@@ -194,12 +194,12 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
 	updateTiles();
-	optionChanged(SettingsManager::StartPage_BackgroundPathOption, SettingsManager::getValue(SettingsManager::StartPage_BackgroundPathOption));
-	optionChanged(SettingsManager::StartPage_ShowSearchFieldOption, SettingsManager::getValue(SettingsManager::StartPage_ShowSearchFieldOption));
+	handleOptionChanged(SettingsManager::StartPage_BackgroundPathOption, SettingsManager::getValue(SettingsManager::StartPage_BackgroundPathOption));
+	handleOptionChanged(SettingsManager::StartPage_ShowSearchFieldOption, SettingsManager::getValue(SettingsManager::StartPage_ShowSearchFieldOption));
 
 	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
 	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 StartPageWidget::~StartPageWidget()
@@ -248,117 +248,6 @@ void StartPageWidget::wheelEvent(QWheelEvent *event)
 	if (event->buttons() == Qt::NoButton && event->modifiers() == Qt::NoModifier)
 	{
 		QScrollArea::wheelEvent(event);
-	}
-}
-
-void StartPageWidget::optionChanged(int identifier, const QVariant &value)
-{
-	switch (identifier)
-	{
-		case SettingsManager::StartPage_BackgroundColorOption:
-		case SettingsManager::StartPage_BackgroundModeOption:
-		case SettingsManager::StartPage_BackgroundPathOption:
-			{
-				const QString backgroundMode(SettingsManager::getValue(SettingsManager::StartPage_BackgroundModeOption).toString());
-
-				if (backgroundMode == QLatin1String("bestFit"))
-				{
-					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::BestFitBackground);
-				}
-				else if (backgroundMode == QLatin1String("center"))
-				{
-					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::CenterBackground);
-				}
-				else if (backgroundMode == QLatin1String("stretch"))
-				{
-					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::StretchBackground);
-				}
-				else if (backgroundMode == QLatin1String("tile"))
-				{
-					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::TileBackground);
-				}
-				else
-				{
-					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
-				}
-
-				update();
-			}
-
-			break;
-		case SettingsManager::StartPage_ShowSearchFieldOption:
-			{
-				QGridLayout *layout(nullptr);
-				const bool needsInitialization(m_contentsWidget->layout() == nullptr);
-
-				if (needsInitialization)
-				{
-					layout = new QGridLayout(m_contentsWidget);
-					layout->setContentsMargins(0, 0, 0, 0);
-					layout->setSpacing(0);
-				}
-				else if ((m_searchWidget && !value.toBool()) || (!m_searchWidget && value.toBool()))
-				{
-					layout = qobject_cast<QGridLayout*>(m_contentsWidget->layout());
-
-					for (int i = (layout->count() - 1); i >=0; --i)
-					{
-						QLayoutItem *item(layout->takeAt(i));
-
-						if (item)
-						{
-							if (item->widget())
-							{
-								item->widget()->setParent(m_contentsWidget);
-							}
-
-							delete item;
-						}
-					}
-				}
-
-				if (value.toBool() && (needsInitialization || !m_searchWidget))
-				{
-					if (!m_searchWidget)
-					{
-						m_searchWidget = new SearchWidget(m_window, this);
-						m_searchWidget->setFixedWidth(300);
-					}
-
-					layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 0, 1);
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 0);
-					layout->addWidget(m_searchWidget, 1, 1, 1, 1, Qt::AlignCenter);
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 2);
-					layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 2, 1);
-					layout->addWidget(m_listView, 3, 0, 1, 3, Qt::AlignCenter);
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 4, 1);
-				}
-				else if (!value.toBool() && (needsInitialization || m_searchWidget))
-				{
-					if (m_searchWidget)
-					{
-						m_searchWidget->deleteLater();
-						m_searchWidget = nullptr;
-					}
-
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 0, 1);
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 0);
-					layout->addWidget(m_listView, 1, 1, 1, 1, Qt::AlignCenter);
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 2);
-					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 2, 1);
-				}
-			}
-
-			break;
-		case SettingsManager::StartPage_TilesPerRowOption:
-		case SettingsManager::StartPage_TileHeightOption:
-		case SettingsManager::StartPage_TileWidthOption:
-		case SettingsManager::StartPage_ZoomLevelOption:
-			updateSize();
-
-			break;
-		default:
-			break;
 	}
 }
 
@@ -563,6 +452,117 @@ void StartPageWidget::markForDeletion()
 	if (m_deleteTimer == 0)
 	{
 		m_deleteTimer = startTimer(250);
+	}
+}
+
+void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)
+{
+	switch (identifier)
+	{
+		case SettingsManager::StartPage_BackgroundColorOption:
+		case SettingsManager::StartPage_BackgroundModeOption:
+		case SettingsManager::StartPage_BackgroundPathOption:
+			{
+				const QString backgroundMode(SettingsManager::getValue(SettingsManager::StartPage_BackgroundModeOption).toString());
+
+				if (backgroundMode == QLatin1String("bestFit"))
+				{
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::BestFitBackground);
+				}
+				else if (backgroundMode == QLatin1String("center"))
+				{
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::CenterBackground);
+				}
+				else if (backgroundMode == QLatin1String("stretch"))
+				{
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::StretchBackground);
+				}
+				else if (backgroundMode == QLatin1String("tile"))
+				{
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::TileBackground);
+				}
+				else
+				{
+					m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
+				}
+
+				update();
+			}
+
+			break;
+		case SettingsManager::StartPage_ShowSearchFieldOption:
+			{
+				QGridLayout *layout(nullptr);
+				const bool needsInitialization(m_contentsWidget->layout() == nullptr);
+
+				if (needsInitialization)
+				{
+					layout = new QGridLayout(m_contentsWidget);
+					layout->setContentsMargins(0, 0, 0, 0);
+					layout->setSpacing(0);
+				}
+				else if ((m_searchWidget && !value.toBool()) || (!m_searchWidget && value.toBool()))
+				{
+					layout = qobject_cast<QGridLayout*>(m_contentsWidget->layout());
+
+					for (int i = (layout->count() - 1); i >=0; --i)
+					{
+						QLayoutItem *item(layout->takeAt(i));
+
+						if (item)
+						{
+							if (item->widget())
+							{
+								item->widget()->setParent(m_contentsWidget);
+							}
+
+							delete item;
+						}
+					}
+				}
+
+				if (value.toBool() && (needsInitialization || !m_searchWidget))
+				{
+					if (!m_searchWidget)
+					{
+						m_searchWidget = new SearchWidget(m_window, this);
+						m_searchWidget->setFixedWidth(300);
+					}
+
+					layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 0, 1);
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 0);
+					layout->addWidget(m_searchWidget, 1, 1, 1, 1, Qt::AlignCenter);
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 2);
+					layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 2, 1);
+					layout->addWidget(m_listView, 3, 0, 1, 3, Qt::AlignCenter);
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 4, 1);
+				}
+				else if (!value.toBool() && (needsInitialization || m_searchWidget))
+				{
+					if (m_searchWidget)
+					{
+						m_searchWidget->deleteLater();
+						m_searchWidget = nullptr;
+					}
+
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 0, 1);
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 0);
+					layout->addWidget(m_listView, 1, 1, 1, 1, Qt::AlignCenter);
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 2);
+					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 2, 1);
+				}
+			}
+
+			break;
+		case SettingsManager::StartPage_TilesPerRowOption:
+		case SettingsManager::StartPage_TileHeightOption:
+		case SettingsManager::StartPage_TileWidthOption:
+		case SettingsManager::StartPage_ZoomLevelOption:
+			updateSize();
+
+			break;
+		default:
+			break;
 	}
 }
 

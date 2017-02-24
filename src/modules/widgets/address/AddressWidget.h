@@ -62,7 +62,7 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	DisplayMode m_displayMode;

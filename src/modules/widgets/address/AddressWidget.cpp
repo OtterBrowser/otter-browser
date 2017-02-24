@@ -51,7 +51,7 @@ AddressDelegate::AddressDelegate(ViewMode mode, QObject *parent) : QItemDelegate
 	m_displayMode((SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
 	m_viewMode(mode)
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -166,7 +166,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	}
 }
 
-void AddressDelegate::optionChanged(int identifier, const QVariant &value)
+void AddressDelegate::handleOptionChanged(int identifier, const QVariant &value)
 {
 	if (identifier == SettingsManager::AddressField_CompletionDisplayModeOption)
 	{

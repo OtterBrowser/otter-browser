@@ -82,7 +82,6 @@ protected:
 	int getTilesPerRow() const;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void configure();
 	void addTile();
 	void addTile(const QUrl &url);
@@ -90,6 +89,7 @@ protected slots:
 	void editTile();
 	void reloadTile();
 	void removeTile();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void updateTile(const QModelIndex &index);
 	void updateSize();
 	void updateTiles();

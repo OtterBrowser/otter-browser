@@ -44,8 +44,8 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void optionChanged(int identifier);
 	void openUrl(QAction *action);
+	void handleOptionChanged(int identifier);
 	void setPolicy(QAction *action);
 
 private:

@@ -69,9 +69,9 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 	m_popupsMenu->addAction(tr("Open All"));
 	m_popupsMenu->addSeparator();
 
-	optionChanged(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
+	handleOptionChanged(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	connect(m_popupsGroup, SIGNAL(triggered(QAction*)), this, SLOT(setPolicy(QAction*)));
 	connect(m_popupsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openUrl(QAction*)));
 	connect(m_ui->closeButton, SIGNAL(clicked()), this, SIGNAL(requestedClose()));
@@ -89,24 +89,6 @@ void PopupsBarWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-	}
-}
-
-void PopupsBarWidget::optionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Permissions_ScriptsCanOpenWindowsOption)
-	{
-		const QString popupsPolicy(SettingsManager::getValue(identifier, m_parentUrl).toString());
-
-		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
-		{
-			if (popupsPolicy == m_popupsGroup->actions().at(i)->data().toString())
-			{
-				m_popupsGroup->actions().at(i)->setChecked(true);
-
-				break;
-			}
-		}
 	}
 }
 
@@ -141,6 +123,24 @@ void PopupsBarWidget::openUrl(QAction *action)
 	}
 
 	emit requestedNewWindow(action->data().toUrl(), WindowsManager::NewTabOpen);
+}
+
+void PopupsBarWidget::handleOptionChanged(int identifier)
+{
+	if (identifier == SettingsManager::Permissions_ScriptsCanOpenWindowsOption)
+	{
+		const QString popupsPolicy(SettingsManager::getValue(identifier, m_parentUrl).toString());
+
+		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
+		{
+			if (popupsPolicy == m_popupsGroup->actions().at(i)->data().toString())
+			{
+				m_popupsGroup->actions().at(i)->setChecked(true);
+
+				break;
+			}
+		}
+	}
 }
 
 void PopupsBarWidget::setPolicy(QAction *action)
