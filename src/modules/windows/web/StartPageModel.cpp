@@ -35,23 +35,16 @@ namespace Otter
 StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 	m_bookmark(nullptr)
 {
-	optionChanged(SettingsManager::Backends_WebOption);
+	handleOptionChanged(SettingsManager::Backends_WebOption);
 	reloadModel();
 
-	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
-}
-
-void StartPageModel::optionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Backends_WebOption)
-	{
-		connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
-	}
-	else if (identifier == SettingsManager::StartPage_BookmarksFolderOption || identifier == SettingsManager::StartPage_ShowAddTileOption)
-	{
-		reloadModel();
-	}
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkMoved(BookmarksItem*,BookmarksItem*,int)), this, SLOT(handleBookmarkMoved(BookmarksItem*,BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*,BookmarksItem*)), this, SLOT(handleBookmarkMoved(BookmarksItem*,BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*,BookmarksItem*)), this, SLOT(handleBookmarkRemoved(BookmarksItem*,BookmarksItem*)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void StartPageModel::dragEnded()
@@ -221,6 +214,42 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 		{
 			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
 		}
+	}
+}
+
+void StartPageModel::handleOptionChanged(int identifier)
+{
+	if (identifier == SettingsManager::Backends_WebOption)
+	{
+		connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
+	}
+	else if (identifier == SettingsManager::StartPage_BookmarksFolderOption || identifier == SettingsManager::StartPage_ShowAddTileOption)
+	{
+		reloadModel();
+	}
+}
+
+void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
+{
+	if (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark))
+	{
+		reloadModel();
+	}
+}
+
+void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
+{
+	if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent))
+	{
+		reloadModel();
+	}
+}
+
+void StartPageModel::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
+{
+	if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent))
+	{
+		reloadModel();
 	}
 }
 

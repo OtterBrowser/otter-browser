@@ -51,9 +51,12 @@ public slots:
 	void reloadTile(const QModelIndex &index, bool full = false);
 
 protected slots:
-	void optionChanged(int identifier);
 	void dragEnded();
 	void thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
+	void handleOptionChanged(int identifier);
+	void handleBookmarkModified(BookmarksItem *bookmark);
+	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 
 private:
 	BookmarksItem *m_bookmark;
