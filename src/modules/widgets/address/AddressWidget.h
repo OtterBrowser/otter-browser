@@ -78,8 +78,8 @@ public:
 	enum CompletionMode
 	{
 		NoCompletionMode = 0,
-		InlineCompletionMode,
-		PopupCompletionMode
+		InlineCompletionMode = 1,
+		PopupCompletionMode = 2
 	};
 
 	Q_DECLARE_FLAGS(CompletionModes, CompletionMode)
@@ -134,11 +134,11 @@ protected:
 	bool startDrag(QMouseEvent *event);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void openFeed(QAction *action);
 	void openUrl(const QString &url);
 	void openUrl(const QModelIndex &index);
 	void removeEntry();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void updateGeometries();
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);

@@ -212,16 +212,16 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
 	setWindow(window);
-	optionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getValue(SettingsManager::AddressField_CompletionModeOption));
-	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
-	optionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getValue(SettingsManager::AddressField_LayoutOption));
-	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
+	handleOptionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getValue(SettingsManager::AddressField_CompletionModeOption));
+	handleOptionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
+	handleOptionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getValue(SettingsManager::AddressField_LayoutOption));
+	handleOptionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
 
 	if (toolBar)
 	{
 		setPlaceholderText(tr("Enter address or search…"));
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 
 		if (toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 		{
@@ -562,7 +562,109 @@ void AddressWidget::hideCompletion()
 	}
 }
 
-void AddressWidget::optionChanged(int identifier, const QVariant &value)
+void AddressWidget::openFeed(QAction *action)
+{
+	if (action && m_window)
+	{
+		m_window->setUrl(action->data().toUrl());
+	}
+}
+
+void AddressWidget::openUrl(const QString &url)
+{
+	setUrl(url);
+	handleUserInput(url, WindowsManager::CurrentTabOpen);
+}
+
+void AddressWidget::openUrl(const QModelIndex &index)
+{
+	hideCompletion();
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType)
+	{
+		emit requestedSearch(index.data(AddressCompletionModel::TextRole).toString(), QString(), WindowsManager::CurrentTabOpen);
+	}
+	else
+	{
+		const QString url(index.data(AddressCompletionModel::UrlRole).toUrl().toString());
+
+		setUrl(url);
+		handleUserInput(url, WindowsManager::CurrentTabOpen);
+	}
+}
+
+void AddressWidget::removeEntry()
+{
+	QAction *action(qobject_cast<QAction*>(sender()));
+
+	if (action)
+	{
+		QStringList layout(SettingsManager::getValue(SettingsManager::AddressField_LayoutOption).toStringList());
+		QString name(metaObject()->enumerator(m_entryIdentifierEnumerator).valueToKey(action->data().toInt()));
+
+		if (!name.isEmpty())
+		{
+			name.chop(5);
+			name[0] = name.at(0).toLower();
+
+			layout.removeAll(name);
+
+			SettingsManager::setValue(SettingsManager::AddressField_LayoutOption, layout);
+		}
+	}
+}
+
+void AddressWidget::showCompletion(bool isTypedHistory)
+{
+	if (!m_completionView)
+	{
+		m_completionView = new ItemViewWidget();
+		m_completionView->setWindowFlags(Qt::Popup);
+		m_completionView->setFocusPolicy(Qt::NoFocus);
+		m_completionView->setFocusProxy(this);
+		m_completionView->setModel(m_completionModel);
+		m_completionView->setItemDelegate(new AddressDelegate(isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode, m_completionView));
+		m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		m_completionView->setFixedWidth(width());
+		m_completionView->installEventFilter(this);
+		m_completionView->header()->setStretchLastSection(true);
+		m_completionView->header()->hide();
+		m_completionView->viewport()->setAttribute(Qt::WA_Hover);
+		m_completionView->viewport()->setMouseTracking(true);
+		m_completionView->viewport()->installEventFilter(this);
+
+		connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+		connect(m_completionView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setTextFromIndex(QModelIndex)));
+
+		m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
+		m_completionView->show();
+	}
+
+	int completionHeight(5);
+
+	if (m_completionModel->rowCount() < 20)
+	{
+		for (int i = 0; i < m_completionModel->rowCount(); ++i)
+		{
+			completionHeight += m_completionView->sizeHintForRow(i);
+		}
+	}
+	else
+	{
+		completionHeight += (20 * m_completionView->sizeHintForRow(0));
+	}
+
+	m_completionView->setFixedHeight(completionHeight);
+	m_completionView->viewport()->setFixedHeight(completionHeight - 3);
+	m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
+}
+
+void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
@@ -660,63 +762,6 @@ void AddressWidget::optionChanged(int identifier, const QVariant &value)
 	}
 }
 
-void AddressWidget::openFeed(QAction *action)
-{
-	if (action && m_window)
-	{
-		m_window->setUrl(action->data().toUrl());
-	}
-}
-
-void AddressWidget::openUrl(const QString &url)
-{
-	setUrl(url);
-	handleUserInput(url, WindowsManager::CurrentTabOpen);
-}
-
-void AddressWidget::openUrl(const QModelIndex &index)
-{
-	hideCompletion();
-
-	if (!index.isValid())
-	{
-		return;
-	}
-
-	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType)
-	{
-		emit requestedSearch(index.data(AddressCompletionModel::TextRole).toString(), QString(), WindowsManager::CurrentTabOpen);
-	}
-	else
-	{
-		const QString url(index.data(AddressCompletionModel::UrlRole).toUrl().toString());
-
-		setUrl(url);
-		handleUserInput(url, WindowsManager::CurrentTabOpen);
-	}
-}
-
-void AddressWidget::removeEntry()
-{
-	QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action)
-	{
-		QStringList layout(SettingsManager::getValue(SettingsManager::AddressField_LayoutOption).toStringList());
-		QString name(metaObject()->enumerator(m_entryIdentifierEnumerator).valueToKey(action->data().toInt()));
-
-		if (!name.isEmpty())
-		{
-			name.chop(5);
-			name[0] = name.at(0).toLower();
-
-			layout.removeAll(name);
-
-			SettingsManager::setValue(SettingsManager::AddressField_LayoutOption, layout);
-		}
-	}
-}
-
 void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHints hints)
 {
 	if (hints == WindowsManager::DefaultOpen)
@@ -734,87 +779,6 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 
 		interpreter->interpret(text, hints);
 	}
-}
-
-void AddressWidget::setCompletion(const QString &filter)
-{
-	m_isTypedHistoryCompletion = false;
-
-	if (filter.isEmpty() || m_completionModel->rowCount() == 0)
-	{
-		hideCompletion();
-
-		LineEditWidget::setCompletion(QString());
-
-		return;
-	}
-
-	if (m_completionModes.testFlag(PopupCompletionMode))
-	{
-		showCompletion(false);
-	}
-
-	if (m_completionModes.testFlag(InlineCompletionMode))
-	{
-		QString matchedText;
-
-		for (int i = 0; i < m_completionModel->rowCount(); ++i)
-		{
-			matchedText = m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString();
-
-			if (!matchedText.isEmpty())
-			{
-				LineEditWidget::setCompletion(matchedText);
-
-				break;
-			}
-		}
-	}
-}
-
-void AddressWidget::showCompletion(bool isTypedHistory)
-{
-	if (!m_completionView)
-	{
-		m_completionView = new ItemViewWidget();
-		m_completionView->setWindowFlags(Qt::Popup);
-		m_completionView->setFocusPolicy(Qt::NoFocus);
-		m_completionView->setFocusProxy(this);
-		m_completionView->setModel(m_completionModel);
-		m_completionView->setItemDelegate(new AddressDelegate(isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode, m_completionView));
-		m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		m_completionView->setFixedWidth(width());
-		m_completionView->installEventFilter(this);
-		m_completionView->header()->setStretchLastSection(true);
-		m_completionView->header()->hide();
-		m_completionView->viewport()->setAttribute(Qt::WA_Hover);
-		m_completionView->viewport()->setMouseTracking(true);
-		m_completionView->viewport()->installEventFilter(this);
-
-		connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
-		connect(m_completionView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setTextFromIndex(QModelIndex)));
-
-		m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
-		m_completionView->show();
-	}
-
-	int completionHeight(5);
-
-	if (m_completionModel->rowCount() < 20)
-	{
-		for (int i = 0; i < m_completionModel->rowCount(); ++i)
-		{
-			completionHeight += m_completionView->sizeHintForRow(i);
-		}
-	}
-	else
-	{
-		completionHeight += (20 * m_completionView->sizeHintForRow(0));
-	}
-
-	m_completionView->setFixedHeight(completionHeight);
-	m_completionView->viewport()->setFixedHeight(completionHeight - 3);
-	m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
 }
 
 void AddressWidget::updateGeometries()
@@ -1072,6 +1036,42 @@ void AddressWidget::updateGeometries()
 	}
 
 	setTextMargins(margins);
+}
+
+void AddressWidget::setCompletion(const QString &filter)
+{
+	m_isTypedHistoryCompletion = false;
+
+	if (filter.isEmpty() || m_completionModel->rowCount() == 0)
+	{
+		hideCompletion();
+
+		LineEditWidget::setCompletion(QString());
+
+		return;
+	}
+
+	if (m_completionModes.testFlag(PopupCompletionMode))
+	{
+		showCompletion(false);
+	}
+
+	if (m_completionModes.testFlag(InlineCompletionMode))
+	{
+		QString matchedText;
+
+		for (int i = 0; i < m_completionModel->rowCount(); ++i)
+		{
+			matchedText = m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString();
+
+			if (!matchedText.isEmpty())
+			{
+				LineEditWidget::setCompletion(matchedText);
+
+				break;
+			}
+		}
+	}
 }
 
 void AddressWidget::setWindow(Window *window)
