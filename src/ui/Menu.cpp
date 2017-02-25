@@ -340,6 +340,11 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 				continue;
 			}
 
+			if (object.contains(QLatin1String("excludeFrom")) && options.contains(object.value(QLatin1String("excludeFrom")).toString()))
+			{
+				continue;
+			}
+
 			if (object.contains(QLatin1String("includeIn")) && !options.contains(object.value(QLatin1String("includeIn")).toString()))
 			{
 				continue;

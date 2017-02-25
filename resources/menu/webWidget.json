@@ -71,6 +71,18 @@
 				"separator",
 				"SelectAll",
 				"ClearAll",
+				{
+					"type": "include",
+					"includeIn": "selection",
+					"actions":
+					[
+						"separator",
+						"Search",
+						"SearchMenu",
+						"separator",
+						"OpenSelectionAsLink"
+					]
+				},
 				"separator",
 				{
 					"type": "include",
@@ -90,6 +102,7 @@
 		},
 		{
 			"type": "include",
+			"excludeFrom": "edit",
 			"includeIn": "selection",
 			"actions":
 			[
