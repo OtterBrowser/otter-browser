@@ -167,7 +167,7 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 
 	if (reply && reply == m_baseReply)
 	{
-		if (m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
+		if (bytesTotal == 0 || m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
 		{
 			m_baseReply = nullptr;
 		}
