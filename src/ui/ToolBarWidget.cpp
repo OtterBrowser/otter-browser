@@ -595,9 +595,9 @@ void ToolBarWidget::handleToolBarRemoved(int identifier)
 	}
 }
 
-void ToolBarWidget::handleBookmarkAdded(BookmarksItem *bookmark)
+void ToolBarWidget::handleBookmarkModified(BookmarksItem *bookmark)
 {
-	if (bookmark->parent() == m_bookmark)
+	if (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark))
 	{
 		loadBookmarks();
 	}
@@ -605,13 +605,13 @@ void ToolBarWidget::handleBookmarkAdded(BookmarksItem *bookmark)
 
 void ToolBarWidget::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
 {
-	if (bookmark->parent() == m_bookmark || previousParent == m_bookmark)
+	if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent))
 	{
 		loadBookmarks();
 	}
 }
 
-void ToolBarWidget::handleBookmarkRemoved(BookmarksItem *bookmark)
+void ToolBarWidget::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
 {
 	if (bookmark == m_bookmark)
 	{
@@ -619,15 +619,7 @@ void ToolBarWidget::handleBookmarkRemoved(BookmarksItem *bookmark)
 
 		loadBookmarks();
 	}
-	else if (bookmark->parent() == m_bookmark)
-	{
-		loadBookmarks();
-	}
-}
-
-void ToolBarWidget::handleBookmarkTrashed(BookmarksItem *bookmark)
-{
-	if (bookmark->parent() == m_bookmark)
+	else if (previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent))
 	{
 		loadBookmarks();
 	}
@@ -755,11 +747,12 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 			loadBookmarks();
 
-			connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkAdded(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
 			connect(BookmarksManager::getModel(), SIGNAL(bookmarkMoved(BookmarksItem*,BookmarksItem*,int)), this, SLOT(handleBookmarkMoved(BookmarksItem*,BookmarksItem*)));
-			connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*,BookmarksItem*)), this, SLOT(handleBookmarkTrashed(BookmarksItem*)));
-			connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(handleBookmarkTrashed(BookmarksItem*)));
-			connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*,BookmarksItem*)), this, SLOT(handleBookmarkRemoved(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*,BookmarksItem*)), this, SLOT(handleBookmarkMoved(BookmarksItem*,BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*,BookmarksItem*)), this, SLOT(handleBookmarkRemoved(BookmarksItem*,BookmarksItem*)));
 
 			return;
 		case ToolBarsManager::SideBarType:

@@ -102,10 +102,9 @@ protected slots:
 	void notifyWindowChanged(quint64 identifier);
 	void handleToolBarModified(int identifier);
 	void handleToolBarRemoved(int identifier);
-	void handleBookmarkAdded(BookmarksItem *bookmark);
+	void handleBookmarkModified(BookmarksItem *bookmark);
 	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
-	void handleBookmarkRemoved(BookmarksItem *bookmark);
-	void handleBookmarkTrashed(BookmarksItem *bookmark);
+	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void updateVisibility();
 	void setToolBarLocked(bool locked);
 
