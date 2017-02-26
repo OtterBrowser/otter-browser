@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,17 +43,42 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 			break;
 		case SettingsManager::ColorType:
 			{
-				const QString color(index.data(Qt::DisplayRole).toString());
+				const QColor color(index.data(Qt::DisplayRole).toString());
+				QPixmap icon(option->fontMetrics.height(), option->fontMetrics.height());
+				icon.fill(Qt::transparent);
 
-				if (!color.isEmpty())
+				QPainter iconPainter(&icon);
+				iconPainter.setRenderHints(QPainter::Antialiasing);
+
+				if (color.alpha() < 255)
 				{
-					option->backgroundBrush = QColor(color);
+					QPixmap pixmap(10, 10);
+					pixmap.fill(Qt::white);
+
+					QPainter pixmapPainter(&pixmap);
+					pixmapPainter.setBrush(Qt::gray);
+					pixmapPainter.setPen(Qt::NoPen);
+					pixmapPainter.drawRect(0, 0, 5, 5);
+					pixmapPainter.drawRect(5, 5, 5, 5);
+					pixmapPainter.end();
+
+					iconPainter.setBrush(pixmap);
+					iconPainter.setPen(Qt::NoPen);
+					iconPainter.drawRoundedRect(icon.rect(), 2, 2);
 				}
 
-				option->displayAlignment = Qt::AlignCenter;
+				iconPainter.setBrush(color);
+				iconPainter.setPen(option->palette.color(QPalette::Button));
+				iconPainter.drawRoundedRect(icon.rect(), 2, 2);
+				iconPainter.end();
 
-				break;
+				option->features |= QStyleOptionViewItem::HasDecoration;
+				option->decorationSize = icon.size();
+				option->icon = QIcon(icon);
+				option->text = index.data(Qt::DisplayRole).toString().toUpper();
 			}
+
+			break;
 		case SettingsManager::FontType:
 			option->font = QFont(index.data(Qt::DisplayRole).toString());
 
