@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #include "SpellCheckManager.h"
 #include "SessionsManager.h"
 
+#include <QtCore/QLocale>
+
 namespace Otter
 {
 
@@ -27,6 +29,7 @@ SpellCheckManager* SpellCheckManager::m_instance(nullptr);
 #ifdef OTTER_ENABLE_SPELLCHECK
 Sonnet::Speller* SpellCheckManager::m_speller(nullptr);
 #endif
+QString SpellCheckManager::m_defaultDictionary;
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
@@ -52,6 +55,46 @@ void SpellCheckManager::createInstance(QObject *parent)
 	}
 }
 
+void SpellCheckManager::updateDefaultDictionary()
+{
+#ifdef OTTER_ENABLE_SPELLCHECK
+	const QStringList dictionaries(m_speller->availableDictionaries().values());
+	const QString defaultLanguage(QLocale().bcp47Name());
+
+	if (dictionaries.contains(defaultLanguage))
+	{
+		m_defaultDictionary = defaultLanguage;
+
+		return;
+	}
+
+	const QLocale locale(defaultLanguage);
+	const QList<QLocale> locales(QLocale::matchingLocales(locale.language(), locale.script(), QLocale::AnyCountry));
+
+	for (int i = 0; i < locales.count(); ++i)
+	{
+		if (dictionaries.contains(locales.at(i).name()))
+		{
+			m_defaultDictionary = locales.at(i).name();
+
+			break;
+		}
+
+		if (dictionaries.contains(locales.at(i).bcp47Name()))
+		{
+			m_defaultDictionary = locales.at(i).bcp47Name();
+
+			break;
+		}
+	}
+
+	if (m_defaultDictionary.isEmpty())
+	{
+		m_defaultDictionary = QLatin1String("en_US");
+	}
+#endif
+}
+
 SpellCheckManager* SpellCheckManager::getInstance()
 {
 	return m_instance;
@@ -59,11 +102,12 @@ SpellCheckManager* SpellCheckManager::getInstance()
 
 QString SpellCheckManager::getDefaultDictionary()
 {
-#ifdef OTTER_ENABLE_SPELLCHECK
-	return m_speller->defaultLanguage();
-#else
-	return QString();
-#endif
+	if (m_defaultDictionary.isEmpty())
+	{
+		updateDefaultDictionary();
+	}
+
+	return m_defaultDictionary;
 }
 
 QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
@@ -85,6 +129,16 @@ QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionari
 #endif
 
 	return dictionaries;
+}
+
+bool SpellCheckManager::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+	{
+		updateDefaultDictionary();
+	}
+
+	return QObject::event(event);
 }
 
 }
