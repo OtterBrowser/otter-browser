@@ -31,6 +31,7 @@
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
+#include <QtNetwork/QAbstractNetworkCache>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -204,6 +205,19 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	m_device = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + temporaryFileName, this);
 	m_timeStarted = QDateTime::currentDateTime();
 	m_bytesTotal = m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
+
+	if (m_bytesTotal == 0 && reply->attribute(QNetworkRequest::SourceIsFromCacheAttribute).toBool() && reply->manager()->cache())
+	{
+		QIODevice *device(reply->manager()->cache()->data(m_source));
+
+		if (device)
+		{
+			m_bytesTotal = device->size();
+
+			device->close();
+			device->deleteLater();
+		}
+	}
 
 	if (!m_device->open(QIODevice::ReadWrite))
 	{
