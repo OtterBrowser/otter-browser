@@ -598,17 +598,20 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	m_contentsWidget->setHistory(history);
 	m_contentsWidget->setZoom(m_session.getZoom());
 
-	if (m_session.historyIndex >= 0)
+	if (isActive())
 	{
-		m_contentsWidget->setFocus();
-	}
-	else
-	{
-		AddressWidget *addressWidget(findAddressWidget());
-
-		if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
+		if (m_session.historyIndex >= 0)
 		{
-			addressWidget->setFocus();
+			m_contentsWidget->setFocus();
+		}
+		else
+		{
+			AddressWidget *addressWidget(findAddressWidget());
+
+			if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
+			{
+				addressWidget->setFocus();
+			}
 		}
 	}
 
@@ -811,6 +814,11 @@ bool Window::canClone() const
 bool Window::isAboutToClose() const
 {
 	return m_isAboutToClose;
+}
+
+bool Window::isActive() const
+{
+	return (isActiveWindow() && isAncestorOf(QApplication::focusWidget()));
 }
 
 bool Window::isPinned() const

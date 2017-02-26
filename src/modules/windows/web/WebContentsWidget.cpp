@@ -748,7 +748,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 			m_webWidget->show();
 
-			if (!Utils::isUrlEmpty(m_webWidget->getUrl()))
+			if (m_window && m_window->isActive() && !Utils::isUrlEmpty(m_webWidget->getUrl()))
 			{
 				m_webWidget->setFocus();
 			}
@@ -772,7 +772,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 				GesturesManager::continueGesture(m_webWidget->getViewport());
 			}
 
-			if (m_webWidget)
+			if (m_webWidget && m_window && m_window->isActive())
 			{
 				m_webWidget->setFocus();
 			}
@@ -1161,7 +1161,11 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 	}
 
 	m_webWidget->setRequestedUrl(url, typed);
-	m_webWidget->setFocus();
+
+	if (m_window && m_window->isActive())
+	{
+		m_webWidget->setFocus();
+	}
 }
 
 void WebContentsWidget::setParent(Window *window)

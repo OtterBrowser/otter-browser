@@ -74,6 +74,7 @@ public:
 	quint64 getIdentifier() const;
 	bool canClone() const;
 	bool isAboutToClose() const;
+	bool isActive() const;
 	bool isPinned() const;
 	bool isPrivate() const;
 
