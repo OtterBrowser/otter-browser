@@ -48,10 +48,9 @@ public:
 
         language = lang;
 
-        if (language.isEmpty()) {
-            language = settings->defaultLanguage();
+        if (!language.isEmpty()) {
+            updateDict();
         }
-        updateDict();
     }
 
     void updateDict() {
