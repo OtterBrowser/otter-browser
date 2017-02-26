@@ -82,7 +82,6 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 		const QString color(SettingsManager::getValue(SettingsManager::getOptionIdentifier(QLatin1String("Content/") + colors.at(i))).toString());
 		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(color)});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[1]->setData(QColor(color), Qt::BackgroundRole);
 		items[1]->setData(QLatin1String("Content/") + colors.at(i), Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -95,7 +94,6 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	connect(m_ui->fontsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentFontChanged(QModelIndex,QModelIndex)));
 	connect(fontsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(fontChanged(QWidget*)));
 	connect(m_ui->colorsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentColorChanged(QModelIndex,QModelIndex)));
-	connect(colorsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(colorChanged(QWidget*)));
 }
 
 PreferencesContentPageWidget::~PreferencesContentPageWidget()
@@ -132,8 +130,6 @@ void PreferencesContentPageWidget::fontChanged(QWidget *editor)
 	{
 		m_ui->fontsViewWidget->model()->setData(index.sibling(index.row(), 2), QFont(index.data(Qt::EditRole).toString()), Qt::FontRole);
 	}
-
-	emit settingsModified();
 }
 
 void PreferencesContentPageWidget::currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
@@ -144,19 +140,6 @@ void PreferencesContentPageWidget::currentColorChanged(const QModelIndex &curren
 	{
 		m_ui->colorsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
 	}
-}
-
-void PreferencesContentPageWidget::colorChanged(QWidget *editor)
-{
-	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
-	const QModelIndex index(widget ? widget->getIndex() : QModelIndex());
-
-	if (index.isValid())
-	{
-		m_ui->colorsViewWidget->model()->setData(index.sibling(index.row(), 1), QColor(index.data(Qt::EditRole).toString()), Qt::BackgroundRole);
-	}
-
-	emit settingsModified();
 }
 
 void PreferencesContentPageWidget::save()

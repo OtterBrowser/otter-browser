@@ -46,7 +46,6 @@ protected slots:
 	void currentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void fontChanged(QWidget *editor);
 	void currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
-	void colorChanged(QWidget *editor);
 	void save();
 
 private:
