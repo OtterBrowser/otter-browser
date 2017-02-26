@@ -22,10 +22,6 @@
 
 #include <QtCore/QObject>
 
-#ifdef OTTER_ENABLE_SPELLCHECK
-#include "../../3rdparty/sonnet/src/core/speller.h"
-#endif
-
 namespace Otter
 {
 
@@ -40,8 +36,6 @@ public:
 		QString title;
 	};
 
-	~SpellCheckManager();
-
 	static void createInstance(QObject *parent = nullptr);
 	static SpellCheckManager* getInstance();
 	static QString getDefaultDictionary();
@@ -55,10 +49,8 @@ protected:
 
 private:
 	static SpellCheckManager *m_instance;
-#ifdef OTTER_ENABLE_SPELLCHECK
-	static Sonnet::Speller *m_speller;
-#endif
 	static QString m_defaultDictionary;
+	static QMap<QString, QString> m_dictionaries;
 };
 
 }

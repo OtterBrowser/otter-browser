@@ -19,6 +19,9 @@
 
 #include "SpellCheckManager.h"
 #include "SessionsManager.h"
+#ifdef OTTER_ENABLE_SPELLCHECK
+#include "../../3rdparty/sonnet/src/core/speller.h"
+#endif
 
 #include <QtCore/QLocale>
 
@@ -26,19 +29,15 @@ namespace Otter
 {
 
 SpellCheckManager* SpellCheckManager::m_instance(nullptr);
-#ifdef OTTER_ENABLE_SPELLCHECK
-Sonnet::Speller* SpellCheckManager::m_speller(nullptr);
-#endif
 QString SpellCheckManager::m_defaultDictionary;
+QMap<QString, QString> SpellCheckManager::m_dictionaries;
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
-}
-
-SpellCheckManager::~SpellCheckManager()
-{
 #ifdef OTTER_ENABLE_SPELLCHECK
-	delete m_speller;
+	qputenv("OTTER_DICTIONARIES", SessionsManager::getWritableDataPath(QLatin1String("dictionaries")).toLatin1());
+
+	m_dictionaries = Sonnet::Speller().availableDictionaries();
 #endif
 }
 
@@ -47,18 +46,12 @@ void SpellCheckManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new SpellCheckManager(parent);
-#ifdef OTTER_ENABLE_SPELLCHECK
-		qputenv("OTTER_DICTIONARIES", SessionsManager::getWritableDataPath(QLatin1String("dictionaries")).toLatin1());
-
-		m_speller = new Sonnet::Speller();
-#endif
 	}
 }
 
 void SpellCheckManager::updateDefaultDictionary()
 {
-#ifdef OTTER_ENABLE_SPELLCHECK
-	const QStringList dictionaries(m_speller->availableDictionaries().values());
+	const QStringList dictionaries(m_dictionaries.values());
 	const QString defaultLanguage(QLocale().bcp47Name());
 
 	if (dictionaries.contains(defaultLanguage))
@@ -92,7 +85,6 @@ void SpellCheckManager::updateDefaultDictionary()
 	{
 		m_defaultDictionary = QLatin1String("en_US");
 	}
-#endif
 }
 
 SpellCheckManager* SpellCheckManager::getInstance()
@@ -113,12 +105,9 @@ QString SpellCheckManager::getDefaultDictionary()
 QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
 {
 	QList<DictionaryInformation> dictionaries;
-
-#ifdef OTTER_ENABLE_SPELLCHECK
-	const QMap<QString, QString> availableDictionaries(m_speller->availableDictionaries());
 	QMap<QString, QString>::const_iterator iterator;
 
-	for (iterator = availableDictionaries.constBegin(); iterator != availableDictionaries.constEnd(); ++iterator)
+	for (iterator = m_dictionaries.constBegin(); iterator != m_dictionaries.constEnd(); ++iterator)
 	{
 		DictionaryInformation dictionary;
 		dictionary.name = iterator.value();
@@ -126,7 +115,6 @@ QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionari
 
 		dictionaries.append(dictionary);
 	}
-#endif
 
 	return dictionaries;
 }
