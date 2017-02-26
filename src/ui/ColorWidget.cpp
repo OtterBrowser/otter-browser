@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,24 +21,90 @@
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QClipboard>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QColorDialog>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
-ColorWidget::ColorWidget(QWidget *parent) : QPushButton(parent)
+ColorWidget::ColorWidget(QWidget *parent) : QWidget(parent),
+	m_lineEdit(new QLineEdit(this))
 {
-	QMenu *menu(new QMenu(this));
-	menu->addAction(tr("Select Color…"), this, SLOT(selectColor()));
-	menu->addAction(tr("Copy Color"), this, SLOT(copyColor()));
-	menu->addSeparator();
-	menu->addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
+	QHBoxLayout *layout(new QHBoxLayout(this));
+	layout->addWidget(m_lineEdit);
+	layout->setContentsMargins((m_lineEdit->height() + 2), 0, 0, 0);
 
-	setMenu(menu);
-	setText(tr("Invalid"));
-	setToolTip(tr("Invalid"));
+	setLayout(layout);
+	setFocusPolicy(Qt::StrongFocus);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	setColor(QColor());
+}
+
+void ColorWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setColor(m_color);
+	}
+}
+
+void ColorWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	QPainter painter(this);
+	painter.setRenderHints(QPainter::Antialiasing);
+	painter.setBrush(m_color);
+	painter.setPen(palette().color(QPalette::Button));
+	painter.drawRoundedRect(m_buttonRectangle, 2, 2);
+}
+
+void ColorWidget::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event);
+
+	layout()->setContentsMargins((m_lineEdit->height() + 2), 0, 0, 0);
+
+	m_buttonRectangle = rect();
+
+	if (isRightToLeft())
+	{
+		m_buttonRectangle.setLeft(m_buttonRectangle.right() - m_lineEdit->height());
+	}
+	else
+	{
+		m_buttonRectangle.setRight(m_lineEdit->height());
+	}
+
+	m_buttonRectangle.adjust(2, 2, -2, -2);
+}
+
+void ColorWidget::focusInEvent(QFocusEvent *event)
+{
+	QWidget::focusInEvent(event);
+
+	m_lineEdit->setFocus();
+}
+
+void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	QWidget::mouseReleaseEvent(event);
+
+	if (event->button() == Qt::LeftButton && m_buttonRectangle.contains(event->pos()))
+	{
+		QMenu menu(this);
+		menu.addAction(tr("Select Color…"), this, SLOT(selectColor()));
+		menu.addAction(tr("Copy Color"), this, SLOT(copyColor()));
+		menu.addSeparator();
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
+		menu.exec(mapToGlobal(isRightToLeft() ? m_buttonRectangle.bottomRight() : m_buttonRectangle.bottomLeft()));
+	}
 }
 
 void ColorWidget::clear()
@@ -75,12 +141,11 @@ void ColorWidget::setColor(const QColor &color)
 	m_color = color;
 
 	const QString text(color.isValid() ? color.name().toUpper() : tr("Invalid"));
-	QPalette palette(this->palette());
-	palette.setColor(QPalette::Button, (color.isValid() ? color : QApplication::palette(this).color(QPalette::Button)));
 
-	setPalette(palette);
-	setText(text);
+	m_lineEdit->setText(text);
+
 	setToolTip(text);
+	update();
 }
 
 QColor ColorWidget::getColor() const

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@
 #ifndef OTTER_COLORWIDGET_H
 #define OTTER_COLORWIDGET_H
 
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
 
-class ColorWidget : public QPushButton
+class ColorWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -36,13 +36,22 @@ public:
 	void setColor(const QColor &color);
 	QColor getColor() const;
 
+protected:
+	void changeEvent(QEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+
 protected slots:
 	void clear();
 	void copyColor();
 	void selectColor();
 
 private:
+	QLineEdit *m_lineEdit;
 	QColor m_color;
+	QRect m_buttonRectangle;
 
 signals:
 	void colorChanged(const QColor &color);
