@@ -114,7 +114,7 @@ void ColorWidget::clear()
 
 void ColorWidget::copyColor()
 {
-	QApplication::clipboard()->setText(m_color.name().toUpper());
+	QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
 }
 
 void ColorWidget::selectColor()
@@ -140,7 +140,7 @@ void ColorWidget::setColor(const QColor &color)
 {
 	m_color = color;
 
-	const QString text(color.isValid() ? color.name().toUpper() : tr("Invalid"));
+	const QString text(color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : tr("Invalid"));
 
 	m_lineEdit->setText(text);
 
