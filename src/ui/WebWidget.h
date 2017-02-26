@@ -256,7 +256,7 @@ protected:
 	QString suggestSaveFileName(SaveFormat format) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	HitTestResult getCurrentHitTestResult() const;
-	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfNotLoadedPlugins() const;

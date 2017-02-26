@@ -50,7 +50,6 @@ public:
 	QString getUserAgent(const QString &pattern = QString()) const override;
 	QUrl getHomePage() const override;
 	QIcon getIcon() const override;
-	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	BackendCapabilities getCapabilities() const override;
 	static int getOptionIdentifier(OptionIdentifier identifier);
 	bool requestThumbnail(const QUrl &url, const QSize &size) override;

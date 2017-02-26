@@ -39,7 +39,7 @@ public:
 	static void createInstance(QObject *parent = nullptr);
 	static SpellCheckManager* getInstance();
 	static QString getDefaultDictionary();
-	static QList<DictionaryInformation> getDictionaries();
+	static QVector<DictionaryInformation> getDictionaries();
 	bool event(QEvent *event) override;
 
 protected:

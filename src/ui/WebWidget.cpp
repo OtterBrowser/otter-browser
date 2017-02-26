@@ -1464,7 +1464,7 @@ Action* WebWidget::getAction(int identifier)
 			break;
 		case ActionsManager::SelectDictionaryAction:
 			{
-				const QList<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
+				const QVector<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
 
 				action->setEnabled(getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !dictionaries.isEmpty());
 
@@ -1658,7 +1658,7 @@ QStringList WebWidget::getStyleSheets() const
 	return QStringList();
 }
 
-QList<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() const
+QVector<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() const
 {
 	return SpellCheckManager::getDictionaries();
 }

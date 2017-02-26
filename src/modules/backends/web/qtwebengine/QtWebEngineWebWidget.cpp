@@ -1660,9 +1660,9 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 	return m_hitResult;
 }
 
-QList<SpellCheckManager::DictionaryInformation> QtWebEngineWebWidget::getDictionaries() const
+QVector<SpellCheckManager::DictionaryInformation> QtWebEngineWebWidget::getDictionaries() const
 {
-	return QList<SpellCheckManager::DictionaryInformation>();
+	return QVector<SpellCheckManager::DictionaryInformation>();
 }
 
 QHash<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const

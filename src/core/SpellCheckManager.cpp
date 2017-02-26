@@ -102,9 +102,11 @@ QString SpellCheckManager::getDefaultDictionary()
 	return m_defaultDictionary;
 }
 
-QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
+QVector<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
 {
-	QList<DictionaryInformation> dictionaries;
+	QVector<DictionaryInformation> dictionaries;
+	dictionaries.reserve(m_dictionaries.count());
+
 	QMap<QString, QString>::const_iterator iterator;
 
 	for (iterator = m_dictionaries.constBegin(); iterator != m_dictionaries.constEnd(); ++iterator)
