@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,23 +22,23 @@
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QEvent>
 #include <QtCore/QStandardPaths>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
 
 FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
+	m_browseButton(new QPushButton(tr("Browse…"), this)),
 	m_lineEdit(new QLineEdit(this)),
 	m_completer(nullptr),
 	m_selectFile(true)
 {
-	QPushButton *button(new QPushButton(tr("Browse…"), this));
 	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->addWidget(m_lineEdit);
-	layout->addWidget(button);
+	layout->addWidget(m_browseButton);
 	layout->setContentsMargins(0, 0, 0, 0);
 
 	setLayout(layout);
@@ -47,7 +47,17 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 
 	connect(m_lineEdit, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
 	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged(QString)));
-	connect(button, SIGNAL(clicked()), this, SLOT(selectPath()));
+	connect(m_browseButton, SIGNAL(clicked()), this, SLOT(selectPath()));
+}
+
+void FilePathWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_browseButton->setText(tr("Browse…"));
+	}
 }
 
 void FilePathWidget::focusInEvent(QFocusEvent *event)

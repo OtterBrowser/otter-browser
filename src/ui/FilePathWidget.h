@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
@@ -40,6 +41,7 @@ public:
 	QString getPath() const;
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 
 protected slots:
@@ -47,6 +49,7 @@ protected slots:
 	void updateCompleter();
 
 private:
+	QPushButton *m_browseButton;
 	QLineEdit *m_lineEdit;
 	QCompleter *m_completer;
 	QString m_filter;
