@@ -5,6 +5,8 @@
 
 [**Otter Browser**](https://otter-browser.org/) aims to recreate the best aspects of **Opera 12** and to revive its spirit. We are working on providing the powerful features power users want while keeping the browser fast and lightweight. We also learned from History and decided to release the browser under the GNU GPL v3.
 
+Screenshots are available on [the official website](https://otter-browser.org/screenshots/).
+
 We have [an official forum](http://thedndsanctuary.eu/index.php?board=9.0) and two IRC channels at Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (polski / Polish).
 
 Selection of planned features:
@@ -32,6 +34,8 @@ Unfortunatelly, we are unable to provide pre-compiled binaries for macOS at the 
 Otter Browser is *your* browser. Because it is free software (GPL v3), you can contribute to make it better. New contributors are always welcome, whether you write code, make resources, report bugs, or suggest features.
 
 The browser is written in C++ from scratch and is based on the Qt5 framework, with some modules written in Javascript. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
+
+We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
 Read *CONTRIBUTING.md* and don’t hesitate!
 
