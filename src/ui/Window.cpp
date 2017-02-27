@@ -256,6 +256,16 @@ void Window::attachAddressWidget(AddressWidget *widget)
 	if (!m_addressWidgets.contains(widget))
 	{
 		m_addressWidgets.append(widget);
+
+		if (widget->isVisible() && isActive() && Utils::isUrlEmpty(m_contentsWidget->getUrl()))
+		{
+			AddressWidget *addressWidget(qobject_cast<AddressWidget*>(QApplication::focusWidget()));
+
+			if (!addressWidget)
+			{
+				widget->setFocus();
+			}
+		}
 	}
 }
 
