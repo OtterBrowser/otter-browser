@@ -831,6 +831,7 @@ void AddressWidget::updateGeometries()
 				break;
 			case WebsiteInformationEntry:
 				{
+					const QUrl url(getUrl());
 					QString icon(QLatin1String("unknown"));
 					const WindowsManager::ContentStates state(m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
 
@@ -855,7 +856,11 @@ void AddressWidget::updateGeometries()
 						icon = QLatin1String("otter-browser");
 					}
 
-					definition.title = QT_TR_NOOP("Show website information");
+					if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
+					{
+						definition.title = QT_TR_NOOP("Show website information");
+					}
+
 					definition.icon = ThemesManager::getIcon(icon, false);
 				}
 
