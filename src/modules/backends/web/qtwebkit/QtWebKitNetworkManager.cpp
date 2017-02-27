@@ -722,7 +722,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
-		reply = new LocalListingNetworkReply(this, request);
+		reply = new LocalListingNetworkReply(request, this);
 	}
 	else if (operation == GetOperation && request.url().scheme() == QLatin1String("ftp"))
 	{

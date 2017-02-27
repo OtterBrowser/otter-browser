@@ -149,7 +149,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 {
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
-		return new LocalListingNetworkReply(this, request);
+		return new LocalListingNetworkReply(request, this);
 	}
 
 	QNetworkRequest mutableRequest(request);
