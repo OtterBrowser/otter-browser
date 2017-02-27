@@ -128,7 +128,12 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
 
 	QStringList arguments(this->arguments());
-	const QString argumentsPath(QDir::current().filePath(QLatin1String("arguments.txt")));
+	QString argumentsPath(QDir::current().filePath(QLatin1String("arguments.txt")));
+
+	if (!QFile::exists(argumentsPath))
+	{
+		argumentsPath = QDir(applicationDirPath()).filePath(QLatin1String("arguments.txt"));
+	}
 
 	if (QFile::exists(argumentsPath))
 	{
