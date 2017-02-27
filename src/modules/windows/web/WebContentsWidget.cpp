@@ -547,21 +547,24 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::WebsiteInformationAction:
-			if (m_websiteInformationDialog)
+			if (!Utils::isUrlEmpty(m_webWidget->getUrl()))
 			{
-				m_websiteInformationDialog->close();
-				m_websiteInformationDialog->deleteLater();
-				m_websiteInformationDialog = nullptr;
-			}
-			else
-			{
-				m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
+				if (m_websiteInformationDialog)
+				{
+					m_websiteInformationDialog->close();
+					m_websiteInformationDialog->deleteLater();
+					m_websiteInformationDialog = nullptr;
+				}
+				else
+				{
+					m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
 
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
+					ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
 
-				connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+					connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
-				showDialog(dialog, false);
+					showDialog(dialog, false);
+				}
 			}
 
 			break;
