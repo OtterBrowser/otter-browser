@@ -87,28 +87,24 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 				if (cachedBackground)
 				{
-					painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
+					painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect().translated(((cachedBackground->width() - width()) / 2), ((cachedBackground->height() - height()) / 2)));
 				}
 				else
 				{
-					const qreal pixmapAscpectRatio(pixmap.width() / qreal(pixmap.height()));
-					const qreal backgroundAscpectRatio(width() / qreal(height()));
+					const qreal pixmapAspectRatio(pixmap.width() / qreal(pixmap.height()));
+					const qreal backgroundAspectRatio(width() / qreal(height()));
 					QPixmap newBackground(size());
 
-					if (pixmapAscpectRatio > backgroundAscpectRatio)
+					if (pixmapAspectRatio > backgroundAspectRatio)
 					{
-						newBackground = pixmap.scaled(QSize((width() / backgroundAscpectRatio), height()), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-					}
-					else if (backgroundAscpectRatio > pixmapAscpectRatio)
-					{
-						newBackground = pixmap.scaled(QSize(width(), (height() * backgroundAscpectRatio)), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+						newBackground = pixmap.scaledToHeight(height(), Qt::SmoothTransformation);
 					}
 					else
 					{
-						newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+						newBackground = pixmap.scaledToWidth(width(), Qt::SmoothTransformation);
 					}
 
-					painter.drawPixmap(contentsRect(), newBackground, contentsRect());
+					painter.drawPixmap(contentsRect(), newBackground, contentsRect().translated(((newBackground.width() - width()) / 2), ((newBackground.height() - height()) / 2)));
 
 					QPixmapCache::insert(key, newBackground);
 				}
