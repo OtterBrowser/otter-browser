@@ -178,7 +178,6 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 {
 	setNetworkAccessManager(m_networkManager);
 	setForwardUnsupportedContent(true);
-	updateStyleSheets();
 	handleFrameCreation(mainFrame());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
@@ -186,7 +185,8 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
 #endif
-	connect(mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(mainFrame(), SIGNAL(loadStarted()), this, SLOT(updateStyleSheets()));
+	connect(mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
 }
 
 QtWebKitPage::QtWebKitPage() : QWebPage(),
@@ -204,13 +204,6 @@ QtWebKitPage::~QtWebKitPage()
 	qDeleteAll(m_popups);
 
 	m_popups.clear();
-}
-
-void QtWebKitPage::pageLoadFinished()
-{
-	m_ignoreJavaScriptPopups = false;
-
-	updateStyleSheets();
 }
 
 void QtWebKitPage::removePopup(const QUrl &url)
@@ -243,6 +236,13 @@ void QtWebKitPage::handleOptionChanged(int identifier)
 	{
 		updateStyleSheets();
 	}
+}
+
+void QtWebKitPage::handleLoadFinished()
+{
+	m_ignoreJavaScriptPopups = false;
+
+	updateStyleSheets();
 }
 
 void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
@@ -470,7 +470,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), nullptr, nullptr);
 		}
 
-		widget->pageLoadStarted();
+		widget->handleLoadStarted();
 
 		emit requestedNewWindow(widget, WindowsManager::calculateOpenHints(popupsPolicy == QLatin1String("openAllInBackground") ? (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen) : WindowsManager::NewTabOpen));
 

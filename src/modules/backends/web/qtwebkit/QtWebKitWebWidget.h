@@ -149,8 +149,6 @@ protected:
 
 protected slots:
 	void navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type);
-	void pageLoadStarted();
-	void pageLoadFinished();
 	void downloadFile(const QNetworkRequest &request);
 	void downloadFile(QNetworkReply *reply);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
@@ -159,7 +157,9 @@ protected slots:
 	void openFormRequest();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void handleLoadStarted();
 	void handleLoadProgress(int progress);
+	void handleLoadFinished();
 	void handlePrintRequest(QWebFrame *frame);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleFullScreenRequest(QWebFullScreenRequest request);

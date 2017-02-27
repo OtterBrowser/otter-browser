@@ -94,9 +94,9 @@ protected:
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result) override;
 
 protected slots:
-	void pageLoadFinished();
 	void removePopup(const QUrl &url);
 	void handleOptionChanged(int identifier);
+	void handleLoadFinished();
 	void handleFrameCreation(QWebFrame *frame);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source);

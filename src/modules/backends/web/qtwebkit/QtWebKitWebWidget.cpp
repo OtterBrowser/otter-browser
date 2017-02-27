@@ -107,6 +107,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	}
 
 	m_page = new QtWebKitPage(m_networkManager, this);
+	m_page->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_page->setParent(m_webView);
 	m_page->setPluginFactory(m_pluginFactory);
 	m_page->setVisibilityState(isVisible() ? QWebPage::VisibilityStateVisible : QWebPage::VisibilityStateHidden);
@@ -114,15 +115,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	if (isPrivate)
 	{
-		m_webView->settings()->setAttribute(QWebSettings::LocalStorageEnabled, false);
-		m_webView->settings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);
-		m_webView->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
+		m_page->settings()->setAttribute(QWebSettings::LocalStorageEnabled, false);
+		m_page->settings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);
+		m_page->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
 	}
 #endif
 
@@ -152,18 +152,18 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 #endif
 	connect(m_page, SIGNAL(featurePermissionRequested(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionRequest(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
-	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(m_page, SIGNAL(loadStarted()), this, SLOT(handleLoadStarted()));
 	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(handleLoadProgress(int)));
-	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
 #endif
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
+	connect(m_page->mainFrame(), SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
+	connect(m_page->mainFrame(), SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
+	connect(m_page->mainFrame(), SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
-	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
-	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
-	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_networkManager, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(notifyContentStateChanged()));
@@ -172,8 +172,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 QtWebKitWebWidget::~QtWebKitWebWidget()
 {
-	m_webView->stop();
-	m_webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+	m_page->triggerAction(QWebPage::Stop);
+	m_page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 }
 
 void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
@@ -238,7 +238,7 @@ void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine
 		setRequestedUrl(request.url(), false, true);
 		updateOptions(request.url());
 
-		m_webView->page()->mainFrame()->load(request, method, body);
+		m_page->mainFrame()->load(request, method, body);
 	}
 }
 
@@ -253,7 +253,7 @@ void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::
 	{
 		if (type != QWebPage::NavigationTypeBackOrForward && (type != QWebPage::NavigationTypeLinkClicked || !getUrl().matches(url, QUrl::RemoveFragment)))
 		{
-			pageLoadStarted();
+			handleLoadStarted();
 			handleHistory();
 
 			m_networkManager->resetStatistics();
@@ -265,53 +265,6 @@ void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::
 
 		emit aboutToNavigate();
 	}
-}
-
-void QtWebKitWebWidget::pageLoadStarted()
-{
-	if (m_loadingState == WindowsManager::OngoingLoadingState)
-	{
-		return;
-	}
-
-	m_thumbnail = QPixmap();
-	m_messageToken = QUuid::createUuid().toString();
-	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
-	m_loadingState = WindowsManager::OngoingLoadingState;
-
-	updateNavigationActions();
-	setStatusMessage(QString());
-	setStatusMessage(QString(), true);
-
-	emit progressBarGeometryChanged();
-	emit loadingStateChanged(WindowsManager::OngoingLoadingState);
-}
-
-void QtWebKitWebWidget::pageLoadFinished()
-{
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	if (m_isAudioMuted)
-	{
-		muteAudio(m_page->mainFrame(), true);
-	}
-#endif
-
-	if (m_loadingState != WindowsManager::OngoingLoadingState)
-	{
-		return;
-	}
-
-	m_networkManager->handleLoadingFinished();
-
-	m_thumbnail = QPixmap();
-	m_loadingState = WindowsManager::FinishedLoadingState;
-
-	updateNavigationActions();
-	handleHistory();
-	startReloadTimer();
-
-	emit contentStateChanged(getContentState());
-	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 }
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
@@ -396,21 +349,21 @@ void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 {
-	if (frame == m_webView->page()->mainFrame())
+	if (frame == m_page->mainFrame())
 	{
-		QVariantList data(m_webView->history()->currentItem().userData().toList());
+		QVariantList data(m_page->history()->currentItem().userData().toList());
 
 		if (data.isEmpty() || data.count() < 3)
 		{
 			data.clear();
 			data.append(0);
 			data.append(getZoom());
-			data.append(m_webView->page()->mainFrame()->scrollPosition());
+			data.append(m_page->mainFrame()->scrollPosition());
 		}
 		else
 		{
 			data[ZoomEntryData] = getZoom();
-			data[PositionEntryData] = m_webView->page()->mainFrame()->scrollPosition();
+			data[PositionEntryData] = m_page->mainFrame()->scrollPosition();
 		}
 
 		item->setUserData(data);
@@ -419,13 +372,13 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 
 void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 {
-	if (frame == m_webView->page()->mainFrame())
+	if (frame == m_page->mainFrame())
 	{
-		setZoom(m_webView->history()->currentItem().userData().toList().value(ZoomEntryData, getZoom()).toInt());
+		setZoom(m_page->history()->currentItem().userData().toList().value(ZoomEntryData, getZoom()).toInt());
 
-		if (m_webView->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
+		if (m_page->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
-			m_webView->page()->mainFrame()->setScrollPosition(m_webView->history()->currentItem().userData().toList().value(PositionEntryData).toPoint());
+			m_page->mainFrame()->setScrollPosition(m_page->history()->currentItem().userData().toList().value(PositionEntryData).toPoint());
 		}
 	}
 }
@@ -522,7 +475,7 @@ void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Oper
 
 void QtWebKitWebWidget::openFormRequest()
 {
-	m_webView->page()->mainFrame()->load(QNetworkRequest(m_formRequestUrl), m_formRequestOperation, m_formRequestBody);
+	m_page->mainFrame()->load(QNetworkRequest(m_formRequestUrl), m_formRequestOperation, m_formRequestBody);
 
 	m_formRequestUrl = QUrl();
 	m_formRequestBody = QByteArray();
@@ -546,11 +499,11 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 {
 	if (identifier == SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption)
 	{
-		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+		disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
 		if (value.toBool() || SettingsManager::getValue(identifier, getUrl()).toBool())
 		{
-			connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+			connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 		}
 		else
 		{
@@ -566,13 +519,60 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 	}
 	else if (identifier == SettingsManager::History_BrowsingLimitAmountWindowOption)
 	{
-		m_webView->page()->history()->setMaximumItemCount(value.toInt());
+		m_page->history()->setMaximumItemCount(value.toInt());
 	}
+}
+
+void QtWebKitWebWidget::handleLoadStarted()
+{
+	if (m_loadingState == WindowsManager::OngoingLoadingState)
+	{
+		return;
+	}
+
+	m_thumbnail = QPixmap();
+	m_messageToken = QUuid::createUuid().toString();
+	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
+	m_loadingState = WindowsManager::OngoingLoadingState;
+
+	updateNavigationActions();
+	setStatusMessage(QString());
+	setStatusMessage(QString(), true);
+
+	emit progressBarGeometryChanged();
+	emit loadingStateChanged(WindowsManager::OngoingLoadingState);
 }
 
 void QtWebKitWebWidget::handleLoadProgress(int progress)
 {
 	m_networkManager->setPageInformation(TotalLoadingProgressInformation, progress);
+}
+
+void QtWebKitWebWidget::handleLoadFinished()
+{
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	if (m_isAudioMuted)
+	{
+		muteAudio(m_page->mainFrame(), true);
+	}
+#endif
+
+	if (m_loadingState != WindowsManager::OngoingLoadingState)
+	{
+		return;
+	}
+
+	m_networkManager->handleLoadingFinished();
+
+	m_thumbnail = QPixmap();
+	m_loadingState = WindowsManager::FinishedLoadingState;
+
+	updateNavigationActions();
+	handleHistory();
+	startReloadTimer();
+
+	emit contentStateChanged(getContentState());
+	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 }
 
 void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
@@ -604,7 +604,7 @@ void QtWebKitWebWidget::handleHistory()
 	if (identifier == 0)
 	{
 		QVariantList data;
-		data.append(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
+		data.append(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped));
 		data.append(getZoom());
 		data.append(QPoint(0, 0));
 
@@ -620,7 +620,7 @@ void QtWebKitWebWidget::handleHistory()
 	}
 	else if (identifier > 0)
 	{
-		HistoryManager::updateEntry(identifier, url, getTitle(), m_webView->icon());
+		HistoryManager::updateEntry(identifier, url, getTitle(), m_page->mainFrame()->icon());
 	}
 }
 
@@ -677,7 +677,7 @@ void QtWebKitWebWidget::handlePermissionCancel(QWebFrame *frame, QWebPage::Featu
 
 void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
 {
-	m_webView->stop();
+	m_page->triggerAction(QWebPage::Reload);
 
 	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone()));
 	widget->setOptions(getOptions());
@@ -768,11 +768,11 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 		switch (getPermission(feature, url))
 		{
 			case GrantedPermission:
-				m_webView->page()->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionGrantedByUser);
+				m_page->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionGrantedByUser);
 
 				break;
 			case DeniedPermission:
-				m_webView->page()->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionDeniedByUser);
+				m_page->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionDeniedByUser);
 
 				break;
 			default:
@@ -807,7 +807,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 	const bool arePluginsEnabled(getOption(SettingsManager::Permissions_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
-	QWebSettings *settings(m_webView->page()->settings());
+	QWebSettings *settings(m_page->settings());
 	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
 	settings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
@@ -832,17 +832,17 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	}
 #endif
 
-	disconnect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
-	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+	disconnect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+	disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
 	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
 	{
-		connect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+		connect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	}
 
 	if (getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, url).toBool())
 	{
-		connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+		connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 	}
 	else
 	{
@@ -865,7 +865,7 @@ void QtWebKitWebWidget::clearOptions()
 
 void QtWebKitWebWidget::goToHistoryIndex(int index)
 {
-	m_page->history()->goToItem(m_webView->history()->itemAt(index));
+	m_page->history()->goToItem(m_page->history()->itemAt(index));
 }
 
 void QtWebKitWebWidget::removeHistoryIndex(int index, bool purge)
@@ -983,12 +983,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 #endif
 		case ActionsManager::OpenLinkAction:
 			{
-				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, true);
+				m_page->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, true);
 
-				const QWebHitTestResult nativeResult(m_webView->page()->mainFrame()->hitTestContent(getClickPosition()));
+				const QWebHitTestResult nativeResult(m_page->mainFrame()->hitTestContent(getClickPosition()));
 				nativeResult.element().evaluateJavaScript(QLatin1String("var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); this.dispatchEvent(event)"));
 
-				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toString() != QLatin1String("blockAll")));
+				m_page->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toString() != QLatin1String("blockAll")));
 
 				setClickPosition(QPoint());
 			}
@@ -1088,7 +1088,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 			else
 			{
-				m_webView->page()->triggerAction(QWebPage::DownloadLinkToDisk);
+				m_page->triggerAction(QWebPage::DownloadLinkToDisk);
 			}
 
 			return;
@@ -1143,7 +1143,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ViewFrameSourceAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				const QString defaultEncoding(m_webView->page()->settings()->defaultTextEncoding());
+				const QString defaultEncoding(m_page->settings()->defaultTextEncoding());
 				QNetworkRequest request(getCurrentHitTestResult().frameUrl);
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
@@ -1196,7 +1196,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 				else
 				{
-					m_webView->page()->triggerAction(QWebPage::CopyImageToClipboard);
+					m_page->triggerAction(QWebPage::CopyImageToClipboard);
 				}
 			}
 
@@ -1235,7 +1235,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					hitResult.element().setAttribute(QLatin1String("src"), src);
 
-					m_webView->page()->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+					m_page->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
 				}
 			}
 
@@ -1282,36 +1282,36 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::MediaControlsAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls, calculateCheckedState(ActionsManager::MediaControlsAction, parameters));
+			m_page->triggerAction(QWebPage::ToggleMediaControls, calculateCheckedState(ActionsManager::MediaControlsAction, parameters));
 
 			return;
 		case ActionsManager::MediaLoopAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaLoop, calculateCheckedState(ActionsManager::MediaLoopAction, parameters));
+			m_page->triggerAction(QWebPage::ToggleMediaLoop, calculateCheckedState(ActionsManager::MediaLoopAction, parameters));
 
 			return;
 		case ActionsManager::MediaPlayPauseAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaPlayPause);
+			m_page->triggerAction(QWebPage::ToggleMediaPlayPause);
 
 			return;
 		case ActionsManager::MediaMuteAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaMute);
+			m_page->triggerAction(QWebPage::ToggleMediaMute);
 
 			return;
 		case ActionsManager::GoBackAction:
-			m_webView->page()->triggerAction(QWebPage::Back);
+			m_page->triggerAction(QWebPage::Back);
 
 			return;
 		case ActionsManager::GoForwardAction:
-			m_webView->page()->triggerAction(QWebPage::Forward);
+			m_page->triggerAction(QWebPage::Forward);
 
 			return;
 		case ActionsManager::RewindAction:
-			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(0));
+			m_page->history()->goToItem(m_page->history()->itemAt(0));
 
 			return;
 		case ActionsManager::FastForwardAction:
 			{
-				const QUrl url(m_webView->page()->mainFrame()->evaluateJavaScript(getFastForwardScript(true)).toUrl());
+				const QUrl url(m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(true)).toUrl());
 
 				if (url.isValid())
 				{
@@ -1319,24 +1319,24 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 				else if (canGoForward())
 				{
-					m_webView->page()->triggerAction(QWebPage::Forward);
+					m_page->triggerAction(QWebPage::Forward);
 				}
 			}
 
 			return;
 		case ActionsManager::StopAction:
-			m_webView->page()->triggerAction(QWebPage::Stop);
+			m_page->triggerAction(QWebPage::Stop);
 
 			return;
 		case ActionsManager::StopScheduledReloadAction:
-			m_webView->page()->triggerAction(QWebPage::StopScheduledPageRefresh);
+			m_page->triggerAction(QWebPage::StopScheduledPageRefresh);
 
 			return;
 		case ActionsManager::ReloadAction:
 			emit aboutToReload();
 
-			m_webView->page()->triggerAction(QWebPage::Stop);
-			m_webView->page()->triggerAction(QWebPage::Reload);
+			m_page->triggerAction(QWebPage::Stop);
+			m_page->triggerAction(QWebPage::Reload);
 
 			return;
 		case ActionsManager::ReloadOrStopAction:
@@ -1351,7 +1351,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::ReloadAndBypassCacheAction:
-			m_webView->page()->triggerAction(QWebPage::ReloadAndBypassCache);
+			m_page->triggerAction(QWebPage::ReloadAndBypassCache);
 
 			return;
 		case ActionsManager::ContextMenuAction:
@@ -1389,19 +1389,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::UndoAction:
-			m_webView->page()->triggerAction(QWebPage::Undo);
+			m_page->triggerAction(QWebPage::Undo);
 
 			return;
 		case ActionsManager::RedoAction:
-			m_webView->page()->triggerAction(QWebPage::Redo);
+			m_page->triggerAction(QWebPage::Redo);
 
 			return;
 		case ActionsManager::CutAction:
-			m_webView->page()->triggerAction(QWebPage::Cut);
+			m_page->triggerAction(QWebPage::Cut);
 
 			return;
 		case ActionsManager::CopyAction:
-			m_webView->page()->triggerAction(QWebPage::Copy);
+			m_page->triggerAction(QWebPage::Copy);
 
 			return;
 		case ActionsManager::CopyPlainTextAction:
@@ -1427,15 +1427,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::PasteAction:
-			m_webView->page()->triggerAction(QWebPage::Paste);
+			m_page->triggerAction(QWebPage::Paste);
 
 			return;
 		case ActionsManager::DeleteAction:
-			m_webView->page()->triggerAction(QWebPage::DeleteEndOfWord);
+			m_page->triggerAction(QWebPage::DeleteEndOfWord);
 
 			return;
 		case ActionsManager::SelectAllAction:
-			m_webView->page()->triggerAction(QWebPage::SelectAll);
+			m_page->triggerAction(QWebPage::SelectAll);
 
 			return;
 		case ActionsManager::UnselectAction:
@@ -1491,7 +1491,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				QWebElement searchTermsElement;
 				const QString tagName(hitResult.element().tagName().toLower());
 				const QUrl url(parentElement.attribute(QLatin1String("action")));
-				const QIcon icon(m_webView->icon());
+				const QIcon icon(m_page->mainFrame()->icon());
 				SearchEnginesManager::SearchEngineDefinition searchEngine;
 				searchEngine.identifier = Utils::createIdentifier(getUrl().host(), SearchEnginesManager::getSearchEngines());
 				searchEngine.title = getTitle();
@@ -1584,27 +1584,27 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::ScrollToStartAction:
-			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), 0));
+			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), 0));
 
 			return;
 		case ActionsManager::ScrollToEndAction:
-			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)));
+			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), m_page->mainFrame()->scrollBarMaximum(Qt::Vertical)));
 
 			return;
 		case ActionsManager::ScrollPageUpAction:
-			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), qMax(0, (m_webView->page()->mainFrame()->scrollPosition().y() - m_webView->height()))));
+			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), qMax(0, (m_page->mainFrame()->scrollPosition().y() - m_webView->height()))));
 
 			return;
 		case ActionsManager::ScrollPageDownAction:
-			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical), (m_webView->page()->mainFrame()->scrollPosition().y() + m_webView->height()))));
+			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), qMin(m_page->mainFrame()->scrollBarMaximum(Qt::Vertical), (m_page->mainFrame()->scrollPosition().y() + m_webView->height()))));
 
 			return;
 		case ActionsManager::ScrollPageLeftAction:
-			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMax(0, (m_webView->page()->mainFrame()->scrollPosition().x() - m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
+			m_page->mainFrame()->setScrollPosition(QPoint(qMax(0, (m_page->mainFrame()->scrollPosition().x() - m_webView->width())), m_page->mainFrame()->scrollPosition().y()));
 
 			return;
 		case ActionsManager::ScrollPageRightAction:
-			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
+			m_page->mainFrame()->setScrollPosition(QPoint(qMin(m_page->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_page->mainFrame()->scrollPosition().x() + m_webView->width())), m_page->mainFrame()->scrollPosition().y()));
 
 			return;
 		case ActionsManager::ActivateContentAction:
@@ -1671,7 +1671,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
-				const QString defaultEncoding(m_webView->page()->settings()->defaultTextEncoding());
+				const QString defaultEncoding(m_page->settings()->defaultTextEncoding());
 				QNetworkRequest request(getUrl());
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
@@ -1717,7 +1717,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				triggerAction(ActionsManager::InspectPageAction, inspectPageParameters);
 
-				m_webView->triggerPageAction(QWebPage::InspectElement);
+				m_page->triggerAction(QWebPage::InspectElement);
 			}
 
 			return;
@@ -1786,7 +1786,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 0)
 	{
-		m_webView->page()->history()->clear();
+		m_page->history()->clear();
 
 		updateNavigationActions();
 		updateOptions(QUrl());
@@ -1800,7 +1800,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		return;
 	}
 
-	const int index(qMin(history.index, (m_webView->history()->maximumItemCount() - 1)));
+	const int index(qMin(history.index, (m_page->history()->maximumItemCount() - 1)));
 
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	qint64 documentSequence(0);
@@ -1815,7 +1815,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	}
 
 	stream.device()->reset();
-	stream >> *(m_webView->page()->history());
+	stream >> *(m_page->history());
 #else
 	QVariantList entries;
 
@@ -1838,7 +1838,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	map[QLatin1String("currentItemIndex")] = index;
 	map[QLatin1String("history")] = entries;
 
-	m_webView->page()->history()->loadFromMap(map);
+	m_page->history()->loadFromMap(map);
 #endif
 
 	for (int i = 0; i < history.entries.count(); ++i)
@@ -1848,46 +1848,46 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		data.append(history.entries.at(i).zoom);
 		data.append(history.entries.at(i).position);
 
-		m_webView->page()->history()->itemAt(i).setUserData(data);
+		m_page->history()->itemAt(i).setUserData(data);
 	}
 
-	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(index));
+	m_page->history()->goToItem(m_page->history()->itemAt(index));
 
-	const QUrl url(m_webView->page()->history()->itemAt(index).url());
+	const QUrl url(m_page->history()->itemAt(index).url());
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
 	updatePageActions(url);
 
-	m_webView->page()->triggerAction(QWebPage::Reload);
+	m_page->triggerAction(QWebPage::Reload);
 }
 
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitWebWidget::setHistory(QDataStream &stream)
 {
 	stream.device()->reset();
-	stream >> *(m_webView->page()->history());
+	stream >> *(m_page->history());
 
-	const QUrl url(m_webView->page()->history()->currentItem().url());
+	const QUrl url(m_page->history()->currentItem().url());
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
 	updatePageActions(url);
 
-	m_webView->page()->triggerAction(QWebPage::Reload);
+	m_page->triggerAction(QWebPage::Reload);
 }
 #else
 void QtWebKitWebWidget::setHistory(const QVariantMap &history)
 {
-	m_webView->page()->history()->loadFromMap(history);
+	m_page->history()->loadFromMap(history);
 
-	const QUrl url(m_webView->page()->history()->currentItem().url());
+	const QUrl url(m_page->history()->currentItem().url());
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
 	updatePageActions(url);
 
-	m_webView->page()->triggerAction(QWebPage::Reload);
+	m_page->triggerAction(QWebPage::Reload);
 }
 #endif
 
@@ -1895,7 +1895,7 @@ void QtWebKitWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
 	{
-		m_webView->setZoomFactor(qBound(0.1, (static_cast<qreal>(zoom) / 100), static_cast<qreal>(100)));
+		m_page->mainFrame()->setZoomFactor(qBound(0.1, (static_cast<qreal>(zoom) / 100), static_cast<qreal>(100)));
 
 		SessionsManager::markSessionModified();
 
@@ -1908,14 +1908,14 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 {
 	if (url.scheme() == QLatin1String("javascript"))
 	{
-		m_webView->page()->mainFrame()->documentElement().evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
+		m_page->mainFrame()->documentElement().evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
 
 		return;
 	}
 
 	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
-		m_webView->page()->mainFrame()->scrollToAnchor(url.fragment());
+		m_page->mainFrame()->scrollToAnchor(url.fragment());
 
 		return;
 	}
@@ -1941,7 +1941,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 
 	updateOptions(targetUrl);
 
-	m_webView->load(targetUrl);
+	m_page->mainFrame()->load(targetUrl);
 
 	notifyTitleChanged();
 	notifyIconChanged();
@@ -2006,7 +2006,7 @@ void QtWebKitWebWidget::setOption(int identifier, const QVariant &value)
 
 	if (identifier == SettingsManager::Content_DefaultCharacterEncodingOption)
 	{
-		m_webView->reload();
+		m_page->triggerAction(QWebPage::Reload);
 	}
 	else if (identifier == SettingsManager::Browser_SpellCheckDictionaryOption)
 	{
@@ -2025,7 +2025,7 @@ void QtWebKitWebWidget::setOptions(const QHash<int, QVariant> &options, const QS
 
 void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
 {
-	m_webView->page()->mainFrame()->setScrollPosition(position);
+	m_page->mainFrame()->setScrollPosition(position);
 }
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions)
@@ -2038,11 +2038,11 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QSt
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QByteArray data;
 		QDataStream stream(&data, QIODevice::ReadWrite);
-		stream << *(m_webView->page()->history());
+		stream << *(m_page->history());
 
 		widget->setHistory(stream);
 #else
-		widget->setHistory(m_webView->page()->history()->toMap());
+		widget->setHistory(m_page->history()->toMap());
 #endif
 	}
 
@@ -2058,7 +2058,7 @@ QWidget* QtWebKitWebWidget::getInspector()
 		m_page->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
 		m_inspector = new QtWebKitInspector(this);
-		m_inspector->setPage(m_webView->page());
+		m_inspector->setPage(m_page);
 	}
 
 	return m_inspector;
@@ -2102,12 +2102,12 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 QWebPage* QtWebKitWebWidget::getPage()
 {
-	return m_webView->page();
+	return m_page;
 }
 
 QString QtWebKitWebWidget::getTitle() const
 {
-	const QString title(m_webView->title());
+	const QString title(m_page->mainFrame()->title());
 
 	if (title.isEmpty())
 	{
@@ -2146,7 +2146,7 @@ QString QtWebKitWebWidget::getActiveStyleSheet() const
 
 QString QtWebKitWebWidget::getSelectedText() const
 {
-	return m_webView->selectedText();
+	return m_page->selectedText();
 }
 
 QString QtWebKitWebWidget::getMessageToken() const
@@ -2181,9 +2181,9 @@ QUrl QtWebKitWebWidget::resolveUrl(QWebFrame *frame, const QUrl &url) const
 
 QUrl QtWebKitWebWidget::getUrl() const
 {
-	const QUrl url(m_webView->url());
+	const QUrl url(m_page->mainFrame()->url());
 
-	return (url.isEmpty() ? m_webView->page()->mainFrame()->requestedUrl() : url);
+	return (url.isEmpty() ? m_page->mainFrame()->requestedUrl() : url);
 }
 
 QIcon QtWebKitWebWidget::getIcon() const
@@ -2193,7 +2193,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 		return ThemesManager::getIcon(QLatin1String("tab-private"));
 	}
 
-	const QIcon icon(m_webView->icon());
+	const QIcon icon(m_page->mainFrame()->icon());
 
 	return (icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon);
 }
@@ -2206,16 +2206,16 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 	}
 
 	const QSize thumbnailSize(QSize(260, 170));
-	const QSize oldViewportSize(m_webView->page()->viewportSize());
-	const QPoint position(m_webView->page()->mainFrame()->scrollPosition());
-	const qreal zoom(m_webView->page()->mainFrame()->zoomFactor());
-	QSize contentsSize(m_webView->page()->mainFrame()->contentsSize());
+	const QSize oldViewportSize(m_page->viewportSize());
+	const QPoint position(m_page->mainFrame()->scrollPosition());
+	const qreal zoom(m_page->mainFrame()->zoomFactor());
+	QSize contentsSize(m_page->mainFrame()->contentsSize());
 	QWidget *newView(new QWidget());
-	QWidget *oldView(m_webView->page()->view());
+	QWidget *oldView(m_page->view());
 
-	m_webView->page()->setView(newView);
-	m_webView->page()->setViewportSize(contentsSize);
-	m_webView->page()->mainFrame()->setZoomFactor(1);
+	m_page->setView(newView);
+	m_page->setViewportSize(contentsSize);
+	m_page->mainFrame()->setZoomFactor(1);
 
 	if (contentsSize.width() > 2000)
 	{
@@ -2229,11 +2229,11 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 
 	QPainter painter(&pixmap);
 
-	m_webView->page()->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
-	m_webView->page()->mainFrame()->setZoomFactor(zoom);
-	m_webView->page()->setView(oldView);
-	m_webView->page()->setViewportSize(oldViewportSize);
-	m_webView->page()->mainFrame()->setScrollPosition(position);
+	m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+	m_page->mainFrame()->setZoomFactor(zoom);
+	m_page->setView(oldView);
+	m_page->setViewportSize(oldViewportSize);
+	m_page->mainFrame()->setScrollPosition(position);
 
 	painter.end();
 
@@ -2249,7 +2249,7 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 
 QPoint QtWebKitWebWidget::getScrollPosition() const
 {
-	return m_webView->page()->mainFrame()->scrollPosition();
+	return m_page->mainFrame()->scrollPosition();
 }
 
 QRect QtWebKitWebWidget::getProgressBarGeometry() const
@@ -2260,8 +2260,8 @@ QRect QtWebKitWebWidget::getProgressBarGeometry() const
 	}
 
 	QRect geometry(QPoint(0, (height() - ((m_inspector && m_inspector->isVisible()) ? m_inspector->height() : 0) - 30)), QSize(width(), 30));
-	const QRect horizontalScrollBar(m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal));
-	const QRect verticalScrollBar(m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical));
+	const QRect horizontalScrollBar(m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal));
+	const QRect verticalScrollBar(m_page->mainFrame()->scrollBarGeometry(Qt::Vertical));
 
 	if (horizontalScrollBar.height() > 0 && geometry.intersects(horizontalScrollBar))
 	{
@@ -2290,28 +2290,28 @@ WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
 
 WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
-	QVariantList data(m_webView->history()->currentItem().userData().toList());
+	QVariantList data(m_page->history()->currentItem().userData().toList());
 
 	if (data.isEmpty() || data.count() < 3)
 	{
 		data.clear();
 		data.append(0);
 		data.append(getZoom());
-		data.append(m_webView->page()->mainFrame()->scrollPosition());
+		data.append(m_page->mainFrame()->scrollPosition());
 	}
 	else
 	{
 		data[ZoomEntryData] = getZoom();
-		data[PositionEntryData] = m_webView->page()->mainFrame()->scrollPosition();
+		data[PositionEntryData] = m_page->mainFrame()->scrollPosition();
 	}
 
-	m_webView->history()->currentItem().setUserData(data);
+	m_page->history()->currentItem().setUserData(data);
 
-	QWebHistory *history(m_webView->history());
+	QWebHistory *history(m_page->history());
 	WindowHistoryInformation information;
 	information.index = history->currentItemIndex();
 
-	const QString requestedUrl(m_webView->page()->mainFrame()->requestedUrl().toString());
+	const QString requestedUrl(m_page->mainFrame()->requestedUrl().toString());
 	const int historyCount(history->count());
 
 	for (int i = 0; i < historyCount; ++i)
@@ -2343,14 +2343,14 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &position)
 {
-	QWebFrame *frame(m_webView->page()->frameAt(position));
+	QWebFrame *frame(m_page->frameAt(position));
 
 	if (!frame)
 	{
 		return HitTestResult();
 	}
 
-	const QWebHitTestResult nativeResult(m_webView->page()->mainFrame()->hitTestContent(position));
+	const QWebHitTestResult nativeResult(m_page->mainFrame()->hitTestContent(position));
 	HitTestResult result;
 	result.title = nativeResult.title();
 	result.tagName = nativeResult.element().tagName().toLower();
@@ -2473,13 +2473,13 @@ QStringList QtWebKitWebWidget::getStyleSheets() const
 
 QList<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
-	const QWebElementCollection elements(m_webView->page()->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]")));
 	QList<LinkUrl> links;
 	QSet<QUrl> urls;
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		QUrl url(resolveUrl(m_webView->page()->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
+		QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{
@@ -2501,13 +2501,13 @@ QList<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 
 QList<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 {
-	const QWebElementCollection elements(m_webView->page()->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]")));
 	QList<LinkUrl> links;
 	QSet<QUrl> urls;
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		QUrl url(resolveUrl(m_webView->page()->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
+		QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{
@@ -2561,7 +2561,7 @@ WindowsManager::LoadingState QtWebKitWebWidget::getLoadingState() const
 
 int QtWebKitWebWidget::getZoom() const
 {
-	return (m_webView->zoomFactor() * 100);
+	return (m_page->mainFrame()->zoomFactor() * 100);
 }
 
 int QtWebKitWebWidget::getAmountOfNotLoadedPlugins() const
@@ -2576,12 +2576,12 @@ bool QtWebKitWebWidget::canLoadPlugins() const
 
 bool QtWebKitWebWidget::canGoBack() const
 {
-	return m_webView->history()->canGoBack();
+	return m_page->history()->canGoBack();
 }
 
 bool QtWebKitWebWidget::canGoForward() const
 {
-	return m_webView->history()->canGoForward();
+	return m_page->history()->canGoForward();
 }
 
 bool QtWebKitWebWidget::canFastForward() const
@@ -2591,7 +2591,7 @@ bool QtWebKitWebWidget::canFastForward() const
 		return true;
 	}
 
-	return m_webView->page()->mainFrame()->evaluateJavaScript(getFastForwardScript(false)).toBool();
+	return m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(false)).toBool();
 }
 
 bool QtWebKitWebWidget::canShowContextMenu(const QPoint &position) const
@@ -2655,7 +2655,7 @@ bool QtWebKitWebWidget::isPopup() const
 
 bool QtWebKitWebWidget::isPrivate() const
 {
-	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
+	return m_page->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
 bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
@@ -2679,11 +2679,11 @@ bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 
 	if (flags.testFlag(HighlightAllFind) || text.isEmpty())
 	{
-		m_webView->findText(QString(), QWebPage::HighlightAllOccurrences);
-		m_webView->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
+		m_page->findText(QString(), QWebPage::HighlightAllOccurrences);
+		m_page->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
 	}
 
-	return m_webView->findText(text, nativeFlags);
+	return m_page->findText(text, nativeFlags);
 }
 
 bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
@@ -2695,7 +2695,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
 		{
 			QWidget *widget(childAt(mouseEvent->pos()));
-			const QWebHitTestResult hitResult(m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos()));
+			const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));
 			const QString tagName(hitResult.element().tagName().toLower());
 
 			if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
