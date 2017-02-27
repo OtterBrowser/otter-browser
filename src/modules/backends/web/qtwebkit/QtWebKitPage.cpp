@@ -98,7 +98,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getPasswordToken()));
+			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken()));
 
 			file.close();
 		}

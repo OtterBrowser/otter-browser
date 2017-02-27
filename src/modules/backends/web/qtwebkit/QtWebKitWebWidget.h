@@ -131,7 +131,7 @@ protected:
 #endif
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
 	QWebPage* getPage();
-	QString getPasswordToken() const;
+	QString getMessageToken() const;
 	QString getPluginToken() const;
 	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;
 	int getAmountOfNotLoadedPlugins() const override;
@@ -181,7 +181,7 @@ private:
 	QtWebKitPluginFactory *m_pluginFactory;
 	QtWebKitInspector *m_inspector;
 	QtWebKitNetworkManager *m_networkManager;
-	QString m_passwordToken;
+	QString m_messageToken;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
 	QUrl m_formRequestUrl;

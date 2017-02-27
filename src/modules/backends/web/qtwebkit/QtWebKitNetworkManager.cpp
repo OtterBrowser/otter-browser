@@ -560,33 +560,38 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
 	}
 
-	if (request.url().path() == QLatin1String("/otter-password") && request.hasRawHeader(QByteArray("X-Otter-Token")) && request.hasRawHeader(QByteArray("X-Otter-Data")))
+	if (request.url().path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArray("X-Otter-Token")) && request.hasRawHeader(QByteArray("X-Otter-Data")))
 	{
-		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getPasswordToken())
+		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
-			const QJsonObject passwordObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
-			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
-			PasswordsManager::PasswordInformation password;
-			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
-			password.timeAdded = QDateTime::currentDateTime();
-			password.type = PasswordsManager::FormPassword;
+			const QString type(request.rawHeader(QByteArray("X-Otter-Type")));
 
-			for (int i = 0; i < fieldsArray.count(); ++i)
+			if (type == QLatin1String("save-password"))
 			{
-				const QJsonObject fieldObject(fieldsArray.at(i).toObject());
-				PasswordsManager::FieldInformation field;
-				field.name = fieldObject.value(QLatin1String("name")).toString();
-				field.value = fieldObject.value(QLatin1String("value")).toString();
-				field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);
+				const QJsonObject passwordObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
+				const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
+				PasswordsManager::PasswordInformation password;
+				password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
+				password.timeAdded = QDateTime::currentDateTime();
+				password.type = PasswordsManager::FormPassword;
 
-				password.fields.append(field);
-			}
+				for (int i = 0; i < fieldsArray.count(); ++i)
+				{
+					const QJsonObject fieldObject(fieldsArray.at(i).toObject());
+					PasswordsManager::FieldInformation field;
+					field.name = fieldObject.value(QLatin1String("name")).toString();
+					field.value = fieldObject.value(QLatin1String("value")).toString();
+					field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);
 
-			PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
+					password.fields.append(field);
+				}
 
-			if (match != PasswordsManager::FullMatch)
-			{
-				m_widget->notifySavePasswordRequested(password, (match == PasswordsManager::PartialMatch));
+				PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
+
+				if (match != PasswordsManager::FullMatch)
+				{
+					m_widget->notifySavePasswordRequested(password, (match == PasswordsManager::PartialMatch));
+				}
 			}
 		}
 

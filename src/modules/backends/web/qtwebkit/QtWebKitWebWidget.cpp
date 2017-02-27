@@ -275,7 +275,7 @@ void QtWebKitWebWidget::pageLoadStarted()
 	}
 
 	m_thumbnail = QPixmap();
-	m_passwordToken = QUuid::createUuid().toString();
+	m_messageToken = QUuid::createUuid().toString();
 	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
 	m_loadingState = WindowsManager::OngoingLoadingState;
 
@@ -2149,9 +2149,9 @@ QString QtWebKitWebWidget::getSelectedText() const
 	return m_webView->selectedText();
 }
 
-QString QtWebKitWebWidget::getPasswordToken() const
+QString QtWebKitWebWidget::getMessageToken() const
 {
-	return m_passwordToken;
+	return m_messageToken;
 }
 
 QString QtWebKitWebWidget::getPluginToken() const
