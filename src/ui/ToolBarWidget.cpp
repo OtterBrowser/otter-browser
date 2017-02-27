@@ -162,8 +162,8 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_bookmark(nullptr),
 	m_toggleButton(nullptr),
 	m_identifier(identifier),
-	m_isInitialized(false),
-	m_isCollapsed(false)
+	m_isCollapsed(false),
+	m_isInitialized(false)
 {
 	setAcceptDrops(true);
 	setAllowedAreas(Qt::NoToolBarArea);

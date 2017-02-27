@@ -254,7 +254,7 @@ void TabSwitcherWidget::setLoadingState(WindowsManager::LoadingState state)
 		{
 			QColor color(palette().color(QPalette::Text));
 
-			if (window->getLoadingState() == WindowsManager::DelayedLoadingState)
+			if (state == WindowsManager::DelayedLoadingState)
 			{
 				color.setAlpha(150);
 			}

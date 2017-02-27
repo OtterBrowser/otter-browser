@@ -208,7 +208,7 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 		profileItems[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 		profileItems[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		const QModelIndexList indexList(m_ui->profilesViewWidget->model()->match(m_ui->profilesViewWidget->model()->index(0, 0), Qt::UserRole, QVariant::fromValue((int)profile->getCategory())));
+		const QModelIndexList indexList(m_ui->profilesViewWidget->model()->match(m_ui->profilesViewWidget->model()->index(0, 0), Qt::UserRole, QVariant::fromValue(static_cast<int>(profile->getCategory()))));
 
 		if (indexList.count() > 0)
 		{
