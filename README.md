@@ -5,7 +5,9 @@
 
 [**Otter Browser**](https://otter-browser.org/) aims to recreate the best aspects of **Opera 12** and to revive its spirit. We are working on providing the powerful features power users want while keeping the browser fast and lightweight. We also learned from History and decided to release the browser under the GNU GPL v3.
 
-Screenshots are available on [the official website](https://otter-browser.org/screenshots/).
+![Screenshot](https://otter-browser.org/screenshots/1.png)
+
+More screenshots are available on [the official website](https://otter-browser.org/screenshots/).
 
 We have [an official forum](http://thedndsanctuary.eu/index.php?board=9.0) and two IRC channels at Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (polski / Polish).
 
