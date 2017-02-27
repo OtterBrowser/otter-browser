@@ -38,6 +38,23 @@ struct ApplicationInformation
 	QIcon icon;
 };
 
+struct ErrorPageInformation
+{
+	enum ErrorType
+	{
+		OtherError = 0,
+		ConnectionInsecureError,
+		ConnectionRefusedError,
+		FileNotFoundError,
+		ServerNotFoundError
+	};
+
+	QString title;
+	QUrl url;
+	QStringList description;
+	ErrorType type = OtherError;
+};
+
 struct SaveInformation
 {
 	QString path;
@@ -52,7 +69,7 @@ void runApplication(const QString &command, const QUrl &url = QUrl());
 void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr);
 QString matchUrl(const QUrl &url, const QString &prefix);
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase = true);
-QString createErrorPage(const QUrl &url, const QString &title, const QString &description);
+QString createErrorPage(const ErrorPageInformation &information);
 QString elideText(const QString &text, QWidget *widget = nullptr, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatTime(int value);

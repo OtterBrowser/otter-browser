@@ -167,8 +167,57 @@ QString createIdentifier(const QString &base, const QStringList &exclude, bool t
 	return identifier + QLatin1Char('_') + QString::number(number);
 }
 
-QString createErrorPage(const QUrl &url, const QString &title, const QString &description)
+QString createErrorPage(const ErrorPageInformation &information)
 {
+	QString title(information.title);
+	QString introduction;
+	QStringList hints;
+
+	if (information.type == ErrorPageInformation::ConnectionInsecureError)
+	{
+		introduction = QCoreApplication::translate("utils", "The owner of <strong>%1</strong> has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
+	}
+	else
+	{
+		introduction = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(information.url.toDisplayString());
+
+		if (information.url.isLocalFile())
+		{
+			hints = QStringList({QCoreApplication::translate("utils", "Check the file name for capitalization or other typing errors."), QCoreApplication::translate("utils", "Check to see if the file was moved, renamed or deleted.")});
+		}
+		else
+		{
+			hints = QStringList({QCoreApplication::translate("utils", "Check the address for typing errors."), QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
+		}
+	}
+
+	if (title.isEmpty())
+	{
+		switch (information.type)
+		{
+			case ErrorPageInformation::ConnectionInsecureError:
+				title = QCoreApplication::translate("utils", "Connection is insecure");
+
+				break;
+			case ErrorPageInformation::ConnectionRefusedError:
+				title = QCoreApplication::translate("utils", "Connection refused");
+
+				break;
+			case ErrorPageInformation::FileNotFoundError:
+				title = QCoreApplication::translate("utils", "File not found");
+
+				break;
+			case ErrorPageInformation::ServerNotFoundError:
+				title = QCoreApplication::translate("utils", "Server not found");
+
+				break;
+			default:
+				title = QCoreApplication::translate("utils", "Network error");
+
+				break;
+		}
+	}
+
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/error.html")));
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -179,23 +228,13 @@ QString createErrorPage(const QUrl &url, const QString &title, const QString &de
 	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
 	variables[QLatin1String("title")] = QCoreApplication::translate("utils", "Error");
 	variables[QLatin1String("header")] = title;
-	variables[QLatin1String("description")] = description;
-	variables[QLatin1String("introduction")] = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(url.toDisplayString());
+	variables[QLatin1String("description")] = information.description.join(QLatin1String("<br>\n"));
+	variables[QLatin1String("introduction")] = introduction;
 
 	QString mainTemplate(stream.readAll());
 	QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
 	QString hintsHtml;
-	QStringList hints;
-
-	if (url.isLocalFile())
-	{
-		hints = QStringList({QCoreApplication::translate("utils", "Check the file name for capitalization or other typing errors."), QCoreApplication::translate("utils", "Check to see if the file was moved, renamed or deleted.")});
-	}
-	else
-	{
-		hints = QStringList({QCoreApplication::translate("utils", "Check the address for typing errors."), QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
-	}
 
 	for (int i = 0; i < hints.count(); ++i)
 	{

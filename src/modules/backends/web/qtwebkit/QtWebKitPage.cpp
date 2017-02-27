@@ -649,7 +649,12 @@ bool QtWebKitPage::event(QEvent *event)
 
 bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
 {
-	if (extension == QWebPage::ChooseMultipleFilesExtension && m_widget)
+	if (!m_widget)
+	{
+		return false;
+	}
+
+	if (extension == QWebPage::ChooseMultipleFilesExtension)
 	{
 		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption(static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option));
 		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output));
@@ -692,34 +697,48 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			return false;
 		}
 
-		QString title;
+		ErrorPageInformation information;
+		information.url = url;
+		information.description = QStringList(errorOption->errorString);
 
 		if ((errorOption->domain == QWebPage::QtNetwork && (errorOption->error == QNetworkReply::HostNotFoundError || errorOption->error == QNetworkReply::ContentNotFoundError)) || (errorOption->domain == QWebPage::Http && errorOption->error == 404))
 		{
 			if (errorOption->url.isLocalFile())
 			{
-				title = tr("File not found");
+				information.type = ErrorPageInformation::FileNotFoundError;
 			}
 			else
 			{
-				title = tr("Server not found");
+				information.type = ErrorPageInformation::ServerNotFoundError;
 			}
 		}
 		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::ConnectionRefusedError)
 		{
-			title = tr("Connection refused");
+			information.type = ErrorPageInformation::ConnectionRefusedError;
+		}
+		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::SslHandshakeFailedError)
+		{
+			information.description.clear();
+			information.type = ErrorPageInformation::ConnectionInsecureError;
+
+			const QList<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
+
+			for (int i = 0; i < sslErrors.count(); ++i)
+			{
+				information.description.append(sslErrors.at(i).second.errorString());
+			}
 		}
 		else if (errorOption->domain == QWebPage::WebKit)
 		{
-			title = tr("WebKit error %1").arg(errorOption->error);
+			information.title = tr("WebKit error %1").arg(errorOption->error);
 		}
 		else
 		{
-			title = tr("Network error %1").arg(errorOption->error);
+			information.title = tr("Network error %1").arg(errorOption->error);
 		}
 
 		errorOutput->baseUrl = url;
-		errorOutput->content = Utils::createErrorPage(url, title, errorOption->errorString).toUtf8();
+		errorOutput->content = Utils::createErrorPage(information).toUtf8();
 
 		return true;
 	}

@@ -54,26 +54,24 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 	{
 		open(ReadOnly | Unbuffered);
 
-		QString title;
+		ErrorPageInformation information;
+		information.url = request().url();
+		information.description = QStringList(m_ftp->errorString());
 
 		if (m_ftp->error() == QFtp::HostNotFound)
 		{
-			title = tr("Server not found");
+			information.type = ErrorPageInformation::ServerNotFoundError;
 		}
 		else if (m_ftp->error() == QFtp::ConnectionRefused)
 		{
-			title = tr("Connection refused");
+			information.type = ErrorPageInformation::ConnectionRefusedError;
 		}
 		else if (m_ftp->replyCode() > 0)
 		{
-			title = tr("Network error %1").arg(m_ftp->replyCode());
-		}
-		else
-		{
-			title = tr("Network error");
+			information.title = tr("Network error %1").arg(m_ftp->replyCode());
 		}
 
-		m_content = Utils::createErrorPage(request().url(), title, m_ftp->errorString()).toUtf8();
+		m_content = Utils::createErrorPage(information).toUtf8();
 
 		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
