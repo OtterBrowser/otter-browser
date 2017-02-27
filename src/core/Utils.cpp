@@ -228,17 +228,40 @@ QString createErrorPage(const ErrorPageInformation &information)
 	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
 	variables[QLatin1String("title")] = QCoreApplication::translate("utils", "Error");
 	variables[QLatin1String("header")] = title;
-	variables[QLatin1String("description")] = information.description.join(QLatin1String("<br>\n"));
 	variables[QLatin1String("introduction")] = introduction;
 
 	QString mainTemplate(stream.readAll());
-	QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
-	QString hintsHtml;
+	QRegularExpression hintsExpression(QLatin1String("<!--hints:begin-->(.*)<!--hints:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	QRegularExpression descriptionExpression(QLatin1String("<!--description:begin-->(.*)<!--description:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 
-	for (int i = 0; i < hints.count(); ++i)
+	if (information.description.isEmpty())
 	{
-		hintsHtml.append(QString(hintTemplate).replace(QLatin1String("{hint}"), hints.at(i)));
+		mainTemplate.remove(descriptionExpression);
+	}
+	else
+	{
+		variables[QLatin1String("description")] = information.description.join(QLatin1String("<br>\n"));
+
+		mainTemplate.replace(descriptionExpression, QLatin1String("\\1"));
+	}
+
+	if (hints.isEmpty())
+	{
+		mainTemplate.remove(hintsExpression);
+	}
+	else
+	{
+		QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+		const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
+		QString hintsHtml;
+
+		for (int i = 0; i < hints.count(); ++i)
+		{
+			hintsHtml.append(QString(hintTemplate).replace(QLatin1String("{hint}"), hints.at(i)));
+		}
+
+		mainTemplate.replace(hintExpression, hintsHtml);
+		mainTemplate.replace(hintsExpression, QLatin1String("\\1"));
 	}
 
 	QHash<QString, QString>::iterator iterator;
@@ -247,8 +270,6 @@ QString createErrorPage(const ErrorPageInformation &information)
 	{
 		mainTemplate.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
 	}
-
-	mainTemplate.replace(hintExpression, hintsHtml);
 
 	return mainTemplate;
 }
