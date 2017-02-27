@@ -42,6 +42,42 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 	setRequest(request);
 	open(QIODevice::ReadOnly | QIODevice::Unbuffered);
 
+	QDir directory(request.url().toLocalFile());
+
+	if (!directory.exists() || !directory.isReadable())
+	{
+		ErrorPageInformation::PageAction reloadAction;
+		reloadAction.name = QLatin1String("reloadPage");
+		reloadAction.title = QCoreApplication::translate("utils", "Try Again");
+		reloadAction.type = ErrorPageInformation::MainAction;
+
+		ErrorPageInformation information;
+		information.url = request.url();
+		information.actions.append(reloadAction);
+
+		if (directory.isReadable())
+		{
+			information.description = QStringList(tr("Directory does not exist"));
+			information.type = ErrorPageInformation::FileNotFoundError;
+		}
+		else
+		{
+			information.title = tr("Directory is not readable");
+			information.description = QStringList(tr("Cannot read directory listing"));
+		}
+
+		m_content = Utils::createErrorPage(information).toUtf8();
+
+		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
+		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
+
+		QTimer::singleShot(0, this, SIGNAL(listingError()));
+		QTimer::singleShot(0, this, SIGNAL(readyRead()));
+		QTimer::singleShot(0, this, SIGNAL(finished()));
+
+		return;
+	}
+
 	QString entriesHtml;
 	QString specialEntriesHtml;
 	QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
@@ -53,7 +89,6 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	QString mainTemplate(stream.readAll());
 	const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
-	QDir directory(request.url().toLocalFile());
 	const QFileInfoList entries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
 	QStringList navigation;
 

@@ -29,6 +29,8 @@ namespace Otter
 
 class LocalListingNetworkReply : public QNetworkReply
 {
+	Q_OBJECT
+
 public:
 	explicit LocalListingNetworkReply(const QNetworkRequest &request, QObject *parent);
 
@@ -42,6 +44,9 @@ public slots:
 private:
 	QByteArray m_content;
 	qint64 m_offset;
+
+signals:
+	void listingError();
 };
 
 }
