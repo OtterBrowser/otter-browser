@@ -788,6 +788,8 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		errorOutput->baseUrl = url;
 		errorOutput->content = Utils::createErrorPage(information).toUtf8();
 
+		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+
 		m_isErrorPage = true;
 
 		return true;
