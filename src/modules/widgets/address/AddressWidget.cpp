@@ -306,6 +306,18 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
 {
+	if (event->reason() == Qt::MouseFocusReason)
+	{
+		const EntryIdentifier entry(getEntry(mapFromGlobal(QCursor::pos())));
+
+		if (entry != UnknownEntry && entry != AddressEntry && entry != HistoryDropdownEntry)
+		{
+			ActionsManager::triggerAction(ActionsManager::ActivateContentAction, this);
+
+			return;
+		}
+	}
+
 	LineEditWidget::focusInEvent(event);
 
 	activate(event->reason());
