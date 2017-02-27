@@ -227,6 +227,11 @@ void QtWebKitPage::removePopup(const QUrl &url)
 	emit requestedPopupWindow(mainFrame()->url(), url);
 }
 
+void QtWebKitPage::markAsErrorPage()
+{
+	m_isErrorPage = true;
+}
+
 void QtWebKitPage::markAsPopup()
 {
 	m_isPopup = true;
@@ -565,7 +570,10 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		}
 	}
 
-	m_isErrorPage = false;
+	if (frame == mainFrame() && type != QWebPage::NavigationTypeOther)
+	{
+		m_isErrorPage = false;
+	}
 
 	emit aboutToNavigate(request.url(), frame, type);
 

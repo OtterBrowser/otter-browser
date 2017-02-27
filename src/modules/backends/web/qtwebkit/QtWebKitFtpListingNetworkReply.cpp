@@ -54,9 +54,15 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 	{
 		open(ReadOnly | Unbuffered);
 
+		ErrorPageInformation::PageAction reloadAction;
+		reloadAction.name = QLatin1String("reloadPage");
+		reloadAction.title = QCoreApplication::translate("utils", "Try Again");
+		reloadAction.type = ErrorPageInformation::MainAction;
+
 		ErrorPageInformation information;
 		information.url = request().url();
 		information.description = QStringList(m_ftp->errorString());
+		information.actions.append(reloadAction);
 
 		if (m_ftp->error() == QFtp::HostNotFound)
 		{
@@ -76,6 +82,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
 
+		emit listingError();
 		emit readyRead();
 		emit finished();
 

@@ -55,6 +55,9 @@ private:
 	QList<QUrlInfo> m_directories;
 	QList<QUrlInfo> m_files;
 	qint64 m_offset;
+
+signals:
+	void listingError();
 };
 
 }

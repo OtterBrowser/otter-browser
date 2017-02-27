@@ -723,10 +723,14 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
 		reply = new LocalListingNetworkReply(request, this);
+
+		connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
 	}
 	else if (operation == GetOperation && request.url().scheme() == QLatin1String("ftp"))
 	{
 		reply = new QtWebKitFtpListingNetworkReply(request, this);
+
+		connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
 	}
 	else
 	{

@@ -74,6 +74,7 @@ public:
 	bool isViewingMedia() const;
 
 public slots:
+	void markAsErrorPage();
 	void updateStyleSheets(const QUrl &url = QUrl());
 
 protected:
