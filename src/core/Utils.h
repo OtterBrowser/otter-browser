@@ -40,6 +40,13 @@ struct ApplicationInformation
 
 struct ErrorPageInformation
 {
+	enum ActionType
+	{
+		OtherAction = 0,
+		MainAction,
+		AdvancedAction
+	};
+
 	enum ErrorType
 	{
 		OtherError = 0,
@@ -49,9 +56,17 @@ struct ErrorPageInformation
 		ServerNotFoundError
 	};
 
+	struct PageAction
+	{
+		QString name;
+		QString title;
+		ActionType type;
+	};
+
 	QString title;
 	QUrl url;
 	QStringList description;
+	QVector<PageAction> actions;
 	ErrorType type = OtherError;
 };
 

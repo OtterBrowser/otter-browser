@@ -81,6 +81,7 @@ public:
 	bool isAudible() const override;
 	bool isAudioMuted() const override;
 #endif
+	bool isErrorPage() const;
 	bool isFullScreen() const override;
 	bool isPrivate() const override;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;

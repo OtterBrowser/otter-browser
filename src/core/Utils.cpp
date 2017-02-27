@@ -231,8 +231,70 @@ QString createErrorPage(const ErrorPageInformation &information)
 	variables[QLatin1String("introduction")] = introduction;
 
 	QString mainTemplate(stream.readAll());
-	QRegularExpression hintsExpression(QLatin1String("<!--hints:begin-->(.*)<!--hints:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	QRegularExpression basicActionsExpression(QLatin1String("<!--basicActions:begin-->(.*)<!--basicActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	QRegularExpression descriptionExpression(QLatin1String("<!--description:begin-->(.*)<!--description:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	QRegularExpression hintsExpression(QLatin1String("<!--hints:begin-->(.*)<!--hints:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+
+	if (information.actions.isEmpty() && information.description.isEmpty())
+	{
+		mainTemplate.remove(advancedActionsExpression);
+		mainTemplate.remove(basicActionsExpression);
+	}
+	else
+	{
+		QRegularExpression actionExpression(QLatin1String("<!--action:begin-->(.*)<!--action:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+		const QString actionTemplate(actionExpression.match(mainTemplate).captured(1));
+		QString basicActionsHtml;
+		QString advancedActionsHtml;
+		QVector<ErrorPageInformation::PageAction> actions(information.actions);
+
+		if (!information.description.isEmpty())
+		{
+			ErrorPageInformation::PageAction action;
+			action.name = QLatin1String("advanced");
+			action.title = QCoreApplication::translate("utils", "Advanced");
+
+			actions.append(action);
+		}
+
+		for (int i = 0; i < actions.count(); ++i)
+		{
+			QString actionHtml(actionTemplate);
+			actionHtml.replace(QLatin1String("{action}"), actions.at(i).name);
+			actionHtml.replace(QLatin1String("{text}"), actions.at(i).title);
+			actionHtml.replace(QLatin1String("{attributes}"), ((actions.at(i).type == ErrorPageInformation::MainAction) ? QLatin1String(" autofocus") : QString()));
+
+			if (actions.at(i).type != ErrorPageInformation::AdvancedAction)
+			{
+				basicActionsHtml.append(actionHtml);
+			}
+			else
+			{
+				advancedActionsHtml.append(actionHtml);
+			}
+		}
+
+		if (advancedActionsHtml.isEmpty())
+		{
+			mainTemplate.remove(advancedActionsExpression);
+		}
+		else
+		{
+			mainTemplate.replace(QLatin1String("{advancedActions}"), advancedActionsHtml);
+			mainTemplate.replace(advancedActionsExpression, QLatin1String("\\1"));
+		}
+
+		if (basicActionsHtml.isEmpty())
+		{
+			mainTemplate.remove(basicActionsExpression);
+		}
+		else
+		{
+			mainTemplate.replace(actionExpression, basicActionsHtml);
+			mainTemplate.replace(basicActionsExpression, QLatin1String("\\1"));
+		}
+	}
 
 	if (information.description.isEmpty())
 	{

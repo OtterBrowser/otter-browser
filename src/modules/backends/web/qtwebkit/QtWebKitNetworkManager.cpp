@@ -347,7 +347,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		reply->ignoreSslErrors(errorsToIgnore);
 	}
 
-	if (messages.isEmpty())
+	if (messages.isEmpty() || reply == m_baseReply)
 	{
 		return;
 	}
@@ -566,7 +566,21 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		{
 			const QString type(request.rawHeader(QByteArray("X-Otter-Type")));
 
-			if (type == QLatin1String("save-password"))
+			if (type == QLatin1String("add-ssl-error-exception"))
+			{
+				const QJsonObject exceptionObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
+				const QString digest(exceptionObject.value(QLatin1String("digest")).toString());
+				const QUrl url(m_widget->getUrl());
+				QStringList ignoredErrors(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, url).toStringList());
+
+				if (!digest.isEmpty() && !ignoredErrors.contains(digest))
+				{
+					ignoredErrors.append(digest);
+
+					SettingsManager::setValue(SettingsManager::Security_IgnoreSslErrorsOption, ignoredErrors, url);
+				}
+			}
+			else if (type == QLatin1String("save-password"))
 			{
 				const QJsonObject passwordObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
 				const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
@@ -595,10 +609,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			}
 		}
 
-		QUrl url;
-		url.setScheme(QLatin1String("http"));
-
-		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 	}
 
 	if (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(request.url()))

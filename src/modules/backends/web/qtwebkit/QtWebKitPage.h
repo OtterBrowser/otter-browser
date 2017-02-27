@@ -69,6 +69,7 @@ public:
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;
 	bool shouldInterruptJavaScript() override;
 	bool supportsExtension(Extension extension) const override;
+	bool isErrorPage() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
 
@@ -106,6 +107,7 @@ private:
 	QtWebKitFrame *m_mainFrame;
 	QList<QtWebKitPage*> m_popups;
 	bool m_ignoreJavaScriptPopups;
+	bool m_isErrorPage;
 	bool m_isPopup;
 	bool m_isViewingMedia;
 

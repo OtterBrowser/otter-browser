@@ -39,6 +39,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
 #include <QtWebKit/QWebElement>
+#include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
 
 namespace Otter
@@ -88,6 +89,17 @@ void QtWebKitFrame::handleLoadFinished()
 	if (!m_widget)
 	{
 		return;
+	}
+
+	if (!m_frame->parentFrame() && m_widget->isErrorPage())
+	{
+		const QList<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
+		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/errorPage.js"));
+		file.open(QIODevice::ReadOnly);
+
+		m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken(), (sslErrors.isEmpty() ? QByteArray() : sslErrors.first().second.certificate().digest().toBase64()), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
+
+		file.close();
 	}
 
 	runUserScripts(m_widget->getUrl());
@@ -553,6 +565,8 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		}
 	}
 
+	m_isErrorPage = false;
+
 	emit aboutToNavigate(request.url(), frame, type);
 
 	return true;
@@ -737,8 +751,36 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			information.title = tr("Network error %1").arg(errorOption->error);
 		}
 
+		if (information.type == ErrorPageInformation::ConnectionInsecureError)
+		{
+			ErrorPageInformation::PageAction goBackAction;
+			goBackAction.name = QLatin1String("goBack");
+			goBackAction.title = QCoreApplication::translate("utils", "Go Back");
+			goBackAction.type = ErrorPageInformation::MainAction;
+
+			ErrorPageInformation::PageAction addExceptionAction;
+			addExceptionAction.name = QLatin1String("addSslErrorException");
+			addExceptionAction.title = QCoreApplication::translate("utils", "Load Insecure Page");
+			addExceptionAction.type = ErrorPageInformation::AdvancedAction;
+
+			information.actions.reserve(2);
+			information.actions.append(goBackAction);
+			information.actions.append(addExceptionAction);
+		}
+		else
+		{
+			ErrorPageInformation::PageAction reloadAction;
+			reloadAction.name = QLatin1String("reloadPage");
+			reloadAction.title = QCoreApplication::translate("utils", "Try Again");
+			reloadAction.type = ErrorPageInformation::MainAction;
+
+			information.actions.append(reloadAction);
+		}
+
 		errorOutput->baseUrl = url;
 		errorOutput->content = Utils::createErrorPage(information).toUtf8();
+
+		m_isErrorPage = true;
 
 		return true;
 	}
@@ -765,6 +807,11 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 {
 	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
+}
+
+bool QtWebKitPage::isErrorPage() const
+{
+	return m_isErrorPage;
 }
 
 bool QtWebKitPage::isPopup() const

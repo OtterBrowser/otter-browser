@@ -18,7 +18,7 @@ html
 }
 body
 {
-	max-width:1000px;
+	max-width:500px;
 	margin:auto;
 	padding:20px 30px;
 	border:1px solid #94C6FF;
@@ -26,6 +26,31 @@ body
 	font-family:sans-serif;
 	background:#FFF linear-gradient(to bottom, #FAFAFA 0%, #FCFCFC 53%, #FFF 100%) top repeat-x;
 	box-shadow:0 0 15px 15px rgba(211, 238, 251, 0.5);
+}
+body > nav
+{
+	margin:20px 0 0 0;
+	overflow:auto;
+}
+button
+{
+	padding:5px 7px;
+	border:1px solid #AAA;
+	border-radius:3px;
+	background:#FAFAFA;
+	color:#012956;
+}
+body > nav button
+{
+	float:right;
+}
+body > nav button[autofocus]
+{
+	padding-left:40px;
+	padding-right:40px;
+	float:left;
+	background:#0095DD;
+	color:#FFF;
 }
 a
 {
@@ -48,6 +73,10 @@ ul
 {
 	margin:30px 0 0 20px;
 }
+.description
+{
+	display:none;
+}
 
 @media (max-width:500px)
 {
@@ -69,9 +98,16 @@ ul
 <body>
 <h1>{header}</h1>
 <p class="introduction">{introduction}</p>
-<!--description:begin--><p class="description">{description}</p>
-<!--description:end--><!--hints:begin--><ul>
+<!--hints:begin--><ul>
 <!--hint:begin--><li>{hint}</li>
 <!--hint:end--></ul>
-<!--hints:end--></body>
+<!--hints:end--><!--basicActions:begin--><nav>
+<!--action:begin--><button class="{action}"{attributes}>{text}</button>
+<!--action:end--></nav>
+<!--basicActions:end--><!--description:begin--><div class="description">
+<p>{description}</p>
+<!--advancedActions:begin--><nav>
+{advancedActions}</nav>
+<!--advancedActions:end--></div>
+<!--description:end--></body>
 </html>
