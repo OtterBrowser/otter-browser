@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -327,6 +328,22 @@ Migrator::MigrationFlags Migrator::checkMigrationStatus(const QString &identifie
 	if (!m_migrations.contains(identifier))
 	{
 		return NoMigration;
+	}
+
+	if (identifier == QLatin1String("optionsRename"))
+	{
+		const QStringList sessions(SessionsManager::getSessions());
+		bool needsOptionsRename(QFile::exists(SettingsManager::getGlobalPath()) || QFile::exists(SettingsManager::getOverridePath()));
+
+		for (int i = 0; i < sessions.count(); ++i)
+		{
+			needsOptionsRename |= QFile::exists(SessionsManager::getSessionPath(sessions.at(i)));
+		}
+
+		if (!needsOptionsRename)
+		{
+			return IgnoreMigration;
+		}
 	}
 
 	QMessageBox messageBox;
