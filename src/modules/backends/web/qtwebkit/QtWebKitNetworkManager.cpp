@@ -61,7 +61,8 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_securityState(UnknownState),
 	m_loadingSpeedTimer(0),
 	m_areImagesEnabled(true),
-	m_canSendReferrer(true)
+	m_canSendReferrer(true),
+	m_isMixedContentAllowed(false)
 {
 	NetworkManagerFactory::initialize();
 
@@ -474,6 +475,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_areImagesEnabled = (m_widget->getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("disabled"));
 	m_canSendReferrer = m_widget->getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
+	m_isMixedContentAllowed = (m_widget->getOption(SettingsManager::Security_AllowMixedContentOption, url).toBool());
 
 	const QString generalCookiesPolicyValue(m_widget->getOption(SettingsManager::Network_CookiesPolicyOption, url).toString());
 	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);
@@ -622,6 +624,13 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				}
 			}
 		}
+
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
+	}
+
+	if (!m_isMixedContentAllowed && m_securityState == SecureState && request.url().scheme() == QLatin1String("http"))
+	{
+		Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(m_widget ? m_widget->getUrl().toString() : QLatin1String("unknown")).arg(request.url().toString()), Console::SecurityCategory, Console::WarningLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 	}

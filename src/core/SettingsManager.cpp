@@ -194,6 +194,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Search_ReuseLastQuickFindQueryOption, false, BooleanType);
 	registerOption(Search_SearchEnginesOrderOption, QStringList({QLatin1String("duckduckgo"), QLatin1String("wikipedia"), QLatin1String("startpage"), QLatin1String("google"), QLatin1String("yahoo"), QLatin1String("bing"), QLatin1String("youtube")}), ListType);
 	registerOption(Search_SearchEnginesSuggestionsOption, false, BooleanType);
+	registerOption(Security_AllowMixedContentOption, false, BooleanType);
 	registerOption(Security_CiphersOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Security_IgnoreSslErrorsOption, QStringList(), ListType);
 	registerOption(Sessions_OpenInExistingWindowOption, false, BooleanType);

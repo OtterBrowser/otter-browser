@@ -108,6 +108,7 @@ private:
 	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
+	bool m_isMixedContentAllowed;
 
 	static WebBackend *m_backend;
 

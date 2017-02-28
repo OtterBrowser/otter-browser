@@ -173,6 +173,7 @@ public:
 		Search_ReuseLastQuickFindQueryOption,
 		Search_SearchEnginesOrderOption,
 		Search_SearchEnginesSuggestionsOption,
+		Security_AllowMixedContentOption,
 		Security_CiphersOption,
 		Security_IgnoreSslErrorsOption,
 		Sessions_OpenInExistingWindowOption,
