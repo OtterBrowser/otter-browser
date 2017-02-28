@@ -97,7 +97,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	QStringList ignoredErrors(SettingsManager::getValue(SettingsManager::Security_IgnoreSslErrorsOption, reply->url()).toStringList());
+	const QStringList exceptions(SettingsManager::getValue(SettingsManager::Security_IgnoreSslErrorsOption, reply->url()).toStringList());
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 
@@ -105,7 +105,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 	{
 		if (errors.at(i).error() != QSslError::NoError)
 		{
-			if (ignoredErrors.contains(errors.at(i).certificate().digest().toBase64()))
+			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
 			{
 				errorsToIgnore.append(errors.at(i));
 			}
@@ -121,12 +121,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		reply->ignoreSslErrors(errorsToIgnore);
 	}
 
-	if (messages.isEmpty())
-	{
-		return;
-	}
-
-	if (QMessageBox::warning(Application::getActiveWindow(), tr("Warning"), tr("SSL errors occurred:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	if (!messages.isEmpty() && QMessageBox::warning(Application::getActiveWindow(), tr("Warning"), tr("SSL errors occurred:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
 	}
