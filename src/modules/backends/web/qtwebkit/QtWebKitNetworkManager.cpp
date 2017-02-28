@@ -347,7 +347,21 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		reply->ignoreSslErrors(errorsToIgnore);
 	}
 
-	if (messages.isEmpty() || reply == m_baseReply)
+	const bool isBaseReply(reply == m_baseReply);
+
+	if (isBaseReply)
+	{
+		m_securityState = InsecureState;
+
+		if (m_contentState.testFlag(WindowsManager::SecureContentState))
+		{
+			m_contentState = WindowsManager::RemoteContentState;
+
+			emit contentStateChanged(m_contentState);
+		}
+	}
+
+	if (isBaseReply || messages.isEmpty())
 	{
 		return;
 	}
@@ -392,7 +406,7 @@ void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
 	}
 }
 
-void QtWebKitNetworkManager::handleLoadingFinished()
+void QtWebKitNetworkManager::handleLoadFinished(bool result)
 {
 	setPageInformation(WebWidget::LoadingFinishedInformation, QDateTime::currentDateTime());
 	setPageInformation(WebWidget::LoadingMessageInformation, tr("Loading finished"));
@@ -401,7 +415,7 @@ void QtWebKitNetworkManager::handleLoadingFinished()
 
 	m_loadingSpeedTimer = 0;
 
-	if ((m_securityState == SecureState || (m_securityState == UnknownState && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
+	if (result && (m_securityState == SecureState || (m_securityState == UnknownState && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
 	{
 		m_contentState = WindowsManager::SecureContentState;
 	}
@@ -753,6 +767,13 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		else if (scheme == QLatin1String("http"))
 		{
 			m_securityState = InsecureState;
+
+			if (m_contentState.testFlag(WindowsManager::SecureContentState))
+			{
+				m_contentState = WindowsManager::MixedContentState;
+
+				emit contentStateChanged(m_contentState);
+			}
 		}
 	}
 

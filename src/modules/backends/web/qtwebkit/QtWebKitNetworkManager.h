@@ -75,7 +75,7 @@ protected slots:
 	void handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void handleOnlineStateChanged(bool isOnline);
-	void handleLoadingFinished();
+	void handleLoadFinished(bool result);
 
 private:
 	enum SecurityState

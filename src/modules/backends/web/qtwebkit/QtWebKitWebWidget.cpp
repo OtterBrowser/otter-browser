@@ -154,7 +154,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(handleLoadStarted()));
 	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(handleLoadProgress(int)));
-	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
+	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished(bool)));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
 #endif
@@ -548,7 +548,7 @@ void QtWebKitWebWidget::handleLoadProgress(int progress)
 	m_networkManager->setPageInformation(TotalLoadingProgressInformation, progress);
 }
 
-void QtWebKitWebWidget::handleLoadFinished()
+void QtWebKitWebWidget::handleLoadFinished(bool result)
 {
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	if (m_isAudioMuted)
@@ -562,7 +562,7 @@ void QtWebKitWebWidget::handleLoadFinished()
 		return;
 	}
 
-	m_networkManager->handleLoadingFinished();
+	m_networkManager->handleLoadFinished(result);
 
 	m_thumbnail = QPixmap();
 	m_loadingState = WindowsManager::FinishedLoadingState;

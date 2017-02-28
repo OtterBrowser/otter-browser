@@ -159,7 +159,7 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleLoadStarted();
 	void handleLoadProgress(int progress);
-	void handleLoadFinished();
+	void handleLoadFinished(bool result);
 	void handlePrintRequest(QWebFrame *frame);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleFullScreenRequest(QWebFullScreenRequest request);
