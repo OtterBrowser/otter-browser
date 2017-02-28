@@ -281,7 +281,7 @@ bool IniSettings::save(const QString &path, bool isAtomic)
 
 	file->deleteLater();
 
-	return true;
+	return result;
 }
 
 bool IniSettings::hasError() const
