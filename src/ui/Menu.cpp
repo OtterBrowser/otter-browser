@@ -1216,7 +1216,7 @@ void Menu::selectStyleSheet(QAction *action)
 		return;
 	}
 
-	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(1));
+	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(-1));
 
 	if (window && action)
 	{
