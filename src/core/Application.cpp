@@ -970,7 +970,7 @@ QString Application::createReport(ReportOptions options)
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);
 		stream << QLatin1String("Configuration");
-		stream << SessionsManager::getWritableDataPath(QLatin1String("otter.conf"));
+		stream << SettingsManager::getGlobalPath();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);
@@ -980,7 +980,7 @@ QString Application::createReport(ReportOptions options)
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);
 		stream << QLatin1String("Overrides");
-		stream << SessionsManager::getWritableDataPath(QLatin1String("override.ini"));
+		stream << SettingsManager::getOverridePath();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);

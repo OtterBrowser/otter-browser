@@ -250,6 +250,8 @@ public:
 	static void updateOptionDefinition(int identifier, const OptionDefinition &definition);
 	static void setValue(int identifier, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
+	static QString getGlobalPath();
+	static QString getOverridePath();
 	static QString getOptionName(int identifier);
 	static QString getReport();
 	static QVariant getValue(int identifier, const QUrl &url = QUrl());

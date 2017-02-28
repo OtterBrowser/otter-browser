@@ -317,6 +317,16 @@ SettingsManager* SettingsManager::getInstance()
 	return m_instance;
 }
 
+QString SettingsManager::getGlobalPath()
+{
+	return m_globalPath;
+}
+
+QString SettingsManager::getOverridePath()
+{
+	return m_overridePath;
+}
+
 QString SettingsManager::getOptionName(int identifier)
 {
 	QString name(m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));

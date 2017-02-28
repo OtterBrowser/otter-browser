@@ -111,7 +111,7 @@ void Migrator::run()
 			optionsMap[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption;
 
 			QMap<QString, SettingsManager::OptionIdentifier>::iterator optionsIterator;
-			QSettings configuration(SessionsManager::getWritableDataPath(QLatin1String("otter.conf")), QSettings::IniFormat);
+			QSettings configuration(SettingsManager::getGlobalPath(), QSettings::IniFormat);
 			const QStringList configurationKeys(configuration.allKeys());
 
 			for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
@@ -123,7 +123,7 @@ void Migrator::run()
 				}
 			}
 
-			QSettings overrides(SessionsManager::getWritableDataPath(QLatin1String("override.ini")), QSettings::IniFormat);
+			QSettings overrides(SettingsManager::getOverridePath(), QSettings::IniFormat);
 			const QStringList overridesGroups(overrides.childGroups());
 
 			for (int i = 0; i < overridesGroups.count(); ++i)
