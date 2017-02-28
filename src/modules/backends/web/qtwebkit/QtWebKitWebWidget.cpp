@@ -2630,11 +2630,6 @@ bool QtWebKitWebWidget::isAudioMuted() const
 }
 #endif
 
-bool QtWebKitWebWidget::isErrorPage() const
-{
-	return m_page->isErrorPage();
-}
-
 bool QtWebKitWebWidget::isFullScreen() const
 {
 	return m_isFullScreen;

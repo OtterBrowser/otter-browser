@@ -42,16 +42,19 @@ public:
 	explicit QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent);
 
 	void runUserScripts(const QUrl &url) const;
+	bool isErrorPage() const;
 
 protected:
 	void applyContentBlockingRules(const QStringList &rules, bool remove);
 
 protected slots:
+	void handleErrorPageChanged(QWebFrame *frame, bool isErrorPage);
 	void handleLoadFinished();
 
 private:
 	QWebFrame *m_frame;
 	QtWebKitWebWidget *m_widget;
+	bool m_isErrorPage;
 };
 
 class QtWebKitPage : public QWebPage
@@ -108,7 +111,6 @@ private:
 	QtWebKitFrame *m_mainFrame;
 	QList<QtWebKitPage*> m_popups;
 	bool m_ignoreJavaScriptPopups;
-	bool m_isErrorPage;
 	bool m_isPopup;
 	bool m_isViewingMedia;
 
@@ -116,6 +118,7 @@ signals:
 	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
+	void errorPageChanged(QWebFrame *frame, bool isVisible);
 	void viewingMediaChanged(bool viewingMedia);
 
 friend class QtWebKitThumbnailFetchJob;

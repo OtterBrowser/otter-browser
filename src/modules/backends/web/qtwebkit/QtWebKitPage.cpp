@@ -47,7 +47,8 @@ namespace Otter
 
 QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObject(parent),
 	m_frame(frame),
-	m_widget(parent)
+	m_widget(parent),
+	m_isErrorPage(false)
 {
 	connect(frame, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
 	connect(frame, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
@@ -84,6 +85,14 @@ void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool rem
 	}
 }
 
+void QtWebKitFrame::handleErrorPageChanged(QWebFrame *frame, bool isErrorPage)
+{
+	if (frame == m_frame)
+	{
+		m_isErrorPage = isErrorPage;
+	}
+}
+
 void QtWebKitFrame::handleLoadFinished()
 {
 	if (!m_widget)
@@ -91,7 +100,7 @@ void QtWebKitFrame::handleLoadFinished()
 		return;
 	}
 
-	if (!m_frame->parentFrame() && m_widget->isErrorPage())
+	if (m_isErrorPage)
 	{
 		const QList<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/errorPage.js"));
@@ -169,6 +178,11 @@ void QtWebKitFrame::handleLoadFinished()
 	}
 }
 
+bool QtWebKitFrame::isErrorPage() const
+{
+	return m_isErrorPage;
+}
+
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_networkManager(networkManager),
@@ -222,7 +236,7 @@ void QtWebKitPage::removePopup(const QUrl &url)
 
 void QtWebKitPage::markAsErrorPage()
 {
-	m_isErrorPage = true;
+	emit errorPageChanged(mainFrame(), false);
 }
 
 void QtWebKitPage::markAsPopup()
@@ -253,6 +267,8 @@ void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 	{
 		m_mainFrame = frameWrapper;
 	}
+
+	connect(this, SIGNAL(errorPageChanged(QWebFrame*,bool)), frameWrapper, SLOT(handleErrorPageChanged(QWebFrame*,bool)));
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -570,9 +586,9 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		}
 	}
 
-	if (frame == mainFrame() && type != QWebPage::NavigationTypeOther)
+	if (type != QWebPage::NavigationTypeOther)
 	{
-		m_isErrorPage = false;
+		emit errorPageChanged(frame, false);
 	}
 
 	emit aboutToNavigate(request.url(), frame, type);
@@ -790,7 +806,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 
 		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 
-		m_isErrorPage = true;
+		emit errorPageChanged(errorOption->frame, true);
 
 		return true;
 	}
@@ -821,7 +837,7 @@ bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 
 bool QtWebKitPage::isErrorPage() const
 {
-	return m_isErrorPage;
+	return m_mainFrame->isErrorPage();
 }
 
 bool QtWebKitPage::isPopup() const
