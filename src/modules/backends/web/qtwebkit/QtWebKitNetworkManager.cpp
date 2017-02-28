@@ -322,8 +322,9 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	QStringList ignoredErrors(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList());
-	QStringList messages;
+	const QString firstPartyUrl(m_widget->getUrl().toString());
+	const QString thirdPartyUrl(reply->request().url().toString());
+	const QStringList exceptions(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList());
 	QList<QSslError> errorsToIgnore;
 
 	for (int i = 0; i < errors.count(); ++i)
@@ -332,13 +333,15 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		{
 			m_sslInformation.errors.append(qMakePair(reply->url(), errors.at(i)));
 
-			if (ignoredErrors.contains(errors.at(i).certificate().digest().toBase64()))
+			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
 			{
+				Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl).arg(thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1,  m_widget->getWindowIdentifier());
+
 				errorsToIgnore.append(errors.at(i));
 			}
 			else
 			{
-				messages.append(errors.at(i).errorString());
+				Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(firstPartyUrl).arg(thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1,  m_widget->getWindowIdentifier());
 			}
 		}
 	}
@@ -348,9 +351,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		reply->ignoreSslErrors(errorsToIgnore);
 	}
 
-	const bool isBaseReply(reply == m_baseReply);
-
-	if (isBaseReply)
+	if (reply == m_baseReply)
 	{
 		m_securityState = InsecureState;
 
@@ -359,42 +360,6 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 			m_contentState = WindowsManager::RemoteContentState;
 
 			emit contentStateChanged(m_contentState);
-		}
-	}
-
-	if (isBaseReply || messages.isEmpty())
-	{
-		return;
-	}
-
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occurred, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), nullptr, m_widget);
-
-	if (!m_widget->getUrl().isEmpty())
-	{
-		dialog.setCheckBox(tr("Do not show this message again"), false);
-	}
-
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-
-	m_widget->showDialog(&dialog);
-
-	if (dialog.isAccepted())
-	{
-		reply->ignoreSslErrors(errors);
-
-		if (!m_widget->getUrl().isEmpty() && dialog.getCheckBoxState())
-		{
-			for (int i = 0; i < errors.count(); ++i)
-			{
-				const QString digest(errors.at(i).certificate().digest().toBase64());
-
-				if (!ignoredErrors.contains(digest))
-				{
-					ignoredErrors.append(digest);
-				}
-			}
-
-			SettingsManager::setValue(SettingsManager::Security_IgnoreSslErrorsOption, ignoredErrors, m_widget->getUrl());
 		}
 	}
 }
@@ -587,13 +552,13 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				const QJsonObject exceptionObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
 				const QString digest(exceptionObject.value(QLatin1String("digest")).toString());
 				const QUrl url(m_widget->getUrl());
-				QStringList ignoredErrors(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, url).toStringList());
+				QStringList exceptions(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, url).toStringList());
 
-				if (!digest.isEmpty() && !ignoredErrors.contains(digest))
+				if (!digest.isEmpty() && !exceptions.contains(digest))
 				{
-					ignoredErrors.append(digest);
+					exceptions.append(digest);
 
-					SettingsManager::setValue(SettingsManager::Security_IgnoreSslErrorsOption, ignoredErrors, url);
+					SettingsManager::setValue(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, url);
 				}
 			}
 			else if (type == QLatin1String("save-password"))
