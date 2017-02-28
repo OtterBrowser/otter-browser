@@ -36,7 +36,6 @@ namespace Otter
 
 class AddressCompletionModel;
 class ItemViewWidget;
-class LineEditWidget;
 class Window;
 
 class AddressDelegate : public QItemDelegate

@@ -47,10 +47,10 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->stateLabel->setText(tr("This website was marked as fraud."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-fraud"), false).pixmap(16, 16));
 	}
-	else if (state.testFlag(WindowsManager::TrustedContentState))
+	else if (state.testFlag(WindowsManager::MixedContentState))
 	{
-		m_ui->stateLabel->setText(tr("Your connection with this website is private."));
-		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-secure"), false).pixmap(16, 16));
+		m_ui->stateLabel->setText(tr("Your connection with this website is not private."));
+		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-mixed"), false).pixmap(16, 16));
 	}
 	else if (state.testFlag(WindowsManager::SecureContentState))
 	{

@@ -839,6 +839,10 @@ void AddressWidget::updateGeometries()
 					{
 						icon = QLatin1String("badge-fraud");
 					}
+					else if (state.testFlag(WindowsManager::MixedContentState))
+					{
+						icon = QLatin1String("badge-mixed");
+					}
 					else if (state.testFlag(WindowsManager::SecureContentState))
 					{
 						icon = QLatin1String("badge-secure");

@@ -64,9 +64,10 @@ public:
 		ApplicationContentState = 1,
 		LocalContentState = 2,
 		RemoteContentState = 4,
-		TrustedContentState = 8,
-		SecureContentState = 16,
-		FraudContentState = 32
+		SecureContentState = 8,
+		TrustedContentState = 16,
+		MixedContentState = 32,
+		FraudContentState = 64
 	};
 
 	Q_DECLARE_FLAGS(ContentStates, ContentState)
