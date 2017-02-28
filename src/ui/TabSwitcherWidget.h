@@ -57,12 +57,12 @@ protected:
 	void keyPressEvent(QKeyEvent *event) override;
 	void keyReleaseEvent(QKeyEvent *event) override;
 	QStandardItem* createRow(Window *window) const;
-	int findRow(qint64 identifier) const;
+	int findRow(quint64 identifier) const;
 
 protected slots:
 	void currentTabChanged(const QModelIndex &index);
-	void tabAdded(qint64 identifier);
-	void tabRemoved(qint64 identifier);
+	void tabAdded(quint64 identifier);
+	void tabRemoved(quint64 identifier);
 	void setTitle(const QString &title);
 	void setIcon(const QIcon &icon);
 	void setLoadingState(WindowsManager::LoadingState state);

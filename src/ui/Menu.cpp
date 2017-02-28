@@ -898,7 +898,7 @@ void Menu::populateStyleSheetsMenu()
 		return;
 	}
 
-	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1)));
+	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(-1));
 
 	if (!window)
 	{
@@ -1053,8 +1053,8 @@ void Menu::populateWindowsMenu()
 
 		if (mainWindow)
 		{
-			connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(qint64)), this, SLOT(populateWindowsMenu()));
-			connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(qint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(quint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(quint64)), this, SLOT(populateWindowsMenu()));
 			connect(mainWindow->getWindowsManager(), SIGNAL(windowTitleChanged(QString)), this, SLOT(populateWindowsMenu()));
 		}
 
@@ -1216,7 +1216,7 @@ void Menu::selectStyleSheet(QAction *action)
 		return;
 	}
 
-	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1)));
+	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(1));
 
 	if (window && action)
 	{

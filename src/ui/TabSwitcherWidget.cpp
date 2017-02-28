@@ -93,8 +93,8 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	QWidget::showEvent(event);
 
-	connect(m_windowsManager, SIGNAL(windowAdded(qint64)), this, SLOT(tabAdded(qint64)));
-	connect(m_windowsManager, SIGNAL(windowRemoved(qint64)), this, SLOT(tabRemoved(qint64)));
+	connect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(tabAdded(quint64)));
+	connect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(tabRemoved(quint64)));
 }
 
 void TabSwitcherWidget::hideEvent(QHideEvent *event)
@@ -103,8 +103,8 @@ void TabSwitcherWidget::hideEvent(QHideEvent *event)
 
 	QWidget::hideEvent(event);
 
-	disconnect(m_windowsManager, SIGNAL(windowAdded(qint64)), this, SLOT(tabAdded(qint64)));
-	disconnect(m_windowsManager, SIGNAL(windowRemoved(qint64)), this, SLOT(tabRemoved(qint64)));
+	disconnect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(tabAdded(quint64)));
+	disconnect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(tabRemoved(quint64)));
 
 	m_model->clear();
 }
@@ -141,7 +141,7 @@ void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 {
-	Window *window(m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toLongLong()));
+	Window *window(m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toULongLong()));
 
 	if (window)
 	{
@@ -171,7 +171,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 	}
 }
 
-void TabSwitcherWidget::tabAdded(qint64 identifier)
+void TabSwitcherWidget::tabAdded(quint64 identifier)
 {
 	Window *window(m_windowsManager->getWindowByIdentifier(identifier));
 
@@ -181,7 +181,7 @@ void TabSwitcherWidget::tabAdded(qint64 identifier)
 	}
 }
 
-void TabSwitcherWidget::tabRemoved(qint64 identifier)
+void TabSwitcherWidget::tabRemoved(quint64 identifier)
 {
 	const int row(findRow(identifier));
 
@@ -200,7 +200,7 @@ void TabSwitcherWidget::show(SwitcherReason reason)
 
 void TabSwitcherWidget::accept()
 {
-	m_windowsManager->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(Qt::UserRole).toLongLong());
+	m_windowsManager->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(Qt::UserRole).toULongLong());
 
 	hide();
 }
@@ -290,11 +290,11 @@ TabSwitcherWidget::SwitcherReason TabSwitcherWidget::getReason() const
 	return m_reason;
 }
 
-int TabSwitcherWidget::findRow(qint64 identifier) const
+int TabSwitcherWidget::findRow(quint64 identifier) const
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (m_model->index(i, 0).data(Qt::UserRole).toLongLong() == identifier)
+		if (m_model->index(i, 0).data(Qt::UserRole).toULongLong() == identifier)
 		{
 			return i;
 		}
@@ -311,7 +311,7 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton)
 		{
-			const int index(m_windowsManager->getWindowIndex(m_tabsView->indexAt(mouseEvent->pos()).data(Qt::UserRole).toLongLong()));
+			const int index(m_windowsManager->getWindowIndex(m_tabsView->indexAt(mouseEvent->pos()).data(Qt::UserRole).toULongLong()));
 
 			if (index >= 0)
 			{

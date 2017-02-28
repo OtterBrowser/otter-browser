@@ -139,8 +139,8 @@ signals:
 	void requestedEditBookmark(const QUrl &url);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);
-	void windowAdded(qint64 identifier);
-	void windowRemoved(qint64 identifier);
+	void windowAdded(quint64 identifier);
+	void windowRemoved(quint64 identifier);
 	void currentWindowChanged(quint64 identifier);
 	void windowTitleChanged(const QString &title);
 	void closedWindowsAvailableChanged(bool available);
