@@ -2224,6 +2224,8 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 
 	contentsSize.setHeight(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width()));
 
+	m_page->setViewportSize(contentsSize);
+
 	QPixmap pixmap(contentsSize);
 	pixmap.fill(Qt::white);
 
