@@ -44,24 +44,25 @@ Migrator::Migrator(QObject *parent) : QObject(parent)
 
 void Migrator::run()
 {
-	QSet<QString> newMigrations;
-	newMigrations.insert(QLatin1String("optionsRename"));
+	QStringList migrations(SettingsManager::getValue(SettingsManager::Browser_MigrationsOption).toStringList());
+	QStringList newMigrations;
 
-	if (!QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty())
+	if (!migrations.contains(QLatin1String("sessionsIniToJson")) && !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty())
 	{
-		newMigrations.insert(QLatin1String("sessionsIniToJson"));
+		newMigrations.append(QLatin1String("sessionsIniToJson"));
 	}
 
-	QSet<QString> migrations(SettingsManager::getValue(SettingsManager::Browser_MigrationsOption).toStringList().toSet());
-
-	newMigrations -= migrations;
+	if (!migrations.contains(QLatin1String("optionsRename")))
+	{
+		newMigrations.append(QLatin1String("optionsRename"));
+	}
 
 	if (newMigrations.isEmpty())
 	{
 		return;
 	}
 
-	QSet<QString>::iterator iterator;
+	QStringList::iterator iterator;
 
 	for (iterator = newMigrations.begin(); iterator != newMigrations.end(); ++iterator)
 	{
@@ -74,7 +75,7 @@ void Migrator::run()
 
 		if (flags.testFlag(IgnoreMigration) || flags.testFlag(ProceedMigration))
 		{
-			migrations.insert(*iterator);
+			migrations.append(*iterator);
 		}
 
 		if (flags.testFlag(WithBackupMigration))
@@ -266,7 +267,7 @@ void Migrator::run()
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(migrations.toList()));
+	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(migrations));
 }
 
 void Migrator::createBackup(const QString &identifier)
