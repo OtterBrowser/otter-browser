@@ -166,6 +166,7 @@ void Migrator::run()
 					if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 					{
 						QTextStream stream(&file);
+						stream.setCodec("UTF-8");
 						stream << data;
 
 						file.close();
