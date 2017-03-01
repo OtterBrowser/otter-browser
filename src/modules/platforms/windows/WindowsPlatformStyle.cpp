@@ -66,11 +66,11 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 							if ((isNavigationBar || toolBarOption->toolBarArea == Qt::TopToolBarArea) && tabBarDefinition.location == Qt::TopToolBarArea)
 							{
 								MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
-								bool hasVisibleTabBar(false);
 
 								if (mainWindow)
 								{
 									const QList<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
+									bool hasVisibleTabBar(false);
 
 									for (int i = 0; i < toolBars.count(); ++i)
 									{
