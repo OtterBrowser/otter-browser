@@ -747,7 +747,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		if (m_webWidget)
 		{
 			m_splitter->show();
-			m_splitter->addWidget(m_webWidget);
+			m_splitter->insertWidget(0, m_webWidget);
 
 			m_webWidget->show();
 
@@ -1064,7 +1064,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	else
 	{
 		m_splitter->show();
-		m_splitter->addWidget(m_webWidget);
+		m_splitter->insertWidget(0, m_webWidget);
 
 		m_webWidget->show();
 	}
