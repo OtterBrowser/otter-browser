@@ -1249,11 +1249,6 @@ QVariant WebContentsWidget::getPageInformation(WebWidget::PageInformation key) c
 	return m_webWidget->getPageInformation(key);
 }
 
-QList<NetworkManager::ResourceInformation> WebContentsWidget::getBlockedRequests() const
-{
-	return m_webWidget->getBlockedRequests();
-}
-
 QUrl WebContentsWidget::getUrl() const
 {
 	return m_webWidget->getRequestedUrl();
@@ -1284,14 +1279,19 @@ QStringList WebContentsWidget::getStyleSheets() const
 	return m_webWidget->getStyleSheets();
 }
 
-QList<WebWidget::LinkUrl> WebContentsWidget::getFeeds() const
+QVector<WebWidget::LinkUrl> WebContentsWidget::getFeeds() const
 {
 	return m_webWidget->getFeeds();
 }
 
-QList<WebWidget::LinkUrl> WebContentsWidget::getSearchEngines() const
+QVector<WebWidget::LinkUrl> WebContentsWidget::getSearchEngines() const
 {
 	return m_webWidget->getSearchEngines();
+}
+
+QVector<NetworkManager::ResourceInformation> WebContentsWidget::getBlockedRequests() const
+{
+	return m_webWidget->getBlockedRequests();
 }
 
 QHash<int, QVariant> WebContentsWidget::getOptions() const

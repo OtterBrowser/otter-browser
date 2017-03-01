@@ -207,9 +207,9 @@ public:
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
 	virtual QStringList getStyleSheets() const;
-	virtual QList<LinkUrl> getFeeds() const;
-	virtual QList<LinkUrl> getSearchEngines() const;
-	virtual QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
+	virtual QVector<LinkUrl> getFeeds() const;
+	virtual QVector<LinkUrl> getSearchEngines() const;
+	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<int, QVariant> getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;

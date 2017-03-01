@@ -79,14 +79,14 @@ public:
 	QLatin1String getType() const override;
 	QVariant getOption(int identifier) const override;
 	QVariant getPageInformation(WebWidget::PageInformation key) const override;
-	QList<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPixmap getThumbnail() override;
 	WindowHistoryInformation getHistory() const override;
 	QStringList getStyleSheets() const override;
-	QList<WebWidget::LinkUrl> getFeeds() const override;
-	QList<WebWidget::LinkUrl> getSearchEngines() const override;
+	QVector<WebWidget::LinkUrl> getFeeds() const override;
+	QVector<WebWidget::LinkUrl> getSearchEngines() const override;
+	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QHash<int, QVariant> getOptions() const;
 	WindowsManager::ContentStates getContentState() const override;
 	WindowsManager::LoadingState getLoadingState() const override;

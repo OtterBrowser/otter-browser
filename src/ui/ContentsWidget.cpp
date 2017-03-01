@@ -323,19 +323,19 @@ QStringList ContentsWidget::getStyleSheets() const
 	return QStringList();
 }
 
-QList<WebWidget::LinkUrl> ContentsWidget::getFeeds() const
+QVector<WebWidget::LinkUrl> ContentsWidget::getFeeds() const
 {
-	return QList<WebWidget::LinkUrl>();
+	return QVector<WebWidget::LinkUrl>();
 }
 
-QList<WebWidget::LinkUrl> ContentsWidget::getSearchEngines() const
+QVector<WebWidget::LinkUrl> ContentsWidget::getSearchEngines() const
 {
-	return QList<WebWidget::LinkUrl>();
+	return QVector<WebWidget::LinkUrl>();
 }
 
-QList<NetworkManager::ResourceInformation> ContentsWidget::getBlockedRequests() const
+QVector<NetworkManager::ResourceInformation> ContentsWidget::getBlockedRequests() const
 {
-	return QList<NetworkManager::ResourceInformation>();
+	return QVector<NetworkManager::ResourceInformation>();
 }
 
 WindowsManager::ContentStates ContentsWidget::getContentState() const

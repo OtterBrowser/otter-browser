@@ -793,7 +793,7 @@ QStringList QtWebKitNetworkManager::getBlockedElements() const
 	return m_blockedElements;
 }
 
-QList<NetworkManager::ResourceInformation> QtWebKitNetworkManager::getBlockedRequests() const
+QVector<NetworkManager::ResourceInformation> QtWebKitNetworkManager::getBlockedRequests() const
 {
 	return m_blockedRequests;
 }

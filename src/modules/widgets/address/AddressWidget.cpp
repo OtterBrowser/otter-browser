@@ -471,7 +471,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 				return;
 			case ListFeedsEntry:
 				{
-					const QList<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<WebWidget::LinkUrl>());
+					const QVector<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QVector<WebWidget::LinkUrl>());
 
 					if (feeds.count() == 1 && m_window)
 					{

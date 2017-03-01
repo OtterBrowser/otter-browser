@@ -131,7 +131,7 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 		return;
 	}
 
-	const QList<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getBlockedRequests().mid(m_amount - 50));
+	const QVector<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getBlockedRequests().mid(m_amount - 50));
 
 	for (int i = 0; i < requests.count(); ++i)
 	{
@@ -201,7 +201,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 
 	m_profilesMenu->addSeparator();
 
-	const QList<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getBlockedRequests());
+	const QVector<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getBlockedRequests());
 	QHash<QString, int> amounts;
 
 	for (int i = 0; i < requests.count(); ++i)

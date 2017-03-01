@@ -55,9 +55,9 @@ public:
 	virtual QPixmap getThumbnail();
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QStringList getStyleSheets() const;
-	virtual QList<WebWidget::LinkUrl> getFeeds() const;
-	virtual QList<WebWidget::LinkUrl> getSearchEngines() const;
-	virtual QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
+	virtual QVector<WebWidget::LinkUrl> getFeeds() const;
+	virtual QVector<WebWidget::LinkUrl> getSearchEngines() const;
+	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	virtual WindowsManager::ContentStates getContentState() const;
 	virtual WindowsManager::LoadingState getLoadingState() const;
 	virtual int getZoom() const;

@@ -1663,19 +1663,19 @@ QVector<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() c
 	return SpellCheckManager::getDictionaries();
 }
 
-QList<WebWidget::LinkUrl> WebWidget::getFeeds() const
+QVector<WebWidget::LinkUrl> WebWidget::getFeeds() const
 {
-	return QList<LinkUrl>();
+	return QVector<LinkUrl>();
 }
 
-QList<WebWidget::LinkUrl> WebWidget::getSearchEngines() const
+QVector<WebWidget::LinkUrl> WebWidget::getSearchEngines() const
 {
-	return QList<LinkUrl>();
+	return QVector<LinkUrl>();
 }
 
-QList<NetworkManager::ResourceInformation> WebWidget::getBlockedRequests() const
+QVector<NetworkManager::ResourceInformation> WebWidget::getBlockedRequests() const
 {
-	return QList<NetworkManager::ResourceInformation>();
+	return QVector<NetworkManager::ResourceInformation>();
 }
 
 QHash<int, QVariant> WebWidget::getOptions() const

@@ -69,9 +69,9 @@ public:
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QStringList getStyleSheets() const override;
-	QList<LinkUrl> getFeeds() const override;
-	QList<LinkUrl> getSearchEngines() const override;
-	QList<NetworkManager::ResourceInformation> getBlockedRequests() const override;
+	QVector<LinkUrl> getFeeds() const override;
+	QVector<LinkUrl> getSearchEngines() const override;
+	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
 	WindowsManager::ContentStates getContentState() const override;
 	WindowsManager::LoadingState getLoadingState() const override;

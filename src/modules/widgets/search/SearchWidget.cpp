@@ -347,7 +347,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 		else if (m_addButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
 		{
 			QMenu menu(this);
-			const QList<WebWidget::LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QList<WebWidget::LinkUrl>());
+			const QVector<WebWidget::LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 
 			for (int i = 0; i < searchEngines.count(); ++i)
 			{
@@ -602,7 +602,7 @@ void SearchWidget::updateGeometries()
 	panel.rect = rect();
 	panel.lineWidth = 1;
 
-	const QList<WebWidget::LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QList<WebWidget::LinkUrl>());
+	const QVector<WebWidget::LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 	QMargins lineEditMargins(1, 0, 1, 0);
 	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
 	const bool isSearchButtonEnabled(m_options.value(QLatin1String("showSearchButton"), true).toBool());

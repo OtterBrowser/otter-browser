@@ -49,7 +49,7 @@ public:
 	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	WebWidget::SslInformation getSslInformation() const;
 	QStringList getBlockedElements() const;
-	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
+	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	WindowsManager::ContentStates getContentState() const;
 
@@ -95,8 +95,8 @@ private:
 	QUrl m_formRequestUrl;
 	WebWidget::SslInformation m_sslInformation;
 	QStringList m_blockedElements;
-	QList<QNetworkReply*> m_transfers;
-	QList<NetworkManager::ResourceInformation> m_blockedRequests;
+	QVector<QNetworkReply*> m_transfers;
+	QVector<NetworkManager::ResourceInformation> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;
 	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
