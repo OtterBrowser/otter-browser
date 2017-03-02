@@ -145,6 +145,8 @@
         <file>searches/duckduckgo.xml</file>
         <file>searches/google.xml</file>
         <file>searches/startpage.xml</file>
+        <file>searches/w3c-css.xml</file>
+        <file>searches/w3c-markup.xml</file>
         <file>searches/wikipedia.xml</file>
         <file>searches/yahoo.xml</file>
         <file>searches/youtube.xml</file>

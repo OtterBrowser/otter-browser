@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>W3C Markup Validator</ShortName>
+	<Description>Markup Validation Service</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABtUlEQVQ4y6WTWyiDYRjHd+1GJKWUTMmVKynkUrmVpJyT827IcrwgUrhxuJBImxlzWGyNFQqJaVi05LDmfFzmbA6z7e97n/Lpa1fmX1/93+d9nt/3PO/3vaIWTp+c8EexGlYrcnGCj2IQEf4pAohLVGgeN1HAaLEhKGcQ28d2Pql+eB1+6QMIzJYjrGiEfKVs7ReQ2jaHKMkYXxCcq6AiJpfbg+A8BVJaZ3F170BCrRYBWXIY9m9+AROGI6LePr1TMLx4BPE1GvJrBzbau35w4OXNCf8MGcZXD4UjsA2WpOZAjo8v8uxhYqNFlKrIx1VrIC5WeZ8BU2KdFlJurv65PcRIJ6lV1bIVSQ3TqFEYKSe6Qk3grI4F3D1/CAHdMzsILVAismyUWuzUmRGSr6Rx5rcv+DfqNk4JIulbEQLO7a986+9OF7aO7OTDCofx5XIL2vbPlFE3AgC1WK6mgh8xQGHPMmyPb1gwX1LM7fFQPLZqyhuQ27WItPZ5fp3cpMfQkgWb1lsqYudTwAGZ753d9QawWfWmM36tMR7DfHJHvnF0kx+RQb2+gs+/8r8vk6/X2cmJ1X4DuaB1HZCXXosAAAAASUVORK5CYII=</Image>
+	<Url rel="results" type="text/html" method="get" template="https://validator.w3.org/check?uri={searchTerms}" />
+</OpenSearchDescription>
