@@ -41,7 +41,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QStringList globalProfiles(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
+	const QStringList globalProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
@@ -52,7 +52,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));
 	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), QLatin1String("none"));
 
-	const int cosmeticFiltersIndex(m_ui->cosmeticFiltersComboBox->findData(SettingsManager::getValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString()));
+	const int cosmeticFiltersIndex(m_ui->cosmeticFiltersComboBox->findData(SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString()));
 
 	m_ui->cosmeticFiltersComboBox->setCurrentIndex((cosmeticFiltersIndex < 0) ? 0 : cosmeticFiltersIndex);
 	m_ui->enableCustomRulesCheckBox->setChecked(globalProfiles.contains(QLatin1String("custom")));
@@ -80,7 +80,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	}
 
 	m_ui->customRulesViewWidget->setModel(customRulesModel);
-	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool());
+	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool());
 
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateProfile(QString)));
 	connect(m_ui->profilesViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(updateProfilesActions()));

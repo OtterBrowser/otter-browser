@@ -65,7 +65,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 		m_ui->languageComboBox->addItem(entries.at(i).first, entries.at(i).second);
 	}
 
-	const QString currentLocale(SettingsManager::getValue(SettingsManager::Browser_LocaleOption).toString());
+	const QString currentLocale(SettingsManager::getOption(SettingsManager::Browser_LocaleOption).toString());
 
 	m_ui->languageComboBox->setCurrentIndex((currentLocale.endsWith(QLatin1String(".qm"))) ? 1 : qMax(0, m_ui->languageComboBox->findData(currentLocale)));
 	m_ui->customFilePathWidget->setEnabled(m_ui->languageComboBox->currentIndex() == 1);

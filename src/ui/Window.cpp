@@ -97,7 +97,7 @@ void Window::hideEvent(QHideEvent *event)
 {
 	QWidget::hideEvent(event);
 
-	const int suspendTime(SettingsManager::getValue(SettingsManager::Browser_InactiveTabTimeUntilSuspendOption).toInt());
+	const int suspendTime(SettingsManager::getOption(SettingsManager::Browser_InactiveTabTimeUntilSuspendOption).toInt());
 
 	if (suspendTime >= 0)
 	{
@@ -408,7 +408,7 @@ void Window::setSession(const SessionWindow &session)
 	setSearchEngine(session.overrides.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString());
 	setPinned(session.isPinned);
 
-	if (SettingsManager::getValue(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool())
+	if (SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool())
 	{
 		setWindowTitle(session.getTitle());
 	}
@@ -715,7 +715,7 @@ QVariant Window::getOption(int identifier) const
 		return m_contentsWidget->getOption(identifier);
 	}
 
-	return (m_session.overrides.contains(identifier) ? m_session.overrides[identifier] : SettingsManager::getValue(identifier, m_session.getUrl()));
+	return (m_session.overrides.contains(identifier) ? m_session.overrides[identifier] : SettingsManager::getOption(identifier, m_session.getUrl()));
 }
 
 QUrl Window::getUrl() const

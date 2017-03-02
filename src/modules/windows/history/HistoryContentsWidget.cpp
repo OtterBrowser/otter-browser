@@ -136,7 +136,7 @@ void HistoryContentsWidget::populateEntries()
 		addEntry(dynamic_cast<HistoryEntryItem*>(model->item(i, 0)));
 	}
 
-	const QString expandBranches(SettingsManager::getValue(SettingsManager::History_ExpandBranchesOption).toString());
+	const QString expandBranches(SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString());
 
 	if (expandBranches == QLatin1String("first"))
 	{
@@ -198,7 +198,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 
 	m_ui->historyViewWidget->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
 
-	if (sender() && groupItem->rowCount() == 1 && SettingsManager::getValue(SettingsManager::History_ExpandBranchesOption).toString() == QLatin1String("first"))
+	if (sender() && groupItem->rowCount() == 1 && SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString() == QLatin1String("first"))
 	{
 		for (int i = 0; i < m_model->rowCount(); ++i)
 		{

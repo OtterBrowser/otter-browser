@@ -73,10 +73,10 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 		}
 	}
 
-	handleOptionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getValue(SettingsManager::Network_CookiesPolicyOption));
+	handleOptionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getOption(SettingsManager::Network_CookiesPolicyOption));
 	setAllCookies(allCookies);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void CookieJar::timerEvent(QTimerEvent *event)
@@ -129,7 +129,7 @@ void CookieJar::handleOptionChanged(int identifier, const QVariant &value)
 
 			break;
 		case SettingsManager::Network_CookiesPolicyOption:
-			if (SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool() || value.toString() == QLatin1String("ignore"))
+			if (SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || value.toString() == QLatin1String("ignore"))
 			{
 				m_generalCookiesPolicy = IgnoreCookies;
 			}

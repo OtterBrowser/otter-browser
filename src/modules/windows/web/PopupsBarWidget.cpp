@@ -71,7 +71,7 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	connect(m_popupsGroup, SIGNAL(triggered(QAction*)), this, SLOT(setPolicy(QAction*)));
 	connect(m_popupsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openUrl(QAction*)));
 	connect(m_ui->closeButton, SIGNAL(clicked()), this, SIGNAL(requestedClose()));
@@ -129,7 +129,7 @@ void PopupsBarWidget::handleOptionChanged(int identifier)
 {
 	if (identifier == SettingsManager::Permissions_ScriptsCanOpenWindowsOption)
 	{
-		const QString popupsPolicy(SettingsManager::getValue(identifier, m_parentUrl).toString());
+		const QString popupsPolicy(SettingsManager::getOption(identifier, m_parentUrl).toString());
 
 		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
 		{

@@ -295,7 +295,7 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	{
 		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers")));
 		showLineNumbersAction->setCheckable(true);
-		showLineNumbersAction->setChecked(SettingsManager::getValue(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
+		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
 
 		connect(showLineNumbersAction, SIGNAL(triggered(bool)), this, SLOT(setShowLineNumbers(bool)));
 	}

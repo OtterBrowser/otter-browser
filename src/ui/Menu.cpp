@@ -1193,7 +1193,7 @@ void Menu::openSession(QAction *action)
 {
 	if (!action->data().isNull())
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? Application::getActiveWindow() : nullptr));
+		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getOption(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? Application::getActiveWindow() : nullptr));
 	}
 }
 

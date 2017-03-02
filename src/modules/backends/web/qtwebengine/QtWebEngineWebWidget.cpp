@@ -1056,7 +1056,7 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 
 	if (request.toggleOn())
 	{
-		const QString value(SettingsManager::getValue(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
+		const QString value(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -1833,7 +1833,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 
-		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
+		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 		{
 			const WebWidget::HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 

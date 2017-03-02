@@ -319,7 +319,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 		if (storageInformation.bytesAvailable() > -1 && storageInformation.bytesAvailable() < 10000000)
 		{
-			QString warnLowDiskSpaceMode(SettingsManager::getValue(SettingsManager::Choices_WarnLowDiskSpaceOption).toString());
+			QString warnLowDiskSpaceMode(SettingsManager::getOption(SettingsManager::Choices_WarnLowDiskSpaceOption).toString());
 
 			if (warnLowDiskSpaceMode == QLatin1String("warn"))
 			{
@@ -407,7 +407,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	TransfersManager::createInstance(this);
 
-	setLocale(SettingsManager::getValue(SettingsManager::Browser_LocaleOption).toString());
+	setLocale(SettingsManager::getOption(SettingsManager::Browser_LocaleOption).toString());
 	setQuitOnLastWindowClosed(true);
 
 	WebBackend *webBackend(AddonsManager::getWebBackend());
@@ -417,7 +417,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		QMessageBox::warning(nullptr, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
 	}
 
-	if (SettingsManager::getValue(SettingsManager::Browser_EnableTrayIconOption).toBool())
+	if (SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption).toBool())
 	{
 		m_trayIcon = new TrayIcon(this);
 	}
@@ -440,10 +440,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		}
 	}
 
-	const QDate lastUpdate(QDate::fromString(SettingsManager::getValue(SettingsManager::Updates_LastCheckOption).toString(), Qt::ISODate));
-	const int interval(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
+	const QDate lastUpdate(QDate::fromString(SettingsManager::getOption(SettingsManager::Updates_LastCheckOption).toString(), Qt::ISODate));
+	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
 		UpdateChecker *updateChecker(new UpdateChecker(this));
 
@@ -452,9 +452,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
 
-	setStyle(ThemesManager::createStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString()));
+	setStyle(ThemesManager::createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
 
-	const QString styleSheet(SettingsManager::getValue(SettingsManager::Interface_StyleSheetOption).toString());
+	const QString styleSheet(SettingsManager::getOption(SettingsManager::Interface_StyleSheetOption).toString());
 
 	if (!styleSheet.isEmpty())
 	{
@@ -472,7 +472,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
 
@@ -528,7 +528,7 @@ void Application::removeWindow(MainWindow *window)
 
 void Application::clearHistory()
 {
-	QStringList clearSettings(SettingsManager::getValue(SettingsManager::History_ClearOnCloseOption).toStringList());
+	QStringList clearSettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList());
 	clearSettings.removeAll(QString());
 
 	if (!clearSettings.isEmpty())
@@ -568,9 +568,9 @@ void Application::periodicUpdateCheck()
 
 	connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
-	const int interval(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
+	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (interval > 0 && !SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+	if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
@@ -585,7 +585,7 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 
 	const int latestVersion(availableUpdates.count() - 1);
 
-	if (SettingsManager::getValue(SettingsManager::Updates_AutomaticInstallOption).toBool())
+	if (SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool())
 	{
 		new Updater(availableUpdates.at(latestVersion), this);
 	}
@@ -645,7 +645,7 @@ void Application::handleNewConnection()
 
 	if (session.isEmpty())
 	{
-		if (!window || !SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
+		if (!window || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
 		{
 			createWindow(isPrivate ? PrivateFlag : NoFlags);
 		}
@@ -743,7 +743,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 
 void Application::showNotification(Notification *notification)
 {
-	if (SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
+	if (SettingsManager::getOption(SettingsManager::Interface_UseNativeNotificationsOption).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
 	{
 		m_platformIntegration->showNotification(notification);
 	}
@@ -1047,7 +1047,7 @@ bool Application::canClose()
 		}
 	}
 
-	if (runningTransfers > 0 && SettingsManager::getValue(SettingsManager::Choices_WarnQuitTransfersOption).toBool())
+	if (runningTransfers > 0 && SettingsManager::getOption(SettingsManager::Choices_WarnQuitTransfersOption).toBool())
 	{
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
@@ -1082,7 +1082,7 @@ bool Application::canClose()
 		}
 	}
 
-	const QString warnQuitMode(SettingsManager::getValue(SettingsManager::Choices_WarnQuitOption).toString());
+	const QString warnQuitMode(SettingsManager::getOption(SettingsManager::Choices_WarnQuitOption).toString());
 
 	if (!transfersDialog && warnQuitMode != QLatin1String("noWarn"))
 	{

@@ -42,7 +42,7 @@ struct WindowHistoryEntry
 	QString url;
 	QString title;
 	QPoint position;
-	int zoom = SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt();
+	int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
 };
 
 struct WindowHistoryInformation
@@ -56,7 +56,7 @@ struct SessionWindow
 	QRect geometry;
 	QHash<int, QVariant> overrides;
 	QList<WindowHistoryEntry> history;
-	WindowState state = ((SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState);
+	WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState);
 	int parentGroup = 0;
 	int historyIndex = -1;
 	bool isAlwaysOnTop = false;
@@ -81,7 +81,7 @@ struct SessionWindow
 				return history.at(historyIndex).title;
 			}
 
-			if (history.at(historyIndex).url == QLatin1String("about:start") || (SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool() && Utils::isUrlEmpty(history.at(historyIndex).url)))
+			if (history.at(historyIndex).url == QLatin1String("about:start") || (SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool() && Utils::isUrlEmpty(history.at(historyIndex).url)))
 			{
 				return QCoreApplication::translate("main", "Start Page");
 			}
@@ -97,7 +97,7 @@ struct SessionWindow
 			return history.at(historyIndex).zoom;
 		}
 
-		return SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt();
+		return SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
 	}
 };
 

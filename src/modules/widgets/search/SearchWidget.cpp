@@ -162,9 +162,9 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(par
 	setItemDelegate(new SearchDelegate(this));
 	setModel(SearchEnginesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
-	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
-	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
-	optionChanged(SettingsManager::Search_SearchEnginesSuggestionsOption, SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption));
+	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getOption(SettingsManager::AddressField_DropActionOption));
+	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption));
+	optionChanged(SettingsManager::Search_SearchEnginesSuggestionsOption, SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption));
 
 	m_lineEdit->setCompleter(m_completer);
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
@@ -178,7 +178,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(par
 
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(storeCurrentSearchEngine()));
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModelModified()), this, SLOT(restoreCurrentSearchEngine()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
 	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(sendRequest(QString)));
@@ -732,7 +732,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 		return;
 	}
 
-	const int index(qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString() : searchEngine)));
+	const int index(qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString() : searchEngine)));
 
 	if (index == currentIndex())
 	{

@@ -52,7 +52,7 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool co
 	else
 	{
 		m_ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Clear Now"));
-		m_ui->periodSpinBox->setValue(SettingsManager::getValue(SettingsManager::History_ManualClearPeriodOption).toInt());
+		m_ui->periodSpinBox->setValue(SettingsManager::getOption(SettingsManager::History_ManualClearPeriodOption).toInt());
 
 		connect(this, SIGNAL(accepted()), this, SLOT(clearHistory()));
 	}

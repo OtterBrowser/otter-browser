@@ -93,18 +93,18 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updatePageSwitcher();
 
-	m_ui->browsingEnableSmoothScrollingCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
-	m_ui->browsingEnableSpellCheckCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableSpellCheckOption).toBool());
+	m_ui->browsingEnableSmoothScrollingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
+	m_ui->browsingEnableSpellCheckCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableSpellCheckOption).toBool());
 
-	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestBookmarksOption).toBool());
-	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestHistoryOption).toBool());
-	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestLocalPathsOption).toBool());
-	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool());
+	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool());
+	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool());
+	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool());
+	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool());
 
 	m_ui->browsingDisplayModeComboBox->addItem(tr("Compact"), QLatin1String("compact"));
 	m_ui->browsingDisplayModeComboBox->addItem(tr("Columns"), QLatin1String("columns"));
 
-	const int displayModeIndex(m_ui->browsingDisplayModeComboBox->findData(SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString()));
+	const int displayModeIndex(m_ui->browsingDisplayModeComboBox->findData(SettingsManager::getOption(SettingsManager::AddressField_CompletionDisplayModeOption).toString()));
 
 	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
 
@@ -130,7 +130,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->notificationsItemView->setModel(notificationsModel);
-	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool());
+	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Interface_UseNativeNotificationsOption).toBool());
 
 	const QStringList widgetStyles(QStyleFactory::keys());
 
@@ -141,28 +141,28 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		m_ui->appearranceWidgetStyleComboBox->addItem(widgetStyles.at(i));
 	}
 
-	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString(), Qt::DisplayRole)));
-	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Interface_StyleSheetOption).toString());
+	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString(), Qt::DisplayRole)));
+	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Interface_StyleSheetOption).toString());
 	m_ui->appearranceStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
-	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableTrayIconOption).toBool());
+	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption).toBool());
 
 	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
 	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
 	m_ui->enableImagesComboBox->addItem(tr("No images"), QLatin1String("disabled"));
 
-	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString()));
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString()));
 
 	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
-	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
+	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString()));
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString()));
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
-	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Content_UserStyleSheetOption).toString());
+	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Content_UserStyleSheetOption).toString());
 	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
@@ -196,9 +196,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
-	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption).toBool());
+	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool());
 
-	TreeModel *userAgentsModel(new UserAgentsModel(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString(), true, this));
+	TreeModel *userAgentsModel(new UserAgentsModel(SettingsManager::getOption(SettingsManager::Network_UserAgentOption).toString(), true, this));
 	userAgentsModel->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
 
 	m_ui->userAgentsViewWidget->setModel(userAgentsModel);
@@ -213,7 +213,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->userAgentsAddButton->setMenu(addUserAgentMenu);
 
-	TreeModel *proxiesModel(new ProxiesModel(SettingsManager::getValue(SettingsManager::Network_ProxyOption).toString(), true, this));
+	TreeModel *proxiesModel(new ProxiesModel(SettingsManager::getOption(SettingsManager::Network_ProxyOption).toString(), true, this));
 	proxiesModel->setHorizontalHeaderLabels({tr("Title")});
 
 	m_ui->proxiesViewWidget->setModel(proxiesModel);
@@ -233,8 +233,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	if (QSslSocket::supportsSsl())
 	{
 		QStandardItemModel *ciphersModel(new QStandardItemModel(this));
-		const bool useDefaultCiphers(SettingsManager::getValue(SettingsManager::Security_CiphersOption).toString() == QLatin1String("default"));
-		const QStringList selectedCiphers(useDefaultCiphers ? QStringList() : SettingsManager::getValue(SettingsManager::Security_CiphersOption).toStringList());
+		const bool useDefaultCiphers(SettingsManager::getOption(SettingsManager::Security_CiphersOption).toString() == QLatin1String("default"));
+		const QStringList selectedCiphers(useDefaultCiphers ? QStringList() : SettingsManager::getOption(SettingsManager::Security_CiphersOption).toStringList());
 
 		for (int i = 0; i < selectedCiphers.count(); ++i)
 		{
@@ -280,7 +280,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *updateChannelsModel(new QStandardItemModel(this));
-	const QStringList availableUpdateChannels(SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList());
+	const QStringList availableUpdateChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
 
 	QMap<QString, QString> defaultChannels;
 	defaultChannels[QLatin1String("release")] = tr("Stable version");
@@ -305,8 +305,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->updateChannelsItemView->setModel(updateChannelsModel);
 
-	m_ui->autoInstallCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Updates_AutomaticInstallOption).toBool());
-	m_ui->intervalSpinBox->setValue(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
+	m_ui->autoInstallCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool());
+	m_ui->intervalSpinBox->setValue(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
 	updateUpdateChannelsActions();
 
@@ -314,7 +314,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
-	const QStringList keyboardProfiles(SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
+	const QStringList keyboardProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
 
 	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
@@ -342,7 +342,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
 	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
-	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
+	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 
 	updateReaddKeyboardProfileMenu();
 
@@ -350,7 +350,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *mouseProfilesModel(new QStandardItemModel(this));
-	const QStringList mouseProfiles(SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
+	const QStringList mouseProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
 
 	for (int i = 0; i < mouseProfiles.count(); ++i)
 	{
@@ -378,7 +378,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
 
 	m_ui->mouseAddButton->setMenu(addMouseProfileMenu);
-	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
+	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
 	updateReaddMouseProfileMenu();
 
@@ -1454,7 +1454,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 		for (int i = 0; i < javaScriptOptions.count(); ++i)
 		{
-			m_javaScriptOptions[javaScriptOptions.at(i)] = SettingsManager::getValue(javaScriptOptions.at(i));
+			m_javaScriptOptions[javaScriptOptions.at(i)] = SettingsManager::getOption(javaScriptOptions.at(i));
 		}
 	}
 
@@ -1529,7 +1529,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
-	if (widgetStyle != SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString())
+	if (widgetStyle != SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString())
 	{
 		Application::setStyle(ThemesManager::createStyle(widgetStyle));
 	}
@@ -1701,7 +1701,7 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	if (needsKeyboardProfilesReload && SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList() == keyboardProfiles && SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
+	if (needsKeyboardProfilesReload && SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList() == keyboardProfiles && SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
 	{
 		ActionsManager::loadProfiles();
 	}
@@ -1768,7 +1768,7 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	if (needsMouseProfilesReload && SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList() == mouseProfiles && SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
+	if (needsMouseProfilesReload && SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList() == mouseProfiles && SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
 	{
 		GesturesManager::loadProfiles();
 	}

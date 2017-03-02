@@ -113,7 +113,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 	runUserScripts(m_widget->getUrl());
 
-	if (SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool())
+	if (SettingsManager::getOption(SettingsManager::Browser_RememberPasswordsOption).toBool())
 	{
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formExtractor.js"));
 
@@ -194,7 +194,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	setForwardUnsupportedContent(true);
 	handleFrameCreation(mainFrame());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	connect(this, SIGNAL(frameCreated(QWebFrame*)), this, SLOT(handleFrameCreation(QWebFrame*)));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
@@ -354,7 +354,7 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl(url.isEmpty() ? mainFrame()->url() : url);
-	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(SettingsManager::Content_TextColorOption).toString()).arg(SettingsManager::getValue(SettingsManager::Content_LinkColorOption).toString()).arg(SettingsManager::getValue(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
+	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getOption(SettingsManager::Content_TextColorOption).toString()).arg(SettingsManager::getOption(SettingsManager::Content_LinkColorOption).toString()).arg(SettingsManager::getOption(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
 	QWebElement media(mainFrame()->findFirstElement(QLatin1String("img, audio source, video source")));
 	const bool isViewingMedia(!media.isNull() && QUrl(media.attribute(QLatin1String("src"))) == currentUrl);
 
@@ -375,7 +375,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		emit viewingMediaChanged(m_isViewingMedia);
 	}
 
-	if (!SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption).toBool())
+	if (!SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption).toBool())
 	{
 		styleSheet.append(QLatin1String("body::-webkit-scrollbar {display:none;}"));
 	}
@@ -471,7 +471,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebWidget *widget(nullptr);
-		QString popupsPolicy(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
+		QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
 		bool isPopup(true);
 
 		if (m_widget)
@@ -500,7 +500,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 
 		if (m_widget)
 		{
-			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
+			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 		}
 		else
 		{
@@ -567,7 +567,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		m_networkManager->setFormRequest(request.url());
 	}
 
-	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(SettingsManager::Choices_WarnFormResendOption).toBool())
+	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool cancel(false);
 		bool warn(true);

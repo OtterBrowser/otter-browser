@@ -63,7 +63,7 @@ void PreviewWidget::setPosition(const QPoint &position)
 	if (!m_moveAnimation)
 	{
 		m_moveAnimation = new QPropertyAnimation(this, QStringLiteral("pos").toLatin1());
-		m_moveAnimation->setDuration(SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
+		m_moveAnimation->setDuration(SettingsManager::getOption(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 	}
 
 	if (position != m_moveAnimation->endValue().toPoint())

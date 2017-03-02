@@ -45,7 +45,7 @@ void InputInterpreter::timerEvent(QTimerEvent *event)
 
 		m_timer = 0;
 
-		emit requestedSearch(m_text, SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString(), m_hints);
+		emit requestedSearch(m_text, SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString(), m_hints);
 
 		m_text.clear();
 	}
@@ -154,7 +154,7 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 		return;
 	}
 
-	const int lookupTimeout(SettingsManager::getValue(SettingsManager::AddressField_HostLookupTimeoutOption).toInt());
+	const int lookupTimeout(SettingsManager::getOption(SettingsManager::AddressField_HostLookupTimeoutOption).toInt());
 
 	if (url.isValid() && lookupTimeout > 0)
 	{

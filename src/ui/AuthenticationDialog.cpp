@@ -41,7 +41,7 @@ AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *auth
 
 	if (type == HttpAuthentication)
 	{
-		m_ui->rememberPasswordCheckBox->setEnabled(SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool());
+		m_ui->rememberPasswordCheckBox->setEnabled(SettingsManager::getOption(SettingsManager::Browser_RememberPasswordsOption).toBool());
 	}
 	else
 	{

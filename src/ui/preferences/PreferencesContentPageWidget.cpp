@@ -37,13 +37,13 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
-	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
-	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Content_ZoomTextOnlyOption).toBool());
-	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
-	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
-	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
+	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
+	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Content_ZoomTextOnlyOption).toBool());
+	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getOption(SettingsManager::Content_DefaultFontSizeOption).toInt());
+	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getOption(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
+	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getOption(SettingsManager::Content_MinimumFontSizeOption).toInt());
 
-	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString()));
+	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString()));
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
@@ -56,7 +56,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
-		const QString family(SettingsManager::getValue(SettingsManager::getOptionIdentifier((QLatin1String("Content/") + fonts.at(i)))).toString());
+		const QString family(SettingsManager::getOption(SettingsManager::getOptionIdentifier((QLatin1String("Content/") + fonts.at(i)))).toString());
 		QList<QStandardItem*> items({new QStandardItem(fontCategories.at(i)), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[1]->setData(QLatin1String("Content/") + fonts.at(i), Qt::UserRole);
@@ -79,7 +79,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
-		const QString color(SettingsManager::getValue(SettingsManager::getOptionIdentifier(QLatin1String("Content/") + colors.at(i))).toString());
+		const QString color(SettingsManager::getOption(SettingsManager::getOptionIdentifier(QLatin1String("Content/") + colors.at(i))).toString());
 		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(color)});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[1]->setData(QLatin1String("Content/") + colors.at(i), Qt::UserRole);

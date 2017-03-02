@@ -227,36 +227,36 @@ void AddressCompletionModel::setFilter(const QString &filter, CompletionTypes ty
 	{
 		m_types = types;
 
-		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
 		{
 			m_types |= BookmarksCompletionType;
 		}
 
-		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestHistoryOption).toBool())
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool())
 		{
 			m_types |= HistoryCompletionType;
 		}
 
-		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestSearchOption).toBool())
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
 		{
 			m_types |= SearchSuggestionsCompletionType;
 
 			m_defaultSearchEngine = SearchEnginesManager::getSearchEngine();
 		}
 
-		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
 		{
 			m_types |= SpecialPagesCompletionType;
 		}
 
-		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
 		{
 			m_types |= LocalPathSuggestionsCompletionType;
 		}
 	}
 
 	m_filter = filter;
-	m_showCompletionCategories = SettingsManager::getValue(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool();
+	m_showCompletionCategories = SettingsManager::getOption(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool();
 
 	if (m_filter.isEmpty())
 	{

@@ -127,7 +127,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 
 	if (value.isNull())
 	{
-		value = SettingsManager::getValue(identifier);
+		value = SettingsManager::getOption(identifier);
 	}
 
 	OptionWidget *widget(new OptionWidget(name, value, definition.type, parent));

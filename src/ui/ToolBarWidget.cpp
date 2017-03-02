@@ -446,11 +446,11 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
 	cycleAction->setCheckable(true);
-	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
+	cycleAction->setChecked(!SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
 
 	QAction *thumbnailsAction(new QAction(tr("Show Thumbnails in Tabs"), this));
 	thumbnailsAction->setCheckable(true);
-	thumbnailsAction->setChecked(SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
+	thumbnailsAction->setChecked(SettingsManager::getOption(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
 
 	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
 	{

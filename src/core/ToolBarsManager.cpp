@@ -51,7 +51,7 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sidebar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Status Bar"))
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void ToolBarsManager::createInstance(QObject *parent)
@@ -60,7 +60,7 @@ void ToolBarsManager::createInstance(QObject *parent)
 	{
 		m_instance = new ToolBarsManager(parent);
 		m_toolBarIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
-		m_areToolBarsLocked = SettingsManager::getValue(SettingsManager::Interface_LockToolBarsOption).toBool();
+		m_areToolBarsLocked = SettingsManager::getOption(SettingsManager::Interface_LockToolBarsOption).toBool();
 	}
 }
 

@@ -176,7 +176,7 @@ SessionInformation StartupDialog::getSession() const
 
 		if (m_ui->homePageButton->isChecked())
 		{
-			entry.url = SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString();
+			entry.url = SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString();
 		}
 		else if (m_ui->startPageRadioButton->isChecked())
 		{

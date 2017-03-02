@@ -46,7 +46,7 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	handleOptionChanged(SettingsManager::History_RememberBrowsingOption);
 	handleOptionChanged(SettingsManager::History_StoreFaviconsOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void HistoryManager::createInstance(QObject *parent)
@@ -89,7 +89,7 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 			getTypedHistoryModel();
 		}
 
-		const int period(SettingsManager::getValue(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
+		const int period(SettingsManager::getOption(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
 
 		m_browsingHistoryModel->clearOldestEntries(period);
 		m_typedHistoryModel->clearOldestEntries(period);
@@ -172,7 +172,7 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		return;
 	}
 
-	if (!SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption, url).toBool())
+	if (!SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption, url).toBool())
 	{
 		removeEntry(identifier);
 
@@ -202,7 +202,7 @@ void HistoryManager::handleOptionChanged(int identifier)
 	{
 		case SettingsManager::Browser_PrivateModeOption:
 		case SettingsManager::History_RememberBrowsingOption:
-			m_isEnabled = (SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
+			m_isEnabled = (SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool());
 
 			break;
 		case SettingsManager::History_BrowsingLimitAmountGlobalOption:
@@ -217,7 +217,7 @@ void HistoryManager::handleOptionChanged(int identifier)
 					getTypedHistoryModel();
 				}
 
-				const int limit(SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
+				const int limit(SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
 
 				m_browsingHistoryModel->clearExcessEntries(limit);
 				m_typedHistoryModel->clearExcessEntries(limit);
@@ -238,7 +238,7 @@ void HistoryManager::handleOptionChanged(int identifier)
 					getTypedHistoryModel();
 				}
 
-				const int period(SettingsManager::getValue(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
+				const int period(SettingsManager::getOption(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
 
 				m_browsingHistoryModel->clearOldestEntries(period);
 				m_typedHistoryModel->clearOldestEntries(period);
@@ -248,7 +248,7 @@ void HistoryManager::handleOptionChanged(int identifier)
 
 			break;
 		case SettingsManager::History_StoreFaviconsOption:
-			m_isStoringFavicons = SettingsManager::getValue(identifier).toBool();
+			m_isStoringFavicons = SettingsManager::getOption(identifier).toBool();
 
 			break;
 		default:
@@ -343,7 +343,7 @@ QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString
 
 quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
 {
-	if (!m_isEnabled || !url.isValid() || !SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption, url).toBool())
+	if (!m_isEnabled || !url.isValid() || !SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption, url).toBool())
 	{
 		return 0;
 	}
@@ -365,7 +365,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime());
 	}
 
-	const int limit(SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
+	const int limit(SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
 
 	if (limit > 0 && m_browsingHistoryModel->rowCount() > limit)
 	{

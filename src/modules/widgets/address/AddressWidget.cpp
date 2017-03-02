@@ -48,10 +48,10 @@ namespace Otter
 int AddressWidget::m_entryIdentifierEnumerator(-1);
 
 AddressDelegate::AddressDelegate(ViewMode mode, QObject *parent) : QItemDelegate(parent),
-	m_displayMode((SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
+	m_displayMode((SettingsManager::getOption(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
 	m_viewMode(mode)
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -210,16 +210,16 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
 	setWindow(window);
-	handleOptionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getValue(SettingsManager::AddressField_CompletionModeOption));
-	handleOptionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
-	handleOptionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getValue(SettingsManager::AddressField_LayoutOption));
-	handleOptionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
+	handleOptionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getOption(SettingsManager::AddressField_CompletionModeOption));
+	handleOptionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getOption(SettingsManager::AddressField_DropActionOption));
+	handleOptionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getOption(SettingsManager::AddressField_LayoutOption));
+	handleOptionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption));
 
 	if (toolBar)
 	{
 		setPlaceholderText(tr("Enter address or search…"));
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 
 		if (toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 		{
@@ -338,7 +338,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 		{
 			setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
-			if (!text.isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
+			if (!text.isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
 			{
 				selectAll();
 			}
@@ -543,7 +543,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 	}
 
-	if (event->button() == Qt::MiddleButton && text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
+	if (event->button() == Qt::MiddleButton && text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 	{
 		handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
 
@@ -597,7 +597,7 @@ void AddressWidget::removeEntry()
 
 	if (action)
 	{
-		QStringList layout(SettingsManager::getValue(SettingsManager::AddressField_LayoutOption).toStringList());
+		QStringList layout(SettingsManager::getOption(SettingsManager::AddressField_LayoutOption).toStringList());
 		QString name(metaObject()->enumerator(m_entryIdentifierEnumerator).valueToKey(action->data().toInt()));
 
 		if (!name.isEmpty())

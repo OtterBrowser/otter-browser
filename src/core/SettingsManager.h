@@ -254,7 +254,7 @@ public:
 	static QString getOverridePath();
 	static QString getOptionName(int identifier);
 	static QString getReport();
-	static QVariant getValue(int identifier, const QUrl &url = QUrl());
+	static QVariant getOption(int identifier, const QUrl &url = QUrl());
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
 	static int registerOption(const QString &name, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());
@@ -278,8 +278,8 @@ private:
 	static bool m_hasWildcardedOverrides;
 
 signals:
-	void valueChanged(int identifier, const QVariant &value);
-	void valueChanged(int identifier, const QVariant &value, const QUrl &url);
+	void optionChanged(int identifier, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value, const QUrl &url);
 };
 
 }

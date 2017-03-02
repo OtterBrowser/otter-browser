@@ -176,7 +176,7 @@ WebBackend* AddonsManager::getWebBackend(const QString &name)
 
 	if (name.isEmpty() && !m_webBackends.isEmpty())
 	{
-		const QString defaultName(SettingsManager::getValue(SettingsManager::Backends_WebOption).toString());
+		const QString defaultName(SettingsManager::getOption(SettingsManager::Backends_WebOption).toString());
 
 		if (m_webBackends.contains(defaultName))
 		{

@@ -221,7 +221,7 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 		{
 			if (wasCloseButtonUnderMouse && !m_isCloseButtonUnderMouse)
 			{
-				m_tabBarWidget->showPreview(-1, SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
+				m_tabBarWidget->showPreview(-1, SettingsManager::getOption(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 
 				QToolTip::hideText();
 
@@ -458,15 +458,15 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_hoveredTab(-1),
 	m_pinnedTabsAmount(0),
 	m_previewTimer(0),
-	m_arePreviewsEnabled(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
+	m_arePreviewsEnabled(SettingsManager::getOption(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
 	m_isDraggingTab(false),
 	m_isDetachingTab(false),
 	m_isIgnoringTabDrag(false),
 	m_needsUpdateOnLeave(false)
 {
-	m_areThumbnailsEnabled = SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool();
-	m_isCloseButtonEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowCloseButtonOption).toBool();
-	m_isUrlIconEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool();
+	m_areThumbnailsEnabled = SettingsManager::getOption(SettingsManager::TabBar_EnableThumbnailsOption).toBool();
+	m_isCloseButtonEnabled = SettingsManager::getOption(SettingsManager::TabBar_ShowCloseButtonOption).toBool();
+	m_isUrlIconEnabled = SettingsManager::getOption(SettingsManager::TabBar_ShowUrlIconOption).toBool();
 
 	setAcceptDrops(true);
 	setExpanding(false);
@@ -479,10 +479,10 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 	updateStyle();
-	handleOptionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
-	handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
-	handleOptionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabWidthOption));
-	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
+	handleOptionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getOption(SettingsManager::TabBar_MaximumTabHeightOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getOption(SettingsManager::TabBar_MinimumTabHeightOption));
+	handleOptionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getOption(SettingsManager::TabBar_MaximumTabWidthOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getOption(SettingsManager::TabBar_MinimumTabWidthOption));
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -493,7 +493,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(updateStyle()));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updatePreviewPosition()));
 }
@@ -510,7 +510,7 @@ void TabBarWidget::changeEvent(QEvent *event)
 
 			break;
 		case QEvent::FontChange:
-			handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+			handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getOption(SettingsManager::TabBar_MinimumTabHeightOption));
 
 			break;
 		default:
@@ -613,7 +613,7 @@ void TabBarWidget::enterEvent(QEvent *event)
 {
 	QTabBar::enterEvent(event);
 
-	showPreview(-1, SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
+	showPreview(-1, SettingsManager::getOption(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 }
 
 void TabBarWidget::leaveEvent(QEvent *event)
@@ -732,11 +732,11 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
 	cycleAction->setCheckable(true);
-	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
+	cycleAction->setChecked(!SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
 
 	QAction *thumbnailsAction(new QAction(tr("Show Thumbnails in Tabs"), this));
 	thumbnailsAction->setCheckable(true);
-	thumbnailsAction->setChecked(SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
+	thumbnailsAction->setChecked(SettingsManager::getOption(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
 
 	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
 	{
@@ -777,7 +777,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (underMouse())
 	{
-		m_previewTimer = startTimer(SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
+		m_previewTimer = startTimer(SettingsManager::getOption(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 	}
 }
 
@@ -891,7 +891,7 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 {
 	QWidget::wheelEvent(event);
 
-	if (!(event->modifiers().testFlag(Qt::ControlModifier)) && SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
+	if (!(event->modifiers().testFlag(Qt::ControlModifier)) && SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
 	{
 		return;
 	}
@@ -999,7 +999,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 		{
 			const QList<QUrl> urls(Utils::extractUrls(event->mimeData()));
 
-			if (urls.count() > 1 && SettingsManager::getValue(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption).toBool())
+			if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption).toBool())
 			{
 				QMessageBox messageBox;
 				messageBox.setWindowTitle(tr("Question"));
@@ -1478,8 +1478,8 @@ void TabBarWidget::updateStyle()
 		m_isLayoutReversed = !m_isLayoutReversed;
 	}
 
-	handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
-	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getOption(SettingsManager::TabBar_MinimumTabHeightOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getOption(SettingsManager::TabBar_MinimumTabWidthOption));
 
 	emit needsGeometriesUpdate();
 }

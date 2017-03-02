@@ -45,11 +45,11 @@ bool ThemesManager::m_useSystemIconTheme(false);
 
 ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 {
-	m_useSystemIconTheme = SettingsManager::getValue(SettingsManager::Interface_UseSystemIconThemeOption).toBool();
+	m_useSystemIconTheme = SettingsManager::getOption(SettingsManager::Interface_UseSystemIconThemeOption).toBool();
 
-	handleOptionChanged(SettingsManager::Interface_IconThemePathOption, SettingsManager::getValue(SettingsManager::Interface_IconThemePathOption));
+	handleOptionChanged(SettingsManager::Interface_IconThemePathOption, SettingsManager::getOption(SettingsManager::Interface_IconThemePathOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void ThemesManager::createInstance(QObject *parent)
@@ -153,7 +153,7 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 	{
 		if (!QApplication::style()->inherits("Otter::Style"))
 		{
-			QApplication::setStyle(createStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString()));
+			QApplication::setStyle(createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
 		}
 
 		emit widgetStyleChanged();

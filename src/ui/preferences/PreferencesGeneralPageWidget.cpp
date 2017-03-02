@@ -36,7 +36,7 @@ namespace Otter
 {
 
 PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QWidget(parent),
-	m_acceptLanguage(SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption).toString()),
+	m_acceptLanguage(SettingsManager::getOption(SettingsManager::Network_AcceptLanguageOption).toString()),
 	m_ui(new Ui::PreferencesGeneralPageWidget)
 {
 	m_ui->setupUi(this);
@@ -46,22 +46,22 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->startupBehaviorComboBox->addItem(tr("Show start page"), QLatin1String("startStartPage"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show empty page"), QLatin1String("startEmpty"));
 
-	const int startupBehaviorIndex(m_ui->startupBehaviorComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_StartupBehaviorOption).toString()));
+	const int startupBehaviorIndex(m_ui->startupBehaviorComboBox->findData(SettingsManager::getOption(SettingsManager::Browser_StartupBehaviorOption).toString()));
 
 	m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
-	m_ui->homePageLineEdit->setText(SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
 
 	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->useBookmarkAsHomePageButton));
 
 	m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
 	m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
-	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Paths_DownloadsOption).toString());
-	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool());
-	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
-	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool());
-	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
-	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
+	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
+	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool());
+	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
+	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool());
+	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
+	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
 
 	PlatformIntegration *integration(Application::getPlatformIntegration());
 

@@ -65,7 +65,7 @@ HandlerDefinition HandlersManager::getHandler(const QString &type)
 	const QString transferMode(settings.getValue(QLatin1String("transferMode"), QString()).toString());
 
 	definition.openCommand = settings.getValue(QLatin1String("openCommand"), QString()).toString();
-	definition.downloadsPath = (downloadsPath.isEmpty() ? SettingsManager::getValue(SettingsManager::Paths_DownloadsOption).toString() : downloadsPath);
+	definition.downloadsPath = (downloadsPath.isEmpty() ? SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString() : downloadsPath);
 
 	if (transferMode == QLatin1String("ignore"))
 	{

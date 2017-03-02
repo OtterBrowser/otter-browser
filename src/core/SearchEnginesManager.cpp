@@ -62,7 +62,7 @@ void SearchEnginesManager::ensureInitialized()
 
 		loadSearchEngines();
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int)));
+		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int)));
 	}
 }
 
@@ -71,7 +71,7 @@ void SearchEnginesManager::loadSearchEngines()
 	m_searchEngines.clear();
 	m_searchKeywords.clear();
 
-	m_searchEnginesOrder = SettingsManager::getValue(SettingsManager::Search_SearchEnginesOrderOption).toStringList();
+	m_searchEnginesOrder = SettingsManager::getOption(SettingsManager::Search_SearchEnginesOrderOption).toStringList();
 
 	const QStringList searchEnginesOrder(m_searchEnginesOrder);
 
@@ -442,7 +442,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 
 	if (identifier.isEmpty())
 	{
-		return m_searchEngines.value(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString(), SearchEngineDefinition());
+		return m_searchEngines.value(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString(), SearchEngineDefinition());
 	}
 
 	return m_searchEngines.value(identifier, SearchEngineDefinition());

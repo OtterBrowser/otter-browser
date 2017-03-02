@@ -36,10 +36,10 @@ NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
 		QDir().mkpath(cachePath);
 
 		setCacheDirectory(cachePath);
-		setMaximumCacheSize(SettingsManager::getValue(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
+		setMaximumCacheSize(SettingsManager::getOption(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void NetworkCache::clearCache(int period)

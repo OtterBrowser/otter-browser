@@ -299,16 +299,16 @@ void SettingsManager::setValue(int identifier, const QVariant &value, const QUrl
 			m_hasWildcardedOverrides = true;
 		}
 
-		emit m_instance->valueChanged(identifier, value, url);
+		emit m_instance->optionChanged(identifier, value, url);
 
 		return;
 	}
 
-	if (getValue(identifier) != value)
+	if (getOption(identifier) != value)
 	{
 		QSettings(m_globalPath, QSettings::IniFormat).setValue(name, value);
 
-		emit m_instance->valueChanged(identifier, value);
+		emit m_instance->optionChanged(identifier, value);
 	}
 }
 
@@ -405,7 +405,7 @@ QString SettingsManager::getReport()
 			stream << definition.defaultValue.toString();
 		}
 
-		stream << ((definition.defaultValue == getValue(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default"));
+		stream << ((definition.defaultValue == getOption(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default"));
 		stream << (overridenValues.contains(options.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[options.at(i)]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
@@ -416,7 +416,7 @@ QString SettingsManager::getReport()
 	return report;
 }
 
-QVariant SettingsManager::getValue(int identifier, const QUrl &url)
+QVariant SettingsManager::getOption(int identifier, const QUrl &url)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
@@ -444,12 +444,12 @@ QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 
 			if (overrides.contains(wildcardedName))
 			{
-				return QSettings(m_overridePath, QSettings::IniFormat).value(wildcardedName, getValue(identifier));
+				return QSettings(m_overridePath, QSettings::IniFormat).value(wildcardedName, getOption(identifier));
 			}
 		}
 	}
 
-	return QSettings(m_overridePath, QSettings::IniFormat).value(overrideName, getValue(identifier));
+	return QSettings(m_overridePath, QSettings::IniFormat).value(overrideName, getOption(identifier));
 }
 
 QStringList SettingsManager::getOptions()

@@ -383,7 +383,7 @@ QString formatDateTime(const QDateTime &dateTime, QString format)
 {
 	if (format.isEmpty())
 	{
-		format = SettingsManager::getValue(SettingsManager::Interface_DateTimeFormatOption).toString();
+		format = SettingsManager::getOption(SettingsManager::Interface_DateTimeFormatOption).toString();
 	}
 
 	return (format.isEmpty() ? QLocale().toString(dateTime, QLocale::ShortFormat) : QLocale().toString(dateTime, format));
@@ -468,11 +468,11 @@ QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool
 
 	if (selectMultiple)
 	{
-		paths = QFileDialog::getOpenFileNames(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
+		paths = QFileDialog::getOpenFileNames(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getOption(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
 	}
 	else
 	{
-		const QString path(QFileDialog::getOpenFileName(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
+		const QString path(QFileDialog::getOpenFileName(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getOption(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
 
 		if (!path.isEmpty())
 		{
@@ -540,7 +540,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 	{
 		if (path.isEmpty() || forceAsk)
 		{
-			QFileDialog dialog(Application::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getValue(SettingsManager::Paths_SaveFileOption).toString() + QDir::separator() + fileName);
+			QFileDialog dialog(Application::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getOption(SettingsManager::Paths_SaveFileOption).toString() + QDir::separator() + fileName);
 			dialog.setNameFilters(filters);
 			dialog.setFileMode(QFileDialog::AnyFile);
 			dialog.setAcceptMode(QFileDialog::AcceptSave);

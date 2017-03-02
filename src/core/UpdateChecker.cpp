@@ -37,7 +37,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 	m_networkReply(nullptr),
 	m_isInBackground(inBackground)
 {
-	const QUrl url(SettingsManager::getValue(SettingsManager::Updates_ServerUrlOption).toString());
+	const QUrl url(SettingsManager::getOption(SettingsManager::Updates_ServerUrlOption).toString());
 
 	if (!url.isValid())
 	{
@@ -69,7 +69,7 @@ void UpdateChecker::runUpdateCheck()
 		return;
 	}
 
-	QStringList activeChannels(SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList());
+	QStringList activeChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
 	activeChannels.removeAll(QString());
 
 	const QJsonObject updateData(QJsonDocument::fromJson(m_networkReply->readAll()).object());

@@ -85,7 +85,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	updateShortcuts();
 
-	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool()), this);
+	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool()), this);
 
 	m_workspace->updateActions();
 
@@ -126,7 +126,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	setCentralWidget(m_workspace);
 
-	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption).toBool());
+	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool());
 	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
@@ -149,7 +149,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	}
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(handleToolBarAdded(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarMoved(int)), this, SLOT(handleToolBarMoved(int)));
@@ -170,7 +170,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	{
 		restoreGeometry(session.geometry);
 	}
-	else if (SettingsManager::getValue(SettingsManager::Interface_MaximizeNewWindowsOption).toBool())
+	else if (SettingsManager::getOption(SettingsManager::Interface_MaximizeNewWindowsOption).toBool())
 	{
 		showMaximized();
 	}
@@ -447,7 +447,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::GoToHomePageAction:
 			{
-				const QString homePage(SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString());
+				const QString homePage(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
 
 				if (!homePage.isEmpty())
 				{
@@ -615,7 +615,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::ClearHistoryAction:
 			{
-				ClearHistoryDialog dialog(SettingsManager::getValue(SettingsManager::History_ManualClearOptionsOption).toStringList(), false, this);
+				ClearHistoryDialog dialog(SettingsManager::getOption(SettingsManager::History_ManualClearOptionsOption).toStringList(), false, this);
 				dialog.exec();
 			}
 
@@ -1107,7 +1107,7 @@ void MainWindow::handleToolBarRemoved(int identifier)
 
 void MainWindow::handleTransferStarted()
 {
-	const QString action(SettingsManager::getValue(SettingsManager::Browser_TransferStartingActionOption).toString());
+	const QString action(SettingsManager::getOption(SettingsManager::Browser_TransferStartingActionOption).toString());
 
 	if (action == QLatin1String("openTab"))
 	{

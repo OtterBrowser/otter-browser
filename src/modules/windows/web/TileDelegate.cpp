@@ -39,7 +39,7 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	const int textHeight(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5);
-	const QString tileBackgroundMode(SettingsManager::getValue(SettingsManager::StartPage_TileBackgroundModeOption).toString());
+	const QString tileBackgroundMode(SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption).toString());
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
 
@@ -163,9 +163,9 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	const qreal zoom(SettingsManager::getValue(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
+	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
 
-	return QSize((SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt() * zoom), (SettingsManager::getValue(SettingsManager::StartPage_TileHeightOption).toInt() * zoom));
+	return QSize((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() * zoom), (SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() * zoom));
 }
 
 }

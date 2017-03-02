@@ -512,7 +512,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), ThemesManager::getIcon(QLatin1String("qt"), NoFlags));
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), ThemesManager::getIcon(QLatin1String("application-exit")));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void ActionsManager::createInstance(QObject *parent)
@@ -542,8 +542,8 @@ void ActionsManager::loadProfiles()
 {
 	QHash<int, QVector<QKeySequence> > actionShortcuts;
 	QVector<QKeySequence> allShortcuts;
-	const QStringList shortcutProfiles(SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
-	const bool enableSingleKeyShortcuts(SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
+	const QStringList shortcutProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
+	const bool enableSingleKeyShortcuts(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
 
 	for (int i = 0; i < shortcutProfiles.count(); ++i)

@@ -31,12 +31,12 @@ namespace Otter
 {
 
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),
-	m_areImagesEnabled(SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"))
+	m_areImagesEnabled(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"))
 {
 	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant,QUrl)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant,QUrl)), this, SLOT(handleOptionChanged(int)));
 }
 
 void QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation()
@@ -56,7 +56,7 @@ void QtWebEngineUrlRequestInterceptor::handleOptionChanged(int identifier)
 
 			break;
 		case SettingsManager::Permissions_EnableImagesOption:
-			m_areImagesEnabled = (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"));
+			m_areImagesEnabled = (SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"));
 
 			break;
 		default:
@@ -80,9 +80,9 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (!m_contentBlockingProfiles.contains(request.firstPartyUrl().host()))
 	{
-		if (SettingsManager::getValue(SettingsManager::ContentBlocking_EnableContentBlockingOption, request.firstPartyUrl()).toBool())
+		if (SettingsManager::getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, request.firstPartyUrl()).toBool())
 		{
-			m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption, request.firstPartyUrl()).toStringList());
+			m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, request.firstPartyUrl()).toStringList());
 		}
 		else
 		{

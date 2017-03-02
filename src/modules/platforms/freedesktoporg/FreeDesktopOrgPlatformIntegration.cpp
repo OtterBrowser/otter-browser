@@ -224,7 +224,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 			break;
 	}
 
-	const int visibilityDuration(SettingsManager::getValue(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
+	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 	QVariantMap hints;
 	hints[QLatin1String("image_data")] = Application::windowIcon().pixmap(128, 128).toImage();
 

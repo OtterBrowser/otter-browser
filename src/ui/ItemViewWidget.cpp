@@ -208,7 +208,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 {
 	m_treeIndentation = indentation();
 
-	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption));
+	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption));
 	setHeader(m_headerWidget);
 	setItemDelegate(new ItemDelegate(this));
 	setIndentation(0);
@@ -218,7 +218,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 	viewport()->setAcceptDrops(true);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(this, SIGNAL(sortChanged(int,Qt::SortOrder)), m_headerWidget, SLOT(setSort(int,Qt::SortOrder)));
 	connect(m_headerWidget, SIGNAL(sortChanged(int,Qt::SortOrder)), this, SLOT(setSort(int,Qt::SortOrder)));
 	connect(m_headerWidget, SIGNAL(columnVisibilityChanged(int,bool)), this, SLOT(setColumnVisibility(int,bool)));

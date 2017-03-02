@@ -330,14 +330,14 @@ SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent)
 {
 	new SyntaxHighlighter(document());
 
-	setZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
-	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption));
-	handleOptionChanged(SettingsManager::SourceViewer_ShowLineNumbersOption, SettingsManager::getValue(SettingsManager::SourceViewer_ShowLineNumbersOption));
-	handleOptionChanged(SettingsManager::SourceViewer_WrapLinesOption, SettingsManager::getValue(SettingsManager::SourceViewer_WrapLinesOption));
+	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
+	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption));
+	handleOptionChanged(SettingsManager::SourceViewer_ShowLineNumbersOption, SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption));
+	handleOptionChanged(SettingsManager::SourceViewer_WrapLinesOption, SettingsManager::getOption(SettingsManager::SourceViewer_WrapLinesOption));
 
 	connect(this, SIGNAL(textChanged()), this, SLOT(updateSelection()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void SourceViewerWidget::resizeEvent(QResizeEvent *event)

@@ -68,7 +68,7 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 	layout->addWidget(new QLabel(text, this));
 
 	const SettingsManager::OptionDefinition optionDefinition(SettingsManager::getOptionDefinition(m_identifier));
-	const QVariant value((m_scope == GlobalScope || !m_window) ? SettingsManager::getValue(m_identifier) : m_window->getOption(m_identifier));
+	const QVariant value((m_scope == GlobalScope || !m_window) ? SettingsManager::getOption(m_identifier) : m_window->getOption(m_identifier));
 
 	m_optionWidget = new OptionWidget(key, value, optionDefinition.type, this);
 	m_optionWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
@@ -91,10 +91,10 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 			connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 		}
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant,QUrl)), this, SLOT(updateValue(int)));
+		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant,QUrl)), this, SLOT(updateValue(int)));
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_optionWidget, SIGNAL(commitData(QWidget*)), this, SLOT(save()));
 }
 
@@ -124,7 +124,7 @@ void ConfigurationOptionWidget::setWindow(Window *window)
 	m_window = window;
 
 	m_optionWidget->setEnabled(m_window != nullptr);
-	m_optionWidget->setValue(m_window ? m_window->getOption(m_identifier) : SettingsManager::getValue(m_identifier));
+	m_optionWidget->setValue(m_window ? m_window->getOption(m_identifier) : SettingsManager::getOption(m_identifier));
 
 	if (window)
 	{

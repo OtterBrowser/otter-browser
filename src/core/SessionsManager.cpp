@@ -194,7 +194,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 		return session;
 	}
 
-	const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+	const int defaultZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 	const QJsonArray mainWindowsArray(settings.object().value(QLatin1String("windows")).toArray());
 
 	session.path = path;
@@ -424,7 +424,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		}
 	}
 
-	const QStringList excludedOptions(SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromSavingOption).toStringList());
+	const QStringList excludedOptions(SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromSavingOption).toStringList());
 	QJsonArray mainWindowsArray;
 	QJsonObject sessionObject;
 	sessionObject.insert(QLatin1String("title"), session.title);

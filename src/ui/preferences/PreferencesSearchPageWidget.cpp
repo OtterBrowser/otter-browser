@@ -102,7 +102,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	searchEnginesModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Keyword")}));
 	searchEnginesModel->setExclusive(true);
 
-	const QString defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString());
+	const QString defaultSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 	for (int i = 0; i < searchEngines.count(); ++i)
@@ -123,7 +123,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchViewWidget->setItemDelegateForColumn(0, new SearchEngineTitleDelegate(this));
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
 	m_ui->searchViewWidget->setExclusive(true);
-	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
+	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
 	addSearchMenu->addAction(tr("New…"), this, SLOT(createSearchEngine()));
@@ -551,7 +551,7 @@ void PreferencesSearchPageWidget::save()
 		}
 	}
 
-	if (SettingsManager::getValue(SettingsManager::Search_SearchEnginesOrderOption).toStringList() == searchEnginesOrder)
+	if (SettingsManager::getOption(SettingsManager::Search_SearchEnginesOrderOption).toStringList() == searchEnginesOrder)
 	{
 		SearchEnginesManager::loadSearchEngines();
 	}

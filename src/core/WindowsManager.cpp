@@ -259,7 +259,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints, int index)
 	{
 		hints = NewTabOpen;
 	}
-	else if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+	else if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -301,7 +301,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints, int index)
 
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
-	if (hints == DefaultOpen && ((window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+	if (hints == DefaultOpen && ((window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -318,7 +318,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints, int index)
 				const QList<QUrl> urls(bookmark->getUrls());
 				bool canOpen(true);
 
-				if (urls.count() > 1 && SettingsManager::getValue(SettingsManager::Choices_WarnOpenBookmarkFolderOption).toBool())
+				if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption).toBool())
 				{
 					QMessageBox messageBox;
 					messageBox.setWindowTitle(tr("Question"));
@@ -362,7 +362,7 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints, int index)
 
 	addWindow(window, hints, index);
 
-	window->setUrl(((url.isEmpty() && SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
+	window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 }
 
 void WindowsManager::search(const QString &query, const QString &searchEngine, OpenHints hints)
@@ -370,7 +370,7 @@ void WindowsManager::search(const QString &query, const QString &searchEngine, O
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 	const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
 
-	if ((hints == NewTabOpen && isUrlEmpty) || (hints == DefaultOpen && (isUrlEmpty || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool())))
+	if ((hints == NewTabOpen && isUrlEmpty) || (hints == DefaultOpen && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -460,7 +460,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	{
 		m_isRestored = true;
 
-		if (SettingsManager::getValue(SettingsManager::Interface_LastTabClosingActionOption).toString() != QLatin1String("doNothing"))
+		if (SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString() != QLatin1String("doNothing"))
 		{
 			open();
 		}
@@ -573,7 +573,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 
 	if (index < 0)
 	{
-		index = ((!hints.testFlag(EndOpen) && SettingsManager::getValue(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
+		index = ((!hints.testFlag(EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
 	}
 
 	if (!window->isPinned())
@@ -586,7 +586,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		}
 	}
 
-	const QString newTabOpeningAction(SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption).toString());
+	const QString newTabOpeningAction(SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString());
 
 	if (m_isRestored && newTabOpeningAction == QLatin1String("maximizeTab"))
 	{
@@ -736,7 +736,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		}
 	}
 
-	const QString lastTabClosingAction(SettingsManager::getValue(SettingsManager::Interface_LastTabClosingActionOption).toString());
+	const QString lastTabClosingAction(SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString());
 
 	if (m_mainWindow->getTabBar()->count() == 1)
 	{
@@ -1011,7 +1011,7 @@ QList<ClosedWindow> WindowsManager::getClosedWindows() const
 
 WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, int modifiers)
 {
-	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
+	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
 	const Qt::KeyboardModifiers keyboardModifiers((modifiers == -1) ? QGuiApplication::keyboardModifiers() : static_cast<Qt::KeyboardModifiers>(modifiers));
 
 	if (button == Qt::MiddleButton && keyboardModifiers.testFlag(Qt::AltModifier))
@@ -1034,7 +1034,7 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt
 		return (useNewTab ? NewTabOpen : NewWindowOpen);
 	}
 
-	if (SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool())
+	if (SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())
 	{
 		return CurrentTabOpen;
 	}

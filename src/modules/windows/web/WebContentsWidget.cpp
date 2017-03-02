@@ -71,7 +71,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
 	m_isTabPreferencesMenuVisible(false),
-	m_showStartPage(SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool()),
+	m_showStartPage(SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()),
 	m_ignoreRelease(false)
 {
 	m_splitter->hide();
@@ -393,7 +393,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
 				connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? WindowsManager::NewTabOpen : WindowsManager::CurrentTabOpen), true);
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? WindowsManager::NewTabOpen : WindowsManager::CurrentTabOpen), true);
 			}
 
 			break;
@@ -409,7 +409,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
 				connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
 
-				if (SettingsManager::getValue(SettingsManager::Search_EnableFindInPageAsYouTypeOption).toBool())
+				if (SettingsManager::getOption(SettingsManager::Search_EnableFindInPageAsYouTypeOption).toBool())
 				{
 					connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
 				}
@@ -424,7 +424,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					m_quickFindTimer = startTimer(2000);
 				}
 
-				if (SettingsManager::getValue(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
+				if (SettingsManager::getOption(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 				{
 					m_searchBarWidget->setQuery(m_sharedQuickFindQuery);
 				}
@@ -632,7 +632,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags));
 
-	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getValue(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
+	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getOption(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 	{
 		m_sharedQuickFindQuery = m_quickFindQuery;
 	}
@@ -880,7 +880,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 {
 	if (state == WindowsManager::CrashedLoadingState)
 	{
-		const QString tabCrashingAction(SettingsManager::getValue(SettingsManager::Browser_TabCrashingActionOption, getUrl()).toString());
+		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Browser_TabCrashingActionOption, getUrl()).toString());
 		bool reloadTab(tabCrashingAction != QLatin1String("close"));
 
 		if (tabCrashingAction == QLatin1String("ask"))
@@ -1078,7 +1078,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 	handleLoadingStateChange(m_webWidget->getLoadingState());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
 	connect(m_webWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));

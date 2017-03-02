@@ -47,7 +47,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	{
 		const int identifier(SettingsManager::getOptionIdentifier(options.at(i)));
 		const QStringList option(options.at(i).split(QLatin1Char('/')));
-		const QVariant value(SettingsManager::getValue(identifier));
+		const QVariant value(SettingsManager::getOption(identifier));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
 		if (!definition.flags.testFlag(SettingsManager::IsEnabledFlag) || !definition.flags.testFlag(SettingsManager::IsVisibleFlag))
@@ -93,7 +93,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));

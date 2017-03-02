@@ -42,11 +42,11 @@ bool ContentBlockingManager::m_areWildcardsEnabled(true);
 ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
 {
-	m_areWildcardsEnabled = SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
+	m_areWildcardsEnabled = SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
 
-	handleOptionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
+	handleOptionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void ContentBlockingManager::createInstance(QObject *parent)

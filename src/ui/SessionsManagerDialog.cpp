@@ -33,7 +33,7 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::SessionsManagerDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->openInExistingWindowCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool());
+	m_ui->openInExistingWindowCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Sessions_OpenInExistingWindowOption).toBool());
 
 	const QStringList sessions(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;

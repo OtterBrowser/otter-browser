@@ -237,14 +237,14 @@ void NetworkManagerFactory::initialize()
 	loadProxies();
 	loadUserAgents();
 
-	m_instance->handleOptionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption));
-	m_instance->handleOptionChanged(SettingsManager::Network_DoNotTrackPolicyOption, SettingsManager::getValue(SettingsManager::Network_DoNotTrackPolicyOption));
-	m_instance->handleOptionChanged(SettingsManager::Network_EnableReferrerOption, SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption));
-	m_instance->handleOptionChanged(SettingsManager::Network_ProxyOption, SettingsManager::getValue(SettingsManager::Network_ProxyOption));
-	m_instance->handleOptionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption));
-	m_instance->handleOptionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getValue(SettingsManager::Security_CiphersOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getOption(SettingsManager::Network_AcceptLanguageOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_DoNotTrackPolicyOption, SettingsManager::getOption(SettingsManager::Network_DoNotTrackPolicyOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_EnableReferrerOption, SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_ProxyOption, SettingsManager::getOption(SettingsManager::Network_ProxyOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption));
+	m_instance->handleOptionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getOption(SettingsManager::Security_CiphersOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void NetworkManagerFactory::clearCookies(int period)

@@ -129,7 +129,7 @@ bool GesturesManager::m_afterScroll(false);
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void GesturesManager::createInstance(QObject *parent)
@@ -190,8 +190,8 @@ void GesturesManager::loadProfiles()
 		m_gestures[context].append(contextMenuGestureDefinition);
 	}
 
-	const QStringList gestureProfiles(SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
-	const bool areMouseGesturesEnabled(SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
+	const QStringList gestureProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
+	const bool areMouseGesturesEnabled(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{

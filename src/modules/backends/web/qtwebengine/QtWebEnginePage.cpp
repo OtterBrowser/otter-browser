@@ -217,7 +217,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 
 		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
 		{
-			const QString popupsPolicy(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
+			const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
 
 			if (popupsPolicy == QLatin1String("blockAll"))
 			{
@@ -237,7 +237,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 
 		if (m_widget)
 		{
-			widget = qobject_cast<QtWebEngineWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
+			widget = qobject_cast<QtWebEngineWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 		}
 		else
 		{
@@ -299,7 +299,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 		return false;
 	}
 
-	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getValue(SettingsManager::Choices_WarnFormResendOption).toBool())
+	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool cancel(false);
 		bool warn(true);

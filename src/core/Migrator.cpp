@@ -44,7 +44,7 @@ Migrator::Migrator(QObject *parent) : QObject(parent)
 
 void Migrator::run()
 {
-	QStringList migrations(SettingsManager::getValue(SettingsManager::Browser_MigrationsOption).toStringList());
+	QStringList migrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 	QStringList newMigrations;
 
 	if (!migrations.contains(QLatin1String("sessionsIniToJson")) && !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty())
@@ -202,7 +202,7 @@ void Migrator::run()
 				session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
 
 				const int windowsAmount(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
-				const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+				const int defaultZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 
 				for (int j = 1; j <= windowsAmount; ++j)
 				{

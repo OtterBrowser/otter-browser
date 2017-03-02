@@ -31,9 +31,9 @@ namespace Otter
 {
 
 Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyleFactory::create(name)),
-	m_areToolTipsEnabled(SettingsManager::getValue(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled"))
+	m_areToolTipsEnabled(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled"))
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void Style::drawDropZone(const QLine &line, QPainter *painter)

@@ -222,11 +222,11 @@ WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
-	handleOptionChanged(SettingsManager::Interface_NewTabOpeningActionOption, SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption));
+	handleOptionChanged(SettingsManager::Interface_NewTabOpeningActionOption, SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption));
 
 	if (!m_mdi)
 	{
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	}
 }
 
@@ -259,7 +259,7 @@ void WorkspaceWidget::createMdi()
 		return;
 	}
 
-	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	disconnect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 
 	Window *activeWindow(m_activeWindow);
 

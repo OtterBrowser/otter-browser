@@ -128,14 +128,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut));
 
-	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
-	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getValue(SettingsManager::Content_BackgroundColorOption));
-	handleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountWindowOption));
+	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
+	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getOption(SettingsManager::Content_BackgroundColorOption));
+	handleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountWindowOption));
 	updateEditActions();
-	setZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QUrl,QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
 	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
@@ -501,7 +501,7 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 	{
 		disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
-		if (value.toBool() || SettingsManager::getValue(identifier, getUrl()).toBool())
+		if (value.toBool() || SettingsManager::getOption(identifier, getUrl()).toBool())
 		{
 			connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 		}
@@ -631,7 +631,7 @@ void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
 
 	if (request.toggleOn())
 	{
-		const QString value(SettingsManager::getValue(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
+		const QString value(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -2689,7 +2689,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
+		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
 		{
 			QWidget *widget(childAt(mouseEvent->pos()));
 			const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));
@@ -2735,7 +2735,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				return true;
 			}
 
-			if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
+			if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 			{
 				const WebWidget::HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 
