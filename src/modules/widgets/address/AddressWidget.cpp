@@ -193,14 +193,12 @@ QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(parent),
 	m_window(nullptr),
 	m_completionModel(new AddressCompletionModel(this)),
-	m_completionView(nullptr),
 	m_clickedEntry(UnknownEntry),
 	m_hoveredEntry(UnknownEntry),
 	m_completionModes(NoCompletionMode),
 	m_hints(WindowsManager::DefaultOpen),
 	m_isNavigatingCompletion(false),
-	m_isUsingSimpleMode(false),
-	m_isTypedHistoryCompletion(false)
+	m_isUsingSimpleMode(false)
 {
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -325,7 +323,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 void AddressWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Down && (!m_completionView || !m_completionView->isVisible()))
+	if (event->key() == Qt::Key_Down && !isPopupVisible())
 	{
 		m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
 
@@ -532,14 +530,12 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 				return;
 			case HistoryDropdownEntry:
 
-				if (!m_isTypedHistoryCompletion)
+				if (!isPopupVisible())
 				{
 					m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
 
 					showCompletion(true);
 				}
-
-				m_isTypedHistoryCompletion = !m_isTypedHistoryCompletion;
 
 				break;
 			default:
@@ -559,21 +555,6 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	LineEditWidget::mouseReleaseEvent(event);
 }
 
-void AddressWidget::hideCompletion()
-{
-	if (m_completionView)
-	{
-		m_completionView->hide();
-		m_completionView->deleteLater();
-		m_completionView = nullptr;
-
-		QString statusTip;
-		QStatusTipEvent statusTipEvent(statusTip);
-
-		QApplication::sendEvent(this, &statusTipEvent);
-	}
-}
-
 void AddressWidget::openFeed(QAction *action)
 {
 	if (action && m_window)
@@ -590,7 +571,7 @@ void AddressWidget::openUrl(const QString &url)
 
 void AddressWidget::openUrl(const QModelIndex &index)
 {
-	hideCompletion();
+	hidePopup();
 
 	if (!index.isValid())
 	{
@@ -633,47 +614,19 @@ void AddressWidget::removeEntry()
 
 void AddressWidget::showCompletion(bool isTypedHistory)
 {
-	if (!m_completionView)
+	PopupViewWidget *popupWidget(getPopup());
+	popupWidget->setModel(m_completionModel);
+	popupWidget->setItemDelegate(new AddressDelegate(isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode, popupWidget));
+
+	if (!isPopupVisible())
 	{
-		m_completionView = new ItemViewWidget();
-		m_completionView->setWindowFlags(Qt::Popup);
-		m_completionView->setFocusPolicy(Qt::NoFocus);
-		m_completionView->setFocusProxy(this);
-		m_completionView->setModel(m_completionModel);
-		m_completionView->setItemDelegate(new AddressDelegate(isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode, m_completionView));
-		m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		m_completionView->setFixedWidth(width());
-		m_completionView->installEventFilter(this);
-		m_completionView->header()->setStretchLastSection(true);
-		m_completionView->header()->hide();
-		m_completionView->viewport()->setAttribute(Qt::WA_Hover);
-		m_completionView->viewport()->setMouseTracking(true);
-		m_completionView->viewport()->installEventFilter(this);
+		connect(popupWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+		connect(popupWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setTextFromIndex(QModelIndex)));
 
-		connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
-		connect(m_completionView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setTextFromIndex(QModelIndex)));
-
-		m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
-		m_completionView->show();
+		showPopup();
 	}
 
-	int completionHeight(5);
-
-	if (m_completionModel->rowCount() < 20)
-	{
-		for (int i = 0; i < m_completionModel->rowCount(); ++i)
-		{
-			completionHeight += m_completionView->sizeHintForRow(i);
-		}
-	}
-	else
-	{
-		completionHeight += (20 * m_completionView->sizeHintForRow(0));
-	}
-
-	m_completionView->setFixedHeight(completionHeight);
-	m_completionView->viewport()->setFixedHeight(completionHeight - 3);
-	m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
+	popupWidget->setCurrentIndex(m_completionModel->index(0, 0));
 }
 
 void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
@@ -1061,11 +1014,9 @@ void AddressWidget::updateGeometries()
 
 void AddressWidget::setCompletion(const QString &filter)
 {
-	m_isTypedHistoryCompletion = false;
-
 	if (filter.isEmpty() || m_completionModel->rowCount() == 0)
 	{
-		hideCompletion();
+		hidePopup();
 
 		LineEditWidget::setCompletion(QString());
 
@@ -1249,102 +1200,6 @@ bool AddressWidget::event(QEvent *event)
 	}
 
 	return LineEditWidget::event(event);
-}
-
-bool AddressWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (object == m_completionView && event->type() == QEvent::KeyPress)
-	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent)
-		{
-			LineEditWidget::event(event);
-
-			if (event->isAccepted())
-			{
-				if (!hasFocus())
-				{
-					hideCompletion();
-				}
-
-				return true;
-			}
-
-			switch (keyEvent->key())
-			{
-				case Qt::Key_Up:
-				case Qt::Key_Down:
-				case Qt::Key_PageUp:
-				case Qt::Key_PageDown:
-				case Qt::Key_End:
-				case Qt::Key_Home:
-					m_isNavigatingCompletion = true;
-
-					return false;
-				case Qt::Key_Enter:
-				case Qt::Key_Return:
-				case Qt::Key_Tab:
-				case Qt::Key_Backtab:
-				case Qt::Key_Escape:
-				case Qt::Key_F4:
-					if (keyEvent->key() == Qt::Key_F4 && !keyEvent->modifiers().testFlag(Qt::AltModifier))
-					{
-						break;
-					}
-
-					hideCompletion();
-
-					if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
-					{
-						openUrl(text());
-					}
-
-					break;
-				default:
-					break;
-			}
-
-			return true;
-		}
-	}
-	else if (object == m_completionView && event->type() == QEvent::MouseButtonPress && !m_completionView->viewport()->underMouse())
-	{
-		hideCompletion();
-
-		return true;
-	}
-	else if (object == m_completionView && (event->type() == QEvent::InputMethod || event->type() == QEvent::ShortcutOverride))
-	{
-		QApplication::sendEvent(this, event);
-	}
-	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent)
-		{
-			const QModelIndex index(m_completionView->indexAt(mouseEvent->pos()));
-
-			if (index.isValid())
-			{
-				m_completionView->setCurrentIndex(index);
-			}
-
-			QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
-
-			QApplication::sendEvent(this, &statusTipEvent);
-		}
-	}
-	else if (object == m_completionView && (event->type() == QEvent::Close || event->type() == QEvent::Hide || event->type() == QEvent::Leave))
-	{
-		QString statusTip;
-		QStatusTipEvent statusTipEvent(statusTip);
-
-		QApplication::sendEvent(this, &statusTipEvent);
-	}
-
-	return QObject::eventFilter(object, event);
 }
 
 }

@@ -26,10 +26,8 @@
 #include "../../../ui/LineEditWidget.h"
 
 #include <QtCore/QPointer>
-#include <QtCore/QTime>
 #include <QtCore/QUrl>
 #include <QtWidgets/QItemDelegate>
-#include <QtWidgets/QLabel>
 
 namespace Otter
 {
@@ -109,7 +107,6 @@ public:
 
 	QUrl getUrl() const;
 	bool event(QEvent *event) override;
-	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
@@ -127,7 +124,6 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
-	void hideCompletion();
 	void showCompletion(bool isTypedHistory);
 	EntryIdentifier getEntry(const QPoint &position) const;
 	bool startDrag(QMouseEvent *event);
@@ -146,7 +142,6 @@ protected slots:
 private:
 	QPointer<Window> m_window;
 	AddressCompletionModel *m_completionModel;
-	ItemViewWidget *m_completionView;
 	QPoint m_dragStartPosition;
 	QVector<EntryIdentifier> m_layout;
 	QHash<EntryIdentifier, EntryDefinition> m_entries;
@@ -156,7 +151,6 @@ private:
 	WindowsManager::OpenHints m_hints;
 	bool m_isNavigatingCompletion;
 	bool m_isUsingSimpleMode;
-	bool m_isTypedHistoryCompletion;
 
 	static int m_entryIdentifierEnumerator;
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,133 @@
 
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
-#include <QtGui/QMouseEvent>
+#include <QtGui/QApplication>
 
 namespace Otter
 {
 
+PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullptr),
+	m_lineEditWidget(parent)
+{
+	setEditTriggers(QAbstractItemView::NoEditTriggers);
+	setFocusPolicy(Qt::NoFocus);
+	setWindowFlags(Qt::Popup);
+	header()->setStretchLastSection(true);
+	header()->hide();
+	viewport()->setAttribute(Qt::WA_Hover);
+	viewport()->setMouseTracking(true);
+	viewport()->installEventFilter(this);
+
+	connect(this, SIGNAL(entered(QModelIndex)), this, SLOT(handleIndexEntered(QModelIndex)));
+}
+
+void PopupViewWidget::keyPressEvent(QKeyEvent *event)
+{
+	if (!m_lineEditWidget)
+	{
+		ItemViewWidget::keyPressEvent(event);
+
+		return;
+	}
+
+	m_lineEditWidget->event(event);
+
+	if (event->isAccepted())
+	{
+		if (!m_lineEditWidget->hasFocus())
+		{
+			m_lineEditWidget->hidePopup();
+		}
+
+		return;
+	}
+
+	switch (event->key())
+	{
+		case Qt::Key_Up:
+		case Qt::Key_Down:
+		case Qt::Key_PageUp:
+		case Qt::Key_PageDown:
+		case Qt::Key_End:
+			ItemViewWidget::keyPressEvent(event);
+
+			return;
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+		case Qt::Key_Tab:
+		case Qt::Key_Backtab:
+		case Qt::Key_Escape:
+		case Qt::Key_F4:
+			if (event->key() == Qt::Key_F4 && !event->modifiers().testFlag(Qt::AltModifier))
+			{
+				break;
+			}
+
+			if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+			{
+				emit clicked(getCurrentIndex());
+			}
+
+			m_lineEditWidget->hidePopup();
+
+			break;
+		default:
+			break;
+	}
+}
+
+void PopupViewWidget::handleIndexEntered(const QModelIndex &index)
+{
+	if (index.isValid())
+	{
+		setCurrentIndex(index);
+	}
+
+	QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
+
+	QApplication::sendEvent(m_lineEditWidget, &statusTipEvent);
+}
+
+bool PopupViewWidget::event(QEvent *event)
+{
+	switch (event->type())
+	{
+		case QEvent::Close:
+		case QEvent::Hide:
+		case QEvent::Leave:
+			if (m_lineEditWidget)
+			{
+				QString statusTip;
+				QStatusTipEvent statusTipEvent(statusTip);
+
+				QApplication::sendEvent(m_lineEditWidget, &statusTipEvent);
+			}
+
+			break;
+		case QEvent::InputMethod:
+		case QEvent::ShortcutOverride:
+			if (m_lineEditWidget)
+			{
+				QApplication::sendEvent(m_lineEditWidget, event);
+			}
+
+			break;
+		case QEvent::MouseButtonPress:
+			if (m_lineEditWidget && !viewport()->underMouse())
+			{
+				m_lineEditWidget->hidePopup();
+			}
+
+			break;
+		default:
+			break;
+	}
+
+	return ItemViewWidget::event(event);
+}
+
 LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
+	m_popupViewWidget(nullptr),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
 	m_shouldIgnoreCompletion(false),
@@ -35,6 +156,25 @@ LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_shouldSelectAllOnRelease(false)
 {
 	setDragEnabled(true);
+}
+
+LineEditWidget::~LineEditWidget()
+{
+	if (m_popupViewWidget)
+	{
+		m_popupViewWidget->deleteLater();
+	}
+}
+
+void LineEditWidget::resizeEvent(QResizeEvent *event)
+{
+	QLineEdit::resizeEvent(event);
+
+	if (m_popupViewWidget)
+	{
+		m_popupViewWidget->move(mapToGlobal(contentsRect().bottomLeft()));
+		m_popupViewWidget->setFixedWidth(width());
+	}
 }
 
 void LineEditWidget::keyPressEvent(QKeyEvent *event)
@@ -164,6 +304,43 @@ void LineEditWidget::deleteText()
 	del();
 }
 
+void LineEditWidget::showPopup()
+{
+	if (!m_popupViewWidget)
+	{
+		m_popupViewWidget = new PopupViewWidget(this);
+	}
+
+	int completionHeight(5);
+	const int rowCount(qMin(20, m_popupViewWidget->getRowCount()));
+
+	for (int i = 0; i < rowCount; ++i)
+	{
+		completionHeight += m_popupViewWidget->sizeHintForRow(i);
+	}
+
+	m_popupViewWidget->move(mapToGlobal(contentsRect().bottomLeft()));
+	m_popupViewWidget->setFixedSize(width(), completionHeight);
+	m_popupViewWidget->setFocusProxy(this);
+	m_popupViewWidget->viewport()->setFixedHeight(completionHeight - 3);
+	m_popupViewWidget->show();
+}
+
+void LineEditWidget::hidePopup()
+{
+	if (m_popupViewWidget)
+	{
+		m_popupViewWidget->hide();
+		m_popupViewWidget->deleteLater();
+		m_popupViewWidget = nullptr;
+
+		QString statusTip;
+		QStatusTipEvent statusTipEvent(statusTip);
+
+		QApplication::sendEvent(this, &statusTipEvent);
+	}
+}
+
 void LineEditWidget::setCompletion(const QString &completion)
 {
 	m_completion = completion;
@@ -202,6 +379,21 @@ void LineEditWidget::setSelectAllOnFocus(bool select)
 	}
 
 	m_shouldSelectAllOnFocus = select;
+}
+
+PopupViewWidget* LineEditWidget::getPopup()
+{
+	if (!m_popupViewWidget)
+	{
+		m_popupViewWidget = new PopupViewWidget(this);
+	}
+
+	return m_popupViewWidget;
+}
+
+bool LineEditWidget::isPopupVisible() const
+{
+	return (m_popupViewWidget && m_popupViewWidget->isVisible());
 }
 
 }
