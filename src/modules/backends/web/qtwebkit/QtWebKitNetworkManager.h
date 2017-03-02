@@ -66,6 +66,7 @@ protected:
 	QtWebKitNetworkManager *clone();
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
 	QString getUserAgent() const;
+	QVariant getOption(int identifier, const QUrl &url) const;
 
 protected slots:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
