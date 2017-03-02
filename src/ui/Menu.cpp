@@ -627,7 +627,7 @@ void Menu::populateOptionMenu()
 		}
 		else if (choices.at(i) == QLatin1String("keepUntilExit"))
 		{
-			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Current Sessions is Closed"));
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Current Session is Closed"));
 		}
 		else if (choices.at(i) == QLatin1String("acceptAll"))
 		{
