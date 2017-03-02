@@ -213,6 +213,27 @@ QtWebKitPage::QtWebKitPage() : QWebPage(),
 {
 }
 
+QtWebKitPage::QtWebKitPage(const QUrl &url) : QWebPage(),
+	m_widget(nullptr),
+	m_networkManager(new QtWebKitNetworkManager(true, nullptr, nullptr)),
+	m_mainFrame(nullptr),
+	m_ignoreJavaScriptPopups(true),
+	m_isPopup(false),
+	m_isViewingMedia(false)
+{
+	setNetworkAccessManager(m_networkManager);
+
+	m_networkManager->setParent(this);
+	m_networkManager->updateOptions(url);
+
+	settings()->setAttribute(QWebSettings::JavaEnabled, false);
+	settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+	settings()->setAttribute(QWebSettings::PluginsEnabled, false);
+	mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+	mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
+	mainFrame()->setUrl(url);
+}
+
 QtWebKitPage::~QtWebKitPage()
 {
 	qDeleteAll(m_popups);

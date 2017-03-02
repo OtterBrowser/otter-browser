@@ -282,17 +282,11 @@ bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 }
 
 QtWebKitThumbnailFetchJob::QtWebKitThumbnailFetchJob(const QUrl &url, const QSize &size, QObject *parent) : QObject(parent),
-	m_page(new QtWebKitPage()),
+	m_page(new QtWebKitPage(url)),
 	m_url(url),
 	m_size(size)
 {
 	m_page->setParent(this);
-	m_page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
-	m_page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
-	m_page->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
-	m_page->mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-	m_page->mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-	m_page->mainFrame()->setUrl(url);
 
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handlePageLoadFinished(bool)));
 }

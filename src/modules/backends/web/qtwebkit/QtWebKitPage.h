@@ -82,6 +82,7 @@ public slots:
 
 protected:
 	QtWebKitPage();
+	QtWebKitPage(const QUrl &url);
 
 	void markAsPopup();
 	void javaScriptAlert(QWebFrame *frame, const QString &message) override;
