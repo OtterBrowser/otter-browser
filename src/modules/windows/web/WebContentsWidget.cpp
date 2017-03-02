@@ -31,6 +31,7 @@
 #include "../../../core/GesturesManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/NetworkManagerFactory.h"
+#include "../../../core/SearchEnginesManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/ToolBarsManager.h"
@@ -446,6 +447,61 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 
 				findInPage(flags);
+			}
+
+			break;
+		case ActionsManager::SearchAction:
+			{
+				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.value(QLatin1String("searchEngine")).toString()));
+
+				if (searchEngine.identifier.isEmpty())
+				{
+					break;
+				}
+
+				const WindowsManager::OpenHints hints(WindowsManager::calculateOpenHints());
+				QString query(parameters.value(QLatin1String("query")).toString());
+
+				if (query.isEmpty())
+				{
+					query = m_webWidget->getSelectedText();
+				}
+				else
+				{
+					const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("selection"), QLatin1String("url")});
+
+					for (int i = 0; i < placeholders.count(); ++i)
+					{
+						const QString placeholder(QStringLiteral("{%1}").arg(placeholders.at(i)));
+
+						if (query.contains(placeholder))
+						{
+							if (placeholders.at(i) == QLatin1String("clipboard"))
+							{
+								query.replace(placeholder, QGuiApplication::clipboard()->text());
+							}
+							else if (placeholders.at(i) == QLatin1String("url"))
+							{
+								query.replace(placeholder, m_webWidget->getUrl().toString());
+							}
+							else
+							{
+								query.replace(placeholder, m_webWidget->getSelectedText());
+							}
+						}
+					}
+				}
+
+				if (hints == WindowsManager::CurrentTabOpen)
+				{
+					search(query, searchEngine.identifier);
+				}
+				else
+				{
+					emit requestedSearch(query, searchEngine.identifier, hints);
+				}
+
+				setOption(SettingsManager::Search_DefaultQuickSearchEngineOption, searchEngine.identifier);
 			}
 
 			break;

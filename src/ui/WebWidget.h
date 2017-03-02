@@ -278,7 +278,6 @@ protected slots:
 	void reloadTimeMenuAboutToShow();
 	void openInApplication(QAction *action);
 	void openInApplicationMenuAboutToShow();
-	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
 	void handleLoadingStateChange(WindowsManager::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);

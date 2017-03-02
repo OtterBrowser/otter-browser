@@ -787,10 +787,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			triggerAction(ActionsManager::DeleteAction);
 
 			return;
-		case ActionsManager::SearchAction:
-			quickSearch(getAction(ActionsManager::SearchAction));
-
-			return;
 		case ActionsManager::CreateSearchAction:
 			{
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/createSearch.js"));

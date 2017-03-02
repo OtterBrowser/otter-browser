@@ -231,10 +231,6 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			m_sourceViewer->textCursor().removeSelectedText();
 
 			return;
-		case ActionsManager::SearchAction:
-			quickSearch(getAction(ActionsManager::SearchAction));
-
-			return;
 		case ActionsManager::ActivateContentAction:
 			m_sourceViewer->setFocus();
 

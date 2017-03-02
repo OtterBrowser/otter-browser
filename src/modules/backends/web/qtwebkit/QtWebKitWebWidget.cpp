@@ -1467,10 +1467,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
-		case ActionsManager::SearchAction:
-			quickSearch(getAction(ActionsManager::SearchAction));
-
-			return;
 		case ActionsManager::CreateSearchAction:
 			{
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));

@@ -129,7 +129,7 @@ void WebWidget::triggerAction()
 
 	if (action)
 	{
-		QVariantMap parameters;
+		QVariantMap parameters(action->getParameters());
 
 		if (action->isCheckable())
 		{
@@ -364,32 +364,6 @@ void WebWidget::openInApplicationMenuAboutToShow()
 	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(openInApplication(QAction*)));
 }
 
-void WebWidget::quickSearch(QAction *action)
-{
-	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString()));
-
-	if (searchEngine.identifier.isEmpty())
-	{
-		return;
-	}
-
-	if (searchEngine.identifier != m_options.value(SettingsManager::Search_DefaultQuickSearchEngineOption).toString())
-	{
-		setOption(SettingsManager::Search_DefaultQuickSearchEngineOption, searchEngine.identifier);
-	}
-
-	const WindowsManager::OpenHints hints(WindowsManager::calculateOpenHints());
-
-	if (hints == WindowsManager::CurrentTabOpen)
-	{
-		search(getSelectedText(), searchEngine.identifier);
-	}
-	else
-	{
-		emit requestedSearch(getSelectedText(), searchEngine.identifier, hints);
-	}
-}
-
 void WebWidget::quickSearchMenuAboutToShow()
 {
 	if (m_quickSearchMenu && m_quickSearchMenu->isEmpty())
@@ -402,9 +376,18 @@ void WebWidget::quickSearchMenuAboutToShow()
 
 			if (!searchEngine.identifier.isEmpty())
 			{
-				QAction *action(m_quickSearchMenu->addAction(searchEngine.icon, searchEngine.title));
-				action->setData(searchEngine.identifier);
+				QVariantMap parameters;
+				parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
+
+				Action *action(new Action(ActionsManager::SearchAction, this));
+				action->setParameters(parameters);
+				action->setIcon(searchEngine.icon);
+				action->setOverrideText(searchEngine.title);
 				action->setToolTip(searchEngine.description);
+
+				m_quickSearchMenu->addAction(action);
+
+				connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 			}
 		}
 	}
@@ -793,9 +776,11 @@ void WebWidget::updateEditActions()
 	{
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
 		const bool isValid(!searchEngine.identifier.isEmpty());
+		QVariantMap parameters;
+		parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
-		m_actions[ActionsManager::SearchAction]->setData(isValid ? searchEngine.identifier : QVariant());
+		m_actions[ActionsManager::SearchAction]->setParameters(parameters);
 		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || searchEngine.icon.isNull()) ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
 		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? searchEngine.description : tr("No search engines defined"));
@@ -1365,7 +1350,6 @@ Action* WebWidget::getAction(int identifier)
 				m_quickSearchMenu = new QMenu(this);
 
 				connect(m_quickSearchMenu, SIGNAL(aboutToShow()), this, SLOT(quickSearchMenuAboutToShow()));
-				connect(m_quickSearchMenu, SIGNAL(triggered(QAction*)), this, SLOT(quickSearch(QAction*)));
 			}
 
 			action->setMenu(m_quickSearchMenu);
