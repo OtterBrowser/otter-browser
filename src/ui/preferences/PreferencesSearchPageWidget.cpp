@@ -472,7 +472,7 @@ void PreferencesSearchPageWidget::updateReaddSearchEngineMenu()
 	QStringList availableIdentifiers;
 	QList<SearchEnginesManager::SearchEngineDefinition> availableSearchEngines;
 	QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList(QDir::Files));
-	allSearchEngines.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"), true)).entryInfoList(QDir::Files));
+	allSearchEngines.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches/"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allSearchEngines.count(); ++i)
 	{
