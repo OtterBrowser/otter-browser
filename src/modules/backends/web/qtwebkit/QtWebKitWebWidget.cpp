@@ -2281,6 +2281,20 @@ QRect QtWebKitWebWidget::getProgressBarGeometry() const
 	return geometry;
 }
 
+WebWidget::LinkUrl QtWebKitWebWidget::getActiveLink() const
+{
+	const QWebHitTestResult result(m_page->mainFrame()->hitTestContent(getClickPosition()));
+	LinkUrl link;
+
+	if (!result.linkElement().isNull())
+	{
+		link.title = result.linkElement().toPlainText();
+		link.url = result.linkUrl();
+	}
+
+	return link;
+}
+
 WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
 {
 	return m_networkManager->getSslInformation();

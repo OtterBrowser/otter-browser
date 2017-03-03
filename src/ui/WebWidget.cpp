@@ -1608,6 +1608,11 @@ QRect WebWidget::getProgressBarGeometry() const
 	return (isVisible() ? QRect(QPoint(0, (height() - 30)), QSize(width(), 30)) : QRect());
 }
 
+WebWidget::LinkUrl WebWidget::getActiveLink() const
+{
+	return LinkUrl();
+}
+
 WebWidget::SslInformation WebWidget::getSslInformation() const
 {
 	return SslInformation();

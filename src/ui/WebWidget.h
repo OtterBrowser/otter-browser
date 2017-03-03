@@ -203,6 +203,7 @@ public:
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const;
+	virtual LinkUrl getActiveLink() const;
 	virtual SslInformation getSslInformation() const;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);

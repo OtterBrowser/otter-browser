@@ -65,7 +65,8 @@ public:
 	QPixmap getThumbnail() override;
 	QPoint getScrollPosition() const override;
 	QRect getProgressBarGeometry() const override;
-	WebWidget::SslInformation getSslInformation() const override;
+	LinkUrl getActiveLink() const override;
+	SslInformation getSslInformation() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QStringList getStyleSheets() const override;
