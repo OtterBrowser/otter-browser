@@ -367,6 +367,11 @@ void WebWidget::openInApplicationMenuAboutToShow()
 void WebWidget::clearOptions()
 {
 	m_options.clear();
+
+	if (m_actions.contains(ActionsManager::ResetQuickPreferencesAction))
+	{
+		m_actions[ActionsManager::ResetQuickPreferencesAction]->setEnabled(false);
+	}
 }
 
 void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
@@ -1092,6 +1097,11 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 		m_options[identifier] = value;
 	}
 
+	if (m_actions.contains(ActionsManager::ResetQuickPreferencesAction))
+	{
+		m_actions[ActionsManager::ResetQuickPreferencesAction]->setEnabled(!m_options.isEmpty());
+	}
+
 	emit optionChanged(identifier, (value.isNull() ? getOption(identifier) : value));
 
 	switch (identifier)
@@ -1140,6 +1150,11 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 		{
 			m_options.remove(identifier);
 		}
+	}
+
+	if (m_actions.contains(ActionsManager::ResetQuickPreferencesAction))
+	{
+		m_actions[ActionsManager::ResetQuickPreferencesAction]->setEnabled(!m_options.isEmpty());
 	}
 
 	const QList<int> identifiers(m_options.keys());
@@ -1420,6 +1435,10 @@ Action* WebWidget::getAction(int identifier)
 				connect(menu, SIGNAL(aboutToShow()), this, SLOT(selectDictionaryMenuAboutToShow()));
 				connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(selectDictionary(QAction*)));
 			}
+
+			break;
+		case ActionsManager::ResetQuickPreferencesAction:
+			action->setEnabled(!m_options.isEmpty());
 
 			break;
 		default:

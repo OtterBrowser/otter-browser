@@ -498,7 +498,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(PreferencesAction, QT_TRANSLATE_NOOP("actions", "Preferences…"));
 	registerAction(WebsitePreferencesAction, QT_TRANSLATE_NOOP("actions", "Website Preferences…"));
 	registerAction(QuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Quick Preferences"));
-	registerAction(ResetQuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Reset Options"));
+	registerAction(ResetQuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Reset Options"), QString(), QIcon(), NoFlags);
 	registerAction(WebsiteInformationAction, QT_TRANSLATE_NOOP("actions", "Website Information…"));
 	registerAction(WebsiteCertificateInformationAction, QT_TRANSLATE_NOOP("actions", "Website Certificate Information…"));
 	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), QString(), ThemesManager::getIcon(QLatin1String("preferences-desktop-locale")));

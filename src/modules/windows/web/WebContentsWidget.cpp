@@ -593,13 +593,17 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				menu.addMenu(new Menu(Menu::ProxyMenuRole, &menu));
 				menu.addAction(m_webWidget->getAction(ActionsManager::EnableReferrerAction));
 				menu.addSeparator();
-				menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
+				menu.addAction(m_webWidget->getAction(ActionsManager::ResetQuickPreferencesAction));
 				menu.addSeparator();
 				menu.addAction(m_webWidget->getAction(ActionsManager::WebsitePreferencesAction));
 				menu.exec(QCursor::pos());
 
 				m_isTabPreferencesMenuVisible = false;
 			}
+
+			break;
+		case ActionsManager::ResetQuickPreferencesAction:
+			m_webWidget->clearOptions();
 
 			break;
 		case ActionsManager::WebsiteInformationAction:
