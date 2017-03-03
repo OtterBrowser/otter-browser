@@ -516,6 +516,7 @@ void ItemViewWidget::markAsModified()
 	m_isModified = true;
 
 	emit modified();
+	emit needsActionsUpdate();
 }
 
 void ItemViewWidget::saveState()
@@ -701,6 +702,8 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 
 	if (!model)
 	{
+		emit needsActionsUpdate();
+
 		return;
 	}
 
@@ -718,6 +721,8 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 	{
 		connect(m_sourceModel, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(notifySelectionChanged()));
 	}
+
+	emit needsActionsUpdate();
 
 	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));
 	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(markAsModified()));
