@@ -863,7 +863,7 @@ void Menu::populateSearchMenu()
 	{
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
 
-		if (!searchEngine.identifier.isEmpty())
+		if (searchEngine.isValid())
 		{
 			QVariantMap parameters;
 			parameters[QLatin1String("searchEngine")] = searchEngine.identifier;

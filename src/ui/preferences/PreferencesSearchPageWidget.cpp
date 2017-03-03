@@ -109,7 +109,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	{
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
 
-		if (searchEngine.identifier.isEmpty())
+		if (!searchEngine.isValid())
 		{
 			continue;
 		}
@@ -342,7 +342,7 @@ void PreferencesSearchPageWidget::addSearchEngine(const QString &path, const QSt
 
 	file.close();
 
-	if (searchEngine.identifier.isEmpty() || m_searchEngines.contains(identifier))
+	if (!searchEngine.isValid() || m_searchEngines.contains(identifier))
 	{
 		QMessageBox::warning(this, tr("Error"), tr("Failed to open Open Search file."));
 
@@ -390,7 +390,7 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 	}
 
 	SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
-	const QString identifier(searchEngine.identifier.isEmpty() ? m_updateJobs.key(job) : searchEngine.identifier);
+	const QString identifier(searchEngine.isValid() ? searchEngine.identifier :  m_updateJobs.key(job));
 
 	if (!identifier.isEmpty())
 	{
@@ -482,7 +482,7 @@ void PreferencesSearchPageWidget::updateReaddSearchEngineMenu()
 		{
 			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
 
-			if (!searchEngine.identifier.isEmpty())
+			if (searchEngine.isValid())
 			{
 				availableIdentifiers.append(identifier);
 

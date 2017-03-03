@@ -90,7 +90,7 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 	m_ui->exceptionsItemViewWidget->setModel(exceptionsModel);
 
 	updateProxyType();
-	setWindowTitle(proxy.identifier.isEmpty() ? tr("Add Proxy") : tr ("Edit Proxy"));
+	setWindowTitle(proxy.isValid() ? tr ("Edit Proxy") : tr("Add Proxy"));
 
 	connect(m_ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(updateProxyType()));
 	connect(m_ui->allCheckBox, SIGNAL(clicked(bool)), this, SLOT(updateProxyType()));

@@ -454,7 +454,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.value(QLatin1String("searchEngine")).toString()));
 
-				if (searchEngine.identifier.isEmpty())
+				if (!searchEngine.isValid())
 				{
 					break;
 				}

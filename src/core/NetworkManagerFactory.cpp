@@ -71,7 +71,7 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 	{
 		const ProxyDefinition proxy(proxies.at(i).isEmpty() ? ProxyDefinition() : NetworkManagerFactory::getProxy(proxies.at(i)));
 		ItemType type(EntryType);
-		QStandardItem *item(new QStandardItem(proxy.identifier.isEmpty() ? QString() : proxy.getTitle()));
+		QStandardItem *item(new QStandardItem(proxy.isValid() ? proxy.getTitle() : QString()));
 
 		if (m_isEditor)
 		{
@@ -136,7 +136,7 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 	{
 		const UserAgentDefinition userAgent(userAgents.at(i).isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(userAgents.at(i)));
 		ItemType type(EntryType);
-		QList<QStandardItem*> items({new QStandardItem(userAgent.identifier.isEmpty() ? QString() : userAgent.getTitle())});
+		QList<QStandardItem*> items({new QStandardItem(userAgent.isValid() ? userAgent.getTitle() : QString())});
 
 		if (m_isEditor)
 		{

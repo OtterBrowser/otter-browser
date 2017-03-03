@@ -136,7 +136,7 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 	const QString keyword(text.section(QLatin1Char(' '), 0, 0));
 	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
 
-	if (!searchEngine.identifier.isEmpty())
+	if (searchEngine.isValid())
 	{
 		emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
 

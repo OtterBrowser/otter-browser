@@ -79,6 +79,11 @@ struct ProxyDefinition
 	{
 		return (title.isEmpty() ? QCoreApplication::translate("proxies", "(Untitled)") : QCoreApplication::translate("proxies", title.toUtf8().constData()));
 	}
+
+	bool isValid() const
+	{
+		return !identifier.isEmpty();
+	}
 };
 
 struct UserAgentDefinition
@@ -92,6 +97,11 @@ struct UserAgentDefinition
 	QString getTitle() const
 	{
 		return (title.isEmpty() ? QCoreApplication::translate("userAgents", "(Untitled)") : QCoreApplication::translate("userAgents", title.toUtf8().constData()));
+	}
+
+	bool isValid() const
+	{
+		return !identifier.isEmpty();
 	}
 };
 

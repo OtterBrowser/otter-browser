@@ -60,7 +60,7 @@ void SearchSuggester::setQuery(const QString &query)
 
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_searchEngine));
 
-		if (searchEngine.identifier.isEmpty() || searchEngine.suggestionsUrl.url.isEmpty())
+		if (!searchEngine.isValid() || searchEngine.suggestionsUrl.url.isEmpty())
 		{
 			return;
 		}

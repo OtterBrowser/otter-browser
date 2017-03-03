@@ -72,7 +72,7 @@ void AddressCompletionModel::updateModel()
 		QString text(m_filter);
 		QIcon icon(m_defaultSearchEngine.icon);
 
-		if (!searchEngine.identifier.isEmpty())
+		if (searchEngine.isValid())
 		{
 			title = searchEngine.title;
 			text = m_filter.section(QLatin1Char(' '), 1, -1);
@@ -222,7 +222,7 @@ void AddressCompletionModel::setFilter(const QString &filter, CompletionTypes ty
 
 		return;
 	}
- 
+
 	if (m_filter.isEmpty() && !filter.isEmpty())
 	{
 		m_types = types;

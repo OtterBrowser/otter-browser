@@ -63,6 +63,11 @@ public:
 		SearchUrl resultsUrl;
 		SearchUrl suggestionsUrl;
 		QIcon icon;
+
+		bool isValid() const
+		{
+			return !identifier.isEmpty();
+		}
 	};
 
 	static void createInstance(QObject *parent = nullptr);
@@ -77,7 +82,7 @@ public:
 	static QStringList getSearchKeywords();
 	static bool hasSearchEngine(const QUrl &url);
 	static bool saveSearchEngine(const SearchEngineDefinition &searchEngine);
-	static bool setupSearchQuery(const QString &query, const QString &searchEngine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
+	static bool setupSearchQuery(const QString &query, const QString &identifier, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
 protected:
 	explicit SearchEnginesManager(QObject *parent = nullptr);

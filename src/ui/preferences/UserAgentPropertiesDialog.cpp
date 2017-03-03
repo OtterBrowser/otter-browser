@@ -49,7 +49,7 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 		m_ui->valueLineEdit->installEventFilter(this);
 	}
 
-	setWindowTitle(userAgent.identifier.isEmpty() ? tr("Add User Agent") : tr ("Edit User Agent"));
+	setWindowTitle(userAgent.isValid() ? tr ("Edit User Agent") : tr("Add User Agent"));
 
 	connect(m_ui->previewButton, SIGNAL(clicked(bool)), this, SLOT(showPreview()));
 }

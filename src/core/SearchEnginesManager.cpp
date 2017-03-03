@@ -90,13 +90,13 @@ void SearchEnginesManager::loadSearchEngines()
 
 		file.close();
 
-		if (searchEngine.identifier.isEmpty())
+		if (searchEngine.isValid())
 		{
-			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
+			m_searchEngines[searchEnginesOrder.at(i)] = searchEngine;
 		}
 		else
 		{
-			m_searchEngines[searchEnginesOrder.at(i)] = searchEngine;
+			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
 		}
 	}
 
@@ -151,7 +151,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 	{
 		const SearchEngineDefinition search(getSearchEngine(searchEngines.at(i)));
 
-		if (!search.identifier.isEmpty())
+		if (search.isValid())
 		{
 			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : search.icon), QString()));
 			item->setData(search.title, TitleRole);
@@ -453,7 +453,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 		{
 			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier));
 
-			if (!searchEngine.identifier.isEmpty())
+			if (searchEngine.isValid())
 			{
 				m_searchEngines[identifier] = searchEngine;
 			}
@@ -503,7 +503,7 @@ bool SearchEnginesManager::hasSearchEngine(const QUrl &url)
 
 bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &searchEngine)
 {
-	if (SessionsManager::isReadOnly() || searchEngine.identifier.isEmpty())
+	if (SessionsManager::isReadOnly() || !searchEngine.isValid())
 	{
 		return false;
 	}
@@ -615,18 +615,18 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 	return true;
 }
 
-bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString &searchEngine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString &identifier, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	const SearchEngineDefinition search(getSearchEngine(searchEngine));
+	const SearchEngineDefinition searchEngine(getSearchEngine(identifier));
 
-	if (search.identifier.isEmpty())
+	if (searchEngine.isValid())
 	{
-		return false;
+		setupQuery(query, searchEngine.resultsUrl, request, method, body);
+
+		return true;
 	}
 
-	setupQuery(query, search.resultsUrl, request, method, body);
-
-	return true;
+	return false;
 }
 
 SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : QObject(parent),
@@ -697,7 +697,7 @@ void SearchEngineFetchJob::handleRequestFinished()
 
 	m_searchEngine = SearchEnginesManager::loadSearchEngine(m_reply, m_searchEngine.identifier);
 
-	if (m_searchEngine.identifier.isEmpty())
+	if (!m_searchEngine.isValid())
 	{
 		deleteLater();
 
