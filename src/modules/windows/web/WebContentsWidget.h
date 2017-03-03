@@ -72,7 +72,7 @@ public:
 	void setParent(Window *window) override;
 	WebContentsWidget* clone(bool cloneHistory = true) override;
 	Action* getAction(int identifier) override;
-	WebWidget* getWebWidget();
+	WebWidget* getWebWidget() override;
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;
 	QString getStatusMessage() const override;

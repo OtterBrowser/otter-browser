@@ -269,6 +269,11 @@ Window* ContentsWidget::getParent()
 	return qobject_cast<Window*>(parent());
 }
 
+WebWidget* ContentsWidget::getWebWidget()
+{
+	return nullptr;
+}
+
 QString ContentsWidget::getVersion() const
 {
 	return QCoreApplication::applicationVersion();

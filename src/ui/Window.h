@@ -58,6 +58,7 @@ public:
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = nullptr);
 	ContentsWidget* getContentsWidget();
+	WebWidget* getWebWidget();
 	QString getSearchEngine() const;
 	QString getTitle() const;
 	QLatin1String getType() const;

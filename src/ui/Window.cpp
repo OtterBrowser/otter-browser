@@ -693,6 +693,16 @@ ContentsWidget* Window::getContentsWidget()
 	return m_contentsWidget;
 }
 
+WebWidget* Window::getWebWidget()
+{
+	if (!m_contentsWidget)
+	{
+		setUrl(m_session.getUrl(), false);
+	}
+
+	return m_contentsWidget->getWebWidget();
+}
+
 QString Window::getSearchEngine() const
 {
 	return m_searchEngine;

@@ -62,14 +62,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		m_geometryUpdateTimer = 0;
 
-		if (!m_window)
-		{
-			return;
-		}
-
-		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(m_window->getContentsWidget()));
-
-		if (!contentsWidget || !contentsWidget->getWebWidget())
+		if (!m_window || !m_window->getWebWidget())
 		{
 			return;
 		}
@@ -78,19 +71,19 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WindowsManager::OngoingLoadingState))
 		{
-			QRect geometry(contentsWidget->getWebWidget()->getProgressBarGeometry());
+			QRect geometry(m_window->getWebWidget()->getProgressBarGeometry());
 
 			if (!isVisible())
 			{
-				connect(contentsWidget->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+				connect(m_window->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 			}
 
 			if (!geometry.isValid())
 			{
-				geometry = QRect(QPoint(0, (contentsWidget->getWebWidget()->height() - 30)), QSize(contentsWidget->getWebWidget()->width(), 30));
+				geometry = QRect(QPoint(0, (m_window->getWebWidget()->height() - 30)), QSize(m_window->getWebWidget()->width(), 30));
 			}
 
-			geometry.translate(contentsWidget->getWebWidget()->mapTo(contentsWidget, QPoint(0, 0)));
+			geometry.translate(m_window->getWebWidget()->mapTo(m_window->getContentsWidget(), QPoint(0, 0)));
 
 			setGeometry(geometry);
 			show();
@@ -98,7 +91,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 		}
 		else
 		{
-			disconnect(contentsWidget->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(m_window->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 
 			hide();
 		}
@@ -117,11 +110,9 @@ void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 	{
 		hide();
 
-		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(m_window->getContentsWidget()));
-
-		if (contentsWidget && contentsWidget->getWebWidget())
+		if (m_window && m_window->getWebWidget())
 		{
-			disconnect(contentsWidget->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(m_window->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 		}
 	}
 }
