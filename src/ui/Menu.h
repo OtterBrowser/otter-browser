@@ -49,6 +49,7 @@ public:
 		StyleSheetsMenuRole,
 		ToolBarsMenuRole,
 		UserAgentMenuRole,
+		ValidateMenuRole,
 		WindowsMenuRole
 	};
 

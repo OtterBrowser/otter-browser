@@ -193,6 +193,12 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
 
 			break;
+		case ValidateMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Validate Using"));
+
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSearchMenu()));
+
+			break;
 		case WindowsMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
 
@@ -850,7 +856,7 @@ void Menu::populateSearchMenu()
 {
 	clear();
 
-	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
+	const QStringList searchEngines((m_role == ValidateMenuRole) ? SettingsManager::getOption(SettingsManager::Browser_ValidatorsOrderOption).toStringList() : SearchEnginesManager::getSearchEngines());
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	for (int i = 0; i < searchEngines.count(); ++i)
@@ -861,6 +867,11 @@ void Menu::populateSearchMenu()
 		{
 			QVariantMap parameters;
 			parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
+
+			if (m_role == ValidateMenuRole)
+			{
+				parameters[QLatin1String("query")] = QLatin1String("{url}");
+			}
 
 			Action *action(addAction(ActionsManager::SearchAction));
 			action->setParameters(parameters);
@@ -1368,6 +1379,11 @@ Menu::MenuRole Menu::getRole(const QString &identifier)
 	if (identifier == QLatin1String("UserAgentMenu"))
 	{
 		return UserAgentMenuRole;
+	}
+
+	if (identifier == QLatin1String("ValidateMenu"))
+	{
+		return ValidateMenuRole;
 	}
 
 	if (identifier == QLatin1String("WindowsMenu"))

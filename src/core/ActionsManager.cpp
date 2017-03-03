@@ -295,7 +295,6 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::EnableReferrerAction:
 		case ActionsManager::ViewSourceAction:
 		case ActionsManager::OpenPageInApplicationAction:
-		case ActionsManager::ValidateAction:
 		case ActionsManager::InspectPageAction:
 		case ActionsManager::InspectElementAction:
 		case ActionsManager::WebsitePreferencesAction:
@@ -476,7 +475,6 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), NoFlags);
 	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Current Page with External Application"), QIcon(), (IsEnabledFlag | IsMenuFlag));
-	registerAction(ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
 	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(InspectElementAction, QT_TRANSLATE_NOOP("actions", "Inspect Element…"));
 	registerAction(WorkOfflineAction, QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));

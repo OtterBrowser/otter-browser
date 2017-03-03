@@ -28,7 +28,7 @@
 				},
 				"InspectElement",
 				"ViewSource",
-				"Validate",
+				"ValidateMenu",
 				"separator",
 				{
 					"type": "menu",

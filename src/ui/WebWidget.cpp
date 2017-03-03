@@ -1305,11 +1305,6 @@ Action* WebWidget::getAction(int identifier)
 			action->setChecked(getOption(SettingsManager::Network_EnableReferrerOption, getUrl()).toBool());
 
 			break;
-		case ActionsManager::ValidateAction:
-			action->setEnabled(false);
-			action->setMenu(new QMenu(this));
-
-			break;
 		case ActionsManager::UndoAction:
 		case ActionsManager::RedoAction:
 		case ActionsManager::CutAction:

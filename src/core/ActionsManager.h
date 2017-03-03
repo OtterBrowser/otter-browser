@@ -223,7 +223,6 @@ public:
 		EnableReferrerAction,
 		ViewSourceAction,
 		OpenPageInApplicationAction,
-		ValidateAction,
 		InspectPageAction,
 		InspectElementAction,
 		WorkOfflineAction,
