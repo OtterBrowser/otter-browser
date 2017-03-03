@@ -22,7 +22,7 @@
 
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 namespace Otter
 {
