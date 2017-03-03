@@ -77,6 +77,7 @@ public:
 		Browser_TabCrashingActionOption,
 		Browser_ToolTipsModeOption,
 		Browser_TransferStartingActionOption,
+		Browser_ValidatorsOrderOption,
 		Cache_DiskCacheLimitOption,
 		Cache_PagesInMemoryLimitOption,
 		Choices_WarnFormResendOption,

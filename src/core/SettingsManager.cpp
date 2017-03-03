@@ -98,6 +98,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_TabCrashingActionOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")}));
 	registerOption(Browser_ToolTipsModeOption, QLatin1String("extended"), EnumerationType, QStringList({QLatin1String("disabled"), QLatin1String("standard"), QLatin1String("extended")}));
 	registerOption(Browser_TransferStartingActionOption, QLatin1String("openTab"), EnumerationType, QStringList({QLatin1String("openTab"), QLatin1String("openBackgroundTab"), QLatin1String("openPanel"), QLatin1String("doNothing")}));
+	registerOption(Browser_ValidatorsOrderOption,  QStringList({QLatin1String("w3c-markup"), QLatin1String("w3c-css")}), ListType);
 	registerOption(Cache_DiskCacheLimitOption, 51200, IntegerType);
 	registerOption(Cache_PagesInMemoryLimitOption, 5, IntegerType);
 	registerOption(Choices_WarnFormResendOption, true, BooleanType);
