@@ -366,7 +366,14 @@ void WebWidget::openInApplicationMenuAboutToShow()
 
 void WebWidget::clearOptions()
 {
+	const QList<int> identifiers(m_options.keys());
+
 	m_options.clear();
+
+	for (int i = 0; i < identifiers.count(); ++i)
+	{
+		emit optionChanged(identifiers.at(i), QVariant());
+	}
 
 	if (m_actions.contains(ActionsManager::ResetQuickPreferencesAction))
 	{
@@ -1140,6 +1147,8 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 
 void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions)
 {
+	const QList<int> identifiers((m_options.keys() + options.keys()).toSet().toList());
+
 	m_options = options;
 
 	for (int i = 0; i < excludedOptions.count(); ++i)
@@ -1157,11 +1166,9 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 		m_actions[ActionsManager::ResetQuickPreferencesAction]->setEnabled(!m_options.isEmpty());
 	}
 
-	const QList<int> identifiers(m_options.keys());
-
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		emit optionChanged(identifiers.at(i), m_options[identifiers.at(i)]);
+		emit optionChanged(identifiers.at(i), m_options.value(identifiers.at(i)));
 	}
 }
 
