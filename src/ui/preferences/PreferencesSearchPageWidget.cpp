@@ -480,20 +480,13 @@ void PreferencesSearchPageWidget::updateReaddSearchEngineMenu()
 
 		if (!m_searchEngines.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			QFile file(allSearchEngines.at(i).absoluteFilePath());
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(identifier));
 
-			if (file.open(QIODevice::ReadOnly))
+			if (!searchEngine.identifier.isEmpty())
 			{
-				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier));
+				availableIdentifiers.append(identifier);
 
-				if (!searchEngine.identifier.isEmpty())
-				{
-					availableIdentifiers.append(identifier);
-
-					availableSearchEngines.append(searchEngine);
-				}
-
-				file.close();
+				availableSearchEngines.append(searchEngine);
 			}
 		}
 	}

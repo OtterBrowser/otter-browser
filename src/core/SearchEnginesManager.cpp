@@ -86,7 +86,7 @@ void SearchEnginesManager::loadSearchEngines()
 			continue;
 		}
 
-		SearchEngineDefinition searchEngine(loadSearchEngine(&file, searchEnginesOrder.at(i), true));
+		const SearchEngineDefinition searchEngine(loadSearchEngine(&file, searchEnginesOrder.at(i), true));
 
 		file.close();
 
@@ -443,6 +443,23 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 	if (identifier.isEmpty())
 	{
 		return m_searchEngines.value(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString(), SearchEngineDefinition());
+	}
+
+	if (!m_searchEngines.contains(identifier))
+	{
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier));
+
+			if (!searchEngine.identifier.isEmpty())
+			{
+				m_searchEngines[identifier] = searchEngine;
+			}
+
+			file.close();
+		}
 	}
 
 	return m_searchEngines.value(identifier, SearchEngineDefinition());
