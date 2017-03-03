@@ -38,6 +38,9 @@ public:
 
 	bool event(QEvent *event) override;
 
+public slots:
+	void updateHeight();
+
 protected:
 	void keyPressEvent(QKeyEvent *event) override;
 

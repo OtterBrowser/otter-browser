@@ -39,6 +39,7 @@ PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullpt
 	viewport()->setMouseTracking(true);
 	viewport()->installEventFilter(this);
 
+	connect(this, SIGNAL(needsActionsUpdate()), this, SLOT(updateHeight()));
 	connect(this, SIGNAL(entered(QModelIndex)), this, SLOT(handleIndexEntered(QModelIndex)));
 }
 
@@ -107,6 +108,20 @@ void PopupViewWidget::handleIndexEntered(const QModelIndex &index)
 	QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
 
 	QApplication::sendEvent(m_lineEditWidget, &statusTipEvent);
+}
+
+void PopupViewWidget::updateHeight()
+{
+	int completionHeight(5);
+	const int rowCount(qMin(20, getRowCount()));
+
+	for (int i = 0; i < rowCount; ++i)
+	{
+		completionHeight += sizeHintForRow(i);
+	}
+
+	setFixedHeight(completionHeight);
+	viewport()->setFixedHeight(completionHeight - 3);
 }
 
 bool PopupViewWidget::event(QEvent *event)
@@ -311,18 +326,10 @@ void LineEditWidget::showPopup()
 		m_popupViewWidget = new PopupViewWidget(this);
 	}
 
-	int completionHeight(5);
-	const int rowCount(qMin(20, m_popupViewWidget->getRowCount()));
-
-	for (int i = 0; i < rowCount; ++i)
-	{
-		completionHeight += m_popupViewWidget->sizeHintForRow(i);
-	}
-
+	m_popupViewWidget->updateHeight();
 	m_popupViewWidget->move(mapToGlobal(contentsRect().bottomLeft()));
-	m_popupViewWidget->setFixedSize(width(), completionHeight);
+	m_popupViewWidget->setFixedWidth(width());
 	m_popupViewWidget->setFocusProxy(this);
-	m_popupViewWidget->viewport()->setFixedHeight(completionHeight - 3);
 	m_popupViewWidget->show();
 }
 
