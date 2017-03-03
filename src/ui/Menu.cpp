@@ -27,6 +27,7 @@
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
+#include "../core/SearchEnginesManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/ToolBarsManager.h"
@@ -155,6 +156,12 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateProxiesMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+
+			break;
+		case SearchMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Search Using"));
+
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSearchMenu()));
 
 			break;
 		case SessionsMenuRole:
@@ -367,15 +374,20 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 		}
 		else
 		{
-			const QString rawAction(actions.at(i).toString());
+			const QString rawIdentifier(actions.at(i).toString());
+			const Menu::MenuRole role(rawIdentifier.endsWith(QLatin1String("Menu")) ? Menu::getRole(rawIdentifier) : Menu::NoMenuRole);
 
-			if (rawAction == QLatin1String("separator"))
+			if (rawIdentifier == QLatin1String("separator"))
 			{
 				addSeparator();
 			}
+			else if (role != Menu::NoMenuRole)
+			{
+				addMenu(new Menu(role, this));
+			}
 			else
 			{
-				const int identifier(ActionsManager::getActionIdentifier(rawAction));
+				const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
 
 				if (identifier >= 0)
 				{
@@ -830,6 +842,36 @@ void Menu::populateProxiesMenu()
 			}
 
 			m_actionGroup->addAction(action);
+		}
+	}
+}
+
+void Menu::populateSearchMenu()
+{
+	clear();
+
+	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	for (int i = 0; i < searchEngines.count(); ++i)
+	{
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
+
+		if (!searchEngine.identifier.isEmpty())
+		{
+			QVariantMap parameters;
+			parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
+
+			Action *action(addAction(ActionsManager::SearchAction));
+			action->setParameters(parameters);
+			action->setIcon(searchEngine.icon);
+			action->setOverrideText(searchEngine.title);
+			action->setToolTip(searchEngine.description);
+
+			if (mainWindow)
+			{
+				connect(action, SIGNAL(triggered(bool)), mainWindow, SLOT(triggerAction(bool)));
+			}
 		}
 	}
 }
@@ -1301,6 +1343,11 @@ Menu::MenuRole Menu::getRole(const QString &identifier)
 	if (identifier == QLatin1String("ProxyMenu"))
 	{
 		return ProxyMenuRole;
+	}
+
+	if (identifier == QLatin1String("SearchMenu"))
+	{
+		return SearchMenuRole;
 	}
 
 	if (identifier == QLatin1String("SessionsMenu"))

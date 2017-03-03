@@ -364,35 +364,6 @@ void WebWidget::openInApplicationMenuAboutToShow()
 	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(openInApplication(QAction*)));
 }
 
-void WebWidget::quickSearchMenuAboutToShow()
-{
-	if (m_quickSearchMenu && m_quickSearchMenu->isEmpty())
-	{
-		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-
-		for (int i = 0; i < searchEngines.count(); ++i)
-		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
-
-			if (!searchEngine.identifier.isEmpty())
-			{
-				QVariantMap parameters;
-				parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
-
-				Action *action(new Action(ActionsManager::SearchAction, this));
-				action->setParameters(parameters);
-				action->setIcon(searchEngine.icon);
-				action->setOverrideText(searchEngine.title);
-				action->setToolTip(searchEngine.description);
-
-				m_quickSearchMenu->addAction(action);
-
-				connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-			}
-		}
-	}
-}
-
 void WebWidget::clearOptions()
 {
 	m_options.clear();
@@ -784,11 +755,6 @@ void WebWidget::updateEditActions()
 		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || searchEngine.icon.isNull()) ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
 		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? searchEngine.description : tr("No search engines defined"));
-	}
-
-	if (m_actions.contains(ActionsManager::SearchMenuAction))
-	{
-		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchEnginesManager::getSearchEngines().count() > 1);
 	}
 
 	if (m_actions.contains(ActionsManager::CreateSearchAction))
@@ -1344,16 +1310,6 @@ Action* WebWidget::getAction(int identifier)
 			action->setMenu(new QMenu(this));
 
 			break;
-		case ActionsManager::SearchMenuAction:
-			if (!m_quickSearchMenu)
-			{
-				m_quickSearchMenu = new QMenu(this);
-
-				connect(m_quickSearchMenu, SIGNAL(aboutToShow()), this, SLOT(quickSearchMenuAboutToShow()));
-			}
-
-			action->setMenu(m_quickSearchMenu);
-
 		case ActionsManager::UndoAction:
 		case ActionsManager::RedoAction:
 		case ActionsManager::CutAction:

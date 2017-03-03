@@ -448,7 +448,6 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 		case ActionsManager::ZoomOutAction:
 		case ActionsManager::ZoomOriginalAction:
 		case ActionsManager::SearchAction:
-		case ActionsManager::SearchMenuAction:
 		case ActionsManager::FindAction:
 		case ActionsManager::FindNextAction:
 		case ActionsManager::FindPreviousAction:

@@ -189,7 +189,6 @@ public:
 		FindPreviousAction,
 		QuickFindAction,
 		SearchAction,
-		SearchMenuAction,
 		CreateSearchAction,
 		ZoomInAction,
 		ZoomOutAction,

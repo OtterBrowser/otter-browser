@@ -274,7 +274,6 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::FindPreviousAction:
 		case ActionsManager::QuickFindAction:
 		case ActionsManager::SearchAction:
-		case ActionsManager::SearchMenuAction:
 		case ActionsManager::CreateSearchAction:
 		case ActionsManager::ZoomInAction:
 		case ActionsManager::ZoomOutAction:
@@ -443,7 +442,6 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"));
 	registerAction(QuickFindAction, QT_TRANSLATE_NOOP("actions", "Quick Find"));
 	registerAction(SearchAction, QT_TRANSLATE_NOOP("actions", "Search"));
-	registerAction(SearchMenuAction, QT_TRANSLATE_NOOP("actions", "Search Using"));
 	registerAction(CreateSearchAction, QT_TRANSLATE_NOOP("actions", "Create Search…"));
 	registerAction(ZoomInAction, QT_TRANSLATE_NOOP("actions", "Zoom In"), QString(), ThemesManager::getIcon(QLatin1String("zoom-in")));
 	registerAction(ZoomOutAction, QT_TRANSLATE_NOOP("actions", "Zoom Out"), QString(), ThemesManager::getIcon(QLatin1String("zoom-out")));

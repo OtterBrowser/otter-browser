@@ -44,6 +44,7 @@ public:
 		ClosedWindowsMenu,
 		ImportExportMenuRole,
 		ProxyMenuRole,
+		SearchMenuRole,
 		SessionsMenuRole,
 		StyleSheetsMenuRole,
 		ToolBarsMenuRole,
@@ -72,6 +73,7 @@ protected slots:
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
 	void populateProxiesMenu();
+	void populateSearchMenu();
 	void populateSessionsMenu();
 	void populateStyleSheetsMenu();
 	void populateToolBarsMenu();
