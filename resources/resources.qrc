@@ -129,6 +129,7 @@
         <file>keyboard/platform.ini</file>
         <file>menu/menuBar.json</file>
         <file>menu/menuButton.json</file>
+        <file>menu/quickPreferences.json</file>
         <file>menu/webWidget.json</file>
         <file>mouse/default.ini</file>
         <file>other/contentBlocking.json</file>

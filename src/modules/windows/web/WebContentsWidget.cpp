@@ -562,40 +562,8 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_isTabPreferencesMenuVisible = true;
 
-				QMenu menu;
-				Menu *popupsPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
-				popupsPolicyMenu->load(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
-
-				Menu *enableImagesMenu(new Menu(Menu::NoMenuRole, &menu));
-				enableImagesMenu->load(SettingsManager::Permissions_EnableImagesOption);
-
-				Menu *enablePluginsMenu(new Menu(Menu::NoMenuRole, &menu));
-				enablePluginsMenu->load(SettingsManager::Permissions_EnablePluginsOption);
-
-				menu.addMenu(popupsPolicyMenu);
-				menu.addMenu(enableImagesMenu);
-				menu.addMenu(enablePluginsMenu);
-				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaScriptAction));
-				menu.addSeparator();
-
-				Menu *cookiesPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
-				cookiesPolicyMenu->load(SettingsManager::Network_CookiesPolicyOption);
-
-				Menu *thirdPartyCookiesPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
-				thirdPartyCookiesPolicyMenu->load(SettingsManager::Network_ThirdPartyCookiesPolicyOption);
-
-				Menu *keepCookiesModeMenu(new Menu(Menu::NoMenuRole, &menu));
-				keepCookiesModeMenu->load(SettingsManager::Network_CookiesKeepModeOption);
-
-				menu.addMenu(cookiesPolicyMenu);
-				menu.addMenu(thirdPartyCookiesPolicyMenu);
-				menu.addMenu(keepCookiesModeMenu);
-				menu.addMenu(new Menu(Menu::ProxyMenuRole, &menu));
-				menu.addAction(m_webWidget->getAction(ActionsManager::EnableReferrerAction));
-				menu.addSeparator();
-				menu.addAction(m_webWidget->getAction(ActionsManager::ResetQuickPreferencesAction));
-				menu.addSeparator();
-				menu.addAction(m_webWidget->getAction(ActionsManager::WebsitePreferencesAction));
+				Menu menu(Menu::NoMenuRole, this);
+				menu.load(QLatin1String("menu/quickPreferences.json"));
 				menu.exec(QCursor::pos());
 
 				m_isTabPreferencesMenuVisible = false;
