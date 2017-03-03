@@ -312,10 +312,10 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 		{
 			const QJsonObject object(actions.at(i).toObject());
 			const QString type(object.value(QLatin1String("type")).toString());
+			const QVariantMap parameters(object.value(QLatin1String("parameters")).toVariant().toMap());
 
 			if (type == QLatin1String("action"))
 			{
-				const QVariantMap parameters(object.value(QLatin1String("parameters")).toVariant().toMap());
 				const int identifier(ActionsManager::getActionIdentifier(object.value(QLatin1String("identifier")).toString()));
 
 				if (identifier >= 0)
@@ -364,7 +364,15 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			}
 
 			Menu *menu(new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this));
-			menu->load(object, options);
+
+			if (parameters.contains(QLatin1String("option")))
+			{
+				menu->load(SettingsManager::getOptionIdentifier(parameters.value(QLatin1String("option")).toString()));
+			}
+			else
+			{
+				menu->load(object, options);
+			}
 
 			if (type == QLatin1String("menu"))
 			{
