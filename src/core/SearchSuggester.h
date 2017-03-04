@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,7 +51,7 @@ public slots:
 	void setQuery(const QString &query);
 
 protected slots:
-	void replyFinished();
+	void handleReplyFinished();
 
 private:
 	QNetworkReply *m_networkReply;
@@ -59,7 +60,7 @@ private:
 	QString m_query;
 
 signals:
-	void suggestionsChanged(const QList<SearchSuggestion> &suggestions);
+	void suggestionsChanged(const QVector<SearchSuggester::SearchSuggestion> &suggestions);
 };
 
 }

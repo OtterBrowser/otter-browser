@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,6 +34,61 @@ SearchSuggester::SearchSuggester(const QString &searchEngine, QObject *parent) :
 	m_model(nullptr),
 	m_searchEngine(searchEngine)
 {
+}
+
+void SearchSuggester::handleReplyFinished()
+{
+	if (!m_networkReply)
+	{
+		return;
+	}
+
+	if (m_model)
+	{
+		m_model->clear();
+	}
+	else
+	{
+		m_model = new QStandardItemModel(this);
+	}
+
+	m_networkReply->deleteLater();
+
+	if (m_networkReply->size() <= 0)
+	{
+		m_networkReply = nullptr;
+
+		return;
+	}
+
+	const QJsonDocument document(QJsonDocument::fromJson(m_networkReply->readAll()));
+
+	if (!document.isEmpty() && document.isArray() && document.array().count() > 1 && document.array().at(0).toString() == m_query)
+	{
+		const QJsonArray completionsArray(document.array().at(1).toArray());
+		const QJsonArray descriptionsArray(document.array().at(2).toArray());
+		const QJsonArray urlsArray(document.array().at(3).toArray());
+		QVector<SearchSuggestion> suggestions;
+
+		for (int i = 0; i < completionsArray.count(); ++i)
+		{
+			SearchSuggestion suggestion;
+			suggestion.completion = completionsArray.at(i).toString();
+			suggestion.description = descriptionsArray.at(i).toString();
+			suggestion.url = urlsArray.at(i).toString();
+
+			if (m_model)
+			{
+				m_model->appendRow(new QStandardItem(suggestion.completion));
+			}
+
+			suggestions.append(suggestion);
+		}
+
+		emit suggestionsChanged(suggestions);
+	}
+
+	m_networkReply = nullptr;
 }
 
 void SearchSuggester::setSearchEngine(const QString &searchEngine)
@@ -82,59 +138,8 @@ void SearchSuggester::setQuery(const QString &query)
 			m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 		}
 
-		connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
+		connect(m_networkReply, SIGNAL(finished()), this, SLOT(handleReplyFinished()));
 	}
-}
-
-void SearchSuggester::replyFinished()
-{
-	if (!m_networkReply)
-	{
-		return;
-	}
-
-	if (m_model)
-	{
-		m_model->clear();
-	}
-
-	m_networkReply->deleteLater();
-
-	if (m_networkReply->size() <= 0)
-	{
-		m_networkReply = nullptr;
-
-		return;
-	}
-
-	const QJsonDocument document(QJsonDocument::fromJson(m_networkReply->readAll()));
-
-	if (!document.isEmpty() && document.isArray() && document.array().count() > 1 && document.array().at(0).toString() == m_query)
-	{
-		const QJsonArray completionsArray(document.array().at(1).toArray());
-		const QJsonArray descriptionsArray(document.array().at(2).toArray());
-		const QJsonArray urlsArray(document.array().at(3).toArray());
-		QList<SearchSuggestion> suggestions;
-
-		for (int i = 0; i < completionsArray.count(); ++i)
-		{
-			SearchSuggestion suggestion;
-			suggestion.completion = completionsArray.at(i).toString();
-			suggestion.description = descriptionsArray.at(i).toString();
-			suggestion.url = urlsArray.at(i).toString();
-
-			if (m_model)
-			{
-				m_model->appendRow(new QStandardItem(suggestion.completion));
-			}
-
-			suggestions.append(suggestion);
-		}
-
-		emit suggestionsChanged(suggestions);
-	}
-
-	m_networkReply = nullptr;
 }
 
 QStandardItemModel* SearchSuggester::getModel()
