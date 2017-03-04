@@ -60,7 +60,7 @@
 
 		if (links[i].search)
 		{
-			links[i].search.substr(1).split('&').every(function(item)
+			links[i].search.substr(1).split('&').forEach(function(item)
 			{
 				url.push(item.split('=')[0]);
 			});
