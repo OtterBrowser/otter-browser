@@ -105,7 +105,7 @@ bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
 			placeholdersMenu->addAction(tr("Platform"))->setData(QLatin1String("platform"));
 			placeholdersMenu->addAction(tr("Engine Version"))->setData(QLatin1String("engineVerion"));
-			placeholdersMenu->addAction(tr("Aplication Version"))->setData(QLatin1String("applicationVersion"));
+			placeholdersMenu->addAction(tr("Application Version"))->setData(QLatin1String("applicationVersion"));
 
 			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
 
