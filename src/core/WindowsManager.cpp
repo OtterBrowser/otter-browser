@@ -131,7 +131,45 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				if (parameters.contains(QLatin1String("hints")))
 				{
-					hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+					if (parameters[QLatin1String("hints")].type() == QVariant::Int)
+					{
+						hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+					}
+					else
+					{
+						const QStringList rawHints(parameters[QLatin1String("hints")].toStringList());
+
+						for (int i = 0; i < rawHints.count(); ++i)
+						{
+							QString hint(rawHints.at(i));
+							hint[0] = hint[0].toUpper();
+
+							if (hint == QLatin1String("Private"))
+							{
+								hints |= PrivateOpen;
+							}
+							else if (hint == QLatin1String("CurrentTab"))
+							{
+								hints |= CurrentTabOpen;
+							}
+							else if (hint == QLatin1String("NewTab"))
+							{
+								hints |= NewTabOpen;
+							}
+							else if (hint == QLatin1String("NewWindow"))
+							{
+								hints |= NewWindowOpen;
+							}
+							else if (hint == QLatin1String("Background"))
+							{
+								hints |= BackgroundOpen;
+							}
+							else if (hint == QLatin1String("End"))
+							{
+								hints |= EndOpen;
+							}
+						}
+					}
 				}
 
 				open(url, hints);
