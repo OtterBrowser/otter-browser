@@ -878,7 +878,7 @@ void Menu::populateSearchMenu()
 
 			if (m_role == ValidateMenuRole)
 			{
-				parameters[QLatin1String("query")] = QLatin1String("{url}");
+				parameters[QLatin1String("query")] = QLatin1String("{pageUrl}");
 			}
 
 			Action *action(addAction(ActionsManager::SearchAction));
