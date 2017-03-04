@@ -1022,7 +1022,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 			{
 				for (int i = 0; i < urls.count(); ++i)
 				{
-					mainWindow->getWindowsManager()->open(urls.at(i), WindowsManager::DefaultOpen, (dropIndex + i));
+					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("hints"), WindowsManager::DefaultOpen}, {QLatin1String("index"), (dropIndex + i)}});
 				}
 			}
 		}

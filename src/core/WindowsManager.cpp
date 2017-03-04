@@ -171,6 +171,10 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 						}
 					}
 				}
+				else
+				{
+					hints = calculateOpenHints();
+				}
 
 				open(url, hints, parameters.value(QLatin1String("index"), -1).toInt());
 			}

@@ -24,7 +24,6 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/ContentsWidget.h"
-#include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
@@ -82,11 +81,9 @@ void ContentBlockingInformationWidget::clear()
 
 void ContentBlockingInformationWidget::openElement(QAction *action)
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (action && mainWindow)
+	if (action)
 	{
-		mainWindow->getWindowsManager()->open(QUrl(action->statusTip()), WindowsManager::calculateOpenHints());
+		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), QUrl(action->statusTip())}});
 	}
 }
 

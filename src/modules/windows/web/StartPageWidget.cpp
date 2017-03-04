@@ -304,13 +304,12 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 	}
 
 	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (url.isValid() && mainWindow)
+	if (url.isValid())
 	{
 		m_urlOpenTime = QTime::currentTime();
 
-		mainWindow->getWindowsManager()->open(url, hints);
+		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 	}
 }
 
@@ -395,14 +394,13 @@ void StartPageWidget::openTile()
 		return;
 	}
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
 
-	if (mainWindow && url.isValid())
+	if (url.isValid())
 	{
 		m_urlOpenTime = QTime::currentTime();
 
-		mainWindow->getWindowsManager()->open(url, hints);
+		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 	}
 }
 
@@ -762,14 +760,9 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (keyEvent->modifiers() != Qt::NoModifier)
 					{
-						MainWindow *mainWindow(MainWindow::findMainWindow(this));
+						m_urlOpenTime = QTime::currentTime();
 
-						if (mainWindow)
-						{
-							m_urlOpenTime = QTime::currentTime();
-
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()));
-						}
+						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}});
 					}
 					else
 					{
@@ -858,32 +851,22 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier)
 					{
-						MainWindow *mainWindow(MainWindow::findMainWindow(this));
+						m_urlOpenTime = QTime::currentTime();
 
-						if (mainWindow)
-						{
-							m_urlOpenTime = QTime::currentTime();
-
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()));
-						}
+						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()))}});
 					}
 					else if (mouseEvent->button() != Qt::MiddleButton)
 					{
-						MainWindow *mainWindow(MainWindow::findMainWindow(this));
+						WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
 
-						if (mainWindow && url.isValid())
+						if (m_window->isPrivate())
 						{
-							WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
-
-							if (m_window->isPrivate())
-							{
-								hints |= WindowsManager::PrivateOpen;
-							}
-
-							m_urlOpenTime = QTime::currentTime();
-
-							mainWindow->getWindowsManager()->open(url, hints);
+							hints |= WindowsManager::PrivateOpen;
 						}
+
+						m_urlOpenTime = QTime::currentTime();
+
+						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 					}
 				}
 			}

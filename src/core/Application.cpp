@@ -488,7 +488,7 @@ void Application::openUrl(const QUrl &url)
 {
 	if (m_activeWindow)
 	{
-		m_activeWindow->getWindowsManager()->open(url);
+		m_activeWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 	}
 }
 

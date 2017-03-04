@@ -375,7 +375,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!path.isEmpty())
 				{
-					m_windowsManager->open(QUrl::fromLocalFile(path));
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl::fromLocalFile(path)}});
 				}
 			}
 
@@ -451,7 +451,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!homePage.isEmpty())
 				{
-					m_windowsManager->open(QUrl(homePage), WindowsManager::CurrentTabOpen);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}, {QLatin1String("hints"), WindowsManager::CurrentTabOpen}});
 				}
 			}
 
@@ -462,7 +462,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -566,7 +566,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (definition.identifier >= 0 && !definition.currentPanel.isEmpty())
 				{
-					m_windowsManager->open(SidebarWidget::getPanelUrl(definition.currentPanel), WindowsManager::NewTabOpen);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), WindowsManager::NewTabOpen}});
 				}
 			}
 
@@ -608,7 +608,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -626,7 +626,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -637,7 +637,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -648,7 +648,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -659,7 +659,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -670,7 +670,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
@@ -1119,7 +1119,7 @@ void MainWindow::handleTransferStarted()
 
 		if (!SessionsManager::hasUrl(url, false))
 		{
-			m_windowsManager->open(url, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
+			m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen)}});
 		}
 	}
 	else if (action == QLatin1String("openPanel"))
