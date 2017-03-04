@@ -468,7 +468,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 				else
 				{
-					const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("linkUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
+					const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("frameUrl"), QLatin1String("linkUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
 
 					for (int i = 0; i < placeholders.count(); ++i)
 					{
@@ -479,6 +479,10 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 							if (placeholders.at(i) == QLatin1String("clipboard"))
 							{
 								query.replace(placeholder, QGuiApplication::clipboard()->text());
+							}
+							else if (placeholders.at(i) == QLatin1String("frameUrl"))
+							{
+								query.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
 							}
 							else if (placeholders.at(i) == QLatin1String("linkUrl"))
 							{

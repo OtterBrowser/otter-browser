@@ -1608,6 +1608,11 @@ QRect WebWidget::getProgressBarGeometry() const
 	return (isVisible() ? QRect(QPoint(0, (height() - 30)), QSize(width(), 30)) : QRect());
 }
 
+WebWidget::LinkUrl WebWidget::getActiveFrame() const
+{
+	return LinkUrl();
+}
+
 WebWidget::LinkUrl WebWidget::getActiveLink() const
 {
 	return LinkUrl();
