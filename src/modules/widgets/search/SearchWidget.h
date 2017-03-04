@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,17 +22,14 @@
 #define OTTER_SEARCHWIDGET_H
 
 #include "../../../core/WindowsManager.h"
-#include "../../../ui/ComboBoxWidget.h"
+#include "../../../ui/LineEditWidget.h"
 
 #include <QtCore/QPointer>
-#include <QtCore/QTime>
-#include <QtWidgets/QCompleter>
 #include <QtWidgets/QItemDelegate>
 
 namespace Otter
 {
 
-class LineEditWidget;
 class SearchSuggester;
 class Window;
 
@@ -45,23 +42,21 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class SearchWidget : public ComboBoxWidget
+class SearchWidget : public LineEditWidget
 {
 	Q_OBJECT
 
 public:
 	explicit SearchWidget(Window *window, QWidget *parent = nullptr);
 
-	void hidePopup() override;
-	QString getCurrentSearchEngine() const;
 	QVariantMap getOptions() const;
 	bool event(QEvent *event) override;
 
 public slots:
-	void activate(Qt::FocusReason reason);
 	void setWindow(Window *window = nullptr);
 	void setSearchEngine(const QString &searchEngine = QString());
 	void setOptions(const QVariantMap &options);
+	void setQuery(const QString &query);
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -70,40 +65,35 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
-	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
+	QModelIndex getCurrentIndex() const;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
-	void currentIndexChanged(int index);
-	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
+	void showCompletion(bool showSearchModel = false);
 	void pasteAndGo();
 	void addSearchEngine(QAction *action);
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void updateGeometries();
+	void setSearchEngine(QModelIndex index);
 
 private:
 	QPointer<Window> m_window;
-	LineEditWidget *m_lineEdit;
-	QCompleter *m_completer;
 	SearchSuggester *m_suggester;
 	QString m_query;
 	QString m_storedSearchEngine;
-	QTime m_popupHideTime;
 	QRect m_iconRectangle;
 	QRect m_dropdownArrowRectangle;
 	QRect m_lineEditRectangle;
 	QRect m_addButtonRectangle;
 	QRect m_searchButtonRectangle;
 	QVariantMap m_options;
-	int m_lastValidIndex;
 	bool m_isIgnoringActivation;
-	bool m_isPopupUpdated;
 	bool m_isSearchEngineLocked;
-	bool m_wasPopupVisible;
 
 signals:
 	void searchEngineChanged(const QString &searchEngine);
