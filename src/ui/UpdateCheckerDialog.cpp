@@ -144,10 +144,7 @@ void UpdateCheckerDialog::showDetails()
 
 		if (url.isValid() && !SessionsManager::hasUrl(url, true))
 		{
-			QVariantMap parameters;
-			parameters[QLatin1String("url")] = url;
-
-			ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
+			ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, {{QLatin1String("url"), url}});
 
 			close();
 		}

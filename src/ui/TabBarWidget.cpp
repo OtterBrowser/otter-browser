@@ -847,10 +847,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 				if (!drag->target())
 				{
-					QVariantMap parameters;
-					parameters[QLatin1String("window")] = window->getIdentifier();
-
-					ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, parameters);
+					ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, {{QLatin1String("window"), window->getIdentifier()}});
 				}
 			}
 		}
@@ -874,10 +871,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		if (m_isDetachingTab)
 		{
-			QVariantMap parameters;
-			parameters[QLatin1String("window")] = m_draggedWindow;
-
-			ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, parameters);
+			ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, {{QLatin1String("window"), m_draggedWindow}});
 
 			m_isDetachingTab = false;
 		}

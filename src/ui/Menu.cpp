@@ -1280,10 +1280,7 @@ void Menu::selectWindow(QAction *action)
 {
 	if (action)
 	{
-		QVariantMap parameters;
-		parameters[QLatin1String("window")] = action->data().toULongLong();
-
-		ActionsManager::triggerAction(ActionsManager::ActivateTabAction, this, parameters);
+		ActionsManager::triggerAction(ActionsManager::ActivateTabAction, this, {{QLatin1String("window"), action->data().toULongLong()}});
 	}
 }
 

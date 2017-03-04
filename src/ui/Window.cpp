@@ -372,10 +372,7 @@ void Window::handleSearchRequest(const QString &query, const QString &searchEngi
 
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
-	QVariantMap parameters;
-	parameters[QLatin1String("window")] = getIdentifier();
-
-	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, MainWindow::findMainWindow(this), parameters);
+	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, MainWindow::findMainWindow(this), {{QLatin1String("window"), getIdentifier()}});
 
 	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 

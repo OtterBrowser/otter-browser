@@ -758,11 +758,9 @@ void WebWidget::updateEditActions()
 	if (m_actions.contains(ActionsManager::SearchAction))
 	{
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
-		QVariantMap parameters;
-		parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(searchEngine.isValid());
-		m_actions[ActionsManager::SearchAction]->setParameters(parameters);
+		m_actions[ActionsManager::SearchAction]->setParameters({{QLatin1String("searchEngine"), searchEngine.identifier}});
 		m_actions[ActionsManager::SearchAction]->setIcon(searchEngine.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
 		m_actions[ActionsManager::SearchAction]->setOverrideText(searchEngine.isValid() ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[ActionsManager::SearchAction]->setToolTip(searchEngine.isValid() ? searchEngine.description : tr("No search engines defined"));

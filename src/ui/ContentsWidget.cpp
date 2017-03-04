@@ -103,14 +103,14 @@ void ContentsWidget::triggerAction()
 
 	if (action)
 	{
-		QVariantMap parameters;
-
 		if (action->isCheckable())
 		{
-			parameters[QLatin1String("isChecked")] = action->isChecked();
+			triggerAction(action->getIdentifier(), {{QLatin1String("isChecked"), action->isChecked()}});
 		}
-
-		triggerAction(action->getIdentifier(), parameters);
+		else
+		{
+			triggerAction(action->getIdentifier());
+		}
 	}
 }
 

@@ -1124,12 +1124,7 @@ void MainWindow::handleTransferStarted()
 	}
 	else if (action == QLatin1String("openPanel"))
 	{
-		QVariantMap parameters;
-		parameters[QLatin1String("isChecked")] = true;
-		parameters[QLatin1String("sidebar")] = ToolBarsManager::SideBar;
-		parameters[QLatin1String("panel")] = QLatin1String("transfers");
-
-		triggerAction(ActionsManager::ShowSidebarAction, parameters);
+		triggerAction(ActionsManager::ShowSidebarAction, {{QLatin1String("isChecked"), true}, {QLatin1String("sidebar"), ToolBarsManager::SideBar}, {QLatin1String("panel"), QLatin1String("transfers")}});
 	}
 }
 

@@ -82,10 +82,7 @@ void QtWebKitInspector::resizeEvent(QResizeEvent *event)
 
 void QtWebKitInspector::hideInspector()
 {
-	QVariantMap parameters;
-	parameters[QLatin1String("isChecked")] = false;
-
-	m_widget->triggerAction(ActionsManager::InspectPageAction, parameters);
+	m_widget->triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), false}});
 }
 #endif
 

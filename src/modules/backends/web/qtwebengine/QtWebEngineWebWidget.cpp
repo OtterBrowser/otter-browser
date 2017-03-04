@@ -1847,10 +1847,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
 		{
-			QVariantMap parameters;
-			parameters[QLatin1String("context")] = contextMenuEvent->reason();
-
-			triggerAction(ActionsManager::ContextMenuAction, parameters);
+			triggerAction(ActionsManager::ContextMenuAction, {{QLatin1String("context"), contextMenuEvent->reason()}});
 		}
 	}
 	else if (object == m_webView && (event->type() == QEvent::Move || event->type() == QEvent::Resize))

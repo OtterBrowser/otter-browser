@@ -54,10 +54,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 			hints |= WindowsManager::PrivateOpen;
 		}
 
-		QVariantMap parameters;
-		parameters[QLatin1String("hints")] = static_cast<int>(hints);
-
-		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
+		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, {{QLatin1String("hints"), QVariant(hints)}});
 
 		QAction *action(defaultAction());
 
