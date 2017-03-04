@@ -128,13 +128,12 @@ void BookmarksContentsWidget::restoreBookmark()
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
 	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (bookmark && mainWindow)
+	if (bookmark)
 	{
 		QAction *action(qobject_cast<QAction*>(sender()));
 
-		mainWindow->getWindowsManager()->open(bookmark, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
+		ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen))}});
 	}
 }
 
@@ -394,15 +393,14 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-		if (mainWindow && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
-				mainWindow->getWindowsManager()->open(bookmark, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
+				ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}});
 
 				return true;
 			}

@@ -242,14 +242,9 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+			ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), BookmarksManager::getModel()->getBookmark(action->data().toModelIndex())->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, event->button(), event->modifiers()))}});
 
-			if (mainWindow)
-			{
-				mainWindow->getWindowsManager()->open(BookmarksManager::getModel()->getBookmark(action->data().toModelIndex()), WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, event->button(), event->modifiers()));
-
-				return;
-			}
+			return;
 		}
 	}
 
@@ -1224,7 +1219,6 @@ void Menu::openBookmark()
 		}
 	}
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && action->data().type() == QVariant::ModelIndex)
@@ -1232,12 +1226,9 @@ void Menu::openBookmark()
 		m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
 	}
 
-	if (mainWindow)
-	{
-		const WindowsManager::OpenHints hints(action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen);
+	const WindowsManager::OpenHints hints(action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen);
 
-		mainWindow->getWindowsManager()->open(m_bookmark, ((hints == WindowsManager::DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
-	}
+	ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((hints == WindowsManager::DefaultOpen) ? WindowsManager::calculateOpenHints() : hints)}});
 
 	m_bookmark = nullptr;
 }

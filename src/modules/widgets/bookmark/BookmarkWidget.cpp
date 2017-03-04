@@ -21,7 +21,6 @@
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WindowsManager.h"
-#include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 
 #include <QtCore/QDateTime>
@@ -54,12 +53,7 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && m_bookmark)
 	{
-		MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
-
-		if (mainWindow)
-		{
-			mainWindow->getWindowsManager()->open(m_bookmark, WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, event->button(), event->modifiers()));
-		}
+		ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, event->button(), event->modifiers()))}});
 	}
 }
 

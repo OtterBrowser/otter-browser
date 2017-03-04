@@ -122,12 +122,13 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::OpenUrlAction:
 			{
 				QUrl url;
-				OpenHints hints(DefaultOpen);
 
 				if (parameters.contains(QLatin1String("url")))
 				{
 					url = ((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
 				}
+
+				OpenHints hints(DefaultOpen);
 
 				if (parameters.contains(QLatin1String("hints")))
 				{
@@ -137,38 +138,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					}
 					else
 					{
-						const QStringList rawHints(parameters[QLatin1String("hints")].toStringList());
-
-						for (int i = 0; i < rawHints.count(); ++i)
-						{
-							QString hint(rawHints.at(i));
-							hint[0] = hint[0].toUpper();
-
-							if (hint == QLatin1String("Private"))
-							{
-								hints |= PrivateOpen;
-							}
-							else if (hint == QLatin1String("CurrentTab"))
-							{
-								hints |= CurrentTabOpen;
-							}
-							else if (hint == QLatin1String("NewTab"))
-							{
-								hints |= NewTabOpen;
-							}
-							else if (hint == QLatin1String("NewWindow"))
-							{
-								hints |= NewWindowOpen;
-							}
-							else if (hint == QLatin1String("Background"))
-							{
-								hints |= BackgroundOpen;
-							}
-							else if (hint == QLatin1String("End"))
-							{
-								hints |= EndOpen;
-							}
-						}
+						calculateOpenHints(parameters[QLatin1String("hints")].toStringList());
 					}
 				}
 				else
@@ -251,15 +221,102 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::OpenBookmarkAction:
+			if (parameters.contains(QLatin1String("bookmark")))
 			{
-				OpenHints hints(DefaultOpen);
+				BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
 
-				if (parameters.contains(QLatin1String("hints")))
+				if (!bookmark)
 				{
-					hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+					break;
 				}
 
-				open(BookmarksManager::getBookmark(parameters.value(QLatin1String("bookmark")).toULongLong()), hints);
+				QVariantMap mutableParameters(parameters);
+				mutableParameters.remove(QLatin1String("bookmark"));
+
+				switch (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
+				{
+					case BookmarksModel::UrlBookmark:
+						mutableParameters[QLatin1String("url")] = bookmark->data(BookmarksModel::UrlRole).toUrl();
+
+						triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+
+						break;
+					case BookmarksModel::RootBookmark:
+					case BookmarksModel::FolderBookmark:
+						{
+							const QList<QUrl> urls(bookmark->getUrls());
+							bool canOpen(true);
+
+							if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption).toBool() && !parameters.value(QLatin1String("ignoreWarning"), false).toBool())
+							{
+								QMessageBox messageBox;
+								messageBox.setWindowTitle(tr("Question"));
+								messageBox.setText(tr("You are about to open %n bookmark(s).", "", urls.count()));
+								messageBox.setInformativeText(tr("Do you want to continue?"));
+								messageBox.setIcon(QMessageBox::Question);
+								messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+								messageBox.setDefaultButton(QMessageBox::Yes);
+								messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+								if (messageBox.exec() == QMessageBox::Cancel)
+								{
+									canOpen = false;
+								}
+
+								SettingsManager::setValue(SettingsManager::Choices_WarnOpenBookmarkFolderOption, !messageBox.checkBox()->isChecked());
+							}
+
+							if (urls.isEmpty() || !canOpen)
+							{
+								break;
+							}
+
+							OpenHints hints(DefaultOpen);
+
+							if (parameters.contains(QLatin1String("hints")))
+							{
+								if (parameters[QLatin1String("hints")].type() == QVariant::Int)
+								{
+									hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+								}
+								else
+								{
+									calculateOpenHints(parameters[QLatin1String("hints")].toStringList());
+								}
+							}
+							else
+							{
+								hints = calculateOpenHints();
+							}
+
+							int index(parameters.value(QLatin1String("index"), -1).toInt());
+
+							if (index < 0)
+							{
+								index = ((!hints.testFlag(EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
+							}
+
+							mutableParameters[QLatin1String("url")] = urls.at(0);
+							mutableParameters[QLatin1String("hints")] = QVariant(hints);
+							mutableParameters[QLatin1String("index")] = index;
+
+							triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+
+							mutableParameters[QLatin1String("hints")] = QVariant((hints == DefaultOpen || hints.testFlag(CurrentTabOpen)) ? NewTabOpen : hints);
+
+							for (int i = 1; i < urls.count(); ++i)
+							{
+								mutableParameters[QLatin1String("url")] = urls.at(i);
+								mutableParameters[QLatin1String("index")] = (index + i);
+
+								triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+							}
+						}
+
+						break;
+					default:
+						break;
+				}
 			}
 
 			break;
@@ -334,67 +391,11 @@ void WindowsManager::open(const QUrl &url, OpenHints hints, int index)
 	}
 }
 
-void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints, int index)
+void WindowsManager::open(BookmarksItem *bookmark, WindowsManager::OpenHints hints, int index)
 {
-	if (!bookmark)
+	if (bookmark)
 	{
-		return;
-	}
-
-	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-
-	if (hints == DefaultOpen && ((window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
-	{
-		hints = CurrentTabOpen;
-	}
-
-	switch (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
-	{
-		case BookmarksModel::UrlBookmark:
-			open(QUrl(bookmark->data(BookmarksModel::UrlRole).toUrl()), hints, index);
-
-			break;
-		case BookmarksModel::RootBookmark:
-		case BookmarksModel::FolderBookmark:
-			{
-				const QList<QUrl> urls(bookmark->getUrls());
-				bool canOpen(true);
-
-				if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption).toBool())
-				{
-					QMessageBox messageBox;
-					messageBox.setWindowTitle(tr("Question"));
-					messageBox.setText(tr("You are about to open %n bookmark(s).", "", urls.count()));
-					messageBox.setInformativeText(tr("Do you want to continue?"));
-					messageBox.setIcon(QMessageBox::Question);
-					messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-					messageBox.setDefaultButton(QMessageBox::Yes);
-					messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
-
-					if (messageBox.exec() == QMessageBox::Cancel)
-					{
-						canOpen = false;
-					}
-
-					SettingsManager::setValue(SettingsManager::Choices_WarnOpenBookmarkFolderOption, !messageBox.checkBox()->isChecked());
-				}
-
-				if (urls.isEmpty() || !canOpen)
-				{
-					return;
-				}
-
-				open(urls.at(0), hints, index);
-
-				for (int i = 1; i < urls.count(); ++i)
-				{
-					open(urls.at(i), ((hints == DefaultOpen || hints.testFlag(CurrentTabOpen)) ? NewTabOpen : hints), ((index >= 0) ? (index + i) : index));
-				}
-			}
-
-			break;
-		default:
-			break;
+		triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}, {QLatin1String("index"), index}});
 	}
 }
 
@@ -1079,6 +1080,44 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt
 	if (SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())
 	{
 		return CurrentTabOpen;
+	}
+
+	return hints;
+}
+
+WindowsManager::OpenHints WindowsManager::calculateOpenHints(const QStringList &rawHints)
+{
+	OpenHints hints(DefaultOpen);
+
+	for (int i = 0; i < rawHints.count(); ++i)
+	{
+		QString hint(rawHints.at(i));
+		hint[0] = hint[0].toUpper();
+
+		if (hint == QLatin1String("Private"))
+		{
+			hints |= PrivateOpen;
+		}
+		else if (hint == QLatin1String("CurrentTab"))
+		{
+			hints |= CurrentTabOpen;
+		}
+		else if (hint == QLatin1String("NewTab"))
+		{
+			hints |= NewTabOpen;
+		}
+		else if (hint == QLatin1String("NewWindow"))
+		{
+			hints |= NewWindowOpen;
+		}
+		else if (hint == QLatin1String("Background"))
+		{
+			hints |= BackgroundOpen;
+		}
+		else if (hint == QLatin1String("End"))
+		{
+			hints |= EndOpen;
+		}
 	}
 
 	return hints;

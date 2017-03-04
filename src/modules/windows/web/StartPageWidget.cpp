@@ -31,7 +31,6 @@
 #include "../../../modules/widgets/search/SearchWidget.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsDialog.h"
-#include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/Window.h"
@@ -376,14 +375,13 @@ void StartPageWidget::openTile()
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 		BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
-		if (mainWindow && bookmark && bookmark->rowCount() > 0)
+		if (bookmark && bookmark->rowCount() > 0)
 		{
 			m_urlOpenTime = QTime::currentTime();
 
-			mainWindow->getWindowsManager()->open(bookmark, hints);
+			ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}});
 		}
 
 		return;

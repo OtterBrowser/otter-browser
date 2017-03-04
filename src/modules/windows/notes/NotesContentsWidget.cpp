@@ -23,7 +23,6 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/MainWindow.h"
 
 #include "ui_NotesContentsWidget.h"
 
@@ -121,11 +120,10 @@ void NotesContentsWidget::restoreNote()
 void NotesContentsWidget::openUrl(const QModelIndex &index)
 {
 	BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid() && mainWindow)
+	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid())
 	{
-		mainWindow->getWindowsManager()->open(bookmark);
+		ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}});
 	}
 }
 
@@ -391,15 +389,14 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-		if (mainWindow && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
-				mainWindow->getWindowsManager()->open(bookmark, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
+				ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}});
 
 				return true;
 			}
