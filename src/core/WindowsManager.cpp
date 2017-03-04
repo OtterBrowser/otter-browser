@@ -172,7 +172,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					}
 				}
 
-				open(url, hints);
+				open(url, hints, parameters.value(QLatin1String("index"), -1).toInt());
 			}
 
 			break;
