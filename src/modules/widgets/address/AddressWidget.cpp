@@ -439,7 +439,7 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 	{
 		if (entry == UnknownEntry || entry == AddressEntry)
 		{
-			unsetCursor();
+			setCursor(Qt::IBeamCursor);
 		}
 		else
 		{
