@@ -72,7 +72,7 @@ WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, WebWidget *w
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
 	m_isTabPreferencesMenuVisible(false),
-	m_showStartPage(SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()),
+	m_showStartPage(!isSidebarPanel() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()),
 	m_ignoreRelease(false)
 {
 	m_splitter->hide();
@@ -713,20 +713,31 @@ void WebContentsWidget::scrollContents(const QPoint &delta)
 
 void WebContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Search_EnableFindInPageAsYouTypeOption && m_searchBarWidget)
+	switch (identifier)
 	{
-		if (value.toBool())
-		{
-			connect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
-		}
-		else
-		{
-			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
-		}
-	}
-	else if (identifier == SettingsManager::StartPage_EnableStartPageOption)
-	{
-		m_showStartPage = value.toBool();
+		case SettingsManager::Search_EnableFindInPageAsYouTypeOption:
+			if (m_searchBarWidget)
+			{
+				if (value.toBool())
+				{
+					connect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
+				}
+				else
+				{
+					disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
+				}
+			}
+
+			break;
+		case SettingsManager::StartPage_EnableStartPageOption:
+			if (!isSidebarPanel())
+			{
+				m_showStartPage = value.toBool();
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
