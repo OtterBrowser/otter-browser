@@ -49,6 +49,12 @@ class TransfersContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		BytesReceivedRole = Qt::UserRole,
+		BytesTotalRole
+	};
+
 	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window);
 	~TransfersContentsWidget();
 

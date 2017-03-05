@@ -44,17 +44,20 @@ ProgressBarDelegate::ProgressBarDelegate(QObject *parent) : ItemDelegate(parent)
 
 void ProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	const qint64 bytesTotal(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong());
+	const bool isIndeterminate(bytesTotal <= 0);
+
 	QStyleOptionProgressBar progressBarOption;
 	progressBarOption.fontMetrics = option.fontMetrics;
 	progressBarOption.palette = option.palette;
 	progressBarOption.rect = option.rect;
 	progressBarOption.state = option.state;
 	progressBarOption.minimum = 0;
-	progressBarOption.maximum = 100;
+	progressBarOption.maximum = (isIndeterminate ? 0 : 100);
 	progressBarOption.textAlignment = Qt::AlignCenter;
 	progressBarOption.textVisible = true;
-	progressBarOption.progress = index.data(Qt::DisplayRole).toInt();
-	progressBarOption.text = QStringLiteral("%1%").arg(progressBarOption.progress);
+	progressBarOption.progress = (isIndeterminate ? -1 : qFloor((static_cast<qreal>(index.data(TransfersContentsWidget::BytesReceivedRole).toLongLong()) / bytesTotal) * 100));
+	progressBarOption.text = (isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(progressBarOption.progress));
 
 	QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter, 0);
 }
@@ -236,20 +239,50 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 			break;
 	}
 
-	m_model->item(row, 0)->setIcon(icon);
-	m_model->item(row, 1)->setText(QFileInfo(transfer->getTarget()).fileName());
-	m_model->item(row, 2)->setText(Utils::formatUnit(transfer->getBytesTotal(), false, 1));
-	m_model->item(row, 3)->setText((transfer->getBytesTotal() > 0) ? QString::number(qFloor((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100), 'f', 0) : QString());
-	m_model->item(row, 4)->setText(remainingTime);
-	m_model->item(row, 5)->setText((transfer->getState() == Transfer::RunningState) ? Utils::formatUnit(transfer->getSpeed(), true, 1) : QString());
-	m_model->item(row, 6)->setText(transfer->getTimeStarted().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
-	m_model->item(row, 7)->setText(transfer->getTimeFinished().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
-
-	const QString tooltip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1)));
+	const QString toolTip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1)));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
-		m_model->item(row, i)->setToolTip(tooltip);
+		const QModelIndex &index(m_model->index(row, i));
+
+		m_model->setData(index, toolTip, Qt::ToolTipRole);
+
+		switch (i)
+		{
+			case 1:
+				m_model->setData(index, QFileInfo(transfer->getTarget()).fileName(), Qt::DisplayRole);
+
+				break;
+			case 2:
+				m_model->setData(index, Utils::formatUnit(transfer->getBytesTotal(), false, 1), Qt::DisplayRole);
+
+				break;
+			case 3:
+				m_model->setData(index, transfer->getBytesReceived(), BytesReceivedRole);
+				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
+
+				break;
+			case 4:
+				m_model->setData(index, remainingTime, Qt::DisplayRole);
+
+				break;
+			case 5:
+				m_model->setData(index, ((transfer->getState() == Transfer::RunningState) ? Utils::formatUnit(transfer->getSpeed(), true, 1) : QString()), Qt::DisplayRole);
+
+				break;
+			case 6:
+				m_model->setData(index, Utils::formatDateTime(transfer->getTimeStarted()), Qt::DisplayRole);
+
+				break;
+			case 7:
+				m_model->setData(index, Utils::formatDateTime(transfer->getTimeFinished()), Qt::DisplayRole);
+
+				break;
+			default:
+				m_model->setData(index, icon, Qt::DecorationRole);
+
+				break;
+		}
 	}
 
 	if (m_ui->transfersViewWidget->selectionModel()->hasSelection())
