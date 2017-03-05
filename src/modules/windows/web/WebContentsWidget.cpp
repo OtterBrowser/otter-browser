@@ -1084,7 +1084,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	}
 	else
 	{
-		widget = AddonsManager::getWebBackend()->createWidget(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen), this);
+		widget = AddonsManager::getWebBackend(parameters.value(QLatin1String("webBackend")).toString())->createWidget(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen), this);
 
 		if (m_window)
 		{
