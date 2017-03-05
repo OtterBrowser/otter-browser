@@ -34,6 +34,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QProgressBar>
 
 namespace Otter
 {
@@ -42,24 +43,36 @@ ProgressBarDelegate::ProgressBarDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
 
-void ProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void ProgressBarDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const qint64 bytesTotal(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong());
-	const bool isIndeterminate(bytesTotal <= 0);
+	Q_UNUSED(index)
 
-	QStyleOptionProgressBar progressBarOption;
-	progressBarOption.fontMetrics = option.fontMetrics;
-	progressBarOption.palette = option.palette;
-	progressBarOption.rect = option.rect;
-	progressBarOption.state = option.state;
-	progressBarOption.minimum = 0;
-	progressBarOption.maximum = (isIndeterminate ? 0 : 100);
-	progressBarOption.textAlignment = Qt::AlignCenter;
-	progressBarOption.textVisible = true;
-	progressBarOption.progress = (isIndeterminate ? -1 : qFloor((static_cast<qreal>(index.data(TransfersContentsWidget::BytesReceivedRole).toLongLong()) / bytesTotal) * 100));
-	progressBarOption.text = (isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(progressBarOption.progress));
+	editor->setGeometry(option.rect);
+}
 
-	QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter, 0);
+void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+	QProgressBar *progressBar(qobject_cast<QProgressBar*>(editor));
+
+	if (progressBar)
+	{
+		const qint64 bytesTotal(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong());
+		const bool isIndeterminate(bytesTotal <= 0);
+
+		progressBar->setRange(0, (isIndeterminate ? 0 : 100));
+		progressBar->setValue(isIndeterminate ? -1 : qFloor((static_cast<qreal>(index.data(TransfersContentsWidget::BytesReceivedRole).toLongLong()) / bytesTotal) * 100));
+		progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
+	}
+}
+
+QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QProgressBar *editor(new QProgressBar(parent));
+	editor->setAlignment(Qt::AlignCenter);
+
+	setEditorData(editor, index);
+
+	return editor;
 }
 
 TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
@@ -136,6 +149,8 @@ void TransfersContentsWidget::addTransfer(Transfer *transfer)
 	}
 
 	m_model->appendRow(items);
+
+	m_ui->transfersViewWidget->openPersistentEditor(items[3]->index());
 
 	if (transfer->getState() == Transfer::RunningState)
 	{
