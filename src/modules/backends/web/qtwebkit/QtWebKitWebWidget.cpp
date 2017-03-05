@@ -2096,7 +2096,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 	return WebWidget::getAction(identifier);
 }
 
-QWebPage* QtWebKitWebWidget::getPage()
+QtWebKitPage* QtWebKitWebWidget::getPage()
 {
 	return m_page;
 }

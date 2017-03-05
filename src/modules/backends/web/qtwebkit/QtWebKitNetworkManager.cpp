@@ -22,6 +22,7 @@
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitCookieJar.h"
 #include "QtWebKitFtpListingNetworkReply.h"
+#include "QtWebKitPage.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
@@ -724,7 +725,14 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		if (m_widget)
 		{
-			connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
+			if (reply->error() == QNetworkReply::NoError)
+			{
+				connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
+			}
+			else
+			{
+				m_widget->getPage()->markAsErrorPage();
+			}
 		}
 	}
 	else if (operation == GetOperation && request.url().scheme() == QLatin1String("ftp"))
@@ -733,7 +741,14 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		if (m_widget)
 		{
-			connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
+			if (reply->error() == QNetworkReply::NoError)
+			{
+				connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
+			}
+			else
+			{
+				m_widget->getPage()->markAsErrorPage();
+			}
 		}
 	}
 	else

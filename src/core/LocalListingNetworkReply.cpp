@@ -68,6 +68,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 		m_content = Utils::createErrorPage(information).toUtf8();
 
+		setError(QNetworkReply::ContentAccessDenied, information.description.first());
 		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
 

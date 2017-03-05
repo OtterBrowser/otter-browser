@@ -190,7 +190,7 @@ void AddonsContentsWidget::addAddon()
 
 	if (!failedPaths.isEmpty())
 	{
-		QMessageBox::critical(this, tr("Error"), tr("Failed to import following User Script file(s):\n%1", "" , failedPaths.count()).arg(failedPaths.join(QLatin1Char('\n'))), QMessageBox::Close);
+		QMessageBox::critical(this, tr("Error"), tr("Failed to import following User Script file(s):\n%1", "", failedPaths.count()).arg(failedPaths.join(QLatin1Char('\n'))), QMessageBox::Close);
 	}
 
 	save();
