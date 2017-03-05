@@ -50,7 +50,7 @@ public:
 		TitleRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
 		IdentifierRole = Qt::UserRole,
-		TimeVisitedRole = (Qt::UserRole + 1)
+		TimeVisitedRole
 	};
 
 	enum HistoryType

@@ -44,7 +44,7 @@ public:
 	enum DataRole
 	{
 		TypeRole = Qt::UserRole,
-		NameRole = (Qt::UserRole + 1)
+		NameRole
 	};
 
 	enum ReplaceMode
