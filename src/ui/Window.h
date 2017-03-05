@@ -118,7 +118,6 @@ private:
 	bool m_areToolBarsVisible;
 	bool m_isAboutToClose;
 	bool m_isPinned;
-	bool m_isPrivate;
 
 	static quint64 m_identifierCounter;
 
