@@ -322,7 +322,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 		index = 0;
 	}
 
-	Application::createWindow(Application::NoFlags, false, m_closedWindows.value(index, SessionMainWindow()));
+	Application::createWindow(QVariantMap(), m_closedWindows.value(index, SessionMainWindow()));
 
 	m_closedWindows.removeAt(index);
 
@@ -349,6 +349,13 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 		m_sessionTitle = session.title;
 	}
 
+	QVariantMap parameters;
+
+	if (isPrivate)
+	{
+		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+	}
+
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
 		if (window && i == 0)
@@ -357,7 +364,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 		}
 		else
 		{
-			Application::createWindow((isPrivate ? Application::PrivateFlag : Application::NoFlags), false, session.windows.at(i));
+			Application::createWindow(parameters, session.windows.at(i));
 		}
 	}
 

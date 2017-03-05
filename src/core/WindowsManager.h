@@ -119,8 +119,8 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
-	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
+	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen);
+	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen);
 	void addWindow(Window *window, WindowsManager::OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);

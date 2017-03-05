@@ -484,14 +484,6 @@ Application::~Application()
 	}
 }
 
-void Application::openUrl(const QUrl &url)
-{
-	if (m_activeWindow)
-	{
-		m_activeWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
-	}
-}
-
 void Application::close()
 {
 	if (canClose())
@@ -502,13 +494,11 @@ void Application::close()
 	}
 }
 
-void Application::openWindow(bool isPrivate, bool inBackground, const QUrl &url)
+void Application::openUrl(const QUrl &url)
 {
-	MainWindow *window(createWindow((isPrivate ? PrivateFlag : NoFlags), inBackground));
-
-	if (url.isValid() && window)
+	if (m_activeWindow)
 	{
-		window->openUrl(url.toString());
+		m_activeWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 	}
 }
 
@@ -647,7 +637,14 @@ void Application::handleNewConnection()
 	{
 		if (!window || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
 		{
-			createWindow(isPrivate ? PrivateFlag : NoFlags);
+			QVariantMap parameters;
+
+			if (isPrivate)
+			{
+				parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+			}
+
+			createWindow(parameters);
 		}
 	}
 	else
@@ -656,9 +653,16 @@ void Application::handleNewConnection()
 
 		if (sessionData.isClean || QMessageBox::warning(nullptr, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 		{
+			QVariantMap parameters;
+
+			if (isPrivate)
+			{
+				parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+			}
+
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
-				createWindow((isPrivate ? PrivateFlag : NoFlags), false, sessionData.windows.at(i));
+				createWindow(parameters, sessionData.windows.at(i));
 			}
 		}
 	}
@@ -700,11 +704,16 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 
 	if (openHints.testFlag(WindowsManager::NewWindowOpen))
 	{
-		MainWindowFlag flags(openHints.testFlag(WindowsManager::PrivateOpen) ? PrivateFlag : NoFlags);
+		QVariantMap parameters;
+
+		if (openHints.testFlag(WindowsManager::PrivateOpen))
+		{
+			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		}
 
 		for (int i = 0; i < urls.count(); ++i)
 		{
-			window = createWindow(flags);
+			window = createWindow(parameters);
 
 			if (!urls.at(i).isEmpty())
 			{
@@ -814,11 +823,13 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(QLocale(identifier));
 }
 
-MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, const SessionMainWindow &windows)
+MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &windows)
 {
-	MainWindow *window(new MainWindow(flags, windows));
+	MainWindow *window(new MainWindow(parameters, windows));
 
 	m_windows.prepend(window);
+
+	const bool inBackground(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::BackgroundOpen));
 
 	if (inBackground)
 	{
@@ -835,6 +846,11 @@ MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, 
 	{
 		window->lower();
 		window->setAttribute(Qt::WA_ShowWithoutActivating, false);
+	}
+
+	if (parameters.contains(QLatin1String("url")))
+	{
+		window->openUrl(parameters[QLatin1String("url")].toString());
 	}
 
 	emit m_instance->windowAdded(window);

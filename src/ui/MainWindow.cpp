@@ -62,7 +62,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(nullptr),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
@@ -74,7 +74,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	m_tabSwitcherTimer(0),
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
-	m_hasToolBars(!flags.testFlag(Application::NoToolBarsFlag)),
+	m_hasToolBars(!parameters.value(QLatin1String("noToolBars"), false).toBool()),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -85,7 +85,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	updateShortcuts();
 
-	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool()), this);
+	m_windowsManager = new WindowsManager((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen)), this);
 
 	m_workspace->updateActions();
 
@@ -362,11 +362,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 	switch (identifier)
 	{
 		case ActionsManager::NewWindowAction:
-			emit Application::openWindow();
+			Application::createWindow();
 
 			break;
 		case ActionsManager::NewWindowPrivateAction:
-			emit Application::openWindow(true);
+			Application::createWindow({{QLatin1String("hints"), WindowsManager::PrivateOpen}});
 
 			break;
 		case ActionsManager::OpenAction:

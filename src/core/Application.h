@@ -43,16 +43,6 @@ class Application : public QApplication
 	Q_OBJECT
 
 public:
-	enum MainWindowFlag
-	{
-		NoFlags = 0,
-		PrivateFlag = 1,
-		SingleWindowFlag = 2,
-		NoToolBarsFlag = 4
-	};
-
-	Q_DECLARE_FLAGS(MainWindowFlags, MainWindowFlag)
-
 	enum ReportOption
 	{
 		BasicReport = 0,
@@ -68,12 +58,11 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
-	static void openWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser);
 	static void setLocale(const QString &locale);
-	static MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
+	static MainWindow* createWindow(const QVariantMap &parameters = QVariantMap(), const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	static MainWindow* getWindow();
 	static MainWindow* getActiveWindow();
@@ -125,7 +114,6 @@ signals:
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Application::MainWindowFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Application::ReportOptions)
 
 #endif

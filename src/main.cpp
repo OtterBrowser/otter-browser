@@ -179,7 +179,14 @@ int main(int argc, char *argv[])
 
 	if (application.getWindows().isEmpty())
 	{
-		application.createWindow(isPrivate ? Application::PrivateFlag : Application::NoFlags);
+		QVariantMap parameters;
+
+		if (isPrivate)
+		{
+			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		}
+
+		application.createWindow(parameters);
 	}
 
 	return application.exec();

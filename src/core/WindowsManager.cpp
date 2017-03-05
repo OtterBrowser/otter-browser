@@ -60,11 +60,21 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 	switch (identifier)
 	{
 		case ActionsManager::NewTabAction:
-			open(QUrl(), NewTabOpen);
+			{
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("hints")] = NewTabOpen;
+
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+			}
 
 			break;
 		case ActionsManager::NewTabPrivateAction:
-			open(QUrl(), (NewTabOpen | PrivateOpen));
+			{
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("hints")] = QVariant(NewTabOpen | PrivateOpen);
+
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+			}
 
 			break;
 		case ActionsManager::CloneTabAction:
@@ -121,20 +131,65 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			break;
 		case ActionsManager::OpenUrlAction:
 			{
-				QVariantMap mutableParameters(parameters);
-				QUrl url;
-
-				if (parameters.contains(QLatin1String("url")))
-				{
-					url = ((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
-				}
+				const QUrl url((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
+				OpenHints hints(calculateOpenHints(parameters));
+				int index(parameters.value(QLatin1String("index"), -1).toInt());
 
 				if (m_isPrivate)
 				{
-					mutableParameters[QLatin1String("hints")] = QVariant(calculateOpenHints(parameters) | PrivateOpen);
+					hints |= PrivateOpen;
 				}
 
-				open(url, calculateOpenHints(mutableParameters), parameters.value(QLatin1String("index"), -1).toInt());
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("hints")] = QVariant(hints);
+
+				if (hints.testFlag(NewWindowOpen))
+				{
+					Application::createWindow(mutableParameters);
+
+					break;
+				}
+
+				if (index >= 0)
+				{
+					openTab(url, hints, index);
+
+					break;
+				}
+
+				Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
+				const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
+
+				if (hints == NewTabOpen && !url.isEmpty() && isUrlEmpty)
+				{
+					hints = CurrentTabOpen;
+				}
+				else if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !Utils::isUrlEmpty(window->getUrl())))
+				{
+					hints = NewTabOpen;
+				}
+				else if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+				{
+					hints = CurrentTabOpen;
+				}
+
+				if (hints.testFlag(CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
+				{
+					if (window->isPrivate() == hints.testFlag(PrivateOpen))
+					{
+						window->getContentsWidget()->setHistory(WindowHistoryInformation());
+						window->setUrl(url, false);
+					}
+					else
+					{
+						close(m_mainWindow->getTabBar()->currentIndex());
+						openTab(url, hints);
+					}
+				}
+				else
+				{
+					openTab(url, hints);
+				}
 			}
 
 			break;
@@ -316,64 +371,17 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 	}
 }
 
-void WindowsManager::open(const QUrl &url, OpenHints hints, int index)
+void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
-	if (index >= 0)
-	{
-		openTab(url, hints, index);
+	triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 
-		return;
-	}
-
-	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-	const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
-
-	if (hints == NewTabOpen && !url.isEmpty() && isUrlEmpty)
-	{
-		hints = CurrentTabOpen;
-	}
-	else if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !Utils::isUrlEmpty(window->getUrl())))
-	{
-		hints = NewTabOpen;
-	}
-	else if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
-	{
-		hints = CurrentTabOpen;
-	}
-
-	if (m_isPrivate)
-	{
-		hints |= PrivateOpen;
-	}
-
-	if (hints.testFlag(NewWindowOpen))
-	{
-		Application::openWindow(hints.testFlag(PrivateOpen), hints.testFlag(BackgroundOpen), url);
-	}
-	else if (hints.testFlag(CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
-	{
-		if (window->isPrivate() == hints.testFlag(PrivateOpen))
-		{
-			window->getContentsWidget()->setHistory(WindowHistoryInformation());
-			window->setUrl(url, false);
-		}
-		else
-		{
-			close(m_mainWindow->getTabBar()->currentIndex());
-			openTab(url, hints);
-		}
-	}
-	else
-	{
-		openTab(url, hints);
-	}
 }
 
-void WindowsManager::open(BookmarksItem *bookmark, WindowsManager::OpenHints hints, int index)
+void WindowsManager::open(BookmarksItem *bookmark, WindowsManager::OpenHints hints)
 {
 	if (bookmark)
 	{
-		triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}, {QLatin1String("index"), index}});
+		triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}});
 	}
 }
 
@@ -411,7 +419,7 @@ void WindowsManager::search(const QString &query, const QString &searchEngine, O
 	}
 	else
 	{
-		open(QUrl(), hints);
+		triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(hints)}});
 
 		window = m_mainWindow->getWorkspace()->getActiveWindow();
 	}
@@ -483,7 +491,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 
 		if (SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString() != QLatin1String("doNothing"))
 		{
-			open();
+			triggerAction(ActionsManager::NewTabAction);
 		}
 		else
 		{
@@ -817,7 +825,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 	if (m_mainWindow->getTabBar()->count() < 1 && lastTabClosingAction == QLatin1String("openTab"))
 	{
-		open();
+		triggerAction(ActionsManager::NewTabAction);
 	}
 }
 
@@ -960,9 +968,14 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints, int 
 
 	Window *window(nullptr);
 
+	if (widget->isPrivate())
+	{
+		hints |= PrivateOpen;
+	}
+
 	if (hints.testFlag(NewWindowOpen))
 	{
-		MainWindow *mainWindow(Application::createWindow((widget->isPrivate() ? Application::PrivateFlag : Application::NoFlags), hints.testFlag(BackgroundOpen)));
+		MainWindow *mainWindow(Application::createWindow({{QLatin1String("hints"), QVariant(hints)}}));
 
 		if (mainWindow)
 		{
@@ -973,11 +986,6 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints, int 
 	}
 	else
 	{
-		if (widget->isPrivate())
-		{
-			hints |= PrivateOpen;
-		}
-
 		window = new Window({{QLatin1String("hints"), QVariant(hints)}}, widget);
 
 		addWindow(window, hints, index);
