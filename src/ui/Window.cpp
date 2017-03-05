@@ -54,15 +54,15 @@ namespace Otter
 
 quint64 Window::m_identifierCounter(0);
 
-Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
+Window::Window(const QVariantMap &parameters, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_navigationBar(nullptr),
 	m_contentsWidget(nullptr),
+	m_parameters(parameters),
 	m_identifier(++m_identifierCounter),
 	m_suspendTimer(0),
 	m_areToolBarsVisible(true),
 	m_isAboutToClose(false),
-	m_isPinned(false),
-	m_isPrivate(isPrivate)
+	m_isPinned(false)
 {
 	QBoxLayout *layout(new QBoxLayout(QBoxLayout::TopToBottom, this));
 	layout->setContentsMargins(0, 0, 0, 0);
@@ -244,7 +244,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 void Window::clear()
 {
-	setContentsWidget(new WebContentsWidget(m_isPrivate, nullptr, this));
+	setContentsWidget(new WebContentsWidget(m_parameters, nullptr, this));
 
 	m_isAboutToClose = false;
 
@@ -302,7 +302,14 @@ void Window::search(const QString &query, const QString &searchEngine)
 
 	if (!widget)
 	{
-		widget = new WebContentsWidget(isPrivate(), nullptr, this);
+		QVariantMap parameters;
+
+		if (isPrivate())
+		{
+			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		}
+
+		widget = new WebContentsWidget(parameters, nullptr, this);
 
 		setContentsWidget(widget);
 	}
@@ -499,7 +506,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
-		newWidget = new WebContentsWidget(m_isPrivate, nullptr, this);
+		newWidget = new WebContentsWidget(m_parameters, nullptr, this);
 	}
 
 	if (newWidget)
@@ -674,7 +681,14 @@ Window* Window::clone(bool cloneHistory, QWidget *parent)
 		return nullptr;
 	}
 
-	Window *window(new Window(false, m_contentsWidget->clone(cloneHistory), parent));
+	QVariantMap parameters;
+
+	if (isPrivate())
+	{
+		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+	}
+
+	Window *window(new Window(parameters, m_contentsWidget->clone(cloneHistory), parent));
 	window->setSearchEngine(getSearchEngine());
 
 	return window;
@@ -845,7 +859,7 @@ bool Window::isPinned() const
 
 bool Window::isPrivate() const
 {
-	return (m_contentsWidget ? m_contentsWidget->isPrivate() : m_isPrivate);
+	return (m_contentsWidget ? m_contentsWidget->isPrivate() : WindowsManager::calculateOpenHints(m_parameters).testFlag(WindowsManager::PrivateOpen));
 }
 
 }

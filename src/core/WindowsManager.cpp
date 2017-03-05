@@ -121,6 +121,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			break;
 		case ActionsManager::OpenUrlAction:
 			{
+				QVariantMap mutableParameters(parameters);
 				QUrl url;
 
 				if (parameters.contains(QLatin1String("url")))
@@ -128,7 +129,12 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					url = ((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
 				}
 
-				open(url, calculateOpenHints(parameters), parameters.value(QLatin1String("index"), -1).toInt());
+				if (m_isPrivate)
+				{
+					mutableParameters[QLatin1String("hints")] = QVariant(calculateOpenHints(parameters) | PrivateOpen);
+				}
+
+				open(url, calculateOpenHints(mutableParameters), parameters.value(QLatin1String("index"), -1).toInt());
 			}
 
 			break;
@@ -288,7 +294,14 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		default:
 			if (identifier == ActionsManager::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
 			{
-				window = new Window(m_isPrivate);
+				QVariantMap mutableParameters(parameters);
+
+				if (m_isPrivate)
+				{
+					mutableParameters[QLatin1String("hints")] = QVariant(calculateOpenHints(parameters) | PrivateOpen);
+				}
+
+				window = new Window(mutableParameters);
 
 				addWindow(window, NewTabOpen);
 
@@ -366,7 +379,7 @@ void WindowsManager::open(BookmarksItem *bookmark, WindowsManager::OpenHints hin
 
 void WindowsManager::openTab(const QUrl &url, OpenHints hints, int index)
 {
-	Window *window(new Window(hints.testFlag(PrivateOpen)));
+	Window *window(new Window({{QLatin1String("hints"), QVariant(hints)}}));
 
 	addWindow(window, hints, index);
 
@@ -479,9 +492,16 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	}
 	else
 	{
+		QVariantMap parameters;
+
+		if (m_isPrivate)
+		{
+			parameters[QLatin1String("hints")] = PrivateOpen;
+		}
+
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			Window *window(new Window(m_isPrivate));
+			Window *window(new Window(parameters));
 			window->setSession(session.windows.at(i));
 
 			if (index < 0 && session.windows.at(i).state != MinimizedWindowState)
@@ -540,7 +560,14 @@ void WindowsManager::restore(int index)
 		}
 	}
 
-	Window *window(new Window(m_isPrivate));
+	QVariantMap parameters;
+
+	if (m_isPrivate)
+	{
+		parameters[QLatin1String("hints")] = PrivateOpen;
+	}
+
+	Window *window(new Window(parameters));
 	window->setSession(closedWindow.window);
 
 	m_closedWindows.removeAt(index);
@@ -946,7 +973,12 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints, int 
 	}
 	else
 	{
-		window = new Window((widget->isPrivate() || hints.testFlag(PrivateOpen)), widget);
+		if (widget->isPrivate())
+		{
+			hints |= PrivateOpen;
+		}
+
+		window = new Window({{QLatin1String("hints"), QVariant(hints)}}, widget);
 
 		addWindow(window, hints, index);
 	}

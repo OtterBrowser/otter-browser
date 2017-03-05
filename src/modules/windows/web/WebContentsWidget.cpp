@@ -56,7 +56,7 @@ namespace Otter
 QString WebContentsWidget::m_sharedQuickFindQuery = nullptr;
 QMap<int, QPixmap> WebContentsWidget::m_scrollCursors;
 
-WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
+WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_websiteInformationDialog(nullptr),
 	m_layout(new QVBoxLayout(this)),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
@@ -84,7 +84,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	setLayout(m_layout);
 	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(QLatin1String("workaround"));
-	setWidget(widget, isPrivate);
+	setWidget(widget, parameters);
 }
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)
@@ -977,7 +977,12 @@ void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, WindowsManager::
 
 void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints)
 {
-	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, nullptr), hints);
+	if (isPrivate())
+	{
+		hints |= WindowsManager::PrivateOpen;
+	}
+
+	emit requestedNewWindow(new WebContentsWidget({{QLatin1String("hints"), QVariant(hints)}}, widget, nullptr), hints);
 }
 
 void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
@@ -1060,7 +1065,7 @@ void WebContentsWidget::setScrollMode(ScrollMode mode)
 	}
 }
 
-void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
+void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &parameters)
 {
 	if (m_webWidget)
 	{
@@ -1079,7 +1084,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	}
 	else
 	{
-		widget = AddonsManager::getWebBackend()->createWidget(isPrivate, this);
+		widget = AddonsManager::getWebBackend()->createWidget(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen), this);
 
 		if (m_window)
 		{
@@ -1188,18 +1193,25 @@ void WebContentsWidget::setZoom(int zoom)
 	m_webWidget->setZoom(zoom);
 }
 
-void WebContentsWidget::setUrl(const QUrl &url, bool typed)
+void WebContentsWidget::setUrl(const QUrl &url, bool isTyped)
 {
+	QVariantMap parameters;
+
+	if (isPrivate())
+	{
+		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+	}
+
 	if (url.scheme() == QLatin1String("view-source") && m_webWidget->getUrl().scheme() != QLatin1String("view-source"))
 	{
-		setWidget(new SourceViewerWebWidget(isPrivate(), this), isPrivate());
+		setWidget(new SourceViewerWebWidget(isPrivate(), this), parameters);
 	}
 	else if (url.scheme() != QLatin1String("view-source") && m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
 	{
-		setWidget(nullptr, isPrivate());
+		setWidget(nullptr, parameters);
 	}
 
-	m_webWidget->setRequestedUrl(url, typed);
+	m_webWidget->setRequestedUrl(url, isTyped);
 
 	if (m_window && m_window->isActive())
 	{
@@ -1239,7 +1251,14 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 		return nullptr;
 	}
 
-	WebContentsWidget *webWidget(new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(cloneHistory), nullptr));
+	QVariantMap parameters;
+
+	if (m_webWidget->isPrivate())
+	{
+		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+	}
+
+	WebContentsWidget *webWidget(new WebContentsWidget(parameters, m_webWidget->clone(cloneHistory), nullptr));
 	webWidget->m_webWidget->setRequestedUrl(m_webWidget->getUrl(), false, true);
 
 	return webWidget;

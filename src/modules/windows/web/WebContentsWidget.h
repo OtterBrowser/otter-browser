@@ -64,7 +64,7 @@ public:
 
 	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
 
-	explicit WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window);
+	explicit WebContentsWidget(const QVariantMap &parameters, WebWidget *widget, Window *window);
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer) override;
@@ -104,7 +104,7 @@ public slots:
 	void setActiveStyleSheet(const QString &styleSheet) override;
 	void setHistory(const WindowHistoryInformation &history) override;
 	void setZoom(int zoom) override;
-	void setUrl(const QUrl &url, bool typed = true) override;
+	void setUrl(const QUrl &url, bool isTyped = true) override;
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -118,7 +118,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void scrollContents(const QPoint &delta);
 	void setScrollMode(ScrollMode mode);
-	void setWidget(WebWidget *widget, bool isPrivate);
+	void setWidget(WebWidget *widget, const QVariantMap &parameters);
 
 protected slots:
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);

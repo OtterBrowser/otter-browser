@@ -47,7 +47,7 @@ class Window : public QWidget
 	Q_OBJECT
 
 public:
-	explicit Window(bool isPrivate, ContentsWidget *widget = nullptr, QWidget *parent = nullptr);
+	explicit Window(const QVariantMap &parameters, ContentsWidget *widget = nullptr, QWidget *parent = nullptr);
 
 	void clear();
 	void attachAddressWidget(AddressWidget *widget);
@@ -112,6 +112,7 @@ private:
 	SessionWindow m_session;
 	QList<QPointer<AddressWidget> > m_addressWidgets;
 	QList<QPointer<SearchWidget> > m_searchWidgets;
+	QVariantMap m_parameters;
 	quint64 m_identifier;
 	int m_suspendTimer;
 	bool m_areToolBarsVisible;

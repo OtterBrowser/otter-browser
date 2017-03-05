@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -210,7 +210,14 @@ QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow)
 
 	if (panel.startsWith(QLatin1String("web:")))
 	{
-		WebContentsWidget *webWidget(new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), nullptr, nullptr));
+		QVariantMap parameters;
+
+		if (!mainWindow || mainWindow->getWindowsManager()->isPrivate())
+		{
+			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		}
+
+		WebContentsWidget *webWidget(new WebContentsWidget(parameters, nullptr, nullptr));
 		webWidget->setUrl(panel.section(QLatin1Char(':'), 1, -1), false);
 
 		return webWidget;
