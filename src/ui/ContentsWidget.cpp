@@ -24,9 +24,10 @@
 namespace Otter
 {
 
-ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
+ContentsWidget::ContentsWidget(const QVariantMap &parameters, Window *window) : QWidget(window),
 	m_layer(nullptr),
-	m_layerTimer(0)
+	m_layerTimer(0),
+	m_sidebar(parameters.value(QLatin1String("sidebar"), -1).toInt())
 {
 	if (window)
 	{
@@ -353,6 +354,11 @@ WindowsManager::LoadingState ContentsWidget::getLoadingState() const
 	return WindowsManager::FinishedLoadingState;
 }
 
+int ContentsWidget::getSidebar() const
+{
+	return m_sidebar;
+}
+
 int ContentsWidget::getZoom() const
 {
 	return 100;
@@ -371,6 +377,11 @@ bool ContentsWidget::canZoom() const
 bool ContentsWidget::isPrivate() const
 {
 	return false;
+}
+
+bool ContentsWidget::isSidebarPanel() const
+{
+	return (m_sidebar >= 0);
 }
 
 }

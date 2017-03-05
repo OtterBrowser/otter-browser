@@ -39,7 +39,7 @@
 namespace Otter
 {
 
-BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidget(window),
+BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -61,7 +61,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEdit->installEventFilter(this);
 
-	if (!window)
+	if (isSidebarPanel())
 	{
 		m_ui->detailsWidget->hide();
 	}

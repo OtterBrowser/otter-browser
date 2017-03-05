@@ -33,7 +33,7 @@
 namespace Otter
 {
 
-ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : ContentsWidget(window),
+ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::ConfigurationContentsWidget)
 {

@@ -161,57 +161,57 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 
 }
 
-QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow)
+QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int sidebar)
 {
+	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
+
 	if (panel == QLatin1String("addons"))
 	{
-		return new AddonsContentsWidget(nullptr);
+		return new AddonsContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("bookmarks"))
 	{
-		return new BookmarksContentsWidget(nullptr);
+		return new BookmarksContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("cache"))
 	{
-		return new CacheContentsWidget(nullptr);
+		return new CacheContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("config"))
 	{
-		return new ConfigurationContentsWidget(nullptr);
+		return new ConfigurationContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("cookies"))
 	{
-		return new CookiesContentsWidget(nullptr);
+		return new CookiesContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("history"))
 	{
-		return new HistoryContentsWidget(nullptr);
+		return new HistoryContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("notes"))
 	{
-		return new NotesContentsWidget(nullptr);
+		return new NotesContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("passwords"))
 	{
-		return new PasswordsContentsWidget(nullptr);
+		return new PasswordsContentsWidget(parameters, nullptr);
 	}
 
 	if (panel == QLatin1String("transfers"))
 	{
-		return new TransfersContentsWidget(nullptr);
+		return new TransfersContentsWidget(parameters, nullptr);
 	}
 
 	if (panel.startsWith(QLatin1String("web:")))
 	{
-		QVariantMap parameters;
-
 		if (!mainWindow || mainWindow->getWindowsManager()->isPrivate())
 		{
 			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;

@@ -56,7 +56,7 @@ namespace Otter
 QString WebContentsWidget::m_sharedQuickFindQuery = nullptr;
 QMap<int, QPixmap> WebContentsWidget::m_scrollCursors;
 
-WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, WebWidget *widget, Window *window) : ContentsWidget(window),
+WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, WebWidget *widget, Window *window) : ContentsWidget(parameters, window),
 	m_websiteInformationDialog(nullptr),
 	m_layout(new QVBoxLayout(this)),
 	m_splitter(new QSplitter(Qt::Vertical, this)),

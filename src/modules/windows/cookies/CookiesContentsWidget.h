@@ -40,7 +40,7 @@ class CookiesContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit CookiesContentsWidget(Window *window);
+	explicit CookiesContentsWidget(const QVariantMap &parameters, Window *window);
 	~CookiesContentsWidget();
 
 	void print(QPrinter *printer) override;

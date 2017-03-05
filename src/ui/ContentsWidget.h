@@ -37,7 +37,7 @@ class ContentsWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit ContentsWidget(Window *window);
+	explicit ContentsWidget(const QVariantMap &parameters, Window *window);
 
 	virtual void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true);
@@ -61,10 +61,12 @@ public:
 	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	virtual WindowsManager::ContentStates getContentState() const;
 	virtual WindowsManager::LoadingState getLoadingState() const;
+	int getSidebar() const;
 	virtual int getZoom() const;
 	virtual bool canClone() const;
 	virtual bool canZoom() const;
 	virtual bool isPrivate() const;
+	bool isSidebarPanel() const;
 
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
@@ -92,6 +94,7 @@ private:
 	QWidget *m_layer;
 	QList<QPointer<ContentsDialog> > m_dialogs;
 	int m_layerTimer;
+	int m_sidebar;
 
 signals:
 	void aboutToNavigate();

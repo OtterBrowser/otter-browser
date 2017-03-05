@@ -39,7 +39,7 @@ class CacheContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit CacheContentsWidget(Window *window);
+	explicit CacheContentsWidget(const QVariantMap &parameters, Window *window);
 	~CacheContentsWidget();
 
 	void print(QPrinter *printer) override;

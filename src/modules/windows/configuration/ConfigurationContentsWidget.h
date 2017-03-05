@@ -39,7 +39,7 @@ class ConfigurationContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit ConfigurationContentsWidget(Window *window);
+	explicit ConfigurationContentsWidget(const QVariantMap &parameters, Window *window);
 	~ConfigurationContentsWidget();
 
 	void print(QPrinter *printer) override;

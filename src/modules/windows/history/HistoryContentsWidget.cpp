@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(window),
+HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::HistoryContentsWidget)

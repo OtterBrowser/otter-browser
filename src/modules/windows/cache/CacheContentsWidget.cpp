@@ -37,7 +37,7 @@
 namespace Otter
 {
 
-CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window),
+CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::CacheContentsWidget)
@@ -49,7 +49,7 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->cacheViewWidget->viewport()->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
 
-	if (!window)
+	if (isSidebarPanel())
 	{
 		m_ui->detailsWidget->hide();
 	}

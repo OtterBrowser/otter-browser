@@ -41,7 +41,7 @@
 namespace Otter
 {
 
-AddonsContentsWidget::AddonsContentsWidget(Window *window) : ContentsWidget(window),
+AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::AddonsContentsWidget)

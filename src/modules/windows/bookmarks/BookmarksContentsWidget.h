@@ -40,7 +40,7 @@ class BookmarksContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit BookmarksContentsWidget(Window *window);
+	explicit BookmarksContentsWidget(const QVariantMap &parameters, Window *window);
 	~BookmarksContentsWidget();
 
 	void print(QPrinter *printer) override;

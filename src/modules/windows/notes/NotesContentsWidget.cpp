@@ -37,7 +37,7 @@
 namespace Otter
 {
 
-NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window),
+NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_ui(new Ui::NotesContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -57,7 +57,7 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->filterLineEdit->installEventFilter(this);
 	m_ui->textEdit->setPlaceholderText(tr("Add note…"));
 
-	if (!window)
+	if (isSidebarPanel())
 	{
 		m_ui->actionsWidget->hide();
 	}

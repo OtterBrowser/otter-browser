@@ -34,7 +34,7 @@ namespace WidgetFactory
 {
 
 QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent, Window *window = nullptr);
-QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow = nullptr);
+QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow = nullptr, int sidebar = -1);
 
 }
 

@@ -40,7 +40,7 @@ class HistoryContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit HistoryContentsWidget(Window *window);
+	explicit HistoryContentsWidget(const QVariantMap &parameters, Window *window);
 	~HistoryContentsWidget();
 
 	void print(QPrinter *printer) override;

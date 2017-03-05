@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(window),
+CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::CookiesContentsWidget)
@@ -44,7 +44,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->cookiesViewWidget->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
 
-	if (!window)
+	if (isSidebarPanel())
 	{
 		m_ui->detailsWidget->hide();
 	}

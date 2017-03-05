@@ -49,7 +49,7 @@ class TransfersContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit TransfersContentsWidget(Window *window);
+	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window);
 	~TransfersContentsWidget();
 
 	void print(QPrinter *printer) override;

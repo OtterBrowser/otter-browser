@@ -461,39 +461,39 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 		if (url.path() == QLatin1String("addons"))
 		{
-			newWidget = new AddonsContentsWidget(this);
+			newWidget = new AddonsContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("bookmarks"))
 		{
-			newWidget = new BookmarksContentsWidget(this);
+			newWidget = new BookmarksContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("cache"))
 		{
-			newWidget = new CacheContentsWidget(this);
+			newWidget = new CacheContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("config"))
 		{
-			newWidget = new ConfigurationContentsWidget(this);
+			newWidget = new ConfigurationContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("cookies"))
 		{
-			newWidget = new CookiesContentsWidget(this);
+			newWidget = new CookiesContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("history"))
 		{
-			newWidget = new HistoryContentsWidget(this);
+			newWidget = new HistoryContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("notes"))
 		{
-			newWidget = new NotesContentsWidget(this);
+			newWidget = new NotesContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("passwords"))
 		{
-			newWidget = new PasswordsContentsWidget(this);
+			newWidget = new PasswordsContentsWidget(QVariantMap(), this);
 		}
 		else if (url.path() == QLatin1String("transfers"))
 		{
-			newWidget = new TransfersContentsWidget(this);
+			newWidget = new TransfersContentsWidget(QVariantMap(), this);
 		}
 
 		if (newWidget && !newWidget->canClone())

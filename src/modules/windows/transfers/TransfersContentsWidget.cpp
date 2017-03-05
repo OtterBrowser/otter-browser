@@ -59,7 +59,7 @@ void ProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 	QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter, 0);
 }
 
-TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidget(window),
+TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(false),
 	m_ui(new Ui::TransfersContentsWidget)
@@ -85,7 +85,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 		addTransfer(transfers.at(i));
 	}
 
-	if (!window)
+	if (isSidebarPanel())
 	{
 		m_ui->detailsWidget->hide();
 	}
