@@ -775,7 +775,7 @@ void MainWindow::triggerAction()
 
 	if (action)
 	{
-		triggerAction(action->getIdentifier(), action->data().toMap());
+		triggerAction(action->getIdentifier(), action->getParameters());
 	}
 }
 
