@@ -128,25 +128,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					url = ((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
 				}
 
-				OpenHints hints(DefaultOpen);
-
-				if (parameters.contains(QLatin1String("hints")))
-				{
-					if (parameters[QLatin1String("hints")].type() == QVariant::Int)
-					{
-						hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
-					}
-					else
-					{
-						calculateOpenHints(parameters[QLatin1String("hints")].toStringList());
-					}
-				}
-				else
-				{
-					hints = calculateOpenHints();
-				}
-
-				open(url, hints, parameters.value(QLatin1String("index"), -1).toInt());
+				open(url, calculateOpenHints(parameters), parameters.value(QLatin1String("index"), -1).toInt());
 			}
 
 			break;
@@ -271,24 +253,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 								break;
 							}
 
-							OpenHints hints(DefaultOpen);
-
-							if (parameters.contains(QLatin1String("hints")))
-							{
-								if (parameters[QLatin1String("hints")].type() == QVariant::Int)
-								{
-									hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
-								}
-								else
-								{
-									calculateOpenHints(parameters[QLatin1String("hints")].toStringList());
-								}
-							}
-							else
-							{
-								hints = calculateOpenHints();
-							}
-
+							const OpenHints hints(calculateOpenHints(parameters));
 							int index(parameters.value(QLatin1String("index"), -1).toInt());
 
 							if (index < 0)
@@ -1085,8 +1050,19 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt
 	return hints;
 }
 
-WindowsManager::OpenHints WindowsManager::calculateOpenHints(const QStringList &rawHints)
+WindowsManager::OpenHints WindowsManager::calculateOpenHints(const QVariantMap &parameters)
 {
+	if (!parameters.contains(QLatin1String("hints")))
+	{
+		return calculateOpenHints();
+	}
+
+	if (parameters[QLatin1String("hints")].type() == QVariant::Int)
+	{
+		return static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+	}
+
+	const QStringList rawHints(parameters[QLatin1String("hints")].toStringList());
 	OpenHints hints(DefaultOpen);
 
 	for (int i = 0; i < rawHints.count(); ++i)

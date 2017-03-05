@@ -92,6 +92,7 @@ public:
 	SessionMainWindow getSession() const;
 	QList<ClosedWindow> getClosedWindows() const;
 	static WindowsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
+	static WindowsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
 	int getZoom() const;
@@ -115,7 +116,6 @@ public slots:
 protected:
 	void openTab(const QUrl &url, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
 	void closeOther(int index = -1);
-	static WindowsManager::OpenHints calculateOpenHints(const QStringList &rawHints);
 	bool event(QEvent *event) override;
 
 protected slots:
