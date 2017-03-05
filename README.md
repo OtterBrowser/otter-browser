@@ -23,11 +23,17 @@ A more complete list is available in the *TODO* file. Details on already impleme
 
 You can either compile Otter Browser from source by following the instructions in the *INSTALL* file, or use pre-compiled binaries.
 
-Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/) when available. The browser is also available in a the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
+### Under Linux and *BSD
 
-Windows users can download the weekly releases on [SourceForge](https://sourceforge.net/projects/otter-browser/files/).
+Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/). It is a single executable file that doesn’t need any dependencies to be installed. The AppImage version should run under any system installed after 2012. The browser is also available in a the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
 
-Unfortunatelly, we are unable to provide pre-compiled binaries for macOS at the moment. If you are willing to help us do so, read on.
+### Under Windows
+
+Windows users can download binary releases on [SourceForge](https://sourceforge.net/projects/otter-browser/files/).
+
+### Under macOS
+
+DMG packages are available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/).
 
 ## How to contribute
 
