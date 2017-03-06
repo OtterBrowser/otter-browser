@@ -176,6 +176,11 @@ QtWebKitWebBackend* QtWebKitWebBackend::getInstance()
 	return m_instance;
 }
 
+QString QtWebKitWebBackend::getName() const
+{
+	return QLatin1String("qtwebkit");
+}
+
 QString QtWebKitWebBackend::getTitle() const
 {
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY

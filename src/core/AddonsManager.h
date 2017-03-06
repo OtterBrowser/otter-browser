@@ -52,6 +52,7 @@ public:
 
 	explicit Addon(QObject *parent = nullptr);
 
+	virtual QString getName() const;
 	virtual QString getTitle() const = 0;
 	virtual QString getDescription() const = 0;
 	virtual QString getVersion() const = 0;

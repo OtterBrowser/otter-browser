@@ -49,6 +49,11 @@ void Addon::setEnabled(bool isEnabled)
 	m_isEnabled = isEnabled;
 }
 
+QString Addon::getName() const
+{
+	return QString();
+}
+
 Addon::AddonType Addon::getType() const
 {
 	return UnknownType;

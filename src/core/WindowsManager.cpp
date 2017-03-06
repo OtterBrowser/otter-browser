@@ -23,6 +23,7 @@
 #include "BookmarksManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
+#include "WebBackend.h"
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
 #include "../ui/TabBarWidget.h"
@@ -181,6 +182,11 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				if (hints.testFlag(CurrentTabOpen))
 				{
+					if (activeWindow && activeWindow->getType() == QLatin1String("web") && activeWindow->getWebWidget() && !parameters.contains(QLatin1String("webBackend")))
+					{
+						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
+					}
+
 					close(m_mainWindow->getTabBar()->currentIndex());
 				}
 

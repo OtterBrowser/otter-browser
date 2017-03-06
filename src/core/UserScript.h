@@ -41,7 +41,7 @@ public:
 
 	explicit UserScript(const QString &path, QObject *parent = nullptr);
 
-	QString getName() const;
+	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;
