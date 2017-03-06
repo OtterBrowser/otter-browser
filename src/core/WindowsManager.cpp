@@ -133,6 +133,14 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::OpenUrlAction:
 			{
 				const QUrl url((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
+
+				if (parameters.contains(QLatin1String("application")))
+				{
+					Utils::runApplication(parameters[QLatin1String("application")].toString(), url);
+
+					break;
+				}
+
 				OpenHints hints(calculateOpenHints(parameters));
 				int index(parameters.value(QLatin1String("index"), -1).toInt());
 
