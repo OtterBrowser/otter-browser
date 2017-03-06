@@ -271,7 +271,7 @@ void OptionWidget::setChoices(const QStringList &choices)
 	m_comboBox->setCurrentText(m_value.toString());
 }
 
-void OptionWidget::setChoices(const QList<OptionWidget::EnumerationChoice> &choices)
+void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> &choices)
 {
 	if (!m_comboBox)
 	{

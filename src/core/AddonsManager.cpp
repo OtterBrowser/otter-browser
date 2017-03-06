@@ -60,9 +60,9 @@ bool Addon::isEnabled() const
 }
 
 AddonsManager *AddonsManager::m_instance(nullptr);
-QHash<QString, UserScript*> AddonsManager::m_userScripts;
-QHash<QString, WebBackend*> AddonsManager::m_webBackends;
-QHash<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
+QMap<QString, UserScript*> AddonsManager::m_userScripts;
+QMap<QString, WebBackend*> AddonsManager::m_webBackends;
+QMap<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
 bool AddonsManager::m_areUserScripsInitialized(false);
 
 AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
@@ -75,7 +75,14 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 #endif
 
 	SettingsManager::OptionDefinition backends(SettingsManager::getOptionDefinition(SettingsManager::Backends_WebOption));
-	backends.choices = m_webBackends.keys();
+	backends.choices.reserve(m_webBackends.count());
+
+	QMap<QString, WebBackend*>::iterator iterator;
+
+	for (iterator = m_webBackends.begin(); iterator != m_webBackends.end(); ++iterator)
+	{
+		backends.choices.append({iterator.value()->getTitle(), iterator.key(), iterator.value()->getIcon()});
+	}
 
 	SettingsManager::updateOptionDefinition(SettingsManager::Backends_WebOption, backends);
 

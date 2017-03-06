@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
@@ -239,11 +240,28 @@ public:
 
 	struct OptionDefinition
 	{
+		struct ChoiceDefinition
+		{
+			QString text;
+			QString value;
+			QIcon icon;
+		};
+
 		QVariant defaultValue;
-		QStringList choices;
+		QVector<ChoiceDefinition> choices;
 		OptionType type = UnknownType;
 		OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag);
 		int identifier = -1;
+
+		void setChoices(const QStringList &choicesValue)
+		{
+			choices.reserve(choicesValue.count());
+
+			for (int i = 0; i < choicesValue.count(); ++i)
+			{
+				choices.append({QString(), choicesValue.at(i), QIcon()});
+			}
+		}
 	};
 
 	static void createInstance(const QString &path, QObject *parent = nullptr);

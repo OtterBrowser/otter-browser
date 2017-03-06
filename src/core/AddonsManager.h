@@ -117,9 +117,9 @@ protected:
 
 private:
 	static AddonsManager *m_instance;
-	static QHash<QString, UserScript*> m_userScripts;
-	static QHash<QString, WebBackend*> m_webBackends;
-	static QHash<QString, SpecialPageInformation> m_specialPages;
+	static QMap<QString, UserScript*> m_userScripts;
+	static QMap<QString, WebBackend*> m_webBackends;
+	static QMap<QString, SpecialPageInformation> m_specialPages;
 	static bool m_areUserScripsInitialized;
 };
 

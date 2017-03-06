@@ -50,20 +50,13 @@ public:
 
 	Q_DECLARE_FLAGS(ButtonTypes, ButtonType)
 
-	struct EnumerationChoice
-	{
-		QString text;
-		QString value;
-		QIcon icon;
-	};
-
 	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
 
 	void setIndex(const QModelIndex &index);
 	void setDefaultValue(const QVariant &value);
 	void setValue(const QVariant &value);
 	void setChoices(const QStringList &choices);
-	void setChoices(const QList<EnumerationChoice> &choices);
+	void setChoices(const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> &choices);
 	void setButtons(ButtonTypes buttons);
 	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
 	void setSizePolicy(QSizePolicy policy);

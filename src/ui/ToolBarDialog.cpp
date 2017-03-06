@@ -309,22 +309,19 @@ void ToolBarDialog::editEntry()
 	if (identifier == QLatin1String("SearchWidget"))
 	{
 		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-		QList<OptionWidget::EnumerationChoice> searchEngineChoices;
+		QVector<SettingsManager::OptionDefinition::ChoiceDefinition> searchEngineChoices;
 		OptionWidget *searchEngineWidget(new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this));
-		OptionWidget::EnumerationChoice defaultSearchEngineChoice;
+		SettingsManager::OptionDefinition::ChoiceDefinition defaultSearchEngineChoice;
 		defaultSearchEngineChoice.text = tr("All");
 
+		searchEngineChoices.reserve(searchEngineChoices.count() + 1);
 		searchEngineChoices.append(defaultSearchEngineChoice);
 
 		for (int i = 0; i < searchEngines.count(); ++i)
 		{
 			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
-			OptionWidget::EnumerationChoice searchEngineChoice;
-			searchEngineChoice.text = (searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title);
-			searchEngineChoice.value = searchEngines.at(i);
-			searchEngineChoice.icon = searchEngine.icon;
 
-			searchEngineChoices.append(searchEngineChoice);
+			searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
 		}
 
 		searchEngineWidget->setChoices(searchEngineChoices);
@@ -350,7 +347,7 @@ void ToolBarDialog::editEntry()
 			widgets.append(qMakePair(tr("Option:"), optionNameWidget));
 
 			OptionWidget *scopeWidget(new OptionWidget(QLatin1String("scope"), options.value(QLatin1String("scope")), SettingsManager::BooleanType, this));
-			scopeWidget->setChoices(QList<OptionWidget::EnumerationChoice>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
+			scopeWidget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
 			scopeWidget->setDefaultValue(QLatin1String("window"));
 
 			widgets.append(qMakePair(tr("Scope:"), scopeWidget));

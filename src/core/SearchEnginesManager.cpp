@@ -183,11 +183,21 @@ void SearchEnginesManager::updateSearchEnginesModel()
 void SearchEnginesManager::updateSearchEnginesOptions()
 {
 	const QStringList searchEngines(m_searchEngines.keys());
+	QVector<SettingsManager::OptionDefinition::ChoiceDefinition> searchEngineChoices;
+	searchEngineChoices.reserve(searchEngines.count());
+
+	for (int i = 0; i < searchEngines.count(); ++i)
+	{
+		const SearchEngineDefinition searchEngine(getSearchEngine(searchEngines.at(i)));
+
+		searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
+	}
+
 	SettingsManager::OptionDefinition defaultQuickSearchEngineOption(SettingsManager::getOptionDefinition(SettingsManager::Search_DefaultQuickSearchEngineOption));
-	defaultQuickSearchEngineOption.choices = searchEngines;
+	defaultQuickSearchEngineOption.choices = searchEngineChoices;
 
 	SettingsManager::OptionDefinition defaultSearchEngineOption(SettingsManager::getOptionDefinition(SettingsManager::Search_DefaultSearchEngineOption));
-	defaultSearchEngineOption.choices = searchEngines;
+	defaultSearchEngineOption.choices = searchEngineChoices;
 
 	SettingsManager::updateOptionDefinition(SettingsManager::Search_DefaultQuickSearchEngineOption, defaultQuickSearchEngineOption);
 	SettingsManager::updateOptionDefinition(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngineOption);
