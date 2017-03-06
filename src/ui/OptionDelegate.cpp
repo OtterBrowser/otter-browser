@@ -20,7 +20,6 @@
 #include "OptionDelegate.h"
 #include "../core/SettingsManager.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtGui/QPainter>
 
 namespace Otter
@@ -35,10 +34,12 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	switch (SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString())).type)
+	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString())));
+
+	switch (definition.type)
 	{
 		case SettingsManager::BooleanType:
-			option->text = (index.data(Qt::DisplayRole).toBool() ? QCoreApplication::translate("Otter::OptionDelegate", "Yes") : QCoreApplication::translate("Otter::OptionDelegate", "No"));
+			option->text = (index.data(Qt::DisplayRole).toBool() ? tr("Yes") : tr("No"));
 
 			break;
 		case SettingsManager::ColorType:
@@ -80,6 +81,25 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 
 			break;
 		case SettingsManager::EnumerationType:
+			{
+				const QString value(index.data(Qt::DisplayRole).toString());
+
+				if (definition.hasIcons())
+				{
+					option->features |= QStyleOptionViewItem::HasDecoration;
+				}
+
+				for (int i = 0; i < definition.choices.count(); ++i)
+				{
+					if (definition.choices.at(i).value == value)
+					{
+						option->text = (definition.choices.at(i).text.isEmpty() ? definition.choices.at(i).value : definition.choices.at(i).text);
+						option->icon = definition.choices.at(i).icon;
+
+						break;
+					}
+				}
+			}
 
 			break;
 		case SettingsManager::FontType:
