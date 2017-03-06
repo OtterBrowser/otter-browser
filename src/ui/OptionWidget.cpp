@@ -306,7 +306,7 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 	{
 		if (choices.at(i).isValid())
 		{
-			m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), choices.at(i).value);
+			m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), (choices.at(i).value.isEmpty() ? QVariant() : choices.at(i).value));
 
 			if (!hasFound && choices.at(i).value == value)
 			{
