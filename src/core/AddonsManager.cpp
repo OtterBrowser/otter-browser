@@ -75,6 +75,7 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 #endif
 
 	SettingsManager::OptionDefinition backends(SettingsManager::getOptionDefinition(SettingsManager::Backends_WebOption));
+	backends.choices.clear();
 	backends.choices.reserve(m_webBackends.count());
 
 	QMap<QString, WebBackend*>::iterator iterator;
