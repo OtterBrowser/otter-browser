@@ -246,7 +246,12 @@ void GesturesManager::loadProfiles()
 				const QStringList rawMouseActions(gestures.at(k).split(QLatin1Char(',')));
 				int action(ActionsManager::getActionIdentifier(profile.getValue(gestures.at(k), QString()).toString()));
 
-				if (action < 0 || rawMouseActions.isEmpty())
+				if (rawMouseActions.isEmpty())
+				{
+					continue;
+				}
+
+				if (action < 0)
 				{
 					if (profile.getValue(gestures.at(k)) == QLatin1String("NoAction"))
 					{
