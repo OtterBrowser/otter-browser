@@ -262,6 +262,19 @@ public:
 				choices.append({QString(), choicesValue.at(i), QIcon()});
 			}
 		}
+
+		bool hasIcons() const
+		{
+			for (int i = 0; i < choices.count(); ++i)
+			{
+				if (!choices.at(i).icon.isNull())
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
 	};
 
 	static void createInstance(const QString &path, QObject *parent = nullptr);

@@ -280,9 +280,26 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 
 	m_comboBox->clear();
 
+	bool hasIcons(false);
+
+	for (int i = 0; i < choices.count(); ++i)
+	{
+		if (!choices.at(i).icon.isNull())
+		{
+			hasIcons = true;
+
+			break;
+		}
+	}
+
 	for (int i = 0; i < choices.count(); ++i)
 	{
 		m_comboBox->addItem(choices.at(i).icon, choices.at(i).text, choices.at(i).value);
+
+		if (hasIcons && choices.at(i).icon.isNull())
+		{
+			m_comboBox->setItemData(i, QColor(Qt::transparent), Qt::DecorationRole);
+		}
 	}
 
 	m_comboBox->setCurrentIndex(qMax(0, m_comboBox->findData(m_value)));

@@ -79,6 +79,9 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 			}
 
 			break;
+		case SettingsManager::EnumerationType:
+
+			break;
 		case SettingsManager::FontType:
 			option->font = QFont(index.data(Qt::DisplayRole).toString());
 
