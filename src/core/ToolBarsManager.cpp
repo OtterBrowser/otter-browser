@@ -452,15 +452,12 @@ QJsonValue ToolBarsManager::encodeEntry(const ActionsManager::ActionEntryDefinit
 
 	if (!definition.options.isEmpty())
 	{
-		QJsonObject options;
-		QVariantMap::const_iterator optionsIterator;
+		action.insert(QLatin1String("options"), QJsonValue::fromVariant(definition.options));
+	}
 
-		for (optionsIterator = definition.options.begin(); optionsIterator != definition.options.end(); ++optionsIterator)
-		{
-			options.insert(optionsIterator.key(), QJsonValue::fromVariant(optionsIterator.value()));
-		}
-
-		action.insert(QLatin1String("options"), options);
+	if (!definition.parameters.isEmpty())
+	{
+		action.insert(QLatin1String("parameters"), QJsonValue::fromVariant(definition.parameters));
 	}
 
 	return QJsonValue(action);
@@ -481,6 +478,7 @@ ActionsManager::ActionEntryDefinition ToolBarsManager::decodeEntry(const QJsonVa
 
 	definition.action = object.value(QLatin1String("identifier")).toString();
 	definition.options = object.value(QLatin1String("options")).toObject().toVariantMap();
+	definition.parameters = object.value(QLatin1String("parameters")).toObject().toVariantMap();
 
 	if (object.contains(QLatin1String("actions")))
 	{
