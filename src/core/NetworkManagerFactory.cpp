@@ -223,7 +223,6 @@ void NetworkManagerFactory::initialize()
 	}
 
 	m_isInitialized = true;
-
 	m_defaultCiphers = QSslSocket::defaultCiphers();
 
 	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)

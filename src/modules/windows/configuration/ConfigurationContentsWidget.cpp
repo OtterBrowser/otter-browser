@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ConfigurationContentsWidget.h"
+#include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/OptionDelegate.h"
@@ -38,6 +39,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui(new Ui::ConfigurationContentsWidget)
 {
 	m_ui->setupUi(this);
+
+	NetworkManagerFactory::initialize();
 
 	const QMetaEnum metaEnum(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())));
 	const QStringList options(SettingsManager::getOptions());
