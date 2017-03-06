@@ -294,7 +294,7 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		m_comboBox->addItem(choices.at(i).icon, choices.at(i).text, choices.at(i).value);
+		m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), choices.at(i).value);
 
 		if (hasIcons && choices.at(i).icon.isNull())
 		{

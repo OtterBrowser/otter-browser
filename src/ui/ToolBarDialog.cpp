@@ -312,7 +312,7 @@ void ToolBarDialog::editEntry()
 		QVector<SettingsManager::OptionDefinition::ChoiceDefinition> searchEngineChoices;
 		OptionWidget *searchEngineWidget(new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this));
 		SettingsManager::OptionDefinition::ChoiceDefinition defaultSearchEngineChoice;
-		defaultSearchEngineChoice.text = tr("All");
+		defaultSearchEngineChoice.title = tr("All");
 
 		searchEngineChoices.reserve(searchEngineChoices.count() + 1);
 		searchEngineChoices.append(defaultSearchEngineChoice);

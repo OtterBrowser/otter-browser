@@ -242,9 +242,14 @@ public:
 	{
 		struct ChoiceDefinition
 		{
-			QString text;
+			QString title;
 			QString value;
 			QIcon icon;
+
+			QString getTitle() const
+			{
+				return (title.isEmpty() ? value : title);
+			}
 		};
 
 		QVariant defaultValue;

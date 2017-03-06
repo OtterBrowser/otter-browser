@@ -697,7 +697,7 @@ void Menu::populateOptionMenu()
 		}
 		else
 		{
-			action->setOverrideText(choices.at(i).text.isEmpty() ? choices.at(i).value : choices.at(i).text);
+			action->setOverrideText(choices.at(i).getTitle());
 		}
 	}
 }

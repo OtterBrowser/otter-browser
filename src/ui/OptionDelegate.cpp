@@ -93,7 +93,7 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 				{
 					if (definition.choices.at(i).value == value)
 					{
-						option->text = (definition.choices.at(i).text.isEmpty() ? definition.choices.at(i).value : definition.choices.at(i).text);
+						option->text = definition.choices.at(i).getTitle();
 						option->icon = definition.choices.at(i).icon;
 
 						break;
