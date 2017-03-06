@@ -284,9 +284,11 @@ void NetworkManagerFactory::loadProxies()
 		readProxy(proxies.at(i), &root);
 	}
 
+	file.close();
+
 	m_proxies[QLatin1String("root")] = root;
 
-	file.close();
+	updateProxiesOption();
 }
 
 void NetworkManagerFactory::loadUserAgents()
@@ -308,9 +310,11 @@ void NetworkManagerFactory::loadUserAgents()
 		readUserAgent(userAgents.at(i), &root);
 	}
 
+	file.close();
+
 	m_userAgents[QLatin1String("root")] = root;
 
-	file.close();
+	updateUserAgentsOption();
 }
 
 void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *parent)
@@ -532,6 +536,45 @@ void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, b
 	emit m_instance->authenticated(authenticator, wasAccepted);
 }
 
+void NetworkManagerFactory::updateProxiesOption()
+{
+	SettingsManager::OptionDefinition proxiesOption(SettingsManager::getOptionDefinition(SettingsManager::Network_ProxyOption));
+	proxiesOption.choices.clear();
+	proxiesOption.choices.reserve(m_proxies.count() * 0.75);
+
+	QMap<QString, ProxyDefinition>::iterator iterator;
+
+	for (iterator = m_proxies.begin(); iterator != m_proxies.end(); ++iterator)
+	{
+		if (!iterator.value().isFolder && !iterator.value().identifier.isEmpty())
+		{
+			proxiesOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, QIcon()});
+		}
+	}
+
+	SettingsManager::updateOptionDefinition(SettingsManager::Network_ProxyOption, proxiesOption);
+}
+
+void NetworkManagerFactory::updateUserAgentsOption()
+{
+	SettingsManager::OptionDefinition userAgentsOption(SettingsManager::getOptionDefinition(SettingsManager::Network_UserAgentOption));
+	userAgentsOption.choices.clear();
+	userAgentsOption.choices.reserve(m_userAgents.count() * 0.75);
+	userAgentsOption.choices.append({QCoreApplication::translate("userAgents", "Default User Agent"), QLatin1String("default"), QIcon()});
+
+	QMap<QString, UserAgentDefinition>::iterator iterator;
+
+	for (iterator = m_userAgents.begin(); iterator != m_userAgents.end(); ++iterator)
+	{
+		if (!iterator.value().isFolder && !iterator.value().identifier.isEmpty() && iterator.value().identifier != QLatin1String("default"))
+		{
+			userAgentsOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, QIcon()});
+		}
+	}
+
+	SettingsManager::updateOptionDefinition(SettingsManager::Network_UserAgentOption, userAgentsOption);
+}
+
 NetworkManagerFactory* NetworkManagerFactory::getInstance()
 {
 	return m_instance;
@@ -670,6 +713,17 @@ bool NetworkManagerFactory::isWorkingOffline()
 bool NetworkManagerFactory::usesSystemProxyAuthentication()
 {
 	return m_proxyFactory->usesSystemAuthentication();
+}
+
+bool NetworkManagerFactory::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange && (!m_proxies.isEmpty() || !m_userAgents.isEmpty()))
+	{
+		updateProxiesOption();
+		updateUserAgentsOption();
+	}
+
+	return QObject::event(event);
 }
 
 }

@@ -183,12 +183,15 @@ public:
 	static bool canSendReferrer();
 	static bool isWorkingOffline();
 	static bool usesSystemProxyAuthentication();
+	bool event(QEvent *event) override;
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = nullptr);
 
 	static void readProxy(const QJsonValue &value, ProxyDefinition *parent);
 	static void readUserAgent(const QJsonValue &value, UserAgentDefinition *parent);
+	static void updateProxiesOption();
+	static void updateUserAgentsOption();
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);

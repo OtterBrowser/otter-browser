@@ -159,11 +159,11 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Network_CookiesPolicyOption, QLatin1String("acceptAll"), EnumerationType, QStringList({QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("readOnly"), QLatin1String("ignore")}));
 	registerOption(Network_DoNotTrackPolicyOption, QLatin1String("skip"), EnumerationType, QStringList({QLatin1String("skip"), QLatin1String("allow"), QLatin1String("doNotAllow")}));
 	registerOption(Network_EnableReferrerOption, true, BooleanType);
-	registerOption(Network_ProxyOption, QLatin1String("system"), StringType);
+	registerOption(Network_ProxyOption, QLatin1String("system"), EnumerationType, QStringList(QLatin1String("system")));
 	registerOption(Network_ThirdPartyCookiesAcceptedHostsOption, QStringList(), ListType);
 	registerOption(Network_ThirdPartyCookiesPolicyOption, QLatin1String("acceptAll"), EnumerationType, QStringList({QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("ignore")}));
 	registerOption(Network_ThirdPartyCookiesRejectedHostsOption, QStringList(), ListType);
-	registerOption(Network_UserAgentOption, QLatin1String("default"), StringType);
+	registerOption(Network_UserAgentOption, QLatin1String("default"), EnumerationType, QStringList(QLatin1String("default")));
 	registerOption(Network_WorkOfflineOption, false, BooleanType);
 	registerOption(Paths_DownloadsOption, QStandardPaths::writableLocation(QStandardPaths::DownloadLocation), PathType);
 	registerOption(Paths_OpenFileOption, QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), PathType);
