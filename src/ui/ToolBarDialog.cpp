@@ -342,7 +342,7 @@ void ToolBarDialog::editEntry()
 		{
 			const QStringList choices(SettingsManager::getOptions());
 			OptionWidget *optionNameWidget(new OptionWidget(QLatin1String("optionName"), options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this));
-			optionNameWidget->setChoices(SettingsManager::getOptions());
+			optionNameWidget->setChoices(choices);
 
 			widgets.append(qMakePair(tr("Option:"), optionNameWidget));
 
