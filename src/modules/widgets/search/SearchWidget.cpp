@@ -242,7 +242,7 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 
 		return;
 	}
-	
+
 	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
 	{
 		if (m_isSearchEngineLocked)
@@ -299,7 +299,7 @@ void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void SearchWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	if (m_dropdownArrowRectangle.united(m_iconRectangle.marginsAdded(QMargins(2, 2, 2, 2))).contains(event->pos()) || m_addButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()) || m_searchButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
+	if (m_dropdownArrowRectangle.united(m_iconRectangle).contains(event->pos()) || m_addButtonRectangle.contains(event->pos()) || m_searchButtonRectangle.contains(event->pos()))
 	{
 		setCursor(Qt::ArrowCursor);
 	}
@@ -315,7 +315,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		if (m_addButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
+		if (m_addButtonRectangle.contains(event->pos()))
 		{
 			QMenu menu(this);
 			const QVector<WebWidget::LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
@@ -332,11 +332,11 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 
 			menu.exec(mapToGlobal(m_addButtonRectangle.bottomLeft()));
 		}
-		else if (m_searchButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
+		else if (m_searchButtonRectangle.contains(event->pos()))
 		{
 			sendRequest();
 		}
-		else if (!m_isSearchEngineLocked && !isPopupVisible() && m_dropdownArrowRectangle.united(m_iconRectangle.marginsAdded(QMargins(2, 2, 2, 2))).contains(event->pos()))
+		else if (!m_isSearchEngineLocked && !isPopupVisible() && m_dropdownArrowRectangle.united(m_iconRectangle).contains(event->pos()))
 		{
 			showCompletion(true);
 		}
@@ -503,7 +503,6 @@ void SearchWidget::restoreCurrentSearchEngine()
 
 	updateGeometries();
 	setText(m_query);
-	setGeometry(m_lineEditRectangle);
 
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setQuery(QString)));
 }
@@ -565,73 +564,56 @@ void SearchWidget::updateGeometries()
 	panel.lineWidth = 1;
 
 	const QVector<WebWidget::LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
-	QMargins margins(1, 0, 1, 0);
-	const QRect rectangle(rect());
-	const bool isSearchButtonEnabled(m_options.value(QLatin1String("showSearchButton"), true).toBool());
+	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
+	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
-	m_iconRectangle = rectangle;
-
-	if (layoutDirection() == Qt::RightToLeft)
-	{
-		m_iconRectangle.setLeft(rectangle.width() - rectangle.height());
-
-		margins.setRight(margins.right() + rectangle.height());
-	}
-	else
-	{
-		m_iconRectangle.setRight(rectangle.height());
-
-		margins.setLeft(margins.left() + rectangle.height());
-	}
-
-	m_iconRectangle = m_iconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 	m_searchButtonRectangle = QRect();
 	m_addButtonRectangle = QRect();
+	m_dropdownArrowRectangle = QRect();
 
-	if (m_isSearchEngineLocked)
+	if (isRightToLeft)
 	{
-		m_dropdownArrowRectangle = QRect();
+		m_iconRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
+
+		margins.setRight(margins.right() + 20);
 	}
 	else
 	{
-		m_dropdownArrowRectangle = rectangle;
+		m_iconRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
 
-		if (layoutDirection() == Qt::RightToLeft)
+		margins.setLeft(margins.left() + 20);
+	}
+
+	if (!m_isSearchEngineLocked)
+	{
+		if (isRightToLeft)
 		{
-			m_dropdownArrowRectangle.setRight(m_iconRectangle.left() - 2);
-			m_dropdownArrowRectangle.setLeft(m_dropdownArrowRectangle.right() - 16);
-			m_dropdownArrowRectangle.setTop(((height() - 16) / 2));
+			m_dropdownArrowRectangle = QRect((width() - margins.right() - 14), 0, 14, height());
 
-			margins.setRight(margins.right() + 16);
+			margins.setRight(margins.right() + 12);
 		}
 		else
 		{
-			m_dropdownArrowRectangle.setLeft(m_iconRectangle.right() + 2);
-			m_dropdownArrowRectangle.setRight(m_dropdownArrowRectangle.left() + 16);
-			m_dropdownArrowRectangle.setTop(((height() - 16) / 2));
+			m_dropdownArrowRectangle = QRect(margins.left(), 0, 14, height());
 
-			margins.setLeft(margins.left() + 16);
+			margins.setLeft(margins.left() + 12);
 		}
 	}
 
-	if (isSearchButtonEnabled)
+	if (m_options.value(QLatin1String("showSearchButton"), true).toBool())
 	{
-		m_searchButtonRectangle = rectangle;
-
-		if (layoutDirection() == Qt::RightToLeft)
+		if (isRightToLeft)
 		{
-			m_searchButtonRectangle.setRight(rectangle.height());
+			m_searchButtonRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
 
-			margins.setLeft(margins.left() + rectangle.height());
+			margins.setLeft(margins.left() + 20);
 		}
 		else
 		{
-			m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
+			m_searchButtonRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
 
-			margins.setRight(margins.right() + rectangle.height());
+			margins.setRight(margins.right() + 20);
 		}
-
-		m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 	}
 
 	if (m_window && !searchEngines.isEmpty())
@@ -648,30 +630,22 @@ void SearchWidget::updateGeometries()
 			}
 		}
 
-		m_lineEditRectangle = rectangle.marginsRemoved(margins);
-
-		if (!hasAllSearchEngines && m_lineEditRectangle.width() > 50)
+		if (!hasAllSearchEngines && rect().marginsRemoved(margins).width() > 50)
 		{
-			m_addButtonRectangle = m_lineEditRectangle;
-
-			if (layoutDirection() == Qt::RightToLeft)
+			if (isRightToLeft)
 			{
-				m_addButtonRectangle.setRight(m_lineEditRectangle.height());
+				m_addButtonRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
 
-				margins.setLeft(margins.left() + m_lineEditRectangle.height());
+				margins.setLeft(margins.left() + 20);
 			}
 			else
 			{
-				m_addButtonRectangle.setLeft(m_lineEditRectangle.right() - m_lineEditRectangle.height());
+				m_addButtonRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
 
-				margins.setRight(margins.right() + m_lineEditRectangle.height());
+				margins.setRight(margins.right() + 20);
 			}
-
-			m_addButtonRectangle = m_addButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 		}
 	}
-
-	m_lineEditRectangle = rectangle.marginsRemoved(margins);
 
 	setTextMargins(margins);
 }
@@ -732,7 +706,6 @@ void SearchWidget::setSearchEngine(QModelIndex index)
 	}
 
 	setEnabled(true);
-	setGeometry(m_lineEditRectangle);
 	hidePopup();
 }
 

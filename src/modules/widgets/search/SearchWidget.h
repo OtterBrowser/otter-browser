@@ -88,7 +88,6 @@ private:
 	QString m_storedSearchEngine;
 	QRect m_iconRectangle;
 	QRect m_dropdownArrowRectangle;
-	QRect m_lineEditRectangle;
 	QRect m_addButtonRectangle;
 	QRect m_searchButtonRectangle;
 	QVariantMap m_options;
