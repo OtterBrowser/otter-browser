@@ -265,7 +265,14 @@ void OptionWidget::setChoices(const QStringList &choices)
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		m_comboBox->addItem(choices.at(i), choices.at(i));
+		if (choices.at(i).isEmpty())
+		{
+			m_comboBox->insertSeparator(i);
+		}
+		else
+		{
+			m_comboBox->addItem(choices.at(i), choices.at(i));
+		}
 	}
 
 	m_comboBox->setCurrentText(m_value.toString());
@@ -292,17 +299,32 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 		}
 	}
 
+	const QString value(m_value.toString());
+	bool hasFound(false);
+
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), choices.at(i).value);
-
-		if (hasIcons && choices.at(i).icon.isNull())
+		if (choices.at(i).isValid())
 		{
-			m_comboBox->setItemData(i, QColor(Qt::transparent), Qt::DecorationRole);
+			m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), choices.at(i).value);
+
+			if (!hasFound && choices.at(i).value == value)
+			{
+				m_comboBox->setCurrentIndex(i);
+
+				hasFound = true;
+			}
+
+			if (hasIcons && choices.at(i).icon.isNull())
+			{
+				m_comboBox->setItemData(i, QColor(Qt::transparent), Qt::DecorationRole);
+			}
+		}
+		else
+		{
+			m_comboBox->insertSeparator(i);
 		}
 	}
-
-	m_comboBox->setCurrentIndex(qMax(0, m_comboBox->findData(m_value)));
 }
 
 void OptionWidget::setButtons(ButtonTypes buttons)

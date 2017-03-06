@@ -250,6 +250,11 @@ public:
 			{
 				return (title.isEmpty() ? value : title);
 			}
+
+			bool isValid() const
+			{
+				return (!title.isEmpty() || !value.isEmpty());
+			}
 		};
 
 		QVariant defaultValue;
