@@ -152,19 +152,23 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				if (index >= 0)
 				{
-					openTab(url, hints, index);
+					Window *window(new Window(mutableParameters));
+
+					addWindow(window, hints, index);
+
+					window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 
 					break;
 				}
 
-				Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-				const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
+				Window *activeWindow(m_mainWindow->getWorkspace()->getActiveWindow());
+				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == NewTabOpen && !url.isEmpty() && isUrlEmpty)
 				{
 					hints = CurrentTabOpen;
 				}
-				else if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !Utils::isUrlEmpty(window->getUrl())))
+				else if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!activeWindow || !Utils::isUrlEmpty(activeWindow->getUrl())))
 				{
 					hints = NewTabOpen;
 				}
@@ -173,23 +177,18 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					hints = CurrentTabOpen;
 				}
 
-				if (hints.testFlag(CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
+				mutableParameters[QLatin1String("hints")] = QVariant(hints);
+
+				if (hints.testFlag(CurrentTabOpen))
 				{
-					if (window->isPrivate() == hints.testFlag(PrivateOpen))
-					{
-						window->getContentsWidget()->setHistory(WindowHistoryInformation());
-						window->setUrl(url, false);
-					}
-					else
-					{
-						close(m_mainWindow->getTabBar()->currentIndex());
-						openTab(url, hints);
-					}
+					close(m_mainWindow->getTabBar()->currentIndex());
 				}
-				else
-				{
-					openTab(url, hints);
-				}
+
+				Window *window(new Window(mutableParameters));
+
+				addWindow(window, hints, index);
+
+				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 			}
 
 			break;
@@ -383,15 +382,6 @@ void WindowsManager::open(BookmarksItem *bookmark, WindowsManager::OpenHints hin
 	{
 		triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}});
 	}
-}
-
-void WindowsManager::openTab(const QUrl &url, OpenHints hints, int index)
-{
-	Window *window(new Window({{QLatin1String("hints"), QVariant(hints)}}));
-
-	addWindow(window, hints, index);
-
-	window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 }
 
 void WindowsManager::search(const QString &query, const QString &searchEngine, OpenHints hints)

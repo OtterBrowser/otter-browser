@@ -114,7 +114,6 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
-	void openTab(const QUrl &url, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
 	void closeOther(int index = -1);
 	bool event(QEvent *event) override;
 
