@@ -201,6 +201,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 	}
 
 	QString remainingTime;
+	const bool isIndeterminate(transfer->getBytesTotal() <= 0);
 
 	if (transfer->getState() == Transfer::RunningState)
 	{
@@ -216,7 +217,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 			m_speeds[transfer].dequeue();
 		}
 
-		if (transfer->getBytesTotal() > 0)
+		if (!isIndeterminate)
 		{
 			qint64 speedSum(0);
 			const QList<qint64> speeds(m_speeds[transfer]);
@@ -254,7 +255,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 			break;
 	}
 
-	const QString toolTip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1)));
+	const QString toolTip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(isIndeterminate ? tr("Unknown") : Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100), 0, 'f', 1)));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
@@ -497,13 +498,15 @@ void TransfersContentsWidget::updateActions()
 
 	if (transfer)
 	{
+		const bool isIndeterminate(transfer->getBytesTotal() <= 0);
+
 		m_ui->sourceLabelWidget->setText(transfer->getSource().toDisplayString());
 		m_ui->sourceLabelWidget->setUrl(transfer->getSource());
 		m_ui->targetLabelWidget->setText(transfer->getTarget());
 		m_ui->targetLabelWidget->setUrl(QUrl(transfer->getTarget()));
-		m_ui->sizeLabelWidget->setText(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true));
+		m_ui->sizeLabelWidget->setText(isIndeterminate ? tr("Unknown") : Utils::formatUnit(transfer->getBytesTotal(), false, 1, true));
 		m_ui->downloadedLabelWidget->setText(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true));
-		m_ui->progressLabelWidget->setText(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
+		m_ui->progressLabelWidget->setText(isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100), 0, 'f', 1));
 	}
 	else
 	{
