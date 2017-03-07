@@ -53,11 +53,9 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 	m_applicationFilePath(QDir::toNativeSeparators(QCoreApplication::applicationFilePath())),
 	m_applicationRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\RegisteredApplications"), QSettings::NativeFormat),
 	m_propertiesRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\Classes\\") + m_registrationIdentifier, QSettings::NativeFormat),
+	m_registrationPairs({{QLatin1String("http"), ProtocolType}, {QLatin1String("https"), ProtocolType}, {QLatin1String("ftp"), ProtocolType}, {QLatin1String(".htm"), ExtensionType}, {QLatin1String(".html"), ExtensionType}, {QLatin1String(".xhtml"), ExtensionType}}),
 	m_cleanupTimer(0)
 {
-	m_registrationPairs << qMakePair(QLatin1String("http"), ProtocolType) << qMakePair(QLatin1String("https"), ProtocolType) << qMakePair(QLatin1String("ftp"), ProtocolType)
-	<< qMakePair(QLatin1String(".htm"), ExtensionType) << qMakePair(QLatin1String(".html"), ExtensionType) << qMakePair(QLatin1String(".xhtml"), ExtensionType);
-
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
 	{
 		connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(removeWindow(MainWindow*)));
