@@ -37,15 +37,15 @@ class GesturesManager : public QObject
 public:
 	enum GesturesContext
 	{
-		UnknownGesturesContext = 0,
-		GenericGesturesContext,
-		LinkGesturesContext,
-		ContentEditableGesturesContext,
-		ToolBarGesturesContext,
-		TabHandleGesturesContext,
-		ActiveTabHandleGesturesContext,
-		NoTabHandleGesturesContext,
-		OtherGesturesContext
+		UnknownContext = 0,
+		GenericContext,
+		LinkContext,
+		ContentEditableContext,
+		ToolBarContext,
+		TabHandleContext,
+		ActiveTabHandleContext,
+		NoTabHandleContext,
+		OtherContext
 	};
 
 	static void createInstance(QObject *parent = nullptr);
@@ -53,7 +53,7 @@ public:
 	static void cancelGesture();
 	static GesturesManager* getInstance();
 	static QObject* getTrackedObject();
-	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericGesturesContext}), const QVariantMap &parameters = QVariantMap());
+	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericContext}), const QVariantMap &parameters = QVariantMap());
 	static bool continueGesture(QObject *object);
 	static bool isTracking();
 

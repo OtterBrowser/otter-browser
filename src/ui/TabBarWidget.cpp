@@ -1689,24 +1689,24 @@ bool TabBarWidget::event(QEvent *event)
 
 				if (tab < 0)
 				{
-					contexts.append(GesturesManager::NoTabHandleGesturesContext);
+					contexts.append(GesturesManager::NoTabHandleContext);
 				}
 				else if (tab == currentIndex())
 				{
-					contexts.append(GesturesManager::ActiveTabHandleGesturesContext);
-					contexts.append(GesturesManager::TabHandleGesturesContext);
+					contexts.append(GesturesManager::ActiveTabHandleContext);
+					contexts.append(GesturesManager::TabHandleContext);
 				}
 				else
 				{
-					contexts.append(GesturesManager::TabHandleGesturesContext);
+					contexts.append(GesturesManager::TabHandleContext);
 				}
 
 				if (qobject_cast<ToolBarWidget*>(parentWidget()))
 				{
-					contexts.append(GesturesManager::ToolBarGesturesContext);
+					contexts.append(GesturesManager::ToolBarContext);
 				}
 
-				contexts.append(GesturesManager::GenericGesturesContext);
+				contexts.append(GesturesManager::GenericContext);
 
 				GesturesManager::startGesture(this, event, contexts, parameters);
 			}

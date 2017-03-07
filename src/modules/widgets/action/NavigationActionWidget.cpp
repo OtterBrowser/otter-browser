@@ -91,7 +91,7 @@ bool NavigationActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
 	{
-		GesturesManager::startGesture(this, event, {GesturesManager::ToolBarGesturesContext, GesturesManager::GenericGesturesContext});
+		GesturesManager::startGesture(this, event, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 	}
 
 	if (event->type() == QEvent::ContextMenu)

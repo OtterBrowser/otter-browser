@@ -1814,15 +1814,15 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
 		{
-			contexts.append(GesturesManager::ContentEditableGesturesContext);
+			contexts.append(GesturesManager::ContentEditableContext);
 		}
 
 		if (getCurrentHitTestResult().linkUrl.isValid())
 		{
-			contexts.append(GesturesManager::LinkGesturesContext);
+			contexts.append(GesturesManager::LinkContext);
 		}
 
-		contexts.append(GesturesManager::GenericGesturesContext);
+		contexts.append(GesturesManager::GenericContext);
 
 		if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
 		{

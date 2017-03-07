@@ -673,7 +673,7 @@ bool StartPageWidget::event(QEvent *event)
 {
 	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
 	{
-		GesturesManager::startGesture(this, event, {GesturesManager::GenericGesturesContext});
+		GesturesManager::startGesture(this, event, {GesturesManager::GenericContext});
 	}
 
 	return QScrollArea::event(event);
@@ -706,10 +706,10 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (m_currentIndex.isValid())
 		{
-			contexts.append(GesturesManager::LinkGesturesContext);
+			contexts.append(GesturesManager::LinkContext);
 		}
 
-		contexts.append(GesturesManager::GenericGesturesContext);
+		contexts.append(GesturesManager::GenericContext);
 
 		if (GesturesManager::startGesture(object, event, contexts))
 		{

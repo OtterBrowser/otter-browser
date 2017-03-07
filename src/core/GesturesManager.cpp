@@ -152,10 +152,10 @@ void GesturesManager::createInstance(QObject *parent)
 		QVector<QVector<GestureStep> > tabHandle;
 		tabHandle.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
-		m_nativeGestures[GesturesManager::GenericGesturesContext] = generic;
-		m_nativeGestures[GesturesManager::LinkGesturesContext] = link;
-		m_nativeGestures[GesturesManager::ContentEditableGesturesContext] = contentEditable;
-		m_nativeGestures[GesturesManager::TabHandleGesturesContext] = tabHandle;
+		m_nativeGestures[GesturesManager::GenericContext] = generic;
+		m_nativeGestures[GesturesManager::LinkContext] = link;
+		m_nativeGestures[GesturesManager::ContentEditableContext] = contentEditable;
+		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
 
 		m_instance = new GesturesManager(parent);
 
@@ -183,7 +183,7 @@ void GesturesManager::loadProfiles()
 	contextMenuGestureDefinition.steps = QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::RightButton), GestureStep(QEvent::MouseButtonRelease, Qt::RightButton)});
 	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
 
-	for (int i = (UnknownGesturesContext + 1); i < OtherGesturesContext; ++i)
+	for (int i = (UnknownContext + 1); i < OtherContext; ++i)
 	{
 		GesturesContext context(static_cast<GesturesContext>(i));
 
@@ -201,35 +201,35 @@ void GesturesManager::loadProfiles()
 
 		for (int j = 0; j < contexts.count(); ++j)
 		{
-			GesturesContext context(UnknownGesturesContext);
+			GesturesContext context(UnknownContext);
 
 			if (contexts.at(j) == QLatin1String("Generic"))
 			{
-				context = GenericGesturesContext;
+				context = GenericContext;
 			}
 			else if (contexts.at(j) == QLatin1String("Link"))
 			{
-				context = LinkGesturesContext;
+				context = LinkContext;
 			}
 			else if (contexts.at(j) == QLatin1String("ContentEditable"))
 			{
-				context = ContentEditableGesturesContext;
+				context = ContentEditableContext;
 			}
 			else if (contexts.at(j) == QLatin1String("ToolBar"))
 			{
-				context = ToolBarGesturesContext;
+				context = ToolBarContext;
 			}
 			else if (contexts.at(j) == QLatin1String("TabHandle"))
 			{
-				context = TabHandleGesturesContext;
+				context = TabHandleContext;
 			}
 			else if (contexts.at(j) == QLatin1String("ActiveTabHandle"))
 			{
-				context = ActiveTabHandleGesturesContext;
+				context = ActiveTabHandleContext;
 			}
 			else if (contexts.at(j) == QLatin1String("NoTabHandle"))
 			{
-				context = NoTabHandleGesturesContext;
+				context = NoTabHandleContext;
 			}
 			else
 			{
