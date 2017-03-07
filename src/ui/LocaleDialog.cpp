@@ -44,11 +44,11 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 		{
-			entries.append(qMakePair(tr("Unknown [%1]").arg(name), name));
+			entries.append({tr("Unknown [%1]").arg(name), name});
 		}
 		else
 		{
-			entries.append(qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(name), name));
+			entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(name), name});
 		}
 	}
 

@@ -347,7 +347,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	{
 		if (errors.at(i).error() != QSslError::NoError)
 		{
-			m_sslInformation.errors.append(qMakePair(reply->url(), errors.at(i)));
+			m_sslInformation.errors.append({reply->url(), errors.at(i)});
 
 			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
 			{
@@ -782,7 +782,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		}
 	}
 
-	m_replies[reply] = qMakePair(0, false);
+	m_replies[reply] = {0, false};
 
 	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 

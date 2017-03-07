@@ -108,7 +108,7 @@ bool QtWebKitCookieJar::insertCookie(const QNetworkCookie &cookie)
 
 	if (m_keepMode == CookieJar::AskIfKeepMode)
 	{
-		m_operations.enqueue(qMakePair((m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie));
+		m_operations.enqueue({(m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie});
 
 		if (m_operations.count() == 1)
 		{
@@ -143,7 +143,7 @@ bool QtWebKitCookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 	if (m_keepMode == CookieJar::AskIfKeepMode)
 	{
-		m_operations.enqueue(qMakePair(CookieJar::RemoveCookie, cookie));
+		m_operations.enqueue({CookieJar::RemoveCookie, cookie});
 
 		if (m_operations.count() == 1)
 		{
@@ -214,7 +214,7 @@ bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieLis
 		{
 			if (m_keepMode == CookieJar::AskIfKeepMode)
 			{
-				m_operations.enqueue(qMakePair((m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie));
+				m_operations.enqueue({(m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie});
 			}
 			else
 			{

@@ -321,8 +321,8 @@ void ToolBarDialog::editEntry()
 
 		searchEngineWidget->setChoices(searchEngineChoices);
 
-		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
-		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this)));
+		widgets.append({tr("Show search engine:"), searchEngineWidget});
+		widgets.append({tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this)});
 	}
 	else if (identifier == QLatin1String("ConfigurationOptionWidget") || identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
@@ -339,13 +339,13 @@ void ToolBarDialog::editEntry()
 			OptionWidget *optionNameWidget(new OptionWidget(QLatin1String("optionName"), options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this));
 			optionNameWidget->setChoices(choices);
 
-			widgets.append(qMakePair(tr("Option:"), optionNameWidget));
+			widgets.append({tr("Option:"), optionNameWidget});
 
 			OptionWidget *scopeWidget(new OptionWidget(QLatin1String("scope"), options.value(QLatin1String("scope")), SettingsManager::BooleanType, this));
 			scopeWidget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
 			scopeWidget->setDefaultValue(QLatin1String("window"));
 
-			widgets.append(qMakePair(tr("Scope:"), scopeWidget));
+			widgets.append({tr("Scope:"), scopeWidget});
 
 			textOptionWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
 
@@ -391,8 +391,8 @@ void ToolBarDialog::editEntry()
 		textOptionWidget->setValue(options.value(QLatin1String("text"), textOptionWidget->getDefaultValue()));
 		textOptionWidget->setButtons(textOptionWidget->getDefaultValue().isNull() ? OptionWidget::NoButtons : OptionWidget::ResetButton);
 
-		widgets.append(qMakePair(tr("Icon:"), iconOptionWidget));
-		widgets.append(qMakePair(tr("Text:"), textOptionWidget));
+		widgets.append({tr("Icon:"), iconOptionWidget});
+		widgets.append({tr("Text:"), textOptionWidget});
 	}
 
 	if (widgets.isEmpty())

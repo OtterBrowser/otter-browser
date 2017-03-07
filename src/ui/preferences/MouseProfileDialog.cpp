@@ -79,7 +79,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->gesturesViewWidget->setItemDelegateForColumn(1, new GestureActionDelegate(this));
 
 	QStandardItemModel *gesturesModel(new QStandardItemModel(this));
-	QList<QPair<QString, QString> > contexts({qMakePair(QLatin1String("Generic"), tr("Generic")), qMakePair(QLatin1String("Link"), tr("Link")), qMakePair(QLatin1String("ContentEditable"), tr("Editable Content")), qMakePair(QLatin1String("TabHandle"), tr("Tab Handle")), qMakePair(QLatin1String("ActiveTabHandle"), tr("Tab Handle of Active Tab")), qMakePair(QLatin1String("NoTabHandle"), tr("Empty Area of Tab Bar")), qMakePair(QLatin1String("ToolBar"), tr("Any Toolbar"))});
+	QList<QPair<QString, QString> > contexts({{QLatin1String("Generic"), tr("Generic")}, {QLatin1String("Link"), tr("Link")}, {QLatin1String("ContentEditable"), tr("Editable Content")}, {QLatin1String("TabHandle"), tr("Tab Handle")}, {QLatin1String("ActiveTabHandle"), tr("Tab Handle of Active Tab")}, {QLatin1String("NoTabHandle"), tr("Empty Area of Tab Bar")}, {QLatin1String("ToolBar"), tr("Any Toolbar")}});
 
 	for (int i = 0; i < contexts.count(); ++i)
 	{

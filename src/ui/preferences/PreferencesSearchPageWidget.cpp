@@ -114,7 +114,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 			continue;
 		}
 
-		m_searchEngines[searchEngine.identifier] = qMakePair(false, searchEngine);
+		m_searchEngines[searchEngine.identifier] = {false, searchEngine};
 
 		searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
 	}
@@ -187,7 +187,7 @@ void PreferencesSearchPageWidget::createSearchEngine()
 
 	searchEngine = dialog.getSearchEngine();
 
-	m_searchEngines[identifier] = qMakePair(true, searchEngine);
+	m_searchEngines[identifier] = {true, searchEngine};
 
 	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
@@ -237,7 +237,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 		searchEngine.keyword = QString();
 	}
 
-	m_searchEngines[identifier] = qMakePair(true, searchEngine);
+	m_searchEngines[identifier] = {true, searchEngine};
 
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
 	m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
@@ -368,7 +368,7 @@ void PreferencesSearchPageWidget::addSearchEngine(const QString &path, const QSt
 		searchEngine.keyword = QString();
 	}
 
-	m_searchEngines[identifier] = qMakePair(false, searchEngine);
+	m_searchEngines[identifier] = {false, searchEngine};
 
 	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
@@ -441,7 +441,7 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 	{
 		searchEngine.keyword = m_searchEngines[identifier].second.keyword;
 
-		m_searchEngines[identifier] = qMakePair(true, searchEngine);
+		m_searchEngines[identifier] = {true, searchEngine};
 	}
 }
 

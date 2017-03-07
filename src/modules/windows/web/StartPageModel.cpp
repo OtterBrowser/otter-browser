@@ -152,7 +152,7 @@ void StartPageModel::reloadModel()
 
 				if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
 				{
-					m_reloads[url] = qMakePair(identifier, false);
+					m_reloads[url] = {identifier, false};
 
 					AddonsManager::getWebBackend()->requestThumbnail(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()));
 				}
@@ -206,13 +206,13 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 
 			information.icon.paint(&painter, QRect(QPoint(0, 0), size));
 
-			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
+			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = {index.data(BookmarksModel::IdentifierRole).toULongLong(), full};
 
 			thumbnailCreated(url, thumbnail, information.getTitle());
 		}
 		else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
 		{
-			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
+			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = {index.data(BookmarksModel::IdentifierRole).toULongLong(), full};
 		}
 	}
 }

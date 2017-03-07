@@ -299,7 +299,7 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 			BookmarksItem *trashItem(getTrashItem());
 			BookmarksItem *previousParent(dynamic_cast<BookmarksItem*>(bookmark->parent()));
 
-			m_trash[bookmark] = qMakePair(bookmark->parent()->index(), bookmark->row());
+			m_trash[bookmark] = {bookmark->parent()->index(), bookmark->row()};
 
 			trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 			trashItem->setEnabled(true);

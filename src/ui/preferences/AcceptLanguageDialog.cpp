@@ -57,11 +57,11 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 		{
 			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 			{
-				entries.append(qMakePair(tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()));
+				entries.append({tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()});
 			}
 			else
 			{
-				entries.append(qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name()));
+				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name()});
 			}
 		}
 	}
