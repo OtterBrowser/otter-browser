@@ -24,6 +24,7 @@
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QMetaEnum>
 #include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
 #include <QtWidgets/QApplication>
@@ -123,6 +124,7 @@ QHash<GesturesManager::GesturesContext, QVector<QVector<GesturesManager::Gesture
 QVector<QInputEvent*> GesturesManager::m_events;
 QVector<GesturesManager::GestureStep> GesturesManager::m_steps;
 QVector<GesturesManager::GesturesContext> GesturesManager::m_contexts;
+int GesturesManager::m_gesturesContextEnumerator(0);
 bool GesturesManager::m_isReleasing(false);
 bool GesturesManager::m_afterScroll(false);
 
@@ -158,6 +160,7 @@ void GesturesManager::createInstance(QObject *parent)
 		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
 
 		m_instance = new GesturesManager(parent);
+		m_gesturesContextEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("GesturesContext").data());
 
 		loadProfiles();
 	}
@@ -201,37 +204,9 @@ void GesturesManager::loadProfiles()
 
 		for (int j = 0; j < contexts.count(); ++j)
 		{
-			GesturesContext context(UnknownContext);
+			const GesturesContext context(static_cast<GesturesContext>(m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).keyToValue((contexts.at(j) + QLatin1String("Context")).toLatin1())));
 
-			if (contexts.at(j) == QLatin1String("Generic"))
-			{
-				context = GenericContext;
-			}
-			else if (contexts.at(j) == QLatin1String("Link"))
-			{
-				context = LinkContext;
-			}
-			else if (contexts.at(j) == QLatin1String("ContentEditable"))
-			{
-				context = ContentEditableContext;
-			}
-			else if (contexts.at(j) == QLatin1String("ToolBar"))
-			{
-				context = ToolBarContext;
-			}
-			else if (contexts.at(j) == QLatin1String("TabHandle"))
-			{
-				context = TabHandleContext;
-			}
-			else if (contexts.at(j) == QLatin1String("ActiveTabHandle"))
-			{
-				context = ActiveTabHandleContext;
-			}
-			else if (contexts.at(j) == QLatin1String("NoTabHandle"))
-			{
-				context = NoTabHandleContext;
-			}
-			else
+			if (context == UnknownContext)
 			{
 				profile.endGroup();
 

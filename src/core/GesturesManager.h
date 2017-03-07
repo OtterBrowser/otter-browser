@@ -33,6 +33,7 @@ namespace Otter
 class GesturesManager : public QObject
 {
 	Q_OBJECT
+	Q_ENUMS(GesturesContext)
 
 public:
 	enum GesturesContext
@@ -110,6 +111,7 @@ private:
 	static QVector<GestureStep> m_steps;
 	static QVector<QInputEvent*> m_events;
 	static QVector<GesturesContext> m_contexts;
+	static int m_gesturesContextEnumerator;
 	static bool m_isReleasing;
 	static bool m_afterScroll;
 };
