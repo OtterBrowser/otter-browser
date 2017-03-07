@@ -588,6 +588,8 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 			toolBar.buttonStyle = Qt::ToolButtonTextUnderIcon;
 		}
 
+		toolBar.entries.reserve(actions.count());
+
 		for (int j = 0; j < actions.count(); ++j)
 		{
 			toolBar.entries.append(decodeEntry(actions.at(j)));

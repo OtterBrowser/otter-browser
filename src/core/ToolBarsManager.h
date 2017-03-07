@@ -65,7 +65,7 @@ public:
 		QString bookmarksPath;
 		QString currentPanel;
 		QStringList panels;
-		QList<ActionsManager::ActionEntryDefinition> entries;
+		QVector<ActionsManager::ActionEntryDefinition> entries;
 		ToolBarType type = ActionsBarType;
 		ToolBarVisibility normalVisibility = AlwaysVisibleToolBar;
 		ToolBarVisibility fullScreenVisibility = AlwaysHiddenToolBar;

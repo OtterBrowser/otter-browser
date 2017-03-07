@@ -304,7 +304,7 @@ void ToolBarDialog::editEntry()
 	const QModelIndex index(m_ui->currentEntriesItemView->currentIndex());
 	const QString identifier(index.data(IdentifierRole).toString());
 	QVariantMap options(index.data(OptionsRole).toMap());
-	QList<QPair<QString, OptionWidget*> > widgets;
+	QVector<QPair<QString, OptionWidget*> > widgets;
 
 	if (identifier == QLatin1String("SearchWidget"))
 	{
@@ -725,6 +725,8 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 			break;
 		default:
+			definition.entries.reserve(m_ui->currentEntriesItemView->model()->rowCount());
+
 			for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
 			{
 				definition.entries.append(getEntry(m_ui->currentEntriesItemView->getItem(i)));
