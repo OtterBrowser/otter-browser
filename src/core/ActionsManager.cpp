@@ -335,6 +335,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 {
 	m_definitions.reserve(ActionsManager::OtherAction);
 
+	registerAction(RunMacroAction, QT_TRANSLATE_NOOP("actions", "Run Macro"), QT_TRANSLATE_NOOP("actions", "Run Arbitrary List of Actions"));
 	registerAction(NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new")));
 	registerAction(NewTabPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new-private")));
 	registerAction(NewWindowAction, QT_TRANSLATE_NOOP("actions", "New Window"), QString(), ThemesManager::getIcon(QLatin1String("window-new")));
@@ -591,11 +592,47 @@ void ActionsManager::loadProfiles()
 
 void ActionsManager::triggerAction(int identifier, QObject *parent, const QVariantMap &parameters)
 {
-	MainWindow *window(MainWindow::findMainWindow(parent));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent));
 
-	if (window)
+	if (!mainWindow)
 	{
-		window->triggerAction(identifier, parameters);
+		return;
+	}
+
+	if (identifier == RunMacroAction)
+	{
+		const QVariantList actions(parameters.value(QLatin1String("actions")).toList());
+
+		for (int i = 0; i < actions.count(); ++i)
+		{
+			QVariant actionIdentifier;
+			QVariantMap actionParameters;
+
+			if (actions.at(i).type() == QVariant::Map)
+			{
+				const QVariantMap action(actions.at(i).toMap());
+
+				actionIdentifier = action.value(QLatin1String("identifier"));
+				actionParameters = action.value(QLatin1String("parameters")).toMap();
+			}
+			else
+			{
+				actionIdentifier = actions.at(i);
+			}
+
+			if (actionIdentifier.type() == QVariant::Int)
+			{
+				triggerAction(actionIdentifier.toInt(), mainWindow, actionParameters);
+			}
+			else
+			{
+				triggerAction(getActionIdentifier(actionIdentifier.toString()), mainWindow, actionParameters);
+			}
+		}
+	}
+	else
+	{
+		mainWindow->triggerAction(identifier, parameters);
 	}
 }
 

@@ -83,7 +83,8 @@ class ActionsManager : public QObject
 public:
 	enum ActionIdentifier
 	{
-		NewTabAction = 0,
+		RunMacroAction = 0,
+		NewTabAction,
 		NewTabPrivateAction,
 		NewWindowAction,
 		NewWindowPrivateAction,
