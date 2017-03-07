@@ -303,8 +303,8 @@ NetworkAutomaticProxy::NetworkAutomaticProxy(const QString &path, QObject *paren
 		m_engine.evaluate(QStringLiteral("function %1() { return PacUtils.%1.apply(null, arguments); }").arg(functions.at(i))).isError();
 	}
 
-	m_proxies.insert(QLatin1String("ERROR"), QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::DefaultProxy)}));
-	m_proxies.insert(QLatin1String("DIRECT"), QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)}));
+	m_proxies.insert(QLatin1String("ERROR"), QVector<QNetworkProxy>({QNetworkProxy(QNetworkProxy::DefaultProxy)}));
+	m_proxies.insert(QLatin1String("DIRECT"), QVector<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)}));
 
 	setPath(path);
 }
@@ -365,7 +365,7 @@ QString NetworkAutomaticProxy::getPath() const
 	return m_path;
 }
 
-QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const QString &host)
+QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const QString &host)
 {
 	const QJSValue result(m_findProxy.call(QJSValueList({m_engine.toScriptValue(url), m_engine.toScriptValue(host)})));
 
@@ -384,7 +384,7 @@ QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const Q
 // proxy format: "PROXY host:port; PROXY host:port", "PROXY host:port; SOCKS host:port" etc.
 // can be combination of DIRECT, PROXY, SOCKS
 	const QStringList proxies(configuration.split(QLatin1Char(';')));
-	QList<QNetworkProxy> proxiesForQuery;
+	QVector<QNetworkProxy> proxiesForQuery;
 
 	for (int i = 0; i < proxies.count(); ++i)
 	{

@@ -114,7 +114,7 @@ void CacheContentsWidget::populateCache()
 	m_model->setSortRole(Qt::DisplayRole);
 
 	NetworkCache *cache(NetworkManagerFactory::getCache());
-	const QList<QUrl> entries(cache->getEntries());
+	const QVector<QUrl> entries(cache->getEntries());
 
 	for (int i = 0; i < entries.count(); ++i)
 	{

@@ -162,9 +162,9 @@ QVariant BookmarksItem::data(int role) const
 	return QStandardItem::data(role);
 }
 
-QList<QUrl> BookmarksItem::getUrls() const
+QVector<QUrl> BookmarksItem::getUrls() const
 {
-	QList<QUrl> urls;
+	QVector<QUrl> urls;
 
 	if (static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 	{
@@ -702,7 +702,7 @@ void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
 
 		if (!m_urls.contains(url))
 		{
-			m_urls[url] = QList<BookmarksItem*>();
+			m_urls[url] = QVector<BookmarksItem*>();
 		}
 
 		m_urls[url].append(bookmark);
@@ -891,11 +891,11 @@ QStringList BookmarksModel::getKeywords() const
 	return m_keywords.keys();
 }
 
-QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString &prefix) const
+QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString &prefix) const
 {
-	QList<BookmarksItem*> matchedBookmarks;
-	QList<BookmarksModel::BookmarkMatch> allMatches;
-	QList<BookmarksModel::BookmarkMatch> currentMatches;
+	QVector<BookmarksItem*> matchedBookmarks;
+	QVector<BookmarksModel::BookmarkMatch> allMatches;
+	QVector<BookmarksModel::BookmarkMatch> currentMatches;
 	QMultiMap<QDateTime, BookmarksModel::BookmarkMatch> matchesMap;
 	QHash<QString, BookmarksItem*>::const_iterator keywordsIterator;
 
@@ -913,7 +913,7 @@ QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString
 		}
 	}
 
-	currentMatches = matchesMap.values();
+	currentMatches = matchesMap.values().toVector();
 
 	matchesMap.clear();
 
@@ -922,7 +922,7 @@ QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString
 		allMatches.append(currentMatches.at(i));
 	}
 
-	QHash<QUrl, QList<BookmarksItem*> >::const_iterator urlsIterator;
+	QHash<QUrl, QVector<BookmarksItem*> >::const_iterator urlsIterator;
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
@@ -945,7 +945,7 @@ QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString
 		}
 	}
 
-	currentMatches = matchesMap.values();
+	currentMatches = matchesMap.values().toVector();
 
 	matchesMap.clear();
 
@@ -957,14 +957,14 @@ QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString
 	return allMatches;
 }
 
-QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
+QVector<BookmarksItem *> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
 {
 	if (!branch)
 	{
 		branch = item(0, 0);
 	}
 
-	QList<BookmarksItem*> items;
+	QVector<BookmarksItem*> items;
 
 	for (int i = 0; i < branch->rowCount(); ++i)
 	{
@@ -988,7 +988,7 @@ QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *b
 	return items;
 }
 
-QList<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
+QVector<BookmarksItem *> BookmarksModel::getBookmarks(const QUrl &url) const
 {
 	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
@@ -997,7 +997,7 @@ QList<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
 		return m_urls[adjustedUrl];
 	}
 
-	return QList<BookmarksItem*>();
+	return QVector<BookmarksItem*>();
 }
 
 BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
@@ -1150,7 +1150,7 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 		{
 			if (!m_urls.contains(newUrl))
 			{
-				m_urls[newUrl] = QList<BookmarksItem*>();
+				m_urls[newUrl] = QVector<BookmarksItem*>();
 			}
 
 			m_urls[newUrl].append(bookmark);

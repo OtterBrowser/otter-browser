@@ -73,7 +73,7 @@ public:
 	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
-	static QList<MainWindow*> getWindows();
+	static QVector<MainWindow*> getWindows();
 	bool canClose();
 	bool isHidden() const;
 	bool isUpdating() const;
@@ -103,7 +103,7 @@ private:
 	static QPointer<MainWindow> m_activeWindow;
 	static QString m_localePath;
 	static QCommandLineParser m_commandLineParser;
-	static QList<MainWindow*> m_windows;
+	static QVector<MainWindow*> m_windows;
 	static bool m_isHidden;
 	static bool m_isUpdating;
 

@@ -68,6 +68,8 @@ void FilePasswordsStorageBackend::initialize()
 
 			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
 
+			password.fields.reserve(fieldsArray.count());
+
 			for (int j = 0; j < fieldsArray.count(); ++j)
 			{
 				const QJsonObject fieldObject(fieldsArray.at(j).toObject());

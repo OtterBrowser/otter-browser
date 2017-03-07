@@ -387,7 +387,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 			else
 			{
-				const QList<MainWindow*> windows(Application::getWindows());
+				const QVector<MainWindow*> windows(Application::getWindows());
 
 				for (int i = 0; i < windows.count(); ++i)
 				{
@@ -859,7 +859,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 
 void MainWindow::editBookmark(const QUrl &url)
 {
-	const QList<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
+	const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
 
 	if (!bookmarks.isEmpty())
 	{

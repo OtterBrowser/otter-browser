@@ -76,7 +76,7 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 void CookiesContentsWidget::populateCookies()
 {
 	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
-	const QList<QNetworkCookie> cookies(cookieJar->getCookies());
+	const QVector<QNetworkCookie> cookies(cookieJar->getCookies());
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{

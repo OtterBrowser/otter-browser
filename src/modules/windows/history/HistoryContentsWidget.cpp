@@ -281,7 +281,7 @@ void HistoryContentsWidget::removeDomainEntries()
 	}
 
 	const QString host(QUrl(domainItem->text()).host());
-	QList<quint64> entries;
+	QVector<quint64> entries;
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{

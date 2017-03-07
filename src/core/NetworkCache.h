@@ -36,7 +36,7 @@ public:
 	void insert(QIODevice *device) override;
 	QIODevice* prepare(const QNetworkCacheMetaData &metaData) override;
 	QString getPathForUrl(const QUrl &url);
-	QList<QUrl> getEntries() const;
+	QVector<QUrl> getEntries() const;
 	bool remove(const QUrl &url) override;
 
 protected slots:

@@ -163,7 +163,7 @@ private:
 	static QString m_sessionTitle;
 	static QString m_cachePath;
 	static QString m_profilePath;
-	static QList<SessionMainWindow> m_closedWindows;
+	static QVector<SessionMainWindow> m_closedWindows;
 	static bool m_isDirty;
 	static bool m_isPrivate;
 	static bool m_isReadOnly;

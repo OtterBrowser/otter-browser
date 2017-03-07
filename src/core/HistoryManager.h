@@ -38,14 +38,14 @@ public:
 	static void createInstance(QObject *parent = nullptr);
 	static void clearHistory(uint period = 0);
 	static void removeEntry(quint64 identifier);
-	static void removeEntries(const QList<quint64> &identifiers);
+	static void removeEntries(const QVector<quint64> &identifiers);
 	static void updateEntry(quint64 identifier, const QUrl &url, const QString &title, const QIcon &icon);
 	static HistoryManager* getInstance();
 	static HistoryModel* getBrowsingHistoryModel();
 	static HistoryModel* getTypedHistoryModel();
 	static QIcon getIcon(const QUrl &url);
 	static HistoryEntryItem* getEntry(quint64 identifier);
-	static QList<HistoryModel::HistoryEntryMatch> findEntries(const QString &prefix, bool isTypedInOnly = false);
+	static QVector<HistoryModel::HistoryEntryMatch> findEntries(const QString &prefix, bool isTypedInOnly = false);
 	static quint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn = false);
 	static bool hasEntry(const QUrl &url);
 

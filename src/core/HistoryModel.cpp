@@ -168,7 +168,7 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 	if (m_type == TypedHistory)
 	{
 		const QUrl normalizedUrl(Utils::normalizeUrl(url));
-		
+
 		if (hasEntry(normalizedUrl))
 		{
 			for (int i = 0; i < m_urls[normalizedUrl].count(); ++i)
@@ -212,13 +212,13 @@ HistoryEntryItem* HistoryModel::getEntry(quint64 identifier) const
 	return nullptr;
 }
 
-QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &prefix, bool markAsTypedIn) const
+QVector<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &prefix, bool markAsTypedIn) const
 {
-	QList<HistoryEntryItem*> matchedEntries;
-	QList<HistoryModel::HistoryEntryMatch> allMatches;
-	QList<HistoryModel::HistoryEntryMatch> currentMatches;
+	QVector<HistoryEntryItem*> matchedEntries;
+	QVector<HistoryModel::HistoryEntryMatch> allMatches;
+	QVector<HistoryModel::HistoryEntryMatch> currentMatches;
 	QMultiMap<QDateTime, HistoryModel::HistoryEntryMatch> matchesMap;
-	QHash<QUrl, QList<HistoryEntryItem*> >::const_iterator urlsIterator;
+	QHash<QUrl, QVector<HistoryEntryItem*> >::const_iterator urlsIterator;
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
@@ -246,7 +246,7 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 		}
 	}
 
-	currentMatches = matchesMap.values();
+	currentMatches = matchesMap.values().toVector();
 
 	matchesMap.clear();
 
@@ -321,7 +321,7 @@ bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int 
 		{
 			if (!m_urls.contains(newUrl))
 			{
-				m_urls[newUrl] = QList<HistoryEntryItem*>();
+				m_urls[newUrl] = QVector<HistoryEntryItem*>();
 			}
 
 			m_urls[newUrl].append(entry);

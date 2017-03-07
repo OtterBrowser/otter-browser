@@ -961,7 +961,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 
 			if (mainWindow)
 			{
-				const QList<MainWindow*> mainWindows(Application::getWindows());
+				const QVector<MainWindow*> mainWindows(Application::getWindows());
 
 				for (int i = 0; i < mainWindows.count(); ++i)
 				{

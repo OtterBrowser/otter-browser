@@ -104,7 +104,7 @@ void AddressCompletionModel::updateModel()
 
 	if (m_types.testFlag(BookmarksCompletionType))
 	{
-		const QList<BookmarksModel::BookmarkMatch> bookmarks(BookmarksManager::findBookmarks(m_filter));
+		const QVector<BookmarksModel::BookmarkMatch> bookmarks(BookmarksManager::findBookmarks(m_filter));
 
 		if (m_showCompletionCategories && !bookmarks.isEmpty())
 		{
@@ -154,7 +154,7 @@ void AddressCompletionModel::updateModel()
 
 	if (m_types.testFlag(HistoryCompletionType))
 	{
-		const QList<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(m_filter));
+		const QVector<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(m_filter));
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
@@ -169,7 +169,7 @@ void AddressCompletionModel::updateModel()
 
 	if (m_types.testFlag(TypedHistoryCompletionType))
 	{
-		const QList<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(QString(), true));
+		const QVector<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(QString(), true));
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{

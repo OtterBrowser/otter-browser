@@ -348,7 +348,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 	{
 		scripts().clear();
 
-		const QList<UserScript*> scripts(UserScript::getUserScriptsForUrl(url));
+		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(url));
 
 		for (int i = 0; i < scripts.count(); ++i)
 		{

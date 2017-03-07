@@ -52,7 +52,7 @@ public:
 	QStringList getExcludeRules() const;
 	QStringList getIncludeRules() const;
 	QStringList getMatchRules() const;
-	static QList<UserScript*> getUserScriptsForUrl(const QUrl &url, InjectionTime injectionTime = AnyTime, bool isSubFrame = false);
+	static QVector<UserScript*> getUserScriptsForUrl(const QUrl &url, InjectionTime injectionTime = AnyTime, bool isSubFrame = false);
 	InjectionTime getInjectionTime() const;
 	AddonType getType() const override;
 	bool isEnabledForUrl(const QUrl &url);

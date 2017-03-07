@@ -67,7 +67,7 @@ public:
 
 	void setPath(const QString &path);
 	QString getPath() const;
-	QList<QNetworkProxy> getProxy(const QString &url, const QString &host);
+	QVector<QNetworkProxy> getProxy(const QString &url, const QString &host);
 	bool isValid();
 
 protected:
@@ -81,7 +81,7 @@ private:
 	QJSEngine m_engine;
 	QJSValue m_findProxy;
 	QString m_path;
-	QHash<QString, QList<QNetworkProxy> > m_proxies;
+	QHash<QString, QVector<QNetworkProxy> > m_proxies;
 	bool m_isValid;
 };
 

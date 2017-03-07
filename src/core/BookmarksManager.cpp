@@ -78,7 +78,7 @@ void BookmarksManager::updateVisits(const QUrl &url)
 
 	if (m_model->hasBookmark(adjustedUrl))
 	{
-		const QList<BookmarksItem*> bookmarks(m_model->getBookmarks(adjustedUrl));
+		const QVector<BookmarksItem*> bookmarks(m_model->getBookmarks(adjustedUrl));
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
@@ -102,7 +102,7 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 		return;
 	}
 
-	const QList<BookmarksItem*> items(m_model->findUrls(adjustedUrl));
+	const QVector<BookmarksItem*> items(m_model->findUrls(adjustedUrl));
 
 	for (int i = 0; i < items.count(); ++i)
 	{
@@ -192,7 +192,7 @@ QStringList BookmarksManager::getKeywords()
 	return m_model->getKeywords();
 }
 
-QList<BookmarksModel::BookmarkMatch> BookmarksManager::findBookmarks(const QString &prefix)
+QVector<BookmarksModel::BookmarkMatch> BookmarksManager::findBookmarks(const QString &prefix)
 {
 	if (!m_model)
 	{

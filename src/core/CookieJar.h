@@ -59,7 +59,7 @@ public:
 	CookieJar* clone(QObject *parent = nullptr);
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const override;
 	QList<QNetworkCookie> getCookiesForUrl(const QUrl &url) const;
-	QList<QNetworkCookie> getCookies(const QString &domain = QString()) const;
+	QVector<QNetworkCookie> getCookies(const QString &domain = QString()) const;
 	bool insertCookie(const QNetworkCookie &cookie) override;
 	bool updateCookie(const QNetworkCookie &cookie) override;
 	bool deleteCookie(const QNetworkCookie &cookie) override;

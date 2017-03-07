@@ -300,7 +300,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					case BookmarksModel::RootBookmark:
 					case BookmarksModel::FolderBookmark:
 						{
-							const QList<QUrl> urls(bookmark->getUrls());
+							const QVector<QUrl> urls(bookmark->getUrls());
 							bool canOpen(true);
 
 							if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption).toBool() && !parameters.value(QLatin1String("ignoreWarning"), false).toBool())

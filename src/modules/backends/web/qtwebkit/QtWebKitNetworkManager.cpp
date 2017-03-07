@@ -579,6 +579,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				PasswordsManager::PasswordInformation password;
 				password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 				password.timeAdded = QDateTime::currentDateTime();
+				password.fields.reserve(fieldsArray.count());
 				password.type = PasswordsManager::FormPassword;
 
 				for (int i = 0; i < fieldsArray.count(); ++i)

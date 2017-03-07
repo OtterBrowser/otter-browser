@@ -145,7 +145,7 @@ void HistoryManager::removeEntry(quint64 identifier)
 	m_instance->scheduleSave();
 }
 
-void HistoryManager::removeEntries(const QList<quint64> &identifiers)
+void HistoryManager::removeEntries(const QVector<quint64> &identifiers)
 {
 	if (!m_isEnabled)
 	{
@@ -318,7 +318,7 @@ HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)
 	return m_browsingHistoryModel->getEntry(identifier);
 }
 
-QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString &prefix, bool isTypedInOnly)
+QVector<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString &prefix, bool isTypedInOnly)
 {
 	if (!m_typedHistoryModel)
 	{
@@ -330,8 +330,7 @@ QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString
 		getBrowsingHistoryModel();
 	}
 
-	QList<HistoryModel::HistoryEntryMatch> entries;
-	entries.append(m_typedHistoryModel->findEntries(prefix, true));
+	QVector<HistoryModel::HistoryEntryMatch> entries(m_typedHistoryModel->findEntries(prefix, true));
 
 	if (!isTypedInOnly)
 	{

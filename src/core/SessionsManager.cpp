@@ -37,7 +37,7 @@ QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
-QList<SessionMainWindow> SessionsManager::m_closedWindows;
+QVector<SessionMainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_isDirty(false);
 bool SessionsManager::m_isPrivate(false);
 bool SessionsManager::m_isReadOnly(false);
@@ -383,7 +383,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	session.title = (title.isEmpty() ? m_sessionTitle : title);
 	session.isClean = isClean;
 
-	QList<MainWindow*> windows;
+	QVector<MainWindow*> windows;
 
 	if (window)
 	{
@@ -555,7 +555,7 @@ bool SessionsManager::isReadOnly()
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
-	const QList<MainWindow*> windows(Application::getWindows());
+	const QVector<MainWindow*> windows(Application::getWindows());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{

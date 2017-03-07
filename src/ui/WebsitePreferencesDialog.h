@@ -40,11 +40,11 @@ class WebsitePreferencesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = nullptr);
+	explicit WebsitePreferencesDialog(const QUrl &url, const QVector<QNetworkCookie> &cookies, QWidget *parent = nullptr);
 	~WebsitePreferencesDialog();
 
-	QList<QNetworkCookie> getCookiesToDelete() const;
-	QList<QNetworkCookie> getCookiesToInsert() const;
+	QVector<QNetworkCookie> getCookiesToDelete() const;
+	QVector<QNetworkCookie> getCookiesToInsert() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -61,8 +61,8 @@ protected slots:
 	void valueChanged();
 
 private:
-	QList<QNetworkCookie> m_cookiesToDelete;
-	QList<QNetworkCookie> m_cookiesToInsert;
+	QVector<QNetworkCookie> m_cookiesToDelete;
+	QVector<QNetworkCookie> m_cookiesToInsert;
 	bool m_updateOverride;
 	Ui::WebsitePreferencesDialog *m_ui;
 };

@@ -86,7 +86,7 @@ QLocalServer* Application::m_localServer(nullptr);
 QPointer<MainWindow> Application::m_activeWindow(nullptr);
 QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
-QList<MainWindow*> Application::m_windows;
+QVector<MainWindow*> Application::m_windows;
 bool Application::m_isHidden(false);
 bool Application::m_isUpdating(false);
 
@@ -1044,7 +1044,7 @@ QString Application::getLocalePath()
 	return m_localePath;
 }
 
-QList<MainWindow*> Application::getWindows()
+QVector<MainWindow *> Application::getWindows()
 {
 	return m_windows;
 }

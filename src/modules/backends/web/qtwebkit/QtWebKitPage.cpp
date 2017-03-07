@@ -56,7 +56,7 @@ QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObj
 
 void QtWebKitFrame::runUserScripts(const QUrl &url) const
 {
-	const QList<UserScript*> scripts(UserScript::getUserScriptsForUrl(url, UserScript::AnyTime, (m_frame->parentFrame() != nullptr)));
+	const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(url, UserScript::AnyTime, (m_frame->parentFrame() != nullptr)));
 
 	for (int i = 0; i < scripts.count(); ++i)
 	{

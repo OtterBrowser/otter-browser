@@ -921,20 +921,20 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
-				WebsitePreferencesDialog dialog(url, QList<QNetworkCookie>(), this);
+				WebsitePreferencesDialog dialog(url, QVector<QNetworkCookie>(), this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					updateOptions(getUrl());
 
-					const QList<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
+					const QVector<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
 
 					for (int i = 0; i < cookiesToDelete.count(); ++i)
 					{
 						m_page->profile()->cookieStore()->deleteCookie(cookiesToDelete.at(i));
 					}
 
-					const QList<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
+					const QVector<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
 
 					for (int i = 0; i < cookiesToInsert.count(); ++i)
 					{
@@ -1272,7 +1272,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 		updateOptions(QUrl());
 		updatePageActions(QUrl());
 
-		const QList<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
+		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
 
 		for (int i = 0; i < scripts.count(); ++i)
 		{

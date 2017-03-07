@@ -74,14 +74,14 @@ public:
 	void removeEntry(quint64 identifier);
 	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
 	HistoryEntryItem* getEntry(quint64 identifier) const;
-	QList<HistoryEntryMatch> findEntries(const QString &prefix, bool markAsTypedIn = false) const;
+	QVector<HistoryEntryMatch> findEntries(const QString &prefix, bool markAsTypedIn = false) const;
 	HistoryType getType() const;
 	bool hasEntry(const QUrl &url) const;
 	bool save(const QString &path) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
 private:
-	QHash<QUrl, QList<HistoryEntryItem*> > m_urls;
+	QHash<QUrl, QVector<HistoryEntryItem*> > m_urls;
 	QMap<quint64, HistoryEntryItem*> m_identifiers;
 	HistoryType m_type;
 

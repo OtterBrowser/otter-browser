@@ -38,12 +38,10 @@
 namespace Otter
 {
 
-WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent) : Dialog(parent),
+WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVector<QNetworkCookie> &cookies, QWidget *parent) : Dialog(parent),
 	m_updateOverride(true),
 	m_ui(new Ui::WebsitePreferencesDialog)
 {
-	const QList<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
-
 	m_ui->setupUi(this);
 	m_ui->enableCookiesCheckBox->setChecked(true);
 
@@ -60,6 +58,8 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->websiteLineEdit->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
 	m_ui->encodingComboBox->addItem(tr("Auto Detect"), QLatin1String("auto"));
+
+	const QVector<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
 
 	for (int i = 0; i < textCodecs.count(); ++i)
 	{
@@ -297,7 +297,7 @@ void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
 
 void WebsitePreferencesDialog::removeCookie()
 {
-	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()));
+	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()).toVector());
 
 	m_ui->cookiesViewWidget->removeRow();
 }
@@ -494,12 +494,12 @@ void WebsitePreferencesDialog::valueChanged()
 	overrideCheckBox->setChecked(true);
 }
 
-QList<QNetworkCookie> WebsitePreferencesDialog::getCookiesToDelete() const
+QVector<QNetworkCookie> WebsitePreferencesDialog::getCookiesToDelete() const
 {
 	return m_cookiesToDelete;
 }
 
-QList<QNetworkCookie> WebsitePreferencesDialog::getCookiesToInsert() const
+QVector<QNetworkCookie> WebsitePreferencesDialog::getCookiesToInsert() const
 {
 	return m_cookiesToInsert;
 }

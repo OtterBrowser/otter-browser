@@ -141,10 +141,9 @@ QString NetworkCache::getPathForUrl(const QUrl &url)
 	return QString();
 }
 
-QList<QUrl> NetworkCache::getEntries() const
+QVector<QUrl> NetworkCache::getEntries() const
 {
-	QList<QUrl> entries;
-
+	QVector<QUrl> entries;
 	const QDir cacheMainDirectory(cacheDirectory());
 	const QStringList directories(cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot));
 

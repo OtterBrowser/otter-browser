@@ -143,7 +143,7 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 		case ProxyDefinition::AutomaticProxy:
 			if (m_automaticProxy && m_automaticProxy->isValid())
 			{
-				return m_automaticProxy->getProxy(query.url().toString(), query.peerHostName());
+				return m_automaticProxy->getProxy(query.url().toString(), query.peerHostName()).toList();
 			}
 
 			return QNetworkProxyFactory::systemProxyForQuery(query);
