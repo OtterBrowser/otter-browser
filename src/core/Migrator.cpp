@@ -229,17 +229,17 @@ void Migrator::run()
 
 						if (!searchEngine.isEmpty())
 						{
-							sessionWindow.overrides[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
+							sessionWindow.options[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
 						}
 
 						if (!userAgent.isEmpty())
 						{
-							sessionWindow.overrides[SettingsManager::Network_UserAgentOption] = userAgent;
+							sessionWindow.options[SettingsManager::Network_UserAgentOption] = userAgent;
 						}
 
 						if (reloadTime >= 0)
 						{
-							sessionWindow.overrides[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
+							sessionWindow.options[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
 						}
 
 						for (int l = 1; l <= historyAmount; ++l)

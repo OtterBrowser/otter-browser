@@ -409,7 +409,7 @@ void Window::setSession(const SessionWindow &session)
 {
 	m_session = session;
 
-	setSearchEngine(session.overrides.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString());
+	setSearchEngine(session.options.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString());
 	setPinned(session.isPinned);
 
 	if (SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool())
@@ -442,7 +442,7 @@ void Window::setOption(int identifier, const QVariant &value)
 	}
 	else
 	{
-		m_session.overrides[identifier] = value;
+		m_session.options[identifier] = value;
 	}
 }
 
@@ -591,13 +591,13 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	if (m_contentsWidget->getType() == QLatin1String("web") && !m_session.overrides.isEmpty())
+	if (m_contentsWidget->getType() == QLatin1String("web") && !m_session.options.isEmpty())
 	{
 		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 		if (webWidget)
 		{
-			webWidget->setOptions(m_session.overrides);
+			webWidget->setOptions(m_session.options);
 		}
 	}
 
@@ -736,7 +736,7 @@ QVariant Window::getOption(int identifier) const
 		return m_contentsWidget->getOption(identifier);
 	}
 
-	return (m_session.overrides.contains(identifier) ? m_session.overrides[identifier] : SettingsManager::getOption(identifier, m_session.getUrl()));
+	return (m_session.options.contains(identifier) ? m_session.options[identifier] : SettingsManager::getOption(identifier, m_session.getUrl()));
 }
 
 QUrl Window::getUrl() const
@@ -773,11 +773,11 @@ SessionWindow Window::getSession() const
 
 			if (webWidget)
 			{
-				session.overrides = webWidget->getOptions();
+				session.options = webWidget->getOptions();
 			}
 		}
 
-		session.overrides[SettingsManager::Search_DefaultSearchEngineOption] = getSearchEngine();
+		session.options[SettingsManager::Search_DefaultSearchEngineOption] = getSearchEngine();
 		session.history = history.entries;
 		session.parentGroup = 0;
 		session.historyIndex = history.index;

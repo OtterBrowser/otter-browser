@@ -126,7 +126,8 @@ SessionInformation StartupDialog::getSession() const
 
 	if (m_ui->continueSessionButton->isChecked())
 	{
-		QList<SessionMainWindow> windows;
+		QVector<SessionMainWindow> windows;
+		windows.reserve(m_windowsModel->rowCount());
 
 		session = SessionsManager::getSession(m_ui->sessionComboBox->currentData().toString());
 
@@ -143,6 +144,7 @@ SessionInformation StartupDialog::getSession() const
 			SessionMainWindow window;
 			window.index = (index + 1);
 			window.geometry = windowItem->data(Qt::UserRole).toByteArray();
+			window.windows.reserve(windowItem->rowCount());
 
 			for (int j = 0; j < windowItem->rowCount(); ++j)
 			{

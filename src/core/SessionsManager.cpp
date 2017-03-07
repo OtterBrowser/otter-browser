@@ -234,7 +234,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 					if (optionIdentifier >= 0)
 					{
-						sessionWindow.overrides[optionIdentifier] = iterator.value().toVariant();
+						sessionWindow.options[optionIdentifier] = iterator.value().toVariant();
 					}
 				}
 			}
@@ -455,9 +455,9 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		{
 			QJsonObject windowObject;
 
-			if (!sessionEntry.windows.at(j).overrides.isEmpty())
+			if (!sessionEntry.windows.at(j).options.isEmpty())
 			{
-				const QHash<int, QVariant> windowOptions(sessionEntry.windows.at(j).overrides);
+				const QHash<int, QVariant> windowOptions(sessionEntry.windows.at(j).options);
 				QHash<int, QVariant>::const_iterator optionsIterator;
 				QJsonObject optionsObject;
 

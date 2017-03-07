@@ -47,15 +47,15 @@ struct WindowHistoryEntry
 
 struct WindowHistoryInformation
 {
-	QList<WindowHistoryEntry> entries;
+	QVector<WindowHistoryEntry> entries;
 	int index = -1;
 };
 
 struct SessionWindow
 {
 	QRect geometry;
-	QHash<int, QVariant> overrides;
-	QList<WindowHistoryEntry> history;
+	QHash<int, QVariant> options;
+	QVector<WindowHistoryEntry> history;
 	WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState);
 	int parentGroup = 0;
 	int historyIndex = -1;
@@ -103,7 +103,7 @@ struct SessionWindow
 
 struct SessionMainWindow
 {
-	QList<SessionWindow> windows;
+	QVector<SessionWindow> windows;
 	QByteArray geometry;
 	int index = -1;
 };
@@ -112,7 +112,7 @@ struct SessionInformation
 {
 	QString path;
 	QString title;
-	QList<SessionMainWindow> windows;
+	QVector<SessionMainWindow> windows;
 	int index = -1;
 	bool isClean = true;
 };
