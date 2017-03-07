@@ -39,7 +39,7 @@ class UpdateCheckerDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit UpdateCheckerDialog(QWidget *parent = nullptr, const QList<UpdateInformation> &availableUpdates = QList<UpdateInformation>());
+	explicit UpdateCheckerDialog(QWidget *parent = nullptr, const QVector<UpdateChecker::UpdateInformation> &availableUpdates = QVector<UpdateChecker::UpdateInformation>());
 	~UpdateCheckerDialog();
 
 protected:
@@ -47,7 +47,7 @@ protected:
 
 protected slots:
 	void buttonClicked(QAbstractButton *button);
-	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
+	void updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 	void updateProgress(const int progress);
 	void showDetails();
 	void transferFinished(const bool success);

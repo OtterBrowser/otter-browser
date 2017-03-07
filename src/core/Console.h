@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QObject>
+#include <QtCore/QVector>
 
 namespace Otter
 {
@@ -64,14 +65,14 @@ public:
 	static void createInstance(QObject *parent = nullptr);
 	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, quint64 window = 0);
 	static Console* getInstance();
-	static QList<Message> getMessages();
+	static QVector<Console::Message> getMessages();
 
 protected:
 	explicit Console(QObject *parent = nullptr);
 
 private:
 	static Console *m_instance;
-	static QList<Message> m_messages;
+	static QVector<Message> m_messages;
 
 signals:
 	void messageAdded(const Console::Message &message);

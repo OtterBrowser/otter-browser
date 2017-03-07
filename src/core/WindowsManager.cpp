@@ -1056,7 +1056,7 @@ SessionMainWindow WindowsManager::getSession() const
 	return session;
 }
 
-QList<ClosedWindow> WindowsManager::getClosedWindows() const
+QVector<ClosedWindow> WindowsManager::getClosedWindows() const
 {
 	return m_closedWindows;
 }

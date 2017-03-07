@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ namespace Otter
 {
 
 Console* Console::m_instance(nullptr);
-QList<Console::Message> Console::m_messages;
+QVector<Console::Message> Console::m_messages;
 
 Console::Console(QObject *parent) : QObject(parent)
 {
@@ -63,7 +63,7 @@ Console* Console::getInstance()
 	return m_instance;
 }
 
-QList<Console::Message> Console::getMessages()
+QVector<Console::Message> Console::getMessages()
 {
 	return m_messages;
 }

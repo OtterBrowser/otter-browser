@@ -566,7 +566,7 @@ void Application::periodicUpdateCheck()
 	}
 }
 
-void Application::updateCheckFinished(const QList<UpdateInformation> &availableUpdates)
+void Application::updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
 {
 	if (availableUpdates.isEmpty())
 	{
@@ -582,7 +582,7 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 	else
 	{
 		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel)));
-		notification->setData(QVariant::fromValue<QList<UpdateInformation> >(availableUpdates));
+		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
 
 		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
 	}
@@ -769,7 +769,7 @@ void Application::showUpdateDetails()
 
 	if (notification)
 	{
-		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QList<UpdateInformation> >()));
+		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QVector<UpdateChecker::UpdateInformation> >()));
 		dialog->show();
 	}
 }

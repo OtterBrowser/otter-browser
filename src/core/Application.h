@@ -85,7 +85,7 @@ public slots:
 
 protected slots:
 	void openUrl(const QUrl &url);
-	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
+	void updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 	void clearHistory();
 	void periodicUpdateCheck();
 	void handleOptionChanged(int identifier, const QVariant &value);

@@ -90,7 +90,7 @@ public:
 	QString getTitle() const;
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
-	QList<ClosedWindow> getClosedWindows() const;
+	QVector<ClosedWindow> getClosedWindows() const;
 	static WindowsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
 	static WindowsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	int getWindowCount(bool onlyPrivate = false) const;
@@ -130,7 +130,7 @@ protected slots:
 
 private:
 	MainWindow *m_mainWindow;
-	QList<ClosedWindow> m_closedWindows;
+	QVector<ClosedWindow> m_closedWindows;
 	QHash<quint64, Window*> m_windows;
 	bool m_isPrivate;
 	bool m_isRestored;

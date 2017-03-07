@@ -31,9 +31,9 @@ QUrl WebBackend::getUpdateUrl() const
 	return QUrl();
 }
 
-QList<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const
+QVector<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const
 {
-	return QList<SpellCheckManager::DictionaryInformation>();
+	return QVector<SpellCheckManager::DictionaryInformation>();
 }
 
 Addon::AddonType WebBackend::getType() const

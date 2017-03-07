@@ -254,7 +254,7 @@ void ContentBlockingDialog::updateProfile(const QString &name)
 
 				if (category == ContentBlockingProfile::RegionalCategory)
 				{
-					const QList<QLocale::Language> languages(profile->getLanguages());
+					const QVector<QLocale::Language> languages(profile->getLanguages());
 					QStringList languageNames;
 
 					for (int k = 0; k < languages.count(); ++k)

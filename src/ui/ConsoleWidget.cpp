@@ -93,7 +93,7 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 		m_model = new QStandardItemModel(this);
 		m_model->setSortRole(TimeRole);
 
-		const QList<Console::Message> messages(Console::getMessages());
+		const QVector<Console::Message> messages(Console::getMessages());
 
 		for (int i = 0; i < messages.count(); ++i)
 		{

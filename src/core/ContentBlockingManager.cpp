@@ -104,7 +104,7 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 
 			profileObject.insert(QLatin1String("category"), categoryTitles.value(profile->getCategory()));
 
-			const QList<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
+			const QVector<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
 
 			if (!languages.contains(QLocale::AnyLanguage))
 			{
@@ -209,7 +209,7 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 
 		if (category == ContentBlockingProfile::RegionalCategory)
 		{
-			const QList<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
+			const QVector<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
 			QStringList languageNames;
 
 			for (int j = 0; j < languages.count(); ++j)

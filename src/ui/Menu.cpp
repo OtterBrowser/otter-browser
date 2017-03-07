@@ -790,7 +790,7 @@ void Menu::populateClosedWindowsMenu()
 
 	if (mainWindow)
 	{
-		const QList<ClosedWindow> tabs(mainWindow->getWindowsManager()->getClosedWindows());
+		const QVector<ClosedWindow> tabs(mainWindow->getWindowsManager()->getClosedWindows());
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{

@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,21 +28,21 @@
 namespace Otter
 {
 
-struct UpdateInformation
-{
-	QString channel;
-	QString version;
-	QUrl detailsUrl;
-	QUrl scriptUrl;
-	QUrl fileUrl;
-	bool isAvailable = false;
-};
-
 class UpdateChecker : public QObject
 {
 	Q_OBJECT
 
 public:
+	struct UpdateInformation
+	{
+		QString channel;
+		QString version;
+		QUrl detailsUrl;
+		QUrl scriptUrl;
+		QUrl fileUrl;
+		bool isAvailable = false;
+	};
+
 	explicit UpdateChecker(QObject *parent = nullptr, bool inBackground = true);
 
 protected slots:
@@ -53,11 +53,11 @@ private:
 	bool m_isInBackground;
 
 signals:
-	void finished(const QList<UpdateInformation> &availableUpdates);
+	void finished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 };
 
 }
 
-Q_DECLARE_METATYPE(Otter::UpdateInformation)
+Q_DECLARE_METATYPE(Otter::UpdateChecker::UpdateInformation)
 
 #endif

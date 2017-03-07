@@ -68,7 +68,7 @@ public:
 	QStringList getStyleSheet();
 	QStringList getStyleSheetBlackList(const QString &domain);
 	QStringList getStyleSheetWhiteList(const QString &domain);
-	QList<QLocale::Language> getLanguages() const;
+	QVector<QLocale::Language> getLanguages() const;
 	ProfileCategory getCategory() const;
 	ProfileFlags getFlags() const;
 	int getUpdateInterval() const;
@@ -158,7 +158,7 @@ private:
 	QDateTime m_lastUpdate;
 	QRegularExpression m_domainExpression;
 	QStringList m_styleSheet;
-	QList<QLocale::Language> m_languages;
+	QVector<QLocale::Language> m_languages;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
 	ProfileCategory m_category;
@@ -168,7 +168,7 @@ private:
 	bool m_isEmpty;
 	bool m_wasLoaded;
 
-	static QList<QChar> m_separators;
+	static QVector<QChar> m_separators;
 	static QHash<QString, RuleOption> m_options;
 	static QHash<NetworkManager::ResourceType, RuleOption> m_resourceTypes;
 

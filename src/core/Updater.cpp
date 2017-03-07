@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-Updater::Updater(const UpdateInformation &information, QObject *parent) : QObject(parent),
+Updater::Updater(const UpdateChecker::UpdateInformation &information, QObject *parent) : QObject(parent),
 	m_transfer(nullptr),
 	m_transfersCount(0),
 	m_transfersSuccessful(true)

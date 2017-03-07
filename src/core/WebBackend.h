@@ -66,7 +66,7 @@ public:
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
 	QUrl getUpdateUrl() const override;
-	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	AddonType getType() const override;
 	virtual BackendCapabilities getCapabilities() const;
 	virtual bool requestThumbnail(const QUrl &url, const QSize &size) = 0;

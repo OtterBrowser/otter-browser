@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QList<UpdateInformation> &availableUpdates) : Dialog(parent),
+UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QVector<UpdateChecker::UpdateInformation> &availableUpdates) : Dialog(parent),
 	m_ui(new Ui::UpdateCheckerDialog)
 {
 	m_ui->setupUi(this);
@@ -84,7 +84,7 @@ void UpdateCheckerDialog::buttonClicked(QAbstractButton *button)
 	close();
 }
 
-void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &availableUpdates)
+void UpdateCheckerDialog::updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
 {
 	m_ui->progressBar->hide();
 
@@ -107,7 +107,7 @@ void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &av
 
 			if (availableUpdates.at(i).isAvailable)
 			{
-				updateButton->setProperty("downloadInfo", QVariant::fromValue<UpdateInformation>(availableUpdates.at(i)));
+				updateButton->setProperty("downloadInfo", QVariant::fromValue<UpdateChecker::UpdateInformation>(availableUpdates.at(i)));
 			}
 			else
 			{
@@ -172,7 +172,7 @@ void UpdateCheckerDialog::downloadUpdate()
 			m_ui->progressBar->show();
 			m_ui->buttonBox->setDisabled(true);
 
-			Updater *updater(new Updater(updateInfo.value<UpdateInformation>(), this));
+			Updater *updater(new Updater(updateInfo.value<UpdateChecker::UpdateInformation>(), this));
 
 			connect(updater, SIGNAL(progress(int)), this, SLOT(updateProgress(int)));
 			connect(updater, SIGNAL(finished(bool)), this, SLOT(transferFinished(bool)));
