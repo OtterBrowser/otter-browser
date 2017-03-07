@@ -130,7 +130,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
 				QUrl url(request().url());
 				QStringList navigation;
-				QList<QUrlInfo> entries(m_directories);
+				QVector<QUrlInfo> entries(m_directories);
 				entries.append(m_files);
 
 				if (url.path().isEmpty())

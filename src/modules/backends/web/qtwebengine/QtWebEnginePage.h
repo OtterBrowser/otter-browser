@@ -58,7 +58,7 @@ protected slots:
 
 private:
 	QtWebEngineWebWidget *m_widget;
-	QList<QtWebEnginePage*> m_popups;
+	QVector<QtWebEnginePage*> m_popups;
 	QWebEnginePage::NavigationType m_previousNavigationType;
 	bool m_ignoreJavaScriptPopups;
 	bool m_isViewingMedia;

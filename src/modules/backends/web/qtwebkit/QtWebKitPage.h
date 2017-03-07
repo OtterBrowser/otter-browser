@@ -110,7 +110,7 @@ private:
 	QtWebKitWebWidget *m_widget;
 	QtWebKitNetworkManager *m_networkManager;
 	QtWebKitFrame *m_mainFrame;
-	QList<QtWebKitPage*> m_popups;
+	QVector<QtWebKitPage*> m_popups;
 	bool m_ignoreJavaScriptPopups;
 	bool m_isPopup;
 	bool m_isViewingMedia;
