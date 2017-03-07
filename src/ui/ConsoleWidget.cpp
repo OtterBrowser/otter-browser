@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ void ConsoleWidget::filterCategories()
 		m_messageScopes = messageScopes;
 	}
 
-	const QList<Console::MessageCategory> categories(getCategories());
+	const QVector<Console::MessageCategory> categories(getCategories());
 	const quint64 currentWindow(getCurrentWindow());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -224,7 +224,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 {
 	if (m_model)
 	{
-		const QList<Console::MessageCategory> categories(getCategories());
+		const QVector<Console::MessageCategory> categories(getCategories());
 		const quint64 currentWindow(getCurrentWindow());
 
 		for (int i = 0; i < m_model->rowCount(); ++i)
@@ -234,7 +234,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 	}
 }
 
-void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QList<Console::MessageCategory> &categories, quint64 currentWindow)
+void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
 {
 	if (!item)
 	{
@@ -264,9 +264,9 @@ void ConsoleWidget::showContextMenu(const QPoint position)
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
-QList<Console::MessageCategory> ConsoleWidget::getCategories() const
+QVector<Console::MessageCategory> ConsoleWidget::getCategories() const
 {
-	QList<Console::MessageCategory> categories;
+	QVector<Console::MessageCategory> categories;
 
 	if (m_ui->networkButton->isChecked())
 	{

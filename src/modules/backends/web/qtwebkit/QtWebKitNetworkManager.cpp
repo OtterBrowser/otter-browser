@@ -229,12 +229,12 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 	{
 		if (reply->sslConfiguration().isNull())
 		{
-			m_sslInformation.certificates = QList<QSslCertificate>();
+			m_sslInformation.certificates = QVector<QSslCertificate>();
 			m_sslInformation.cipher = QSslCipher();
 		}
 		else
 		{
-			m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain();
+			m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain().toVector();
 			m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
 		}
 	}

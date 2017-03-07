@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ protected:
 	Q_DECLARE_FLAGS(MessagesScopes, MessagesScope)
 
 	void showEvent(QShowEvent *event) override;
-	void applyFilters(QStandardItem *item, const QString &filter, const QList<Console::MessageCategory> &categories, quint64 currentWindow);
-	QList<Console::MessageCategory> getCategories() const;
+	void applyFilters(QStandardItem *item, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow);
+	QVector<Console::MessageCategory> getCategories() const;
 	quint64 getCurrentWindow();
 
 protected slots:

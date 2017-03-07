@@ -754,11 +754,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (toolBar)
 	{
-		QList<QAction*> actions;
-		actions.append(cycleAction);
-		actions.append(thumbnailsAction);
-
-		menu.addMenu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::TabBar, actions, &menu));
+		menu.addMenu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::TabBar, {cycleAction, thumbnailsAction}, &menu));
 	}
 	else
 	{

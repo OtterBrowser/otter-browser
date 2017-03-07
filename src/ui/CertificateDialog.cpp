@@ -36,7 +36,7 @@
 namespace Otter
 {
 
-CertificateDialog::CertificateDialog(QList<QSslCertificate> certificates, QWidget *parent) : Dialog(parent),
+CertificateDialog::CertificateDialog(QVector<QSslCertificate> certificates, QWidget *parent) : Dialog(parent),
 	m_certificates(certificates),
 	m_ui(new Ui::CertificateDialog)
 {

@@ -208,7 +208,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < areas.count(); ++i)
 		{
-			const QList<ToolBarWidget*> toolBars(getToolBars(areas.at(i)));
+			const QVector<ToolBarWidget*> toolBars(getToolBars(areas.at(i)));
 
 			for (int j = 0; j < toolBars.count(); ++j)
 			{
@@ -921,7 +921,7 @@ void MainWindow::saveToolBarPositions()
 
 	for (int i = 0; i < 4; ++i)
 	{
-		const QList<ToolBarWidget*> toolBars(getToolBars(areas.at(i)));
+		const QVector<ToolBarWidget*> toolBars(getToolBars(areas.at(i)));
 
 		for (int j = 0; j < toolBars.count(); ++j)
 		{
@@ -952,7 +952,7 @@ void MainWindow::handleOptionChanged(int identifier, const QVariant &value)
 void MainWindow::handleToolBarAdded(int identifier)
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
-	QList<ToolBarWidget*> toolBars(getToolBars(definition.location));
+	QVector<ToolBarWidget*> toolBars(getToolBars(definition.location));
 	ToolBarWidget *toolBar(new ToolBarWidget(identifier, nullptr, this));
 
 	if (toolBars.isEmpty() || definition.row < 0)
@@ -1049,7 +1049,7 @@ void MainWindow::handleToolBarMoved(int identifier)
 		return;
 	}
 
-	QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+	QVector<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly).toVector());
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
@@ -1275,9 +1275,9 @@ WindowsManager* MainWindow::getWindowsManager()
 	return m_windowsManager;
 }
 
-QList<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area)
+QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area)
 {
-	QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+	QVector<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly).toVector());
 
 	for (int i = (toolBars.count() - 1); i >= 0; --i)
 	{
@@ -1471,7 +1471,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 		if (toolBar)
 		{
-			const QList<ToolBarWidget*> toolBars(getToolBars(toolBar->getArea()));
+			const QVector<ToolBarWidget*> toolBars(getToolBars(toolBar->getArea()));
 			bool isUnderMouse(false);
 
 			for (int i = 0; i < toolBars.count(); ++i)

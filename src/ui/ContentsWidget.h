@@ -92,7 +92,7 @@ protected slots:
 
 private:
 	QWidget *m_layer;
-	QList<QPointer<ContentsDialog> > m_dialogs;
+	QVector<QPointer<ContentsDialog> > m_dialogs;
 	int m_layerTimer;
 	int m_sidebar;
 

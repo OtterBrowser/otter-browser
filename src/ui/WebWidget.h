@@ -174,8 +174,8 @@ public:
 	struct SslInformation
 	{
 		QSslCipher cipher;
-		QList<QSslCertificate> certificates;
-		QList<QPair<QUrl, QSslError> > errors;
+		QVector<QSslCertificate> certificates;
+		QVector<QPair<QUrl, QSslError> > errors;
 	};
 
 	virtual void search(const QString &query, const QString &searchEngine);

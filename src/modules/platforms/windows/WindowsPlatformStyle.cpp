@@ -69,7 +69,7 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 
 								if (mainWindow)
 								{
-									const QList<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
+									const QVector<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
 									bool hasVisibleTabBar(false);
 
 									for (int i = 0; i < toolBars.count(); ++i)

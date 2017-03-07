@@ -59,7 +59,7 @@ public:
 		DigestSha256Field
 	};
 
-	explicit CertificateDialog(QList<QSslCertificate> certificates, QWidget *parent = nullptr);
+	explicit CertificateDialog(QVector<QSslCertificate> certificates, QWidget *parent = nullptr);
 	~CertificateDialog();
 
 protected:
@@ -73,7 +73,7 @@ protected slots:
 	void updateValue();
 
 private:
-	QList<QSslCertificate> m_certificates;
+	QVector<QSslCertificate> m_certificates;
 	Ui::CertificateDialog *m_ui;
 };
 

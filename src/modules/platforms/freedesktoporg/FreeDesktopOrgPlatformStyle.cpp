@@ -65,7 +65,7 @@ void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, co
 
 				if (mainWindow)
 				{
-					const QList<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
+					const QVector<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
 
 					for (int i = (toolBars.count() - 1); i >= 0; --i)
 					{

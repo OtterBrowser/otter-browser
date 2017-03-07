@@ -149,7 +149,7 @@ private:
 	QString m_quickFindQuery;
 	QPoint m_beginCursorPosition;
 	QPoint m_lastCursorPosition;
-	QList<PermissionBarWidget*> m_permissionBarWidgets;
+	QVector<PermissionBarWidget*> m_permissionBarWidgets;
 	ScrollMode m_scrollMode;
 	int m_createStartPageTimer;
 	int m_quickFindTimer;

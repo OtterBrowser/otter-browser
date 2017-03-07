@@ -291,7 +291,7 @@ void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (toolBar)
 	{
 		menu.addSeparator();
-		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QList<QAction*>(), &menu));
+		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QVector<QAction*>(), &menu));
 	}
 
 	menu.exec(event->globalPos());

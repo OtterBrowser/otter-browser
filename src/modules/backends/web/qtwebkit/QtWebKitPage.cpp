@@ -102,7 +102,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 	if (m_isErrorPage)
 	{
-		const QList<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
+		const QVector<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/errorPage.js"));
 		file.open(QIODevice::ReadOnly);
 
@@ -777,7 +777,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			information.description.clear();
 			information.type = ErrorPageInformation::ConnectionInsecureError;
 
-			const QList<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
+			const QVector<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
 
 			for (int i = 0; i < sslErrors.count(); ++i)
 			{

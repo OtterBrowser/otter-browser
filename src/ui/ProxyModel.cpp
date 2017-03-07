@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-ProxyModel::ProxyModel(QStandardItemModel *model, const QList<QPair<QString, int> > &mapping, QObject *parent) : QIdentityProxyModel(parent),
+ProxyModel::ProxyModel(QStandardItemModel *model, const QVector<QPair<QString, int> > &mapping, QObject *parent) : QIdentityProxyModel(parent),
 	m_model(model),
 	m_mapping(mapping)
 {

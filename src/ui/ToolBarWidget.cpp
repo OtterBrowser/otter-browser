@@ -461,10 +461,6 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		SettingsManager::setValue(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
 	});
 
-	QList<QAction*> actions;
-	actions.append(cycleAction);
-	actions.append(thumbnailsAction);
-
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
@@ -480,7 +476,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
 
-	menu.addMenu(createCustomizationMenu(m_identifier, actions, &menu));
+	menu.addMenu(createCustomizationMenu(m_identifier, {cycleAction, thumbnailsAction}, &menu));
 	menu.exec(event->globalPos());
 
 	cycleAction->deleteLater();
@@ -843,7 +839,7 @@ void ToolBarWidget::setToolBarLocked(bool locked)
 	setMovable(!locked && m_identifier != ToolBarsManager::MenuBar && m_identifier != ToolBarsManager::ProgressBar);
 }
 
-QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> actions, QWidget *parent)
+QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> actions, QWidget *parent)
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
 	QMenu *menu(new QMenu(parent));
@@ -859,7 +855,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 	if (!actions.isEmpty())
 	{
 		toolBarMenu->addSeparator();
-		toolBarMenu->addActions(actions);
+		toolBarMenu->addActions(actions.toList());
 
 		for (int i = 0; i < actions.count(); ++i)
 		{

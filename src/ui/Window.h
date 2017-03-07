@@ -110,8 +110,8 @@ private:
 	QString m_searchEngine;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;
-	QList<QPointer<AddressWidget> > m_addressWidgets;
-	QList<QPointer<SearchWidget> > m_searchWidgets;
+	QVector<QPointer<AddressWidget> > m_addressWidgets;
+	QVector<QPointer<SearchWidget> > m_searchWidgets;
 	QVariantMap m_parameters;
 	quint64 m_identifier;
 	int m_suspendTimer;

@@ -32,7 +32,7 @@ class ProxyModel : public QIdentityProxyModel
 	Q_OBJECT
 
 public:
-	explicit ProxyModel(QStandardItemModel *model, const QList<QPair<QString, int> > &mapping, QObject *parent = nullptr);
+	explicit ProxyModel(QStandardItemModel *model, const QVector<QPair<QString, int> > &mapping, QObject *parent = nullptr);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QVariant data(const QModelIndex &index, int role) const override;
@@ -45,7 +45,7 @@ public:
 
 private:
 	QStandardItemModel *m_model;
-	QList<QPair<QString, int> > m_mapping;
+	QVector<QPair<QString, int> > m_mapping;
 };
 
 }

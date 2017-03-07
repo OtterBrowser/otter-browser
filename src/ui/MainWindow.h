@@ -58,7 +58,7 @@ public:
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
 	WindowsManager* getWindowsManager();
-	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
+	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool areToolBarsVisible() const;
 	bool isAboutToClose() const;
 	bool eventFilter(QObject *object, QEvent *event) override;
