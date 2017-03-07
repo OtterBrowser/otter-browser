@@ -42,7 +42,7 @@ public:
 	QUrl getHomePage() const override;
 	QIcon getIcon() const override;
 	QStringList getHosts() override;
-	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
+	QVector<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
 	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password) override;
 	bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
 
@@ -51,7 +51,7 @@ protected:
 	void save();
 
 private:
-	QHash<QString, QList<PasswordsManager::PasswordInformation> > m_passwords;
+	QHash<QString, QVector<PasswordsManager::PasswordInformation> > m_passwords;
 	bool m_isInitialized;
 };
 

@@ -47,14 +47,15 @@ void FilePasswordsStorageBackend::initialize()
 		return;
 	}
 
-	QHash<QString, QList<PasswordsManager::PasswordInformation> > passwords;
+	QHash<QString, QVector<PasswordsManager::PasswordInformation> > passwords;
 	QJsonObject hostsObject(QJsonDocument::fromJson(file.readAll()).object());
 	QJsonObject::const_iterator hostsIterator;
 
 	for (hostsIterator = hostsObject.constBegin(); hostsIterator != hostsObject.constEnd(); ++hostsIterator)
 	{
 		const QJsonArray hostArray(hostsIterator.value().toArray());
-		QList<PasswordsManager::PasswordInformation> hostPasswords;
+		QVector<PasswordsManager::PasswordInformation> hostPasswords;
+		hostPasswords.reserve(hostArray.count());
 
 		for (int i = 0; i < hostArray.count(); ++i)
 		{
@@ -101,7 +102,7 @@ void FilePasswordsStorageBackend::save()
 	}
 
 	QJsonObject hostsObject;
-	QHash<QString, QList<PasswordsManager::PasswordInformation> >::iterator hostsIterator;
+	QHash<QString, QVector<PasswordsManager::PasswordInformation> >::iterator hostsIterator;
 
 	for (hostsIterator = m_passwords.begin(); hostsIterator != m_passwords.end(); ++hostsIterator)
 	{
@@ -111,7 +112,7 @@ void FilePasswordsStorageBackend::save()
 		}
 
 		QJsonArray hostArray;
-		const QList<PasswordsManager::PasswordInformation> passwords(hostsIterator.value());
+		const QVector<PasswordsManager::PasswordInformation> passwords(hostsIterator.value());
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
@@ -208,12 +209,12 @@ void FilePasswordsStorageBackend::clearPasswords(int period)
 		return;
 	}
 
-	QHash<QString, QList<PasswordsManager::PasswordInformation> >::iterator iterator(m_passwords.begin());
+	QHash<QString, QVector<PasswordsManager::PasswordInformation> >::iterator iterator(m_passwords.begin());
 	bool wasModified(false);
 
 	while (iterator != m_passwords.end())
 	{
-		QList<PasswordsManager::PasswordInformation> passwords(iterator.value());
+		QVector<PasswordsManager::PasswordInformation> passwords(iterator.value());
 
 		for (int i = (passwords.count() - 1); i >= 0; --i)
 		{
@@ -256,7 +257,7 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 	if (m_passwords.contains(host))
 	{
-		const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+		const QVector<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
@@ -274,7 +275,7 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 	}
 	else
 	{
-		m_passwords[host] = QList<PasswordsManager::PasswordInformation>();
+		m_passwords[host] = QVector<PasswordsManager::PasswordInformation>();
 	}
 
 	m_passwords[host].append(password);
@@ -298,7 +299,7 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 		return;
 	}
 
-	const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+	const QVector<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{
@@ -350,7 +351,7 @@ QStringList FilePasswordsStorageBackend::getHosts()
 	return m_passwords.keys();
 }
 
-QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
+QVector<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	if (!m_isInitialized)
 	{
@@ -366,8 +367,8 @@ QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPas
 			return m_passwords[host];
 		}
 
-		const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
-		QList<PasswordsManager::PasswordInformation> matchingPasswords;
+		const QVector<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+		QVector<PasswordsManager::PasswordInformation> matchingPasswords;
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
@@ -380,7 +381,7 @@ QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPas
 		return matchingPasswords;
 	}
 
-	return QList<PasswordsManager::PasswordInformation>();
+	return QVector<PasswordsManager::PasswordInformation>();
 }
 
 PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const PasswordsManager::PasswordInformation &password)
@@ -397,7 +398,7 @@ PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const P
 		return PasswordsManager::NoMatch;
 	}
 
-	const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+	const QVector<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{
@@ -428,7 +429,7 @@ bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager
 
 	if (m_passwords.contains(host))
 	{
-		const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+		const QVector<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{

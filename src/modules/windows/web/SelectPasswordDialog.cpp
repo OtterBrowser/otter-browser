@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-SelectPasswordDialog::SelectPasswordDialog(const QList<PasswordsManager::PasswordInformation> &passwords, QWidget *parent) : Dialog(parent),
+SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::PasswordInformation> &passwords, QWidget *parent) : Dialog(parent),
 	m_passwords(passwords),
 	m_ui(new Ui::SelectPasswordDialog)
 {

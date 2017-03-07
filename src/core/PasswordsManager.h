@@ -82,7 +82,7 @@ public:
 	static void removePassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
 	static QStringList getHosts();
-	static QList<PasswordInformation> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
+	static QVector<PasswordInformation> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 	static PasswordMatch hasPassword(const PasswordInformation &password);
 	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 

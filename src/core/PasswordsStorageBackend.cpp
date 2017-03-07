@@ -56,12 +56,12 @@ QStringList PasswordsStorageBackend::getHosts()
 	return QStringList();
 }
 
-QList<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
+QVector<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	Q_UNUSED(url)
 	Q_UNUSED(types)
 
-	return QList<PasswordsManager::PasswordInformation>();
+	return QVector<PasswordsManager::PasswordInformation>();
 }
 
 Addon::AddonType PasswordsStorageBackend::getType() const

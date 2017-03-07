@@ -84,9 +84,9 @@ QStringList PasswordsManager::getHosts()
 	return (m_backend ? m_backend->getHosts() : QStringList());
 }
 
-QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url, PasswordTypes types)
+QVector<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url, PasswordTypes types)
 {
-	return (m_backend ? m_backend->getPasswords(url, types) : QList<PasswordsManager::PasswordInformation>());
+	return (m_backend ? m_backend->getPasswords(url, types) : QVector<PasswordsManager::PasswordInformation>());
 }
 
 PasswordsManager::PasswordMatch PasswordsManager::hasPassword(const PasswordsManager::PasswordInformation &password)

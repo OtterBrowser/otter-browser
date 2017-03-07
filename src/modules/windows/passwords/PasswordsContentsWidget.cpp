@@ -76,7 +76,7 @@ void PasswordsContentsWidget::populatePasswords()
 	for (int i = 0; i < hosts.count(); ++i)
 	{
 		const QUrl url(QStringLiteral("http://%1/").arg(hosts.at(i)));
-		const QList<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
+		const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
 		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), hosts.at(i)));
 		hostItem->setData(hosts.at(i), HostRole);
 

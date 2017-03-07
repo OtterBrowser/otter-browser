@@ -350,7 +350,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::FillPasswordAction:
 			{
-				const QList<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(getUrl(), PasswordsManager::FormPassword));
+				const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(getUrl(), PasswordsManager::FormPassword));
 
 				if (!passwords.isEmpty())
 				{
