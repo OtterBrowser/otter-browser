@@ -681,6 +681,8 @@ ActionsManager::ActionEntryDefinition ToolBarDialog::getEntry(QStandardItem *ite
 
 	if (definition.action == QLatin1String("CustomMenu"))
 	{
+		definition.entries.reserve(item->rowCount());
+
 		for (int i = 0; i < item->rowCount(); ++i)
 		{
 			definition.entries.append(getEntry(item->child(i, 0)));

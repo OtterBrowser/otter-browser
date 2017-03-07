@@ -49,7 +49,7 @@ public slots:
 protected:
 	void actionEvent(QActionEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
-	void addMenu(Menu *menu, const QList<ActionsManager::ActionEntryDefinition> &entries);
+	void addMenu(Menu *menu, const QVector<ActionsManager::ActionEntryDefinition> &entries);
 	bool event(QEvent *event) override;
 
 protected slots:

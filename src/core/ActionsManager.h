@@ -40,7 +40,7 @@ public:
 	void setParameters(const QVariantMap &parameters);
 	QString getText() const;
 	QVariantMap getParameters() const;
-	QList<QKeySequence> getShortcuts() const;
+	QVector<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event) override;
 	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
@@ -285,7 +285,7 @@ public:
 		QString action;
 		QVariantMap options;
 		QVariantMap parameters;
-		QList<ActionEntryDefinition> entries;
+		QVector<ActionEntryDefinition> entries;
 	};
 
 	static void createInstance(QObject *parent);

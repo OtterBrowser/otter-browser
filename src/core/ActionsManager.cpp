@@ -144,9 +144,9 @@ QVariantMap Action::getParameters() const
 	return m_parameters;
 }
 
-QList<QKeySequence> Action::getShortcuts() const
+QVector<QKeySequence> Action::getShortcuts() const
 {
-	return ActionsManager::getActionDefinition(m_identifier).shortcuts.toList();
+	return ActionsManager::getActionDefinition(m_identifier).shortcuts;
 }
 
 int Action::getIdentifier() const

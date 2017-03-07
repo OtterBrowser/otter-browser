@@ -85,6 +85,10 @@ public:
 		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime timeVisitedValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), type(typeValue)
 		{
 		}
+
+		CompletionEntry()
+		{
+		}
 	};
 
 	explicit AddressCompletionModel(QObject *parent = nullptr);
@@ -103,7 +107,7 @@ protected:
 	void updateModel();
 
 private:
-	QList<CompletionEntry> m_completions;
+	QVector<CompletionEntry> m_completions;
 	QString m_filter;
 	SearchEnginesManager::SearchEngineDefinition m_defaultSearchEngine;
 	AddressCompletionModel::CompletionTypes m_types;

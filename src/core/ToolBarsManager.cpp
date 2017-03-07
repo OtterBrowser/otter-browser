@@ -484,6 +484,8 @@ ActionsManager::ActionEntryDefinition ToolBarsManager::decodeEntry(const QJsonVa
 	{
 		const QJsonArray actions(object.value(QLatin1String("actions")).toArray());
 
+		definition.entries.reserve(actions.count());
+
 		for (int i = 0; i < actions.count(); ++i)
 		{
 			definition.entries.append(decodeEntry(actions.at(i)));

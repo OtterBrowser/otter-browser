@@ -100,7 +100,7 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 	painter.drawComplexControl(QStyle::CC_ToolButton, option);
 }
 
-void ToolButtonWidget::addMenu(Menu *menu, const QList<ActionsManager::ActionEntryDefinition> &entries)
+void ToolButtonWidget::addMenu(Menu *menu, const QVector<ActionsManager::ActionEntryDefinition> &entries)
 {
 	for (int i = 0; i < entries.count(); ++i)
 	{

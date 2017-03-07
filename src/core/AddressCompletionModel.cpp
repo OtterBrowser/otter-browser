@@ -62,7 +62,8 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 void AddressCompletionModel::updateModel()
 {
-	QList<CompletionEntry> completions;
+	QVector<CompletionEntry> completions;
+	completions.reserve(10);
 
 	if (m_types.testFlag(SearchSuggestionsCompletionType))
 	{
