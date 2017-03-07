@@ -318,7 +318,7 @@ void MacPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title
 
 void MacPlatformIntegration::updateTransfersProgress()
 {
-	const QList<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
 	int transferAmount(0);

@@ -38,8 +38,8 @@ namespace Otter
 {
 
 TransfersManager* TransfersManager::m_instance(nullptr);
-QList<Transfer*> TransfersManager::m_transfers;
-QList<Transfer*> TransfersManager::m_privateTransfers;
+QVector<Transfer*> TransfersManager::m_transfers;
+QVector<Transfer*> TransfersManager::m_privateTransfers;
 bool TransfersManager::m_isInitilized(false);
 
 Transfer::Transfer(TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
@@ -1121,7 +1121,7 @@ Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &t
 	return transfer;
 }
 
-QList<Transfer*> TransfersManager::getTransfers()
+QVector<Transfer*> TransfersManager::getTransfers()
 {
 	if (!m_isInitilized)
 	{

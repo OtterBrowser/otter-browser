@@ -1051,7 +1051,7 @@ QVector<MainWindow *> Application::getWindows()
 
 bool Application::canClose()
 {
-	const QList<Transfer*> transfers(TransfersManager::getTransfers());
+	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 	int runningTransfers(0);
 	bool transfersDialog(false);
 
