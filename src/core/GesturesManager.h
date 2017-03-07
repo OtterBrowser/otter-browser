@@ -53,7 +53,7 @@ public:
 	static void cancelGesture();
 	static GesturesManager* getInstance();
 	static QObject* getTrackedObject();
-	static bool startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts = QList<GesturesContext>({GenericGesturesContext}), const QVariantMap &parameters = QVariantMap());
+	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericGesturesContext}), const QVariantMap &parameters = QVariantMap());
 	static bool continueGesture(QObject *object);
 	static bool isTracking();
 
@@ -76,7 +76,7 @@ protected:
 
 	struct MouseGesture
 	{
-		QList<GestureStep> steps;
+		QVector<GestureStep> steps;
 		int action = 0;
 	};
 
@@ -85,10 +85,10 @@ protected:
 	void timerEvent(QTimerEvent *event) override;
 	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
-	static QList<GestureStep> recognizeMoveStep(QInputEvent *event);
+	static QVector<GestureStep> recognizeMoveStep(QInputEvent *event);
 	static int matchGesture();
 	static int getLastMoveDistance(bool measureFinished = false);
-	static int gesturesDifference(QList<GestureStep> defined);
+	static int gesturesDifference(const QVector<GestureStep> &steps);
 	static bool triggerAction(int gestureIdentifier);
 	bool eventFilter(QObject *object, QEvent *event) override;
 
@@ -106,10 +106,10 @@ private:
 	static QPoint m_lastPosition;
 	static QVariantMap m_paramaters;
 	static QHash<GesturesContext, QVector<MouseGesture> > m_gestures;
-	static QHash<GesturesContext, QList<QList<GestureStep> > > m_nativeGestures;
-	static QList<GestureStep> m_steps;
-	static QList<QInputEvent*> m_events;
-	static QList<GesturesContext> m_contexts;
+	static QHash<GesturesContext, QVector<QVector<GestureStep> > > m_nativeGestures;
+	static QVector<GestureStep> m_steps;
+	static QVector<QInputEvent*> m_events;
+	static QVector<GesturesContext> m_contexts;
 	static bool m_isReleasing;
 	static bool m_afterScroll;
 };

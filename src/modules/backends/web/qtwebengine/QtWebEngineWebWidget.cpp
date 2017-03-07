@@ -1810,7 +1810,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		QList<GesturesManager::GesturesContext> contexts;
+		QVector<GesturesManager::GesturesContext> contexts;
 
 		if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
 		{

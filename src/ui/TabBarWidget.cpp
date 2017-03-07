@@ -1689,7 +1689,7 @@ bool TabBarWidget::event(QEvent *event)
 					}
 				}
 
-				QList<GesturesManager::GesturesContext> contexts;
+				QVector<GesturesManager::GesturesContext> contexts;
 
 				if (tab < 0)
 				{

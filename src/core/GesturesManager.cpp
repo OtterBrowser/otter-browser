@@ -119,10 +119,10 @@ QPoint GesturesManager::m_lastClick;
 QPoint GesturesManager::m_lastPosition;
 QVariantMap GesturesManager::m_paramaters;
 QHash<GesturesManager::GesturesContext, QVector<GesturesManager::MouseGesture> > GesturesManager::m_gestures;
-QHash<GesturesManager::GesturesContext, QList<QList<GesturesManager::GestureStep> > > GesturesManager::m_nativeGestures;
-QList<QInputEvent*> GesturesManager::m_events;
-QList<GesturesManager::GestureStep> GesturesManager::m_steps;
-QList<GesturesManager::GesturesContext> GesturesManager::m_contexts;
+QHash<GesturesManager::GesturesContext, QVector<QVector<GesturesManager::GestureStep> > > GesturesManager::m_nativeGestures;
+QVector<QInputEvent*> GesturesManager::m_events;
+QVector<GesturesManager::GestureStep> GesturesManager::m_steps;
+QVector<GesturesManager::GesturesContext> GesturesManager::m_contexts;
 bool GesturesManager::m_isReleasing(false);
 bool GesturesManager::m_afterScroll(false);
 
@@ -136,20 +136,21 @@ void GesturesManager::createInstance(QObject *parent)
 {
 	if (!m_instance)
 	{
-		QList<QList<GestureStep> > generic;
-		generic.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonDblClick, Qt::LeftButton)}));
-		generic.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
-		generic.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
+		QVector<QVector<GestureStep> > generic;
+		generic.reserve(3);
+		generic.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonDblClick, Qt::LeftButton)}));
+		generic.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
+		generic.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
-		QList<QList<GestureStep> > link;
-		link.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
-		link.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
+		QVector<QVector<GestureStep> > link;
+		link.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
+		link.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
-		QList<QList<GestureStep> > contentEditable;
-		contentEditable.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::MiddleButton)}));
+		QVector<QVector<GestureStep> > contentEditable;
+		contentEditable.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::MiddleButton)}));
 
-		QList<QList<GestureStep> > tabHandle;
-		tabHandle.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
+		QVector<QVector<GestureStep> > tabHandle;
+		tabHandle.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
 		m_nativeGestures[GesturesManager::GenericGesturesContext] = generic;
 		m_nativeGestures[GesturesManager::LinkGesturesContext] = link;
@@ -179,7 +180,7 @@ void GesturesManager::loadProfiles()
 	m_gestures.clear();
 
 	MouseGesture contextMenuGestureDefinition;
-	contextMenuGestureDefinition.steps = QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::RightButton), GestureStep(QEvent::MouseButtonRelease, Qt::RightButton)});
+	contextMenuGestureDefinition.steps = QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::RightButton), GestureStep(QEvent::MouseButtonRelease, Qt::RightButton)});
 	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
 
 	for (int i = (UnknownGesturesContext + 1); i < OtherGesturesContext; ++i)
@@ -263,7 +264,9 @@ void GesturesManager::loadProfiles()
 					}
 				}
 
-				QList<GestureStep> steps;
+				QVector<GestureStep> steps;
+				steps.reserve(rawMouseActions.count());
+
 				bool hasMove(false);
 
 				for (int l = 0; l < rawMouseActions.count(); ++l)
@@ -460,9 +463,9 @@ GesturesManager::GestureStep GesturesManager::deserializeStep(const QString &str
 	return step;
 }
 
-QList<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEvent *event)
+QVector<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEvent *event)
 {
-	QList<GestureStep> result;
+	QVector<GestureStep> result;
 
 	if (!m_recognizer)
 	{
@@ -475,7 +478,7 @@ QList<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEve
 	{
 		for (int j = 0; j < m_gestures[m_contexts[i]].count(); ++j)
 		{
-			QList<GestureStep> steps(m_gestures[m_contexts[i]][j].steps);
+			const QVector<GestureStep> steps(m_gestures[m_contexts[i]][j].steps);
 
 			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
 			{
@@ -595,48 +598,48 @@ int GesturesManager::getLastMoveDistance(bool measureFinished)
 	return result;
 }
 
-int GesturesManager::gesturesDifference(QList<GestureStep> defined)
+int GesturesManager::gesturesDifference(const QVector<GestureStep> &steps)
 {
-	if (m_steps.count() != defined.count())
+	if (m_steps.count() != steps.count())
 	{
 		return std::numeric_limits<int>::max();
 	}
 
 	int difference(0);
 
-	for (int j = 0; j < defined.count(); ++j)
+	for (int j = 0; j < steps.count(); ++j)
 	{
 		int stepDifference(0);
 
-		if (j == (defined.count() - 1) && defined[j].type == QEvent::MouseButtonPress && m_steps[j].type == QEvent::MouseButtonDblClick && defined[j].button == m_steps[j].button && defined[j].modifiers == m_steps[j].modifiers)
+		if (j == (steps.count() - 1) && steps[j].type == QEvent::MouseButtonPress && m_steps[j].type == QEvent::MouseButtonDblClick && steps[j].button == m_steps[j].button && steps[j].modifiers == m_steps[j].modifiers)
 		{
 			stepDifference += 100;
 		}
 
-		if (m_steps[j].type == defined[j].type && (defined[j].type == QEvent::MouseButtonPress || defined[j].type == QEvent::MouseButtonRelease || defined[j].type == QEvent::MouseButtonDblClick) && m_steps[j].button == defined[j].button && (m_steps[j].modifiers | defined[j].modifiers) == m_steps[j].modifiers)
+		if (m_steps[j].type == steps[j].type && (steps[j].type == QEvent::MouseButtonPress || steps[j].type == QEvent::MouseButtonRelease || steps[j].type == QEvent::MouseButtonDblClick) && m_steps[j].button == steps[j].button && (m_steps[j].modifiers | steps[j].modifiers) == m_steps[j].modifiers)
 		{
-			if (m_steps[j].modifiers.testFlag(Qt::ControlModifier) && !defined[j].modifiers.testFlag(Qt::ControlModifier))
+			if (m_steps[j].modifiers.testFlag(Qt::ControlModifier) && !steps[j].modifiers.testFlag(Qt::ControlModifier))
 			{
 				stepDifference += 8;
 			}
 
-			if (m_steps[j].modifiers.testFlag(Qt::ShiftModifier) && !defined[j].modifiers.testFlag(Qt::ShiftModifier))
+			if (m_steps[j].modifiers.testFlag(Qt::ShiftModifier) && !steps[j].modifiers.testFlag(Qt::ShiftModifier))
 			{
 				stepDifference += 4;
 			}
 
-			if (m_steps[j].modifiers.testFlag(Qt::AltModifier) && !defined[j].modifiers.testFlag(Qt::AltModifier))
+			if (m_steps[j].modifiers.testFlag(Qt::AltModifier) && !steps[j].modifiers.testFlag(Qt::AltModifier))
 			{
 				stepDifference += 2;
 			}
 
-			if (m_steps[j].modifiers.testFlag(Qt::MetaModifier) && !defined[j].modifiers.testFlag(Qt::MetaModifier))
+			if (m_steps[j].modifiers.testFlag(Qt::MetaModifier) && !steps[j].modifiers.testFlag(Qt::MetaModifier))
 			{
 				stepDifference += 1;
 			}
 		}
 
-		if (stepDifference == 0 && defined[j] != m_steps[j])
+		if (stepDifference == 0 && steps[j] != m_steps[j])
 		{
 			return std::numeric_limits<int>::max();
 		}
@@ -647,11 +650,11 @@ int GesturesManager::gesturesDifference(QList<GestureStep> defined)
 	return difference;
 }
 
-bool GesturesManager::startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts, const QVariantMap &parameters)
+bool GesturesManager::startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts, const QVariantMap &parameters)
 {
 	QInputEvent *inputEvent(static_cast<QInputEvent*>(event));
 
-	if (!object || !inputEvent || m_gestures.keys().toSet().intersect(contexts.toSet()).isEmpty() || m_events.contains(inputEvent))
+	if (!object || !inputEvent || m_gestures.keys().toSet().intersect(contexts.toList().toSet()).isEmpty() || m_events.contains(inputEvent))
 	{
 		return false;
 	}
