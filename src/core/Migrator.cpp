@@ -109,7 +109,7 @@ void Migrator::run()
 			optionsMap[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption;
 			optionsMap[QLatin1String("Browser/JavaScriptCanCloseWindows")] = SettingsManager::Permissions_ScriptsCanCloseWindowsOption;
 			optionsMap[QLatin1String("Content/PopupsPolicy")] = SettingsManager::Permissions_ScriptsCanOpenWindowsOption;
-			optionsMap[QLatin1String("Browser/JavaScriptCanDisableContextMen")] = SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption;
+			optionsMap[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption;
 			optionsMap[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption;
 
 			QMap<QString, SettingsManager::OptionIdentifier>::iterator optionsIterator;
