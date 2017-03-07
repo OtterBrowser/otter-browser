@@ -69,11 +69,11 @@ Style* PlatformIntegration::createStyle(const QString &name) const
 	return nullptr;
 }
 
-QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+QVector<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	Q_UNUSED(mimeType)
 
-	return QList<ApplicationInformation>();
+	return QVector<ApplicationInformation>();
 }
 
 QString PlatformIntegration::getUpdaterBinary() const

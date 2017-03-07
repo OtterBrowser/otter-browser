@@ -991,7 +991,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 
 		if (canOpen)
 		{
-			const QList<QUrl> urls(Utils::extractUrls(event->mimeData()));
+			const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
 
 			if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption).toBool())
 			{

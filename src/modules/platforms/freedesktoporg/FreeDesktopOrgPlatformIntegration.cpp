@@ -294,16 +294,17 @@ Style* FreeDesktopOrgPlatformIntegration::createStyle(const QString &name) const
 	return nullptr;
 }
 
-QList<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+QVector<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	if (m_applicationsCache.contains(mimeType.name()))
 	{
 		return m_applicationsCache[mimeType.name()];
 	}
 
-	LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
-	std::vector<LibMimeApps::DesktopEntry> applications(index.appsForMime(mimeType.name().toStdString()));
-	QList<ApplicationInformation> result;
+	const LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
+	const std::vector<LibMimeApps::DesktopEntry> applications(index.appsForMime(mimeType.name().toStdString()));
+	QVector<ApplicationInformation> result;
+	result.reserve(applications.size());
 
 	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < applications.size(); ++i)
 	{

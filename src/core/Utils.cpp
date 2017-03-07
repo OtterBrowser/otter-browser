@@ -488,17 +488,17 @@ QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool
 	return paths;
 }
 
-QList<QUrl> extractUrls(const QMimeData *mimeData)
+QVector<QUrl> extractUrls(const QMimeData *mimeData)
 {
 	if (mimeData->property("x-url-string").isNull())
 	{
-		return mimeData->urls();
+		return mimeData->urls().toVector();
 	}
 
-	return QList<QUrl>({QUrl(mimeData->property("x-url-string").toString())});
+	return QVector<QUrl>({QUrl(mimeData->property("x-url-string").toString())});
 }
 
-QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
+QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	PlatformIntegration *integration(Application::getPlatformIntegration());
 
@@ -507,7 +507,7 @@ QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeTy
 		return integration->getApplicationsForMimeType(mimeType);
 	}
 
-	return QList<ApplicationInformation>();
+	return QVector<ApplicationInformation>();
 }
 
 SaveInformation getSavePath(const QString &fileName, QString path, QStringList filters, bool forceAsk)

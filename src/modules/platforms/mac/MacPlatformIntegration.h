@@ -52,7 +52,7 @@ public:
 	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
 	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;
 	Style* createStyle(const QString &name) const override;
-	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
+	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
 	bool canShowNotifications() const override;
 
 public slots:

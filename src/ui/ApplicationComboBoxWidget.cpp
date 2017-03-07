@@ -115,7 +115,7 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 
 	clear();
 
-	const QList<ApplicationInformation> applications(Utils::getApplicationsForMimeType(mimeType));
+	const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(mimeType));
 
 	if (applications.isEmpty() || m_alwaysShowDefaultApplication)
 	{

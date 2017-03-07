@@ -342,7 +342,7 @@ void WebWidget::openInApplicationMenuAboutToShow()
 		return;
 	}
 
-	const QList<ApplicationInformation> applications(Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html"))));
+	const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html"))));
 
 	if (applications.isEmpty())
 	{

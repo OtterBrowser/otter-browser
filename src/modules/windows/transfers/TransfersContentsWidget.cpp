@@ -431,7 +431,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 	{
 		menu.addAction(tr("Open"), this, SLOT(openTransfer()));
 
-		const QList<ApplicationInformation> applications(Utils::getApplicationsForMimeType(transfer->getMimeType()));
+		const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(transfer->getMimeType()));
 
 		if (applications.count() > 1)
 		{

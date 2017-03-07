@@ -390,9 +390,9 @@ Style* MacPlatformIntegration::createStyle(const QString &name) const
 	return nullptr;
 }
 
-QList<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+QVector<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
-	QList<ApplicationInformation> applications;
+	QVector<ApplicationInformation> applications;
 
 	if (mimeType.preferredSuffix().isEmpty())
 	{

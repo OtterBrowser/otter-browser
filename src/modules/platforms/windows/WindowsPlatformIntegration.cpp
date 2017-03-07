@@ -279,21 +279,21 @@ Style* WindowsPlatformIntegration::createStyle(const QString &name) const
 	return nullptr;
 }
 
-QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
-	QList<ApplicationInformation> applications;
+	QVector<ApplicationInformation> applications;
 	const QString suffix(mimeType.preferredSuffix());
 
 	if (suffix.isEmpty())
 	{
 		Console::addMessage(tr("No valid suffix for given MIME type: %1").arg(mimeType.name()), Console::OtherCategory, Console::ErrorLevel);
 
-		return QList<ApplicationInformation>();
+		return applications;
 	}
 
 	if (suffix == QLatin1String("exe"))
 	{
-		return QList<ApplicationInformation>();
+		return applications;
 	}
 
 	if (m_cleanupTimer != 0)

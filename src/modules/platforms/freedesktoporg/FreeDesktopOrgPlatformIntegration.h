@@ -45,7 +45,7 @@ public:
 
 	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
 	Style* createStyle(const QString &name) const override;
-	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
+	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
 	bool canShowNotifications() const override;
 
 public slots:
@@ -63,7 +63,7 @@ private:
 	QDBusInterface *m_notificationsInterface;
 	QHash<QDBusPendingCallWatcher*, Notification*> m_notificationWatchers;
 	QHash<quint32, Notification*> m_notifications;
-	QHash<QString, QList<ApplicationInformation> > m_applicationsCache;
+	QHash<QString, QVector<ApplicationInformation> > m_applicationsCache;
 };
 
 }

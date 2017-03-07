@@ -95,7 +95,7 @@ public:
 	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
 	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;
 	Style* createStyle(const QString &name) const override;
-	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
+	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
 	QString getPlatform() const override;
 	bool canShowNotifications() const override;
 	bool canSetAsDefaultBrowser() const override;
@@ -121,7 +121,7 @@ private:
 	QString m_applicationFilePath;
 	QSettings m_applicationRegistration;
 	QSettings m_propertiesRegistration;
-	QList<QPair<QString, RegistrationType> > m_registrationPairs;
+	QVector<QPair<QString, RegistrationType> > m_registrationPairs;
 	QHash<MainWindow*, QWinTaskbarButton*> m_taskbarButtons;
 	int m_cleanupTimer;
 
