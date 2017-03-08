@@ -115,7 +115,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 		}
 	}
 
-	const QList<MainWindow*> windows(Application::getWindows());
+	const QVector<MainWindow*> windows(Application::getWindows());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
