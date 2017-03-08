@@ -28,6 +28,7 @@
 #include "SelectPasswordDialog.h"
 #include "StartPageWidget.h"
 #include "../../../core/AddonsManager.h"
+#include "../../../core/Console.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/NetworkManagerFactory.h"
@@ -1095,7 +1096,20 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	}
 	else
 	{
-		widget = AddonsManager::getWebBackend(parameters.value(QLatin1String("webBackend")).toString())->createWidget(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen), this);
+		const QString webBackendName(parameters.value(QLatin1String("webBackend")).toString());
+		WebBackend *webBackend(AddonsManager::getWebBackend(webBackendName));
+
+		if (!webBackend)
+		{
+			webBackend = AddonsManager::getWebBackend();
+
+			if (!webBackendName.isEmpty())
+			{
+				Console::addMessage(tr("Failed to create requested web backend: %1").arg(webBackendName), Console::OtherCategory, Console::WarningLevel, QString(), -1, (m_window ? m_window->getIdentifier() : 0));
+			}
+		}
+
+		widget = webBackend->createWidget(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen), this);
 
 		if (m_window)
 		{
