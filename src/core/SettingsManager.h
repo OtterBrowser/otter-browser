@@ -299,7 +299,7 @@ public:
 	static QVariant getOption(int identifier, const QUrl &url = QUrl());
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
-	static int registerOption(const QString &name, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());
+	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = QVariant(), const QStringList &choices = QStringList());
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, int identifier = -1);
 
@@ -307,7 +307,7 @@ protected:
 	explicit SettingsManager(QObject *parent = nullptr);
 
 	static QString getHost(const QUrl &url);
-	static void registerOption(int identifier, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());
+	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = QVariant(), const QStringList &choices = QStringList());
 
 private:
 	static SettingsManager *m_instance;
