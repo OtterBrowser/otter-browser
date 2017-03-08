@@ -31,6 +31,7 @@
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QWheelEvent>
@@ -724,13 +725,13 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 	{
 		const QWebPage::ErrorPageExtensionOption *errorOption(static_cast<const QWebPage::ErrorPageExtensionOption*>(option));
 		QWebPage::ErrorPageExtensionReturn *errorOutput(static_cast<QWebPage::ErrorPageExtensionReturn*>(output));
+		const QUrl url((errorOption->url.isEmpty() && m_widget) ? m_widget->getRequestedUrl() : errorOption->url);
 
 		if (!errorOption || !errorOutput)
 		{
 			return false;
 		}
 
-		const QUrl url((errorOption->url.isEmpty() && m_widget) ? m_widget->getRequestedUrl() : errorOption->url);
 		QString domain;
 
 		if (errorOption->domain == QWebPage::QtNetwork)
@@ -749,6 +750,17 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 		if (errorOption->domain == QWebPage::WebKit && (errorOption->error == 102 || errorOption->error == 203))
+		{
+			return false;
+		}
+
+		errorOutput->baseUrl = url;
+
+		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+
+		emit errorPageChanged(errorOption->frame, true);
+
+		if (errorOption->domain == QWebPage::QtNetwork && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
 		{
 			return false;
 		}
@@ -819,12 +831,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			information.actions.append(reloadAction);
 		}
 
-		errorOutput->baseUrl = url;
 		errorOutput->content = Utils::createErrorPage(information).toUtf8();
-
-		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
-
-		emit errorPageChanged(errorOption->frame, true);
 
 		return true;
 	}
