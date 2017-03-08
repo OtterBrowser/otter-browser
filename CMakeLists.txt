@@ -524,6 +524,8 @@ elseif (APPLE)
 	find_library(FRAMEWORK_Cocoa Cocoa)
 	find_library(FRAMEWORK_Foundation Foundation)
 
+	set_target_properties(otter-browser PROPERTIES OUTPUT_NAME "Otter Browser")
+
 	target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
 	target_link_libraries(otter-browser Qt5::DBus)
