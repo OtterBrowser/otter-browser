@@ -88,8 +88,8 @@ protected:
 	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
 	static int matchGesture();
-	static int getLastMoveDistance(bool measureFinished = false);
-	static int gesturesDifference(const QVector<GestureStep> &steps);
+	static int calculateLastMoveDistance(bool measureFinished = false);
+	static int calculateGesturesDifference(const QVector<GestureStep> &steps);
 	static bool triggerAction(int gestureIdentifier);
 	bool eventFilter(QObject *object, QEvent *event) override;
 

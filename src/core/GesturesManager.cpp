@@ -317,7 +317,7 @@ void GesturesManager::recognizeMoveStep(QInputEvent *event)
 		m_steps.append(GestureStep(QEvent::MouseMove, *iterator, event->modifiers()));
 	}
 
-	if (m_steps.empty() && getLastMoveDistance(true) >= QApplication::startDragDistance())
+	if (m_steps.empty() && calculateLastMoveDistance(true) >= QApplication::startDragDistance())
 	{
 		m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()));
 	}
@@ -496,13 +496,12 @@ int GesturesManager::matchGesture()
 {
 	int bestGesture(0);
 	int lowestDifference(std::numeric_limits<int>::max());
-	int difference(0);
 
 	for (int i = 0; i < m_contexts.count(); ++i)
 	{
 		for (int j = 0; j < m_nativeGestures[m_contexts[i]].count(); ++j)
 		{
-			difference = gesturesDifference(m_nativeGestures[m_contexts[i]][j]);
+			const int difference(calculateGesturesDifference(m_nativeGestures[m_contexts[i]][j]));
 
 			if (difference == 0)
 			{
@@ -518,7 +517,7 @@ int GesturesManager::matchGesture()
 
 		for (int j = 0; j < m_gestures[m_contexts[i]].count(); ++j)
 		{
-			difference = gesturesDifference(m_gestures[m_contexts[i]][j].steps);
+			const int difference(calculateGesturesDifference(m_gestures[m_contexts[i]][j].steps));
 
 			if (difference == 0)
 			{
@@ -536,7 +535,7 @@ int GesturesManager::matchGesture()
 	return ((lowestDifference < std::numeric_limits<int>::max()) ? bestGesture : UNKNOWN_GESTURE);
 }
 
-int GesturesManager::getLastMoveDistance(bool measureFinished)
+int GesturesManager::calculateLastMoveDistance(bool measureFinished)
 {
 	int result(0);
 	int index(m_events.count() - 1);
@@ -556,20 +555,18 @@ int GesturesManager::getLastMoveDistance(bool measureFinished)
 		QMouseEvent *current(static_cast<QMouseEvent*>(m_events[index]));
 		QMouseEvent *previous(static_cast<QMouseEvent*>(m_events[index - 1]));
 
-		if (current && previous)
-		{
-			result += (previous->pos() - current->pos()).manhattanLength();
-		}
-		else
+		if (!current || !previous)
 		{
 			break;
 		}
+
+		result += (previous->pos() - current->pos()).manhattanLength();
 	}
 
 	return result;
 }
 
-int GesturesManager::gesturesDifference(const QVector<GestureStep> &steps)
+int GesturesManager::calculateGesturesDifference(const QVector<GestureStep> &steps)
 {
 	if (m_steps.count() != steps.count())
 	{
@@ -818,7 +815,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
 
-			if (getLastMoveDistance() >= QApplication::startDragDistance())
+			if (calculateLastMoveDistance() >= QApplication::startDragDistance())
 			{
 				m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
 
