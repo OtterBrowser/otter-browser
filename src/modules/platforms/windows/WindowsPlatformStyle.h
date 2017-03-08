@@ -39,7 +39,7 @@ protected slots:
 	void checkForVistaStyle();
 
 private:
-	bool m_isVistaStyle;
+	bool m_isModernStyle;
 };
 
 }

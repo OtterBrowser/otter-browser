@@ -33,7 +33,7 @@ namespace Otter
 {
 
 WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
-	m_isVistaStyle(QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
+	m_isModernStyle(QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 {
 	checkForVistaStyle();
 
@@ -43,7 +43,7 @@ WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 
 void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isVistaStyle)
+	if (m_isModernStyle)
 	{
 		switch (element)
 		{
@@ -135,7 +135,7 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 
 void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isVistaStyle && element == QStyle::PE_PanelStatusBar)
+	if (m_isModernStyle && element == QStyle::PE_PanelStatusBar)
 	{
 		painter->fillRect(option->rect, Qt::white);
 
@@ -147,18 +147,18 @@ void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const
 
 void WindowsPlatformStyle::checkForVistaStyle()
 {
-	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
+	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 	{
 		HIGHCONTRAST information = {0};
 		information.cbSize = sizeof(HIGHCONTRAST);
 
 		BOOL isSuccess(SystemParametersInfoW(SPI_GETHIGHCONTRAST, 0, &information, 0));
 
-		m_isVistaStyle = !(isSuccess && information.dwFlags & HCF_HIGHCONTRASTON);
+		m_isModernStyle = !(isSuccess && information.dwFlags & HCF_HIGHCONTRASTON);
 	}
 	else
 	{
-		m_isVistaStyle = false;
+		m_isModernStyle = false;
 	}
 }
 
