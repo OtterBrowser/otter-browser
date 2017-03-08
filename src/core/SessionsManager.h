@@ -33,8 +33,8 @@ namespace Otter
 enum WindowState
 {
 	NormalWindowState = 0,
-	MaximizedWindowState = 1,
-	MinimizedWindowState = 2
+	MaximizedWindowState,
+	MinimizedWindowState
 };
 
 struct WindowHistoryEntry

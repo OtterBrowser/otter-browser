@@ -39,8 +39,8 @@ public:
 	enum SwitcherReason
 	{
 		ActionReason = 0,
-		KeyboardReason = 1,
-		WheelReason = 2
+		KeyboardReason,
+		WheelReason
 	};
 
 	explicit TabSwitcherWidget(WindowsManager *manager, QWidget *parent = nullptr);

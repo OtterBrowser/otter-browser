@@ -75,9 +75,9 @@ public:
 	enum LoadingState
 	{
 		DelayedLoadingState = 0,
-		OngoingLoadingState = 1,
-		FinishedLoadingState = 2,
-		CrashedLoadingState = 3
+		OngoingLoadingState,
+		FinishedLoadingState,
+		CrashedLoadingState
 	};
 
 	explicit WindowsManager(bool isPrivate, MainWindow *parent);

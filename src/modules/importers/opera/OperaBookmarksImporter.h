@@ -54,10 +54,10 @@ protected:
 	enum OperaBookmarkEntry
 	{
 		NoEntry = 0,
-		UrlEntry = 1,
-		FolderStartEntry = 2,
-		FolderEndEntry = 3,
-		SeparatorEntry = 4
+		UrlEntry,
+		FolderStartEntry,
+		FolderEndEntry,
+		SeparatorEntry
 	};
 
 private:

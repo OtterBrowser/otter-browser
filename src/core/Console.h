@@ -35,20 +35,20 @@ public:
 	enum MessageCategory
 	{
 		OtherCategory = 0,
-		NetworkCategory = 1,
-		ContentBlockingCategory = 2,
-		SecurityCategory = 3,
-		CssCategory = 4,
-		JavaScriptCategory = 5
+		NetworkCategory,
+		ContentBlockingCategory,
+		SecurityCategory,
+		CssCategory,
+		JavaScriptCategory
 	};
 
 	enum MessageLevel
 	{
 		UnknownLevel = 0,
-		DebugLevel = 1,
-		LogLevel = 2,
-		WarningLevel = 3,
-		ErrorLevel = 4
+		DebugLevel,
+		LogLevel,
+		WarningLevel,
+		ErrorLevel
 	};
 
 	struct Message

@@ -38,18 +38,18 @@ public:
 	enum HighlightingSyntax
 	{
 		NoSyntax = 0,
-		HtmlSyntax = 1
+		HtmlSyntax
 	};
 
 	enum HighlightingState
 	{
 		NoState = 0,
-		DoctypeState = 1,
-		KeywordState = 2,
-		AttributeState = 3,
-		EntityState = 4,
-		ValueState = 5,
-		CommentState = 6
+		DoctypeState,
+		KeywordState,
+		AttributeState,
+		EntityState,
+		ValueState,
+		CommentState
 	};
 
 	struct BlockData : public QTextBlockUserData

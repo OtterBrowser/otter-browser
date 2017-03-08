@@ -39,8 +39,8 @@ public:
 	enum CosmeticFiltersMode
 	{
 		NoFiltersMode = 0,
-		DomainOnlyFiltersMode = 1,
-		AllFiltersMode = 2
+		DomainOnlyFiltersMode,
+		AllFiltersMode
 	};
 
 	struct CheckResult

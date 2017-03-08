@@ -33,11 +33,11 @@ public:
 	enum EntityType
 	{
 		UnknownEntity = 0,
-		SessionEntity = 1,
-		TrashEntity = 2,
-		MainWindowEntity = 3,
-		WindowEntity = 4,
-		HistoryEntity = 5
+		SessionEntity,
+		TrashEntity,
+		MainWindowEntity,
+		WindowEntity,
+		HistoryEntity
 	};
 
 	enum EntityRole

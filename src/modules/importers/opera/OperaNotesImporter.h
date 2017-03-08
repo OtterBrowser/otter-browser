@@ -56,10 +56,10 @@ protected:
 	enum OperaNoteEntry
 	{
 		NoEntry = 0,
-		NoteEntry = 1,
-		FolderStartEntry = 2,
-		FolderEndEntry = 3,
-		SeparatorEntry = 4
+		NoteEntry,
+		FolderStartEntry,
+		FolderEndEntry,
+		SeparatorEntry
 	};
 
 	void goToParent();

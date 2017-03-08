@@ -49,8 +49,8 @@ public:
 	enum ScrollMode
 	{
 		NoScroll = 0,
-		MoveScroll = 1,
-		DragScroll = 2
+		MoveScroll,
+		DragScroll
 	};
 
 	enum ScrollDirection

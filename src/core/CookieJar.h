@@ -34,23 +34,23 @@ public:
 	enum CookiesPolicy
 	{
 		IgnoreCookies = 0,
-		ReadOnlyCookies = 1,
-		AcceptAllCookies = 2,
-		AcceptExistingCookies = 3
+		ReadOnlyCookies,
+		AcceptAllCookies,
+		AcceptExistingCookies
 	};
 
 	enum KeepMode
 	{
 		KeepUntilExpiresMode = 0,
-		KeepUntilExitMode = 1,
-		AskIfKeepMode = 2
+		KeepUntilExitMode,
+		AskIfKeepMode
 	};
 
 	enum CookieOperation
 	{
 		InsertCookie = 0,
-		UpdateCookie = 1,
-		RemoveCookie = 2
+		UpdateCookie,
+		RemoveCookie
 	};
 
 	explicit CookieJar(bool isPrivate, QObject *parent = nullptr);

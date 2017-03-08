@@ -67,8 +67,8 @@ public:
 	enum PermissionPolicy
 	{
 		DeniedPermission = 0,
-		GrantedPermission = 1,
-		KeepAskingPermission = 2
+		GrantedPermission,
+		KeepAskingPermission
 	};
 
 	Q_DECLARE_FLAGS(PermissionPolicies, PermissionPolicy)

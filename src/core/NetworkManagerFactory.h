@@ -157,8 +157,8 @@ public:
 	enum DoNotTrackPolicy
 	{
 		SkipTrackPolicy = 0,
-		AllowToTrackPolicy = 1,
-		DoNotAllowToTrackPolicy = 2
+		AllowToTrackPolicy,
+		DoNotAllowToTrackPolicy
 	};
 
 	static void createInstance(QObject *parent = nullptr);

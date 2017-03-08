@@ -106,8 +106,8 @@ protected:
 	enum HistoryEntryData
 	{
 		IdentifierEntryData = 0,
-		ZoomEntryData = 1,
-		PositionEntryData = 2
+		ZoomEntryData,
+		PositionEntryData
 	};
 
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);

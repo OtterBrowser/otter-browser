@@ -53,11 +53,11 @@ public:
 	enum BookmarkType
 	{
 		UnknownBookmark = 0,
-		RootBookmark = 1,
-		TrashBookmark = 2,
-		FolderBookmark = 3,
-		UrlBookmark = 4,
-		SeparatorBookmark = 5
+		RootBookmark,
+		TrashBookmark,
+		FolderBookmark,
+		UrlBookmark,
+		SeparatorBookmark
 	};
 
 	enum BookmarkRole
@@ -79,7 +79,7 @@ public:
 	enum FormatMode
 	{
 		BookmarksMode = 0,
-		NotesMode = 1
+		NotesMode
 	};
 
 	struct BookmarkMatch
