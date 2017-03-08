@@ -84,9 +84,9 @@ protected:
 	explicit GesturesManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
+	static void recognizeMoveStep(QInputEvent *event);
 	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
-	static QVector<GestureStep> recognizeMoveStep(QInputEvent *event);
 	static int matchGesture();
 	static int getLastMoveDistance(bool measureFinished = false);
 	static int gesturesDifference(const QVector<GestureStep> &steps);

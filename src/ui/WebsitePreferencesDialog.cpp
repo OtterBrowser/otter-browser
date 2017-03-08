@@ -297,7 +297,7 @@ void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
 
 void WebsitePreferencesDialog::removeCookie()
 {
-	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()).toVector());
+	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()).value(0));
 
 	m_ui->cookiesViewWidget->removeRow();
 }

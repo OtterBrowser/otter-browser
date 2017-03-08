@@ -184,7 +184,11 @@ QVector<QUrl> BookmarksItem::getUrls() const
 
 		if (type == BookmarksModel::FolderBookmark)
 		{
+#if QT_VERSION >= 0x050500
 			urls.append(bookmark->getUrls());
+#else
+			urls += bookmark->getUrls();
+#endif
 		}
 		else if (type == BookmarksModel::UrlBookmark)
 		{
@@ -976,7 +980,11 @@ QVector<BookmarksItem *> BookmarksModel::findUrls(const QUrl &url, QStandardItem
 
 			if (type == FolderBookmark)
 			{
+#if QT_VERSION >= 0x050500
 				items.append(findUrls(url, item));
+#else
+				items += findUrls(url, item);
+#endif
 			}
 			else if (type == UrlBookmark && url == Utils::normalizeUrl(item->data(UrlRole).toUrl()))
 			{

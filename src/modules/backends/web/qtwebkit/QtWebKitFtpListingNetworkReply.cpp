@@ -130,8 +130,6 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
 				QUrl url(request().url());
 				QStringList navigation;
-				QVector<QUrlInfo> entries(m_directories);
-				entries.append(m_files);
 
 				if (url.path().isEmpty())
 				{
@@ -166,6 +164,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				variables[QLatin1String("headerDate")] = tr("Date");
 
 				const QFileIconProvider iconProvider;
+				const QVector<QUrlInfo> entries(m_directories + m_files);
 
 				for (int i = 0; i < entries.count(); ++i)
 				{

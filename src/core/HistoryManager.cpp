@@ -334,7 +334,11 @@ QVector<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QStri
 
 	if (!isTypedInOnly)
 	{
+#if QT_VERSION >= 0x050500
 		entries.append(m_browsingHistoryModel->findEntries(prefix));
+#else
+		entries += m_browsingHistoryModel->findEntries(prefix);
+#endif
 	}
 
 	return entries;
