@@ -40,7 +40,7 @@ namespace Otter
 
 ThemesManager* ThemesManager::m_instance(nullptr);
 QWidget* ThemesManager::m_probeWidget(nullptr);
-QString ThemesManager::m_iconThemePath(QLatin1String(":/icons/"));
+QString ThemesManager::m_iconThemePath(QLatin1String(":/icons/theme/"));
 bool ThemesManager::m_useSystemIconTheme(false);
 
 ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
@@ -78,7 +78,7 @@ void ThemesManager::handleOptionChanged(int identifier, const QVariant &value)
 
 				if (path.isEmpty())
 				{
-					path = QLatin1String(":/icons/");
+					path = QLatin1String(":/icons/theme/");
 				}
 				else if (!path.endsWith(QDir::separator()))
 				{
@@ -136,7 +136,7 @@ QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)
 		return QIcon::fromTheme(name);
 	}
 
-	const QString iconPath(m_iconThemePath + name);
+	const QString iconPath((!fromTheme && name == QLatin1String("otter-browser")) ? QLatin1String(":/icons/otter-browser") : m_iconThemePath + name);
 	const QString svgPath(iconPath + QLatin1String(".svg"));
 
 	if (QFile::exists(svgPath))
