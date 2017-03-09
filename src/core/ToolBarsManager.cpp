@@ -430,7 +430,7 @@ QString ToolBarsManager::getToolBarName(int identifier)
 
 QJsonValue ToolBarsManager::encodeEntry(const ActionsManager::ActionEntryDefinition &definition)
 {
-	if (definition.entries.isEmpty() && definition.options.isEmpty())
+	if (definition.entries.isEmpty() && definition.options.isEmpty() && definition.parameters.isEmpty())
 	{
 		return QJsonValue(definition.action);
 	}
