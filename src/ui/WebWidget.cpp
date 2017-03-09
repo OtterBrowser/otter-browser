@@ -1324,6 +1324,10 @@ Action* WebWidget::getAction(int identifier)
 			action->setChecked(getOption(SettingsManager::Network_EnableReferrerOption, getUrl()).toBool());
 
 			break;
+		case ActionsManager::ViewSourceAction:
+			action->setEnabled(canViewSource());
+
+			break;
 		case ActionsManager::UndoAction:
 		case ActionsManager::RedoAction:
 		case ActionsManager::CutAction:
