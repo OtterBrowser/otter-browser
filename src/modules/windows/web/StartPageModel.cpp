@@ -231,7 +231,7 @@ void StartPageModel::handleOptionChanged(int identifier)
 
 void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
 {
-	if (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark))
+	if (m_bookmark && (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark)))
 	{
 		reloadModel();
 	}
@@ -239,7 +239,7 @@ void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
 
 void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
 {
-	if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent))
+	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent)))
 	{
 		reloadModel();
 	}
@@ -247,7 +247,7 @@ void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem 
 
 void StartPageModel::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
 {
-	if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent))
+	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent)))
 	{
 		reloadModel();
 	}
@@ -306,7 +306,7 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt()));
 	const QModelIndex index(data->property("x-item-index").toModelIndex());
 
-	if (index.isValid())
+	if (m_bookmark && index.isValid())
 	{
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
 		{
