@@ -73,7 +73,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		return;
 	}
 
-	if (!getParameters().isEmpty())
+	if (!getParameters().isEmpty() && event->button() == Qt::LeftButton)
 	{
 		ActionsManager::triggerAction(m_identifier, this, getParameters());
 
