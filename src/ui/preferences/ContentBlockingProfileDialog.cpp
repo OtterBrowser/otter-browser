@@ -120,7 +120,7 @@ void ContentBlockingProfileDialog::save()
 		file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
 		file.close();
 
-		ContentBlockingProfile *profile(new ContentBlockingProfile(fileName, m_ui->titleEdit->text(), url, QDateTime(), QList<QString>(), m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
+		ContentBlockingProfile *profile(new ContentBlockingProfile(fileName, m_ui->titleEdit->text(), url, QDateTime(), QStringList(), m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
 
 		ContentBlockingManager::addProfile(profile);
 

@@ -330,7 +330,7 @@ void ContentBlockingDialog::save()
 			}
 			else
 			{
-				profile = new ContentBlockingProfile(QLatin1String("custom"), tr("Custom Rules"), QUrl(), QDateTime(), QList<QString>(), 0, ContentBlockingProfile::OtherCategory, ContentBlockingProfile::NoFlags);
+				profile = new ContentBlockingProfile(QLatin1String("custom"), tr("Custom Rules"), QUrl(), QDateTime(), QStringList(), 0, ContentBlockingProfile::OtherCategory, ContentBlockingProfile::NoFlags);
 
 				ContentBlockingManager::addProfile(profile);
 			}

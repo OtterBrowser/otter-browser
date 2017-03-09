@@ -478,7 +478,7 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 			}
 
 			const QJsonArray languages(profileObject.value(QLatin1String("languages")).toArray());
-			QList<QString> parsedLanguages;
+			QStringList parsedLanguages;
 
 			for (int j = 0; j < languages.count(); ++j)
 			{
