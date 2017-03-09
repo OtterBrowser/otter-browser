@@ -235,7 +235,7 @@ void ToolBarDialog::changeEvent(QEvent *event)
 
 void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent)
 {
-	QStandardItem *item(createEntry(entry.action, entry.options));
+	QStandardItem *item(createEntry(entry.action, entry.options, entry.parameters));
 
 	if (parent)
 	{
@@ -472,11 +472,12 @@ void ToolBarDialog::updateActions()
 	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("ConfigurationOptionWidget") || targetIdentifier == QLatin1String("ContentBlockingInformationWidget") || targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
 }
 
-QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options)
+QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options, const QVariantMap &parameters)
 {
 	QStandardItem *item(new QStandardItem());
 	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 	item->setData(identifier, IdentifierRole);
+	item->setData(parameters, ParametersRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	if (identifier == QLatin1String("separator"))
@@ -678,6 +679,7 @@ ActionsManager::ActionEntryDefinition ToolBarDialog::getEntry(QStandardItem *ite
 
 	definition.action = item->data(IdentifierRole).toString();
 	definition.options = item->data(OptionsRole).toMap();
+	definition.parameters = item->data(ParametersRole).toMap();
 
 	if (definition.action == QLatin1String("CustomMenu"))
 	{

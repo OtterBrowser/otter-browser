@@ -42,7 +42,8 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
-		OptionsRole
+		OptionsRole,
+		ParametersRole
 	};
 
 	explicit ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition = ToolBarsManager::ToolBarDefinition(), QWidget *parent = nullptr);
@@ -54,7 +55,7 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 	void addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent = nullptr);
-	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = QVariantMap());
+	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = QVariantMap(), const QVariantMap &parameters = QVariantMap());
 	ActionsManager::ActionEntryDefinition getEntry(QStandardItem *item) const;
 
 protected slots:
