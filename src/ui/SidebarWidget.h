@@ -35,6 +35,8 @@ namespace Ui
 	class SidebarWidget;
 }
 
+class ResizerWidget;
+
 class SidebarWidget : public QWidget
 {
 	Q_OBJECT
@@ -60,6 +62,7 @@ protected slots:
 
 private:
 	ToolBarWidget *m_toolBarWidget;
+	ResizerWidget *m_resizerWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
 	QHash<QString, QWidget*> m_panels;

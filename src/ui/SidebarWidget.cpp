@@ -20,6 +20,7 @@
 
 #include "SidebarWidget.h"
 #include "MainWindow.h"
+#include "ResizerWidget.h"
 #include "WidgetFactory.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
@@ -40,9 +41,12 @@ namespace Otter
 
 SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_toolBarWidget(parent),
+	m_resizerWidget(nullptr),
 	m_ui(new Ui::SidebarWidget)
 {
 	m_ui->setupUi(this);
+
+	m_resizerWidget = new ResizerWidget(m_ui->containerWidget, this);
 
 	ActionsManager::ActionEntryDefinition definition;
 	definition.parameters[QLatin1String("sidebar")] = m_toolBarWidget->getIdentifier();
@@ -61,6 +65,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_ui->panelLayout->addWidget(toolbar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
+	m_ui->horizontalLayout->addWidget(m_resizerWidget);
 
 	updateLayout();
 	updatePanels();
@@ -235,6 +240,8 @@ void SidebarWidget::updateLayout()
 
 	m_ui->toggleSpacer->changeSize((m_toolBarWidget->getDefinition().hasToggle ? 6 : 0), 0, QSizePolicy::Fixed);
 
+	m_resizerWidget->setDirection((area == Qt::RightToolBarArea) ? ResizerWidget::RightToLeftDirection : ResizerWidget::LeftToRightDirection);
+
 	if (QGuiApplication::isRightToLeft())
 	{
 		direction = ((direction == QBoxLayout::LeftToRight) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
@@ -384,6 +391,11 @@ QSize SidebarWidget::sizeHint() const
 	if (m_currentPanel.isEmpty())
 	{
 		return m_ui->buttonsLayout->sizeHint();
+	}
+
+	if (m_ui->containerWidget->maximumWidth() < QWIDGETSIZE_MAX)
+	{
+		return QSize((m_ui->buttonsLayout->sizeHint().width() + m_ui->containerWidget->maximumWidth()), m_ui->buttonsLayout->sizeHint().height());
 	}
 
 	return QSize(250, m_ui->buttonsLayout->sizeHint().height());
