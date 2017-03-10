@@ -165,6 +165,8 @@ void ResizerWidget::mouseReleaseEvent(QMouseEvent *event)
 		m_isMoving = false;
 	}
 
+	emit finished();
+
 	QWidget::mouseReleaseEvent(event);
 }
 

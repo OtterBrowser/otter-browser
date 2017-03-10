@@ -56,6 +56,7 @@ private:
 	bool m_isMoving;
 
 signals:
+	void finished();
 	void resized(int size);
 };
 
