@@ -67,11 +67,19 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
 	m_ui->horizontalLayout->addWidget(m_resizerWidget);
 
+	const int panelSize(m_toolBarWidget->getDefinition().panelSize);
+
+	if (panelSize > 0)
+	{
+		m_ui->containerWidget->setMaximumWidth(panelSize);
+	}
+
 	updateLayout();
 	updatePanels();
 
 	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updateLayout()));
 	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updatePanels()));
+	connect(m_resizerWidget, SIGNAL(finished()), this, SLOT(saveSize()));
 }
 
 SidebarWidget::~SidebarWidget()
@@ -227,6 +235,24 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	if (identifier != definition.currentPanel)
 	{
 		definition.currentPanel = identifier;
+
+		ToolBarsManager::setToolBar(definition);
+	}
+}
+
+void SidebarWidget::saveSize()
+{
+	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+	int size(m_ui->containerWidget->maximumWidth());
+
+	if (size == QWIDGETSIZE_MAX)
+	{
+		size = -1;
+	}
+
+	if (size != definition.panelSize)
+	{
+		definition.panelSize = size;
 
 		ToolBarsManager::setToolBar(definition);
 	}
@@ -393,12 +419,7 @@ QSize SidebarWidget::sizeHint() const
 		return m_ui->buttonsLayout->sizeHint();
 	}
 
-	if (m_ui->containerWidget->maximumWidth() < QWIDGETSIZE_MAX)
-	{
-		return QSize((m_ui->buttonsLayout->sizeHint().width() + m_ui->containerWidget->maximumWidth()), m_ui->buttonsLayout->sizeHint().height());
-	}
-
-	return QSize(250, m_ui->buttonsLayout->sizeHint().height());
+	return QSize((m_ui->buttonsLayout->sizeHint().width() + ((m_ui->containerWidget->maximumWidth() < QWIDGETSIZE_MAX) ? m_ui->containerWidget->maximumWidth() : 250)), m_ui->buttonsLayout->sizeHint().height());
 }
 
 }

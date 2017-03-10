@@ -181,6 +181,11 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 				definitionObject.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions[i].maximumButtonSize));
 			}
 
+			if (m_definitions[i].panelSize > 0)
+			{
+				definitionObject.insert(QLatin1String("panelSize"), QJsonValue(m_definitions[i].panelSize));
+			}
+
 			definitionObject.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
 
 			if (m_definitions[i].hasToggle)
@@ -545,6 +550,7 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		toolBar.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), AlwaysHiddenToolBar);
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
+		toolBar.panelSize = toolBarObject.value(QLatin1String("panelSize")).toInt();
 		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
 		toolBar.hasToggle = toolBarObject.value(QLatin1String("hasToggle")).toBool();
 		toolBar.isDefault = isDefault;

@@ -74,6 +74,7 @@ public:
 		int identifier = -1;
 		int iconSize = -1;
 		int maximumButtonSize = -1;
+		int panelSize = -1;
 		int row = -1;
 		bool canReset = false;
 		bool hasToggle = false;

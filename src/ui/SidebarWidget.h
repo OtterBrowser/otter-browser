@@ -57,6 +57,7 @@ protected slots:
 	void addWebPanel();
 	void choosePanel(bool checked);
 	void selectPanel();
+	void saveSize();
 	void updateLayout();
 	void updatePanels();
 
