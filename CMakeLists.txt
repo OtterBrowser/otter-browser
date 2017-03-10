@@ -173,6 +173,7 @@ set(otter_src
 	src/ui/ProxyModel.cpp
 	src/ui/ReloadTimeDialog.cpp
 	src/ui/ReportDialog.cpp
+	src/ui/ResizerWidget.cpp
 	src/ui/SaveSessionDialog.cpp
 	src/ui/SearchEnginePropertiesDialog.cpp
 	src/ui/SessionsManagerDialog.cpp
