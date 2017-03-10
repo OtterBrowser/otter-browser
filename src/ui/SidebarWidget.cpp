@@ -286,7 +286,7 @@ void SidebarWidget::updateLayout()
 		direction = ((direction == QBoxLayout::LeftToRight) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 	}
 
-	qobject_cast<QBoxLayout*>(layout())->setDirection(direction);
+	m_ui->horizontalLayout->setDirection(direction);
 
 	if (!toolbar)
 	{
