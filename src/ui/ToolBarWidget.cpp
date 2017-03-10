@@ -727,6 +727,11 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			return;
 		}
 	}
+	else if (m_toggleButton)
+	{
+		m_toggleButton->deleteLater();
+		m_toggleButton = nullptr;
+	}
 
 	const int iconSize(getIconSize());
 
