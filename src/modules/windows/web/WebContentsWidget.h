@@ -129,6 +129,7 @@ protected slots:
 	void handleSavePasswordRequest(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);
 	void handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
+	void handleInspectorVisibilityChangeRequest(bool isVisible);
 	void handleLoadingStateChange(WindowsManager::LoadingState state);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);

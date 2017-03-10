@@ -1698,11 +1698,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				const bool result(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
 
-				m_inspector->setVisible(result);
-
 				getAction(ActionsManager::InspectPageAction)->setChecked(result);
 
-				emit progressBarGeometryChanged();
+				emit requestedInspectorVisibilityChange(result);
 
 				return;
 			}

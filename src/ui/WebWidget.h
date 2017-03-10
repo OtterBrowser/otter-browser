@@ -333,6 +333,7 @@ signals:
 	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void requestedGeometryChange(const QRect &geometry);
+	void requestedInspectorVisibilityChange(bool isVisible);
 	void progressBarGeometryChanged();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

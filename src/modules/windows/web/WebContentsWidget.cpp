@@ -546,22 +546,6 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_webWidget->setOption(SettingsManager::Network_EnableReferrerOption, Action::calculateCheckedState(parameters));
 
 			break;
-		case ActionsManager::InspectPageAction:
-		case ActionsManager::InspectElementAction:
-			if (m_webWidget)
-			{
-				QWidget *inspector(m_webWidget->getInspector());
-
-				if (inspector && m_splitter->indexOf(inspector) < 0)
-				{
-					m_splitter->show();
-					m_splitter->addWidget(inspector);
-				}
-
-				m_webWidget->triggerAction(identifier, parameters);
-			}
-
-			break;
 		case ActionsManager::QuickPreferencesAction:
 			{
 				if (m_isTabPreferencesMenuVisible)
@@ -924,6 +908,31 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 	}
 }
 
+void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
+{
+	if (m_webWidget)
+	{
+		QWidget *inspector(m_webWidget->getInspector());
+
+		if (inspector)
+		{
+			if (isVisible)
+			{
+				if (m_splitter->indexOf(inspector) < 0)
+				{
+					m_splitter->addWidget(inspector);
+				}
+
+				inspector->show();
+			}
+			else
+			{
+				inspector->hide();
+			}
+		}
+	}
+}
+
 void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
 {
 	if (state == WindowsManager::CrashedLoadingState)
@@ -1157,6 +1166,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, SIGNAL(requestedPermission(WebWidget::FeaturePermission,QUrl,bool)), this, SLOT(handlePermissionRequest(WebWidget::FeaturePermission,QUrl,bool)));
 	connect(m_webWidget, SIGNAL(requestedSavePassword(PasswordsManager::PasswordInformation,bool)), this, SLOT(handleSavePasswordRequest(PasswordsManager::PasswordInformation,bool)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+	connect(m_webWidget, SIGNAL(requestedInspectorVisibilityChange(bool)), this, SLOT(handleInspectorVisibilityChangeRequest(bool)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
