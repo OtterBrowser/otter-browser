@@ -27,7 +27,7 @@ You can either compile Otter Browser from source by following the instructions i
 
 ### Under Linux and *BSD
 
-Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/). It is a single executable file that doesn’t need any dependencies to be installed. The AppImage version should run under any system installed after 2012. The browser is also available in a the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
+Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/). It is a single executable file that doesnÂ’t need any dependencies to be installed. The AppImage version should run under any system installed after 2012. The browser is also available in a the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
 
 ### Under Windows
 
