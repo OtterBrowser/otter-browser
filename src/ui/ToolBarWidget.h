@@ -33,6 +33,7 @@ namespace Otter
 
 class BookmarksItem;
 class MainWindow;
+class SidebarWidget;
 class Window;
 
 class ToolBarDropZoneWidget : public QToolBar
@@ -111,6 +112,7 @@ protected slots:
 private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
+	SidebarWidget *m_sidebarWidget;
 	BookmarksItem *m_bookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;

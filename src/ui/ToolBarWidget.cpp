@@ -159,6 +159,7 @@ bool ToolBarDropZoneWidget::canDrop(const QMimeData *mimeData)
 ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
+	m_sidebarWidget(nullptr),
 	m_bookmark(nullptr),
 	m_toggleButton(nullptr),
 	m_identifier(identifier),
@@ -704,6 +705,10 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 		resetGeometry();
 	}
+	else if (definition.type == ToolBarsManager::SideBarType && m_sidebarWidget)
+	{
+		m_sidebarWidget->reload();
+	}
 	else
 	{
 		clear();
@@ -757,7 +762,12 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 			return;
 		case ToolBarsManager::SideBarType:
-			addWidget(new SidebarWidget(this));
+			if (!m_sidebarWidget)
+			{
+				m_sidebarWidget = new SidebarWidget(this);
+
+				addWidget(m_sidebarWidget);
+			}
 
 			if (m_toggleButton)
 			{

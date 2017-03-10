@@ -45,6 +45,7 @@ public:
 	explicit SidebarWidget(ToolBarWidget *parent);
 	~SidebarWidget();
 
+	void reload();
 	static QString getPanelTitle(const QString &identifier);
 	static QUrl getPanelUrl(const QString &identifier);
 	QSize sizeHint() const override;

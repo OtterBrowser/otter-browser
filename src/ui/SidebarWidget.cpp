@@ -128,6 +128,19 @@ void SidebarWidget::changeEvent(QEvent *event)
 	}
 }
 
+void SidebarWidget::reload()
+{
+	const int panelSize(m_toolBarWidget->getDefinition().panelSize);
+
+	if (panelSize > 0)
+	{
+		m_ui->containerWidget->setMaximumWidth(panelSize);
+	}
+
+	updateLayout();
+	updatePanels();
+}
+
 void SidebarWidget::addWebPanel()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
@@ -306,6 +319,8 @@ void SidebarWidget::updatePanels()
 
 	if (m_buttons.keys().toSet() == definition.panels.toSet())
 	{
+		selectPanel(definition.currentPanel);
+
 		return;
 	}
 
