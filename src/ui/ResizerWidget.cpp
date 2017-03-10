@@ -111,15 +111,16 @@ void ResizerWidget::mouseMoveEvent(QMouseEvent *event)
 		return;
 	}
 
-	int size(((m_direction == TopToBottomDirection || m_direction == BottomToTopDirection) ? m_widget->height() : m_widget->width()) + sizeDifference);
+	const int oldSize((m_direction == TopToBottomDirection || m_direction == BottomToTopDirection) ? m_widget->height() : m_widget->width());
+	int newSize(oldSize + sizeDifference);
 
 	m_dragStartPosition = event->pos();
 
-	if (size < 0)
+	if (newSize < 0)
 	{
-		sizeDifference += size;
+		sizeDifference = -oldSize;
 
-		size = 0;
+		newSize = 0;
 	}
 
 	if (sizeDifference == 0)
@@ -129,7 +130,7 @@ void ResizerWidget::mouseMoveEvent(QMouseEvent *event)
 
 	if (isVertical)
 	{
-		m_widget->setFixedHeight(size);
+		m_widget->setFixedHeight(newSize);
 
 		if (isFlipped)
 		{
@@ -142,7 +143,7 @@ void ResizerWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 	else
 	{
-		m_widget->setFixedWidth(size);
+		m_widget->setFixedWidth(newSize);
 
 		if (isFlipped)
 		{
@@ -154,7 +155,7 @@ void ResizerWidget::mouseMoveEvent(QMouseEvent *event)
 		}
 	}
 
-	emit resized(size);
+	emit resized(newSize);
 }
 
 void ResizerWidget::mouseReleaseEvent(QMouseEvent *event)
