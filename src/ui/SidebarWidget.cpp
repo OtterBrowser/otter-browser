@@ -211,13 +211,6 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		{
 			m_buttons[identifier]->setChecked(true);
 		}
-
-		setMinimumWidth(0);
-		setMaximumWidth(QWIDGETSIZE_MAX);
-	}
-	else
-	{
-		setFixedWidth(m_ui->buttonsLayout->sizeHint().width());
 	}
 
 	m_ui->containerWidget->setVisible(widget != nullptr);
