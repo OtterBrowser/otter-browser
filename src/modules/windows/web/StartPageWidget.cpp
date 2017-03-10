@@ -636,22 +636,13 @@ QPixmap StartPageWidget::getThumbnail()
 		QPixmap pixmap(widget()->size());
 		pixmap.setDevicePixelRatio(devicePixelRatio());
 
-		QPainter widgetPainter(&pixmap);
+		QPainter painter(&pixmap);
 
-		widget()->render(&widgetPainter);
+		widget()->render(&painter);
 
-		widgetPainter.end();
+		painter.end();
 
-		pixmap = pixmap.scaled(260, 170, Qt::KeepAspectRatio);
-
-		QPixmap thumbnail(QSize(260, 170));
-		thumbnail.setDevicePixelRatio(devicePixelRatio());
-		thumbnail.fill(Qt::white);
-
-		QPainter thumbnailPainter(&thumbnail);
-		thumbnailPainter.drawPixmap(QPoint(((pixmap.width() < 260) ? ((260 - pixmap.width()) / 2) : 0), 0), pixmap);
-
-		m_thumbnail = thumbnail;
+		m_thumbnail = pixmap.scaledToWidth(260, Qt::SmoothTransformation).copy(0, 0, 260, 170);
 	}
 
 	return m_thumbnail;
