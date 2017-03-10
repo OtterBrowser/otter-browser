@@ -322,26 +322,28 @@ void TabHandleWidget::updateGeometries()
 	const bool isCloseButtonEnabled(TabBarWidget::isCloseButtonEnabled());
 	const bool isUrlIconEnabled(TabBarWidget::isUrlIconEnabled());
 
-	if (controlsWidth <= 16 && (isCloseButtonEnabled || isUrlIconEnabled))
+	if (controlsWidth <= 18 && (isCloseButtonEnabled || isUrlIconEnabled))
 	{
 		if (isUrlIconEnabled)
 		{
 			if (isActive && isCloseButtonEnabled && !m_window->isPinned())
 			{
+				const int buttonWidth((controlsRectangle.width() / 2) - 2);
+
 				m_closeButtonRectangle = controlsRectangle;
 				m_urlIconRectangle = controlsRectangle;
 
 				if (TabBarWidget::isLayoutReversed())
 				{
-					m_closeButtonRectangle.setWidth(controlsRectangle.width() / 2);
+					m_closeButtonRectangle.setWidth(buttonWidth);
 
-					m_urlIconRectangle.setLeft(m_closeButtonRectangle.right());
+					m_urlIconRectangle.setLeft(m_urlIconRectangle.right() - buttonWidth);
 				}
 				else
 				{
-					m_urlIconRectangle.setWidth(controlsRectangle.width() / 2);
+					m_urlIconRectangle.setWidth(buttonWidth);
 
-					m_closeButtonRectangle.setLeft(m_urlIconRectangle.right());
+					m_closeButtonRectangle.setLeft(m_closeButtonRectangle.right() - buttonWidth);
 				}
 			}
 			else
@@ -354,24 +356,26 @@ void TabHandleWidget::updateGeometries()
 			m_closeButtonRectangle = controlsRectangle;
 		}
 	}
-	else if (controlsWidth <= 32 && isActive && (isCloseButtonEnabled && !m_window->isPinned()) && isUrlIconEnabled)
+	else if (controlsWidth <= 34 && isActive && (isCloseButtonEnabled && !m_window->isPinned()) && isUrlIconEnabled)
 	{
 		if (isUrlIconEnabled)
 		{
+			const int buttonWidth((controlsRectangle.width() / 2) - 2);
+
 			m_closeButtonRectangle = controlsRectangle;
 			m_urlIconRectangle = controlsRectangle;
 
 			if (TabBarWidget::isLayoutReversed())
 			{
-				m_closeButtonRectangle.setWidth(controlsRectangle.width() / 2);
+				m_closeButtonRectangle.setWidth(buttonWidth);
 
-				m_urlIconRectangle.setLeft(m_closeButtonRectangle.right());
+				m_urlIconRectangle.setLeft(m_urlIconRectangle.right() - buttonWidth);
 			}
 			else
 			{
-				m_urlIconRectangle.setWidth(controlsRectangle.width() / 2);
+				m_urlIconRectangle.setWidth(buttonWidth);
 
-				m_closeButtonRectangle.setLeft(m_urlIconRectangle.right());
+				m_closeButtonRectangle.setLeft(m_closeButtonRectangle.right() - buttonWidth);
 			}
 		}
 	}
