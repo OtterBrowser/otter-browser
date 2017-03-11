@@ -1,13 +1,13 @@
 0.9.?? (2017-??-??):
 - reworked toolbars:
 -- added support for visibility toggle button (collapsing contents);
--- fixed unified toolbar and titlebar style under macOS X;
+-- fixed unified toolbar and titlebar style under macOS;
 - improved sidebar(s):
 -- added ability to add new sidebars;
 -- allow to change their location by drag and drop;
 - improved User Agents configuration;
 - added support for managing multiple proxy configurations and setting them per page or host;
-- improved styling under Windows, Unity and macOS X;
+- improved styling under Windows, Unity and macOS;
 - added support for configurable Fast Forward;
 - lots of various fixes.
 
@@ -99,7 +99,7 @@
 - added initial support for auto updates;
 - added dialog allowing to decide what to do with downloaded file;
 - MDI actions are now enabled by default;
-- multiple fixes and improvements for macOS X;
+- multiple fixes and improvements for macOS;
 - allow to specify default arguments using arguments.txt;
 - various minor fixes and improvements.
 
