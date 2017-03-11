@@ -21,11 +21,7 @@
 #ifndef OTTER_SIDEBARWIDGET_H
 #define OTTER_SIDEBARWIDGET_H
 
-#include "ToolBarWidget.h"
-#include "../core/WindowsManager.h"
-
 #include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
 
 namespace Otter
 {
@@ -36,6 +32,7 @@ namespace Ui
 }
 
 class ResizerWidget;
+class ToolBarWidget;
 
 class SidebarWidget : public QWidget
 {

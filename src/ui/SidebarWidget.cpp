@@ -21,6 +21,7 @@
 #include "SidebarWidget.h"
 #include "MainWindow.h"
 #include "ResizerWidget.h"
+#include "ToolBarWidget.h"
 #include "WidgetFactory.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
@@ -34,7 +35,6 @@
 
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
-#include <QtWidgets/QToolBar>
 
 namespace Otter
 {
