@@ -1281,11 +1281,6 @@ void WebContentsWidget::setParent(Window *window)
 
 WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 {
-	if (!canClone())
-	{
-		return nullptr;
-	}
-
 	QVariantMap parameters;
 
 	if (m_webWidget->isPrivate())
