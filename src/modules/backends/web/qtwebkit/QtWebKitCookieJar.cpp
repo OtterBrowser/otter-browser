@@ -158,7 +158,7 @@ bool QtWebKitCookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 bool QtWebKitCookieJar::canModifyCookie(const QNetworkCookie &cookie) const
 {
-	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
+	if (!m_widget || m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
 	{
 		return false;
 	}
