@@ -25,7 +25,8 @@ namespace Otter
 {
 
 NetworkProxyFactory::NetworkProxyFactory(QObject *parent) : QObject(parent), QNetworkProxyFactory(),
-	m_automaticProxy(nullptr)
+	m_automaticProxy(nullptr),
+	m_definition(ProxyDefinition())
 {
 }
 
