@@ -725,13 +725,13 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 	{
 		const QWebPage::ErrorPageExtensionOption *errorOption(static_cast<const QWebPage::ErrorPageExtensionOption*>(option));
 		QWebPage::ErrorPageExtensionReturn *errorOutput(static_cast<QWebPage::ErrorPageExtensionReturn*>(output));
-		const QUrl url((errorOption->url.isEmpty() && m_widget) ? m_widget->getRequestedUrl() : errorOption->url);
 
 		if (!errorOption || !errorOutput)
 		{
 			return false;
 		}
 
+		const QUrl url((errorOption->url.isEmpty() && m_widget) ? m_widget->getRequestedUrl() : errorOption->url);
 		QString domain;
 
 		if (errorOption->domain == QWebPage::QtNetwork)
