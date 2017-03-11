@@ -26,9 +26,23 @@
 namespace Otter
 {
 
+class Migration
+{
+public:
+	Migration();
+
+	virtual void createBackup() const;
+	virtual void migrate() const;
+	virtual QString getName() const;
+	virtual QString getTitle() const;
+	virtual bool canMigrate() const;
+
+protected:
+	static QString createBackupPath(const QString &sourcePath);
+};
+
 class Migrator : public QObject
 {
-	Q_OBJECT
 
 public:
 	enum MigrationFlag
@@ -46,12 +60,7 @@ public:
 	void run();
 
 protected:
-	void registerMigration(const QString &identifier, const QString &title);
-	void createBackup(const QString &identifier);
-	MigrationFlags checkMigrationStatus(const QString &identifier) const;
-
-private:
-	QHash<QString, QString> m_migrations;
+	MigrationFlags checkMigrationStatus(const Migration *migration) const;
 };
 
 }

@@ -36,272 +36,286 @@
 namespace Otter
 {
 
-Migrator::Migrator(QObject *parent) : QObject(parent)
+class OptionsRenameMigration : public Migration
 {
-	registerMigration(QLatin1String("optionsRename"), QT_TRANSLATE_NOOP("migrations", "Options"));
-	registerMigration(QLatin1String("sessionsIniToJson"), QT_TRANSLATE_NOOP("migrations", "Sessions"));
-}
-
-void Migrator::run()
-{
-	QStringList migrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
-	QStringList newMigrations;
-
-	if (!migrations.contains(QLatin1String("sessionsIniToJson")) && !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty())
+public:
+	OptionsRenameMigration() : Migration()
 	{
-		newMigrations.append(QLatin1String("sessionsIniToJson"));
 	}
 
-	if (!migrations.contains(QLatin1String("optionsRename")))
+	void createBackup() const override
 	{
-		newMigrations.append(QLatin1String("optionsRename"));
+		const QString backupPath(createBackupPath(QLatin1String("other")));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QString())).entryInfoList(QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")})));
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			QFile::copy(entries.at(i).absoluteFilePath(), backupPath + entries.at(i).fileName());
+		}
 	}
 
-	if (newMigrations.isEmpty())
+	void migrate() const override
 	{
-		return;
-	}
+		QMap<QString, SettingsManager::OptionIdentifier> optionsMap;
+		optionsMap[QLatin1String("Browser/EnableFullScreen")] = SettingsManager::Permissions_EnableFullScreenOption;
+		optionsMap[QLatin1String("Browser/EnableGeolocation")] = SettingsManager::Permissions_EnableGeolocationOption;
+		optionsMap[QLatin1String("Browser/EnableImages")] = SettingsManager::Permissions_EnableImagesOption;
+		optionsMap[QLatin1String("Browser/EnableJavaScript")] = SettingsManager::Permissions_EnableJavaScriptOption;
+		optionsMap[QLatin1String("Browser/EnableLocalStorage")] = SettingsManager::Permissions_EnableLocalStorageOption;
+		optionsMap[QLatin1String("Browser/EnableMediaCaptureAudio")] = SettingsManager::Permissions_EnableMediaCaptureAudioOption;
+		optionsMap[QLatin1String("Browser/EnableMediaCaptureVideo")] = SettingsManager::Permissions_EnableMediaCaptureVideoOption;
+		optionsMap[QLatin1String("Browser/EnableMediaPlaybackAudio")] = SettingsManager::Permissions_EnableMediaPlaybackAudioOption;
+		optionsMap[QLatin1String("Browser/EnableNotifications")] = SettingsManager::Permissions_EnableNotificationsOption;
+		optionsMap[QLatin1String("Browser/EnableOfflineStorageDatabase")] = SettingsManager::Permissions_EnableOfflineStorageDatabaseOption;
+		optionsMap[QLatin1String("Browser/EnableOfflineWebApplicationCache")] = SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption;
+		optionsMap[QLatin1String("Browser/EnablePlugins")] = SettingsManager::Permissions_EnablePluginsOption;
+		optionsMap[QLatin1String("Browser/EnablePointerLock")] = SettingsManager::Permissions_EnablePointerLockOption;
+		optionsMap[QLatin1String("Browser/EnableWebgl")] = SettingsManager::Permissions_EnableWebglOption;
+		optionsMap[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::Permissions_ScriptsCanAccessClipboardOption;
+		optionsMap[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption;
+		optionsMap[QLatin1String("Browser/JavaScriptCanCloseWindows")] = SettingsManager::Permissions_ScriptsCanCloseWindowsOption;
+		optionsMap[QLatin1String("Content/PopupsPolicy")] = SettingsManager::Permissions_ScriptsCanOpenWindowsOption;
+		optionsMap[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption;
+		optionsMap[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption;
 
-	QStringList::iterator iterator;
+		QMap<QString, SettingsManager::OptionIdentifier>::iterator optionsIterator;
+		QSettings configuration(SettingsManager::getGlobalPath(), QSettings::IniFormat);
+		const QStringList configurationKeys(configuration.allKeys());
 
-	for (iterator = newMigrations.begin(); iterator != newMigrations.end(); ++iterator)
-	{
-		const MigrationFlags flags(checkMigrationStatus(*iterator));
-
-		if (flags == NoMigration)
+		for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
 		{
-			continue;
+			if (configurationKeys.contains(optionsIterator.key()))
+			{
+				configuration.setValue(SettingsManager::getOptionName(optionsIterator.value()), configuration.value(optionsIterator.key()).toString());
+				configuration.remove(optionsIterator.key());
+			}
 		}
 
-		if (flags.testFlag(IgnoreMigration) || flags.testFlag(ProceedMigration))
-		{
-			migrations.append(*iterator);
-		}
+		QSettings overrides(SettingsManager::getOverridePath(), QSettings::IniFormat);
+		const QStringList overridesGroups(overrides.childGroups());
 
-		if (flags.testFlag(WithBackupMigration))
+		for (int i = 0; i < overridesGroups.count(); ++i)
 		{
-			createBackup(*iterator);
-		}
+			overrides.beginGroup(overridesGroups.at(i));
 
-		if (!flags.testFlag(ProceedMigration))
-		{
-			continue;
-		}
-
-		if (*iterator == QLatin1String("optionsRename"))
-		{
-			QMap<QString, SettingsManager::OptionIdentifier> optionsMap;
-			optionsMap[QLatin1String("Browser/EnableFullScreen")] = SettingsManager::Permissions_EnableFullScreenOption;
-			optionsMap[QLatin1String("Browser/EnableGeolocation")] = SettingsManager::Permissions_EnableGeolocationOption;
-			optionsMap[QLatin1String("Browser/EnableImages")] = SettingsManager::Permissions_EnableImagesOption;
-			optionsMap[QLatin1String("Browser/EnableJavaScript")] = SettingsManager::Permissions_EnableJavaScriptOption;
-			optionsMap[QLatin1String("Browser/EnableLocalStorage")] = SettingsManager::Permissions_EnableLocalStorageOption;
-			optionsMap[QLatin1String("Browser/EnableMediaCaptureAudio")] = SettingsManager::Permissions_EnableMediaCaptureAudioOption;
-			optionsMap[QLatin1String("Browser/EnableMediaCaptureVideo")] = SettingsManager::Permissions_EnableMediaCaptureVideoOption;
-			optionsMap[QLatin1String("Browser/EnableMediaPlaybackAudio")] = SettingsManager::Permissions_EnableMediaPlaybackAudioOption;
-			optionsMap[QLatin1String("Browser/EnableNotifications")] = SettingsManager::Permissions_EnableNotificationsOption;
-			optionsMap[QLatin1String("Browser/EnableOfflineStorageDatabase")] = SettingsManager::Permissions_EnableOfflineStorageDatabaseOption;
-			optionsMap[QLatin1String("Browser/EnableOfflineWebApplicationCache")] = SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption;
-			optionsMap[QLatin1String("Browser/EnablePlugins")] = SettingsManager::Permissions_EnablePluginsOption;
-			optionsMap[QLatin1String("Browser/EnablePointerLock")] = SettingsManager::Permissions_EnablePointerLockOption;
-			optionsMap[QLatin1String("Browser/EnableWebgl")] = SettingsManager::Permissions_EnableWebglOption;
-			optionsMap[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::Permissions_ScriptsCanAccessClipboardOption;
-			optionsMap[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption;
-			optionsMap[QLatin1String("Browser/JavaScriptCanCloseWindows")] = SettingsManager::Permissions_ScriptsCanCloseWindowsOption;
-			optionsMap[QLatin1String("Content/PopupsPolicy")] = SettingsManager::Permissions_ScriptsCanOpenWindowsOption;
-			optionsMap[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption;
-			optionsMap[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption;
-
-			QMap<QString, SettingsManager::OptionIdentifier>::iterator optionsIterator;
-			QSettings configuration(SettingsManager::getGlobalPath(), QSettings::IniFormat);
-			const QStringList configurationKeys(configuration.allKeys());
+			const QStringList overridesKeys(overrides.allKeys());
 
 			for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
 			{
-				if (configurationKeys.contains(optionsIterator.key()))
+				if (overridesKeys.contains(optionsIterator.key()))
 				{
-					configuration.setValue(SettingsManager::getOptionName(optionsIterator.value()), configuration.value(optionsIterator.key()).toString());
-					configuration.remove(optionsIterator.key());
+					overrides.setValue(SettingsManager::getOptionName(optionsIterator.value()), overrides.value(optionsIterator.key()).toString());
+					overrides.remove(optionsIterator.key());
 				}
 			}
 
-			QSettings overrides(SettingsManager::getOverridePath(), QSettings::IniFormat);
-			const QStringList overridesGroups(overrides.childGroups());
+			overrides.endGroup();
+		}
 
-			for (int i = 0; i < overridesGroups.count(); ++i)
+		const QStringList sessions(SessionsManager::getSessions());
+
+		for (int i = 0; i < sessions.count(); ++i)
+		{
+			QFile file(SessionsManager::getSessionPath(sessions.at(i)));
+
+			if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 			{
-				overrides.beginGroup(overridesGroups.at(i));
-
-				const QStringList overridesKeys(overrides.allKeys());
+				QString data(file.readAll());
 
 				for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
 				{
-					if (overridesKeys.contains(optionsIterator.key()))
-					{
-						overrides.setValue(SettingsManager::getOptionName(optionsIterator.value()), overrides.value(optionsIterator.key()).toString());
-						overrides.remove(optionsIterator.key());
-					}
+					data.replace(QLatin1Char('"') + optionsIterator.key() + QLatin1String("\": "), QLatin1Char('"') + SettingsManager::getOptionName(optionsIterator.value()) + QLatin1String("\": "));
 				}
 
-				overrides.endGroup();
-			}
+				file.close();
 
-			const QStringList sessions(SessionsManager::getSessions());
-
-			for (int i = 0; i < sessions.count(); ++i)
-			{
-				QFile file(SessionsManager::getSessionPath(sessions.at(i)));
-
-				if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+				if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 				{
-					QString data(file.readAll());
-
-					for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
-					{
-						data.replace(QLatin1Char('"') + optionsIterator.key() + QLatin1String("\": "), QLatin1Char('"') + SettingsManager::getOptionName(optionsIterator.value()) + QLatin1String("\": "));
-					}
+					QTextStream stream(&file);
+					stream.setCodec("UTF-8");
+					stream << data;
 
 					file.close();
-
-					if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-					{
-						QTextStream stream(&file);
-						stream.setCodec("UTF-8");
-						stream << data;
-
-						file.close();
-					}
 				}
-			}
-
-			if (configurationKeys.contains(QLatin1String("Sidebar/PanelsOption")) || configurationKeys.contains(QLatin1String("Sidebar/ShowToggleEdgeOption")) || configurationKeys.contains(QLatin1String("Sidebar/VisibleOption")))
-			{
-				ToolBarsManager::ToolBarDefinition sidebarDefiniton(ToolBarsManager::getToolBarDefinition(ToolBarsManager::SideBar));
-				sidebarDefiniton.currentPanel = configuration.value(QLatin1String("Sidebar/CurrentPanelOption")).toString();
-				sidebarDefiniton.normalVisibility = (configuration.value(QLatin1String("Sidebar/VisibleOption")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
-				sidebarDefiniton.panels = configuration.value(QLatin1String("Sidebar/PanelsOption")).toStringList();
-				sidebarDefiniton.hasToggle = configuration.value(QLatin1String("Sidebar/ShowToggleEdgeOption")).toBool();
-
-				ToolBarsManager::setToolBar(sidebarDefiniton);
 			}
 		}
 
-		if (*iterator == QLatin1String("sessionsIniToJson"))
+		if (configurationKeys.contains(QLatin1String("Sidebar/PanelsOption")) || configurationKeys.contains(QLatin1String("Sidebar/ShowToggleEdgeOption")) || configurationKeys.contains(QLatin1String("Sidebar/VisibleOption")))
 		{
-			const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+			ToolBarsManager::ToolBarDefinition sidebarDefiniton(ToolBarsManager::getToolBarDefinition(ToolBarsManager::SideBar));
+			sidebarDefiniton.currentPanel = configuration.value(QLatin1String("Sidebar/CurrentPanelOption")).toString();
+			sidebarDefiniton.normalVisibility = (configuration.value(QLatin1String("Sidebar/VisibleOption")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+			sidebarDefiniton.panels = configuration.value(QLatin1String("Sidebar/PanelsOption")).toStringList();
+			sidebarDefiniton.hasToggle = configuration.value(QLatin1String("Sidebar/ShowToggleEdgeOption")).toBool();
 
-			for (int i = 0; i < entries.count(); ++i)
+			ToolBarsManager::setToolBar(sidebarDefiniton);
+		}
+	}
+
+	QString getName() const override
+	{
+		return QLatin1String("optionsRename");
+	}
+
+	QString getTitle() const override
+	{
+		return QT_TRANSLATE_NOOP("migrations", "Options");
+	}
+
+	bool canMigrate() const override
+	{
+		const QStringList sessions(SessionsManager::getSessions());
+		bool needsRename(QFile::exists(SettingsManager::getGlobalPath()) || QFile::exists(SettingsManager::getOverridePath()));
+
+		for (int i = 0; i < sessions.count(); ++i)
+		{
+			needsRename |= QFile::exists(SessionsManager::getSessionPath(sessions.at(i)));
+		}
+
+		return needsRename;
+	}
+};
+
+class SessionsIniToJsonMigration : public Migration
+{
+public:
+	SessionsIniToJsonMigration() : Migration()
+	{
+	}
+
+	void createBackup() const override
+	{
+		const QString backupPath(createBackupPath(QLatin1String("sessions")));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			QFile::copy(entries.at(i).absoluteFilePath(), backupPath + entries.at(i).fileName());
+		}
+	}
+
+	void migrate() const override
+	{
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			QSettings sessionData(entries.at(i).absoluteFilePath(), QSettings::IniFormat);
+			sessionData.setIniCodec("UTF-8");
+
+			SessionInformation session;
+			session.path = entries.at(i).absolutePath() + QDir::separator() + entries.at(i).baseName() + QLatin1String(".json");
+			session.title = sessionData.value(QLatin1String("Session/title"), QString()).toString();
+			session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
+			session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
+
+			const int windowsAmount(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
+			const int defaultZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
+
+			for (int j = 1; j <= windowsAmount; ++j)
 			{
-				QSettings sessionData(entries.at(i).absoluteFilePath(), QSettings::IniFormat);
-				sessionData.setIniCodec("UTF-8");
+				const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(j), 0).toInt());
+				SessionMainWindow sessionEntry;
+				sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(j), QString()).toString().toLatin1());
+				sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(j), 1).toInt() - 1);
 
-				SessionInformation session;
-				session.path = entries.at(i).absolutePath() + QDir::separator() + entries.at(i).baseName() + QLatin1String(".json");
-				session.title = sessionData.value(QLatin1String("Session/title"), QString()).toString();
-				session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
-				session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
-
-				const int windowsAmount(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
-				const int defaultZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
-
-				for (int j = 1; j <= windowsAmount; ++j)
+				for (int k = 1; k <= tabs; ++k)
 				{
-					const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(j), 0).toInt());
-					SessionMainWindow sessionEntry;
-					sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(j), QString()).toString().toLatin1());
-					sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(j), 1).toInt() - 1);
+					const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(j).arg(k), QString()).toString());
+					const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(j).arg(k), QString()).toString());
+					const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(j).arg(k), QString()).toString());
+					const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), QString()).toString().split(QLatin1Char(',')));
+					const int historyAmount(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(j).arg(k), 0).toInt());
+					const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(j).arg(k), -1).toInt());
+					SessionWindow sessionWindow;
+					sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
+					sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
+					sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(j).arg(k), 0).toInt();
+					sessionWindow.historyIndex = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(j).arg(k), 1).toInt() - 1);
+					sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(j).arg(k), false).toBool();
+					sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(j).arg(k), false).toBool();
 
-					for (int k = 1; k <= tabs; ++k)
+					if (!searchEngine.isEmpty())
 					{
-						const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(j).arg(k), QString()).toString());
-						const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(j).arg(k), QString()).toString());
-						const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(j).arg(k), QString()).toString());
-						const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), QString()).toString().split(QLatin1Char(',')));
-						const int historyAmount(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(j).arg(k), 0).toInt());
-						const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(j).arg(k), -1).toInt());
-						SessionWindow sessionWindow;
-						sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
-						sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
-						sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(j).arg(k), 0).toInt();
-						sessionWindow.historyIndex = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(j).arg(k), 1).toInt() - 1);
-						sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(j).arg(k), false).toBool();
-						sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(j).arg(k), false).toBool();
-
-						if (!searchEngine.isEmpty())
-						{
-							sessionWindow.options[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
-						}
-
-						if (!userAgent.isEmpty())
-						{
-							sessionWindow.options[SettingsManager::Network_UserAgentOption] = userAgent;
-						}
-
-						if (reloadTime >= 0)
-						{
-							sessionWindow.options[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
-						}
-
-						for (int l = 1; l <= historyAmount; ++l)
-						{
-							const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(j).arg(k).arg(l), 1).toStringList());
-							WindowHistoryEntry historyEntry;
-							historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), QString()).toString();
-							historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), QString()).toString();
-							historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
-							historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(j).arg(k).arg(l), defaultZoom).toInt();
-
-							sessionWindow.history.append(historyEntry);
-						}
-
-						sessionEntry.windows.append(sessionWindow);
+						sessionWindow.options[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
 					}
 
-					session.windows.append(sessionEntry);
+					if (!userAgent.isEmpty())
+					{
+						sessionWindow.options[SettingsManager::Network_UserAgentOption] = userAgent;
+					}
+
+					if (reloadTime >= 0)
+					{
+						sessionWindow.options[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
+					}
+
+					for (int l = 1; l <= historyAmount; ++l)
+					{
+						const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(j).arg(k).arg(l), 1).toStringList());
+						WindowHistoryEntry historyEntry;
+						historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), QString()).toString();
+						historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), QString()).toString();
+						historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
+						historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(j).arg(k).arg(l), defaultZoom).toInt();
+
+						sessionWindow.history.append(historyEntry);
+					}
+
+					sessionEntry.windows.append(sessionWindow);
 				}
 
-				if (SessionsManager::saveSession(session))
-				{
-					QFile::remove(entries.at(i).absoluteFilePath());
-				}
+				session.windows.append(sessionEntry);
+			}
+
+			if (SessionsManager::saveSession(session))
+			{
+				QFile::remove(entries.at(i).absoluteFilePath());
 			}
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(migrations));
+	QString getName() const override
+	{
+		return QLatin1String("sessionsIniToJson");
+	}
+
+	QString getTitle() const override
+	{
+		return QT_TRANSLATE_NOOP("migrations", "Sessions");
+	}
+
+	bool canMigrate() const override
+	{
+		return !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty();
+	}
+};
+
+Migration::Migration()
+{
 }
 
-void Migrator::createBackup(const QString &identifier)
+void Migration::createBackup() const
 {
-	QString sourcePath;
-	QStringList sourceFilters;
+}
 
-	if (identifier == QLatin1String("optionsRename"))
-	{
-		sourceFilters = QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")});
-	}
-	else if (identifier == QLatin1String("sessionsIniToJson"))
-	{
-		sourcePath = QLatin1String("sessions");
-		sourceFilters = QStringList(QLatin1String("*.ini"));
-	}
+void Migration::migrate() const
+{
+}
 
-	if (sourcePath.isEmpty() && sourceFilters.isEmpty())
-	{
-		return;
-	}
-
-	QString targetPath(SessionsManager::getWritableDataPath(QLatin1String("backups") + QDir::separator() + (sourcePath.isEmpty() ? QLatin1String("other") : sourcePath)) + QDir::separator());
+QString Migration::createBackupPath(const QString &sourcePath)
+{
+	QString backupPath(SessionsManager::getWritableDataPath(QLatin1String("backups") + QDir::separator() + (sourcePath.isEmpty() ? QLatin1String("other") : sourcePath)) + QDir::separator());
 	QString backupName(QDate::currentDate().toString(QLatin1String("yyyyMMdd")));
 	int i(1);
 
 	do
 	{
-		const QString path(targetPath + backupName + ((i > 1) ? QStringLiteral("-%1").arg(i) : QString()) + QDir::separator());
+		const QString path(backupPath + backupName + ((i > 1) ? QStringLiteral("-%1").arg(i) : QString()) + QDir::separator());
 
 		if (!QFile::exists(path))
 		{
-			targetPath = path;
+			backupPath = path;
 
 			break;
 		}
@@ -310,47 +324,66 @@ void Migrator::createBackup(const QString &identifier)
 	}
 	while (true);
 
-	QDir().mkpath(targetPath);
+	QDir().mkpath(backupPath);
 
-	const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(sourcePath)).entryInfoList(sourceFilters));
-
-	for (int i = 0; i < entries.count(); ++i)
-	{
-		QFile::copy(entries.at(i).absoluteFilePath(), targetPath + entries.at(i).fileName());
-	}
+	return backupPath;
 }
 
-void Migrator::registerMigration(const QString &identifier, const QString &title)
+QString Migration::getName() const
 {
-	m_migrations[identifier] = title;
+	return QString();
 }
 
-Migrator::MigrationFlags Migrator::checkMigrationStatus(const QString &identifier) const
+QString Migration::getTitle() const
 {
-	if (!m_migrations.contains(identifier))
+	return QString();
+}
+
+bool Migration::canMigrate() const
+{
+	return false;
+}
+
+Migrator::Migrator(QObject *parent) : QObject(parent)
+{
+}
+
+void Migrator::run()
+{
+	const QVector<Migration> availableMigrations({OptionsRenameMigration(), SessionsIniToJsonMigration()});
+	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
+
+	for (int i = 0; i < availableMigrations.count(); ++i)
 	{
-		return NoMigration;
+		if (!processedMigrations.contains(availableMigrations[i].getName()))
+		{
+			const MigrationFlags flags(checkMigrationStatus(&availableMigrations[i]));
+
+			if (flags.testFlag(IgnoreMigration) || flags.testFlag(ProceedMigration))
+			{
+				processedMigrations.append(availableMigrations[i].getName());
+			}
+
+			if (flags.testFlag(WithBackupMigration))
+			{
+				availableMigrations[i].createBackup();
+			}
+
+			if (flags.testFlag(ProceedMigration))
+			{
+				availableMigrations[i].migrate();
+			}
+		}
 	}
 
-	if (identifier == QLatin1String("optionsRename"))
-	{
-		const QStringList sessions(SessionsManager::getSessions());
-		bool needsOptionsRename(QFile::exists(SettingsManager::getGlobalPath()) || QFile::exists(SettingsManager::getOverridePath()));
+	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
+}
 
-		for (int i = 0; i < sessions.count(); ++i)
-		{
-			needsOptionsRename |= QFile::exists(SessionsManager::getSessionPath(sessions.at(i)));
-		}
-
-		if (!needsOptionsRename)
-		{
-			return IgnoreMigration;
-		}
-	}
-
+Migrator::MigrationFlags Migrator::checkMigrationStatus(const Migration *migration) const
+{
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
-	messageBox.setText(tr("Configuration of %1 needs to be updated to new version.\nDo you want to migrate it?").arg(QCoreApplication::translate("migrations", m_migrations[identifier].toUtf8().constData())));
+	messageBox.setText(tr("Configuration of %1 needs to be updated to new version.\nDo you want to migrate it?").arg(QCoreApplication::translate("migrations", migration->getTitle().toUtf8().constData())));
 	messageBox.setIcon(QMessageBox::Question);
 	messageBox.setCheckBox(new QCheckBox(tr("Create backup")));
 	messageBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
