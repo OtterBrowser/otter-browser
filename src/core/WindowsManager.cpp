@@ -1145,7 +1145,7 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(const QVariantMap &
 
 int WindowsManager::getWindowCount(bool onlyPrivate) const
 {
-	if (!onlyPrivate || isPrivate())
+	if (!onlyPrivate || m_isPrivate)
 	{
 		return m_mainWindow->getTabBar()->count();
 	}
