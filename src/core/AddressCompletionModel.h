@@ -80,7 +80,7 @@ public:
 		QUrl url;
 		QIcon icon;
 		QDateTime timeVisited;
-		EntryType type;
+		EntryType type = UnknownType;
 
 		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime timeVisitedValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), type(typeValue)
 		{
