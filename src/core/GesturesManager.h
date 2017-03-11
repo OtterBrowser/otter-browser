@@ -71,6 +71,7 @@ protected:
 		GestureStep(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
 		explicit GestureStep(const QInputEvent *event);
 
+		QString toString() const;
 		bool operator ==(const GestureStep &other) const;
 		bool operator !=(const GestureStep &other) const;
 	};

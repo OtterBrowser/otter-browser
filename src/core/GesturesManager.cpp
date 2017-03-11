@@ -103,6 +103,132 @@ GesturesManager::GestureStep::GestureStep(const QInputEvent *event) : type(event
 	}
 }
 
+QString GesturesManager::GestureStep::toString() const
+{
+	QString string;
+
+	switch (type)
+	{
+		case QEvent::MouseButtonPress:
+			string += QLatin1String("press");
+
+			break;
+		case QEvent::MouseButtonRelease:
+			string += QLatin1String("release");
+
+			break;
+		case QEvent::MouseButtonDblClick:
+			string += QLatin1String("doubleClick");
+
+			break;
+		case QEvent::Wheel:
+			string += QLatin1String("scroll");
+
+			break;
+		case QEvent::MouseMove:
+			string += QLatin1String("move");
+
+			break;
+		default:
+			break;
+	}
+
+	if (type == QEvent::Wheel || type == QEvent::MouseMove)
+	{
+		switch (direction)
+		{
+			case MouseGestures::MoveUpMouseAction:
+				string += QLatin1String("Up");
+
+				break;
+			case MouseGestures::MoveDownMouseAction:
+				string += QLatin1String("Down");
+
+				break;
+			case MouseGestures::MoveLeftMouseAction:
+				string += QLatin1String("Left");
+
+				break;
+			case MouseGestures::MoveRightMouseAction:
+				string += QLatin1String("Right");
+
+				break;
+			case MouseGestures::MoveHorizontallyMouseAction:
+				string += QLatin1String("Horizontal");
+
+				break;
+			case MouseGestures::MoveVerticallyMouseAction:
+				string += QLatin1String("Vertical");
+
+				break;
+			default:
+				break;
+		}
+	}
+	else
+	{
+		switch (button)
+		{
+			case Qt::LeftButton:
+				string += QLatin1String("Left");
+
+				break;
+			case Qt::RightButton:
+				string += QLatin1String("Right");
+
+				break;
+			case Qt::MiddleButton:
+				string += QLatin1String("Middle");
+
+				break;
+			case Qt::BackButton:
+				string += QLatin1String("Back");
+
+				break;
+			case Qt::ForwardButton:
+				string += QLatin1String("Forward");
+
+				break;
+			case Qt::TaskButton:
+				string += QLatin1String("Task");
+
+				break;
+			default:
+				break;
+		}
+
+		for (int i = 4; i <= 24; ++i)
+		{
+			if (button == static_cast<Qt::MouseButton>(Qt::ExtraButton1 << (i - 1)))
+			{
+				string += QStringLiteral("Extra%1").arg(i);
+			}
+		}
+	}
+
+	if (modifiers.testFlag(Qt::ShiftModifier))
+	{
+		string += QLatin1String("+shift");
+	}
+
+	if (modifiers.testFlag(Qt::ControlModifier))
+	{
+		string += QLatin1String("+ctrl");
+	}
+
+	if (modifiers.testFlag(Qt::AltModifier))
+	{
+		string += QLatin1String("+alt");
+	}
+
+	if (modifiers.testFlag(Qt::MetaModifier))
+	{
+		string += QLatin1String("+meta");
+	}
+
+	return string;
+}
+
 bool GesturesManager::GestureStep::operator ==(const GestureStep &other) const
 {
 	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers || type == QEvent::MouseMove);
