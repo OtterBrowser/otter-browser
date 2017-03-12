@@ -239,7 +239,7 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 
 QUrl QtWebKitWebBackend::getHomePage() const
 {
-	return QUrl(QLatin1String("http://otter-browser.org/"));
+	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
 QString QtWebKitWebBackend::getActiveDictionary()

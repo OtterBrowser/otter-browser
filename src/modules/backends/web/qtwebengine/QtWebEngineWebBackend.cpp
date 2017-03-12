@@ -311,7 +311,7 @@ QStringList QtWebEngineWebBackend::getBlockedElements(const QString &domain) con
 
 QUrl QtWebEngineWebBackend::getHomePage() const
 {
-	return QUrl(QLatin1String("http://otter-browser.org/"));
+	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
 WebBackend::BackendCapabilities QtWebEngineWebBackend::getCapabilities() const

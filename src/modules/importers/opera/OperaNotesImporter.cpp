@@ -148,7 +148,7 @@ QString OperaNotesImporter::getBrowser() const
 
 QUrl OperaNotesImporter::getHomePage() const
 {
-	return QUrl(QLatin1String("http://otter-browser.org/"));
+	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
 QStringList OperaNotesImporter::getFileFilters() const

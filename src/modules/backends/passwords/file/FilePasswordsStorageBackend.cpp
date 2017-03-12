@@ -335,7 +335,7 @@ QString FilePasswordsStorageBackend::getVersion() const
 
 QUrl FilePasswordsStorageBackend::getHomePage() const
 {
-	return QUrl(QLatin1String("http://otter-browser.org/"));
+	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
 QStringList FilePasswordsStorageBackend::getHosts()

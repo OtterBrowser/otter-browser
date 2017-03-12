@@ -178,7 +178,7 @@ QString HtmlBookmarksImporter::getBrowser() const
 
 QUrl HtmlBookmarksImporter::getHomePage() const
 {
-	return QUrl(QLatin1String("http://otter-browser.org/"));
+	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
 
 QStringList HtmlBookmarksImporter::getFileFilters() const
