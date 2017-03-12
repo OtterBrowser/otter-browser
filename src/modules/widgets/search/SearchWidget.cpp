@@ -141,7 +141,6 @@ QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(parent),
 	m_window(nullptr),
 	m_suggester(nullptr),
-	m_isIgnoringActivation(false),
 	m_isSearchEngineLocked(false)
 {
 	setMinimumWidth(100);
@@ -234,7 +233,7 @@ void SearchWidget::focusInEvent(QFocusEvent *event)
 
 void SearchWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && !isPopupVisible())
 	{
 		sendRequest(text().trimmed());
 
@@ -243,30 +242,12 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 		return;
 	}
 
-	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
+	if ((event->key() == Qt::Key_Down || event->key() == Qt::Key_Up) && !m_isSearchEngineLocked && !isPopupVisible())
 	{
-		if (m_isSearchEngineLocked)
-		{
-			QWidget::keyPressEvent(event);
-
-			return;
-		}
-
-		disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(setQuery(QString)));
-
-		m_isIgnoringActivation = true;
+		showCompletion(true);
 	}
 
 	LineEditWidget::keyPressEvent(event);
-
-	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
-	{
-		m_isIgnoringActivation = false;
-
-		setText(m_query);
-
-		connect(this, SIGNAL(textChanged(QString)), this, SLOT(setQuery(QString)));
-	}
 }
 
 void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -354,10 +335,6 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 		return;
 	}
 
-	disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(setQuery(QString)));
-
-	m_isIgnoringActivation = true;
-
 	int index(getCurrentIndex().row());
 	QStandardItemModel *model(SearchEnginesManager::getSearchEnginesModel());
 
@@ -369,7 +346,7 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 
 			if (modelIndex.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
 			{
-				setSearchEngine(modelIndex);
+				setSearchEngine(modelIndex, false);
 
 				break;
 			}
@@ -392,7 +369,7 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 
 			if (modelIndex.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
 			{
-				setSearchEngine(modelIndex);
+				setSearchEngine(modelIndex, false);
 
 				break;
 			}
@@ -407,12 +384,6 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 			}
 		}
 	}
-
-	m_isIgnoringActivation = false;
-
-	setText(m_query);
-
-	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setQuery(QString)));
 }
 
 void SearchWidget::showCompletion(bool showSearchModel)
@@ -445,21 +416,18 @@ void SearchWidget::sendRequest(const QString &query)
 		m_query = query;
 	}
 
-	if (!m_isIgnoringActivation)
+	if (m_query.isEmpty())
 	{
-		if (m_query.isEmpty())
-		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_storedSearchEngine));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_storedSearchEngine));
 
-			if (searchEngine.formUrl.isValid())
-			{
-				emit requestedOpenUrl(searchEngine.formUrl, WindowsManager::calculateOpenHints());
-			}
-		}
-		else
+		if (searchEngine.formUrl.isValid())
 		{
-			emit requestedSearch(m_query, m_storedSearchEngine, WindowsManager::calculateOpenHints());
+			emit requestedOpenUrl(searchEngine.formUrl, WindowsManager::calculateOpenHints());
 		}
+	}
+	else
+	{
+		emit requestedSearch(m_query, m_storedSearchEngine, WindowsManager::calculateOpenHints());
 	}
 }
 
@@ -650,7 +618,34 @@ void SearchWidget::updateGeometries()
 	setTextMargins(margins);
 }
 
-void SearchWidget::setSearchEngine(QModelIndex index)
+void SearchWidget::setSearchEngine(const QString &searchEngine)
+{
+	if (m_isSearchEngineLocked && searchEngine != m_options.value(QLatin1String("searchEngine")).toString())
+	{
+		return;
+	}
+
+	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
+
+	if (searchEngines.isEmpty())
+	{
+		hidePopup();
+		setEnabled(false);
+		setToolTip(QString());
+		setPlaceholderText(QString());
+
+		return;
+	}
+
+	setSearchEngine(getCurrentIndex());
+
+	if (m_suggester)
+	{
+		m_suggester->setSearchEngine(m_storedSearchEngine);
+	}
+}
+
+void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest)
 {
 	if (m_suggester && getPopup()->model() == m_suggester->getModel())
 	{
@@ -684,7 +679,7 @@ void SearchWidget::setSearchEngine(QModelIndex index)
 			m_suggester->setQuery(QString());
 		}
 
-		if (!m_query.isEmpty() && sender() != m_window)
+		if (canSendRequest && !m_query.isEmpty() && sender() != m_window)
 		{
 			sendRequest();
 		}
@@ -705,35 +700,9 @@ void SearchWidget::setSearchEngine(QModelIndex index)
 		}
 	}
 
+	update();
 	setEnabled(true);
 	hidePopup();
-}
-
-void SearchWidget::setSearchEngine(const QString &searchEngine)
-{
-	if (m_isSearchEngineLocked && searchEngine != m_options.value(QLatin1String("searchEngine")).toString())
-	{
-		return;
-	}
-
-	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-
-	if (searchEngines.isEmpty())
-	{
-		hidePopup();
-		setEnabled(false);
-		setToolTip(QString());
-		setPlaceholderText(QString());
-
-		return;
-	}
-
-	setSearchEngine(getCurrentIndex());
-
-	if (m_suggester)
-	{
-		m_suggester->setSearchEngine(m_storedSearchEngine);
-	}
 }
 
 void SearchWidget::setOptions(const QVariantMap &options)

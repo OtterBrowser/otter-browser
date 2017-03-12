@@ -54,7 +54,6 @@ public:
 
 public slots:
 	void setWindow(Window *window = nullptr);
-	void setSearchEngine(const QString &searchEngine = QString());
 	void setOptions(const QVariantMap &options);
 	void setQuery(const QString &query);
 
@@ -79,7 +78,8 @@ protected slots:
 	void restoreCurrentSearchEngine();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void updateGeometries();
-	void setSearchEngine(QModelIndex index);
+	void setSearchEngine(const QString &searchEngine = QString());
+	void setSearchEngine(const QModelIndex &index, bool canSendRequest = true);
 
 private:
 	QPointer<Window> m_window;
@@ -91,7 +91,6 @@ private:
 	QRect m_addButtonRectangle;
 	QRect m_searchButtonRectangle;
 	QVariantMap m_options;
-	bool m_isIgnoringActivation;
 	bool m_isSearchEngineLocked;
 
 signals:
