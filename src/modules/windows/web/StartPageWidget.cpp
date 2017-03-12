@@ -339,21 +339,11 @@ void StartPageWidget::addTile()
 	OpenAddressDialog dialog(this);
 	dialog.setWindowTitle(tr("Add Tile"));
 
-	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(addTile(QUrl)));
+	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), m_model, SLOT(addTile(QUrl)));
 
 	m_ignoreEnter = true;
 
 	dialog.exec();
-}
-
-void StartPageWidget::addTile(const QUrl &url)
-{
-	BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString())));
-
-	if (bookmark)
-	{
-		m_model->reloadTile(bookmark->index(), true);
-	}
 }
 
 void StartPageWidget::openTile()

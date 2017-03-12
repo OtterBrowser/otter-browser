@@ -179,6 +179,16 @@ void StartPageModel::reloadModel()
 	emit modelModified();
 }
 
+void StartPageModel::addTile(const QUrl &url)
+{
+	BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), m_bookmark));
+
+	if (bookmark)
+	{
+		reloadTile(bookmark->index(), true);
+	}
+}
+
 void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 {
 	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());

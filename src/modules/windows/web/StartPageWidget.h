@@ -84,7 +84,6 @@ protected:
 protected slots:
 	void configure();
 	void addTile();
-	void addTile(const QUrl &url);
 	void openTile();
 	void editTile();
 	void reloadTile();
