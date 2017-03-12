@@ -99,6 +99,9 @@ void StartPageModel::reloadModel()
 
 	if (!m_bookmark)
 	{
+		disconnect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+		disconnect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+
 		const QStringList directories(path.split(QLatin1Char('/'), QString::SkipEmptyParts));
 
 		m_bookmark = BookmarksManager::getModel()->getRootItem();
@@ -121,13 +124,12 @@ void StartPageModel::reloadModel()
 
 			if (!hasFound)
 			{
-				disconnect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
-
 				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, 0, QUrl(), directories.at(i), m_bookmark);
-
-				connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
 			}
 		}
+
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
 	}
 
 	clear();
