@@ -229,13 +229,19 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 
 void StartPageModel::handleOptionChanged(int identifier)
 {
-	if (identifier == SettingsManager::Backends_WebOption)
+	switch (identifier)
 	{
-		connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
-	}
-	else if (identifier == SettingsManager::StartPage_BookmarksFolderOption || identifier == SettingsManager::StartPage_ShowAddTileOption)
-	{
-		reloadModel();
+		case SettingsManager::Backends_WebOption:
+			connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
+
+			break;
+		case SettingsManager::StartPage_BookmarksFolderOption:
+		case SettingsManager::StartPage_ShowAddTileOption:
+			reloadModel();
+
+			break;
+		default:
+			break;
 	}
 }
 
