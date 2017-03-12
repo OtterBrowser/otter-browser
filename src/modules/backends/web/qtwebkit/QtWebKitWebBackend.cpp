@@ -242,11 +242,6 @@ QUrl QtWebKitWebBackend::getHomePage() const
 	return QUrl(QLatin1String("http://otter-browser.org/"));
 }
 
-QIcon QtWebKitWebBackend::getIcon() const
-{
-	return QIcon();
-}
-
 QString QtWebKitWebBackend::getActiveDictionary()
 {
 	if (m_activeWidget && m_activeWidget->getOption(SettingsManager::Browser_EnableSpellCheckOption, m_activeWidget->getUrl()).toBool())

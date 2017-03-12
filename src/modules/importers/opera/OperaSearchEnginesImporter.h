@@ -43,7 +43,6 @@ public:
 	QString getSuggestedPath(const QString &path = QString()) const override;
 	QString getBrowser() const override;
 	QUrl getHomePage() const override;
-	QIcon getIcon() const override;
 	QStringList getFileFilters() const override;
 	ImportType getImportType() const override;
 

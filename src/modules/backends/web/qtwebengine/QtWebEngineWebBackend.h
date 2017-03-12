@@ -48,7 +48,6 @@ public:
 	QString getUserAgent(const QString &pattern = QString()) const override;
 	QStringList getBlockedElements(const QString &domain) const;
 	QUrl getHomePage() const override;
-	QIcon getIcon() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
 	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 

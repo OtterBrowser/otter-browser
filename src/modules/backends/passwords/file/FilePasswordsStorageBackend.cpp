@@ -338,11 +338,6 @@ QUrl FilePasswordsStorageBackend::getHomePage() const
 	return QUrl(QLatin1String("http://otter-browser.org/"));
 }
 
-QIcon FilePasswordsStorageBackend::getIcon() const
-{
-	return QIcon();
-}
-
 QStringList FilePasswordsStorageBackend::getHosts()
 {
 	if (!m_isInitialized)

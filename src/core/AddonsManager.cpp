@@ -54,6 +54,11 @@ QString Addon::getName() const
 	return QString();
 }
 
+QIcon Addon::getIcon() const
+{
+	return QIcon();
+}
+
 Addon::AddonType Addon::getType() const
 {
 	return UnknownType;

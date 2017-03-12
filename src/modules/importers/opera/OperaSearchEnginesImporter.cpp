@@ -100,11 +100,6 @@ QUrl OperaSearchEnginesImporter::getHomePage() const
 	return QUrl(QLatin1String("http://otter-browser.org/"));
 }
 
-QIcon OperaSearchEnginesImporter::getIcon() const
-{
-	return QIcon();
-}
-
 QStringList OperaSearchEnginesImporter::getFileFilters() const
 {
 	return QStringList(tr("Opera search engines files (search.ini)"));

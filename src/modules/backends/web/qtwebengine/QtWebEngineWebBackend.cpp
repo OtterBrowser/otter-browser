@@ -314,11 +314,6 @@ QUrl QtWebEngineWebBackend::getHomePage() const
 	return QUrl(QLatin1String("http://otter-browser.org/"));
 }
 
-QIcon QtWebEngineWebBackend::getIcon() const
-{
-	return QIcon();
-}
-
 WebBackend::BackendCapabilities QtWebEngineWebBackend::getCapabilities() const
 {
 	return (UserScriptsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability);

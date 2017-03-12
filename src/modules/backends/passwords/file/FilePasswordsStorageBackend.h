@@ -40,7 +40,6 @@ public:
 	QString getDescription() const override;
 	QString getVersion() const override;
 	QUrl getHomePage() const override;
-	QIcon getIcon() const override;
 	QStringList getHosts() override;
 	QVector<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
 	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password) override;
