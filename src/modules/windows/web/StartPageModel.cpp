@@ -241,6 +241,11 @@ void StartPageModel::handleOptionChanged(int identifier)
 
 void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
 {
+	if (!m_bookmark)
+	{
+		m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+	}
+
 	if (m_bookmark && (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark)))
 	{
 		reloadModel();
@@ -249,6 +254,11 @@ void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
 
 void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
 {
+	if (!m_bookmark)
+	{
+		m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+	}
+
 	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent)))
 	{
 		reloadModel();
