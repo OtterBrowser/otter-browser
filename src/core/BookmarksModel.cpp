@@ -752,9 +752,9 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 		bookmark->setDropEnabled(false);
 	}
 
-	setData(bookmark->index(), type, TypeRole);
-	setData(bookmark->index(), url, UrlRole);
-	setData(bookmark->index(), title, TitleRole);
+	bookmark->setData(type, TypeRole);
+	bookmark->setData(url, UrlRole);
+	bookmark->setData(title, TitleRole);
 
 	if (type != RootBookmark && type != TrashBookmark && type != FolderBookmark)
 	{
@@ -768,7 +768,7 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
 		}
 
-		setData(bookmark->index(), identifier, IdentifierRole);
+		bookmark->setData(identifier, IdentifierRole);
 
 		m_identifiers[identifier] = bookmark;
 	}
