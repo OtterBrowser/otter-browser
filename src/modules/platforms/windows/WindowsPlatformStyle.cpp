@@ -122,6 +122,10 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 
 						Style::drawControl(element, &menuItemOption, painter, widget);
 					}
+					else if (element == QStyle::CE_ToolBar)
+					{
+						drawToolBarEdge(option, painter);
+					}
 				}
 
 				return;
@@ -131,6 +135,11 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 	}
 
 	Style::drawControl(element, option, painter, widget);
+
+	if (element == QStyle::CE_ToolBar)
+	{
+		drawToolBarEdge(option, painter);
+	}
 }
 
 void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
