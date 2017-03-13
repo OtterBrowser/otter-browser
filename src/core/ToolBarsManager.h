@@ -93,7 +93,7 @@ public:
 	static void setToolBarsLocked(bool locked);
 	static ToolBarsManager* getInstance();
 	static QString getToolBarName(int identifier);
-	static QVector<ToolBarsManager::ToolBarDefinition> getToolBarDefinitions();
+	static QVector<ToolBarsManager::ToolBarDefinition> getToolBarDefinitions(Qt::ToolBarAreas areas = Qt::AllToolBarAreas);
 	static ToolBarsManager::ToolBarDefinition getToolBarDefinition(int identifier);
 	static int getToolBarIdentifier(const QString &name);
 	static bool areToolBarsLocked();

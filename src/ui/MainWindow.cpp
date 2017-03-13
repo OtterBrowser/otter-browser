@@ -91,30 +91,29 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	if (m_hasToolBars)
 	{
-		const QList<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
-		QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions(ToolBarsManager::getToolBarDefinitions());
-
-		std::sort(toolBarDefinitions.begin(), toolBarDefinitions.end(), [&](const ToolBarsManager::ToolBarDefinition &first, const ToolBarsManager::ToolBarDefinition &second)
-		{
-			return (first.row > second.row);
-		});
+		const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
 
 		for (int i = 0; i < 4; ++i)
 		{
+			const Qt::ToolBarArea area(areas.at(i));
+			QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions(ToolBarsManager::getToolBarDefinitions(area));
+
+			std::sort(toolBarDefinitions.begin(), toolBarDefinitions.end(), [&](const ToolBarsManager::ToolBarDefinition &first, const ToolBarsManager::ToolBarDefinition &second)
+			{
+				return (first.row > second.row);
+			});
+
 			for (int j = 0; j < toolBarDefinitions.count(); ++j)
 			{
-				if (areas.at(i) == toolBarDefinitions.at(j).location)
+				ToolBarWidget *toolBar(new ToolBarWidget(toolBarDefinitions.at(j).identifier, nullptr, this));
+
+				if (toolBarDefinitions.at(j).identifier == ToolBarsManager::TabBar)
 				{
-					ToolBarWidget *toolBar(new ToolBarWidget(toolBarDefinitions.at(j).identifier, nullptr, this));
-
-					if (toolBarDefinitions.at(j).identifier == ToolBarsManager::TabBar)
-					{
-						m_tabBar = toolBar->findChild<TabBarWidget*>();
-					}
-
-					addToolBar(areas.at(i), toolBar);
-					addToolBarBreak(areas.at(i));
+					m_tabBar = toolBar->findChild<TabBarWidget*>();
 				}
+
+				addToolBar(area, toolBar);
+				addToolBarBreak(area);
 			}
 		}
 	}

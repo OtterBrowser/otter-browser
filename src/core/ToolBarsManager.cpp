@@ -607,7 +607,7 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 	return definitions;
 }
 
-QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
+QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitions(Qt::ToolBarAreas areas)
 {
 	if (m_definitions.isEmpty())
 	{
@@ -707,11 +707,13 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		if (!m_definitions.at(i).wasRemoved)
+		if (!m_definitions.at(i).wasRemoved && (areas == Qt::AllToolBarAreas || areas.testFlag(m_definitions.at(i).location)))
 		{
 			definitions.append(m_definitions.at(i));
 		}
 	}
+
+	definitions.squeeze();
 
 	return definitions;
 }
