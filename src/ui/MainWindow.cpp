@@ -112,8 +112,12 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 					m_tabBar = toolBar->findChild<TabBarWidget*>();
 				}
 
+				if (i > 0)
+				{
+					addToolBarBreak(area);
+				}
+
 				addToolBar(area, toolBar);
-				addToolBarBreak(area);
 			}
 		}
 	}
@@ -887,14 +891,14 @@ void MainWindow::beginToolBarDragging(bool isSidebar)
 		}
 	}
 
-	const QList<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
+	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
 
 	for (int i = 0; i < 4; ++i)
 	{
 		if (!isSidebar || areas.at(i) == Qt::LeftToolBarArea ||areas.at(i) == Qt::RightToolBarArea)
 		{
-			addToolBar(areas.at(i), new ToolBarDropZoneWidget(this));
 			addToolBarBreak(areas.at(i));
+			addToolBar(areas.at(i), new ToolBarDropZoneWidget(this));
 		}
 	}
 }
@@ -957,7 +961,6 @@ void MainWindow::handleToolBarAdded(int identifier)
 	if (toolBars.isEmpty() || definition.row < 0)
 	{
 		addToolBar(definition.location, toolBar);
-		addToolBarBreak(definition.location);
 	}
 	else
 	{
@@ -977,8 +980,12 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 		for (int i = 0; i < toolBars.count(); ++i)
 		{
+			if (i > 0)
+			{
+				addToolBarBreak(definition.location);
+			}
+
 			addToolBar(definition.location, toolBars.at(i));
-			addToolBarBreak(definition.location);
 
 			toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
 		}
@@ -1079,8 +1086,12 @@ void MainWindow::handleToolBarMoved(int identifier)
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
+		if (i > 0)
+		{
+			addToolBarBreak(definition.location);
+		}
+
 		addToolBar(definition.location, toolBars.at(i));
-		addToolBarBreak(definition.location);
 
 		toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
 	}
