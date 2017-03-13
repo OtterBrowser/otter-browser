@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SearchBarWidget.h"
+#include "../../../core/ThemesManager.h"
 
 #include "ui_SearchBarWidget.h"
 
@@ -30,6 +31,9 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::SearchBarWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->nextButton->setIcon(ThemesManager::getIcon(QLatin1String("go-down")));
+	m_ui->previousButton->setIcon(ThemesManager::getIcon(QLatin1String("go-up")));
+	m_ui->closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
 
 	connect(m_ui->queryLineEdit, SIGNAL(textEdited(QString)), this, SIGNAL(queryChanged()));
 	connect(m_ui->queryLineEdit, SIGNAL(returnPressed()), this, SLOT(notifyRequestedSearch()));

@@ -44,10 +44,6 @@
      <property name="toolTip">
       <string>Find Next</string>
      </property>
-     <property name="icon">
-      <iconset resource="../../../../resources/resources.qrc">
-       <normaloff>:/icons/go-down.png</normaloff>:/icons/go-down.png</iconset>
-     </property>
     </widget>
    </item>
    <item>
@@ -57,10 +53,6 @@
      </property>
      <property name="toolTip">
       <string>Find Previous</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../../resources/resources.qrc">
-       <normaloff>:/icons/go-up.png</normaloff>:/icons/go-up.png</iconset>
      </property>
     </widget>
    </item>
@@ -117,10 +109,6 @@
      <property name="toolTip">
       <string>Close</string>
      </property>
-     <property name="icon">
-      <iconset resource="../../../../resources/resources.qrc">
-       <normaloff>:/icons/window-close.png</normaloff>:/icons/window-close.png</iconset>
-     </property>
      <property name="autoRaise">
       <bool>true</bool>
      </property>
@@ -128,8 +116,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
