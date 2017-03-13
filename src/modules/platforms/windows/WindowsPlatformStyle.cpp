@@ -146,7 +146,11 @@ void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const
 {
 	if (m_isModernStyle && element == QStyle::PE_PanelStatusBar)
 	{
+		painter->save();
 		painter->fillRect(option->rect, Qt::white);
+		painter->setPen(QPen(Qt::lightGray, 1));
+		painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
+		painter->restore();
 
 		return;
 	}
