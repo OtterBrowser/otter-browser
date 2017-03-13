@@ -36,7 +36,7 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
-void Style::drawDropZone(const QLine &line, QPainter *painter)
+void Style::drawDropZone(const QLine &line, QPainter *painter) const
 {
 	painter->save();
 	painter->setPen(QPen(QGuiApplication::palette().text(), 3, Qt::DotLine));
@@ -44,6 +44,41 @@ void Style::drawDropZone(const QLine &line, QPainter *painter)
 	painter->setPen(QPen(QGuiApplication::palette().text(), 9, Qt::SolidLine, Qt::RoundCap));
 	painter->drawPoint(line.p1());
 	painter->drawPoint(line.p2());
+	painter->restore();
+}
+
+void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
+{
+	const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
+
+	if (!toolBarOption || toolBarOption->positionOfLine == QStyleOptionToolBar::Beginning || toolBarOption->positionOfLine == QStyleOptionToolBar::Middle || toolBarOption->toolBarArea == Qt::NoToolBarArea)
+	{
+		return;
+	}
+
+	painter->save();
+	painter->setPen(QPen(Qt::lightGray, 1));
+
+	switch (toolBarOption->toolBarArea)
+	{
+		case Qt::LeftToolBarArea:
+			painter->drawLine(option->rect.right(), option->rect.top(), option->rect.right(), option->rect.bottom());
+
+			break;
+		case Qt::RightToolBarArea:
+			painter->drawLine(option->rect.left(), option->rect.top(), option->rect.left(), option->rect.bottom());
+
+			break;
+		case Qt::BottomToolBarArea:
+			painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
+
+			break;
+		default:
+			painter->drawLine(option->rect.left(), option->rect.bottom(), option->rect.right(), option->rect.bottom());
+
+			break;
+	}
+
 	painter->restore();
 }
 
