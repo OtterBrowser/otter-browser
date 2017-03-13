@@ -23,7 +23,6 @@
 #include "MainWindow.h"
 #include "OpenAddressDialog.h"
 #include "ToolBarWidget.h"
-#include "WebWidget.h"
 #include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
@@ -46,8 +45,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QMdiSubWindow>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
