@@ -629,6 +629,8 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 
 	if (searchEngines.isEmpty())
 	{
+		m_storedSearchEngine = QString();
+
 		hidePopup();
 		setEnabled(false);
 		setToolTip(QString());
@@ -636,6 +638,8 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 
 		return;
 	}
+
+	m_storedSearchEngine = (searchEngines.contains(searchEngine) ? searchEngine : QString());
 
 	setSearchEngine(getCurrentIndex());
 
