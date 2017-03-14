@@ -79,7 +79,6 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
-	int getTilesPerRow() const;
 
 protected slots:
 	void configure();

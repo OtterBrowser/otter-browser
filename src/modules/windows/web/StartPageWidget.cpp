@@ -561,8 +561,9 @@ void StartPageWidget::updateSize()
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
 	const int tileHeight(SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() * zoom);
 	const int tileWidth(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() * zoom);
+	const int tilesPerRow(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
 	const int amount(m_model->rowCount());
-	const int columns(getTilesPerRow());
+	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, int((width() - 50) / tileWidth)));
 	const int rows(qCeil(amount / qreal(columns)));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
@@ -636,18 +637,6 @@ QPixmap StartPageWidget::getThumbnail()
 	}
 
 	return m_thumbnail;
-}
-
-int StartPageWidget::getTilesPerRow() const
-{
-	const int tilesPerRow(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
-
-	if (tilesPerRow > 0)
-	{
-		return tilesPerRow;
-	}
-
-	return qMax(1, int((width() - 50) / (SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() * (SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100)))));
 }
 
 bool StartPageWidget::event(QEvent *event)
