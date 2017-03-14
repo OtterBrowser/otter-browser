@@ -439,7 +439,16 @@ void Window::setOption(int identifier, const QVariant &value)
 	}
 	else
 	{
-		m_session.options[identifier] = value;
+		if (value.isNull())
+		{
+			m_session.options.remove(identifier);
+		}
+		else
+		{
+			m_session.options[identifier] = value;
+		}
+
+		emit optionChanged(identifier, value);
 	}
 }
 
