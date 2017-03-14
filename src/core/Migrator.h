@@ -30,6 +30,7 @@ class Migration
 {
 public:
 	Migration();
+	virtual ~Migration();
 
 	virtual void createBackup() const;
 	virtual void migrate() const;

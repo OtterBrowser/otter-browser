@@ -295,6 +295,10 @@ Migration::Migration()
 {
 }
 
+Migration::~Migration()
+{
+}
+
 void Migration::createBackup() const
 {
 }
@@ -350,37 +354,44 @@ Migrator::Migrator(QObject *parent) : QObject(parent)
 
 void Migrator::run()
 {
-	const QVector<Migration> availableMigrations({OptionsRenameMigration(), SessionsIniToJsonMigration()});
+	const QVector<Migration*> availableMigrations({new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 
 	for (int i = 0; i < availableMigrations.count(); ++i)
 	{
-		if (!processedMigrations.contains(availableMigrations[i].getName()))
+		if (!processedMigrations.contains(availableMigrations[i]->getName()))
 		{
-			const MigrationFlags flags(checkMigrationStatus(&availableMigrations[i]));
+			const MigrationFlags flags(checkMigrationStatus(availableMigrations[i]));
 
 			if (flags.testFlag(IgnoreMigration) || flags.testFlag(ProceedMigration))
 			{
-				processedMigrations.append(availableMigrations[i].getName());
+				processedMigrations.append(availableMigrations[i]->getName());
 			}
 
 			if (flags.testFlag(WithBackupMigration))
 			{
-				availableMigrations[i].createBackup();
+				availableMigrations[i]->createBackup();
 			}
 
 			if (flags.testFlag(ProceedMigration))
 			{
-				availableMigrations[i].migrate();
+				availableMigrations[i]->migrate();
 			}
 		}
 	}
+
+	qDeleteAll(availableMigrations);
 
 	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
 }
 
 Migrator::MigrationFlags Migrator::checkMigrationStatus(const Migration *migration) const
 {
+	if (!migration->canMigrate())
+	{
+		return IgnoreMigration;
+	}
+
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
 	messageBox.setText(tr("Configuration of %1 needs to be updated to new version.\nDo you want to migrate it?").arg(QCoreApplication::translate("migrations", migration->getTitle().toUtf8().constData())));
