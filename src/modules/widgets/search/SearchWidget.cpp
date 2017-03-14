@@ -743,8 +743,6 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
-
-		setSearchEngine();
 	}
 
 	m_window = window;
@@ -779,7 +777,7 @@ void SearchWidget::setWindow(Window *window)
 			connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 		}
 
-		setSearchEngine();
+		setSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 	}
 
 	updateGeometries();
