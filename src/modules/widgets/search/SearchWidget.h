@@ -85,7 +85,7 @@ private:
 	QPointer<Window> m_window;
 	SearchSuggester *m_suggester;
 	QString m_query;
-	QString m_storedSearchEngine;
+	QString m_searchEngine;
 	QRect m_iconRectangle;
 	QRect m_dropdownArrowRectangle;
 	QRect m_addButtonRectangle;

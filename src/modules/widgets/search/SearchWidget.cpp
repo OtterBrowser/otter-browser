@@ -173,7 +173,7 @@ void SearchWidget::changeEvent(QEvent *event)
 	{
 		case QEvent::LanguageChange:
 			{
-				const QString title(SearchEnginesManager::getSearchEngine(m_storedSearchEngine).title);
+				const QString title(SearchEnginesManager::getSearchEngine(m_searchEngine).title);
 
 				setToolTip(tr("Search using %1").arg(title));
 				setPlaceholderText(tr("Search using %1").arg(title));
@@ -197,7 +197,7 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 
 	if (isEnabled())
 	{
-		painter.drawPixmap(m_iconRectangle, SearchEnginesManager::getSearchEngine(m_storedSearchEngine).icon.pixmap(m_iconRectangle.size()));
+		painter.drawPixmap(m_iconRectangle, SearchEnginesManager::getSearchEngine(m_searchEngine).icon.pixmap(m_iconRectangle.size()));
 
 		QStyleOption arrow;
 		arrow.initFrom(this);
@@ -418,7 +418,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 	if (m_query.isEmpty())
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_storedSearchEngine));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_searchEngine));
 
 		if (searchEngine.formUrl.isValid())
 		{
@@ -427,7 +427,7 @@ void SearchWidget::sendRequest(const QString &query)
 	}
 	else
 	{
-		emit requestedSearch(m_query, m_storedSearchEngine, WindowsManager::calculateOpenHints());
+		emit requestedSearch(m_query, m_searchEngine, WindowsManager::calculateOpenHints());
 	}
 }
 
@@ -462,11 +462,11 @@ void SearchWidget::storeCurrentSearchEngine()
 
 void SearchWidget::restoreCurrentSearchEngine()
 {
-	if (!m_storedSearchEngine.isEmpty())
+	if (!m_searchEngine.isEmpty())
 	{
-		setSearchEngine(m_storedSearchEngine);
+		setSearchEngine(m_searchEngine);
 
-		m_storedSearchEngine = QString();
+		m_searchEngine = QString();
 	}
 
 	updateGeometries();
@@ -505,7 +505,7 @@ void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
 		case SettingsManager::Search_SearchEnginesSuggestionsOption:
 			if (value.toBool() && !m_suggester)
 			{
-				m_suggester = new SearchSuggester(m_storedSearchEngine, this);
+				m_suggester = new SearchSuggester(m_searchEngine, this);
 
 				connect(this, SIGNAL(textEdited(QString)), m_suggester, SLOT(setQuery(QString)));
 				connect(m_suggester, SIGNAL(suggestionsChanged(QVector<SearchSuggester::SearchSuggestion>)), this, SLOT(showCompletion()));
@@ -629,7 +629,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 
 	if (searchEngines.isEmpty())
 	{
-		m_storedSearchEngine = QString();
+		m_searchEngine = QString();
 
 		hidePopup();
 		setEnabled(false);
@@ -639,13 +639,13 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 		return;
 	}
 
-	m_storedSearchEngine = (searchEngines.contains(searchEngine) ? searchEngine : QString());
+	m_searchEngine = (searchEngines.contains(searchEngine) ? searchEngine : QString());
 
 	setSearchEngine(getCurrentIndex());
 
 	if (m_suggester)
 	{
-		m_suggester->setSearchEngine(m_storedSearchEngine);
+		m_suggester->setSearchEngine(m_searchEngine);
 	}
 }
 
@@ -662,11 +662,11 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
-		m_storedSearchEngine = index.data(SearchEnginesManager::IdentifierRole).toString();
+		m_searchEngine = index.data(SearchEnginesManager::IdentifierRole).toString();
 
 		if (m_window && !m_isSearchEngineLocked)
 		{
-			m_window->setOption(SettingsManager::Search_DefaultSearchEngineOption, m_storedSearchEngine);
+			m_window->setOption(SettingsManager::Search_DefaultSearchEngineOption, m_searchEngine);
 		}
 
 		const QString title(index.data(SearchEnginesManager::TitleRole).toString());
@@ -677,7 +677,7 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 
 		if (m_suggester)
 		{
-			m_suggester->setSearchEngine(m_storedSearchEngine);
+			m_suggester->setSearchEngine(m_searchEngine);
 			m_suggester->setQuery(QString());
 		}
 
@@ -789,7 +789,7 @@ void SearchWidget::setWindow(Window *window)
 
 QModelIndex SearchWidget::getCurrentIndex() const
 {
-	return SearchEnginesManager::getSearchEnginesModel()->index(qMax(0, SearchEnginesManager::getSearchEngines().indexOf(m_storedSearchEngine)), 0);
+	return SearchEnginesManager::getSearchEnginesModel()->index(qMax(0, SearchEnginesManager::getSearchEngines().indexOf(m_searchEngine)), 0);
 }
 
 QVariantMap SearchWidget::getOptions() const
