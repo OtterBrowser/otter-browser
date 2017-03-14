@@ -59,7 +59,6 @@ public:
 	Window* clone(bool cloneHistory = true, QWidget *parent = nullptr);
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
-	QString getSearchEngine() const;
 	QString getTitle() const;
 	QLatin1String getType() const;
 	QVariant getOption(int identifier) const;
@@ -84,7 +83,6 @@ public slots:
 	void close();
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive();
-	void setSearchEngine(const QString &searchEngine);
 	void setUrl(const QUrl &url, bool isTyped = true);
 	void setToolBarsVisible(bool areVisible);
 	void setPinned(bool isPinned);
@@ -107,7 +105,6 @@ protected slots:
 private:
 	ToolBarWidget *m_navigationBar;
 	ContentsWidget *m_contentsWidget;
-	QString m_searchEngine;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;
 	QVector<QPointer<AddressWidget> > m_addressWidgets;
@@ -133,7 +130,6 @@ signals:
 	void requestedEditBookmark(const QUrl &url);
 	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
 	void requestedCloseWindow(Window *window);
-	void searchEngineChanged(const QString &searchEngine);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url, bool force = false);

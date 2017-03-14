@@ -660,11 +660,9 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 	{
 		m_storedSearchEngine = index.data(SearchEnginesManager::IdentifierRole).toString();
 
-		if (!m_isSearchEngineLocked)
+		if (m_window && !m_isSearchEngineLocked)
 		{
-			SessionsManager::markSessionModified();
-
-			emit searchEngineChanged(m_storedSearchEngine);
+			m_window->setOption(SettingsManager::Search_DefaultSearchEngineOption, m_storedSearchEngine);
 		}
 
 		const QString title(index.data(SearchEnginesManager::TitleRole).toString());
@@ -743,10 +741,8 @@ void SearchWidget::setWindow(Window *window)
 
 		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
-		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window.data(), SLOT(setSearchEngine(QString)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
-		disconnect(m_window.data(), SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 
 		setSearchEngine();
 	}
@@ -762,14 +758,12 @@ void SearchWidget::setWindow(Window *window)
 
 		window->attachSearchWidget(this);
 
-		setSearchEngine(window->getSearchEngine());
+		setSearchEngine(window->getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 
 		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
-		connect(this, SIGNAL(searchEngineChanged(QString)), window, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
-		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 

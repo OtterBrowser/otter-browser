@@ -406,7 +406,6 @@ void Window::setSession(const SessionWindow &session)
 {
 	m_session = session;
 
-	setSearchEngine(session.options.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString());
 	setPinned(session.isPinned);
 
 	if (SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool())
@@ -419,25 +418,13 @@ void Window::setSession(const SessionWindow &session)
 	}
 }
 
-void Window::setSearchEngine(const QString &searchEngine)
-{
-	if (searchEngine == m_searchEngine)
-	{
-		return;
-	}
-
-	m_searchEngine = searchEngine;
-
-	emit searchEngineChanged(searchEngine);
-}
-
 void Window::setOption(int identifier, const QVariant &value)
 {
 	if (m_contentsWidget)
 	{
 		m_contentsWidget->setOption(identifier, value);
 	}
-	else
+	else if (value != m_session.options.value(identifier))
 	{
 		if (value.isNull())
 		{
@@ -696,10 +683,7 @@ Window* Window::clone(bool cloneHistory, QWidget *parent)
 		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
 	}
 
-	Window *window(new Window(parameters, m_contentsWidget->clone(cloneHistory), parent));
-	window->setSearchEngine(getSearchEngine());
-
-	return window;
+	return new Window(parameters, m_contentsWidget->clone(cloneHistory), parent) ;
 }
 
 ContentsWidget* Window::getContentsWidget()
@@ -720,11 +704,6 @@ WebWidget* Window::getWebWidget()
 	}
 
 	return m_contentsWidget->getWebWidget();
-}
-
-QString Window::getSearchEngine() const
-{
-	return m_searchEngine;
 }
 
 QString Window::getTitle() const
@@ -785,7 +764,6 @@ SessionWindow Window::getSession() const
 			}
 		}
 
-		session.options[SettingsManager::Search_DefaultSearchEngineOption] = getSearchEngine();
 		session.history = history.entries;
 		session.parentGroup = 0;
 		session.historyIndex = history.index;
