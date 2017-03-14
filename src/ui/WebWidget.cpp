@@ -1107,6 +1107,8 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 		m_actions[ActionsManager::ResetQuickPreferencesAction]->setEnabled(!m_options.isEmpty());
 	}
 
+	SessionsManager::markSessionModified();
+
 	emit optionChanged(identifier, (value.isNull() ? getOption(identifier) : value));
 
 	switch (identifier)
