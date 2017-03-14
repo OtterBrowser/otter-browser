@@ -681,7 +681,7 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 			m_suggester->setQuery(QString());
 		}
 
-		if (canSendRequest && !m_query.isEmpty() && sender() != m_window)
+		if (canSendRequest && !m_query.isEmpty())
 		{
 			sendRequest();
 		}
