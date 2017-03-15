@@ -77,6 +77,7 @@ protected slots:
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void handleWindowOptionChanged(int identifier, const QVariant &value);
 	void updateGeometries();
 	void setSearchEngine(const QString &searchEngine);
 	void setSearchEngine(const QModelIndex &index, bool canSendRequest = true);

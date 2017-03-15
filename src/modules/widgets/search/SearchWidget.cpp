@@ -524,6 +524,14 @@ void SearchWidget::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
+void SearchWidget::handleWindowOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Search_DefaultSearchEngineOption)
+	{
+		setSearchEngine(value.toString());
+	}
+}
+
 void SearchWidget::updateGeometries()
 {
 	QStyleOptionFrame panel;
@@ -747,6 +755,7 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		disconnect(m_window.data(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleWindowOptionChanged(int,QVariant)));
 	}
 
 	m_window = window;
@@ -766,6 +775,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		connect(window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleWindowOptionChanged(int,QVariant)));
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
