@@ -155,8 +155,8 @@ private:
 	int m_quickFindTimer;
 	int m_scrollTimer;
 	bool m_isTabPreferencesMenuVisible;
-	bool m_showStartPage;
-	bool m_ignoreRelease;
+	bool m_isStartPageEnabled;
+	bool m_isIgnoringMouseRelease;
 
 	static QString m_sharedQuickFindQuery;
 	static QMap<int, QPixmap> m_scrollCursors;

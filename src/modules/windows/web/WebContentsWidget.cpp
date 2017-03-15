@@ -73,8 +73,8 @@ WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, const QHash<
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
 	m_isTabPreferencesMenuVisible(false),
-	m_showStartPage(!isSidebarPanel() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()),
-	m_ignoreRelease(false)
+	m_isStartPageEnabled(!isSidebarPanel() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()),
+	m_isIgnoringMouseRelease(false)
 {
 	m_splitter->hide();
 
@@ -280,9 +280,9 @@ void WebContentsWidget::mousePressEvent(QMouseEvent *event)
 
 void WebContentsWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_ignoreRelease)
+	if (m_isIgnoringMouseRelease)
 	{
-		m_ignoreRelease = false;
+		m_isIgnoringMouseRelease = false;
 
 		event->accept();
 
@@ -717,7 +717,7 @@ void WebContentsWidget::handleOptionChanged(int identifier, const QVariant &valu
 		case SettingsManager::StartPage_EnableStartPageOption:
 			if (!isSidebarPanel())
 			{
-				m_showStartPage = value.toBool();
+				m_isStartPageEnabled = value.toBool();
 			}
 
 			break;
@@ -738,7 +738,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		return;
 	}
 
-	const bool showStartPage((m_showStartPage && Utils::isUrlEmpty(url)) || url == QUrl(QLatin1String("about:start")));
+	const bool showStartPage((m_isStartPageEnabled && Utils::isUrlEmpty(url)) || url == QUrl(QLatin1String("about:start")));
 
 	if (showStartPage)
 	{
@@ -1046,7 +1046,7 @@ void WebContentsWidget::setScrollMode(ScrollMode mode)
 			grabKeyboard();
 			grabMouse();
 
-			m_ignoreRelease = true;
+			m_isIgnoringMouseRelease = true;
 
 			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
 
@@ -1128,7 +1128,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 		connect(m_splitter, SIGNAL(splitterMoved(int,int)), widget, SIGNAL(progressBarGeometryChanged()));
 	}
 
-	bool isHidden(m_showStartPage && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
+	bool isHidden(m_isStartPageEnabled && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
 
 	m_webWidget = widget;
 	m_webWidget->setOptions(options);
