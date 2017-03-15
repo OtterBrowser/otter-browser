@@ -101,21 +101,27 @@ void StartPageModel::reloadModel()
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			if (m_bookmark->child(i))
+			QStandardItem *bookmark(m_bookmark->child(i));
+
+			if (bookmark)
 			{
-				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt()));
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()));
 
 				if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
 				{
 					continue;
 				}
 
-				const quint64 identifier(m_bookmark->child(i)->data(BookmarksModel::IdentifierRole).toULongLong());
-				const QUrl url(m_bookmark->child(i)->data(BookmarksModel::UrlRole).toUrl());
-				QStandardItem *item(m_bookmark->child(i)->clone());
+				const quint64 identifier(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
+				const QUrl url(bookmark->data(BookmarksModel::UrlRole).toUrl());
+				QStandardItem *item(bookmark->clone());
 				item->setData(identifier, BookmarksModel::IdentifierRole);
 
-				if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
+				if (type == BookmarksModel::FolderBookmark && bookmark->rowCount() == 0)
+				{
+					item->setEnabled(false);
+				}
+				else if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
 				{
 					m_reloads[url] = {identifier, false};
 
