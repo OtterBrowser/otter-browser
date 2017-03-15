@@ -789,7 +789,14 @@ void SearchWidget::setWindow(Window *window)
 
 QModelIndex SearchWidget::getCurrentIndex() const
 {
-	return SearchEnginesManager::getSearchEnginesModel()->index(qMax(0, SearchEnginesManager::getSearchEngines().indexOf(m_searchEngine)), 0);
+	QString searchEngine(m_searchEngine);
+
+	if (m_searchEngine.isEmpty())
+	{
+		searchEngine = (m_window ? m_window->getOption(SettingsManager::Search_DefaultSearchEngineOption) : SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption)).toString();
+	}
+
+	return SearchEnginesManager::getSearchEnginesModel()->index(qMax(0, SearchEnginesManager::getSearchEngines().indexOf(searchEngine)), 0);
 }
 
 QVariantMap SearchWidget::getOptions() const
