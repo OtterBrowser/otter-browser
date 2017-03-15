@@ -107,7 +107,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	}
 
 	painter->setClipping(false);
-	painter->setPen(QGuiApplication::palette().color(QPalette::Text));
+	painter->setPen(QGuiApplication::palette().color((index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled), QPalette::Text));
 
 	if (tileBackgroundMode == QLatin1String("none"))
 	{
