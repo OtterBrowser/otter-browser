@@ -241,7 +241,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 void Window::clear()
 {
-	setContentsWidget(new WebContentsWidget(m_parameters, nullptr, this));
+	setContentsWidget(new WebContentsWidget(m_parameters, QHash<int, QVariant>(), nullptr, this));
 
 	m_isAboutToClose = false;
 
@@ -306,7 +306,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
 		}
 
-		widget = new WebContentsWidget(parameters, nullptr, this);
+		widget = new WebContentsWidget(parameters, QHash<int, QVariant>(), nullptr, this);
 
 		setContentsWidget(widget);
 	}
@@ -501,7 +501,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
-		newWidget = new WebContentsWidget(m_parameters, nullptr, this);
+		newWidget = new WebContentsWidget(m_parameters, m_session.options, nullptr, this);
 	}
 
 	if (newWidget)
@@ -585,16 +585,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 
 	layout()->addWidget(m_contentsWidget);
-
-	if (m_contentsWidget->getType() == QLatin1String("web") && !m_session.options.isEmpty())
-	{
-		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
-
-		if (webWidget)
-		{
-			webWidget->setOptions(m_session.options);
-		}
-	}
 
 	WindowHistoryInformation history;
 

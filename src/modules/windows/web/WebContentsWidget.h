@@ -64,11 +64,10 @@ public:
 
 	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
 
-	explicit WebContentsWidget(const QVariantMap &parameters, WebWidget *widget, Window *window);
+	explicit WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window);
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer) override;
-	void setOptions(const QHash<int, QVariant> &options);
 	void setParent(Window *window) override;
 	WebContentsWidget* clone(bool cloneHistory = true) override;
 	Action* getAction(int identifier) override;
@@ -118,7 +117,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void scrollContents(const QPoint &delta);
 	void setScrollMode(ScrollMode mode);
-	void setWidget(WebWidget *widget, const QVariantMap &parameters);
+	void setWidget(WebWidget *widget, const QVariantMap &parameters, const QHash<int, QVariant> &options);
 
 protected slots:
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);

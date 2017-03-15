@@ -217,7 +217,7 @@ QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int si
 			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
 		}
 
-		WebContentsWidget *webWidget(new WebContentsWidget(parameters, nullptr, nullptr));
+		WebContentsWidget *webWidget(new WebContentsWidget(parameters, QHash<int, QVariant>(), nullptr, nullptr));
 		webWidget->setUrl(panel.section(QLatin1Char(':'), 1, -1), false);
 
 		return webWidget;
