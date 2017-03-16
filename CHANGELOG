@@ -8,6 +8,11 @@
 - improved User Agents configuration;
 - added support for managing multiple proxy configurations and setting them per page or host;
 - improved styling under Windows, Unity and macOS;
+- added new default icon theme by Kamil Nęcek;
+- replaced SSL warning dialogs by special error pages and console messages;
+- improved error pages;
+- added support for customizing F12 menu;
+- implemented "Validate Using" menu;
 - added support for configurable Fast Forward;
 - lots of various fixes.
 
