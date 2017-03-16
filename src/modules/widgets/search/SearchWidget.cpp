@@ -335,53 +335,41 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 		return;
 	}
 
-	int index(getCurrentIndex().row());
 	QStandardItemModel *model(SearchEnginesManager::getSearchEnginesModel());
+	int row(getCurrentIndex().row());
 
-	if (event->delta() > 0)
+	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		for (int i = 0; i < model->rowCount(); ++i)
+		if (event->delta() > 0)
 		{
-			const QModelIndex modelIndex(model->index((index > 0) ? (index - 1) : (model->rowCount() - 1), 0));
-
-			if (modelIndex.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
+			if (row == 0)
 			{
-				setSearchEngine(modelIndex, false);
-
-				break;
-			}
-
-			if (index == 0)
-			{
-				index = model->rowCount();
+				row = (model->rowCount() - 1);
 			}
 			else
 			{
-				--index;
+				--row;
 			}
 		}
-	}
-	else
-	{
-		for (int i = 0; i < model->rowCount(); ++i)
+		else
 		{
-			const QModelIndex modelIndex(model->index((((index + 1) < model->rowCount()) ? (index + 1) : 0), 0));
-
-			if (modelIndex.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
+			if (row == (model->rowCount() - 1))
 			{
-				setSearchEngine(modelIndex, false);
-
-				break;
-			}
-
-			if (index == model->rowCount() - 1)
-			{
-				index = 0;
+				row = 0;
 			}
 			else
 			{
-				++index;
+				++row;
 			}
+		}
+
+		const QModelIndex index(model->index(row, 0));
+
+		if (index.data(Qt::AccessibleDescriptionRole).toString().isEmpty())
+		{
+			setSearchEngine(index, false);
+
+			break;
 		}
 	}
 }
