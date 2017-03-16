@@ -23,7 +23,6 @@
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
-#include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"

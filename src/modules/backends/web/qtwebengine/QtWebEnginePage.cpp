@@ -35,7 +35,6 @@
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineScriptCollection>
 #include <QtWebEngineWidgets/QWebEngineSettings>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
 
