@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ConfigurationContentsWidget.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"

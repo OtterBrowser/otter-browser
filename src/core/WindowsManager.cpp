@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "WindowsManager.h"
+#include "ActionsManager.h"
 #include "Application.h"
 #include "BookmarksManager.h"
 #include "SettingsManager.h"

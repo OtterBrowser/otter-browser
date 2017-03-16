@@ -21,6 +21,7 @@
 #include "QtWebKitPage.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/ActionsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManagerFactory.h"

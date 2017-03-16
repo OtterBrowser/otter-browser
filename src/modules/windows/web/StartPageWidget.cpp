@@ -22,6 +22,7 @@
 #include "StartPageModel.h"
 #include "TileDelegate.h"
 #include "WebContentsWidget.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/SettingsManager.h"

@@ -19,6 +19,7 @@
 
 #include "WebsiteInformationDialog.h"
 #include "CertificateDialog.h"
+#include "../core/ActionsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 

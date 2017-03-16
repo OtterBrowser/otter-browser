@@ -20,6 +20,7 @@
 #include "ContentsWidget.h"
 #include "ContentsDialog.h"
 #include "Window.h"
+#include "../core/ActionsManager.h"
 
 namespace Otter
 {

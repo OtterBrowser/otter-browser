@@ -19,10 +19,10 @@
 **************************************************************************/
 
 #include "GesturesManager.h"
+#include "ActionsManager.h"
 #include "IniSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
-#include "../ui/MainWindow.h"
 
 #include <QtCore/QMetaEnum>
 #include <QtCore/QPointer>

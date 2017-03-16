@@ -26,7 +26,6 @@
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
-#include <QtWidgets/QShortcut>
 #include <QtWidgets/QMainWindow>
 
 namespace Otter
@@ -37,13 +36,15 @@ namespace Ui
 	class MainWindow;
 }
 
-class WorkspaceWidget;
+class Action;
 class MenuBarWidget;
+class Shortcut;
 class StatusBarWidget;
 class TabBarWidget;
 class TabSwitcherWidget;
 class ToolBarWidget;
 class WindowsManager;
+class WorkspaceWidget;
 
 class MainWindow : public QMainWindow
 {

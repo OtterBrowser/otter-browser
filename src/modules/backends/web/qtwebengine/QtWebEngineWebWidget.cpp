@@ -19,6 +19,7 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
+#include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"

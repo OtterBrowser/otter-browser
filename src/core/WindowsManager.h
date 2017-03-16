@@ -20,7 +20,6 @@
 #ifndef OTTER_WINDOWSMANAGER_H
 #define OTTER_WINDOWSMANAGER_H
 
-#include "ActionsManager.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QUrl>
@@ -35,6 +34,7 @@ struct ClosedWindow
 	quint64 previousWindow = 0;
 };
 
+class Action;
 class BookmarksItem;
 class ContentsWidget;
 class MainWindow;

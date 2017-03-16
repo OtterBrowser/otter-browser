@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "Window.h"
+#include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/WindowsManager.h"
 
