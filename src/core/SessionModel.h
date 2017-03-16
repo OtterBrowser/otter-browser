@@ -49,8 +49,10 @@ public:
 		IndexRole,
 		LastActivityRole,
 		ZoomRole,
-		PinnedRole,
-		SettingsRole
+		OptionsRole,
+		IsPinnedRole,
+		IsPrivateRole,
+		IsSuspendedRole
 	};
 
 	explicit SessionModel(const QString &path, QObject *parent);
