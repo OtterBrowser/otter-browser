@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,15 @@
 
 namespace Otter
 {
+
+SessionItem::SessionItem() : QStandardItem()
+{
+}
+
+Window* SessionItem::getActiveWindow() const
+{
+	return nullptr;
+}
 
 SessionModel::SessionModel(const QString &path, QObject *parent) : QStandardItemModel(parent),
 	m_path(path)
