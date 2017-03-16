@@ -749,8 +749,8 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 void AddressWidget::updateGeometries()
 {
 	QHash<EntryIdentifier, EntryDefinition> entries;
-	QList<EntryDefinition> leadingEntries;
-	QList<EntryDefinition> trailingEntries;
+	QVector<EntryDefinition> leadingEntries;
+	QVector<EntryDefinition> trailingEntries;
 	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
 	int availableWidth(width() - margins.left() - margins.right());
 	bool isLeading(true);

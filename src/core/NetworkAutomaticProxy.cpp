@@ -158,8 +158,9 @@ bool PacUtils::weekdayRange(QString fromDay, QString toDay, const QString &gmt) 
 bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt) const
 {
 	const QVariantList rawArguments({arg1, arg2, arg3, arg4, arg5, arg6});
-	QList<int> arguments;
 	const QDate currentDay(((gmt.toLower() == QLatin1String("gmt")) ? QDateTime::currentDateTimeUtc() : QDateTime::currentDateTime()).date());
+	QVector<int> arguments;
+	arguments.reserve(6);
 
 	for (int i = 0; i < rawArguments.count(); ++i)
 	{
@@ -243,8 +244,9 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt) const
 {
 	const QVariantList rawArguments({arg1, arg2, arg3, arg4, arg5, arg6});
-	QList<int> arguments;
 	const QTime currentTime(((gmt.toLower() == QLatin1String("gmt")) ? QDateTime::currentDateTimeUtc() : QDateTime::currentDateTime()).time());
+	QVector<int> arguments;
+	arguments.reserve(6);
 
 	for (int i = 0; i < rawArguments.count(); ++i)
 	{

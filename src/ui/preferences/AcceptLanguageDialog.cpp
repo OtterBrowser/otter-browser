@@ -47,7 +47,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	}
 
 	const QList<QLocale> locales(QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry));
-	QList<QPair<QString, QString> > entries;
+	QVector<QPair<QString, QString> > entries;
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
