@@ -71,6 +71,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QUndoStack>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter

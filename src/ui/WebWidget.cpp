@@ -41,15 +41,10 @@
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
-#include <QtCore/QMimeData>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QTimer>
-#include <QtCore/QUrl>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
-#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 
 namespace Otter

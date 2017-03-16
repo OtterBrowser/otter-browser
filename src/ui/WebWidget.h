@@ -35,7 +35,6 @@
 #include <QtNetwork/QSslError>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QMenu>
-#include <QtWidgets/QUndoStack>
 
 namespace Otter
 {
