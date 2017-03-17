@@ -1225,8 +1225,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 	QStringList availableIdentifiers;
 	QList<KeyboardProfile> availableShortcutsProfiles;
-	QList<QFileInfo> allShortcutsProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files));
-	allShortcutsProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
+	const QList<QFileInfo> allShortcutsProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allShortcutsProfiles.count(); ++i)
 	{
@@ -1414,9 +1413,8 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 	}
 
 	QStringList availableIdentifiers;
-	QList<MouseProfile> availableMouseProfiles;
-	QList<QFileInfo> allMouseProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList(QDir::Files));
-	allMouseProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList(QDir::Files));
+	QVector<MouseProfile> availableMouseProfiles;
+	const QList<QFileInfo> allMouseProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allMouseProfiles.count(); ++i)
 	{
