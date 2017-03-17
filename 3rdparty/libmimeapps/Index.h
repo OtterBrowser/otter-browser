@@ -57,7 +57,7 @@ protected:
 		bool withSubdirectories;
 		std::string path;
 
-		lookupDirectory(bool withSubdirectories, std::string path):
+		lookupDirectory(bool withSubdirectories, const std::string &path):
 			withSubdirectories(withSubdirectories),
 			path(path)
 		{
