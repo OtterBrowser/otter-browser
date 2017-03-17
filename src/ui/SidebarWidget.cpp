@@ -295,7 +295,7 @@ void SidebarWidget::updateLayout()
 
 	toolbar->setLayoutDirection((area == Qt::LeftToolBarArea) ? Qt::LeftToRight : Qt::RightToLeft);
 
-	QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
+	const QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{

@@ -277,7 +277,7 @@ void WorkspaceWidget::createMdi()
 		m_isRestored = false;
 	}
 
-	QList<Window*> windows(findChildren<Window*>());
+	const QList<Window*> windows(findChildren<Window*>());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
