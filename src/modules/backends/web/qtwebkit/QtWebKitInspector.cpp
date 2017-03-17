@@ -20,6 +20,7 @@
 #include "QtWebKitInspector.h"
 #include "QtWebKitWebWidget.h"
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+#include "../../../../core/ActionsManager.h"
 #include "../../../../core/ThemesManager.h"
 #endif
 
