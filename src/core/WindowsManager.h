@@ -32,6 +32,7 @@ struct ClosedWindow
 	SessionWindow window;
 	quint64 nextWindow = 0;
 	quint64 previousWindow = 0;
+	bool isPrivate = false;
 };
 
 class Action;

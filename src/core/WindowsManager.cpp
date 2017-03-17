@@ -575,7 +575,7 @@ void WindowsManager::restore(int index)
 
 	QVariantMap parameters;
 
-	if (m_isPrivate)
+	if (m_isPrivate || closedWindow.isPrivate)
 	{
 		parameters[QLatin1String("hints")] = PrivateOpen;
 	}
@@ -772,6 +772,7 @@ void WindowsManager::handleWindowClose(Window *window)
 			closedWindow.window = window->getSession();
 			closedWindow.nextWindow = (nextWindow ? nextWindow->getIdentifier() : 0);
 			closedWindow.previousWindow = (previousWindow ? previousWindow->getIdentifier() : 0);
+			closedWindow.isPrivate = window->isPrivate();
 
 			if (window->getType() != QLatin1String("web"))
 			{
