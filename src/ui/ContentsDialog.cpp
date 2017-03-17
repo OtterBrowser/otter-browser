@@ -229,7 +229,7 @@ void ContentsDialog::keyPressEvent(QKeyEvent *event)
 			case Qt::Key_Enter:
 			case Qt::Key_Return:
 				{
-					QList<QPushButton*> buttons(findChildren<QPushButton*>());
+					const QList<QPushButton*> buttons(findChildren<QPushButton*>());
 
 					for (int i = 0; i < buttons.count(); ++i)
 					{

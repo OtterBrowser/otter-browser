@@ -147,7 +147,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 
 	updateValues();
 
-	QList<QCheckBox*> checkBoxes(findChildren<QCheckBox*>());
+	const QList<QCheckBox*> checkBoxes(findChildren<QCheckBox*>());
 
 	for (int i = 0; i < checkBoxes.count(); ++i)
 	{
@@ -161,7 +161,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 		}
 	}
 
-	QList<QComboBox*> comboBoxes(findChildren<QComboBox*>());
+	const QList<QComboBox*> comboBoxes(findChildren<QComboBox*>());
 
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{

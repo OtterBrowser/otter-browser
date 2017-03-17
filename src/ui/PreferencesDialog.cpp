@@ -159,35 +159,35 @@ void PreferencesDialog::currentTabChanged(int tab)
 	}
 
 	QWidget *widget(m_ui->tabWidget->widget(tab));
-	QList<QAbstractButton*> buttons(widget->findChildren<QAbstractButton*>());
+	const QList<QAbstractButton*> buttons(widget->findChildren<QAbstractButton*>());
 
 	for (int i = 0; i < buttons.count(); ++i)
 	{
 		connect(buttons.at(i), SIGNAL(toggled(bool)), this, SLOT(markModified()));
 	}
 
-	QList<QComboBox*> comboBoxes(widget->findChildren<QComboBox*>());
+	const QList<QComboBox*> comboBoxes(widget->findChildren<QComboBox*>());
 
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{
 		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(markModified()));
 	}
 
-	QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
+	const QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
 
 	for (int i = 0; i < lineEdits.count(); ++i)
 	{
 		connect(lineEdits.at(i), SIGNAL(textChanged(QString)), this, SLOT(markModified()));
 	}
 
-	QList<QSpinBox*> spinBoxes(widget->findChildren<QSpinBox*>());
+	const QList<QSpinBox*> spinBoxes(widget->findChildren<QSpinBox*>());
 
 	for (int i = 0; i < spinBoxes.count(); ++i)
 	{
 		connect(spinBoxes.at(i), SIGNAL(valueChanged(int)), this, SLOT(markModified()));
 	}
 
-	QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
+	const QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
 
 	for (int i = 0; i < viewWidgets.count(); ++i)
 	{
