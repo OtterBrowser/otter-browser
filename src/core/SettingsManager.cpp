@@ -21,7 +21,6 @@
 
 #include "SettingsManager.h"
 
-#include <QtCore/QFileInfo>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>

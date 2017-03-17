@@ -56,7 +56,6 @@
 #include "../ui/TrayIcon.h"
 #include "../ui/UpdateCheckerDialog.h"
 
-#include <QtCore/QBuffer>
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -72,7 +71,6 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStyle>
 
 namespace Otter
 {
