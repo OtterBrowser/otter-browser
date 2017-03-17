@@ -118,6 +118,7 @@ public:
 		History_ManualClearOptionsOption,
 		History_ManualClearPeriodOption,
 		History_RememberBrowsingOption,
+		History_RememberClosedPrivateTabsOption,
 		History_RememberDownloadsOption,
 		History_StoreFaviconsOption,
 		Interface_DateTimeFormatOption,

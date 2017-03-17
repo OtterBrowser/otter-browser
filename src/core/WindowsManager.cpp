@@ -759,7 +759,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		return;
 	}
 
-	if (window && !window->isPrivate())
+	if (window && (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool()))
 	{
 		const WindowHistoryInformation history(window->getContentsWidget()->getHistory());
 

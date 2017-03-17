@@ -138,6 +138,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(History_ManualClearOptionsOption, ListType, QStringList({QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")}));
 	registerOption(History_ManualClearPeriodOption, IntegerType, 1);
 	registerOption(History_RememberBrowsingOption, BooleanType, true);
+	registerOption(History_RememberClosedPrivateTabsOption, BooleanType, false);
 	registerOption(History_RememberDownloadsOption, BooleanType, true);
 	registerOption(History_StoreFaviconsOption, BooleanType, true);
 	registerOption(Interface_DateTimeFormatOption, StringType, QString());
