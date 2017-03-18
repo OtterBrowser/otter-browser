@@ -145,7 +145,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Interface_IconThemePathOption, PathType, QString());
 	registerOption(Interface_LastTabClosingActionOption, EnumerationType, QLatin1String("openTab"), QStringList({QLatin1String("openTab"), QLatin1String("closeWindow"), QLatin1String("closeWindowIfNotLast"), QLatin1String("doNothing")}));
 	registerOption(Interface_LockToolBarsOption, BooleanType, false);
-	registerOption(Interface_MaximizeNewWindowsOption, BooleanType, true);
 	registerOption(Interface_NewTabOpeningActionOption, EnumerationType, QLatin1String("maximizeTab"), QStringList({QLatin1String("doNothing"), QLatin1String("maximizeTab"), QLatin1String("cascadeAll"), QLatin1String("tileAll")}));
 	registerOption(Interface_NotificationVisibilityDurationOption, IntegerType, 5);
 	registerOption(Interface_ShowScrollBarsOption, BooleanType, true);

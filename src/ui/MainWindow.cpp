@@ -169,21 +169,20 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	updateWindowTitle(m_windowsManager->getTitle());
 
-	if (!session.geometry.isEmpty())
-	{
-		restoreGeometry(session.geometry);
-	}
-	else
+	if (session.geometry.isEmpty())
 	{
 		if (Application::getActiveWindow())
 		{
 			resize(Application::getActiveWindow()->size());
 		}
-
-		if (SettingsManager::getOption(SettingsManager::Interface_MaximizeNewWindowsOption).toBool())
+		else
 		{
 			showMaximized();
 		}
+	}
+	else
+	{
+		restoreGeometry(session.geometry);
 	}
 }
 

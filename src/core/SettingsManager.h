@@ -126,7 +126,6 @@ public:
 		Interface_IconThemePathOption,
 		Interface_LastTabClosingActionOption,
 		Interface_LockToolBarsOption,
-		Interface_MaximizeNewWindowsOption,
 		Interface_NewTabOpeningActionOption,
 		Interface_NotificationVisibilityDurationOption,
 		Interface_ShowScrollBarsOption,
