@@ -326,6 +326,7 @@ bool MarginWidget::event(QEvent *event)
 SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
 	m_marginWidget(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
+	m_findTextResultsAmount(0),
 	m_zoom(100)
 {
 	new SyntaxHighlighter(document());
@@ -416,6 +417,7 @@ void SourceViewerWidget::updateTextCursor()
 void SourceViewerWidget::updateSelection()
 {
 	QList<QTextEdit::ExtraSelection> extraSelections;
+	int findTextResultsAmount(0);
 
 	if (!m_findText.isEmpty())
 	{
@@ -442,17 +444,24 @@ void SourceViewerWidget::updateSelection()
 			{
 				textCursor = document()->find(m_findText, textCursor, nativeFlags);
 
-				if (!textCursor.isNull() && textCursor != m_findTextSelection)
+				if (!textCursor.isNull())
 				{
-					QTextEdit::ExtraSelection selection;
-					selection.format.setBackground(QColor(255, 255, 0));
-					selection.cursor = textCursor;
+					if (textCursor != m_findTextSelection)
+					{
+						QTextEdit::ExtraSelection selection;
+						selection.format.setBackground(QColor(255, 255, 0));
+						selection.cursor = textCursor;
 
-					extraSelections.append(selection);
+						extraSelections.append(selection);
+					}
+
+					++findTextResultsAmount;
 				}
 			}
 		}
 	}
+
+	m_findTextResultsAmount = findTextResultsAmount;
 
 	setExtraSelections(extraSelections);
 }
@@ -482,7 +491,7 @@ int SourceViewerWidget::getZoom() const
 	return m_zoom;
 }
 
-bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
+int SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
 {
 	const bool isTheSame(text == m_findText);
 
@@ -547,7 +556,7 @@ bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 
 	updateSelection();
 
-	return !m_findTextAnchor.isNull();
+	return m_findTextResultsAmount;
 }
 
 }

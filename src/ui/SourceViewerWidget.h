@@ -103,7 +103,7 @@ public:
 
 	void setZoom(int zoom);
 	int getZoom() const;
-	bool findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	int findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
@@ -121,6 +121,7 @@ private:
 	QTextCursor m_findTextAnchor;
 	QTextCursor m_findTextSelection;
 	WebWidget::FindFlags m_findFlags;
+	int m_findTextResultsAmount;
 	int m_zoom;
 
 signals:

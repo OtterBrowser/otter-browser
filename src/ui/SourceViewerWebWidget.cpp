@@ -562,7 +562,7 @@ bool SourceViewerWebWidget::isPrivate() const
 
 bool SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
 {
-	return m_sourceViewer->findText(text, flags);
+	return (m_sourceViewer->findText(text, flags) != 0);
 }
 
 }
