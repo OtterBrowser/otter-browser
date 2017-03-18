@@ -173,9 +173,17 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	{
 		restoreGeometry(session.geometry);
 	}
-	else if (SettingsManager::getOption(SettingsManager::Interface_MaximizeNewWindowsOption).toBool())
+	else
 	{
-		showMaximized();
+		if (Application::getActiveWindow())
+		{
+			resize(Application::getActiveWindow()->size());
+		}
+
+		if (SettingsManager::getOption(SettingsManager::Interface_MaximizeNewWindowsOption).toBool())
+		{
+			showMaximized();
+		}
 	}
 }
 
