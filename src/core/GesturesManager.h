@@ -24,7 +24,6 @@
 #include <QtCore/QObject>
 #include <QtGui/QMouseEvent>
 
-#include "../core/Utils.h"
 #include "../../3rdparty/mousegestures/MouseGestures.h"
 
 namespace Otter
