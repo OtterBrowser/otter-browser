@@ -397,7 +397,6 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	for (int i = 0; i < windows.count(); ++i)
 	{
 		session.windows.append(windows.at(i)->getWindowsManager()->getSession());
-		session.windows.last().geometry = windows.at(i)->saveGeometry();
 	}
 
 	return saveSession(session);

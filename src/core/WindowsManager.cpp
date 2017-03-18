@@ -1039,6 +1039,7 @@ QUrl WindowsManager::getUrl() const
 SessionMainWindow WindowsManager::getSession() const
 {
 	SessionMainWindow session;
+	session.geometry = m_mainWindow->saveGeometry();
 	session.index = m_mainWindow->getTabBar()->currentIndex();
 
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
