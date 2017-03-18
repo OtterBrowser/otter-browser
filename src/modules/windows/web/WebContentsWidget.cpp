@@ -649,7 +649,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 		flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::HighlightAllFind);
 	}
 
-	m_quickFindQuery = ((m_searchBarWidget && !m_searchBarWidget->getQuery().isEmpty()) ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
+	m_quickFindQuery = (m_searchBarWidget ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
 
 	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags));
 
