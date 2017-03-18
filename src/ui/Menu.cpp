@@ -24,6 +24,7 @@
 #include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
+#include "../core/Console.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
@@ -311,7 +312,8 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 			if (type == QLatin1String("action"))
 			{
-				const int identifier(ActionsManager::getActionIdentifier(object.value(QLatin1String("identifier")).toString()));
+				const QString rawIdentifier(object.value(QLatin1String("identifier")).toString());
+				const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
 
 				if (identifier >= 0)
 				{
@@ -343,6 +345,10 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 					{
 						connect(action, SIGNAL(triggered(bool)), mainWindow, SLOT(triggerAction(bool)));
 					}
+				}
+				else
+				{
+					Console::addMessage(tr("Failed to create menu action: %1").arg(rawIdentifier), Console::OtherCategory, Console::ErrorLevel);
 				}
 
 				continue;
@@ -410,6 +416,10 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 					{
 						addAction(identifier, true);
 					}
+				}
+				else
+				{
+					Console::addMessage(tr("Failed to create menu action: %1").arg(rawIdentifier), Console::OtherCategory, Console::ErrorLevel);
 				}
 			}
 		}
