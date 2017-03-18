@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,6 @@ public:
 	virtual QWidget* getOptionsWidget() = 0;
 	virtual QString getSuggestedPath(const QString &path = QString()) const = 0;
 	virtual QString getBrowser() const = 0;
-	QUrl getUpdateUrl() const override;
 	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const override;
 	virtual ImportType getImportType() const = 0;

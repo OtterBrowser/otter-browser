@@ -46,11 +46,6 @@ void PasswordsStorageBackend::removePassword(const PasswordsManager::PasswordInf
 	Q_UNUSED(password)
 }
 
-QUrl PasswordsStorageBackend::getUpdateUrl() const
-{
-	return QUrl();
-}
-
 QStringList PasswordsStorageBackend::getHosts()
 {
 	return QStringList();

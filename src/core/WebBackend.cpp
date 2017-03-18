@@ -26,11 +26,6 @@ WebBackend::WebBackend(QObject *parent) : Addon(parent)
 {
 }
 
-QUrl WebBackend::getUpdateUrl() const
-{
-	return QUrl();
-}
-
 QVector<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const
 {
 	return QVector<SpellCheckManager::DictionaryInformation>();

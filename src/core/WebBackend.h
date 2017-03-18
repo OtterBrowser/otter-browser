@@ -65,7 +65,6 @@ public:
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
-	QUrl getUpdateUrl() const override;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	AddonType getType() const override;
 	virtual BackendCapabilities getCapabilities() const;

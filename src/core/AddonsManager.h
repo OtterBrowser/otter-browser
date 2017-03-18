@@ -56,8 +56,8 @@ public:
 	virtual QString getTitle() const = 0;
 	virtual QString getDescription() const = 0;
 	virtual QString getVersion() const = 0;
-	virtual QUrl getHomePage() const = 0;
-	virtual QUrl getUpdateUrl() const = 0;
+	virtual QUrl getHomePage() const;
+	virtual QUrl getUpdateUrl() const;
 	virtual QIcon getIcon() const;
 	virtual AddonType getType() const;
 	virtual bool isEnabled() const;

@@ -54,6 +54,16 @@ QString Addon::getName() const
 	return QString();
 }
 
+QUrl Addon::getHomePage() const
+{
+	return QUrl();
+}
+
+QUrl Addon::getUpdateUrl() const
+{
+	return QUrl();
+}
+
 QIcon Addon::getIcon() const
 {
 	return QIcon();

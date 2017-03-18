@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,6 @@ namespace Otter
 
 Importer::Importer(QObject *parent) : Addon(parent)
 {
-}
-
-QUrl Importer::getUpdateUrl() const
-{
-	return QUrl();
 }
 
 Addon::AddonType Importer::getType() const
