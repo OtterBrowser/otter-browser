@@ -2594,6 +2594,29 @@ int QtWebKitWebWidget::getAmountOfNotLoadedPlugins() const
 	return findChildren<QtWebKitPluginWidget*>().count();
 }
 
+int QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
+{
+	QWebPage::FindFlags nativeFlags(QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
+
+	if (flags.testFlag(BackwardFind))
+	{
+		nativeFlags |= QWebPage::FindBackward;
+	}
+
+	if (flags.testFlag(CaseSensitiveFind))
+	{
+		nativeFlags |= QWebPage::FindCaseSensitively;
+	}
+
+	if (flags.testFlag(HighlightAllFind) || text.isEmpty())
+	{
+		m_page->findText(QString(), QWebPage::HighlightAllOccurrences);
+		m_page->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
+	}
+
+	return (m_page->findText(text, nativeFlags) ? -1 : 0);
+}
+
 bool QtWebKitWebWidget::canLoadPlugins() const
 {
 	return m_canLoadPlugins;
@@ -2681,29 +2704,6 @@ bool QtWebKitWebWidget::isPrivate() const
 bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
 {
 	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
-}
-
-bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
-{
-	QWebPage::FindFlags nativeFlags(QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
-
-	if (flags.testFlag(BackwardFind))
-	{
-		nativeFlags |= QWebPage::FindBackward;
-	}
-
-	if (flags.testFlag(CaseSensitiveFind))
-	{
-		nativeFlags |= QWebPage::FindCaseSensitively;
-	}
-
-	if (flags.testFlag(HighlightAllFind) || text.isEmpty())
-	{
-		m_page->findText(QString(), QWebPage::HighlightAllOccurrences);
-		m_page->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
-	}
-
-	return m_page->findText(text, nativeFlags);
 }
 
 bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)

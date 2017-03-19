@@ -55,6 +55,7 @@ public:
 	QHash<QByteArray, QByteArray> getHeaders() const override;
 	WindowsManager::LoadingState getLoadingState() const override;
 	int getZoom() const override;
+	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
 #if QT_VERSION >= 0x050700
 	bool isAudible() const override;
@@ -62,7 +63,6 @@ public:
 #endif
 	bool isFullScreen() const override;
 	bool isPrivate() const override;
-	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:

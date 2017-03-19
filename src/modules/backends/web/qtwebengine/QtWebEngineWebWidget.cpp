@@ -1679,6 +1679,25 @@ int QtWebEngineWebWidget::getZoom() const
 	return (m_page->zoomFactor() * 100);
 }
 
+int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
+{
+	QWebEnginePage::FindFlags nativeFlags(0);
+
+	if (flags.testFlag(BackwardFind))
+	{
+		nativeFlags |= QWebEnginePage::FindBackward;
+	}
+
+	if (flags.testFlag(CaseSensitiveFind))
+	{
+		nativeFlags |= QWebEnginePage::FindCaseSensitively;
+	}
+
+	m_page->findText(text, nativeFlags);
+
+	return -1;
+}
+
 bool QtWebEngineWebWidget::canGoBack() const
 {
 	return m_page->history()->canGoBack();
@@ -1761,25 +1780,6 @@ bool QtWebEngineWebWidget::isPrivate() const
 bool QtWebEngineWebWidget::isScrollBar(const QPoint &position) const
 {
 	Q_UNUSED(position)
-
-	return false;
-}
-
-bool QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
-{
-	QWebEnginePage::FindFlags nativeFlags(0);
-
-	if (flags.testFlag(BackwardFind))
-	{
-		nativeFlags |= QWebEnginePage::FindBackward;
-	}
-
-	if (flags.testFlag(CaseSensitiveFind))
-	{
-		nativeFlags |= QWebEnginePage::FindCaseSensitively;
-	}
-
-	m_page->findText(text, nativeFlags);
 
 	return false;
 }

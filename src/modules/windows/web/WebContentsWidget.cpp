@@ -651,7 +651,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	m_quickFindQuery = (m_searchBarWidget ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
 
-	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags));
+	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags) != 0);
 
 	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getOption(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 	{

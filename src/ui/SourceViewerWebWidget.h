@@ -50,9 +50,9 @@ public:
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	WindowsManager::LoadingState getLoadingState() const override;
 	int getZoom() const override;
+	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
 	bool isPrivate() const override;
-	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;

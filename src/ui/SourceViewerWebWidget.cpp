@@ -550,6 +550,11 @@ int SourceViewerWebWidget::getZoom() const
 	return m_sourceViewer->getZoom();
 }
 
+int SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
+{
+	return m_sourceViewer->findText(text, flags);
+}
+
 bool SourceViewerWebWidget::hasSelection() const
 {
 	return m_sourceViewer->textCursor().hasSelection();
@@ -558,11 +563,6 @@ bool SourceViewerWebWidget::hasSelection() const
 bool SourceViewerWebWidget::isPrivate() const
 {
 	return m_isPrivate;
-}
-
-bool SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
-{
-	return (m_sourceViewer->findText(text, flags) != 0);
 }
 
 }

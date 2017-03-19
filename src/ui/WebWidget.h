@@ -217,13 +217,13 @@ public:
 	virtual WindowsManager::LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
+	virtual int findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
 	virtual bool isAudible() const;
 	virtual bool isAudioMuted() const;
 	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
-	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) = 0;
