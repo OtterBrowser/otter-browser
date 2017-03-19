@@ -1693,9 +1693,22 @@ int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 		nativeFlags |= QWebEnginePage::FindCaseSensitively;
 	}
 
-	m_page->findText(text, nativeFlags);
+	QEventLoop eventLoop;
+	bool hasFound(false);
 
-	return -1;
+	m_page->findText(text, nativeFlags, [&](const QVariant &result)
+	{
+		hasFound = result.toBool();
+
+		eventLoop.quit();
+	});
+
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	return (hasFound ? -1 : 0);
 }
 
 bool QtWebEngineWebWidget::canGoBack() const
