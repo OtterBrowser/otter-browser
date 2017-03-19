@@ -1681,6 +1681,13 @@ int QtWebEngineWebWidget::getZoom() const
 
 int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 {
+	if (text.isEmpty())
+	{
+		m_page->findText(text);
+
+		return 0;
+	}
+
 	QWebEnginePage::FindFlags nativeFlags(0);
 
 	if (flags.testFlag(BackwardFind))
