@@ -130,12 +130,16 @@ private:
 	QIcon m_icon;
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
+#if QT_VERSION < 0x050700
 	QPoint m_scrollPosition;
+#endif
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	WindowsManager::LoadingState m_loadingState;
 	int m_documentLoadingProgress;
 	int m_focusProxyTimer;
+#if QT_VERSION < 0x050700
 	int m_scrollTimer;
+#endif
 	int m_updateNavigationActionsTimer;
 	bool m_isEditing;
 	bool m_isFullScreen;
