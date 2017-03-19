@@ -384,7 +384,9 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 	else
 	{
-		if (entry == WebsiteInformationEntry)
+		const QUrl url(getUrl());
+
+		if (entry == WebsiteInformationEntry && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
 		{
 			if (m_window)
 			{
