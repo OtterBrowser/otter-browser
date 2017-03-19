@@ -89,7 +89,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_OfflineWebApplicationCacheLimitOption, IntegerType, 10240);
 	registerOption(Browser_OpenLinksInNewTabOption, BooleanType, true);
 	registerOption(Browser_PrintElementBackgroundsOption, BooleanType, true);
-	registerOption(Browser_PrivateModeOption, BooleanType, BooleanType);
+	registerOption(Browser_PrivateModeOption, BooleanType, false);
 	registerOption(Browser_RememberPasswordsOption, BooleanType, false);
 	registerOption(Browser_ReuseCurrentTabOption, BooleanType, false);
 	registerOption(Browser_ShowSelectionContextMenuOnDoubleClickOption, BooleanType, false);
