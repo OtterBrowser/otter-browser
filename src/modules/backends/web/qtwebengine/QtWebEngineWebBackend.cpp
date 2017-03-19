@@ -162,6 +162,12 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 {
 	switch (identifier)
 	{
+#if QT_VERSION >= 0x050800
+		case SettingsManager::Browser_PrintElementBackgroundsOption:
+			QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
+
+			return;
+#endif
 		case SettingsManager::Interface_EnableSmoothScrollingOption:
 			QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 
@@ -218,6 +224,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
 #if QT_VERSION >= 0x050800
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
 #endif
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 

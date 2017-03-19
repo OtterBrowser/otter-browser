@@ -69,6 +69,7 @@ public:
 		Browser_OfflineStorageLimitOption,
 		Browser_OfflineWebApplicationCacheLimitOption,
 		Browser_OpenLinksInNewTabOption,
+		Browser_PrintElementBackgroundsOption,
 		Browser_PrivateModeOption,
 		Browser_RememberPasswordsOption,
 		Browser_ReuseCurrentTabOption,
