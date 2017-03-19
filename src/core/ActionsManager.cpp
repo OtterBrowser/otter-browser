@@ -438,8 +438,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(SelectDictionaryAction, QT_TRANSLATE_NOOP("actions", "Dictionaries"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(FindAction, QT_TRANSLATE_NOOP("actions", "Find…"), QString(), ThemesManager::getIcon(QLatin1String("edit-find")));
-	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"));
-	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"));
+	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"), QString(), ThemesManager::getIcon(QLatin1String("go-down")));
+	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"), QString(), ThemesManager::getIcon(QLatin1String("go-up")));
 	registerAction(QuickFindAction, QT_TRANSLATE_NOOP("actions", "Quick Find"));
 	registerAction(SearchAction, QT_TRANSLATE_NOOP("actions", "Search"));
 	registerAction(CreateSearchAction, QT_TRANSLATE_NOOP("actions", "Create Search…"));
