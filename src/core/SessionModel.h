@@ -84,12 +84,12 @@ public:
 	{
 		TitleRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
+		IconRole = Qt::DecorationRole,
 		IdentifierRole = Qt::UserRole,
 		TypeRole,
 		IndexRole,
 		LastActivityRole,
 		ZoomRole,
-		OptionsRole,
 		IsPinnedRole,
 		IsPrivateRole,
 		IsSuspendedRole

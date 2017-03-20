@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SessionModel.h"
+#include "ThemesManager.h"
 #include "../ui/MainWindow.h"
 #include "../ui/Window.h"
 
@@ -51,6 +52,8 @@ QVariant MainWindowSessionItem::data(int role) const
 			return m_mainWindow->getWindowsManager()->getTitle();
 		case SessionModel::UrlRole:
 			return m_mainWindow->getWindowsManager()->getUrl();
+		case SessionModel::IconRole:
+			return ThemesManager::getIcon(QLatin1String("window"));
 		case SessionModel::TypeRole:
 			return SessionModel::MainWindowEntity;
 		case SessionModel::IsPrivateRole:
@@ -80,6 +83,8 @@ QVariant WindowSessionItem::data(int role) const
 			return m_window->getTitle();
 		case SessionModel::UrlRole:
 			return m_window->getUrl();
+		case SessionModel::IconRole:
+			return m_window->getIcon();
 		case SessionModel::IdentifierRole:
 			return m_window->getIdentifier();
 		case SessionModel::TypeRole:
