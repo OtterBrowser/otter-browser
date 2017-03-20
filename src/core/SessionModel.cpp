@@ -19,6 +19,7 @@
 
 #include "SessionModel.h"
 #include "../ui/MainWindow.h"
+#include "../ui/Window.h"
 
 namespace Otter
 {
@@ -54,6 +55,51 @@ QVariant MainWindowSessionItem::data(int role) const
 			return SessionModel::MainWindowEntity;
 		case SessionModel::IsPrivateRole:
 			return m_mainWindow->getWindowsManager()->isPrivate();
+		default:
+			break;
+	}
+
+	return SessionItem::data(role);
+}
+
+WindowSessionItem::WindowSessionItem(Window *window) : SessionItem(),
+	m_window(window)
+{
+}
+
+Window* WindowSessionItem::getActiveWindow() const
+{
+	return m_window;
+}
+
+QVariant WindowSessionItem::data(int role) const
+{
+	switch (role)
+	{
+		case SessionModel::TitleRole:
+			return m_window->getTitle();
+		case SessionModel::UrlRole:
+			return m_window->getUrl();
+		case SessionModel::IdentifierRole:
+			return m_window->getIdentifier();
+		case SessionModel::TypeRole:
+			return SessionModel::WindowEntity;
+		case SessionModel::IndexRole:
+			{
+				MainWindow *mainWindow(MainWindow::findMainWindow(m_window));
+
+				return (mainWindow ? mainWindow->getWindowsManager()->getWindowIndex(m_window->getIdentifier()) : -1);
+			}
+		case SessionModel::LastActivityRole:
+			return m_window->getLastActivity();
+		case SessionModel::ZoomRole:
+			return m_window->getContentsWidget()->getZoom();
+		case SessionModel::IsPinnedRole:
+			return m_window->isPinned();
+		case SessionModel::IsPrivateRole:
+			return m_window->isPrivate();
+		case SessionModel::IsSuspendedRole:
+			return (m_window->getLoadingState() == WindowsManager::DelayedLoadingState);
 		default:
 			break;
 	}

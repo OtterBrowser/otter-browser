@@ -52,6 +52,19 @@ private:
 	MainWindow *m_mainWindow;
 };
 
+class WindowSessionItem : public SessionItem
+{
+public:
+	Window* getActiveWindow() const override;
+	QVariant data(int role) const override;
+
+protected:
+	explicit WindowSessionItem(Window *window);
+
+private:
+	Window *m_window;
+};
+
 class SessionModel : public QStandardItemModel
 {
 	Q_OBJECT
