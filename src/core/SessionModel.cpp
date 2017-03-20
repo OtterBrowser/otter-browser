@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SessionModel.h"
+#include "../ui/MainWindow.h"
 
 namespace Otter
 {
@@ -29,6 +30,16 @@ SessionItem::SessionItem() : QStandardItem()
 Window* SessionItem::getActiveWindow() const
 {
 	return nullptr;
+}
+
+MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionItem(),
+	m_mainWindow(mainWindow)
+{
+}
+
+Window* MainWindowSessionItem::getActiveWindow() const
+{
+	return m_mainWindow->getWindowsManager()->getWindowByIndex(-1);
 }
 
 SessionModel::SessionModel(const QString &path, QObject *parent) : QStandardItemModel(parent),

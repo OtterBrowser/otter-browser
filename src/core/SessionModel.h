@@ -25,6 +25,7 @@
 namespace Otter
 {
 
+class MainWindow;
 class Window;
 
 class SessionItem : public QStandardItem
@@ -36,6 +37,18 @@ protected:
 	explicit SessionItem();
 
 friend class SessionModel;
+};
+
+class MainWindowSessionItem : public SessionItem
+{
+public:
+	Window* getActiveWindow() const override;
+
+protected:
+	explicit MainWindowSessionItem(MainWindow *mainWindow);
+
+private:
+	MainWindow *m_mainWindow;
 };
 
 class SessionModel : public QStandardItemModel
