@@ -83,7 +83,12 @@ public:
 
 	explicit SessionModel(const QString &path, QObject *parent);
 
+	SessionItem* getRootItem() const;
+	SessionItem* getTrashItem() const;
+
 private:
+	SessionItem *m_rootItem;
+	SessionItem *m_trashItem;
 	QString m_path;
 };
 

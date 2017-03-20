@@ -43,8 +43,30 @@ Window* MainWindowSessionItem::getActiveWindow() const
 }
 
 SessionModel::SessionModel(const QString &path, QObject *parent) : QStandardItemModel(parent),
+	m_rootItem(new SessionItem()),
+	m_trashItem(new SessionItem()),
 	m_path(path)
 {
+	m_rootItem->setData(SessionEntity, TypeRole);
+	m_rootItem->setData(tr("Session"), TitleRole);
+	m_rootItem->setDragEnabled(false);
+	m_trashItem->setData(TrashEntity, TypeRole);
+	m_trashItem->setData(tr("Trash"), TitleRole);
+	m_trashItem->setDragEnabled(false);
+	m_trashItem->setEnabled(false);
+
+	appendRow(m_rootItem);
+	appendRow(m_trashItem);
+}
+
+SessionItem* SessionModel::getRootItem() const
+{
+	return m_rootItem;
+}
+
+SessionItem* SessionModel::getTrashItem() const
+{
+	return m_trashItem;
 }
 
 }
