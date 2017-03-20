@@ -43,6 +43,7 @@ class MainWindowSessionItem : public SessionItem
 {
 public:
 	Window* getActiveWindow() const override;
+	QVariant data(int role) const override;
 
 protected:
 	explicit MainWindowSessionItem(MainWindow *mainWindow);

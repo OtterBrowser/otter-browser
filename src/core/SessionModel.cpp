@@ -42,6 +42,25 @@ Window* MainWindowSessionItem::getActiveWindow() const
 	return m_mainWindow->getWindowsManager()->getWindowByIndex(-1);
 }
 
+QVariant MainWindowSessionItem::data(int role) const
+{
+	switch (role)
+	{
+		case SessionModel::TitleRole:
+			return m_mainWindow->getWindowsManager()->getTitle();
+		case SessionModel::UrlRole:
+			return m_mainWindow->getWindowsManager()->getUrl();
+		case SessionModel::TypeRole:
+			return SessionModel::MainWindowEntity;
+		case SessionModel::IsPrivateRole:
+			return m_mainWindow->getWindowsManager()->isPrivate();
+		default:
+			break;
+	}
+
+	return SessionItem::data(role);
+}
+
 SessionModel::SessionModel(const QString &path, QObject *parent) : QStandardItemModel(parent),
 	m_rootItem(new SessionItem()),
 	m_trashItem(new SessionItem()),
