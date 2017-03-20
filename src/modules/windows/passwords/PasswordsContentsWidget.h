@@ -23,7 +23,6 @@
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
-#include <QtNetwork/QNetworkCookie>
 
 namespace Otter
 {
