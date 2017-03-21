@@ -34,6 +34,26 @@ Window* SessionItem::getActiveWindow() const
 	return nullptr;
 }
 
+QVariant SessionItem::data(int role) const
+{
+	if (role == Qt::DecorationRole)
+	{
+		const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(data(SessionModel::TypeRole).toInt()));
+
+		if (type == SessionModel::SessionEntity)
+		{
+			return ThemesManager::getIcon(QLatin1String("inode-directory"));
+		}
+
+		if (type == SessionModel::TrashEntity)
+		{
+			return ThemesManager::getIcon(QLatin1String("user-trash"));
+		}
+	}
+
+	return QStandardItem::data(role);
+}
+
 MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionItem(),
 	m_mainWindow(mainWindow)
 {

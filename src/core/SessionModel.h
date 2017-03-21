@@ -32,6 +32,7 @@ class SessionItem : public QStandardItem
 {
 public:
 	virtual Window* getActiveWindow() const;
+	QVariant data(int role) const override;
 
 protected:
 	explicit SessionItem();
