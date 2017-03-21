@@ -108,6 +108,7 @@ public:
 protected slots:
 	void handleMainWindowAdded(MainWindow *mainWindow);
 	void handleMainWindowRemoved(MainWindow *mainWindow);
+	void notifyMainWindowModified();
 
 private:
 	SessionItem *m_rootItem;
