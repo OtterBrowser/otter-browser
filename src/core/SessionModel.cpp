@@ -37,6 +37,13 @@ Window* SessionItem::getActiveWindow() const
 MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionItem(),
 	m_mainWindow(mainWindow)
 {
+	connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
+	connect(mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyMainWindowModified()));
+}
+
+void MainWindowSessionItem::notifyMainWindowModified()
+{
+	emitDataChanged();
 }
 
 Window* MainWindowSessionItem::getActiveWindow() const
@@ -157,9 +164,6 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 	}
 
 	m_rootItem->appendRow(new MainWindowSessionItem(mainWindow));
-
-	connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
-	connect(mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyMainWindowModified()));
 }
 
 void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
@@ -171,21 +175,6 @@ void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
 		if (item && item->getMainWindow() == mainWindow)
 		{
 			m_rootItem->removeRow(i);
-
-			break;
-		}
-	}
-}
-
-void SessionModel::notifyMainWindowModified()
-{
-	for (int i = 0; i < m_rootItem->rowCount(); ++i)
-	{
-		MainWindowSessionItem *item(dynamic_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
-
-		if (item && item->getMainWindow()->getWindowsManager() == sender())
-		{
-			item->emitDataChanged();
 
 			break;
 		}

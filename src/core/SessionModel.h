@@ -39,8 +39,10 @@ protected:
 friend class SessionModel;
 };
 
-class MainWindowSessionItem : public SessionItem
+class MainWindowSessionItem : public QObject, public SessionItem
 {
+	Q_OBJECT
+
 public:
 	Window* getActiveWindow() const override;
 	MainWindow* getMainWindow() const;
@@ -48,6 +50,9 @@ public:
 
 protected:
 	explicit MainWindowSessionItem(MainWindow *mainWindow);
+
+protected slots:
+	void notifyMainWindowModified();
 
 private:
 	MainWindow *m_mainWindow;
@@ -108,7 +113,6 @@ public:
 protected slots:
 	void handleMainWindowAdded(MainWindow *mainWindow);
 	void handleMainWindowRemoved(MainWindow *mainWindow);
-	void notifyMainWindowModified();
 
 private:
 	SessionItem *m_rootItem;
