@@ -43,6 +43,7 @@ class MainWindowSessionItem : public SessionItem
 {
 public:
 	Window* getActiveWindow() const override;
+	MainWindow* getMainWindow() const;
 	QVariant data(int role) const override;
 
 protected:
@@ -50,6 +51,8 @@ protected:
 
 private:
 	MainWindow *m_mainWindow;
+
+friend class SessionModel;
 };
 
 class WindowSessionItem : public SessionItem
@@ -63,6 +66,8 @@ protected:
 
 private:
 	Window *m_window;
+
+friend class SessionModel;
 };
 
 class SessionModel : public QStandardItemModel
@@ -99,6 +104,10 @@ public:
 
 	SessionItem* getRootItem() const;
 	SessionItem* getTrashItem() const;
+
+protected slots:
+	void handleMainWindowAdded(MainWindow *mainWindow);
+	void handleMainWindowRemoved(MainWindow *mainWindow);
 
 private:
 	SessionItem *m_rootItem;

@@ -44,6 +44,11 @@ Window* MainWindowSessionItem::getActiveWindow() const
 	return m_mainWindow->getWindowsManager()->getWindowByIndex(-1);
 }
 
+MainWindow* MainWindowSessionItem::getMainWindow() const
+{
+	return m_mainWindow;
+}
+
 QVariant MainWindowSessionItem::data(int role) const
 {
 	switch (role)
@@ -127,6 +132,46 @@ SessionModel::SessionModel(const QString &path, QObject *parent) : QStandardItem
 
 	appendRow(m_rootItem);
 	appendRow(m_trashItem);
+
+	const QVector<MainWindow*> mainWindows(Application::getWindows());
+
+	for (int i = 0; i < mainWindows.count(); ++i)
+	{
+		handleMainWindowAdded(mainWindows.at(i));
+	}
+
+	connect(Application::getInstance(), SIGNAL(windowAdded(MainWindow*)), this, SLOT(handleMainWindowAdded(MainWindow*)));
+	connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(handleMainWindowRemoved(MainWindow*)));
+}
+
+void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
+{
+	for (int i = 0; i < m_rootItem->rowCount(); ++i)
+	{
+		MainWindowSessionItem *item(dynamic_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
+
+		if (item && item->getMainWindow() == mainWindow)
+		{
+			return;
+		}
+	}
+
+	m_rootItem->appendRow(new MainWindowSessionItem(mainWindow));
+}
+
+void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
+{
+	for (int i = 0; i < m_rootItem->rowCount(); ++i)
+	{
+		MainWindowSessionItem *item(dynamic_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
+
+		if (item && item->getMainWindow() == mainWindow)
+		{
+			m_rootItem->removeRow(i);
+
+			break;
+		}
+	}
 }
 
 SessionItem* SessionModel::getRootItem() const
