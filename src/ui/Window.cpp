@@ -38,6 +38,7 @@
 #include "../modules/windows/passwords/PasswordsContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
+#include "../modules/windows/windows/WindowsContentsWidget.h"
 
 #include <QtCore/QTimer>
 #include <QtPrintSupport/QPrintDialog>
@@ -489,6 +490,10 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 		else if (url.path() == QLatin1String("transfers"))
 		{
 			newWidget = new TransfersContentsWidget(QVariantMap(), this);
+		}
+		else if (url.path() == QLatin1String("windows"))
+		{
+			newWidget = new WindowsContentsWidget(QVariantMap(), this);
 		}
 
 		if (newWidget && !newWidget->canClone())

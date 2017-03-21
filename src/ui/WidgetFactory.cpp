@@ -44,6 +44,7 @@
 #include "../modules/windows/passwords/PasswordsContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
+#include "../modules/windows/windows/WindowsContentsWidget.h"
 
 namespace Otter
 {
@@ -208,6 +209,11 @@ QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int si
 	if (panel == QLatin1String("transfers"))
 	{
 		return new TransfersContentsWidget(parameters, nullptr);
+	}
+
+	if (panel == QLatin1String("windows"))
+	{
+		return new WindowsContentsWidget(parameters, nullptr);
 	}
 
 	if (panel.startsWith(QLatin1String("web:")))

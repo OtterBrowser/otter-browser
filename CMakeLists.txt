@@ -251,6 +251,7 @@ set(otter_src
 	src/modules/windows/web/StartPageWidget.cpp
 	src/modules/windows/web/TileDelegate.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
+	src/modules/windows/windows/WindowsContentsWidget.cpp
 	3rdparty/mousegestures/MouseGestures.cpp
 )
 
@@ -316,6 +317,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/SearchBarWidget.ui
 	src/modules/windows/web/SelectPasswordDialog.ui
 	src/modules/windows/web/StartPagePreferencesDialog.ui
+	src/modules/windows/windows/WindowsContentsWidget.ui
 )
 
 if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)

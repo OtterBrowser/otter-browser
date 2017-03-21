@@ -116,6 +116,7 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Notes"), QString(), QUrl(QLatin1String("about:notes")), ThemesManager::getIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Passwords"), QString(), QUrl(QLatin1String("about:passwords")), ThemesManager::getIcon(QLatin1String("dialog-password"), false)), QLatin1String("passwords"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Transfers"), QString(), QUrl(QLatin1String("about:transfers")), ThemesManager::getIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Windows"), QString(), QUrl(QLatin1String("about:windows")), ThemesManager::getIcon(QLatin1String("window"), false)), QLatin1String("windows"));
 }
 
 void AddonsManager::createInstance(QObject *parent)
