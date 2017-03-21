@@ -64,7 +64,7 @@ void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 		}
 	}
 
-	appendRow(new WindowSessionItem(window));
+	insertRow(m_mainWindow->getWindowsManager()->getWindowIndex(identifier), new WindowSessionItem(window));
 }
 
 void MainWindowSessionItem::handleWindowRemoved(quint64 identifier)
