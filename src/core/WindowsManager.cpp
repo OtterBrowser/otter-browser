@@ -812,7 +812,7 @@ void WindowsManager::handleWindowClose(Window *window)
 			m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(false);
 			m_mainWindow->setCurrentWindow(nullptr);
 
-			emit windowTitleChanged(QString());
+			emit titleChanged(QString());
 		}
 	}
 
@@ -904,7 +904,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
-		emit windowTitleChanged(window->getContentsWidget()->getTitle());
+		emit titleChanged(window->getContentsWidget()->getTitle());
 		emit zoomChanged(window->getContentsWidget()->getZoom());
 		emit canZoomChanged(window->getContentsWidget()->canZoom());
 
@@ -947,7 +947,7 @@ void WindowsManager::setTitle(const QString &title)
 
 	if (index == m_mainWindow->getTabBar()->currentIndex())
 	{
-		emit windowTitleChanged(text);
+		emit titleChanged(text);
 	}
 }
 
@@ -1196,7 +1196,7 @@ bool WindowsManager::event(QEvent *event)
 
 		if (window)
 		{
-			emit windowTitleChanged(window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
+			emit titleChanged(window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
 		}
 	}
 

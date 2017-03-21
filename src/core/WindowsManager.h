@@ -139,12 +139,12 @@ private:
 signals:
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedEditBookmark(const QUrl &url);
+	void titleChanged(const QString &title);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);
 	void currentWindowChanged(quint64 identifier);
-	void windowTitleChanged(const QString &title);
 	void closedWindowsAvailableChanged(bool available);
 
 friend class ManWindow;

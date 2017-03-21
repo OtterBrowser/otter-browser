@@ -1120,9 +1120,9 @@ void Menu::populateWindowsMenu()
 
 		if (mainWindow)
 		{
+			connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(populateWindowsMenu()));
 			connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(quint64)), this, SLOT(populateWindowsMenu()));
 			connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(quint64)), this, SLOT(populateWindowsMenu()));
-			connect(mainWindow->getWindowsManager(), SIGNAL(windowTitleChanged(QString)), this, SLOT(populateWindowsMenu()));
 		}
 
 		disconnect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
