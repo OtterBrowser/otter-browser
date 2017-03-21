@@ -37,8 +37,51 @@ Window* SessionItem::getActiveWindow() const
 MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionItem(),
 	m_mainWindow(mainWindow)
 {
+	const QVector<quint64> windows(mainWindow->getWindowsManager()->getWindows());
+
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		handleWindowAdded(windows.at(i));
+	}
+
 	connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
 	connect(mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyMainWindowModified()));
+	connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
+	connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
+}
+
+void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
+{
+	Window *window(m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier));
+
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		WindowSessionItem *item(dynamic_cast<WindowSessionItem*>(child(i)));
+
+		if (item && item->getActiveWindow() == window)
+		{
+			return;
+		}
+	}
+
+	appendRow(new WindowSessionItem(window));
+}
+
+void MainWindowSessionItem::handleWindowRemoved(quint64 identifier)
+{
+	Window *window(m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier));
+
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		WindowSessionItem *item(dynamic_cast<WindowSessionItem*>(child(i)));
+
+		if (item && item->getActiveWindow() == window)
+		{
+			removeRow(i);
+
+			break;
+		}
+	}
 }
 
 void MainWindowSessionItem::notifyMainWindowModified()

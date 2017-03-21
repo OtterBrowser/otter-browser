@@ -52,6 +52,8 @@ protected:
 	explicit MainWindowSessionItem(MainWindow *mainWindow);
 
 protected slots:
+	void handleWindowAdded(quint64 identifier);
+	void handleWindowRemoved(quint64 identifier);
 	void notifyMainWindowModified();
 
 private:
@@ -72,7 +74,7 @@ protected:
 private:
 	Window *m_window;
 
-friend class SessionModel;
+friend class MainWindowSessionItem;
 };
 
 class SessionModel : public QStandardItemModel
