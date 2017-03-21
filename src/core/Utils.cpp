@@ -177,6 +177,10 @@ QString createErrorPage(const ErrorPageInformation &information)
 	{
 		introduction = QCoreApplication::translate("utils", "The owner of <strong>%1</strong> has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
 	}
+	else if (information.type == ErrorPageInformation::FraudAttemptError)
+	{
+		introduction = QCoreApplication::translate("utils", "This web page at <strong>%1</strong> has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
+	}
 	else
 	{
 		introduction = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(information.url.toDisplayString());
@@ -205,6 +209,10 @@ QString createErrorPage(const ErrorPageInformation &information)
 				break;
 			case ErrorPageInformation::FileNotFoundError:
 				title = QCoreApplication::translate("utils", "File not found");
+
+				break;
+			case ErrorPageInformation::FraudAttemptError:
+				title = QCoreApplication::translate("utils", "Fraud attempt");
 
 				break;
 			case ErrorPageInformation::ServerNotFoundError:

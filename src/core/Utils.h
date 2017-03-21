@@ -53,6 +53,7 @@ struct ErrorPageInformation
 		ConnectionInsecureError,
 		ConnectionRefusedError,
 		FileNotFoundError,
+		FraudAttemptError,
 		ServerNotFoundError
 	};
 
