@@ -1064,6 +1064,24 @@ QVector<ClosedWindow> WindowsManager::getClosedWindows() const
 	return m_closedWindows;
 }
 
+QVector<quint64> WindowsManager::getWindows() const
+{
+	QVector<quint64> windows;
+	windows.reserve(m_mainWindow->getTabBar()->count());
+
+	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if (window)
+		{
+			windows.append(window->getIdentifier());
+		}
+	}
+
+	return windows;
+}
+
 WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, int modifiers)
 {
 	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());

@@ -92,6 +92,7 @@ public:
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
 	QVector<ClosedWindow> getClosedWindows() const;
+	QVector<quint64> getWindows() const;
 	static WindowsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
 	static WindowsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	int getWindowCount(bool onlyPrivate = false) const;
