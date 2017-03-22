@@ -19,6 +19,7 @@
 
 #include "TabSwitcherWidget.h"
 #include "Window.h"
+#include "../core/ActionsManager.h"
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QKeyEvent>
@@ -311,11 +312,11 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton)
 		{
-			const int index(m_windowsManager->getWindowIndex(m_tabsView->indexAt(mouseEvent->pos()).data(Qt::UserRole).toULongLong()));
+			const QModelIndex index(m_tabsView->indexAt(mouseEvent->pos()));
 
-			if (index >= 0)
+			if (index.isValid())
 			{
-				m_windowsManager->close(index);
+				ActionsManager::triggerAction(ActionsManager::CloseTabAction, parentWidget(), QVariantMap({{QLatin1String("window"), index.data(Qt::UserRole).toULongLong()}}));
 			}
 
 			return true;

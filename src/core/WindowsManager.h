@@ -105,8 +105,6 @@ public:
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void search(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = DefaultOpen);
-	void close(int index);
-	void closeAll();
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
 	void clearClosedWindows();
@@ -116,7 +114,9 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
+	void close(int index);
 	void closeOther(int index = -1);
+	void closeAll();
 	bool event(QEvent *event) override;
 
 protected slots:
@@ -148,7 +148,7 @@ signals:
 	void currentWindowChanged(quint64 identifier);
 	void closedWindowsAvailableChanged(bool available);
 
-friend class ManWindow;
+friend class MainWindow;
 };
 
 }
