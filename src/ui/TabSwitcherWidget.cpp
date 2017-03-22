@@ -67,7 +67,7 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_previewLabel->setAlignment(Qt::AlignCenter);
 	m_previewLabel->setStyleSheet(QLatin1String("border:1px solid gray;"));
 
-	connect(m_tabsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentTabChanged(QModelIndex)));
+	connect(m_tabsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(handleCurrentTabChanged(QModelIndex)));
 }
 
 void TabSwitcherWidget::showEvent(QShowEvent *event)
@@ -94,8 +94,8 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	QWidget::showEvent(event);
 
-	connect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(tabAdded(quint64)));
-	connect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(tabRemoved(quint64)));
+	connect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
+	connect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
 }
 
 void TabSwitcherWidget::hideEvent(QHideEvent *event)
@@ -104,8 +104,8 @@ void TabSwitcherWidget::hideEvent(QHideEvent *event)
 
 	QWidget::hideEvent(event);
 
-	disconnect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(tabAdded(quint64)));
-	disconnect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(tabRemoved(quint64)));
+	disconnect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
+	disconnect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
 
 	m_model->clear();
 }
@@ -140,7 +140,7 @@ void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 	}
 }
 
-void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
+void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 {
 	Window *window(m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toULongLong()));
 
@@ -172,7 +172,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 	}
 }
 
-void TabSwitcherWidget::tabAdded(quint64 identifier)
+void TabSwitcherWidget::handleWindowAdded(quint64 identifier)
 {
 	Window *window(m_windowsManager->getWindowByIdentifier(identifier));
 
@@ -182,7 +182,7 @@ void TabSwitcherWidget::tabAdded(quint64 identifier)
 	}
 }
 
-void TabSwitcherWidget::tabRemoved(quint64 identifier)
+void TabSwitcherWidget::handleWindowRemoved(quint64 identifier)
 {
 	const int row(findRow(identifier));
 

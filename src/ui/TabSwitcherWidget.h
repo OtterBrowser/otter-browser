@@ -60,9 +60,9 @@ protected:
 	int findRow(quint64 identifier) const;
 
 protected slots:
-	void currentTabChanged(const QModelIndex &index);
-	void tabAdded(quint64 identifier);
-	void tabRemoved(quint64 identifier);
+	void handleCurrentTabChanged(const QModelIndex &index);
+	void handleWindowAdded(quint64 identifier);
+	void handleWindowRemoved(quint64 identifier);
 	void setTitle(const QString &title);
 	void setIcon(const QIcon &icon);
 	void setLoadingState(WindowsManager::LoadingState state);
