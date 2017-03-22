@@ -963,13 +963,18 @@ QString Application::createReport(ReportOptions options)
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(30);
-		stream << QLatin1String("Locale");
-		stream << QLocale::system().name();
+		stream << QLatin1String("Build Qt Version");
+		stream << QT_VERSION_STR;
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(30);
-		stream << QLatin1String("Qt Version");
-		stream << QT_VERSION_STR;
+		stream << QLatin1String("Current Qt Version");
+		stream << qVersion();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(30);
+		stream << QLatin1String("Locale");
+		stream << QLocale::system().name();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\n");
 	}
