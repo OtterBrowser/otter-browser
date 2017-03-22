@@ -144,31 +144,29 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 {
 	Window *window(m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toULongLong()));
 
-	if (window)
+	m_previewLabel->setMovie(nullptr);
+	m_previewLabel->setPixmap(QPixmap());
+
+	if (!window)
 	{
-		if (window->getLoadingState() == WindowsManager::DelayedLoadingState || window->getLoadingState() == WindowsManager::OngoingLoadingState)
-		{
-			if (!m_loadingMovie)
-			{
-				m_loadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), m_previewLabel);
-				m_loadingMovie->start();
-			}
+		return;
+	}
 
-			m_previewLabel->setPixmap(QPixmap());
-			m_previewLabel->setMovie(m_loadingMovie);
-
-			m_loadingMovie->setSpeed((window->getLoadingState() == WindowsManager::OngoingLoadingState) ? 100 : 10);
-		}
-		else
+	if (window->getLoadingState() == WindowsManager::DelayedLoadingState || window->getLoadingState() == WindowsManager::OngoingLoadingState)
+	{
+		if (!m_loadingMovie)
 		{
-			m_previewLabel->setMovie(nullptr);
-			m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
+			m_loadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), m_previewLabel);
+			m_loadingMovie->start();
 		}
+
+		m_previewLabel->setMovie(m_loadingMovie);
+
+		m_loadingMovie->setSpeed((window->getLoadingState() == WindowsManager::OngoingLoadingState) ? 100 : 10);
 	}
 	else
 	{
-		m_previewLabel->setMovie(nullptr);
-		m_previewLabel->setPixmap(QPixmap());
+		m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
 	}
 }
 
