@@ -79,7 +79,7 @@ bool Addon::isEnabled() const
 	return m_isEnabled;
 }
 
-AddonsManager *AddonsManager::m_instance(nullptr);
+AddonsManager* AddonsManager::m_instance(nullptr);
 QMap<QString, UserScript*> AddonsManager::m_userScripts;
 QMap<QString, WebBackend*> AddonsManager::m_webBackends;
 QMap<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
