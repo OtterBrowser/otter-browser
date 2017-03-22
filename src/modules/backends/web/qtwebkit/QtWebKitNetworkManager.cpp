@@ -351,13 +351,13 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 
 			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
 			{
-				Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl).arg(thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1,  m_widget->getWindowIdentifier());
+				Console::addMessage(QStringLiteral("[accepted] The page at %1 was allowed to display insecure content from %2").arg(firstPartyUrl).arg(thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
 
 				errorsToIgnore.append(errors.at(i));
 			}
 			else
 			{
-				Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(firstPartyUrl).arg(thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1,  m_widget->getWindowIdentifier());
+				Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(firstPartyUrl).arg(thirdPartyUrl), Console::SecurityCategory, Console::WarningLevel, thirdPartyUrl, -1, m_widget->getWindowIdentifier());
 			}
 		}
 	}

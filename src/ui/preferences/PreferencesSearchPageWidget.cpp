@@ -390,7 +390,7 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 	}
 
 	SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
-	const QString identifier(searchEngine.isValid() ? searchEngine.identifier :  m_updateJobs.key(job));
+	const QString identifier(searchEngine.isValid() ? searchEngine.identifier : m_updateJobs.key(job));
 
 	if (!identifier.isEmpty())
 	{
