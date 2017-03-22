@@ -900,8 +900,8 @@ QCommandLineParser* Application::getCommandLineParser()
 
 QString Application::createReport(ReportOptions options)
 {
-	ActionsManager::createInstance(getInstance());
-	AddonsManager::createInstance(getInstance());
+	ActionsManager::createInstance(m_instance);
+	AddonsManager::createInstance(m_instance);
 
 	WebBackend *webBackend(AddonsManager::getWebBackend());
 	QString report;
