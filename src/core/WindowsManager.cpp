@@ -391,7 +391,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 
 }
 
-void WindowsManager::open(BookmarksItem *bookmark, WindowsManager::OpenHints hints)
+void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 {
 	if (bookmark)
 	{
