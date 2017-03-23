@@ -1199,13 +1199,6 @@ int WindowsManager::getWindowIndex(quint64 identifier) const
 	return -1;
 }
 
-int WindowsManager::getZoom() const
-{
-	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-
-	return (window ? window->getContentsWidget()->getZoom() : 100);
-}
-
 bool WindowsManager::event(QEvent *event)
 {
 	if (event->type() == QEvent::LanguageChange)
@@ -1219,13 +1212,6 @@ bool WindowsManager::event(QEvent *event)
 	}
 
 	return QObject::event(event);
-}
-
-bool WindowsManager::canZoom() const
-{
-	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-
-	return (window ? window->getContentsWidget()->canZoom() : false);
 }
 
 bool WindowsManager::isPrivate() const

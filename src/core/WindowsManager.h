@@ -97,8 +97,6 @@ public:
 	static WindowsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
-	int getZoom() const;
-	bool canZoom() const;
 	bool isPrivate() const;
 	bool hasUrl(const QUrl &url, bool activate = false);
 
