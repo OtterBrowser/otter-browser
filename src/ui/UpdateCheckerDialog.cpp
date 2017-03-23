@@ -51,7 +51,7 @@ UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QVector<UpdateCh
 
 		UpdateChecker *updateChecker(new UpdateChecker(this, false));
 
-		connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
+		connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(updateCheckFinished(QVector<UpdateChecker::UpdateInformation>)));
 	}
 	else
 	{

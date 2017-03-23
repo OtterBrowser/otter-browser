@@ -445,7 +445,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	{
 		UpdateChecker *updateChecker(new UpdateChecker(this));
 
-		connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
+		connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(updateCheckFinished(QVector<UpdateChecker::UpdateInformation>)));
 
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
@@ -554,7 +554,7 @@ void Application::periodicUpdateCheck()
 {
 	UpdateChecker *updateChecker(new UpdateChecker(this));
 
-	connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
+	connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(updateCheckFinished(QVector<UpdateChecker::UpdateInformation>)));
 
 	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
