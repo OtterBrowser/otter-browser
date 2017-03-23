@@ -1224,7 +1224,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 	}
 
 	QStringList availableIdentifiers;
-	QList<KeyboardProfile> availableShortcutsProfiles;
+	QVector<KeyboardProfile> availableShortcutsProfiles;
 	const QList<QFileInfo> allShortcutsProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allShortcutsProfiles.count(); ++i)
@@ -1448,7 +1448,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
-		const QList<int> javaScriptOptions({SettingsManager::Permissions_EnableFullScreenOption, SettingsManager::Permissions_ScriptsCanAccessClipboardOption, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, SettingsManager::Permissions_ScriptsCanCloseWindowsOption, SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption});
+		const QVector<int> javaScriptOptions({SettingsManager::Permissions_EnableFullScreenOption, SettingsManager::Permissions_ScriptsCanAccessClipboardOption, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, SettingsManager::Permissions_ScriptsCanCloseWindowsOption, SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption});
 
 		for (int i = 0; i < javaScriptOptions.count(); ++i)
 		{

@@ -50,7 +50,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	QStandardItemModel *fontsModel(new QStandardItemModel(this));
 	fontsModel->setHorizontalHeaderLabels(QStringList({tr("Style"), tr("Font"), tr("Preview")}));
 
-	const QList<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
+	const QVector<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
 	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
 	OptionDelegate *fontsDelegate(new OptionDelegate(true, this));
 
@@ -73,7 +73,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	QStandardItemModel *colorsModel(new QStandardItemModel(this));
 	colorsModel->setHorizontalHeaderLabels(QStringList({tr("Type"), tr("Preview")}));
 
-	const QList<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
+	const QVector<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
 	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
 	OptionDelegate *colorsDelegate(new OptionDelegate(true, this));
 
