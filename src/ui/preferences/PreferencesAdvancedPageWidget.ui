@@ -316,7 +316,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="appearranceStyleSheetLabel">
            <property name="text">
-            <string>Style sheet:</string>
+            <string>Interface style sheet:</string>
            </property>
            <property name="buddy">
             <cstring>appearranceStyleSheetFilePathWidget</cstring>
