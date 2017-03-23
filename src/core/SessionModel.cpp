@@ -131,6 +131,12 @@ QVariant MainWindowSessionItem::data(int role) const
 			return ThemesManager::getIcon(QLatin1String("window"));
 		case SessionModel::TypeRole:
 			return SessionModel::MainWindowEntity;
+		case SessionModel::IndexRole:
+			{
+				Window *window(m_mainWindow->getWindowsManager()->getWindowByIndex(-1));
+
+				return (window ? m_mainWindow->getWindowsManager()->getWindowIndex(window->getIdentifier()) : -1);
+			}
 		case SessionModel::IsPrivateRole:
 			return m_mainWindow->getWindowsManager()->isPrivate();
 		default:
