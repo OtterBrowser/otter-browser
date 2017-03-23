@@ -153,7 +153,23 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 	{
 		if (!QApplication::style()->inherits("Otter::Style"))
 		{
-			QApplication::setStyle(createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
+			const QList<QStyle*> children(QApplication::style()->findChildren<QStyle*>());
+			bool hasFound(false);
+
+			for (int i = 0; i < children.count(); ++i)
+			{
+				if (children.at(i)->inherits("Otter::Style"))
+				{
+					hasFound = true;
+
+					break;
+				}
+			}
+
+			if (!hasFound)
+			{
+				QApplication::setStyle(createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
+			}
 		}
 
 		emit widgetStyleChanged();
