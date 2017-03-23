@@ -1311,7 +1311,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation>Стерти історію</translation>
+        <translation>Очистити історію</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
@@ -1532,7 +1532,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="82"/>
         <source>Settings</source>
-        <translation>Налаштування</translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
@@ -2521,12 +2521,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="43"/>
         <source>System</source>
-        <translation>Система</translation>
+        <translation>Системна</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="48"/>
         <source>Custom</source>
-        <translation>Інше</translation>
+        <translation>Інша</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="47"/>
@@ -3204,22 +3204,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="41"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation>%1 хоче використовувати повноекранний режим.</translation>
+        <translation>%1 бажає використовувати повноекранний режим.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="46"/>
         <source>%1 wants access to your location.</source>
-        <translation>%1 бажає отримати дозвіл на визначення вашого місця перебування.</translation>
+        <translation>%1 бажає отримати дозвіл на визначення вашого місця розташування.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="51"/>
         <source>%1 wants to show notifications.</source>
-        <translation>%1 хоче відобразити попередження.</translation>
+        <translation>%1 бажає відобразити попередження.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="56"/>
         <source>%1 wants to lock mouse pointer.</source>
-        <translation>%1 хоче зафіксувати курсор миші.</translation>
+        <translation>%1 бажає зафіксувати курсор миші.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="61"/>
@@ -3239,7 +3239,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="76"/>
         <source>%1 wants to play audio.</source>
-        <translation>%1 хоче відтворити аудіо.</translation>
+        <translation>%1 бажає відтворити аудіо.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="81"/>
@@ -3420,7 +3420,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="352"/>
         <source>Show tray icon</source>
-        <translation>Показувати іконку в системному лотку</translation>
+        <translation>Показувати іконку в області сповіщень</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="393"/>
@@ -5541,7 +5541,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation>Починати с домашньої сторінки</translation>
+        <translation>Починати з домашньої сторінки</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
@@ -5786,7 +5786,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="81"/>
         <source>Follow style</source>
-        <translation>Слідувати стилю</translation>
+        <translation>Дотримуватися стилю</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="82"/>
@@ -6644,7 +6644,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1326"/>
         <source>Page Default</source>
-        <translation>Задане сторінкою</translation>
+        <translation>Задано сторінкою</translation>
     </message>
 </context>
 <context>
@@ -6748,7 +6748,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
         <source>Enter full screen mode:</source>
-        <translation>Введіть повноекранний режим:</translation>
+        <translation>Ввести повноекранний режим:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
@@ -7045,7 +7045,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="458"/>
         <source>Allow to receive right mouse button clicks</source>
-        <translation>Дозволити отримувати клацання правої кнопки миші</translation>
+        <translation>Дозволити отримувати клацання правою кнопкою миші</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
@@ -7589,7 +7589,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <location filename="../../src/ui/WebWidget.cpp" line="455"/>
         <source>Mute Tab Media</source>
-        <translation>Приглушити звук медіа у вкладці</translation>
+        <translation>Вимкнути звук медіа у вкладці</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="356"/>
@@ -8111,12 +8111,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="455"/>
         <source>Page Left</source>
-        <translation>Вкладка зліва</translation>
+        <translation>Вкладка ліворуч</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Page Right</source>
-        <translation>Вкладка справа</translation>
+        <translation>Вкладка праворуч</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="457"/>
@@ -8410,7 +8410,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="513"/>
         <source>Exit</source>
-        <translation>Вийти</translation>
+        <translation>Вихід</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
@@ -8501,7 +8501,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="59"/>
         <source>Settings</source>
-        <translation>Налаштування</translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="60"/>
