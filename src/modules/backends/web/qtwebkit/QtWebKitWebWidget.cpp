@@ -498,29 +498,36 @@ void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError erro
 
 void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption)
+	switch (identifier)
 	{
-		disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+		case SettingsManager::Content_BackgroundColorOption:
+			{
+				QPalette palette(m_page->palette());
+				palette.setColor(QPalette::Base, QColor(value.toString()));
 
-		if (value.toBool() || SettingsManager::getOption(identifier, getUrl()).toBool())
-		{
-			connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
-		}
-		else
-		{
-			setStatusMessage(QString());
-		}
-	}
-	else if (identifier == SettingsManager::Content_BackgroundColorOption)
-	{
-		QPalette palette(m_page->palette());
-		palette.setColor(QPalette::Base, QColor(value.toString()));
+				m_page->setPalette(palette);
+			}
 
-		m_page->setPalette(palette);
-	}
-	else if (identifier == SettingsManager::History_BrowsingLimitAmountWindowOption)
-	{
-		m_page->history()->setMaximumItemCount(value.toInt());
+			break;
+		case SettingsManager::History_BrowsingLimitAmountWindowOption:
+			m_page->history()->setMaximumItemCount(value.toInt());
+
+			break;
+		case SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption:
+			disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+
+			if (value.toBool() || SettingsManager::getOption(identifier, getUrl()).toBool())
+			{
+				connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+			}
+			else
+			{
+				setStatusMessage(QString());
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
