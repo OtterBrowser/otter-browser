@@ -27,7 +27,7 @@ You can either compile Otter Browser from source by following the instructions i
 
 ### Under Linux and *BSD
 
-Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/). It is a single executable file that doesnt need any dependencies to be installed. The AppImage version should run under any system installed after 2012. The browser is also available in a the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
+Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/). It is a single executable file that doesn’t need any dependencies to be installed. The AppImage version should run under any system installed after 2012. The browser is also available in a the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
 
 ### Under Windows
 
@@ -41,7 +41,7 @@ DMG packages are available on [SourceForge](https://sourceforge.net/projects/ott
 
 Otter Browser is *your* browser. Because it is free software (GPL v3), you can contribute to make it better. New contributors are always welcome, whether you write code, make resources, report bugs, or suggest features.
 
-The browser is written in C++ from scratch and is based on the Qt5 framework, with some modules written in Javascript. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
+The browser is written in C++ from scratch and is based on the Qt5 framework, with some modules written in JavaScript. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
