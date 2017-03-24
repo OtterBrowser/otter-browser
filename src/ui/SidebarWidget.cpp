@@ -241,6 +241,8 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	m_ui->containerWidget->setVisible(widget != nullptr);
 
+	m_resizerWidget->setVisible(widget != nullptr);
+
 	m_currentPanel = identifier;
 
 	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
