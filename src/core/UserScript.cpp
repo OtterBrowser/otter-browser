@@ -201,6 +201,11 @@ QString UserScript::getVersion() const
 	return m_version;
 }
 
+QString UserScript::getPath() const
+{
+	return m_path;
+}
+
 QString UserScript::getSource()
 {
 	if (m_source.isEmpty())

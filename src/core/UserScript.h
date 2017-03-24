@@ -45,6 +45,7 @@ public:
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;
+	QString getPath() const;
 	QString getSource();
 	QUrl getHomePage() const override;
 	QUrl getUpdateUrl() const override;
