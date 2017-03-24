@@ -276,6 +276,9 @@ void AddonsContentsWidget::reloadAddon()
 				if (script)
 				{
 					script->reload();
+
+					m_ui->addonsViewWidget->setData(indexes.at(i), script->getIcon(), Qt::DecorationRole);
+					m_ui->addonsViewWidget->setData(indexes.at(i), (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle()).arg(script->getVersion())), Qt::DisplayRole);
 				}
 			}
 		}
