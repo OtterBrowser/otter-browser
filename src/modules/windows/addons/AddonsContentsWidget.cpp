@@ -309,16 +309,16 @@ void AddonsContentsWidget::showContextMenu(const QPoint &point)
 {
 	const QModelIndex index(m_ui->addonsViewWidget->indexAt(point));
 	QMenu menu(this);
+	menu.addAction(tr("Add Addon…"), this, SLOT(addAddon()));
 
 	if (index.isValid() && index.parent() != m_model->invisibleRootItem()->index())
 	{
+		menu.addSeparator();
 		menu.addAction(tr("Reload Addon"), this, SLOT(reloadAddon()));
 		menu.addSeparator();
 		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()))->setEnabled(false);
-		menu.addSeparator();
 	}
 
-	menu.addAction(tr("Add Addon…"), this, SLOT(addAddon()));
 	menu.exec(m_ui->addonsViewWidget->mapToGlobal(point));
 }
 
