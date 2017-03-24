@@ -311,6 +311,18 @@ void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
 
 void WebContentsWidget::search(const QString &search, const QString &query)
 {
+	if (m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
+	{
+		QVariantMap parameters;
+
+		if (isPrivate())
+		{
+			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		}
+
+		setWidget(nullptr, parameters, (m_webWidget ? m_webWidget->getOptions() : QHash<int, QVariant>()));
+	}
+
 	m_webWidget->search(search, query);
 }
 
