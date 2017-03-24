@@ -116,7 +116,7 @@ void HistoryContentsWidget::print(QPrinter *printer)
 void HistoryContentsWidget::populateEntries()
 {
 	const QDate date(QDate::currentDate());
-	const QList<QDate> dates({date, date.addDays(-1), date.addDays(-7), date.addDays(-14), date.addDays(-30), date.addDays(-365)});
+	const QVector<QDate> dates({date, date.addDays(-1), date.addDays(-7), date.addDays(-14), date.addDays(-30), date.addDays(-365)});
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{

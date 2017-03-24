@@ -195,7 +195,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_mouseTrackerTimer)
 	{
-		QList<Qt::ToolBarArea> areas;
+		QVector<Qt::ToolBarArea> areas;
 		const QPoint position(mapFromGlobal(QCursor::pos()));
 
 		if (position.x() < 10)
