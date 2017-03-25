@@ -109,7 +109,6 @@ public slots:
 	void setActiveWindowByIndex(int index);
 	void setActiveWindowByIdentifier(quint64 identifier);
 	void setOption(int identifier, const QVariant &value);
-	void setZoom(int zoom);
 
 protected:
 	void close(int index);
@@ -139,8 +138,6 @@ signals:
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedEditBookmark(const QUrl &url);
 	void titleChanged(const QString &title);
-	void canZoomChanged(bool can);
-	void zoomChanged(int zoom);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);
 	void currentWindowChanged(quint64 identifier);

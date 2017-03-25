@@ -855,16 +855,6 @@ void WindowsManager::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void WindowsManager::setZoom(int zoom)
-{
-	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-
-	if (window)
-	{
-		window->getContentsWidget()->setZoom(zoom);
-	}
-}
-
 void WindowsManager::setActiveWindowByIndex(int index)
 {
 	if (!m_isRestored || index >= m_mainWindow->getTabBar()->count())
@@ -884,8 +874,6 @@ void WindowsManager::setActiveWindowByIndex(int index)
 	if (window)
 	{
 		disconnect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
-		disconnect(window, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-		disconnect(window, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
 	}
 
 	setStatusMessage(QString());
@@ -905,12 +893,8 @@ void WindowsManager::setActiveWindowByIndex(int index)
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
 		emit titleChanged(window->getContentsWidget()->getTitle());
-		emit zoomChanged(window->getContentsWidget()->getZoom());
-		emit canZoomChanged(window->getContentsWidget()->canZoom());
 
 		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
-		connect(window, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-		connect(window, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
 	}
 
 	m_mainWindow->getAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
