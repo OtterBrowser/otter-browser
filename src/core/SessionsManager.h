@@ -170,7 +170,7 @@ private:
 
 signals:
 	void closedWindowsChanged();
-	void requestedRemoveStoredUrl(QString url);
+	void requestedRemoveStoredUrl(const QString &url);
 };
 
 }
