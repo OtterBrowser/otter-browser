@@ -117,7 +117,7 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 
 	if (definition.action == QLatin1String("ZoomWidget"))
 	{
-		return new ZoomWidget(parent);
+		return new ZoomWidget(window, parent);
 	}
 
 	if (definition.action.startsWith(QLatin1String("bookmarks:")))

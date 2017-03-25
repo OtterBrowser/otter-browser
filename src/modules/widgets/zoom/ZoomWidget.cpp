@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,10 @@
 **************************************************************************/
 
 #include "ZoomWidget.h"
-#include "../../../core/WindowsManager.h"
+#include "../../../core/SettingsManager.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QApplication>
@@ -28,19 +30,10 @@
 namespace Otter
 {
 
-ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent),
-	m_mainWindow(MainWindow::findMainWindow(parent))
+ZoomWidget::ZoomWidget(Window *window, QWidget *parent) : QSlider(parent),
+	m_window(nullptr)
 {
-	if (m_mainWindow)
-	{
-		connect(m_mainWindow->getWindowsManager(), SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
-		connect(m_mainWindow->getWindowsManager(), SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
-		connect(this, SIGNAL(valueChanged(int)), m_mainWindow->getWindowsManager(), SLOT(setZoom(int)));
-	}
-	else
-	{
-		setEnabled(false);
-	}
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	setRange(0, 300);
 	setTracking(true);
@@ -49,7 +42,12 @@ ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent),
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setTickPosition(QSlider::TicksBelow);
 	setTickInterval(100);
-	setZoom(100);
+	setWindow(window);
+
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+	{
+		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+	}
 }
 
 void ZoomWidget::mousePressEvent(QMouseEvent *event)
@@ -87,6 +85,33 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 	}
 }
 
+void ZoomWidget::setWindow(Window *window)
+{
+	if (m_window)
+	{
+		disconnect(m_window, SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
+		disconnect(m_window, SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
+		disconnect(this, SIGNAL(valueChanged(int)), m_window, SLOT(setZoom(int)));
+	}
+
+	m_window = window;
+
+	setEnabled(m_window && m_window->canZoom());
+
+	if (window)
+	{
+		setZoom(window->getZoom());
+
+		connect(window, SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
+		connect(window, SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
+		connect(this, SIGNAL(valueChanged(int)), window, SLOT(setZoom(int)));
+	}
+	else
+	{
+		setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
+	}
+}
+
 void ZoomWidget::setZoom(int zoom)
 {
 	zoom = qMax(zoom, 10);
@@ -95,11 +120,13 @@ void ZoomWidget::setZoom(int zoom)
 	setToolTip(tr("Zoom %1%").arg(zoom));
 	setStatusTip(tr("Zoom %1%").arg(zoom));
 
-	if (m_mainWindow && (underMouse() || isSliderDown()))
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow && (underMouse() || isSliderDown()))
 	{
 		QStatusTipEvent event(statusTip());
 
-		QApplication::sendEvent(m_mainWindow, &event);
+		QApplication::sendEvent(mainWindow, &event);
 	}
 }
 

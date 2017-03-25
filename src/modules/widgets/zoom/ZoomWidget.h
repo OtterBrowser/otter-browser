@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@
 namespace Otter
 {
 
-class MainWindow;
+class Window;
 
 class ZoomWidget : public QSlider
 {
 	Q_OBJECT
 
 public:
-	explicit ZoomWidget(QWidget *parent = nullptr);
+	explicit ZoomWidget(Window *window, QWidget *parent = nullptr);
 
 	QSize sizeHint() const override;
 
@@ -42,8 +42,11 @@ public slots:
 protected:
 	void mousePressEvent(QMouseEvent *event) override;
 
+protected slots:
+	void setWindow(Window *window);
+
 private:
-	MainWindow *m_mainWindow;
+	Window *m_window;
 };
 
 }
