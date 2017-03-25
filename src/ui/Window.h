@@ -72,7 +72,9 @@ public:
 	WindowsManager::LoadingState getLoadingState() const;
 	WindowsManager::ContentStates getContentState() const;
 	quint64 getIdentifier() const;
+	int getZoom() const;
 	bool canClone() const;
+	bool canZoom() const;
 	bool isAboutToClose() const;
 	bool isActive() const;
 	bool isPinned() const;
@@ -84,6 +86,7 @@ public slots:
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive();
 	void setUrl(const QUrl &url, bool isTyped = true);
+	void setZoom(int zoom);
 	void setToolBarsVisible(bool areVisible);
 	void setPinned(bool isPinned);
 

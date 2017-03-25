@@ -528,6 +528,18 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 	}
 }
 
+void Window::setZoom(int zoom)
+{
+	if (m_contentsWidget)
+	{
+		m_contentsWidget->setZoom(zoom);
+	}
+	else if (m_session.historyIndex >= 0 && m_session.historyIndex < m_session.history.count())
+	{
+		m_session.history[m_session.historyIndex].zoom = zoom;
+	}
+}
+
 void Window::setToolBarsVisible(bool areVisible)
 {
 	m_areToolBarsVisible = areVisible;
@@ -818,9 +830,19 @@ quint64 Window::getIdentifier() const
 	return m_identifier;
 }
 
+int Window::getZoom() const
+{
+	return (m_contentsWidget ? m_contentsWidget->getZoom() : m_session.getZoom());
+}
+
 bool Window::canClone() const
 {
 	return (m_contentsWidget ? m_contentsWidget->canClone() : false);
+}
+
+bool Window::canZoom() const
+{
+	return (m_contentsWidget ? m_contentsWidget->canZoom() : false);
 }
 
 bool Window::isAboutToClose() const
