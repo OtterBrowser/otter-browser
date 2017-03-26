@@ -129,6 +129,7 @@ protected:
 	bool startDrag(QMouseEvent *event);
 
 protected slots:
+	void addBookmark(QAction *action);
 	void openFeed(QAction *action);
 	void openUrl(const QString &url);
 	void openUrl(const QModelIndex &index);

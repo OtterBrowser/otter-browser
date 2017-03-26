@@ -507,8 +507,13 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						}
 						else
 						{
-							BookmarkPropertiesDialog dialog(url.adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), nullptr, -1, true, this);
-							dialog.exec();
+							QMenu menu;
+							menu.addAction(tr("Add to Bookmarks"));
+							menu.addAction(tr("Add to Start Page"))->setData(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption));
+
+							connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(addBookmark(QAction*)));
+
+							menu.exec(event->globalPos());
 						}
 
 						updateGeometries();
@@ -555,6 +560,24 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	m_clickedEntry = UnknownEntry;
 
 	LineEditWidget::mouseReleaseEvent(event);
+}
+
+void AddressWidget::addBookmark(QAction *action)
+{
+	if (action && m_window)
+	{
+		const QUrl url(getUrl().adjusted(QUrl::RemovePassword));
+
+		if (action->data().isNull())
+		{
+			BookmarkPropertiesDialog dialog(url, m_window->getTitle(), QString(), nullptr, -1, true, this);
+			dialog.exec();
+		}
+		else
+		{
+			BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, url, m_window->getTitle(), BookmarksManager::getModel()->getItem(action->data().toString()));
+		}
+	}
 }
 
 void AddressWidget::openFeed(QAction *action)
