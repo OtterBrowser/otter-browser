@@ -536,7 +536,6 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 				return;
 			case HistoryDropdownEntry:
-
 				if (!isPopupVisible())
 				{
 					m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
