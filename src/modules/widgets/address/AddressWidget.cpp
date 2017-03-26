@@ -488,7 +488,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 						connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(openFeed(QAction*)));
 
-						menu.exec(event->globalPos());
+						menu.exec(mapToGlobal(m_entries.value(ListFeedsEntry).rectangle.bottomLeft()));
 					}
 
 					event->accept();
@@ -513,7 +513,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 							connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(addBookmark(QAction*)));
 
-							menu.exec(event->globalPos());
+							menu.exec(mapToGlobal(m_entries.value(BookmarkEntry).rectangle.bottomLeft()));
 						}
 
 						updateGeometries();
