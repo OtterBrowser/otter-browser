@@ -39,7 +39,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->setupUi(this);
 
 	m_ui->windowsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	m_ui->windowsViewWidget->setModel(new SessionModel(SessionsManager::getSessionPath(SessionsManager::getCurrentSession()), this));
+	m_ui->windowsViewWidget->setModel(SessionsManager::getModel());
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
 }

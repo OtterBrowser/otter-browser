@@ -22,6 +22,7 @@
 #include "ActionsManager.h"
 #include "Application.h"
 #include "JsonSettings.h"
+#include "SessionModel.h"
 #include "WindowsManager.h"
 #include "../ui/MainWindow.h"
 
@@ -33,6 +34,7 @@ namespace Otter
 {
 
 SessionsManager* SessionsManager::m_instance(nullptr);
+SessionModel* SessionsManager::m_model(nullptr);
 QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
@@ -127,6 +129,16 @@ void SessionsManager::removeStoredUrl(const QString &url)
 SessionsManager* SessionsManager::getInstance()
 {
 	return m_instance;
+}
+
+SessionModel* SessionsManager::getModel()
+{
+	if (!m_model)
+	{
+		m_model = new SessionModel(SessionsManager::getSessionPath(getCurrentSession()), m_model);
+	}
+
+	return m_model;
 }
 
 QString SessionsManager::getCurrentSession()

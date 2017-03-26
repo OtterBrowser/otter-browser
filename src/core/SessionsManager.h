@@ -118,6 +118,7 @@ struct SessionInformation
 };
 
 class MainWindow;
+class SessionModel;
 class WindowsManager;
 
 class SessionsManager : public QObject
@@ -131,6 +132,7 @@ public:
 	static void markSessionModified();
 	static void removeStoredUrl(const QString &url);
 	static SessionsManager* getInstance();
+	static SessionModel* getModel();
 	static QString getCurrentSession();
 	static QString getCachePath();
 	static QString getProfilePath();
@@ -159,6 +161,7 @@ private:
 	int m_saveTimer;
 
 	static SessionsManager *m_instance;
+	static SessionModel *m_model;
 	static QString m_sessionPath;
 	static QString m_sessionTitle;
 	static QString m_cachePath;
