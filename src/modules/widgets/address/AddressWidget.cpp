@@ -753,7 +753,8 @@ void AddressWidget::updateGeometries()
 	QHash<EntryIdentifier, EntryDefinition> entries;
 	QVector<EntryDefinition> leadingEntries;
 	QVector<EntryDefinition> trailingEntries;
-	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
+	const int offset(qMax(((height() - 16) / 2), 2));
+	QMargins margins(offset, 0, offset, 0);
 	int availableWidth(width() - margins.left() - margins.right());
 	bool isLeading(true);
 	bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
@@ -1001,14 +1002,14 @@ void AddressWidget::updateGeometries()
 
 	m_entries = entries;
 
-	if (margins.left() > 0)
+	if (margins.left() > offset)
 	{
 		margins.setLeft(margins.left() - 2);
 	}
 
-	if (margins.right() > 0)
+	if (margins.right() > offset)
 	{
-		margins.setRight(margins.right() - 2);
+		margins.setRight(margins.right() + 2);
 	}
 
 	setTextMargins(margins);
