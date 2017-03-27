@@ -112,6 +112,7 @@ public:
 
 	SessionItem* getRootItem() const;
 	SessionItem* getTrashItem() const;
+	SessionItem* getMainWindowItem(MainWindow *mainWindow) const;
 
 protected slots:
 	void handleMainWindowAdded(MainWindow *mainWindow);
@@ -121,6 +122,7 @@ private:
 	SessionItem *m_rootItem;
 	SessionItem *m_trashItem;
 	QString m_path;
+	QMap<MainWindow*, SessionItem*> m_mainWindowItems;
 };
 
 }

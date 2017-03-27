@@ -232,7 +232,11 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 		}
 	}
 
-	m_rootItem->appendRow(new MainWindowSessionItem(mainWindow));
+	MainWindowSessionItem *item(new MainWindowSessionItem(mainWindow));
+
+	m_rootItem->appendRow(item);
+
+	m_mainWindowItems[mainWindow] = item;
 }
 
 void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
@@ -248,6 +252,8 @@ void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
 			break;
 		}
 	}
+
+	m_mainWindowItems.remove(mainWindow);
 }
 
 SessionItem* SessionModel::getRootItem() const
@@ -258,6 +264,11 @@ SessionItem* SessionModel::getRootItem() const
 SessionItem* SessionModel::getTrashItem() const
 {
 	return m_trashItem;
+}
+
+SessionItem* SessionModel::getMainWindowItem(MainWindow *mainWindow) const
+{
+	return m_mainWindowItems.value(mainWindow, nullptr);
 }
 
 }
