@@ -408,7 +408,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					}
 					else
 					{
-						windows[i]->getWindowsManager()->triggerAction(ActionsManager::ClosePrivateTabsAction);
+						windows[i]->triggerAction(ActionsManager::ClosePrivateTabsAction);
 					}
 				}
 			}
