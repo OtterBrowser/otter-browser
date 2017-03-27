@@ -81,8 +81,6 @@ public:
 
 	void addTab(int index, Window *window);
 	void removeTab(int index);
-	void activateTabOnLeft();
-	void activateTabOnRight();
 	void showPreview(int index, int delay = 0);
 	void hidePreview();
 	Window* getWindow(int index) const;

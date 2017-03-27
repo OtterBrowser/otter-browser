@@ -885,18 +885,16 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 {
 	QWidget::wheelEvent(event);
 
-	if (!(event->modifiers().testFlag(Qt::ControlModifier)) && SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
+	if (event->modifiers().testFlag(Qt::ControlModifier) || !SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
 	{
-		return;
-	}
-
-	if (event->delta() > 0)
-	{
-		activateTabOnLeft();
-	}
-	else
-	{
-		activateTabOnRight();
+		if (event->delta() > 0)
+		{
+			ActionsManager::triggerAction(ActionsManager::ActivateTabOnLeftAction, parentWidget());
+		}
+		else
+		{
+			ActionsManager::triggerAction(ActionsManager::ActivateTabOnRightAction, parentWidget());
+		}
 	}
 }
 
@@ -1161,16 +1159,6 @@ void TabBarWidget::removeTab(int index)
 
 		updateSize();
 	}
-}
-
-void TabBarWidget::activateTabOnLeft()
-{
-	setCurrentIndex((currentIndex() > 0) ? (currentIndex() - 1) : (count() - 1));
-}
-
-void TabBarWidget::activateTabOnRight()
-{
-	setCurrentIndex((currentIndex() + 1 < count()) ? (currentIndex() + 1) : 0);
 }
 
 void TabBarWidget::showPreview(int index, int delay)

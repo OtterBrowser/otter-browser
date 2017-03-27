@@ -258,11 +258,11 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::ActivateTabOnLeftAction:
-			m_mainWindow->getTabBar()->activateTabOnLeft();
+			setActiveWindowByIndex((m_mainWindow->getTabBar()->currentIndex() > 0) ? (m_mainWindow->getTabBar()->currentIndex() - 1) : (getWindowCount() - 1));
 
 			break;
 		case ActionsManager::ActivateTabOnRightAction:
-			m_mainWindow->getTabBar()->activateTabOnRight();
+			setActiveWindowByIndex(((m_mainWindow->getTabBar()->currentIndex() + 1) < getWindowCount()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : 0);
 
 			break;
 		case ActionsManager::BookmarkAllOpenPagesAction:
