@@ -39,9 +39,8 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(parent),
+WindowsManager::WindowsManager(MainWindow *parent) : QObject(parent),
 	m_mainWindow(parent),
-	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
 }
@@ -145,7 +144,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 				OpenHints hints(calculateOpenHints(parameters));
 				int index(parameters.value(QLatin1String("index"), -1).toInt());
 
-				if (m_isPrivate)
+				if (m_mainWindow->isPrivate())
 				{
 					hints |= PrivateOpen;
 				}
@@ -365,7 +364,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			{
 				QVariantMap mutableParameters(parameters);
 
-				if (m_isPrivate)
+				if (m_mainWindow->isPrivate())
 				{
 					mutableParameters[QLatin1String("hints")] = QVariant(calculateOpenHints(parameters) | PrivateOpen);
 				}
@@ -507,7 +506,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	{
 		QVariantMap parameters;
 
-		if (m_isPrivate)
+		if (m_mainWindow->isPrivate())
 		{
 			parameters[QLatin1String("hints")] = PrivateOpen;
 		}
@@ -575,7 +574,7 @@ void WindowsManager::restore(int index)
 
 	QVariantMap parameters;
 
-	if (m_isPrivate || closedWindow.isPrivate)
+	if (m_mainWindow->isPrivate() || closedWindow.isPrivate)
 	{
 		parameters[QLatin1String("hints")] = PrivateOpen;
 	}
@@ -1155,7 +1154,7 @@ int WindowsManager::getCurrentWindowIndex() const
 
 int WindowsManager::getWindowCount(bool onlyPrivate) const
 {
-	if (!onlyPrivate || m_isPrivate)
+	if (!onlyPrivate || m_mainWindow->isPrivate())
 	{
 		return m_mainWindow->getTabBar()->count();
 	}
@@ -1201,11 +1200,6 @@ bool WindowsManager::event(QEvent *event)
 	}
 
 	return QObject::event(event);
-}
-
-bool WindowsManager::isPrivate() const
-{
-	return m_isPrivate;
 }
 
 bool WindowsManager::hasUrl(const QUrl &url, bool activate)

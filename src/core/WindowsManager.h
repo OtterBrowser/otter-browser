@@ -81,7 +81,7 @@ public:
 		CrashedLoadingState
 	};
 
-	explicit WindowsManager(bool isPrivate, MainWindow *parent);
+	explicit WindowsManager(MainWindow *parent);
 
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
 	Action* getAction(int identifier);
@@ -98,7 +98,6 @@ public:
 	int getCurrentWindowIndex() const;
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
-	bool isPrivate() const;
 	bool hasUrl(const QUrl &url, bool activate = false);
 
 public slots:
@@ -132,7 +131,6 @@ private:
 	MainWindow *m_mainWindow;
 	QVector<ClosedWindow> m_closedWindows;
 	QHash<quint64, Window*> m_windows;
-	bool m_isPrivate;
 	bool m_isRestored;
 
 signals:

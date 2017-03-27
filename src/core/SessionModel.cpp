@@ -134,7 +134,7 @@ QVariant MainWindowSessionItem::data(int role) const
 		case SessionModel::IndexRole:
 			return m_mainWindow->getWindowsManager()->getCurrentWindowIndex();
 		case SessionModel::IsPrivateRole:
-			return m_mainWindow->getWindowsManager()->isPrivate();
+			return m_mainWindow->isPrivate();
 		default:
 			break;
 	}

@@ -62,6 +62,7 @@ public:
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool areToolBarsVisible() const;
 	bool isAboutToClose() const;
+	bool isPrivate() const;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
@@ -116,6 +117,7 @@ private:
 	int m_tabSwitcherTimer;
 	bool m_isAboutToClose;
 	bool m_isDraggingToolBar;
+	bool m_isPrivate;
 	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 

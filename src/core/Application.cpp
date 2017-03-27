@@ -633,7 +633,7 @@ void Application::handleNewConnection()
 
 	if (session.isEmpty())
 	{
-		if (!window || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
+		if (!window || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->isPrivate()))
 		{
 			QVariantMap parameters;
 

@@ -74,6 +74,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_tabSwitcherTimer(0),
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
+	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen))),
 	m_hasToolBars(!parameters.value(QLatin1String("noToolBars"), false).toBool()),
 	m_ui(new Ui::MainWindow)
 {
@@ -85,7 +86,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	updateShortcuts();
 
-	m_windowsManager = new WindowsManager((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen)), this);
+	m_windowsManager = new WindowsManager(this);
 
 	m_workspace->updateActions();
 
@@ -401,7 +402,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				for (int i = 0; i < windows.count(); ++i)
 				{
-					if (windows[i]->getWindowsManager()->isPrivate())
+					if (windows[i]->isPrivate())
 					{
 						windows[i]->close();
 					}
@@ -1335,6 +1336,11 @@ bool MainWindow::areToolBarsVisible() const
 bool MainWindow::isAboutToClose() const
 {
 	return m_isAboutToClose;
+}
+
+bool MainWindow::isPrivate() const
+{
+	return m_isPrivate;
 }
 
 bool MainWindow::event(QEvent *event)

@@ -218,7 +218,7 @@ QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int si
 
 	if (panel.startsWith(QLatin1String("web:")))
 	{
-		if (!mainWindow || mainWindow->getWindowsManager()->isPrivate())
+		if (!mainWindow || mainWindow->isPrivate())
 		{
 			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
 		}
