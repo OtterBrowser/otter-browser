@@ -95,6 +95,7 @@ public:
 	QVector<quint64> getWindows() const;
 	static WindowsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
 	static WindowsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
+	int getCurrentWindowIndex() const;
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
 	bool isPrivate() const;

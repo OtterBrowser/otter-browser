@@ -196,7 +196,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
 					}
 
-					close(m_mainWindow->getTabBar()->currentIndex());
+					close(getCurrentWindowIndex());
 				}
 
 				Window *window(new Window(mutableParameters));
@@ -258,11 +258,11 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::ActivateTabOnLeftAction:
-			setActiveWindowByIndex((m_mainWindow->getTabBar()->currentIndex() > 0) ? (m_mainWindow->getTabBar()->currentIndex() - 1) : (getWindowCount() - 1));
+			setActiveWindowByIndex((getCurrentWindowIndex() > 0) ? (getCurrentWindowIndex() - 1) : (getWindowCount() - 1));
 
 			break;
 		case ActionsManager::ActivateTabOnRightAction:
-			setActiveWindowByIndex(((m_mainWindow->getTabBar()->currentIndex() + 1) < getWindowCount()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : 0);
+			setActiveWindowByIndex(((getCurrentWindowIndex() + 1) < getWindowCount()) ? (getCurrentWindowIndex() + 1) : 0);
 
 			break;
 		case ActionsManager::BookmarkAllOpenPagesAction:
@@ -333,7 +333,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 							if (index < 0)
 							{
-								index = ((!hints.testFlag(EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : getWindowCount());
+								index = ((!hints.testFlag(EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : getWindowCount());
 							}
 
 							mutableParameters[QLatin1String("url")] = urls.at(0);
@@ -454,7 +454,7 @@ void WindowsManager::closeOther(int index)
 {
 	if (index < 0)
 	{
-		index = m_mainWindow->getTabBar()->currentIndex();
+		index = getCurrentWindowIndex();
 	}
 
 	if (index < 0 || index >= getWindowCount())
@@ -621,7 +621,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 
 	if (index < 0)
 	{
-		index = ((!hints.testFlag(EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : getWindowCount());
+		index = ((!hints.testFlag(EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : getWindowCount());
 	}
 
 	if (!window->isPinned())
@@ -862,7 +862,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 		return;
 	}
 
-	if (index != m_mainWindow->getTabBar()->currentIndex())
+	if (index != getCurrentWindowIndex())
 	{
 		m_mainWindow->getTabBar()->setCurrentIndex(index);
 
@@ -929,7 +929,7 @@ void WindowsManager::setTitle(const QString &title)
 
 	const int index(getWindowIndex(window->getIdentifier()));
 
-	if (index == m_mainWindow->getTabBar()->currentIndex())
+	if (index == getCurrentWindowIndex())
 	{
 		emit titleChanged(text);
 	}
@@ -988,7 +988,7 @@ Window* WindowsManager::getWindowByIndex(int index) const
 {
 	if (index == -1)
 	{
-		index = m_mainWindow->getTabBar()->currentIndex();
+		index = getCurrentWindowIndex();
 	}
 
 	return m_mainWindow->getTabBar()->getWindow(index);
@@ -1024,7 +1024,7 @@ SessionMainWindow WindowsManager::getSession() const
 {
 	SessionMainWindow session;
 	session.geometry = m_mainWindow->saveGeometry();
-	session.index = m_mainWindow->getTabBar()->currentIndex();
+	session.index = getCurrentWindowIndex();
 
 	for (int i = 0; i < getWindowCount(); ++i)
 	{
@@ -1146,6 +1146,11 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(const QVariantMap &
 	}
 
 	return hints;
+}
+
+int WindowsManager::getCurrentWindowIndex() const
+{
+	return m_mainWindow->getTabBar()->currentIndex();
 }
 
 int WindowsManager::getWindowCount(bool onlyPrivate) const
