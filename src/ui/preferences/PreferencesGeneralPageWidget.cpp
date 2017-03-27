@@ -27,8 +27,9 @@
 #include "../../core/BookmarksManager.h"
 #include "../../core/BookmarksModel.h"
 #include "../../core/PlatformIntegration.h"
+#include "../../core/SessionModel.h"
+#include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
-#include "../../core/WindowsManager.h"
 
 #include "ui_PreferencesGeneralPageWidget.h"
 
@@ -97,11 +98,11 @@ void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
 
 void PreferencesGeneralPageWidget::useCurrentAsHomePage()
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	SessionItem *item(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
 
-	if (mainWindow)
+	if (item)
 	{
-		m_ui->homePageLineEdit->setText(mainWindow->getWindowsManager()->getUrl().toString(QUrl::RemovePassword));
+		m_ui->homePageLineEdit->setText(item->data(SessionModel::UrlRole).toUrl().toString(QUrl::RemovePassword));
 	}
 }
 
