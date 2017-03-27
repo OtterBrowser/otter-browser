@@ -1176,7 +1176,7 @@ int WindowsManager::getWindowIndex(quint64 identifier) const
 {
 	for (int i = 0; i < getWindowCount(); ++i)
 	{
-		Window *window(m_mainWindow->getTabBar()->getWindow(i));
+		Window *window(getWindowByIndex(i));
 
 		if (window && window->getIdentifier() == identifier)
 		{
