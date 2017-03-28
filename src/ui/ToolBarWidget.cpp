@@ -352,11 +352,14 @@ void ToolBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QToolBar::resizeEvent(event);
 
-	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
-
-	if (tabBar)
+	if (m_identifier == ToolBarsManager::TabBar)
 	{
-		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
+		TabBarWidget *tabBar(findChild<TabBarWidget*>());
+
+		if (tabBar)
+		{
+			QTimer::singleShot(200, tabBar, SLOT(updateSize()));
+		}
 	}
 
 	if (m_toggleButton && m_toggleButton->isVisible())
@@ -688,15 +691,20 @@ void ToolBarWidget::updateToggleGeometry()
 
 void ToolBarWidget::updateVisibility()
 {
-	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar && m_mainWindow->getTabBar())
+	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
 	{
-		setVisible(m_mainWindow->getTabBar()->count() > 1);
+		TabBarWidget *tabBar(findChild<TabBarWidget*>());
+
+		if (tabBar)
+		{
+			setVisible(tabBar->count() > 1);
+		}
 	}
 }
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
+	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar) ? findChild<TabBarWidget*>() : nullptr);
 	const bool isFullScreen(m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false);
 	const bool isHorizontal(definition.location != Qt::LeftToolBarArea && definition.location != Qt::RightToolBarArea);
 
@@ -811,7 +819,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			{
 				const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
 
-				if (isTabBar && (m_identifier != ToolBarsManager::TabBar || !m_mainWindow || m_mainWindow->getTabBar()))
+				if (isTabBar && (m_identifier != ToolBarsManager::TabBar || findChild<TabBarWidget*>()))
 				{
 					continue;
 				}
