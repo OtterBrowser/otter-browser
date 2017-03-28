@@ -81,7 +81,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::CloneTabAction:
 			if (window && window->canClone())
 			{
-				addWindow(window->clone(true, m_mainWindow->getWorkspace()));
+				addWindow(window->clone(true, m_mainWindow));
 			}
 
 			break;
@@ -161,7 +161,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				if (index >= 0)
 				{
-					Window *window(new Window(mutableParameters));
+					Window *window(new Window(mutableParameters, nullptr, m_mainWindow));
 
 					addWindow(window, hints, index);
 
@@ -198,7 +198,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					close(getCurrentWindowIndex());
 				}
 
-				Window *window(new Window(mutableParameters));
+				Window *window(new Window(mutableParameters, nullptr, m_mainWindow));
 
 				addWindow(window, hints, index);
 
@@ -369,7 +369,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					mutableParameters[QLatin1String("hints")] = QVariant(calculateOpenHints(parameters) | PrivateOpen);
 				}
 
-				window = new Window(mutableParameters);
+				window = new Window(mutableParameters, nullptr, m_mainWindow);
 
 				addWindow(window, NewTabOpen);
 
@@ -417,7 +417,7 @@ void WindowsManager::search(const QString &query, const QString &searchEngine, O
 
 	if (window && window->canClone())
 	{
-		window = window->clone(false, m_mainWindow->getWorkspace());
+		window = window->clone(false, m_mainWindow);
 
 		addWindow(window, hints);
 	}
@@ -513,7 +513,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			Window *window(new Window(parameters));
+			Window *window(new Window(parameters, nullptr, m_mainWindow));
 			window->setSession(session.windows.at(i));
 
 			if (index < 0 && session.windows.at(i).state != MinimizedWindowState)
@@ -579,7 +579,7 @@ void WindowsManager::restore(int index)
 		parameters[QLatin1String("hints")] = PrivateOpen;
 	}
 
-	Window *window(new Window(parameters));
+	Window *window(new Window(parameters, nullptr, m_mainWindow));
 	window->setSession(closedWindow.window);
 
 	m_closedWindows.removeAt(index);
@@ -975,7 +975,7 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints, int 
 	}
 	else
 	{
-		window = new Window({{QLatin1String("hints"), QVariant(hints)}}, widget);
+		window = new Window({{QLatin1String("hints"), QVariant(hints)}}, widget, m_mainWindow);
 
 		addWindow(window, hints, index);
 	}

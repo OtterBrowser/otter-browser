@@ -574,7 +574,6 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 	else
 	{
 		window->hide();
-		window->setParent(this);
 		window->move(0, 0);
 	}
 

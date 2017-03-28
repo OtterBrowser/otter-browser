@@ -47,7 +47,7 @@ class Window : public QWidget
 	Q_OBJECT
 
 public:
-	explicit Window(const QVariantMap &parameters, ContentsWidget *widget = nullptr, QWidget *parent = nullptr);
+	explicit Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow);
 
 	void clear();
 	void attachAddressWidget(AddressWidget *widget);
@@ -56,7 +56,7 @@ public:
 	void detachSearchWidget(SearchWidget *widget);
 	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session);
-	Window* clone(bool cloneHistory = true, QWidget *parent = nullptr);
+	Window* clone(bool cloneHistory, MainWindow *mainWindow);
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
 	QString getTitle() const;
@@ -106,6 +106,7 @@ protected slots:
 	void updateNavigationBar();
 
 private:
+	MainWindow *m_mainWindow;
 	ToolBarWidget *m_navigationBar;
 	ContentsWidget *m_contentsWidget;
 	QDateTime m_lastActivity;

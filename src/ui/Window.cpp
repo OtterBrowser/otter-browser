@@ -23,6 +23,7 @@
 #include "MainWindow.h"
 #include "OpenAddressDialog.h"
 #include "ToolBarWidget.h"
+#include "WorkspaceWidget.h"
 #include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
@@ -52,7 +53,8 @@ namespace Otter
 
 quint64 Window::m_identifierCounter(0);
 
-Window::Window(const QVariantMap &parameters, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
+Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->getWorkspace()),
+	m_mainWindow(mainWindow),
 	m_navigationBar(nullptr),
 	m_contentsWidget(nullptr),
 	m_parameters(parameters),
@@ -377,7 +379,7 @@ void Window::handleSearchRequest(const QString &query, const QString &searchEngi
 
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
-	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, MainWindow::findMainWindow(this), {{QLatin1String("window"), getIdentifier()}});
+	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, m_mainWindow, {{QLatin1String("window"), getIdentifier()}});
 
 	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
@@ -676,7 +678,7 @@ AddressWidget* Window::findAddressWidget() const
 	return m_addressWidgets.value(0, nullptr);
 }
 
-Window* Window::clone(bool cloneHistory, QWidget *parent)
+Window* Window::clone(bool cloneHistory, MainWindow *mainWindow)
 {
 	if (!m_contentsWidget || !canClone())
 	{
@@ -690,7 +692,7 @@ Window* Window::clone(bool cloneHistory, QWidget *parent)
 		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
 	}
 
-	return new Window(parameters, m_contentsWidget->clone(cloneHistory), parent);
+	return new Window(parameters, m_contentsWidget->clone(cloneHistory), mainWindow);
 }
 
 ContentsWidget* Window::getContentsWidget()
