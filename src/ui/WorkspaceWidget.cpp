@@ -489,94 +489,96 @@ void WorkspaceWidget::markRestored()
 
 void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
 {
-	if (window)
+	if (!window)
 	{
-		if (!m_mdi && (state != MaximizedWindowState || geometry.isValid()))
-		{
-			createMdi();
-		}
-
-		if (m_mdi)
-		{
-			disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
-
-			QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
-			MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
-			Action *closeAction(new Action(ActionsManager::CloseTabAction));
-			closeAction->setEnabled(true);
-			closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
-			closeAction->setIcon(QIcon());
-
-			QMenu *menu(new QMenu(mdiWindow));
-			menu->addAction(closeAction);
-			menu->addAction(m_mainWindow->getAction(ActionsManager::RestoreTabAction));
-			menu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeTabAction));
-			menu->addAction(m_mainWindow->getAction(ActionsManager::MaximizeTabAction));
-			menu->addAction(m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction));
-			menu->addSeparator();
-
-			QMenu *arrangeMenu(menu->addMenu(tr("Arrange")));
-			arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::RestoreAllAction));
-			arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::MaximizeAllAction));
-			arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeAllAction));
-			arrangeMenu->addSeparator();
-			arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::CascadeAllAction));
-			arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::TileAllAction));
-
-			mdiWindow->show();
-			mdiWindow->lower();
-			mdiWindow->setSystemMenu(menu);
-
-			switch (state)
-			{
-				case MaximizedWindowState:
-					mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-					mdiWindow->showMaximized();
-
-					break;
-				case MinimizedWindowState:
-					mdiWindow->showMinimized();
-
-					break;
-				default:
-					mdiWindow->showNormal();
-
-					break;
-			}
-
-			if (isAlwaysOnTop)
-			{
-				mdiWindow->setWindowFlags(mdiWindow->windowFlags() | Qt::WindowStaysOnTopHint);
-			}
-
-			if (geometry.isValid())
-			{
-				mdiWindow->setGeometry(geometry);
-			}
-
-			if (activeWindow)
-			{
-				m_mdi->setActiveSubWindow(activeWindow);
-			}
-
-			if (m_isRestored)
-			{
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
-			}
-
-			connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
-			connect(mdiWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(updateActions()));
-			connect(window, SIGNAL(destroyed()), this, SLOT(updateActions()));
-		}
-		else
-		{
-			window->hide();
-			window->setParent(this);
-			window->move(0, 0);
-		}
-
-		updateActions();
+		return;
 	}
+
+	if (!m_mdi && (state != MaximizedWindowState || geometry.isValid()))
+	{
+		createMdi();
+	}
+
+	if (m_mdi)
+	{
+		disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+
+		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
+		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
+		Action *closeAction(new Action(ActionsManager::CloseTabAction));
+		closeAction->setEnabled(true);
+		closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
+		closeAction->setIcon(QIcon());
+
+		QMenu *menu(new QMenu(mdiWindow));
+		menu->addAction(closeAction);
+		menu->addAction(m_mainWindow->getAction(ActionsManager::RestoreTabAction));
+		menu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeTabAction));
+		menu->addAction(m_mainWindow->getAction(ActionsManager::MaximizeTabAction));
+		menu->addAction(m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction));
+		menu->addSeparator();
+
+		QMenu *arrangeMenu(menu->addMenu(tr("Arrange")));
+		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::RestoreAllAction));
+		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::MaximizeAllAction));
+		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeAllAction));
+		arrangeMenu->addSeparator();
+		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::CascadeAllAction));
+		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::TileAllAction));
+
+		mdiWindow->show();
+		mdiWindow->lower();
+		mdiWindow->setSystemMenu(menu);
+
+		switch (state)
+		{
+			case MaximizedWindowState:
+				mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+				mdiWindow->showMaximized();
+
+				break;
+			case MinimizedWindowState:
+				mdiWindow->showMinimized();
+
+				break;
+			default:
+				mdiWindow->showNormal();
+
+				break;
+		}
+
+		if (isAlwaysOnTop)
+		{
+			mdiWindow->setWindowFlags(mdiWindow->windowFlags() | Qt::WindowStaysOnTopHint);
+		}
+
+		if (geometry.isValid())
+		{
+			mdiWindow->setGeometry(geometry);
+		}
+
+		if (activeWindow)
+		{
+			m_mdi->setActiveSubWindow(activeWindow);
+		}
+
+		if (m_isRestored)
+		{
+			connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+		}
+
+		connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
+		connect(mdiWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(updateActions()));
+		connect(window, SIGNAL(destroyed()), this, SLOT(updateActions()));
+	}
+	else
+	{
+		window->hide();
+		window->setParent(this);
+		window->move(0, 0);
+	}
+
+	updateActions();
 }
 
 void WorkspaceWidget::handleActiveSubWindowChanged(QMdiSubWindow *subWindow)
