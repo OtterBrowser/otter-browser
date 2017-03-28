@@ -362,13 +362,13 @@ void SourceViewerWebWidget::setZoom(int zoom)
 	}
 }
 
-void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
+void SourceViewerWebWidget::setUrl(const QUrl &url, bool isTyped)
 {
 	triggerAction(ActionsManager::StopAction);
 
 	m_url = url;
 
-	if (typed)
+	if (isTyped)
 	{
 		triggerAction(ActionsManager::ReloadAction);
 	}

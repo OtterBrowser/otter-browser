@@ -78,7 +78,7 @@ public slots:
 	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
-	virtual void setUrl(const QUrl &url, bool typed = true);
+	virtual void setUrl(const QUrl &url, bool isTyped = true);
 
 protected:
 	void timerEvent(QTimerEvent *event) override;

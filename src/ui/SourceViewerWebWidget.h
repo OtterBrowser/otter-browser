@@ -62,7 +62,7 @@ public slots:
 	void setScrollPosition(const QPoint &position) override;
 	void setHistory(const WindowHistoryInformation &history) override;
 	void setZoom(int zoom) override;
-	void setUrl(const QUrl &url, bool typed = true) override;
+	void setUrl(const QUrl &url, bool isTyped = true) override;
 	void setContents(const QByteArray &contents, const QString &contentType);
 
 protected:
