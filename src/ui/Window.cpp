@@ -690,7 +690,7 @@ Window* Window::clone(bool cloneHistory, QWidget *parent)
 		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
 	}
 
-	return new Window(parameters, m_contentsWidget->clone(cloneHistory), parent) ;
+	return new Window(parameters, m_contentsWidget->clone(cloneHistory), parent);
 }
 
 ContentsWidget* Window::getContentsWidget()

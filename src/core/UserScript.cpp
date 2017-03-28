@@ -303,7 +303,7 @@ QVector<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, UserScrip
 	const QStringList scriptNames(AddonsManager::getUserScripts());
 	QVector<UserScript*> scripts;
 
-	for (int i = 0 ; i < scriptNames.count(); ++i)
+	for (int i = 0; i < scriptNames.count(); ++i)
 	{
 		UserScript *script(AddonsManager::getUserScript(scriptNames.at(i)));
 
