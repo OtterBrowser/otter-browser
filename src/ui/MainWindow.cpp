@@ -113,7 +113,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 					m_tabBar = toolBar->findChild<TabBarWidget*>();
 				}
 
-				if (i > 0)
+				if (j > 0)
 				{
 					addToolBarBreak(area);
 				}
