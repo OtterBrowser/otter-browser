@@ -254,45 +254,45 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 		return;
 	}
 
-	WindowsManager::OpenHints hints;
+	SessionsManager::OpenHints hints;
 
 	switch (identifier)
 	{
 		case ActionsManager::OpenLinkAction:
 		case ActionsManager::OpenLinkInCurrentTabAction:
-			hints = WindowsManager::CurrentTabOpen;
+			hints = SessionsManager::CurrentTabOpen;
 
 			break;
 		case ActionsManager::OpenLinkInNewTabAction:
-			hints = WindowsManager::NewTabOpen;
+			hints = SessionsManager::NewTabOpen;
 
 			break;
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
-			hints = (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen);
+			hints = (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen);
 
 			break;
 		case ActionsManager::OpenLinkInNewWindowAction:
-			hints = WindowsManager::NewWindowOpen;
+			hints = SessionsManager::NewWindowOpen;
 
 			break;
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-			hints = (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen);
+			hints = (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen);
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateTabAction:
-			hints = (WindowsManager::NewTabOpen | WindowsManager::PrivateOpen);
+			hints = (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen);
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-			hints = (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen);
+			hints = (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen);
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
-			hints = (WindowsManager::NewWindowOpen | WindowsManager::PrivateOpen);
+			hints = (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen);
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-			hints = (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen);
+			hints = (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen);
 
 			break;
 		case ActionsManager::ContextMenuAction:
@@ -340,7 +340,7 @@ void StartPageWidget::addTile()
 	OpenAddressDialog dialog(this);
 	dialog.setWindowTitle(tr("Add Tile"));
 
-	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), m_model, SLOT(addTile(QUrl)));
+	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), m_model, SLOT(addTile(QUrl)));
 
 	m_ignoreEnter = true;
 
@@ -357,11 +357,11 @@ void StartPageWidget::openTile()
 	}
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
-	WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
+	SessionsManager::OpenHints hints(SessionsManager::CurrentTabOpen);
 
 	if (m_window->isPrivate())
 	{
-		hints |= WindowsManager::PrivateOpen;
+		hints |= SessionsManager::PrivateOpen;
 	}
 
 	if (type == BookmarksModel::FolderBookmark)
@@ -731,7 +731,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						m_urlOpenTime = QTime::currentTime();
 
-						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}});
+						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}});
 					}
 					else
 					{
@@ -822,15 +822,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						m_urlOpenTime = QTime::currentTime();
 
-						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()))}});
+						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()))}});
 					}
 					else if (mouseEvent->button() != Qt::MiddleButton)
 					{
-						WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
+						SessionsManager::OpenHints hints(SessionsManager::CurrentTabOpen);
 
 						if (m_window->isPrivate())
 						{
-							hints |= WindowsManager::PrivateOpen;
+							hints |= SessionsManager::PrivateOpen;
 						}
 
 						m_urlOpenTime = QTime::currentTime();

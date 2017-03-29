@@ -99,11 +99,11 @@ private:
 signals:
 	void aboutToNavigate();
 	void needsAttention();
-	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedEditBookmark(const QUrl &url);
-	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &search, WindowsManager::OpenHints hints);
+	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &search, SessionsManager::OpenHints hints);
 	void requestedGeometryChange(const QRect &geometry);
 	void webWidgetChanged();
 	void statusMessageChanged(const QString &message);

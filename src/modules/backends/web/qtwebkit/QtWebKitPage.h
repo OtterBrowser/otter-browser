@@ -116,7 +116,7 @@ private:
 	bool m_isViewingMedia;
 
 signals:
-	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
 	void errorPageChanged(QWebFrame *frame, bool isVisible);

@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 
 		if (isPrivate)
 		{
-			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
 		application.createWindow(parameters);

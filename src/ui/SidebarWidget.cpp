@@ -207,10 +207,10 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (widget && mainWindow)
 	{
-		connect(widget, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
-		connect(widget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,SessionsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,SessionsManager::OpenHints)));
 		connect(widget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), mainWindow->getWindowsManager(), SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
-		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(openWindow(ContentsWidget*,WindowsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])

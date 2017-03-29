@@ -34,7 +34,7 @@ class InputInterpreter : public QObject
 public:
 	explicit InputInterpreter(QObject *parent = nullptr);
 
-	void interpret(const QString &text, WindowsManager::OpenHints hints, bool ignoreBookmarks = false);
+	void interpret(const QString &text, SessionsManager::OpenHints hints, bool ignoreBookmarks = false);
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -44,14 +44,14 @@ protected slots:
 
 private:
 	QString m_text;
-	WindowsManager::OpenHints m_hints;
+	SessionsManager::OpenHints m_hints;
 	int m_lookup;
 	int m_timer;
 
 signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
-	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
 };
 
 }

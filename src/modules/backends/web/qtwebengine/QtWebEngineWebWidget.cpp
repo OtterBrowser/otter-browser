@@ -90,7 +90,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 #endif
 	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
 	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebEnginePage::NavigationType)), this, SIGNAL(aboutToNavigate()));
-	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
+	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)));
 	connect(m_page, SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_page, SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
@@ -370,63 +370,63 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenLinkInCurrentTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::CurrentTabOpen);
+				openUrl(m_hitResult.linkUrl, SessionsManager::CurrentTabOpen);
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
+				openUrl(m_hitResult.linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
+				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(WindowsManager::NewWindowOpen));
+				openUrl(m_hitResult.linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen));
+				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, (WindowsManager::NewTabOpen | WindowsManager::PrivateOpen));
+				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen));
+				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, (WindowsManager::NewWindowOpen | WindowsManager::PrivateOpen));
+				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen));
+				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
 			return;
@@ -469,14 +469,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
+				openUrl(m_hitResult.frameUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
 			return;
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
+				openUrl(m_hitResult.frameUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
 			return;
@@ -517,21 +517,21 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
 				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
 
-				emit requestedNewWindow(sourceViewer, WindowsManager::DefaultOpen);
+				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
 
 			return;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
+				openUrl(m_hitResult.imageUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
 			return;
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
+				openUrl(m_hitResult.imageUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
 			return;
@@ -903,7 +903,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
 				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
 
-				emit requestedNewWindow(sourceViewer, WindowsManager::DefaultOpen);
+				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
 
 			return;

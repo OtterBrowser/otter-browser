@@ -69,7 +69,7 @@ void InputInterpreter::verifyLookup(const QHostInfo &host)
 	deleteLater();
 }
 
-void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints hints, bool ignoreBookmarks)
+void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints hints, bool ignoreBookmarks)
 {
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{

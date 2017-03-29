@@ -327,6 +327,88 @@ QStringList SessionsManager::getSessions()
 	return entries;
 }
 
+SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, int modifiers)
+{
+	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
+	const Qt::KeyboardModifiers keyboardModifiers((modifiers == -1) ? QGuiApplication::keyboardModifiers() : static_cast<Qt::KeyboardModifiers>(modifiers));
+
+	if (button == Qt::MiddleButton && keyboardModifiers.testFlag(Qt::AltModifier))
+	{
+		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen | EndOpen);
+	}
+
+	if (keyboardModifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
+	{
+		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen);
+	}
+
+	if (keyboardModifiers.testFlag(Qt::ShiftModifier))
+	{
+		return (useNewTab ? NewTabOpen : NewWindowOpen);
+	}
+
+	if (hints.testFlag(NewTabOpen) && !hints.testFlag(NewWindowOpen))
+	{
+		return (useNewTab ? NewTabOpen : NewWindowOpen);
+	}
+
+	if (SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())
+	{
+		return CurrentTabOpen;
+	}
+
+	return hints;
+}
+
+SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap &parameters)
+{
+	if (!parameters.contains(QLatin1String("hints")))
+	{
+		return calculateOpenHints();
+	}
+
+	if (parameters[QLatin1String("hints")].type() == QVariant::Int)
+	{
+		return static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+	}
+
+	const QStringList rawHints(parameters[QLatin1String("hints")].toStringList());
+	OpenHints hints(DefaultOpen);
+
+	for (int i = 0; i < rawHints.count(); ++i)
+	{
+		QString hint(rawHints.at(i));
+		hint[0] = hint[0].toUpper();
+
+		if (hint == QLatin1String("Private"))
+		{
+			hints |= PrivateOpen;
+		}
+		else if (hint == QLatin1String("CurrentTab"))
+		{
+			hints |= CurrentTabOpen;
+		}
+		else if (hint == QLatin1String("NewTab"))
+		{
+			hints |= NewTabOpen;
+		}
+		else if (hint == QLatin1String("NewWindow"))
+		{
+			hints |= NewWindowOpen;
+		}
+		else if (hint == QLatin1String("Background"))
+		{
+			hints |= BackgroundOpen;
+		}
+		else if (hint == QLatin1String("End"))
+		{
+			hints |= EndOpen;
+		}
+	}
+
+	return hints;
+}
+
 bool SessionsManager::restoreClosedWindow(int index)
 {
 	if (index < 0)
@@ -365,7 +447,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 
 	if (isPrivate)
 	{
-		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		parameters[QLatin1String("hints")] = PrivateOpen;
 	}
 
 	for (int i = 0; i < session.windows.count(); ++i)

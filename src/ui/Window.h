@@ -99,8 +99,8 @@ protected:
 
 protected slots:
 	void handleIconChanged(const QIcon &icon);
-	void handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hints);
-	void handleSearchRequest(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
+	void handleOpenUrlRequest(const QUrl &url, SessionsManager::OpenHints hints);
+	void handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void handleGeometryChangeRequest(const QRect &geometry);
 	void notifyRequestedCloseWindow();
 	void updateNavigationBar();
@@ -127,12 +127,12 @@ signals:
 	void aboutToClose();
 	void aboutToNavigate();
 	void needsAttention();
-	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
-	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
+	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedEditBookmark(const QUrl &url);
-	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
+	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints);
 	void requestedCloseWindow(Window *window);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

@@ -56,7 +56,7 @@ private:
 
 signals:
 	void requestedClose();
-	void requestedNewWindow(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedNewWindow(const QUrl &url, SessionsManager::OpenHints hints);
 };
 
 }

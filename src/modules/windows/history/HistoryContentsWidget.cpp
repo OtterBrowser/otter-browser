@@ -321,7 +321,7 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 	{
 		QAction *action(qobject_cast<QAction*>(sender()));
 
-		emit requestedOpenUrl(url, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
+		emit requestedOpenUrl(url, (action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen));
 	}
 }
 
@@ -353,11 +353,11 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	if (entry > 0)
 	{
 		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(WindowsManager::NewTabOpen);
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(SessionsManager::NewTabOpen);
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(WindowsManager::NewWindowOpen);
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(static_cast<int>(WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen));
+		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(SessionsManager::NewWindowOpen);
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
 		menu.addAction(tr("Add to Bookmarks…"), this, SLOT(bookmarkEntry()));
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
@@ -461,7 +461,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (url.isValid())
 			{
-				emit requestedOpenUrl(url, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
+				emit requestedOpenUrl(url, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
 
 				return true;
 			}

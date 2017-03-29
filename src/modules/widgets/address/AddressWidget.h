@@ -109,7 +109,7 @@ public:
 	bool event(QEvent *event) override;
 
 public slots:
-	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
+	void handleUserInput(const QString &text, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void setWindow(Window *window = nullptr);
 	void setUrl(const QUrl &url, bool force = false);
 
@@ -149,16 +149,16 @@ private:
 	EntryIdentifier m_clickedEntry;
 	EntryIdentifier m_hoveredEntry;
 	CompletionModes m_completionModes;
-	WindowsManager::OpenHints m_hints;
+	SessionsManager::OpenHints m_hints;
 	bool m_isNavigatingCompletion;
 	bool m_isUsingSimpleMode;
 
 	static int m_entryIdentifierEnumerator;
 
 signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
-	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
 };
 
 }

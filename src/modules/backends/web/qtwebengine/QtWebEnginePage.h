@@ -65,7 +65,7 @@ private:
 	bool m_isPopup;
 
 signals:
-	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebEnginePage::NavigationType navigationType);
 	void viewingMediaChanged(bool viewingMedia);

@@ -639,7 +639,7 @@ void Application::handleNewConnection()
 
 			if (isPrivate)
 			{
-				parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+				parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 			}
 
 			createWindow(parameters);
@@ -655,7 +655,7 @@ void Application::handleNewConnection()
 
 			if (isPrivate)
 			{
-				parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+				parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 			}
 
 			for (int i = 0; i < sessionData.windows.count(); ++i)
@@ -672,26 +672,26 @@ void Application::handleNewConnection()
 
 void Application::handlePositionalArguments(QCommandLineParser *parser)
 {
-	WindowsManager::OpenHints openHints(WindowsManager::DefaultOpen);
+	SessionsManager::OpenHints openHints(SessionsManager::DefaultOpen);
 
 	if (parser->isSet(QLatin1String("new-private-window")))
 	{
-		openHints = (WindowsManager::NewWindowOpen | WindowsManager::PrivateOpen);
+		openHints = (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen);
 	}
 	else if (parser->isSet(QLatin1String("new-window")))
 	{
-		openHints = WindowsManager::WindowsManager::NewWindowOpen;
+		openHints = SessionsManager::NewWindowOpen;
 	}
 	else if (parser->isSet(QLatin1String("new-private-tab")))
 	{
-		openHints = (WindowsManager::NewTabOpen | WindowsManager::PrivateOpen);
+		openHints = (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen);
 	}
 	else if (parser->isSet(QLatin1String("new-tab")))
 	{
-		openHints = WindowsManager::NewTabOpen;
+		openHints = SessionsManager::NewTabOpen;
 	}
 
-	const QStringList urls((openHints == WindowsManager::DefaultOpen || !parser->positionalArguments().isEmpty()) ? parser->positionalArguments() : QStringList(QString()));
+	const QStringList urls((openHints == SessionsManager::DefaultOpen || !parser->positionalArguments().isEmpty()) ? parser->positionalArguments() : QStringList(QString()));
 
 	if (urls.isEmpty())
 	{
@@ -700,13 +700,13 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 
 	MainWindow *window(nullptr);
 
-	if (openHints.testFlag(WindowsManager::NewWindowOpen))
+	if (openHints.testFlag(SessionsManager::NewWindowOpen))
 	{
 		QVariantMap parameters;
 
-		if (openHints.testFlag(WindowsManager::PrivateOpen))
+		if (openHints.testFlag(SessionsManager::PrivateOpen))
 		{
-			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
 		for (int i = 0; i < urls.count(); ++i)
@@ -727,7 +727,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 		{
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				window->openUrl(urls.at(i), openHints.testFlag(WindowsManager::PrivateOpen));
+				window->openUrl(urls.at(i), openHints.testFlag(SessionsManager::PrivateOpen));
 			}
 		}
 	}
@@ -827,7 +827,7 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 
 	m_windows.prepend(window);
 
-	const bool inBackground(WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::BackgroundOpen));
+	const bool inBackground(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::BackgroundOpen));
 
 	if (inBackground)
 	{

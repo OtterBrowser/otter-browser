@@ -131,8 +131,8 @@ protected slots:
 	void handleInspectorVisibilityChangeRequest(bool isVisible);
 	void handleLoadingStateChange(WindowsManager::LoadingState state);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
-	void notifyRequestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
-	void notifyRequestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
+	void notifyRequestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void updateFindHighlight(WebWidget::FindFlags flags);
 
 private:

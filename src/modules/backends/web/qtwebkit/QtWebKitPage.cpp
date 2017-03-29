@@ -508,7 +508,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 
 		widget->handleLoadStarted();
 
-		emit requestedNewWindow(widget, WindowsManager::calculateOpenHints(popupsPolicy == QLatin1String("openAllInBackground") ? (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen) : WindowsManager::NewTabOpen));
+		emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(popupsPolicy == QLatin1String("openAllInBackground") ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
 
 		return widget->getPage();
 	}

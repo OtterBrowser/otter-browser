@@ -74,7 +74,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_tabSwitcherTimer(0),
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
-	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || WindowsManager::calculateOpenHints(parameters).testFlag(WindowsManager::PrivateOpen))),
+	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
 	m_hasToolBars(!parameters.value(QLatin1String("noToolBars"), false).toBool()),
 	m_ui(new Ui::MainWindow)
 {
@@ -377,7 +377,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::NewWindowPrivateAction:
-			Application::createWindow({{QLatin1String("hints"), WindowsManager::PrivateOpen}});
+			Application::createWindow({{QLatin1String("hints"), SessionsManager::PrivateOpen}});
 
 			break;
 		case ActionsManager::OpenAction:
@@ -448,9 +448,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				OpenAddressDialog dialog(this);
 
-				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
-				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
-				connect(&dialog, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,SessionsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 
 				dialog.exec();
 			}
@@ -462,7 +462,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!homePage.isEmpty())
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}, {QLatin1String("hints"), WindowsManager::CurrentTabOpen}});
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}, {QLatin1String("hints"), SessionsManager::CurrentTabOpen}});
 				}
 			}
 
@@ -577,7 +577,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (definition.identifier >= 0 && !definition.currentPanel.isEmpty())
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), WindowsManager::NewTabOpen}});
+					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}});
 				}
 			}
 
@@ -811,7 +811,7 @@ void MainWindow::triggerAction(bool checked)
 
 void MainWindow::openUrl(const QString &text, bool isPrivate)
 {
-	WindowsManager::OpenHints hints(isPrivate ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen);
+	SessionsManager::OpenHints hints(isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen);
 
 	if (text.isEmpty())
 	{
@@ -823,17 +823,17 @@ void MainWindow::openUrl(const QString &text, bool isPrivate)
 	{
 		InputInterpreter *interpreter(new InputInterpreter(this));
 
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,SessionsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 
 		if (!m_workspace->getActiveWindow() || (m_workspace->getActiveWindow()->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())))
 		{
-			hints |= WindowsManager::CurrentTabOpen;
+			hints |= SessionsManager::CurrentTabOpen;
 		}
 		else
 		{
-			hints |= WindowsManager::NewTabOpen;
+			hints |= SessionsManager::NewTabOpen;
 		}
 
 		interpreter->interpret(text, hints);
@@ -1137,7 +1137,7 @@ void MainWindow::handleTransferStarted()
 
 		if (!SessionsManager::hasUrl(url, false))
 		{
-			m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen)}});
+			m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}});
 		}
 	}
 	else if (action == QLatin1String("openPanel"))

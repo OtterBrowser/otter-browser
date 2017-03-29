@@ -49,11 +49,11 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		QVariantMap parameters(getParameters());
 
-		WindowsManager::OpenHints hints(WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, event->button(), event->modifiers()));
+		SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, event->button(), event->modifiers()));
 
 		if (m_identifier == ActionsManager::NewTabPrivateAction)
 		{
-			hints |= WindowsManager::PrivateOpen;
+			hints |= SessionsManager::PrivateOpen;
 		}
 
 		parameters[QLatin1String("hints")] = QVariant(hints);

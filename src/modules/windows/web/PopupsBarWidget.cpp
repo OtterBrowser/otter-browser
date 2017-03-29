@@ -115,14 +115,14 @@ void PopupsBarWidget::openUrl(QAction *action)
 
 			if (!url.isEmpty())
 			{
-				emit requestedNewWindow(url, WindowsManager::NewTabOpen);
+				emit requestedNewWindow(url, SessionsManager::NewTabOpen);
 			}
 		}
 
 		return;
 	}
 
-	emit requestedNewWindow(action->data().toUrl(), WindowsManager::NewTabOpen);
+	emit requestedNewWindow(action->data().toUrl(), SessionsManager::NewTabOpen);
 }
 
 void PopupsBarWidget::handleOptionChanged(int identifier)

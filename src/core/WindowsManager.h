@@ -46,19 +46,6 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	enum OpenHint
-	{
-		DefaultOpen = 0,
-		PrivateOpen = 1,
-		CurrentTabOpen = 2,
-		NewTabOpen = 4,
-		NewWindowOpen = 8,
-		BackgroundOpen = 16,
-		EndOpen = 32
-	};
-
-	Q_DECLARE_FLAGS(OpenHints, OpenHint)
-
 	enum ContentState
 	{
 		UnknownContentState = 0,
@@ -93,8 +80,6 @@ public:
 	SessionMainWindow getSession() const;
 	QVector<ClosedWindow> getClosedWindows() const;
 	QVector<quint64> getWindows() const;
-	static WindowsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
-	static WindowsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	int getCurrentWindowIndex() const;
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
@@ -102,7 +87,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void search(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = DefaultOpen);
+	void search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
 	void clearClosedWindows();
@@ -117,15 +102,15 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen);
-	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen);
-	void addWindow(Window *window, WindowsManager::OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
+	void open(const QUrl &url = QUrl(), SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
+	void open(BookmarksItem *bookmark, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
+	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
 	void handleWindowIsPinnedChanged(bool isPinned);
 	void setTitle(const QString &title);
 	void setStatusMessage(const QString &message);
-	Window* openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
+	Window* openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1);
 
 private:
 	MainWindow *m_mainWindow;
@@ -146,8 +131,6 @@ friend class MainWindow;
 };
 
 }
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WindowsManager::OpenHints)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WindowsManager::ContentStates)
 
 #endif

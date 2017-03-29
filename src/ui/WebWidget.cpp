@@ -381,9 +381,9 @@ void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &passwo
 	Q_UNUSED(password)
 }
 
-void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
+void WebWidget::openUrl(const QUrl &url, SessionsManager::OpenHints hints)
 {
-	WebWidget *widget(clone(false, hints.testFlag(WindowsManager::PrivateOpen), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
+	WebWidget *widget(clone(false, hints.testFlag(SessionsManager::PrivateOpen), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 	widget->setRequestedUrl(url, false);
 
 	emit requestedNewWindow(widget, hints);

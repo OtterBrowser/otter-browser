@@ -167,7 +167,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 			else if (identifier == ActionsManager::GoAction)
 			{
-				addressWidget->handleUserInput(addressWidget->text(), WindowsManager::CurrentTabOpen);
+				addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
 
 				return;
 			}
@@ -181,9 +181,9 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 				dialog.setText(QLatin1String("? "));
 			}
 
-			connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
-			connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
-			connect(&dialog, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
+			connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
+			connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
+			connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
 
 			dialog.exec();
 		}
@@ -306,7 +306,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 
 		if (isPrivate())
 		{
-			parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
 		widget = new WebContentsWidget(parameters, QHash<int, QVariant>(), nullptr, this);
@@ -348,9 +348,9 @@ void Window::handleIconChanged(const QIcon &icon)
 	}
 }
 
-void Window::handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hints)
+void Window::handleOpenUrlRequest(const QUrl &url, SessionsManager::OpenHints hints)
 {
-	if (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen)
+	if (hints == SessionsManager::DefaultOpen || hints == SessionsManager::CurrentTabOpen)
 	{
 		setUrl(url);
 
@@ -359,15 +359,15 @@ void Window::handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hin
 
 	if (isPrivate())
 	{
-		hints |= WindowsManager::PrivateOpen;
+		hints |= SessionsManager::PrivateOpen;
 	}
 
 	emit requestedOpenUrl(url, hints);
 }
 
-void Window::handleSearchRequest(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints)
+void Window::handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
 {
-	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen))
+	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == SessionsManager::DefaultOpen || hints == SessionsManager::CurrentTabOpen))
 	{
 		search(query, searchEngine);
 	}
@@ -647,9 +647,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_contentsWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
-	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
-	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)));
-	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedGeometryChange(QRect)), this, SLOT(handleGeometryChangeRequest(QRect)));
 	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
@@ -689,7 +689,7 @@ Window* Window::clone(bool cloneHistory, MainWindow *mainWindow)
 
 	if (isPrivate())
 	{
-		parameters[QLatin1String("hints")] = WindowsManager::PrivateOpen;
+		parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 	}
 
 	return new Window(parameters, m_contentsWidget->clone(cloneHistory), mainWindow);
@@ -864,7 +864,7 @@ bool Window::isPinned() const
 
 bool Window::isPrivate() const
 {
-	return (m_contentsWidget ? m_contentsWidget->isPrivate() : WindowsManager::calculateOpenHints(m_parameters).testFlag(WindowsManager::PrivateOpen));
+	return (m_contentsWidget ? m_contentsWidget->isPrivate() : SessionsManager::calculateOpenHints(m_parameters).testFlag(SessionsManager::PrivateOpen));
 }
 
 }

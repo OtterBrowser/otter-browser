@@ -246,7 +246,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event) override;
 	void bounceAction(int identifier, QVariantMap parameters);
-	void openUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
 	void startTransfer(Transfer *transfer);
@@ -323,11 +323,11 @@ signals:
 	void aboutToReload();
 	void needsAttention();
 	void requestedCloseWindow();
-	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedEditBookmark(const QUrl &url);
-	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &search, WindowsManager::OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &search, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);

@@ -95,8 +95,8 @@ private:
 	bool m_isSearchEngineLocked;
 
 signals:
-	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
 };
 
 }

@@ -126,6 +126,19 @@ class SessionsManager : public QObject
 	Q_OBJECT
 
 public:
+	enum OpenHint
+	{
+		DefaultOpen = 0,
+		PrivateOpen = 1,
+		CurrentTabOpen = 2,
+		NewTabOpen = 4,
+		NewWindowOpen = 8,
+		BackgroundOpen = 16,
+		EndOpen = 32
+	};
+
+	Q_DECLARE_FLAGS(OpenHints, OpenHint)
+
 	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false, QObject *parent = nullptr);
 	static void clearClosedWindows();
 	static void storeClosedWindow(MainWindow *window);
@@ -142,6 +155,8 @@ public:
 	static SessionInformation getSession(const QString &path);
 	static QStringList getClosedWindows();
 	static QStringList getSessions();
+	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
+	static SessionsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	static bool restoreClosedWindow(int index = -1);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = nullptr, bool isPrivate = false);
 	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = nullptr, bool isClean = true);
@@ -177,5 +192,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::SessionsManager::OpenHints)
 
 #endif
