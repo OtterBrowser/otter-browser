@@ -97,7 +97,6 @@ private:
 	bool m_isRestored;
 
 signals:
-	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void titleChanged(const QString &title);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);

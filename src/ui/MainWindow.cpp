@@ -159,7 +159,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarMoved(int)), this, SLOT(handleToolBarMoved(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(handleTransferStarted()));
-	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 
@@ -478,7 +477,27 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::BookmarkPageAction:
-			addBookmark();
+			{
+				const QUrl url((parameters.contains(QLatin1String("url")) ? parameters[QLatin1String("url")].toUrl() : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword));
+
+				if (url.isEmpty())
+				{
+					break;
+				}
+
+				const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
+
+				if (bookmarks.isEmpty())
+				{
+					BookmarkPropertiesDialog dialog(url, (parameters.contains(QLatin1String("title")) ? parameters[QLatin1String("title")].toString() : m_windowsManager->getTitle()), parameters[QLatin1String("description")].toString(), nullptr, -1, true, this);
+					dialog.exec();
+				}
+				else
+				{
+					BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
+					dialog.exec();
+				}
+			}
 
 			break;
 		case ActionsManager::QuickBookmarkAccessAction:
@@ -852,29 +871,6 @@ void MainWindow::restoreWindowState()
 void MainWindow::raiseWindow()
 {
 	setWindowState(m_previousRaisedState);
-}
-
-void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description)
-{
-	const QUrl bookmarkUrl((url.isValid() ? url : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword));
-
-	if (bookmarkUrl.isEmpty())
-	{
-		return;
-	}
-
-	const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
-
-	if (bookmarks.isEmpty())
-	{
-		BookmarkPropertiesDialog dialog(bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()), description, nullptr, -1, true, this);
-		dialog.exec();
-	}
-	else
-	{
-		BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
-		dialog.exec();
-	}
 }
 
 void MainWindow::beginToolBarDragging(bool isSidebar)

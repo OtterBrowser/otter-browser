@@ -1078,7 +1078,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
 				const QString title(getCurrentHitTestResult().title);
 
-				emit requestedAddBookmark(getCurrentHitTestResult().linkUrl, (title.isEmpty() ? hitResult.element().toPlainText() : title), QString());
+				ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}});
 			}
 
 			return;
@@ -1623,7 +1623,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
 
-				emit requestedAddBookmark(getUrl(), getTitle(), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description));
+				ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}, {QLatin1String("description"), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description)}});
 			}
 
 			return;

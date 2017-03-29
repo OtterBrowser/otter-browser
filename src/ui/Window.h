@@ -128,7 +128,6 @@ signals:
 	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
 	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
-	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints);
 	void requestedCloseWindow(Window *window);
 	void statusMessageChanged(const QString &message);

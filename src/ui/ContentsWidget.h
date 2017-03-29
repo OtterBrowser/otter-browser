@@ -100,7 +100,6 @@ signals:
 	void aboutToNavigate();
 	void needsAttention();
 	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
-	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &search, SessionsManager::OpenHints hints);
 	void requestedGeometryChange(const QRect &geometry);

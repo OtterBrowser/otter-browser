@@ -331,7 +331,7 @@ void HistoryContentsWidget::bookmarkEntry()
 
 	if (entryItem)
 	{
-		emit requestedAddBookmark(QUrl(entryItem->text()), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString(), QString());
+		ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), entryItem->text()}, {QLatin1String("title"), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString()}});
 	}
 }
 

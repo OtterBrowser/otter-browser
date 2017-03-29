@@ -440,7 +440,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::BookmarkLinkAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				emit requestedAddBookmark(m_hitResult.linkUrl, m_hitResult.title, QString());
+				ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}});
 			}
 
 			return;
@@ -860,7 +860,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::BookmarkPageAction:
-			emit requestedAddBookmark(getUrl(), getTitle(), QString());
+			ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}});
 
 			return;
 		case ActionsManager::ViewSourceAction:
