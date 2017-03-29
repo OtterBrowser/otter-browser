@@ -29,8 +29,6 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
-#include <QtPrintSupport/QPrinter>
-#include <QtWidgets/QUndoStack>
 #include <QtWidgets/QWidget>
 
 namespace Otter
