@@ -440,14 +440,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::BookmarkLinkAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				if (BookmarksManager::hasBookmark(m_hitResult.linkUrl))
-				{
-					emit requestedEditBookmark(m_hitResult.linkUrl);
-				}
-				else
-				{
-					emit requestedAddBookmark(m_hitResult.linkUrl, m_hitResult.title, QString());
-				}
+				emit requestedAddBookmark(m_hitResult.linkUrl, m_hitResult.title, QString());
 			}
 
 			return;
@@ -867,18 +860,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::BookmarkPageAction:
-			{
-				const QUrl url(getUrl());
-
-				if (BookmarksManager::hasBookmark(url))
-				{
-					emit requestedEditBookmark(url);
-				}
-				else
-				{
-					emit requestedAddBookmark(url, getTitle(), QString());
-				}
-			}
+			emit requestedAddBookmark(getUrl(), getTitle(), QString());
 
 			return;
 		case ActionsManager::ViewSourceAction:

@@ -160,7 +160,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(handleTransferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
-	connect(m_windowsManager, SIGNAL(requestedEditBookmark(QUrl)), this, SLOT(editBookmark(QUrl)));
 	connect(m_windowsManager, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 
@@ -479,7 +478,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::BookmarkPageAction:
-			addBookmark(QUrl(), QString(), QString(), true);
+			addBookmark();
 
 			break;
 		case ActionsManager::QuickBookmarkAccessAction:
@@ -855,24 +854,23 @@ void MainWindow::raiseWindow()
 	setWindowState(m_previousRaisedState);
 }
 
-void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description, bool warn)
+void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description)
 {
 	const QUrl bookmarkUrl((url.isValid() ? url : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword));
 
-	if (bookmarkUrl.isEmpty() || (warn && BookmarksManager::hasBookmark(bookmarkUrl) && QMessageBox::warning(this, tr("Warning"), tr("You already have this address in your bookmarks.\nDo you want to continue?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
+	if (bookmarkUrl.isEmpty())
 	{
 		return;
 	}
 
-	BookmarkPropertiesDialog dialog(bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()), description, nullptr, -1, true, this);
-	dialog.exec();
-}
-
-void MainWindow::editBookmark(const QUrl &url)
-{
 	const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
 
-	if (!bookmarks.isEmpty())
+	if (bookmarks.isEmpty())
+	{
+		BookmarkPropertiesDialog dialog(bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()), description, nullptr, -1, true, this);
+		dialog.exec();
+	}
+	else
 	{
 		BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
 		dialog.exec();

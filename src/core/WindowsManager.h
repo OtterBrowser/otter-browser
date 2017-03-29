@@ -98,7 +98,6 @@ private:
 
 signals:
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
-	void requestedEditBookmark(const QUrl &url);
 	void titleChanged(const QString &title);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);

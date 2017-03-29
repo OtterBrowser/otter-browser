@@ -1075,17 +1075,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::BookmarkLinkAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				if (BookmarksManager::hasBookmark(getCurrentHitTestResult().linkUrl))
-				{
-					emit requestedEditBookmark(getCurrentHitTestResult().linkUrl);
-				}
-				else
-				{
-					const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
-					const QString title(getCurrentHitTestResult().title);
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				const QString title(getCurrentHitTestResult().title);
 
-					emit requestedAddBookmark(getCurrentHitTestResult().linkUrl, (title.isEmpty() ? hitResult.element().toPlainText() : title), QString());
-				}
+				emit requestedAddBookmark(getCurrentHitTestResult().linkUrl, (title.isEmpty() ? hitResult.element().toPlainText() : title), QString());
 			}
 
 			return;
@@ -1628,18 +1621,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::BookmarkPageAction:
 			{
-				const QUrl url(getUrl());
+				const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
 
-				if (BookmarksManager::hasBookmark(url))
-				{
-					emit requestedEditBookmark(url);
-				}
-				else
-				{
-					const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
-
-					emit requestedAddBookmark(url, getTitle(), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description));
-				}
+				emit requestedAddBookmark(getUrl(), getTitle(), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description));
 			}
 
 			return;

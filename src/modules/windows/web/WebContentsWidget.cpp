@@ -1171,7 +1171,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
 	connect(m_webWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
-	connect(m_webWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,SessionsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,SessionsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));

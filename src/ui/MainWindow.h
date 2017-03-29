@@ -86,8 +86,7 @@ protected:
 protected slots:
 	void triggerAction();
 	void triggerAction(bool checked);
-	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
-	void editBookmark(const QUrl &url);
+	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString());
 	void saveToolBarPositions();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleToolBarAdded(int identifier);
