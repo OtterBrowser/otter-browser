@@ -75,8 +75,8 @@ public:
 	QVector<LinkUrl> getSearchEngines() const override;
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
-	WindowsManager::ContentStates getContentState() const override;
-	WindowsManager::LoadingState getLoadingState() const override;
+	WebWidget::ContentStates getContentState() const override;
+	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
@@ -191,7 +191,7 @@ private:
 	QQueue<Transfer*> m_transfers;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
-	WindowsManager::LoadingState m_loadingState;
+	WebWidget::LoadingState m_loadingState;
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
 	bool m_isAudioMuted;

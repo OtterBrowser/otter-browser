@@ -21,7 +21,7 @@
 #ifndef OTTER_QQTWEBENGINEPAGE_H
 #define OTTER_QQTWEBENGINEPAGE_H
 
-#include "../../../../core/WindowsManager.h"
+#include "../../../../core/SessionsManager.h"
 
 #include <QtWebEngineWidgets/QWebEnginePage>
 

@@ -48,7 +48,7 @@ public:
 	QPoint getScrollPosition() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
-	WindowsManager::LoadingState getLoadingState() const override;
+	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;

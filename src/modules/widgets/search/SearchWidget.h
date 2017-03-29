@@ -21,7 +21,7 @@
 #ifndef OTTER_SEARCHWIDGET_H
 #define OTTER_SEARCHWIDGET_H
 
-#include "../../../core/WindowsManager.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../ui/LineEditWidget.h"
 
 #include <QtCore/QPointer>

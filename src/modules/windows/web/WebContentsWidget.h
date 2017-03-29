@@ -87,8 +87,8 @@ public:
 	QVector<WebWidget::LinkUrl> getSearchEngines() const override;
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QHash<int, QVariant> getOptions() const;
-	WindowsManager::ContentStates getContentState() const override;
-	WindowsManager::LoadingState getLoadingState() const override;
+	WebWidget::ContentStates getContentState() const override;
+	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	bool canClone() const override;
 	bool canZoom() const override;
@@ -129,7 +129,7 @@ protected slots:
 	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);
 	void handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
 	void handleInspectorVisibilityChangeRequest(bool isVisible);
-	void handleLoadingStateChange(WindowsManager::LoadingState state);
+	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);

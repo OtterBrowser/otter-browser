@@ -34,7 +34,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 {
 	m_ui->setupUi(this);
 
-	const WindowsManager::ContentStates state(widget->getContentState());
+	const WebWidget::ContentStates state(widget->getContentState());
 	const QString characterEncoding(widget->getCharacterEncoding());
 	QString host(widget->getUrl().host());
 
@@ -43,32 +43,32 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		host = (widget->getUrl().scheme() == QLatin1String("file") ? QLatin1String("localhost") : tr("(unknown)"));
 	}
 
-	if (state.testFlag(WindowsManager::FraudContentState))
+	if (state.testFlag(WebWidget::FraudContentState))
 	{
 		m_ui->stateLabel->setText(tr("This website was marked as fraud."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-fraud"), false).pixmap(16, 16));
 	}
-	else if (state.testFlag(WindowsManager::MixedContentState))
+	else if (state.testFlag(WebWidget::MixedContentState))
 	{
 		m_ui->stateLabel->setText(tr("Your connection with this website is not private."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-mixed"), false).pixmap(16, 16));
 	}
-	else if (state.testFlag(WindowsManager::SecureContentState))
+	else if (state.testFlag(WebWidget::SecureContentState))
 	{
 		m_ui->stateLabel->setText(tr("Your connection with this website is private."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-secure"), false).pixmap(16, 16));
 	}
-	else if (state.testFlag(WindowsManager::RemoteContentState))
+	else if (state.testFlag(WebWidget::RemoteContentState))
 	{
 		m_ui->stateLabel->setText(tr("Your connection with this website is not private."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-remote"), false).pixmap(16, 16));
 	}
-	else if (state.testFlag(WindowsManager::LocalContentState))
+	else if (state.testFlag(WebWidget::LocalContentState))
 	{
 		m_ui->stateLabel->setText(tr("You are viewing content from your local filesystem."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-local"), false).pixmap(16, 16));
 	}
-	else if (state.testFlag(WindowsManager::ApplicationContentState))
+	else if (state.testFlag(WebWidget::ApplicationContentState))
 	{
 		m_ui->stateLabel->setText(tr("You are viewing safe page from Otter Browser."));
 		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("otter-browser"), false).pixmap(16, 16));

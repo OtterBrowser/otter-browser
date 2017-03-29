@@ -25,7 +25,6 @@
 #include "ContentsWidget.h"
 #include "WebWidget.h"
 #include "../core/SessionsManager.h"
-#include "../core/WindowsManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QUrl>
@@ -38,6 +37,7 @@ namespace Otter
 {
 
 class AddressWidget;
+class BookmarksItem;
 class ContentsWidget;
 class SearchWidget;
 class ToolBarWidget;
@@ -69,8 +69,8 @@ public:
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	QSize sizeHint() const override;
-	WindowsManager::LoadingState getLoadingState() const;
-	WindowsManager::ContentStates getContentState() const;
+	WebWidget::LoadingState getLoadingState() const;
+	WebWidget::ContentStates getContentState() const;
 	quint64 getIdentifier() const;
 	int getZoom() const;
 	bool canClone() const;
@@ -139,8 +139,8 @@ signals:
 	void urlChanged(const QUrl &url, bool force = false);
 	void iconChanged(const QIcon &icon);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
-	void contentStateChanged(WindowsManager::ContentStates state);
-	void loadingStateChanged(WindowsManager::LoadingState state);
+	void contentStateChanged(WebWidget::ContentStates state);
+	void loadingStateChanged(WebWidget::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);

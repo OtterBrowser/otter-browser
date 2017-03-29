@@ -70,7 +70,7 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	connect(window, SIGNAL(needsAttention()), this, SLOT(markAsNeedingAttention()));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(update()));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(update()));
-	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChanged(WindowsManager::LoadingState)));
+	connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChanged(WebWidget::LoadingState)));
 	connect(parent, SIGNAL(currentChanged(int)), this, SLOT(updateGeometries()));
 	connect(parent, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateGeometries()));
 	connect(parent, SIGNAL(needsGeometriesUpdate()), this, SLOT(updateGeometries()));
@@ -121,7 +121,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_urlIconRectangle.isValid())
 	{
-		if (m_window->getLoadingState() == WindowsManager::OngoingLoadingState && m_loadingMovie)
+		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingMovie)
 		{
 			painter.drawPixmap(m_urlIconRectangle, m_loadingMovie->currentPixmap());
 		}
@@ -141,7 +141,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 			if (m_thumbnailRectangle.height() >= 16 && m_thumbnailRectangle.width() >= 16)
 			{
-				if (m_window->getLoadingState() == WindowsManager::OngoingLoadingState && m_loadingMovie)
+				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingMovie)
 				{
 					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_loadingMovie->currentPixmap());
 				}
@@ -164,7 +164,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 	{
 		QColor color(palette().color(QPalette::Text));
 
-		if (m_window->getLoadingState() == WindowsManager::DelayedLoadingState)
+		if (m_window->getLoadingState() == WebWidget::DelayedLoadingState)
 		{
 			color.setAlpha(150);
 		}
@@ -271,9 +271,9 @@ void TabHandleWidget::markAsNeedingAttention()
 	}
 }
 
-void TabHandleWidget::handleLoadingStateChanged(WindowsManager::LoadingState state)
+void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 {
-	if (state == WindowsManager::OngoingLoadingState)
+	if (state == WebWidget::OngoingLoadingState)
 	{
 		if (!m_loadingMovie)
 		{
@@ -692,7 +692,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 			menu.addAction(cloneTabAction);
 			menu.addAction(pinTabAction);
-			menu.addAction((window && window->getLoadingState() != WindowsManager::DelayedLoadingState) ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
+			menu.addAction((window && window->getLoadingState() != WebWidget::DelayedLoadingState) ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
 			menu.addSeparator();
 			menu.addAction(detachTabAction);
 			menu.addSeparator();

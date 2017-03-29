@@ -22,7 +22,7 @@
 #ifndef OTTER_ADDRESSWIDGET_H
 #define OTTER_ADDRESSWIDGET_H
 
-#include "../../../core/WindowsManager.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../ui/LineEditWidget.h"
 
 #include <QtCore/QPointer>
@@ -33,6 +33,7 @@ namespace Otter
 {
 
 class AddressCompletionModel;
+class BookmarksItem;
 class ItemViewWidget;
 class Window;
 

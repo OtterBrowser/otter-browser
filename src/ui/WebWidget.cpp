@@ -68,7 +68,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 {
 	Q_UNUSED(isPrivate)
 
-	connect(this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChange(WindowsManager::LoadingState)));
+	connect(this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
@@ -86,7 +86,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 		m_reloadTimer = 0;
 
-		if (getLoadingState() == WindowsManager::FinishedLoadingState)
+		if (getLoadingState() == FinishedLoadingState)
 		{
 			triggerAction(ActionsManager::ReloadAction);
 		}
@@ -389,7 +389,7 @@ void WebWidget::openUrl(const QUrl &url, SessionsManager::OpenHints hints)
 	emit requestedNewWindow(widget, hints);
 }
 
-void WebWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
+void WebWidget::handleLoadingStateChange(LoadingState state)
 {
 	if (m_loadingTimer != 0)
 	{
@@ -398,7 +398,7 @@ void WebWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
 		m_loadingTimer = 0;
 	}
 
-	if (state == WindowsManager::OngoingLoadingState)
+	if (state == OngoingLoadingState)
 	{
 		m_loadingTime = 0;
 		m_loadingTimer = startTimer(1000);
@@ -654,17 +654,17 @@ void WebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::StopAction))
 	{
-		m_actions[ActionsManager::StopAction]->setEnabled(getLoadingState() == WindowsManager::OngoingLoadingState);
+		m_actions[ActionsManager::StopAction]->setEnabled(getLoadingState() == OngoingLoadingState);
 	}
 
 	if (m_actions.contains(ActionsManager::ReloadAction))
 	{
-		m_actions[ActionsManager::ReloadAction]->setEnabled(getLoadingState() != WindowsManager::OngoingLoadingState);
+		m_actions[ActionsManager::ReloadAction]->setEnabled(getLoadingState() != OngoingLoadingState);
 	}
 
 	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
 	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup((getLoadingState() == WindowsManager::OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+		m_actions[ActionsManager::ReloadOrStopAction]->setup((getLoadingState() == OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 	}
 
 	if (m_actions.contains(ActionsManager::LoadPluginsAction))
@@ -1266,16 +1266,16 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::StopAction:
-			action->setEnabled(getLoadingState() == WindowsManager::OngoingLoadingState);
+			action->setEnabled(getLoadingState() == OngoingLoadingState);
 
 			break;
 
 		case ActionsManager::ReloadAction:
-			action->setEnabled(getLoadingState() != WindowsManager::OngoingLoadingState);
+			action->setEnabled(getLoadingState() != OngoingLoadingState);
 
 			break;
 		case ActionsManager::ReloadOrStopAction:
-			action->setup((getLoadingState() == WindowsManager::OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+			action->setup((getLoadingState() == OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
@@ -1594,7 +1594,7 @@ QVariant WebWidget::getPageInformation(WebWidget::PageInformation key) const
 
 QUrl WebWidget::getRequestedUrl() const
 {
-	return ((getUrl().isEmpty() || getLoadingState() == WindowsManager::OngoingLoadingState) ? m_requestedUrl : getUrl());
+	return ((getUrl().isEmpty() || getLoadingState() == OngoingLoadingState) ? m_requestedUrl : getUrl());
 }
 
 QPoint WebWidget::getClickPosition() const
@@ -1669,21 +1669,21 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 	return HitTestResult();
 }
 
-WindowsManager::ContentStates WebWidget::getContentState() const
+WebWidget::ContentStates WebWidget::getContentState() const
 {
 	const QUrl url(getUrl());
 
 	if (url.isEmpty() || url.scheme() == QLatin1String("about"))
 	{
-		return WindowsManager::ApplicationContentState;
+		return ApplicationContentState;
 	}
 
 	if (url.scheme() == QLatin1String("file"))
 	{
-		return WindowsManager::LocalContentState;
+		return LocalContentState;
 	}
 
-	return WindowsManager::RemoteContentState;
+	return RemoteContentState;
 }
 
 WebWidget::PermissionPolicy WebWidget::getPermission(WebWidget::FeaturePermission feature, const QUrl &url) const

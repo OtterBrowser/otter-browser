@@ -21,6 +21,7 @@
 #include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/ThemesManager.h"
+#include "../core/WindowsManager.h"
 
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMovie>
@@ -152,7 +153,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 		return;
 	}
 
-	if (window->getLoadingState() == WindowsManager::DelayedLoadingState || window->getLoadingState() == WindowsManager::OngoingLoadingState)
+	if (window->getLoadingState() == WebWidget::DelayedLoadingState || window->getLoadingState() == WebWidget::OngoingLoadingState)
 	{
 		if (!m_loadingMovie)
 		{
@@ -162,11 +163,11 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 
 		m_previewLabel->setMovie(m_loadingMovie);
 
-		m_loadingMovie->setSpeed((window->getLoadingState() == WindowsManager::OngoingLoadingState) ? 100 : 10);
+		m_loadingMovie->setSpeed((window->getLoadingState() == WebWidget::OngoingLoadingState) ? 100 : 10);
 	}
 	else
 	{
-		m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
+		m_previewLabel->setPixmap((window->getLoadingState() == WebWidget::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
 	}
 }
 
@@ -241,7 +242,7 @@ void TabSwitcherWidget::setIcon(const QIcon &icon)
 	}
 }
 
-void TabSwitcherWidget::setLoadingState(WindowsManager::LoadingState state)
+void TabSwitcherWidget::setLoadingState(WebWidget::LoadingState state)
 {
 	Window *window(qobject_cast<Window*>(sender()));
 
@@ -253,7 +254,7 @@ void TabSwitcherWidget::setLoadingState(WindowsManager::LoadingState state)
 		{
 			QColor color(palette().color(QPalette::Text));
 
-			if (state == WindowsManager::DelayedLoadingState)
+			if (state == WebWidget::DelayedLoadingState)
 			{
 				color.setAlpha(150);
 			}
@@ -267,7 +268,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window) const
 {
 	QColor color(palette().color(QPalette::Text));
 
-	if (window->getLoadingState() == WindowsManager::DelayedLoadingState)
+	if (window->getLoadingState() == WebWidget::DelayedLoadingState)
 	{
 		color.setAlpha(150);
 	}
@@ -279,7 +280,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window) const
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(setLoadingState(WindowsManager::LoadingState)));
+	connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(setLoadingState(WebWidget::LoadingState)));
 
 	return item;
 }

@@ -59,8 +59,8 @@ public:
 	virtual QVector<WebWidget::LinkUrl> getFeeds() const;
 	virtual QVector<WebWidget::LinkUrl> getSearchEngines() const;
 	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
-	virtual WindowsManager::ContentStates getContentState() const;
-	virtual WindowsManager::LoadingState getLoadingState() const;
+	virtual WebWidget::ContentStates getContentState() const;
+	virtual WebWidget::LoadingState getLoadingState() const;
 	int getSidebar() const;
 	virtual int getZoom() const;
 	virtual bool canClone() const;
@@ -111,8 +111,8 @@ signals:
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
-	void contentStateChanged(WindowsManager::ContentStates state);
-	void loadingStateChanged(WindowsManager::LoadingState);
+	void contentStateChanged(WebWidget::ContentStates state);
+	void loadingStateChanged(WebWidget::LoadingState);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);

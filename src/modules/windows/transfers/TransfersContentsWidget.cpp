@@ -314,7 +314,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 		{
 			m_isLoading = true;
 
-			emit loadingStateChanged(WindowsManager::OngoingLoadingState);
+			emit loadingStateChanged(WebWidget::OngoingLoadingState);
 		}
 		else
 		{
@@ -335,7 +335,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 			{
 				m_isLoading = false;
 
-				emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+				emit loadingStateChanged(WebWidget::FinishedLoadingState);
 			}
 		}
 	}
@@ -621,9 +621,9 @@ QIcon TransfersContentsWidget::getIcon() const
 	return ThemesManager::getIcon(QLatin1String("transfers"), false);
 }
 
-WindowsManager::LoadingState TransfersContentsWidget::getLoadingState() const
+WebWidget::LoadingState TransfersContentsWidget::getLoadingState() const
 {
-	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
+	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
 int TransfersContentsWidget::findTransfer(Transfer *transfer) const

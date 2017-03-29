@@ -742,7 +742,7 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
-		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 		disconnect(m_window.data(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleWindowOptionChanged(int,QVariant)));
 	}
 
@@ -762,7 +762,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
-		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 		connect(window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleWindowOptionChanged(int,QVariant)));
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));

@@ -21,7 +21,7 @@
 #define OTTER_TABSWITCHERWIDGET_H
 
 #include "ItemViewWidget.h"
-#include "../core/WindowsManager.h"
+#include "WebWidget.h"
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
@@ -65,7 +65,7 @@ protected slots:
 	void handleWindowRemoved(quint64 identifier);
 	void setTitle(const QString &title);
 	void setIcon(const QIcon &icon);
-	void setLoadingState(WindowsManager::LoadingState state);
+	void setLoadingState(WebWidget::LoadingState state);
 
 private:
 	WindowsManager *m_windowsManager;

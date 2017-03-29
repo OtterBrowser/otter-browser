@@ -118,7 +118,7 @@ void Window::focusInEvent(QFocusEvent *event)
 
 	AddressWidget *addressWidget(findAddressWidget());
 
-	if (Utils::isUrlEmpty(getUrl()) && m_contentsWidget->getLoadingState() != WindowsManager::OngoingLoadingState && addressWidget)
+	if (Utils::isUrlEmpty(getUrl()) && m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState && addressWidget)
 	{
 		addressWidget->setFocus();
 	}
@@ -523,7 +523,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 			m_contentsWidget->setUrl(url, isTyped);
 		}
 
-		if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
+		if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->getLoadingState() == WebWidget::OngoingLoadingState)
 		{
 			emit urlChanged(url, true);
 		}
@@ -656,8 +656,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
 	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_contentsWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
-	connect(m_contentsWidget, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SIGNAL(contentStateChanged(WindowsManager::ContentStates)));
-	connect(m_contentsWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
+	connect(m_contentsWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
+	connect(m_contentsWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)));
 	connect(m_contentsWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_contentsWidget, SIGNAL(optionChanged(int,QVariant)), this, SIGNAL(optionChanged(int,QVariant)));
 	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
@@ -817,14 +817,14 @@ QSize Window::sizeHint() const
 	return QSize(800, 600);
 }
 
-WindowsManager::LoadingState Window::getLoadingState() const
+WebWidget::LoadingState Window::getLoadingState() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getLoadingState() : WindowsManager::DelayedLoadingState);
+	return (m_contentsWidget ? m_contentsWidget->getLoadingState() : WebWidget::DelayedLoadingState);
 }
 
-WindowsManager::ContentStates Window::getContentState() const
+WebWidget::ContentStates Window::getContentState() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getContentState() : WindowsManager::UnknownContentState);
+	return (m_contentsWidget ? m_contentsWidget->getContentState() : WebWidget::UnknownContentState);
 }
 
 quint64 Window::getIdentifier() const

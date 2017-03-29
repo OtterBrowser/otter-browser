@@ -345,14 +345,14 @@ QVector<NetworkManager::ResourceInformation> ContentsWidget::getBlockedRequests(
 	return QVector<NetworkManager::ResourceInformation>();
 }
 
-WindowsManager::ContentStates ContentsWidget::getContentState() const
+WebWidget::ContentStates ContentsWidget::getContentState() const
 {
-	return WindowsManager::ApplicationContentState;
+	return WebWidget::ApplicationContentState;
 }
 
-WindowsManager::LoadingState ContentsWidget::getLoadingState() const
+WebWidget::LoadingState ContentsWidget::getLoadingState() const
 {
-	return WindowsManager::FinishedLoadingState;
+	return WebWidget::FinishedLoadingState;
 }
 
 int ContentsWidget::getSidebar() const

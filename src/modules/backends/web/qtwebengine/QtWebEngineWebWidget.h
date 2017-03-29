@@ -53,7 +53,7 @@ public:
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
-	WindowsManager::LoadingState getLoadingState() const override;
+	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
@@ -134,7 +134,7 @@ private:
 	QPoint m_scrollPosition;
 #endif
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
-	WindowsManager::LoadingState m_loadingState;
+	WebWidget::LoadingState m_loadingState;
 	int m_documentLoadingProgress;
 	int m_focusProxyTimer;
 #if QT_VERSION < 0x050700

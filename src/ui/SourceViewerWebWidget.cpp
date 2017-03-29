@@ -105,7 +105,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			m_isLoading = false;
 
-			emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+			emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 			updateNavigationActions();
 
@@ -143,7 +143,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_isLoading = true;
 
-				emit loadingStateChanged(WindowsManager::OngoingLoadingState);
+				emit loadingStateChanged(WebWidget::OngoingLoadingState);
 
 				updateNavigationActions();
 			}
@@ -173,7 +173,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_isLoading = true;
 
-				emit loadingStateChanged(WindowsManager::OngoingLoadingState);
+				emit loadingStateChanged(WebWidget::OngoingLoadingState);
 
 				updateNavigationActions();
 			}
@@ -540,9 +540,9 @@ WebWidget::HitTestResult SourceViewerWebWidget::getHitTestResult(const QPoint &p
 	return result;
 }
 
-WindowsManager::LoadingState SourceViewerWebWidget::getLoadingState() const
+WebWidget::LoadingState SourceViewerWebWidget::getLoadingState() const
 {
-	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
+	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
 int SourceViewerWebWidget::getZoom() const

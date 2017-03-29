@@ -56,7 +56,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_cookieJarProxy(cookieJarProxy),
 	m_proxyFactory(nullptr),
 	m_baseReply(nullptr),
-	m_contentState(WindowsManager::UnknownContentState),
+	m_contentState(WebWidget::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_bytesReceivedDifference(0),
 	m_securityState(UnknownState),
@@ -137,7 +137,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
 	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
 	m_baseReply = nullptr;
-	m_contentState = WindowsManager::UnknownContentState;
+	m_contentState = WebWidget::UnknownContentState;
 	m_bytesReceivedDifference = 0;
 	m_securityState = UnknownState;
 
@@ -371,9 +371,9 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	{
 		m_securityState = InsecureState;
 
-		if (m_contentState.testFlag(WindowsManager::SecureContentState))
+		if (m_contentState.testFlag(WebWidget::SecureContentState))
 		{
-			m_contentState = WindowsManager::RemoteContentState;
+			m_contentState = WebWidget::RemoteContentState;
 
 			emit contentStateChanged(m_contentState);
 		}
@@ -397,9 +397,9 @@ void QtWebKitNetworkManager::handleLoadFinished(bool result)
 
 	m_loadingSpeedTimer = 0;
 
-	if (result && (m_securityState == SecureState || (m_securityState == UnknownState && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
+	if (result && (m_securityState == SecureState || (m_securityState == UnknownState && m_contentState.testFlag(WebWidget::SecureContentState))) && m_sslInformation.errors.isEmpty())
 	{
-		m_contentState = WindowsManager::SecureContentState;
+		m_contentState = WebWidget::SecureContentState;
 	}
 
 	emit contentStateChanged(m_contentState);
@@ -774,9 +774,9 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		{
 			m_securityState = InsecureState;
 
-			if (m_contentState.testFlag(WindowsManager::SecureContentState))
+			if (m_contentState.testFlag(WebWidget::SecureContentState))
 			{
-				m_contentState = WindowsManager::MixedContentState;
+				m_contentState = WebWidget::MixedContentState;
 
 				emit contentStateChanged(m_contentState);
 			}
@@ -852,7 +852,7 @@ QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 	return headers;
 }
 
-WindowsManager::ContentStates QtWebKitNetworkManager::getContentState() const
+WebWidget::ContentStates QtWebKitNetworkManager::getContentState() const
 {
 	return m_contentState;
 }

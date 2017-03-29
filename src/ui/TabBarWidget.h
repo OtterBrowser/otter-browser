@@ -21,7 +21,7 @@
 #ifndef OTTER_TABBARWIDGET_H
 #define OTTER_TABBARWIDGET_H
 
-#include "../core/WindowsManager.h"
+#include "WebWidget.h"
 
 #include <QtGui/QMovie>
 #include <QtWidgets/QProxyStyle>
@@ -55,7 +55,7 @@ protected:
 protected slots:
 	void markAsActive();
 	void markAsNeedingAttention();
-	void handleLoadingStateChanged(WindowsManager::LoadingState state);
+	void handleLoadingStateChanged(WebWidget::LoadingState state);
 	void updateGeometries();
 
 private:

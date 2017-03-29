@@ -171,7 +171,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 				}
 
 				Window *activeWindow(m_mainWindow->getWorkspace()->getActiveWindow());
-				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
+				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
 				{
@@ -401,7 +401,7 @@ void WindowsManager::open(BookmarksItem *bookmark, SessionsManager::OpenHints hi
 void WindowsManager::search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
 {
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-	const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
+	const bool isUrlEmpty(window && window->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
 
 	if ((hints == SessionsManager::NewTabOpen && isUrlEmpty) || (hints == SessionsManager::DefaultOpen && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())))
 	{

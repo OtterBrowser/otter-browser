@@ -103,9 +103,9 @@ QIcon WindowsContentsWidget::getIcon() const
 	return ThemesManager::getIcon(QLatin1String("window"), false);
 }
 
-WindowsManager::LoadingState WindowsContentsWidget::getLoadingState() const
+WebWidget::LoadingState WindowsContentsWidget::getLoadingState() const
 {
-	return WindowsManager::FinishedLoadingState;
+	return WebWidget::FinishedLoadingState;
 }
 
 }

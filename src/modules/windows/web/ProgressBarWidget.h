@@ -20,12 +20,14 @@
 #ifndef OTTER_PROGRESSBARWIDGET_H
 #define OTTER_PROGRESSBARWIDGET_H
 
-#include "../../../core/WindowsManager.h"
+#include "../../../ui/WebWidget.h"
 
 #include <QtWidgets/QFrame>
 
 namespace Otter
 {
+
+class Window;
 
 class ProgressBarWidget : public QFrame
 {
@@ -41,7 +43,7 @@ protected:
 	void timerEvent(QTimerEvent *event) override;
 
 protected slots:
-	void updateLoadingState(WindowsManager::LoadingState state);
+	void updateLoadingState(WebWidget::LoadingState state);
 
 private:
 	Window *m_window;

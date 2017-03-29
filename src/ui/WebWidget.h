@@ -27,7 +27,6 @@
 #include "../core/PasswordsManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/SpellCheckManager.h"
-#include "../core/WindowsManager.h"
 
 #include <QtGui/QHelpEvent>
 #include <QtNetwork/QSslCertificate>
@@ -41,6 +40,7 @@ namespace Otter
 
 class Action;
 class ContentsDialog;
+class ContentsWidget;
 class Menu;
 class Transfer;
 class WebBackend;
@@ -50,6 +50,28 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum ContentState
+	{
+		UnknownContentState = 0,
+		ApplicationContentState = 1,
+		LocalContentState = 2,
+		RemoteContentState = 4,
+		SecureContentState = 8,
+		TrustedContentState = 16,
+		MixedContentState = 32,
+		FraudContentState = 64
+	};
+
+	Q_DECLARE_FLAGS(ContentStates, ContentState)
+
+	enum LoadingState
+	{
+		DelayedLoadingState = 0,
+		OngoingLoadingState,
+		FinishedLoadingState,
+		CrashedLoadingState
+	};
+
 	enum FeaturePermission
 	{
 		UnknownFeature = 0,
@@ -213,8 +235,8 @@ public:
 	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<int, QVariant> getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
-	virtual WindowsManager::ContentStates getContentState() const;
-	virtual WindowsManager::LoadingState getLoadingState() const = 0;
+	virtual WebWidget::ContentStates getContentState() const;
+	virtual WebWidget::LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
 	virtual int findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
@@ -279,7 +301,7 @@ protected slots:
 	void reloadTimeMenuAboutToShow();
 	void openInApplication(QAction *action);
 	void openInApplicationMenuAboutToShow();
-	void handleLoadingStateChange(WindowsManager::LoadingState state);
+	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);
 	void handleWindowCloseRequest();
 	void updatePasswords();
@@ -339,8 +361,8 @@ signals:
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
-	void contentStateChanged(WindowsManager::ContentStates state);
-	void loadingStateChanged(WindowsManager::LoadingState state);
+	void contentStateChanged(WebWidget::ContentStates state);
+	void loadingStateChanged(WebWidget::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);
@@ -349,6 +371,7 @@ signals:
 
 }
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WebWidget::ContentStates)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WebWidget::PermissionPolicies)
 
 #endif

@@ -53,7 +53,7 @@ public:
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	WindowsManager::LoadingState getLoadingState() const override;
+	WebWidget::LoadingState getLoadingState() const override;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;

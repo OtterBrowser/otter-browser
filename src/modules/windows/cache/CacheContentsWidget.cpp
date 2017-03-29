@@ -131,7 +131,7 @@ void CacheContentsWidget::populateCache()
 
 		m_isLoading = false;
 
-		emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 		connect(cache, SIGNAL(cleared()), this, SLOT(populateCache()));
 		connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
@@ -574,9 +574,9 @@ QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const
 	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toUrl() : QUrl());
 }
 
-WindowsManager::LoadingState CacheContentsWidget::getLoadingState() const
+WebWidget::LoadingState CacheContentsWidget::getLoadingState() const
 {
-	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
+	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
 bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)

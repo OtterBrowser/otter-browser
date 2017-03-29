@@ -181,7 +181,7 @@ void WebContentsWidget::showEvent(QShowEvent *event)
 {
 	ContentsWidget::showEvent(event);
 
-	if (m_window && !m_progressBarWidget && getLoadingState() == WindowsManager::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
+	if (m_window && !m_progressBarWidget && getLoadingState() == WebWidget::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_window, this);
 	}
@@ -234,7 +234,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 
 	if (event->key() == Qt::Key_Escape)
 	{
-		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
+		if (m_webWidget->getLoadingState() == WebWidget::OngoingLoadingState)
 		{
 			triggerAction(ActionsManager::StopAction);
 
@@ -945,9 +945,9 @@ void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
 	}
 }
 
-void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
+void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 {
-	if (state == WindowsManager::CrashedLoadingState)
+	if (state == WebWidget::CrashedLoadingState)
 	{
 		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Browser_TabCrashingActionOption, getUrl()).toString());
 		bool reloadTab(tabCrashingAction != QLatin1String("close"));
@@ -976,7 +976,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 			m_window->close();
 		}
 	}
-	else if (m_window && !m_progressBarWidget && state == WindowsManager::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
+	else if (m_window && !m_progressBarWidget && state == WebWidget::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_window, this);
 	}
@@ -1108,7 +1108,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 		m_webWidget->close();
 		m_webWidget->deleteLater();
 
-		handleLoadingStateChange(WindowsManager::FinishedLoadingState);
+		handleLoadingStateChange(WebWidget::FinishedLoadingState);
 	}
 
 	if (widget)
@@ -1186,9 +1186,9 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(handleUrlChange(QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
-	connect(m_webWidget, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SIGNAL(contentStateChanged(WindowsManager::ContentStates)));
-	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
-	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChange(WindowsManager::LoadingState)));
+	connect(m_webWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
+	connect(m_webWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)));
+	connect(m_webWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
 	connect(m_webWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_webWidget, SIGNAL(optionChanged(int,QVariant)), this, SIGNAL(optionChanged(int,QVariant)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
@@ -1277,9 +1277,9 @@ void WebContentsWidget::setParent(Window *window)
 
 	if (window && m_webWidget)
 	{
-		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
+		if (m_webWidget->getLoadingState() == WebWidget::OngoingLoadingState)
 		{
-			handleLoadingStateChange(WindowsManager::OngoingLoadingState);
+			handleLoadingStateChange(WebWidget::OngoingLoadingState);
 		}
 
 		m_webWidget->setWindowIdentifier(window->getIdentifier());
@@ -1393,12 +1393,12 @@ QHash<int, QVariant> WebContentsWidget::getOptions() const
 	return m_webWidget->getOptions();
 }
 
-WindowsManager::ContentStates WebContentsWidget::getContentState() const
+WebWidget::ContentStates WebContentsWidget::getContentState() const
 {
 	return m_webWidget->getContentState();
 }
 
-WindowsManager::LoadingState WebContentsWidget::getLoadingState() const
+WebWidget::LoadingState WebContentsWidget::getLoadingState() const
 {
 	return m_webWidget->getLoadingState();
 }

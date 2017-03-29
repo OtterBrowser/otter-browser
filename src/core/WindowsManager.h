@@ -46,28 +46,6 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	enum ContentState
-	{
-		UnknownContentState = 0,
-		ApplicationContentState = 1,
-		LocalContentState = 2,
-		RemoteContentState = 4,
-		SecureContentState = 8,
-		TrustedContentState = 16,
-		MixedContentState = 32,
-		FraudContentState = 64
-	};
-
-	Q_DECLARE_FLAGS(ContentStates, ContentState)
-
-	enum LoadingState
-	{
-		DelayedLoadingState = 0,
-		OngoingLoadingState,
-		FinishedLoadingState,
-		CrashedLoadingState
-	};
-
 	explicit WindowsManager(MainWindow *parent);
 
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
@@ -131,6 +109,5 @@ friend class MainWindow;
 };
 
 }
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WindowsManager::ContentStates)
 
 #endif

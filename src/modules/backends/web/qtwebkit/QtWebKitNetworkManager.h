@@ -26,7 +26,6 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
-#include "../../../../core/WindowsManager.h"
 
 #include <QtNetwork/QNetworkRequest>
 
@@ -51,7 +50,7 @@ public:
 	QStringList getBlockedElements() const;
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
-	WindowsManager::ContentStates getContentState() const;
+	WebWidget::ContentStates getContentState() const;
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -102,7 +101,7 @@ private:
 	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
-	WindowsManager::ContentStates m_contentState;
+	WebWidget::ContentStates m_contentState;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
 	qint64 m_bytesReceivedDifference;
 	SecurityState m_securityState;
@@ -116,7 +115,7 @@ private:
 signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
-	void contentStateChanged(WindowsManager::ContentStates state);
+	void contentStateChanged(WebWidget::ContentStates state);
 
 friend class QtWebKitPage;
 friend class QtWebKitWebWidget;

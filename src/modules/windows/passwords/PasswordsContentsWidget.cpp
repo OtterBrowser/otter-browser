@@ -109,7 +109,7 @@ void PasswordsContentsWidget::populatePasswords()
 	{
 		m_isLoading = false;
 
-		emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 		connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(populatePasswords()));
 	}
@@ -409,9 +409,9 @@ PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const
 	return password;
 }
 
-WindowsManager::LoadingState PasswordsContentsWidget::getLoadingState() const
+WebWidget::LoadingState PasswordsContentsWidget::getLoadingState() const
 {
-	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
+	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
 bool PasswordsContentsWidget::eventFilter(QObject *object, QEvent *event)

@@ -19,8 +19,8 @@
 
 #include "BookmarkWidget.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/Utils.h"
-#include "../../../core/WindowsManager.h"
 #include "../../../ui/Menu.h"
 
 #include <QtCore/QDateTime>

@@ -51,7 +51,7 @@ ProgressBarWidget::ProgressBarWidget(Window *window, QWidget *parent) : QFrame(p
 	updateLoadingState(window->getLoadingState());
 	setAutoFillBackground(true);
 
-	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateLoadingState(WindowsManager::LoadingState)));
+	connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateLoadingState(WebWidget::LoadingState)));
 }
 
 void ProgressBarWidget::timerEvent(QTimerEvent *event)
@@ -69,7 +69,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
 
-		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WindowsManager::OngoingLoadingState))
+		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WebWidget::OngoingLoadingState))
 		{
 			QRect geometry(m_window->getWebWidget()->getProgressBarGeometry());
 
@@ -98,11 +98,11 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
-void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
+void ProgressBarWidget::updateLoadingState(WebWidget::LoadingState state)
 {
 	const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
 
-	if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && state == WindowsManager::OngoingLoadingState))
+	if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && state == WebWidget::OngoingLoadingState))
 	{
 		scheduleGeometryUpdate();
 	}

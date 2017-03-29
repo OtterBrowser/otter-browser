@@ -471,7 +471,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 				return;
 			case ListFeedsEntry:
 				{
-					const QVector<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QVector<WebWidget::LinkUrl>());
+					const QVector<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WebWidget::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QVector<WebWidget::LinkUrl>());
 
 					if (feeds.count() == 1 && m_window)
 					{
@@ -811,29 +811,29 @@ void AddressWidget::updateGeometries()
 				{
 					const QUrl url(getUrl());
 					QString icon(QLatin1String("unknown"));
-					const WindowsManager::ContentStates state(m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
+					const WebWidget::ContentStates state(m_window ? m_window->getContentState() : WebWidget::UnknownContentState);
 
-					if (state.testFlag(WindowsManager::FraudContentState))
+					if (state.testFlag(WebWidget::FraudContentState))
 					{
 						icon = QLatin1String("badge-fraud");
 					}
-					else if (state.testFlag(WindowsManager::MixedContentState))
+					else if (state.testFlag(WebWidget::MixedContentState))
 					{
 						icon = QLatin1String("badge-mixed");
 					}
-					else if (state.testFlag(WindowsManager::SecureContentState))
+					else if (state.testFlag(WebWidget::SecureContentState))
 					{
 						icon = QLatin1String("badge-secure");
 					}
-					else if (state.testFlag(WindowsManager::RemoteContentState))
+					else if (state.testFlag(WebWidget::RemoteContentState))
 					{
 						icon = QLatin1String("badge-remote");
 					}
-					else if (state.testFlag(WindowsManager::LocalContentState))
+					else if (state.testFlag(WebWidget::LocalContentState))
 					{
 						icon = QLatin1String("badge-local");
 					}
-					else if (state.testFlag(WindowsManager::ApplicationContentState))
+					else if (state.testFlag(WebWidget::ApplicationContentState))
 					{
 						icon = QLatin1String("otter-browser");
 					}
@@ -852,7 +852,7 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case ListFeedsEntry:
-				if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WindowsManager::FinishedLoadingState || m_window->getContentsWidget()->getFeeds().isEmpty())
+				if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState || m_window->getContentsWidget()->getFeeds().isEmpty())
 				{
 					continue;
 				}
@@ -890,7 +890,7 @@ void AddressWidget::updateGeometries()
 				break;
 			case LoadPluginsEntry:
 				{
-					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WindowsManager::FinishedLoadingState)
+					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState)
 					{
 						continue;
 					}
@@ -911,7 +911,7 @@ void AddressWidget::updateGeometries()
 				{
 					const QUrl url(getUrl());
 
-					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WindowsManager::FinishedLoadingState || Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about") || !PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
+					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState || Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about") || !PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
 					{
 						continue;
 					}
@@ -1085,8 +1085,8 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		disconnect(m_window.data(), SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(updateGeometries()));
-		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		disconnect(m_window.data(), SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(updateGeometries()));
+		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 	}
 
 	m_window = window;
@@ -1107,8 +1107,8 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
 		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		connect(window, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(updateGeometries()));
-		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		connect(window, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(updateGeometries()));
+		connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 

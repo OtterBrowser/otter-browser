@@ -95,7 +95,7 @@ void AddonsContentsWidget::populateAddons()
 
 	m_isLoading = false;
 
-	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+	emit loadingStateChanged(WebWidget::FinishedLoadingState);
 }
 
 void AddonsContentsWidget::addAddon()
@@ -432,9 +432,9 @@ QIcon AddonsContentsWidget::getIcon() const
 	return ThemesManager::getIcon(QLatin1String("preferences-plugin"), false);
 }
 
-WindowsManager::LoadingState AddonsContentsWidget::getLoadingState() const
+WebWidget::LoadingState AddonsContentsWidget::getLoadingState() const
 {
-	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
+	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
 }
 
 bool AddonsContentsWidget::eventFilter(QObject *object, QEvent *event)

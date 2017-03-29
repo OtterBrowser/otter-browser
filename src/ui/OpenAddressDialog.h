@@ -22,7 +22,7 @@
 #define OTTER_OPENADDRESSDIALOG_H
 
 #include "Dialog.h"
-#include "../core/WindowsManager.h"
+#include "../core/SessionsManager.h"
 
 namespace Otter
 {
@@ -33,6 +33,7 @@ namespace Ui
 }
 
 class AddressWidget;
+class BookmarksItem;
 class InputInterpreter;
 
 class OpenAddressDialog : public Dialog

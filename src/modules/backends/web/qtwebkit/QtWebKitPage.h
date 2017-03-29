@@ -21,7 +21,7 @@
 #ifndef OTTER_QTWEBKITPAGE_H
 #define OTTER_QTWEBKITPAGE_H
 
-#include "../../../../core/WindowsManager.h"
+#include "../../../../core/SessionsManager.h"
 
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebPage>

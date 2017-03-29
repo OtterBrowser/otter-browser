@@ -97,7 +97,7 @@ void ActionWidget::resetAction()
 {
 	Action *action(nullptr);
 
-	if (m_window && !m_window->isAboutToClose() && Action::isLocal(m_identifier) && m_window->getLoadingState() != WindowsManager::DelayedLoadingState && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
+	if (m_window && !m_window->isAboutToClose() && Action::isLocal(m_identifier) && m_window->getLoadingState() != WebWidget::DelayedLoadingState && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
 	{
 		action = m_window->getContentsWidget()->getAction(m_identifier);
 	}

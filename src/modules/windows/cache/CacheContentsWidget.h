@@ -48,7 +48,7 @@ public:
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	WindowsManager::LoadingState getLoadingState() const override;
+	WebWidget::LoadingState getLoadingState() const override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
