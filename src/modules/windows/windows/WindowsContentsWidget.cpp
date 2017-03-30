@@ -22,6 +22,7 @@
 #include "../../../core/SessionModel.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/Window.h"
 
 #include "ui_WindowsContentsWidget.h"
 
@@ -101,6 +102,24 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabPrivateAction));
 			menu.addSeparator();
 			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::CloseWindowAction));
+		}
+	}
+	else if (type == SessionModel::WindowEntity)
+	{
+		WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+
+		if (windowItem)
+		{
+			Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
+			closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
+			closeTabAction->setParameters({{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
+
+			menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, windowItem->getActiveWindow()->getMainWindow()));
+			menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, windowItem->getActiveWindow()->getMainWindow()));
+			menu.addSeparator();
+			menu.addAction(closeTabAction);
+
+			connect(closeTabAction, SIGNAL(triggered()), windowItem->getActiveWindow()->getMainWindow(), SLOT(triggerAction()));
 		}
 	}
 
