@@ -55,6 +55,7 @@ public:
 	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow);
+	MainWindow* getMainWindow();
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
 	QString getTitle() const;

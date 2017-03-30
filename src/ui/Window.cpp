@@ -693,6 +693,11 @@ Window* Window::clone(bool cloneHistory, MainWindow *mainWindow)
 	return new Window(parameters, m_contentsWidget->clone(cloneHistory), mainWindow);
 }
 
+MainWindow* Window::getMainWindow()
+{
+	return m_mainWindow;
+}
+
 ContentsWidget* Window::getContentsWidget()
 {
 	if (!m_contentsWidget)
