@@ -21,6 +21,7 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/SessionModel.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_WindowsContentsWidget.h"
 
@@ -84,9 +85,25 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void WindowsContentsWidget::showContextMenu(const QPoint &position)
 {
+	const QModelIndex index(m_ui->windowsViewWidget->indexAt(position));
+	SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowAction, this));
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowPrivateAction, this));
+
+	if (type == SessionModel::MainWindowEntity)
+	{
+		MainWindowSessionItem *mainWindowItem(dynamic_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+
+		if (mainWindowItem)
+		{
+			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabAction));
+			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabPrivateAction));
+			menu.addSeparator();
+			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::CloseWindowAction));
+		}
+	}
+
 	menu.exec(m_ui->windowsViewWidget->mapToGlobal(position));
 }
 
