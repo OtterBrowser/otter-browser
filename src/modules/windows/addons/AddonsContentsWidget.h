@@ -81,7 +81,7 @@ protected slots:
 	void reloadAddon();
 	void removeAddons();
 	void save();
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 
 private:
 	QStandardItemModel *m_model;

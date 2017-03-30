@@ -69,7 +69,7 @@ protected slots:
 	void openEntry(const QModelIndex &index = QModelIndex());
 	void bookmarkEntry();
 	void copyEntryLink();
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 
 private:
 	QStandardItemModel *m_model;

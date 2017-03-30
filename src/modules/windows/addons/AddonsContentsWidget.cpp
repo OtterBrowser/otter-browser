@@ -331,9 +331,9 @@ void AddonsContentsWidget::save()
 	settings.save(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
 }
 
-void AddonsContentsWidget::showContextMenu(const QPoint &point)
+void AddonsContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->addonsViewWidget->indexAt(point));
+	const QModelIndex index(m_ui->addonsViewWidget->indexAt(position));
 	QMenu menu(this);
 	menu.addAction(tr("Add Addon…"), this, SLOT(addAddon()));
 
@@ -346,7 +346,7 @@ void AddonsContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()))->setEnabled(false);
 	}
 
-	menu.exec(m_ui->addonsViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->addonsViewWidget->mapToGlobal(position));
 }
 
 void AddonsContentsWidget::print(QPrinter *printer)

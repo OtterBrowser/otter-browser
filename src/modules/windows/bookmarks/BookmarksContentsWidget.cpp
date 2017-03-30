@@ -150,9 +150,9 @@ void BookmarksContentsWidget::bookmarkProperties()
 	}
 }
 
-void BookmarksContentsWidget::showContextMenu(const QPoint &point)
+void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(point));
+	const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(position));
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 	QMenu menu(this);
 
@@ -232,7 +232,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		connect(copyLinkAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
 	}
 
-	menu.exec(m_ui->bookmarksViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->bookmarksViewWidget->mapToGlobal(position));
 }
 
 void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)

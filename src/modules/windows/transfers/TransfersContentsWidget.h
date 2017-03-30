@@ -90,7 +90,7 @@ protected slots:
 	void redownloadTransfer();
 	void startQuickTransfer();
 	void clearFinishedTransfers();
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 	void updateActions();
 
 private:

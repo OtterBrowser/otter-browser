@@ -252,9 +252,9 @@ void PasswordsContentsWidget::removeAllPasswords()
 	}
 }
 
-void PasswordsContentsWidget::showContextMenu(const QPoint &point)
+void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->passwordsViewWidget->indexAt(point));
+	const QModelIndex index(m_ui->passwordsViewWidget->indexAt(position));
 	QMenu menu(this);
 
 	if (index.isValid())
@@ -270,7 +270,7 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &point)
 	menu.addAction(tr("Remove All Passwords…"), this, SLOT(removeAllPasswords()))->setEnabled(m_ui->passwordsViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
-	menu.exec(m_ui->passwordsViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->passwordsViewWidget->mapToGlobal(position));
 }
 
 void PasswordsContentsWidget::print(QPrinter *printer)

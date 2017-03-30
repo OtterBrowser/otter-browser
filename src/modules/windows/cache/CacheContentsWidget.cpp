@@ -329,9 +329,9 @@ void CacheContentsWidget::copyEntryLink()
 	}
 }
 
-void CacheContentsWidget::showContextMenu(const QPoint &point)
+void CacheContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->cacheViewWidget->indexAt(point));
+	const QModelIndex index(m_ui->cacheViewWidget->indexAt(position));
 	const QUrl entry(getEntry(index));
 	QMenu menu(this);
 
@@ -356,7 +356,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
-	menu.exec(m_ui->cacheViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->cacheViewWidget->mapToGlobal(position));
 }
 
 void CacheContentsWidget::updateActions()

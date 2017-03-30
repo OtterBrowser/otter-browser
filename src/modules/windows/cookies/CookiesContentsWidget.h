@@ -70,7 +70,7 @@ protected slots:
 	void removeDomainCookies();
 	void removeAllCookies();
 	void cookieProperties();
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 	void updateActions();
 
 private:

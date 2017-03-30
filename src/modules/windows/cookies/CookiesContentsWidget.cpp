@@ -332,9 +332,9 @@ void CookiesContentsWidget::cookieProperties()
 	}
 }
 
-void CookiesContentsWidget::showContextMenu(const QPoint &point)
+void CookiesContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
+	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(position));
 	QMenu menu(this);
 	menu.addAction(tr("Add Cookie…"), this, SLOT(addCookie()));
 	menu.addSeparator();
@@ -359,7 +359,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Properties…"), this, SLOT(cookieProperties()));
 	}
 
-	menu.exec(m_ui->cookiesViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->cookiesViewWidget->mapToGlobal(position));
 }
 
 void CookiesContentsWidget::print(QPrinter *printer)

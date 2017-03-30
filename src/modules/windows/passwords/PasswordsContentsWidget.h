@@ -72,7 +72,7 @@ protected slots:
 	void removePasswords();
 	void removeHostPasswords();
 	void removeAllPasswords();
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 
 private:
 	QStandardItemModel *m_model;

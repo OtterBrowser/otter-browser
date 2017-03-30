@@ -61,7 +61,7 @@ protected slots:
 	void copyOptionValue();
 	void restoreDefaults();
 	void handleOptionChanged(int identifier, const QVariant &value);
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 
 private:
 	QStandardItemModel *m_model;

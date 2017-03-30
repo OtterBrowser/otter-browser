@@ -345,9 +345,9 @@ void HistoryContentsWidget::copyEntryLink()
 	}
 }
 
-void HistoryContentsWidget::showContextMenu(const QPoint &point)
+void HistoryContentsWidget::showContextMenu(const QPoint &position)
 {
-	const quint64 entry(getEntry(m_ui->historyViewWidget->indexAt(point)));
+	const quint64 entry(getEntry(m_ui->historyViewWidget->indexAt(position)));
 	QMenu menu(this);
 
 	if (entry > 0)
@@ -368,7 +368,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
-	menu.exec(m_ui->historyViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
 }
 
 QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)

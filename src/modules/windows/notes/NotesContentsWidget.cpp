@@ -127,9 +127,9 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 	}
 }
 
-void NotesContentsWidget::showContextMenu(const QPoint &point)
+void NotesContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->notesViewWidget->indexAt(point));
+	const QModelIndex index(m_ui->notesViewWidget->indexAt(position));
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 	QMenu menu(this);
 
@@ -196,7 +196,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 		}
 	}
 
-	menu.exec(m_ui->notesViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->notesViewWidget->mapToGlobal(position));
 }
 
 void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)

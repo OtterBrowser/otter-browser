@@ -69,7 +69,7 @@ protected slots:
 	void removeDomainEntriesOrEntry();
 	void openEntry(const QModelIndex &index = QModelIndex());
 	void copyEntryLink();
-	void showContextMenu(const QPoint &point);
+	void showContextMenu(const QPoint &position);
 	void updateActions();
 
 private:

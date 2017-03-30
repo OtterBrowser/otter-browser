@@ -422,9 +422,9 @@ void TransfersContentsWidget::clearFinishedTransfers()
 	TransfersManager::clearTransfers();
 }
 
-void TransfersContentsWidget::showContextMenu(const QPoint &point)
+void TransfersContentsWidget::showContextMenu(const QPoint &position)
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->indexAt(point)));
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->indexAt(position)));
 	QMenu menu(this);
 
 	if (transfer)
@@ -472,7 +472,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.addAction(tr("Clear Finished Transfers"), this, SLOT(clearFinishedTransfers()))->setEnabled(finishedTransfers > 0);
-	menu.exec(m_ui->transfersViewWidget->mapToGlobal(point));
+	menu.exec(m_ui->transfersViewWidget->mapToGlobal(position));
 }
 
 void TransfersContentsWidget::updateActions()
