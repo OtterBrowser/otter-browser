@@ -24,10 +24,7 @@
 
 #include "ui_WindowsContentsWidget.h"
 
-#include <QtCore/QTimer>
-#include <QtGui/QKeyEvent>
 #include <QtWidgets/QMenu>
-#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {

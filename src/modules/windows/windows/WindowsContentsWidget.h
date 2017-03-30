@@ -37,14 +37,6 @@ class WindowsContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	enum DataRole
-	{
-		HostRole = Qt::UserRole,
-		UrlRole,
-		AuthTypeRole,
-		FieldTypeRole
-	};
-
 	explicit WindowsContentsWidget(const QVariantMap &parameters, Window *window);
 	~WindowsContentsWidget();
 
