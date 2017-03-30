@@ -42,6 +42,8 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->windowsViewWidget->setModel(SessionsManager::getModel());
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
+
+	connect(m_ui->windowsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 WindowsContentsWidget::~WindowsContentsWidget()
@@ -81,6 +83,14 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 		default:
 			break;
 	}
+}
+
+void WindowsContentsWidget::showContextMenu(const QPoint &position)
+{
+	QMenu menu(this);
+	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowPrivateAction, this));
+	menu.exec(m_ui->windowsViewWidget->mapToGlobal(position));
 }
 
 QString WindowsContentsWidget::getTitle() const

@@ -61,6 +61,9 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void showContextMenu(const QPoint &position);
+
 private:
 	bool m_isLoading;
 	Ui::WindowsContentsWidget *m_ui;
