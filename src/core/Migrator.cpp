@@ -74,9 +74,10 @@ public:
 		optionsMap[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::Permissions_ScriptsCanAccessClipboardOption;
 		optionsMap[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption;
 		optionsMap[QLatin1String("Browser/JavaScriptCanCloseWindows")] = SettingsManager::Permissions_ScriptsCanCloseWindowsOption;
-		optionsMap[QLatin1String("Content/PopupsPolicy")] = SettingsManager::Permissions_ScriptsCanOpenWindowsOption;
 		optionsMap[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption;
 		optionsMap[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption;
+		optionsMap[QLatin1String("Browser/TabCrashingActionOption")] = SettingsManager::Interface_TabCrashingActionOption;
+		optionsMap[QLatin1String("Content/PopupsPolicy")] = SettingsManager::Permissions_ScriptsCanOpenWindowsOption;
 
 		QMap<QString, SettingsManager::OptionIdentifier>::iterator optionsIterator;
 		QSettings configuration(SettingsManager::getGlobalPath(), QSettings::IniFormat);

@@ -95,7 +95,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_ShowSelectionContextMenuOnDoubleClickOption, BooleanType, false);
 	registerOption(Browser_SpellCheckDictionaryOption, StringType, QString());
 	registerOption(Browser_StartupBehaviorOption, EnumerationType, QLatin1String("continuePrevious"), QStringList({QLatin1String("continuePrevious"), QLatin1String("showDialog"), QLatin1String("startHomePage"), QLatin1String("startStartPage"), QLatin1String("startEmpty")}));
-	registerOption(Browser_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), QStringList({QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")}));
 	registerOption(Browser_ToolTipsModeOption, EnumerationType, QLatin1String("extended"), QStringList({QLatin1String("disabled"), QLatin1String("standard"), QLatin1String("extended")}));
 	registerOption(Browser_TransferStartingActionOption, EnumerationType, QLatin1String("openTab"), QStringList({QLatin1String("openTab"), QLatin1String("openBackgroundTab"), QLatin1String("openPanel"), QLatin1String("doNothing")}));
 	registerOption(Browser_ValidatorsOrderOption, ListType, QStringList({QLatin1String("w3c-markup"), QLatin1String("w3c-css")}));
@@ -151,6 +150,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Interface_ShowScrollBarsOption, BooleanType, true);
 	registerOption(Interface_ShowSizeGripOption, BooleanType, true);
 	registerOption(Interface_StyleSheetOption, PathType, QString());
+	registerOption(Interface_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), QStringList({QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")}));
 	registerOption(Interface_UseNativeNotificationsOption, BooleanType, true);
 	registerOption(Interface_UseSystemIconThemeOption, BooleanType, false);
 	registerOption(Interface_WidgetStyleOption, StringType, QString());

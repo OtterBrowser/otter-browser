@@ -949,7 +949,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 {
 	if (state == WebWidget::CrashedLoadingState)
 	{
-		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Browser_TabCrashingActionOption, getUrl()).toString());
+		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Interface_TabCrashingActionOption, getUrl()).toString());
 		bool reloadTab(tabCrashingAction != QLatin1String("close"));
 
 		if (tabCrashingAction == QLatin1String("ask"))
@@ -961,7 +961,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 
 			if (dialog.getCheckBoxState())
 			{
-				SettingsManager::setValue(SettingsManager::Browser_TabCrashingActionOption, (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
+				SettingsManager::setValue(SettingsManager::Interface_TabCrashingActionOption, (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
 			}
 
 			reloadTab = dialog.isAccepted();
