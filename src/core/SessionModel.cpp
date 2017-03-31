@@ -50,6 +50,29 @@ QVariant SessionItem::data(int role) const
 			return ThemesManager::getIcon(QLatin1String("user-trash"));
 		}
 	}
+	else if (role == SessionModel::IsTrashedRole)
+	{
+		QModelIndex parent(index().parent());
+
+		while (parent.isValid())
+		{
+			const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(parent.data(SessionModel::TypeRole).toInt()));
+
+			if (type == SessionModel::TrashEntity)
+			{
+				return true;
+			}
+
+			if (type == SessionModel::SessionEntity)
+			{
+				break;
+			}
+
+			parent = parent.parent();
+		}
+
+		return false;
+	}
 
 	return QStandardItem::data(role);
 }

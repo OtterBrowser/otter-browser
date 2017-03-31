@@ -105,7 +105,8 @@ public:
 		ZoomRole,
 		IsPinnedRole,
 		IsPrivateRole,
-		IsSuspendedRole
+		IsSuspendedRole,
+		IsTrashedRole
 	};
 
 	explicit SessionModel(const QString &path, QObject *parent);
