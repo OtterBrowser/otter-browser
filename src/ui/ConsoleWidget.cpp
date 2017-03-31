@@ -264,6 +264,9 @@ void ConsoleWidget::showContextMenu(const QPoint position)
 {
 	QMenu menu(m_ui->consoleView);
 	menu.addAction(ThemesManager::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
+	menu.addSeparator();
+	menu.addAction(tr("Expand All"), m_ui->consoleView, SLOT(expandAll()));
+	menu.addAction(tr("Collapse All"), m_ui->consoleView, SLOT(collapseAll()));
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
