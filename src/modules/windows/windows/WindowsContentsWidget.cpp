@@ -92,34 +92,37 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowAction, this));
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowPrivateAction, this));
 
-	if (type == SessionModel::MainWindowEntity)
+	if (!index.data(SessionModel::IsTrashedRole).toBool())
 	{
-		MainWindowSessionItem *mainWindowItem(dynamic_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
-
-		if (mainWindowItem)
+		if (type == SessionModel::MainWindowEntity)
 		{
-			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabAction));
-			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabPrivateAction));
-			menu.addSeparator();
-			menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::CloseWindowAction));
+			MainWindowSessionItem *mainWindowItem(dynamic_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+
+			if (mainWindowItem)
+			{
+				menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabAction));
+				menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabPrivateAction));
+				menu.addSeparator();
+				menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::CloseWindowAction));
+			}
 		}
-	}
-	else if (type == SessionModel::WindowEntity)
-	{
-		WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
-
-		if (windowItem)
+		else if (type == SessionModel::WindowEntity)
 		{
-			Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
-			closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
-			closeTabAction->setParameters({{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
+			WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
 
-			menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, windowItem->getActiveWindow()->getMainWindow()));
-			menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, windowItem->getActiveWindow()->getMainWindow()));
-			menu.addSeparator();
-			menu.addAction(closeTabAction);
+			if (windowItem)
+			{
+				Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
+				closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
+				closeTabAction->setParameters({{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
 
-			connect(closeTabAction, SIGNAL(triggered()), windowItem->getActiveWindow()->getMainWindow(), SLOT(triggerAction()));
+				menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, windowItem->getActiveWindow()->getMainWindow()));
+				menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, windowItem->getActiveWindow()->getMainWindow()));
+				menu.addSeparator();
+				menu.addAction(closeTabAction);
+
+				connect(closeTabAction, SIGNAL(triggered()), windowItem->getActiveWindow()->getMainWindow(), SLOT(triggerAction()));
+			}
 		}
 	}
 
