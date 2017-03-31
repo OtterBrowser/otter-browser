@@ -155,7 +155,7 @@ void ConsoleWidget::addMessage(const Console::Message &message)
 	}
 
 	const QString source(message.source + ((message.line > 0) ? QStringLiteral(":%1").arg(message.line) : QString()));
-	QString entry(QStringLiteral("[%1] %2").arg(message.time.toString()).arg(category));
+	QString entry(QStringLiteral("[%1] %2").arg(message.time.toString(QLatin1String("yyyy-dd-MM hh:mm:ss"))).arg(category));
 
 	if (!message.source.isEmpty())
 	{
