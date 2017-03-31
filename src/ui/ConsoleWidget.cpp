@@ -162,21 +162,24 @@ void ConsoleWidget::addMessage(const Console::Message &message)
 		entry.append(QStringLiteral(" - %1").arg(source));
 	}
 
-	QStandardItem *item(new QStandardItem(icon, entry));
-	item->setData(message.time.toTime_t(), TimeRole);
-	item->setData(message.category, CategoryRole);
-	item->setData(source, SourceRole);
-	item->setData(message.window, WindowRole);
+	QStandardItem *messageItem(new QStandardItem(icon, entry));
+	messageItem->setData(message.time.toTime_t(), TimeRole);
+	messageItem->setData(message.category, CategoryRole);
+	messageItem->setData(source, SourceRole);
+	messageItem->setData(message.window, WindowRole);
 
 	if (!message.note.isEmpty())
 	{
-		item->appendRow(new QStandardItem(message.note));
+		QStandardItem *descriptionItem(new QStandardItem(message.note));
+		descriptionItem->setFlags(descriptionItem->flags() | Qt::ItemNeverHasChildren);
+
+		messageItem->appendRow(descriptionItem);
 	}
 
-	m_model->appendRow(item);
+	m_model->appendRow(messageItem);
 	m_model->sort(0, Qt::DescendingOrder);
 
-	applyFilters(item, m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
+	applyFilters(messageItem, m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
 }
 
 void ConsoleWidget::clear()
