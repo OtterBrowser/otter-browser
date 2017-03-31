@@ -168,6 +168,7 @@ QVariant MainWindowSessionItem::data(int role) const
 WindowSessionItem::WindowSessionItem(Window *window) : SessionItem(),
 	m_window(window)
 {
+	setFlags(flags() | Qt::ItemNeverHasChildren);
 }
 
 Window* WindowSessionItem::getActiveWindow() const
