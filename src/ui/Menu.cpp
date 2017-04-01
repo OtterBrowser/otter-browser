@@ -281,11 +281,13 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 void Menu::load(const QString &path, const QStringList &options)
 {
 	QFile file(SessionsManager::getReadableDataPath(path));
-	file.open(QIODevice::ReadOnly);
 
-	load(QJsonDocument::fromJson(file.readAll()).object(), options);
+	if (file.open(QIODevice::ReadOnly))
+	{
+		load(QJsonDocument::fromJson(file.readAll()).object(), options);
 
-	file.close();
+		file.close();
+	}
 }
 
 void Menu::load(const QJsonObject &definition, const QStringList &options)
