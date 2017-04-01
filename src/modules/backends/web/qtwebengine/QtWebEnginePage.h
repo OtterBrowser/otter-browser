@@ -60,7 +60,7 @@ private:
 	QtWebEngineWebWidget *m_widget;
 	QVector<QtWebEnginePage*> m_popups;
 	QWebEnginePage::NavigationType m_previousNavigationType;
-	bool m_ignoreJavaScriptPopups;
+	bool m_isIgnoringJavaScriptPopups;
 	bool m_isViewingMedia;
 	bool m_isPopup;
 

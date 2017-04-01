@@ -188,7 +188,7 @@ bool QtWebKitFrame::isErrorPage() const
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_networkManager(networkManager),
-	m_ignoreJavaScriptPopups(false),
+	m_isIgnoringJavaScriptPopups(false),
 	m_isPopup(false),
 	m_isViewingMedia(false)
 {
@@ -209,7 +209,7 @@ QtWebKitPage::QtWebKitPage() : QWebPage(),
 	m_widget(nullptr),
 	m_networkManager(nullptr),
 	m_mainFrame(nullptr),
-	m_ignoreJavaScriptPopups(false),
+	m_isIgnoringJavaScriptPopups(false),
 	m_isPopup(false),
 	m_isViewingMedia(false)
 {
@@ -219,7 +219,7 @@ QtWebKitPage::QtWebKitPage(const QUrl &url) : QWebPage(),
 	m_widget(nullptr),
 	m_networkManager(new QtWebKitNetworkManager(true, nullptr, nullptr)),
 	m_mainFrame(nullptr),
-	m_ignoreJavaScriptPopups(true),
+	m_isIgnoringJavaScriptPopups(true),
 	m_isPopup(false),
 	m_isViewingMedia(false)
 {
@@ -277,7 +277,7 @@ void QtWebKitPage::handleOptionChanged(int identifier)
 
 void QtWebKitPage::handleLoadFinished()
 {
-	m_ignoreJavaScriptPopups = false;
+	m_isIgnoringJavaScriptPopups = false;
 
 	updateStyleSheets();
 }
@@ -397,7 +397,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 
 void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 {
-	if (m_ignoreJavaScriptPopups)
+	if (m_isIgnoringJavaScriptPopups)
 	{
 		return;
 	}
@@ -420,7 +420,7 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 
 	if (dialog.getCheckBoxState())
 	{
-		m_ignoreJavaScriptPopups = true;
+		m_isIgnoringJavaScriptPopups = true;
 	}
 }
 
@@ -618,7 +618,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 {
-	if (m_ignoreJavaScriptPopups)
+	if (m_isIgnoringJavaScriptPopups)
 	{
 		return false;
 	}
@@ -639,7 +639,7 @@ bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 
 	if (dialog.getCheckBoxState())
 	{
-		m_ignoreJavaScriptPopups = true;
+		m_isIgnoringJavaScriptPopups = true;
 	}
 
 	return dialog.isAccepted();
@@ -647,7 +647,7 @@ bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 
 bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result)
 {
-	if (m_ignoreJavaScriptPopups)
+	if (m_isIgnoringJavaScriptPopups)
 	{
 		return false;
 	}
@@ -684,7 +684,7 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 
 	if (dialog.getCheckBoxState())
 	{
-		m_ignoreJavaScriptPopups = true;
+		m_isIgnoringJavaScriptPopups = true;
 	}
 
 	return dialog.isAccepted();

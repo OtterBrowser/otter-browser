@@ -44,7 +44,7 @@ namespace Otter
 QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) : QWebEnginePage((isPrivate ? new QWebEngineProfile(parent) : QWebEngineProfile::defaultProfile()), parent),
 	m_widget(parent),
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
-	m_ignoreJavaScriptPopups(false),
+	m_isIgnoringJavaScriptPopups(false),
 	m_isViewingMedia(false),
 	m_isPopup(false)
 {
@@ -58,7 +58,7 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 
 void QtWebEnginePage::pageLoadFinished()
 {
-	m_ignoreJavaScriptPopups = false;
+	m_isIgnoringJavaScriptPopups = false;
 
 	toHtml([&](const QString &result)
 	{
@@ -165,7 +165,7 @@ void QtWebEnginePage::markAsPopup()
 
 void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 {
-	if (m_ignoreJavaScriptPopups)
+	if (m_isIgnoringJavaScriptPopups)
 	{
 		return;
 	}
@@ -188,7 +188,7 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 
 	if (dialog.getCheckBoxState())
 	{
-		m_ignoreJavaScriptPopups = true;
+		m_isIgnoringJavaScriptPopups = true;
 	}
 }
 
@@ -378,7 +378,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 
 bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 {
-	if (m_ignoreJavaScriptPopups)
+	if (m_isIgnoringJavaScriptPopups)
 	{
 		return false;
 	}
@@ -399,7 +399,7 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 
 	if (dialog.getCheckBoxState())
 	{
-		m_ignoreJavaScriptPopups = true;
+		m_isIgnoringJavaScriptPopups = true;
 	}
 
 	return dialog.isAccepted();
@@ -407,7 +407,7 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 
 bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result)
 {
-	if (m_ignoreJavaScriptPopups)
+	if (m_isIgnoringJavaScriptPopups)
 	{
 		return false;
 	}
@@ -444,7 +444,7 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 
 	if (dialog.getCheckBoxState())
 	{
-		m_ignoreJavaScriptPopups = true;
+		m_isIgnoringJavaScriptPopups = true;
 	}
 
 	return dialog.isAccepted();
