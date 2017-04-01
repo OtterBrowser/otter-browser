@@ -224,16 +224,20 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 {
 	const QModelIndex index(m_ui->configurationViewWidget->indexAt(position));
+	QMenu menu(this);
 
 	if (index.isValid() && index.parent() != m_ui->configurationViewWidget->rootIndex())
 	{
-		QMenu menu(this);
 		menu.addAction(tr("Copy Option Name"), this, SLOT(copyOptionName()));
 		menu.addAction(tr("Copy Option Value"), this, SLOT(copyOptionValue()));
 		menu.addSeparator();
 		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.sibling(index.row(), 2).data(Qt::UserRole).toString())).defaultValue);
-		menu.exec(m_ui->configurationViewWidget->mapToGlobal(position));
+		menu.addSeparator();
 	}
+
+	menu.addAction(tr("Expand All"), m_ui->configurationViewWidget, SLOT(expandAll()));
+	menu.addAction(tr("Collapse All"), m_ui->configurationViewWidget, SLOT(collapseAll()));
+	menu.exec(m_ui->configurationViewWidget->mapToGlobal(position));
 }
 
 QString ConfigurationContentsWidget::getTitle() const
