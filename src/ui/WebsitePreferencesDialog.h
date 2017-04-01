@@ -57,7 +57,7 @@ protected slots:
 	void cookieProperties();
 	void updateCookiesActions();
 	void updateContentBlockingProfile(const QString &name);
-	void updateValues(bool checked = false);
+	void updateValues(bool isChecked = false);
 	void valueChanged();
 
 private:

@@ -360,12 +360,12 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 	}
 }
 
-void WebsitePreferencesDialog::updateValues(bool checked)
+void WebsitePreferencesDialog::updateValues(bool isChecked)
 {
 	QUrl url;
 	url.setHost(m_ui->websiteLineEdit->text());
 
-	if (checked)
+	if (isChecked)
 	{
 		return;
 	}

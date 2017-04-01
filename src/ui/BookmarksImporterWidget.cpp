@@ -47,9 +47,9 @@ BookmarksImporterWidget::~BookmarksImporterWidget()
 	delete m_ui;
 }
 
-void BookmarksImporterWidget::removeStateChanged(bool checked)
+void BookmarksImporterWidget::removeStateChanged(bool isChecked)
 {
-	if (checked)
+	if (isChecked)
 	{
 		m_ui->removeDependentStackedWidget->setCurrentWidget(m_ui->noRemovePage);
 	}
@@ -59,9 +59,9 @@ void BookmarksImporterWidget::removeStateChanged(bool checked)
 	}
 }
 
-void BookmarksImporterWidget::toSubfolderChanged(bool checked)
+void BookmarksImporterWidget::toSubfolderChanged(bool isChecked)
 {
-	m_ui->subfolderNameLineEdit->setEnabled(checked);
+	m_ui->subfolderNameLineEdit->setEnabled(isChecked);
 }
 
 BookmarksItem* BookmarksImporterWidget::getTargetFolder() const

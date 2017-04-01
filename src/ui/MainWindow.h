@@ -85,7 +85,7 @@ protected:
 
 protected slots:
 	void triggerAction();
-	void triggerAction(bool checked);
+	void triggerAction(bool isChecked);
 	void saveToolBarPositions();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleToolBarAdded(int identifier);

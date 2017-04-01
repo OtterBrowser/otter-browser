@@ -65,7 +65,7 @@ public:
 	explicit QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
 	~QtWebKitPage();
 
-	void triggerAction(WebAction action, bool checked = false) override;
+	void triggerAction(WebAction action, bool isChecked = false) override;
 	QtWebKitFrame* getMainFrame();
 	QVariant runScript(const QString &path, QWebElement element = QWebElement());
 	bool event(QEvent *event) override;

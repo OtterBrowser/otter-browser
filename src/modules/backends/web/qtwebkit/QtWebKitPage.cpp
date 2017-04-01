@@ -431,7 +431,7 @@ void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const
 }
 #endif
 
-void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
+void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool isChecked)
 {
 	if (action == InspectElement && m_widget && !m_widget->isInspecting())
 	{
@@ -440,7 +440,7 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 		m_widget->triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}});
 	}
 
-	QWebPage::triggerAction(action, checked);
+	QWebPage::triggerAction(action, isChecked);
 }
 
 QtWebKitFrame* QtWebKitPage::getMainFrame()

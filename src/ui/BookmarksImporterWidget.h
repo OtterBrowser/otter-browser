@@ -48,8 +48,8 @@ public:
 	bool hasToRemoveExisting() const;
 
 protected slots:
-	void removeStateChanged(bool checked);
-	void toSubfolderChanged(bool checked);
+	void removeStateChanged(bool isChecked);
+	void toSubfolderChanged(bool isChecked);
 
 private:
 	Ui::BookmarksImporterWidget *m_ui;

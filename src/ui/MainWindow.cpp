@@ -808,10 +808,8 @@ void MainWindow::triggerAction()
 	}
 }
 
-void MainWindow::triggerAction(bool checked)
+void MainWindow::triggerAction(bool isChecked)
 {
-	Q_UNUSED(checked)
-
 	Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
@@ -820,7 +818,7 @@ void MainWindow::triggerAction(bool checked)
 
 		if (action->isCheckable())
 		{
-			parameters[QLatin1String("isChecked")] = action->isChecked();
+			parameters[QLatin1String("isChecked")] = isChecked;
 		}
 
 		triggerAction(action->getIdentifier(), parameters);

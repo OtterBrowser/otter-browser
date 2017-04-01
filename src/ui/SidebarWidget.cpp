@@ -162,7 +162,7 @@ void SidebarWidget::addWebPanel()
 	}
 }
 
-void SidebarWidget::choosePanel(bool checked)
+void SidebarWidget::choosePanel(bool isChecked)
 {
 	QAction *action(qobject_cast<QAction*>(sender()));
 
@@ -173,7 +173,7 @@ void SidebarWidget::choosePanel(bool checked)
 
 	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
 
-	if (checked)
+	if (isChecked)
 	{
 		definition.panels.append(action->data().toString());
 	}
