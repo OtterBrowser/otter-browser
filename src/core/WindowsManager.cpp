@@ -100,9 +100,9 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::CloseTabAction:
-			if (window)
+			if (window && !window->isPinned())
 			{
-				close(getWindowIndex(window->getIdentifier()));
+				window->close();
 			}
 
 			break;
