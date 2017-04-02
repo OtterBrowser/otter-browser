@@ -193,9 +193,9 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
-				if (hints.testFlag(SessionsManager::CurrentTabOpen))
+				if (hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow)
 				{
-					if (activeWindow && activeWindow->getType() == QLatin1String("web") && activeWindow->getWebWidget() && !parameters.contains(QLatin1String("webBackend")))
+					if (activeWindow->getType() == QLatin1String("web") && activeWindow->getWebWidget() && !parameters.contains(QLatin1String("webBackend")))
 					{
 						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
 					}
