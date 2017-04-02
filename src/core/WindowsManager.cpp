@@ -966,7 +966,7 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, SessionsManager::Open
 
 		if (mainWindow)
 		{
-			window = mainWindow->getWindowsManager()->openWindow(widget, (hints.testFlag(SessionsManager::PrivateOpen) ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen));
+			window = mainWindow->getWindowsManager()->openWindow(widget);
 
 			mainWindow->getWindowsManager()->closeOther();
 		}
