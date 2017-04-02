@@ -942,12 +942,7 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, SessionsManager::Open
 
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
-		MainWindow *mainWindow(Application::createWindow({{QLatin1String("hints"), QVariant(hints)}}));
-
-		if (mainWindow)
-		{
-			window = mainWindow->getWindowsManager()->openWindow(widget);
-		}
+		window = Application::createWindow({{QLatin1String("hints"), QVariant(hints)}})->getWindowsManager()->openWindow(widget);
 	}
 	else
 	{
