@@ -1047,14 +1047,15 @@ int WindowsManager::getWindowCount(bool onlyPrivate) const
 {
 	if (!onlyPrivate || m_mainWindow->isPrivate())
 	{
-		return m_mainWindow->getTabBar()->count();
+		return m_windows.count();
 	}
 
+	QHash<quint64, Window*>::const_iterator iterator;
 	int amount(0);
 
-	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+	for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 	{
-		if (getWindowByIndex(i)->isPrivate())
+		if (iterator.value()->isPrivate())
 		{
 			++amount;
 		}
