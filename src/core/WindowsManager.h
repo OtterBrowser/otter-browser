@@ -75,7 +75,6 @@ public slots:
 
 protected:
 	void close(int index);
-	void closeOther(int index = -1);
 	void closeAll();
 	bool event(QEvent *event) override;
 

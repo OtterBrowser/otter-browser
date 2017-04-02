@@ -107,13 +107,16 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::CloseOtherTabsAction:
-			if (window)
+			if (window && !window->isPinned())
 			{
-				const int index(getWindowIndex(window->getIdentifier()));
-
-				if (index >= 0)
+				for (int i = (getWindowCount() - 1); i >= 0; --i)
 				{
-					closeOther(index);
+					Window *iteratedWindow(getWindowByIndex(i));
+
+					if (window != iteratedWindow)
+					{
+						iteratedWindow->close();
+					}
 				}
 			}
 
@@ -446,29 +449,6 @@ void WindowsManager::close(int index)
 	if (window && !window->isPinned())
 	{
 		window->close();
-	}
-}
-
-void WindowsManager::closeOther(int index)
-{
-	if (index < 0)
-	{
-		index = getCurrentWindowIndex();
-	}
-
-	if (index < 0 || index >= getWindowCount())
-	{
-		return;
-	}
-
-	for (int i = (getWindowCount() - 1); i > index; --i)
-	{
-		close(i);
-	}
-
-	for (int i = (index - 1); i >= 0; --i)
-	{
-		close(i);
 	}
 }
 
@@ -967,8 +947,6 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, SessionsManager::Open
 		if (mainWindow)
 		{
 			window = mainWindow->getWindowsManager()->openWindow(widget);
-
-			mainWindow->getWindowsManager()->closeOther();
 		}
 	}
 	else
