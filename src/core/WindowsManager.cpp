@@ -126,9 +126,11 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			for (int i = (getWindowCount() - 1); i > 0; --i)
 			{
-				if (getWindowByIndex(i)->isPrivate())
+				Window *window(getWindowByIndex(i));
+
+				if (window && window->isPrivate())
 				{
-					close(i);
+					window->close();
 				}
 			}
 
