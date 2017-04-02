@@ -74,7 +74,6 @@ public slots:
 	void setOption(int identifier, const QVariant &value);
 
 protected:
-	void close(int index);
 	void closeAll();
 	bool event(QEvent *event) override;
 

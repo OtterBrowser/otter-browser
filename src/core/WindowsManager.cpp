@@ -200,7 +200,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
 					}
 
-					close(getCurrentWindowIndex());
+					activeWindow->close();
 				}
 
 				Window *window(new Window(mutableParameters, nullptr, m_mainWindow));
@@ -439,26 +439,16 @@ void WindowsManager::search(const QString &query, const QString &searchEngine, S
 	}
 }
 
-void WindowsManager::close(int index)
-{
-	if (index < 0 || index >= getWindowCount())
-	{
-		return;
-	}
-
-	Window *window(getWindowByIndex(index));
-
-	if (window && !window->isPinned())
-	{
-		window->close();
-	}
-}
-
 void WindowsManager::closeAll()
 {
 	for (int i = (getWindowCount() - 1); i >= 0; --i)
 	{
-		close(i);
+		Window *window(getWindowByIndex(i));
+
+		if (window && !window->isPinned())
+		{
+			window->close();
+		}
 	}
 }
 
