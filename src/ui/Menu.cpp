@@ -31,6 +31,7 @@
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
+#include "../core/SessionModel.h"
 #include "../core/SessionsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/ToolBarsManager.h"
@@ -1148,30 +1149,28 @@ void Menu::populateWindowsMenu()
 
 	clear();
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
 
-	if (!mainWindow)
+	if (mainWindowItem)
 	{
-		return;
-	}
-
-	for (int i = 0; i < mainWindow->getWindowCount(); ++i)
-	{
-		Window *window(mainWindow->getWindowByIndex(i));
-
-		if (window)
+		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
-			Action *action(addAction());
-			action->setData(window->getIdentifier());
-			action->setIcon(window->getIcon());
+			WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
-			if (window->getTitle().isEmpty())
+			if (windowItem)
 			{
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
-			}
-			else
-			{
-				action->setText(Utils::elideText(window->getTitle()));
+				Action *action(addAction());
+				action->setData(windowItem->getActiveWindow()->getIdentifier());
+				action->setIcon(windowItem->getActiveWindow()->getIcon());
+
+				if (windowItem->getActiveWindow()->getTitle().isEmpty())
+				{
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
+				}
+				else
+				{
+					action->setText(Utils::elideText(windowItem->getActiveWindow()->getTitle()));
+				}
 			}
 		}
 	}

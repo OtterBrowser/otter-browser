@@ -272,14 +272,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		SessionsManager::storeClosedWindow(this);
 	}
 
-	for (int i = (getWindowCount() - 1); i >= 0; --i)
-	{
-		Window *window(getWindowByIndex(i));
+	QHash<quint64, Window*>::const_iterator iterator;
 
-		if (window)
-		{
-			window->close();
-		}
+	for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+	{
+		iterator.value()->close();
 	}
 
 	Application::removeWindow(this);
@@ -553,19 +550,21 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ClosePrivateTabsAction:
-			getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
-
-			for (int i = (getWindowCount() - 1); i > 0; --i)
 			{
-				Window *window(getWindowByIndex(i));
+				getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
 
-				if (window && window->isPrivate())
+				QHash<quint64, Window*>::const_iterator iterator;
+
+				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					window->close();
+					if (iterator.value()->isPrivate())
+					{
+						iterator.value()->close();
+					}
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::OpenUrlAction:
 			{
 				const QUrl url((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
@@ -647,25 +646,23 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::StopAllAction:
-			for (int i = 0; i < getWindowCount(); ++i)
 			{
-				Window *window(getWindowByIndex(i));
+				QHash<quint64, Window*>::const_iterator iterator;
 
-				if (window)
+				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					window->triggerAction(ActionsManager::StopAction);
+					iterator.value()->triggerAction(ActionsManager::StopAction);
 				}
 			}
 
 			break;
 		case ActionsManager::ReloadAllAction:
-			for (int i = 0; i < getWindowCount(); ++i)
 			{
-				Window *window(getWindowByIndex(i));
+				QHash<quint64, Window*>::const_iterator iterator;
 
-				if (window)
+				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					window->triggerAction(ActionsManager::ReloadAction);
+					iterator.value()->triggerAction(ActionsManager::ReloadAction);
 				}
 			}
 
@@ -673,16 +670,15 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ActivatePreviouslyUsedTabAction:
 		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
 			{
+				QHash<quint64, Window*>::const_iterator iterator;
 				QMultiMap<qint64, quint64> map;
 				const bool includeMinimized(parameters.contains(QLatin1String("includeMinimized")));
 
-				for (int i = 0; i < getWindowCount(); ++i)
+				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					Window *window(getWindowByIndex(i));
-
-					if (window && (includeMinimized || !window->isMinimized()))
+					if (includeMinimized || !iterator.value()->isMinimized())
 					{
-						map.insert(window->getLastActivity().toMSecsSinceEpoch(), window->getIdentifier());
+						map.insert(iterator.value()->getLastActivity().toMSecsSinceEpoch(), iterator.value()->getIdentifier());
 					}
 				}
 
@@ -1081,15 +1077,15 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::CloseOtherTabsAction:
-			if (window && !window->isPinned())
+			if (window)
 			{
-				for (int i = (getWindowCount() - 1); i >= 0; --i)
-				{
-					Window *iteratedWindow(getWindowByIndex(i));
+				QHash<quint64, Window*>::const_iterator iterator;
 
-					if (window != iteratedWindow)
+				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+				{
+					if (iterator.value() != window && !iterator.value()->isPinned())
 					{
-						iteratedWindow->close();
+						iterator.value()->close();
 					}
 				}
 			}

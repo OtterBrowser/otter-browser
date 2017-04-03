@@ -286,7 +286,7 @@ SessionItem* SessionModel::getTrashItem() const
 	return m_trashItem;
 }
 
-SessionItem* SessionModel::getMainWindowItem(MainWindow *mainWindow) const
+MainWindowSessionItem* SessionModel::getMainWindowItem(MainWindow *mainWindow) const
 {
 	return m_mainWindowItems.value(mainWindow, nullptr);
 }

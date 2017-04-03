@@ -19,6 +19,8 @@
 
 #include "BookmarksContentsWidget.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/SessionModel.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
@@ -264,17 +266,17 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			{
-				MainWindow *mainWindow(MainWindow::findMainWindow(this));
+				MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
 
-				if (mainWindow)
+				if (mainWindowItem)
 				{
-					for (int i = 0; i < mainWindow->getWindowCount(); ++i)
+					for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 					{
-						Window *window(mainWindow->getWindowByIndex(i));
+						WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
-						if (window && !Utils::isUrlEmpty(window->getUrl()))
+						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
 						{
-							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, window->getUrl(), window->getTitle(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
+							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, windowItem->getActiveWindow()->getUrl(), windowItem->getActiveWindow()->getTitle(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
 						}
 					}
 				}

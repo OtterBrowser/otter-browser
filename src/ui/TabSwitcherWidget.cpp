@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
+#include "../core/SessionModel.h"
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QKeyEvent>
@@ -75,13 +76,18 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 {
 	grabKeyboard();
 
-	for (int i = 0; i < m_mainWindow->getWindowCount(); ++i)
-	{
-		Window *window(m_mainWindow->getWindowByIndex(i));
+	MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(m_mainWindow));
 
-		if (window)
+	if (mainWindowItem)
+	{
+		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
-			m_model->appendRow(createRow(window));
+			WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+
+			if (windowItem)
+			{
+				m_model->appendRow(createRow(windowItem->getActiveWindow()));
+			}
 		}
 	}
 
