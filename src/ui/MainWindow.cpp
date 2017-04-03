@@ -767,7 +767,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 							if (index < 0)
 							{
-								index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : getWindowCount());
+								index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (getWindowCount() - 1));
 							}
 
 							mutableParameters[QLatin1String("url")] = urls.at(0);
@@ -1395,7 +1395,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	if (index < 0)
 	{
-		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : getWindowCount());
+		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (getWindowCount() - 1));
 	}
 
 	if (!window->isPinned())
