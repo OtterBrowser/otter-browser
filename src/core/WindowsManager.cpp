@@ -1010,24 +1010,6 @@ QVector<ClosedWindow> WindowsManager::getClosedWindows() const
 	return m_closedWindows;
 }
 
-QVector<quint64> WindowsManager::getWindows() const
-{
-	QVector<quint64> windows;
-	windows.reserve(getWindowCount());
-
-	for (int i = 0; i < getWindowCount(); ++i)
-	{
-		Window *window(getWindowByIndex(i));
-
-		if (window)
-		{
-			windows.append(window->getIdentifier());
-		}
-	}
-
-	return windows;
-}
-
 int WindowsManager::getCurrentWindowIndex() const
 {
 	return m_mainWindow->getTabBar()->currentIndex();

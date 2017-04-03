@@ -57,7 +57,6 @@ public:
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
 	QVector<ClosedWindow> getClosedWindows() const;
-	QVector<quint64> getWindows() const;
 	int getCurrentWindowIndex() const;
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;

@@ -20,6 +20,7 @@
 #include "SessionModel.h"
 #include "ThemesManager.h"
 #include "../ui/MainWindow.h"
+#include "../ui/TabBarWidget.h"
 #include "../ui/Window.h"
 
 namespace Otter
@@ -80,11 +81,9 @@ QVariant SessionItem::data(int role) const
 MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionItem(),
 	m_mainWindow(mainWindow)
 {
-	const QVector<quint64> windows(mainWindow->getWindowsManager()->getWindows());
-
-	for (int i = 0; i < windows.count(); ++i)
+	for (int i = 0; i < mainWindow->getTabBar()->count(); ++i)
 	{
-		handleWindowAdded(windows.at(i));
+		handleWindowAdded(mainWindow->getTabBar()->getWindow(i)->getIdentifier());
 	}
 
 	connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
