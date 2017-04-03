@@ -84,7 +84,12 @@ MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionIt
 {
 	for (int i = 0; i < mainWindow->getTabBar()->count(); ++i)
 	{
-		handleWindowAdded(mainWindow->getTabBar()->getWindow(i)->getIdentifier());
+		Window *window(mainWindow->getTabBar()->getWindow(i));
+
+		if (window)
+		{
+			handleWindowAdded(window->getIdentifier());
+		}
 	}
 
 	connect(mainWindow, SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
