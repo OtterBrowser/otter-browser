@@ -22,6 +22,7 @@
 #include "ImportDialog.h"
 #include "MainWindow.h"
 #include "Window.h"
+#include "WorkspaceWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/Console.h"
@@ -408,11 +409,26 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 				if (identifier >= 0)
 				{
-					MainWindow *mainWindow(MainWindow::findMainWindow(this));
+					QAction *action(nullptr);
 
-					if (mainWindow && Action::isLocal(identifier) && mainWindow->getWindowsManager()->getAction(identifier))
+					if (Action::isLocal(identifier))
 					{
-						QMenu::addAction(mainWindow->getWindowsManager()->getAction(identifier));
+						MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+						if (mainWindow)
+						{
+							Window *window(mainWindow->getWorkspace()->getActiveWindow());
+
+							if (window)
+							{
+								action = window->getContentsWidget()->getAction(identifier);
+							}
+						}
+					}
+
+					if (action)
+					{
+						QMenu::addAction(action);
 					}
 					else
 					{

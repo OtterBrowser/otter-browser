@@ -911,13 +911,6 @@ void WindowsManager::setStatusMessage(const QString &message)
 	QApplication::sendEvent(m_mainWindow, &event);
 }
 
-Action* WindowsManager::getAction(int identifier)
-{
-	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
-
-	return (window ? window->getContentsWidget()->getAction(identifier) : nullptr);
-}
-
 Window* WindowsManager::openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints, int index)
 {
 	if (!widget)
