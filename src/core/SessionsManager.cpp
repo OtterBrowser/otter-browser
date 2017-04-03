@@ -23,7 +23,6 @@
 #include "Application.h"
 #include "JsonSettings.h"
 #include "SessionModel.h"
-#include "WindowsManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QDir>
@@ -100,7 +99,7 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 		return;
 	}
 
-	SessionMainWindow session(window->getWindowsManager()->getSession());
+	SessionMainWindow session(window->getSession());
 	session.geometry = window->saveGeometry();
 
 	if (!session.windows.isEmpty())
@@ -454,7 +453,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	{
 		if (window && i == 0)
 		{
-			window->getWindowsManager()->restore(session.windows.first());
+			window->restore(session.windows.first());
 		}
 		else
 		{
@@ -490,7 +489,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		session.windows.append(windows.at(i)->getWindowsManager()->getSession());
+		session.windows.append(windows.at(i)->getSession());
 	}
 
 	return saveSession(session);
@@ -652,7 +651,7 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		if (windows.at(i)->getWindowsManager()->hasUrl(url, activate))
+		if (windows.at(i)->hasUrl(url, activate))
 		{
 			QWidget *window(qobject_cast<QWidget*>(windows.at(i)->parent()));
 

@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "TabSwitcherWidget.h"
+#include "MainWindow.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/ThemesManager.h"
-#include "../core/WindowsManager.h"
 
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMovie>
@@ -31,8 +31,8 @@
 namespace Otter
 {
 
-TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) : QWidget(parent),
-	m_windowsManager(manager),
+TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
+	m_mainWindow(parent),
 	m_model(new QStandardItemModel(this)),
 	m_frame(new QFrame(this)),
 	m_tabsView(new ItemViewWidget(m_frame)),
@@ -75,9 +75,9 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 {
 	grabKeyboard();
 
-	for (int i = 0; i < m_windowsManager->getWindowCount(); ++i)
+	for (int i = 0; i < m_mainWindow->getWindowCount(); ++i)
 	{
-		Window *window(m_windowsManager->getWindowByIndex(i));
+		Window *window(m_mainWindow->getWindowByIndex(i));
 
 		if (window)
 		{
@@ -95,8 +95,8 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	QWidget::showEvent(event);
 
-	connect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
-	connect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
+	connect(m_mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
+	connect(m_mainWindow, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
 }
 
 void TabSwitcherWidget::hideEvent(QHideEvent *event)
@@ -105,8 +105,8 @@ void TabSwitcherWidget::hideEvent(QHideEvent *event)
 
 	QWidget::hideEvent(event);
 
-	disconnect(m_windowsManager, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
-	disconnect(m_windowsManager, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
+	disconnect(m_mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
+	disconnect(m_mainWindow, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
 
 	m_model->clear();
 }
@@ -143,7 +143,7 @@ void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 {
-	Window *window(m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toULongLong()));
+	Window *window(m_mainWindow->getWindowByIdentifier(index.data(Qt::UserRole).toULongLong()));
 
 	m_previewLabel->setMovie(nullptr);
 	m_previewLabel->setPixmap(QPixmap());
@@ -173,7 +173,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 
 void TabSwitcherWidget::handleWindowAdded(quint64 identifier)
 {
-	Window *window(m_windowsManager->getWindowByIdentifier(identifier));
+	Window *window(m_mainWindow->getWindowByIdentifier(identifier));
 
 	if (window)
 	{
@@ -200,7 +200,7 @@ void TabSwitcherWidget::show(SwitcherReason reason)
 
 void TabSwitcherWidget::accept()
 {
-	m_windowsManager->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(Qt::UserRole).toULongLong());
+	m_mainWindow->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(Qt::UserRole).toULongLong());
 
 	hide();
 }

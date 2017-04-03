@@ -29,7 +29,6 @@
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/ThemesManager.h"
-#include "../core/WindowsManager.h"
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
 
 #include <QtCore/QTimer>
@@ -212,7 +211,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	if (m_mainWindow && m_identifier != ToolBarsManager::NavigationBar && m_identifier != ToolBarsManager::ProgressBar)
 	{
-		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyWindowChanged(quint64)));
+		connect(m_mainWindow, SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyWindowChanged(quint64)));
 	}
 }
 
@@ -588,7 +587,7 @@ void ToolBarWidget::toggleVisibility()
 
 void ToolBarWidget::notifyWindowChanged(quint64 identifier)
 {
-	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
+	m_window = m_mainWindow->getWindowByIdentifier(identifier);
 
 	emit windowChanged(m_window);
 }

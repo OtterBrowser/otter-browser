@@ -38,6 +38,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionFrame>
 #include <QtWidgets/QToolTip>
@@ -1095,9 +1096,9 @@ void AddressWidget::setWindow(Window *window)
 	{
 		if (mainWindow)
 		{
-			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,SessionsManager::OpenHints)));
-			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
-			disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,SessionsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow, SLOT(open(QUrl,SessionsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), mainWindow, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 		}
 
 		window->attachAddressWidget(this);
@@ -1119,9 +1120,9 @@ void AddressWidget::setWindow(Window *window)
 	}
 	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
 	{
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,SessionsManager::OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
-		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,SessionsManager::OpenHints)));
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow, SLOT(open(QUrl,SessionsManager::OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), mainWindow, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 	}
 
 	setIcon(window ? window->getIcon() : QIcon());

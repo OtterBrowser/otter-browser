@@ -27,7 +27,6 @@
 #include "../core/AddonsManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/ThemesManager.h"
-#include "../core/WindowsManager.h"
 #include "../modules/widgets/action/ActionWidget.h"
 #include "../modules/widgets/panelChooser/PanelChooserWidget.h"
 
@@ -148,7 +147,7 @@ void SidebarWidget::addWebPanel()
 
 	if (mainWindow)
 	{
-		url = mainWindow->getWindowsManager()->getUrl().toString(QUrl::RemovePassword);
+		url = mainWindow->getUrl().toString(QUrl::RemovePassword);
 	}
 
 	url = QInputDialog::getText(this, tr("Add web panel"), tr("Input address of web page to be shown in panel:"), QLineEdit::Normal, url);
@@ -207,9 +206,9 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (widget && mainWindow)
 	{
-		connect(widget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,SessionsManager::OpenHints)));
-		connect(widget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,SessionsManager::OpenHints)));
-		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow, SLOT(open(QUrl,SessionsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), mainWindow, SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])

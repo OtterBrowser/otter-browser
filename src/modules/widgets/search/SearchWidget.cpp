@@ -30,6 +30,7 @@
 
 #include <QtGui/QClipboard>
 #include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolTip>
 
@@ -752,7 +753,7 @@ void SearchWidget::setWindow(Window *window)
 	{
 		if (mainWindow)
 		{
-			disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,SessionsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 		}
 
 		window->attachSearchWidget(this);
@@ -776,7 +777,7 @@ void SearchWidget::setWindow(Window *window)
 	{
 		if (mainWindow && !mainWindow->isAboutToClose())
 		{
-			connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,SessionsManager::OpenHints)));
+			connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 		}
 
 		setSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());

@@ -134,7 +134,6 @@ set(otter_src
 	src/core/UserScript.cpp
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
-	src/core/WindowsManager.cpp
 	src/ui/AcceptCookieDialog.cpp
 	src/ui/ActionComboBoxWidget.cpp
 	src/ui/ApplicationComboBoxWidget.cpp

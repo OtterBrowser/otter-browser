@@ -24,6 +24,7 @@
 #include "OpenAddressDialog.h"
 #include "ToolBarWidget.h"
 #include "WorkspaceWidget.h"
+#include "../core/Application.h"
 #include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"

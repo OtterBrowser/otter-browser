@@ -26,6 +26,7 @@
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
+#include "../core/Application.h"
 #include "../core/GesturesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
@@ -826,7 +827,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 		if (mainWindow)
 		{
-			Window *window(mainWindow->getWindowsManager()->getWindowByIdentifier(m_draggedWindow));
+			Window *window(mainWindow->getWindowByIdentifier(m_draggedWindow));
 
 			if (window)
 			{
@@ -965,11 +966,11 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 				{
 					if (mainWindows.at(i))
 					{
-						Window *window(mainWindows.at(i)->getWindowsManager()->getWindowByIdentifier(windowIdentifier));
+						Window *window(mainWindows.at(i)->getWindowByIdentifier(windowIdentifier));
 
 						if (window)
 						{
-							mainWindows.at(i)->getWindowsManager()->moveWindow(window, mainWindow, dropIndex);
+							mainWindows.at(i)->moveWindow(window, mainWindow, dropIndex);
 
 							break;
 						}

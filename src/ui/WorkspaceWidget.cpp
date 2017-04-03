@@ -23,7 +23,6 @@
 #include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/WindowsManager.h"
 
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMenu>
@@ -169,7 +168,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 
 			if (mainWindow)
 			{
-				mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
+				mainWindow->setActiveWindowByIndex(-1);
 			}
 			else
 			{
@@ -306,7 +305,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 	if (parameters.contains(QLatin1String("window")))
 	{
-		Window *window(m_mainWindow->getWindowsManager()->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()));
+		Window *window(m_mainWindow->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()));
 
 		if (window)
 		{
@@ -352,7 +351,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				if (activeSubWindows == 1)
 				{
-					m_mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
+					m_mainWindow->setActiveWindowByIndex(-1);
 				}
 				else if (wasActive && activeSubWindows > 1)
 				{
@@ -430,7 +429,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
-				m_mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
+				m_mainWindow->setActiveWindowByIndex(-1);
 			}
 
 			break;
@@ -588,7 +587,7 @@ void WorkspaceWidget::handleActiveSubWindowChanged(QMdiSubWindow *subWindow)
 
 		if (window)
 		{
-			m_mainWindow->getWindowsManager()->setActiveWindowByIdentifier(window->getIdentifier());
+			m_mainWindow->setActiveWindowByIdentifier(window->getIdentifier());
 		}
 	}
 	else

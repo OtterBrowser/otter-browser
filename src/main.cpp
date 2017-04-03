@@ -21,7 +21,6 @@
 #include "core/Application.h"
 #include "core/SessionsManager.h"
 #include "core/SettingsManager.h"
-#include "core/WindowsManager.h"
 #include "ui/MainWindow.h"
 #include "ui/StartupDialog.h"
 #ifdef OTTER_ENABLE_CRASHREPORTS
@@ -72,7 +71,7 @@ bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIden
 
 		MainWindow *mainWindow(Application::getActiveWindow());
 
-		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), QStringList({dumpPath, (mainWindow ? mainWindow->getWindowsManager()->getUrl().toDisplayString() : QString())}));
+		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), QStringList({dumpPath, (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())}));
 	}
 
 	return succeeded;
@@ -88,7 +87,7 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 
 		MainWindow *mainWindow(Application::getActiveWindow());
 
-		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), QStringList({descriptor.path(), (mainWindow ? mainWindow->getWindowsManager()->getUrl().toDisplayString() : QString())}));
+		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), QStringList({descriptor.path(), (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())}));
 	}
 
 	return succeeded;

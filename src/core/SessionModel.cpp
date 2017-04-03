@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SessionModel.h"
+#include "Application.h"
 #include "ThemesManager.h"
 #include "../ui/MainWindow.h"
 #include "../ui/TabBarWidget.h"
@@ -86,15 +87,15 @@ MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionIt
 		handleWindowAdded(mainWindow->getTabBar()->getWindow(i)->getIdentifier());
 	}
 
-	connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
-	connect(mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyMainWindowModified()));
-	connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
-	connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
+	connect(mainWindow, SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
+	connect(mainWindow, SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyMainWindowModified()));
+	connect(mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
+	connect(mainWindow, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
 }
 
 void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 {
-	Window *window(m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier));
+	Window *window(m_mainWindow->getWindowByIdentifier(identifier));
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
@@ -106,12 +107,12 @@ void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 		}
 	}
 
-	insertRow(m_mainWindow->getWindowsManager()->getWindowIndex(identifier), new WindowSessionItem(window));
+	insertRow(m_mainWindow->getWindowIndex(identifier), new WindowSessionItem(window));
 }
 
 void MainWindowSessionItem::handleWindowRemoved(quint64 identifier)
 {
-	Window *window(m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier));
+	Window *window(m_mainWindow->getWindowByIdentifier(identifier));
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
@@ -133,7 +134,7 @@ void MainWindowSessionItem::notifyMainWindowModified()
 
 Window* MainWindowSessionItem::getActiveWindow() const
 {
-	return m_mainWindow->getWindowsManager()->getWindowByIndex(-1);
+	return m_mainWindow->getWindowByIndex(-1);
 }
 
 MainWindow* MainWindowSessionItem::getMainWindow() const
@@ -146,15 +147,15 @@ QVariant MainWindowSessionItem::data(int role) const
 	switch (role)
 	{
 		case SessionModel::TitleRole:
-			return m_mainWindow->getWindowsManager()->getTitle();
+			return m_mainWindow->getTitle();
 		case SessionModel::UrlRole:
-			return m_mainWindow->getWindowsManager()->getUrl();
+			return m_mainWindow->getUrl();
 		case SessionModel::IconRole:
 			return ThemesManager::getIcon(QLatin1String("window"));
 		case SessionModel::TypeRole:
 			return SessionModel::MainWindowEntity;
 		case SessionModel::IndexRole:
-			return m_mainWindow->getWindowsManager()->getCurrentWindowIndex();
+			return m_mainWindow->getCurrentWindowIndex();
 		case SessionModel::IsPrivateRole:
 			return m_mainWindow->isPrivate();
 		default:
@@ -193,7 +194,7 @@ QVariant WindowSessionItem::data(int role) const
 			{
 				MainWindow *mainWindow(MainWindow::findMainWindow(m_window));
 
-				return (mainWindow ? mainWindow->getWindowsManager()->getWindowIndex(m_window->getIdentifier()) : -1);
+				return (mainWindow ? mainWindow->getWindowIndex(m_window->getIdentifier()) : -1);
 			}
 		case SessionModel::LastActivityRole:
 			return m_window->getLastActivity();

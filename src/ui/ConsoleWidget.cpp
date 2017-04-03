@@ -87,7 +87,7 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 
 		if (mainWindow)
 		{
-			connect(mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(filterCategories()));
+			connect(mainWindow, SIGNAL(currentWindowChanged(quint64)), this, SLOT(filterCategories()));
 		}
 
 		m_model = new QStandardItemModel(this);

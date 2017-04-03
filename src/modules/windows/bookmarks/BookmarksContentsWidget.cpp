@@ -187,7 +187,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 		Action *bookmarkAllOpenPagesAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, this));
-		bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowsManager()->getWindowCount() > 0);
+		bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowCount() > 0);
 
 		Action *copyLinkAction(new Action(ActionsManager::CopyLinkToClipboardAction, this));
 		copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
@@ -268,9 +268,9 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 				if (mainWindow)
 				{
-					for (int i = 0; i < mainWindow->getWindowsManager()->getWindowCount(); ++i)
+					for (int i = 0; i < mainWindow->getWindowCount(); ++i)
 					{
-						Window *window(mainWindow->getWindowsManager()->getWindowByIndex(i));
+						Window *window(mainWindow->getWindowByIndex(i));
 
 						if (window && !Utils::isUrlEmpty(window->getUrl()))
 						{

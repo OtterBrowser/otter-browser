@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TransfersManager.h"
+#include "Application.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
 #include "NotificationsManager.h"

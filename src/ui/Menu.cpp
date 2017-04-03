@@ -24,6 +24,7 @@
 #include "Window.h"
 #include "WorkspaceWidget.h"
 #include "../core/ActionsManager.h"
+#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/Console.h"
 #include "../core/HistoryManager.h"
@@ -34,7 +35,6 @@
 #include "../core/ThemesManager.h"
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
-#include "../core/WindowsManager.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
@@ -107,9 +107,9 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 				if (mainWindow)
 				{
-					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !mainWindow->getWindowsManager()->getClosedWindows().isEmpty());
+					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !mainWindow->getClosedWindows().isEmpty());
 
-					connect(mainWindow->getWindowsManager(), SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
+					connect(mainWindow, SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
 				}
 
 				connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindowsMenu()));
@@ -620,7 +620,7 @@ void Menu::populateModelMenu()
 void Menu::populateOptionMenu()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString value(mainWindow ? mainWindow->getWindowsManager()->getOption(m_option).toString() : QString());
+	const QString value(mainWindow ? mainWindow->getOption(m_option).toString() : QString());
 
 	if (m_actionGroup)
 	{
@@ -766,7 +766,7 @@ void Menu::populateCharacterEncodingMenu()
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString encoding(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString().toLower() : QString());
+	const QString encoding(mainWindow ? mainWindow->getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString().toLower() : QString());
 
 	for (int i = 2; i < actions().count(); ++i)
 	{
@@ -818,7 +818,7 @@ void Menu::populateClosedWindowsMenu()
 
 	if (mainWindow)
 	{
-		const QVector<ClosedWindow> tabs(mainWindow->getWindowsManager()->getClosedWindows());
+		const QVector<ClosedWindow> tabs(mainWindow->getClosedWindows());
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
@@ -841,7 +841,7 @@ void Menu::populateProxiesMenu()
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString proxy(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Network_ProxyOption).toString() : QString());
+	const QString proxy(mainWindow ? mainWindow->getOption(SettingsManager::Network_ProxyOption).toString() : QString());
 	const QStringList proxies((!menuAction() || menuAction()->data().toString().isEmpty()) ? NetworkManagerFactory::getProxies() : NetworkManagerFactory::getProxy(menuAction()->data().toString()).children);
 
 	m_actionGroup = new QActionGroup(this);
@@ -983,7 +983,7 @@ void Menu::populateStyleSheetsMenu()
 		return;
 	}
 
-	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(-1));
+	Window *window(mainWindow->getWindowByIndex(-1));
 
 	if (!window)
 	{
@@ -1074,7 +1074,7 @@ void Menu::populateUserAgentMenu()
 
 	const bool isRoot(!menuAction() || menuAction()->data().toString().isEmpty());
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString userAgent(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
+	const QString userAgent(mainWindow ? mainWindow->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
 	const QStringList userAgents(isRoot ? NetworkManagerFactory::getUserAgents() : NetworkManagerFactory::getUserAgent(menuAction()->data().toString()).children);
 
 	m_actionGroup = new QActionGroup(this);
@@ -1138,9 +1138,9 @@ void Menu::populateWindowsMenu()
 
 		if (mainWindow)
 		{
-			connect(mainWindow->getWindowsManager(), SIGNAL(titleChanged(QString)), this, SLOT(populateWindowsMenu()));
-			connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(quint64)), this, SLOT(populateWindowsMenu()));
-			connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(quint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow, SIGNAL(titleChanged(QString)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow, SIGNAL(windowRemoved(quint64)), this, SLOT(populateWindowsMenu()));
 		}
 
 		disconnect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
@@ -1155,9 +1155,9 @@ void Menu::populateWindowsMenu()
 		return;
 	}
 
-	for (int i = 0; i < mainWindow->getWindowsManager()->getWindowCount(); ++i)
+	for (int i = 0; i < mainWindow->getWindowCount(); ++i)
 	{
-		Window *window(mainWindow->getWindowsManager()->getWindowByIndex(i));
+		Window *window(mainWindow->getWindowByIndex(i));
 
 		if (window)
 		{
@@ -1207,7 +1207,7 @@ void Menu::clearClosedWindows()
 
 	if (mainWindow)
 	{
-		mainWindow->getWindowsManager()->clearClosedWindows();
+		mainWindow->clearClosedWindows();
 	}
 
 	SessionsManager::clearClosedWindows();
@@ -1224,7 +1224,7 @@ void Menu::restoreClosedWindow()
 
 		if (mainWindow)
 		{
-			mainWindow->getWindowsManager()->restore(index - 1);
+			mainWindow->restore(index - 1);
 		}
 	}
 	else if (index < 0)
@@ -1284,7 +1284,7 @@ void Menu::selectOption(QAction *action)
 
 	if (mainWindow)
 	{
-		mainWindow->getWindowsManager()->setOption(m_option, action->data().toString());
+		mainWindow->setOption(m_option, action->data().toString());
 	}
 }
 
@@ -1297,7 +1297,7 @@ void Menu::selectStyleSheet(QAction *action)
 		return;
 	}
 
-	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(-1));
+	Window *window(mainWindow->getWindowByIndex(-1));
 
 	if (window && action)
 	{
@@ -1317,7 +1317,7 @@ void Menu::updateClosedWindowsMenu()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
-	setEnabled((mainWindow && mainWindow->getWindowsManager()->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
+	setEnabled((mainWindow && mainWindow->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
 }
 
 void Menu::setToolBarVisibility(bool visible)

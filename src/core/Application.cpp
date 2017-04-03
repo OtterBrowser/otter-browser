@@ -1111,7 +1111,7 @@ bool Application::canClose()
 		{
 			if (m_windows.at(i))
 			{
-				tabsAmount += m_windows.at(i)->getWindowsManager()->getWindowCount();
+				tabsAmount += m_windows.at(i)->getWindowCount();
 			}
 		}
 

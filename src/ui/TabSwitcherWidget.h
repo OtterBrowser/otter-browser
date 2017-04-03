@@ -43,7 +43,7 @@ public:
 		WheelReason
 	};
 
-	explicit TabSwitcherWidget(WindowsManager *manager, QWidget *parent = nullptr);
+	explicit TabSwitcherWidget(MainWindow *parent);
 
 	void show(SwitcherReason reason);
 	void accept();
@@ -68,7 +68,7 @@ protected slots:
 	void setLoadingState(WebWidget::LoadingState state);
 
 private:
-	WindowsManager *m_windowsManager;
+	MainWindow *m_mainWindow;
 	QStandardItemModel *m_model;
 	QFrame *m_frame;
 	ItemViewWidget *m_tabsView;

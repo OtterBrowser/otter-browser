@@ -23,11 +23,11 @@
 #include "ThemesManager.h"
 #include "../ui/MainWindow.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QSettings>
 #include <QtCore/QTextStream>
+#include <QtWidgets/QApplication>
 
 namespace Otter
 {

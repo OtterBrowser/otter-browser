@@ -57,13 +57,13 @@
 #include "ui_MainWindow.h"
 
 #include <QtGui/QCloseEvent>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
 
 MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
-	m_windowsManager(nullptr),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
 	m_tabBar(nullptr),
@@ -75,6 +75,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
+	m_isRestored(false),
 	m_hasToolBars(!parameters.value(QLatin1String("noToolBars"), false).toBool()),
 	m_ui(new Ui::MainWindow)
 {
@@ -85,8 +86,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_actions.fill(nullptr, ActionsManager::getActionDefinitions().count());
 
 	updateShortcuts();
-
-	m_windowsManager = new WindowsManager(this);
 
 	m_workspace->updateActions();
 
@@ -129,7 +128,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	}
 
 	setCentralWidget(m_workspace);
-
 	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool());
 	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
@@ -154,19 +152,19 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(handleToolBarAdded(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarMoved(int)), this, SLOT(handleToolBarMoved(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(handleTransferStarted()));
-	connect(m_windowsManager, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 
-	m_windowsManager->restore(session);
+	restore(session);
 
 	m_ui->consoleDockWidget->hide();
 
-	updateWindowTitle(m_windowsManager->getTitle());
+	updateWindowTitle();
 
 	if (session.geometry.isEmpty())
 	{
@@ -235,11 +233,11 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 		m_tabSwitcherTimer = 0;
 
-		if (m_windowsManager->getWindowCount() > 1)
+		if (getWindowCount() > 1)
 		{
 			if (!m_tabSwitcher)
 			{
-				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+				m_tabSwitcher = new TabSwitcherWidget(this);
 			}
 
 			m_tabSwitcher->raise();
@@ -274,7 +272,15 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		SessionsManager::storeClosedWindow(this);
 	}
 
-	m_windowsManager->closeAll();
+	for (int i = (getWindowCount() - 1); i >= 0; --i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if (window)
+		{
+			window->close();
+		}
+	}
 
 	Application::removeWindow(this);
 
@@ -285,7 +291,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
 	{
-		if (m_windowsManager->getWindowCount() < 2)
+		if (getWindowCount() < 2)
 		{
 			event->accept();
 
@@ -300,7 +306,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 			if (!m_tabSwitcher)
 			{
-				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+				m_tabSwitcher = new TabSwitcherWidget(this);
 			}
 
 			m_tabSwitcher->raise();
@@ -315,7 +321,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 				m_tabSwitcherTimer = startTimer(200);
 			}
 
-			m_windowsManager->triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
+			triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
 		}
 
 		event->accept();
@@ -370,25 +376,43 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	switch (identifier)
 	{
+		case ActionsManager::NewTabAction:
+			{
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("hints")] = SessionsManager::NewTabOpen;
+
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+			}
+
+			return;
+		case ActionsManager::NewTabPrivateAction:
+			{
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("hints")] = QVariant(SessionsManager::NewTabOpen | SessionsManager::PrivateOpen);
+
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+			}
+
+			return;
 		case ActionsManager::NewWindowAction:
 			Application::createWindow();
 
-			break;
+			return;
 		case ActionsManager::NewWindowPrivateAction:
 			Application::createWindow({{QLatin1String("hints"), SessionsManager::PrivateOpen}});
 
-			break;
+			return;
 		case ActionsManager::OpenAction:
 			{
 				const QString path(Utils::getOpenPaths().value(0));
 
 				if (!path.isEmpty())
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl::fromLocalFile(path)}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl::fromLocalFile(path)}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ClosePrivateTabsPanicAction:
 			if (SessionsManager::isPrivate())
 			{
@@ -411,7 +435,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::MaximizeTabAction:
 		case ActionsManager::MinimizeTabAction:
 		case ActionsManager::RestoreTabAction:
@@ -423,73 +447,73 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::TileAllAction:
 			m_workspace->triggerAction(identifier, parameters);
 
-			break;
+			return;
 		case ActionsManager::CloseWindowAction:
 			close();
 
-			break;
+			return;
 		case ActionsManager::SessionsAction:
 			{
 				SessionsManagerDialog dialog(this);
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::SaveSessionAction:
 			{
 				SaveSessionDialog dialog(this);
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::GoToPageAction:
 			{
 				OpenAddressDialog dialog(this);
 
-				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,SessionsManager::OpenHints)));
-				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
-				connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::GoToHomePageAction:
 			{
 				const QString homePage(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
 
 				if (!homePage.isEmpty())
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}, {QLatin1String("hints"), SessionsManager::CurrentTabOpen}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}, {QLatin1String("hints"), SessionsManager::CurrentTabOpen}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::BookmarksAction:
 			{
 				const QUrl url(QLatin1String("about:bookmarks"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::BookmarkPageAction:
 			{
-				const QUrl url((parameters.contains(QLatin1String("url")) ? parameters[QLatin1String("url")].toUrl() : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword));
+				const QUrl url((parameters.contains(QLatin1String("url")) ? parameters[QLatin1String("url")].toUrl() : getUrl()).adjusted(QUrl::RemovePassword));
 
 				if (url.isEmpty())
 				{
-					break;
+					return;
 				}
 
 				const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
 
 				if (bookmarks.isEmpty())
 				{
-					BookmarkPropertiesDialog dialog(url, (parameters.contains(QLatin1String("title")) ? parameters[QLatin1String("title")].toString() : m_windowsManager->getTitle()), parameters[QLatin1String("description")].toString(), nullptr, -1, true, this);
+					BookmarkPropertiesDialog dialog(url, (parameters.contains(QLatin1String("title")) ? parameters[QLatin1String("title")].toString() : getTitle()), parameters[QLatin1String("description")].toString(), nullptr, -1, true, this);
 					dialog.exec();
 				}
 				else
@@ -499,21 +523,21 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::QuickBookmarkAccessAction:
 			{
 				OpenBookmarkDialog dialog(this);
 
-				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), m_windowsManager, SLOT(open(BookmarksItem*)));
+				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), this, SLOT(open(BookmarksItem*)));
 
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::WorkOfflineAction:
 			SettingsManager::setValue(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters, getAction(ActionsManager::WorkOfflineAction)));
 
-			break;
+			return;
 		case ActionsManager::FullScreenAction:
 			if (isFullScreen())
 			{
@@ -525,20 +549,266 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				showFullScreen();
 			}
 
-			m_windowsManager->triggerAction(identifier, parameters);
+			triggerAction(identifier, parameters);
+
+			return;
+		case ActionsManager::ClosePrivateTabsAction:
+			getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
+
+			for (int i = (getWindowCount() - 1); i > 0; --i)
+			{
+				Window *window(getWindowByIndex(i));
+
+				if (window && window->isPrivate())
+				{
+					window->close();
+				}
+			}
+
+			break;
+		case ActionsManager::OpenUrlAction:
+			{
+				const QUrl url((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
+
+				if (parameters.contains(QLatin1String("application")))
+				{
+					Utils::runApplication(parameters[QLatin1String("application")].toString(), url);
+
+					break;
+				}
+
+				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+				int index(parameters.value(QLatin1String("index"), -1).toInt());
+
+				if (m_isPrivate)
+				{
+					hints |= SessionsManager::PrivateOpen;
+				}
+
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("hints")] = QVariant(hints);
+
+				if (hints.testFlag(SessionsManager::NewWindowOpen))
+				{
+					Application::createWindow(mutableParameters);
+
+					break;
+				}
+
+				if (index >= 0)
+				{
+					Window *window(new Window(mutableParameters, nullptr, this));
+
+					addWindow(window, hints, index);
+
+					window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
+
+					break;
+				}
+
+				Window *activeWindow(getWorkspace()->getActiveWindow());
+				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
+
+				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
+				{
+					hints = SessionsManager::CurrentTabOpen;
+				}
+				else if (hints == SessionsManager::DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!activeWindow || !Utils::isUrlEmpty(activeWindow->getUrl())))
+				{
+					hints = SessionsManager::NewTabOpen;
+				}
+				else if (hints == SessionsManager::DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+				{
+					hints = SessionsManager::CurrentTabOpen;
+				}
+
+				mutableParameters[QLatin1String("hints")] = QVariant(hints);
+
+				if (hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow)
+				{
+					if (activeWindow->getType() == QLatin1String("web") && activeWindow->getWebWidget() && !parameters.contains(QLatin1String("webBackend")))
+					{
+						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
+					}
+
+					activeWindow->close();
+				}
+
+				Window *window(new Window(mutableParameters, nullptr, this));
+
+				addWindow(window, hints, index);
+
+				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
+			}
+
+			break;
+		case ActionsManager::ReopenTabAction:
+			restore();
+
+			break;
+		case ActionsManager::StopAllAction:
+			for (int i = 0; i < getWindowCount(); ++i)
+			{
+				Window *window(getWindowByIndex(i));
+
+				if (window)
+				{
+					window->triggerAction(ActionsManager::StopAction);
+				}
+			}
+
+			break;
+		case ActionsManager::ReloadAllAction:
+			for (int i = 0; i < getWindowCount(); ++i)
+			{
+				Window *window(getWindowByIndex(i));
+
+				if (window)
+				{
+					window->triggerAction(ActionsManager::ReloadAction);
+				}
+			}
+
+			break;
+		case ActionsManager::ActivatePreviouslyUsedTabAction:
+		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
+			{
+				QMultiMap<qint64, quint64> map;
+				const bool includeMinimized(parameters.contains(QLatin1String("includeMinimized")));
+
+				for (int i = 0; i < getWindowCount(); ++i)
+				{
+					Window *window(getWindowByIndex(i));
+
+					if (window && (includeMinimized || !window->isMinimized()))
+					{
+						map.insert(window->getLastActivity().toMSecsSinceEpoch(), window->getIdentifier());
+					}
+				}
+
+				const QList<quint64> list(map.values());
+
+				if (list.count() > 1)
+				{
+					setActiveWindowByIdentifier((identifier == ActionsManager::ActivatePreviouslyUsedTabAction) ? list.at(list.count() - 2) : list.first());
+				}
+			}
+
+			break;
+		case ActionsManager::ActivateTabOnLeftAction:
+			setActiveWindowByIndex((getCurrentWindowIndex() > 0) ? (getCurrentWindowIndex() - 1) : (getWindowCount() - 1));
+
+			break;
+		case ActionsManager::ActivateTabOnRightAction:
+			setActiveWindowByIndex(((getCurrentWindowIndex() + 1) < getWindowCount()) ? (getCurrentWindowIndex() + 1) : 0);
+
+			break;
+		case ActionsManager::BookmarkAllOpenPagesAction:
+			for (int i = 0; i < getWindowCount(); ++i)
+			{
+				Window *window(getWindowByIndex(i));
+
+				if (window && !Utils::isUrlEmpty(window->getUrl()))
+				{
+					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, window->getUrl(), window->getTitle());
+				}
+			}
+
+			break;
+		case ActionsManager::OpenBookmarkAction:
+			if (parameters.contains(QLatin1String("bookmark")))
+			{
+				BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
+
+				if (!bookmark)
+				{
+					break;
+				}
+
+				QVariantMap mutableParameters(parameters);
+				mutableParameters.remove(QLatin1String("bookmark"));
+
+				switch (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
+				{
+					case BookmarksModel::UrlBookmark:
+						mutableParameters[QLatin1String("url")] = bookmark->data(BookmarksModel::UrlRole).toUrl();
+
+						triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+
+						break;
+					case BookmarksModel::RootBookmark:
+					case BookmarksModel::FolderBookmark:
+						{
+							const QVector<QUrl> urls(bookmark->getUrls());
+							bool canOpen(true);
+
+							if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption).toBool() && !parameters.value(QLatin1String("ignoreWarning"), false).toBool())
+							{
+								QMessageBox messageBox;
+								messageBox.setWindowTitle(tr("Question"));
+								messageBox.setText(tr("You are about to open %n bookmark(s).", "", urls.count()));
+								messageBox.setInformativeText(tr("Do you want to continue?"));
+								messageBox.setIcon(QMessageBox::Question);
+								messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+								messageBox.setDefaultButton(QMessageBox::Yes);
+								messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+								if (messageBox.exec() == QMessageBox::Cancel)
+								{
+									canOpen = false;
+								}
+
+								SettingsManager::setValue(SettingsManager::Choices_WarnOpenBookmarkFolderOption, !messageBox.checkBox()->isChecked());
+							}
+
+							if (urls.isEmpty() || !canOpen)
+							{
+								break;
+							}
+
+							const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+							int index(parameters.value(QLatin1String("index"), -1).toInt());
+
+							if (index < 0)
+							{
+								index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : getWindowCount());
+							}
+
+							mutableParameters[QLatin1String("url")] = urls.at(0);
+							mutableParameters[QLatin1String("hints")] = QVariant(hints);
+							mutableParameters[QLatin1String("index")] = index;
+
+							triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+
+							mutableParameters[QLatin1String("hints")] = QVariant((hints == SessionsManager::DefaultOpen || hints.testFlag(SessionsManager::CurrentTabOpen)) ? SessionsManager::NewTabOpen : hints);
+
+							for (int i = 1; i < urls.count(); ++i)
+							{
+								mutableParameters[QLatin1String("url")] = urls.at(i);
+								mutableParameters[QLatin1String("index")] = (index + i);
+
+								triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+							}
+						}
+
+						break;
+					default:
+						break;
+				}
+			}
 
 			break;
 		case ActionsManager::ShowTabSwitcherAction:
 			if (!m_tabSwitcher)
 			{
-				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+				m_tabSwitcher = new TabSwitcherWidget(this);
 			}
 
 			m_tabSwitcher->raise();
 			m_tabSwitcher->resize(size());
 			m_tabSwitcher->show(TabSwitcherWidget::ActionReason);
 
-			break;
+			return;
 		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
@@ -547,7 +817,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				ToolBarsManager::setToolBar(definition);
 			}
 
-			break;
+			return;
 		case ActionsManager::ShowTabBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
@@ -556,7 +826,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				ToolBarsManager::setToolBar(definition);
 			}
 
-			break;
+			return;
 		case ActionsManager::ShowSidebarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
@@ -588,18 +858,18 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::OpenPanelAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 
 				if (definition.identifier >= 0 && !definition.currentPanel.isEmpty())
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ClosePanelAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
@@ -611,127 +881,127 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ShowErrorConsoleAction:
 			m_ui->consoleDockWidget->setVisible(Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowErrorConsoleAction)));
 
-			break;
+			return;
 		case ActionsManager::LockToolBarsAction:
 			ToolBarsManager::setToolBarsLocked(Action::calculateCheckedState(parameters, getAction(ActionsManager::LockToolBarsAction)));
 
-			break;
+			return;
 		case ActionsManager::ResetToolBarsAction:
 			ToolBarsManager::resetToolBars();
 
-			break;
+			return;
 		case ActionsManager::ContentBlockingAction:
 			{
 				ContentBlockingDialog dialog(this);
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::HistoryAction:
 			{
 				const QUrl url(QLatin1String("about:history"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ClearHistoryAction:
 			{
 				ClearHistoryDialog dialog(SettingsManager::getOption(SettingsManager::History_ManualClearOptionsOption).toStringList(), false, this);
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::AddonsAction:
 			{
 				const QUrl url(QLatin1String("about:addons"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::NotesAction:
 			{
 				const QUrl url(QLatin1String("about:notes"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::PasswordsAction:
 			{
 				const QUrl url(QLatin1String("about:passwords"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::TransfersAction:
 			{
 				const QUrl url(QLatin1String("about:transfers"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::CookiesAction:
 			{
 				const QUrl url(QLatin1String("about:cookies"));
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::PreferencesAction:
 			{
 				PreferencesDialog dialog(QLatin1String("general"), this);
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::SwitchApplicationLanguageAction:
 			{
 				LocaleDialog dialog(this);
 				dialog.exec();
 			}
 
-			break;
+			return;
 		case ActionsManager::CheckForUpdatesAction:
 			{
 				UpdateCheckerDialog *dialog(new UpdateCheckerDialog(this));
 				dialog->show();
 			}
 
-			break;
+			return;
 		case ActionsManager::DiagnosticReportAction:
 			{
 				ReportDialog *dialog(new ReportDialog(Application::FullReport, this));
 				dialog->show();
 			}
 
-			break;
+			return;
 		case ActionsManager::AboutApplicationAction:
 			{
 				WebBackend *webBackend(AddonsManager::getWebBackend());
@@ -756,17 +1026,102 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				QMessageBox::about(this, QLatin1String("Otter"), about);
 			}
 
-			break;
+			return;
 		case ActionsManager::AboutQtAction:
 			Application::getInstance()->aboutQt();
 
-			break;
+			return;
 		case ActionsManager::ExitAction:
 			Application::getInstance()->close();
 
+			return;
+		default:
+			break;
+	}
+
+	Window *window(nullptr);
+
+	if (parameters.contains(QLatin1String("window")))
+	{
+		window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+	}
+	else
+	{
+		window = getWorkspace()->getActiveWindow();
+	}
+
+	switch (identifier)
+	{
+		case ActionsManager::CloneTabAction:
+			if (window && window->canClone())
+			{
+				addWindow(window->clone(true, this));
+			}
+
+			break;
+		case ActionsManager::PinTabAction:
+			if (window)
+			{
+				window->setPinned(!window->isPinned());
+			}
+
+			break;
+		case ActionsManager::DetachTabAction:
+			if (window && getWindowCount() > 1)
+			{
+				moveWindow(window);
+			}
+
+			break;
+		case ActionsManager::CloseTabAction:
+			if (window && !window->isPinned())
+			{
+				window->close();
+			}
+
+			break;
+		case ActionsManager::CloseOtherTabsAction:
+			if (window && !window->isPinned())
+			{
+				for (int i = (getWindowCount() - 1); i >= 0; --i)
+				{
+					Window *iteratedWindow(getWindowByIndex(i));
+
+					if (window != iteratedWindow)
+					{
+						iteratedWindow->close();
+					}
+				}
+			}
+
+			break;
+		case ActionsManager::ActivateTabAction:
+			if (window)
+			{
+				setActiveWindowByIdentifier(window->getIdentifier());
+			}
+
 			break;
 		default:
-			m_windowsManager->triggerAction(identifier, parameters);
+			if (identifier == ActionsManager::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
+			{
+				QVariantMap mutableParameters(parameters);
+
+				if (m_isPrivate)
+				{
+					mutableParameters[QLatin1String("hints")] = QVariant(SessionsManager::calculateOpenHints(parameters) | SessionsManager::PrivateOpen);
+				}
+
+				window = new Window(mutableParameters, nullptr, this);
+
+				addWindow(window, SessionsManager::NewTabOpen);
+
+				window->triggerAction(ActionsManager::PasteAndGoAction);
+			}
+			else if (window)
+			{
+				window->triggerAction(identifier, parameters);
+			}
 
 			break;
 	}
@@ -825,34 +1180,332 @@ void MainWindow::triggerAction(bool isChecked)
 	}
 }
 
+void MainWindow::open(const QUrl &url, SessionsManager::OpenHints hints)
+{
+	triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
+}
+
+void MainWindow::open(BookmarksItem *bookmark, SessionsManager::OpenHints hints)
+{
+	if (bookmark)
+	{
+		triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}});
+	}
+}
+
 void MainWindow::openUrl(const QString &text, bool isPrivate)
 {
 	SessionsManager::OpenHints hints(isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen);
 
 	if (text.isEmpty())
 	{
-		m_windowsManager->triggerAction(hints | ActionsManager::NewTabAction);
+		triggerAction(hints | ActionsManager::NewTabAction);
 
 		return;
 	}
+
+	InputInterpreter *interpreter(new InputInterpreter(this));
+
+	connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+	connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
+	connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+
+	if (!m_workspace->getActiveWindow() || (m_workspace->getActiveWindow()->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())))
+	{
+		hints |= SessionsManager::CurrentTabOpen;
+	}
 	else
 	{
-		InputInterpreter *interpreter(new InputInterpreter(this));
+		hints |= SessionsManager::NewTabOpen;
+	}
 
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,SessionsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+	interpreter->interpret(text, hints);
+}
 
-		if (!m_workspace->getActiveWindow() || (m_workspace->getActiveWindow()->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())))
+void MainWindow::search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
+{
+	Window *window(m_workspace->getActiveWindow());
+	const bool isUrlEmpty(window && window->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
+
+	if ((hints == SessionsManager::NewTabOpen && isUrlEmpty) || (hints == SessionsManager::DefaultOpen && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool())))
+	{
+		hints = SessionsManager::CurrentTabOpen;
+	}
+
+	if (window && hints.testFlag(SessionsManager::CurrentTabOpen) && window->getType() == QLatin1String("web"))
+	{
+		window->search(query, searchEngine);
+
+		return;
+	}
+
+	if (window && window->canClone())
+	{
+		window = window->clone(false, this);
+
+		addWindow(window, hints);
+	}
+	else
+	{
+		triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(hints)}});
+
+		window = m_workspace->getActiveWindow();
+	}
+
+	if (window)
+	{
+		window->search(query, searchEngine);
+	}
+}
+
+void MainWindow::restore(const SessionMainWindow &session)
+{
+	disconnect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
+
+	int index(session.index);
+
+	if (index >= session.windows.count())
+	{
+		index = -1;
+	}
+
+	if (session.windows.isEmpty())
+	{
+		m_isRestored = true;
+
+		if (SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString() != QLatin1String("doNothing"))
 		{
-			hints |= SessionsManager::CurrentTabOpen;
+			triggerAction(ActionsManager::NewTabAction);
 		}
 		else
 		{
-			hints |= SessionsManager::NewTabOpen;
+			setCurrentWindow(nullptr);
+		}
+	}
+	else
+	{
+		QVariantMap parameters;
+
+		if (m_isPrivate)
+		{
+			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		interpreter->interpret(text, hints);
+		for (int i = 0; i < session.windows.count(); ++i)
+		{
+			Window *window(new Window(parameters, nullptr, this));
+			window->setSession(session.windows.at(i));
+
+			if (index < 0 && session.windows.at(i).state != MinimizedWindowState)
+			{
+				index = i;
+			}
+
+			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).geometry, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
+		}
+	}
+
+	m_isRestored = true;
+
+	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
+
+	setActiveWindowByIndex(index);
+
+	m_workspace->markRestored();
+}
+
+void MainWindow::restore(int index)
+{
+	if (index < 0 || index >= m_closedWindows.count())
+	{
+		return;
+	}
+
+	const ClosedWindow closedWindow(m_closedWindows.at(index));
+	int windowIndex(-1);
+
+	if (closedWindow.previousWindow == 0)
+	{
+		windowIndex = 0;
+	}
+	else if (closedWindow.nextWindow == 0)
+	{
+		windowIndex = getWindowCount();
+	}
+	else
+	{
+		const int previousIndex(getWindowIndex(closedWindow.previousWindow));
+
+		if (previousIndex >= 0)
+		{
+			windowIndex = (previousIndex + 1);
+		}
+		else
+		{
+			const int nextIndex(getWindowIndex(closedWindow.nextWindow));
+
+			if (nextIndex >= 0)
+			{
+				windowIndex = qMax(0, (nextIndex - 1));
+			}
+		}
+	}
+
+	QVariantMap parameters;
+
+	if (m_isPrivate || closedWindow.isPrivate)
+	{
+		parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
+	}
+
+	Window *window(new Window(parameters, nullptr, this));
+	window->setSession(closedWindow.window);
+
+	m_closedWindows.removeAt(index);
+
+	if (m_closedWindows.isEmpty() && SessionsManager::getClosedWindows().isEmpty())
+	{
+		emit closedWindowsAvailableChanged(false);
+	}
+
+	addWindow(window, SessionsManager::DefaultOpen, windowIndex);
+}
+
+void MainWindow::clearClosedWindows()
+{
+	m_closedWindows.clear();
+
+	if (SessionsManager::getClosedWindows().isEmpty())
+	{
+		emit closedWindowsAvailableChanged(false);
+	}
+}
+
+void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
+{
+	if (!window)
+	{
+		return;
+	}
+
+	m_windows[window->getIdentifier()] = window;
+
+	if (window->isPrivate())
+	{
+		getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
+	}
+
+	window->setToolBarsVisible(!isFullScreen());
+
+	if (index < 0)
+	{
+		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : getWindowCount());
+	}
+
+	if (!window->isPinned())
+	{
+		const int offset(m_tabBar->getPinnedTabsAmount());
+
+		if (index < offset)
+		{
+			index = offset;
+		}
+	}
+
+	const QString newTabOpeningAction(SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString());
+
+	if (m_isRestored && newTabOpeningAction == QLatin1String("maximizeTab"))
+	{
+		state = MaximizedWindowState;
+	}
+
+	m_tabBar->addTab(index, window);
+	m_workspace->addWindow(window, geometry, state, isAlwaysOnTop);
+
+	getAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
+
+	if (!hints.testFlag(SessionsManager::BackgroundOpen) || getWindowCount() < 2)
+	{
+		m_tabBar->setCurrentIndex(index);
+
+		if (m_isRestored)
+		{
+			setActiveWindowByIndex(index);
+		}
+	}
+
+	if (m_isRestored)
+	{
+		if (newTabOpeningAction == QLatin1String("cascadeAll"))
+		{
+			ActionsManager::triggerAction(ActionsManager::CascadeAllAction, this);
+		}
+		else if (newTabOpeningAction == QLatin1String("tileAll"))
+		{
+			ActionsManager::triggerAction(ActionsManager::TileAllAction, this);
+		}
+	}
+
+	connect(this, SIGNAL(areToolBarsVisibleChanged(bool)), window, SLOT(setToolBarsVisible(bool)));
+	connect(window, &Window::needsAttention, [&]()
+	{
+		QApplication::alert(this);
+	});
+	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle()));
+	connect(window, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
+	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+	connect(window, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), this, SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
+	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(handleWindowClose(Window*)));
+	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(handleWindowIsPinnedChanged(bool)));
+
+	emit windowAdded(window->getIdentifier());
+}
+
+void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
+{
+	Window *newWindow(nullptr);
+	SessionsManager::OpenHints hints(mainWindow ? SessionsManager::DefaultOpen : SessionsManager::NewWindowOpen);
+
+	if (window->isPrivate())
+	{
+		hints |= SessionsManager::PrivateOpen;
+	}
+
+	window->getContentsWidget()->setParent(nullptr);
+
+	if (mainWindow)
+	{
+		newWindow = mainWindow->openWindow(window->getContentsWidget(), hints, index);
+	}
+	else
+	{
+		newWindow = openWindow(window->getContentsWidget(), hints);
+	}
+
+	if (newWindow && window->isPinned())
+	{
+		newWindow->setPinned(true);
+	}
+
+	m_tabBar->removeTab(getWindowIndex(window->getIdentifier()));
+
+	m_windows.remove(window->getIdentifier());
+
+	if (mainWindow && m_windows.isEmpty())
+	{
+		close();
+	}
+	else
+	{
+		Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
+
+		if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+		{
+			closePrivateTabsAction->setEnabled(false);
+		}
+
+		emit windowRemoved(window->getIdentifier());
 	}
 }
 
@@ -869,6 +1522,24 @@ void MainWindow::restoreWindowState()
 void MainWindow::raiseWindow()
 {
 	setWindowState(m_previousRaisedState);
+}
+
+void MainWindow::removeStoredUrl(const QString &url)
+{
+	for (int i = (m_closedWindows.count() - 1); i >= 0; --i)
+	{
+		if (url == m_closedWindows.at(i).window.getUrl())
+		{
+			m_closedWindows.removeAt(i);
+
+			break;
+		}
+	}
+
+	if (m_closedWindows.isEmpty())
+	{
+		emit closedWindowsAvailableChanged(false);
+	}
 }
 
 void MainWindow::beginToolBarDragging(bool isSidebar)
@@ -934,6 +1605,101 @@ void MainWindow::saveToolBarPositions()
 
 			ToolBarsManager::setToolBar(definition);
 		}
+	}
+}
+
+void MainWindow::handleWindowClose(Window *window)
+{
+	const int index(window ? getWindowIndex(window->getIdentifier()) : -1);
+
+	if (index < 0)
+	{
+		return;
+	}
+
+	if (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool())
+	{
+		const WindowHistoryInformation history(window->getContentsWidget()->getHistory());
+
+		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
+		{
+			Window *nextWindow(getWindowByIndex(index + 1));
+			Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
+
+			ClosedWindow closedWindow;
+			closedWindow.window = window->getSession();
+			closedWindow.nextWindow = (nextWindow ? nextWindow->getIdentifier() : 0);
+			closedWindow.previousWindow = (previousWindow ? previousWindow->getIdentifier() : 0);
+			closedWindow.isPrivate = window->isPrivate();
+
+			if (window->getType() != QLatin1String("web"))
+			{
+				removeStoredUrl(closedWindow.window.getUrl());
+			}
+
+			m_closedWindows.prepend(closedWindow);
+
+			emit closedWindowsAvailableChanged(true);
+		}
+	}
+
+	const QString lastTabClosingAction(SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString());
+
+	if (getWindowCount() == 1)
+	{
+		if (lastTabClosingAction == QLatin1String("closeWindow") || (lastTabClosingAction == QLatin1String("closeWindowIfNotLast") && Application::getWindows().count() > 1))
+		{
+			triggerAction(ActionsManager::CloseWindowAction);
+
+			return;
+		}
+
+		if (lastTabClosingAction == QLatin1String("openTab"))
+		{
+			window = getWindowByIndex(0);
+
+			if (window)
+			{
+				window->clear();
+
+				return;
+			}
+		}
+		else
+		{
+			getAction(ActionsManager::CloseTabAction)->setEnabled(false);
+			setCurrentWindow(nullptr);
+
+			emit titleChanged(QString());
+		}
+	}
+
+	m_tabBar->removeTab(index);
+
+	Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
+
+	if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+	{
+		closePrivateTabsAction->setEnabled(false);
+	}
+
+	emit windowRemoved(window->getIdentifier());
+
+	m_windows.remove(window->getIdentifier());
+
+	if (getWindowCount() < 1 && lastTabClosingAction == QLatin1String("openTab"))
+	{
+		triggerAction(ActionsManager::NewTabAction);
+	}
+}
+
+void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
+{
+	Window *window(qobject_cast<Window*>(sender()));
+
+	if (window && window == m_workspace->getActiveWindow())
+	{
+		getAction(ActionsManager::CloseTabAction)->setEnabled(!isPinned);
 	}
 }
 
@@ -1129,7 +1895,7 @@ void MainWindow::handleTransferStarted()
 
 		if (!SessionsManager::hasUrl(url, false))
 		{
-			m_windowsManager->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}});
+			triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}});
 		}
 	}
 	else if (action == QLatin1String("openPanel"))
@@ -1138,9 +1904,9 @@ void MainWindow::handleTransferStarted()
 	}
 }
 
-void MainWindow::updateWindowTitle(const QString &title)
+void MainWindow::updateWindowTitle()
 {
-	m_windowTitle = title;
+	m_windowTitle = getTitle();
 
 	setWindowTitle(m_windowTitle);
 }
@@ -1166,6 +1932,78 @@ void MainWindow::updateShortcuts()
 
 				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerAction()));
 			}
+		}
+	}
+}
+
+void MainWindow::setOption(int identifier, const QVariant &value)
+{
+	Window *window(m_workspace->getActiveWindow());
+
+	if (window)
+	{
+		window->setOption(identifier, value);
+	}
+}
+
+void MainWindow::setActiveWindowByIndex(int index)
+{
+	if (!m_isRestored || index >= getWindowCount())
+	{
+		return;
+	}
+
+	if (index != getCurrentWindowIndex())
+	{
+		m_tabBar->setCurrentIndex(index);
+
+		return;
+	}
+
+	Window *window(m_workspace->getActiveWindow());
+
+	if (window)
+	{
+		disconnect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
+	}
+
+	setStatusMessage(QString());
+
+	window = getWindowByIndex(index);
+
+	getAction(ActionsManager::CloseTabAction)->setEnabled(window && !window->isPinned());
+	setCurrentWindow(window);
+
+	if (window)
+	{
+		m_workspace->setActiveWindow(window);
+
+		window->setFocus();
+		window->markAsActive();
+
+		setStatusMessage(window->getContentsWidget()->getStatusMessage());
+
+		emit titleChanged(window->getContentsWidget()->getTitle());
+
+		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
+	}
+
+	getAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
+
+	emit currentWindowChanged(window ? window->getIdentifier() : 0);
+}
+
+void MainWindow::setActiveWindowByIdentifier(quint64 identifier)
+{
+	for (int i = 0; i < getWindowCount(); ++i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if (window && window->getIdentifier() == identifier)
+		{
+			setActiveWindowByIndex(i);
+
+			break;
 		}
 	}
 }
@@ -1199,6 +2037,13 @@ void MainWindow::setCurrentWindow(Window *window)
 			}
 		}
 	}
+}
+
+void MainWindow::setStatusMessage(const QString &message)
+{
+	QStatusTipEvent event(message);
+
+	QApplication::sendEvent(this, &event);
 }
 
 MainWindow* MainWindow::findMainWindow(QObject *parent)
@@ -1280,9 +2125,91 @@ TabBarWidget* MainWindow::getTabBar()
 	return m_tabBar;
 }
 
-WindowsManager* MainWindow::getWindowsManager()
+Window* MainWindow::getWindowByIndex(int index) const
 {
-	return m_windowsManager;
+	if (index == -1)
+	{
+		index = getCurrentWindowIndex();
+	}
+
+	return m_tabBar->getWindow(index);
+}
+
+Window* MainWindow::getWindowByIdentifier(quint64 identifier) const
+{
+	return (m_windows.contains(identifier) ? m_windows[identifier] : nullptr);
+}
+
+Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints, int index)
+{
+	if (!widget)
+	{
+		return nullptr;
+	}
+
+	Window *window(nullptr);
+
+	if (widget->isPrivate())
+	{
+		hints |= SessionsManager::PrivateOpen;
+	}
+
+	if (hints.testFlag(SessionsManager::NewWindowOpen))
+	{
+		window = Application::createWindow({{QLatin1String("hints"), QVariant(hints)}})->openWindow(widget);
+	}
+	else
+	{
+		window = new Window({{QLatin1String("hints"), QVariant(hints)}}, widget, this);
+
+		addWindow(window, hints, index);
+	}
+
+	return window;
+}
+
+QVariant MainWindow::getOption(int identifier) const
+{
+	Window *window(m_workspace->getActiveWindow());
+
+	return (window ? window->getContentsWidget()->getOption(identifier) : QVariant());
+}
+
+QString MainWindow::getTitle() const
+{
+	Window *window(m_workspace->getActiveWindow());
+
+	return (window ? window->getTitle() : tr("Empty"));
+}
+
+QUrl MainWindow::getUrl() const
+{
+	Window *window(m_workspace->getActiveWindow());
+
+	return (window ? window->getUrl() : QUrl());
+}
+
+SessionMainWindow MainWindow::getSession() const
+{
+	SessionMainWindow session;
+	session.geometry = saveGeometry();
+	session.index = getCurrentWindowIndex();
+
+	for (int i = 0; i < getWindowCount(); ++i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if (window && !window->isPrivate())
+		{
+			session.windows.append(window->getSession());
+		}
+		else if (i < session.index)
+		{
+			--session.index;
+		}
+	}
+
+	return session;
 }
 
 QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area)
@@ -1320,6 +2247,72 @@ QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area)
 	return toolBars;
 }
 
+QVector<ClosedWindow> MainWindow::getClosedWindows() const
+{
+	return m_closedWindows;
+}
+
+int MainWindow::getCurrentWindowIndex() const
+{
+	return m_tabBar->currentIndex();
+}
+
+int MainWindow::getWindowCount(bool onlyPrivate) const
+{
+	if (!onlyPrivate || m_isPrivate)
+	{
+		return m_windows.count();
+	}
+
+	QHash<quint64, Window*>::const_iterator iterator;
+	int amount(0);
+
+	for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+	{
+		if (iterator.value()->isPrivate())
+		{
+			++amount;
+		}
+	}
+
+	return amount;
+}
+
+int MainWindow::getWindowIndex(quint64 identifier) const
+{
+	for (int i = 0; i < getWindowCount(); ++i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if (window && window->getIdentifier() == identifier)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+bool MainWindow::hasUrl(const QUrl &url, bool activate)
+{
+	for (int i = 0; i < getWindowCount(); ++i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if (window && window->getUrl() == url)
+		{
+			if (activate)
+			{
+				setActiveWindowByIndex(i);
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool MainWindow::areToolBarsVisible() const
 {
 	return !isFullScreen();
@@ -1342,7 +2335,7 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::LanguageChange:
 			m_ui->retranslateUi(this);
 
-			updateWindowTitle(m_windowsManager->getTitle());
+			updateWindowTitle();
 
 			break;
 		case QEvent::WindowStateChange:
@@ -1424,9 +2417,9 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::WindowTitleChange:
-			if (m_windowTitle != windowTitle() && m_windowsManager)
+			if (m_windowTitle != windowTitle())
 			{
-				updateWindowTitle(m_windowsManager->getTitle());
+				updateWindowTitle();
 			}
 
 			break;
