@@ -82,22 +82,49 @@ void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
 	painter->restore();
 }
 
+void Style::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+{
+	QProxyStyle::drawControl(element, option, painter, widget);
+
+	if (element == QStyle::CE_ToolBar)
+	{
+		drawToolBarEdge(option, painter);
+	}
+}
+
 void Style::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (element == QStyle::PE_IndicatorItemViewItemCheck && widget)
+	switch (element)
 	{
-		const ItemViewWidget *view(qobject_cast<const ItemViewWidget*>(widget));
+		case QStyle::PE_IndicatorItemViewItemCheck:
+			if (widget)
+			{
+				const ItemViewWidget *view(qobject_cast<const ItemViewWidget*>(widget));
 
-		if (view && view->isExclusive())
-		{
-			QStyleOptionButton buttonOption;
-			buttonOption.rect = option->rect;
-			buttonOption.state = option->state;
+				if (view && view->isExclusive())
+				{
+					QStyleOptionButton buttonOption;
+					buttonOption.rect = option->rect;
+					buttonOption.state = option->state;
 
-			drawControl(QStyle::CE_RadioButton, &buttonOption, painter);
+					drawControl(QStyle::CE_RadioButton, &buttonOption, painter);
+
+					return;
+				}
+			}
+
+			break;
+		case QStyle::PE_PanelStatusBar:
+			QProxyStyle::drawPrimitive(element, option, painter, widget);
+
+			painter->save();
+			painter->setPen(QPen(Qt::lightGray, 1));
+			painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
+			painter->restore();
 
 			return;
-		}
+		default:
+			break;
 	}
 
 	QProxyStyle::drawPrimitive(element, option, painter, widget);

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,33 +29,54 @@ MacPlatformStyle::MacPlatformStyle(const QString &name) : Style(name)
 {
 }
 
-void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void MacPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (element == QStyle::PE_IndicatorTabClose)
+	if (element == QStyle::CE_ToolBar)
 	{
-		const int size(pixelMetric(QStyle::PM_TabCloseIndicatorWidth, option, widget));
-
-		painter->save();
-		painter->translate(option->rect.topLeft());
-
-		if (option->rect.width() < size)
-		{
-			const qreal scale(option->rect.width() / static_cast<qreal>(size));
-
-			painter->scale(scale, scale);
-		}
-		else
-		{
-			const int offset((option->rect.width() - size) / 2);
-
-			painter->translate(offset, offset);
-		}
-
-		QProxyStyle::drawPrimitive(element, option, painter, widget);
-
-		painter->restore();
+		QProxyStyle::drawControl(element, option, painter, widget);
 
 		return;
+	}
+
+	Style::drawControl(element, option, painter, widget);
+}
+
+void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+{
+	switch (element)
+	{
+		case QStyle::PE_IndicatorTabClose:
+			{
+				const int size(pixelMetric(QStyle::PM_TabCloseIndicatorWidth, option, widget));
+
+				painter->save();
+				painter->translate(option->rect.topLeft());
+
+				if (option->rect.width() < size)
+				{
+					const qreal scale(option->rect.width() / static_cast<qreal>(size));
+
+					painter->scale(scale, scale);
+				}
+				else
+				{
+					const int offset((option->rect.width() - size) / 2);
+
+					painter->translate(offset, offset);
+				}
+
+				QProxyStyle::drawPrimitive(element, option, painter, widget);
+
+				painter->restore();
+			}
+
+			return;
+		case QStyle::PE_PanelStatusBar:
+			QProxyStyle::drawPrimitive(element, option, painter, widget);
+
+			return;
+		default:
+			break;
 	}
 
 	Style::drawPrimitive(element, option, painter, widget);

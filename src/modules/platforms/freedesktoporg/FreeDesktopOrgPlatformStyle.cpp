@@ -99,6 +99,8 @@ void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, co
 		{
 			painter->fillRect(option->rect, QColor(60, 59, 55));
 
+			drawToolBarEdge(option, painter);
+
 			return;
 		}
 	}
