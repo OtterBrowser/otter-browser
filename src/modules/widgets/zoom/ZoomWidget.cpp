@@ -54,6 +54,8 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (!isEnabled() || event->button() != Qt::LeftButton)
 	{
+		QSlider::mousePressEvent(event);
+
 		return;
 	}
 
