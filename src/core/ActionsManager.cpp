@@ -483,7 +483,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ShowTabSwitcherAction, QT_TRANSLATE_NOOP("actions", "Show Tab Switcher"));
 	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
-	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
+	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), ThemesManager::getIcon(QLatin1String("sidebar-show")), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(ResetToolBarsAction, QT_TRANSLATE_NOOP("actions", "Reset to Defaults…"), QT_TRANSLATE_NOOP("actions", "Reset Toolbars to Defaults…"), QIcon(), IsEnabledFlag);

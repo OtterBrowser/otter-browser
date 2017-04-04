@@ -99,6 +99,7 @@
         <file>icons/theme/preferences-plugin.png</file>
         <file>icons/theme/process-stop.png</file>
         <file>icons/theme/qt.png</file>
+        <file>icons/theme/sidebar-show.png</file>
         <file>icons/theme/tab-close-other.png</file>
         <file>icons/theme/tab-close.png</file>
         <file>icons/theme/tab-crashed.png</file>
