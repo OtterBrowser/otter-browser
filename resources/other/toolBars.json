@@ -70,6 +70,7 @@
 		"iconSize": 20,
 		"actions":
 		[
+			"ShowSidebarAction",
 			"StatusMessageWidget",
 			"ZoomOutAction",
 			"ZoomWidget",
