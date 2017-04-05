@@ -183,7 +183,7 @@ void WebContentsWidget::showEvent(QShowEvent *event)
 
 	if (m_window && !m_progressBarWidget && getLoadingState() == WebWidget::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 	{
-		m_progressBarWidget = new ProgressBarWidget(m_window, this);
+		m_progressBarWidget = new ProgressBarWidget(m_window, m_webWidget);
 	}
 }
 
@@ -978,7 +978,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 	}
 	else if (m_window && !m_progressBarWidget && state == WebWidget::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
 	{
-		m_progressBarWidget = new ProgressBarWidget(m_window, this);
+		m_progressBarWidget = new ProgressBarWidget(m_window, m_webWidget);
 	}
 }
 

@@ -29,7 +29,8 @@
 namespace Otter
 {
 
-ProgressBarWidget::ProgressBarWidget(Window *window, QWidget *parent) : QFrame(parent),
+ProgressBarWidget::ProgressBarWidget(Window *window, WebWidget *parent) : QFrame(parent),
+	m_webWidget(parent),
 	m_window(window),
 	m_geometryUpdateTimer(0)
 {
@@ -62,7 +63,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		m_geometryUpdateTimer = 0;
 
-		if (!m_window || !m_window->getWebWidget())
+		if (!m_window || !m_webWidget)
 		{
 			return;
 		}
@@ -71,19 +72,19 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WebWidget::OngoingLoadingState))
 		{
-			QRect geometry(m_window->getWebWidget()->getProgressBarGeometry());
+			QRect geometry(m_webWidget->getProgressBarGeometry());
 
 			if (!isVisible())
 			{
-				connect(m_window->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+				connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 			}
 
 			if (!geometry.isValid())
 			{
-				geometry = QRect(QPoint(0, (m_window->getWebWidget()->height() - 30)), QSize(m_window->getWebWidget()->width(), 30));
+				geometry = QRect(QPoint(0, (m_webWidget->height() - 30)), QSize(m_webWidget->width(), 30));
 			}
 
-			geometry.translate(m_window->getWebWidget()->mapTo(m_window->getContentsWidget(), QPoint(0, 0)));
+			geometry.translate(m_webWidget->mapTo(m_window->getContentsWidget(), QPoint(0, 0)));
 
 			setGeometry(geometry);
 			show();
@@ -91,7 +92,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 		}
 		else
 		{
-			disconnect(m_window->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 
 			hide();
 		}
@@ -110,9 +111,9 @@ void ProgressBarWidget::updateLoadingState(WebWidget::LoadingState state)
 	{
 		hide();
 
-		if (m_window && m_window->getWebWidget())
+		if (m_window && m_webWidget)
 		{
-			disconnect(m_window->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 		}
 	}
 }
