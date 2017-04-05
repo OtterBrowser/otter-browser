@@ -104,12 +104,12 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 
 		if (!m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isNull())
 		{
-			toolTip.append(tr("Created: %1").arg(m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().toString()));
+			toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime())));
 		}
 
 		if (!m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().isNull())
 		{
-			toolTip.append(tr("Visited: %1").arg(m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().toString()));
+			toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime())));
 		}
 
 		setToolTip(QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>"));

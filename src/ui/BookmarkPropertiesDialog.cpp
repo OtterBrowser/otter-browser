@@ -46,8 +46,8 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	m_ui->addressLabel->setVisible(type == BookmarksModel::UrlBookmark);
 	m_ui->descriptionTextEdit->setPlainText(m_bookmark->data(BookmarksModel::DescriptionRole).toString());
 	m_ui->keywordLineEdit->setText(m_bookmark->data(BookmarksModel::KeywordRole).toString());
-	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? m_bookmark->data(BookmarksModel::TitleRole).toDateTime().toString() : tr("Unknown"));
-	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().toString() : tr("Unknown"));
+	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TitleRole).toDateTime()) : tr("Unknown"));
+	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime()) : tr("Unknown"));
 
 	if (type == BookmarksModel::UrlBookmark)
 	{
