@@ -1666,6 +1666,8 @@ void MainWindow::handleWindowClose(Window *window)
 			getAction(ActionsManager::CloseTabAction)->setEnabled(false);
 			setCurrentWindow(nullptr);
 
+			m_workspace->setActiveWindow(nullptr);
+
 			emit titleChanged(QString());
 		}
 	}
@@ -1985,6 +1987,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 	}
 
 	getAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
+	updateWindowTitle();
 
 	emit currentWindowChanged(window ? window->getIdentifier() : 0);
 }
