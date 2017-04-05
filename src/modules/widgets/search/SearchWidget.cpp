@@ -638,7 +638,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 
 	m_searchEngine = (searchEngines.contains(searchEngine) ? searchEngine : QString());
 
-	setSearchEngine(getCurrentIndex());
+	setSearchEngine(getCurrentIndex(), false);
 
 	if (m_suggester)
 	{
