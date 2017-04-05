@@ -229,7 +229,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 
 			speedSum /= (speeds.count());
 
-			remainingTime = Utils::formatTime(qreal(transfer->getBytesTotal() - transfer->getBytesReceived()) / speedSum);
+			remainingTime = Utils::formatElapsedTime(qreal(transfer->getBytesTotal() - transfer->getBytesReceived()) / speedSum);
 		}
 	}
 	else

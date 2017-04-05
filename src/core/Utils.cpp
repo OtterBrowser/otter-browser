@@ -367,7 +367,7 @@ QString formatConfigurationEntry(const QLatin1String &key, const QString &value,
 	return QStringLiteral("%1=%2\n").arg(key).arg(escapedValue);
 }
 
-QString formatTime(int value)
+QString formatElapsedTime(int value)
 {
 	QTime time(0, 0);
 	time = time.addSecs(value);
