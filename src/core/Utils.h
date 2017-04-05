@@ -89,7 +89,7 @@ QString createErrorPage(const ErrorPageInformation &information);
 QString elideText(const QString &text, QWidget *widget = nullptr, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatTime(int value);
-QString formatDateTime(const QDateTime &dateTime, QString format = QString());
+QString formatDateTime(const QDateTime &dateTime, QString format = QString(), bool allowFancy = true);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
 QString formatFileTypes(const QStringList &filters = QStringList());
 QString normalizePath(const QString &path);

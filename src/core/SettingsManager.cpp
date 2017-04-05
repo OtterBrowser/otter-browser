@@ -151,6 +151,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Interface_ShowSizeGripOption, BooleanType, true);
 	registerOption(Interface_StyleSheetOption, PathType, QString());
 	registerOption(Interface_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), QStringList({QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")}));
+	registerOption(Interface_UseFancyDateTimeFormatOption, BooleanType, true);
 	registerOption(Interface_UseNativeNotificationsOption, BooleanType, true);
 	registerOption(Interface_UseSystemIconThemeOption, BooleanType, false);
 	registerOption(Interface_WidgetStyleOption, StringType, QString());

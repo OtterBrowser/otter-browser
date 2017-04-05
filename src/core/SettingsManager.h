@@ -132,6 +132,7 @@ public:
 		Interface_ShowSizeGripOption,
 		Interface_StyleSheetOption,
 		Interface_TabCrashingActionOption,
+		Interface_UseFancyDateTimeFormatOption,
 		Interface_UseNativeNotificationsOption,
 		Interface_UseSystemIconThemeOption,
 		Interface_WidgetStyleOption,

@@ -387,8 +387,26 @@ QString formatTime(int value)
 	return time.toString(QLatin1String("mm:ss"));
 }
 
-QString formatDateTime(const QDateTime &dateTime, QString format)
+QString formatDateTime(const QDateTime &dateTime, QString format, bool allowFancy)
 {
+	if (allowFancy && SettingsManager::getOption(SettingsManager::Interface_UseFancyDateTimeFormatOption).toBool() && dateTime.date() > QDate::currentDate().addDays(-7))
+	{
+		if (dateTime.date() == QDate::currentDate())
+		{
+			return QCoreApplication::translate("utils", "Today at %1").arg(dateTime.toString(QLatin1String("hh:mm")));
+		}
+
+		if (dateTime.date() == QDate::currentDate().addDays(-1))
+		{
+			return QCoreApplication::translate("utils", "Yesterday at %1").arg(dateTime.toString(QLatin1String("hh:mm")));
+		}
+
+		QString dayOfWeek(dateTime.toString(QLatin1String("dddd")));
+		dayOfWeek[0] = dayOfWeek.at(0).toUpper();
+
+		return QCoreApplication::translate("utils", "%1 at %2").arg(dayOfWeek, dateTime.toString(QLatin1String("hh:mm")));
+	}
+
 	if (format.isEmpty())
 	{
 		format = SettingsManager::getOption(SettingsManager::Interface_DateTimeFormatOption).toString();
