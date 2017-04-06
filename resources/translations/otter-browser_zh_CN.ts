@@ -24,12 +24,12 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
         <source>Send for:</source>
-        <translation type="unfinished"/>
+        <translation>发送给：</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="83"/>
         <source>Accessible using JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>可用 JavaScript 访问：</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="100"/>
@@ -54,17 +54,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation type="unfinished"/>
+        <translation>仅此会话</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Secure connections only</source>
-        <translation type="unfinished"/>
+        <translation>仅安全连接</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Any type of connection</source>
-        <translation type="unfinished"/>
+        <translation>任何连接</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
@@ -249,7 +249,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="390"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>扩展</translation>
     </message>
 </context>
 <context>
@@ -277,7 +277,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="175"/>
         <source>Typed history</source>
-        <translation type="unfinished"/>
+        <translation>输入历史</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="197"/>
@@ -341,7 +341,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="406"/>
         <source>Remove this Icon</source>
-        <translation type="unfinished"/>
+        <translation>移除此图标</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="486"/>
@@ -351,32 +351,32 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="865"/>
         <source>Show website information</source>
-        <translation type="unfinished"/>
+        <translation>显示网站信息</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="882"/>
         <source>Show feed list</source>
-        <translation type="unfinished"/>
+        <translation>显示订阅列表</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="894"/>
         <source>Remove bookmark</source>
-        <translation type="unfinished"/>
+        <translation>移除书签</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="905"/>
         <source>Add bookmark</source>
-        <translation type="unfinished"/>
+        <translation>添加书签</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="927"/>
         <source>Load all plugins on the page</source>
-        <translation type="unfinished"/>
+        <translation>在此页面上载入所有插件</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="941"/>
         <source>Log in</source>
-        <translation type="unfinished"/>
+        <translation>登录</translation>
     </message>
 </context>
 <context>
@@ -717,13 +717,13 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>添加文件夹…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>添加书签…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="50"/>
@@ -821,7 +821,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="356"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>书签</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1432,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"/>
+        <translation>高级配置</translation>
     </message>
 </context>
 <context>
@@ -1659,7 +1659,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="338"/>
         <source>Blocked Elements: {amount}</source>
-        <translation type="unfinished"/>
+        <translation>被拦截的元素：（数量）</translation>
     </message>
 </context>
 <context>
@@ -1755,58 +1755,58 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>名称：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="38"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>值：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="51"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>过期时间：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="64"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>仅此会话</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="71"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation type="unfinished"/>
+        <translation>MM.dd.yyyy HH:mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="81"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>域名：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="97"/>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>路径：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="112"/>
         <source>Send only for secure connections</source>
-        <translation type="unfinished"/>
+        <translation>仅为安全连接发送</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="119"/>
         <source>Allow accessing using JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>允许使用 JavaScript 访问</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.cpp" line="35"/>
         <source>Add Cookie</source>
-        <translation type="unfinished"/>
+        <translation>添加 Cookie</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.cpp" line="39"/>
         <source>Edit Cookie</source>
-        <translation type="unfinished"/>
+        <translation>编辑 Cookie</translation>
     </message>
 </context>
 <context>
@@ -1839,18 +1839,18 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>路径：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="165"/>
         <source>Add…</source>
-        <translation type="unfinished"/>
+        <translation>添加…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="175"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="359"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>属性…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="185"/>
@@ -1882,7 +1882,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="339"/>
         <source>Add Cookie…</source>
-        <translation type="unfinished"/>
+        <translation>添加 Cookie…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="349"/>
@@ -1897,12 +1897,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="428"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>仅此会话</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="482"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Cookies</translation>
     </message>
 </context>
 <context>
@@ -2216,7 +2216,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="132"/>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>重置</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="136"/>
@@ -2359,7 +2359,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
         <source>Allow to receive right mouse button clicks</source>
-        <translation type="unfinished"/>
+        <translation>允许接受鼠标右键点击</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="72"/>
@@ -2458,17 +2458,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="60"/>
         <source>Directory does not exist</source>
-        <translation type="unfinished"/>
+        <translation>目录不存在</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
         <source>Directory is not readable</source>
-        <translation type="unfinished"/>
+        <translation>目录不可读</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="66"/>
         <source>Cannot read directory listing</source>
-        <translation type="unfinished"/>
+        <translation>无法读取目录列表</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="104"/>
@@ -2653,33 +2653,34 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="352"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="353"/>
         <source>Configuration of %1 needs to be updated to new version.
 Do you want to migrate it?</source>
-        <translation type="unfinished"/>
+        <translation>%1 的配置需要更新到一个更新的版本。
+您希望迁移此配置吗？</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="355"/>
         <source>Create backup</source>
-        <translation type="unfinished"/>
+        <translation>创建备份</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="356"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="358"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="359"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -2817,12 +2818,12 @@ Do you want to migrate it?</source>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="326"/>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="357"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>无法载入代理自动配置 (PAC)：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="344"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法载入代理自动配置 (PAC)。无效 URL：%1</translation>
     </message>
 </context>
 <context>
@@ -2885,7 +2886,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>添加文件夹…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
@@ -2944,7 +2945,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="371"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>便笺</translation>
     </message>
 </context>
 <context>
@@ -3164,7 +3165,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="373"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>密码</translation>
     </message>
 </context>
 <context>
@@ -3313,12 +3314,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="62"/>
         <source>Smooth scrolling</source>
-        <translation type="unfinished"/>
+        <translation>平滑滚动</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="69"/>
         <source>Check spelling</source>
-        <translation type="unfinished"/>
+        <translation>检查拼写</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="82"/>
@@ -3498,7 +3499,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="733"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>User Agent</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="776"/>
@@ -3710,34 +3711,34 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="217"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="210"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="225"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>添加文件夹…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="211"/>
         <source>Add User Agent…</source>
-        <translation type="unfinished"/>
+        <translation>添加 User Agent…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="212"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="227"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>添加分隔符</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="226"/>
         <source>Add Proxy…</source>
-        <translation type="unfinished"/>
+        <translation>添加代理…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="286"/>

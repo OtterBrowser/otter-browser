@@ -54,7 +54,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation type="unfinished"/>
+        <translation>Само за тази сесия</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -374,7 +374,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="941"/>
         <source>Log in</source>
-        <translation type="unfinished"/>
+        <translation>Влизане</translation>
     </message>
 </context>
 <context>
@@ -426,12 +426,12 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Игнориране</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="346"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Излизане</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="417"/>
@@ -834,7 +834,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Нов...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -918,12 +918,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Търсене...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="110"/>
@@ -958,12 +958,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="210"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Изтрий</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="113"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="113"/>
@@ -988,7 +988,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="340"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Отвори</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="341"/>
