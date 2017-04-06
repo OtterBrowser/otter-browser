@@ -70,6 +70,7 @@ public:
 	QSize sizeHint() const override;
 	WebWidget::LoadingState getLoadingState() const;
 	WebWidget::ContentStates getContentState() const;
+	WindowState getWindowState() const;
 	quint64 getIdentifier() const;
 	int getZoom() const;
 	bool canClone() const;

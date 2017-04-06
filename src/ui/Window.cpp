@@ -787,30 +787,11 @@ SessionWindow Window::getSession() const
 		session = m_session;
 	}
 
-	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+	session.state = getWindowState();
 
-	if (subWindow)
+	if (session.state == NormalWindowState && parentWidget())
 	{
-		if (subWindow->isMaximized())
-		{
-			session.state = MaximizedWindowState;
-			session.geometry = QRect();
-		}
-		else if (subWindow->isMinimized())
-		{
-			session.state = MinimizedWindowState;
-			session.geometry = QRect();
-		}
-		else
-		{
-			session.state = NormalWindowState;
-			session.geometry = subWindow->geometry();
-		}
-	}
-	else
-	{
-		session.state = MaximizedWindowState;
-		session.geometry = QRect();
+		session.geometry = parentWidget()->geometry();
 	}
 
 	return session;
@@ -829,6 +810,28 @@ WebWidget::LoadingState Window::getLoadingState() const
 WebWidget::ContentStates Window::getContentState() const
 {
 	return (m_contentsWidget ? m_contentsWidget->getContentState() : WebWidget::UnknownContentState);
+}
+
+WindowState Window::getWindowState() const
+{
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+	if (subWindow)
+	{
+		if (subWindow->isMaximized())
+		{
+			return MaximizedWindowState;
+		}
+
+		if (subWindow->isMinimized())
+		{
+			return MinimizedWindowState;
+		}
+
+		return NormalWindowState;
+	}
+
+	return MaximizedWindowState;
 }
 
 quint64 Window::getIdentifier() const
