@@ -535,20 +535,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			SettingsManager::setValue(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters, getAction(ActionsManager::WorkOfflineAction)));
 
 			return;
-		case ActionsManager::FullScreenAction:
-			if (isFullScreen())
-			{
-				restoreWindowState();
-			}
-			else
-			{
-				storeWindowState();
-				showFullScreen();
-			}
-
-			triggerAction(identifier, parameters);
-
-			return;
 		case ActionsManager::ClosePrivateTabsAction:
 			{
 				getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
@@ -1095,6 +1081,23 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			if (window)
 			{
 				setActiveWindowByIdentifier(window->getIdentifier());
+			}
+
+			break;
+		case ActionsManager::FullScreenAction:
+			if (isFullScreen())
+			{
+				restoreWindowState();
+			}
+			else
+			{
+				storeWindowState();
+				showFullScreen();
+			}
+
+			if (window)
+			{
+				window->triggerAction(identifier, parameters);
 			}
 
 			break;
