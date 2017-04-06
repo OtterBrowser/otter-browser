@@ -23,7 +23,6 @@
 
 #include "HistoryModel.h"
 
-#include <QtCore/QDateTime>
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
 

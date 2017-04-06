@@ -24,9 +24,6 @@
 #include "SettingsManager.h"
 #include "ThemesManager.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QFile>
-#include <QtCore/QTextStream>
 #include <QtCore/QTimerEvent>
 
 namespace Otter
