@@ -559,7 +559,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				{
 					Utils::runApplication(parameters[QLatin1String("application")].toString(), url);
 
-					break;
+					return;
 				}
 
 				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
@@ -577,7 +577,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				{
 					Application::createWindow(mutableParameters);
 
-					break;
+					return;
 				}
 
 				if (index >= 0)
@@ -588,7 +588,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 					window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 
-					break;
+					return;
 				}
 
 				Window *activeWindow(getWorkspace()->getActiveWindow());
@@ -626,11 +626,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 			}
 
-			break;
+			return;
 		case ActionsManager::ReopenTabAction:
 			restore();
 
-			break;
+			return;
 		case ActionsManager::StopAllAction:
 			{
 				QHash<quint64, Window*>::const_iterator iterator;
@@ -641,7 +641,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ReloadAllAction:
 			{
 				QHash<quint64, Window*>::const_iterator iterator;
@@ -652,7 +652,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ActivatePreviouslyUsedTabAction:
 		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
 			{
@@ -676,15 +676,15 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ActivateTabOnLeftAction:
 			setActiveWindowByIndex((getCurrentWindowIndex() > 0) ? (getCurrentWindowIndex() - 1) : (getWindowCount() - 1));
 
-			break;
+			return;
 		case ActionsManager::ActivateTabOnRightAction:
 			setActiveWindowByIndex(((getCurrentWindowIndex() + 1) < getWindowCount()) ? (getCurrentWindowIndex() + 1) : 0);
 
-			break;
+			return;
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			for (int i = 0; i < getWindowCount(); ++i)
 			{
@@ -696,7 +696,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::OpenBookmarkAction:
 			if (parameters.contains(QLatin1String("bookmark")))
 			{
@@ -704,7 +704,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!bookmark)
 				{
-					break;
+					return;
 				}
 
 				QVariantMap mutableParameters(parameters);
@@ -779,7 +779,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::ShowTabSwitcherAction:
 			if (!m_tabSwitcher)
 			{
@@ -2474,8 +2474,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 			triggerAction(ActionsManager::FullScreenAction);
 		}
 	}
-
-	if (event->type() == QEvent::Leave && isFullScreen())
+	else if (event->type() == QEvent::Leave && isFullScreen())
 	{
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(object));
 
