@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "CookieJar.h"
+#include "Application.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
@@ -106,7 +107,17 @@ void CookieJar::clearCookies(int period)
 		emit cookieRemoved(cookies.at(i));
 	}
 
-	save();
+	if (!m_isPrivate)
+	{
+		if (Application::isAboutToQuit())
+		{
+			save();
+		}
+		else
+		{
+			scheduleSave();
+		}
+	}
 }
 
 void CookieJar::scheduleSave()

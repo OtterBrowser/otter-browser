@@ -20,6 +20,7 @@
 
 #include "HistoryManager.h"
 #include "AddonsManager.h"
+#include "Application.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
@@ -62,15 +63,7 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		if (m_browsingHistoryModel)
-		{
-			m_browsingHistoryModel->save(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json")));
-		}
-
-		if (m_typedHistoryModel)
-		{
-			m_typedHistoryModel->save(SessionsManager::getWritableDataPath(QLatin1String("typedHistory.json")));
-		}
+		save();
 	}
 	else if (event->timerId() == m_dayTimer)
 	{
@@ -107,6 +100,19 @@ void HistoryManager::scheduleSave()
 	}
 }
 
+void HistoryManager::save()
+{
+	if (m_browsingHistoryModel)
+	{
+		m_browsingHistoryModel->save(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json")));
+	}
+
+	if (m_typedHistoryModel)
+	{
+		m_typedHistoryModel->save(SessionsManager::getWritableDataPath(QLatin1String("typedHistory.json")));
+	}
+}
+
 void HistoryManager::clearHistory(uint period)
 {
 	if (!m_browsingHistoryModel)
@@ -122,7 +128,14 @@ void HistoryManager::clearHistory(uint period)
 	m_browsingHistoryModel->clearRecentEntries(period);
 	m_typedHistoryModel->clearRecentEntries(period);
 
-	m_instance->scheduleSave();
+	if (Application::isAboutToQuit())
+	{
+		m_instance->save();
+	}
+	else
+	{
+		m_instance->scheduleSave();
+	}
 }
 
 void HistoryManager::removeEntry(quint64 identifier)

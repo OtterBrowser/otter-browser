@@ -53,6 +53,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();
+	void save();
 
 protected slots:
 	void handleOptionChanged(int identifier);
