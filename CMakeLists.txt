@@ -412,7 +412,6 @@ endif (ENABLE_CRASHREPORTS)
 
 if (HUNSPELL_FOUND)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
-	add_definitions(-DSONNET_STATIC)
 	add_definitions(-DQT_STATICPLUGIN)
 	include_directories(${HUNSPELL_INCLUDE_DIR})
 
