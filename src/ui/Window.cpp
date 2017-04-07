@@ -22,7 +22,6 @@
 #include "Window.h"
 #include "MainWindow.h"
 #include "OpenAddressDialog.h"
-#include "ToolBarWidget.h"
 #include "WorkspaceWidget.h"
 #include "../core/Application.h"
 #include "../core/HistoryManager.h"
@@ -45,6 +44,7 @@
 #include <QtCore/QTimer>
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
+#include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QMdiSubWindow>
@@ -53,6 +53,26 @@ namespace Otter
 {
 
 quint64 Window::m_identifierCounter(0);
+
+WindowToolBarWidget::WindowToolBarWidget(int identifier, Window *parent) : ToolBarWidget(identifier, parent, parent)
+{
+}
+
+void WindowToolBarWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	QPainter painter(this);
+	QStyleOptionToolBar toolBarOption;
+	toolBarOption.initFrom(this);
+	toolBarOption.lineWidth = style()->pixelMetric(QStyle::PM_ToolBarFrameWidth, nullptr, this);
+	toolBarOption.positionOfLine = QStyleOptionToolBar::End;
+	toolBarOption.positionWithinLine = QStyleOptionToolBar::OnlyOne;
+	toolBarOption.state |= QStyle::State_Horizontal;
+	toolBarOption.toolBarArea = Qt::TopToolBarArea;
+
+	style()->drawControl(QStyle::CE_ToolBar, &toolBarOption, &painter);
+}
 
 Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->getWorkspace()),
 	m_mainWindow(mainWindow),
@@ -598,7 +618,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (!m_navigationBar)
 	{
-		m_navigationBar = new ToolBarWidget(ToolBarsManager::NavigationBar, this, this);
+		m_navigationBar = new WindowToolBarWidget(ToolBarsManager::NavigationBar, this);
 		m_navigationBar->setVisible(m_areToolBarsVisible && m_navigationBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		layout()->addWidget(m_navigationBar);

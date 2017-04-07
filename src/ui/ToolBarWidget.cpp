@@ -245,28 +245,10 @@ void ToolBarWidget::changeEvent(QEvent *event)
 
 void ToolBarWidget::paintEvent(QPaintEvent *event)
 {
-	if (m_identifier == ToolBarsManager::StatusBar)
+	if (m_identifier != ToolBarsManager::StatusBar)
 	{
-		return;
+		QToolBar::paintEvent(event);
 	}
-
-	if (m_identifier == ToolBarsManager::NavigationBar)
-	{
-		QPainter painter(this);
-		QStyleOptionToolBar toolBarOption;
-		toolBarOption.initFrom(this);
-		toolBarOption.lineWidth = style()->pixelMetric(QStyle::PM_ToolBarFrameWidth, nullptr, this);
-		toolBarOption.positionOfLine = QStyleOptionToolBar::End;
-		toolBarOption.positionWithinLine = QStyleOptionToolBar::OnlyOne;
-		toolBarOption.state |= QStyle::State_Horizontal;
-		toolBarOption.toolBarArea = Qt::TopToolBarArea;
-
-		style()->drawControl(QStyle::CE_ToolBar, &toolBarOption, &painter);
-
-		return;
-	}
-
-	QToolBar::paintEvent(event);
 
 	if (m_identifier != ToolBarsManager::TabBar)
 	{

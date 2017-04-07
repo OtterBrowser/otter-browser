@@ -23,13 +23,13 @@
 #define OTTER_WINDOW_H
 
 #include "ContentsWidget.h"
+#include "ToolBarWidget.h"
 #include "WebWidget.h"
 #include "../core/SessionsManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
-#include <QtWidgets/QWidget>
 
 namespace Otter
 {
@@ -38,7 +38,15 @@ class AddressWidget;
 class BookmarksItem;
 class ContentsWidget;
 class SearchWidget;
-class ToolBarWidget;
+
+class WindowToolBarWidget : public ToolBarWidget
+{
+public:
+	explicit WindowToolBarWidget(int identifier, Window *parent);
+
+protected:
+	void paintEvent(QPaintEvent *event) override;
+};
 
 class Window : public QWidget
 {
@@ -107,7 +115,7 @@ protected slots:
 
 private:
 	MainWindow *m_mainWindow;
-	ToolBarWidget *m_navigationBar;
+	WindowToolBarWidget *m_navigationBar;
 	ContentsWidget *m_contentsWidget;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;
