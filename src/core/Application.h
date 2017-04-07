@@ -69,15 +69,15 @@ public:
 	static Style* getStyle();
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
-	QCommandLineParser* getCommandLineParser();
+	static QCommandLineParser* getCommandLineParser();
 	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
 	static QVector<MainWindow*> getWindows();
-	bool canClose();
-	bool isHidden() const;
-	bool isUpdating() const;
-	bool isRunning() const;
+	static bool canClose();
+	static bool isHidden();
+	static bool isUpdating();
+	static bool isRunning();
 
 public slots:
 	void close();

@@ -113,20 +113,20 @@ int main(int argc, char *argv[])
 	Application application(argc, argv);
 	application.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
-	if (application.isRunning() || application.isUpdating() || application.getCommandLineParser()->isSet(QLatin1String("report")))
+	if (Application::isRunning() || Application::isUpdating() || Application::getCommandLineParser()->isSet(QLatin1String("report")))
 	{
 		return 0;
 	}
 
-	const QString session(application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : application.getCommandLineParser()->value(QLatin1String("session")));
+	const QString session(Application::getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : Application::getCommandLineParser()->value(QLatin1String("session")));
 	const QString startupBehavior(SettingsManager::getOption(SettingsManager::Browser_StartupBehaviorOption).toString());
-	const bool isPrivate(application.getCommandLineParser()->isSet(QLatin1String("private-session")));
+	const bool isPrivate(Application::getCommandLineParser()->isSet(QLatin1String("private-session")));
 
-	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
+	if (!Application::getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(session), nullptr, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("session-chooser")) || !SessionsManager::getSession(session).isClean)
+	else if (startupBehavior == QLatin1String("showDialog") || Application::getCommandLineParser()->isSet(QLatin1String("session-chooser")) || !SessionsManager::getSession(session).isClean)
 	{
 		StartupDialog dialog(session);
 
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 		SessionsManager::restoreSession(sessionData, nullptr, isPrivate);
 	}
 
-	Application::handlePositionalArguments(application.getCommandLineParser());
+	Application::handlePositionalArguments(Application::getCommandLineParser());
 
 	if (application.getWindows().isEmpty())
 	{

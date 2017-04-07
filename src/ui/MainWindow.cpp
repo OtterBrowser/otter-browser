@@ -251,7 +251,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
 	const bool isLastWindow(Application::getWindows().count() == 1);
 
-	if (isLastWindow && !Application::getInstance()->canClose())
+	if (isLastWindow && !Application::canClose())
 	{
 		event->ignore();
 

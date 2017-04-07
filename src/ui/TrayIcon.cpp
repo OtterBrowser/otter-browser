@@ -116,7 +116,7 @@ void TrayIcon::hide()
 
 void TrayIcon::updateMenu()
 {
-	m_trayIcon->contextMenu()->actions().at(0)->setText(Application::getInstance()->isHidden() ? tr("Show Windows") : tr("Hide Windows"));
+	m_trayIcon->contextMenu()->actions().at(0)->setText(Application::isHidden() ? tr("Show Windows") : tr("Hide Windows"));
 }
 
 void TrayIcon::showMessage(Notification *notification)

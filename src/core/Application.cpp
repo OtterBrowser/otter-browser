@@ -1084,7 +1084,7 @@ bool Application::canClose()
 
 		if (messageBox.clickedButton() == hideButton)
 		{
-			setHidden(true);
+			m_instance->setHidden(true);
 
 			return false;
 		}
@@ -1141,7 +1141,7 @@ bool Application::canClose()
 
 			if (messageBox.clickedButton() == hideButton)
 			{
-				setHidden(true);
+				m_instance->setHidden(true);
 
 				return false;
 			}
@@ -1151,17 +1151,17 @@ bool Application::canClose()
 	return true;
 }
 
-bool Application::isHidden() const
+bool Application::isHidden()
 {
 	return m_isHidden;
 }
 
-bool Application::isUpdating() const
+bool Application::isUpdating()
 {
 	return m_isUpdating;
 }
 
-bool Application::isRunning() const
+bool Application::isRunning()
 {
 	return (m_localServer == nullptr);
 }
