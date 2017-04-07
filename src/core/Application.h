@@ -75,6 +75,7 @@ public:
 	static QString getLocalePath();
 	static QVector<MainWindow*> getWindows();
 	static bool canClose();
+	static bool isAboutToQuit();
 	static bool isHidden();
 	static bool isUpdating();
 	static bool isRunning();
@@ -86,9 +87,9 @@ public slots:
 protected slots:
 	void openUrl(const QUrl &url);
 	void updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
-	void clearHistory();
 	void periodicUpdateCheck();
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void handleAboutToQuit();
 	void handleNewConnection();
 	void showUpdateDetails();
 	void setActiveWindow(MainWindow *window);
@@ -104,6 +105,7 @@ private:
 	static QString m_localePath;
 	static QCommandLineParser m_commandLineParser;
 	static QVector<MainWindow*> m_windows;
+	static bool m_isAboutToQuit;
 	static bool m_isHidden;
 	static bool m_isUpdating;
 

@@ -85,6 +85,7 @@ QPointer<MainWindow> Application::m_activeWindow(nullptr);
 QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
 QVector<MainWindow*> Application::m_windows;
+bool Application::m_isAboutToQuit(false);
 bool Application::m_isHidden(false);
 bool Application::m_isUpdating(false);
 
@@ -471,7 +472,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
 
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
-	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
+	connect(this, SIGNAL(aboutToQuit()), this, SLOT(handleAboutToQuit()));
 }
 
 Application::~Application()
@@ -511,42 +512,6 @@ void Application::removeWindow(MainWindow *window)
 	if (m_windows.isEmpty())
 	{
 		exit();
-	}
-}
-
-void Application::clearHistory()
-{
-	QStringList clearSettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList());
-	clearSettings.removeAll(QString());
-
-	if (!clearSettings.isEmpty())
-	{
-		const bool shouldClearAll(clearSettings.contains(QLatin1String("all")));
-
-		if (shouldClearAll || clearSettings.contains(QLatin1String("browsing")))
-		{
-			HistoryManager::clearHistory();
-		}
-
-		if (shouldClearAll || clearSettings.contains(QLatin1String("cookies")))
-		{
-			NetworkManagerFactory::clearCookies();
-		}
-
-		if (shouldClearAll || clearSettings.contains(QLatin1String("downloads")))
-		{
-			TransfersManager::clearTransfers();
-		}
-
-		if (shouldClearAll || clearSettings.contains(QLatin1String("caches")))
-		{
-			NetworkManagerFactory::clearCache();
-		}
-
-		if (shouldClearAll || clearSettings.contains(QLatin1String("passwords")))
-		{
-			PasswordsManager::clearPasswords();
-		}
 	}
 }
 
@@ -598,6 +563,44 @@ void Application::handleOptionChanged(int identifier, const QVariant &value)
 		{
 			m_trayIcon->deleteLater();
 			m_trayIcon = nullptr;
+		}
+	}
+}
+
+void Application::handleAboutToQuit()
+{
+	m_isAboutToQuit = true;
+
+	QStringList clearSettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList());
+	clearSettings.removeAll(QString());
+
+	if (!clearSettings.isEmpty())
+	{
+		const bool shouldClearAll(clearSettings.contains(QLatin1String("all")));
+
+		if (shouldClearAll || clearSettings.contains(QLatin1String("browsing")))
+		{
+			HistoryManager::clearHistory();
+		}
+
+		if (shouldClearAll || clearSettings.contains(QLatin1String("cookies")))
+		{
+			NetworkManagerFactory::clearCookies();
+		}
+
+		if (shouldClearAll || clearSettings.contains(QLatin1String("downloads")))
+		{
+			TransfersManager::clearTransfers();
+		}
+
+		if (shouldClearAll || clearSettings.contains(QLatin1String("caches")))
+		{
+			NetworkManagerFactory::clearCache();
+		}
+
+		if (shouldClearAll || clearSettings.contains(QLatin1String("passwords")))
+		{
+			PasswordsManager::clearPasswords();
 		}
 	}
 }
@@ -1149,6 +1152,11 @@ bool Application::canClose()
 	}
 
 	return true;
+}
+
+bool Application::isAboutToQuit()
+{
+	return m_isAboutToQuit;
 }
 
 bool Application::isHidden()
