@@ -65,13 +65,14 @@ void QtWebKitCookieJar::showDialog()
 
 	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation(m_operations.dequeue());
 	AcceptCookieDialog *cookieDialog(new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget));
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget));
+	dialog->setAttribute(Qt::WA_DeleteOnClose);
 
-	connect(cookieDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
+	connect(cookieDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 	connect(cookieDialog, SIGNAL(finished(int)), this, SLOT(dialogClosed()));
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(m_widget, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 
-	m_widget->showDialog(&dialog);
+	m_widget->showDialog(dialog, false);
 }
 
 void QtWebKitCookieJar::setWidget(WebWidget *widget)
