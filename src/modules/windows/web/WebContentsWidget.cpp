@@ -407,7 +407,14 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
 				connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? SessionsManager::NewTabOpen : SessionsManager::CurrentTabOpen), true);
+				SessionsManager::OpenHints hints(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? SessionsManager::NewTabOpen : SessionsManager::CurrentTabOpen);
+
+				if (parameters.contains(QLatin1String("hints")))
+				{
+					hints = SessionsManager::calculateOpenHints(parameters);
+				}
+
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), hints, true);
 			}
 
 			break;
