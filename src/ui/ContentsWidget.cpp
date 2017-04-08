@@ -187,8 +187,17 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 
 	dialog->setParent(m_layer);
 	dialog->show();
-	dialog->raise();
-	dialog->setFocus();
+
+	if (m_dialogs.count() > 1)
+	{
+		dialog->stackUnder(m_dialogs.value(m_dialogs.count() - 2));
+	}
+	else
+	{
+		dialog->raise();
+		dialog->setFocus();
+	}
+
 	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
 
 	emit needsAttention();
