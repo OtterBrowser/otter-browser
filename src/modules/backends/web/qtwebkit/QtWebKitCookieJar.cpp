@@ -33,8 +33,7 @@ QtWebKitCookieJar::QtWebKitCookieJar(CookieJar *cookieJar, WebWidget *widget) : 
 	m_cookieJar(cookieJar),
 	m_generalCookiesPolicy(CookieJar::AcceptAllCookies),
 	m_thirdPartyCookiesPolicy(CookieJar::AcceptAllCookies),
-	m_keepMode(CookieJar::KeepUntilExpiresMode),
-	m_isDialogVisible(false)
+	m_keepMode(CookieJar::KeepUntilExpiresMode)
 {
 }
 
@@ -47,29 +46,13 @@ void QtWebKitCookieJar::setup(const QStringList &thirdPartyAcceptedHosts, const 
 	m_keepMode = keepMode;
 }
 
-void QtWebKitCookieJar::dialogClosed()
+void QtWebKitCookieJar::showDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation)
 {
-	m_isDialogVisible = false;
-
-	showDialog();
-}
-
-void QtWebKitCookieJar::showDialog()
-{
-	if (m_operations.isEmpty() || m_isDialogVisible)
-	{
-		return;
-	}
-
-	m_isDialogVisible = true;
-
-	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation(m_operations.dequeue());
-	AcceptCookieDialog *cookieDialog(new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget));
+	AcceptCookieDialog *cookieDialog(new AcceptCookieDialog(cookie, operation, m_cookieJar, m_widget));
 	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget));
 	dialog->setAttribute(Qt::WA_DeleteOnClose);
 
 	connect(cookieDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
-	connect(cookieDialog, SIGNAL(finished(int)), this, SLOT(dialogClosed()));
 	connect(m_widget, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 
 	m_widget->showDialog(dialog, false);
@@ -109,12 +92,7 @@ bool QtWebKitCookieJar::insertCookie(const QNetworkCookie &cookie)
 
 	if (m_keepMode == CookieJar::AskIfKeepMode)
 	{
-		m_operations.enqueue({(m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie});
-
-		if (m_operations.count() == 1)
-		{
-			QTimer::singleShot(250, this, SLOT(showDialog()));
-		}
+		showDialog(cookie, (m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie));
 
 		return false;
 	}
@@ -144,12 +122,7 @@ bool QtWebKitCookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 	if (m_keepMode == CookieJar::AskIfKeepMode)
 	{
-		m_operations.enqueue({CookieJar::RemoveCookie, cookie});
-
-		if (m_operations.count() == 1)
-		{
-			QTimer::singleShot(250, this, SLOT(showDialog()));
-		}
+		showDialog(cookie, CookieJar::RemoveCookie);
 
 		return false;
 	}
@@ -215,7 +188,7 @@ bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieLis
 		{
 			if (m_keepMode == CookieJar::AskIfKeepMode)
 			{
-				m_operations.enqueue({(m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie});
+				showDialog(cookie, (m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie));
 			}
 			else
 			{
@@ -229,11 +202,6 @@ bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieLis
 				added = true;
 			}
 		}
-	}
-
-	if (m_operations.count() > 0)
-	{
-		QTimer::singleShot(250, this, SLOT(showDialog()));
 	}
 
 	return added;

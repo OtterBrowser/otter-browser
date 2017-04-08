@@ -48,22 +48,17 @@ public:
 	bool setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url) override;
 
 protected:
+	void showDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation);
 	bool canModifyCookie(const QNetworkCookie &cookie) const;
-
-protected slots:
-	void dialogClosed();
-	void showDialog();
 
 private:
 	WebWidget *m_widget;
 	CookieJar *m_cookieJar;
 	QStringList m_thirdPartyAcceptedHosts;
 	QStringList m_thirdPartyRejectedHosts;
-	QQueue<QPair<CookieJar::CookieOperation, QNetworkCookie> > m_operations;
 	CookieJar::CookiesPolicy m_generalCookiesPolicy;
 	CookieJar::CookiesPolicy m_thirdPartyCookiesPolicy;
 	CookieJar::KeepMode m_keepMode;
-	bool m_isDialogVisible;
 };
 
 }
