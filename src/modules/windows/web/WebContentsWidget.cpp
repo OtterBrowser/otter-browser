@@ -637,17 +637,13 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 						case ActionsManager::ContextMenuAction:
 							m_startPageWidget->triggerAction(identifier, parameters);
 
-							break;
+							return;
 						default:
-							m_webWidget->triggerAction(identifier, parameters);
-
 							break;
 					}
 				}
-				else
-				{
-					m_webWidget->triggerAction(identifier, parameters);
-				}
+
+				m_webWidget->triggerAction(identifier, parameters);
 			}
 
 			break;
