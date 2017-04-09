@@ -172,15 +172,15 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (actions.at(i).defaultState.description.isEmpty() ? actions.at(i).defaultState.text : actions.at(i).defaultState.description).toUtf8().constData())));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), IdentifierRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 		item->setToolTip(item->text());
 
-		if (!actions.at(i).icon.isNull())
+		if (!actions.at(i).defaultState.icon.isNull())
 		{
-			item->setIcon(actions.at(i).icon);
+			item->setIcon(actions.at(i).defaultState.icon);
 		}
 
 		availableEntriesModel->appendRow(item);
@@ -382,8 +382,8 @@ void ToolBarDialog::editEntry()
 			{
 				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
-				iconOptionWidget->setDefaultValue(definition.icon);
-				textOptionWidget->setDefaultValue(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
+				iconOptionWidget->setDefaultValue(definition.defaultState.icon);
+				textOptionWidget->setDefaultValue(QCoreApplication::translate("actions", (definition.defaultState.description.isEmpty() ? definition.defaultState.text : definition.defaultState.description).toUtf8().constData()));
 			}
 		}
 
@@ -616,11 +616,11 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		{
 			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
-			item->setText(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
+			item->setText(QCoreApplication::translate("actions", (definition.defaultState.description.isEmpty() ? definition.defaultState.text : definition.defaultState.description).toUtf8().constData()));
 
-			if (!definition.icon.isNull())
+			if (!definition.defaultState.icon.isNull())
 			{
-				item->setIcon(definition.icon);
+				item->setIcon(definition.defaultState.icon);
 			}
 		}
 	}

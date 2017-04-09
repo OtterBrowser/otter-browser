@@ -69,7 +69,7 @@ void Action::update(bool reset)
 	}
 
 	const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(m_identifier));
-	QString text(QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.text).toUtf8().constData()));
+	QString text(QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.defaultState.text).toUtf8().constData()));
 
 	if (!action.shortcuts.isEmpty())
 	{
@@ -80,9 +80,9 @@ void Action::update(bool reset)
 
 	if (reset)
 	{
-		setEnabled(action.flags.testFlag(ActionsManager::IsEnabledFlag));
-		setCheckable(action.flags.testFlag(ActionsManager::IsCheckableFlag));
-		setChecked(action.flags.testFlag(ActionsManager::IsCheckedFlag));
+		setEnabled(action.flags.testFlag(ActionsManager::ActionDefinition::IsEnabledFlag));
+		setCheckable(action.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
+		setChecked(action.flags.testFlag(ActionsManager::ActionDefinition::IsCheckedFlag));
 
 		switch (m_identifier)
 		{
@@ -103,7 +103,7 @@ void Action::update(bool reset)
 
 				break;
 			default:
-				setIcon(action.icon);
+				setIcon(action.defaultState.icon);
 
 				break;
 		}
@@ -125,7 +125,7 @@ void Action::setParameters(const QVariantMap &parameters)
 
 QString Action::getText() const
 {
-	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).text).toUtf8().constData());
+	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).defaultState.text).toUtf8().constData());
 }
 
 QVariantMap Action::getParameters() const

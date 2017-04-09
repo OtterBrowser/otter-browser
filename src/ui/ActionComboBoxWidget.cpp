@@ -44,15 +44,15 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(par
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (definitions.at(i).defaultState.description.isEmpty() ? definitions.at(i).defaultState.text : definitions.at(i).defaultState.description).toUtf8().constData())));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
-		if (!definitions.at(i).icon.isNull())
+		if (!definitions.at(i).defaultState.icon.isNull())
 		{
-			item->setIcon(definitions.at(i).icon);
+			item->setIcon(definitions.at(i).defaultState.icon);
 		}
 
 		model->appendRow(item);

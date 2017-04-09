@@ -46,16 +46,16 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 	{
 		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
 
-		model->setData(index, QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()), Qt::DisplayRole);
+		model->setData(index, QCoreApplication::translate("actions", (definition.defaultState.description.isEmpty() ? definition.defaultState.text : definition.defaultState.description).toUtf8().constData()), Qt::DisplayRole);
 		model->setData(index, widget->getActionIdentifier(), Qt::UserRole);
 
-		if (definition.icon.isNull())
+		if (definition.defaultState.icon.isNull())
 		{
 			model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
 		}
 		else
 		{
-			model->setData(index, definition.icon, Qt::DecorationRole);
+			model->setData(index, definition.defaultState.icon, Qt::DecorationRole);
 		}
 	}
 }
@@ -94,15 +94,15 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			for (iterator = profiles[profile].gestures[contexts.at(i).first].constBegin(); iterator != profiles[profile].gestures[contexts.at(i).first].constEnd(); ++iterator)
 			{
 				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(iterator.value()));
-				QList<QStandardItem*> items({new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))), new QStandardItem(QCoreApplication::translate("actions", (action.description.isEmpty() ? action.text : action.description).toUtf8().constData()))});
+				QList<QStandardItem*> items({new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))), new QStandardItem(QCoreApplication::translate("actions", (action.defaultState.description.isEmpty() ? action.defaultState.text : action.defaultState.description).toUtf8().constData()))});
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 				items[1]->setData(action.identifier, Qt::UserRole);
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 
-				if (!action.icon.isNull())
+				if (!action.defaultState.icon.isNull())
 				{
-					items[1]->setIcon(action.icon);
+					items[1]->setIcon(action.defaultState.icon);
 				}
 
 				item->appendRow(items);

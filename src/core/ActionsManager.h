@@ -215,25 +215,32 @@ public:
 		OtherAction
 	};
 
-	enum ActionFlag
-	{
-		NoFlags = 0,
-		IsEnabledFlag = 1,
-		IsCheckableFlag = 2,
-		IsCheckedFlag = 4,
-		IsMenuFlag = 8
-	};
-
-	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
-
 	struct ActionDefinition
 	{
-		QString text;
-		QString description;
-		QIcon icon;
+		enum ActionFlag
+		{
+			NoFlags = 0,
+			IsEnabledFlag = 1,
+			IsCheckableFlag = 2,
+			IsCheckedFlag = 4,
+			HasMenuFlag = 8
+		};
+
+		Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
+
+		struct State
+		{
+			QString text;
+			QString description;
+			QIcon icon;
+			bool isEnabled = true;
+			bool isChecked = false;
+		};
+
+		State defaultState;
 		QVector<QKeySequence> shortcuts;
-		ActionFlags flags = IsEnabledFlag;
 		int identifier = -1;
+		ActionFlags flags = IsEnabledFlag;
 	};
 
 	struct ActionEntryDefinition
@@ -259,7 +266,7 @@ protected:
 	explicit ActionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionFlags flags = IsEnabledFlag);
+	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag);
 
 protected slots:
 	void handleOptionChanged(int identifier);
@@ -277,6 +284,6 @@ private:
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionFlags)
 
 #endif
