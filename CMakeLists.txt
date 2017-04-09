@@ -135,6 +135,7 @@ set(otter_src
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
 	src/ui/AcceptCookieDialog.cpp
+	src/ui/Action.cpp
 	src/ui/ActionComboBoxWidget.cpp
 	src/ui/ApplicationComboBoxWidget.cpp
 	src/ui/AuthenticationDialog.cpp

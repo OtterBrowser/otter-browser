@@ -18,12 +18,12 @@
 **************************************************************************/
 
 #include "CacheContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkCache.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/Action.h"
 
 #include "ui_CacheContentsWidget.h"
 

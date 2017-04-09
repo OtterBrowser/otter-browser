@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "WorkspaceWidget.h"
+#include "Action.h"
 #include "MainWindow.h"
 #include "Menu.h"
 #include "Window.h"
-#include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 
 #include <QtGui/QContextMenuEvent>

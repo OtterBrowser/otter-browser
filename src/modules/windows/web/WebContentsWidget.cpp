@@ -38,6 +38,7 @@
 #include "../../../core/ToolBarsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/CertificateDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"

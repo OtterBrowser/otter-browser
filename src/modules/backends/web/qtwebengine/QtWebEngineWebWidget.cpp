@@ -19,7 +19,6 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
-#include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
@@ -32,6 +31,7 @@
 #include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
 #include "../../../../core/WebBackend.h"
+#include "../../../../ui/Action.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"

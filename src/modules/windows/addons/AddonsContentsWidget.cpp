@@ -19,12 +19,12 @@
 **************************************************************************/
 
 #include "AddonsContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/JsonSettings.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/Action.h"
 
 #include "ui_AddonsContentsWidget.h"
 

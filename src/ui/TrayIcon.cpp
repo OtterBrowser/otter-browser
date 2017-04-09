@@ -19,9 +19,9 @@
 **************************************************************************/
 
 #include "TrayIcon.h"
+#include "Action.h"
 #include "MainWindow.h"
 #include "Menu.h"
-#include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/NotificationsManager.h"
 

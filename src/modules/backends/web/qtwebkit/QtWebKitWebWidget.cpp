@@ -25,7 +25,6 @@
 #include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
 #include "QtWebKitWebBackend.h"
-#include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
@@ -42,6 +41,7 @@
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../ui/Action.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
@@ -71,6 +71,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QShortcut>
 #include <QtWidgets/QUndoStack>
 #include <QtWidgets/QVBoxLayout>
 

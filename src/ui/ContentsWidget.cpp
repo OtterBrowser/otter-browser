@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "ContentsWidget.h"
+#include "Action.h"
 #include "ContentsDialog.h"
 #include "Window.h"
-#include "../core/ActionsManager.h"
 
 namespace Otter
 {

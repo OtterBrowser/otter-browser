@@ -21,6 +21,7 @@
 #include "NavigationActionWidget.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/HistoryManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"

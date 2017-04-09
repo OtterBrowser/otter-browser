@@ -20,12 +20,6 @@
 **************************************************************************/
 
 #include "AddressWidget.h"
-#include "../../../ui/BookmarkPropertiesDialog.h"
-#include "../../../ui/ContentsWidget.h"
-#include "../../../ui/ItemViewWidget.h"
-#include "../../../ui/MainWindow.h"
-#include "../../../ui/ToolBarWidget.h"
-#include "../../../ui/Window.h"
 #include "../../../core/AddressCompletionModel.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/InputInterpreter.h"
@@ -33,6 +27,13 @@
 #include "../../../core/SearchEnginesManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/Action.h"
+#include "../../../ui/BookmarkPropertiesDialog.h"
+#include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ItemViewWidget.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtCore/QMetaEnum>
 #include <QtGui/QClipboard>

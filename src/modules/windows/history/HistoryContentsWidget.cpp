@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "HistoryContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/Action.h"
 
 #include "ui_HistoryContentsWidget.h"
 

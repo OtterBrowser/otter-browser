@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "ToolBarWidget.h"
+#include "Action.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "Menu.h"

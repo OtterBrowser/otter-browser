@@ -19,13 +19,13 @@
 **************************************************************************/
 
 #include "TabBarWidget.h"
+#include "Action.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "PreviewWidget.h"
 #include "Style.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
-#include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/GesturesManager.h"
 #include "../core/SettingsManager.h"

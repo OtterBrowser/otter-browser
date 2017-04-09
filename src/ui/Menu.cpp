@@ -18,12 +18,12 @@
 **************************************************************************/
 
 #include "Menu.h"
+#include "Action.h"
 #include "ContentsWidget.h"
 #include "ImportDialog.h"
 #include "MainWindow.h"
 #include "Window.h"
 #include "WorkspaceWidget.h"
-#include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/Console.h"

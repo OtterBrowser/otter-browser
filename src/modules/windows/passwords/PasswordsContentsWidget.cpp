@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "PasswordsContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/PasswordsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/Action.h"
 
 #include "ui_PasswordsContentsWidget.h"
 

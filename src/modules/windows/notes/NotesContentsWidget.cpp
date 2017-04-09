@@ -18,11 +18,11 @@
 **************************************************************************/
 
 #include "NotesContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/NotesManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/Action.h"
 
 #include "ui_NotesContentsWidget.h"
 

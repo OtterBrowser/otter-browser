@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "ToolButtonWidget.h"
+#include "Action.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
-#include "../core/ActionsManager.h"
 #include "../core/ThemesManager.h"
 
 #include <QtCore/QEvent>

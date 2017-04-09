@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "SourceViewerWebWidget.h"
+#include "Action.h"
 #include "SourceViewerWidget.h"
-#include "../core/ActionsManager.h"
 #include "../core/Console.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManager.h"

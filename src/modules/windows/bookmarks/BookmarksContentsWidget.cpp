@@ -18,12 +18,12 @@
 **************************************************************************/
 
 #include "BookmarksContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/SessionModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ProxyModel.h"

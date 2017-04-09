@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "MainWindow.h"
+#include "Action.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "ContentsWidget.h"

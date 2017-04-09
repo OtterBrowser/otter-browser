@@ -22,58 +22,14 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
+#include <QtCore/QObject>
 #include <QtCore/QVariantMap>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QShortcut>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
 
-class Action : public QAction
-{
-	Q_OBJECT
-
-public:
-	explicit Action(int identifier, QObject *parent = nullptr);
-
-	void setOverrideText(const QString &text);
-	void setParameters(const QVariantMap &parameters);
-	QString getText() const;
-	QVariantMap getParameters() const;
-	QVector<QKeySequence> getShortcuts() const;
-	int getIdentifier() const;
-	bool event(QEvent *event) override;
-	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
-	static bool isLocal(int identifier);
-
-public slots:
-	void setup(Action *action = nullptr);
-
-protected:
-	void update(bool reset = false);
-
-private:
-	QString m_overrideText;
-	QVariantMap m_parameters;
-	int m_identifier;
-	bool m_isOverridingText;
-};
-
-class Shortcut : public QShortcut
-{
-	Q_OBJECT
-
-public:
-	explicit Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent = nullptr);
-
-	void setParameters(const QVariantMap &parameters);
-	QVariantMap getParameters() const;
-	int getIdentifier() const;
-
-private:
-	QVariantMap m_parameters;
-	int m_identifier;
-};
+class Action;
 
 class ActionsManager : public QObject
 {

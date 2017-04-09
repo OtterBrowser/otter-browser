@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "WindowsContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/SessionModel.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 

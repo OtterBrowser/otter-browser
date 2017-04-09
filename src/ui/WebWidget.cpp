@@ -21,13 +21,13 @@
 **************************************************************************/
 
 #include "WebWidget.h"
+#include "Action.h"
 #include "ContentsDialog.h"
 #include "ContentsWidget.h"
 #include "Menu.h"
 #include "ReloadTimeDialog.h"
 #include "TransferDialog.h"
 #include "Window.h"
-#include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"
 #include "../core/IniSettings.h"

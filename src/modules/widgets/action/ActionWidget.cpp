@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ActionWidget.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
