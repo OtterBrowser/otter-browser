@@ -231,12 +231,12 @@ public:
 		struct State
 		{
 			QString text;
-			QString description;
 			QIcon icon;
 			bool isEnabled = true;
 			bool isChecked = false;
 		};
 
+		QString description;
 		State defaultState;
 		QVector<QKeySequence> shortcuts;
 		int identifier = -1;
@@ -244,7 +244,7 @@ public:
 
 		QString getText(bool preferDescription = false) const
 		{
-			return QCoreApplication::translate("actions", ((preferDescription && !defaultState.description.isEmpty()) ? defaultState.description : defaultState.text).toUtf8().constData());
+			return QCoreApplication::translate("actions", ((preferDescription && !description.isEmpty()) ? description : defaultState.text).toUtf8().constData());
 		}
 	};
 

@@ -344,8 +344,8 @@ void ActionsManager::triggerAction(int identifier, QObject *parent, const QVaria
 void ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, ActionDefinition::ActionFlags flags)
 {
 	ActionsManager::ActionDefinition action;
+	action.description = description;
 	action.defaultState.text = text;
-	action.defaultState.description = description;
 	action.defaultState.icon = icon;
 	action.defaultState.isEnabled = flags.testFlag(ActionDefinition::IsEnabledFlag);
 	action.defaultState.isChecked = flags.testFlag(ActionDefinition::IsCheckedFlag);
