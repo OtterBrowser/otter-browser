@@ -49,11 +49,8 @@ void Action::setup(Action *action)
 
 	m_identifier = action->getIdentifier();
 
-	setEnabled(action->isEnabled());
-	setText(action->text());
-	setIcon(action->icon());
 	setCheckable(action->isCheckable());
-	setChecked(action->isChecked());
+	setState(action->getState());
 }
 
 void Action::update(bool reset)
@@ -68,46 +65,54 @@ void Action::update(bool reset)
 		return;
 	}
 
-	const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(m_identifier));
-	QString text(QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.defaultState.text).toUtf8().constData()));
-
-	if (!action.shortcuts.isEmpty())
-	{
-		text += QLatin1Char('\t') + action.shortcuts.first().toString(QKeySequence::NativeText);
-	}
-
-	setText(text);
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(m_identifier));
+	ActionsManager::ActionDefinition::State state;
 
 	if (reset)
 	{
-		setEnabled(action.flags.testFlag(ActionsManager::ActionDefinition::IsEnabledFlag));
-		setCheckable(action.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
-		setChecked(action.flags.testFlag(ActionsManager::ActionDefinition::IsCheckedFlag));
+		state = definition.defaultState;
+		state.text = QCoreApplication::translate("actions", state.text.toUtf8().constData());
 
 		switch (m_identifier)
 		{
 			case ActionsManager::GoBackAction:
-				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next"));
 
 				break;
 			case ActionsManager::GoForwardAction:
-				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
+				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous"));
 
 				break;
 			case ActionsManager::RewindAction:
-				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last")));
+				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last"));
 
 				break;
 			case ActionsManager::FastForwardAction:
-				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first")));
+				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first"));
 
 				break;
 			default:
-				setIcon(action.defaultState.icon);
-
 				break;
 		}
+
+		setCheckable(definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
 	}
+	else
+	{
+		state = getState();
+	}
+
+	if (m_isOverridingText)
+	{
+		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
+	}
+
+	if (!definition.shortcuts.isEmpty())
+	{
+		state.text += QLatin1Char('\t') + definition.shortcuts.first().toString(QKeySequence::NativeText);
+	}
+
+	setState(state);
 }
 
 void Action::setOverrideText(const QString &text)
@@ -118,14 +123,35 @@ void Action::setOverrideText(const QString &text)
 	update();
 }
 
+void Action::setState(const ActionsManager::ActionDefinition::State &state)
+{
+	setText(state.text);
+	setIcon(state.icon);
+	setEnabled(state.isEnabled);
+	setChecked(state.isChecked);
+}
+
 void Action::setParameters(const QVariantMap &parameters)
 {
 	m_parameters = parameters;
+
+	update();
 }
 
 QString Action::getText() const
 {
 	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).defaultState.text).toUtf8().constData());
+}
+
+ActionsManager::ActionDefinition::State Action::getState() const
+{
+	ActionsManager::ActionDefinition::State state;
+	state.text = getText();
+	state.icon = icon();
+	state.isEnabled = isEnabled();
+	state.isChecked = isChecked();
+
+	return state;
 }
 
 QVariantMap Action::getParameters() const

@@ -36,8 +36,10 @@ public:
 	explicit Action(int identifier, QObject *parent = nullptr);
 
 	void setOverrideText(const QString &text);
+	void setState(const ActionsManager::ActionDefinition::State &state);
 	void setParameters(const QVariantMap &parameters);
 	QString getText() const;
+	ActionsManager::ActionDefinition::State getState() const;
 	QVariantMap getParameters() const;
 	QVector<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
