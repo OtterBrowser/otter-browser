@@ -1199,7 +1199,7 @@ void MainWindow::openUrl(const QString &text, bool isPrivate)
 
 	if (text.isEmpty())
 	{
-		triggerAction(hints | ActionsManager::NewTabAction);
+		triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), (hints | ActionsManager::NewTabAction)}});
 
 		return;
 	}
