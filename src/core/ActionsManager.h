@@ -22,7 +22,7 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QVariantMap>
 #include <QtGui/QIcon>
 
@@ -241,6 +241,11 @@ public:
 		QVector<QKeySequence> shortcuts;
 		int identifier = -1;
 		ActionFlags flags = IsEnabledFlag;
+
+		QString getText(bool preferDescription = false) const
+		{
+			return QCoreApplication::translate("actions", ((preferDescription && !defaultState.description.isEmpty()) ? defaultState.description : defaultState.text).toUtf8().constData());
+		}
 	};
 
 	struct ActionEntryDefinition

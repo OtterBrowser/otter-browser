@@ -172,7 +172,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (actions.at(i).defaultState.description.isEmpty() ? actions.at(i).defaultState.text : actions.at(i).defaultState.description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(actions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), IdentifierRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
@@ -383,7 +383,7 @@ void ToolBarDialog::editEntry()
 				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
 				iconOptionWidget->setDefaultValue(definition.defaultState.icon);
-				textOptionWidget->setDefaultValue(QCoreApplication::translate("actions", (definition.defaultState.description.isEmpty() ? definition.defaultState.text : definition.defaultState.description).toUtf8().constData()));
+				textOptionWidget->setDefaultValue(definition.getText(true));
 			}
 		}
 
@@ -616,7 +616,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		{
 			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
-			item->setText(QCoreApplication::translate("actions", (definition.defaultState.description.isEmpty() ? definition.defaultState.text : definition.defaultState.description).toUtf8().constData()));
+			item->setText(definition.getText(true));
 
 			if (!definition.defaultState.icon.isNull())
 			{

@@ -61,7 +61,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (definitions.at(i).defaultState.description.isEmpty() ? definitions.at(i).defaultState.text : definitions.at(i).defaultState.description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(definitions.at(i).identifier, IdentifierRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
