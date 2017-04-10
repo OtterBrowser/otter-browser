@@ -223,7 +223,8 @@ public:
 			IsEnabledFlag = 1,
 			IsCheckableFlag = 2,
 			IsCheckedFlag = 4,
-			HasMenuFlag = 8
+			HasMenuFlag = 8,
+			RequiresParameters = 16
 		};
 
 		Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
