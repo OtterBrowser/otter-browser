@@ -154,7 +154,7 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 
 void FreeDesktopOrgPlatformIntegration::createApplicationsCache()
 {
-	m_applicationsCache[QLatin1String("text/html")] = getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html")));
+	getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html")));
 }
 
 void FreeDesktopOrgPlatformIntegration::createApplicationsCacheThread()
