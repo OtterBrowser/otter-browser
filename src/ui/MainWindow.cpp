@@ -2033,7 +2033,7 @@ void MainWindow::setCurrentWindow(Window *window)
 
 	for (int i = 0; i < m_actions.count(); ++i)
 	{
-		if (m_actions[i] && ActionsManager::getActionDefinition(m_actions[i]->getIdentifier()).scope == ActionsManager::ActionDefinition::WindowScope)
+		if (m_actions[i] && m_actions[i]->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
 		{
 			const int identifier(m_actions[i]->getIdentifier());
 			Action *previousAction(previousWindow ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);

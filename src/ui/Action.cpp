@@ -65,7 +65,7 @@ void Action::update(bool reset)
 		return;
 	}
 
-	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(m_identifier));
+	const ActionsManager::ActionDefinition definition(getDefinition());
 	ActionsManager::ActionDefinition::State state;
 
 	if (reset)
@@ -140,7 +140,12 @@ void Action::setParameters(const QVariantMap &parameters)
 
 QString Action::getText() const
 {
-	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).defaultState.text).toUtf8().constData());
+	if (m_isOverridingText)
+	{
+		return QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
+	}
+
+	return getDefinition().getText();
 }
 
 Otter::ActionsManager::ActionDefinition Action::getDefinition() const
@@ -166,7 +171,7 @@ QVariantMap Action::getParameters() const
 
 QVector<QKeySequence> Action::getShortcuts() const
 {
-	return ActionsManager::getActionDefinition(m_identifier).shortcuts;
+	return getDefinition().shortcuts;
 }
 
 int Action::getIdentifier() const
