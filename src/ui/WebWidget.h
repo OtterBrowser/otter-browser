@@ -299,7 +299,6 @@ protected slots:
 	void selectDictionary(QAction *action);
 	void selectDictionaryMenuAboutToShow();
 	void reloadTimeMenuAboutToShow();
-	void openInApplication(QAction *action);
 	void openInApplicationMenuAboutToShow();
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);
@@ -321,9 +320,6 @@ private:
 	ContentsWidget *m_parent;
 	WebBackend *m_backend;
 	Menu *m_pasteNoteMenu;
-	QMenu *m_linkApplicationsMenu;
-	QMenu *m_frameApplicationsMenu;
-	QMenu *m_pageApplicationsMenu;
 	QMenu *m_reloadTimeMenu;
 	QMenu *m_quickSearchMenu;
 	QUrl m_requestedUrl;

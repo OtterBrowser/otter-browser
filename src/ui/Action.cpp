@@ -143,6 +143,11 @@ QString Action::getText() const
 	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).defaultState.text).toUtf8().constData());
 }
 
+Otter::ActionsManager::ActionDefinition Action::getDefinition() const
+{
+	return ActionsManager::getActionDefinition(m_identifier);
+}
+
 ActionsManager::ActionDefinition::State Action::getState() const
 {
 	ActionsManager::ActionDefinition::State state;

@@ -554,7 +554,21 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::OpenUrlAction:
 			{
-				const QUrl url((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
+				QUrl url;
+
+				if (parameters.contains(QLatin1String("urlPlaceholder")))
+				{
+					Window *window(parameters.contains(QLatin1String("window")) ? getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()) : getWorkspace()->getActiveWindow());
+
+					if (window)
+					{
+						url = QUrl::fromUserInput(window->getContentsWidget()->parseQuery(parameters[QLatin1String("urlPlaceholder")].toString()));
+					}
+				}
+				else if (parameters.contains(QLatin1String("url")))
+				{
+					url = ((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
+				}
 
 				if (parameters.contains(QLatin1String("application")))
 				{

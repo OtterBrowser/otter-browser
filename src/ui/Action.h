@@ -39,6 +39,7 @@ public:
 	void setState(const ActionsManager::ActionDefinition::State &state);
 	void setParameters(const QVariantMap &parameters);
 	QString getText() const;
+	ActionsManager::ActionDefinition getDefinition() const;
 	ActionsManager::ActionDefinition::State getState() const;
 	QVariantMap getParameters() const;
 	QVector<QKeySequence> getShortcuts() const;

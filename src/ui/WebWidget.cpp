@@ -56,9 +56,6 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_parent(parent),
 	m_backend(backend),
 	m_pasteNoteMenu(nullptr),
-	m_linkApplicationsMenu(nullptr),
-	m_frameApplicationsMenu(nullptr),
-	m_pageApplicationsMenu(nullptr),
 	m_reloadTimeMenu(nullptr),
 	m_quickSearchMenu(nullptr),
 	m_windowIdentifier(0),
@@ -131,7 +128,14 @@ void WebWidget::triggerAction()
 			parameters[QLatin1String("isChecked")] = action->isChecked();
 		}
 
-		triggerAction(action->getIdentifier(), parameters);
+		if (action->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
+		{
+			triggerAction(action->getIdentifier(), parameters);
+		}
+		else
+		{
+			ActionsManager::triggerAction(action->getIdentifier(), this, parameters);
+		}
 	}
 }
 
@@ -312,42 +316,55 @@ void WebWidget::reloadTimeMenuAboutToShow()
 	}
 }
 
-void WebWidget::openInApplication(QAction *action)
-{
-	if (sender() == m_pageApplicationsMenu)
-	{
-		Utils::runApplication(action->data().toString(), getUrl());
-	}
-	else if (sender() == m_linkApplicationsMenu && m_hitResult.linkUrl.isValid())
-	{
-		Utils::runApplication(action->data().toString(), m_hitResult.linkUrl);
-	}
-	else if (sender() == m_frameApplicationsMenu && m_hitResult.frameUrl.isValid())
-	{
-		Utils::runApplication(action->data().toString(), m_hitResult.frameUrl);
-	}
-}
-
 void WebWidget::openInApplicationMenuAboutToShow()
 {
-	QMenu *menu(qobject_cast<QMenu*>(sender()));
+	Menu *menu(qobject_cast<Menu*>(sender()));
 
 	if (!menu || !menu->actions().isEmpty())
 	{
 		return;
 	}
 
+	Action *parentAction(qobject_cast<Action*>(menu->menuAction()));
+	QString query(QLatin1String("{pageUrl}"));
+
+	if (parentAction)
+	{
+		switch (parentAction->getIdentifier())
+		{
+			case ActionsManager::OpenLinkInApplicationAction:
+				query = QLatin1String("{linkUrl}");
+
+				break;
+			case ActionsManager::OpenFrameInApplicationAction:
+				query = QLatin1String("{frameUrl}");
+
+				break;
+			default:
+				break;
+		}
+	}
+
 	const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html"))));
 
 	if (applications.isEmpty())
 	{
-		menu->addAction(tr("Default Application"));
+		Action *action(menu->addAction(ActionsManager::OpenUrlAction));
+		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Application"));
+		action->setParameters({{QLatin1String("application"), QString()}, {QLatin1String("urlPlaceholder"), query}});
+
+		connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 	}
 	else
 	{
 		for (int i = 0; i < applications.count(); ++i)
 		{
-			menu->addAction(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name))->setData(applications.at(i).command);
+			Action *action(menu->addAction(ActionsManager::OpenUrlAction));
+			action->setIcon(applications.at(i).icon);
+			action->setOverrideText(((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name));
+			action->setParameters({{QLatin1String("application"), applications.at(i).command}, {QLatin1String("urlPlaceholder"), query}});
+
+			connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
 			if (i == 0)
 			{
@@ -355,8 +372,6 @@ void WebWidget::openInApplicationMenuAboutToShow()
 			}
 		}
 	}
-
-	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(openInApplication(QAction*)));
 }
 
 void WebWidget::clearOptions()
@@ -1342,15 +1357,9 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::OpenLinkInApplicationAction:
-			if (!m_linkApplicationsMenu)
-			{
-				m_linkApplicationsMenu = new QMenu(this);
+			action->setMenu(new Menu(Menu::NoMenuRole, this));
 
-				action->setMenu(m_linkApplicationsMenu);
-
-				connect(m_linkApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-			}
-
+			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
 		case ActionsManager::OpenLinkAction:
 		case ActionsManager::OpenLinkInCurrentTabAction:
 		case ActionsManager::OpenLinkInNewTabAction:
@@ -1369,15 +1378,9 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::OpenFrameInApplicationAction:
-			if (!m_frameApplicationsMenu)
-			{
-				m_frameApplicationsMenu = new QMenu(this);
+			action->setMenu(new Menu(Menu::NoMenuRole, this));
 
-				action->setMenu(m_frameApplicationsMenu);
-
-				connect(m_frameApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-			}
-
+			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
 		case ActionsManager::OpenFrameInCurrentTabAction:
 		case ActionsManager::OpenFrameInNewTabAction:
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
@@ -1407,14 +1410,9 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::OpenPageInApplicationAction:
-			if (!m_pageApplicationsMenu)
-			{
-				m_pageApplicationsMenu = new QMenu(this);
+			action->setMenu(new Menu(Menu::NoMenuRole, this));
 
-				action->setMenu(m_pageApplicationsMenu);
-
-				connect(m_pageApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-			}
+			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
 
 			break;
 		case ActionsManager::SelectDictionaryAction:
