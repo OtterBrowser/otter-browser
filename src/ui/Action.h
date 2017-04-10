@@ -45,7 +45,6 @@ public:
 	int getIdentifier() const;
 	bool event(QEvent *event) override;
 	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
-	static bool isLocal(int identifier);
 
 public slots:
 	void setup(Action *action = nullptr);

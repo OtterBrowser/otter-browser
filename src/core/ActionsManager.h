@@ -228,6 +228,14 @@ public:
 
 		Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
 
+		enum ActionScope
+		{
+			OtherScope = 0,
+			WindowScope,
+			MainWindowScope,
+			ApplicationScope
+		};
+
 		struct State
 		{
 			QString text;
@@ -239,8 +247,9 @@ public:
 		QString description;
 		State defaultState;
 		QVector<QKeySequence> shortcuts;
-		int identifier = -1;
 		ActionFlags flags = IsEnabledFlag;
+		ActionScope scope = OtherScope;
+		int identifier = -1;
 
 		QString getText(bool preferDescription = false) const
 		{
@@ -271,7 +280,7 @@ protected:
 	explicit ActionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag);
+	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionDefinition::ActionScope scope = ActionDefinition::OtherScope, ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag);
 
 protected slots:
 	void handleOptionChanged(int identifier);

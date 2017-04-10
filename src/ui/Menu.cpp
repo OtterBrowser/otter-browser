@@ -412,7 +412,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 				{
 					QAction *action(nullptr);
 
-					if (Action::isLocal(identifier))
+					if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::WindowScope)
 					{
 						MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
