@@ -1610,6 +1610,11 @@ WebWidget::LinkUrl WebWidget::getActiveFrame() const
 	return LinkUrl();
 }
 
+WebWidget::LinkUrl WebWidget::getActiveImage() const
+{
+	return LinkUrl();
+}
+
 WebWidget::LinkUrl WebWidget::getActiveLink() const
 {
 	return LinkUrl();

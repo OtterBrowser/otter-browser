@@ -1285,7 +1285,7 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 	}
 
 	QString mutableQuery(query);
-	const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("frameUrl"), QLatin1String("linkUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
+	const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("frameUrl"), QLatin1String("imageUrl"), QLatin1String("linkUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
 
 	for (int i = 0; i < placeholders.count(); ++i)
 	{
@@ -1302,6 +1302,10 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 				if (placeholders.at(i) == QLatin1String("frameUrl"))
 				{
 					mutableQuery.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
+				}
+				else if (placeholders.at(i) == QLatin1String("imageUrl"))
+				{
+					mutableQuery.replace(placeholder, m_webWidget->getActiveImage().url.toString());
 				}
 				else if (placeholders.at(i) == QLatin1String("linkUrl"))
 				{

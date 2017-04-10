@@ -2286,6 +2286,20 @@ WebWidget::LinkUrl QtWebKitWebWidget::getActiveFrame() const
 	return link;
 }
 
+WebWidget::LinkUrl QtWebKitWebWidget::getActiveImage() const
+{
+	const QWebHitTestResult result(m_page->mainFrame()->hitTestContent(getClickPosition()));
+	LinkUrl link;
+
+	if (!result.imageUrl().isEmpty())
+	{
+		link.title = result.alternateText();
+		link.url = result.imageUrl();
+	}
+
+	return link;
+}
+
 WebWidget::LinkUrl QtWebKitWebWidget::getActiveLink() const
 {
 	const QWebHitTestResult result(m_page->mainFrame()->hitTestContent(getClickPosition()));

@@ -225,6 +225,7 @@ public:
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const;
 	virtual LinkUrl getActiveFrame() const;
+	virtual LinkUrl getActiveImage() const;
 	virtual LinkUrl getActiveLink() const;
 	virtual SslInformation getSslInformation() const;
 	virtual WindowHistoryInformation getHistory() const = 0;
