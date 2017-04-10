@@ -67,6 +67,8 @@ void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 
 QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	Q_UNUSED(option)
+
 	QProgressBar *editor(new QProgressBar(parent));
 	editor->setAlignment(Qt::AlignCenter);
 
