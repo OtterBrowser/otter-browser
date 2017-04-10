@@ -145,6 +145,7 @@ signals:
 	void urlChanged(const QUrl &url, bool force = false);
 	void iconChanged(const QIcon &icon);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
+	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 	void contentStateChanged(WebWidget::ContentStates state);
 	void loadingStateChanged(WebWidget::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);

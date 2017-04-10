@@ -217,6 +217,23 @@ public:
 
 	struct ActionDefinition
 	{
+		enum ActionCategory
+		{
+			UnknownCategory = 0,
+			PageCategory,
+			NavigationCategory,
+			EditingCategory,
+			LinkCategory,
+			FrameCategory,
+			ImageCategory,
+			MediaCategory,
+			BookmarkCategory,
+			OtherCategory,
+			UserCategory
+		};
+
+		Q_DECLARE_FLAGS(ActionCategories, ActionCategory)
+
 		enum ActionFlag
 		{
 			NoFlags = 0,
@@ -299,6 +316,7 @@ private:
 
 }
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionCategories)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionFlags)
 
 #endif

@@ -78,7 +78,6 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 {
 	setFocusPolicy(Qt::StrongFocus);
 
-	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
 	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(notifyDocumentLoadingProgress(int)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
@@ -265,6 +264,7 @@ void QtWebEngineWebWidget::pageLoadFinished()
 	updateNavigationActions();
 	startReloadTimer();
 
+	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
 }
@@ -343,6 +343,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			m_page->history()->clear();
 
 			updateNavigationActions();
+
+			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 
 			return;
 #if QT_VERSION >= 0x050700
@@ -1092,6 +1094,7 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 
 	emit iconChanged(getIcon());
 	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);
+	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
 
 	SessionsManager::markSessionModified();
 }
@@ -1269,6 +1272,8 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 #endif
 		}
 
+		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+
 		return;
 	}
 
@@ -1293,6 +1298,8 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 	updatePageActions(url);
 
 	m_page->triggerAction(QWebEnginePage::Reload);
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
 }
 
 void QtWebEngineWebWidget::setHistory(QDataStream &stream)

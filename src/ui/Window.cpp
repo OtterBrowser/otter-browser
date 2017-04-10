@@ -675,6 +675,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
 	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_contentsWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
+	connect(m_contentsWidget, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
 	connect(m_contentsWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
 	connect(m_contentsWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)));
 	connect(m_contentsWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));

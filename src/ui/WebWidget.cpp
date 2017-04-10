@@ -66,6 +66,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	Q_UNUSED(isPrivate)
 
 	connect(this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
+	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
@@ -545,6 +546,8 @@ void WebWidget::showContextMenu(const QPoint &position)
 	updateHitTestResult(hitPosition);
 	updateEditActions();
 
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+
 	QStringList flags;
 
 	if (m_hitResult.flags.testFlag(IsFormTest))
@@ -607,6 +610,8 @@ void WebWidget::showContextMenu(const QPoint &position)
 void WebWidget::updatePasswords()
 {
 	updatePageActions(getUrl());
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 }
 
 void WebWidget::updateQuickSearch()
@@ -1000,6 +1005,8 @@ void WebWidget::updateMediaActions()
 
 void WebWidget::updateBookmarkActions()
 {
+	emit actionsStateChanged(ActionsManager::ActionDefinition::LinkCategory | ActionsManager::ActionDefinition::PageCategory);
+
 	updatePageActions(getUrl());
 	updateLinkActions();
 }

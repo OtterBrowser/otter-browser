@@ -21,6 +21,7 @@
 #ifndef OTTER_APPLICATION_H
 #define OTTER_APPLICATION_H
 
+#include "ActionsManager.h"
 #include "UpdateChecker.h"
 #include "SessionsManager.h"
 
@@ -112,6 +113,7 @@ private:
 signals:
 	void windowAdded(MainWindow *window);
 	void windowRemoved(MainWindow *window);
+	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 };
 
 }

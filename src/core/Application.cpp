@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "Application.h"
-#include "ActionsManager.h"
 #include "AddonsManager.h"
 #include "BookmarksManager.h"
 #include "Console.h"

@@ -1150,6 +1150,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(handleUrlChange(QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
+	connect(m_webWidget, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
 	connect(m_webWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)));
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));

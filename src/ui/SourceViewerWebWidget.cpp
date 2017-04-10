@@ -285,6 +285,8 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	updateHitTestResult(position);
 	updateEditActions();
 
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+
 	QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
 	QMenu menu;
 

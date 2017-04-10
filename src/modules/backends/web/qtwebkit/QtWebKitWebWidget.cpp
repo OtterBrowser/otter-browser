@@ -136,7 +136,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	updateEditActions();
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 
-	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QUrl,QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)));
@@ -549,6 +548,7 @@ void QtWebKitWebWidget::handleLoadStarted()
 	setStatusMessage(QString(), true);
 
 	emit progressBarGeometryChanged();
+	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit loadingStateChanged(WebWidget::OngoingLoadingState);
 }
 
@@ -580,6 +580,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	handleHistory();
 	startReloadTimer();
 
+	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
 }
@@ -739,6 +740,7 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	updateNavigationActions();
 
 	emit urlChanged(url);
+	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
 
 	SessionsManager::markSessionModified();
 }
@@ -979,6 +981,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_page->history()->clear();
 
 			updateNavigationActions();
+
+			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 
 			return;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -1784,6 +1788,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 			m_page->getMainFrame()->runUserScripts(QUrl(QLatin1String("about:blank")));
 		}
 
+		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+
 		return;
 	}
 
@@ -1847,6 +1853,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	updatePageActions(url);
 
 	m_page->triggerAction(QWebPage::Reload);
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 }
 
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -1875,6 +1883,8 @@ void QtWebKitWebWidget::setHistory(const QVariantMap &history)
 	updatePageActions(url);
 
 	m_page->triggerAction(QWebPage::Reload);
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 }
 #endif
 
