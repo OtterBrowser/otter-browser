@@ -285,6 +285,11 @@ WebWidget* ContentsWidget::getWebWidget()
 	return nullptr;
 }
 
+QString ContentsWidget::parseQuery(const QString &query) const
+{
+	return query;
+}
+
 QString ContentsWidget::getVersion() const
 {
 	return QCoreApplication::applicationVersion();

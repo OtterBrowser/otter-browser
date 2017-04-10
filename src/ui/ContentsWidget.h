@@ -44,6 +44,7 @@ public:
 	virtual Action* getAction(int identifier);
 	Window* getParent();
 	virtual WebWidget* getWebWidget();
+	virtual QString parseQuery(const QString &query) const;
 	virtual QString getTitle() const = 0;
 	virtual QString getVersion() const;
 	virtual QString getActiveStyleSheet() const;

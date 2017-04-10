@@ -481,45 +481,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 
 				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints());
-				QString query(parameters.value(QLatin1String("query")).toString());
-
-				if (query.isEmpty())
-				{
-					query = m_webWidget->getSelectedText();
-				}
-				else
-				{
-					const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("frameUrl"), QLatin1String("linkUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
-
-					for (int i = 0; i < placeholders.count(); ++i)
-					{
-						const QString placeholder(QStringLiteral("{%1}").arg(placeholders.at(i)));
-
-						if (query.contains(placeholder))
-						{
-							if (placeholders.at(i) == QLatin1String("clipboard"))
-							{
-								query.replace(placeholder, QGuiApplication::clipboard()->text());
-							}
-							else if (placeholders.at(i) == QLatin1String("frameUrl"))
-							{
-								query.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
-							}
-							else if (placeholders.at(i) == QLatin1String("linkUrl"))
-							{
-								query.replace(placeholder, m_webWidget->getActiveLink().url.toString());
-							}
-							else if (placeholders.at(i) == QLatin1String("pageUrl"))
-							{
-								query.replace(placeholder, m_webWidget->getUrl().toString());
-							}
-							else
-							{
-								query.replace(placeholder, m_webWidget->getSelectedText());
-							}
-						}
-					}
-				}
+				const QString query(parseQuery(parameters.value(QLatin1String("query")).toString()));
 
 				if (hints == SessionsManager::CurrentTabOpen)
 				{
@@ -1313,6 +1275,51 @@ Action* WebContentsWidget::getAction(int identifier)
 WebWidget* WebContentsWidget::getWebWidget()
 {
 	return m_webWidget;
+}
+
+QString WebContentsWidget::parseQuery(const QString &query) const
+{
+	if (query.isEmpty())
+	{
+		return query;
+	}
+
+	QString mutableQuery(query);
+	const QStringList placeholders({QLatin1String("clipboard"), QLatin1String("frameUrl"), QLatin1String("linkUrl"), QLatin1String("pageUrl"), QLatin1String("selection")});
+
+	for (int i = 0; i < placeholders.count(); ++i)
+	{
+		const QString placeholder(QStringLiteral("{%1}").arg(placeholders.at(i)));
+
+		if (mutableQuery.contains(placeholder))
+		{
+			if (placeholders.at(i) == QLatin1String("clipboard"))
+			{
+				mutableQuery.replace(placeholder, QGuiApplication::clipboard()->text());
+			}
+			else if (m_webWidget)
+			{
+				if (placeholders.at(i) == QLatin1String("frameUrl"))
+				{
+					mutableQuery.replace(placeholder, m_webWidget->getActiveFrame().url.toString());
+				}
+				else if (placeholders.at(i) == QLatin1String("linkUrl"))
+				{
+					mutableQuery.replace(placeholder, m_webWidget->getActiveLink().url.toString());
+				}
+				else if (placeholders.at(i) == QLatin1String("pageUrl"))
+				{
+					mutableQuery.replace(placeholder, m_webWidget->getUrl().toString());
+				}
+				else
+				{
+					mutableQuery.replace(placeholder, m_webWidget->getSelectedText());
+				}
+			}
+		}
+	}
+
+	return mutableQuery;
 }
 
 QString WebContentsWidget::getTitle() const

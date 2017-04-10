@@ -72,6 +72,7 @@ public:
 	WebContentsWidget* clone(bool cloneHistory = true) override;
 	Action* getAction(int identifier) override;
 	WebWidget* getWebWidget() override;
+	QString parseQuery(const QString &query) const override;
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;
 	QString getStatusMessage() const override;
