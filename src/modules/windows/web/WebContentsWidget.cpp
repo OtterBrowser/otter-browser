@@ -481,7 +481,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 
 				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints());
-				const QString query(parseQuery(parameters.value(QLatin1String("query")).toString()));
+				const QString query(parameters.contains(QLatin1String("queryPlaceholder")) ? parseQuery(parameters[QLatin1String("queryPlaceholder")].toString()) : parameters.value(QLatin1String("query")).toString());
 
 				if (hints == SessionsManager::CurrentTabOpen)
 				{
