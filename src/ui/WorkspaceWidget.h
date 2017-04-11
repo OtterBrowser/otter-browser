@@ -58,10 +58,12 @@ protected:
 	void closeEvent(QCloseEvent *event) override;
 	void moveEvent(QMoveEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
+	Window *m_window;
 	bool m_wasMaximized;
 };
 

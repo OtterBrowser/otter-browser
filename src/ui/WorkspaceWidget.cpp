@@ -24,6 +24,7 @@
 #include "Window.h"
 #include "../core/SettingsManager.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionTitleBar>
@@ -59,6 +60,7 @@ bool MdiWidget::eventFilter(QObject *object, QEvent *event)
 }
 
 MdiWindow::MdiWindow(Window *window, MdiWidget *parent) : QMdiSubWindow(parent, Qt::SubWindow),
+	m_window(window),
 	m_wasMaximized(false)
 {
 	setWidget(window);
@@ -100,12 +102,7 @@ void MdiWindow::changeEvent(QEvent *event)
 
 void MdiWindow::closeEvent(QCloseEvent *event)
 {
-	Window *window(qobject_cast<Window*>(widget()));
-
-	if (window)
-	{
-		window->close();
-	}
+	m_window->close();
 
 	event->ignore();
 }
@@ -122,6 +119,13 @@ void MdiWindow::resizeEvent(QResizeEvent *event)
 	QMdiSubWindow::resizeEvent(event);
 
 	SessionsManager::markSessionModified();
+}
+
+void MdiWindow::focusInEvent(QFocusEvent *event)
+{
+	QMdiSubWindow::focusInEvent(event);
+
+	m_window->setFocus(Qt::ActiveWindowFocusReason);
 }
 
 void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -690,6 +694,8 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 					{
 						subWindow->raise();
 					}
+
+					QTimer::singleShot(0, subWindow, SLOT(setFocus()));
 				}
 			}
 
