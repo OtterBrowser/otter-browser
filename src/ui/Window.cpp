@@ -139,7 +139,7 @@ void Window::focusInEvent(QFocusEvent *event)
 
 	AddressWidget *addressWidget(findAddressWidget());
 
-	if (Utils::isUrlEmpty(getUrl()) && m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState && addressWidget)
+	if (Utils::isUrlEmpty(getUrl()) && (!m_contentsWidget || m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState) && addressWidget)
 	{
 		addressWidget->setFocus();
 	}
