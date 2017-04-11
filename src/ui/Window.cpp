@@ -71,7 +71,7 @@ void WindowToolBarWidget::paintEvent(QPaintEvent *event)
 	toolBarOption.state |= QStyle::State_Horizontal;
 	toolBarOption.toolBarArea = Qt::TopToolBarArea;
 
-	style()->drawControl(QStyle::CE_ToolBar, &toolBarOption, &painter);
+	style()->drawControl(QStyle::CE_ToolBar, &toolBarOption, &painter, this);
 }
 
 Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->getWorkspace()),
