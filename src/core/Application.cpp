@@ -295,7 +295,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		m_localServer->listen(server);
 	}
 
-	if (!QFile::exists(profilePath))
+	if (!isReadOnly && !QFile::exists(profilePath))
 	{
 		QDir().mkpath(profilePath);
 	}
