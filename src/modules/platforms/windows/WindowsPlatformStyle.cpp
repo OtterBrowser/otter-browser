@@ -35,103 +35,109 @@ namespace Otter
 WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 	m_isModernStyle(QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 {
-	checkForVistaStyle();
+	checkForModernStyle();
 
-	connect(QApplication::instance(), SIGNAL(paletteChanged(QPalette)), this, SLOT(checkForVistaStyle()));
-	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForVistaStyle()));
+	connect(QApplication::instance(), SIGNAL(paletteChanged(QPalette)), this, SLOT(checkForModernStyle()));
+	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForModernStyle()));
 }
 
 void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isModernStyle)
+	switch (element)
 	{
-		switch (element)
-		{
-			case QStyle::CE_MenuBarEmptyArea:
-			case QStyle::CE_MenuBarItem:
-			case QStyle::CE_ToolBar:
+		case QStyle::CE_MenuBarEmptyArea:
+		case QStyle::CE_MenuBarItem:
+			if (!m_isModernStyle)
+			{
+				break;
+			}
+		case QStyle::CE_ToolBar:
+			{
+				bool shouldUseWindowBackground(true);
+
+				if (element == QStyle::CE_ToolBar)
 				{
-					bool shouldUseWindowBackground(true);
+					const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
+					const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
+					const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::NavigationBar);
 
-					if (element == QStyle::CE_ToolBar)
+					if (toolBarOption && toolBar && !(toolBar->getIdentifier() == ToolBarsManager::TabBar && toolBar->getDefinition().location == Qt::TopToolBarArea))
 					{
-						const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
-						const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
-						const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::NavigationBar);
+						const ToolBarsManager::ToolBarDefinition tabBarDefinition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
 
-						if (toolBarOption && toolBar && !(toolBar->getIdentifier() == ToolBarsManager::TabBar && toolBar->getDefinition().location == Qt::TopToolBarArea))
+						if ((isNavigationBar || toolBarOption->toolBarArea == Qt::TopToolBarArea) && tabBarDefinition.location == Qt::TopToolBarArea)
 						{
-							const ToolBarsManager::ToolBarDefinition tabBarDefinition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
+							MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
 
-							if ((isNavigationBar || toolBarOption->toolBarArea == Qt::TopToolBarArea) && tabBarDefinition.location == Qt::TopToolBarArea)
+							if (mainWindow)
 							{
-								MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
+								const QVector<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
+								bool hasVisibleTabBar(false);
 
-								if (mainWindow)
+								for (int i = 0; i < toolBars.count(); ++i)
 								{
-									const QVector<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
-									bool hasVisibleTabBar(false);
-
-									for (int i = 0; i < toolBars.count(); ++i)
+									if (toolBars.at(i)->getIdentifier() == ToolBarsManager::TabBar && toolBars.at(i)->isVisible())
 									{
-										if (toolBars.at(i)->getIdentifier() == ToolBarsManager::TabBar && toolBars.at(i)->isVisible())
-										{
-											hasVisibleTabBar = true;
+										hasVisibleTabBar = true;
 
-											break;
-										}
-
-										if (toolBars.at(i) == toolBar && !hasVisibleTabBar)
-										{
-											shouldUseWindowBackground = false;
-
-											break;
-										}
+										break;
 									}
 
-									if (isNavigationBar && hasVisibleTabBar)
+									if (toolBars.at(i) == toolBar && !hasVisibleTabBar)
 									{
 										shouldUseWindowBackground = false;
+
+										break;
 									}
 								}
-							}
-							else if (!isNavigationBar && toolBarOption->toolBarArea != Qt::TopToolBarArea)
-							{
-								shouldUseWindowBackground = false;
+
+								if (isNavigationBar && hasVisibleTabBar)
+								{
+									shouldUseWindowBackground = false;
+								}
 							}
 						}
-					}
-
-					const QRect rectantagle((widget && element == QStyle::CE_ToolBar) ? widget->rect() : option->rect);
-
-					if (shouldUseWindowBackground)
-					{
-						const DWORD rawColor(GetSysColor(COLOR_WINDOW));
-
-						painter->fillRect(rectantagle, QColor((rawColor & 0xff), ((rawColor >> 8) & 0xff), ((rawColor >> 16) & 0xff)));
-					}
-					else
-					{
-						painter->fillRect(rectantagle, Qt::white);
-					}
-
-					if (element == QStyle::CE_MenuBarItem)
-					{
-						QStyleOptionMenuItem menuItemOption(*qstyleoption_cast<const QStyleOptionMenuItem*>(option));
-						menuItemOption.palette.setColor(QPalette::Window, Qt::transparent);
-
-						Style::drawControl(element, &menuItemOption, painter, widget);
-					}
-					else if (element == QStyle::CE_ToolBar)
-					{
-						drawToolBarEdge(option, painter);
+						else if (!isNavigationBar && toolBarOption->toolBarArea != Qt::TopToolBarArea)
+						{
+							shouldUseWindowBackground = false;
+						}
 					}
 				}
 
-				return;
-			default:
-				break;
-		}
+				const QRect rectantagle((widget && element == QStyle::CE_ToolBar) ? widget->rect() : option->rect);
+
+				if (shouldUseWindowBackground)
+				{
+					if (!m_isModernStyle)
+					{
+						break;
+					}
+
+					const DWORD rawColor(GetSysColor(COLOR_WINDOW));
+
+					painter->fillRect(rectantagle, QColor((rawColor & 0xff), ((rawColor >> 8) & 0xff), ((rawColor >> 16) & 0xff)));
+				}
+				else
+				{
+					painter->fillRect(rectantagle, Qt::white);
+				}
+
+				if (element == QStyle::CE_MenuBarItem)
+				{
+					QStyleOptionMenuItem menuItemOption(*qstyleoption_cast<const QStyleOptionMenuItem*>(option));
+					menuItemOption.palette.setColor(QPalette::Window, Qt::transparent);
+
+					Style::drawControl(element, &menuItemOption, painter, widget);
+				}
+				else if (element == QStyle::CE_ToolBar)
+				{
+					drawToolBarEdge(option, painter);
+				}
+			}
+
+			return;
+		default:
+			break;
 	}
 
 	Style::drawControl(element, option, painter, widget);
@@ -158,7 +164,7 @@ void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const
 	Style::drawPrimitive(element, option, painter, widget);
 }
 
-void WindowsPlatformStyle::checkForVistaStyle()
+void WindowsPlatformStyle::checkForModernStyle()
 {
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 	{

@@ -36,7 +36,7 @@ public:
 	void drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 
 protected slots:
-	void checkForVistaStyle();
+	void checkForModernStyle();
 
 private:
 	bool m_isModernStyle;
