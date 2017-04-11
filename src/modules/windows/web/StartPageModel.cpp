@@ -60,37 +60,6 @@ void StartPageModel::dragEnded()
 	}
 }
 
-void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title)
-{
-	if (!m_reloads.contains(url))
-	{
-		return;
-	}
-
-	if (!thumbnail.isNull())
-	{
-		const QString path(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
-
-		QDir().mkpath(path);
-
-		thumbnail.save(path + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
-	}
-
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_reloads[url].first));
-
-	if (bookmark)
-	{
-		if (m_reloads[url].second)
-		{
-			bookmark->setData(title, BookmarksModel::TitleRole);
-		}
-
-		emit isReloadingTileChanged(index(bookmark->index().row(), bookmark->index().column()));
-	}
-
-	m_reloads.remove(url);
-}
-
 void StartPageModel::reloadModel()
 {
 	m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
@@ -215,16 +184,23 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 		{
 			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
 
-			QPixmap thumbnail(size);
-			thumbnail.fill();
+			if (SessionsManager::isReadOnly())
+			{
+				handleThumbnailCreated(url, QPixmap(), information.getTitle());
+			}
+			else
+			{
+				QPixmap thumbnail(size);
+				thumbnail.fill();
 
-			QPainter painter(&thumbnail);
+				QPainter painter(&thumbnail);
 
-			information.icon.paint(&painter, QRect(QPoint(0, 0), size));
+				information.icon.paint(&painter, QRect(QPoint(0, 0), size));
 
-			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = {index.data(BookmarksModel::IdentifierRole).toULongLong(), full};
+				m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = {index.data(BookmarksModel::IdentifierRole).toULongLong(), full};
 
-			thumbnailCreated(url, thumbnail, information.getTitle());
+				handleThumbnailCreated(url, thumbnail, information.getTitle());
+			}
 		}
 		else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
 		{
@@ -238,7 +214,7 @@ void StartPageModel::handleOptionChanged(int identifier)
 	switch (identifier)
 	{
 		case SettingsManager::Backends_WebOption:
-			connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
+			connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(handleThumbnailCreated(QUrl,QPixmap,QString)));
 
 			break;
 		case SettingsManager::StartPage_BookmarksFolderOption:
@@ -283,6 +259,37 @@ void StartPageModel::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksIte
 	{
 		reloadModel();
 	}
+}
+
+void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title)
+{
+	if (!m_reloads.contains(url))
+	{
+		return;
+	}
+
+	if (!SessionsManager::isReadOnly() && !thumbnail.isNull())
+	{
+		const QString path(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
+
+		QDir().mkpath(path);
+
+		thumbnail.save(path + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
+	}
+
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_reloads[url].first));
+
+	if (bookmark)
+	{
+		if (m_reloads[url].second)
+		{
+			bookmark->setData(title, BookmarksModel::TitleRole);
+		}
+
+		emit isReloadingTileChanged(index(bookmark->index().row(), bookmark->index().column()));
+	}
+
+	m_reloads.remove(url);
 }
 
 QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const

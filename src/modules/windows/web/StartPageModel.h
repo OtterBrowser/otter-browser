@@ -53,11 +53,11 @@ public slots:
 
 protected slots:
 	void dragEnded();
-	void thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 	void handleOptionChanged(int identifier);
 	void handleBookmarkModified(BookmarksItem *bookmark);
 	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void handleThumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 
 private:
 	BookmarksItem *m_bookmark;
