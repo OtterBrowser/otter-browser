@@ -49,7 +49,7 @@ public:
 public slots:
 	void reloadModel();
 	void addTile(const QUrl &url);
-	void reloadTile(const QModelIndex &index, bool full = false);
+	void reloadTile(const QModelIndex &index, bool needsTitleUpdate = false);
 
 protected slots:
 	void dragEnded();
