@@ -76,7 +76,7 @@ BookmarksItem* BookmarksImporter::getCurrentFolder() const
 	return m_currentFolder;
 }
 
-ImportType BookmarksImporter::getImportType() const
+Importer::ImportType BookmarksImporter::getImportType() const
 {
 	return BookmarksImport;
 }

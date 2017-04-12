@@ -105,7 +105,7 @@ QStringList OperaSearchEnginesImporter::getFileFilters() const
 	return QStringList(tr("Opera search engines files (search.ini)"));
 }
 
-ImportType OperaSearchEnginesImporter::getImportType() const
+Importer::ImportType OperaSearchEnginesImporter::getImportType() const
 {
 	return SearchEnginesImport;
 }

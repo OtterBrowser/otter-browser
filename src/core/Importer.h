@@ -25,27 +25,27 @@
 namespace Otter
 {
 
-enum ImportType
-{
-	OtherImport = 0,
-	FullImport = 1,
-	BookmarksImport = 2,
-	SettingsImport = 4,
-	PasswordsImport = 8,
-	SearchEnginesImport = 16,
-	SessionsImport = 32,
-	CookiesImport = 64,
-	HistoryImport = 128,
-	FeedsImport = 256,
-	MailImport = 512,
-	NotesImport = 1024
-};
-
 class Importer : public QObject, public Addon
 {
 	Q_OBJECT
 
 public:
+	enum ImportType
+	{
+		OtherImport = 0,
+		FullImport = 1,
+		BookmarksImport = 2,
+		SettingsImport = 4,
+		PasswordsImport = 8,
+		SearchEnginesImport = 16,
+		SessionsImport = 32,
+		CookiesImport = 64,
+		HistoryImport = 128,
+		FeedsImport = 256,
+		MailImport = 512,
+		NotesImport = 1024
+	};
+
 	explicit Importer(QObject *parent = nullptr);
 
 	virtual QWidget* getOptionsWidget() = 0;

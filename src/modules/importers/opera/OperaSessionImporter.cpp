@@ -92,7 +92,7 @@ QStringList OperaSessionImporter::getFileFilters() const
 	return QStringList(tr("Opera session files (*.win)"));
 }
 
-ImportType OperaSessionImporter::getImportType() const
+Importer::ImportType OperaSessionImporter::getImportType() const
 {
 	return SessionsImport;
 }
