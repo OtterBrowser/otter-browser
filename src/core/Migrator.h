@@ -45,24 +45,9 @@ class Migrator
 {
 
 public:
-	enum MigrationFlag
-	{
-		NoMigration = 0,
-		IgnoreMigration = 1,
-		ProceedMigration = 2,
-		WithBackupMigration = 4
-	};
-
-	Q_DECLARE_FLAGS(MigrationFlags, MigrationFlag)
-
 	static bool run();
-
-protected:
-	static MigrationFlags checkMigrationStatus(const Migration *migration);
 };
 
 }
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Migrator::MigrationFlags)
 
 #endif

@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 	Application application(argc, argv);
 	application.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
-	if (Application::isRunning() || Application::isUpdating() || Application::getCommandLineParser()->isSet(QLatin1String("report")))
+	if (Application::isAboutToQuit() || Application::isRunning() || Application::isUpdating() || Application::getCommandLineParser()->isSet(QLatin1String("report")))
 	{
 		return 0;
 	}

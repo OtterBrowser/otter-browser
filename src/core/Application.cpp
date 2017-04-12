@@ -371,6 +371,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	if (!isReadOnly && !Migrator::run())
 	{
+		m_isAboutToQuit = true;
+
 		exit();
 
 		return;

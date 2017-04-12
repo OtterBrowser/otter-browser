@@ -23,14 +23,17 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ToolBarsManager.h"
+#include "../ui/ItemViewWidget.h"
 
 #include <QtCore/QDate>
 #include <QtCore/QDir>
 #include <QtCore/QSettings>
 #include <QtCore/QTextStream>
 #include <QtWidgets/QCheckBox>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QVBoxLayout>
 
 namespace Otter
 {
@@ -348,79 +351,90 @@ bool Migration::canMigrate() const
 	return false;
 }
 
-Migrator::MigrationFlags Migrator::checkMigrationStatus(const Migration *migration)
-{
-	if (!migration->canMigrate())
-	{
-		return IgnoreMigration;
-	}
-
-	QMessageBox messageBox;
-	messageBox.setWindowTitle(QCoreApplication::translate("Otter::Migrator", "Question"));
-	messageBox.setText(QCoreApplication::translate("Otter::Migrator", "Configuration of %1 needs to be updated to new version.\nDo you want to migrate it?").arg(QCoreApplication::translate("migrations", migration->getTitle().toUtf8().constData())));
-	messageBox.setIcon(QMessageBox::Question);
-	messageBox.setCheckBox(new QCheckBox(QCoreApplication::translate("Otter::Migrator", "Create backup")));
-	messageBox.addButton(QCoreApplication::translate("Otter::Migrator", "Yes"), QMessageBox::AcceptRole);
-
-	QAbstractButton *ignoreButton(messageBox.addButton(QCoreApplication::translate("Otter::Migrator", "No"), QMessageBox::RejectRole));
-	QAbstractButton *cancelButton(messageBox.addButton(QCoreApplication::translate("Otter::Migrator", "Cancel"), QMessageBox::RejectRole));
-
-	messageBox.checkBox()->setChecked(true);
-	messageBox.exec();
-
-	if (messageBox.clickedButton() == cancelButton)
-	{
-		return NoMigration;
-	}
-
-	MigrationFlags flags(NoMigration);
-
-	if (messageBox.clickedButton() == ignoreButton)
-	{
-		flags |= IgnoreMigration;
-	}
-	else
-	{
-		flags |= ProceedMigration;
-	}
-
-	if (messageBox.checkBox()->isChecked())
-	{
-		flags |= WithBackupMigration;
-	}
-
-	return flags;
-}
-
 bool Migrator::run()
 {
 	const QVector<Migration*> availableMigrations({new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
+	QVector<Migration*> possibleMigrations;
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 
 	for (int i = 0; i < availableMigrations.count(); ++i)
 	{
-		if (!processedMigrations.contains(availableMigrations[i]->getName()))
+		if (!processedMigrations.contains(availableMigrations[i]->getName()) && availableMigrations[i]->canMigrate())
 		{
-			const MigrationFlags flags(checkMigrationStatus(availableMigrations[i]));
+			possibleMigrations.append(availableMigrations[i]);
+		}
+	}
 
-			if (flags.testFlag(IgnoreMigration) || flags.testFlag(ProceedMigration))
+	if (possibleMigrations.isEmpty())
+	{
+		return true;
+	}
+
+	QDialog dialog;
+	dialog.setWindowTitle(QCoreApplication::translate("Otter::Migrator", "Settings Migration"));
+	dialog.setLayout(new QVBoxLayout(&dialog));
+
+	QLabel *label(new QLabel(QCoreApplication::translate("Otter::Migrator", "Configuration of the components listed below needs to be updated to new version.\nDo you want to migrate it?"), &dialog));
+	label->setWordWrap(true);
+
+	ItemViewWidget *migrationsViewWidget(new ItemViewWidget(&dialog));
+	migrationsViewWidget->setModel(new QStandardItemModel(migrationsViewWidget));
+
+	for (int i = 0; i < possibleMigrations.count(); ++i)
+	{
+		migrationsViewWidget->insertRow(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations[i]->getTitle().toUtf8().constData())));
+	}
+
+	QCheckBox *createBackupCheckBox(new QCheckBox(QCoreApplication::translate("Otter::Migrator", "Create backup")));
+	createBackupCheckBox->setChecked(true);
+
+	QDialogButtonBox *buttonBox(new QDialogButtonBox(&dialog));
+	buttonBox->addButton(QDialogButtonBox::Yes);
+	buttonBox->addButton(QDialogButtonBox::No);
+	buttonBox->addButton(QDialogButtonBox::Abort);
+
+	QDialogButtonBox::StandardButton clickedButton(QDialogButtonBox::Yes);
+
+	QObject::connect(buttonBox, &QDialogButtonBox::clicked, [&](QAbstractButton *button)
+	{
+		clickedButton = buttonBox->standardButton(button);
+
+		dialog.close();
+	});
+
+	dialog.layout()->addWidget(label);
+	dialog.layout()->addWidget(migrationsViewWidget);
+	dialog.layout()->addWidget(createBackupCheckBox);
+	dialog.layout()->addWidget(buttonBox);
+	dialog.exec();
+
+	const bool canProceed(clickedButton == QDialogButtonBox::Yes);
+	const bool needsBackup(createBackupCheckBox->isChecked());
+
+	if (canProceed || needsBackup)
+	{
+		for (int i = 0; i < possibleMigrations.count(); ++i)
+		{
+			processedMigrations.append(possibleMigrations[i]->getName());
+
+			if (needsBackup)
 			{
-				processedMigrations.append(availableMigrations[i]->getName());
+				possibleMigrations[i]->createBackup();
 			}
 
-			if (flags.testFlag(WithBackupMigration))
+			if (canProceed)
 			{
-				availableMigrations[i]->createBackup();
-			}
-
-			if (flags.testFlag(ProceedMigration))
-			{
-				availableMigrations[i]->migrate();
+				possibleMigrations[i]->migrate();
 			}
 		}
 	}
 
 	qDeleteAll(availableMigrations);
+
+	if (clickedButton == QDialogButtonBox::Abort)
+	{
+		return false;
+	}
 
 	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
 
