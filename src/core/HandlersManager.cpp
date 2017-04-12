@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ HandlersManager* HandlersManager::getInstance()
 	return m_instance;
 }
 
-HandlerDefinition HandlersManager::getHandler(const QString &type)
+HandlersManager::HandlerDefinition HandlersManager::getHandler(const QString &type)
 {
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	HandlerDefinition definition;
@@ -69,23 +69,23 @@ HandlerDefinition HandlersManager::getHandler(const QString &type)
 
 	if (transferMode == QLatin1String("ignore"))
 	{
-		definition.transferMode = IgnoreTransferMode;
+		definition.transferMode = HandlerDefinition::IgnoreTransfer;
 	}
 	else if (transferMode == QLatin1String("open"))
 	{
-		definition.transferMode = OpenTransferMode;
+		definition.transferMode = HandlerDefinition::OpenTransfer;
 	}
 	else if (transferMode == QLatin1String("save"))
 	{
-		definition.transferMode = SaveTransferMode;
+		definition.transferMode = HandlerDefinition::SaveTransfer;
 	}
 	else if (transferMode == QLatin1String("saveAs"))
 	{
-		definition.transferMode = SaveAsTransferMode;
+		definition.transferMode = HandlerDefinition::SaveAsTransfer;
 	}
 	else
 	{
-		definition.transferMode = AskTransferMode;
+		definition.transferMode = HandlerDefinition::AskTransfer;
 	}
 
 	return definition;
@@ -102,19 +102,19 @@ void HandlersManager::setHandler(const QString &type, const HandlerDefinition &d
 	IniSettings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	QString transferMode(QLatin1String("ask"));
 
-	if (definition.transferMode == IgnoreTransferMode)
+	if (definition.transferMode == HandlerDefinition::IgnoreTransfer)
 	{
 		transferMode = QLatin1String("ignore");
 	}
-	else if (definition.transferMode == OpenTransferMode)
+	else if (definition.transferMode == HandlerDefinition::OpenTransfer)
 	{
 		transferMode = QLatin1String("open");
 	}
-	else if (definition.transferMode == SaveTransferMode)
+	else if (definition.transferMode == HandlerDefinition::SaveTransfer)
 	{
 		transferMode = QLatin1String("save");
 	}
-	else if (definition.transferMode == SaveAsTransferMode)
+	else if (definition.transferMode == HandlerDefinition::SaveAsTransfer)
 	{
 		transferMode = QLatin1String("saveAs");
 	}

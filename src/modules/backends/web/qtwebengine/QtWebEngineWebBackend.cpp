@@ -105,26 +105,26 @@ void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
 		return;
 	}
 
-	const HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType().name()));
+	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType().name()));
 
 	switch (handler.transferMode)
 	{
-		case IgnoreTransferMode:
+		case HandlersManager::HandlerDefinition::IgnoreTransfer:
 			transfer->cancel();
 			transfer->deleteLater();
 
 			break;
-		case AskTransferMode:
+		case HandlersManager::HandlerDefinition::AskTransfer:
 			TransferDialog(transfer).exec();
 
 			break;
-		case OpenTransferMode:
+		case HandlersManager::HandlerDefinition::OpenTransfer:
 			transfer->setOpenCommand(handler.openCommand);
 
 			TransfersManager::addTransfer(transfer);
 
 			break;
-		case SaveTransferMode:
+		case HandlersManager::HandlerDefinition::SaveTransfer:
 			transfer->setTarget(handler.downloadsPath + QDir::separator() + transfer->getSuggestedFileName());
 
 			if (transfer->getState() == Transfer::CancelledState)
@@ -137,7 +137,7 @@ void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
 			}
 
 			break;
-		case SaveAsTransferMode:
+		case HandlersManager::HandlerDefinition::SaveAsTransfer:
 			{
 				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, QStringList(), true).path);
 

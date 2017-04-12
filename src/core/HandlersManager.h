@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,28 +25,28 @@
 namespace Otter
 {
 
-enum TransferMode
-{
-	IgnoreTransferMode = 0,
-	AskTransferMode,
-	OpenTransferMode,
-	SaveTransferMode,
-	SaveAsTransferMode
-};
-
-struct HandlerDefinition
-{
-	QString openCommand;
-	QString downloadsPath;
-	TransferMode transferMode = IgnoreTransferMode;
-	bool isExplicit = true;
-};
-
 class HandlersManager : public QObject
 {
 	Q_OBJECT
 
 public:
+	struct HandlerDefinition
+	{
+		enum TransferMode
+		{
+			IgnoreTransfer = 0,
+			AskTransfer,
+			OpenTransfer,
+			SaveTransfer,
+			SaveAsTransfer
+		};
+
+		QString openCommand;
+		QString downloadsPath;
+		TransferMode transferMode = IgnoreTransfer;
+		bool isExplicit = true;
+	};
+
 	static void createInstance(QObject *parent = nullptr);
 	static HandlersManager* getInstance();
 	static HandlerDefinition getHandler(const QString &type);
