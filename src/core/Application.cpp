@@ -369,10 +369,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly, this);
 
-	if (!isReadOnly)
+	if (!isReadOnly && !Migrator::run())
 	{
-		Migrator migrator(this);
-		migrator.run();
+		exit();
+
+		return;
 	}
 
 	ThemesManager::createInstance(this);

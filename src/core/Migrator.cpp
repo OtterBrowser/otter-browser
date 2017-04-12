@@ -26,7 +26,6 @@
 
 #include <QtCore/QDate>
 #include <QtCore/QDir>
-#include <QtCore/QSet>
 #include <QtCore/QSettings>
 #include <QtCore/QTextStream>
 #include <QtWidgets/QCheckBox>
@@ -349,11 +348,51 @@ bool Migration::canMigrate() const
 	return false;
 }
 
-Migrator::Migrator(QObject *parent) : QObject(parent)
+Migrator::MigrationFlags Migrator::checkMigrationStatus(const Migration *migration)
 {
+	if (!migration->canMigrate())
+	{
+		return IgnoreMigration;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(QCoreApplication::translate("Otter::Migrator", "Question"));
+	messageBox.setText(QCoreApplication::translate("Otter::Migrator", "Configuration of %1 needs to be updated to new version.\nDo you want to migrate it?").arg(QCoreApplication::translate("migrations", migration->getTitle().toUtf8().constData())));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setCheckBox(new QCheckBox(QCoreApplication::translate("Otter::Migrator", "Create backup")));
+	messageBox.addButton(QCoreApplication::translate("Otter::Migrator", "Yes"), QMessageBox::AcceptRole);
+
+	QAbstractButton *ignoreButton(messageBox.addButton(QCoreApplication::translate("Otter::Migrator", "No"), QMessageBox::RejectRole));
+	QAbstractButton *cancelButton(messageBox.addButton(QCoreApplication::translate("Otter::Migrator", "Cancel"), QMessageBox::RejectRole));
+
+	messageBox.checkBox()->setChecked(true);
+	messageBox.exec();
+
+	if (messageBox.clickedButton() == cancelButton)
+	{
+		return NoMigration;
+	}
+
+	MigrationFlags flags(NoMigration);
+
+	if (messageBox.clickedButton() == ignoreButton)
+	{
+		flags |= IgnoreMigration;
+	}
+	else
+	{
+		flags |= ProceedMigration;
+	}
+
+	if (messageBox.checkBox()->isChecked())
+	{
+		flags |= WithBackupMigration;
+	}
+
+	return flags;
 }
 
-void Migrator::run()
+bool Migrator::run()
 {
 	const QVector<Migration*> availableMigrations({new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
@@ -384,50 +423,8 @@ void Migrator::run()
 	qDeleteAll(availableMigrations);
 
 	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
-}
 
-Migrator::MigrationFlags Migrator::checkMigrationStatus(const Migration *migration) const
-{
-	if (!migration->canMigrate())
-	{
-		return IgnoreMigration;
-	}
-
-	QMessageBox messageBox;
-	messageBox.setWindowTitle(tr("Question"));
-	messageBox.setText(tr("Configuration of %1 needs to be updated to new version.\nDo you want to migrate it?").arg(QCoreApplication::translate("migrations", migration->getTitle().toUtf8().constData())));
-	messageBox.setIcon(QMessageBox::Question);
-	messageBox.setCheckBox(new QCheckBox(tr("Create backup")));
-	messageBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
-
-	QAbstractButton *ignoreButton(messageBox.addButton(tr("No"), QMessageBox::RejectRole));
-	QAbstractButton *cancelButton(messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole));
-
-	messageBox.checkBox()->setChecked(true);
-	messageBox.exec();
-
-	if (messageBox.clickedButton() == cancelButton)
-	{
-		return NoMigration;
-	}
-
-	MigrationFlags flags(NoMigration);
-
-	if (messageBox.clickedButton() == ignoreButton)
-	{
-		flags |= IgnoreMigration;
-	}
-	else
-	{
-		flags |= ProceedMigration;
-	}
-
-	if (messageBox.checkBox()->isChecked())
-	{
-		flags |= WithBackupMigration;
-	}
-
-	return flags;
+	return true;
 }
 
 }

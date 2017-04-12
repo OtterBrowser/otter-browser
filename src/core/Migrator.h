@@ -20,8 +20,7 @@
 #ifndef OTTER_MIGRATOR_H
 #define OTTER_MIGRATOR_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
+#include <QtCore/QString>
 
 namespace Otter
 {
@@ -42,7 +41,7 @@ protected:
 	static QString createBackupPath(const QString &sourcePath);
 };
 
-class Migrator : public QObject
+class Migrator
 {
 
 public:
@@ -56,12 +55,10 @@ public:
 
 	Q_DECLARE_FLAGS(MigrationFlags, MigrationFlag)
 
-	explicit Migrator(QObject *parent = nullptr);
-
-	void run();
+	static bool run();
 
 protected:
-	MigrationFlags checkMigrationStatus(const Migration *migration) const;
+	static MigrationFlags checkMigrationStatus(const Migration *migration);
 };
 
 }
