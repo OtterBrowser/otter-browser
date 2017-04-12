@@ -39,8 +39,11 @@
 namespace Otter
 {
 
-Addon::Addon(QObject *parent) : QObject(parent),
-	m_isEnabled(true)
+Addon::Addon() : m_isEnabled(true)
+{
+}
+
+Addon::~Addon()
 {
 }
 

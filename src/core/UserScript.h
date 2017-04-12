@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class UserScript : public Addon
+class UserScript : public QObject, public Addon
 {
 	Q_OBJECT
 

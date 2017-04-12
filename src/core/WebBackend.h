@@ -29,7 +29,7 @@ namespace Otter
 class ContentsWidget;
 class WebWidget;
 
-class WebBackend : public Addon
+class WebBackend : public QObject, public Addon
 {
 	Q_OBJECT
 

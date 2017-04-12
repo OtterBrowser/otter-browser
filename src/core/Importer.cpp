@@ -22,7 +22,7 @@
 namespace Otter
 {
 
-Importer::Importer(QObject *parent) : Addon(parent)
+Importer::Importer(QObject *parent) : QObject(parent), Addon()
 {
 }
 

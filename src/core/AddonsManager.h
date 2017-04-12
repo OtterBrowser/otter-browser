@@ -31,10 +31,8 @@ class AddonsManager;
 class UserScript;
 class WebBackend;
 
-class Addon : public QObject
+class Addon
 {
-	Q_OBJECT
-
 public:
 	enum AddonType
 	{
@@ -50,7 +48,8 @@ public:
 		WebBackendType
 	};
 
-	explicit Addon(QObject *parent = nullptr);
+	explicit Addon();
+	virtual ~Addon();
 
 	virtual QString getName() const;
 	virtual QString getTitle() const = 0;

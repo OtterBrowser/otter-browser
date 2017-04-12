@@ -22,7 +22,7 @@
 namespace Otter
 {
 
-PasswordsStorageBackend::PasswordsStorageBackend(QObject *parent) : Addon(parent)
+PasswordsStorageBackend::PasswordsStorageBackend(QObject *parent) : QObject(parent), Addon()
 {
 }
 

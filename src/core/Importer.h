@@ -41,7 +41,7 @@ enum ImportType
 	NotesImport = 1024
 };
 
-class Importer : public Addon
+class Importer : public QObject, public Addon
 {
 	Q_OBJECT
 

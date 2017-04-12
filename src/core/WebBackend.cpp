@@ -22,7 +22,7 @@
 namespace Otter
 {
 
-WebBackend::WebBackend(QObject *parent) : Addon(parent)
+WebBackend::WebBackend(QObject *parent) : QObject(parent), Addon()
 {
 }
 

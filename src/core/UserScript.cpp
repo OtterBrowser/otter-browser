@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
+UserScript::UserScript(const QString &path, QObject *parent) : QObject(parent), Addon(),
 	m_path(path),
 	m_icon(ThemesManager::getIcon(QLatin1String("addon-user-script"), false)),
 	m_injectionTime(DocumentReadyTime),
