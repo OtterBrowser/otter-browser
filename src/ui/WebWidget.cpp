@@ -67,6 +67,12 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 
 	connect(this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
+	connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, [&]()
+	{
+		updatePageActions(getUrl());
+
+		emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+	});
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
@@ -605,13 +611,6 @@ void WebWidget::showContextMenu(const QPoint &position)
 	Menu menu(Menu::NoMenuRole, this);
 	menu.load(QLatin1String("menu/webWidget.json"), flags);
 	menu.exec(mapToGlobal(hitPosition));
-}
-
-void WebWidget::updatePasswords()
-{
-	updatePageActions(getUrl());
-
-	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 }
 
 void WebWidget::updateQuickSearch()
@@ -1246,6 +1245,7 @@ Action* WebWidget::getAction(int identifier)
 	}
 
 	Action *action(new Action(identifier, this));
+	action->setState(getActionState(identifier));
 
 	m_actions[identifier] = action;
 
@@ -1253,27 +1253,6 @@ Action* WebWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
-		case ActionsManager::MuteTabMediaAction:
-			handleAudibleStateChange(isAudible());
-
-			break;
-		case ActionsManager::FillPasswordAction:
-			connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(updatePasswords()));
-		case ActionsManager::BookmarkPageAction:
-		case ActionsManager::WebsitePreferencesAction:
-			updatePageActions(getUrl());
-
-			break;
-		case ActionsManager::GoBackAction:
-		case ActionsManager::RewindAction:
-			action->setEnabled(canGoBack());
-
-			break;
-		case ActionsManager::GoForwardAction:
-		case ActionsManager::FastForwardAction:
-			action->setEnabled(canGoForward());
-
-			break;
 		case ActionsManager::PasteNoteAction:
 			if (!m_pasteNoteMenu)
 			{
@@ -1283,21 +1262,6 @@ Action* WebWidget::getAction(int identifier)
 			}
 
 			action->setMenu(m_pasteNoteMenu);
-
-			updateEditActions();
-
-			break;
-		case ActionsManager::StopAction:
-			action->setEnabled(getLoadingState() == OngoingLoadingState);
-
-			break;
-
-		case ActionsManager::ReloadAction:
-			action->setEnabled(getLoadingState() != OngoingLoadingState);
-
-			break;
-		case ActionsManager::ReloadOrStopAction:
-			action->setup((getLoadingState() == OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
@@ -1331,89 +1295,16 @@ Action* WebWidget::getAction(int identifier)
 			action->setMenu(m_reloadTimeMenu);
 
 			break;
-		case ActionsManager::LoadPluginsAction:
-			action->setEnabled(getAmountOfNotLoadedPlugins() > 0);
-
-			break;
-		case ActionsManager::EnableJavaScriptAction:
-			action->setChecked(getOption(SettingsManager::Permissions_EnableJavaScriptOption, getUrl()).toBool());
-
-			break;
-		case ActionsManager::EnableReferrerAction:
-			action->setChecked(getOption(SettingsManager::Network_EnableReferrerOption, getUrl()).toBool());
-
-			break;
-		case ActionsManager::ViewSourceAction:
-			action->setEnabled(canViewSource());
-
-			break;
-		case ActionsManager::UndoAction:
-		case ActionsManager::RedoAction:
-		case ActionsManager::CutAction:
-		case ActionsManager::CopyAction:
-		case ActionsManager::CopyPlainTextAction:
-		case ActionsManager::CopyToNoteAction:
-		case ActionsManager::PasteAction:
-		case ActionsManager::PasteAndGoAction:
-		case ActionsManager::DeleteAction:
-		case ActionsManager::ClearAllAction:
-		case ActionsManager::CheckSpellingAction:
-		case ActionsManager::SearchAction:
-		case ActionsManager::CreateSearchAction:
-			updateEditActions();
-
-			break;
 		case ActionsManager::OpenLinkInApplicationAction:
 			action->setMenu(new Menu(Menu::NoMenuRole, this));
 
 			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-		case ActionsManager::OpenLinkAction:
-		case ActionsManager::OpenLinkInCurrentTabAction:
-		case ActionsManager::OpenLinkInNewTabAction:
-		case ActionsManager::OpenLinkInNewTabBackgroundAction:
-		case ActionsManager::OpenLinkInNewWindowAction:
-		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-		case ActionsManager::OpenLinkInNewPrivateTabAction:
-		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-		case ActionsManager::OpenLinkInNewPrivateWindowAction:
-		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-		case ActionsManager::CopyLinkToClipboardAction:
-		case ActionsManager::BookmarkLinkAction:
-		case ActionsManager::SaveLinkToDiskAction:
-		case ActionsManager::SaveLinkToDownloadsAction:
-			updateLinkActions();
 
 			break;
 		case ActionsManager::OpenFrameInApplicationAction:
 			action->setMenu(new Menu(Menu::NoMenuRole, this));
 
 			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-		case ActionsManager::OpenFrameInCurrentTabAction:
-		case ActionsManager::OpenFrameInNewTabAction:
-		case ActionsManager::OpenFrameInNewTabBackgroundAction:
-		case ActionsManager::CopyFrameLinkToClipboardAction:
-		case ActionsManager::ReloadFrameAction:
-		case ActionsManager::ViewFrameSourceAction:
-			updateFrameActions();
-
-			break;
-		case ActionsManager::OpenImageInNewTabAction:
-		case ActionsManager::OpenImageInNewTabBackgroundAction:
-		case ActionsManager::SaveImageToDiskAction:
-		case ActionsManager::CopyImageToClipboardAction:
-		case ActionsManager::CopyImageUrlToClipboardAction:
-		case ActionsManager::ReloadImageAction:
-		case ActionsManager::ImagePropertiesAction:
-			updateImageActions();
-
-			break;
-		case ActionsManager::SaveMediaToDiskAction:
-		case ActionsManager::CopyMediaUrlToClipboardAction:
-		case ActionsManager::MediaControlsAction:
-		case ActionsManager::MediaLoopAction:
-		case ActionsManager::MediaPlayPauseAction:
-		case ActionsManager::MediaMuteAction:
-			updateMediaActions();
 
 			break;
 		case ActionsManager::OpenPageInApplicationAction:
@@ -1425,9 +1316,6 @@ Action* WebWidget::getAction(int identifier)
 		case ActionsManager::SelectDictionaryAction:
 			{
 				const QVector<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
-
-				action->setEnabled(getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !dictionaries.isEmpty());
-
 				QMenu *menu(new QMenu(this));
 				QActionGroup *dictionariesGroup(new QActionGroup(menu));
 				dictionariesGroup->setExclusive(true);
@@ -1446,10 +1334,6 @@ Action* WebWidget::getAction(int identifier)
 				connect(menu, SIGNAL(aboutToShow()), this, SLOT(selectDictionaryMenuAboutToShow()));
 				connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(selectDictionary(QAction*)));
 			}
-
-			break;
-		case ActionsManager::ResetQuickPreferencesAction:
-			action->setEnabled(!m_options.isEmpty());
 
 			break;
 		default:

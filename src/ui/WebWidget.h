@@ -308,7 +308,6 @@ protected slots:
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);
 	void handleWindowCloseRequest();
-	void updatePasswords();
 	void updateQuickSearch();
 	virtual void updatePageActions(const QUrl &url);
 	virtual void updateNavigationActions();
