@@ -1612,6 +1612,246 @@ QRect WebWidget::getProgressBarGeometry() const
 	return (isVisible() ? QRect(QPoint(0, (height() - 30)), QSize(width(), 30)) : QRect());
 }
 
+ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+
+	switch (identifier)
+	{
+		case ActionsManager::OpenLinkAction:
+		case ActionsManager::OpenLinkInCurrentTabAction:
+		case ActionsManager::OpenLinkInNewTabAction:
+		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewWindowAction:
+		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateTabAction:
+		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
+		case ActionsManager::OpenLinkInApplicationAction:
+		case ActionsManager::CopyLinkToClipboardAction:
+		case ActionsManager::SaveLinkToDiskAction:
+		case ActionsManager::SaveLinkToDownloadsAction:
+			state.isEnabled = m_hitResult.linkUrl.isValid();
+
+			break;
+		case ActionsManager::BookmarkLinkAction:
+			state.text = (BookmarksManager::hasBookmark(m_hitResult.linkUrl) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
+			state.isEnabled = m_hitResult.linkUrl.isValid();
+
+			break;
+		case ActionsManager::OpenFrameInCurrentTabAction:
+		case ActionsManager::OpenFrameInNewTabAction:
+		case ActionsManager::OpenFrameInNewTabBackgroundAction:
+		case ActionsManager::OpenFrameInApplicationAction:
+		case ActionsManager::CopyFrameLinkToClipboardAction:
+		case ActionsManager::ReloadFrameAction:
+		case ActionsManager::ViewFrameSourceAction:
+			state.isEnabled = m_hitResult.frameUrl.isValid();
+
+			break;
+		case ActionsManager::OpenImageInNewTabAction:
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
+			if (m_hitResult.imageUrl.isEmpty())
+			{
+				state.isEnabled = false;
+			}
+			else
+			{
+				const QString fileName((m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? QString() : fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256));
+
+				if (!fileName.isEmpty())
+				{
+					if (identifier == ActionsManager::OpenImageInNewTabBackgroundAction)
+					{
+						state.text = tr("Open Image in New Background Tab (%1)").arg(fileName);
+					}
+					else
+					{
+						state.text = tr("Open Image in New Tab (%1)").arg(fileName);
+					}
+				}
+
+				state.isEnabled = !getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
+			}
+
+			break;
+		case ActionsManager::SaveImageToDiskAction:
+		case ActionsManager::CopyImageToClipboardAction:
+		case ActionsManager::CopyImageUrlToClipboardAction:
+		case ActionsManager::ReloadImageAction:
+		case ActionsManager::ImagePropertiesAction:
+			state.isEnabled = !m_hitResult.imageUrl.isEmpty();
+
+			break;
+		case ActionsManager::SaveMediaToDiskAction:
+			state.text = ((m_hitResult.tagName == QLatin1String("video")) ? QT_TRANSLATE_NOOP("actions", "Save Video…") : QT_TRANSLATE_NOOP("actions", "Save Audio…"));
+			state.isEnabled = m_hitResult.mediaUrl.isValid();
+
+			break;
+		case ActionsManager::CopyMediaUrlToClipboardAction:
+			state.text = ((m_hitResult.tagName == QLatin1String("video")) ? QT_TRANSLATE_NOOP("actions", "Copy Video Link to Clipboard") : QT_TRANSLATE_NOOP("actions", "Copy Audio Link to Clipboard"));
+			state.isEnabled = m_hitResult.mediaUrl.isValid();
+
+			break;
+		case ActionsManager::MediaControlsAction:
+			state.isChecked = m_hitResult.flags.testFlag(MediaHasControlsTest);
+			state.isEnabled = m_hitResult.mediaUrl.isValid();
+
+			break;
+		case ActionsManager::MediaLoopAction:
+			state.isChecked = m_hitResult.flags.testFlag(MediaIsLoopedTest);
+			state.isEnabled = m_hitResult.mediaUrl.isValid();
+
+			break;
+		case ActionsManager::MediaPlayPauseAction:
+			state.text = (m_hitResult.flags.testFlag(MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
+			state.icon = ThemesManager::getIcon(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause"));
+			state.isEnabled = m_hitResult.mediaUrl.isValid();
+
+			break;
+		case ActionsManager::MediaMuteAction:
+			state.text = (m_hitResult.flags.testFlag(MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
+			state.icon = ThemesManager::getIcon(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted"));
+			state.isEnabled = m_hitResult.mediaUrl.isValid();
+
+			break;
+		case ActionsManager::FillPasswordAction:
+			state.isEnabled = (!Utils::isUrlEmpty(getUrl()) && PasswordsManager::hasPasswords(getUrl(), PasswordsManager::FormPassword));
+
+			break;
+		case ActionsManager::MuteTabMediaAction:
+			state.isEnabled = (isAudible() || isAudioMuted());
+			state.icon = ThemesManager::getIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium"));
+			state.text = (isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
+
+			break;
+		case ActionsManager::GoBackAction:
+		case ActionsManager::RewindAction:
+			state.isEnabled = canGoBack();
+
+			break;
+		case ActionsManager::GoForwardAction:
+			state.isEnabled = canGoForward();
+
+			break;
+		case ActionsManager::FastForwardAction:
+			state.isEnabled = canFastForward();
+
+			break;
+		case ActionsManager::StopAction:
+			state.isEnabled = (getLoadingState() == OngoingLoadingState);
+
+			break;
+		case ActionsManager::ReloadAction:
+			state.isEnabled = (getLoadingState() != OngoingLoadingState);
+
+			break;
+		case ActionsManager::ReloadOrStopAction:
+			state = getActionState((getLoadingState() == OngoingLoadingState) ? ActionsManager::StopAction : ActionsManager::ReloadAction);
+
+			break;
+		case ActionsManager::UndoAction:
+			state.isEnabled = canUndo();
+
+			break;
+		case ActionsManager::RedoAction:
+			state.isEnabled = canRedo();
+
+			break;
+		case ActionsManager::CutAction:
+			state.isEnabled = (this->hasSelection() && !getSelectedText().trimmed().isEmpty() && m_hitResult.flags.testFlag(IsContentEditableTest));
+
+			break;
+		case ActionsManager::CopyAction:
+		case ActionsManager::CopyPlainTextAction:
+		case ActionsManager::CopyToNoteAction:
+		case ActionsManager::UnselectAction:
+			state.isEnabled = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
+
+			break;
+		case ActionsManager::PasteAction:
+			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+
+			break;
+		case ActionsManager::PasteAndGoAction:
+			state.isEnabled = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+
+			break;
+		case ActionsManager::PasteNoteAction:
+			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText() && NotesManager::getModel()->getRootItem()->hasChildren());
+
+			break;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+
+			break;
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = (!m_hitResult.flags.testFlag(IsEmptyTest));
+
+			break;
+		case ActionsManager::ClearAllAction:
+			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+
+			break;
+		case ActionsManager::CheckSpellingAction:
+			state.isChecked = (m_hitResult.flags.testFlag(IsSpellCheckEnabled));
+			state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !getDictionaries().isEmpty());
+
+			break;
+		case ActionsManager::SelectDictionaryAction:
+			state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !getDictionaries().isEmpty());
+
+			break;
+		case ActionsManager::SearchAction:
+			{
+				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.contains(QLatin1String("searchEngine")) ? parameters[QLatin1String("searchEngine")].toString() : getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
+
+				state.text = (searchEngine.isValid() ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
+				state.icon = (searchEngine.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
+				state.isEnabled = searchEngine.isValid();
+			}
+
+			break;
+		case ActionsManager::CreateSearchAction:
+			state.isEnabled = m_hitResult.flags.testFlag(IsFormTest);
+
+			break;
+		case ActionsManager::BookmarkPageAction:
+			state.text = (BookmarksManager::hasBookmark(getUrl()) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
+
+			break;
+		case ActionsManager::LoadPluginsAction:
+			state.isEnabled = (getAmountOfNotLoadedPlugins() > 0);
+
+			break;
+		case ActionsManager::EnableJavaScriptAction:
+			state.isChecked = getOption(SettingsManager::Permissions_EnableJavaScriptOption, getUrl()).toBool();
+
+			break;
+		case ActionsManager::EnableReferrerAction:
+			state.isChecked = getOption(SettingsManager::Network_EnableReferrerOption, getUrl()).toBool();
+
+			break;
+		case ActionsManager::ViewSourceAction:
+			state.isEnabled = canViewSource();
+
+			break;
+		case ActionsManager::WebsitePreferencesAction:
+			state.isEnabled = (!Utils::isUrlEmpty(getUrl()) && getUrl().scheme() != QLatin1String("about"));
+
+			break;
+		case ActionsManager::ResetQuickPreferencesAction:
+			state.isEnabled = !m_options.isEmpty();
+
+			break;
+		default:
+			break;
+	}
+
+	return state;
+}
+
 WebWidget::LinkUrl WebWidget::getActiveFrame() const
 {
 	return LinkUrl();
@@ -1824,6 +2064,16 @@ bool WebWidget::canGoForward() const
 }
 
 bool WebWidget::canFastForward() const
+{
+	return false;
+}
+
+bool WebWidget::canRedo() const
+{
+	return false;
+}
+
+bool WebWidget::canUndo() const
 {
 	return false;
 }

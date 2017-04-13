@@ -1746,6 +1746,16 @@ bool QtWebEngineWebWidget::canFastForward() const
 	return canFastFoward;
 }
 
+bool QtWebEngineWebWidget::canRedo() const
+{
+	return m_page->action(QWebEnginePage::Redo)->isEnabled();
+}
+
+bool QtWebEngineWebWidget::canUndo() const
+{
+	return m_page->action(QWebEnginePage::Undo)->isEnabled();
+}
+
 bool QtWebEngineWebWidget::canShowContextMenu(const QPoint &position) const
 {
 	Q_UNUSED(position)

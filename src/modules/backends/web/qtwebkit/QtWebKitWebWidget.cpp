@@ -2658,6 +2658,16 @@ bool QtWebKitWebWidget::canFastForward() const
 	return m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(false)).toBool();
 }
 
+bool QtWebKitWebWidget::canRedo() const
+{
+	return m_page->undoStack()->canRedo();
+}
+
+bool QtWebKitWebWidget::canUndo() const
+{
+	return m_page->undoStack()->canUndo();
+}
+
 bool QtWebKitWebWidget::canShowContextMenu(const QPoint &position) const
 {
 	if (!getOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool())

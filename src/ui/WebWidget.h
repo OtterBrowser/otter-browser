@@ -225,6 +225,7 @@ public:
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const;
+	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
 	virtual LinkUrl getActiveFrame() const;
 	virtual LinkUrl getActiveImage() const;
 	virtual LinkUrl getActiveLink() const;
@@ -289,6 +290,8 @@ protected:
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
 	virtual bool canFastForward() const;
+	virtual bool canRedo() const;
+	virtual bool canUndo() const;
 	virtual bool canShowContextMenu(const QPoint &position) const;
 	virtual bool canViewSource() const;
 	virtual bool isInspecting() const;
