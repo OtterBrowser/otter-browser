@@ -1382,7 +1382,7 @@ void MainWindow::restore(int index)
 		emit closedWindowsAvailableChanged(false);
 	}
 
-	addWindow(window, SessionsManager::DefaultOpen, windowIndex);
+	addWindow(window, SessionsManager::DefaultOpen, windowIndex, closedWindow.window.geometry, closedWindow.window.state, closedWindow.window.isAlwaysOnTop);
 }
 
 void MainWindow::clearClosedWindows()
