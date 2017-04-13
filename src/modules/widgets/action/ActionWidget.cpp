@@ -46,52 +46,34 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ActionsManager:
 
 void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if ((m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
+	int identifier(m_identifier);
+	QVariantMap parameters(getParameters());
+
+	if ((identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
 	{
-		QVariantMap parameters(getParameters());
+		identifier = ActionsManager::OpenUrlAction;
 
 		SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, event->button(), event->modifiers()));
 
-		if (m_identifier == ActionsManager::NewTabPrivateAction)
+		if (identifier == ActionsManager::NewTabPrivateAction)
 		{
 			hints |= SessionsManager::PrivateOpen;
 		}
 
 		parameters[QLatin1String("hints")] = QVariant(hints);
-
-		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
-
-		QAction *action(defaultAction());
-
-		setDefaultAction(nullptr);
-
-		ToolButtonWidget::mouseReleaseEvent(event);
-
-		setDefaultAction(action);
-		setText(getText());
-		setIcon(getIcon());
-
-		return;
 	}
 
-	if (!getParameters().isEmpty() && event->button() == Qt::LeftButton)
-	{
-		ActionsManager::triggerAction(m_identifier, this, getParameters());
+	ActionsManager::triggerAction(identifier, this, parameters);
 
-		QAction *action(defaultAction());
+	QAction *action(defaultAction());
 
-		setDefaultAction(nullptr);
-
-		ToolButtonWidget::mouseReleaseEvent(event);
-
-		setDefaultAction(action);
-		setText(getText());
-		setIcon(getIcon());
-
-		return;
-	}
+	setDefaultAction(nullptr);
 
 	ToolButtonWidget::mouseReleaseEvent(event);
+
+	setDefaultAction(action);
+	setText(getText());
+	setIcon(getIcon());
 }
 
 void ActionWidget::resetAction()
