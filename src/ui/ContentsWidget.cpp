@@ -324,6 +324,13 @@ QPixmap ContentsWidget::getThumbnail()
 	return QPixmap();
 }
 
+ActionsManager::ActionDefinition::State ContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	Q_UNUSED(parameters)
+
+	return ActionsManager::getActionDefinition(identifier).defaultState;
+}
+
 WindowHistoryInformation ContentsWidget::getHistory() const
 {
 	WindowHistoryEntry entry;

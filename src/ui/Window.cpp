@@ -780,6 +780,16 @@ QDateTime Window::getLastActivity() const
 	return m_lastActivity;
 }
 
+ActionsManager::ActionDefinition::State Window::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (m_contentsWidget)
+	{
+		return m_contentsWidget->getActionState(identifier, parameters);
+	}
+
+	return ActionsManager::getActionDefinition(identifier).defaultState;
+}
+
 SessionWindow Window::getSession() const
 {
 	SessionWindow session;

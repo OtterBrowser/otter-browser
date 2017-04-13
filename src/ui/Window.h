@@ -73,6 +73,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	QDateTime getLastActivity() const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	QSize sizeHint() const override;

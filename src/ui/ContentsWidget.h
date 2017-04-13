@@ -55,6 +55,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail();
+	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<WebWidget::LinkUrl> getFeeds() const;

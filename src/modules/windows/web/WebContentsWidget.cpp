@@ -1377,6 +1377,11 @@ QPixmap WebContentsWidget::getThumbnail()
 	return m_webWidget->getThumbnail();
 }
 
+ActionsManager::ActionDefinition::State WebContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	return m_webWidget->getActionState(identifier, parameters);
+}
+
 WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();

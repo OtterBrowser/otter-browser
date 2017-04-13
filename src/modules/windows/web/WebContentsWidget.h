@@ -82,6 +82,7 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPixmap getThumbnail() override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const override;
 	WindowHistoryInformation getHistory() const override;
 	QStringList getStyleSheets() const override;
 	QVector<WebWidget::LinkUrl> getFeeds() const override;
