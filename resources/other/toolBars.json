@@ -77,5 +77,15 @@
 			"ZoomInAction",
 			"ContentBlockingInformationWidget"
 		]
+	},
+	{
+		"identifier": "ErrorConsoleBar",
+		"title": "Error Console",
+		"location": "bottom",
+		"normalVisibility": "hidden",
+		"actions":
+		[
+			"ErrorConsoleWidget"
+		]
 	}
 ]

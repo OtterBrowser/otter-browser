@@ -41,6 +41,7 @@ public:
 		ProgressBar,
 		SideBar,
 		StatusBar,
+		ErrorConsoleBar,
 		OtherToolBar
 	};
 

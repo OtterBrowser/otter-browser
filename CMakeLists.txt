@@ -146,7 +146,6 @@ set(otter_src
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ColorWidget.cpp
 	src/ui/ComboBoxWidget.cpp
-	src/ui/ConsoleWidget.cpp
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/CookiePropertiesDialog.cpp
@@ -225,6 +224,7 @@ set(otter_src
 	src/modules/widgets/bookmark/BookmarkWidget.cpp
 	src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp
 	src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp
+	src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp
 	src/modules/widgets/menuButton/MenuButtonWidget.cpp
 	src/modules/widgets/panelChooser/PanelChooserWidget.cpp
 	src/modules/widgets/progressInformation/ProgressInformationWidget.cpp
@@ -266,7 +266,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/BookmarksImporterWidget.ui
 	src/ui/CertificateDialog.ui
 	src/ui/ClearHistoryDialog.ui
-	src/ui/ConsoleWidget.ui
 	src/ui/CookiePropertiesDialog.ui
 	src/ui/ImagePropertiesDialog.ui
 	src/ui/ImportDialog.ui
@@ -302,6 +301,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/PreferencesSearchPageWidget.ui
 	src/ui/preferences/ProxyPropertiesDialog.ui
 	src/ui/preferences/UserAgentPropertiesDialog.ui
+	src/modules/widgets/errorConsole/ErrorConsoleWidget.ui
 	src/modules/windows/addons/AddonsContentsWidget.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui

@@ -155,12 +155,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarMoved(int)), this, SLOT(handleToolBarMoved(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(handleTransferStarted()));
-	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 
 	restore(session);
-
-	m_ui->consoleDockWidget->hide();
-
 	updateWindowTitle();
 
 	if (session.geometry.isEmpty())
@@ -798,6 +794,15 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			return;
+		case ActionsManager::ShowErrorConsoleAction:
+			{
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ErrorConsoleBar));
+				definition.normalVisibility = (Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowErrorConsoleAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+
+				ToolBarsManager::setToolBar(definition);
+			}
+
+			return;
 		case ActionsManager::OpenPanelAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
@@ -819,10 +824,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					ToolBarsManager::setToolBar(definition);
 				}
 			}
-
-			return;
-		case ActionsManager::ShowErrorConsoleAction:
-			m_ui->consoleDockWidget->setVisible(Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowErrorConsoleAction)));
 
 			return;
 		case ActionsManager::ContentBlockingAction:
@@ -2256,7 +2257,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::ShowErrorConsoleAction:
-			state.isChecked = m_ui->consoleWidget->isVisible();
+			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::ErrorConsoleBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
 
 			break;
 		default:

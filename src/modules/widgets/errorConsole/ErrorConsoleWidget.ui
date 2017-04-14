@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Otter::ConsoleWidget</class>
- <widget class="QWidget" name="Otter::ConsoleWidget">
+ <class>Otter::ErrorConsoleWidget</class>
+ <widget class="QWidget" name="Otter::ErrorConsoleWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>661</width>
+    <width>700</width>
     <height>300</height>
    </rect>
   </property>

@@ -27,6 +27,7 @@
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
 #include "../modules/widgets/configurationOption/ConfigurationOptionWidget.h"
 #include "../modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.h"
+#include "../modules/widgets/errorConsole/ErrorConsoleWidget.h"
 #include "../modules/widgets/menuButton/MenuButtonWidget.h"
 #include "../modules/widgets/panelChooser/PanelChooserWidget.h"
 #include "../modules/widgets/progressInformation/ProgressInformationWidget.h"
@@ -75,6 +76,11 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 	if (definition.action == QLatin1String("ConfigurationOptionWidget"))
 	{
 		return new ConfigurationOptionWidget(window, definition, parent);
+	}
+
+	if (definition.action == QLatin1String("ErrorConsoleWidget"))
+	{
+		return new ErrorConsoleWidget(parent);
 	}
 
 	if (definition.action == QLatin1String("ContentBlockingInformationWidget"))

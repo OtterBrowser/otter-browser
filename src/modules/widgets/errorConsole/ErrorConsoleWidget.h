@@ -23,23 +23,23 @@
 #include <QtGui/QStandardItemModel>
 #include <QtWidgets/QWidget>
 
-#include "../core/Console.h"
+#include "../../../core/Console.h"
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class ConsoleWidget;
+	class ErrorConsoleWidget;
 }
 
-class ConsoleWidget : public QWidget
+class ErrorConsoleWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit ConsoleWidget(QWidget *parent = nullptr);
-	~ConsoleWidget();
+	explicit ErrorConsoleWidget(QWidget *parent = nullptr);
+	~ErrorConsoleWidget();
 
 protected:
 	enum DataRole
@@ -76,7 +76,7 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	MessagesScopes m_messageScopes;
-	Ui::ConsoleWidget *m_ui;
+	Ui::ErrorConsoleWidget *m_ui;
 };
 
 }

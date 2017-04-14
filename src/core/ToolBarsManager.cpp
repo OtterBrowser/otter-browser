@@ -50,6 +50,7 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Progress Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sidebar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Status Bar"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Error Console"))
 
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }

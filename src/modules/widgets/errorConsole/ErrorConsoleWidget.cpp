@@ -17,13 +17,13 @@
 *
 **************************************************************************/
 
-#include "ConsoleWidget.h"
-#include "MainWindow.h"
-#include "Window.h"
-#include "WorkspaceWidget.h"
-#include "../core/ThemesManager.h"
+#include "ErrorConsoleWidget.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/Window.h"
+#include "../../../ui/WorkspaceWidget.h"
 
-#include "ui_ConsoleWidget.h"
+#include "ui_ErrorConsoleWidget.h"
 
 #include <QtGui/QClipboard>
 #include <QtWidgets/QActionGroup>
@@ -32,10 +32,10 @@
 namespace Otter
 {
 
-ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
+ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 	m_model(nullptr),
 	m_messageScopes(AllTabsScope | OtherSourcesScope),
-	m_ui(new Ui::ConsoleWidget)
+	m_ui(new Ui::ErrorConsoleWidget)
 {
 	m_ui->setupUi(this);
 
@@ -74,12 +74,12 @@ ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 	connect(m_ui->consoleView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
-ConsoleWidget::~ConsoleWidget()
+ErrorConsoleWidget::~ErrorConsoleWidget()
 {
 	delete m_ui;
 }
 
-void ConsoleWidget::showEvent(QShowEvent *event)
+void ErrorConsoleWidget::showEvent(QShowEvent *event)
 {
 	if (!m_model)
 	{
@@ -108,7 +108,7 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 	QWidget::showEvent(event);
 }
 
-void ConsoleWidget::addMessage(const Console::Message &message)
+void ErrorConsoleWidget::addMessage(const Console::Message &message)
 {
 	if (!m_model)
 	{
@@ -182,7 +182,7 @@ void ConsoleWidget::addMessage(const Console::Message &message)
 	applyFilters(messageItem, m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
 }
 
-void ConsoleWidget::clear()
+void ErrorConsoleWidget::clear()
 {
 	if (m_model)
 	{
@@ -190,12 +190,12 @@ void ConsoleWidget::clear()
 	}
 }
 
-void ConsoleWidget::copyText()
+void ErrorConsoleWidget::copyText()
 {
 	QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
 }
 
-void ConsoleWidget::filterCategories()
+void ErrorConsoleWidget::filterCategories()
 {
 	QMenu *menu(qobject_cast<QMenu*>(sender()));
 
@@ -223,7 +223,7 @@ void ConsoleWidget::filterCategories()
 	}
 }
 
-void ConsoleWidget::filterMessages(const QString &filter)
+void ErrorConsoleWidget::filterMessages(const QString &filter)
 {
 	if (m_model)
 	{
@@ -237,7 +237,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 	}
 }
 
-void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
+void ErrorConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
 {
 	if (!item)
 	{
@@ -260,7 +260,7 @@ void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, con
 	m_ui->consoleView->setRowHidden(item->row(), m_ui->consoleView->rootIndex(), !matched);
 }
 
-void ConsoleWidget::showContextMenu(const QPoint position)
+void ErrorConsoleWidget::showContextMenu(const QPoint position)
 {
 	QMenu menu(m_ui->consoleView);
 	menu.addAction(ThemesManager::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
@@ -270,7 +270,7 @@ void ConsoleWidget::showContextMenu(const QPoint position)
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
-QVector<Console::MessageCategory> ConsoleWidget::getCategories() const
+QVector<Console::MessageCategory> ErrorConsoleWidget::getCategories() const
 {
 	QVector<Console::MessageCategory> categories;
 
@@ -302,7 +302,7 @@ QVector<Console::MessageCategory> ConsoleWidget::getCategories() const
 	return categories;
 }
 
-quint64 ConsoleWidget::getCurrentWindow()
+quint64 ErrorConsoleWidget::getCurrentWindow()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	Window *currentWindow(mainWindow ? mainWindow->getWorkspace()->getActiveWindow() : nullptr);

@@ -14,25 +14,8 @@
    <set>QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralWidget"/>
-  <widget class="QDockWidget" name="consoleDockWidget">
-   <property name="windowTitle">
-    <string>Console</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="Otter::ConsoleWidget" name="consoleWidget"/>
-  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Otter::ConsoleWidget</class>
-   <extends>QWidget</extends>
-   <header>src/ui/ConsoleWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -518,6 +518,10 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	{
 		item->setText(tr("Content Blocking Details"));
 	}
+	else if (identifier == QLatin1String("ErrorConsoleWidget"))
+	{
+		item->setText(tr("Error Console"));
+	}
 	else if (identifier == QLatin1String("MenuBarWidget"))
 	{
 		item->setText(tr("Menu Bar"));
