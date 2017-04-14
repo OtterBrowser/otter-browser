@@ -24,26 +24,22 @@
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "ContentsWidget.h"
-#include "LocaleDialog.h"
 #include "WorkspaceWidget.h"
 #include "Menu.h"
 #include "MenuBarWidget.h"
 #include "OpenAddressDialog.h"
 #include "OpenBookmarkDialog.h"
 #include "PreferencesDialog.h"
-#include "ReportDialog.h"
-#include "SaveSessionDialog.h"
-#include "SessionsManagerDialog.h"
 #include "SidebarWidget.h"
 #include "StatusBarWidget.h"
 #include "TabBarWidget.h"
 #include "TabSwitcherWidget.h"
 #include "ToolBarWidget.h"
-#include "UpdateCheckerDialog.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
+#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/HistoryManager.h"
@@ -392,14 +388,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			return;
-		case ActionsManager::NewWindowAction:
-			Application::createWindow();
-
-			return;
-		case ActionsManager::NewWindowPrivateAction:
-			Application::createWindow({{QLatin1String("hints"), SessionsManager::PrivateOpen}});
-
-			return;
 		case ActionsManager::OpenAction:
 			{
 				const QString path(Utils::getOpenPaths().value(0));
@@ -407,29 +395,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				if (!path.isEmpty())
 				{
 					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl::fromLocalFile(path)}});
-				}
-			}
-
-			return;
-		case ActionsManager::ClosePrivateTabsPanicAction:
-			if (SessionsManager::isPrivate())
-			{
-				Application::getInstance()->close();
-			}
-			else
-			{
-				const QVector<MainWindow*> windows(Application::getWindows());
-
-				for (int i = 0; i < windows.count(); ++i)
-				{
-					if (windows[i]->isPrivate())
-					{
-						windows[i]->close();
-					}
-					else
-					{
-						windows[i]->triggerAction(ActionsManager::ClosePrivateTabsAction);
-					}
 				}
 			}
 
@@ -448,20 +413,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::CloseWindowAction:
 			close();
-
-			return;
-		case ActionsManager::SessionsAction:
-			{
-				SessionsManagerDialog dialog(this);
-				dialog.exec();
-			}
-
-			return;
-		case ActionsManager::SaveSessionAction:
-			{
-				SaveSessionDialog dialog(this);
-				dialog.exec();
-			}
 
 			return;
 		case ActionsManager::GoToPageAction:
@@ -530,10 +481,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				dialog.exec();
 			}
-
-			return;
-		case ActionsManager::WorkOfflineAction:
-			SettingsManager::setValue(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters, getAction(ActionsManager::WorkOfflineAction)));
 
 			return;
 		case ActionsManager::ClosePrivateTabsAction:
@@ -878,14 +825,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			m_ui->consoleDockWidget->setVisible(Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowErrorConsoleAction)));
 
 			return;
-		case ActionsManager::LockToolBarsAction:
-			ToolBarsManager::setToolBarsLocked(Action::calculateCheckedState(parameters, getAction(ActionsManager::LockToolBarsAction)));
-
-			return;
-		case ActionsManager::ResetToolBarsAction:
-			ToolBarsManager::resetToolBars();
-
-			return;
 		case ActionsManager::ContentBlockingAction:
 			{
 				ContentBlockingDialog dialog(this);
@@ -971,60 +910,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				PreferencesDialog dialog(QLatin1String("general"), this);
 				dialog.exec();
 			}
-
-			return;
-		case ActionsManager::SwitchApplicationLanguageAction:
-			{
-				LocaleDialog dialog(this);
-				dialog.exec();
-			}
-
-			return;
-		case ActionsManager::CheckForUpdatesAction:
-			{
-				UpdateCheckerDialog *dialog(new UpdateCheckerDialog(this));
-				dialog->show();
-			}
-
-			return;
-		case ActionsManager::DiagnosticReportAction:
-			{
-				ReportDialog *dialog(new ReportDialog(Application::FullReport, this));
-				dialog->show();
-			}
-
-			return;
-		case ActionsManager::AboutApplicationAction:
-			{
-				WebBackend *webBackend(AddonsManager::getWebBackend());
-				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.<br><a href=\"https://www.otter-browser.org/\">https://www.otter-browser.org/</a>").arg(Application::getFullVersion());
-
-				if (webBackend)
-				{
-					const QString sslVersion(webBackend->getSslVersion());
-
-					about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) + QLatin1String("<br><br>"));
-
-					if (sslVersion.isEmpty())
-					{
-						about.append(tr("SSL library not available."));
-					}
-					else
-					{
-						about.append(tr("SSL library version: %1.").arg(sslVersion));
-					}
-				}
-
-				QMessageBox::about(this, QLatin1String("Otter"), about);
-			}
-
-			return;
-		case ActionsManager::AboutQtAction:
-			Application::getInstance()->aboutQt();
-
-			return;
-		case ActionsManager::ExitAction:
-			Application::getInstance()->close();
 
 			return;
 		default:

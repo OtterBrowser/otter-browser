@@ -48,9 +48,13 @@
 #elif defined(Q_OS_UNIX)
 #include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
 #endif
+#include "../ui/Action.h"
+#include "../ui/LocaleDialog.h"
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"
 #include "../ui/ReportDialog.h"
+#include "../ui/SaveSessionDialog.h"
+#include "../ui/SessionsManagerDialog.h"
 #include "../ui/Style.h"
 #include "../ui/TrayIcon.h"
 #include "../ui/UpdateCheckerDialog.h"
@@ -482,6 +486,131 @@ Application::~Application()
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		m_windows.at(i)->deleteLater();
+	}
+}
+
+void Application::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	switch (identifier)
+	{
+		case ActionsManager::NewWindowAction:
+			createWindow();
+
+			return;
+		case ActionsManager::NewWindowPrivateAction:
+			createWindow({{QLatin1String("hints"), SessionsManager::PrivateOpen}});
+
+			return;
+		case ActionsManager::ClosePrivateTabsPanicAction:
+			if (SessionsManager::isPrivate())
+			{
+				m_instance->close();
+			}
+			else
+			{
+				for (int i = 0; i < m_windows.count(); ++i)
+				{
+					if (m_windows[i]->isPrivate())
+					{
+						m_windows[i]->close();
+					}
+					else
+					{
+						m_windows[i]->triggerAction(ActionsManager::ClosePrivateTabsAction);
+					}
+				}
+			}
+
+			return;
+		case ActionsManager::SessionsAction:
+			{
+				SessionsManagerDialog dialog(m_activeWindow);
+				dialog.exec();
+			}
+
+			return;
+		case ActionsManager::SaveSessionAction:
+			{
+				SaveSessionDialog dialog(m_activeWindow);
+				dialog.exec();
+			}
+
+			return;
+		case ActionsManager::WorkOfflineAction:
+			SettingsManager::setValue(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters));
+
+			return;
+		case ActionsManager::LockToolBarsAction:
+			ToolBarsManager::setToolBarsLocked(Action::calculateCheckedState(parameters));
+
+			return;
+		case ActionsManager::ResetToolBarsAction:
+			ToolBarsManager::resetToolBars();
+
+			return;
+		case ActionsManager::SwitchApplicationLanguageAction:
+			{
+				LocaleDialog dialog(m_activeWindow);
+				dialog.exec();
+			}
+
+			return;
+		case ActionsManager::CheckForUpdatesAction:
+			{
+				UpdateCheckerDialog *dialog(new UpdateCheckerDialog(m_activeWindow));
+				dialog->setAttribute(Qt::WA_DeleteOnClose, true);
+				dialog->show();
+			}
+
+			return;
+		case ActionsManager::DiagnosticReportAction:
+			{
+				ReportDialog *dialog(new ReportDialog(Application::FullReport, m_activeWindow));
+				dialog->setAttribute(Qt::WA_DeleteOnClose, true);
+				dialog->show();
+			}
+
+			return;
+		case ActionsManager::AboutApplicationAction:
+			{
+				WebBackend *webBackend(AddonsManager::getWebBackend());
+				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.<br><a href=\"https://www.otter-browser.org/\">https://www.otter-browser.org/</a>").arg(Application::getFullVersion());
+
+				if (webBackend)
+				{
+					const QString sslVersion(webBackend->getSslVersion());
+
+					about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) + QLatin1String("<br><br>"));
+
+					if (sslVersion.isEmpty())
+					{
+						about.append(tr("SSL library not available."));
+					}
+					else
+					{
+						about.append(tr("SSL library version: %1.").arg(sslVersion));
+					}
+				}
+
+				QMessageBox::about(m_activeWindow, QLatin1String("Otter"), about);
+			}
+
+			return;
+		case ActionsManager::AboutQtAction:
+			aboutQt();
+
+			return;
+		case ActionsManager::ExitAction:
+			m_instance->close();
+
+			return;
+		default:
+			if (m_activeWindow)
+			{
+				m_activeWindow->triggerAction(identifier, parameters);
+			}
+
+			break;
 	}
 }
 

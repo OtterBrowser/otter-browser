@@ -59,6 +59,7 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
+	static void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser);
