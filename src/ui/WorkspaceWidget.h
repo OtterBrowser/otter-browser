@@ -77,6 +77,7 @@ public:
 	void addWindow(Window *window, const QRect &geometry = QRect(), WindowState state = MaximizedWindowState, bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window, bool force = false);
 	Window* getActiveWindow();
+	int getWindowCount(Qt::WindowState state) const;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());

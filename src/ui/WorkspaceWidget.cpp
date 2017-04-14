@@ -610,43 +610,18 @@ void WorkspaceWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 void WorkspaceWidget::updateActions()
 {
-	const QList<QMdiSubWindow*> subWindows(m_mdi ? m_mdi->subWindowList() : QList<QMdiSubWindow*>());
-	const int subWindowsCount(m_mdi ? subWindows.count() : findChildren<Window*>().count());
-	int maximizedSubWindows(m_mdi ? 0 : subWindowsCount);
-	int minimizedSubWindows(0);
-	int restoredSubWindows(0);
+	const Qt::WindowStates state((m_mdi && m_mdi->currentSubWindow()) ? m_mdi->currentSubWindow()->windowState() : Qt::WindowNoState);
+	const int windowCount(m_mainWindow->getWindowCount());
 
-	for (int i = 0; i < subWindows.count(); ++i)
-	{
-		const Qt::WindowStates states(subWindows.at(i)->windowState());
-
-		if (states.testFlag(Qt::WindowMaximized))
-		{
-			++maximizedSubWindows;
-		}
-		else if (states.testFlag(Qt::WindowMinimized))
-		{
-			++minimizedSubWindows;
-		}
-		else
-		{
-			++restoredSubWindows;
-		}
-	}
-
-	m_mainWindow->getAction(ActionsManager::MaximizeAllAction)->setEnabled(maximizedSubWindows < subWindowsCount);
-	m_mainWindow->getAction(ActionsManager::MinimizeAllAction)->setEnabled(minimizedSubWindows < subWindowsCount);
-	m_mainWindow->getAction(ActionsManager::RestoreAllAction)->setEnabled(restoredSubWindows < subWindowsCount);
-	m_mainWindow->getAction(ActionsManager::CascadeAllAction)->setEnabled(subWindowsCount > 0);
-	m_mainWindow->getAction(ActionsManager::TileAllAction)->setEnabled(subWindowsCount > 0);
-
-	QMdiSubWindow *activeSubWindow(m_mdi ? m_mdi->currentSubWindow() : nullptr);
-
-	m_mainWindow->getAction(ActionsManager::MaximizeTabAction)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
-	m_mainWindow->getAction(ActionsManager::MinimizeTabAction)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
-	m_mainWindow->getAction(ActionsManager::RestoreTabAction)->setEnabled(!m_mdi || (activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized))));
-	m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)->setEnabled(activeSubWindow);
-	m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
+	m_mainWindow->getAction(ActionsManager::MaximizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMaximized));
+	m_mainWindow->getAction(ActionsManager::MinimizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMinimized));
+	m_mainWindow->getAction(ActionsManager::RestoreTabAction)->setEnabled(state.testFlag(Qt::WindowMaximized) || state.testFlag(Qt::WindowMinimized));
+	m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)->setChecked(m_mdi && m_mdi->currentSubWindow() && m_mdi->currentSubWindow()->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
+	m_mainWindow->getAction(ActionsManager::MaximizeAllAction)->setEnabled(getWindowCount(Qt::WindowMaximized) != windowCount);
+	m_mainWindow->getAction(ActionsManager::MinimizeAllAction)->setEnabled(getWindowCount(Qt::WindowMinimized) != windowCount);
+	m_mainWindow->getAction(ActionsManager::RestoreAllAction)->setEnabled(getWindowCount(Qt::WindowNoState) != windowCount);
+	m_mainWindow->getAction(ActionsManager::CascadeAllAction)->setEnabled(windowCount > 0);
+	m_mainWindow->getAction(ActionsManager::TileAllAction)->setEnabled(windowCount > 0);
 }
 
 void WorkspaceWidget::showContextMenu(const QPoint &position)
@@ -722,6 +697,50 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 Window* WorkspaceWidget::getActiveWindow()
 {
 	return m_activeWindow.data();
+}
+
+int WorkspaceWidget::getWindowCount(Qt::WindowState state) const
+{
+	if (!m_mdi)
+	{
+		switch (state)
+		{
+			case Qt::WindowNoState:
+				return m_mainWindow->getWindowCount();
+			case Qt::WindowActive:
+				return (m_activeWindow ? 1 : 0);
+			default:
+				break;
+		}
+
+		return 0;
+	}
+
+	const QList<QMdiSubWindow*> windows(m_mdi->subWindowList());
+	int amount(0);
+
+	if (state == Qt::WindowNoState)
+	{
+		for (int i = 0; i < windows.count(); ++i)
+		{
+			if (!windows.at(i)->windowState().testFlag(Qt::WindowMinimized) && !windows.at(i)->windowState().testFlag(Qt::WindowMaximized))
+			{
+				++amount;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < windows.count(); ++i)
+		{
+			if (windows.at(i)->windowState().testFlag(state))
+			{
+				++amount;
+			}
+		}
+	}
+
+	return amount;
 }
 
 }
