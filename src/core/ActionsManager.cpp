@@ -72,7 +72,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions…"), QString(), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(SaveSessionAction, QT_TRANSLATE_NOOP("actions", "Save Current Session…"), QString(), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(OpenUrlAction, QT_TRANSLATE_NOOP("actions", "Open URL"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(OpenLinkAction, QT_TRANSLATE_NOOP("actions", "Open"), QString(), ThemesManager::getIcon(QLatin1String("document-open")), ActionDefinition::MainWindowScope);
+	registerAction(OpenLinkAction, QT_TRANSLATE_NOOP("actions", "Open"), QString(), ThemesManager::getIcon(QLatin1String("document-open")), ActionDefinition::WindowScope);
 	registerAction(OpenLinkInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open in This Tab"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(OpenLinkInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(OpenLinkInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"), QString(), QIcon(), ActionDefinition::WindowScope);
@@ -186,10 +186,10 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(WorkOfflineAction, QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(FullScreenAction, QT_TRANSLATE_NOOP("actions", "Full Screen"), QString(), ThemesManager::getIcon(QLatin1String("view-fullscreen")), ActionDefinition::MainWindowScope);
 	registerAction(ShowTabSwitcherAction, QT_TRANSLATE_NOOP("actions", "Show Tab Switcher"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
-	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
-	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), ThemesManager::getIcon(QLatin1String("sidebar-show")), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
-	registerAction(ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
+	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
+	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
+	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), ThemesManager::getIcon(QLatin1String("sidebar-show")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
+	registerAction(ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(ResetToolBarsAction, QT_TRANSLATE_NOOP("actions", "Reset to Defaults…"), QT_TRANSLATE_NOOP("actions", "Reset Toolbars to Defaults…"), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), ThemesManager::getIcon(QLatin1String("arrow-right")), ActionDefinition::MainWindowScope);
