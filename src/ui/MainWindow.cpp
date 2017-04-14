@@ -540,14 +540,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
 
-				QHash<quint64, Window*>::const_iterator iterator;
-
-				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+				for (int i = 0; i < m_privateWindows.count(); ++i)
 				{
-					if (iterator.value()->isPrivate())
-					{
-						iterator.value()->close();
-					}
+					m_privateWindows[i]->close();
 				}
 			}
 
@@ -1404,9 +1399,11 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	m_windows[window->getIdentifier()] = window;
 
-	if (window->isPrivate())
+	if (!m_isPrivate && window->isPrivate())
 	{
 		getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
+
+		m_privateWindows.append(window);
 	}
 
 	window->setToolBarsVisible(!isFullScreen());
@@ -1506,6 +1503,11 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 
 	m_windows.remove(window->getIdentifier());
 
+	if (!m_isPrivate && window->isPrivate())
+	{
+		m_privateWindows.removeAll(window);
+	}
+
 	if (mainWindow && m_windows.isEmpty())
 	{
 		close();
@@ -1514,7 +1516,7 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 	{
 		Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
 
-		if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+		if (closePrivateTabsAction->isEnabled() && !((m_isPrivate && !m_windows.isEmpty()) || !m_privateWindows.isEmpty()))
 		{
 			closePrivateTabsAction->setEnabled(false);
 		}
@@ -1692,16 +1694,21 @@ void MainWindow::handleWindowClose(Window *window)
 
 	m_tabBar->removeTab(index);
 
-	Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
-
-	if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
-	{
-		closePrivateTabsAction->setEnabled(false);
-	}
-
 	emit windowRemoved(window->getIdentifier());
 
 	m_windows.remove(window->getIdentifier());
+
+	if (!m_isPrivate && window->isPrivate())
+	{
+		m_privateWindows.removeAll(window);
+	}
+
+	Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
+
+	if (closePrivateTabsAction->isEnabled() && !((m_isPrivate && !m_windows.isEmpty()) || !m_privateWindows.isEmpty()))
+	{
+		closePrivateTabsAction->setEnabled(false);
+	}
 
 	if (getWindowCount() < 1 && lastTabClosingAction == QLatin1String("openTab"))
 	{
@@ -2274,25 +2281,9 @@ int MainWindow::getCurrentWindowIndex() const
 	return m_tabBar->currentIndex();
 }
 
-int MainWindow::getWindowCount(bool onlyPrivate) const
+int MainWindow::getWindowCount() const
 {
-	if (!onlyPrivate || m_isPrivate)
-	{
-		return m_windows.count();
-	}
-
-	QHash<quint64, Window*>::const_iterator iterator;
-	int amount(0);
-
-	for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
-	{
-		if (iterator.value()->isPrivate())
-		{
-			++amount;
-		}
-	}
-
-	return amount;
+	return m_windows.count();
 }
 
 int MainWindow::getWindowIndex(quint64 identifier) const

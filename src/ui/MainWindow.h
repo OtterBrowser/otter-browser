@@ -70,7 +70,7 @@ public:
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	QVector<ClosedWindow> getClosedWindows() const;
 	int getCurrentWindowIndex() const;
-	int getWindowCount(bool onlyPrivate = false) const;
+	int getWindowCount() const;
 	int getWindowIndex(quint64 identifier) const;
 	bool hasUrl(const QUrl &url, bool activate = false);
 	bool areToolBarsVisible() const;
@@ -134,6 +134,7 @@ private:
 	QString m_windowTitle;
 	QVector<Action*> m_actions;
 	QVector<Shortcut*> m_shortcuts;
+	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;
 	QHash<quint64, Window*> m_windows;
 	Qt::WindowStates m_previousState;
