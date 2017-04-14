@@ -28,6 +28,7 @@
 #include "ReloadTimeDialog.h"
 #include "TransferDialog.h"
 #include "Window.h"
+#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"
 #include "../core/IniSettings.h"
@@ -99,26 +100,33 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 void WebWidget::bounceAction(int identifier, QVariantMap parameters)
 {
-	Window *window(nullptr);
-	QObject *parent(parentWidget());
+	parameters[QLatin1String("isBounced")] = true;
 
-	while (parent)
+	if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::WindowScope)
 	{
-		if (parent->metaObject()->className() == QLatin1String("Otter::Window"))
-		{
-			window = qobject_cast<Window*>(parent);
+		Window *window(nullptr);
+		QObject *parent(parentWidget());
 
-			break;
+		while (parent)
+		{
+			if (parent->metaObject()->className() == QLatin1String("Otter::Window"))
+			{
+				window = qobject_cast<Window*>(parent);
+
+				break;
+			}
+
+			parent = parent->parent();
 		}
 
-		parent = parent->parent();
+		if (window)
+		{
+			window->triggerAction(identifier, parameters);
+		}
 	}
-
-	if (window)
+	else
 	{
-		parameters[QLatin1String("isBounced")] = true;
-
-		window->triggerAction(identifier, parameters);
+		Application::triggerAction(identifier, parameters);
 	}
 }
 
