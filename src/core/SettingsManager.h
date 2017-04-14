@@ -204,6 +204,7 @@ public:
 		TabBar_MaximumTabWidthOption,
 		TabBar_MinimumTabWidthOption,
 		TabBar_OpenNextToActiveOption,
+		TabBar_PrependPinnedTabOption,
 		TabBar_PreviewsAnimationDurationOption,
 		TabBar_RequireModifierToSwitchTabOnScrollOption,
 		TabBar_ShowCloseButtonOption,

@@ -669,7 +669,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			parameters[QLatin1String("window")] = window->getIdentifier();
 
-			const int amount(count() - getPinnedTabsAmount());
+			const int amount(count() - m_pinnedTabsAmount);
 			const bool isPinned(window->isPinned());
 			Action *cloneTabAction(new Action(ActionsManager::CloneTabAction, &menu));
 			cloneTabAction->setEnabled(window->canClone());
@@ -1128,7 +1128,7 @@ void TabBarWidget::addTab(int index, Window *window)
 
 	if (window->isPinned())
 	{
-		updatePinnedTabsAmount(window);
+		updatePinnedTabsAmount();
 	}
 }
 
@@ -1403,7 +1403,7 @@ void TabBarWidget::updatePreviewPosition()
 	}
 }
 
-void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
+void TabBarWidget::updatePinnedTabsAmount()
 {
 	int amount(0);
 
@@ -1417,32 +1417,11 @@ void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
 		}
 	}
 
-	m_pinnedTabsAmount = amount;
-
-	if (!modifiedWindow)
+	if (amount != m_pinnedTabsAmount)
 	{
-		modifiedWindow = qobject_cast<Window*>(sender());
-	}
+		m_pinnedTabsAmount = amount;
 
-	if (modifiedWindow)
-	{
-		int index(-1);
-
-		for (int i = 0; i < count(); ++i)
-		{
-			if (getWindow(i) == modifiedWindow)
-			{
-				index = i;
-
-				break;
-			}
-		}
-
-		if (index >= 0)
-		{
-			moveTab(index, (modifiedWindow->isPinned() ? qMax(0, (m_pinnedTabsAmount - 1)) : m_pinnedTabsAmount));
-			updateSize();
-		}
+		updateSize();
 	}
 }
 
@@ -1611,11 +1590,6 @@ int TabBarWidget::getDropIndex() const
 	}
 
 	return index;
-}
-
-int TabBarWidget::getPinnedTabsAmount() const
-{
-	return m_pinnedTabsAmount;
 }
 
 bool TabBarWidget::areThumbnailsEnabled()

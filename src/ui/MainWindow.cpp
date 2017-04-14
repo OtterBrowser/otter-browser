@@ -1413,13 +1413,21 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (getWindowCount() - 1));
 	}
 
-	if (!window->isPinned())
+	if (m_isRestored && SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool() && !window->isPinned())
 	{
-		const int offset(m_tabBar->getPinnedTabsAmount());
-
-		if (index < offset)
+		for (int i = 0; i < m_windows.count(); ++i)
 		{
-			index = offset;
+			Window *window(getWindowByIndex(i));
+
+			if (!window || !window->isPinned())
+			{
+				if (index < i)
+				{
+					index = i;
+				}
+
+				break;
+			}
 		}
 	}
 
@@ -1718,11 +1726,63 @@ void MainWindow::handleWindowClose(Window *window)
 
 void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 {
-	Window *window(qobject_cast<Window*>(sender()));
+	Window *modifiedWindow(qobject_cast<Window*>(sender()));
 
-	if (window && window == m_workspace->getActiveWindow())
+	if (!modifiedWindow)
+	{
+		return;
+	}
+
+	if (modifiedWindow == m_workspace->getActiveWindow())
 	{
 		getAction(ActionsManager::CloseTabAction)->setEnabled(!isPinned);
+	}
+
+	if (!m_isRestored || !SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool())
+	{
+		return;
+	}
+
+	int amountOfLeadingPinnedTabs(0);
+	int index(-1);
+
+	for (int i = 0; i < m_windows.count(); ++i)
+	{
+		Window *window(getWindowByIndex(i));
+
+		if ((window && window->isPinned()) || (!isPinned && window == modifiedWindow))
+		{
+			++amountOfLeadingPinnedTabs;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	for (int i = 0; i < m_windows.count(); ++i)
+	{
+		if (getWindowByIndex(i) == modifiedWindow)
+		{
+			index = i;
+
+			break;
+		}
+	}
+
+	if (index < 0)
+	{
+		return;
+	}
+
+	if (!isPinned && index < amountOfLeadingPinnedTabs)
+	{
+		--amountOfLeadingPinnedTabs;
+	}
+
+	if ((isPinned && index > amountOfLeadingPinnedTabs) || (!isPinned && index < amountOfLeadingPinnedTabs))
+	{
+		m_tabBar->moveTab(index, amountOfLeadingPinnedTabs);
 	}
 }
 

@@ -86,7 +86,6 @@ public:
 	Window* getWindow(int index) const;
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
-	int getPinnedTabsAmount() const;
 	static bool areThumbnailsEnabled();
 	static bool isLayoutReversed();
 	static bool isCloseButtonEnabled();
@@ -123,7 +122,7 @@ protected:
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void updatePreviewPosition();
-	void updatePinnedTabsAmount(Window *modifiedWindow = nullptr);
+	void updatePinnedTabsAmount();
 	void updateStyle();
 	void setArea(Qt::ToolBarArea area);
 

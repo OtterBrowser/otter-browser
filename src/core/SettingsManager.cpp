@@ -223,6 +223,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(TabBar_MaximumTabWidthOption, IntegerType, 250);
 	registerOption(TabBar_MinimumTabWidthOption, IntegerType, -1);
 	registerOption(TabBar_OpenNextToActiveOption, BooleanType, true);
+	registerOption(TabBar_PrependPinnedTabOption, BooleanType, true);
 	registerOption(TabBar_PreviewsAnimationDurationOption, IntegerType, 250);
 	registerOption(TabBar_RequireModifierToSwitchTabOnScrollOption, BooleanType, true);
 	registerOption(TabBar_ShowCloseButtonOption, BooleanType, true);
