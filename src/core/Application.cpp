@@ -1052,7 +1052,46 @@ QString Application::getLocalePath()
 	return m_localePath;
 }
 
-QVector<MainWindow *> Application::getWindows()
+ActionsManager::ActionDefinition::State Application::getActionState(int identifier, const QVariantMap &parameters)
+{
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
+
+	switch (definition.scope)
+	{
+		case ActionsManager::ActionDefinition::WindowScope:
+		case ActionsManager::ActionDefinition::MainWindowScope:
+			if (m_activeWindow)
+			{
+				return m_activeWindow->getActionState(identifier, parameters);
+			}
+
+			return definition.defaultState;
+		case ActionsManager::ActionDefinition::ApplicationScope:
+			break;
+		default:
+			return definition.defaultState;
+	}
+
+	ActionsManager::ActionDefinition::State state(definition.defaultState);
+
+	switch (identifier)
+	{
+		case ActionsManager::WorkOfflineAction:
+			state.isChecked = SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool();
+
+			break;
+		case ActionsManager::LockToolBarsAction:
+			state.isChecked = ToolBarsManager::areToolBarsLocked();
+
+			break;
+		default:
+			break;
+	}
+
+	return state;
+}
+
+QVector<MainWindow*> Application::getWindows()
 {
 	return m_windows;
 }

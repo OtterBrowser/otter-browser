@@ -74,6 +74,7 @@ public:
 	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
+	static ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap());
 	static QVector<MainWindow*> getWindows();
 	static bool canClose();
 	static bool isAboutToQuit();

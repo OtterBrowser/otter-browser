@@ -2273,6 +2273,114 @@ QUrl MainWindow::getUrl() const
 	return (window ? window->getUrl() : QUrl());
 }
 
+ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
+
+	switch (definition.scope)
+	{
+		case ActionsManager::ActionDefinition::WindowScope:
+			if (m_workspace->getActiveWindow())
+			{
+				return m_workspace->getActiveWindow()->getActionState(identifier, parameters);
+			}
+
+			return definition.defaultState;
+		case ActionsManager::ActionDefinition::MainWindowScope:
+			break;
+		case ActionsManager::ActionDefinition::ApplicationScope:
+			return Application::getActionState(identifier, parameters);
+		default:
+			return definition.defaultState;
+	}
+
+	ActionsManager::ActionDefinition::State state(definition.defaultState);
+
+	switch (identifier)
+	{
+		case ActionsManager::ClosePrivateTabsAction:
+			state.isEnabled = ((m_isPrivate && m_windows.count() > 0) || m_privateWindows.count() > 0);
+
+			break;
+		case ActionsManager::ReopenTabAction:
+			state.isEnabled = !m_closedWindows.isEmpty();
+
+			break;
+		case ActionsManager::MaximizeAllAction:
+			state.isEnabled = (m_workspace->getWindowCount(Qt::WindowMaximized) != m_windows.count());
+
+			break;
+		case ActionsManager::MinimizeAllAction:
+			state.isEnabled = (m_workspace->getWindowCount(Qt::WindowMinimized) != m_windows.count());
+
+			break;
+		case ActionsManager::RestoreAllAction:
+			state.isEnabled = (m_workspace->getWindowCount(Qt::WindowNoState) != m_windows.count());
+
+			break;
+		case ActionsManager::GoToHomePageAction:
+			state.isEnabled = !SettingsManager::getOption(SettingsManager::Browser_HomePageOption).isNull();
+
+			break;
+		case ActionsManager::CascadeAllAction:
+		case ActionsManager::TileAllAction:
+		case ActionsManager::StopAllAction:
+		case ActionsManager::ReloadAllAction:
+			state.isEnabled = !m_windows.isEmpty();
+
+			break;
+		case ActionsManager::CloseOtherTabsAction:
+		case ActionsManager::ActivatePreviouslyUsedTabAction:
+		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
+		case ActionsManager::ActivateTabOnLeftAction:
+		case ActionsManager::ActivateTabOnRightAction:
+		case ActionsManager::ShowTabSwitcherAction:
+			state.isEnabled = (m_windows.count() > 1);
+
+			break;
+		case ActionsManager::OpenBookmarkAction:
+			{
+				BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
+
+				if (bookmark)
+				{
+					state.text = bookmark->data(Qt::DisplayRole).toString();
+					state.icon = bookmark->data(Qt::DecorationRole).value<QIcon>();
+				}
+				else
+				{
+					state.isEnabled = false;
+				}
+			}
+
+			break;
+		case ActionsManager::FullScreenAction:
+			state.icon = ThemesManager::getIcon(isFullScreen() ? QLatin1String("view-restore") : QLatin1String("view-fullscreen"));
+
+			break;
+		case ActionsManager::ShowMenuBarAction:
+			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+
+			break;
+		case ActionsManager::ShowTabBarAction:
+			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+
+			break;
+		case ActionsManager::ShowSidebarAction:
+			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::SideBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+
+			break;
+		case ActionsManager::ShowErrorConsoleAction:
+			state.isChecked = m_ui->consoleWidget->isVisible();
+
+			break;
+		default:
+			break;
+	}
+
+	return state;
+}
+
 SessionMainWindow MainWindow::getSession() const
 {
 	SessionMainWindow session;

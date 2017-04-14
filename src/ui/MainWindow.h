@@ -22,6 +22,7 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
+#include "../core/ActionsManager.h"
 #include "../core/SessionsManager.h"
 
 #include <QtWidgets/QMainWindow>
@@ -66,6 +67,7 @@ public:
 	QVariant getOption(int identifier) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
 	SessionMainWindow getSession() const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	QVector<ClosedWindow> getClosedWindows() const;
