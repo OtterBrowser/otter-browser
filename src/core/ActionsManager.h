@@ -285,7 +285,6 @@ public:
 
 	static void createInstance(QObject *parent);
 	static void loadProfiles();
-	static void triggerAction(int identifier, QObject *parent, const QVariantMap &parameters = QVariantMap());
 	static ActionsManager* getInstance();
 	static Action* getAction(int identifier, QObject *parent);
 	static QString getReport();

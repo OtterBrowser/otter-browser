@@ -123,7 +123,7 @@ void WebWidget::triggerAction()
 		}
 		else
 		{
-			ActionsManager::triggerAction(action->getIdentifier(), this, parameters);
+			Application::triggerAction(action->getIdentifier(), parameters, parentWidget());
 		}
 	}
 }

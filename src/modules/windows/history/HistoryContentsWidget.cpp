@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "HistoryContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
@@ -331,7 +332,7 @@ void HistoryContentsWidget::bookmarkEntry()
 
 	if (entryItem)
 	{
-		ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), entryItem->text()}, {QLatin1String("title"), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString()}});
+		Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), entryItem->text()}, {QLatin1String("title"), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString()}}, parentWidget());
 	}
 }
 

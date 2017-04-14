@@ -20,7 +20,7 @@
 #include "PreferencesPrivacyPageWidget.h"
 #include "CookiesExceptionsDialog.h"
 #include "../ClearHistoryDialog.h"
-#include "../../core/ActionsManager.h"
+#include "../../core/Application.h"
 #include "../../core/SettingsManager.h"
 
 #include "ui_PreferencesPrivacyPageWidget.h"
@@ -81,7 +81,10 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	connect(m_ui->thirdPartyCookiesExceptionsButton, SIGNAL(clicked(bool)), this, SLOT(setupThirdPartyCookiesExceptions()));
 	connect(m_ui->clearHistoryCheckBox, SIGNAL(toggled(bool)), m_ui->clearHistoryButton, SLOT(setEnabled(bool)));
 	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
-	connect(m_ui->managePasswordsButton, SIGNAL(clicked()), this, SLOT(viewPasswords()));
+	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
+	{
+		Application::triggerAction(ActionsManager::PasswordsAction, QVariantMap(), this);
+	});
 }
 
 PreferencesPrivacyPageWidget::~PreferencesPrivacyPageWidget()
@@ -125,11 +128,6 @@ void PreferencesPrivacyPageWidget::setupClearHistory()
 
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
 	m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
-}
-
-void PreferencesPrivacyPageWidget::viewPasswords()
-{
-	ActionsManager::triggerAction(ActionsManager::PasswordsAction, this);
 }
 
 void PreferencesPrivacyPageWidget::save()

@@ -21,6 +21,7 @@
 
 #include "AddressWidget.h"
 #include "../../../core/AddressCompletionModel.h"
+#include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/HistoryManager.h"
@@ -312,7 +313,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 		if (entry != UnknownEntry && entry != AddressEntry && entry != HistoryDropdownEntry)
 		{
-			ActionsManager::triggerAction(ActionsManager::ActivateContentAction, this);
+			Application::triggerAction(ActionsManager::ActivateContentAction, QVariantMap(), this);
 
 			return;
 		}

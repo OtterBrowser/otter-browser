@@ -1342,11 +1342,11 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	{
 		if (newTabOpeningAction == QLatin1String("cascadeAll"))
 		{
-			ActionsManager::triggerAction(ActionsManager::CascadeAllAction, this);
+			triggerAction(ActionsManager::CascadeAllAction);
 		}
 		else if (newTabOpeningAction == QLatin1String("tileAll"))
 		{
-			ActionsManager::triggerAction(ActionsManager::TileAllAction, this);
+			triggerAction(ActionsManager::TileAllAction);
 		}
 	}
 

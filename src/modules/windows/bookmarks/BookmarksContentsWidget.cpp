@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "BookmarksContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/SessionModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
@@ -135,7 +136,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	{
 		QAction *action(qobject_cast<QAction*>(sender()));
 
-		ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}});
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
 	}
 }
 
@@ -402,7 +403,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (bookmark)
 			{
-				ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}});
+				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}}, parentWidget());
 
 				return true;
 			}

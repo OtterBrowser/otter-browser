@@ -42,10 +42,6 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 
-protected slots:
-	void showPreferences();
-	void showCertificate();
-
 private:
 	WebWidget::SslInformation m_sslInformation;
 	Ui::WebsiteInformationDialog *m_ui;

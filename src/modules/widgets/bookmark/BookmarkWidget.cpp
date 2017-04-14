@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "BookmarkWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/Utils.h"
@@ -53,7 +54,7 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && m_bookmark)
 	{
-		ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}});
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
 	}
 }
 

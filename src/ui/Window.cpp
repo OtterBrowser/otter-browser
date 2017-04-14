@@ -400,7 +400,7 @@ void Window::handleSearchRequest(const QString &query, const QString &searchEngi
 
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
-	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, m_mainWindow, {{QLatin1String("window"), getIdentifier()}});
+	Application::triggerAction(ActionsManager::RestoreTabAction, {{QLatin1String("window"), getIdentifier()}}, m_mainWindow);
 
 	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 

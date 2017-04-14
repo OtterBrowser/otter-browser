@@ -22,7 +22,7 @@
 #include "StartPageModel.h"
 #include "TileDelegate.h"
 #include "WebContentsWidget.h"
-#include "../../../core/ActionsManager.h"
+#include "../../../core/Application.h"
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/SessionsManager.h"
@@ -309,7 +309,7 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 	{
 		m_urlOpenTime = QTime::currentTime();
 
-		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget());
 	}
 }
 
@@ -372,7 +372,7 @@ void StartPageWidget::openTile()
 		{
 			m_urlOpenTime = QTime::currentTime();
 
-			ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}});
+			Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget());
 		}
 
 		return;
@@ -389,7 +389,7 @@ void StartPageWidget::openTile()
 	{
 		m_urlOpenTime = QTime::currentTime();
 
-		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget());
 	}
 }
 
@@ -731,7 +731,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						m_urlOpenTime = QTime::currentTime();
 
-						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}});
+						Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
 					}
 					else
 					{
@@ -822,7 +822,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						m_urlOpenTime = QTime::currentTime();
 
-						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()))}});
+						Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()))}}, parentWidget());
 					}
 					else if (mouseEvent->button() != Qt::MiddleButton)
 					{
@@ -835,7 +835,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						m_urlOpenTime = QTime::currentTime();
 
-						ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
+						Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget());
 					}
 				}
 			}

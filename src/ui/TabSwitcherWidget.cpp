@@ -20,7 +20,7 @@
 #include "TabSwitcherWidget.h"
 #include "MainWindow.h"
 #include "Window.h"
-#include "../core/ActionsManager.h"
+#include "../core/Application.h"
 #include "../core/SessionModel.h"
 #include "../core/ThemesManager.h"
 
@@ -321,7 +321,7 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (index.isValid())
 			{
-				ActionsManager::triggerAction(ActionsManager::CloseTabAction, parentWidget(), QVariantMap({{QLatin1String("window"), index.data(Qt::UserRole).toULongLong()}}));
+				Application::triggerAction(ActionsManager::CloseTabAction, {{QLatin1String("window"), index.data(Qt::UserRole).toULongLong()}}, parentWidget());
 			}
 
 			return true;

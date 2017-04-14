@@ -19,8 +19,8 @@
 **************************************************************************/
 
 #include "UpdateCheckerDialog.h"
+#include "../core/Application.h"
 #include "../core/Updater.h"
-#include "../core/ActionsManager.h"
 
 #include "ui_UpdateCheckerDialog.h"
 
@@ -144,7 +144,7 @@ void UpdateCheckerDialog::showDetails()
 
 		if (url.isValid() && !SessionsManager::hasUrl(url, true))
 		{
-			ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, {{QLatin1String("url"), url}});
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
 
 			close();
 		}

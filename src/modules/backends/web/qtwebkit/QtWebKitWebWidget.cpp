@@ -25,6 +25,7 @@
 #include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
 #include "QtWebKitWebBackend.h"
+#include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
@@ -1083,7 +1084,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
 				const QString title(getCurrentHitTestResult().title);
 
-				ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}});
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}}, parentWidget());
 			}
 
 			return;
@@ -1628,7 +1629,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
 
-				ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}, {QLatin1String("description"), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description)}});
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}, {QLatin1String("description"), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description)}}, parentWidget());
 			}
 
 			return;

@@ -494,6 +494,39 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 {
 	switch (identifier)
 	{
+		case ActionsManager::RunMacroAction:
+			{
+				const QVariantList actions(parameters.value(QLatin1String("actions")).toList());
+
+				for (int i = 0; i < actions.count(); ++i)
+				{
+					QVariant actionIdentifier;
+					QVariantMap actionParameters;
+
+					if (actions.at(i).type() == QVariant::Map)
+					{
+						const QVariantMap action(actions.at(i).toMap());
+
+						actionIdentifier = action.value(QLatin1String("identifier"));
+						actionParameters = action.value(QLatin1String("parameters")).toMap();
+					}
+					else
+					{
+						actionIdentifier = actions.at(i);
+					}
+
+					if (actionIdentifier.type() == QVariant::Int)
+					{
+						triggerAction(actionIdentifier.toInt(), actionParameters, target);
+					}
+					else
+					{
+						triggerAction(ActionsManager::getActionIdentifier(actionIdentifier.toString()), actionParameters, target);
+					}
+				}
+			}
+
+			return;
 		case ActionsManager::NewWindowAction:
 			createWindow();
 

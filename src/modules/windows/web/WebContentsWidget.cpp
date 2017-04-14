@@ -28,6 +28,7 @@
 #include "SelectPasswordDialog.h"
 #include "StartPageWidget.h"
 #include "../../../core/AddonsManager.h"
+#include "../../../core/Application.h"
 #include "../../../core/Console.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/InputInterpreter.h"
@@ -239,7 +240,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 		{
 			triggerAction(ActionsManager::StopAction);
 
-			ActionsManager::triggerAction(ActionsManager::ActivateAddressFieldAction, this);
+			Application::triggerAction(ActionsManager::ActivateAddressFieldAction, QVariantMap(), this);
 
 			event->accept();
 		}

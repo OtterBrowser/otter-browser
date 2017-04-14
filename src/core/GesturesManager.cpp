@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "GesturesManager.h"
-#include "ActionsManager.h"
+#include "Application.h"
 #include "IniSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
@@ -27,7 +27,6 @@
 #include <QtCore/QMetaEnum>
 #include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
-#include <QtWidgets/QApplication>
 
 #include <limits>
 
@@ -830,7 +829,7 @@ bool GesturesManager::triggerAction(int gestureIdentifier)
 	}
 	else
 	{
-		ActionsManager::triggerAction(gestureIdentifier, m_trackedObject, m_paramaters);
+		Application::triggerAction(gestureIdentifier, m_paramaters, m_trackedObject);
 	}
 
 	if (m_trackedObject)

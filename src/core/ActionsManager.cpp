@@ -40,7 +40,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 {
 	m_definitions.reserve(ActionsManager::OtherAction);
 
-	registerAction(RunMacroAction, QT_TRANSLATE_NOOP("actions", "Run Macro"), QT_TRANSLATE_NOOP("actions", "Run Arbitrary List of Actions"));
+	registerAction(RunMacroAction, QT_TRANSLATE_NOOP("actions", "Run Macro"), QT_TRANSLATE_NOOP("actions", "Run Arbitrary List of Actions"), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new")), ActionDefinition::MainWindowScope);
 	registerAction(NewTabPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new-private")), ActionDefinition::MainWindowScope);
 	registerAction(NewWindowAction, QT_TRANSLATE_NOOP("actions", "New Window"), QString(), ThemesManager::getIcon(QLatin1String("window-new")), ActionDefinition::ApplicationScope);
@@ -293,52 +293,6 @@ void ActionsManager::loadProfiles()
 	}
 
 	emit m_instance->shortcutsChanged();
-}
-
-void ActionsManager::triggerAction(int identifier, QObject *parent, const QVariantMap &parameters)
-{
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent));
-
-	if (!mainWindow)
-	{
-		return;
-	}
-
-	if (identifier == RunMacroAction)
-	{
-		const QVariantList actions(parameters.value(QLatin1String("actions")).toList());
-
-		for (int i = 0; i < actions.count(); ++i)
-		{
-			QVariant actionIdentifier;
-			QVariantMap actionParameters;
-
-			if (actions.at(i).type() == QVariant::Map)
-			{
-				const QVariantMap action(actions.at(i).toMap());
-
-				actionIdentifier = action.value(QLatin1String("identifier"));
-				actionParameters = action.value(QLatin1String("parameters")).toMap();
-			}
-			else
-			{
-				actionIdentifier = actions.at(i);
-			}
-
-			if (actionIdentifier.type() == QVariant::Int)
-			{
-				triggerAction(actionIdentifier.toInt(), mainWindow, actionParameters);
-			}
-			else
-			{
-				triggerAction(getActionIdentifier(actionIdentifier.toString()), mainWindow, actionParameters);
-			}
-		}
-	}
-	else
-	{
-		mainWindow->triggerAction(identifier, parameters);
-	}
 }
 
 void ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, ActionDefinition::ActionScope scope, ActionDefinition::ActionFlags flags)

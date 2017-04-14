@@ -22,6 +22,7 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "Window.h"
+#include "../core/Application.h"
 #include "../core/SettingsManager.h"
 
 #include <QtCore/QTimer>
@@ -181,7 +182,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		}
 		else if (activeSubWindows > 1)
 		{
-			ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, mdiArea());
+			Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, QVariantMap(), mdiArea());
 		}
 
 		SessionsManager::markSessionModified();
@@ -359,7 +360,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				}
 				else if (wasActive && activeSubWindows > 1)
 				{
-					ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, m_mainWindow);
+					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, QVariantMap(), m_mainWindow);
 				}
 			}
 

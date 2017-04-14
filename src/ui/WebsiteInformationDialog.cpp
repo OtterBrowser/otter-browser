@@ -19,7 +19,7 @@
 
 #include "WebsiteInformationDialog.h"
 #include "CertificateDialog.h"
-#include "../core/ActionsManager.h"
+#include "../core/Application.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
@@ -261,8 +261,16 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	setWindowTitle(tr("Information for %1").arg(host));
 
-	connect(m_ui->preferencesDetailsButton, SIGNAL(clicked(bool)), this, SLOT(showPreferences()));
-	connect(m_ui->certificateDetailsButton, SIGNAL(clicked(bool)), this, SLOT(showCertificate()));
+	connect(m_ui->preferencesDetailsButton, &QPushButton::clicked, [&]()
+	{
+		Application::triggerAction(ActionsManager::WebsitePreferencesAction, QVariantMap(), this);
+	});
+	connect(m_ui->certificateDetailsButton, &QPushButton::clicked, [&]()
+	{
+		CertificateDialog *dialog(new CertificateDialog(m_sslInformation.certificates));
+		dialog->setAttribute(Qt::WA_DeleteOnClose);
+		dialog->show();
+	});
 }
 
 WebsiteInformationDialog::~WebsiteInformationDialog()
@@ -278,18 +286,6 @@ void WebsiteInformationDialog::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
-}
-
-void WebsiteInformationDialog::showPreferences()
-{
-	ActionsManager::triggerAction(ActionsManager::WebsitePreferencesAction, this);
-}
-
-void WebsiteInformationDialog::showCertificate()
-{
-	CertificateDialog *dialog(new CertificateDialog(m_sslInformation.certificates));
-	dialog->setAttribute(Qt::WA_DeleteOnClose);
-	dialog->show();
 }
 
 }

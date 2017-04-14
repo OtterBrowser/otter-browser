@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ActionWidget.h"
+#include "../../../core/Application.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/MainWindow.h"
@@ -63,7 +64,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		parameters[QLatin1String("hints")] = QVariant(hints);
 	}
 
-	ActionsManager::triggerAction(identifier, this, parameters);
+	Application::triggerAction(identifier, parameters, this);
 
 	QAction *action(defaultAction());
 

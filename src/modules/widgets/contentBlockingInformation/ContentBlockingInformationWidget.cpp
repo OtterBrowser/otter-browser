@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "ContentBlockingInformationWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/ContentBlockingManager.h"
 #include "../../../core/ContentBlockingProfile.h"
 #include "../../../core/ThemesManager.h"
@@ -83,7 +84,7 @@ void ContentBlockingInformationWidget::openElement(QAction *action)
 {
 	if (action)
 	{
-		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, parent(), {{QLatin1String("url"), QUrl(action->statusTip())}});
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(action->statusTip())}}, parentWidget());
 	}
 }
 

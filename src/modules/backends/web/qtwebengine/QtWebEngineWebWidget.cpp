@@ -19,6 +19,7 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
+#include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
@@ -442,7 +443,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::BookmarkLinkAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}});
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}}, parentWidget());
 			}
 
 			return;
@@ -862,7 +863,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::BookmarkPageAction:
-			ActionsManager::triggerAction(ActionsManager::BookmarkPageAction, parentWidget(), {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}});
+			Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}}, parentWidget());
 
 			return;
 		case ActionsManager::ViewSourceAction:

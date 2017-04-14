@@ -25,7 +25,7 @@
 #include "preferences/PreferencesGeneralPageWidget.h"
 #include "preferences/PreferencesPrivacyPageWidget.h"
 #include "preferences/PreferencesSearchPageWidget.h"
-#include "../core/ActionsManager.h"
+#include "../core/Application.h"
 #include "../core/SessionsManager.h"
 
 #include "ui_PreferencesDialog.h"
@@ -206,7 +206,7 @@ void PreferencesDialog::openConfigurationManager()
 
 	if (!SessionsManager::hasUrl(url, true))
 	{
-		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, {{QLatin1String("url"), url}});
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
 	}
 }
 

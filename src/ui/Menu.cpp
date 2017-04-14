@@ -245,7 +245,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), BookmarksManager::getModel()->getBookmark(action->data().toModelIndex())->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}});
+			Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), BookmarksManager::getModel()->getBookmark(action->data().toModelIndex())->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
 
 			return;
 		}
@@ -1256,7 +1256,7 @@ void Menu::openBookmark()
 
 	const SessionsManager::OpenHints hints(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen);
 
-	ActionsManager::triggerAction(ActionsManager::OpenBookmarkAction, parent(), {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((hints == SessionsManager::DefaultOpen) ? SessionsManager::calculateOpenHints() : hints)}});
+	Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((hints == SessionsManager::DefaultOpen) ? SessionsManager::calculateOpenHints() : hints)}}, parentWidget());
 
 	m_bookmark = nullptr;
 }
@@ -1308,7 +1308,7 @@ void Menu::selectWindow(QAction *action)
 {
 	if (action)
 	{
-		ActionsManager::triggerAction(ActionsManager::ActivateTabAction, this, {{QLatin1String("window"), action->data().toULongLong()}});
+		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("window"), action->data().toULongLong()}}, parentWidget());
 	}
 }
 

@@ -848,7 +848,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 				if (!drag->target())
 				{
-					ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, {{QLatin1String("window"), window->getIdentifier()}});
+					Application::triggerAction(ActionsManager::DetachTabAction, {{QLatin1String("window"), window->getIdentifier()}}, parentWidget());
 				}
 			}
 		}
@@ -872,7 +872,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		if (m_isDetachingTab)
 		{
-			ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, {{QLatin1String("window"), m_draggedWindow}});
+			Application::triggerAction(ActionsManager::DetachTabAction, {{QLatin1String("window"), m_draggedWindow}}, parentWidget());
 
 			m_isDetachingTab = false;
 		}
@@ -888,14 +888,7 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 
 	if (event->modifiers().testFlag(Qt::ControlModifier) || !SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
 	{
-		if (event->delta() > 0)
-		{
-			ActionsManager::triggerAction(ActionsManager::ActivateTabOnLeftAction, parentWidget());
-		}
-		else
-		{
-			ActionsManager::triggerAction(ActionsManager::ActivateTabOnRightAction, parentWidget());
-		}
+		Application::triggerAction(((event->delta() > 0) ? ActionsManager::ActivateTabOnLeftAction : ActionsManager::ActivateTabOnRightAction), QVariantMap(), parentWidget());
 	}
 }
 
