@@ -230,7 +230,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 		m_tabSwitcherTimer = 0;
 
-		if (getWindowCount() > 1)
+		if (m_windows.count() > 1)
 		{
 			if (!m_tabSwitcher)
 			{
@@ -285,7 +285,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
 	{
-		if (getWindowCount() < 2)
+		if (m_windows.count() < 2)
 		{
 			event->accept();
 
@@ -635,15 +635,15 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ActivateTabOnLeftAction:
-			setActiveWindowByIndex((getCurrentWindowIndex() > 0) ? (getCurrentWindowIndex() - 1) : (getWindowCount() - 1));
+			setActiveWindowByIndex((getCurrentWindowIndex() > 0) ? (getCurrentWindowIndex() - 1) : (m_windows.count() - 1));
 
 			return;
 		case ActionsManager::ActivateTabOnRightAction:
-			setActiveWindowByIndex(((getCurrentWindowIndex() + 1) < getWindowCount()) ? (getCurrentWindowIndex() + 1) : 0);
+			setActiveWindowByIndex(((getCurrentWindowIndex() + 1) < m_windows.count()) ? (getCurrentWindowIndex() + 1) : 0);
 
 			return;
 		case ActionsManager::BookmarkAllOpenPagesAction:
-			for (int i = 0; i < getWindowCount(); ++i)
+			for (int i = 0; i < m_windows.count(); ++i)
 			{
 				Window *window(getWindowByIndex(i));
 
@@ -710,7 +710,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 							if (index < 0)
 							{
-								index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (getWindowCount() - 1));
+								index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (m_windows.count() - 1));
 							}
 
 							mutableParameters[QLatin1String("url")] = urls.at(0);
@@ -944,7 +944,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::DetachTabAction:
-			if (window && getWindowCount() > 1)
+			if (window && m_windows.count() > 1)
 			{
 				moveWindow(window);
 			}
@@ -1224,7 +1224,7 @@ void MainWindow::restore(int index)
 	}
 	else if (closedWindow.nextWindow == 0)
 	{
-		windowIndex = getWindowCount();
+		windowIndex = m_windows.count();
 	}
 	else
 	{
@@ -1295,7 +1295,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	if (index < 0)
 	{
-		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (getWindowCount() - 1));
+		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (m_windows.count() - 1));
 	}
 
 	if (m_isRestored && SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool() && !window->isPinned())
@@ -1328,7 +1328,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	getAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
 
-	if (!hints.testFlag(SessionsManager::BackgroundOpen) || getWindowCount() < 2)
+	if (!hints.testFlag(SessionsManager::BackgroundOpen) || m_windows.count() < 2)
 	{
 		m_tabBar->setCurrentIndex(index);
 
@@ -1554,7 +1554,7 @@ void MainWindow::handleWindowClose(Window *window)
 
 	const QString lastTabClosingAction(SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString());
 
-	if (getWindowCount() == 1)
+	if (m_windows.count() == 1)
 	{
 		if (lastTabClosingAction == QLatin1String("closeWindow") || (lastTabClosingAction == QLatin1String("closeWindowIfNotLast") && Application::getWindows().count() > 1))
 		{
@@ -1603,7 +1603,7 @@ void MainWindow::handleWindowClose(Window *window)
 		closePrivateTabsAction->setEnabled(false);
 	}
 
-	if (getWindowCount() < 1 && lastTabClosingAction == QLatin1String("openTab"))
+	if (m_windows.isEmpty() && lastTabClosingAction == QLatin1String("openTab"))
 	{
 		triggerAction(ActionsManager::NewTabAction);
 	}
@@ -1916,7 +1916,7 @@ void MainWindow::setOption(int identifier, const QVariant &value)
 
 void MainWindow::setActiveWindowByIndex(int index)
 {
-	if (!m_isRestored || index >= getWindowCount())
+	if (!m_isRestored || index >= m_windows.count())
 	{
 		return;
 	}
@@ -1964,7 +1964,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 
 void MainWindow::setActiveWindowByIdentifier(quint64 identifier)
 {
-	for (int i = 0; i < getWindowCount(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		Window *window(getWindowByIndex(i));
 
@@ -2272,7 +2272,7 @@ SessionMainWindow MainWindow::getSession() const
 	session.geometry = saveGeometry();
 	session.index = getCurrentWindowIndex();
 
-	for (int i = 0; i < getWindowCount(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		Window *window(getWindowByIndex(i));
 
@@ -2341,7 +2341,7 @@ int MainWindow::getWindowCount() const
 
 int MainWindow::getWindowIndex(quint64 identifier) const
 {
-	for (int i = 0; i < getWindowCount(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		Window *window(getWindowByIndex(i));
 
@@ -2356,7 +2356,7 @@ int MainWindow::getWindowIndex(quint64 identifier) const
 
 bool MainWindow::hasUrl(const QUrl &url, bool activate)
 {
-	for (int i = 0; i < getWindowCount(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		Window *window(getWindowByIndex(i));
 

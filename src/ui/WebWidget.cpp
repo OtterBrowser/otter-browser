@@ -45,7 +45,6 @@
 #include <QtCore/QMimeDatabase>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
