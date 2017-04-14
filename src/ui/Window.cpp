@@ -782,12 +782,51 @@ QDateTime Window::getLastActivity() const
 
 ActionsManager::ActionDefinition::State Window::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	if (m_contentsWidget)
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+
+	switch (identifier)
 	{
-		return m_contentsWidget->getActionState(identifier, parameters);
+		case ActionsManager::CloseTabAction:
+			state.isEnabled = !m_isPinned;
+
+			break;
+		case ActionsManager::GoToParentDirectoryAction:
+			state.isEnabled = !Utils::isUrlEmpty(getUrl());
+
+			break;
+		case ActionsManager::MaximizeTabAction:
+			state.isEnabled = (getWindowState() != MaximizedWindowState);
+
+			break;
+		case ActionsManager::MinimizeTabAction:
+			state.isEnabled = (getWindowState() != MinimizedWindowState);
+
+			break;
+		case ActionsManager::RestoreTabAction:
+			state.isEnabled = (getWindowState() != NormalWindowState);
+
+			break;
+		case ActionsManager::AlwaysOnTopTabAction:
+			{
+				QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+				if (subWindow)
+				{
+					state.isEnabled = subWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint);
+				}
+			}
+
+			break;
+		default:
+			if (m_contentsWidget)
+			{
+				state = m_contentsWidget->getActionState(identifier, parameters);
+			}
+
+			break;
 	}
 
-	return ActionsManager::getActionDefinition(identifier).defaultState;
+	return state;
 }
 
 SessionWindow Window::getSession() const
