@@ -58,6 +58,7 @@
 #include "../ui/Style.h"
 #include "../ui/TrayIcon.h"
 #include "../ui/UpdateCheckerDialog.h"
+#include "../ui/Window.h"
 
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QDir>
@@ -489,7 +490,7 @@ Application::~Application()
 	}
 }
 
-void Application::triggerAction(int identifier, const QVariantMap &parameters)
+void Application::triggerAction(int identifier, const QVariantMap &parameters, QObject *target)
 {
 	switch (identifier)
 	{
@@ -605,12 +606,47 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		default:
-			if (m_activeWindow)
+			break;
+	}
+
+	const ActionsManager::ActionDefinition::ActionScope scope(ActionsManager::getActionDefinition(identifier).scope);
+
+	if (scope == ActionsManager::ActionDefinition::MainWindowScope || scope == ActionsManager::ActionDefinition::WindowScope)
+	{
+		MainWindow *mainWindow(target ? MainWindow::findMainWindow(target) : m_activeWindow.data());
+
+		if (scope == ActionsManager::ActionDefinition::WindowScope)
+		{
+			Window *window(nullptr);
+
+			if (target)
 			{
-				m_activeWindow->triggerAction(identifier, parameters);
+				while (target)
+				{
+					if (target->metaObject()->className() == QLatin1String("Otter::Window"))
+					{
+						window = qobject_cast<Window*>(target);
+
+						break;
+					}
+
+					target = target->parent();
+				}
+			}
+			else if (mainWindow)
+			{
+				window = mainWindow->getWindowByIndex(-1);
 			}
 
-			break;
+			if (window)
+			{
+				window->triggerAction(identifier, parameters);
+			}
+		}
+		else if (mainWindow)
+		{
+			mainWindow->triggerAction(identifier, parameters);
+		}
 	}
 }
 

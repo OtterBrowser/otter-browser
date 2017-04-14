@@ -101,32 +101,7 @@ void WebWidget::bounceAction(int identifier, QVariantMap parameters)
 {
 	parameters[QLatin1String("isBounced")] = true;
 
-	if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::WindowScope)
-	{
-		Window *window(nullptr);
-		QObject *parent(parentWidget());
-
-		while (parent)
-		{
-			if (parent->metaObject()->className() == QLatin1String("Otter::Window"))
-			{
-				window = qobject_cast<Window*>(parent);
-
-				break;
-			}
-
-			parent = parent->parent();
-		}
-
-		if (window)
-		{
-			window->triggerAction(identifier, parameters);
-		}
-	}
-	else
-	{
-		Application::triggerAction(identifier, parameters);
-	}
+	Application::triggerAction(identifier, parameters, parentWidget());
 }
 
 void WebWidget::triggerAction()
