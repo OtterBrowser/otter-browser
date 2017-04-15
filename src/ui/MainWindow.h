@@ -88,6 +88,7 @@ public slots:
 	void raiseWindow();
 	void search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void clearClosedWindows();
+	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void setActiveWindowByIndex(int index);
 	void setActiveWindowByIdentifier(quint64 identifier);
 	void setOption(int identifier, const QVariant &value);
@@ -109,7 +110,6 @@ protected slots:
 	void saveToolBarPositions();
 	void open(const QUrl &url = QUrl(), SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void open(BookmarksItem *bookmark, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
-	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
 	void handleWindowIsPinnedChanged(bool isPinned);

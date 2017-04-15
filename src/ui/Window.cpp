@@ -212,12 +212,37 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 	switch (identifier)
 	{
+		case ActionsManager::CloneTabAction:
+			if (canClone())
+			{
+				m_mainWindow->addWindow(clone(true, m_mainWindow));
+			}
+
+			break;
+		case ActionsManager::PinTabAction:
+			setPinned(!isPinned());
+
+			break;
+		case ActionsManager::DetachTabAction:
+			if (m_mainWindow->getWindowCount() > 1)
+			{
+				m_mainWindow->moveWindow(this);
+			}
+
+			break;
 		case ActionsManager::SuspendTabAction:
 			if (m_contentsWidget)
 			{
 				m_session = getSession();
 
 				setContentsWidget(nullptr);
+			}
+
+			break;
+		case ActionsManager::CloseTabAction:
+			if (!isPinned())
+			{
+				close();
 			}
 
 			break;

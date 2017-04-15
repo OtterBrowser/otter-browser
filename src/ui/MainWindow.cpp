@@ -930,34 +930,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 	switch (identifier)
 	{
-		case ActionsManager::CloneTabAction:
-			if (window && window->canClone())
-			{
-				addWindow(window->clone(true, this));
-			}
-
-			break;
-		case ActionsManager::PinTabAction:
-			if (window)
-			{
-				window->setPinned(!window->isPinned());
-			}
-
-			break;
-		case ActionsManager::DetachTabAction:
-			if (window && m_windows.count() > 1)
-			{
-				moveWindow(window);
-			}
-
-			break;
-		case ActionsManager::CloseTabAction:
-			if (window && !window->isPinned())
-			{
-				window->close();
-			}
-
-			break;
 		case ActionsManager::CloseOtherTabsAction:
 			if (window)
 			{
