@@ -654,16 +654,23 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			if (target)
 			{
-				while (target)
+				if (mainWindow && parameters.contains(QLatin1String("window")))
 				{
-					if (target->metaObject()->className() == QLatin1String("Otter::Window"))
+					window = mainWindow->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+				}
+				else
+				{
+					while (target)
 					{
-						window = qobject_cast<Window*>(target);
+						if (target->metaObject()->className() == QLatin1String("Otter::Window"))
+						{
+							window = qobject_cast<Window*>(target);
 
-						break;
+							break;
+						}
+
+						target = target->parent();
 					}
-
-					target = target->parent();
 				}
 			}
 			else if (mainWindow)
