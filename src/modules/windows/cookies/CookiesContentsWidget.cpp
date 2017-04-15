@@ -352,7 +352,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 
 	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
-	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, QVariantMap(), true, this));
 
 	if (index.parent() != m_model->invisibleRootItem()->index())
 	{

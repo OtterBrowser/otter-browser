@@ -196,7 +196,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 		copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
 
 		menu.addSeparator();
-		menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, this));
+		menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, QVariantMap(), true, this));
 		menu.addAction(bookmarkAllOpenPagesAction);
 		menu.addSeparator();
 		menu.addAction(copyLinkAction);

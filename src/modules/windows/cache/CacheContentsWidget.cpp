@@ -356,7 +356,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 	}
 
-	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, QVariantMap(), true, this));
 	menu.exec(m_ui->cacheViewWidget->mapToGlobal(position));
 }
 

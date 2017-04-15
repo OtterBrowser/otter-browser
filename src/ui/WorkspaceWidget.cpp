@@ -41,12 +41,12 @@ MdiWidget::MdiWidget(QWidget *parent) : QMdiArea(parent)
 void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::RestoreAllAction, this));
-	menu.addAction(Application::createAction(ActionsManager::MaximizeAllAction, this));
-	menu.addAction(Application::createAction(ActionsManager::MinimizeAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
+	menu.addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));
+	menu.addAction(Application::createAction(ActionsManager::MinimizeAllAction, QVariantMap(), true, this));
 	menu.addSeparator();
-	menu.addAction(Application::createAction(ActionsManager::CascadeAllAction, this));
-	menu.addAction(Application::createAction(ActionsManager::TileAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::CascadeAllAction, QVariantMap(), true, this));
+	menu.addAction(Application::createAction(ActionsManager::TileAllAction, QVariantMap(), true, this));
 	menu.exec(event->globalPos());
 }
 
@@ -629,14 +629,14 @@ void WorkspaceWidget::showContextMenu(const QPoint &position)
 {
 	QMenu menu(this);
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, QVariantMap(), true, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, QVariantMap(), true, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, QVariantMap(), true, this));
 
 	menu.addMenu(new Menu(Menu::ToolBarsMenuRole, &menu))->setText(tr("Toolbars"));
 	menu.exec(m_mdi->mapToGlobal(position));

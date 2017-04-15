@@ -270,7 +270,7 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 
 	menu.addAction(tr("Remove All Passwords…"), this, SLOT(removeAllPasswords()))->setEnabled(m_ui->passwordsViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
-	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, QVariantMap(), true, this));
 	menu.exec(m_ui->passwordsViewWidget->mapToGlobal(position));
 }
 

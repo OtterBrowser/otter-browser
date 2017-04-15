@@ -464,19 +464,19 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	});
 
 	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::NewTabAction, this));
-	menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, this));
+	menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, this));
+	menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, this));
 	menu.addSeparator();
 
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, QVariantMap(), true, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, QVariantMap(), true, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, QVariantMap(), true, this));
 
 	menu.addMenu(createCustomizationMenu(m_identifier, {cycleAction, thumbnailsAction}, &menu));
 	menu.exec(event->globalPos());

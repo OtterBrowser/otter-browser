@@ -90,8 +90,8 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 	const QModelIndex index(m_ui->windowsViewWidget->indexAt(position));
 	SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
 	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::NewWindowAction, this));
-	menu.addAction(Application::createAction(ActionsManager::NewWindowPrivateAction, this));
+	menu.addAction(Application::createAction(ActionsManager::NewWindowAction, QVariantMap(), true, this));
+	menu.addAction(Application::createAction(ActionsManager::NewWindowPrivateAction, QVariantMap(), true, this));
 
 	if (!index.data(SessionModel::IsTrashedRole).toBool())
 	{
@@ -117,8 +117,8 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 				closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
 				closeTabAction->setParameters({{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
 
-				menu.addAction(Application::createAction(ActionsManager::NewTabAction, windowItem->getActiveWindow()->getMainWindow()));
-				menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, windowItem->getActiveWindow()->getMainWindow()));
+				menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
+				menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
 				menu.addSeparator();
 				menu.addAction(closeTabAction);
 

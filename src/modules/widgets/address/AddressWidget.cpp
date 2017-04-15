@@ -375,7 +375,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (!m_isUsingSimpleMode)
 		{
-			menu.addAction(Application::createAction(ActionsManager::PasteAndGoAction, this));
+			menu.addAction(Application::createAction(ActionsManager::PasteAndGoAction, QVariantMap(), true, this));
 		}
 
 		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());

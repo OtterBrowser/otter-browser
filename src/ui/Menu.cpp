@@ -1323,7 +1323,7 @@ void Menu::setTitle(const QString &title)
 
 Action* Menu::addAction(int identifier, bool useGlobal)
 {
-	Action *action(useGlobal ? Application::createAction(identifier, this) : new Action(identifier, this));
+	Action *action(useGlobal ? Application::createAction(identifier, QVariantMap(), true, this) : new Action(identifier, this));
 
 	QMenu::addAction(action);
 

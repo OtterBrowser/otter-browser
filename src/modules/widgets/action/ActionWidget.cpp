@@ -87,7 +87,7 @@ void ActionWidget::resetAction()
 	}
 	else
 	{
-		action = Application::createAction(m_identifier, this);
+		action = Application::createAction(m_identifier, QVariantMap(), true, this);
 	}
 
 	removeAction(defaultAction());
