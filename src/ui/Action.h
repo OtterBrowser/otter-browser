@@ -33,7 +33,20 @@ class Action : public QAction
 	Q_OBJECT
 
 public:
-	explicit Action(int identifier, QObject *parent = nullptr);
+	enum ActionFlag
+	{
+		NoFlag = 0,
+		CanTriggerAction = 1,
+		FollowsActionStateFlag = 2,
+		FollowsActiveObjectFlag = 4,
+		IsOverridingTextFlag = 8
+	};
+
+	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
+
+	explicit Action(int identifier, QObject *parent);
+	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
+	explicit Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent);
 
 	void setOverrideText(const QString &text);
 	void setState(const ActionsManager::ActionDefinition::State &state);
@@ -56,8 +69,8 @@ protected:
 private:
 	QString m_overrideText;
 	QVariantMap m_parameters;
+	ActionFlags m_flags;
 	int m_identifier;
-	bool m_isOverridingText;
 };
 
 class Shortcut : public QShortcut
@@ -77,5 +90,7 @@ private:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Action::ActionFlags)
 
 #endif

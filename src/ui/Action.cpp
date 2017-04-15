@@ -26,8 +26,24 @@ namespace Otter
 {
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
-	m_identifier(identifier),
-	m_isOverridingText(false)
+	m_flags(CanTriggerAction | FollowsActionStateFlag),
+	m_identifier(identifier)
+{
+	update(true);
+}
+
+Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
+	m_parameters(parameters),
+	m_flags(CanTriggerAction | FollowsActionStateFlag),
+	m_identifier(identifier)
+{
+	update(true);
+}
+
+Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent) : QAction(parent),
+	m_parameters(parameters),
+	m_flags(flags),
+	m_identifier(identifier)
 {
 	update(true);
 }
@@ -57,7 +73,7 @@ void Action::update(bool reset)
 {
 	if (m_identifier < 0)
 	{
-		if (m_isOverridingText)
+		if (m_flags.testFlag(IsOverridingTextFlag))
 		{
 			setText(QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()));
 		}
@@ -102,7 +118,7 @@ void Action::update(bool reset)
 		state = getState();
 	}
 
-	if (m_isOverridingText)
+	if (m_flags.testFlag(IsOverridingTextFlag))
 	{
 		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
@@ -118,7 +134,8 @@ void Action::update(bool reset)
 void Action::setOverrideText(const QString &text)
 {
 	m_overrideText = text;
-	m_isOverridingText = true;
+
+	m_flags |= IsOverridingTextFlag;
 
 	update();
 }
@@ -140,7 +157,7 @@ void Action::setParameters(const QVariantMap &parameters)
 
 QString Action::getText() const
 {
-	if (m_isOverridingText)
+	if (m_flags.testFlag(IsOverridingTextFlag))
 	{
 		return QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
