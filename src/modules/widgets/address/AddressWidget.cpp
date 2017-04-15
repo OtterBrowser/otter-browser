@@ -397,7 +397,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 			}
 			else
 			{
-				Action *websiteInformationAction(new Action(ActionsManager::WebsiteInformationAction));
+				Action *websiteInformationAction(new Action(ActionsManager::WebsiteInformationAction, &menu));
 				websiteInformationAction->setEnabled(false);
 
 				menu.addAction(websiteInformationAction);

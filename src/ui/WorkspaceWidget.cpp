@@ -509,12 +509,12 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 
 		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
-		Action *closeAction(new Action(ActionsManager::CloseTabAction));
+		QMenu *menu(new QMenu(mdiWindow));
+		Action *closeAction(new Action(ActionsManager::CloseTabAction, menu));
 		closeAction->setEnabled(true);
 		closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
 		closeAction->setIcon(QIcon());
 
-		QMenu *menu(new QMenu(mdiWindow));
 		menu->addAction(closeAction);
 		menu->addAction(m_mainWindow->getAction(ActionsManager::RestoreTabAction));
 		menu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeTabAction));
