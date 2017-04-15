@@ -1016,28 +1016,24 @@ void Menu::populateToolBarsMenu()
 {
 	clear();
 
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions());
 
-	for (int i = 0; i < definitions.count(); ++i)
+	if (mainWindow)
 	{
-		Action *action(addAction());
-		action->setData(definitions.at(i).identifier);
-		action->setCheckable(true);
-		action->setChecked(definitions.at(i).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+		for (int i = 0; i < definitions.count(); ++i)
+		{
+			const QVariantMap parameters({{QLatin1String("toolBar"), definitions.at(i).identifier}});
+			Action *action(addAction(ActionsManager::ShowToolBarAction));
+			action->setCheckable(true);
+			action->setParameters(parameters);
+			action->setState(mainWindow->getActionState(ActionsManager::ShowToolBarAction, parameters));
 
-		if (definitions.at(i).getTitle().isEmpty())
-		{
-			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
-		}
-		else
-		{
-			action->setText(definitions.at(i).getTitle());
+			connect(action, SIGNAL(triggered(bool)), mainWindow, SLOT(triggerAction(bool)));
 		}
 
-		connect(action, SIGNAL(toggled(bool)), this, SLOT(setToolBarVisibility(bool)));
+		addSeparator();
 	}
-
-	addSeparator();
 
 	Menu *addNewMenu(new Menu(NoMenuRole, this));
 	Action *addNewAction(addAction());
@@ -1316,19 +1312,6 @@ void Menu::updateClosedWindowsMenu()
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	setEnabled((mainWindow && mainWindow->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
-}
-
-void Menu::setToolBarVisibility(bool visible)
-{
-	QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action)
-	{
-		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(action->data().toInt()));
-		definition.normalVisibility = (visible ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
-
-		ToolBarsManager::setToolBar(definition);
-	}
 }
 
 void Menu::setTitle(const QString &title)

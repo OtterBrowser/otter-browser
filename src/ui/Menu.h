@@ -90,7 +90,6 @@ protected slots:
 	void selectStyleSheet(QAction *action);
 	void selectWindow(QAction *action);
 	void updateClosedWindowsMenu();
-	void setToolBarVisibility(bool visible);
 
 private:
 	QActionGroup *m_actionGroup;

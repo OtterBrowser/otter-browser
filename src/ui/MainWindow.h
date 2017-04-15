@@ -81,6 +81,8 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
+	void triggerAction();
+	void triggerAction(bool isChecked);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void openUrl(const QString &text = QString(), bool isPrivate = false);
 	void storeWindowState();
@@ -105,8 +107,6 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void triggerAction();
-	void triggerAction(bool isChecked);
 	void saveToolBarPositions();
 	void open(const QUrl &url = QUrl(), SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void open(BookmarksItem *bookmark, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);

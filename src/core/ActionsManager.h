@@ -185,6 +185,7 @@ public:
 		WorkOfflineAction,
 		FullScreenAction,
 		ShowTabSwitcherAction,
+		ShowToolBarAction,
 		ShowMenuBarAction,
 		ShowTabBarAction,
 		ShowSidebarAction,

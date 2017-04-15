@@ -744,6 +744,16 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			m_tabSwitcher->show(TabSwitcherWidget::ActionReason);
 
 			return;
+		case ActionsManager::ShowToolBarAction:
+			if (parameters.contains(QLatin1String("toolBar")))
+			{
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt()));
+				definition.normalVisibility = (Action::calculateCheckedState(parameters) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+
+				ToolBarsManager::setToolBar(definition);
+			}
+
+			return;
 		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
@@ -2214,6 +2224,17 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::FullScreenAction:
 			state.icon = ThemesManager::getIcon(isFullScreen() ? QLatin1String("view-restore") : QLatin1String("view-fullscreen"));
+
+			break;
+		case ActionsManager::ShowToolBarAction:
+			if (parameters.contains(QLatin1String("toolBar")))
+			{
+				const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt()));
+
+				state.text = definition.getTitle();
+				state.isChecked = (definition.normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+				state.isEnabled = true;
+			}
 
 			break;
 		case ActionsManager::ShowMenuBarAction:
