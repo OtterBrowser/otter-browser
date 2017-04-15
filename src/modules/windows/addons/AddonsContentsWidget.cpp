@@ -391,8 +391,11 @@ void AddonsContentsWidget::filterAddons(const QString &filter)
 	}
 }
 
-Action* AddonsContentsWidget::createAction(int identifier)
+Action* AddonsContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (m_actions.contains(identifier))
 	{
 		return m_actions[identifier];

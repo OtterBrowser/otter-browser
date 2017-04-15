@@ -2067,7 +2067,7 @@ QWidget* QtWebKitWebWidget::getViewport()
 	return m_webView;
 }
 
-Action* QtWebKitWebWidget::createAction(int identifier)
+Action* QtWebKitWebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
@@ -2095,7 +2095,7 @@ Action* QtWebKitWebWidget::createAction(int identifier)
 		return action;
 	}
 
-	return WebWidget::createAction(identifier);
+	return WebWidget::createAction(identifier, parameters, followState);
 }
 
 QtWebKitPage* QtWebKitWebWidget::getPage()

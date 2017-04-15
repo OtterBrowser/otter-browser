@@ -206,7 +206,7 @@ public:
 	void setParent(QWidget *parent);
 	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList());
 	void setWindowIdentifier(quint64 identifier);
-	virtual Action* createAction(int identifier);
+	virtual Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) = 0;
 	virtual QWidget* getInspector();
 	virtual QWidget* getViewport();

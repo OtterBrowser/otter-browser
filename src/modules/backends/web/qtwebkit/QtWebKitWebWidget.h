@@ -54,7 +54,7 @@ public:
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) override;
 	QWidget* getInspector() override;
 	QWidget* getViewport() override;
-	Action* createAction(int identifier) override;
+	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;
 	QString getSelectedText() const override;

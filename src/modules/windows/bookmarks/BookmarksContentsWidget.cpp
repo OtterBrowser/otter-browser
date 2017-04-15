@@ -313,8 +313,11 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 	m_ui->bookmarksViewWidget->render(printer);
 }
 
-Action* BookmarksContentsWidget::createAction(int identifier)
+Action* BookmarksContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (m_actions.contains(identifier))
 	{
 		return m_actions[identifier];

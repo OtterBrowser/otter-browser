@@ -268,9 +268,11 @@ ContentsWidget* ContentsWidget::clone(bool cloneHistory)
 	return nullptr;
 }
 
-Action* ContentsWidget::createAction(int identifier)
+Action* ContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
 	Q_UNUSED(identifier)
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
 
 	return nullptr;
 }

@@ -51,7 +51,7 @@ public:
 	~PasswordsContentsWidget();
 
 	void print(QPrinter *printer) override;
-	Action* createAction(int identifier) override;
+	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
 	QString getTitle() const override;
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;

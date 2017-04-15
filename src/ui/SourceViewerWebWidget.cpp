@@ -426,8 +426,11 @@ WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const
 	return nullptr;
 }
 
-Action* SourceViewerWebWidget::createAction(int identifier)
+Action* SourceViewerWebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:

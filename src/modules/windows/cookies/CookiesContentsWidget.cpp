@@ -452,8 +452,11 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 	return nullptr;
 }
 
-Action* CookiesContentsWidget::createAction(int identifier)
+Action* CookiesContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (m_actions.contains(identifier))
 	{
 		return m_actions[identifier];

@@ -1269,9 +1269,9 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 	return webWidget;
 }
 
-Action* WebContentsWidget::createAction(int identifier)
+Action* WebContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	return m_webWidget->createAction(identifier);
+	return m_webWidget->createAction(identifier, parameters, followState);
 }
 
 WebWidget* WebContentsWidget::getWebWidget()

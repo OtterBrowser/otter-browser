@@ -1471,7 +1471,7 @@ QWidget* QtWebEngineWebWidget::getViewport()
 	return (focusWidget() ? focusWidget() : m_webView);
 }
 
-Action* QtWebEngineWebWidget::createAction(int identifier)
+Action* QtWebEngineWebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
@@ -1503,7 +1503,7 @@ Action* QtWebEngineWebWidget::createAction(int identifier)
 		return action;
 	}
 
-	return WebWidget::createAction(identifier);
+	return WebWidget::createAction(identifier, parameters, followState);
 }
 
 QWebEnginePage* QtWebEngineWebWidget::getPage()

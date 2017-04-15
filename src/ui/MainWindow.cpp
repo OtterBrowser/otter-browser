@@ -2038,8 +2038,11 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	return window;
 }
 
-Action* MainWindow::createAction(int identifier)
+Action* MainWindow::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (identifier < 0 || identifier >= m_actions.count())
 	{
 		return nullptr;

@@ -529,8 +529,11 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 	return nullptr;
 }
 
-Action* CacheContentsWidget::createAction(int identifier)
+Action* CacheContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (m_actions.contains(identifier))
 	{
 		return m_actions[identifier];

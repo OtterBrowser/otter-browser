@@ -1204,8 +1204,11 @@ void WebWidget::setWindowIdentifier(quint64 identifier)
 	m_windowIdentifier = identifier;
 }
 
-Action* WebWidget::createAction(int identifier)
+Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (identifier < 0)
 	{
 		return nullptr;

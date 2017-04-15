@@ -348,8 +348,11 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 	}
 }
 
-Action* PasswordsContentsWidget::createAction(int identifier)
+Action* PasswordsContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
+	Q_UNUSED(parameters)
+	Q_UNUSED(followState)
+
 	if (m_actions.contains(identifier))
 	{
 		return m_actions[identifier];
