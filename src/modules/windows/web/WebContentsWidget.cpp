@@ -1269,9 +1269,9 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 	return webWidget;
 }
 
-Action* WebContentsWidget::getAction(int identifier)
+Action* WebContentsWidget::createAction(int identifier)
 {
-	return m_webWidget->getAction(identifier);
+	return m_webWidget->createAction(identifier);
 }
 
 WebWidget* WebContentsWidget::getWebWidget()

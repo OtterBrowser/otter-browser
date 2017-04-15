@@ -300,16 +300,16 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	}
 	else
 	{
-		menu.addAction(getAction(ActionsManager::UndoAction));
-		menu.addAction(getAction(ActionsManager::RedoAction));
+		menu.addAction(createAction(ActionsManager::UndoAction));
+		menu.addAction(createAction(ActionsManager::RedoAction));
 		menu.addSeparator();
-		menu.addAction(getAction(ActionsManager::CutAction));
-		menu.addAction(getAction(ActionsManager::CopyAction));
-		menu.addAction(getAction(ActionsManager::PasteAction));
-		menu.addAction(getAction(ActionsManager::DeleteAction));
+		menu.addAction(createAction(ActionsManager::CutAction));
+		menu.addAction(createAction(ActionsManager::CopyAction));
+		menu.addAction(createAction(ActionsManager::PasteAction));
+		menu.addAction(createAction(ActionsManager::DeleteAction));
 		menu.addSeparator();
-		menu.addAction(getAction(ActionsManager::SelectAllAction));
-		menu.addAction(getAction(ActionsManager::ClearAllAction));
+		menu.addAction(createAction(ActionsManager::SelectAllAction));
+		menu.addAction(createAction(ActionsManager::ClearAllAction));
 	}
 
 	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
@@ -426,7 +426,7 @@ WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const
 	return nullptr;
 }
 
-Action* SourceViewerWebWidget::getAction(int identifier)
+Action* SourceViewerWebWidget::createAction(int identifier)
 {
 	switch (identifier)
 	{
@@ -463,7 +463,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::UndoAction));
+		Action *action(WebWidget::createAction(ActionsManager::UndoAction));
 		action->setEnabled(m_sourceViewer->document()->isUndoAvailable());
 
 		connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), action, SLOT(setEnabled(bool)));
@@ -473,7 +473,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::RedoAction));
+		Action *action(WebWidget::createAction(ActionsManager::RedoAction));
 		action->setEnabled(m_sourceViewer->document()->isRedoAvailable());
 
 		connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), action, SLOT(setEnabled(bool)));
@@ -481,7 +481,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 		return action;
 	}
 
-	return WebWidget::getAction(identifier);
+	return WebWidget::createAction(identifier);
 }
 
 QString SourceViewerWebWidget::getTitle() const

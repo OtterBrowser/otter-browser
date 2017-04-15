@@ -136,7 +136,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 	if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::TrashBookmark)
 	{
-		menu.addAction(getAction(ActionsManager::PasteAction));
+		menu.addAction(createAction(ActionsManager::PasteAction));
 		menu.addSeparator();
 	}
 
@@ -156,9 +156,9 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 		if (type == BookmarksModel::UrlBookmark)
 		{
-			menu.addAction(getAction(ActionsManager::CutAction));
-			menu.addAction(getAction(ActionsManager::CopyAction));
-			menu.addAction(getAction(ActionsManager::PasteAction));
+			menu.addAction(createAction(ActionsManager::CutAction));
+			menu.addAction(createAction(ActionsManager::CopyAction));
+			menu.addAction(createAction(ActionsManager::PasteAction));
 			menu.addSeparator();
 		}
 
@@ -166,7 +166,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 		if (type != BookmarksModel::RootBookmark)
 		{
-			Action *copyLinkAction(getAction(ActionsManager::CopyLinkToClipboardAction));
+			Action *copyLinkAction(createAction(ActionsManager::CopyLinkToClipboardAction));
 			copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
 
 			menu.addAction(copyLinkAction);
@@ -192,7 +192,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 			}
 			else
 			{
-				menu.addAction(getAction(ActionsManager::DeleteAction));
+				menu.addAction(createAction(ActionsManager::DeleteAction));
 			}
 		}
 	}
@@ -312,7 +312,7 @@ void NotesContentsWidget::print(QPrinter *printer)
 	m_ui->notesViewWidget->render(printer);
 }
 
-Action* NotesContentsWidget::getAction(int identifier)
+Action* NotesContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

@@ -287,7 +287,6 @@ public:
 	static void createInstance(QObject *parent);
 	static void loadProfiles();
 	static ActionsManager* getInstance();
-	static Action* getAction(int identifier, QObject *parent);
 	static QString getReport();
 	static QString getActionName(int identifier);
 	static QVector<ActionDefinition> getActionDefinitions();

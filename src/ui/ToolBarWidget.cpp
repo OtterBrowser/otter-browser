@@ -27,6 +27,7 @@
 #include "TabBarWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
+#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/ThemesManager.h"
@@ -36,7 +37,6 @@
 #include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
@@ -464,19 +464,19 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	});
 
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
-	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
+	menu.addAction(Application::createAction(ActionsManager::NewTabAction, this));
+	menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, this));
 	menu.addSeparator();
 
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, this));
 
 	menu.addMenu(createCustomizationMenu(m_identifier, {cycleAction, thumbnailsAction}, &menu));
 	menu.exec(event->globalPos());

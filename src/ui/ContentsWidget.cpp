@@ -268,7 +268,7 @@ ContentsWidget* ContentsWidget::clone(bool cloneHistory)
 	return nullptr;
 }
 
-Action* ContentsWidget::getAction(int identifier)
+Action* ContentsWidget::createAction(int identifier)
 {
 	Q_UNUSED(identifier)
 

@@ -196,7 +196,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 		copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
 
 		menu.addSeparator();
-		menu.addAction(ActionsManager::getAction(ActionsManager::BookmarkPageAction, this));
+		menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, this));
 		menu.addAction(bookmarkAllOpenPagesAction);
 		menu.addSeparator();
 		menu.addAction(copyLinkAction);
@@ -221,7 +221,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 			}
 			else
 			{
-				menu.addAction(getAction(ActionsManager::DeleteAction));
+				menu.addAction(createAction(ActionsManager::DeleteAction));
 			}
 
 			if (type != BookmarksModel::SeparatorBookmark)
@@ -304,7 +304,7 @@ void BookmarksContentsWidget::updateActions()
 
 	if (m_actions.contains(ActionsManager::DeleteAction))
 	{
-		getAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 }
 
@@ -313,7 +313,7 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 	m_ui->bookmarksViewWidget->render(printer);
 }
 
-Action* BookmarksContentsWidget::getAction(int identifier)
+Action* BookmarksContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

@@ -375,7 +375,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (!m_isUsingSimpleMode)
 		{
-			menu.addAction(ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
+			menu.addAction(Application::createAction(ActionsManager::PasteAndGoAction, this));
 		}
 
 		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
@@ -393,7 +393,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			if (m_window)
 			{
-				menu.addAction(m_window->getContentsWidget()->getAction(ActionsManager::WebsiteInformationAction));
+				menu.addAction(m_window->getContentsWidget()->createAction(ActionsManager::WebsiteInformationAction));
 			}
 			else
 			{
@@ -898,7 +898,7 @@ void AddressWidget::updateGeometries()
 						continue;
 					}
 
-					Action *loadPluginsAction(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction));
+					Action *loadPluginsAction(m_window->getContentsWidget()->createAction(ActionsManager::LoadPluginsAction));
 
 					if (!loadPluginsAction || !loadPluginsAction->isEnabled())
 					{

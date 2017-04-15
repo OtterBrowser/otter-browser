@@ -391,7 +391,7 @@ void AddonsContentsWidget::filterAddons(const QString &filter)
 	}
 }
 
-Action* AddonsContentsWidget::getAction(int identifier)
+Action* AddonsContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "CacheContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkCache.h"
 #include "../../../core/NetworkManagerFactory.h"
@@ -355,7 +356,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
 	menu.exec(m_ui->cacheViewWidget->mapToGlobal(position));
 }
 
@@ -484,9 +485,9 @@ void CacheContentsWidget::updateActions()
 		}
 	}
 
-	if (m_ui->deleteButton->isEnabled() != getAction(ActionsManager::DeleteAction)->isEnabled())
+	if (m_ui->deleteButton->isEnabled() != createAction(ActionsManager::DeleteAction)->isEnabled())
 	{
-		getAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 }
 
@@ -528,7 +529,7 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 	return nullptr;
 }
 
-Action* CacheContentsWidget::getAction(int identifier)
+Action* CacheContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

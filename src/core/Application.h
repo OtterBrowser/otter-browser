@@ -64,6 +64,7 @@ public:
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser);
 	static void setLocale(const QString &locale);
+	static Action* createAction(int identifier, QObject *parent);
 	static MainWindow* createWindow(const QVariantMap &parameters = QVariantMap(), const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	static MainWindow* getWindow();

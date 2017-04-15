@@ -665,7 +665,7 @@ void WebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
 	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup((getLoadingState() == OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+		m_actions[ActionsManager::ReloadOrStopAction]->setup((getLoadingState() == OngoingLoadingState) ? createAction(ActionsManager::StopAction) : createAction(ActionsManager::ReloadAction));
 	}
 
 	if (m_actions.contains(ActionsManager::LoadPluginsAction))
@@ -1204,17 +1204,7 @@ void WebWidget::setWindowIdentifier(quint64 identifier)
 	m_windowIdentifier = identifier;
 }
 
-QWidget* WebWidget::getInspector()
-{
-	return nullptr;
-}
-
-QWidget* WebWidget::getViewport()
-{
-	return this;
-}
-
-Action* WebWidget::getAction(int identifier)
+Action* WebWidget::createAction(int identifier)
 {
 	if (identifier < 0)
 	{
@@ -1323,6 +1313,16 @@ Action* WebWidget::getAction(int identifier)
 	}
 
 	return action;
+}
+
+QWidget* WebWidget::getInspector()
+{
+	return nullptr;
+}
+
+QWidget* WebWidget::getViewport()
+{
+	return this;
 }
 
 Action* WebWidget::getExistingAction(int identifier)
@@ -1916,7 +1916,7 @@ bool WebWidget::calculateCheckedState(int identifier, const QVariantMap &paramet
 			break;
 	}
 
-	return Action::calculateCheckedState(parameters, getAction(identifier));
+	return Action::calculateCheckedState(parameters, createAction(identifier));
 }
 
 bool WebWidget::canGoBack() const

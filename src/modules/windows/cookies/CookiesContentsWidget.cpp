@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "CookiesContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/CookieJar.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkManagerFactory.h"
@@ -343,7 +344,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 	{
 		if (index.parent() != m_model->invisibleRootItem()->index())
 		{
-			menu.addAction(getAction(ActionsManager::DeleteAction));
+			menu.addAction(createAction(ActionsManager::DeleteAction));
 		}
 
 		menu.addAction(tr("Remove All Cookies from This Domain…"), this, SLOT(removeDomainCookies()));
@@ -351,7 +352,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 
 	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
-	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
 
 	if (index.parent() != m_model->invisibleRootItem()->index())
 	{
@@ -403,9 +404,9 @@ void CookiesContentsWidget::updateActions()
 	m_ui->propertiesButton->setEnabled(false);
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
 
-	if (m_ui->deleteButton->isEnabled() != getAction(ActionsManager::DeleteAction)->isEnabled())
+	if (m_ui->deleteButton->isEnabled() != createAction(ActionsManager::DeleteAction)->isEnabled())
 	{
-		getAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 
 	m_ui->nameLabelWidget->clear();
@@ -451,7 +452,7 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 	return nullptr;
 }
 
-Action* CookiesContentsWidget::getAction(int identifier)
+Action* CookiesContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "PasswordsContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/PasswordsManager.h"
 #include "../../../core/ThemesManager.h"
@@ -269,7 +270,7 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 
 	menu.addAction(tr("Remove All Passwords…"), this, SLOT(removeAllPasswords()))->setEnabled(m_ui->passwordsViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
-	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
 	menu.exec(m_ui->passwordsViewWidget->mapToGlobal(position));
 }
 
@@ -347,7 +348,7 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 	}
 }
 
-Action* PasswordsContentsWidget::getAction(int identifier)
+Action* PasswordsContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

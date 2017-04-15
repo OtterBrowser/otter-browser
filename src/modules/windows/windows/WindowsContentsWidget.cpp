@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "WindowsContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/SessionModel.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
@@ -89,8 +90,8 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 	const QModelIndex index(m_ui->windowsViewWidget->indexAt(position));
 	SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowAction, this));
-	menu.addAction(ActionsManager::getAction(ActionsManager::NewWindowPrivateAction, this));
+	menu.addAction(Application::createAction(ActionsManager::NewWindowAction, this));
+	menu.addAction(Application::createAction(ActionsManager::NewWindowPrivateAction, this));
 
 	if (!index.data(SessionModel::IsTrashedRole).toBool())
 	{
@@ -100,10 +101,10 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 			if (mainWindowItem)
 			{
-				menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabAction));
-				menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::NewTabPrivateAction));
+				menu.addAction(mainWindowItem->getMainWindow()->createAction(ActionsManager::NewTabAction));
+				menu.addAction(mainWindowItem->getMainWindow()->createAction(ActionsManager::NewTabPrivateAction));
 				menu.addSeparator();
-				menu.addAction(mainWindowItem->getMainWindow()->getAction(ActionsManager::CloseWindowAction));
+				menu.addAction(mainWindowItem->getMainWindow()->createAction(ActionsManager::CloseWindowAction));
 			}
 		}
 		else if (type == SessionModel::WindowEntity)
@@ -116,8 +117,8 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 				closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
 				closeTabAction->setParameters({{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
 
-				menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, windowItem->getActiveWindow()->getMainWindow()));
-				menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, windowItem->getActiveWindow()->getMainWindow()));
+				menu.addAction(Application::createAction(ActionsManager::NewTabAction, windowItem->getActiveWindow()->getMainWindow()));
+				menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, windowItem->getActiveWindow()->getMainWindow()));
 				menu.addSeparator();
 				menu.addAction(closeTabAction);
 

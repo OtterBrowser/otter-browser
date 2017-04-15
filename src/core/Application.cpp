@@ -1031,6 +1031,13 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(QLocale(identifier));
 }
 
+Action* Application::createAction(int identifier, QObject *parent)
+{
+	MainWindow *window(MainWindow::findMainWindow(parent));
+
+	return (window ? window->createAction(identifier) : nullptr);
+}
+
 MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &windows)
 {
 	MainWindow *window(new MainWindow(parameters, windows));

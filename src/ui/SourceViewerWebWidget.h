@@ -39,7 +39,7 @@ public:
 
 	void print(QPrinter *printer) override;
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) override;
-	Action* getAction(int identifier) override;
+	Action* createAction(int identifier) override;
 	QString getTitle() const override;
 	QString getSelectedText() const override;
 	QUrl getUrl() const override;

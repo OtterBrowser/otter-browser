@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "NavigationActionWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../ui/Action.h"
@@ -112,8 +113,8 @@ bool NavigationActionWidget::event(QEvent *event)
 
 			Window *window(getWindow());
 			QMenu menu(this);
-			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::ClearTabHistoryAction) : ActionsManager::getAction(ActionsManager::ClearTabHistoryAction, this));
-			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::PurgeTabHistoryAction) : ActionsManager::getAction(ActionsManager::PurgeTabHistoryAction, this));
+			menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::ClearTabHistoryAction) : Application::createAction(ActionsManager::ClearTabHistoryAction, this));
+			menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::PurgeTabHistoryAction) : Application::createAction(ActionsManager::PurgeTabHistoryAction, this));
 
 			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 

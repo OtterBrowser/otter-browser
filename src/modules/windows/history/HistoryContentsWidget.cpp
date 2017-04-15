@@ -368,7 +368,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
+	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, this));
 	menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
 }
 

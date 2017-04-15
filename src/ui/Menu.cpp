@@ -422,7 +422,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 							if (window)
 							{
-								action = window->getContentsWidget()->getAction(identifier);
+								action = window->getContentsWidget()->createAction(identifier);
 							}
 						}
 					}
@@ -1323,7 +1323,7 @@ void Menu::setTitle(const QString &title)
 
 Action* Menu::addAction(int identifier, bool useGlobal)
 {
-	Action *action(useGlobal ? ActionsManager::getAction(identifier, this) : new Action(identifier, this));
+	Action *action(useGlobal ? Application::createAction(identifier, this) : new Action(identifier, this));
 
 	QMenu::addAction(action);
 

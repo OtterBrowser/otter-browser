@@ -495,8 +495,8 @@ void TransfersContentsWidget::updateActions()
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState));
 	m_ui->redownloadButton->setEnabled(transfer);
 
-	getAction(ActionsManager::CopyAction)->setEnabled(transfer);
-	getAction(ActionsManager::DeleteAction)->setEnabled(transfer);
+	createAction(ActionsManager::CopyAction)->setEnabled(transfer);
+	createAction(ActionsManager::DeleteAction)->setEnabled(transfer);
 
 	if (transfer)
 	{
@@ -582,7 +582,7 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index)
 	return nullptr;
 }
 
-Action* TransfersContentsWidget::getAction(int identifier)
+Action* TransfersContentsWidget::createAction(int identifier)
 {
 	if (m_actions.contains(identifier))
 	{

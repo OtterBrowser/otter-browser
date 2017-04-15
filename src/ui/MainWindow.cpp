@@ -125,13 +125,13 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	}
 
 	setCentralWidget(m_workspace);
-	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool());
-	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
-	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
-	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
-	getAction(ActionsManager::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
-	getAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
-	getAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
+	createAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool());
+	createAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+	createAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
+	createAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
+	createAction(ActionsManager::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
+	createAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
+	createAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
 	if (m_hasToolBars && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
@@ -481,7 +481,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::ClosePrivateTabsAction:
 			{
-				getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
+				createAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
 
 				for (int i = 0; i < m_privateWindows.count(); ++i)
 				{
@@ -757,7 +757,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowMenuBarAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (Action::calculateCheckedState(parameters, createAction(ActionsManager::ShowMenuBarAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -766,7 +766,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowTabBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowTabBarAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (Action::calculateCheckedState(parameters, createAction(ActionsManager::ShowTabBarAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -807,7 +807,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowErrorConsoleAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ErrorConsoleBar));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowErrorConsoleAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (Action::calculateCheckedState(parameters, createAction(ActionsManager::ShowErrorConsoleAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -1016,7 +1016,7 @@ void MainWindow::triggerAction()
 
 			if (definition.identifier >= 0 && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
 			{
-				Action *action(getAction(definition.identifier));
+				Action *action(createAction(definition.identifier));
 
 				if (action)
 				{
@@ -1269,7 +1269,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	if (!m_isPrivate && window->isPrivate())
 	{
-		getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
+		createAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
 
 		m_privateWindows.append(window);
 	}
@@ -1309,7 +1309,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	m_tabBar->addTab(index, window);
 	m_workspace->addWindow(window, geometry, state, isAlwaysOnTop);
 
-	getAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
+	createAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
 
 	if (!hints.testFlag(SessionsManager::BackgroundOpen) || m_windows.count() < 2)
 	{
@@ -1390,7 +1390,7 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 	}
 	else
 	{
-		Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
+		Action *closePrivateTabsAction(createAction(ActionsManager::ClosePrivateTabsAction));
 
 		if (closePrivateTabsAction->isEnabled() && !((m_isPrivate && !m_windows.isEmpty()) || !m_privateWindows.isEmpty()))
 		{
@@ -1559,7 +1559,7 @@ void MainWindow::handleWindowClose(Window *window)
 		}
 		else
 		{
-			getAction(ActionsManager::CloseTabAction)->setEnabled(false);
+			createAction(ActionsManager::CloseTabAction)->setEnabled(false);
 			setCurrentWindow(nullptr);
 
 			m_workspace->setActiveWindow(nullptr);
@@ -1579,7 +1579,7 @@ void MainWindow::handleWindowClose(Window *window)
 		m_privateWindows.removeAll(window);
 	}
 
-	Action *closePrivateTabsAction(getAction(ActionsManager::ClosePrivateTabsAction));
+	Action *closePrivateTabsAction(createAction(ActionsManager::ClosePrivateTabsAction));
 
 	if (closePrivateTabsAction->isEnabled() && !((m_isPrivate && !m_windows.isEmpty()) || !m_privateWindows.isEmpty()))
 	{
@@ -1603,7 +1603,7 @@ void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 
 	if (modifiedWindow == m_workspace->getActiveWindow())
 	{
-		getAction(ActionsManager::CloseTabAction)->setEnabled(!isPinned);
+		createAction(ActionsManager::CloseTabAction)->setEnabled(!isPinned);
 	}
 
 	if (!m_isRestored || !SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool())
@@ -1659,11 +1659,11 @@ void MainWindow::handleOptionChanged(int identifier, const QVariant &value)
 	switch (identifier)
 	{
 		case SettingsManager::Interface_LockToolBarsOption:
-			getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
+			createAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
 
 			break;
 		case SettingsManager::Network_WorkOfflineOption:
-			getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
+			createAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
 
 			break;
 	}
@@ -1733,7 +1733,7 @@ void MainWindow::handleToolBarModified(int identifier)
 					m_menuBar->hide();
 				}
 
-				getAction(ActionsManager::ShowMenuBarAction)->setChecked(showMenuBar);
+				createAction(ActionsManager::ShowMenuBarAction)->setChecked(showMenuBar);
 			}
 
 			break;
@@ -1922,7 +1922,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 
 	window = getWindowByIndex(index);
 
-	getAction(ActionsManager::CloseTabAction)->setEnabled(window && !window->isPinned());
+	createAction(ActionsManager::CloseTabAction)->setEnabled(window && !window->isPinned());
 	setCurrentWindow(window);
 
 	if (window)
@@ -1939,7 +1939,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
 	}
 
-	getAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
+	createAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
 	updateWindowTitle();
 
 	emit currentWindowChanged(window ? window->getIdentifier() : 0);
@@ -1971,8 +1971,8 @@ void MainWindow::setCurrentWindow(Window *window)
 		if (m_actions[i] && m_actions[i]->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
 		{
 			const int identifier(m_actions[i]->getIdentifier());
-			Action *previousAction(previousWindow ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
-			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : nullptr);
+			Action *previousAction(previousWindow ? previousWindow->getContentsWidget()->createAction(identifier) : nullptr);
+			Action *currentAction(window ? window->getContentsWidget()->createAction(identifier) : nullptr);
 
 			if (previousAction)
 			{
@@ -2038,7 +2038,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	return window;
 }
 
-Action* MainWindow::getAction(int identifier)
+Action* MainWindow::createAction(int identifier)
 {
 	if (identifier < 0 || identifier >= m_actions.count())
 	{
@@ -2403,7 +2403,7 @@ bool MainWindow::event(QEvent *event)
 				{
 					if (isFullScreen())
 					{
-						getAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-restore")));
+						createAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-restore")));
 
 						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
 						{
@@ -2419,7 +2419,7 @@ bool MainWindow::event(QEvent *event)
 					}
 					else
 					{
-						getAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-fullscreen")));
+						createAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-fullscreen")));
 
 						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 						{

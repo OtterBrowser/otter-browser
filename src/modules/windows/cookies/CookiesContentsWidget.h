@@ -44,7 +44,7 @@ public:
 	~CookiesContentsWidget();
 
 	void print(QPrinter *printer) override;
-	Action* getAction(int identifier) override;
+	Action* createAction(int identifier) override;
 	QString getTitle() const override;
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;

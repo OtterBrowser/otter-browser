@@ -169,7 +169,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_networkManager, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(notifyContentStateChanged()));
-	connect(selectAllShortcut, SIGNAL(activated()), getAction(ActionsManager::SelectAllAction), SLOT(trigger()));
+	connect(selectAllShortcut, SIGNAL(activated()), createAction(ActionsManager::SelectAllAction), SLOT(trigger()));
 }
 
 QtWebKitWebWidget::~QtWebKitWebWidget()
@@ -807,12 +807,12 @@ void QtWebKitWebWidget::notifyContentStateChanged()
 
 void QtWebKitWebWidget::updateUndoText(const QString &text)
 {
-	getAction(ActionsManager::UndoAction)->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
+	createAction(ActionsManager::UndoAction)->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
 }
 
 void QtWebKitWebWidget::updateRedoText(const QString &text)
 {
-	getAction(ActionsManager::RedoAction)->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
+	createAction(ActionsManager::RedoAction)->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
@@ -1696,7 +1696,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				const bool result(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
 
-				getAction(ActionsManager::InspectPageAction)->setChecked(result);
+				createAction(ActionsManager::InspectPageAction)->setChecked(result);
 
 				emit requestedInspectorVisibilityChange(result);
 
@@ -2067,11 +2067,11 @@ QWidget* QtWebKitWebWidget::getViewport()
 	return m_webView;
 }
 
-Action* QtWebKitWebWidget::getAction(int identifier)
+Action* QtWebKitWebWidget::createAction(int identifier)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::UndoAction));
+		Action *action(WebWidget::createAction(ActionsManager::UndoAction));
 		action->setEnabled(m_page->undoStack()->canUndo());
 
 		updateUndoText(m_page->undoStack()->undoText());
@@ -2084,7 +2084,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::RedoAction));
+		Action *action(WebWidget::createAction(ActionsManager::RedoAction));
 		action->setEnabled(m_page->undoStack()->canRedo());
 
 		updateRedoText(m_page->undoStack()->redoText());
@@ -2095,7 +2095,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 		return action;
 	}
 
-	return WebWidget::getAction(identifier);
+	return WebWidget::createAction(identifier);
 }
 
 QtWebKitPage* QtWebKitWebWidget::getPage()

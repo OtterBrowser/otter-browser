@@ -206,10 +206,10 @@ public:
 	void setParent(QWidget *parent);
 	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList());
 	void setWindowIdentifier(quint64 identifier);
+	virtual Action* createAction(int identifier);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) = 0;
 	virtual QWidget* getInspector();
 	virtual QWidget* getViewport();
-	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
 	virtual QString getTitle() const = 0;
 	virtual QString getActiveStyleSheet() const;

@@ -1471,11 +1471,11 @@ QWidget* QtWebEngineWebWidget::getViewport()
 	return (focusWidget() ? focusWidget() : m_webView);
 }
 
-Action* QtWebEngineWebWidget::getAction(int identifier)
+Action* QtWebEngineWebWidget::createAction(int identifier)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::UndoAction));
+		Action *action(WebWidget::createAction(ActionsManager::UndoAction));
 
 		updateUndo();
 
@@ -1486,7 +1486,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::RedoAction));
+		Action *action(WebWidget::createAction(ActionsManager::RedoAction));
 
 		updateRedo();
 
@@ -1497,13 +1497,13 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::InspectElementAction && !getExistingAction(ActionsManager::InspectElementAction))
 	{
-		Action *action(WebWidget::getAction(ActionsManager::InspectElementAction));
+		Action *action(WebWidget::createAction(ActionsManager::InspectElementAction));
 		action->setEnabled(false);
 
 		return action;
 	}
 
-	return WebWidget::getAction(identifier);
+	return WebWidget::createAction(identifier);
 }
 
 QWebEnginePage* QtWebEngineWebWidget::getPage()

@@ -41,12 +41,12 @@ MdiWidget::MdiWidget(QWidget *parent) : QMdiArea(parent)
 void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
-	menu.addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
-	menu.addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::RestoreAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::MaximizeAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::MinimizeAllAction, this));
 	menu.addSeparator();
-	menu.addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
-	menu.addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::CascadeAllAction, this));
+	menu.addAction(Application::createAction(ActionsManager::TileAllAction, this));
 	menu.exec(event->globalPos());
 }
 
@@ -379,7 +379,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		case ActionsManager::AlwaysOnTopTabAction:
 			if (subWindow)
 			{
-				if (Action::calculateCheckedState(parameters, m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)))
+				if (Action::calculateCheckedState(parameters, m_mainWindow->createAction(ActionsManager::AlwaysOnTopTabAction)))
 				{
 					subWindow->setWindowFlags(subWindow->windowFlags() | Qt::WindowStaysOnTopHint);
 				}
@@ -516,19 +516,19 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 		closeAction->setIcon(QIcon());
 
 		menu->addAction(closeAction);
-		menu->addAction(m_mainWindow->getAction(ActionsManager::RestoreTabAction));
-		menu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeTabAction));
-		menu->addAction(m_mainWindow->getAction(ActionsManager::MaximizeTabAction));
-		menu->addAction(m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction));
+		menu->addAction(m_mainWindow->createAction(ActionsManager::RestoreTabAction));
+		menu->addAction(m_mainWindow->createAction(ActionsManager::MinimizeTabAction));
+		menu->addAction(m_mainWindow->createAction(ActionsManager::MaximizeTabAction));
+		menu->addAction(m_mainWindow->createAction(ActionsManager::AlwaysOnTopTabAction));
 		menu->addSeparator();
 
 		QMenu *arrangeMenu(menu->addMenu(tr("Arrange")));
-		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::RestoreAllAction));
-		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::MaximizeAllAction));
-		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::MinimizeAllAction));
+		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::RestoreAllAction));
+		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::MaximizeAllAction));
+		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::MinimizeAllAction));
 		arrangeMenu->addSeparator();
-		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::CascadeAllAction));
-		arrangeMenu->addAction(m_mainWindow->getAction(ActionsManager::TileAllAction));
+		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::CascadeAllAction));
+		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::TileAllAction));
 
 		mdiWindow->show();
 		mdiWindow->lower();
@@ -614,29 +614,29 @@ void WorkspaceWidget::updateActions()
 	const Qt::WindowStates state((m_mdi && m_mdi->currentSubWindow()) ? m_mdi->currentSubWindow()->windowState() : Qt::WindowNoState);
 	const int windowCount(m_mainWindow->getWindowCount());
 
-	m_mainWindow->getAction(ActionsManager::MaximizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMaximized));
-	m_mainWindow->getAction(ActionsManager::MinimizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMinimized));
-	m_mainWindow->getAction(ActionsManager::RestoreTabAction)->setEnabled(state.testFlag(Qt::WindowMaximized) || state.testFlag(Qt::WindowMinimized));
-	m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)->setChecked(m_mdi && m_mdi->currentSubWindow() && m_mdi->currentSubWindow()->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
-	m_mainWindow->getAction(ActionsManager::MaximizeAllAction)->setEnabled(getWindowCount(Qt::WindowMaximized) != windowCount);
-	m_mainWindow->getAction(ActionsManager::MinimizeAllAction)->setEnabled(getWindowCount(Qt::WindowMinimized) != windowCount);
-	m_mainWindow->getAction(ActionsManager::RestoreAllAction)->setEnabled(getWindowCount(Qt::WindowNoState) != windowCount);
-	m_mainWindow->getAction(ActionsManager::CascadeAllAction)->setEnabled(windowCount > 0);
-	m_mainWindow->getAction(ActionsManager::TileAllAction)->setEnabled(windowCount > 0);
+	m_mainWindow->createAction(ActionsManager::MaximizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMaximized));
+	m_mainWindow->createAction(ActionsManager::MinimizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMinimized));
+	m_mainWindow->createAction(ActionsManager::RestoreTabAction)->setEnabled(state.testFlag(Qt::WindowMaximized) || state.testFlag(Qt::WindowMinimized));
+	m_mainWindow->createAction(ActionsManager::AlwaysOnTopTabAction)->setChecked(m_mdi && m_mdi->currentSubWindow() && m_mdi->currentSubWindow()->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
+	m_mainWindow->createAction(ActionsManager::MaximizeAllAction)->setEnabled(getWindowCount(Qt::WindowMaximized) != windowCount);
+	m_mainWindow->createAction(ActionsManager::MinimizeAllAction)->setEnabled(getWindowCount(Qt::WindowMinimized) != windowCount);
+	m_mainWindow->createAction(ActionsManager::RestoreAllAction)->setEnabled(getWindowCount(Qt::WindowNoState) != windowCount);
+	m_mainWindow->createAction(ActionsManager::CascadeAllAction)->setEnabled(windowCount > 0);
+	m_mainWindow->createAction(ActionsManager::TileAllAction)->setEnabled(windowCount > 0);
 }
 
 void WorkspaceWidget::showContextMenu(const QPoint &position)
 {
 	QMenu menu(this);
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, this));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, this));
+	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, this));
 
 	menu.addMenu(new Menu(Menu::ToolBarsMenuRole, &menu))->setText(tr("Toolbars"));
 	menu.exec(m_mdi->mapToGlobal(position));

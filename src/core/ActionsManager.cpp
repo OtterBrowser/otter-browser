@@ -333,13 +333,6 @@ ActionsManager* ActionsManager::getInstance()
 	return m_instance;
 }
 
-Action* ActionsManager::getAction(int identifier, QObject *parent)
-{
-	MainWindow *window(MainWindow::findMainWindow(parent));
-
-	return (window ? window->getAction(identifier) : nullptr);
-}
-
 QString ActionsManager::getReport()
 {
 	QString report;
