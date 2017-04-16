@@ -47,10 +47,17 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ActionsManager:
 
 void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+	if (event->button() != Qt::LeftButton)
+	{
+		ToolButtonWidget::mouseReleaseEvent(event);
+
+		return;
+	}
+
 	int identifier(m_identifier);
 	QVariantMap parameters(getParameters());
 
-	if ((identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
+	if (identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction)
 	{
 		identifier = ActionsManager::OpenUrlAction;
 
