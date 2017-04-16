@@ -79,6 +79,7 @@ class Shortcut : public QShortcut
 
 public:
 	explicit Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent = nullptr);
+	explicit Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent = nullptr);
 
 	void setParameters(const QVariantMap &parameters);
 	QVariantMap getParameters() const;

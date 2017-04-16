@@ -248,6 +248,12 @@ Shortcut::Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent
 {
 }
 
+Shortcut::Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent) : QShortcut(sequence, parent),
+	m_parameters(parameters),
+	m_identifier(identifier)
+{
+}
+
 void Shortcut::setParameters(const QVariantMap &parameters)
 {
 	m_parameters = parameters;
