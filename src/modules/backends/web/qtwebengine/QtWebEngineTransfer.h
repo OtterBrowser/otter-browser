@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class QtWebEngineTransfer : public Transfer
+class QtWebEngineTransfer final : public Transfer
 {
 	Q_OBJECT
 

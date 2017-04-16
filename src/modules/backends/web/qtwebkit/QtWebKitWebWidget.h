@@ -42,7 +42,7 @@ class QtWebKitPage;
 class QtWebKitPluginFactory;
 class SourceViewerWebWidget;
 
-class QtWebKitWebWidget : public WebWidget
+class QtWebKitWebWidget final : public WebWidget
 {
 	Q_OBJECT
 

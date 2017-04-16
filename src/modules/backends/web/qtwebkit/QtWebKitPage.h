@@ -57,7 +57,7 @@ private:
 	bool m_isErrorPage;
 };
 
-class QtWebKitPage : public QWebPage
+class QtWebKitPage final : public QWebPage
 {
 	Q_OBJECT
 

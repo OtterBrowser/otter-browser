@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class QtWebKitPlugin : public QObject, public QWebKitPlatformPlugin
+class QtWebKitPlugin final : public QObject, public QWebKitPlatformPlugin
 {
 	Q_OBJECT
 	Q_INTERFACES(QWebKitPlatformPlugin)

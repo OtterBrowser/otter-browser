@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class QtWebKitSpellChecker : public QWebSpellChecker
+class QtWebKitSpellChecker final : public QWebSpellChecker
 {
 	Q_OBJECT
 

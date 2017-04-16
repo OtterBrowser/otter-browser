@@ -31,7 +31,7 @@ namespace Otter
 class QtWebEngineWebWidget;
 class WebWidget;
 
-class QtWebEnginePage : public QWebEnginePage
+class QtWebEnginePage final : public QWebEnginePage
 {
 	Q_OBJECT
 

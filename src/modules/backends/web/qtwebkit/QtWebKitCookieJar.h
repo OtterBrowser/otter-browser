@@ -30,7 +30,7 @@ namespace Otter
 
 class WebWidget;
 
-class QtWebKitCookieJar : public QNetworkCookieJar
+class QtWebKitCookieJar final : public QNetworkCookieJar
 {
 	Q_OBJECT
 

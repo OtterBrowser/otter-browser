@@ -28,7 +28,7 @@ namespace Otter
 class QtWebKitPage;
 class QtWebKitSpellChecker;
 
-class QtWebKitWebBackend : public WebBackend
+class QtWebKitWebBackend final : public WebBackend
 {
 	Q_OBJECT
 
@@ -78,7 +78,7 @@ signals:
 friend class QtWebKitSpellChecker;
 };
 
-class QtWebKitThumbnailFetchJob : public QObject
+class QtWebKitThumbnailFetchJob final : public QObject
 {
 	Q_OBJECT
 

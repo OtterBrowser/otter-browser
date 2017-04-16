@@ -30,7 +30,7 @@ namespace Otter
 
 class QtWebKitWebWidget;
 
-class QtWebKitInspector : public QWebInspector
+class QtWebKitInspector final : public QWebInspector
 {
 	Q_OBJECT
 

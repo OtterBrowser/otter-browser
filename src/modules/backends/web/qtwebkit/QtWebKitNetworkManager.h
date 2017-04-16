@@ -37,7 +37,7 @@ class QtWebKitCookieJar;
 class QtWebKitWebWidget;
 class WebBackend;
 
-class QtWebKitNetworkManager : public QNetworkAccessManager
+class QtWebKitNetworkManager final : public QNetworkAccessManager
 {
 	Q_OBJECT
 

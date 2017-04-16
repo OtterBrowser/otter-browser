@@ -33,7 +33,7 @@ class ContentsDialog;
 class QtWebEnginePage;
 class SourceViewerWebWidget;
 
-class QtWebEngineWebWidget : public WebWidget
+class QtWebEngineWebWidget final : public WebWidget
 {
 	Q_OBJECT
 

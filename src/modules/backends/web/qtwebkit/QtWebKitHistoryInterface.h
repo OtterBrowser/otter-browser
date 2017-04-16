@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class QtWebKitHistoryInterface : public QWebHistoryInterface
+class QtWebKitHistoryInterface final : public QWebHistoryInterface
 {
 	Q_OBJECT
 

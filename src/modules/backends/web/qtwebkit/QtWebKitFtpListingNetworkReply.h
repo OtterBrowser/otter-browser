@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-class QtWebKitFtpListingNetworkReply : public QNetworkReply
+class QtWebKitFtpListingNetworkReply final : public QNetworkReply
 {
 	Q_OBJECT
 

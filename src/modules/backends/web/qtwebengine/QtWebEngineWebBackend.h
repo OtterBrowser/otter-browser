@@ -31,7 +31,7 @@ namespace Otter
 class QtWebEnginePage;
 class QtWebEngineUrlRequestInterceptor;
 
-class QtWebEngineWebBackend : public WebBackend
+class QtWebEngineWebBackend final : public WebBackend
 {
 	Q_OBJECT
 

@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class QtWebEngineUrlRequestInterceptor : public QWebEngineUrlRequestInterceptor
+class QtWebEngineUrlRequestInterceptor final : public QWebEngineUrlRequestInterceptor
 {
 	Q_OBJECT
 
