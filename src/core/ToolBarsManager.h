@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class ToolBarsManager : public QObject
+class ToolBarsManager final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(ToolBarIdentifier)

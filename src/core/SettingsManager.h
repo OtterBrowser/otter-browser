@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-class SettingsManager : public QObject
+class SettingsManager final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(OptionIdentifier)

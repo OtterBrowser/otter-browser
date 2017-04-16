@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class HistoryManager : public QObject
+class HistoryManager final : public QObject
 {
 	Q_OBJECT
 

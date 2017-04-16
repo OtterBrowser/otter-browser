@@ -32,9 +32,9 @@ namespace Otter
 class Style;
 
 #if defined(Q_OS_WIN32)
-class ThemesManager : public QObject, public QAbstractNativeEventFilter
+class ThemesManager final : public QObject, public QAbstractNativeEventFilter
 #else
-class ThemesManager : public QObject
+class ThemesManager final : public QObject
 #endif
 {
 	Q_OBJECT

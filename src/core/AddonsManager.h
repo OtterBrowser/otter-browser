@@ -70,7 +70,7 @@ private:
 friend class AddonsManager;
 };
 
-class AddonsManager : public QObject
+class AddonsManager final : public QObject
 {
 	Q_OBJECT
 

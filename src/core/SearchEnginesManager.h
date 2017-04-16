@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-class SearchEnginesManager : public QObject
+class SearchEnginesManager final : public QObject
 {
 	Q_OBJECT
 

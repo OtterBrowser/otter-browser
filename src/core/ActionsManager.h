@@ -31,7 +31,7 @@ namespace Otter
 
 class Action;
 
-class ActionsManager : public QObject
+class ActionsManager final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(ActionIdentifier)

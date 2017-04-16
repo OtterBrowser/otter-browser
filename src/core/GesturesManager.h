@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class GesturesManager : public QObject
+class GesturesManager final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(GesturesContext)

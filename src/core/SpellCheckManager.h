@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class SpellCheckManager : public QObject
+class SpellCheckManager final : public QObject
 {
 	Q_OBJECT
 

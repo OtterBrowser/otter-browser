@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class NotesManager : public QObject
+class NotesManager final : public QObject
 {
 	Q_OBJECT
 

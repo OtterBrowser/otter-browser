@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class BookmarksManager : public QObject
+class BookmarksManager final : public QObject
 {
 	Q_OBJECT
 

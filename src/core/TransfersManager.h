@@ -129,7 +129,7 @@ signals:
 	void stopped();
 };
 
-class TransfersManager : public QObject
+class TransfersManager final : public QObject
 {
 	Q_OBJECT
 

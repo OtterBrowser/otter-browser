@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class HandlersManager : public QObject
+class HandlersManager final : public QObject
 {
 	Q_OBJECT
 

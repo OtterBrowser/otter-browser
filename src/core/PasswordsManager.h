@@ -31,7 +31,7 @@ namespace Otter
 
 class PasswordsStorageBackend;
 
-class PasswordsManager : public QObject
+class PasswordsManager final : public QObject
 {
 	Q_OBJECT
 

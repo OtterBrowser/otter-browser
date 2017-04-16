@@ -128,7 +128,7 @@ struct ClosedWindow
 class MainWindow;
 class SessionModel;
 
-class SessionsManager : public QObject
+class SessionsManager final : public QObject
 {
 	Q_OBJECT
 

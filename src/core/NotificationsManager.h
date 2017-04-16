@@ -76,7 +76,7 @@ signals:
 friend class NotificationsManager;
 };
 
-class NotificationsManager : public QObject
+class NotificationsManager final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(EventIdentifier)
