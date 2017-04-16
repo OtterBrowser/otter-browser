@@ -46,7 +46,7 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class TransfersContentsWidget : public ContentsWidget
+class TransfersContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 

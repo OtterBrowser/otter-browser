@@ -35,7 +35,7 @@ namespace Ui
 
 class Window;
 
-class BookmarksContentsWidget : public ContentsWidget
+class BookmarksContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 

@@ -34,7 +34,7 @@ namespace Ui
 
 class Window;
 
-class CacheContentsWidget : public ContentsWidget
+class CacheContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 

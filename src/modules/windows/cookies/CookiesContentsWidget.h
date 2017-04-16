@@ -35,7 +35,7 @@ namespace Ui
 
 class Window;
 
-class CookiesContentsWidget : public ContentsWidget
+class CookiesContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 

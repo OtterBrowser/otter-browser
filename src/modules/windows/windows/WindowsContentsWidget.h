@@ -32,7 +32,7 @@ namespace Ui
 
 class Window;
 
-class WindowsContentsWidget : public ContentsWidget
+class WindowsContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 

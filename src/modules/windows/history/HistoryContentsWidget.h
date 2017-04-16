@@ -35,7 +35,7 @@ namespace Ui
 
 class Window;
 
-class HistoryContentsWidget : public ContentsWidget
+class HistoryContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 

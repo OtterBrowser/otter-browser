@@ -41,7 +41,7 @@ class StartPageWidget;
 class WebsiteInformationDialog;
 class WebWidget;
 
-class WebContentsWidget : public ContentsWidget
+class WebContentsWidget final : public ContentsWidget
 {
 	Q_OBJECT
 
