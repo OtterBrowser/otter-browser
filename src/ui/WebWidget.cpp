@@ -756,7 +756,7 @@ void WebWidget::updateEditActions()
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(searchEngine.isValid());
-		m_actions[ActionsManager::SearchAction]->setParameters({{QLatin1String("searchEngine"), searchEngine.identifier}});
+		m_actions[ActionsManager::SearchAction]->setParameters({{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
 		m_actions[ActionsManager::SearchAction]->setIcon(searchEngine.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
 		m_actions[ActionsManager::SearchAction]->setOverrideText(searchEngine.isValid() ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[ActionsManager::SearchAction]->setToolTip(searchEngine.isValid() ? searchEngine.description : tr("No search engines defined"));
@@ -1280,6 +1280,10 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 			action->setMenu(new Menu(Menu::NoMenuRole, this));
 
 			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+
+			break;
+		case ActionsManager::SearchAction:
+			action->setParameters({{QLatin1String("searchEngine"), getOption(SettingsManager::Search_DefaultQuickSearchEngineOption)}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
 
 			break;
 		case ActionsManager::OpenPageInApplicationAction:

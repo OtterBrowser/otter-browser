@@ -898,16 +898,8 @@ void Menu::populateSearchMenu()
 
 		if (searchEngine.isValid())
 		{
-			QVariantMap parameters;
-			parameters[QLatin1String("searchEngine")] = searchEngine.identifier;
-
-			if (m_role == ValidateMenuRole)
-			{
-				parameters[QLatin1String("queryPlaceholder")] = QLatin1String("{pageUrl}");
-			}
-
 			Action *action(addAction(ActionsManager::SearchAction));
-			action->setParameters(parameters);
+			action->setParameters({{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenuRole) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}});
 			action->setIcon(searchEngine.icon);
 			action->setOverrideText(searchEngine.title);
 			action->setToolTip(searchEngine.description);
