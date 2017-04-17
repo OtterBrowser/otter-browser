@@ -30,7 +30,7 @@ namespace Ui
 	class SearchBarWidget;
 }
 
-class SearchBarWidget : public QWidget
+class SearchBarWidget final : public QWidget
 {
 	Q_OBJECT
 

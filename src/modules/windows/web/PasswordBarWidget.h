@@ -33,7 +33,7 @@ namespace Ui
 	class PasswordBarWidget;
 }
 
-class PasswordBarWidget : public QWidget
+class PasswordBarWidget final : public QWidget
 {
 	Q_OBJECT
 

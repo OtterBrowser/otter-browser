@@ -31,7 +31,7 @@ namespace Ui
 	class SelectPasswordDialog;
 }
 
-class SelectPasswordDialog : public Dialog
+class SelectPasswordDialog final : public Dialog
 {
 	Q_OBJECT
 

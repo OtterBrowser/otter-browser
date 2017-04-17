@@ -30,7 +30,7 @@ namespace Ui
 	class PopupsBarWidget;
 }
 
-class PopupsBarWidget : public QWidget
+class PopupsBarWidget final : public QWidget
 {
 	Q_OBJECT
 

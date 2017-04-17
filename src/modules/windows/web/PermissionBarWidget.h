@@ -30,7 +30,7 @@ namespace Ui
 	class PermissionBarWidget;
 }
 
-class PermissionBarWidget : public QWidget
+class PermissionBarWidget final : public QWidget
 {
 	Q_OBJECT
 

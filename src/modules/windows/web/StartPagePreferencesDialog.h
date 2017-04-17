@@ -31,7 +31,7 @@ namespace Ui
 	class StartPagePreferencesDialog;
 }
 
-class StartPagePreferencesDialog : public Dialog
+class StartPagePreferencesDialog final : public Dialog
 {
 	Q_OBJECT
 

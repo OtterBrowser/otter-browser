@@ -34,7 +34,7 @@ class SearchWidget;
 class StartPageModel;
 class Window;
 
-class StartPageContentsWidget : public QWidget
+class StartPageContentsWidget final : public QWidget
 {
 public:
 	enum BackgroundMode
@@ -59,7 +59,7 @@ private:
 	BackgroundMode m_mode;
 };
 
-class StartPageWidget : public QScrollArea
+class StartPageWidget final : public QScrollArea
 {
 	Q_OBJECT
 

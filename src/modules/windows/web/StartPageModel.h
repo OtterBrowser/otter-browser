@@ -27,7 +27,7 @@ namespace Otter
 
 class BookmarksItem;
 
-class StartPageModel : public QStandardItemModel
+class StartPageModel final : public QStandardItemModel
 {
 	Q_OBJECT
 

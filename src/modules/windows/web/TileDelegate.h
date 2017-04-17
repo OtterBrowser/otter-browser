@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class TileDelegate : public QStyledItemDelegate
+class TileDelegate final : public QStyledItemDelegate
 {
 public:
 	explicit TileDelegate(QObject *parent = nullptr);
