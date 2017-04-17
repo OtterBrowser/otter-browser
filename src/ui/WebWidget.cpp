@@ -57,7 +57,6 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_backend(backend),
 	m_pasteNoteMenu(nullptr),
 	m_reloadTimeMenu(nullptr),
-	m_quickSearchMenu(nullptr),
 	m_windowIdentifier(0),
 	m_loadingTime(0),
 	m_loadingTimer(0),
@@ -73,7 +72,6 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 
 		emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 	});
-	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
 void WebWidget::timerEvent(QTimerEvent *event)
@@ -593,14 +591,6 @@ void WebWidget::showContextMenu(const QPoint &position)
 	Menu menu(Menu::NoMenuRole, this);
 	menu.load(QLatin1String("menu/webWidget.json"), flags);
 	menu.exec(mapToGlobal(hitPosition));
-}
-
-void WebWidget::updateQuickSearch()
-{
-	if (m_quickSearchMenu)
-	{
-		m_quickSearchMenu->clear();
-	}
 }
 
 void WebWidget::updatePageActions(const QUrl &url)
@@ -1132,10 +1122,6 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 					}
 				}
 			}
-
-			break;
-		case SettingsManager::Search_DefaultQuickSearchEngineOption:
-			updateQuickSearch();
 
 			break;
 		default:

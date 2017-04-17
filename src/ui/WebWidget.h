@@ -308,7 +308,6 @@ protected slots:
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);
 	void handleWindowCloseRequest();
-	void updateQuickSearch();
 	virtual void updatePageActions(const QUrl &url);
 	virtual void updateNavigationActions();
 	virtual void updateEditActions();
@@ -325,7 +324,6 @@ private:
 	WebBackend *m_backend;
 	Menu *m_pasteNoteMenu;
 	QMenu *m_reloadTimeMenu;
-	QMenu *m_quickSearchMenu;
 	QUrl m_requestedUrl;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
