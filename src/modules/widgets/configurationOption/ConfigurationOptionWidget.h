@@ -31,7 +31,7 @@ namespace Otter
 
 class OptionWidget;
 
-class ConfigurationOptionWidget : public QWidget
+class ConfigurationOptionWidget final : public QWidget
 {
 	Q_OBJECT
 

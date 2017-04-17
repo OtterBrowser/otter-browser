@@ -31,7 +31,7 @@ namespace Otter
 
 class Window;
 
-class ProgressInformationWidget : public QWidget
+class ProgressInformationWidget final : public QWidget
 {
 	Q_OBJECT
 

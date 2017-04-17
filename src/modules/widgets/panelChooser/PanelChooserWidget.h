@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class PanelChooserWidget : public ToolButtonWidget
+class PanelChooserWidget final : public ToolButtonWidget
 {
 	Q_OBJECT
 

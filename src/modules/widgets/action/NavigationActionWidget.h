@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class NavigationActionWidget : public ActionWidget
+class NavigationActionWidget final : public ActionWidget
 {
 	Q_OBJECT
 

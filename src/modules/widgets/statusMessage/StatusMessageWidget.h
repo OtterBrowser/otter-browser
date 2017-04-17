@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class StatusMessageWidget : public QLabel
+class StatusMessageWidget final : public QLabel
 {
 	Q_OBJECT
 

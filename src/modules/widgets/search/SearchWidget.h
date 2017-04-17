@@ -33,7 +33,7 @@ namespace Otter
 class SearchSuggester;
 class Window;
 
-class SearchDelegate : public QItemDelegate
+class SearchDelegate final : public QItemDelegate
 {
 public:
 	explicit SearchDelegate(QObject *parent = nullptr);
@@ -42,7 +42,7 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class SearchWidget : public LineEditWidget
+class SearchWidget final : public LineEditWidget
 {
 	Q_OBJECT
 

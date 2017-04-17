@@ -37,7 +37,7 @@ class BookmarksItem;
 class ItemViewWidget;
 class Window;
 
-class AddressDelegate : public QItemDelegate
+class AddressDelegate final : public QItemDelegate
 {
 	Q_OBJECT
 
@@ -67,7 +67,7 @@ private:
 	ViewMode m_viewMode;
 };
 
-class AddressWidget : public LineEditWidget
+class AddressWidget final : public LineEditWidget
 {
 	Q_OBJECT
 	Q_ENUMS(EntryIdentifier)

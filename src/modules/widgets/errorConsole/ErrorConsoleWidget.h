@@ -33,7 +33,7 @@ namespace Ui
 	class ErrorConsoleWidget;
 }
 
-class ErrorConsoleWidget : public QWidget
+class ErrorConsoleWidget final : public QWidget
 {
 	Q_OBJECT
 

@@ -29,7 +29,7 @@ namespace Otter
 
 class Window;
 
-class ContentBlockingInformationWidget : public ToolButtonWidget
+class ContentBlockingInformationWidget final : public ToolButtonWidget
 {
 	Q_OBJECT
 

@@ -27,7 +27,7 @@ namespace Otter
 
 class Window;
 
-class ZoomWidget : public QSlider
+class ZoomWidget final : public QSlider
 {
 	Q_OBJECT
 

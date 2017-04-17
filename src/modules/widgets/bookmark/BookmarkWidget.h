@@ -27,7 +27,7 @@ namespace Otter
 
 class BookmarksItem;
 
-class BookmarkWidget : public ToolButtonWidget
+class BookmarkWidget final : public ToolButtonWidget
 {
 	Q_OBJECT
 
