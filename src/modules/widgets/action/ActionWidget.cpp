@@ -59,8 +59,6 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	if (identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction)
 	{
-		identifier = ActionsManager::OpenUrlAction;
-
 		SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, event->button(), event->modifiers()));
 
 		if (identifier == ActionsManager::NewTabPrivateAction)
@@ -69,6 +67,8 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 
 		parameters[QLatin1String("hints")] = QVariant(hints);
+
+		identifier = ActionsManager::OpenUrlAction;
 	}
 
 	Application::triggerAction(identifier, parameters, this);
