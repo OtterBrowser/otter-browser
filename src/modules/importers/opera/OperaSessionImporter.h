@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class OperaSessionImporter : public Importer
+class OperaSessionImporter final : public Importer
 {
 	Q_OBJECT
 

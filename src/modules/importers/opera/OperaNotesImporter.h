@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class OperaNotesImporter : public Importer
+class OperaNotesImporter final : public Importer
 {
 	Q_OBJECT
 

@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class OperaBookmarksImporter : public BookmarksImporter
+class OperaBookmarksImporter final : public BookmarksImporter
 {
 	Q_OBJECT
 

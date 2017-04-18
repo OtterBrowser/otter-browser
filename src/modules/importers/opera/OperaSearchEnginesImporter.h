@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class OperaSearchEnginesImporter : public Importer
+class OperaSearchEnginesImporter final : public Importer
 {
 	Q_OBJECT
 
