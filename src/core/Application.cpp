@@ -982,11 +982,6 @@ void Application::showUpdateDetails()
 	}
 }
 
-void Application::setActiveWindow(MainWindow *window)
-{
-	m_activeWindow = window;
-}
-
 void Application::setHidden(bool hidden)
 {
 	if (hidden == m_isHidden)
@@ -1070,7 +1065,10 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 
 	emit m_instance->windowAdded(window);
 
-	connect(window, &MainWindow::activated, m_instance, &Application::setActiveWindow);
+	connect(window, &MainWindow::activated, [&](MainWindow *window)
+	{
+		m_activeWindow = window;
+	});
 
 	return window;
 }

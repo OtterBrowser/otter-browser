@@ -96,7 +96,6 @@ protected slots:
 	void handleAboutToQuit();
 	void handleNewConnection();
 	void showUpdateDetails();
-	void setActiveWindow(MainWindow *window);
 
 private:
 	static Application *m_instance;
