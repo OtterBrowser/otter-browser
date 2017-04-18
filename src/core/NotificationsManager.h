@@ -27,16 +27,6 @@
 namespace Otter
 {
 
-struct EventDefinition
-{
-	QString title;
-	QString description;
-	QString playSound;
-	int identifier = -1;
-	bool showAlert = false;
-	bool showNotification = false;
-};
-
 class NotificationsManager;
 
 class Notification : public QObject
@@ -86,6 +76,16 @@ public:
 	{
 		TransferCompletedEvent = 0,
 		UpdateAvailableEvent = 1
+	};
+
+	struct EventDefinition
+	{
+		QString title;
+		QString description;
+		QString playSound;
+		int identifier = -1;
+		bool showAlert = false;
+		bool showNotification = false;
 	};
 
 	static void createInstance(QObject *parent = nullptr);

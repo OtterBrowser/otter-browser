@@ -34,7 +34,7 @@ namespace Otter
 
 NotificationsManager* NotificationsManager::m_instance(nullptr);
 QMap<int, QString> NotificationsManager::m_identifiers;
-QVector<EventDefinition> NotificationsManager::m_definitions;
+QVector<NotificationsManager::EventDefinition> NotificationsManager::m_definitions;
 int NotificationsManager::m_eventIdentifierEnumerator(0);
 
 Notification::Notification(const QString &message, NotificationLevel level, int event, QObject *parent) : QObject(parent),
@@ -155,7 +155,7 @@ QString NotificationsManager::getEventName(int identifier)
 	return QString();
 }
 
-EventDefinition NotificationsManager::getEventDefinition(int identifier)
+NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(int identifier)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
@@ -172,7 +172,7 @@ EventDefinition NotificationsManager::getEventDefinition(int identifier)
 	return m_definitions[identifier];
 }
 
-QVector<EventDefinition> NotificationsManager::getEventDefinitions()
+QVector<NotificationsManager::EventDefinition> NotificationsManager::getEventDefinitions()
 {
 	QSettings notificationsSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 

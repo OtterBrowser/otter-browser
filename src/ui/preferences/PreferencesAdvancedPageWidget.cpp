@@ -114,7 +114,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
 	notificationsModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Description")}));
 
-	const QVector<EventDefinition> events(NotificationsManager::getEventDefinitions());
+	const QVector<NotificationsManager::EventDefinition> events(NotificationsManager::getEventDefinitions());
 
 	for (int i = 0; i < events.count(); ++i)
 	{
