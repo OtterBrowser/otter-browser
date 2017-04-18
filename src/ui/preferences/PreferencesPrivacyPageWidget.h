@@ -30,7 +30,7 @@ namespace Ui
 	class PreferencesPrivacyPageWidget;
 }
 
-class PreferencesPrivacyPageWidget : public QWidget
+class PreferencesPrivacyPageWidget final : public QWidget
 {
 	Q_OBJECT
 

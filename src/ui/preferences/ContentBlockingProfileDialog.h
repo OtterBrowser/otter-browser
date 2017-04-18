@@ -32,7 +32,7 @@ namespace Ui
 
 class ContentBlockingProfile;
 
-class ContentBlockingProfileDialog : public Dialog
+class ContentBlockingProfileDialog final : public Dialog
 {
 	Q_OBJECT
 

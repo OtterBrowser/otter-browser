@@ -32,7 +32,7 @@ namespace Ui
 	class PreferencesGeneralPageWidget;
 }
 
-class PreferencesGeneralPageWidget : public QWidget
+class PreferencesGeneralPageWidget final : public QWidget
 {
 	Q_OBJECT
 

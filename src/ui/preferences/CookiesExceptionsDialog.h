@@ -30,7 +30,7 @@ namespace Ui
 	class CookiesExceptionsDialog;
 }
 
-class CookiesExceptionsDialog : public Dialog
+class CookiesExceptionsDialog final : public Dialog
 {
 	Q_OBJECT
 

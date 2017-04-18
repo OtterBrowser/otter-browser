@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class ContentBlockingIntervalDelegate : public ItemDelegate
+class ContentBlockingIntervalDelegate final : public ItemDelegate
 {
 public:
 	explicit ContentBlockingIntervalDelegate(QObject *parent = nullptr);

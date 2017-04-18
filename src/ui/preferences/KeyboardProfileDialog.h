@@ -44,7 +44,7 @@ struct KeyboardProfile
 	bool isModified = false;
 };
 
-class KeyboardShortcutDelegate : public ItemDelegate
+class KeyboardShortcutDelegate final : public ItemDelegate
 {
 public:
 	explicit KeyboardShortcutDelegate(QObject *parent);
@@ -53,7 +53,7 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class KeyboardProfileDialog : public Dialog
+class KeyboardProfileDialog final : public Dialog
 {
 	Q_OBJECT
 

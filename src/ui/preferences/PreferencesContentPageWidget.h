@@ -31,7 +31,7 @@ namespace Ui
 	class PreferencesContentPageWidget;
 }
 
-class PreferencesContentPageWidget : public QWidget
+class PreferencesContentPageWidget final : public QWidget
 {
 	Q_OBJECT
 

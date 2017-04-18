@@ -31,7 +31,7 @@ namespace Ui
 	class ProxyPropertiesDialog;
 }
 
-class ProxyPropertiesDialog : public Dialog
+class ProxyPropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 

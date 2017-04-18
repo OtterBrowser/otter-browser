@@ -39,7 +39,7 @@ struct MouseProfile;
 struct KeyboardProfile;
 class ItemViewWidget;
 
-class PreferencesAdvancedPageWidget : public QWidget
+class PreferencesAdvancedPageWidget final : public QWidget
 {
 	Q_OBJECT
 

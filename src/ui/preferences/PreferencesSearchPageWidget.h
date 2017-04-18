@@ -35,7 +35,7 @@ namespace Ui
 	class PreferencesSearchPageWidget;
 }
 
-class SearchEngineTitleDelegate : public ItemDelegate
+class SearchEngineTitleDelegate final : public ItemDelegate
 {
 public:
 	explicit SearchEngineTitleDelegate(QObject *parent);
@@ -43,7 +43,7 @@ public:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class SearchEngineKeywordDelegate : public ItemDelegate
+class SearchEngineKeywordDelegate final : public ItemDelegate
 {
 public:
 	explicit SearchEngineKeywordDelegate(QObject *parent);
@@ -53,7 +53,7 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class PreferencesSearchPageWidget : public QWidget
+class PreferencesSearchPageWidget final : public QWidget
 {
 	Q_OBJECT
 

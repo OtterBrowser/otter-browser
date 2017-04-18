@@ -31,7 +31,7 @@ namespace Ui
 	class UserAgentPropertiesDialog;
 }
 
-class UserAgentPropertiesDialog : public Dialog
+class UserAgentPropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 

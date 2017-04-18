@@ -42,7 +42,7 @@ struct MouseProfile
 	bool isModified = false;
 };
 
-class GestureActionDelegate : public ItemDelegate
+class GestureActionDelegate final : public ItemDelegate
 {
 public:
 	explicit GestureActionDelegate(QObject *parent);
@@ -52,7 +52,7 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class MouseProfileDialog : public Dialog
+class MouseProfileDialog final : public Dialog
 {
 	Q_OBJECT
 

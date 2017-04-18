@@ -33,7 +33,7 @@ namespace Ui
 	class AcceptLanguageDialog;
 }
 
-class AcceptLanguageDialog : public Dialog
+class AcceptLanguageDialog final : public Dialog
 {
 	Q_OBJECT
 
