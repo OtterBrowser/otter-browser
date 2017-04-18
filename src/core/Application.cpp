@@ -982,14 +982,14 @@ void Application::showUpdateDetails()
 	}
 }
 
-void Application::setHidden(bool hidden)
+void Application::setHidden(bool isHidden)
 {
-	if (hidden == m_isHidden)
+	if (isHidden == m_isHidden)
 	{
 		return;
 	}
 
-	m_isHidden = hidden;
+	m_isHidden = isHidden;
 
 	for (int i = 0; i < m_windows.count(); ++i)
 	{

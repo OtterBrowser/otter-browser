@@ -63,6 +63,7 @@ public:
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser);
+	static void setHidden(bool isHidden);
 	static void setLocale(const QString &locale);
 	static Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true, QObject *target = nullptr);
 	static MainWindow* createWindow(const QVariantMap &parameters = QVariantMap(), const SessionMainWindow &windows = SessionMainWindow());
@@ -86,7 +87,6 @@ public:
 
 public slots:
 	void close();
-	void setHidden(bool hidden);
 
 protected slots:
 	void openUrl(const QUrl &url);
