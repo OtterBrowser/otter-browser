@@ -157,12 +157,12 @@ protected slots:
 	void downloadFile(QNetworkReply *reply);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
-	void linkHovered(const QString &link);
-	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleLoadStarted();
 	void handleLoadProgress(int progress);
 	void handleLoadFinished(bool result);
+	void handleLinkHovered(const QString &link);
+	void handleViewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handlePrintRequest(QWebFrame *frame);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleFullScreenRequest(QWebFullScreenRequest request);

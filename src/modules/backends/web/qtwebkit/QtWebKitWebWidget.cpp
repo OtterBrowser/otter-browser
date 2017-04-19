@@ -145,7 +145,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
 	connect(m_page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
-	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
+	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(handleLinkHovered(QString)));
 	connect(m_page, SIGNAL(microFocusChanged()), this, SLOT(updateEditActions()));
 	connect(m_page, SIGNAL(printRequested(QWebFrame*)), this, SLOT(handlePrintRequest(QWebFrame*)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
@@ -385,11 +385,6 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 	}
 }
 
-void QtWebKitWebWidget::linkHovered(const QString &link)
-{
-	setStatusMessage(link, true);
-}
-
 void QtWebKitWebWidget::clearPluginToken()
 {
 	QList<QWebFrame*> frames;
@@ -481,20 +476,6 @@ void QtWebKitWebWidget::openRequest(const QNetworkRequest &request, QNetworkAcce
 	});
 }
 
-void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
-{
-	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
-
-	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
-	{
-		m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
-	}
-
-	m_viewSourceReplies.remove(reply);
-
-	reply->deleteLater();
-}
-
 void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
@@ -582,6 +563,25 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+}
+
+void QtWebKitWebWidget::handleLinkHovered(const QString &link)
+{
+	setStatusMessage(link, true);
+}
+
+void QtWebKitWebWidget::handleViewSourceReplyFinished(QNetworkReply::NetworkError error)
+{
+	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
+
+	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+	{
+		m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
+	}
+
+	m_viewSourceReplies.remove(reply);
+
+	reply->deleteLater();
 }
 
 void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
@@ -1163,8 +1163,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
-				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
-				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+				connect(reply, SIGNAL(finished()), this, SLOT(handleViewSourceReplyFinished()));
+				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleViewSourceReplyFinished(QNetworkReply::NetworkError)));
 
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
@@ -1678,8 +1678,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
-				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
-				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+				connect(reply, SIGNAL(finished()), this, SLOT(handleViewSourceReplyFinished()));
+				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleViewSourceReplyFinished(QNetworkReply::NetworkError)));
 
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
