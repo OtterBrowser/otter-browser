@@ -555,7 +555,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	{
 		m_formRequestUrl = QUrl();
 
-		m_widget->openFormRequest(request.url(), operation, outgoingData);
+		m_widget->openFormRequest(request, operation, outgoingData);
 
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
 	}

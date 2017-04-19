@@ -122,8 +122,8 @@ protected:
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void muteAudio(QWebFrame *frame, bool isMuted);
 #endif
-	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
-	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
+	void openRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
+	void openFormRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void pasteText(const QString &text) override;
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
@@ -158,7 +158,6 @@ protected slots:
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
 	void linkHovered(const QString &link);
-	void openFormRequest();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleLoadStarted();
@@ -189,7 +188,7 @@ private:
 	QString m_messageToken;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
-	QUrl m_formRequestUrl;
+	QNetworkRequest m_formRequest;
 	QByteArray m_formRequestBody;
 	QQueue<Transfer*> m_transfers;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;

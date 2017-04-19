@@ -457,9 +457,9 @@ void QtWebKitWebWidget::muteAudio(QWebFrame *frame, bool isMuted)
 }
 #endif
 
-void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
+void QtWebKitWebWidget::openRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
 {
-	m_formRequestUrl = url;
+	m_formRequest = request;
 	m_formRequestOperation = operation;
 	m_formRequestBody = (outgoingData ? outgoingData->readAll() : QByteArray());
 
@@ -469,18 +469,16 @@ void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Oper
 		outgoingData->deleteLater();
 	}
 
-	setRequestedUrl(m_formRequestUrl, false, true);
-	updateOptions(m_formRequestUrl);
+	setRequestedUrl(m_formRequest.url(), false, true);
+	updateOptions(m_formRequest.url());
 
-	QTimer::singleShot(50, this, SLOT(openFormRequest()));
-}
+	QTimer::singleShot(50, [&]()
+	{
+		m_page->mainFrame()->load(m_formRequest, m_formRequestOperation, m_formRequestBody);
 
-void QtWebKitWebWidget::openFormRequest()
-{
-	m_page->mainFrame()->load(QNetworkRequest(m_formRequestUrl), m_formRequestOperation, m_formRequestBody);
-
-	m_formRequestUrl = QUrl();
-	m_formRequestBody = QByteArray();
+		m_formRequest = QNetworkRequest();
+		m_formRequestBody = QByteArray();
+	});
 }
 
 void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
@@ -686,14 +684,14 @@ void QtWebKitWebWidget::handlePermissionCancel(QWebFrame *frame, QWebPage::Featu
 	notifyPermissionRequested(frame, feature, true);
 }
 
-void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
+void QtWebKitWebWidget::openFormRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
 {
-	m_page->triggerAction(QWebPage::Reload);
+	m_page->triggerAction(QWebPage::Stop);
 
 	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone()));
 	widget->setOptions(getOptions());
 	widget->setZoom(getZoom());
-	widget->openRequest(url, operation, outgoingData);
+	widget->openRequest(request, operation, outgoingData);
 
 	emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 }
