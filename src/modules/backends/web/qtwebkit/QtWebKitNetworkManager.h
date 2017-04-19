@@ -61,6 +61,7 @@ protected:
 	void updateOptions(const QUrl &url);
 	void setPageInformation(WebWidget::PageInformation key, const QVariant &value);
 	void setFormRequest(const QUrl &url);
+	void setMainRequest(const QUrl &url);
 	void setWidget(QtWebKitWebWidget *widget);
 	QtWebKitNetworkManager *clone();
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
@@ -93,6 +94,7 @@ private:
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
+	QUrl m_mainRequestUrl;
 	WebWidget::SslInformation m_sslInformation;
 	QStringList m_blockedElements;
 	QVector<QNetworkReply*> m_transfers;
@@ -103,8 +105,8 @@ private:
 	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
 	WebWidget::ContentStates m_contentState;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
-	qint64 m_bytesReceivedDifference;
 	SecurityState m_securityState;
+	qint64 m_bytesReceivedDifference;
 	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;

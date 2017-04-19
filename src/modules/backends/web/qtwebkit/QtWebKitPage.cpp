@@ -561,6 +561,11 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		return false;
 	}
 
+	if (mainFrame() == frame)
+	{
+		m_networkManager->setMainRequest(request.url());
+	}
+
 	if (type == QWebPage::NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
 	{
 		m_networkManager->setFormRequest(request.url());

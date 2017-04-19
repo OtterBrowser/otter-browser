@@ -58,8 +58,8 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_baseReply(nullptr),
 	m_contentState(WebWidget::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
-	m_bytesReceivedDifference(0),
 	m_securityState(UnknownState),
+	m_bytesReceivedDifference(0),
 	m_loadingSpeedTimer(0),
 	m_areImagesEnabled(true),
 	m_canSendReferrer(true),
@@ -138,8 +138,8 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
 	m_baseReply = nullptr;
 	m_contentState = WebWidget::UnknownContentState;
-	m_bytesReceivedDifference = 0;
 	m_securityState = UnknownState;
+	m_bytesReceivedDifference = 0;
 
 	updateLoadingSpeed();
 
@@ -527,6 +527,14 @@ void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
 	m_formRequestUrl = url;
 }
 
+void QtWebKitNetworkManager::setMainRequest(const QUrl &url)
+{
+	m_mainRequestUrl = url;
+	m_baseReply = nullptr;
+	m_contentState = WebWidget::UnknownContentState;
+	m_securityState = UnknownState;
+}
+
 void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
 {
 	setParent(widget);
@@ -628,7 +636,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				NetworkManager::ResourceType resourceType(NetworkManager::OtherType);
 				bool storeBlockedUrl(true);
 
-				if (!m_baseReply)
+				if (request.url() == m_mainRequestUrl)
 				{
 					resourceType = NetworkManager::MainFrameType;
 				}
@@ -757,12 +765,12 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 	}
 
-	if (!m_baseReply)
+	if (!m_baseReply && request.url() == m_mainRequestUrl)
 	{
 		m_baseReply = reply;
 	}
 
-	if (m_securityState != InsecureState)
+	if (m_baseReply && m_securityState != InsecureState)
 	{
 		const QString scheme(reply->url().scheme());
 
