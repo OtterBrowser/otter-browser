@@ -127,6 +127,7 @@ protected:
 	void pasteText(const QString &text) override;
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
+	void handleNavigationRequest(const QUrl &url, QWebPage::NavigationType type);
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void setHistory(QDataStream &stream);
 #else
@@ -152,7 +153,6 @@ protected:
 	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:
-	void navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type);
 	void downloadFile(const QNetworkRequest &request);
 	void downloadFile(QNetworkReply *reply);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);

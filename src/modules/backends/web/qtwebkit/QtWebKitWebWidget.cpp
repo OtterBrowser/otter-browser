@@ -138,7 +138,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
-	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QUrl,QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)));
 	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
 	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
@@ -247,26 +246,6 @@ void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine
 void QtWebKitWebWidget::print(QPrinter *printer)
 {
 	m_webView->print(printer);
-}
-
-void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type)
-{
-	if (frame == m_page->mainFrame())
-	{
-		if (type != QWebPage::NavigationTypeBackOrForward && (type != QWebPage::NavigationTypeLinkClicked || !getUrl().matches(url, QUrl::RemoveFragment)))
-		{
-			handleLoadStarted();
-			handleHistory();
-
-			m_networkManager->resetStatistics();
-		}
-
-		updateOptions(url);
-
-		m_isNavigating = true;
-
-		emit aboutToNavigate();
-	}
 }
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
@@ -631,6 +610,23 @@ void QtWebKitWebWidget::handleHistory()
 	{
 		HistoryManager::updateEntry(identifier, url, getTitle(), m_page->mainFrame()->icon());
 	}
+}
+
+void QtWebKitWebWidget::handleNavigationRequest(const QUrl &url, QWebPage::NavigationType type)
+{
+	if (type != QWebPage::NavigationTypeBackOrForward && (type != QWebPage::NavigationTypeLinkClicked || !getUrl().matches(url, QUrl::RemoveFragment)))
+	{
+		handleLoadStarted();
+		handleHistory();
+
+		m_networkManager->resetStatistics();
+	}
+
+	updateOptions(url);
+
+	m_isNavigating = true;
+
+	emit aboutToNavigate();
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

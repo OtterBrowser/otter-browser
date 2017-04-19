@@ -563,6 +563,11 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 	if (mainFrame() == frame)
 	{
+		if (m_widget)
+		{
+			m_widget->handleNavigationRequest(request.url(), type);
+		}
+
 		m_networkManager->setMainRequest(request.url());
 	}
 
