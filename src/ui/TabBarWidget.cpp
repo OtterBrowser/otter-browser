@@ -216,26 +216,23 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 
 	m_isCloseButtonUnderMouse = m_closeButtonRectangle.contains(event->pos());
 
-	if (m_window)
+	if (m_window && !m_window->isPinned())
 	{
-		if (!m_window->isPinned())
+		if (wasCloseButtonUnderMouse && !m_isCloseButtonUnderMouse)
 		{
-			if (wasCloseButtonUnderMouse && !m_isCloseButtonUnderMouse)
-			{
-				m_tabBarWidget->showPreview(-1, SettingsManager::getOption(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
+			m_tabBarWidget->showPreview(-1, SettingsManager::getOption(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 
-				QToolTip::hideText();
+			QToolTip::hideText();
 
-				setToolTip(QString());
-			}
-			else if (!wasCloseButtonUnderMouse && m_isCloseButtonUnderMouse)
-			{
-				m_tabBarWidget->hidePreview();
+			setToolTip(QString());
+		}
+		else if (!wasCloseButtonUnderMouse && m_isCloseButtonUnderMouse)
+		{
+			m_tabBarWidget->hidePreview();
 
-				const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::CloseTabAction).shortcuts);
+			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::CloseTabAction).shortcuts);
 
-				setToolTip(tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
-			}
+			setToolTip(tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 		}
 	}
 
