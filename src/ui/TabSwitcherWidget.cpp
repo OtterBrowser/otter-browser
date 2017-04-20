@@ -51,7 +51,7 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	frameLayout->addWidget(m_tabsView, 1);
 	frameLayout->addWidget(m_previewLabel, 0, Qt::AlignCenter);
 
-	m_model->setSortRole(Qt::UserRole);
+	m_model->setSortRole(OrderRole);
 
 	m_frame->setLayout(frameLayout);
 	m_frame->setAutoFillBackground(true);
@@ -80,18 +80,20 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	if (mainWindowItem)
 	{
+		const bool useSorting(SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() != QLatin1String("noSort"));
+
 		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
 			WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
 			if (windowItem)
 			{
-				m_model->appendRow(createRow(windowItem->getActiveWindow()));
+				m_model->appendRow(createRow(windowItem->getActiveWindow(), (useSorting ? QVariant(windowItem->getActiveWindow()->getLastActivity()) : QVariant(i))));
 			}
 		}
 	}
 
-	m_model->sort(0, Qt::DescendingOrder);
+	m_model->sort(0, ((SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() == QLatin1String("noSort")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
 	m_tabsView->setCurrentIndex(m_model->index(0, 0));
 
@@ -149,7 +151,7 @@ void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 {
-	Window *window(m_mainWindow->getWindowByIdentifier(index.data(Qt::UserRole).toULongLong()));
+	Window *window(m_mainWindow->getWindowByIdentifier(index.data(IdentifierRole).toULongLong()));
 
 	m_previewLabel->setMovie(nullptr);
 	m_previewLabel->setPixmap(QPixmap());
@@ -183,7 +185,7 @@ void TabSwitcherWidget::handleWindowAdded(quint64 identifier)
 
 	if (window)
 	{
-		m_model->insertRow(0, createRow(window));
+		m_model->insertRow(0, createRow(window, ((SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() == QLatin1String("noSort")) ? QVariant(-1) : QVariant(window->getLastActivity()))));
 	}
 }
 
@@ -206,7 +208,7 @@ void TabSwitcherWidget::show(SwitcherReason reason)
 
 void TabSwitcherWidget::accept()
 {
-	m_mainWindow->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(Qt::UserRole).toULongLong());
+	m_mainWindow->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(IdentifierRole).toULongLong());
 
 	hide();
 }
@@ -270,7 +272,7 @@ void TabSwitcherWidget::setLoadingState(WebWidget::LoadingState state)
 	}
 }
 
-QStandardItem* TabSwitcherWidget::createRow(Window *window) const
+QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &index) const
 {
 	QColor color(palette().color(QPalette::Text));
 
@@ -281,7 +283,8 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window) const
 
 	QStandardItem* item(new QStandardItem(window->getIcon(), window->getTitle()));
 	item->setData(color, Qt::TextColorRole);
-	item->setData(window->getIdentifier(), Qt::UserRole);
+	item->setData(window->getIdentifier(), IdentifierRole);
+	item->setData(index, OrderRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
@@ -300,7 +303,7 @@ int TabSwitcherWidget::findRow(quint64 identifier) const
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (m_model->index(i, 0).data(Qt::UserRole).toULongLong() == identifier)
+		if (m_model->index(i, 0).data(IdentifierRole).toULongLong() == identifier)
 		{
 			return i;
 		}
@@ -321,7 +324,7 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (index.isValid())
 			{
-				Application::triggerAction(ActionsManager::CloseTabAction, {{QLatin1String("window"), index.data(Qt::UserRole).toULongLong()}}, parentWidget());
+				Application::triggerAction(ActionsManager::CloseTabAction, {{QLatin1String("window"), index.data(IdentifierRole).toULongLong()}}, parentWidget());
 			}
 
 			return true;

@@ -36,6 +36,12 @@ class TabSwitcherWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		OrderRole
+	};
+
 	enum SwitcherReason
 	{
 		ActionReason = 0,
@@ -56,7 +62,7 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
 	void keyReleaseEvent(QKeyEvent *event) override;
-	QStandardItem* createRow(Window *window) const;
+	QStandardItem* createRow(Window *window, const QVariant &index) const;
 	int findRow(quint64 identifier) const;
 
 protected slots:
