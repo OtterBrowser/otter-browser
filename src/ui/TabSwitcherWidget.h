@@ -23,7 +23,6 @@
 #include "ItemViewWidget.h"
 #include "WebWidget.h"
 
-#include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
 
 namespace Otter
@@ -76,7 +75,6 @@ protected slots:
 private:
 	MainWindow *m_mainWindow;
 	QStandardItemModel *m_model;
-	QFrame *m_frame;
 	ItemViewWidget *m_tabsView;
 	QLabel *m_previewLabel;
 	QMovie *m_loadingMovie;

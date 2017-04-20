@@ -26,6 +26,7 @@
 
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMovie>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 
@@ -35,29 +36,29 @@ namespace Otter
 TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	m_mainWindow(parent),
 	m_model(new QStandardItemModel(this)),
-	m_frame(new QFrame(this)),
-	m_tabsView(new ItemViewWidget(m_frame)),
-	m_previewLabel(new QLabel(m_frame)),
+	m_tabsView(new ItemViewWidget(this)),
+	m_previewLabel(new QLabel(this)),
 	m_loadingMovie(nullptr),
 	m_reason(KeyboardReason)
 {
+	QFrame *frame(new QFrame(this));
 	QHBoxLayout *mainLayout(new QHBoxLayout(this));
-	mainLayout->addWidget(m_frame, 0, Qt::AlignCenter);
+	mainLayout->addWidget(frame, 0, Qt::AlignCenter);
 
 	setLayout(mainLayout);
 	setAutoFillBackground(false);
 
-	QHBoxLayout *frameLayout(new QHBoxLayout(m_frame));
+	QHBoxLayout *frameLayout(new QHBoxLayout(frame));
 	frameLayout->addWidget(m_tabsView, 1);
 	frameLayout->addWidget(m_previewLabel, 0, Qt::AlignCenter);
 
 	m_model->setSortRole(OrderRole);
 
-	m_frame->setLayout(frameLayout);
-	m_frame->setAutoFillBackground(true);
-	m_frame->setMinimumWidth(600);
-	m_frame->setObjectName(QLatin1String("tabSwitcher"));
-	m_frame->setStyleSheet(QStringLiteral("#tabSwitcher {background:%1;border:1px solid #B3B3B3;border-radius:4px;}").arg(palette().color(QPalette::Base).name()));
+	frame->setLayout(frameLayout);
+	frame->setAutoFillBackground(true);
+	frame->setMinimumWidth(600);
+	frame->setObjectName(QLatin1String("tabSwitcher"));
+	frame->setStyleSheet(QStringLiteral("#tabSwitcher {background:%1;border:1px solid #B3B3B3;border-radius:4px;}").arg(palette().color(QPalette::Base).name()));
 
 	m_tabsView->setModel(m_model);
 	m_tabsView->setStyleSheet(QLatin1String("border:0;"));
