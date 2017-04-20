@@ -95,10 +95,10 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	m_model->sort(0, ((SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() == QLatin1String("noSort")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
-	m_tabsView->setCurrentIndex(m_model->index(0, 0));
-
+	Window *activeWindow(m_mainWindow->getWindowByIndex(-1));
 	const int contentsHeight(m_model->rowCount() * 22);
 
+	m_tabsView->setCurrentIndex(m_model->index((activeWindow ? findRow(activeWindow->getIdentifier()) : 0), 0));
 	m_tabsView->setMinimumHeight(qMin(contentsHeight, int(height() * 0.9)));
 
 	QWidget::showEvent(event);
