@@ -163,7 +163,7 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	}
 
 	QStandardItem *messageItem(new QStandardItem(icon, entry));
-	messageItem->setData(message.time.toTime_t(), TimeRole);
+	messageItem->setData(message.time.toMSecsSinceEpoch(), TimeRole);
 	messageItem->setData(message.category, CategoryRole);
 	messageItem->setData(source, SourceRole);
 	messageItem->setData(message.window, WindowRole);

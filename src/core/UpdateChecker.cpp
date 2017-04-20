@@ -108,7 +108,7 @@ void UpdateChecker::runUpdateCheck()
 					information.isAvailable = object[QLatin1String("availablePlatforms")].toArray().contains(QJsonValue(platform));
 					information.detailsUrl = QUrl(object[QLatin1String("detailsUrl")].toString());
 					information.scriptUrl = QUrl(object[QLatin1String("scriptUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
-					information.fileUrl = QUrl(object[QLatin1String("fileUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toTime_t())));
+					information.fileUrl = QUrl(object[QLatin1String("fileUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toMSecsSinceEpoch() / 1000)));
 
 					if (!object[QLatin1String("subVersion")].toString().isEmpty())
 					{

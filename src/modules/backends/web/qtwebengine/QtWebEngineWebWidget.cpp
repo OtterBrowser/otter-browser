@@ -1284,7 +1284,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		stream << QUrl(history.entries.at(i).url) << history.entries.at(i).title << QByteArray() << qint32(0) << false << QUrl() << qint32(0) << QUrl(history.entries.at(i).url) << false << qint64(QDateTime::currentDateTime().toTime_t()) << int(200);
+		stream << QUrl(history.entries.at(i).url) << history.entries.at(i).title << QByteArray() << qint32(0) << false << QUrl() << qint32(0) << QUrl(history.entries.at(i).url) << false << qint64(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000) << int(200);
 	}
 
 	stream.device()->reset();
