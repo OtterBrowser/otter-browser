@@ -78,7 +78,7 @@ private:
 friend class MainWindowSessionItem;
 };
 
-class SessionModel : public QStandardItemModel
+class SessionModel final : public QStandardItemModel
 {
 	Q_OBJECT
 

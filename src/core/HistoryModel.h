@@ -40,7 +40,7 @@ protected:
 friend class HistoryModel;
 };
 
-class HistoryModel : public QStandardItemModel
+class HistoryModel final : public QStandardItemModel
 {
 	Q_OBJECT
 

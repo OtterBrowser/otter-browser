@@ -111,7 +111,7 @@ class NetworkManager;
 class NetworkManagerFactory;
 class NetworkProxyFactory;
 
-class ProxiesModel : public TreeModel
+class ProxiesModel final : public TreeModel
 {
 public:
 	enum ItemRole
@@ -129,7 +129,7 @@ private:
 	bool m_isEditor;
 };
 
-class UserAgentsModel : public TreeModel
+class UserAgentsModel final : public TreeModel
 {
 public:
 	enum ItemRole

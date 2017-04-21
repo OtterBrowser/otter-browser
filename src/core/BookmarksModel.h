@@ -45,7 +45,7 @@ protected:
 friend class BookmarksModel;
 };
 
-class BookmarksModel : public QStandardItemModel
+class BookmarksModel final : public QStandardItemModel
 {
 	Q_OBJECT
 
