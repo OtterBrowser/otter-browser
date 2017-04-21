@@ -113,7 +113,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QT_TRANSLATE_NOOP("actions", "Go Back"), ThemesManager::getIcon(QLatin1String("go-previous")), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::HasMenuFlag));
 	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QT_TRANSLATE_NOOP("actions", "Go Forward"), ThemesManager::getIcon(QLatin1String("go-next")), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::HasMenuFlag));
 	registerAction(GoToPageAction, QT_TRANSLATE_NOOP("actions", "Go to Page or Search"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(GoToHomePageAction, QT_TRANSLATE_NOOP("actions", "Go to Home Page"), QString(), ThemesManager::getIcon(QLatin1String("go-home")), ActionDefinition::WindowScope);
+	registerAction(GoToHomePageAction, QT_TRANSLATE_NOOP("actions", "Go to Home Page"), QString(), ThemesManager::getIcon(QLatin1String("go-home")), ActionDefinition::MainWindowScope);
 	registerAction(GoToParentDirectoryAction, QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(RewindAction, QT_TRANSLATE_NOOP("actions", "Rewind"), QT_TRANSLATE_NOOP("actions", "Rewind History"), ThemesManager::getIcon(QLatin1String("go-first")), ActionDefinition::WindowScope);
 	registerAction(FastForwardAction, QT_TRANSLATE_NOOP("actions", "Fast Forward"), QString(), ThemesManager::getIcon(QLatin1String("go-last")), ActionDefinition::WindowScope);
