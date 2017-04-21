@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class IconWidget : public QToolButton
+class IconWidget final : public QToolButton
 {
 	Q_OBJECT
 

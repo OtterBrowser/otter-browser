@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class ColorWidget : public QWidget
+class ColorWidget final : public QWidget
 {
 	Q_OBJECT
 

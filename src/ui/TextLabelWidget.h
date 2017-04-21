@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class TextLabelWidget : public QLineEdit
+class TextLabelWidget final : public QLineEdit
 {
 	Q_OBJECT
 

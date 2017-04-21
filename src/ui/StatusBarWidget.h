@@ -28,7 +28,7 @@ namespace Otter
 class MainWindow;
 class ToolBarWidget;
 
-class StatusBarWidget : public QStatusBar
+class StatusBarWidget final : public QStatusBar
 {
 	Q_OBJECT
 

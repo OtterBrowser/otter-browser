@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class ApplicationComboBoxWidget : public QComboBox
+class ApplicationComboBoxWidget final : public QComboBox
 {
 	Q_OBJECT
 

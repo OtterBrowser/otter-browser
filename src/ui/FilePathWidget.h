@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class FilePathWidget : public QWidget
+class FilePathWidget final : public QWidget
 {
 	Q_OBJECT
 

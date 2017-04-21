@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-class HeaderViewWidget : public QHeaderView
+class HeaderViewWidget final : public QHeaderView
 {
 	Q_OBJECT
 

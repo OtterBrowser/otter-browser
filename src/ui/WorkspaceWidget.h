@@ -32,7 +32,7 @@ namespace Otter
 class MainWindow;
 class Window;
 
-class MdiWidget : public QMdiArea
+class MdiWidget final : public QMdiArea
 {
 public:
 	explicit MdiWidget(QWidget *parent);
@@ -67,7 +67,7 @@ private:
 	bool m_wasMaximized;
 };
 
-class WorkspaceWidget : public QWidget
+class WorkspaceWidget final : public QWidget
 {
 	Q_OBJECT
 

@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class ResizerWidget : public QWidget
+class ResizerWidget final : public QWidget
 {
 	Q_OBJECT
 

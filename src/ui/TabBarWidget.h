@@ -34,7 +34,7 @@ class PreviewWidget;
 class TabBarWidget;
 class Window;
 
-class TabHandleWidget : public QWidget
+class TabHandleWidget final : public QWidget
 {
 	Q_OBJECT
 
@@ -72,7 +72,7 @@ private:
 	static QIcon m_lockedIcon;
 };
 
-class TabBarWidget : public QTabBar
+class TabBarWidget final : public QTabBar
 {
 	Q_OBJECT
 

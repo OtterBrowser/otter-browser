@@ -36,7 +36,7 @@ class MainWindow;
 class SidebarWidget;
 class Window;
 
-class ToolBarDropZoneWidget : public QToolBar
+class ToolBarDropZoneWidget final : public QToolBar
 {
 	Q_OBJECT
 

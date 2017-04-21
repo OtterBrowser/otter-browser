@@ -30,7 +30,7 @@ namespace Otter
 
 class ItemViewWidget;
 
-class ActionComboBoxWidget : public ComboBoxWidget
+class ActionComboBoxWidget final : public ComboBoxWidget
 {
 	Q_OBJECT
 

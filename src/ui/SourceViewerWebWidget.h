@@ -30,7 +30,7 @@ namespace Otter
 class NetworkManager;
 class SourceViewerWidget;
 
-class SourceViewerWebWidget : public WebWidget
+class SourceViewerWebWidget final : public WebWidget
 {
 	Q_OBJECT
 

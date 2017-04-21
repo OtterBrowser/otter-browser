@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class OptionDelegate : public ItemDelegate
+class OptionDelegate final : public ItemDelegate
 {
 public:
 	explicit OptionDelegate(bool isSimple, QObject *parent);

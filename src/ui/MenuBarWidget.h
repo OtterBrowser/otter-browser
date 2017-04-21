@@ -28,7 +28,7 @@ namespace Otter
 class MainWindow;
 class ToolBarWidget;
 
-class MenuBarWidget : public QMenuBar
+class MenuBarWidget final : public QMenuBar
 {
 	Q_OBJECT
 

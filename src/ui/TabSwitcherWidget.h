@@ -30,7 +30,7 @@ namespace Otter
 
 class Window;
 
-class TabSwitcherWidget : public QWidget
+class TabSwitcherWidget final : public QWidget
 {
 	Q_OBJECT
 

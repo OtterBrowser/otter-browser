@@ -36,7 +36,7 @@ class ColorWidget;
 class FilePathWidget;
 class IconWidget;
 
-class OptionWidget : public QWidget
+class OptionWidget final : public QWidget
 {
 	Q_OBJECT
 

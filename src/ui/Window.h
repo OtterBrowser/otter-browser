@@ -39,7 +39,7 @@ class BookmarksItem;
 class ContentsWidget;
 class SearchWidget;
 
-class WindowToolBarWidget : public ToolBarWidget
+class WindowToolBarWidget final : public ToolBarWidget
 {
 public:
 	explicit WindowToolBarWidget(int identifier, Window *parent);

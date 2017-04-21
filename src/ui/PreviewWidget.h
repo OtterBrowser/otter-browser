@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class PreviewWidget : public QFrame
+class PreviewWidget final : public QFrame
 {
 	Q_OBJECT
 

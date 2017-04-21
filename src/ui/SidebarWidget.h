@@ -34,7 +34,7 @@ namespace Ui
 class ResizerWidget;
 class ToolBarWidget;
 
-class SidebarWidget : public QWidget
+class SidebarWidget final : public QWidget
 {
 	Q_OBJECT
 

@@ -71,7 +71,7 @@ private:
 
 class SourceViewerWidget;
 
-class MarginWidget : public QWidget
+class MarginWidget final : public QWidget
 {
 	Q_OBJECT
 
@@ -94,7 +94,7 @@ private:
 	int m_lastClickedLine;
 };
 
-class SourceViewerWidget : public QPlainTextEdit
+class SourceViewerWidget final : public QPlainTextEdit
 {
 	Q_OBJECT
 

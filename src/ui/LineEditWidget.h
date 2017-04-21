@@ -30,7 +30,7 @@ namespace Otter
 
 class LineEditWidget;
 
-class PopupViewWidget : public ItemViewWidget
+class PopupViewWidget final : public ItemViewWidget
 {
 	Q_OBJECT
 

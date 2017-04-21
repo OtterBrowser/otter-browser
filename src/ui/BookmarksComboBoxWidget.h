@@ -29,7 +29,7 @@ namespace Otter
 
 class BookmarksItem;
 
-class BookmarksComboBoxWidget : public ComboBoxWidget
+class BookmarksComboBoxWidget final : public ComboBoxWidget
 {
 	Q_OBJECT
 

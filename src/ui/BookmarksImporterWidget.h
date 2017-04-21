@@ -33,7 +33,7 @@ namespace Ui
 	class BookmarksImporterWidget;
 }
 
-class BookmarksImporterWidget : public QWidget
+class BookmarksImporterWidget final : public QWidget
 {
 	Q_OBJECT
 
