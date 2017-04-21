@@ -1980,8 +1980,8 @@ void MainWindow::setCurrentWindow(Window *window)
 		if (m_actions[i] && m_actions[i]->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
 		{
 			const int identifier(m_actions[i]->getIdentifier());
-			Action *previousAction(previousWindow ? previousWindow->getContentsWidget()->createAction(identifier) : nullptr);
-			Action *currentAction(window ? window->getContentsWidget()->createAction(identifier) : nullptr);
+			Action *previousAction(previousWindow ? previousWindow->createAction(identifier) : nullptr);
+			Action *currentAction(window ? window->createAction(identifier) : nullptr);
 
 			if (previousAction)
 			{

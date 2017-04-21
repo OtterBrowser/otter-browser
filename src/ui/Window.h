@@ -63,6 +63,7 @@ public:
 	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow);
+	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
 	MainWindow* getMainWindow();
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();

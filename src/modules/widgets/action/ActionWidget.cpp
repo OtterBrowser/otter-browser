@@ -88,9 +88,9 @@ void ActionWidget::resetAction()
 {
 	Action *action(nullptr);
 
-	if (m_window && !m_window->isAboutToClose() && ActionsManager::getActionDefinition(m_identifier).scope == ActionsManager::ActionDefinition::WindowScope && m_window->getLoadingState() != WebWidget::DelayedLoadingState && m_window->getContentsWidget() && m_window->getContentsWidget()->createAction(m_identifier))
+	if (m_window && !m_window->isAboutToClose() && ActionsManager::getActionDefinition(m_identifier).scope == ActionsManager::ActionDefinition::WindowScope && m_window->getLoadingState() != WebWidget::DelayedLoadingState)
 	{
-		action = m_window->getContentsWidget()->createAction(m_identifier);
+		action = m_window->createAction(m_identifier);
 	}
 	else
 	{

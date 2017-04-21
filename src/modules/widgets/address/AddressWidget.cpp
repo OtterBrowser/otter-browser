@@ -393,7 +393,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			if (m_window)
 			{
-				menu.addAction(m_window->getContentsWidget()->createAction(ActionsManager::WebsiteInformationAction));
+				menu.addAction(m_window->createAction(ActionsManager::WebsiteInformationAction));
 			}
 			else
 			{
@@ -898,7 +898,7 @@ void AddressWidget::updateGeometries()
 						continue;
 					}
 
-					Action *loadPluginsAction(m_window->getContentsWidget()->createAction(ActionsManager::LoadPluginsAction));
+					Action *loadPluginsAction(m_window->createAction(ActionsManager::LoadPluginsAction));
 
 					if (!loadPluginsAction || !loadPluginsAction->isEnabled())
 					{

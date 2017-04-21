@@ -422,7 +422,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 							if (window)
 							{
-								action = window->getContentsWidget()->createAction(identifier);
+								action = window->createAction(identifier);
 							}
 						}
 					}
