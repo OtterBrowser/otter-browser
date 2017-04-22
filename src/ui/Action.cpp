@@ -123,7 +123,7 @@ void Action::update(bool reset)
 		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
 
-	if (!definition.shortcuts.isEmpty())
+	if (m_parameters.isEmpty() && !definition.shortcuts.isEmpty())
 	{
 		state.text += QLatin1Char('\t') + definition.shortcuts.first().toString(QKeySequence::NativeText);
 	}
