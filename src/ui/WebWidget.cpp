@@ -1610,6 +1610,22 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			state = getActionState((getLoadingState() == OngoingLoadingState) ? ActionsManager::StopAction : ActionsManager::ReloadAction);
 
 			break;
+		case ActionsManager::ScheduleReloadAction:
+			if (parameters.contains(QLatin1String("time")) && parameters[QLatin1String("time")].type() == QVariant::Int)
+			{
+				const int reloadTime(parameters[QLatin1String("time")].toInt());
+
+				if (reloadTime < 0)
+				{
+					state.isChecked = !m_options.contains(SettingsManager::Content_PageReloadTimeOption);
+				}
+				else
+				{
+					state.isChecked = (reloadTime == m_options.contains(SettingsManager::Content_PageReloadTimeOption) && m_options[SettingsManager::Content_PageReloadTimeOption].toInt());
+				}
+			}
+
+			break;
 		case ActionsManager::UndoAction:
 			state.isEnabled = canUndo();
 
