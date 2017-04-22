@@ -44,6 +44,7 @@
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
+#include "../../../ui/ReloadTimeDialog.h"
 #include "../../../ui/SourceViewerWebWidget.h"
 #include "../../../ui/WebsiteInformationDialog.h"
 #include "../../../ui/Window.h"
@@ -402,10 +403,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
-			if (parameters.contains(QLatin1String("time")))
-			{
-				setOption(SettingsManager::Content_PageReloadTimeOption, parameters[QLatin1String("time")].toInt());
-			}
+			setOption(SettingsManager::Content_PageReloadTimeOption, parameters.value(QLatin1String("time"), QLatin1String("custom")));
 
 			break;
 		case ActionsManager::PasteAndGoAction:
@@ -1171,7 +1169,16 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 
 void WebContentsWidget::setOption(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Network_UserAgentOption && value.toString() == QLatin1String("custom"))
+	if (identifier == SettingsManager::Content_PageReloadTimeOption && value.type() == QVariant::String && value.toString() == QLatin1String("custom"))
+	{
+		ReloadTimeDialog dialog(qMax(0, getOption(SettingsManager::Content_PageReloadTimeOption).toInt()), this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			m_webWidget->setOption(SettingsManager::Content_PageReloadTimeOption, dialog.getReloadTime());
+		}
+	}
+	else if (identifier == SettingsManager::Network_UserAgentOption && value.toString() == QLatin1String("custom"))
 	{
 		bool isConfirmed(false);
 		const QString userAgent(QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(m_webWidget->getOption(SettingsManager::Network_UserAgentOption).toString()).value, &isConfirmed));
