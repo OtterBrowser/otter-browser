@@ -148,7 +148,7 @@ private:
 	bool m_isEditor;
 };
 
-class NetworkManagerFactory : public QObject
+class NetworkManagerFactory final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(DoNotTrackPolicy)

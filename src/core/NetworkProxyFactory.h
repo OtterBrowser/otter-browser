@@ -30,7 +30,7 @@ namespace Otter
 
 class NetworkAutomaticProxy;
 
-class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
+class NetworkProxyFactory final : public QObject, public QNetworkProxyFactory
 {
 	Q_OBJECT
 

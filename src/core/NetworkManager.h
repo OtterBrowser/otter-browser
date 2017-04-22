@@ -29,7 +29,7 @@ namespace Otter
 
 class CookieJar;
 
-class NetworkManager : public QNetworkAccessManager
+class NetworkManager final : public QNetworkAccessManager
 {
 	Q_OBJECT
 

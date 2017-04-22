@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class PacUtils : public QObject
+class PacUtils final : public QObject
 {
 	Q_OBJECT
 
@@ -58,7 +58,7 @@ private:
 	static QStringList m_days;
 };
 
-class NetworkAutomaticProxy : public QObject
+class NetworkAutomaticProxy final : public QObject
 {
 	Q_OBJECT
 

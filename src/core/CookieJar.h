@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class CookieJar : public QNetworkCookieJar
+class CookieJar final : public QNetworkCookieJar
 {
 	Q_OBJECT
 

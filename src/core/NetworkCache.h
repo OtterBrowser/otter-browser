@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class NetworkCache : public QNetworkDiskCache
+class NetworkCache final : public QNetworkDiskCache
 {
 	Q_OBJECT
 
