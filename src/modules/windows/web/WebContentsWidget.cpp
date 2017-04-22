@@ -401,6 +401,13 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+		case ActionsManager::ScheduleReloadAction:
+			if (parameters.contains(QLatin1String("time")))
+			{
+				setOption(SettingsManager::Content_PageReloadTimeOption, parameters[QLatin1String("time")].toInt());
+			}
+
+			break;
 		case ActionsManager::PasteAndGoAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
