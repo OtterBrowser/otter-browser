@@ -1520,7 +1520,11 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
-			if (parameters.contains(QLatin1String("time")) && parameters[QLatin1String("time")].type() != QVariant::String)
+			if (!parameters.contains(QLatin1String("time")) || (parameters.contains(QLatin1String("time")) && parameters[QLatin1String("time")].type() == QVariant::String && parameters[QLatin1String("time")].toString() == QLatin1String("custom")))
+			{
+				state.isChecked = (m_options.contains(SettingsManager::Content_PageReloadTimeOption) && !QVector<int>({-1, 0, 60, 1800, 3600, 7200}).contains(m_options[SettingsManager::Content_PageReloadTimeOption].toInt()));
+			}
+			else if (parameters.contains(QLatin1String("time")) && parameters[QLatin1String("time")].type() != QVariant::String)
 			{
 				const int reloadTime(parameters[QLatin1String("time")].toInt());
 
