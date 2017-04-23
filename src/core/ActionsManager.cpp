@@ -124,7 +124,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ReloadOrStopAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), ThemesManager::getIcon(QLatin1String("view-refresh")), ActionDefinition::WindowScope);
 	registerAction(ReloadAndBypassCacheAction, QT_TRANSLATE_NOOP("actions", "Reload and Bypass Cache"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(ReloadAllAction, QT_TRANSLATE_NOOP("actions", "Reload All Tabs"), QString(), ThemesManager::getIcon(QLatin1String("view-refresh")), ActionDefinition::MainWindowScope);
-	registerAction(ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Reload Every"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::HasMenuFlag));
+	registerAction(ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Schedule Page Reload"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(ContextMenuAction, QT_TRANSLATE_NOOP("actions", "Show Context Menu"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), ThemesManager::getIcon(QLatin1String("edit-undo")), ActionDefinition::WindowScope);
 	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), ThemesManager::getIcon(QLatin1String("edit-redo")), ActionDefinition::WindowScope);

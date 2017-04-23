@@ -12,7 +12,86 @@
 				"FastForward",
 				"separator",
 				"ReloadOrStop",
-				"ScheduleReload",
+				{
+					"type": "menu",
+					"title": "Reload Every",
+					"actions":
+					[
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "1 Minute",
+							"parameters":
+							{
+								"time": 60
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "30 Minutes",
+							"parameters":
+							{
+								"time": 1800
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "1 Hour",
+							"parameters":
+							{
+								"time": 1600
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "2 Hours",
+							"parameters":
+							{
+								"time": 7200
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "6 Hours",
+							"parameters":
+							{
+								"time": 21600
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "Never",
+							"parameters":
+							{
+								"time": 0
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "Custom…",
+							"parameters":
+							{
+								"time": "custom"
+							}
+						},
+						"separator",
+						{
+							"type": "action",
+							"identifier": "ScheduleReload",
+							"title": "Page Default",
+							"parameters":
+							{
+								"time": -1
+							}
+						}
+					]
+				},
 				"separator",
 				"BookmarkPage",
 				"CopyAddress",
