@@ -1611,17 +1611,17 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
-			if (parameters.contains(QLatin1String("time")) && parameters[QLatin1String("time")].type() == QVariant::Int)
+			if (parameters.contains(QLatin1String("time")) && parameters[QLatin1String("time")].type() != QVariant::String)
 			{
 				const int reloadTime(parameters[QLatin1String("time")].toInt());
 
 				if (reloadTime < 0)
 				{
-					state.isChecked = !m_options.contains(SettingsManager::Content_PageReloadTimeOption);
+					state.isChecked = (!m_options.contains(SettingsManager::Content_PageReloadTimeOption) || m_options[SettingsManager::Content_PageReloadTimeOption].toInt() < 0);
 				}
 				else
 				{
-					state.isChecked = (reloadTime == m_options.contains(SettingsManager::Content_PageReloadTimeOption) && m_options[SettingsManager::Content_PageReloadTimeOption].toInt());
+					state.isChecked = (m_options.contains(SettingsManager::Content_PageReloadTimeOption) && reloadTime == m_options[SettingsManager::Content_PageReloadTimeOption].toInt());
 				}
 			}
 
