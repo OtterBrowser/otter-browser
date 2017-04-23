@@ -325,6 +325,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 					MainWindow *mainWindow(MainWindow::findMainWindow(this));
 					Action *action(addAction(identifier, false));
 					action->setParameters(parameters);
+					action->setState(Application::getActionState(identifier, parameters));
 
 					if (!text.isEmpty())
 					{
