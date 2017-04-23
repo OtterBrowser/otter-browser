@@ -303,7 +303,6 @@ protected slots:
 	void pasteNote(QAction *action);
 	void selectDictionary(QAction *action);
 	void selectDictionaryMenuAboutToShow();
-	void reloadTimeMenuAboutToShow();
 	void openInApplicationMenuAboutToShow();
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);
@@ -316,14 +315,12 @@ protected slots:
 	virtual void updateImageActions();
 	virtual void updateMediaActions();
 	virtual void updateBookmarkActions();
-	void setReloadTime(QAction *action);
 	void setStatusMessage(const QString &message, bool override = false);
 
 private:
 	ContentsWidget *m_parent;
 	WebBackend *m_backend;
 	Menu *m_pasteNoteMenu;
-	QMenu *m_reloadTimeMenu;
 	QUrl m_requestedUrl;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
