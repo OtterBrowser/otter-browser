@@ -34,10 +34,9 @@ class ComboBoxWidget : public QComboBox
 public:
 	explicit ComboBoxWidget(QWidget *parent = nullptr);
 
-	ItemViewWidget* getView() const;
 	void setCurrentIndex(const QModelIndex &index);
 	void setCurrentIndex(int index);
-
+	ItemViewWidget* getView() const;
 	bool event(QEvent *event) override;
 
 private:
