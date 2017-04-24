@@ -2089,13 +2089,13 @@ TabBarWidget* MainWindow::getTabBar()
 	return m_tabBar;
 }
 
+Window* MainWindow::getActiveWindow() const
+{
+	return m_workspace->getActiveWindow();
+}
+
 Window* MainWindow::getWindowByIndex(int index) const
 {
-	if (index == -1)
-	{
-		index = getCurrentWindowIndex();
-	}
-
 	return m_tabBar->getWindow(index);
 }
 

@@ -139,7 +139,7 @@ void MainWindowSessionItem::notifyMainWindowModified()
 
 Window* MainWindowSessionItem::getActiveWindow() const
 {
-	return m_mainWindow->getWindowByIndex(-1);
+	return m_mainWindow->getActiveWindow();
 }
 
 MainWindow* MainWindowSessionItem::getMainWindow() const

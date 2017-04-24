@@ -62,6 +62,7 @@ public:
 	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
+	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
 	QVariant getOption(int identifier) const;

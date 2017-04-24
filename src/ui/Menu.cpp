@@ -23,7 +23,6 @@
 #include "ImportDialog.h"
 #include "MainWindow.h"
 #include "Window.h"
-#include "WorkspaceWidget.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/Console.h"
@@ -418,7 +417,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 						if (mainWindow)
 						{
-							Window *window(mainWindow->getWorkspace()->getActiveWindow());
+							Window *window(mainWindow->getActiveWindow());
 
 							if (window)
 							{

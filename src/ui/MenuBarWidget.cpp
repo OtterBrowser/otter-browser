@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #include "MenuBarWidget.h"
 #include "MainWindow.h"
-#include "WorkspaceWidget.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
 #include "../core/ActionsManager.h"
@@ -133,7 +132,7 @@ void MenuBarWidget::reload()
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
-		m_leftToolBar = new ToolBarWidget(ToolBarsManager::MenuBar, m_mainWindow->getWorkspace()->getActiveWindow(), this);
+		m_leftToolBar = new ToolBarWidget(ToolBarsManager::MenuBar, m_mainWindow->getActiveWindow(), this);
 
 		setCornerWidget(m_leftToolBar, Qt::TopLeftCorner);
 	}
@@ -147,7 +146,7 @@ void MenuBarWidget::reload()
 
 	if (needsRightToolbar && !m_rightToolBar)
 	{
-		m_rightToolBar = new ToolBarWidget(ToolBarsManager::MenuBar, m_mainWindow->getWorkspace()->getActiveWindow(), this);
+		m_rightToolBar = new ToolBarWidget(ToolBarsManager::MenuBar, m_mainWindow->getActiveWindow(), this);
 
 		setCornerWidget(m_rightToolBar, Qt::TopRightCorner);
 	}

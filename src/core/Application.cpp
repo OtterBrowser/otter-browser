@@ -676,7 +676,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			if (!target && mainWindow)
 			{
-				window = mainWindow->getWindowByIndex(-1);
+				window = mainWindow->getActiveWindow();
 			}
 
 			if (window)

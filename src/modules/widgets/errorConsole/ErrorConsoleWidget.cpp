@@ -21,7 +21,6 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
-#include "../../../ui/WorkspaceWidget.h"
 
 #include "ui_ErrorConsoleWidget.h"
 
@@ -305,7 +304,7 @@ QVector<Console::MessageCategory> ErrorConsoleWidget::getCategories() const
 quint64 ErrorConsoleWidget::getCurrentWindow()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	Window *currentWindow(mainWindow ? mainWindow->getWorkspace()->getActiveWindow() : nullptr);
+	Window *currentWindow(mainWindow ? mainWindow->getActiveWindow() : nullptr);
 
 	return (currentWindow ? currentWindow->getIdentifier() : 0);
 }
