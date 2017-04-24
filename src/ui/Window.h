@@ -126,7 +126,6 @@ private:
 	QVariantMap m_parameters;
 	quint64 m_identifier;
 	int m_suspendTimer;
-	bool m_areToolBarsVisible;
 	bool m_isAboutToClose;
 	bool m_isPinned;
 

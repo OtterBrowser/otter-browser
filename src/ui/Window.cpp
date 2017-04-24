@@ -81,7 +81,6 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 	m_parameters(parameters),
 	m_identifier(++m_identifierCounter),
 	m_suspendTimer(0),
-	m_areToolBarsVisible(true),
 	m_isAboutToClose(false),
 	m_isPinned(false)
 {
@@ -590,8 +589,6 @@ void Window::setZoom(int zoom)
 
 void Window::setToolBarsVisible(bool areVisible)
 {
-	m_areToolBarsVisible = areVisible;
-
 	if (m_navigationBar)
 	{
 		if (areVisible && ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
@@ -644,7 +641,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	if (!m_navigationBar)
 	{
 		m_navigationBar = new WindowToolBarWidget(ToolBarsManager::NavigationBar, this);
-		m_navigationBar->setVisible(m_areToolBarsVisible && m_navigationBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+		m_navigationBar->setVisible(m_mainWindow->areToolBarsVisible() && m_navigationBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		layout()->addWidget(m_navigationBar);
 	}
