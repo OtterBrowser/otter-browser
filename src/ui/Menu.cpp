@@ -37,7 +37,6 @@
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QTextCodec>
