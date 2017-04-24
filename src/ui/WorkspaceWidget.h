@@ -76,7 +76,7 @@ public:
 
 	void addWindow(Window *window, const QRect &geometry = QRect(), WindowState state = MaximizedWindowState, bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window, bool force = false);
-	Window* getActiveWindow();
+	Window* getActiveWindow() const;
 	int getWindowCount(Qt::WindowState state) const;
 
 public slots:

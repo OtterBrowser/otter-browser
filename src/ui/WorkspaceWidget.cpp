@@ -695,7 +695,7 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 	}
 }
 
-Window* WorkspaceWidget::getActiveWindow()
+Window* WorkspaceWidget::getActiveWindow() const
 {
 	return m_activeWindow.data();
 }
