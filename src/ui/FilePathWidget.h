@@ -22,11 +22,21 @@
 #define OTTER_FILEPATHWIDGET_H
 
 #include <QtWidgets/QFileDialog>
+#include <QtWidgets/QFileSystemModel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 
 namespace Otter
 {
+
+class FileSystemCompleterModel final : public QFileSystemModel
+{
+
+public:
+	explicit FileSystemCompleterModel(QObject *parent);
+
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+};
 
 class FilePathWidget final : public QWidget
 {
