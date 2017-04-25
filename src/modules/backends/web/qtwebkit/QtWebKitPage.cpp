@@ -832,9 +832,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			addExceptionAction.title = QCoreApplication::translate("utils", "Load Insecure Page");
 			addExceptionAction.type = ErrorPageInformation::AdvancedAction;
 
-			information.actions.reserve(2);
-			information.actions.append(goBackAction);
-			information.actions.append(addExceptionAction);
+			information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
 		}
 		else
 		{
@@ -843,7 +841,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			reloadAction.title = QCoreApplication::translate("utils", "Try Again");
 			reloadAction.type = ErrorPageInformation::MainAction;
 
-			information.actions.append(reloadAction);
+			information.actions = QVector<ErrorPageInformation::PageAction>({reloadAction});
 		}
 
 		errorOutput->content = Utils::createErrorPage(information).toUtf8();
