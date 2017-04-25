@@ -54,7 +54,8 @@ struct ErrorPageInformation
 		ConnectionRefusedError,
 		FileNotFoundError,
 		FraudAttemptError,
-		ServerNotFoundError
+		ServerNotFoundError,
+		UnsupportedAddressTypeError
 	};
 
 	struct PageAction

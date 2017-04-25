@@ -219,6 +219,10 @@ QString createErrorPage(const ErrorPageInformation &information)
 				title = QCoreApplication::translate("utils", "Server not found");
 
 				break;
+			case ErrorPageInformation::UnsupportedAddressTypeError:
+				title = QCoreApplication::translate("utils", "Unsupported address type");
+
+				break;
 			default:
 				title = QCoreApplication::translate("utils", "Network error");
 
