@@ -807,6 +807,10 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 				information.description.append(sslErrors.at(i).second.errorString());
 			}
 		}
+		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
+		{
+			information.type = ErrorPageInformation::UnsupportedAddressTypeError;
+		}
 		else if (errorOption->domain == QWebPage::WebKit)
 		{
 			information.title = tr("WebKit error %1").arg(errorOption->error);
