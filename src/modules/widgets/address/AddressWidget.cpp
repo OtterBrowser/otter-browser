@@ -37,9 +37,12 @@
 #include "../../../ui/Window.h"
 
 #include <QtCore/QMetaEnum>
+#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
+#include <QtGui/QTextBlock>
+#include <QtGui/QTextDocument>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionFrame>
@@ -50,7 +53,8 @@ namespace Otter
 
 int AddressWidget::m_entryIdentifierEnumerator(-1);
 
-AddressDelegate::AddressDelegate(ViewMode mode, QObject *parent) : QItemDelegate(parent),
+AddressDelegate::AddressDelegate(const QString &highlight, ViewMode mode, QObject *parent) : QStyledItemDelegate(parent),
+	m_highlight(highlight),
 	m_displayMode((SettingsManager::getOption(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
 	m_viewMode(mode)
 {
@@ -59,13 +63,15 @@ AddressDelegate::AddressDelegate(ViewMode mode, QObject *parent) : QItemDelegate
 
 void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	drawBackground(painter, option, index);
-
+	QAbstractTextDocumentLayout::PaintContext paintContext;
 	QRect titleRectangle(option.rect);
+	const bool isRightToLeft(option.direction == Qt::RightToLeft);
+	QTextDocument document;
+	document.setDefaultFont(option.font);
 
 	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
 	{
-		titleRectangle = titleRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+		const int headerTopPosition((index.row() != 0) ? titleRectangle.top() : (titleRectangle.top() - (titleRectangle.height() - painter->clipBoundingRect().united(document.documentLayout()->blockBoundingRect(document.firstBlock())).height())));
 
 		if (index.row() != 0)
 		{
@@ -77,29 +83,62 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 			painter->drawLine((option.rect.left() + 5), (option.rect.top() + 3), (option.rect.right() - 5), (option.rect.top() + 3));
 		}
 
-		drawDisplay(painter, option, titleRectangle, index.data(AddressCompletionModel::TitleRole).toString());
+		painter->save();
+
+		const QString title(index.data(AddressCompletionModel::TitleRole).toString());
+
+		titleRectangle = titleRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+		if (isRightToLeft)
+		{
+			painter->translate((titleRectangle.right() - (option.fontMetrics.width(title) + 10)), headerTopPosition);
+		}
+		else
+		{
+			painter->translate(titleRectangle.left(), headerTopPosition);
+		}
+
+		paintContext.palette.setCurrentColorGroup(QPalette::Disabled);
+
+		document.setPlainText(title);
+		document.documentLayout()->draw(painter, paintContext);
+
+		painter->restore();
 
 		return;
 	}
 
-	if (option.direction == Qt::RightToLeft)
+	QString url(index.data(Qt::DisplayRole).toString());
+	QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
+	const int topPosition(titleRectangle.top() - ((titleRectangle.height() - painter->clipBoundingRect().united(document.documentLayout()->blockBoundingRect(document.firstBlock())).height()) / 2));
+	const bool isSearchSuggestion(static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType);
+
+	if (option.state.testFlag(QStyle::State_Selected))
 	{
-		titleRectangle.setRight(option.rect.width() - 33);
+		painter->fillRect(option.rect, option.palette.color(QPalette::Highlight));
+
+		paintContext.palette.setColor(QPalette::Text, option.palette.color(QPalette::HighlightedText));
 	}
-	else
+	else if (!isSearchSuggestion)
 	{
-		titleRectangle.setLeft(33);
+		paintContext.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
 	}
 
 	QRect decorationRectangle(option.rect);
 
-	if (option.direction == Qt::RightToLeft)
+	if (isRightToLeft)
 	{
-		decorationRectangle.setLeft(option.rect.width() - 33);
+		const int width(option.rect.width() - 33);
+
+		decorationRectangle.setLeft(width);
+
+		titleRectangle.setRight(width);
 	}
 	else
 	{
 		decorationRectangle.setRight(33);
+
+		titleRectangle.setLeft(33);
 	}
 
 	decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
@@ -113,58 +152,121 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);
 
-	QString url(index.data(Qt::DisplayRole).toString());
-	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
-	QStyleOptionViewItem linkOption(option);
-
-	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) != AddressCompletionModel::SearchSuggestionType)
-	{
-		linkOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
-	}
-
 	if (m_displayMode == ColumnsMode)
 	{
 		const int maxUrlWidth(option.rect.width() / 2);
 
 		url = option.fontMetrics.elidedText(url, Qt::ElideRight, (maxUrlWidth - 40));
 
-		drawDisplay(painter, linkOption, titleRectangle, url);
+		painter->save();
+
+		if (isRightToLeft)
+		{
+			painter->translate((titleRectangle.right() - calculateLength(option, url)), topPosition);
+		}
+		else
+		{
+			painter->translate(titleRectangle.left(), topPosition);
+		}
+
+		document.setHtml(isSearchSuggestion ? url : highlightText(url));
+		document.documentLayout()->draw(painter, paintContext);
+
+		painter->restore();
 
 		if (!description.isEmpty())
 		{
-			if (option.direction == Qt::RightToLeft)
+			painter->save();
+
+			description = option.fontMetrics.elidedText(description, (isRightToLeft ? Qt::ElideLeft : Qt::ElideRight), (maxUrlWidth - 10));
+
+			if (isRightToLeft)
 			{
 				titleRectangle.setRight(maxUrlWidth);
+
+				painter->translate((titleRectangle.right() - calculateLength(option, description)), topPosition);
 			}
 			else
 			{
 				titleRectangle.setLeft(maxUrlWidth);
+
+				painter->translate(titleRectangle.left(), topPosition);
 			}
 
-			drawDisplay(painter, option, titleRectangle, description);
+			document.setHtml(highlightText(description));
+
+			if (option.state.testFlag(QStyle::State_Selected))
+			{
+				document.documentLayout()->draw(painter, paintContext);
+			}
+			else
+			{
+				document.drawContents(painter);
+			}
+
+			painter->restore();
 		}
 
 		return;
 	}
 
-	drawDisplay(painter, linkOption, titleRectangle, url);
+	painter->save();
+
+	url = option.fontMetrics.elidedText(url, Qt::ElideRight, (option.rect.width() - 40));
+
+	if (isRightToLeft)
+	{
+		painter->translate((titleRectangle.right() - calculateLength(option, url)), topPosition);
+	}
+	else
+	{
+		painter->translate(titleRectangle.left(), topPosition);
+	}
+
+	document.setHtml(isSearchSuggestion ? url : highlightText(url));
+	document.documentLayout()->draw(painter, paintContext);
+
+	painter->restore();
 
 	if (!description.isEmpty())
 	{
-		const int urlLength(option.fontMetrics.width(url + QLatin1Char(' ')));
+		const int urlLength(calculateLength(option, url + QLatin1Char(' ')));
 
-		if (urlLength < titleRectangle.width())
+		if ((urlLength + 40) < titleRectangle.width())
 		{
-			if (option.direction == Qt::RightToLeft)
+			painter->save();
+
+			description = option.fontMetrics.elidedText(description, (isRightToLeft ? Qt::ElideLeft : Qt::ElideRight), (option.rect.width() - urlLength - 50));
+
+			if (isRightToLeft)
 			{
-				titleRectangle.setRight(option.rect.width() - (urlLength + 33));
+				description.append(QLatin1String(" -"));
+
+				titleRectangle.setRight(option.rect.width() - calculateLength(option, description) - (urlLength + 33));
+
+				painter->translate(titleRectangle.right(), topPosition);
 			}
 			else
 			{
+				description.insert(0, QLatin1String("- "));
+
 				titleRectangle.setLeft(urlLength + 33);
+
+				painter->translate(titleRectangle.left(), topPosition);
 			}
 
-			drawDisplay(painter, option, titleRectangle, QLatin1String("- ") + description);
+			document.setHtml(highlightText(description));
+
+			if (option.state.testFlag(QStyle::State_Selected))
+			{
+				document.documentLayout()->draw(painter, paintContext);
+			}
+			else
+			{
+				document.drawContents(painter);
+			}
+
+			painter->restore();
 		}
 	}
 }
@@ -175,6 +277,40 @@ void AddressDelegate::handleOptionChanged(int identifier, const QVariant &value)
 	{
 		m_displayMode = ((value.toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode);
 	}
+}
+
+QString AddressDelegate::highlightText(const QString &text, QString html) const
+{
+	const int index(text.indexOf(m_highlight, 0, Qt::CaseInsensitive));
+
+	if (m_highlight.isEmpty() || index < 0)
+	{
+		return (html + text);
+	}
+
+	html += text.left(index);
+	html += QStringLiteral("<b>%1</b>").arg(text.mid(index, m_highlight.length()));
+
+	return highlightText(text.mid(index + m_highlight.length()), html);
+}
+
+int AddressDelegate::calculateLength(const QStyleOptionViewItem &option, const QString &text, int length) const
+{
+	const int index(text.indexOf(m_highlight, 0, Qt::CaseInsensitive));
+
+	if (m_highlight.isEmpty() || index < 0)
+	{
+		return (length + option.fontMetrics.width(text));
+	}
+
+	length += option.fontMetrics.width(text.left(index));
+
+	QStyleOptionViewItem highlightedOption(option);
+	highlightedOption.font.setBold(true);
+
+	length += highlightedOption.fontMetrics.width(text.mid(index, m_highlight.length()));
+
+	return calculateLength(option, text.mid(index + m_highlight.length()), length);
 }
 
 QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -643,7 +779,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 {
 	PopupViewWidget *popupWidget(getPopup());
 	popupWidget->setModel(m_completionModel);
-	popupWidget->setItemDelegate(new AddressDelegate(isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode, popupWidget));
+	popupWidget->setItemDelegate(new AddressDelegate((isTypedHistory ? QString() : text()), (isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode), popupWidget));
 
 	if (!isPopupVisible())
 	{
@@ -654,6 +790,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 	}
 
 	popupWidget->setCurrentIndex(m_completionModel->index(0, 0));
+	popupWidget->setFocus();
 }
 
 void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)

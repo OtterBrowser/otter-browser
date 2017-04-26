@@ -27,7 +27,7 @@
 
 #include <QtCore/QPointer>
 #include <QtCore/QUrl>
-#include <QtWidgets/QItemDelegate>
+#include <QtWidgets/QStyledItemDelegate>
 
 namespace Otter
 {
@@ -37,7 +37,7 @@ class BookmarksItem;
 class ItemViewWidget;
 class Window;
 
-class AddressDelegate final : public QItemDelegate
+class AddressDelegate final : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -54,15 +54,20 @@ public:
 		HistoryMode
 	};
 
-	explicit AddressDelegate(ViewMode mode, QObject *parent = nullptr);
+	explicit AddressDelegate(const QString &highlight, ViewMode mode, QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	QString highlightText(const QString &text, QString html = QString()) const;
+	int calculateLength(const QStyleOptionViewItem &option, const QString &text, int length = 0) const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
+	QString m_highlight;
 	DisplayMode m_displayMode;
 	ViewMode m_viewMode;
 };
