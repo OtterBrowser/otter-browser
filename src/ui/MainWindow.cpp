@@ -437,7 +437,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!homePage.isEmpty())
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}, {QLatin1String("hints"), SessionsManager::CurrentTabOpen}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}});
 				}
 			}
 
