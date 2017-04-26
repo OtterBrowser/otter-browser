@@ -1723,7 +1723,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
-				WebsitePreferencesDialog dialog(url, m_networkManager->getCookieJar()->getCookies(url.host()), this);
+				WebsitePreferencesDialog dialog(url, (url.host().isEmpty() ? QVector<QNetworkCookie>() : m_networkManager->getCookieJar()->getCookies(url.host())), this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
