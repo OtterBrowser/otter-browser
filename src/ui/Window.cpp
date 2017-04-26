@@ -22,7 +22,6 @@
 #include "Window.h"
 #include "MainWindow.h"
 #include "OpenAddressDialog.h"
-#include "WorkspaceWidget.h"
 #include "../core/Application.h"
 #include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
@@ -74,7 +73,7 @@ void WindowToolBarWidget::paintEvent(QPaintEvent *event)
 	style()->drawControl(QStyle::CE_ToolBar, &toolBarOption, &painter, this);
 }
 
-Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->getWorkspace()),
+Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->centralWidget()),
 	m_mainWindow(mainWindow),
 	m_navigationBar(nullptr),
 	m_contentsWidget(nullptr),

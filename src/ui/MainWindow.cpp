@@ -505,7 +505,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (parameters.contains(QLatin1String("urlPlaceholder")))
 				{
-					Window *window(parameters.contains(QLatin1String("window")) ? getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()) : getWorkspace()->getActiveWindow());
+					Window *window(parameters.contains(QLatin1String("window")) ? getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()) : m_workspace->getActiveWindow());
 
 					if (window)
 					{
@@ -553,7 +553,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					return;
 				}
 
-				Window *activeWindow(getWorkspace()->getActiveWindow());
+				Window *activeWindow(m_workspace->getActiveWindow());
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
@@ -944,7 +944,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 	}
 	else
 	{
-		window = getWorkspace()->getActiveWindow();
+		window = m_workspace->getActiveWindow();
 	}
 
 	switch (identifier)
@@ -2077,11 +2077,6 @@ Action* MainWindow::createAction(int identifier, const QVariantMap parameters, b
 	}
 
 	return m_actions.value(identifier, nullptr);
-}
-
-WorkspaceWidget* MainWindow::getWorkspace()
-{
-	return m_workspace;
 }
 
 TabBarWidget* MainWindow::getTabBar()
