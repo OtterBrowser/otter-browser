@@ -277,11 +277,6 @@ Action* ContentsWidget::createAction(int identifier, const QVariantMap parameter
 	return nullptr;
 }
 
-Window* ContentsWidget::getParent()
-{
-	return qobject_cast<Window*>(parent());
-}
-
 WebWidget* ContentsWidget::getWebWidget()
 {
 	return nullptr;
