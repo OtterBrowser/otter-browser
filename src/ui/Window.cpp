@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "Window.h"
+#include "BookmarkPropertiesDialog.h"
 #include "MainWindow.h"
 #include "OpenAddressDialog.h"
 #include "../core/Application.h"
@@ -279,6 +280,30 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
+		case ActionsManager::BookmarkPageAction:
+			{
+				const QUrl url((parameters.contains(QLatin1String("url")) ? parameters[QLatin1String("url")].toUrl() : getUrl()).adjusted(QUrl::RemovePassword));
+
+				if (url.isEmpty())
+				{
+					return;
+				}
+
+				const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
+
+				if (bookmarks.isEmpty())
+				{
+					BookmarkPropertiesDialog dialog(url, (parameters.contains(QLatin1String("title")) ? parameters[QLatin1String("title")].toString() : getTitle()), parameters[QLatin1String("description")].toString(), nullptr, -1, true, this);
+					dialog.exec();
+				}
+				else
+				{
+					BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
+					dialog.exec();
+				}
+			}
+
+			return;
 		default:
 			getContentsWidget()->triggerAction(identifier, parameters);
 
