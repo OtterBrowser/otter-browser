@@ -561,7 +561,7 @@ list(LENGTH OTTER_BACKENDS_WEB OTTER_BACKENDS_WEB_LENGTH)
 if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
 	message(SEND_ERROR "No web backends available!")
 else (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
-	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n")
+	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n\n")
 
 	foreach(_backend ${OTTER_BACKENDS_WEB})
 		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY} * ${_backend}\n")
