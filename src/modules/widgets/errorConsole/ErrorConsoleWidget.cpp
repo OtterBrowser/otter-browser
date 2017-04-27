@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ErrorConsoleWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
@@ -37,6 +38,26 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::ErrorConsoleWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
+
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+
+	if (toolBar)
+	{
+		connect(m_ui->closeButton, &QToolButton::clicked, [&]()
+		{
+			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+
+			if (toolBar)
+			{
+				Application::triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBar->getIdentifier()}, {QLatin1String("isChecked"), false}});
+			}
+		});
+	}
+	else
+	{
+		m_ui->closeButton->hide();
+	}
 
 	QMenu *menu(new QMenu(m_ui->scopeButton));
 	QAction *allTabsAction(menu->addAction(tr("All Tabs")));
