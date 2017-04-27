@@ -672,16 +672,19 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	WindowHistoryInformation history;
-
-	if (m_session.historyIndex >= 0)
+	if (m_session.historyIndex >= 0 || !m_contentsWidget->getWebWidget() || m_contentsWidget->getWebWidget()->getRequestedUrl().isEmpty())
 	{
-		history.index = m_session.historyIndex;
-		history.entries = m_session.history;
-	}
+		WindowHistoryInformation history;
 
-	m_contentsWidget->setHistory(history);
-	m_contentsWidget->setZoom(m_session.getZoom());
+		if (m_session.historyIndex >= 0)
+		{
+			history.index = m_session.historyIndex;
+			history.entries = m_session.history;
+		}
+
+		m_contentsWidget->setHistory(history);
+		m_contentsWidget->setZoom(m_session.getZoom());
+	}
 
 	if (isActive())
 	{
