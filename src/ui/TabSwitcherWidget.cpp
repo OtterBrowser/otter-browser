@@ -122,21 +122,29 @@ void TabSwitcherWidget::hideEvent(QHideEvent *event)
 
 void TabSwitcherWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Down)
+	switch (event->key())
 	{
-		selectTab(true);
-	}
-	else if (event->key() == Qt::Key_Backtab || event->key() == Qt::Key_Up)
-	{
-		selectTab(false);
-	}
-	else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-	{
-		accept();
-	}
-	else if (event->key() == Qt::Key_Escape)
-	{
-		hide();
+		case Qt::Key_Tab:
+		case Qt::Key_Down:
+			selectTab(true);
+
+			break;
+		case Qt::Key_Backtab:
+		case Qt::Key_Up:
+			selectTab(false);
+
+			break;
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+			accept();
+
+			break;
+		case Qt::Key_Escape:
+			hide();
+
+			break;
+		default:
+			break;
 	}
 }
 
