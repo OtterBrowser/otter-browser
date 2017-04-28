@@ -53,6 +53,7 @@ public:
 	static void cancelGesture();
 	static GesturesManager* getInstance();
 	static QObject* getTrackedObject();
+	static QString getContextName(int identifier);
 	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericContext}), const QVariantMap &parameters = QVariantMap());
 	static bool continueGesture(QObject *object);
 	static bool isTracking();
@@ -87,6 +88,7 @@ protected:
 	static void recognizeMoveStep(QInputEvent *event);
 	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
+	static int getContextIdentifier(const QString &name);
 	static int matchGesture();
 	static int calculateLastMoveDistance(bool measureFinished = false);
 	static int calculateGesturesDifference(const QVector<GestureStep> &steps);

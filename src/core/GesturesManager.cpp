@@ -329,7 +329,7 @@ void GesturesManager::loadProfiles()
 
 		for (int j = 0; j < contexts.count(); ++j)
 		{
-			const GesturesContext context(static_cast<GesturesContext>(m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).keyToValue((contexts.at(j) + QLatin1String("Context")).toLatin1())));
+			const GesturesContext context(static_cast<GesturesContext>(getContextIdentifier(contexts.at(j))));
 
 			if (context == UnknownContext)
 			{
@@ -503,6 +503,20 @@ QObject* GesturesManager::getTrackedObject()
 	return m_trackedObject;
 }
 
+QString GesturesManager::getContextName(int identifier)
+{
+	QString name(m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).valueToKey(identifier));
+
+	if (!name.isEmpty())
+	{
+		name.chop(7);
+
+		return name;
+	}
+
+	return QString();
+}
+
 GesturesManager::GestureStep GesturesManager::deserializeStep(const QString &string)
 {
 	GestureStep step;
@@ -615,6 +629,16 @@ GesturesManager::GestureStep GesturesManager::deserializeStep(const QString &str
 	}
 
 	return step;
+}
+
+int GesturesManager::getContextIdentifier(const QString &name)
+{
+	if (!name.endsWith(QLatin1String("Context")))
+	{
+		return m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).keyToValue(QString(name + QLatin1String("Context")).toLatin1());
+	}
+
+	return m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).keyToValue(name.toLatin1());
 }
 
 int GesturesManager::matchGesture()
