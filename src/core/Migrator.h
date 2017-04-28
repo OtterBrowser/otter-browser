@@ -41,7 +41,7 @@ protected:
 	static QString createBackupPath(const QString &sourcePath);
 };
 
-class Migrator
+class Migrator final
 {
 
 public:

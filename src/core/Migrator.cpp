@@ -38,7 +38,7 @@
 namespace Otter
 {
 
-class OptionsRenameMigration : public Migration
+class OptionsRenameMigration final : public Migration
 {
 public:
 	OptionsRenameMigration() : Migration()
@@ -179,7 +179,7 @@ public:
 	}
 };
 
-class SessionsIniToJsonMigration : public Migration
+class SessionsIniToJsonMigration final : public Migration
 {
 public:
 	SessionsIniToJsonMigration() : Migration()
