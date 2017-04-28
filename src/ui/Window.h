@@ -48,7 +48,7 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 };
 
-class Window : public QWidget
+class Window final : public QWidget
 {
 	Q_OBJECT
 
