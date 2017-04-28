@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,6 +40,11 @@ void FilePasswordsStorageBackend::initialize()
 	m_isInitialized = true;
 
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
+
+	if (!file.exists())
+	{
+		return;
+	}
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
