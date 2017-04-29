@@ -255,7 +255,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (printDialog.exec() != QDialog::Accepted)
 				{
-					return;
+					break;
 				}
 
 				getContentsWidget()->print(&printer);
@@ -286,7 +286,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (url.isEmpty())
 				{
-					return;
+					break;
 				}
 
 				const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
@@ -303,7 +303,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 			}
 
-			return;
+			break;
 		default:
 			getContentsWidget()->triggerAction(identifier, parameters);
 
