@@ -322,13 +322,14 @@ void WebWidget::openInApplicationMenuAboutToShow()
 
 void WebWidget::clearOptions()
 {
+	const QUrl url(getUrl());
 	const QList<int> identifiers(m_options.keys());
 
 	m_options.clear();
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		emit optionChanged(identifiers.at(i), QVariant());
+		emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), url));
 	}
 
 	if (m_actions.contains(ActionsManager::ResetQuickPreferencesAction))
