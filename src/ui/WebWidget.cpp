@@ -1110,9 +1110,18 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 		m_actions[ActionsManager::ResetQuickPreferencesAction]->setEnabled(!m_options.isEmpty());
 	}
 
+	const QUrl url(getUrl());
+
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		emit optionChanged(identifiers.at(i), m_options.value(identifiers.at(i)));
+		if (m_options.contains(identifiers.at(i)))
+		{
+			emit optionChanged(identifiers.at(i), m_options[identifiers.at(i)]);
+		}
+		else
+		{
+			emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), url));
+		}
 	}
 }
 
