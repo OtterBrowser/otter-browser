@@ -1918,7 +1918,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
-		emit titleChanged(window->getContentsWidget()->getTitle());
+		emit titleChanged(window->getTitle());
 
 		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
 	}
@@ -2106,7 +2106,7 @@ QVariant MainWindow::getOption(int identifier) const
 {
 	Window *window(m_workspace->getActiveWindow());
 
-	return (window ? window->getContentsWidget()->getOption(identifier) : QVariant());
+	return (window ? window->getOption(identifier) : QVariant());
 }
 
 QString MainWindow::getTitle() const

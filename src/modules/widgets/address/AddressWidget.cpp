@@ -663,13 +663,13 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 				return;
 			case LoadPluginsEntry:
-				m_window->getContentsWidget()->triggerAction(ActionsManager::LoadPluginsAction);
+				m_window->triggerAction(ActionsManager::LoadPluginsAction);
 
 				event->accept();
 
 				return;
 			case FillPasswordEntry:
-				m_window->getContentsWidget()->triggerAction(ActionsManager::FillPasswordAction);
+				m_window->triggerAction(ActionsManager::FillPasswordAction);
 
 				event->accept();
 

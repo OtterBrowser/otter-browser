@@ -204,7 +204,7 @@ QVariant WindowSessionItem::data(int role) const
 		case SessionModel::LastActivityRole:
 			return m_window->getLastActivity();
 		case SessionModel::ZoomRole:
-			return m_window->getContentsWidget()->getZoom();
+			return m_window->getZoom();
 		case SessionModel::IsPinnedRole:
 			return m_window->isPinned();
 		case SessionModel::IsPrivateRole:

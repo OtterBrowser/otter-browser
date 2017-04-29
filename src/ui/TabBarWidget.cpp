@@ -690,7 +690,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 			menu.addAction(cloneTabAction);
 			menu.addAction(pinTabAction);
-			menu.addAction((window && window->getLoadingState() != WebWidget::DelayedLoadingState) ? window->getContentsWidget()->createAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
+			menu.addAction((window && window->getLoadingState() != WebWidget::DelayedLoadingState) ? window->createAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
 			menu.addSeparator();
 			menu.addAction(detachTabAction);
 			menu.addSeparator();
