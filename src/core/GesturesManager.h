@@ -24,10 +24,60 @@
 #include <QtCore/QObject>
 #include <QtGui/QMouseEvent>
 
+#include "AddonsManager.h"
 #include "../../3rdparty/mousegestures/MouseGestures.h"
 
 namespace Otter
 {
+
+class GesturesProfile final : public Addon
+{
+public:
+	struct Gesture
+	{
+		struct Step
+		{
+			QEvent::Type type = QEvent::None;
+			Qt::MouseButton button = Qt::NoButton;
+			Qt::KeyboardModifiers modifiers = Qt::NoModifier;
+			MouseGestures::MouseAction direction = MouseGestures::UnknownMouseAction;
+
+			Step();
+			Step(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+			Step(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+			explicit Step(const QInputEvent *event);
+
+			QString toString() const;
+			static Step fromString(const QString &string);
+			bool operator ==(const Step &other) const;
+			bool operator !=(const Step &other) const;
+		};
+
+		QVector<Step> steps;
+		QVariantMap parameters;
+		int action = 0;
+	};
+
+	explicit GesturesProfile(const QString &identifier, bool onlyMetaData = false);
+
+	void setTitle(const QString &title);
+	void setDescription(const QString &description);
+	void setVersion(const QString &version);
+	QString getName() const override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
+	AddonType getType() const override;
+	bool save() const;
+
+private:
+	QString m_identifier;
+	QString m_title;
+	QString m_description;
+	QString m_author;
+	QString m_version;
+	QHash<int, QVector<Gesture> > m_definitions;
+};
 
 class GesturesManager final : public QObject
 {
@@ -54,44 +104,20 @@ public:
 	static GesturesManager* getInstance();
 	static QObject* getTrackedObject();
 	static QString getContextName(int identifier);
+	static int getContextIdentifier(const QString &name);
 	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericContext}), const QVariantMap &parameters = QVariantMap());
 	static bool continueGesture(QObject *object);
 	static bool isTracking();
 
 protected:
-	struct GestureStep
-	{
-		QEvent::Type type;
-		Qt::MouseButton button;
-		Qt::KeyboardModifiers modifiers;
-		MouseGestures::MouseAction direction;
-
-		GestureStep();
-		GestureStep(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-		GestureStep(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-		explicit GestureStep(const QInputEvent *event);
-
-		QString toString() const;
-		bool operator ==(const GestureStep &other) const;
-		bool operator !=(const GestureStep &other) const;
-	};
-
-	struct MouseGesture
-	{
-		QVector<GestureStep> steps;
-		int action = 0;
-	};
-
 	explicit GesturesManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	static void recognizeMoveStep(QInputEvent *event);
 	static void releaseObject();
-	static GestureStep deserializeStep(const QString &string);
-	static int getContextIdentifier(const QString &name);
 	static int matchGesture();
 	static int calculateLastMoveDistance(bool measureFinished = false);
-	static int calculateGesturesDifference(const QVector<GestureStep> &steps);
+	static int calculateGesturesDifference(const QVector<GesturesProfile::Gesture::Step> &steps);
 	static bool triggerAction(int gestureIdentifier);
 	bool eventFilter(QObject *object, QEvent *event) override;
 
@@ -108,9 +134,9 @@ private:
 	static QPoint m_lastClick;
 	static QPoint m_lastPosition;
 	static QVariantMap m_paramaters;
-	static QHash<GesturesContext, QVector<MouseGesture> > m_gestures;
-	static QHash<GesturesContext, QVector<QVector<GestureStep> > > m_nativeGestures;
-	static QVector<GestureStep> m_steps;
+	static QHash<GesturesContext, QVector<GesturesProfile::Gesture> > m_gestures;
+	static QHash<GesturesContext, QVector<QVector<GesturesProfile::Gesture::Step> > > m_nativeGestures;
+	static QVector<GesturesProfile::Gesture::Step> m_steps;
 	static QVector<QInputEvent*> m_events;
 	static QVector<GesturesContext> m_contexts;
 	static int m_gesturesContextEnumerator;

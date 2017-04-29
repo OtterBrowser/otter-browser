@@ -21,12 +21,16 @@
 #include "GesturesManager.h"
 #include "Application.h"
 #include "IniSettings.h"
+#include "JsonSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTextStream>
 
 #include <limits>
 
@@ -36,31 +40,24 @@
 namespace Otter
 {
 
-GesturesManager::GestureStep::GestureStep() : type(QEvent::None),
-	button(Qt::NoButton),
-	modifiers(Qt::NoModifier),
-	direction(MouseGestures::UnknownMouseAction)
+GesturesProfile::Gesture::Step::Step()
 {
 }
 
-GesturesManager::GestureStep::GestureStep(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifier) : type(type),
-	button(Qt::NoButton),
+GesturesProfile::Gesture::Step::Step(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifier) : type(type),
 	modifiers(modifier),
 	direction(direction)
 {
 }
 
-GesturesManager::GestureStep::GestureStep(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifier) : type(type),
+GesturesProfile::Gesture::Step::Step(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifier) : type(type),
 	button(button),
-	modifiers(modifier),
-	direction(MouseGestures::UnknownMouseAction)
+	modifiers(modifier)
 {
 }
 
-GesturesManager::GestureStep::GestureStep(const QInputEvent *event) : type(event->type()),
-	button(Qt::NoButton),
-	modifiers(event->modifiers()),
-	direction(MouseGestures::UnknownMouseAction)
+GesturesProfile::Gesture::Step::Step(const QInputEvent *event) : type(event->type()),
+	modifiers(event->modifiers())
 {
 	switch (event->type())
 	{
@@ -102,7 +99,7 @@ GesturesManager::GestureStep::GestureStep(const QInputEvent *event) : type(event
 	}
 }
 
-QString GesturesManager::GestureStep::toString() const
+QString GesturesProfile::Gesture::Step::toString() const
 {
 	QString string;
 
@@ -228,298 +225,9 @@ QString GesturesManager::GestureStep::toString() const
 	return string;
 }
 
-bool GesturesManager::GestureStep::operator ==(const GestureStep &other) const
+GesturesProfile::Gesture::Step GesturesProfile::Gesture::Step::fromString(const QString &string)
 {
-	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers || type == QEvent::MouseMove);
-}
-
-bool GesturesManager::GestureStep::operator !=(const GestureStep &other) const
-{
-	return !((*this) == other);
-}
-
-GesturesManager* GesturesManager::m_instance(nullptr);
-MouseGestures::Recognizer* GesturesManager::m_recognizer(nullptr);
-QPointer<QObject> GesturesManager::m_trackedObject(nullptr);
-QPoint GesturesManager::m_lastClick;
-QPoint GesturesManager::m_lastPosition;
-QVariantMap GesturesManager::m_paramaters;
-QHash<GesturesManager::GesturesContext, QVector<GesturesManager::MouseGesture> > GesturesManager::m_gestures;
-QHash<GesturesManager::GesturesContext, QVector<QVector<GesturesManager::GestureStep> > > GesturesManager::m_nativeGestures;
-QVector<QInputEvent*> GesturesManager::m_events;
-QVector<GesturesManager::GestureStep> GesturesManager::m_steps;
-QVector<GesturesManager::GesturesContext> GesturesManager::m_contexts;
-int GesturesManager::m_gesturesContextEnumerator(0);
-bool GesturesManager::m_isReleasing(false);
-bool GesturesManager::m_afterScroll(false);
-
-GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
-	m_reloadTimer(0)
-{
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
-}
-
-void GesturesManager::createInstance(QObject *parent)
-{
-	if (!m_instance)
-	{
-		QVector<QVector<GestureStep> > generic;
-		generic.reserve(3);
-		generic.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonDblClick, Qt::LeftButton)}));
-		generic.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
-		generic.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
-
-		QVector<QVector<GestureStep> > link;
-		link.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
-		link.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
-
-		QVector<QVector<GestureStep> > contentEditable;
-		contentEditable.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::MiddleButton)}));
-
-		QVector<QVector<GestureStep> > tabHandle;
-		tabHandle.append(QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
-
-		m_nativeGestures[GesturesManager::GenericContext] = generic;
-		m_nativeGestures[GesturesManager::LinkContext] = link;
-		m_nativeGestures[GesturesManager::ContentEditableContext] = contentEditable;
-		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
-
-		m_instance = new GesturesManager(parent);
-		m_gesturesContextEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("GesturesContext").data());
-
-		loadProfiles();
-	}
-}
-
-void GesturesManager::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_reloadTimer)
-	{
-		killTimer(m_reloadTimer);
-
-		m_reloadTimer = 0;
-
-		loadProfiles();
-	}
-}
-
-void GesturesManager::loadProfiles()
-{
-	m_gestures.clear();
-
-	MouseGesture contextMenuGestureDefinition;
-	contextMenuGestureDefinition.steps = QVector<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::RightButton), GestureStep(QEvent::MouseButtonRelease, Qt::RightButton)});
-	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
-
-	for (int i = (UnknownContext + 1); i < OtherContext; ++i)
-	{
-		GesturesContext context(static_cast<GesturesContext>(i));
-
-		m_gestures[context] = QVector<MouseGesture>();
-		m_gestures[context].append(contextMenuGestureDefinition);
-	}
-
-	const QStringList gestureProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
-	const bool areMouseGesturesEnabled(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
-
-	for (int i = 0; i < gestureProfiles.count(); ++i)
-	{
-		IniSettings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")));
-		const QStringList contexts(profile.getGroups());
-
-		for (int j = 0; j < contexts.count(); ++j)
-		{
-			const GesturesContext context(static_cast<GesturesContext>(getContextIdentifier(contexts.at(j))));
-
-			if (context == UnknownContext)
-			{
-				profile.endGroup();
-
-				continue;
-			}
-
-			profile.beginGroup(contexts.at(j));
-
-			const QStringList gestures(profile.getKeys());
-
-			for (int k = 0; k < gestures.count(); ++k)
-			{
-				const QStringList rawMouseActions(gestures.at(k).split(QLatin1Char(',')));
-				int action(ActionsManager::getActionIdentifier(profile.getValue(gestures.at(k), QString()).toString()));
-
-				if (rawMouseActions.isEmpty())
-				{
-					continue;
-				}
-
-				if (action < 0)
-				{
-					if (profile.getValue(gestures.at(k)) == QLatin1String("NoAction"))
-					{
-						action = NATIVE_GESTURE;
-					}
-					else
-					{
-						continue;
-					}
-				}
-
-				QVector<GestureStep> steps;
-				steps.reserve(rawMouseActions.count());
-
-				bool hasMove(false);
-
-				for (int l = 0; l < rawMouseActions.count(); ++l)
-				{
-					steps.append(deserializeStep(rawMouseActions.at(l)));
-
-					if (steps.last().type == QEvent::MouseMove)
-					{
-						hasMove = true;
-					}
-				}
-
-				if (!steps.empty() && (!hasMove || areMouseGesturesEnabled))
-				{
-					MouseGesture definition;
-					definition.steps = steps;
-					definition.action = action;
-
-					m_gestures[context].append(definition);
-				}
-			}
-
-			profile.endGroup();
-		}
-	}
-}
-
-void GesturesManager::recognizeMoveStep(QInputEvent *event)
-{
-	if (!m_recognizer)
-	{
-		return;
-	}
-
-	QHash<int, MouseGestures::ActionList> possibleMoves;
-
-	for (int i = 0; i < m_contexts.count(); ++i)
-	{
-		for (int j = 0; j < m_gestures[m_contexts[i]].count(); ++j)
-		{
-			const QVector<GestureStep> steps(m_gestures[m_contexts[i]][j].steps);
-
-			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
-			{
-				MouseGestures::ActionList moves;
-
-				for (int k = m_steps.count(); k < steps.count() && steps[k].type == QEvent::MouseMove; ++k)
-				{
-					moves.push_back(steps[k].direction);
-				}
-
-				if (!moves.empty())
-				{
-					possibleMoves.insert(m_recognizer->registerGesture(moves), moves);
-				}
-			}
-		}
-	}
-
-	const QMouseEvent *mouseEvent(static_cast<const QMouseEvent*>(event));
-
-	if (mouseEvent)
-	{
-		m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
-	}
-
-	const int gesture(m_recognizer->endGesture());
-	const MouseGestures::ActionList moves(possibleMoves.value(gesture));
-	MouseGestures::ActionList::const_iterator iterator;
-
-	for (iterator = moves.begin(); iterator != moves.end(); ++iterator)
-	{
-		m_steps.append(GestureStep(QEvent::MouseMove, *iterator, event->modifiers()));
-	}
-
-	if (m_steps.empty() && calculateLastMoveDistance(true) >= QApplication::startDragDistance())
-	{
-		m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()));
-	}
-}
-
-void GesturesManager::cancelGesture()
-{
-	releaseObject();
-
-	m_steps.clear();
-
-	qDeleteAll(m_events);
-
-	m_events.clear();
-}
-
-void GesturesManager::releaseObject()
-{
-	if (m_trackedObject)
-	{
-		m_trackedObject->removeEventFilter(m_instance);
-
-		disconnect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
-	}
-
-	m_trackedObject = nullptr;
-}
-
-void GesturesManager::endGesture()
-{
-	cancelGesture();
-}
-
-void GesturesManager::handleOptionChanged(int identifier)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Browser_EnableMouseGesturesOption:
-		case SettingsManager::Browser_MouseProfilesOrderOption:
-			if (m_reloadTimer == 0)
-			{
-				m_reloadTimer = startTimer(250);
-			}
-
-			break;
-		default:
-			break;
-	}
-}
-
-GesturesManager* GesturesManager::getInstance()
-{
-	return m_instance;
-}
-
-QObject* GesturesManager::getTrackedObject()
-{
-	return m_trackedObject;
-}
-
-QString GesturesManager::getContextName(int identifier)
-{
-	QString name(m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).valueToKey(identifier));
-
-	if (!name.isEmpty())
-	{
-		name.chop(7);
-
-		return name;
-	}
-
-	return QString();
-}
-
-GesturesManager::GestureStep GesturesManager::deserializeStep(const QString &string)
-{
-	GestureStep step;
+	Step step;
 	const QStringList parts(string.split(QLatin1Char('+')));
 	const QString event(parts.first());
 
@@ -631,6 +339,471 @@ GesturesManager::GestureStep GesturesManager::deserializeStep(const QString &str
 	return step;
 }
 
+bool GesturesProfile::Gesture::Step::operator ==(const Step &other) const
+{
+	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers || type == QEvent::MouseMove);
+}
+
+bool GesturesProfile::Gesture::Step::operator !=(const Step &other) const
+{
+	return !(*this == other);
+}
+
+GesturesProfile::GesturesProfile(const QString &identifier, bool onlyMetaData) : Addon()
+{
+	const JsonSettings settings(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".json")));
+	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
+
+	for (int i = 0; i < comments.count(); ++i)
+	{
+		const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
+		const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
+
+		if (key == QLatin1String("Title"))
+		{
+			m_title = value;
+		}
+		else if (key == QLatin1String("Description"))
+		{
+			m_description = value;
+		}
+		else if (key == QLatin1String("Author"))
+		{
+			m_author = value;
+		}
+		else if (key == QLatin1String("Version"))
+		{
+			m_version = value;
+		}
+	}
+
+	if (onlyMetaData)
+	{
+		return;
+	}
+
+	const QJsonArray contextsArray(settings.array());
+
+	for (int i = 0; i < contextsArray.count(); ++i)
+	{
+		const QJsonObject contextObject(contextsArray.at(i).toObject());
+		const GesturesManager::GesturesContext context(static_cast<GesturesManager::GesturesContext>(GesturesManager::getContextIdentifier(contextObject.value(QLatin1String("context")).toString())));
+
+		if (context == GesturesManager::UnknownContext)
+		{
+			continue;
+		}
+
+		const QJsonArray gesturesArray(contextObject.value(QLatin1String("gestures")).toArray());
+
+		for (int j = 0; j < gesturesArray.count(); ++j)
+		{
+			const QJsonObject actionObject(gesturesArray.at(j).toObject());
+			const QJsonArray rawMouseActions(actionObject.value(QLatin1String("steps")).toArray());
+			const QString actionIdentifier(actionObject.value(QLatin1String("action")).toString());
+			const QVariantMap parameters(actionObject.value(QLatin1String("parameters")).toVariant().toMap());
+			int action(ActionsManager::getActionIdentifier(actionIdentifier));
+
+			if (rawMouseActions.isEmpty())
+			{
+				continue;
+			}
+
+			if (action < 0)
+			{
+				if (actionIdentifier == QLatin1String("NoAction"))
+				{
+					action = NATIVE_GESTURE;
+				}
+				else
+				{
+					continue;
+				}
+			}
+
+			QVector<GesturesProfile::Gesture::Step> steps;
+			steps.reserve(rawMouseActions.count());
+
+			for (int k = 0; k < rawMouseActions.count(); ++k)
+			{
+				steps.append(Gesture::Step::fromString(rawMouseActions.at(k).toString()));
+			}
+
+			GesturesProfile::Gesture definition;
+			definition.steps = steps;
+			definition.parameters = parameters;
+			definition.action = action;
+
+			m_definitions[context].append(definition);
+		}
+	}
+}
+
+void GesturesProfile::setTitle(const QString &title)
+{
+	m_title = title;
+}
+
+void GesturesProfile::setDescription(const QString &description)
+{
+	m_description = description;
+}
+
+void GesturesProfile::setVersion(const QString &version)
+{
+	m_version = version;
+}
+
+QString GesturesProfile::getName() const
+{
+	return m_identifier;
+}
+
+QString GesturesProfile::getTitle() const
+{
+	return m_title;
+}
+
+QString GesturesProfile::getDescription() const
+{
+	return m_description;
+}
+
+QString GesturesProfile::getVersion() const
+{
+	return m_version;
+}
+
+Addon::AddonType GesturesProfile::getType() const
+{
+	return Addon::UnknownType;
+}
+
+bool GesturesProfile::save() const
+{
+	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + m_identifier + QLatin1String(".json")));
+	QString comment;
+	QTextStream stream(&comment);
+	stream.setCodec("UTF-8");
+	stream << QLatin1String("Title: ") << (m_title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_title) << QLatin1Char('\n');
+	stream << QLatin1String("Description: ") << m_description << QLatin1Char('\n');
+	stream << QLatin1String("Type: mouse-profile\n");
+	stream << QLatin1String("Author: ") << m_author << QLatin1Char('\n');
+	stream << QLatin1String("Version: ") << m_version;
+
+	settings.setComment(comment);
+
+	QJsonArray contextsArray;
+	QHash<int, QVector<GesturesProfile::Gesture> >::const_iterator contextsIterator;
+
+	for (contextsIterator = m_definitions.begin(); contextsIterator != m_definitions.end(); ++contextsIterator)
+	{
+		QJsonArray gesturesArray;
+
+		for (int i = 0; i < contextsIterator.value().count(); ++i)
+		{
+			const GesturesProfile::Gesture &gesture(contextsIterator.value().at(i));
+			QJsonArray stepsArray;
+
+			for (int j = 0; j < gesture.steps.count(); ++j)
+			{
+				stepsArray.append(gesture.steps.at(j).toString());
+			}
+
+			QJsonObject gestureObject{{QLatin1String("action"), ((gesture.action == NATIVE_GESTURE) ? QLatin1String("NoAction") : ActionsManager::getActionName(gesture.action))}, {QLatin1String("steps"), stepsArray}};
+
+			if (!gesture.parameters.isEmpty())
+			{
+				gestureObject.insert(QLatin1String("parameters"), QJsonObject::fromVariantMap(gesture.parameters));
+			}
+
+			gesturesArray.append(gestureObject);
+		}
+
+		contextsArray.append(QJsonObject({{QLatin1String("context"), QString(GesturesManager::getContextName(contextsIterator.key()))}, {QLatin1String("gestures"), gesturesArray}}));
+	}
+
+	settings.setArray(contextsArray);
+
+	return settings.save();
+}
+
+GesturesManager* GesturesManager::m_instance(nullptr);
+MouseGestures::Recognizer* GesturesManager::m_recognizer(nullptr);
+QPointer<QObject> GesturesManager::m_trackedObject(nullptr);
+QPoint GesturesManager::m_lastClick;
+QPoint GesturesManager::m_lastPosition;
+QVariantMap GesturesManager::m_paramaters;
+QHash<GesturesManager::GesturesContext, QVector<GesturesProfile::Gesture> > GesturesManager::m_gestures;
+QHash<GesturesManager::GesturesContext, QVector<QVector<GesturesProfile::Gesture::Step> > > GesturesManager::m_nativeGestures;
+QVector<QInputEvent*> GesturesManager::m_events;
+QVector<GesturesProfile::Gesture::Step> GesturesManager::m_steps;
+QVector<GesturesManager::GesturesContext> GesturesManager::m_contexts;
+int GesturesManager::m_gesturesContextEnumerator(0);
+bool GesturesManager::m_isReleasing(false);
+bool GesturesManager::m_afterScroll(false);
+
+GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
+	m_reloadTimer(0)
+{
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+}
+
+void GesturesManager::createInstance(QObject *parent)
+{
+	if (!m_instance)
+	{
+		QVector<QVector<GesturesProfile::Gesture::Step> > generic;
+		generic.reserve(3);
+		generic.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonDblClick, Qt::LeftButton)}));
+		generic.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), GesturesProfile::Gesture::Step(QEvent::MouseButtonRelease, Qt::LeftButton)}));
+		generic.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), GesturesProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
+
+		QVector<QVector<GesturesProfile::Gesture::Step> > link;
+		link.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), GesturesProfile::Gesture::Step(QEvent::MouseButtonRelease, Qt::LeftButton)}));
+		link.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), GesturesProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
+
+		QVector<QVector<GesturesProfile::Gesture::Step> > contentEditable;
+		contentEditable.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::MiddleButton)}));
+
+		QVector<QVector<GesturesProfile::Gesture::Step> > tabHandle;
+		tabHandle.append(QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), GesturesProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
+
+		m_nativeGestures[GesturesManager::GenericContext] = generic;
+		m_nativeGestures[GesturesManager::LinkContext] = link;
+		m_nativeGestures[GesturesManager::ContentEditableContext] = contentEditable;
+		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
+
+		m_instance = new GesturesManager(parent);
+		m_gesturesContextEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("GesturesContext").data());
+
+		loadProfiles();
+	}
+}
+
+void GesturesManager::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_reloadTimer)
+	{
+		killTimer(m_reloadTimer);
+
+		m_reloadTimer = 0;
+
+		loadProfiles();
+	}
+}
+
+void GesturesManager::loadProfiles()
+{
+	m_gestures.clear();
+
+	GesturesProfile::Gesture contextMenuGestureDefinition;
+	contextMenuGestureDefinition.steps = QVector<GesturesProfile::Gesture::Step>({GesturesProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::RightButton), GesturesProfile::Gesture::Step(QEvent::MouseButtonRelease, Qt::RightButton)});
+	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
+
+	for (int i = (UnknownContext + 1); i < OtherContext; ++i)
+	{
+		m_gestures[static_cast<GesturesContext>(i)] = QVector<GesturesProfile::Gesture>({contextMenuGestureDefinition});
+	}
+
+	const QStringList gestureProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
+	const bool areMouseGesturesEnabled(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
+
+	for (int i = 0; i < gestureProfiles.count(); ++i)
+	{
+		IniSettings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")));
+		const QStringList contexts(profile.getGroups());
+
+		for (int j = 0; j < contexts.count(); ++j)
+		{
+			const GesturesContext context(static_cast<GesturesContext>(getContextIdentifier(contexts.at(j))));
+
+			if (context == UnknownContext)
+			{
+				profile.endGroup();
+
+				continue;
+			}
+
+			profile.beginGroup(contexts.at(j));
+
+			const QStringList gestures(profile.getKeys());
+
+			for (int k = 0; k < gestures.count(); ++k)
+			{
+				const QStringList rawMouseActions(gestures.at(k).split(QLatin1Char(',')));
+				int action(ActionsManager::getActionIdentifier(profile.getValue(gestures.at(k), QString()).toString()));
+
+				if (rawMouseActions.isEmpty())
+				{
+					continue;
+				}
+
+				if (action < 0)
+				{
+					if (profile.getValue(gestures.at(k)) == QLatin1String("NoAction"))
+					{
+						action = NATIVE_GESTURE;
+					}
+					else
+					{
+						continue;
+					}
+				}
+
+				QVector<GesturesProfile::Gesture::Step> steps;
+				steps.reserve(rawMouseActions.count());
+
+				bool hasMove(false);
+
+				for (int l = 0; l < rawMouseActions.count(); ++l)
+				{
+					steps.append(GesturesProfile::Gesture::Step::fromString(rawMouseActions.at(l)));
+
+					if (steps.last().type == QEvent::MouseMove)
+					{
+						hasMove = true;
+					}
+				}
+
+				if (!steps.empty() && (!hasMove || areMouseGesturesEnabled))
+				{
+					GesturesProfile::Gesture definition;
+					definition.steps = steps;
+					definition.action = action;
+
+					m_gestures[context].append(definition);
+				}
+			}
+
+			profile.endGroup();
+		}
+	}
+}
+
+void GesturesManager::recognizeMoveStep(QInputEvent *event)
+{
+	if (!m_recognizer)
+	{
+		return;
+	}
+
+	QHash<int, MouseGestures::ActionList> possibleMoves;
+
+	for (int i = 0; i < m_contexts.count(); ++i)
+	{
+		for (int j = 0; j < m_gestures[m_contexts[i]].count(); ++j)
+		{
+			const QVector<GesturesProfile::Gesture::Step> steps(m_gestures[m_contexts[i]][j].steps);
+
+			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
+			{
+				MouseGestures::ActionList moves;
+
+				for (int k = m_steps.count(); k < steps.count() && steps[k].type == QEvent::MouseMove; ++k)
+				{
+					moves.push_back(steps[k].direction);
+				}
+
+				if (!moves.empty())
+				{
+					possibleMoves.insert(m_recognizer->registerGesture(moves), moves);
+				}
+			}
+		}
+	}
+
+	const QMouseEvent *mouseEvent(static_cast<const QMouseEvent*>(event));
+
+	if (mouseEvent)
+	{
+		m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
+	}
+
+	const int gesture(m_recognizer->endGesture());
+	const MouseGestures::ActionList moves(possibleMoves.value(gesture));
+	MouseGestures::ActionList::const_iterator iterator;
+
+	for (iterator = moves.begin(); iterator != moves.end(); ++iterator)
+	{
+		m_steps.append(GesturesProfile::Gesture::Step(QEvent::MouseMove, *iterator, event->modifiers()));
+	}
+
+	if (m_steps.empty() && calculateLastMoveDistance(true) >= QApplication::startDragDistance())
+	{
+		m_steps.append(GesturesProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()));
+	}
+}
+
+void GesturesManager::cancelGesture()
+{
+	releaseObject();
+
+	m_steps.clear();
+
+	qDeleteAll(m_events);
+
+	m_events.clear();
+}
+
+void GesturesManager::releaseObject()
+{
+	if (m_trackedObject)
+	{
+		m_trackedObject->removeEventFilter(m_instance);
+
+		disconnect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+	}
+
+	m_trackedObject = nullptr;
+}
+
+void GesturesManager::endGesture()
+{
+	cancelGesture();
+}
+
+void GesturesManager::handleOptionChanged(int identifier)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Browser_EnableMouseGesturesOption:
+		case SettingsManager::Browser_MouseProfilesOrderOption:
+			if (m_reloadTimer == 0)
+			{
+				m_reloadTimer = startTimer(250);
+			}
+
+			break;
+		default:
+			break;
+	}
+}
+
+GesturesManager* GesturesManager::getInstance()
+{
+	return m_instance;
+}
+
+QObject* GesturesManager::getTrackedObject()
+{
+	return m_trackedObject;
+}
+
+QString GesturesManager::getContextName(int identifier)
+{
+	QString name(m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).valueToKey(identifier));
+
+	if (!name.isEmpty())
+	{
+		name.chop(7);
+
+		return name;
+	}
+
+	return QString();
+}
+
 int GesturesManager::getContextIdentifier(const QString &name)
 {
 	if (!name.endsWith(QLatin1String("Context")))
@@ -715,7 +888,7 @@ int GesturesManager::calculateLastMoveDistance(bool measureFinished)
 	return result;
 }
 
-int GesturesManager::calculateGesturesDifference(const QVector<GestureStep> &steps)
+int GesturesManager::calculateGesturesDifference(const QVector<GesturesProfile::Gesture::Step> &steps)
 {
 	if (m_steps.count() != steps.count())
 	{
@@ -724,39 +897,39 @@ int GesturesManager::calculateGesturesDifference(const QVector<GestureStep> &ste
 
 	int difference(0);
 
-	for (int j = 0; j < steps.count(); ++j)
+	for (int i = 0; i < steps.count(); ++i)
 	{
 		int stepDifference(0);
 
-		if (j == (steps.count() - 1) && steps[j].type == QEvent::MouseButtonPress && m_steps[j].type == QEvent::MouseButtonDblClick && steps[j].button == m_steps[j].button && steps[j].modifiers == m_steps[j].modifiers)
+		if (i == (steps.count() - 1) && steps[i].type == QEvent::MouseButtonPress && m_steps[i].type == QEvent::MouseButtonDblClick && steps[i].button == m_steps[i].button && steps[i].modifiers == m_steps[i].modifiers)
 		{
 			stepDifference += 100;
 		}
 
-		if (m_steps[j].type == steps[j].type && (steps[j].type == QEvent::MouseButtonPress || steps[j].type == QEvent::MouseButtonRelease || steps[j].type == QEvent::MouseButtonDblClick) && m_steps[j].button == steps[j].button && (m_steps[j].modifiers | steps[j].modifiers) == m_steps[j].modifiers)
+		if (m_steps[i].type == steps[i].type && (steps[i].type == QEvent::MouseButtonPress || steps[i].type == QEvent::MouseButtonRelease || steps[i].type == QEvent::MouseButtonDblClick) && m_steps[i].button == steps[i].button && (m_steps[i].modifiers | steps[i].modifiers) == m_steps[i].modifiers)
 		{
-			if (m_steps[j].modifiers.testFlag(Qt::ControlModifier) && !steps[j].modifiers.testFlag(Qt::ControlModifier))
+			if (m_steps[i].modifiers.testFlag(Qt::ControlModifier) && !steps[i].modifiers.testFlag(Qt::ControlModifier))
 			{
 				stepDifference += 8;
 			}
 
-			if (m_steps[j].modifiers.testFlag(Qt::ShiftModifier) && !steps[j].modifiers.testFlag(Qt::ShiftModifier))
+			if (m_steps[i].modifiers.testFlag(Qt::ShiftModifier) && !steps[i].modifiers.testFlag(Qt::ShiftModifier))
 			{
 				stepDifference += 4;
 			}
 
-			if (m_steps[j].modifiers.testFlag(Qt::AltModifier) && !steps[j].modifiers.testFlag(Qt::AltModifier))
+			if (m_steps[i].modifiers.testFlag(Qt::AltModifier) && !steps[i].modifiers.testFlag(Qt::AltModifier))
 			{
 				stepDifference += 2;
 			}
 
-			if (m_steps[j].modifiers.testFlag(Qt::MetaModifier) && !steps[j].modifiers.testFlag(Qt::MetaModifier))
+			if (m_steps[i].modifiers.testFlag(Qt::MetaModifier) && !steps[i].modifiers.testFlag(Qt::MetaModifier))
 			{
 				stepDifference += 1;
 			}
 		}
 
-		if (stepDifference == 0 && steps[j] != m_steps[j])
+		if (stepDifference == 0 && steps[i] != m_steps[i])
 		{
 			return std::numeric_limits<int>::max();
 		}
@@ -908,7 +1081,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			recognizeMoveStep(mouseEvent);
 
-			m_steps.append(GestureStep(mouseEvent));
+			m_steps.append(GesturesProfile::Gesture::Step(mouseEvent));
 
 			if (m_isReleasing && event->type() == QEvent::MouseButtonRelease)
 			{
@@ -966,7 +1139,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			if (calculateLastMoveDistance() >= QApplication::startDragDistance())
 			{
-				m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
+				m_steps.append(GesturesProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
 
 				gesture = matchGesture();
 
@@ -996,7 +1169,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 				recognizeMoveStep(wheelEvent);
 
-				m_steps.append(GestureStep(wheelEvent));
+				m_steps.append(GesturesProfile::Gesture::Step(wheelEvent));
 
 				m_lastClick = wheelEvent->pos();
 
