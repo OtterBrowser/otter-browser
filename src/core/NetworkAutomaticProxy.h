@@ -68,7 +68,7 @@ public:
 	void setPath(const QString &path);
 	QString getPath() const;
 	QVector<QNetworkProxy> getProxy(const QString &url, const QString &host);
-	bool isValid();
+	bool isValid() const;
 
 protected:
 	bool setup(const QString &script);

@@ -424,7 +424,7 @@ QVector<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const
 	return m_proxies[configuration];
 }
 
-bool NetworkAutomaticProxy::isValid()
+bool NetworkAutomaticProxy::isValid() const
 {
 	return m_isValid;
 }
