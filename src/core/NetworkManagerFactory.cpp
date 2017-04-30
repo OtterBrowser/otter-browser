@@ -716,10 +716,17 @@ bool NetworkManagerFactory::usesSystemProxyAuthentication()
 
 bool NetworkManagerFactory::event(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange && (!m_proxies.isEmpty() || !m_userAgents.isEmpty()))
+	if (event->type() == QEvent::LanguageChange)
 	{
-		updateProxiesOption();
-		updateUserAgentsOption();
+		if (!m_proxies.isEmpty())
+		{
+			updateProxiesOption();
+		}
+
+		if (!m_userAgents.isEmpty())
+		{
+			updateUserAgentsOption();
+		}
 	}
 
 	return QObject::event(event);
