@@ -336,10 +336,7 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 
 		if (data.isEmpty() || data.count() < 3)
 		{
-			data.clear();
-			data.append(0);
-			data.append(getZoom());
-			data.append(m_page->mainFrame()->scrollPosition());
+			data = QVariantList({0, getZoom(), m_page->mainFrame()->scrollPosition()});
 		}
 		else
 		{
