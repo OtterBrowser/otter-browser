@@ -63,10 +63,12 @@ public:
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);
 	void setVersion(const QString &version);
+	void setDefinitions(const QHash<int, QVector<Gesture> > &definitions);
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;
+	QHash<int, QVector<Gesture> > getDefinitions() const;
 	AddonType getType() const override;
 	bool save() const;
 

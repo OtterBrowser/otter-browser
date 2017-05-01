@@ -454,6 +454,11 @@ void GesturesProfile::setVersion(const QString &version)
 	m_version = version;
 }
 
+void GesturesProfile::setDefinitions(const QHash<int, QVector<GesturesProfile::Gesture> > &definitions)
+{
+	m_definitions = definitions;
+}
+
 QString GesturesProfile::getName() const
 {
 	return m_identifier;
@@ -472,6 +477,11 @@ QString GesturesProfile::getDescription() const
 QString GesturesProfile::getVersion() const
 {
 	return m_version;
+}
+
+QHash<int, QVector<GesturesProfile::Gesture> > GesturesProfile::getDefinitions() const
+{
+	return m_definitions;
 }
 
 Addon::AddonType GesturesProfile::getType() const
