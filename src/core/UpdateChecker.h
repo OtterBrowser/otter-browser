@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class UpdateChecker : public QObject
+class UpdateChecker final : public QObject
 {
 	Q_OBJECT
 

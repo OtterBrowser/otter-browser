@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class JsonSettings : public QJsonDocument
+class JsonSettings final : public QJsonDocument
 {
 public:
 	explicit JsonSettings();

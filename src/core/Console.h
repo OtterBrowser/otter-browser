@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class Console : public QObject
+class Console final : public QObject
 {
 	Q_OBJECT
 

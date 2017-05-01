@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class IniSettings : public QObject
+class IniSettings final : public QObject
 {
 	Q_OBJECT
 

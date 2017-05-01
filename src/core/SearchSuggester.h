@@ -30,7 +30,7 @@ namespace Otter
 
 class NetworkManager;
 
-class SearchSuggester : public QObject
+class SearchSuggester final : public QObject
 {
 	Q_OBJECT
 

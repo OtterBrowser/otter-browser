@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class ContentBlockingProfile : public QObject
+class ContentBlockingProfile final : public QObject
 {
 	Q_OBJECT
 

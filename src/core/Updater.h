@@ -29,7 +29,7 @@ namespace Otter
 
 class Transfer;
 
-class Updater : public QObject
+class Updater final : public QObject
 {
 	Q_OBJECT
 

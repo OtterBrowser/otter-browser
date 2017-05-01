@@ -30,7 +30,7 @@ namespace Otter
 
 class BookmarksItem;
 
-class InputInterpreter : public QObject
+class InputInterpreter final : public QObject
 {
 	Q_OBJECT
 

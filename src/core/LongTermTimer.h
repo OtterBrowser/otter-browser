@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class LongTermTimer : public QObject
+class LongTermTimer final : public QObject
 {
 	Q_OBJECT
 

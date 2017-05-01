@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-class AddressCompletionModel : public QAbstractListModel
+class AddressCompletionModel final : public QAbstractListModel
 {
 	Q_OBJECT
 
