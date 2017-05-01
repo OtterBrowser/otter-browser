@@ -34,7 +34,7 @@ namespace Ui
 	class UpdateCheckerDialog;
 }
 
-class UpdateCheckerDialog : public Dialog
+class UpdateCheckerDialog final : public Dialog
 {
 	Q_OBJECT
 

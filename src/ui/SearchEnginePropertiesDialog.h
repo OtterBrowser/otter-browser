@@ -33,7 +33,7 @@ namespace Ui
 	class SearchEnginePropertiesDialog;
 }
 
-class SearchEnginePropertiesDialog : public Dialog
+class SearchEnginePropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 

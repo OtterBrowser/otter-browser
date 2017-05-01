@@ -30,7 +30,7 @@ namespace Ui
 	class ReloadTimeDialog;
 }
 
-class ReloadTimeDialog : public Dialog
+class ReloadTimeDialog final : public Dialog
 {
 	Q_OBJECT
 

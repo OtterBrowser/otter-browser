@@ -36,7 +36,7 @@ class AddressWidget;
 class BookmarksItem;
 class InputInterpreter;
 
-class OpenAddressDialog : public Dialog
+class OpenAddressDialog final : public Dialog
 {
 	Q_OBJECT
 

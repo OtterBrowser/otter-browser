@@ -32,7 +32,7 @@ namespace Ui
 	class ImportDialog;
 }
 
-class ImportDialog : public Dialog
+class ImportDialog final : public Dialog
 {
 	Q_OBJECT
 

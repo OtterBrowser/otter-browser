@@ -34,7 +34,7 @@ namespace Ui
 	class CertificateDialog;
 }
 
-class CertificateDialog : public Dialog
+class CertificateDialog final : public Dialog
 {
 	Q_OBJECT
 

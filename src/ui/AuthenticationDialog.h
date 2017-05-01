@@ -33,7 +33,7 @@ namespace Ui
 	class AuthenticationDialog;
 }
 
-class AuthenticationDialog : public Dialog
+class AuthenticationDialog final : public Dialog
 {
 	Q_OBJECT
 

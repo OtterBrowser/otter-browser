@@ -31,7 +31,7 @@ namespace Ui
 	class WebsiteInformationDialog;
 }
 
-class WebsiteInformationDialog : public Dialog
+class WebsiteInformationDialog final : public Dialog
 {
 	Q_OBJECT
 

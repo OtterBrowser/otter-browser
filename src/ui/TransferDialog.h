@@ -35,7 +35,7 @@ namespace Ui
 
 class Transfer;
 
-class TransferDialog : public Dialog
+class TransferDialog final : public Dialog
 {
 	Q_OBJECT
 

@@ -30,7 +30,7 @@ namespace Ui
 	class ClearHistoryDialog;
 }
 
-class ClearHistoryDialog : public Dialog
+class ClearHistoryDialog final : public Dialog
 {
 	Q_OBJECT
 

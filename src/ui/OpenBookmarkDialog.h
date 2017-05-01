@@ -33,7 +33,7 @@ namespace Ui
 	class OpenBookmarkDialog;
 }
 
-class OpenBookmarkDialog : public Dialog
+class OpenBookmarkDialog final : public Dialog
 {
 	Q_OBJECT
 

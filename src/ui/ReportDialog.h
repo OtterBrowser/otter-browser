@@ -31,7 +31,7 @@ namespace Ui
 	class ReportDialog;
 }
 
-class ReportDialog : public Dialog
+class ReportDialog final : public Dialog
 {
 	Q_OBJECT
 

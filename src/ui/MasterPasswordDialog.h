@@ -30,7 +30,7 @@ namespace Ui
 	class MasterPasswordDialog;
 }
 
-class MasterPasswordDialog : public Dialog
+class MasterPasswordDialog final : public Dialog
 {
 	Q_OBJECT
 

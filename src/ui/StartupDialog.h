@@ -34,7 +34,7 @@ namespace Ui
 
 struct SessionInformation;
 
-class StartupDialog : public Dialog
+class StartupDialog final : public Dialog
 {
 	Q_OBJECT
 

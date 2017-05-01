@@ -34,7 +34,7 @@ namespace Ui
 
 class BookmarksItem;
 
-class BookmarkPropertiesDialog : public Dialog
+class BookmarkPropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 

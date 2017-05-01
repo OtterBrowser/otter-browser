@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class ProxyModel : public QIdentityProxyModel
+class ProxyModel final : public QIdentityProxyModel
 {
 	Q_OBJECT
 

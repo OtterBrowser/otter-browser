@@ -34,7 +34,7 @@ namespace Ui
 	class ToolBarDialog;
 }
 
-class ToolBarDialog : public Dialog
+class ToolBarDialog final : public Dialog
 {
 	Q_OBJECT
 

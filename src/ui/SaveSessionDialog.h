@@ -30,7 +30,7 @@ namespace Ui
 	class SaveSessionDialog;
 }
 
-class SaveSessionDialog : public Dialog
+class SaveSessionDialog final : public Dialog
 {
 	Q_OBJECT
 

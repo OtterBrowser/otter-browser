@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class Action : public QAction
+class Action final : public QAction
 {
 	Q_OBJECT
 
@@ -73,7 +73,7 @@ private:
 	int m_identifier;
 };
 
-class Shortcut : public QShortcut
+class Shortcut final : public QShortcut
 {
 	Q_OBJECT
 

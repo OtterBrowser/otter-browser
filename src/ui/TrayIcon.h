@@ -30,7 +30,7 @@ namespace Otter
 class Application;
 class Notification;
 
-class TrayIcon : public QObject
+class TrayIcon final : public QObject
 {
 	Q_OBJECT
 

@@ -31,7 +31,7 @@ namespace Ui
 	class PreferencesDialog;
 }
 
-class PreferencesDialog : public Dialog
+class PreferencesDialog final : public Dialog
 {
 	Q_OBJECT
 

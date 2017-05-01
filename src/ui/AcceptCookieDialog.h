@@ -33,7 +33,7 @@ namespace Ui
 	class AcceptCookieDialog;
 }
 
-class AcceptCookieDialog : public Dialog
+class AcceptCookieDialog final : public Dialog
 {
 	Q_OBJECT
 

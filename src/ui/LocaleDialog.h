@@ -31,7 +31,7 @@ namespace Ui
 	class LocaleDialog;
 }
 
-class LocaleDialog : public Dialog
+class LocaleDialog final : public Dialog
 {
 	Q_OBJECT
 

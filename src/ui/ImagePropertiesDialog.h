@@ -32,7 +32,7 @@ namespace Ui
 	class ImagePropertiesDialog;
 }
 
-class ImagePropertiesDialog : public Dialog
+class ImagePropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 

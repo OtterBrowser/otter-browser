@@ -32,7 +32,7 @@ namespace Ui
 	class CookiePropertiesDialog;
 }
 
-class CookiePropertiesDialog : public Dialog
+class CookiePropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 
