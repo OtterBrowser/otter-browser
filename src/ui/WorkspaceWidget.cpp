@@ -257,6 +257,16 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void WorkspaceWidget::keyPressEvent(QKeyEvent *event)
+{
+	QWidget::keyPressEvent(event);
+
+	if (event->key() == Qt::Key_Escape && m_mainWindow->isFullScreen())
+	{
+		m_mainWindow->triggerAction(ActionsManager::FullScreenAction);
+	}
+}
+
 void WorkspaceWidget::createMdi()
 {
 	if (m_mdi)

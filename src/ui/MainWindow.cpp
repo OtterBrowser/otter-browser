@@ -2396,8 +2396,6 @@ bool MainWindow::event(QEvent *event)
 						{
 							m_statusBar->hide();
 						}
-
-						m_workspace->installEventFilter(this);
 					}
 					else
 					{
@@ -2412,8 +2410,6 @@ bool MainWindow::event(QEvent *event)
 						{
 							m_statusBar->show();
 						}
-
-						m_workspace->removeEventFilter(this);
 					}
 
 					if (!windowState().testFlag(Qt::WindowFullScreen))
@@ -2500,16 +2496,7 @@ bool MainWindow::event(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_workspace && event->type() == QEvent::KeyPress)
-	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
-		{
-			triggerAction(ActionsManager::FullScreenAction);
-		}
-	}
-	else if (event->type() == QEvent::Leave && isFullScreen())
+	if (event->type() == QEvent::Leave && isFullScreen())
 	{
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(object));
 

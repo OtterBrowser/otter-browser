@@ -87,6 +87,7 @@ public slots:
 protected:
 	void timerEvent(QTimerEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
 	void createMdi();
 
 protected slots:
