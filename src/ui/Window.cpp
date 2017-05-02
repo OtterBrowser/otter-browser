@@ -615,14 +615,7 @@ void Window::setToolBarsVisible(bool areVisible)
 {
 	if (m_navigationBar)
 	{
-		if (areVisible && ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
-		{
-			m_navigationBar->show();
-		}
-		else
-		{
-			m_navigationBar->hide();
-		}
+		m_navigationBar->setVisible(m_navigationBar->shouldBeVisible(!areVisible));
 	}
 }
 
