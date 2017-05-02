@@ -117,7 +117,7 @@ protected slots:
 
 private:
 	MainWindow *m_mainWindow;
-	WindowToolBarWidget *m_navigationBar;
+	WindowToolBarWidget *m_addressBar;
 	ContentsWidget *m_contentsWidget;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;

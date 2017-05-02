@@ -76,7 +76,7 @@ void WindowToolBarWidget::paintEvent(QPaintEvent *event)
 
 Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->centralWidget()),
 	m_mainWindow(mainWindow),
-	m_navigationBar(nullptr),
+	m_addressBar(nullptr),
 	m_contentsWidget(nullptr),
 	m_parameters(parameters),
 	m_identifier(++m_identifierCounter),
@@ -468,9 +468,9 @@ void Window::notifyRequestedCloseWindow()
 
 void Window::updateNavigationBar()
 {
-	if (m_navigationBar)
+	if (m_addressBar)
 	{
-		m_navigationBar->reload();
+		m_addressBar->reload();
 	}
 }
 
@@ -613,9 +613,9 @@ void Window::setZoom(int zoom)
 
 void Window::setToolBarsVisible(bool areVisible)
 {
-	if (m_navigationBar)
+	if (m_addressBar)
 	{
-		m_navigationBar->setVisible(m_navigationBar->shouldBeVisible(!areVisible));
+		m_addressBar->setVisible(m_addressBar->shouldBeVisible(!areVisible));
 	}
 }
 
@@ -642,12 +642,12 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (!m_contentsWidget)
 	{
-		if (m_navigationBar)
+		if (m_addressBar)
 		{
-			layout()->removeWidget(m_navigationBar);
+			layout()->removeWidget(m_addressBar);
 
-			m_navigationBar->deleteLater();
-			m_navigationBar = nullptr;
+			m_addressBar->deleteLater();
+			m_addressBar = nullptr;
 		}
 
 		emit widgetChanged();
@@ -655,12 +655,12 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		return;
 	}
 
-	if (!m_navigationBar)
+	if (!m_addressBar)
 	{
-		m_navigationBar = new WindowToolBarWidget(ToolBarsManager::NavigationBar, this);
-		m_navigationBar->setVisible(m_mainWindow->areToolBarsVisible() && m_navigationBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+		m_addressBar = new WindowToolBarWidget(ToolBarsManager::NavigationBar, this);
+		m_addressBar->setVisible(m_mainWindow->areToolBarsVisible() && m_addressBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
-		layout()->addWidget(m_navigationBar);
+		layout()->addWidget(m_addressBar);
 	}
 
 	layout()->addWidget(m_contentsWidget);
