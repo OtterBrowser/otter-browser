@@ -304,6 +304,13 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
+		case ActionsManager::FullScreenAction:
+			if (m_contentsWidget)
+			{
+				m_contentsWidget->triggerAction(identifier, parameters);
+			}
+
+			break;
 		default:
 			getContentsWidget()->triggerAction(identifier, parameters);
 

@@ -900,6 +900,27 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			return;
+		case ActionsManager::FullScreenAction:
+			{
+				if (isFullScreen())
+				{
+					restoreWindowState();
+				}
+				else
+				{
+					storeWindowState();
+					showFullScreen();
+				}
+
+				QHash<quint64, Window*>::const_iterator iterator;
+
+				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+				{
+					iterator.value()->triggerAction(identifier, parameters);
+				}
+			}
+
+			return;
 		case ActionsManager::PreferencesAction:
 			{
 				PreferencesDialog dialog(QLatin1String("general"), this);
@@ -943,23 +964,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			if (window)
 			{
 				setActiveWindowByIdentifier(window->getIdentifier());
-			}
-
-			break;
-		case ActionsManager::FullScreenAction:
-			if (isFullScreen())
-			{
-				restoreWindowState();
-			}
-			else
-			{
-				storeWindowState();
-				showFullScreen();
-			}
-
-			if (window)
-			{
-				window->triggerAction(identifier, parameters);
 			}
 
 			break;
