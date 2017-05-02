@@ -305,6 +305,11 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::FullScreenAction:
+			if (m_addressBar)
+			{
+				m_addressBar->setVisible(m_addressBar->shouldBeVisible(m_mainWindow->isFullScreen()));
+			}
+
 			if (m_contentsWidget)
 			{
 				m_contentsWidget->triggerAction(identifier, parameters);
@@ -618,14 +623,6 @@ void Window::setZoom(int zoom)
 	}
 }
 
-void Window::setToolBarsVisible(bool areVisible)
-{
-	if (m_addressBar)
-	{
-		m_addressBar->setVisible(m_addressBar->shouldBeVisible(!areVisible));
-	}
-}
-
 void Window::setPinned(bool isPinned)
 {
 	if (isPinned != m_isPinned)
@@ -665,7 +662,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	if (!m_addressBar)
 	{
 		m_addressBar = new WindowToolBarWidget(ToolBarsManager::NavigationBar, this);
-		m_addressBar->setVisible(m_mainWindow->areToolBarsVisible() && m_addressBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+		m_addressBar->setVisible(m_addressBar->shouldBeVisible(m_mainWindow->isFullScreen()));
 
 		layout()->addWidget(m_addressBar);
 	}

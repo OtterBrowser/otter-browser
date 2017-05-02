@@ -1262,8 +1262,6 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		m_privateWindows.append(window);
 	}
 
-	window->setToolBarsVisible(!isFullScreen());
-
 	if (index < 0)
 	{
 		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (m_windows.count() - 1));
@@ -1321,7 +1319,6 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		}
 	}
 
-	connect(this, SIGNAL(areToolBarsVisibleChanged(bool)), window, SLOT(setToolBarsVisible(bool)));
 	connect(window, &Window::needsAttention, [&]()
 	{
 		QApplication::alert(this);
@@ -2352,11 +2349,6 @@ bool MainWindow::hasUrl(const QUrl &url, bool activate)
 	}
 
 	return false;
-}
-
-bool MainWindow::areToolBarsVisible() const
-{
-	return !isFullScreen();
 }
 
 bool MainWindow::isAboutToClose() const

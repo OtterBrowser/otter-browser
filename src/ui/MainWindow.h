@@ -75,7 +75,6 @@ public:
 	int getWindowCount() const;
 	int getWindowIndex(quint64 identifier) const;
 	bool hasUrl(const QUrl &url, bool activate = false);
-	bool areToolBarsVisible() const;
 	bool isAboutToClose() const;
 	bool isPrivate() const;
 	bool eventFilter(QObject *object, QEvent *event) override;

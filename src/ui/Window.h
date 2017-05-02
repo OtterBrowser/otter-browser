@@ -97,7 +97,6 @@ public slots:
 	void markAsActive();
 	void setUrl(const QUrl &url, bool isTyped = true);
 	void setZoom(int zoom);
-	void setToolBarsVisible(bool areVisible);
 	void setPinned(bool isPinned);
 
 protected:
