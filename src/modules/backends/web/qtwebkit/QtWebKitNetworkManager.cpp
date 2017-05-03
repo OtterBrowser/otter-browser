@@ -62,8 +62,10 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_bytesReceivedDifference(0),
 	m_loadingSpeedTimer(0),
 	m_areImagesEnabled(true),
-	m_canSendReferrer(true),
-	m_isMixedContentAllowed(false)
+	m_canSendReferrer(true)
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+	, m_isMixedContentAllowed(false)
+#endif
 {
 	NetworkManagerFactory::initialize();
 
@@ -451,7 +453,9 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_areImagesEnabled = (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("disabled"));
 	m_canSendReferrer = getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	m_isMixedContentAllowed = (getOption(SettingsManager::Security_AllowMixedContentOption, url).toBool());
+#endif
 
 	const QString generalCookiesPolicyValue(getOption(SettingsManager::Network_CookiesPolicyOption, url).toString());
 	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);

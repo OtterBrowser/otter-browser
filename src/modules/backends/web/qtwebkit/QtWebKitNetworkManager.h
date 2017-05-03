@@ -110,7 +110,9 @@ private:
 	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	bool m_isMixedContentAllowed;
+#endif
 
 	static WebBackend *m_backend;
 
