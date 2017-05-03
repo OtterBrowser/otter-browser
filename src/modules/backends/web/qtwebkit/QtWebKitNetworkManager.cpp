@@ -613,12 +613,14 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 	}
 
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	if (!m_isMixedContentAllowed && m_securityState == SecureState && request.url().scheme() == QLatin1String("http"))
 	{
 		Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(m_widget ? m_widget->getUrl().toString() : QLatin1String("unknown")).arg(request.url().toString()), Console::SecurityCategory, Console::WarningLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 	}
+#endif
 
 	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(request.url())))
 	{
