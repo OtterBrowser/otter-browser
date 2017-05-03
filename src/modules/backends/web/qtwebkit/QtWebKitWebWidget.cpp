@@ -1438,7 +1438,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::UnselectAction:
 			{
-				const QWebElement element(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")));
+				QWebFrame *frame(m_page->currentFrame() ? m_page->currentFrame() : m_page->mainFrame());
+				const QWebElement element(frame->findFirstElement(QLatin1String(":focus")));
 
 				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
 				{
@@ -1446,7 +1447,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 				else
 				{
-					m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
+					frame->documentElement().evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
 				}
 			}
 
