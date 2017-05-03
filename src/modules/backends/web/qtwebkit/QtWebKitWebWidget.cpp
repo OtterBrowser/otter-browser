@@ -363,8 +363,7 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 
 void QtWebKitWebWidget::clearPluginToken()
 {
-	QList<QWebFrame*> frames;
-	frames.append(m_page->mainFrame());
+	QList<QWebFrame*> frames({m_page->mainFrame()});
 
 	while (!frames.isEmpty())
 	{
@@ -921,8 +920,7 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 
 	file.close();
 
-	QList<QWebFrame*> frames;
-	frames.append(m_page->mainFrame());
+	QList<QWebFrame*> frames({m_page->mainFrame()});
 
 	while (!frames.isEmpty())
 	{
@@ -1629,8 +1627,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				m_canLoadPlugins = true;
 
-				QList<QWebFrame*> frames;
-				frames.append(m_page->mainFrame());
+				QList<QWebFrame*> frames({m_page->mainFrame()});
 
 				while (!frames.isEmpty())
 				{
@@ -1972,8 +1969,7 @@ void QtWebKitWebWidget::setPermission(FeaturePermission feature, const QUrl &url
 			return;
 	}
 
-	QList<QWebFrame*> frames;
-	frames.append(m_page->mainFrame());
+	QList<QWebFrame*> frames({m_page->mainFrame()});
 
 	while (!frames.isEmpty())
 	{
