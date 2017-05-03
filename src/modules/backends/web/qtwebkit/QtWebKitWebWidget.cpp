@@ -2680,7 +2680,7 @@ bool QtWebKitWebWidget::canViewSource() const
 
 bool QtWebKitWebWidget::hasSelection() const
 {
-	return m_page->hasSelection();
+	return (m_page->hasSelection() && !m_page->selectedText().isEmpty());
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

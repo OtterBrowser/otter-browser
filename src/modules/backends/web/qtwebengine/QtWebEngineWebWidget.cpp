@@ -1771,7 +1771,7 @@ bool QtWebEngineWebWidget::canViewSource() const
 
 bool QtWebEngineWebWidget::hasSelection() const
 {
-	return m_page->hasSelection();
+	return (m_page->hasSelection() && !m_page->selectedText().isEmpty());
 }
 
 #if QT_VERSION >= 0x050700
