@@ -24,7 +24,7 @@
 	},
 	{
 		"identifier": "NavigationBar",
-		"title": "Navigation Bar",
+		"title": "Address Bar",
 		"actions":
 		[
 			"GoBackAction",
