@@ -254,7 +254,7 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 		return;
 	}
 
-	SessionsManager::OpenHints hints;
+	SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
 
 	switch (identifier)
 	{
