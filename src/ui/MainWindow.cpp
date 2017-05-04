@@ -155,9 +155,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(handleTransferStarted()));
 
-	restore(session);
-	updateWindowTitle();
-
 	if (session.geometry.isEmpty())
 	{
 		if (Application::getActiveWindow())
@@ -173,6 +170,9 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	{
 		restoreGeometry(session.geometry);
 	}
+
+	restore(session);
+	updateWindowTitle();
 }
 
 MainWindow::~MainWindow()
