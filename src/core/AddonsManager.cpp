@@ -110,16 +110,16 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 
 	SettingsManager::updateOptionDefinition(SettingsManager::Backends_WebOption, backends);
 
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Addons"), QString(), QUrl(QLatin1String("about:addons")), ThemesManager::getIcon(QLatin1String("preferences-plugin"), false)), QLatin1String("addons"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Bookmarks"), QString(), QUrl(QLatin1String("about:bookmarks")), ThemesManager::getIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cache"), QString(), QUrl(QLatin1String("about:cache")), ThemesManager::getIcon(QLatin1String("cache"), false)), QLatin1String("cache"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Advanced Configuration"), QString(), QUrl(QLatin1String("about:config")), ThemesManager::getIcon(QLatin1String("configuration"), false)), QLatin1String("config"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cookies"), QString(), QUrl(QLatin1String("about:cookies")), ThemesManager::getIcon(QLatin1String("cookies"), false)), QLatin1String("cookies"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "History"), QString(), QUrl(QLatin1String("about:history")), ThemesManager::getIcon(QLatin1String("view-history"), false)), QLatin1String("history"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Notes"), QString(), QUrl(QLatin1String("about:notes")), ThemesManager::getIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Passwords"), QString(), QUrl(QLatin1String("about:passwords")), ThemesManager::getIcon(QLatin1String("dialog-password"), false)), QLatin1String("passwords"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Transfers"), QString(), QUrl(QLatin1String("about:transfers")), ThemesManager::getIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
-	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Windows"), QString(), QUrl(QLatin1String("about:windows")), ThemesManager::getIcon(QLatin1String("window"), false)), QLatin1String("windows"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Addons"), QString(), QUrl(QLatin1String("about:addons")), ThemesManager::createIcon(QLatin1String("preferences-plugin"), false)), QLatin1String("addons"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Bookmarks"), QString(), QUrl(QLatin1String("about:bookmarks")), ThemesManager::createIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cache"), QString(), QUrl(QLatin1String("about:cache")), ThemesManager::createIcon(QLatin1String("cache"), false)), QLatin1String("cache"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Advanced Configuration"), QString(), QUrl(QLatin1String("about:config")), ThemesManager::createIcon(QLatin1String("configuration"), false)), QLatin1String("config"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cookies"), QString(), QUrl(QLatin1String("about:cookies")), ThemesManager::createIcon(QLatin1String("cookies"), false)), QLatin1String("cookies"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "History"), QString(), QUrl(QLatin1String("about:history")), ThemesManager::createIcon(QLatin1String("view-history"), false)), QLatin1String("history"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Notes"), QString(), QUrl(QLatin1String("about:notes")), ThemesManager::createIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Passwords"), QString(), QUrl(QLatin1String("about:passwords")), ThemesManager::createIcon(QLatin1String("dialog-password"), false)), QLatin1String("passwords"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Transfers"), QString(), QUrl(QLatin1String("about:transfers")), ThemesManager::createIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Windows"), QString(), QUrl(QLatin1String("about:windows")), ThemesManager::createIcon(QLatin1String("window"), false)), QLatin1String("windows"));
 }
 
 void AddonsManager::createInstance(QObject *parent)

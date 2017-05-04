@@ -1254,7 +1254,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : nullptr), this));
 				imagePropertiesDialog->setButtonsVisible(false);
 
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
 
 				connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 				connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
@@ -1489,7 +1489,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				searchEngine.identifier = Utils::createIdentifier(getUrl().host(), SearchEnginesManager::getSearchEngines());
 				searchEngine.title = getTitle();
 				searchEngine.formUrl = getUrl();
-				searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
+				searchEngine.icon = (icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : icon);
 				searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
 				searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
 				searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
@@ -2176,12 +2176,12 @@ QIcon QtWebKitWebWidget::getIcon() const
 {
 	if (isPrivate())
 	{
-		return ThemesManager::getIcon(QLatin1String("tab-private"));
+		return ThemesManager::createIcon(QLatin1String("tab-private"));
 	}
 
 	const QIcon icon(m_page->mainFrame()->icon());
 
-	return (icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon);
+	return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : icon);
 }
 
 QPixmap QtWebKitWebWidget::getThumbnail()

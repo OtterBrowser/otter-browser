@@ -31,7 +31,7 @@ PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation
 	m_ui(new Ui::PasswordBarWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
+	m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
 	m_ui->messageLabel->setText((isUpdate ? tr("Do you want to update login data for %1?") : tr("Do you want to save login data for %1?")).arg(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host()));
 
 	connect(m_ui->okButton, SIGNAL(clicked()), this, SLOT(accepted()));

@@ -295,7 +295,7 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 {
 	if (Utils::isUrlEmpty(url))
 	{
-		return ThemesManager::getIcon(QLatin1String("tab"));
+		return ThemesManager::createIcon(QLatin1String("tab"));
 	}
 
 	if (url.scheme() == QLatin1String("about"))
@@ -315,7 +315,7 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 
 ///TODO
 
-	return ThemesManager::getIcon(QLatin1String("text-html"));
+	return ThemesManager::createIcon(QLatin1String("text-html"));
 }
 
 HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)

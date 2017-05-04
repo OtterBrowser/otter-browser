@@ -568,7 +568,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
 
-					ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
+					ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
 
 					connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
@@ -926,7 +926,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 
 		if (tabCrashingAction == QLatin1String("ask"))
 		{
-			ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("This tab has crashed."), tr("Do you want to try to reload it?"), (QDialogButtonBox::Yes | QDialogButtonBox::Close), nullptr, this);
+			ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("Question"), tr("This tab has crashed."), tr("Do you want to try to reload it?"), (QDialogButtonBox::Yes | QDialogButtonBox::Close), nullptr, this);
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 
 			showDialog(&dialog);

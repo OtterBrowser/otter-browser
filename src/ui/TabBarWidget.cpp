@@ -94,7 +94,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 		{
 			if (m_lockedIcon.isNull())
 			{
-				m_lockedIcon = ThemesManager::getIcon(QLatin1String("object-locked"));
+				m_lockedIcon = ThemesManager::createIcon(QLatin1String("object-locked"));
 			}
 
 			m_lockedIcon.paint(&painter, m_closeButtonRectangle);

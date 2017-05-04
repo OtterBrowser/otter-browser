@@ -32,7 +32,7 @@ namespace Otter
 
 UserScript::UserScript(const QString &path, QObject *parent) : QObject(parent), Addon(),
 	m_path(path),
-	m_icon(ThemesManager::getIcon(QLatin1String("addon-user-script"), false)),
+	m_icon(ThemesManager::createIcon(QLatin1String("addon-user-script"), false)),
 	m_injectionTime(DocumentReadyTime),
 	m_shouldRunOnSubFrames(true)
 {
@@ -47,7 +47,7 @@ void UserScript::reload()
 	m_version = QString();
 	m_homePage = QUrl();
 	m_updateUrl = QUrl();
-	m_icon = ThemesManager::getIcon(QLatin1String("addon-user-script"), false);
+	m_icon = ThemesManager::createIcon(QLatin1String("addon-user-script"), false);
 	m_excludeRules = QStringList();
 	m_includeRules = QStringList();
 	m_matchRules = QStringList();

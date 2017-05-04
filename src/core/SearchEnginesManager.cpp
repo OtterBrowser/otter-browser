@@ -153,7 +153,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 		if (search.isValid())
 		{
-			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : search.icon), QString()));
+			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : search.icon), QString()));
 			item->setData(search.title, TitleRole);
 			item->setData(search.identifier, IdentifierRole);
 			item->setData(search.keyword, KeywordRole);
@@ -169,7 +169,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 		separatorItem->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
-		QStandardItem *manageItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("configure")), tr("Manage Search Engines…")));
+		QStandardItem *manageItem(new QStandardItem(ThemesManager::createIcon(QLatin1String("configure")), tr("Manage Search Engines…")));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
 		manageItem->setFlags(manageItem->flags() | Qt::ItemNeverHasChildren);
 

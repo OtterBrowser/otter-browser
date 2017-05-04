@@ -71,10 +71,10 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 		const QString applicationFilePath(QCoreApplication::applicationFilePath());
 		QWinJumpList jumpLists;
 		QWinJumpListCategory* tasks(jumpLists.tasks());
-		tasks->addLink(ThemesManager::getIcon(QLatin1String("tab-new")), tr("New tab"), applicationFilePath, QStringList(QLatin1String("--new-tab")));
-		tasks->addLink(ThemesManager::getIcon(QLatin1String("tab-new-private")), tr("New private tab"), applicationFilePath, QStringList(QLatin1String("--new-private-tab")));
-		tasks->addLink(ThemesManager::getIcon(QLatin1String("window-new")), tr("New window"), applicationFilePath, QStringList(QLatin1String("--new-window")));
-		tasks->addLink(ThemesManager::getIcon(QLatin1String("window-new-private")), tr("New private window"), applicationFilePath, QStringList(QLatin1String("--new-private-window")));
+		tasks->addLink(ThemesManager::createIcon(QLatin1String("tab-new")), tr("New tab"), applicationFilePath, QStringList(QLatin1String("--new-tab")));
+		tasks->addLink(ThemesManager::createIcon(QLatin1String("tab-new-private")), tr("New private tab"), applicationFilePath, QStringList(QLatin1String("--new-private-tab")));
+		tasks->addLink(ThemesManager::createIcon(QLatin1String("window-new")), tr("New window"), applicationFilePath, QStringList(QLatin1String("--new-window")));
+		tasks->addLink(ThemesManager::createIcon(QLatin1String("window-new-private")), tr("New private window"), applicationFilePath, QStringList(QLatin1String("--new-private-window")));
 		tasks->setVisible(true);
 	}
 }

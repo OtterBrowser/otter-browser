@@ -166,7 +166,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 		case HandlersManager::HandlerDefinition::AskTransfer:
 			{
 				TransferDialog *transferDialog(new TransferDialog(transfer, this));
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
 
 				connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
@@ -374,7 +374,7 @@ void WebWidget::handleAudibleStateChange(bool isAudible)
 	if (m_actions.contains(ActionsManager::MuteTabMediaAction))
 	{
 		m_actions[ActionsManager::MuteTabMediaAction]->setEnabled(isAudible || isAudioMuted());
-		m_actions[ActionsManager::MuteTabMediaAction]->setIcon(ThemesManager::getIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")));
+		m_actions[ActionsManager::MuteTabMediaAction]->setIcon(ThemesManager::createIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")));
 		m_actions[ActionsManager::MuteTabMediaAction]->setOverrideText(isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
 	}
 }
@@ -438,7 +438,7 @@ void WebWidget::handleWindowCloseRequest()
 		return;
 	}
 
-	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this));
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this));
 	dialog->setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
@@ -707,7 +707,7 @@ void WebWidget::updateEditActions()
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(searchEngine.isValid());
 		m_actions[ActionsManager::SearchAction]->setParameters({{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
-		m_actions[ActionsManager::SearchAction]->setIcon(searchEngine.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
+		m_actions[ActionsManager::SearchAction]->setIcon(searchEngine.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : searchEngine.icon);
 		m_actions[ActionsManager::SearchAction]->setOverrideText(searchEngine.isValid() ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[ActionsManager::SearchAction]->setToolTip(searchEngine.isValid() ? searchEngine.description : tr("No search engines defined"));
 	}
@@ -922,14 +922,14 @@ void WebWidget::updateMediaActions()
 	if (m_actions.contains(ActionsManager::MediaPlayPauseAction))
 	{
 		m_actions[ActionsManager::MediaPlayPauseAction]->setOverrideText(isPaused ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
-		m_actions[ActionsManager::MediaPlayPauseAction]->setIcon(ThemesManager::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
+		m_actions[ActionsManager::MediaPlayPauseAction]->setIcon(ThemesManager::createIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
 		m_actions[ActionsManager::MediaPlayPauseAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(ActionsManager::MediaMuteAction))
 	{
 		m_actions[ActionsManager::MediaMuteAction]->setOverrideText(isMuted ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
-		m_actions[ActionsManager::MediaMuteAction]->setIcon(ThemesManager::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
+		m_actions[ActionsManager::MediaMuteAction]->setIcon(ThemesManager::createIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		m_actions[ActionsManager::MediaMuteAction]->setEnabled(isMedia);
 	}
 }
@@ -1484,13 +1484,13 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::MediaPlayPauseAction:
 			state.text = (m_hitResult.flags.testFlag(MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
-			state.icon = ThemesManager::getIcon(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause"));
+			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
 		case ActionsManager::MediaMuteAction:
 			state.text = (m_hitResult.flags.testFlag(MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
-			state.icon = ThemesManager::getIcon(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted"));
+			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
@@ -1500,7 +1500,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::MuteTabMediaAction:
 			state.isEnabled = (isAudible() || isAudioMuted());
-			state.icon = ThemesManager::getIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium"));
+			state.icon = ThemesManager::createIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium"));
 			state.text = (isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
 
 			break;
@@ -1606,7 +1606,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.contains(QLatin1String("searchEngine")) ? parameters[QLatin1String("searchEngine")].toString() : getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
 
 				state.text = (searchEngine.isValid() ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
-				state.icon = (searchEngine.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
+				state.icon = (searchEngine.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : searchEngine.icon);
 				state.isEnabled = searchEngine.isValid();
 			}
 

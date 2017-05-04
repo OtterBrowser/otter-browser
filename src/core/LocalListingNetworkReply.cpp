@@ -125,7 +125,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 			if (pixmap.isNull())
 			{
-				pixmap = ThemesManager::getIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false).pixmap(16, 16);
+				pixmap = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false).pixmap(16, 16);
 			}
 
 			pixmap.save(&buffer, "PNG");

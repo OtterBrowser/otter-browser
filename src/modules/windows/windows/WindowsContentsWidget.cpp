@@ -147,7 +147,7 @@ QUrl WindowsContentsWidget::getUrl() const
 
 QIcon WindowsContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("window"), false);
+	return ThemesManager::createIcon(QLatin1String("window"), false);
 }
 
 WebWidget::LoadingState WindowsContentsWidget::getLoadingState() const

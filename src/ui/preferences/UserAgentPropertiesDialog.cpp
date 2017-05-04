@@ -38,7 +38,7 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(userAgent.getTitle());
 	m_ui->valueLineEdit->setText(userAgent.value);
-	m_ui->previewButton->setIcon(ThemesManager::getIcon(QLatin1String("document-preview")));
+	m_ui->previewButton->setIcon(ThemesManager::createIcon(QLatin1String("document-preview")));
 
 	if (userAgent.identifier == QLatin1String("default"))
 	{

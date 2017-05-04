@@ -43,7 +43,7 @@ public:
 	static void createInstance(QObject *parent = nullptr);
 	static ThemesManager* getInstance();
 	static Style* createStyle(const QString &name);
-	static QIcon getIcon(const QString &name, bool fromTheme = true);
+	static QIcon createIcon(const QString &name, bool fromTheme = true);
 
 protected:
 	explicit ThemesManager(QObject *parent = nullptr);

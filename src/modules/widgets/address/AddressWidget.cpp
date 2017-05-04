@@ -147,7 +147,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	if (icon.isNull())
 	{
-		icon = ThemesManager::getIcon(QLatin1String("tab"));
+		icon = ThemesManager::createIcon(QLatin1String("tab"));
 	}
 
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);
@@ -502,24 +502,24 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (entry == UnknownEntry || entry == AddressEntry)
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-undo")), tr("Undo"), this, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(isUndoAvailable());
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-redo")), tr("Redo"), this, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(isRedoAvailable());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-undo")), tr("Undo"), this, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(isUndoAvailable());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-redo")), tr("Redo"), this, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(isRedoAvailable());
 		menu.addSeparator();
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-cut")), tr("Cut"), this, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(hasSelectedText());
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-paste")), tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-cut")), tr("Cut"), this, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(hasSelectedText());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-paste")), tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 
 		if (!m_isUsingSimpleMode)
 		{
 			menu.addAction(Application::createAction(ActionsManager::PasteAndGoAction, QVariantMap(), true, this));
 		}
 
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
 		menu.addSeparator();
 		menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!text().isEmpty());
 		menu.addSeparator();
 		menu.addAction(tr("Clear All"), this, SLOT(clear()))->setEnabled(!text().isEmpty());
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
 	}
 	else
 	{
@@ -983,12 +983,12 @@ void AddressWidget::updateGeometries()
 						definition.title = QT_TR_NOOP("Show website information");
 					}
 
-					definition.icon = ThemesManager::getIcon(icon, false);
+					definition.icon = ThemesManager::createIcon(icon, false);
 				}
 
 				break;
 			case FaviconEntry:
-				definition.icon = (m_window ? m_window->getIcon() : ThemesManager::getIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false));
+				definition.icon = (m_window ? m_window->getIcon() : ThemesManager::createIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false));
 
 				break;
 			case ListFeedsEntry:
@@ -998,14 +998,14 @@ void AddressWidget::updateGeometries()
 				}
 
 				definition.title = QT_TR_NOOP("Show feed list");
-				definition.icon = ThemesManager::getIcon(QLatin1String("application-rss+xml"), false);
+				definition.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"), false);
 
 				break;
 			case BookmarkEntry:
 				{
 					const QUrl url(getUrl());
 
-					definition.icon = ThemesManager::getIcon(QLatin1String("bookmarks"), false);
+					definition.icon = ThemesManager::createIcon(QLatin1String("bookmarks"), false);
 
 					if (BookmarksManager::hasBookmark(url))
 					{
@@ -1043,7 +1043,7 @@ void AddressWidget::updateGeometries()
 					}
 
 					definition.title = QT_TR_NOOP("Load all plugins on the page");
-					definition.icon = ThemesManager::getIcon(QLatin1String("preferences-plugin"), false);
+					definition.icon = ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
 				}
 
 				break;
@@ -1057,7 +1057,7 @@ void AddressWidget::updateGeometries()
 					}
 
 					definition.title = QT_TR_NOOP("Log in");
-					definition.icon = ThemesManager::getIcon(QLatin1String("fill-password"), false);
+					definition.icon = ThemesManager::createIcon(QLatin1String("fill-password"), false);
 				}
 
 				break;
@@ -1300,7 +1300,7 @@ void AddressWidget::setIcon(const QIcon &icon)
 {
 	if (m_layout.contains(FaviconEntry))
 	{
-		m_entries[FaviconEntry].icon = (icon.isNull() ? ThemesManager::getIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false) : icon);
+		m_entries[FaviconEntry].icon = (icon.isNull() ? ThemesManager::createIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false) : icon);
 
 		update();
 	}
@@ -1332,7 +1332,7 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 
 	if (event->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (event->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance() && url.isValid())
 	{
-		Utils::startLinkDrag(url, (m_window ? m_window->getTitle() : QString()), ((m_window ? m_window->getIcon() : ThemesManager::getIcon(QLatin1String("tab"))).pixmap(16, 16)), this);
+		Utils::startLinkDrag(url, (m_window ? m_window->getTitle() : QString()), ((m_window ? m_window->getIcon() : ThemesManager::createIcon(QLatin1String("tab"))).pixmap(16, 16)), this);
 
 		return true;
 	}

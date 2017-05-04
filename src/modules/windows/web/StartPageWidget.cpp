@@ -328,7 +328,7 @@ void StartPageWidget::configure()
 
 	m_preferencesDialog = new StartPagePreferencesDialog(this);
 
-	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("configure")), m_preferencesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_preferencesDialog, this));
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("configure")), m_preferencesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_preferencesDialog, this));
 
 	connect(m_preferencesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 

@@ -73,7 +73,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	titleLabel->setFont(font);
 
 	m_closeLabel->setToolTip(tr("Close"));
-	m_closeLabel->setPixmap(ThemesManager::getIcon(QLatin1String("window-close")).pixmap(16, 16));
+	m_closeLabel->setPixmap(ThemesManager::createIcon(QLatin1String("window-close")).pixmap(16, 16));
 	m_closeLabel->setMargin(5);
 	m_closeLabel->installEventFilter(this);
 

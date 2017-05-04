@@ -184,7 +184,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 	}
 	else
 	{
-		m_previewLabel->setPixmap((window->getLoadingState() == WebWidget::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
+		m_previewLabel->setPixmap((window->getLoadingState() == WebWidget::CrashedLoadingState) ? ThemesManager::createIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
 	}
 }
 

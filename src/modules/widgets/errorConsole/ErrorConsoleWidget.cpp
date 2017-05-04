@@ -38,7 +38,7 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::ErrorConsoleWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
+	m_ui->closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -141,15 +141,15 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	switch (message.level)
 	{
 		case Console::ErrorLevel:
-			icon = ThemesManager::getIcon(QLatin1String("dialog-error"));
+			icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
 
 			break;
 		case Console::WarningLevel:
-			icon = ThemesManager::getIcon(QLatin1String("dialog-warning"));
+			icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 
 			break;
 		default:
-			icon = ThemesManager::getIcon(QLatin1String("dialog-information"));
+			icon = ThemesManager::createIcon(QLatin1String("dialog-information"));
 
 			break;
 	}
@@ -283,7 +283,7 @@ void ErrorConsoleWidget::applyFilters(QStandardItem *item, const QString &filter
 void ErrorConsoleWidget::showContextMenu(const QPoint position)
 {
 	QMenu menu(m_ui->consoleView);
-	menu.addAction(ThemesManager::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
 	menu.addSeparator();
 	menu.addAction(tr("Expand All"), m_ui->consoleView, SLOT(expandAll()));
 	menu.addAction(tr("Collapse All"), m_ui->consoleView, SLOT(collapseAll()));

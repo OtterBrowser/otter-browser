@@ -68,7 +68,7 @@ QIcon IconWidget::createIcon(const QString &data) const
 		return QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
 	}
 
-	return ThemesManager::getIcon(data);
+	return ThemesManager::createIcon(data);
 }
 
 void IconWidget::clear()
@@ -133,7 +133,7 @@ void IconWidget::updateMenu()
 	}
 
 	menu()->addSeparator();
-	menu()->addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(!icon().isNull());
+	menu()->addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(!icon().isNull());
 }
 
 void IconWidget::setIcon(const QString &data)

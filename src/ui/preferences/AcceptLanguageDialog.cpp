@@ -82,8 +82,8 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 		m_ui->languagesComboBox->addItem(entries.at(i).first, entries.at(i).second);
 	}
 
-	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
-	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
+	m_ui->moveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 	m_ui->languagesComboBox->installEventFilter(this);
 
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));

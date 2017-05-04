@@ -131,8 +131,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
 	m_ui->addSearchButton->setMenu(addSearchMenu);
-	m_ui->moveDownSearchButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
-	m_ui->moveUpSearchButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
+	m_ui->moveDownSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
 	updateReaddSearchEngineMenu();
 
@@ -176,7 +176,7 @@ void PreferencesSearchPageWidget::createSearchEngine()
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
 	searchEngine.identifier = identifier;
 	searchEngine.title = tr("New Search Engine");
-	searchEngine.icon = ThemesManager::getIcon(QLatin1String("edit-find"));
+	searchEngine.icon = ThemesManager::createIcon(QLatin1String("edit-find"));
 
 	SearchEnginePropertiesDialog dialog(searchEngine, getKeywords(m_ui->searchViewWidget->getSourceModel()), this);
 

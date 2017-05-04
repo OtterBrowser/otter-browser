@@ -120,7 +120,7 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 		menu.addAction(tr("Select Color…"), this, SLOT(selectColor()));
 		menu.addAction(tr("Copy Color"), this, SLOT(copyColor()));
 		menu.addSeparator();
-		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
 		menu.exec(mapToGlobal(isRightToLeft() ? m_buttonRectangle.bottomRight() : m_buttonRectangle.bottomLeft()));
 	}
 }

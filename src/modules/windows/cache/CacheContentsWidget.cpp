@@ -338,7 +338,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 
 	if (entry.isValid())
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(SessionsManager::NewTabOpen);
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
@@ -409,7 +409,7 @@ void CacheContentsWidget::updateActions()
 
 		if (preview.isNull() && QIcon::hasThemeIcon(mimeType.iconName()))
 		{
-			preview = QIcon::fromTheme(mimeType.iconName(), ThemesManager::getIcon(QLatin1String("unknown"))).pixmap(64, 64);
+			preview = QIcon::fromTheme(mimeType.iconName(), ThemesManager::createIcon(QLatin1String("unknown"))).pixmap(64, 64);
 		}
 
 		const QUrl localUrl(cache->getPathForUrl(url));
@@ -570,7 +570,7 @@ QUrl CacheContentsWidget::getUrl() const
 
 QIcon CacheContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("cache"), false);
+	return ThemesManager::createIcon(QLatin1String("cache"), false);
 }
 
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const

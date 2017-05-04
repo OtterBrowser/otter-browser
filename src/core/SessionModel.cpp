@@ -44,12 +44,12 @@ QVariant SessionItem::data(int role) const
 
 		if (type == SessionModel::SessionEntity)
 		{
-			return ThemesManager::getIcon(QLatin1String("inode-directory"));
+			return ThemesManager::createIcon(QLatin1String("inode-directory"));
 		}
 
 		if (type == SessionModel::TrashEntity)
 		{
-			return ThemesManager::getIcon(QLatin1String("user-trash"));
+			return ThemesManager::createIcon(QLatin1String("user-trash"));
 		}
 	}
 	else if (role == SessionModel::IsTrashedRole)
@@ -156,7 +156,7 @@ QVariant MainWindowSessionItem::data(int role) const
 		case SessionModel::UrlRole:
 			return m_mainWindow->getUrl();
 		case SessionModel::IconRole:
-			return ThemesManager::getIcon(QLatin1String("window"));
+			return ThemesManager::createIcon(QLatin1String("window"));
 		case SessionModel::TypeRole:
 			return SessionModel::MainWindowEntity;
 		case SessionModel::IndexRole:

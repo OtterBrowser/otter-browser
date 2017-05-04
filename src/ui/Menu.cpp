@@ -100,7 +100,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 		case ClosedWindowsMenu:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Closed Tabs and Windows"));
-				setIcon(ThemesManager::getIcon(QLatin1String("user-trash")));
+				setIcon(ThemesManager::createIcon(QLatin1String("user-trash")));
 
 				MainWindow *mainWindow(MainWindow::findMainWindow(parent));
 
@@ -263,7 +263,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
 
 			QMenu contextMenu(this);
-			contextMenu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
+			contextMenu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 			contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
 			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			contextMenu.addSeparator();
@@ -340,7 +340,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 						}
 						else
 						{
-							action->setIcon(ThemesManager::getIcon(data));
+							action->setIcon(ThemesManager::createIcon(data));
 						}
 					}
 
@@ -548,7 +548,7 @@ void Menu::populateModelMenu()
 	{
 		Action *openAllAction(menu->addAction());
 		openAllAction->setData(index);
-		openAllAction->setIcon(ThemesManager::getIcon(QLatin1String("document-open-folder")));
+		openAllAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		openAllAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open All"));
 
 		menu->addSeparator();
@@ -560,7 +560,7 @@ void Menu::populateModelMenu()
 	{
 		Action *addFolderAction(menu->addAction());
 		addFolderAction->setData(index);
-		addFolderAction->setIcon(ThemesManager::getIcon(QLatin1String("document-open-folder")));
+		addFolderAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		addFolderAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "This Folder"));
 
 		menu->addSeparator();
@@ -797,7 +797,7 @@ void Menu::populateClosedWindowsMenu()
 
 	Action *clearAction(addAction());
 	clearAction->setData(0);
-	clearAction->setIcon(ThemesManager::getIcon(QLatin1String("edit-clear")));
+	clearAction->setIcon(ThemesManager::createIcon(QLatin1String("edit-clear")));
 	clearAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Clear"));
 
 	addSeparator();
@@ -822,7 +822,7 @@ void Menu::populateClosedWindowsMenu()
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
-			QAction *action(QMenu::addAction((tabs.at(i).isPrivate ? ThemesManager::getIcon(QLatin1String("tab-private")) : HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl()))), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this), this, SLOT(restoreClosedWindow())));
+			QAction *action(QMenu::addAction((tabs.at(i).isPrivate ? ThemesManager::createIcon(QLatin1String("tab-private")) : HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl()))), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this), this, SLOT(restoreClosedWindow())));
 			action->setData(i + 1);
 			action->setStatusTip(tabs.at(i).window.getUrl());
 		}
@@ -862,7 +862,7 @@ void Menu::populateProxiesMenu()
 
 			if (definition.isFolder)
 			{
-				action->setIcon(ThemesManager::getIcon(QLatin1String("inode-directory")));
+				action->setIcon(ThemesManager::createIcon(QLatin1String("inode-directory")));
 
 				if (definition.children.count() > 0)
 				{
@@ -1082,7 +1082,7 @@ void Menu::populateUserAgentMenu()
 
 			if (definition.isFolder)
 			{
-				action->setIcon(ThemesManager::getIcon(QLatin1String("inode-directory")));
+				action->setIcon(ThemesManager::createIcon(QLatin1String("inode-directory")));
 
 				if (definition.children.count() > 0)
 				{

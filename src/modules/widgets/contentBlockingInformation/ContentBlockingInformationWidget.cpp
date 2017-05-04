@@ -48,7 +48,7 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 
 	setMenu(menu);
 	setPopupMode(QToolButton::MenuButtonPopup);
-	setIcon(ThemesManager::getIcon(QLatin1String("content-blocking")));
+	setIcon(ThemesManager::createIcon(QLatin1String("content-blocking")));
 	setDefaultAction(new QAction(this));
 	setWindow(window);
 
@@ -248,7 +248,7 @@ void ContentBlockingInformationWidget::updateState()
 
 	if (m_icon.isNull())
 	{
-		m_icon = ThemesManager::getIcon(QLatin1String("content-blocking"));
+		m_icon = ThemesManager::createIcon(QLatin1String("content-blocking"));
 	}
 
 	const int iconSize(this->iconSize().width());

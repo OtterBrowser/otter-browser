@@ -38,7 +38,7 @@ QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	m_closeButton->setAutoFillBackground(false);
 	m_closeButton->setAutoRaise(true);
-	m_closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
+	m_closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 	m_closeButton->setToolTip(tr("Close"));
 	m_closeButton->setFixedSize(16, 16);
 	m_closeButton->show();

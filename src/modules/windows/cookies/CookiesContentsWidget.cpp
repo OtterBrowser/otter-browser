@@ -498,7 +498,7 @@ QUrl CookiesContentsWidget::getUrl() const
 
 QIcon CookiesContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("cookies"), false);
+	return ThemesManager::createIcon(QLatin1String("cookies"), false);
 }
 
 QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const

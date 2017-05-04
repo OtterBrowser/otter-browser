@@ -389,7 +389,7 @@ QUrl PasswordsContentsWidget::getUrl() const
 
 QIcon PasswordsContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("dialog-password"), false);
+	return ThemesManager::createIcon(QLatin1String("dialog-password"), false);
 }
 
 PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const QModelIndex &index) const

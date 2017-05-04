@@ -92,19 +92,19 @@ void Action::update(bool reset)
 		switch (m_identifier)
 		{
 			case ActionsManager::GoBackAction:
-				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next"));
+				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next"));
 
 				break;
 			case ActionsManager::GoForwardAction:
-				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous"));
+				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous"));
 
 				break;
 			case ActionsManager::RewindAction:
-				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last"));
+				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last"));
 
 				break;
 			case ActionsManager::FastForwardAction:
-				state.icon = ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first"));
+				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first"));
 
 				break;
 			default:

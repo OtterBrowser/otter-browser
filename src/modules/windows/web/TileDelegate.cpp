@@ -74,7 +74,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		if (isAddTile)
 		{
-			ThemesManager::getIcon(QLatin1String("list-add")).paint(painter, rectangle);
+			ThemesManager::createIcon(QLatin1String("list-add")).paint(painter, rectangle);
 		}
 
 		return;
@@ -92,7 +92,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	if (type == BookmarksModel::FolderBookmark && tileBackgroundMode != QLatin1String("none"))
 	{
-		ThemesManager::getIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.flags().testFlag(Qt::ItemIsEnabled) ? QIcon::Normal : QIcon::Disabled));
+		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.flags().testFlag(Qt::ItemIsEnabled) ? QIcon::Normal : QIcon::Disabled));
 	}
 	else if (tileBackgroundMode == QLatin1String("thumbnail"))
 	{

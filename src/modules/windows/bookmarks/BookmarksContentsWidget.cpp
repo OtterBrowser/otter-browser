@@ -48,7 +48,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	m_ui->setupUi(this);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
-	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
 	addMenu->addAction(tr("Add Bookmark…"), this, SLOT(addBookmark()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
@@ -161,11 +161,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 	if (type == BookmarksModel::TrashBookmark)
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 	}
 	else if (type == BookmarksModel::UnknownBookmark)
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
 		menu.addAction(tr("Add Bookmark…"), this, SLOT(addBookmark()));
 		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 	}
@@ -173,7 +173,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 	{
 		const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
 
-		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
@@ -206,7 +206,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 			menu.addSeparator();
 
 			QMenu *addMenu(menu.addMenu(tr("Add Bookmark")));
-			addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+			addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
 			addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
 			addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 		}
@@ -373,7 +373,7 @@ QUrl BookmarksContentsWidget::getUrl() const
 
 QIcon BookmarksContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("bookmarks"), false);
+	return ThemesManager::createIcon(QLatin1String("bookmarks"), false);
 }
 
 bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)

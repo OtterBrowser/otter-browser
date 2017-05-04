@@ -598,7 +598,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
 				imagePropertiesDialog->setButtonsVisible(false);
 
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
 
 				connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 				connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
@@ -622,7 +622,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
 					imagePropertiesDialog->setButtonsVisible(false);
 
-					ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
 					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
@@ -804,7 +804,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
 					searchEngine.title = getTitle();
 					searchEngine.formUrl = getUrl();
-					searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
+					searchEngine.icon = (icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : icon);
 					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
 					searchEngine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
 					searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
@@ -1008,7 +1008,7 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(url, authenticator, AuthenticationDialog::HttpAuthentication, this));
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -1023,7 +1023,7 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy, authenticator, AuthenticationDialog::ProxyAuthentication, this));
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -1566,15 +1566,15 @@ QIcon QtWebEngineWebWidget::getIcon() const
 {
 	if (isPrivate())
 	{
-		return ThemesManager::getIcon(QLatin1String("tab-private"));
+		return ThemesManager::createIcon(QLatin1String("tab-private"));
 	}
 
 #if QT_VERSION < 0x050700
-	return (m_icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : m_icon);
+	return (m_icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : m_icon);
 #else
 	const QIcon icon(m_page->icon());
 
-	return (icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon);
+	return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : icon);
 #endif
 }
 

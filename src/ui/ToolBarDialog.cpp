@@ -138,10 +138,10 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 			break;
 	}
 
-	m_ui->removeButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
-	m_ui->addButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
-	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("go-up")));
-	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("go-down")));
+	m_ui->removeButton->setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+	m_ui->addButton->setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
+	m_ui->moveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("go-up")));
+	m_ui->moveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("go-down")));
 	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
 
 	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
@@ -331,7 +331,7 @@ void ToolBarDialog::editEntry()
 
 		if (identifier == QLatin1String("ClosedWindowsMenu"))
 		{
-			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("user-trash")));
+			iconOptionWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
 		}
 		else if (identifier == QLatin1String("ConfigurationOptionWidget"))
 		{
@@ -356,12 +356,12 @@ void ToolBarDialog::editEntry()
 		}
 		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 		{
-			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("content-blocking")));
+			iconOptionWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("content-blocking")));
 			textOptionWidget->setDefaultValue(tr("Blocked Elements: {amount}"));
 		}
 		else if (identifier == QLatin1String("MenuButtonWidget"))
 		{
-			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("otter-browser"), false));
+			iconOptionWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
 			textOptionWidget->setDefaultValue(tr("Menu"));
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
@@ -648,7 +648,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 			}
 			else
 			{
-				icon = ThemesManager::getIcon(data);
+				icon = ThemesManager::createIcon(data);
 			}
 
 			if (data.isEmpty())

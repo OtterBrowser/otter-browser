@@ -37,47 +37,47 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 	switch (feature)
 	{
 		case WebWidget::FullScreenFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to enter full screen mode.").arg(domain));
 
 			break;
 		case WebWidget::GeolocationFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants access to your location.").arg(domain));
 
 			break;
 		case WebWidget::NotificationsFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to show notifications.").arg(domain));
 
 			break;
 		case WebWidget::PointerLockFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-pointer-lock"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-pointer-lock"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to lock mouse pointer.").arg(domain));
 
 			break;
 		case WebWidget::CaptureAudioFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to access your microphone.").arg(domain));
 
 			break;
 		case WebWidget::CaptureVideoFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to access your camera.").arg(domain));
 
 			break;
 		case WebWidget::CaptureAudioVideoFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
 
 			break;
 		case WebWidget::PlaybackAudioFeature:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-playback-audio"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-playback-audio"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("%1 wants to play audio.").arg(domain));
 
 			break;
 		default:
-			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
 			m_ui->messageLabel->setText(tr("Invalid permission request from %1.").arg(domain));
 			m_ui->permissionComboBox->hide();
 			m_ui->okButton->hide();

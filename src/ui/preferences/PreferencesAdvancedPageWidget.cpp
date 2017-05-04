@@ -108,7 +108,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
 
-	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
+	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::createIcon(QLatin1String("media-playback-start")));
 	m_ui->notificationsPlaySoundFilePathWidget->setFilters(QStringList(tr("WAV files (*.wav)")));
 
 	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
@@ -207,7 +207,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->userAgentsViewWidget->expandAll();
 
 	QMenu *addUserAgentMenu(new QMenu(m_ui->userAgentsAddButton));
-	addUserAgentMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"))->setData(TreeModel::FolderType);
+	addUserAgentMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"))->setData(TreeModel::FolderType);
 	addUserAgentMenu->addAction(tr("Add User Agent…"))->setData(TreeModel::EntryType);
 	addUserAgentMenu->addAction(tr("Add Separator"))->setData(TreeModel::SeparatorType);
 
@@ -222,7 +222,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->proxiesViewWidget->expandAll();
 
 	QMenu *addProxyMenu(new QMenu(m_ui->proxiesAddButton));
-	addProxyMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"))->setData(TreeModel::FolderType);
+	addProxyMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"))->setData(TreeModel::FolderType);
 	addProxyMenu->addAction(tr("Add Proxy…"))->setData(TreeModel::EntryType);
 	addProxyMenu->addAction(tr("Add Separator"))->setData(TreeModel::SeparatorType);
 
@@ -276,8 +276,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		m_ui->ciphersViewWidget->setEnabled(false);
 	}
 
-	m_ui->ciphersMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
-	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
+	m_ui->ciphersMoveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *updateChannelsModel(new QStandardItemModel(this));
 	const QStringList availableUpdateChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
@@ -310,8 +310,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateUpdateChannelsActions();
 
-	m_ui->keyboardMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
-	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
+	m_ui->keyboardMoveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
 	const QStringList keyboardProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
@@ -346,8 +346,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateReaddKeyboardProfileMenu();
 
-	m_ui->mouseMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
-	m_ui->mouseMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
+	m_ui->mouseMoveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->mouseMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *mouseProfilesModel(new QStandardItemModel(this));
 	const QStringList mouseProfiles(SettingsManager::getOption(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());

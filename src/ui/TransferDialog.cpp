@@ -35,7 +35,7 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(par
 	m_transfer(transfer),
 	m_ui(new Ui::TransferDialog)
 {
-	const QPixmap icon(ThemesManager::getIcon(transfer->getMimeType().iconName()).pixmap(16, 16));
+	const QPixmap icon(ThemesManager::createIcon(transfer->getMimeType().iconName()).pixmap(16, 16));
 	QString fileName(transfer->getSuggestedFileName());
 
 	if (fileName.isEmpty())

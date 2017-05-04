@@ -49,7 +49,7 @@ void QtWebKitCookieJar::setup(const QStringList &thirdPartyAcceptedHosts, const 
 void QtWebKitCookieJar::showDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation)
 {
 	AcceptCookieDialog *cookieDialog(new AcceptCookieDialog(cookie, operation, m_cookieJar, m_widget));
-	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget));
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget));
 	dialog->setAttribute(Qt::WA_DeleteOnClose);
 
 	connect(cookieDialog, SIGNAL(finished(int)), dialog, SLOT(close()));

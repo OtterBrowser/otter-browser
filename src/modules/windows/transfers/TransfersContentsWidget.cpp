@@ -92,8 +92,8 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	m_ui->transfersViewWidget->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersViewWidget->installEventFilter(this);
-	m_ui->stopResumeButton->setIcon(ThemesManager::getIcon(QLatin1String("task-ongoing")));
-	m_ui->redownloadButton->setIcon(ThemesManager::getIcon(QLatin1String("view-refresh")));
+	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-ongoing")));
+	m_ui->redownloadButton->setIcon(ThemesManager::createIcon(QLatin1String("view-refresh")));
 	m_ui->downloadLineEdit->installEventFilter(this);
 
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
@@ -244,15 +244,15 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 	switch (transfer->getState())
 	{
 		case Transfer::RunningState:
-			icon = ThemesManager::getIcon(QLatin1String("task-ongoing"));
+			icon = ThemesManager::createIcon(QLatin1String("task-ongoing"));
 
 			break;
 		case Transfer::FinishedState:
-			icon = ThemesManager::getIcon(QLatin1String("task-complete"));
+			icon = ThemesManager::createIcon(QLatin1String("task-complete"));
 
 			break;
 		default:
-			icon = ThemesManager::getIcon(QLatin1String("task-reject"));
+			icon = ThemesManager::createIcon(QLatin1String("task-reject"));
 
 			break;
 	}
@@ -484,12 +484,12 @@ void TransfersContentsWidget::updateActions()
 	if (transfer && transfer->getState() == Transfer::ErrorState)
 	{
 		m_ui->stopResumeButton->setText(tr("Resume"));
-		m_ui->stopResumeButton->setIcon(ThemesManager::getIcon(QLatin1String("task-ongoing")));
+		m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-ongoing")));
 	}
 	else
 	{
 		m_ui->stopResumeButton->setText(tr("Stop"));
-		m_ui->stopResumeButton->setIcon(ThemesManager::getIcon(QLatin1String("task-reject")));
+		m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-reject")));
 	}
 
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState));
@@ -623,7 +623,7 @@ QUrl TransfersContentsWidget::getUrl() const
 
 QIcon TransfersContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("transfers"), false);
+	return ThemesManager::createIcon(QLatin1String("transfers"), false);
 }
 
 WebWidget::LoadingState TransfersContentsWidget::getLoadingState() const

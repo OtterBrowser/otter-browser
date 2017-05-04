@@ -33,7 +33,7 @@ MenuButtonWidget::MenuButtonWidget(const ActionsManager::ActionEntryDefinition &
 	m_menu(new Menu(Menu::NoMenuRole, this)),
 	m_isHidden(false)
 {
-	setIcon(ThemesManager::getIcon(QLatin1String("otter-browser"), false));
+	setIcon(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
 	setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);

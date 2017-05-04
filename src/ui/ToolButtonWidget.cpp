@@ -230,7 +230,7 @@ QIcon ToolButtonWidget::getIcon() const
 			return QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
 		}
 
-		return ThemesManager::getIcon(data);
+		return ThemesManager::createIcon(data);
 	}
 
 	return (defaultAction() ? defaultAction()->icon() : icon());

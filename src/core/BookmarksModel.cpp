@@ -114,12 +114,12 @@ QVariant BookmarksItem::data(int role) const
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark)
 		{
-			return ThemesManager::getIcon(QLatin1String("inode-directory"));
+			return ThemesManager::createIcon(QLatin1String("inode-directory"));
 		}
 
 		if (type == BookmarksModel::TrashBookmark)
 		{
-			return ThemesManager::getIcon(QLatin1String("user-trash"));
+			return ThemesManager::createIcon(QLatin1String("user-trash"));
 		}
 
 		if (type == BookmarksModel::UrlBookmark)

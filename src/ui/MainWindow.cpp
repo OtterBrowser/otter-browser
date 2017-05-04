@@ -2206,7 +2206,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::FullScreenAction:
-			state.icon = ThemesManager::getIcon(isFullScreen() ? QLatin1String("view-restore") : QLatin1String("view-fullscreen"));
+			state.icon = ThemesManager::createIcon(isFullScreen() ? QLatin1String("view-restore") : QLatin1String("view-fullscreen"));
 
 			break;
 		case ActionsManager::ShowToolBarAction:
@@ -2381,7 +2381,7 @@ bool MainWindow::event(QEvent *event)
 				{
 					if (isFullScreen())
 					{
-						createAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-restore")));
+						createAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::createIcon(QLatin1String("view-restore")));
 
 						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
 						{
@@ -2395,7 +2395,7 @@ bool MainWindow::event(QEvent *event)
 					}
 					else
 					{
-						createAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-fullscreen")));
+						createAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::createIcon(QLatin1String("view-fullscreen")));
 
 						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 						{

@@ -129,7 +129,7 @@ Style* ThemesManager::createStyle(const QString &name)
 	return style;
 }
 
-QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)
+QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
 {
 	if (m_useSystemIconTheme && fromTheme && QIcon::hasThemeIcon(name))
 	{

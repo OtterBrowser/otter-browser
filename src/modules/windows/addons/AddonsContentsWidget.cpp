@@ -78,7 +78,7 @@ void AddonsContentsWidget::populateAddons()
 	m_types.clear();
 	m_types[Addon::UserScriptType] = 0;
 
-	QStandardItem *userScriptsItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("addon-user-script"), false), tr("User Scripts")));
+	QStandardItem *userScriptsItem(new QStandardItem(ThemesManager::createIcon(QLatin1String("addon-user-script"), false), tr("User Scripts")));
 	userScriptsItem->setData(Addon::UserScriptType, TypeRole);
 
 	m_model->appendRow(userScriptsItem);
@@ -432,7 +432,7 @@ QUrl AddonsContentsWidget::getUrl() const
 
 QIcon AddonsContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("preferences-plugin"), false);
+	return ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
 }
 
 WebWidget::LoadingState AddonsContentsWidget::getLoadingState() const

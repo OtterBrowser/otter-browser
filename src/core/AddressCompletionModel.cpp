@@ -86,7 +86,7 @@ void AddressCompletionModel::updateModel()
 
 		if (icon.isNull())
 		{
-			icon = ThemesManager::getIcon(QLatin1String("edit-find"));
+			icon = ThemesManager::createIcon(QLatin1String("edit-find"));
 		}
 
 		if (m_showCompletionCategories)

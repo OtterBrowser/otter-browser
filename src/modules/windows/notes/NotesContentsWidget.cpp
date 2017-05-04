@@ -44,7 +44,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->setupUi(this);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
-	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
 	addMenu->addAction(tr("Add Note"), this, SLOT(addNote()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
@@ -142,11 +142,11 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 	if (type == BookmarksModel::TrashBookmark)
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), NotesManager::getModel(), SLOT(emptyTrash()))->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), NotesManager::getModel(), SLOT(emptyTrash()))->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
 	}
 	else if (type == BookmarksModel::UnknownBookmark)
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
 		menu.addAction(tr("Add Bookmark"), this, SLOT(addNote()));
 		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 	}
@@ -162,7 +162,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 			menu.addSeparator();
 		}
 
-		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open source page"), this, SLOT(openUrl()))->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open source page"), this, SLOT(openUrl()))->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
 
 		if (type != BookmarksModel::RootBookmark)
 		{
@@ -177,7 +177,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 			menu.addSeparator();
 
 			QMenu *addMenu(menu.addMenu(tr("Add Note")));
-			addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+			addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
 			addMenu->addAction(tr("Add Note"), this, SLOT(addNote()));
 			addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 		}
@@ -385,7 +385,7 @@ QUrl NotesContentsWidget::getUrl() const
 
 QIcon NotesContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("notes"), false);
+	return ThemesManager::createIcon(QLatin1String("notes"), false);
 }
 
 bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)

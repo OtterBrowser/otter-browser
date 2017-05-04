@@ -63,7 +63,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 
 	m_ui->panelLayout->addWidget(toolbar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
-	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
+	m_ui->panelsButton->setIcon(ThemesManager::createIcon(QLatin1String("list-add")));
 	m_ui->horizontalLayout->addWidget(m_resizerWidget);
 
 	const int panelSize(m_toolBarWidget->getDefinition().panelSize);

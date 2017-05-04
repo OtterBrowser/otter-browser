@@ -61,7 +61,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 
 		if (!groupItem || groupItem->text() != option.first())
 		{
-			groupItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), option.first());
+			groupItem = new QStandardItem(ThemesManager::createIcon(QLatin1String("inode-directory")), option.first());
 
 			m_model->appendRow(groupItem);
 		}
@@ -257,7 +257,7 @@ QUrl ConfigurationContentsWidget::getUrl() const
 
 QIcon ConfigurationContentsWidget::getIcon() const
 {
-	return ThemesManager::getIcon(QLatin1String("configuration"), false);
+	return ThemesManager::createIcon(QLatin1String("configuration"), false);
 }
 
 bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
