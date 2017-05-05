@@ -93,13 +93,6 @@ void WebWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
-void WebWidget::bounceAction(int identifier, QVariantMap parameters)
-{
-	parameters[QLatin1String("isBounced")] = true;
-
-	Application::triggerAction(identifier, parameters, parentWidget());
-}
-
 void WebWidget::triggerAction()
 {
 	Action *action(qobject_cast<Action*>(sender()));

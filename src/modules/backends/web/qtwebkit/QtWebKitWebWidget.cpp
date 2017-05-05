@@ -933,11 +933,6 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 
 void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.contains(QLatin1String("isBounced")))
-	{
-		return;
-	}
-
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
@@ -1744,8 +1739,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		default:
 			break;
 	}
-
-	bounceAction(identifier, parameters);
 }
 
 void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)

@@ -150,65 +150,6 @@ void Window::focusInEvent(QFocusEvent *event)
 
 void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.contains(QLatin1String("isBounced")))
-	{
-		AddressWidget *addressWidget(nullptr);
-		SearchWidget *searchWidget(nullptr);
-
-		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction || identifier == ActionsManager::GoAction)
-		{
-			addressWidget = findAddressWidget();
-
-			for (int i = 0; i < m_searchWidgets.count(); ++i)
-			{
-				if (m_searchWidgets.at(i) && m_searchWidgets.at(i)->isVisible())
-				{
-					searchWidget = m_searchWidgets.at(i);
-
-					break;
-				}
-			}
-		}
-
-		if (identifier == ActionsManager::ActivateSearchFieldAction && searchWidget)
-		{
-			searchWidget->activate(Qt::ShortcutFocusReason);
-		}
-		else if (addressWidget)
-		{
-			if (identifier == ActionsManager::ActivateAddressFieldAction)
-			{
-				addressWidget->activate(Qt::ShortcutFocusReason);
-			}
-			else if (identifier == ActionsManager::ActivateSearchFieldAction)
-			{
-				addressWidget->setText(QLatin1String("? "));
-				addressWidget->activate(Qt::OtherFocusReason);
-			}
-			else if (identifier == ActionsManager::GoAction)
-			{
-				addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
-
-				return;
-			}
-		}
-		else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
-		{
-			OpenAddressDialog dialog(this);
-
-			if (identifier == ActionsManager::ActivateSearchFieldAction)
-			{
-				dialog.setText(QLatin1String("? "));
-			}
-
-			connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
-			connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
-			connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
-
-			dialog.exec();
-		}
-	}
-
 	switch (identifier)
 	{
 		case ActionsManager::CloneTabAction:
@@ -242,6 +183,63 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			if (!isPinned())
 			{
 				close();
+			}
+
+			break;
+		case ActionsManager::GoAction:
+		case ActionsManager::ActivateAddressFieldAction:
+		case ActionsManager::ActivateSearchFieldAction:
+			{
+				AddressWidget *addressWidget(findAddressWidget());
+				SearchWidget *searchWidget(nullptr);
+
+				for (int i = 0; i < m_searchWidgets.count(); ++i)
+				{
+					if (m_searchWidgets.at(i) && m_searchWidgets.at(i)->isVisible())
+					{
+						searchWidget = m_searchWidgets.at(i);
+
+						break;
+					}
+				}
+
+				if (identifier == ActionsManager::ActivateSearchFieldAction && searchWidget)
+				{
+					searchWidget->activate(Qt::ShortcutFocusReason);
+				}
+				else if (addressWidget)
+				{
+					if (identifier == ActionsManager::ActivateAddressFieldAction)
+					{
+						addressWidget->activate(Qt::ShortcutFocusReason);
+					}
+					else if (identifier == ActionsManager::ActivateSearchFieldAction)
+					{
+						addressWidget->setText(QLatin1String("? "));
+						addressWidget->activate(Qt::OtherFocusReason);
+					}
+					else if (identifier == ActionsManager::GoAction)
+					{
+						addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
+
+						return;
+					}
+				}
+				else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
+				{
+					OpenAddressDialog dialog(this);
+
+					if (identifier == ActionsManager::ActivateSearchFieldAction)
+					{
+						dialog.setText(QLatin1String("? "));
+					}
+
+					connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
+					connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
+					connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
+
+					dialog.exec();
+				}
 			}
 
 			break;

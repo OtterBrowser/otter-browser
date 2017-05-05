@@ -310,11 +310,6 @@ void QtWebEngineWebWidget::removeHistoryIndex(int index, bool purge)
 
 void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.contains(QLatin1String("isBounced")))
-	{
-		return;
-	}
-
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
@@ -932,8 +927,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		default:
 			break;
 	}
-
-	bounceAction(identifier, parameters);
 }
 
 void QtWebEngineWebWidget::pasteText(const QString &text)

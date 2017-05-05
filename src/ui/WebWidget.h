@@ -270,7 +270,6 @@ protected:
 	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
-	void bounceAction(int identifier, QVariantMap parameters);
 	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();

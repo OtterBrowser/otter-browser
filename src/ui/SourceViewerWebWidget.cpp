@@ -61,11 +61,6 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 
 void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.contains(QLatin1String("isBounced")))
-	{
-		return;
-	}
-
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
@@ -237,8 +232,6 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			return;
 	}
-
-	bounceAction(identifier, parameters);
 }
 
 void SourceViewerWebWidget::print(QPrinter *printer)

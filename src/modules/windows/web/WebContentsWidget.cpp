@@ -587,33 +587,30 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		default:
-			if (!parameters.contains(QLatin1String("isBounced")))
+			if (m_startPageWidget)
 			{
-				if (m_startPageWidget)
+				switch (identifier)
 				{
-					switch (identifier)
-					{
-						case ActionsManager::OpenLinkAction:
-						case ActionsManager::OpenLinkInCurrentTabAction:
-						case ActionsManager::OpenLinkInNewTabAction:
-						case ActionsManager::OpenLinkInNewTabBackgroundAction:
-						case ActionsManager::OpenLinkInNewWindowAction:
-						case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-						case ActionsManager::OpenLinkInNewPrivateTabAction:
-						case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-						case ActionsManager::OpenLinkInNewPrivateWindowAction:
-						case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-						case ActionsManager::ContextMenuAction:
-							m_startPageWidget->triggerAction(identifier, parameters);
+					case ActionsManager::OpenLinkAction:
+					case ActionsManager::OpenLinkInCurrentTabAction:
+					case ActionsManager::OpenLinkInNewTabAction:
+					case ActionsManager::OpenLinkInNewTabBackgroundAction:
+					case ActionsManager::OpenLinkInNewWindowAction:
+					case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+					case ActionsManager::OpenLinkInNewPrivateTabAction:
+					case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+					case ActionsManager::OpenLinkInNewPrivateWindowAction:
+					case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
+					case ActionsManager::ContextMenuAction:
+						m_startPageWidget->triggerAction(identifier, parameters);
 
-							return;
-						default:
-							break;
-					}
+						return;
+					default:
+						break;
 				}
-
-				m_webWidget->triggerAction(identifier, parameters);
 			}
+
+			m_webWidget->triggerAction(identifier, parameters);
 
 			break;
 	}

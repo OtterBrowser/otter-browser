@@ -249,10 +249,7 @@ void StartPageWidget::wheelEvent(QWheelEvent *event)
 
 void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.contains(QLatin1String("isBounced")))
-	{
-		return;
-	}
+	Q_UNUSED(parameters)
 
 	SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
 
