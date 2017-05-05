@@ -1077,6 +1077,20 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 			}
 
 			break;
+		case SettingsManager::Network_EnableReferrerOption:
+			if (m_actions.contains(ActionsManager::EnableReferrerAction))
+			{
+				m_actions[ActionsManager::EnableReferrerAction]->setChecked(value.toBool());
+			}
+
+			break;
+		case SettingsManager::Permissions_EnableJavaScriptOption:
+			if (m_actions.contains(ActionsManager::EnableJavaScriptAction))
+			{
+				m_actions[ActionsManager::EnableJavaScriptAction]->setChecked(value.toBool());
+			}
+
+			break;
 		default:
 			break;
 	}
