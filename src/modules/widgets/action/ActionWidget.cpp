@@ -71,6 +71,11 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		identifier = ActionsManager::OpenUrlAction;
 	}
 
+	if (isCheckable())
+	{
+		parameters[QLatin1String("isChecked")] = !isChecked();
+	}
+
 	Application::triggerAction(identifier, parameters, this);
 
 	QAction *action(defaultAction());
