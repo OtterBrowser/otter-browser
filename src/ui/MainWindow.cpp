@@ -994,6 +994,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 void MainWindow::triggerAction()
 {
+	QVariantMap parameters;
+	int identifier(-1);
 	Shortcut *shortcut(qobject_cast<Shortcut*>(sender()));
 
 	if (shortcut)
@@ -1015,16 +1017,30 @@ void MainWindow::triggerAction()
 			}
 		}
 
-		triggerAction(shortcut->getIdentifier(), shortcut->getParameters());
+		identifier = shortcut->getIdentifier();
+		parameters = shortcut->getParameters();
+	}
+	else
+	{
+		Action *action(qobject_cast<Action*>(sender()));
 
-		return;
+		if (action)
+		{
+			identifier = action->getIdentifier();
+			parameters = action->getParameters();
+		}
 	}
 
-	Action *action(qobject_cast<Action*>(sender()));
-
-	if (action)
+	if (identifier >= 0)
 	{
-		triggerAction(action->getIdentifier(), action->getParameters());
+		if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::ApplicationScope)
+		{
+			Application::triggerAction(identifier, parameters);
+		}
+		else
+		{
+			triggerAction(identifier, parameters);
+		}
 	}
 }
 
