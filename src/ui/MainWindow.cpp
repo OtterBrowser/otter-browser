@@ -1004,7 +1004,7 @@ void MainWindow::triggerAction()
 		{
 			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(shortcut->getIdentifier()));
 
-			if (definition.identifier >= 0 && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+			if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
 			{
 				Action *action(createAction(definition.identifier));
 

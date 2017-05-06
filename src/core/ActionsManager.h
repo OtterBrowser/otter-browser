@@ -274,6 +274,11 @@ public:
 		{
 			return QCoreApplication::translate("actions", ((preferDescription && !description.isEmpty()) ? description : defaultState.text).toUtf8().constData());
 		}
+
+		bool isValid() const
+		{
+			return (identifier >= 0);
+		}
 	};
 
 	struct ActionEntryDefinition
