@@ -86,7 +86,7 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
-		if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
 			connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 		}

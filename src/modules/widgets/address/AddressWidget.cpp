@@ -360,7 +360,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 
 		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 
-		if (toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		if (toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
 			connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 		}
@@ -1252,7 +1252,7 @@ void AddressWidget::setWindow(Window *window)
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
-		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
 			connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 		}

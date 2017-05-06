@@ -659,7 +659,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (!m_addressBar)
 	{
-		m_addressBar = new WindowToolBarWidget(ToolBarsManager::NavigationBar, this);
+		m_addressBar = new WindowToolBarWidget(ToolBarsManager::AddressBar, this);
 		m_addressBar->setVisible(m_addressBar->shouldBeVisible(m_mainWindow->isFullScreen()));
 
 		layout()->addWidget(m_addressBar);

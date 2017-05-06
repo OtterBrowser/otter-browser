@@ -37,7 +37,7 @@ public:
 	{
 		MenuBar = 0,
 		TabBar,
-		NavigationBar,
+		AddressBar,
 		ProgressBar,
 		SideBar,
 		StatusBar,

@@ -152,7 +152,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
-	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
 		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}
@@ -768,7 +768,7 @@ void SearchWidget::setWindow(Window *window)
 
 		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
-		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
 			connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 		}

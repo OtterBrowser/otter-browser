@@ -23,7 +23,7 @@
 		]
 	},
 	{
-		"identifier": "NavigationBar",
+		"identifier": "AddressBar",
 		"title": "Address Bar",
 		"actions":
 		[

@@ -44,7 +44,7 @@ ZoomWidget::ZoomWidget(Window *window, QWidget *parent) : QSlider(parent),
 	setTickInterval(100);
 	setWindow(window);
 
-	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
 		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}

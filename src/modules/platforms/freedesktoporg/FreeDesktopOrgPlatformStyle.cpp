@@ -43,7 +43,7 @@ void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, co
 	{
 		const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
 		const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
-		const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::NavigationBar);
+		const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::AddressBar);
 
 		if (!toolBarOption || !toolBar || (toolBarOption->toolBarArea != Qt::TopToolBarArea && !isNavigationBar))
 		{
