@@ -120,7 +120,6 @@ public slots:
 	void setUrl(const QUrl &url, bool force = false);
 
 protected:
-	void dragEnterEvent(QDragEnterEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
@@ -130,6 +129,7 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
+	void dragEnterEvent(QDragEnterEvent *event) override;
 	void showCompletion(bool isTypedHistory);
 	EntryIdentifier getEntry(const QPoint &position) const;
 	bool startDrag(QMouseEvent *event);

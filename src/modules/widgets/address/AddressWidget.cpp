@@ -424,16 +424,6 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	}
 }
 
-void AddressWidget::dragEnterEvent(QDragEnterEvent *event)
-{
-	if (event->mimeData()->hasUrls())
-	{
-		event->accept();
-	}
-
-	LineEditWidget::dragEnterEvent(event);
-}
-
 void AddressWidget::resizeEvent(QResizeEvent *event)
 {
 	LineEditWidget::resizeEvent(event);
@@ -698,6 +688,16 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	m_clickedEntry = UnknownEntry;
 
 	LineEditWidget::mouseReleaseEvent(event);
+}
+
+void AddressWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+	}
+
+	LineEditWidget::dragEnterEvent(event);
 }
 
 void AddressWidget::addBookmark(QAction *action)
