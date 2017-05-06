@@ -453,7 +453,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	{
 		UpdateChecker *updateChecker(new UpdateChecker(this));
 
-		connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(updateCheckFinished(QVector<UpdateChecker::UpdateInformation>)));
+		connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(handleUpdateCheckResult(QVector<UpdateChecker::UpdateInformation>)));
 
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
@@ -727,35 +727,13 @@ void Application::periodicUpdateCheck()
 {
 	UpdateChecker *updateChecker(new UpdateChecker(this));
 
-	connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(updateCheckFinished(QVector<UpdateChecker::UpdateInformation>)));
+	connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(handleUpdateCheckResult(QVector<UpdateChecker::UpdateInformation>)));
 
 	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
 	if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
-	}
-}
-
-void Application::updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
-{
-	if (availableUpdates.isEmpty())
-	{
-		return;
-	}
-
-	const int latestVersion(availableUpdates.count() - 1);
-
-	if (SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool())
-	{
-		new Updater(availableUpdates.at(latestVersion), this);
-	}
-	else
-	{
-		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel)));
-		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
-
-		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
 	}
 }
 
@@ -956,6 +934,28 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 		{
 			window->raiseWindow();
 		}
+	}
+}
+
+void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
+{
+	if (availableUpdates.isEmpty())
+	{
+		return;
+	}
+
+	const int latestVersion(availableUpdates.count() - 1);
+
+	if (SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool())
+	{
+		new Updater(availableUpdates.at(latestVersion), this);
+	}
+	else
+	{
+		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel)));
+		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
+
+		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
 	}
 }
 

@@ -90,11 +90,11 @@ public slots:
 
 protected slots:
 	void openUrl(const QUrl &url);
-	void updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 	void periodicUpdateCheck();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleAboutToQuit();
 	void handleNewConnection();
+	void handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 	void showUpdateDetails();
 
 private:
