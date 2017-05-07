@@ -529,9 +529,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 
 				Window *activeWindow(m_workspace->getActiveWindow());
-				const QRect geometry(activeWindow ? activeWindow->getSession().geometry : QRect());
-				const Qt::WindowState state(activeWindow ? activeWindow->getSession().state : ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState));
-				const bool isAlwaysOnTop(activeWindow ? activeWindow->getSession().isAlwaysOnTop : false);
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
@@ -547,9 +544,14 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					hints = SessionsManager::CurrentTabOpen;
 				}
 
+				const bool isReplacing(hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow);
+				const QRect geometry(isReplacing ? activeWindow->getSession().geometry : QRect());
+				const Qt::WindowState state(isReplacing ? activeWindow->getSession().state : ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState));
+				const bool isAlwaysOnTop(isReplacing ? activeWindow->getSession().isAlwaysOnTop : false);
+
 				mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
-				if (hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow)
+				if (isReplacing)
 				{
 					if (activeWindow->getType() == QLatin1String("web") && activeWindow->getWebWidget() && !parameters.contains(QLatin1String("webBackend")))
 					{
