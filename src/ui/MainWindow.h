@@ -89,7 +89,7 @@ public slots:
 	void raiseWindow();
 	void search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void clearClosedWindows();
-	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
+	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const QRect &geometry = QRect(), Qt::WindowState state = Qt::WindowMaximized, bool isAlwaysOnTop = false);
 	void setActiveWindowByIndex(int index);
 	void setActiveWindowByIdentifier(quint64 identifier);
 	void setOption(int identifier, const QVariant &value);

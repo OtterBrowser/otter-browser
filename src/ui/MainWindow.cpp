@@ -530,8 +530,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				Window *activeWindow(m_workspace->getActiveWindow());
 				const QRect geometry(activeWindow ? activeWindow->getSession().geometry : QRect());
-				WindowState state(activeWindow ? activeWindow->getSession().state : ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState));
-				bool isAlwaysOnTop(activeWindow ? activeWindow->getSession().isAlwaysOnTop : false);
+				const Qt::WindowState state(activeWindow ? activeWindow->getSession().state : ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState));
+				const bool isAlwaysOnTop(activeWindow ? activeWindow->getSession().isAlwaysOnTop : false);
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
@@ -1180,7 +1180,7 @@ void MainWindow::restore(const SessionMainWindow &session)
 			Window *window(new Window(parameters, nullptr, this));
 			window->setSession(session.windows.at(i));
 
-			if (index < 0 && session.windows.at(i).state != MinimizedWindowState)
+			if (index < 0 && session.windows.at(i).state != Qt::WindowMinimized)
 			{
 				index = i;
 			}
@@ -1265,7 +1265,7 @@ void MainWindow::clearClosedWindows()
 	}
 }
 
-void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
+void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const QRect &geometry, Qt::WindowState state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{
@@ -1308,7 +1308,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	if (m_isRestored && newTabOpeningAction == QLatin1String("maximizeTab"))
 	{
-		state = MaximizedWindowState;
+		state = Qt::WindowMaximized;
 	}
 
 	m_tabBar->addTab(index, window);

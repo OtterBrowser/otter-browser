@@ -849,15 +849,15 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::MaximizeTabAction:
-			state.isEnabled = (getWindowState() != MaximizedWindowState);
+			state.isEnabled = (getWindowState() != Qt::WindowMaximized);
 
 			break;
 		case ActionsManager::MinimizeTabAction:
-			state.isEnabled = (getWindowState() != MinimizedWindowState);
+			state.isEnabled = (getWindowState() != Qt::WindowMinimized);
 
 			break;
 		case ActionsManager::RestoreTabAction:
-			state.isEnabled = (getWindowState() != NormalWindowState);
+			state.isEnabled = (getWindowState() != Qt::WindowNoState);
 
 			break;
 		case ActionsManager::AlwaysOnTopTabAction:
@@ -913,7 +913,7 @@ SessionWindow Window::getSession() const
 
 	session.state = getWindowState();
 
-	if (session.state == NormalWindowState && parentWidget())
+	if (session.state == Qt::WindowNoState && parentWidget())
 	{
 		session.geometry = parentWidget()->geometry();
 	}
@@ -936,7 +936,7 @@ WebWidget::ContentStates Window::getContentState() const
 	return (m_contentsWidget ? m_contentsWidget->getContentState() : WebWidget::UnknownContentState);
 }
 
-WindowState Window::getWindowState() const
+Qt::WindowState Window::getWindowState() const
 {
 	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
@@ -944,18 +944,18 @@ WindowState Window::getWindowState() const
 	{
 		if (subWindow->isMaximized())
 		{
-			return MaximizedWindowState;
+			return Qt::WindowMaximized;
 		}
 
 		if (subWindow->isMinimized())
 		{
-			return MinimizedWindowState;
+			return Qt::WindowMinimized;
 		}
 
-		return NormalWindowState;
+		return Qt::WindowNoState;
 	}
 
-	return MaximizedWindowState;
+	return Qt::WindowMaximized;
 }
 
 quint64 Window::getIdentifier() const

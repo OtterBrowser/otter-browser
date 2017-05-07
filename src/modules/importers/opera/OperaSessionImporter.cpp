@@ -140,15 +140,15 @@ bool OperaSessionImporter::import(const QString &path)
 		switch (originalSession.getValue(QLatin1String("state")).toInt())
 		{
 			case 0:
-				window.state = NormalWindowState;
+				window.state = Qt::WindowNoState;
 
 				break;
 			case 1:
-				window.state = MinimizedWindowState;
+				window.state = Qt::WindowMinimized;
 
 				break;
 			default:
-				window.state = MaximizedWindowState;
+				window.state = Qt::WindowMaximized;
 
 				break;
 		}
