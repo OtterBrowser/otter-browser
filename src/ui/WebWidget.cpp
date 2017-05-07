@@ -106,14 +106,7 @@ void WebWidget::triggerAction()
 			parameters[QLatin1String("isChecked")] = action->isChecked();
 		}
 
-		if (action->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
-		{
-			triggerAction(action->getIdentifier(), parameters);
-		}
-		else
-		{
-			Application::triggerAction(action->getIdentifier(), parameters, parentWidget());
-		}
+		Application::triggerAction(action->getIdentifier(), parameters, parentWidget());
 	}
 }
 
