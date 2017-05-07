@@ -530,6 +530,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				Window *activeWindow(m_workspace->getActiveWindow());
 				const QRect geometry(activeWindow ? activeWindow->getSession().geometry : QRect());
+				WindowState state(activeWindow ? activeWindow->getSession().state : ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState));
+				bool isAlwaysOnTop(activeWindow ? activeWindow->getSession().isAlwaysOnTop : false);
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
@@ -559,7 +561,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				Window *window(new Window(mutableParameters, nullptr, this));
 
-				addWindow(window, hints, index, geometry);
+				addWindow(window, hints, index, geometry, state, isAlwaysOnTop);
 
 				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 			}
