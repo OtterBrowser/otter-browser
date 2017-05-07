@@ -441,7 +441,7 @@ void ToolBarDialog::editEntry()
 
 	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::DisplayRole);
 	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::ToolTipRole);
-	m_ui->currentEntriesItemView->setData(index, item->icon(), Qt::DecorationRole);
+	m_ui->currentEntriesItemView->setData(index, item->data(Qt::DecorationRole), Qt::DecorationRole);
 	m_ui->currentEntriesItemView->setData(index, options, OptionsRole);
 
 	delete item;
