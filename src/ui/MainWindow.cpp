@@ -529,6 +529,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 
 				Window *activeWindow(m_workspace->getActiveWindow());
+				const QRect geometry(activeWindow ? activeWindow->getSession().geometry : QRect());
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
 				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
@@ -558,7 +559,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				Window *window(new Window(mutableParameters, nullptr, this));
 
-				addWindow(window, hints, index);
+				addWindow(window, hints, index, geometry);
 
 				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 			}
