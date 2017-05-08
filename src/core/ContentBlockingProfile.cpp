@@ -285,7 +285,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 	addRule(new ContentBlockingRule(rule, blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck), line);
 }
 
-void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list)
+void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const
 {
 	const QStringList domains(line.at(0).split(QLatin1Char(',')));
 
@@ -295,7 +295,7 @@ void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMulti
 	}
 }
 
-void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &ruleString)
+void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &ruleString) const
 {
 	Node *node(m_root);
 
@@ -339,7 +339,7 @@ void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &r
 	node->rules.append(rule);
 }
 
-void ContentBlockingProfile::deleteNode(Node *node)
+void ContentBlockingProfile::deleteNode(Node *node) const
 {
 	for (int i = 0; i < node->children.count(); ++i)
 	{
@@ -890,7 +890,7 @@ bool ContentBlockingProfile::loadRules()
 	return true;
 }
 
-bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const QStringList &ruleList)
+bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const QStringList &ruleList) const
 {
 	for (int i = 0; i < ruleList.count(); ++i)
 	{

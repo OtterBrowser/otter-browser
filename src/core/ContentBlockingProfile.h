@@ -134,14 +134,14 @@ protected:
 	QString getPath() const;
 	void loadHeader(const QString &path);
 	void parseRuleLine(QString line);
-	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
-	void addRule(ContentBlockingRule *rule, const QString &ruleString);
-	void deleteNode(Node *node);
+	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const;
+	void addRule(ContentBlockingRule *rule, const QString &ruleString) const;
+	void deleteNode(Node *node) const;
 	ContentBlockingManager::CheckResult checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
 	ContentBlockingManager::CheckResult checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
 	ContentBlockingManager::CheckResult evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType);
 	bool loadRules();
-	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
+	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 
 protected slots:
 	void replyFinished();
