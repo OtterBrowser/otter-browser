@@ -2112,7 +2112,11 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
-		window = Application::createWindow({{QLatin1String("hints"), QVariant(hints)}})->openWindow(widget);
+		MainWindow *mainWindow(Application::createWindow({{QLatin1String("hints"), QVariant(hints)}}));
+
+		window = mainWindow->openWindow(widget);
+
+		mainWindow->triggerAction(ActionsManager::CloseOtherTabsAction);
 	}
 	else
 	{
