@@ -49,7 +49,7 @@ public:
 	static bool hasKeyword(const QString &keyword);
 
 protected:
-	explicit BookmarksManager(QObject *parent = nullptr);
+	explicit BookmarksManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 

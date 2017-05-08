@@ -113,7 +113,7 @@ public:
 	static QStringList getSpecialPages();
 
 protected:
-	explicit AddonsManager(QObject *parent = nullptr);
+	explicit AddonsManager(QObject *parent);
 
 private:
 	static AddonsManager *m_instance;

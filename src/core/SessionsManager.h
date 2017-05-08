@@ -167,7 +167,7 @@ public:
 	static bool hasUrl(const QUrl &url, bool activate = false);
 
 protected:
-	explicit SessionsManager(QObject *parent = nullptr);
+	explicit SessionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();

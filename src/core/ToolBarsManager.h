@@ -108,7 +108,7 @@ public slots:
 	void removeToolBar(int identifier = -1);
 
 protected:
-	explicit ToolBarsManager(QObject *parent = nullptr);
+	explicit ToolBarsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	static QJsonValue encodeEntry(const ActionsManager::ActionEntryDefinition &definition);

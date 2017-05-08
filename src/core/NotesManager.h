@@ -38,7 +38,7 @@ public:
 	static BookmarksItem* addNote(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = nullptr);
 
 protected:
-	explicit NotesManager(QObject *parent = nullptr);
+	explicit NotesManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 

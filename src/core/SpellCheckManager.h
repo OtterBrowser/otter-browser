@@ -43,7 +43,7 @@ public:
 	bool event(QEvent *event) override;
 
 protected:
-	explicit SpellCheckManager(QObject *parent = nullptr);
+	explicit SpellCheckManager(QObject *parent);
 
 	static void updateDefaultDictionary();
 

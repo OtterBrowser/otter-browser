@@ -97,7 +97,7 @@ public:
 	static int registerEvent(const QString &title, const QString &description = QString());
 
 protected:
-	explicit NotificationsManager(QObject *parent = nullptr);
+	explicit NotificationsManager(QObject *parent);
 
 private:
 	static NotificationsManager *m_instance;

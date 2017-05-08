@@ -146,7 +146,7 @@ public:
 	static bool isDownloading(const QString &source, const QString &target = QString());
 
 protected:
-	explicit TransfersManager(QObject *parent = nullptr);
+	explicit TransfersManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();

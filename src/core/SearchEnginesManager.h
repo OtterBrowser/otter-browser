@@ -85,7 +85,7 @@ public:
 	static bool setupSearchQuery(const QString &query, const QString &identifier, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
 protected:
-	explicit SearchEnginesManager(QObject *parent = nullptr);
+	explicit SearchEnginesManager(QObject *parent);
 
 	static void ensureInitialized();
 	static void updateSearchEnginesModel();

@@ -72,7 +72,7 @@ public slots:
 	void scheduleSave();
 
 protected:
-	explicit ContentBlockingManager(QObject *parent = nullptr);
+	explicit ContentBlockingManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 

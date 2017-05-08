@@ -53,7 +53,7 @@ public:
 	static void setHandler(const QString &type, const HandlerDefinition &definition);
 
 protected:
-	explicit HandlersManager(QObject *parent = nullptr);
+	explicit HandlersManager(QObject *parent);
 
 private:
 	static HandlersManager *m_instance;

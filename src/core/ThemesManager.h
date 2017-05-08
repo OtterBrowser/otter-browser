@@ -46,7 +46,7 @@ public:
 	static QIcon createIcon(const QString &name, bool fromTheme = true);
 
 protected:
-	explicit ThemesManager(QObject *parent = nullptr);
+	explicit ThemesManager(QObject *parent);
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 #if defined(Q_OS_WIN32)

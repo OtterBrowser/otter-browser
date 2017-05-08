@@ -49,7 +49,7 @@ public:
 	static bool hasEntry(const QUrl &url);
 
 protected:
-	explicit HistoryManager(QObject *parent = nullptr);
+	explicit HistoryManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();

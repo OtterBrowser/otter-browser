@@ -308,7 +308,7 @@ public:
 	static bool hasOverride(const QUrl &url, int identifier = -1);
 
 protected:
-	explicit SettingsManager(QObject *parent = nullptr);
+	explicit SettingsManager(QObject *parent);
 
 	static QString getHost(const QUrl &url);
 	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = QVariant(), const QStringList &choices = QStringList());

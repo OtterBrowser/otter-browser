@@ -88,7 +88,7 @@ public:
 	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 
 protected:
-	explicit PasswordsManager(QObject *parent = nullptr);
+	explicit PasswordsManager(QObject *parent);
 
 private:
 	static PasswordsManager *m_instance;
