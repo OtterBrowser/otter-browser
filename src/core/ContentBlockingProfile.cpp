@@ -461,7 +461,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(No
 	return result;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType)
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const
 {
 	switch (rule->ruleMatch)
 	{
@@ -831,7 +831,7 @@ bool ContentBlockingProfile::downloadRules()
 	return true;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType)
+ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const
 {
 	ContentBlockingManager::CheckResult result;
 
