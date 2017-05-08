@@ -31,11 +31,11 @@ PasswordsManager::PasswordsManager(QObject *parent) : QObject(parent)
 {
 }
 
-void PasswordsManager::createInstance(QObject *parent)
+void PasswordsManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new PasswordsManager(parent);
+		m_instance = new PasswordsManager(QCoreApplication::instance());
 		m_backend = new FilePasswordsStorageBackend(m_instance);
 
 		connect(m_backend, SIGNAL(passwordsModified()), m_instance, SIGNAL(passwordsModified()));

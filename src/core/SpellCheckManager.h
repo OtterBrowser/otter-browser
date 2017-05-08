@@ -36,7 +36,7 @@ public:
 		QString title;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static SpellCheckManager* getInstance();
 	static QString getDefaultDictionary();
 	static QVector<DictionaryInformation> getDictionaries();

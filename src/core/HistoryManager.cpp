@@ -47,11 +47,11 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
-void HistoryManager::createInstance(QObject *parent)
+void HistoryManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new HistoryManager(parent);
+		m_instance = new HistoryManager(QCoreApplication::instance());
 	}
 }
 

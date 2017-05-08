@@ -65,11 +65,11 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate, bool isReadOnly, QObject *parent)
+void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate, bool isReadOnly)
 {
 	if (!m_instance)
 	{
-		m_instance = new SessionsManager(parent);
+		m_instance = new SessionsManager(QCoreApplication::instance());
 		m_cachePath = cachePath;
 		m_profilePath = profilePath;
 		m_isPrivate = isPrivate;

@@ -21,6 +21,7 @@
 
 #include "SettingsManager.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
@@ -43,14 +44,14 @@ SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
 }
 
-void SettingsManager::createInstance(const QString &path, QObject *parent)
+void SettingsManager::createInstance(const QString &path)
 {
 	if (m_instance)
 	{
 		return;
 	}
 
-	m_instance = new SettingsManager(parent);
+	m_instance = new SettingsManager(QCoreApplication::instance());
 	m_globalPath = path + QLatin1String("/otter.conf");
 	m_overridePath = path + QLatin1String("/override.ini");
 	m_optionIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data());

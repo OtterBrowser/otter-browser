@@ -34,7 +34,7 @@ class HistoryManager final : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void clearHistory(uint period = 0);
 	static void removeEntry(quint64 identifier);
 	static void removeEntries(const QVector<quint64> &identifiers);

@@ -139,7 +139,7 @@ public:
 
 	Q_DECLARE_FLAGS(OpenHints, OpenHint)
 
-	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false, QObject *parent = nullptr);
+	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false);
 	static void clearClosedWindows();
 	static void storeClosedWindow(MainWindow *window);
 	static void markSessionModified();

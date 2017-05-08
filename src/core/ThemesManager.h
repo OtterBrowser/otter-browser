@@ -40,7 +40,7 @@ class ThemesManager final : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static ThemesManager* getInstance();
 	static Style* createStyle(const QString &name);
 	static QIcon createIcon(const QString &name, bool fromTheme = true);

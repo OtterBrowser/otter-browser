@@ -47,7 +47,7 @@ public:
 		bool isExplicit = true;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static HandlersManager* getInstance();
 	static HandlerDefinition getHandler(const QString &type);
 	static void setHandler(const QString &type, const HandlerDefinition &definition);

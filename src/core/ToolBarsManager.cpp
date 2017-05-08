@@ -56,11 +56,11 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
-void ToolBarsManager::createInstance(QObject *parent)
+void ToolBarsManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new ToolBarsManager(parent);
+		m_instance = new ToolBarsManager(QCoreApplication::instance());
 		m_toolBarIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
 		m_areToolBarsLocked = SettingsManager::getOption(SettingsManager::Interface_LockToolBarsOption).toBool();
 	}

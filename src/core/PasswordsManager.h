@@ -76,7 +76,7 @@ public:
 		PasswordType type = FormPassword;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void clearPasswords(const QString &host);
 	static void clearPasswords(int period = 0);
 	static void addPassword(const PasswordInformation &password);

@@ -70,7 +70,7 @@ public:
 		}
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void loadSearchEngines();
 	static void addSearchEngine(const SearchEngineDefinition &searchEngine);
 	static void setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);

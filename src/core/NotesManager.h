@@ -32,7 +32,7 @@ class NotesManager final : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static NotesManager* getInstance();
 	static BookmarksModel* getModel();
 	static BookmarksItem* addNote(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = nullptr);

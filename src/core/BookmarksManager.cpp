@@ -51,11 +51,11 @@ void BookmarksManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void BookmarksManager::createInstance(QObject *parent)
+void BookmarksManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new BookmarksManager(parent);
+		m_instance = new BookmarksManager(QCoreApplication::instance());
 	}
 }
 

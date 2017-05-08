@@ -52,7 +52,7 @@ public:
 		bool isException = false;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void addProfile(ContentBlockingProfile *profile);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentBlockingManager* getInstance();

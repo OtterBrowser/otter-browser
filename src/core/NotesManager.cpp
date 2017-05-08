@@ -33,11 +33,11 @@ NotesManager::NotesManager(QObject *parent) : QObject(parent),
 {
 }
 
-void NotesManager::createInstance(QObject *parent)
+void NotesManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new NotesManager(parent);
+		m_instance = new NotesManager(QCoreApplication::instance());
 	}
 }
 

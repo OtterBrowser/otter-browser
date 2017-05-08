@@ -122,11 +122,11 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Windows"), QString(), QUrl(QLatin1String("about:windows")), ThemesManager::createIcon(QLatin1String("window"), false)), QLatin1String("windows"));
 }
 
-void AddonsManager::createInstance(QObject *parent)
+void AddonsManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new AddonsManager(parent);
+		m_instance = new AddonsManager(QCoreApplication::instance());
 	}
 }
 

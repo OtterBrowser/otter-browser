@@ -161,7 +161,7 @@ public:
 		DoNotAllowToTrackPolicy
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void initialize();
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);

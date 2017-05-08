@@ -100,7 +100,7 @@ public:
 		OtherContext
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void loadProfiles();
 	static void cancelGesture();
 	static GesturesManager* getInstance();

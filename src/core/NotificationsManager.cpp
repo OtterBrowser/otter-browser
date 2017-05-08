@@ -90,11 +90,11 @@ NotificationsManager::NotificationsManager(QObject *parent) : QObject(parent)
 	registerEvent(QT_TRANSLATE_NOOP("notifications", "Update Available"), QT_TRANSLATE_NOOP("notifications", "Update is available to be downloaded"));
 }
 
-void NotificationsManager::createInstance(QObject *parent)
+void NotificationsManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new NotificationsManager(parent);
+		m_instance = new NotificationsManager(QCoreApplication::instance());
 		m_eventIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("EventIdentifier").data());
 	}
 }

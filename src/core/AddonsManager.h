@@ -101,7 +101,7 @@ public:
 		}
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void registerWebBackend(WebBackend *backend, const QString &name);
 	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
 	static void loadUserScripts();

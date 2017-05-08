@@ -49,11 +49,11 @@ ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
-void ContentBlockingManager::createInstance(QObject *parent)
+void ContentBlockingManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new ContentBlockingManager(parent);
+		m_instance = new ContentBlockingManager(QCoreApplication::instance());
 	}
 }
 

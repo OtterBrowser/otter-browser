@@ -33,11 +33,11 @@ HandlersManager::HandlersManager(QObject *parent) : QObject(parent)
 {
 }
 
-void HandlersManager::createInstance(QObject *parent)
+void HandlersManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new HandlersManager(parent);
+		m_instance = new HandlersManager(QCoreApplication::instance());
 	}
 }
 

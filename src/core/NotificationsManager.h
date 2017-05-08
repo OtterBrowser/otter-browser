@@ -88,7 +88,7 @@ public:
 		bool showNotification = false;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static NotificationsManager* getInstance();
 	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationLevel, QObject *parent = nullptr);
 	static QString getEventName(int identifier);

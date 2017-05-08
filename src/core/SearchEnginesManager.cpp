@@ -46,11 +46,11 @@ SearchEnginesManager::SearchEnginesManager(QObject *parent) : QObject(parent)
 {
 }
 
-void SearchEnginesManager::createInstance(QObject *parent)
+void SearchEnginesManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new SearchEnginesManager(parent);
+		m_instance = new SearchEnginesManager(QCoreApplication::instance());
 	}
 }
 

@@ -559,7 +559,7 @@ GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
-void GesturesManager::createInstance(QObject *parent)
+void GesturesManager::createInstance()
 {
 	if (!m_instance)
 	{
@@ -584,7 +584,7 @@ void GesturesManager::createInstance(QObject *parent)
 		m_nativeGestures[GesturesManager::ContentEditableContext] = contentEditable;
 		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
 
-		m_instance = new GesturesManager(parent);
+		m_instance = new GesturesManager(QCoreApplication::instance());
 		m_gesturesContextEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("GesturesContext").data());
 
 		loadProfiles();

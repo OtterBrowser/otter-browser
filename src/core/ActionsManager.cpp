@@ -218,11 +218,11 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
-void ActionsManager::createInstance(QObject *parent)
+void ActionsManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new ActionsManager(parent);
+		m_instance = new ActionsManager(QCoreApplication::instance());
 		m_actionIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data());
 
 		loadProfiles();

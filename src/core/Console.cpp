@@ -19,6 +19,8 @@
 
 #include "Console.h"
 
+#include <QtCore/QCoreApplication>
+
 namespace Otter
 {
 
@@ -29,11 +31,11 @@ Console::Console(QObject *parent) : QObject(parent)
 {
 }
 
-void Console::createInstance(QObject *parent)
+void Console::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new Console(parent);
+		m_instance = new Console(QCoreApplication::instance());
 	}
 }
 

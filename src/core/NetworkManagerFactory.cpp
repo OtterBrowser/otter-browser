@@ -202,16 +202,16 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 	connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SIGNAL(onlineStateChanged(bool)));
 }
 
-void NetworkManagerFactory::createInstance(QObject *parent)
+void NetworkManagerFactory::createInstance()
 {
 	if (!m_instance)
 	{
 		m_proxyFactory = new NetworkProxyFactory();
-		m_instance = new NetworkManagerFactory(parent);
+		m_instance = new NetworkManagerFactory(QCoreApplication::instance());
 
 		QNetworkProxyFactory::setApplicationProxyFactory(m_proxyFactory);
 
-		ContentBlockingManager::createInstance(m_instance);
+		ContentBlockingManager::createInstance();
 	}
 }
 

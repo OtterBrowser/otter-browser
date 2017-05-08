@@ -914,11 +914,11 @@ TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 {
 }
 
-void TransfersManager::createInstance(QObject *parent)
+void TransfersManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new TransfersManager(parent);
+		m_instance = new TransfersManager(QCoreApplication::instance());
 	}
 }
 

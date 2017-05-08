@@ -62,7 +62,7 @@ public:
 		int line = -1;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, quint64 window = 0);
 	static Console* getInstance();
 	static QVector<Console::Message> getMessages();

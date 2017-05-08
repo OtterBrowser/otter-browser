@@ -202,11 +202,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	if (m_commandLineParser.isSet(QLatin1String("report")))
 	{
-		Console::createInstance(this);
+		Console::createInstance();
 
-		SettingsManager::createInstance(profilePath, this);
+		SettingsManager::createInstance(profilePath);
 
-		SessionsManager::createInstance(profilePath, cachePath, isPrivate, false, this);
+		SessionsManager::createInstance(profilePath, cachePath, isPrivate, false);
 
 		QStringList rawReportOptions(m_commandLineParser.positionalArguments());
 		ReportOptions reportOptions(BasicReport);
@@ -312,9 +312,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		isReadOnly = true;
 	}
 
-	Console::createInstance(this);
+	Console::createInstance();
 
-	SettingsManager::createInstance(profilePath, this);
+	SettingsManager::createInstance(profilePath);
 
 	if (!isReadOnly)
 	{
@@ -372,7 +372,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		}
 	}
 
-	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly, this);
+	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly);
 
 	if (!isReadOnly && !Migrator::run())
 	{
@@ -383,35 +383,35 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		return;
 	}
 
-	ThemesManager::createInstance(this);
+	ThemesManager::createInstance();
 
-	ActionsManager::createInstance(this);
+	ActionsManager::createInstance();
 
-	AddonsManager::createInstance(this);
+	AddonsManager::createInstance();
 
-	BookmarksManager::createInstance(this);
+	BookmarksManager::createInstance();
 
-	GesturesManager::createInstance(this);
+	GesturesManager::createInstance();
 
-	HandlersManager::createInstance(this);
+	HandlersManager::createInstance();
 
-	HistoryManager::createInstance(this);
+	HistoryManager::createInstance();
 
-	NetworkManagerFactory::createInstance(this);
+	NetworkManagerFactory::createInstance();
 
-	NotesManager::createInstance(this);
+	NotesManager::createInstance();
 
-	NotificationsManager::createInstance(this);
+	NotificationsManager::createInstance();
 
-	PasswordsManager::createInstance(this);
+	PasswordsManager::createInstance();
 
-	SearchEnginesManager::createInstance(this);
+	SearchEnginesManager::createInstance();
 
-	SpellCheckManager::createInstance(this);
+	SpellCheckManager::createInstance();
 
-	ToolBarsManager::createInstance(this);
+	ToolBarsManager::createInstance();
 
-	TransfersManager::createInstance(this);
+	TransfersManager::createInstance();
 
 	setLocale(SettingsManager::getOption(SettingsManager::Browser_LocaleOption).toString());
 	setQuitOnLastWindowClosed(true);
@@ -1116,8 +1116,8 @@ QCommandLineParser* Application::getCommandLineParser()
 
 QString Application::createReport(ReportOptions options)
 {
-	ActionsManager::createInstance(m_instance);
-	AddonsManager::createInstance(m_instance);
+	ActionsManager::createInstance();
+	AddonsManager::createInstance();
 
 	WebBackend *webBackend(AddonsManager::getWebBackend());
 	QString report;

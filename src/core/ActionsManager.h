@@ -289,7 +289,7 @@ public:
 		QVector<ActionEntryDefinition> entries;
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void loadProfiles();
 	static ActionsManager* getInstance();
 	static QString getReport();

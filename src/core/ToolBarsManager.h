@@ -88,7 +88,7 @@ public:
 		}
 	};
 
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void resetToolBars();
 	static void setToolBar(ToolBarsManager::ToolBarDefinition definition);
 	static void setToolBarsLocked(bool locked);

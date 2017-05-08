@@ -33,7 +33,7 @@ class BookmarksManager final : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void updateVisits(const QUrl &url);
 	static void removeBookmark(const QUrl &url);
 	static void setLastUsedFolder(BookmarksItem *folder);

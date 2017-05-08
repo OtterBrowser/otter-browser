@@ -134,7 +134,7 @@ class TransfersManager final : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = nullptr);
+	static void createInstance();
 	static void addTransfer(Transfer *transfer);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();

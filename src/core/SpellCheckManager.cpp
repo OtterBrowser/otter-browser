@@ -41,11 +41,11 @@ SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 #endif
 }
 
-void SpellCheckManager::createInstance(QObject *parent)
+void SpellCheckManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new SpellCheckManager(parent);
+		m_instance = new SpellCheckManager(QCoreApplication::instance());
 	}
 }
 

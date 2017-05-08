@@ -52,11 +52,11 @@ ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
-void ThemesManager::createInstance(QObject *parent)
+void ThemesManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new ThemesManager(parent);
+		m_instance = new ThemesManager(QCoreApplication::instance());
 		m_probeWidget = new QWidget();
 		m_probeWidget->hide();
 		m_probeWidget->setAttribute(Qt::WA_DontShowOnScreen, true);
