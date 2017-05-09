@@ -97,8 +97,14 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 
+	if (isSidebarPanel())
+	{
+		m_ui->detailsWidget->hide();
+	}
+
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
 }
@@ -238,6 +244,25 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 	menu.addAction(tr("Expand All"), m_ui->configurationViewWidget, SLOT(expandAll()));
 	menu.addAction(tr("Collapse All"), m_ui->configurationViewWidget, SLOT(collapseAll()));
 	menu.exec(m_ui->configurationViewWidget->mapToGlobal(position));
+}
+
+void ConfigurationContentsWidget::updateActions()
+{
+	const QModelIndex index(m_ui->configurationViewWidget->selectionModel()->hasSelection() ? m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2) : QModelIndex());
+	const int identifier(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString()));
+
+	if (identifier >= 0)
+	{
+		m_ui->nameLabelWidget->setText(SettingsManager::getOptionName(identifier));
+		m_ui->currentValueLabelWidget->setText(SettingsManager::getOption(identifier).toString());
+		m_ui->defaultValueLabelWidget->setText(SettingsManager::getOptionDefinition(identifier).defaultValue.toString());
+	}
+	else
+	{
+		m_ui->nameLabelWidget->clear();
+		m_ui->currentValueLabelWidget->clear();
+		m_ui->defaultValueLabelWidget->clear();
+	}
 }
 
 QString ConfigurationContentsWidget::getTitle() const
