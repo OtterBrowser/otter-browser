@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "OptionDelegate.h"
+#include "OptionWidget.h"
 #include "../core/SettingsManager.h"
 
 #include <QtGui/QPainter>

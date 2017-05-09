@@ -21,7 +21,6 @@
 #define OTTER_OPTIONDELEGATE_H
 
 #include "ItemDelegate.h"
-#include "OptionWidget.h"
 
 namespace Otter
 {
