@@ -47,7 +47,7 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QVBoxLayout" name="buttonsLayout">
+     <layout class="QVBoxLayout" name="buttonsLayout" stretch="0,1">
       <property name="spacing">
        <number>1</number>
       </property>
