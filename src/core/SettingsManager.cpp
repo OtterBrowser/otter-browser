@@ -322,6 +322,46 @@ SettingsManager* SettingsManager::getInstance()
 	return m_instance;
 }
 
+QString SettingsManager::createDisplayValue(int identifier, const QVariant &value)
+{
+	const OptionDefinition definition(getOptionDefinition(identifier));
+
+	switch (definition.type)
+	{
+		case SettingsManager::BooleanType:
+			return (value.toBool() ? tr("Yes") : tr("No"));
+		case SettingsManager::ColorType:
+			return value.toString().toUpper();
+		case SettingsManager::EnumerationType:
+			{
+				const QString key(value.toString());
+
+				for (int i = 0; i < definition.choices.count(); ++i)
+				{
+					if (definition.choices.at(i).value == key)
+					{
+						return definition.choices.at(i).getTitle();
+					}
+				}
+			}
+
+			break;
+		case SettingsManager::ListType:
+			return value.toStringList().join(QLatin1String(", "));
+		case SettingsManager::PasswordType:
+			if (!value.toString().isEmpty())
+			{
+				return QString(5, QChar(0x2022));
+			}
+
+			break;
+		default:
+			break;
+	}
+
+	return value.toString();
+}
+
 QString SettingsManager::getGlobalPath()
 {
 	return m_globalPath;

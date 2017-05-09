@@ -36,12 +36,10 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString())));
 
+	option->text = SettingsManager::createDisplayValue(definition.identifier, index.data(Qt::DisplayRole));
+
 	switch (definition.type)
 	{
-		case SettingsManager::BooleanType:
-			option->text = (index.data(Qt::DisplayRole).toBool() ? tr("Yes") : tr("No"));
-
-			break;
 		case SettingsManager::ColorType:
 			{
 				const QColor color(index.data(Qt::DisplayRole).toString());
@@ -76,7 +74,6 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 				option->features |= QStyleOptionViewItem::HasDecoration;
 				option->decorationSize = icon.size();
 				option->icon = QIcon(icon);
-				option->text = index.data(Qt::DisplayRole).toString().toUpper();
 			}
 
 			break;
@@ -93,7 +90,6 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 				{
 					if (definition.choices.at(i).value == value)
 					{
-						option->text = definition.choices.at(i).getTitle();
 						option->icon = definition.choices.at(i).icon;
 
 						break;
@@ -104,13 +100,6 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 			break;
 		case SettingsManager::FontType:
 			option->font = QFont(index.data(Qt::DisplayRole).toString());
-
-			break;
-		case SettingsManager::PasswordType:
-			if (!option->text.isEmpty())
-			{
-				option->text = QString(5, QChar(0x2022));
-			}
 
 			break;
 		default:

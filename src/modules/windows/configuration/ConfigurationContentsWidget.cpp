@@ -254,8 +254,8 @@ void ConfigurationContentsWidget::updateActions()
 	if (identifier >= 0)
 	{
 		m_ui->nameLabelWidget->setText(SettingsManager::getOptionName(identifier));
-		m_ui->currentValueLabelWidget->setText(SettingsManager::getOption(identifier).toString());
-		m_ui->defaultValueLabelWidget->setText(SettingsManager::getOptionDefinition(identifier).defaultValue.toString());
+		m_ui->currentValueLabelWidget->setText(SettingsManager::createDisplayValue(identifier, SettingsManager::getOption(identifier)));
+		m_ui->defaultValueLabelWidget->setText(SettingsManager::createDisplayValue(identifier, SettingsManager::getOptionDefinition(identifier).defaultValue));
 	}
 	else
 	{
