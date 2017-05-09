@@ -225,6 +225,8 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 			}
 		}
 	}
+
+	updateActions();
 }
 
 void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
