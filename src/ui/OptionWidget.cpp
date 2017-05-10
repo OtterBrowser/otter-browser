@@ -42,6 +42,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 	m_saveButton(nullptr),
 	m_option(option),
 	m_value(value),
+	m_type(type),
 	m_isModified(false)
 {
 	switch (type)
@@ -417,7 +418,7 @@ QVariant OptionWidget::getValue() const
 			return QVariant();
 		}
 
-		if (SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).type == SettingsManager::ListType)
+		if (m_type == SettingsManager::ListType)
 		{
 			return m_lineEdit->text().split(QLatin1String(", "), QString::SkipEmptyParts);
 		}

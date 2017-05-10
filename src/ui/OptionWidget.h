@@ -89,6 +89,7 @@ private:
 	QVariant m_defaultValue;
 	QVariant m_value;
 	QModelIndex m_index;
+	SettingsManager::OptionType m_type;
 	bool m_isModified;
 
 signals:
