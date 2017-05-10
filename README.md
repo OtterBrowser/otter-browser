@@ -47,7 +47,7 @@ The browser is written in C++ from scratch and is based on the Qt5 framework, wi
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
-Too stay tuned on the development, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0) and two IRC channels at Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (main and international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (Polski / Polish).
+To stay tuned on the development, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0) and two IRC channels at Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (main and international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (Polski / Polish).
 
 Read *CONTRIBUTING.md* and don’t hesitate!
 
