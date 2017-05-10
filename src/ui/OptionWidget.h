@@ -41,15 +41,6 @@ class OptionWidget final : public QWidget
 	Q_OBJECT
 
 public:
-	enum ButtonType
-	{
-		NoButtons = 0,
-		ResetButton,
-		SaveButton
-	};
-
-	Q_DECLARE_FLAGS(ButtonTypes, ButtonType)
-
 	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
 
 	void setIndex(const QModelIndex &index);
@@ -57,7 +48,6 @@ public:
 	void setValue(const QVariant &value);
 	void setChoices(const QStringList &choices);
 	void setChoices(const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> &choices);
-	void setButtons(ButtonTypes buttons);
 	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
 	void setSizePolicy(QSizePolicy policy);
 	QString getOption() const;
@@ -72,7 +62,6 @@ protected:
 protected slots:
 	void markModified();
 	void reset();
-	void save();
 
 private:
 	QWidget *m_widget;
@@ -84,7 +73,6 @@ private:
 	QLineEdit *m_lineEdit;
 	QSpinBox *m_spinBox;
 	QPushButton *m_resetButton;
-	QPushButton *m_saveButton;
 	QString m_option;
 	QVariant m_defaultValue;
 	QVariant m_value;
@@ -97,7 +85,5 @@ signals:
 };
 
 }
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::OptionWidget::ButtonTypes)
 
 #endif

@@ -389,7 +389,6 @@ void ToolBarDialog::editEntry()
 
 		iconOptionWidget->setValue(options.value(QLatin1String("icon"), iconOptionWidget->getDefaultValue()));
 		textOptionWidget->setValue(options.value(QLatin1String("text"), textOptionWidget->getDefaultValue()));
-		textOptionWidget->setButtons(textOptionWidget->getDefaultValue().isNull() ? OptionWidget::NoButtons : OptionWidget::ResetButton);
 
 		widgets.append({tr("Icon:"), iconOptionWidget});
 		widgets.append({tr("Text:"), textOptionWidget});

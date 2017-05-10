@@ -118,14 +118,11 @@ void OptionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionVie
 
 void OptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	if (m_isSimple)
-	{
-		OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
-		if (widget)
-		{
-			model->setData(index, widget->getValue());
-		}
+	if (widget)
+	{
+		model->setData(index, widget->getValue());
 	}
 }
 
@@ -136,16 +133,13 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 	const QString name(index.data(Qt::UserRole).toString());
 	const int identifier(SettingsManager::getOptionIdentifier(name));
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
-	QVariant value(index.data(Qt::EditRole));
-
-	if (value.isNull())
-	{
-		value = SettingsManager::getOption(identifier);
-	}
-
-	OptionWidget *widget(new OptionWidget(name, value, definition.type, parent));
+	OptionWidget *widget(new OptionWidget(name, index.data(Qt::EditRole), definition.type, parent));
 	widget->setIndex(index);
-	widget->setButtons(m_isSimple ? OptionWidget::NoButtons : (OptionWidget::ResetButton | OptionWidget::SaveButton));
+
+	if (!m_isSimple)
+	{
+		widget->setDefaultValue(definition.defaultValue);
+	}
 
 	if (definition.type == SettingsManager::EnumerationType)
 	{

@@ -39,7 +39,6 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 	m_lineEdit(nullptr),
 	m_spinBox(nullptr),
 	m_resetButton(nullptr),
-	m_saveButton(nullptr),
 	m_option(option),
 	m_value(value),
 	m_type(type),
@@ -162,12 +161,10 @@ void OptionWidget::markModified()
 
 	if (m_resetButton)
 	{
-		m_resetButton->setEnabled(getValue() != getDefaultValue());
+		m_resetButton->setEnabled(m_defaultValue != getValue());
 	}
-	else
-	{
-		emit commitData(this);
-	}
+
+	emit commitData(this);
 }
 
 void OptionWidget::reset()
@@ -180,11 +177,6 @@ void OptionWidget::reset()
 	{
 		m_resetButton->setEnabled(false);
 	}
-}
-
-void OptionWidget::save()
-{
-	SettingsManager::setValue(SettingsManager::getOptionIdentifier(m_option), getValue());
 }
 
 void OptionWidget::setIndex(const QModelIndex &index)
@@ -211,6 +203,16 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 	if (!m_isModified)
 	{
 		reset();
+	}
+
+	if (!m_resetButton)
+	{
+		m_resetButton = new QPushButton(tr("Defaults"), this);
+		m_resetButton->setEnabled(m_defaultValue != getValue());
+
+		layout()->addWidget(m_resetButton);
+
+		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
 	}
 }
 
@@ -328,38 +330,6 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 	}
 }
 
-void OptionWidget::setButtons(ButtonTypes buttons)
-{
-	if (buttons.testFlag(ResetButton) && !m_resetButton)
-	{
-		m_resetButton = new QPushButton(tr("Defaults"), this);
-		m_resetButton->setEnabled(getValue() != getDefaultValue());
-
-		layout()->addWidget(m_resetButton);
-
-		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
-	}
-	else if (!buttons.testFlag(ResetButton) && m_resetButton)
-	{
-		m_resetButton->deleteLater();
-		m_resetButton = nullptr;
-	}
-
-	if (buttons.testFlag(SaveButton) && !m_saveButton)
-	{
-		m_saveButton = new QPushButton(tr("Save"), this);
-
-		layout()->addWidget(m_saveButton);
-
-		connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
-	}
-	else if (!buttons.testFlag(SaveButton) && m_saveButton)
-	{
-		m_saveButton->deleteLater();
-		m_saveButton = nullptr;
-	}
-}
-
 void OptionWidget::setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical)
 {
 	QWidget::setSizePolicy(horizontal, vertical);
@@ -381,7 +351,7 @@ QString OptionWidget::getOption() const
 
 QVariant OptionWidget::getDefaultValue() const
 {
-	return (m_defaultValue.isNull() ? SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue : m_defaultValue);
+	return m_defaultValue;
 }
 
 QVariant OptionWidget::getValue() const
