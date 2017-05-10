@@ -46,7 +46,6 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QStrin
 	m_title(title),
 	m_updateUrl(updateUrl),
 	m_lastUpdate(lastUpdate),
-	m_languages({QLocale::AnyLanguage}),
 	m_category(category),
 	m_flags(flags),
 	m_updateInterval(updateInterval),
@@ -54,10 +53,12 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QStrin
 	m_isEmpty(true),
 	m_wasLoaded(false)
 {
-	if (!languages.isEmpty())
+	if (languages.isEmpty())
 	{
-		m_languages.clear();
-
+		m_languages = QVector<QLocale::Language>({QLocale::AnyLanguage});
+	}
+	else
+	{
 		for (int i = 0; i < languages.count(); ++i)
 		{
 			m_languages.append(QLocale(languages.at(i)).language());
