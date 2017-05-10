@@ -344,7 +344,7 @@ void ItemViewWidget::ensureInitialized()
 	}
 
 	const QString suffix(QLatin1String("ViewWidget"));
-	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().size() - suffix.size()) : objectName());
+	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().length() - suffix.length()) : objectName());
 
 	if (type.isEmpty())
 	{
@@ -527,7 +527,7 @@ void ItemViewWidget::saveState()
 	}
 
 	const QString suffix(QLatin1String("ViewWidget"));
-	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().size() - suffix.size()) : objectName());
+	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().length() - suffix.length()) : objectName());
 
 	if (type.isEmpty())
 	{
