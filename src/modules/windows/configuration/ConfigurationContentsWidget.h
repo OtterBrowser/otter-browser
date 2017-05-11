@@ -80,6 +80,7 @@ protected slots:
 	void copyOptionName();
 	void copyOptionValue();
 	void restoreDefaults();
+	void saveAll();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void showContextMenu(const QPoint &position);
 	void updateActions();

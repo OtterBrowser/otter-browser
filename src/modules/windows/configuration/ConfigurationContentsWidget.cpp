@@ -232,8 +232,13 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
+	{
+		m_ui->saveButton->setEnabled(true);
+	});
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->saveButton, SIGNAL(clicked()), this, SLOT(saveAll()));
 }
 
 ConfigurationContentsWidget::~ConfigurationContentsWidget()
@@ -320,6 +325,33 @@ void ConfigurationContentsWidget::restoreDefaults()
 		m_ui->configurationViewWidget->setCurrentIndex(QModelIndex());
 		m_ui->configurationViewWidget->setCurrentIndex(index);
 	}
+}
+
+void ConfigurationContentsWidget::saveAll()
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *groupItem(m_model->item(i, 0));
+
+		if (!groupItem)
+		{
+			continue;
+		}
+
+		for (int j = 0; j < groupItem->rowCount(); ++j)
+		{
+			QStandardItem *optionItem(groupItem->child(j, 0));
+
+			if (optionItem && optionItem->data(IsModifiedRole).toBool())
+			{
+				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
+
+				SettingsManager::setValue(SettingsManager::getOptionIdentifier(valueIndex.data(IdentifierRole).toString()), valueIndex.data(Qt::EditRole));
+			}
+		}
+	}
+
+	updateActions();
 }
 
 void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
