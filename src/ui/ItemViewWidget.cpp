@@ -787,7 +787,7 @@ QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
 
 QModelIndex ItemViewWidget::getCurrentIndex(int column) const
 {
-	if (!selectionModel()->hasSelection())
+	if (!selectionModel() || !selectionModel()->hasSelection())
 	{
 		return QModelIndex();
 	}
