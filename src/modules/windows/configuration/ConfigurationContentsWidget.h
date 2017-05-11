@@ -53,6 +53,12 @@ class ConfigurationContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		IsModifiedRole
+	};
+
 	explicit ConfigurationContentsWidget(const QVariantMap &parameters, Window *window);
 	~ConfigurationContentsWidget();
 
