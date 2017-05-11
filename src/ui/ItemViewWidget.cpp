@@ -273,7 +273,7 @@ void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 		{
 			QItemSelectionModel::SelectionFlags command(selectionCommand(newIndex, event));
 
-			if (command != QItemSelectionModel::NoUpdate || style()->styleHint(QStyle::SH_ItemView_MovementWithoutUpdatingSelection, 0, this))
+			if (command != QItemSelectionModel::NoUpdate || style()->styleHint(QStyle::SH_ItemView_MovementWithoutUpdatingSelection, nullptr, this))
 			{
 				if (event->key() == Qt::Key_Down)
 				{

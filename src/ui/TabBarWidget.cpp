@@ -575,7 +575,7 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 
 		if (m_isDraggingTab && !m_isIgnoringTabDrag && m_movableTabWidget)
 		{
-			const int tabOverlap(style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this));
+			const int tabOverlap(style()->pixelMetric(QStyle::PM_TabBarTabOverlap, nullptr, this));
 
 			m_movableTabWidget->setGeometry(tabOption.rect.adjusted(-tabOverlap, 0, tabOverlap, 0));
 		}

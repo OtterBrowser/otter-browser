@@ -216,7 +216,7 @@ void MenuBarWidget::updateGeometries()
 
 	if (actions().count() > 0)
 	{
-		size = ((style()->pixelMetric(QStyle::PM_MenuBarHMargin, 0, this) * 2) + (style()->pixelMetric(QStyle::PM_MenuBarItemSpacing, 0, this) * actions().count()));
+		size = ((style()->pixelMetric(QStyle::PM_MenuBarHMargin, nullptr, this) * 2) + (style()->pixelMetric(QStyle::PM_MenuBarItemSpacing, nullptr, this) * actions().count()));
 
 		for (int i = 0; i < actions().count(); ++i)
 		{

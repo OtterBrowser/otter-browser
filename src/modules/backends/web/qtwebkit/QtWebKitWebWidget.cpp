@@ -129,7 +129,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	}
 #endif
 
-	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut));
+	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut));
 
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
 	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getOption(SettingsManager::Content_BackgroundColorOption));

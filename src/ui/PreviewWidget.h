@@ -32,7 +32,7 @@ class PreviewWidget final : public QFrame
 	Q_OBJECT
 
 public:
-	explicit PreviewWidget(QWidget *parent = 0);
+	explicit PreviewWidget(QWidget *parent = nullptr);
 
 public slots:
 	void setPosition(const QPoint &position);

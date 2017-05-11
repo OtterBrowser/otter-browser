@@ -36,7 +36,7 @@ class JavaScriptPreferencesDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit JavaScriptPreferencesDialog(const QHash<int, QVariant> &options, QWidget *parent = 0);
+	explicit JavaScriptPreferencesDialog(const QHash<int, QVariant> &options, QWidget *parent = nullptr);
 	~JavaScriptPreferencesDialog();
 
 	QHash<int, QVariant> getOptions() const;

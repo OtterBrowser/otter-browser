@@ -44,7 +44,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		frameOption.state = option.state;
 		frameOption.frameShape = QFrame::HLine;
 
-		QApplication::style()->drawControl(QStyle::CE_ShapedFrame, &frameOption, painter, 0);
+		QApplication::style()->drawControl(QStyle::CE_ShapedFrame, &frameOption, painter);
 
 		return;
 	}
