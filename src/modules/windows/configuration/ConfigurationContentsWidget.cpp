@@ -22,7 +22,7 @@
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../ui/OptionDelegate.h"
+#include "../../../ui/OptionWidget.h"
 
 #include "ui_ConfigurationContentsWidget.h"
 
@@ -30,10 +30,135 @@
 #include <QtCore/QSettings>
 #include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QMenu>
 
 namespace Otter
 {
+
+ConfigurationOptionDelegate::ConfigurationOptionDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void ConfigurationOptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString())));
+
+	option->text = SettingsManager::createDisplayValue(definition.identifier, index.data(Qt::DisplayRole));
+
+	switch (definition.type)
+	{
+		case SettingsManager::ColorType:
+			{
+				const QColor color(index.data(Qt::DisplayRole).toString());
+				QPixmap icon(option->fontMetrics.height(), option->fontMetrics.height());
+				icon.fill(Qt::transparent);
+
+				QPainter iconPainter(&icon);
+				iconPainter.setRenderHints(QPainter::Antialiasing);
+
+				if (color.alpha() < 255)
+				{
+					QPixmap pixmap(10, 10);
+					pixmap.fill(Qt::white);
+
+					QPainter pixmapPainter(&pixmap);
+					pixmapPainter.setBrush(Qt::gray);
+					pixmapPainter.setPen(Qt::NoPen);
+					pixmapPainter.drawRect(0, 0, 5, 5);
+					pixmapPainter.drawRect(5, 5, 5, 5);
+					pixmapPainter.end();
+
+					iconPainter.setBrush(pixmap);
+					iconPainter.setPen(Qt::NoPen);
+					iconPainter.drawRoundedRect(icon.rect(), 2, 2);
+				}
+
+				iconPainter.setBrush(color);
+				iconPainter.setPen(option->palette.color(QPalette::Button));
+				iconPainter.drawRoundedRect(icon.rect(), 2, 2);
+				iconPainter.end();
+
+				option->features |= QStyleOptionViewItem::HasDecoration;
+				option->decorationSize = icon.size();
+				option->icon = QIcon(icon);
+			}
+
+			break;
+		case SettingsManager::EnumerationType:
+			{
+				const QString value(index.data(Qt::DisplayRole).toString());
+
+				if (definition.hasIcons())
+				{
+					option->features |= QStyleOptionViewItem::HasDecoration;
+				}
+
+				for (int i = 0; i < definition.choices.count(); ++i)
+				{
+					if (definition.choices.at(i).value == value)
+					{
+						option->icon = definition.choices.at(i).icon;
+
+						break;
+					}
+				}
+			}
+
+			break;
+		case SettingsManager::FontType:
+			option->font = QFont(index.data(Qt::DisplayRole).toString());
+
+			break;
+		default:
+			break;
+	}
+}
+
+void ConfigurationOptionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+	Q_UNUSED(index)
+
+	editor->setGeometry(option.rect);
+}
+
+void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+
+	if (widget)
+	{
+		QFont font(index.sibling(index.row(), 0).data(Qt::FontRole).value<QFont>());
+		font.setBold(widget->getValue() != widget->getDefaultValue());
+
+		model->setData(index, widget->getValue());
+		model->setData(index.sibling(index.row(), 0), font, Qt::FontRole);
+	}
+}
+
+QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	const QString name(index.data(Qt::UserRole).toString());
+	const int identifier(SettingsManager::getOptionIdentifier(name));
+	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
+	OptionWidget *widget(new OptionWidget(name, index.data(Qt::EditRole), definition.type, parent));
+	widget->setIndex(index);
+	widget->setDefaultValue(definition.defaultValue);
+
+	if (definition.type == SettingsManager::EnumerationType)
+	{
+		widget->setChoices(definition.choices);
+	}
+
+	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+
+	return widget;
+}
 
 ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
 	m_model(new QStandardItemModel(this)),
@@ -93,7 +218,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
-	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new OptionDelegate(false, this));
+	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 

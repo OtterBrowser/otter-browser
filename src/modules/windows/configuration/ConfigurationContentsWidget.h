@@ -21,6 +21,7 @@
 #define OTTER_CONFIGURATIONCONTENTSWIDGET_H
 
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ItemDelegate.h"
 
 #include <QtGui/QStandardItemModel>
 
@@ -33,6 +34,19 @@ namespace Ui
 }
 
 class Window;
+
+class ConfigurationOptionDelegate final : public ItemDelegate
+{
+public:
+	explicit ConfigurationOptionDelegate(QObject *parent);
+
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
 
 class ConfigurationContentsWidget final : public ContentsWidget
 {
