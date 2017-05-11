@@ -398,7 +398,7 @@ void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelInde
 {
 	QTreeView::currentChanged(current, previous);
 
-	if (selectionModel()->hasSelection())
+	if (selectionModel() && selectionModel()->hasSelection())
 	{
 		if (m_sourceModel)
 		{
@@ -834,7 +834,7 @@ int ItemViewWidget::getSortColumn() const
 
 int ItemViewWidget::getCurrentRow() const
 {
-	return (selectionModel()->hasSelection() ? currentIndex().row() : -1);
+	return ((selectionModel() && selectionModel()->hasSelection()) ? currentIndex().row() : -1);
 }
 
 int ItemViewWidget::getRowCount(const QModelIndex &parent) const
