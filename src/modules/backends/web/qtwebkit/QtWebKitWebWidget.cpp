@@ -2741,7 +2741,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		switch (event->type())
 		{
-			case  QEvent::ContextMenu:
+			case QEvent::ContextMenu:
 				{
 					QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
@@ -2752,6 +2752,20 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (!getOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool())
 					{
+						return true;
+					}
+				}
+
+				break;
+
+			case QEvent::KeyPress:
+				{
+					QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+
+					if (keyEvent->key() == Qt::Key_Escape && m_page->hasSelection())
+					{
+						event->ignore();
+
 						return true;
 					}
 				}
