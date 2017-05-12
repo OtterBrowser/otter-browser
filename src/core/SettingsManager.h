@@ -294,7 +294,7 @@ public:
 	static void createInstance(const QString &path);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
 	static void updateOptionDefinition(int identifier, const OptionDefinition &definition);
-	static void setValue(int identifier, const QVariant &value, const QUrl &url = QUrl());
+	static void setOption(int identifier, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QString createDisplayValue(int identifier, const QVariant &value);
 	static QString getGlobalPath();

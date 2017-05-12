@@ -320,7 +320,7 @@ void ConfigurationContentsWidget::restoreDefaults()
 	{
 		const int identifier(SettingsManager::getOptionIdentifier(index.data(IdentifierRole).toString()));
 
-		SettingsManager::setValue(identifier, SettingsManager::getOptionDefinition(identifier).defaultValue);
+		SettingsManager::setOption(identifier, SettingsManager::getOptionDefinition(identifier).defaultValue);
 
 		m_ui->configurationViewWidget->setCurrentIndex(QModelIndex());
 		m_ui->configurationViewWidget->setCurrentIndex(index);
@@ -346,7 +346,7 @@ void ConfigurationContentsWidget::saveAll()
 			{
 				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
 
-				SettingsManager::setValue(SettingsManager::getOptionIdentifier(valueIndex.data(IdentifierRole).toString()), valueIndex.data(Qt::EditRole));
+				SettingsManager::setOption(SettingsManager::getOptionIdentifier(valueIndex.data(IdentifierRole).toString()), valueIndex.data(Qt::EditRole));
 			}
 		}
 	}

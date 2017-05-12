@@ -436,7 +436,7 @@ bool Migrator::run()
 		return false;
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
+	SettingsManager::setOption(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
 
 	return true;
 }

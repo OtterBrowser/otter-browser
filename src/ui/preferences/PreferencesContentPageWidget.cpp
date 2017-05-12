@@ -144,21 +144,21 @@ void PreferencesContentPageWidget::currentColorChanged(const QModelIndex &curren
 
 void PreferencesContentPageWidget::save()
 {
-	SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_ui->popupsComboBox->currentData().toString());
-	SettingsManager::setValue(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Content_ZoomTextOnlyOption, m_ui->zoomTextOnlyCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Content_DefaultFontSizeOption, m_ui->proportionalFontSizeSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Content_DefaultFixedFontSizeOption, m_ui->fixedFontSizeSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Content_MinimumFontSizeOption, m_ui->minimumFontSizeSpinBox->value());
+	SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_ui->popupsComboBox->currentData().toString());
+	SettingsManager::setOption(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());
+	SettingsManager::setOption(SettingsManager::Content_ZoomTextOnlyOption, m_ui->zoomTextOnlyCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Content_DefaultFontSizeOption, m_ui->proportionalFontSizeSpinBox->value());
+	SettingsManager::setOption(SettingsManager::Content_DefaultFixedFontSizeOption, m_ui->fixedFontSizeSpinBox->value());
+	SettingsManager::setOption(SettingsManager::Content_MinimumFontSizeOption, m_ui->minimumFontSizeSpinBox->value());
 
 	for (int i = 0; i < m_ui->fontsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setValue(SettingsManager::getOptionIdentifier(m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
+		SettingsManager::setOption(SettingsManager::getOptionIdentifier(m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
 	}
 
 	for (int i = 0; i < m_ui->colorsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setValue(SettingsManager::getOptionIdentifier(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
+		SettingsManager::setOption(SettingsManager::getOptionIdentifier(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
 	}
 }
 

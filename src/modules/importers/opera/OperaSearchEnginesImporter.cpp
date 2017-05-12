@@ -116,7 +116,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 	if (m_optionsWidget->isChecked())
 	{
-		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, QStringList());
+		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, QStringList());
 	}
 
 	const QStringList groups(settings.getGroups());
@@ -177,7 +177,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 		if (settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine)
 		{
-			SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, defaultEngine);
+			SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultEngine);
 		}
 
 		identifiers.append(searchEngine.identifier);

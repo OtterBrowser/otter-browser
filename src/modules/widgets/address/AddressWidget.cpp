@@ -770,7 +770,7 @@ void AddressWidget::removeEntry()
 
 			layout.removeAll(name);
 
-			SettingsManager::setValue(SettingsManager::AddressField_LayoutOption, layout);
+			SettingsManager::setOption(SettingsManager::AddressField_LayoutOption, layout);
 		}
 	}
 }

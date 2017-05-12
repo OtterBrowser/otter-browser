@@ -581,7 +581,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				{
 					exceptions.append(digest);
 
-					SettingsManager::setValue(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, url);
+					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, url);
 				}
 			}
 			else if (type == QLatin1String("save-password"))

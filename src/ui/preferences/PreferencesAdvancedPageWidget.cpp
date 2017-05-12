@@ -1494,13 +1494,13 @@ void PreferencesAdvancedPageWidget::save()
 
 	m_filesToRemove.clear();
 
-	SettingsManager::setValue(SettingsManager::Interface_EnableSmoothScrollingOption, m_ui->browsingEnableSmoothScrollingCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Browser_EnableSpellCheckOption, m_ui->browsingEnableSpellCheckCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::AddressField_SuggestBookmarksOption, m_ui->browsingSuggestBookmarksCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::AddressField_SuggestHistoryOption, m_ui->browsingSuggestHistoryCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::AddressField_SuggestLocalPathsOption, m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::AddressField_ShowCompletionCategoriesOption, m_ui->browsingCategoriesCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::AddressField_CompletionDisplayModeOption, m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setOption(SettingsManager::Interface_EnableSmoothScrollingOption, m_ui->browsingEnableSmoothScrollingCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Browser_EnableSpellCheckOption, m_ui->browsingEnableSpellCheckCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::AddressField_SuggestBookmarksOption, m_ui->browsingSuggestBookmarksCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::AddressField_SuggestHistoryOption, m_ui->browsingSuggestHistoryCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::AddressField_SuggestLocalPathsOption, m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::AddressField_ShowCompletionCategoriesOption, m_ui->browsingCategoriesCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::AddressField_CompletionDisplayModeOption, m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
@@ -1523,7 +1523,7 @@ void PreferencesAdvancedPageWidget::save()
 		notificationsSettings.endGroup();
 	}
 
-	SettingsManager::setValue(SettingsManager::Interface_UseNativeNotificationsOption, m_ui->preferNativeNotificationsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Interface_UseNativeNotificationsOption, m_ui->preferNativeNotificationsCheckBox->isChecked());
 
 	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
@@ -1532,9 +1532,9 @@ void PreferencesAdvancedPageWidget::save()
 		Application::setStyle(ThemesManager::createStyle(widgetStyle));
 	}
 
-	SettingsManager::setValue(SettingsManager::Interface_WidgetStyleOption, widgetStyle);
-	SettingsManager::setValue(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());
-	SettingsManager::setValue(SettingsManager::Browser_EnableTrayIconOption, m_ui->enableTrayIconCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Interface_WidgetStyleOption, widgetStyle);
+	SettingsManager::setOption(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());
+	SettingsManager::setOption(SettingsManager::Browser_EnableTrayIconOption, m_ui->enableTrayIconCheckBox->isChecked());
 
 	if (m_ui->appearranceStyleSheetFilePathWidget->getPath().isEmpty())
 	{
@@ -1556,10 +1556,10 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::Permissions_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
-	SettingsManager::setValue(SettingsManager::Permissions_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
-	SettingsManager::setValue(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
+	SettingsManager::setOption(SettingsManager::Permissions_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setOption(SettingsManager::Permissions_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setOption(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 
 	IniSettings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());
@@ -1590,8 +1590,8 @@ void PreferencesAdvancedPageWidget::save()
 
 	handlersSettings.save(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 
-	SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(UserAgentsModel::IdentifierRole).toString());
+	SettingsManager::setOption(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(UserAgentsModel::IdentifierRole).toString());
 
 	if (m_ui->userAgentsViewWidget->isModified())
 	{
@@ -1606,7 +1606,7 @@ void PreferencesAdvancedPageWidget::save()
 		NetworkManagerFactory::loadUserAgents();
 	}
 
-	SettingsManager::setValue(SettingsManager::Network_ProxyOption, m_ui->proxiesViewWidget->getCheckedIndex().data(ProxiesModel::IdentifierRole).toString());
+	SettingsManager::setOption(SettingsManager::Network_ProxyOption, m_ui->proxiesViewWidget->getCheckedIndex().data(ProxiesModel::IdentifierRole).toString());
 
 	if (m_ui->proxiesViewWidget->isModified())
 	{
@@ -1630,12 +1630,12 @@ void PreferencesAdvancedPageWidget::save()
 			ciphers.append(m_ui->ciphersViewWidget->getIndex(i, 0).data(Qt::DisplayRole).toString());
 		}
 
-		SettingsManager::setValue(SettingsManager::Security_CiphersOption, ciphers);
+		SettingsManager::setOption(SettingsManager::Security_CiphersOption, ciphers);
 	}
 
-	SettingsManager::setValue(SettingsManager::Updates_ActiveChannelsOption, getSelectedUpdateChannels());
-	SettingsManager::setValue(SettingsManager::Updates_AutomaticInstallOption, m_ui->autoInstallCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Updates_CheckIntervalOption, m_ui->intervalSpinBox->value());
+	SettingsManager::setOption(SettingsManager::Updates_ActiveChannelsOption, getSelectedUpdateChannels());
+	SettingsManager::setOption(SettingsManager::Updates_AutomaticInstallOption, m_ui->autoInstallCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Updates_CheckIntervalOption, m_ui->intervalSpinBox->value());
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
@@ -1704,8 +1704,8 @@ void PreferencesAdvancedPageWidget::save()
 		ActionsManager::loadProfiles();
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption, keyboardProfiles);
-	SettingsManager::setValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption, m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption, keyboardProfiles);
+	SettingsManager::setOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption, m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
 
@@ -1771,8 +1771,8 @@ void PreferencesAdvancedPageWidget::save()
 		GesturesManager::loadProfiles();
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_MouseProfilesOrderOption, mouseProfiles);
-	SettingsManager::setValue(SettingsManager::Browser_EnableMouseGesturesOption, m_ui->mouseEnableGesturesCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Browser_MouseProfilesOrderOption, mouseProfiles);
+	SettingsManager::setOption(SettingsManager::Browser_EnableMouseGesturesOption, m_ui->mouseEnableGesturesCheckBox->isChecked());
 
 	if (!m_javaScriptOptions.isEmpty())
 	{
@@ -1780,7 +1780,7 @@ void PreferencesAdvancedPageWidget::save()
 
 		for (javaScriptOptionsIterator = m_javaScriptOptions.begin(); javaScriptOptionsIterator != m_javaScriptOptions.end(); ++javaScriptOptionsIterator)
 		{
-			SettingsManager::setValue(javaScriptOptionsIterator.key(), javaScriptOptionsIterator.value());
+			SettingsManager::setOption(javaScriptOptionsIterator.key(), javaScriptOptionsIterator.value());
 		}
 	}
 

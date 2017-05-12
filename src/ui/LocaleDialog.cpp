@@ -117,7 +117,7 @@ void LocaleDialog::save()
 		locale = m_ui->languageComboBox->currentData(Qt::UserRole).toString();
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_LocaleOption, locale);
+	SettingsManager::setOption(SettingsManager::Browser_LocaleOption, locale);
 
 	Application::setLocale(locale);
 }

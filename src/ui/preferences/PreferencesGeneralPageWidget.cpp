@@ -142,15 +142,15 @@ void PreferencesGeneralPageWidget::setupAcceptLanguage()
 
 void PreferencesGeneralPageWidget::save()
 {
-	SettingsManager::setValue(SettingsManager::Browser_StartupBehaviorOption, m_ui->startupBehaviorComboBox->currentData().toString());
-	SettingsManager::setValue(SettingsManager::Browser_HomePageOption, m_ui->homePageLineEdit->text());
-	SettingsManager::setValue(SettingsManager::Paths_DownloadsOption, m_ui->downloadsFilePathWidget->getPath());
-	SettingsManager::setValue(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption, m_ui->alwaysAskCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Browser_OpenLinksInNewTabOption, m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption, m_ui->delayTabsLoadingCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Browser_ReuseCurrentTabOption, m_ui->reuseCurrentTabCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::TabBar_OpenNextToActiveOption, m_ui->openNextToActiveheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Network_AcceptLanguageOption, m_acceptLanguage);
+	SettingsManager::setOption(SettingsManager::Browser_StartupBehaviorOption, m_ui->startupBehaviorComboBox->currentData().toString());
+	SettingsManager::setOption(SettingsManager::Browser_HomePageOption, m_ui->homePageLineEdit->text());
+	SettingsManager::setOption(SettingsManager::Paths_DownloadsOption, m_ui->downloadsFilePathWidget->getPath());
+	SettingsManager::setOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption, m_ui->alwaysAskCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Browser_OpenLinksInNewTabOption, m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption, m_ui->delayTabsLoadingCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Browser_ReuseCurrentTabOption, m_ui->reuseCurrentTabCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::TabBar_OpenNextToActiveOption, m_ui->openNextToActiveheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Network_AcceptLanguageOption, m_acceptLanguage);
 }
 
 }

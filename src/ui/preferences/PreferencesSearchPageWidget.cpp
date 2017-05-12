@@ -549,11 +549,11 @@ void PreferencesSearchPageWidget::save()
 	}
 	else
 	{
-		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, searchEnginesOrder);
+		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, searchEnginesOrder);
 	}
 
-	SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngine);
-	SettingsManager::setValue(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngine);
+	SettingsManager::setOption(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
 
 	updateReaddSearchEngineMenu();
 }

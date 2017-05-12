@@ -147,7 +147,7 @@ void PopupsBarWidget::setPolicy(QAction *action)
 {
 	if (action)
 	{
-		SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), m_parentUrl);
+		SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), m_parentUrl);
 	}
 }
 

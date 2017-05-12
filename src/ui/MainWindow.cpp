@@ -682,7 +682,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 									canOpen = false;
 								}
 
-								SettingsManager::setValue(SettingsManager::Choices_WarnOpenBookmarkFolderOption, !messageBox.checkBox()->isChecked());
+								SettingsManager::setOption(SettingsManager::Choices_WarnOpenBookmarkFolderOption, !messageBox.checkBox()->isChecked());
 							}
 
 							if (urls.isEmpty() || !canOpen)

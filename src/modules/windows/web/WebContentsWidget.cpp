@@ -930,7 +930,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 
 			if (dialog.getCheckBoxState())
 			{
-				SettingsManager::setValue(SettingsManager::Interface_TabCrashingActionOption, (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
+				SettingsManager::setOption(SettingsManager::Interface_TabCrashingActionOption, (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
 			}
 
 			reloadTab = dialog.isAccepted();

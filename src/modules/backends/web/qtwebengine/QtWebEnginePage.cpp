@@ -330,7 +330,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 			warn = !dialog.checkBox()->isChecked();
 		}
 
-		SettingsManager::setValue(SettingsManager::Choices_WarnFormResendOption, warn);
+		SettingsManager::setOption(SettingsManager::Choices_WarnFormResendOption, warn);
 
 		if (cancel)
 		{

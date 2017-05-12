@@ -310,7 +310,7 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 void SourceViewerWebWidget::setShowLineNumbers(bool show)
 {
-	SettingsManager::setValue(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
+	SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
 }
 
 void SourceViewerWebWidget::setOption(int identifier, const QVariant &value)

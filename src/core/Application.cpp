@@ -361,7 +361,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 				if (messageBox.checkBox()->isChecked())
 				{
-					SettingsManager::setValue(SettingsManager::Choices_WarnLowDiskSpaceOption, warnLowDiskSpaceMode);
+					SettingsManager::setOption(SettingsManager::Choices_WarnLowDiskSpaceOption, warnLowDiskSpaceMode);
 				}
 			}
 
@@ -571,7 +571,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::WorkOfflineAction:
-			SettingsManager::setValue(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters));
+			SettingsManager::setOption(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters));
 
 			return;
 		case ActionsManager::LockToolBarsAction:
@@ -1335,7 +1335,7 @@ bool Application::canClose()
 		QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
 		const int result(messageBox.exec());
 
-		SettingsManager::setValue(SettingsManager::Choices_WarnQuitTransfersOption, !messageBox.checkBox()->isChecked());
+		SettingsManager::setOption(SettingsManager::Choices_WarnQuitTransfersOption, !messageBox.checkBox()->isChecked());
 
 		if (messageBox.clickedButton() == hideButton)
 		{
@@ -1386,7 +1386,7 @@ bool Application::canClose()
 
 			if (messageBox.checkBox()->isChecked())
 			{
-				SettingsManager::setValue(SettingsManager::Choices_WarnQuitOption, QLatin1String("noWarn"));
+				SettingsManager::setOption(SettingsManager::Choices_WarnQuitOption, QLatin1String("noWarn"));
 			}
 
 			if (result == QMessageBox::Cancel)

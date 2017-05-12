@@ -512,7 +512,7 @@ QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool
 
 	if (!paths.isEmpty())
 	{
-		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.first()).dir().canonicalPath());
+		SettingsManager::setOption(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.first()).dir().canonicalPath());
 	}
 
 	return paths;
@@ -615,7 +615,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 
 	if (!path.isEmpty())
 	{
-		SettingsManager::setValue(SettingsManager::Paths_SaveFileOption, QFileInfo(path).dir().canonicalPath());
+		SettingsManager::setOption(SettingsManager::Paths_SaveFileOption, QFileInfo(path).dir().canonicalPath());
 	}
 
 	information.path = path;

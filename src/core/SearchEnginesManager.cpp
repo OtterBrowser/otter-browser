@@ -124,7 +124,7 @@ void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchE
 	{
 		m_searchEnginesOrder.append(searchEngine.identifier);
 
-		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
+		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
 	}
 }
 

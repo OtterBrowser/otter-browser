@@ -456,11 +456,11 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
 	{
-		SettingsManager::setValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
+		SettingsManager::setOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
 	});
 	connect(thumbnailsAction, &QAction::toggled, [&](bool areEnabled)
 	{
-		SettingsManager::setValue(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
+		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
 	});
 
 	QMenu menu(this);

@@ -608,7 +608,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 			warn = !dialog.checkBox()->isChecked();
 		}
 
-		SettingsManager::setValue(SettingsManager::Choices_WarnFormResendOption, warn);
+		SettingsManager::setOption(SettingsManager::Choices_WarnFormResendOption, warn);
 
 		if (cancel)
 		{

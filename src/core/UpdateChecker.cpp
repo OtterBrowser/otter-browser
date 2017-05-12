@@ -121,7 +121,7 @@ void UpdateChecker::runUpdateCheck()
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
+	SettingsManager::setOption(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
 
 	emit finished(availableUpdates);
 

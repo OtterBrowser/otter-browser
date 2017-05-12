@@ -136,7 +136,7 @@ void ConfigurationOptionWidget::save()
 {
 	if (m_scope == GlobalScope)
 	{
-		SettingsManager::setValue(m_identifier, m_optionWidget->getValue());
+		SettingsManager::setOption(m_identifier, m_optionWidget->getValue());
 	}
 	else if (m_window)
 	{

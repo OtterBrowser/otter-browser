@@ -109,8 +109,8 @@ void ClearHistoryDialog::clearHistory()
 		PasswordsManager::clearPasswords(m_ui->periodSpinBox->value());
 	}
 
-	SettingsManager::setValue(SettingsManager::History_ManualClearOptionsOption, getClearSettings());
-	SettingsManager::setValue(SettingsManager::History_ManualClearPeriodOption, m_ui->periodSpinBox->value());
+	SettingsManager::setOption(SettingsManager::History_ManualClearOptionsOption, getClearSettings());
+	SettingsManager::setOption(SettingsManager::History_ManualClearPeriodOption, m_ui->periodSpinBox->value());
 }
 
 QStringList ClearHistoryDialog::getClearSettings() const

@@ -282,7 +282,7 @@ void SettingsManager::updateOptionDefinition(int identifier, const SettingsManag
 	}
 }
 
-void SettingsManager::setValue(int identifier, const QVariant &value, const QUrl &url)
+void SettingsManager::setOption(int identifier, const QVariant &value, const QUrl &url)
 {
 	const QString name(getOptionName(identifier));
 

@@ -339,9 +339,9 @@ void ContentBlockingDialog::save()
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::ContentBlocking_ProfilesOption, profiles);
-	SettingsManager::setValue(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, m_ui->cosmeticFiltersComboBox->currentData().toString());
+	SettingsManager::setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
+	SettingsManager::setOption(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, m_ui->cosmeticFiltersComboBox->currentData().toString());
 
 	close();
 }

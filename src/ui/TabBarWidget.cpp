@@ -742,11 +742,11 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
 	{
-		SettingsManager::setValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
+		SettingsManager::setOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
 	});
 	connect(thumbnailsAction, &QAction::toggled, [&](bool areEnabled)
 	{
-		SettingsManager::setValue(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
+		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
 	});
 	connect(restoreTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 	connect(minimizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
@@ -998,7 +998,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 					canOpen = false;
 				}
 
-				SettingsManager::setValue(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption, !messageBox.checkBox()->isChecked());
+				SettingsManager::setOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption, !messageBox.checkBox()->isChecked());
 			}
 
 			if (canOpen)

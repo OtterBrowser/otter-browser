@@ -77,13 +77,13 @@ void StartPagePreferencesDialog::save()
 {
 	const QString backgroundModeString(m_ui->backgroundModeComboBox->currentData().toString());
 
-	SettingsManager::setValue(SettingsManager::StartPage_BackgroundColorOption, (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
-	SettingsManager::setValue(SettingsManager::StartPage_BackgroundModeOption, (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
-	SettingsManager::setValue(SettingsManager::StartPage_BackgroundPathOption, m_ui->backgroundFilePathWidget->getPath());
-	SettingsManager::setValue(SettingsManager::StartPage_TilesPerRowOption, m_ui->columnsPerRowSpinBox->value());
-	SettingsManager::setValue(SettingsManager::StartPage_ZoomLevelOption, m_ui->zoomLevelSpinBox->value());
-	SettingsManager::setValue(SettingsManager::StartPage_ShowSearchFieldOption, m_ui->showSearchFieldCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::StartPage_ShowAddTileOption, m_ui->showAddTileCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::StartPage_BackgroundColorOption, (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
+	SettingsManager::setOption(SettingsManager::StartPage_BackgroundModeOption, (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
+	SettingsManager::setOption(SettingsManager::StartPage_BackgroundPathOption, m_ui->backgroundFilePathWidget->getPath());
+	SettingsManager::setOption(SettingsManager::StartPage_TilesPerRowOption, m_ui->columnsPerRowSpinBox->value());
+	SettingsManager::setOption(SettingsManager::StartPage_ZoomLevelOption, m_ui->zoomLevelSpinBox->value());
+	SettingsManager::setOption(SettingsManager::StartPage_ShowSearchFieldOption, m_ui->showSearchFieldCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::StartPage_ShowAddTileOption, m_ui->showAddTileCheckBox->isChecked());
 }
 
 }
