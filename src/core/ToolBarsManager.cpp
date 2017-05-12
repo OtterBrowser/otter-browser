@@ -637,6 +637,12 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 				{
 					int identifier(getToolBarIdentifier(iterator.key()));
 
+//TODO Drop after migration
+					if (identifier < 0 && iterator.key() == QLatin1String("NavigationBar") && !customDefinitions.contains(QLatin1String("AddressBar")))
+					{
+						identifier = AddressBar;
+					}
+
 					if (identifier >= 0)
 					{
 						m_definitions[identifier] = iterator.value();
