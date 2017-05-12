@@ -388,10 +388,15 @@ bool Migrator::run()
 
 	ItemViewWidget *migrationsViewWidget(new ItemViewWidget(&dialog));
 	migrationsViewWidget->setModel(new QStandardItemModel(migrationsViewWidget));
+	migrationsViewWidget->setHeaderHidden(true);
+	migrationsViewWidget->header()->setStretchLastSection(true);
 
 	for (int i = 0; i < possibleMigrations.count(); ++i)
 	{
-		migrationsViewWidget->insertRow(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations[i]->getTitle().toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations[i]->getTitle().toUtf8().constData())));
+		item->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsSelectable);
+
+		migrationsViewWidget->insertRow(item);
 	}
 
 	QCheckBox *createBackupCheckBox(new QCheckBox(QCoreApplication::translate("Otter::Migrator", "Create backup")));
