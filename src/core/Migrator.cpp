@@ -165,7 +165,7 @@ public:
 		return QT_TRANSLATE_NOOP("migrations", "Options");
 	}
 
-	bool canMigrate() const override
+	bool needsMigration() const override
 	{
 		const QStringList sessions(SessionsManager::getSessions());
 		bool needsRename(QFile::exists(SettingsManager::getGlobalPath()) || QFile::exists(SettingsManager::getOverridePath()));
@@ -288,7 +288,7 @@ public:
 		return QT_TRANSLATE_NOOP("migrations", "Sessions");
 	}
 
-	bool canMigrate() const override
+	bool needsMigration() const override
 	{
 		return !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty();
 	}
@@ -346,7 +346,7 @@ QString Migration::getTitle() const
 	return QString();
 }
 
-bool Migration::canMigrate() const
+bool Migration::needsMigration() const
 {
 	return false;
 }
@@ -359,14 +359,23 @@ bool Migrator::run()
 
 	for (int i = 0; i < availableMigrations.count(); ++i)
 	{
-		if (!processedMigrations.contains(availableMigrations[i]->getName()) && availableMigrations[i]->canMigrate())
+		if (!processedMigrations.contains(availableMigrations[i]->getName()))
 		{
-			possibleMigrations.append(availableMigrations[i]);
+			if (availableMigrations[i]->needsMigration())
+			{
+				possibleMigrations.append(availableMigrations[i]);
+			}
+			else
+			{
+				processedMigrations.append(availableMigrations[i]->getName());
+			}
 		}
 	}
 
 	if (possibleMigrations.isEmpty())
 	{
+		SettingsManager::setOption(SettingsManager::Browser_MigrationsOption, QVariant(processedMigrations));
+
 		return true;
 	}
 
