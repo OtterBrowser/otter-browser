@@ -336,7 +336,7 @@ void ToolBarsManager::resetToolBars()
 
 	m_definitions.append(defaultDefinitions[QLatin1String("MenuBar")]);
 	m_definitions.append(defaultDefinitions[QLatin1String("TabBar")]);
-	m_definitions.append(defaultDefinitions[QLatin1String("NavigationBar")]);
+	m_definitions.append(defaultDefinitions[QLatin1String("AddressBar")]);
 	m_definitions.append(defaultDefinitions[QLatin1String("ProgressBar")]);
 	m_definitions.append(defaultDefinitions[QLatin1String("StatusBar")]);
 
@@ -366,7 +366,7 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		QStringList toolBars({QLatin1String("MenuBar"), QLatin1String("TabBar"), QLatin1String("NavigationBar"), QLatin1String("ProgressBar"), QLatin1String("StatusBar")});
+		QStringList toolBars({QLatin1String("MenuBar"), QLatin1String("TabBar"), QLatin1String("AddressBar"), QLatin1String("ProgressBar"), QLatin1String("StatusBar")});
 		toolBars.append(m_identifiers.values());
 
 		identifier = m_definitions.count();
