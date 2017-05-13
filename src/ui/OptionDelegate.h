@@ -28,7 +28,7 @@ namespace Otter
 class OptionDelegate final : public ItemDelegate
 {
 public:
-	explicit OptionDelegate(bool isSimple, QObject *parent);
+	explicit OptionDelegate(QObject *parent);
 
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
@@ -36,9 +36,6 @@ public:
 
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
-
-private:
-	bool m_isSimple;
 };
 
 }

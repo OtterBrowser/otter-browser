@@ -26,8 +26,7 @@
 namespace Otter
 {
 
-OptionDelegate::OptionDelegate(bool isSimple, QObject *parent) : ItemDelegate(parent),
-	m_isSimple(isSimple)
+OptionDelegate::OptionDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
 
@@ -135,11 +134,6 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 	OptionWidget *widget(new OptionWidget(name, index.data(Qt::EditRole), definition.type, parent));
 	widget->setIndex(index);
-
-	if (!m_isSimple)
-	{
-		widget->setDefaultValue(definition.defaultValue);
-	}
 
 	if (definition.type == SettingsManager::EnumerationType)
 	{

@@ -52,7 +52,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	const QVector<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
 	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
-	OptionDelegate *fontsDelegate(new OptionDelegate(true, this));
+	OptionDelegate *fontsDelegate(new OptionDelegate(this));
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
@@ -75,7 +75,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	const QVector<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
 	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
-	OptionDelegate *colorsDelegate(new OptionDelegate(true, this));
+	OptionDelegate *colorsDelegate(new OptionDelegate(this));
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
