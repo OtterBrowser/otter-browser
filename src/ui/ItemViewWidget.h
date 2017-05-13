@@ -103,6 +103,7 @@ public slots:
 	void setExclusive(bool isExclusive);
 	void setFilterString(const QString filter = QString());
 	void setFilterRoles(const QSet<int> &roles);
+	void setModified(bool isModified);
 
 protected:
 	void showEvent(QShowEvent *event) override;

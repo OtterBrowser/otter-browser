@@ -513,10 +513,7 @@ void ItemViewWidget::moveDownRow()
 
 void ItemViewWidget::markAsModified()
 {
-	m_isModified = true;
-
-	emit modified();
-	emit needsActionsUpdate();
+	setModified(true);
 }
 
 void ItemViewWidget::saveState()
@@ -736,6 +733,18 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 	m_viewMode = mode;
 
 	setIndentation((mode == TreeViewMode) ? m_treeIndentation : 0);
+}
+
+void ItemViewWidget::setModified(bool isModified)
+{
+	m_isModified = isModified;
+
+	if (isModified)
+	{
+		emit modified();
+	}
+
+	emit needsActionsUpdate();
 }
 
 QStandardItemModel* ItemViewWidget::getSourceModel()
