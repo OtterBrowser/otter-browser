@@ -56,6 +56,7 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
+		NameRole,
 		IsModifiedRole
 	};
 

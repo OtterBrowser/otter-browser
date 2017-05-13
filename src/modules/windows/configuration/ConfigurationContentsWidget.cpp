@@ -44,7 +44,7 @@ void ConfigurationOptionDelegate::initStyleOption(QStyleOptionViewItem *option, 
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.data(ConfigurationContentsWidget::IdentifierRole).toString())));
+	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(index.data(ConfigurationContentsWidget::IdentifierRole).toInt()));
 
 	option->text = SettingsManager::createDisplayValue(definition.identifier, index.data(Qt::DisplayRole));
 
@@ -145,10 +145,9 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 {
 	Q_UNUSED(option)
 
-	const QString name(index.data(ConfigurationContentsWidget::IdentifierRole).toString());
-	const int identifier(SettingsManager::getOptionIdentifier(name));
+	const int identifier(index.data(ConfigurationContentsWidget::IdentifierRole).toInt());
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
-	OptionWidget *widget(new OptionWidget(name, index.data(Qt::EditRole), definition.type, parent));
+	OptionWidget *widget(new OptionWidget(SettingsManager::getOptionName(identifier), index.data(Qt::EditRole), definition.type, parent));
 	widget->setIndex(index);
 	widget->setDefaultValue(definition.defaultValue);
 
@@ -200,7 +199,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
-		optionItems[2]->setData(options.at(i), IdentifierRole);
+		optionItems[2]->setData(identifier, IdentifierRole);
+		optionItems[2]->setData(options.at(i), NameRole);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
 
 		if (value != definition.defaultValue)
@@ -221,7 +221,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
-	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, IdentifierRole}));
+	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, NameRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (isSidebarPanel())
@@ -298,7 +298,7 @@ void ConfigurationContentsWidget::copyOptionName()
 
 	if (index.isValid())
 	{
-		QApplication::clipboard()->setText(index.data(IdentifierRole).toString());
+		QApplication::clipboard()->setText(index.data(NameRole).toString());
 	}
 }
 
@@ -318,7 +318,7 @@ void ConfigurationContentsWidget::restoreDefaults()
 
 	if (index.isValid())
 	{
-		const int identifier(SettingsManager::getOptionIdentifier(index.data(IdentifierRole).toString()));
+		const int identifier(index.data(IdentifierRole).toInt());
 
 		SettingsManager::setOption(identifier, SettingsManager::getOptionDefinition(identifier).defaultValue);
 
@@ -346,7 +346,7 @@ void ConfigurationContentsWidget::saveAll()
 			{
 				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
 
-				SettingsManager::setOption(SettingsManager::getOptionIdentifier(valueIndex.data(IdentifierRole).toString()), valueIndex.data(Qt::EditRole));
+				SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), valueIndex.data(Qt::EditRole));
 			}
 		}
 	}
@@ -398,7 +398,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(tr("Copy Option Name"), this, SLOT(copyOptionName()));
 		menu.addAction(tr("Copy Option Value"), this, SLOT(copyOptionValue()));
 		menu.addSeparator();
-		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.sibling(index.row(), 2).data(IdentifierRole).toString())).defaultValue);
+		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);
 		menu.addSeparator();
 	}
 
@@ -410,7 +410,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 void ConfigurationContentsWidget::updateActions()
 {
 	const QModelIndex index(m_ui->configurationViewWidget->selectionModel()->hasSelection() ? m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2) : QModelIndex());
-	const int identifier(SettingsManager::getOptionIdentifier(index.data(IdentifierRole).toString()));
+	const int identifier(index.data(IdentifierRole).toInt());
 
 	if (identifier >= 0)
 	{
