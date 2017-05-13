@@ -12,7 +12,7 @@
 	},
 	{
 		"identifier": "mobile",
-		"title": "Mask as Google Chrome 60 (mobile device)",
+		"title": "Mask as Google Chrome 55 (mobile device)",
 		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2869.0 Mobile Safari/537.36"
 	},
 	{
@@ -28,7 +28,7 @@
 	{
 		"identifier": "internet-explorer",
 		"title": "Mask as Internet Explorer 11.0 (Windows)",
-		"value": "Mozilla/5.0 (compatible; MSIE 11.0; Windows NT 6.1; Trident/7.0)"
+		"value": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0)"
 	},
 	{
 		"identifier": "opera",
