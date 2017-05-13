@@ -297,10 +297,10 @@ public:
 	static void setOption(int identifier, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QString createDisplayValue(int identifier, const QVariant &value);
+	static QString createReport();
 	static QString getGlobalPath();
 	static QString getOverridePath();
 	static QString getOptionName(int identifier);
-	static QString getReport();
 	static QVariant getOption(int identifier, const QUrl &url = QUrl());
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);

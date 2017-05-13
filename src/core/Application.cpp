@@ -1242,12 +1242,12 @@ QString Application::createReport(ReportOptions options)
 
 	if (options.testFlag(SettingsReport))
 	{
-		stream << SettingsManager::getReport();
+		stream << SettingsManager::createReport();
 	}
 
 	if (options.testFlag(KeyboardShortcutsReport))
 	{
-		stream << ActionsManager::getReport();
+		stream << ActionsManager::createReport();
 	}
 
 	return report.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));

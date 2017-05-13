@@ -333,7 +333,7 @@ ActionsManager* ActionsManager::getInstance()
 	return m_instance;
 }
 
-QString ActionsManager::getReport()
+QString ActionsManager::createReport()
 {
 	QString report;
 	QTextStream stream(&report);

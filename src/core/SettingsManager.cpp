@@ -362,36 +362,7 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 	return value.toString();
 }
 
-QString SettingsManager::getGlobalPath()
-{
-	return m_globalPath;
-}
-
-QString SettingsManager::getOverridePath()
-{
-	return m_overridePath;
-}
-
-QString SettingsManager::getOptionName(int identifier)
-{
-	QString name(m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));
-
-	if (!name.isEmpty())
-	{
-		name.chop(6);
-
-		return name.replace(QLatin1Char('_'), QLatin1Char('/'));
-	}
-
-	return m_customOptions.key(identifier);
-}
-
-QString SettingsManager::getHost(const QUrl &url)
-{
-	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
-}
-
-QString SettingsManager::getReport()
+QString SettingsManager::createReport()
 {
 	QString report;
 	QTextStream stream(&report);
@@ -459,6 +430,35 @@ QString SettingsManager::getReport()
 	stream << QLatin1Char('\n');
 
 	return report;
+}
+
+QString SettingsManager::getGlobalPath()
+{
+	return m_globalPath;
+}
+
+QString SettingsManager::getOverridePath()
+{
+	return m_overridePath;
+}
+
+QString SettingsManager::getOptionName(int identifier)
+{
+	QString name(m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));
+
+	if (!name.isEmpty())
+	{
+		name.chop(6);
+
+		return name.replace(QLatin1Char('_'), QLatin1Char('/'));
+	}
+
+	return m_customOptions.key(identifier);
+}
+
+QString SettingsManager::getHost(const QUrl &url)
+{
+	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
 }
 
 QVariant SettingsManager::getOption(int identifier, const QUrl &url)

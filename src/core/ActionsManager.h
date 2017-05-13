@@ -292,7 +292,7 @@ public:
 	static void createInstance();
 	static void loadProfiles();
 	static ActionsManager* getInstance();
-	static QString getReport();
+	static QString createReport();
 	static QString getActionName(int identifier);
 	static QVector<ActionDefinition> getActionDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
