@@ -81,7 +81,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void markRestored();
+	void markAsRestored();
 	void updateActions();
 
 protected:

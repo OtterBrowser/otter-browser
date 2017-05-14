@@ -303,7 +303,7 @@ void WorkspaceWidget::createMdi()
 	if (wasRestored)
 	{
 		setActiveWindow(activeWindow, true);
-		markRestored();
+		markAsRestored();
 	}
 
 	connect(m_mdi, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -491,7 +491,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 	SessionsManager::markSessionModified();
 }
 
-void WorkspaceWidget::markRestored()
+void WorkspaceWidget::markAsRestored()
 {
 	m_isRestored = true;
 

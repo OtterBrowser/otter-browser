@@ -1197,7 +1197,7 @@ void MainWindow::restore(const SessionMainWindow &session)
 
 	setActiveWindowByIndex(index);
 
-	m_workspace->markRestored();
+	m_workspace->markAsRestored();
 }
 
 void MainWindow::restore(int index)
