@@ -94,8 +94,6 @@ void FilePasswordsStorageBackend::initialize()
 	}
 
 	m_passwords = passwords;
-
-	emit passwordsModified();
 }
 
 void FilePasswordsStorageBackend::save()
