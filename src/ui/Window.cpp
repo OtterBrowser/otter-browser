@@ -885,6 +885,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 SessionWindow Window::getSession() const
 {
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 	SessionWindow session;
 
 	if (m_contentsWidget)
@@ -912,6 +913,7 @@ SessionWindow Window::getSession() const
 	}
 
 	session.state = getWindowState();
+	session.isAlwaysOnTop = (subWindow && subWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 
 	return session;
 }
