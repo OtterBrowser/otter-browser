@@ -545,8 +545,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 
 				const bool isReplacing(hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow);
-				const WindowState windowState(activeWindow ? activeWindow->getWindowState() : WindowState());
-				const bool isAlwaysOnTop(activeWindow ? activeWindow->getSession().isAlwaysOnTop : false);
+				const WindowState windowState(isReplacing ? activeWindow->getWindowState() : WindowState());
+				const bool isAlwaysOnTop(isReplacing ? activeWindow->getSession().isAlwaysOnTop : false);
 
 				mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
@@ -562,7 +562,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				Window *window(new Window(mutableParameters, nullptr, this));
 
-				addWindow(window, hints, index, windowState.geometry, windowState.state, isAlwaysOnTop);
+				addWindow(window, hints, index, windowState, isAlwaysOnTop);
 
 				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 			}
@@ -1186,7 +1186,7 @@ void MainWindow::restore(const SessionMainWindow &session)
 				index = i;
 			}
 
-			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).state.geometry, session.windows.at(i).state.state, session.windows.at(i).isAlwaysOnTop);
+			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
 		}
 	}
 
@@ -1253,7 +1253,7 @@ void MainWindow::restore(int index)
 		emit closedWindowsAvailableChanged(false);
 	}
 
-	addWindow(window, SessionsManager::DefaultOpen, windowIndex, closedWindow.window.state.geometry, closedWindow.window.state.state, closedWindow.window.isAlwaysOnTop);
+	addWindow(window, SessionsManager::DefaultOpen, windowIndex, closedWindow.window.state, closedWindow.window.isAlwaysOnTop);
 }
 
 void MainWindow::clearClosedWindows()
@@ -1266,7 +1266,7 @@ void MainWindow::clearClosedWindows()
 	}
 }
 
-void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const QRect &geometry, Qt::WindowState state, bool isAlwaysOnTop)
+void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const WindowState &state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{
@@ -1305,15 +1305,8 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		}
 	}
 
-	const QString newTabOpeningAction(SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString());
-
-	if (m_isRestored && newTabOpeningAction == QLatin1String("maximizeTab"))
-	{
-		state = Qt::WindowMaximized;
-	}
-
 	m_tabBar->addTab(index, window);
-	m_workspace->addWindow(window, geometry, state, isAlwaysOnTop);
+	m_workspace->addWindow(window, state, isAlwaysOnTop);
 
 	createAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
 
@@ -1329,6 +1322,8 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	if (m_isRestored)
 	{
+		const QString newTabOpeningAction(SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString());
+
 		if (newTabOpeningAction == QLatin1String("cascadeAll"))
 		{
 			triggerAction(ActionsManager::CascadeAllAction);

@@ -74,7 +74,7 @@ class WorkspaceWidget final : public QWidget
 public:
 	explicit WorkspaceWidget(MainWindow *parent);
 
-	void addWindow(Window *window, const QRect &geometry = QRect(), Qt::WindowState state = Qt::WindowMaximized, bool isAlwaysOnTop = false);
+	void addWindow(Window *window, const WindowState &state = WindowState(), bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window, bool force = false);
 	Window* getActiveWindow() const;
 	int getWindowCount(Qt::WindowState state) const;

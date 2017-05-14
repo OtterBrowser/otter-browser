@@ -501,14 +501,14 @@ void WorkspaceWidget::markAsRestored()
 	}
 }
 
-void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, Qt::WindowState state, bool isAlwaysOnTop)
+void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{
 		return;
 	}
 
-	if (!m_mdi && (state != Qt::WindowMaximized || geometry.isValid()))
+	if (!m_mdi && (state.state != Qt::WindowMaximized || state.geometry.isValid()))
 	{
 		createMdi();
 	}
@@ -544,7 +544,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, Qt::Windo
 		mdiWindow->lower();
 		mdiWindow->setSystemMenu(menu);
 
-		switch (state)
+		switch (state.state)
 		{
 			case Qt::WindowMaximized:
 				mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
@@ -566,9 +566,9 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, Qt::Windo
 			mdiWindow->setWindowFlags(mdiWindow->windowFlags() | Qt::WindowStaysOnTopHint);
 		}
 
-		if (geometry.isValid())
+		if (state.geometry.isValid())
 		{
-			mdiWindow->setGeometry(geometry);
+			mdiWindow->setGeometry(state.geometry);
 		}
 
 		if (activeWindow)
