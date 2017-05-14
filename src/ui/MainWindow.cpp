@@ -545,9 +545,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 
 				const bool isReplacing(hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow);
-				const QRect geometry(isReplacing ? activeWindow->getSession().geometry : QRect());
-				const Qt::WindowState state(isReplacing ? activeWindow->getSession().state : ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState));
-				const bool isAlwaysOnTop(isReplacing ? activeWindow->getSession().isAlwaysOnTop : false);
+				const WindowState windowState(activeWindow ? activeWindow->getWindowState() : WindowState());
+				const bool isAlwaysOnTop(activeWindow ? activeWindow->getSession().isAlwaysOnTop : false);
 
 				mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
@@ -563,7 +562,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				Window *window(new Window(mutableParameters, nullptr, this));
 
-				addWindow(window, hints, index, geometry, state, isAlwaysOnTop);
+				addWindow(window, hints, index, windowState.geometry, windowState.state, isAlwaysOnTop);
 
 				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 			}
@@ -1182,12 +1181,12 @@ void MainWindow::restore(const SessionMainWindow &session)
 			Window *window(new Window(parameters, nullptr, this));
 			window->setSession(session.windows.at(i));
 
-			if (index < 0 && session.windows.at(i).state != Qt::WindowMinimized)
+			if (index < 0 && session.windows.at(i).state.state != Qt::WindowMinimized)
 			{
 				index = i;
 			}
 
-			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).geometry, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
+			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).state.geometry, session.windows.at(i).state.state, session.windows.at(i).isAlwaysOnTop);
 		}
 	}
 
@@ -1254,7 +1253,7 @@ void MainWindow::restore(int index)
 		emit closedWindowsAvailableChanged(false);
 	}
 
-	addWindow(window, SessionsManager::DefaultOpen, windowIndex, closedWindow.window.geometry, closedWindow.window.state, closedWindow.window.isAlwaysOnTop);
+	addWindow(window, SessionsManager::DefaultOpen, windowIndex, closedWindow.window.state.geometry, closedWindow.window.state.state, closedWindow.window.isAlwaysOnTop);
 }
 
 void MainWindow::clearClosedWindows()

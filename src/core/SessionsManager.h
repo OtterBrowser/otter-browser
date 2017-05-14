@@ -30,6 +30,12 @@
 namespace Otter
 {
 
+struct WindowState
+{
+	QRect geometry;
+	Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
+};
+
 struct WindowHistoryEntry
 {
 	QString url;
@@ -46,10 +52,9 @@ struct WindowHistoryInformation
 
 struct SessionWindow
 {
-	QRect geometry;
+	WindowState state;
 	QHash<int, QVariant> options;
 	QVector<WindowHistoryEntry> history;
-	Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
 	int parentGroup = 0;
 	int historyIndex = -1;
 	bool isAlwaysOnTop = false;

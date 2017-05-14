@@ -127,34 +127,33 @@ bool OperaSessionImporter::import(const QString &path)
 		}
 
 		SessionWindow window;
-		window.geometry.setX(originalSession.getValue(QLatin1String("x")).toInt());
-		window.geometry.setY(originalSession.getValue(QLatin1String("y")).toInt());
-		window.geometry.setWidth(originalSession.getValue(QLatin1String("w")).toInt());
-		window.geometry.setHeight(originalSession.getValue(QLatin1String("h")).toInt());
+		WindowState windowState;
+		windowState.geometry = QRect(originalSession.getValue(QLatin1String("x")).toInt(), originalSession.getValue(QLatin1String("y")).toInt(), originalSession.getValue(QLatin1String("w")).toInt(), originalSession.getValue(QLatin1String("h")).toInt());
+
+		switch (originalSession.getValue(QLatin1String("state")).toInt())
+		{
+			case 0:
+				windowState.state = Qt::WindowNoState;
+
+				break;
+			case 1:
+				windowState.state = Qt::WindowMinimized;
+
+				break;
+			default:
+				windowState.state = Qt::WindowMaximized;
+
+				break;
+		}
+
+		window.state = windowState;
+		window.historyIndex = (originalSession.getValue(QLatin1String("current history")).toInt() - 1);
+		window.isPinned = originalSession.getValue(QLatin1String("locked")).toInt();
 
 		if (originalSession.getValue(QLatin1String("user auto reload enable")).toInt() == 1)
 		{
 			window.options[SettingsManager::Content_PageReloadTimeOption] = originalSession.getValue(QLatin1String("user auto reload sec user setting")).toInt();
 		}
-
-		switch (originalSession.getValue(QLatin1String("state")).toInt())
-		{
-			case 0:
-				window.state = Qt::WindowNoState;
-
-				break;
-			case 1:
-				window.state = Qt::WindowMinimized;
-
-				break;
-			default:
-				window.state = Qt::WindowMaximized;
-
-				break;
-		}
-
-		window.historyIndex = (originalSession.getValue(QLatin1String("current history")).toInt() - 1);
-		window.isPinned = originalSession.getValue(QLatin1String("locked")).toInt();
 
 		const int zoom(originalSession.getValue(QLatin1String("scale")).toInt());
 

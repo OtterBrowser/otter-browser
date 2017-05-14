@@ -849,15 +849,15 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::MaximizeTabAction:
-			state.isEnabled = (getWindowState() != Qt::WindowMaximized);
+			state.isEnabled = (getWindowState().state != Qt::WindowMaximized);
 
 			break;
 		case ActionsManager::MinimizeTabAction:
-			state.isEnabled = (getWindowState() != Qt::WindowMinimized);
+			state.isEnabled = (getWindowState().state != Qt::WindowMinimized);
 
 			break;
 		case ActionsManager::RestoreTabAction:
-			state.isEnabled = (getWindowState() != Qt::WindowNoState);
+			state.isEnabled = (getWindowState().state != Qt::WindowNoState);
 
 			break;
 		case ActionsManager::AlwaysOnTopTabAction:
@@ -913,12 +913,32 @@ SessionWindow Window::getSession() const
 
 	session.state = getWindowState();
 
-	if (session.state == Qt::WindowNoState && parentWidget())
+	return session;
+}
+
+WindowState Window::getWindowState() const
+{
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+	WindowState windowState;
+	windowState.state = Qt::WindowNoState;
+
+	if (subWindow)
 	{
-		session.geometry = parentWidget()->geometry();
+		if (subWindow->isMaximized())
+		{
+			windowState.state = Qt::WindowMaximized;
+		}
+		else if (subWindow->isMinimized())
+		{
+			windowState.state = Qt::WindowMinimized;
+		}
+		else
+		{
+			windowState.geometry = subWindow->geometry();
+		}
 	}
 
-	return session;
+	return windowState;
 }
 
 QSize Window::sizeHint() const
@@ -934,28 +954,6 @@ WebWidget::LoadingState Window::getLoadingState() const
 WebWidget::ContentStates Window::getContentState() const
 {
 	return (m_contentsWidget ? m_contentsWidget->getContentState() : WebWidget::UnknownContentState);
-}
-
-Qt::WindowState Window::getWindowState() const
-{
-	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
-
-	if (subWindow)
-	{
-		if (subWindow->isMaximized())
-		{
-			return Qt::WindowMaximized;
-		}
-
-		if (subWindow->isMinimized())
-		{
-			return Qt::WindowMinimized;
-		}
-
-		return Qt::WindowNoState;
-	}
-
-	return Qt::WindowMaximized;
 }
 
 quint64 Window::getIdentifier() const

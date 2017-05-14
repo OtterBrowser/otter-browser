@@ -77,10 +77,10 @@ public:
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
+	WindowState getWindowState() const;
 	QSize sizeHint() const override;
 	WebWidget::LoadingState getLoadingState() const;
 	WebWidget::ContentStates getContentState() const;
-	Qt::WindowState getWindowState() const;
 	quint64 getIdentifier() const;
 	int getZoom() const;
 	bool canClone() const;

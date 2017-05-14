@@ -227,9 +227,12 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			const QJsonArray windowHistoryArray(windowObject.value(QLatin1String("history")).toArray());
 			const QString state(windowObject.value(QLatin1String("state")).toString());
 			const QStringList geometry(windowObject.value(QLatin1String("geometry")).toString().split(QLatin1Char(',')));
+			WindowState windowState;
+			windowState.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
+			windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
+
 			SessionWindow sessionWindow;
-			sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
-			sessionWindow.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
+			sessionWindow.state = windowState;
 			sessionWindow.historyIndex = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
 			sessionWindow.isPinned = windowObject.value(QLatin1String("isPinned")).toBool(false);
@@ -566,14 +569,14 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				windowObject.insert(QLatin1String("options"), optionsObject);
 			}
 
-			windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(sessionEntry.windows.at(j).geometry.x()).arg(sessionEntry.windows.at(j).geometry.y()).arg(sessionEntry.windows.at(j).geometry.width()).arg(sessionEntry.windows.at(j).geometry.height()));
+			windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(sessionEntry.windows.at(j).state.geometry.x()).arg(sessionEntry.windows.at(j).state.geometry.y()).arg(sessionEntry.windows.at(j).state.geometry.width()).arg(sessionEntry.windows.at(j).state.geometry.height()));
 			windowObject.insert(QLatin1String("currentIndex"), (sessionEntry.windows.at(j).historyIndex + 1));
 
-			if (sessionEntry.windows.at(j).state == Qt::WindowMaximized)
+			if (sessionEntry.windows.at(j).state.state == Qt::WindowMaximized)
 			{
 				windowObject.insert(QLatin1String("state"), QLatin1String("maximized"));
 			}
-			else if (sessionEntry.windows.at(j).state == Qt::WindowMinimized)
+			else if (sessionEntry.windows.at(j).state.state == Qt::WindowMinimized)
 			{
 				windowObject.insert(QLatin1String("state"), QLatin1String("minimized"));
 			}
