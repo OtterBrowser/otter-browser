@@ -312,18 +312,31 @@ void ConfigurationContentsWidget::copyOptionValue()
 	}
 }
 
-void ConfigurationContentsWidget::restoreDefaults()
+void ConfigurationContentsWidget::resetOption()
 {
 	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
 
 	if (index.isValid())
 	{
-		const int identifier(index.data(IdentifierRole).toInt());
+		SettingsManager::setOption(index.data(IdentifierRole).toInt(), SettingsManager::getOptionDefinition(index.data(IdentifierRole).toInt()).defaultValue);
 
-		SettingsManager::setOption(identifier, SettingsManager::getOptionDefinition(identifier).defaultValue);
+		m_model->setData(index.sibling(index.row(), 0), false, IsModifiedRole);
 
-		m_ui->configurationViewWidget->setCurrentIndex(QModelIndex());
-		m_ui->configurationViewWidget->setCurrentIndex(index);
+		updateActions();
+	}
+}
+
+void ConfigurationContentsWidget::saveOption()
+{
+	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
+
+	if (index.isValid())
+	{
+		SettingsManager::setOption(index.data(IdentifierRole).toInt(), index.data(Qt::EditRole));
+
+		m_model->setData(index.sibling(index.row(), 0), false, IsModifiedRole);
+
+		updateActions();
 	}
 }
 
@@ -404,7 +417,8 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(tr("Copy Option Name"), this, SLOT(copyOptionName()));
 		menu.addAction(tr("Copy Option Value"), this, SLOT(copyOptionValue()));
 		menu.addSeparator();
-		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);
+		menu.addAction(tr("Save Value"), this, SLOT(saveOption()))->setEnabled(index.sibling(index.row(), 0).data(IsModifiedRole).toBool());
+		menu.addAction(tr("Restore Default Value"), this, SLOT(resetOption()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);
 		menu.addSeparator();
 	}
 
