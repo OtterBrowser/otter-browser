@@ -304,13 +304,16 @@ void ToolBarDialog::editEntry()
 	const QModelIndex index(m_ui->currentEntriesItemView->currentIndex());
 	const QString identifier(index.data(IdentifierRole).toString());
 	QVariantMap options(index.data(OptionsRole).toMap());
-	QVector<QPair<QString, OptionWidget*> > widgets;
+	QVector<OptionEntry> entries;
 
 	if (identifier == QLatin1String("SearchWidget"))
 	{
 		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 		QVector<SettingsManager::OptionDefinition::ChoiceDefinition> searchEngineChoices{{tr("All"), QString(), QIcon()}, SettingsManager::OptionDefinition::ChoiceDefinition()};
-		OptionWidget *searchEngineWidget(new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this));
+		OptionEntry searchEngineEntry;
+		searchEngineEntry.widget = new OptionWidget(options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this);
+		searchEngineEntry.name = QLatin1String("searchEngine");
+		searchEngineEntry.label = tr("Show search engine:");
 
 		for (int i = 0; i < searchEngines.count(); ++i)
 		{
@@ -319,50 +322,75 @@ void ToolBarDialog::editEntry()
 			searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
 		}
 
-		searchEngineWidget->setChoices(searchEngineChoices);
+		searchEngineEntry.widget->setChoices(searchEngineChoices);
 
-		widgets.append({tr("Show search engine:"), searchEngineWidget});
-		widgets.append({tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this)});
+		OptionEntry showSearchButtonEntry;
+		showSearchButtonEntry.widget = new OptionWidget(options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this);
+		showSearchButtonEntry.name = QLatin1String("showSearchButton");
+		showSearchButtonEntry.label = tr("Show search button:");
+
+		entries = {searchEngineEntry, showSearchButtonEntry};
 	}
 	else if (identifier == QLatin1String("ConfigurationOptionWidget") || identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
-		OptionWidget *iconOptionWidget(new OptionWidget(QLatin1String("icon"), QVariant(), SettingsManager::IconType, this));
-		OptionWidget *textOptionWidget(new OptionWidget(QLatin1String("text"), QVariant(), SettingsManager::StringType, this));
+		OptionEntry iconEntry;
+		iconEntry.widget = new OptionWidget(QVariant(), SettingsManager::IconType, this);
+		iconEntry.name = QLatin1String("icon");
+		iconEntry.label = tr("Icon:");
+
+		OptionEntry textEntry;
+		textEntry.widget = new OptionWidget(QVariant(), SettingsManager::StringType, this);
+		textEntry.name = QLatin1String("text");
+		textEntry.label = tr("Text:");
+
+		entries = {iconEntry, textEntry};
 
 		if (identifier == QLatin1String("ClosedWindowsMenu"))
 		{
-			iconOptionWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
+			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
 		}
 		else if (identifier == QLatin1String("ConfigurationOptionWidget"))
 		{
 			const QStringList choices(SettingsManager::getOptions());
-			OptionWidget *optionNameWidget(new OptionWidget(QLatin1String("optionName"), options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this));
-			optionNameWidget->setChoices(choices);
+			OptionEntry optionNameEntry;
+			optionNameEntry.widget = new OptionWidget(options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this);
+			optionNameEntry.widget->setChoices(choices);
+			optionNameEntry.name = QLatin1String("optionName");
+			optionNameEntry.label = tr("Option:");
 
-			widgets.append({tr("Option:"), optionNameWidget});
+			OptionEntry scopeEntry;
+			scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::BooleanType, this);
+			scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
+			scopeEntry.widget->setDefaultValue(QLatin1String("window"));
+			scopeEntry.name = QLatin1String("scope");
+			scopeEntry.label = tr("Scope:");
 
-			OptionWidget *scopeWidget(new OptionWidget(QLatin1String("scope"), options.value(QLatin1String("scope")), SettingsManager::BooleanType, this));
-			scopeWidget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
-			scopeWidget->setDefaultValue(QLatin1String("window"));
+			entries.append(optionNameEntry);
+			entries.append(scopeEntry);
 
-			widgets.append({tr("Scope:"), scopeWidget});
+			textEntry.widget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
 
-			textOptionWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
-
-			connect(optionNameWidget, &OptionWidget::commitData, [&]()
+			connect(optionNameEntry.widget, &OptionWidget::commitData, [&]()
 			{
-				textOptionWidget->setDefaultValue(optionNameWidget->getValue().toString().section(QLatin1Char('/'), -1));
+				const bool needsReset(textEntry.widget->getDefaultValue() == textEntry.widget->getValue());
+
+				textEntry.widget->setDefaultValue(optionNameEntry.widget->getValue().toString().section(QLatin1Char('/'), -1));
+
+				if (needsReset)
+				{
+					textEntry.widget->setValue(textEntry.widget->getDefaultValue());
+				}
 			});
 		}
 		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 		{
-			iconOptionWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("content-blocking")));
-			textOptionWidget->setDefaultValue(tr("Blocked Elements: {amount}"));
+			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("content-blocking")));
+			textEntry.widget->setDefaultValue(tr("Blocked Elements: {amount}"));
 		}
 		else if (identifier == QLatin1String("MenuButtonWidget"))
 		{
-			iconOptionWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
-			textOptionWidget->setDefaultValue(tr("Menu"));
+			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
+			textEntry.widget->setDefaultValue(tr("Menu"));
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
 		{
@@ -370,8 +398,8 @@ void ToolBarDialog::editEntry()
 
 			if (bookmark)
 			{
-				iconOptionWidget->setDefaultValue(bookmark->data(Qt::DecorationRole).value<QIcon>());
-				textOptionWidget->setDefaultValue(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->data(BookmarksModel::TitleRole).toString() : tr("(Untitled)"));
+				iconEntry.widget->setDefaultValue(bookmark->data(Qt::DecorationRole).value<QIcon>());
+				textEntry.widget->setDefaultValue(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->data(BookmarksModel::TitleRole).toString() : tr("(Untitled)"));
 			}
 		}
 		else if (identifier.endsWith(QLatin1String("Action")))
@@ -382,19 +410,16 @@ void ToolBarDialog::editEntry()
 			{
 				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
-				iconOptionWidget->setDefaultValue(definition.defaultState.icon);
-				textOptionWidget->setDefaultValue(definition.getText(true));
+				iconEntry.widget->setDefaultValue(definition.defaultState.icon);
+				textEntry.widget->setDefaultValue(definition.getText(true));
 			}
 		}
 
-		iconOptionWidget->setValue(options.value(QLatin1String("icon"), iconOptionWidget->getDefaultValue()));
-		textOptionWidget->setValue(options.value(QLatin1String("text"), textOptionWidget->getDefaultValue()));
-
-		widgets.append({tr("Icon:"), iconOptionWidget});
-		widgets.append({tr("Text:"), textOptionWidget});
+		iconEntry.widget->setValue(options.value(QLatin1String("icon"), iconEntry.widget->getDefaultValue()));
+		textEntry.widget->setValue(options.value(QLatin1String("text"), textEntry.widget->getDefaultValue()));
 	}
 
-	if (widgets.isEmpty())
+	if (entries.isEmpty())
 	{
 		return;
 	}
@@ -411,9 +436,9 @@ void ToolBarDialog::editEntry()
 	mainLayout->addLayout(formLayout);
 	mainLayout->addWidget(buttonBox);
 
-	for (int i = 0; i < widgets.count(); ++i)
+	for (int i = 0; i < entries.count(); ++i)
 	{
-		formLayout->addRow(widgets.at(i).first, widgets.at(i).second);
+		formLayout->addRow(entries.at(i).label, entries.at(i).widget);
 	}
 
 	connect(buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
@@ -424,15 +449,15 @@ void ToolBarDialog::editEntry()
 		return;
 	}
 
-	for (int i = 0; i < widgets.count(); ++i)
+	for (int i = 0; i < entries.count(); ++i)
 	{
-		if (widgets.at(i).second->getValue() == widgets.at(i).second->getDefaultValue())
+		if (entries.at(i).widget->getValue() == entries.at(i).widget->getDefaultValue())
 		{
-			options.remove(widgets.at(i).second->getOption());
+			options.remove(entries.at(i).name);
 		}
 		else
 		{
-			options[widgets.at(i).second->getOption()] = widgets.at(i).second->getValue();
+			options[entries.at(i).name] = entries.at(i).widget->getValue();
 		}
 	}
 

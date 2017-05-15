@@ -34,6 +34,8 @@ namespace Ui
 	class ToolBarDialog;
 }
 
+class OptionWidget;
+
 class ToolBarDialog final : public Dialog
 {
 	Q_OBJECT
@@ -53,6 +55,13 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
+	struct OptionEntry
+	{
+		OptionWidget *widget = nullptr;
+		QString name;
+		QString label;
+	};
+
 	void changeEvent(QEvent *event) override;
 	void addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent = nullptr);
 	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = QVariantMap(), const QVariantMap &parameters = QVariantMap());

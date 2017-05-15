@@ -67,7 +67,7 @@ QWidget* ColorItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 {
 	Q_UNUSED(option)
 
-	OptionWidget *widget(new OptionWidget(QString(), index.data(Qt::EditRole), SettingsManager::ColorType, parent));
+	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), SettingsManager::ColorType, parent));
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 
@@ -101,7 +101,7 @@ QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 {
 	Q_UNUSED(option)
 
-	OptionWidget *widget(new OptionWidget(QString(), index.data(Qt::EditRole), SettingsManager::FontType, parent));
+	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), SettingsManager::FontType, parent));
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 

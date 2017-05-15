@@ -54,7 +54,6 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 	}
 
 	QString text;
-	const QString key(definition.options.value(QLatin1String("optionName")).toString());
 
 	if (definition.options.contains(QLatin1String("text")))
 	{
@@ -62,7 +61,7 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 	}
 	else
 	{
-		text = key.section(QLatin1Char('/'), -1);
+		text = definition.options.value(QLatin1String("optionName")).toString().section(QLatin1Char('/'), -1);
 	}
 
 	layout->addWidget(new QLabel(text, this));
@@ -70,7 +69,7 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 	const SettingsManager::OptionDefinition optionDefinition(SettingsManager::getOptionDefinition(m_identifier));
 	const QVariant value((m_scope == GlobalScope || !m_window) ? SettingsManager::getOption(m_identifier) : m_window->getOption(m_identifier));
 
-	m_optionWidget = new OptionWidget(key, value, optionDefinition.type, this);
+	m_optionWidget = new OptionWidget(value, optionDefinition.type, this);
 	m_optionWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
 
 	if (optionDefinition.type == SettingsManager::EnumerationType)

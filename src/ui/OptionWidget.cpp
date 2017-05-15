@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-OptionWidget::OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent) : QWidget(parent),
+OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType type, QWidget *parent) : QWidget(parent),
 	m_widget(nullptr),
 	m_colorWidget(nullptr),
 	m_filePathWidget(nullptr),
@@ -38,7 +38,6 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 	m_lineEdit(nullptr),
 	m_spinBox(nullptr),
 	m_resetButton(nullptr),
-	m_option(option),
 	m_value(value),
 	m_type(type)
 {
@@ -324,11 +323,6 @@ void OptionWidget::setSizePolicy(QSizePolicy policy)
 	QWidget::setSizePolicy(policy);
 
 	m_widget->setSizePolicy(policy);
-}
-
-QString OptionWidget::getOption() const
-{
-	return m_option;
 }
 
 QVariant OptionWidget::getDefaultValue() const

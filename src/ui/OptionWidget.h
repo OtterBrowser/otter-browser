@@ -41,7 +41,7 @@ class OptionWidget final : public QWidget
 	Q_OBJECT
 
 public:
-	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
+	explicit OptionWidget(const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
 
 	void setDefaultValue(const QVariant &value);
 	void setValue(const QVariant &value);
@@ -49,7 +49,6 @@ public:
 	void setChoices(const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> &choices);
 	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
 	void setSizePolicy(QSizePolicy policy);
-	QString getOption() const;
 	QVariant getDefaultValue() const;
 	QVariant getValue() const;
 
@@ -70,7 +69,6 @@ private:
 	QLineEdit *m_lineEdit;
 	QSpinBox *m_spinBox;
 	QPushButton *m_resetButton;
-	QString m_option;
 	QVariant m_defaultValue;
 	QVariant m_value;
 	SettingsManager::OptionType m_type;
