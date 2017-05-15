@@ -268,7 +268,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 	{
-		iterator.value()->close();
+		iterator.value()->requestClose();
 	}
 
 	Application::removeWindow(this);
@@ -958,7 +958,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				{
 					if (iterator.value() != window && !iterator.value()->isPinned())
 					{
-						iterator.value()->close();
+						iterator.value()->requestClose();
 					}
 				}
 			}
