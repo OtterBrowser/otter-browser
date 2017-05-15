@@ -81,7 +81,7 @@ void SelectPasswordDialog::removePassword()
 {
 	const int currentSet(getCurrentSet());
 
-	if (currentSet < 0 || currentSet >= m_passwords.count() || QMessageBox::question(this, tr("Question"), tr("Do you really want to remove this credentials set?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+	if (currentSet < 0 || currentSet >= m_passwords.count() || QMessageBox::question(this, tr("Question"), tr("Do you really want to remove this credentials set?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 	{
 		return;
 	}

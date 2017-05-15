@@ -284,7 +284,7 @@ void ToolBarsManager::resetToolBar(int identifier)
 		identifier = action->data().toInt();
 	}
 
-	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
+	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
 		const QHash<QString, ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
 		ToolBarDefinition definition(defaultDefinitions.value(getToolBarName(identifier)));
@@ -303,7 +303,7 @@ void ToolBarsManager::removeToolBar(int identifier)
 		identifier = action->data().toInt();
 	}
 
-	if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(nullptr, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
+	if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(nullptr, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
 		m_definitions[identifier].wasRemoved = true;
 		m_definitions[identifier].title = QString();
@@ -317,7 +317,7 @@ void ToolBarsManager::removeToolBar(int identifier)
 
 void ToolBarsManager::resetToolBars()
 {
-	if (QMessageBox::question(nullptr, tr("Reset Toolbars"), tr("Do you really want to reset all toolbars to default configuration?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
+	if (QMessageBox::question(nullptr, tr("Reset Toolbars"), tr("Do you really want to reset all toolbars to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 	{
 		return;
 	}

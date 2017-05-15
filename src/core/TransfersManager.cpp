@@ -285,7 +285,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			path = SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString();
 
-			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 			{
 				path = QString();
 			}
@@ -819,7 +819,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 
 	if (!canOverwriteExisting && !m_options.testFlag(CanOverwriteOption) && QFile::exists(target))
 	{
-		const QMessageBox::StandardButton result(QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
+		const int result(QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
 
 		if (result == QMessageBox::No)
 		{
