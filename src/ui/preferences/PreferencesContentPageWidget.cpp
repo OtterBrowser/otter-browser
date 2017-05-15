@@ -20,6 +20,7 @@
 
 #include "PreferencesContentPageWidget.h"
 #include "../../core/SettingsManager.h"
+#include "../../ui/ColorWidget.h"
 #include "../../ui/OptionWidget.h"
 
 #include "ui_PreferencesContentPageWidget.h"
@@ -35,39 +36,21 @@ ColorItemDelegate::ColorItemDelegate(QObject *parent) : ItemDelegate(parent)
 
 void ColorItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
-	const QColor color(index.data(Qt::EditRole).toString());
-	QPixmap icon(option->fontMetrics.height(), option->fontMetrics.height());
-	icon.fill(Qt::transparent);
+	const QString color(index.data(Qt::EditRole).toString());
+	QPixmap pixmap(option->fontMetrics.height(), option->fontMetrics.height());
+	pixmap.fill(Qt::transparent);
 
-	QPainter iconPainter(&icon);
-	iconPainter.setRenderHints(QPainter::Antialiasing);
+	QPainter painter(&pixmap);
+	painter.setRenderHints(QPainter::Antialiasing);
 
-	if (color.alpha() < 255)
-	{
-		QPixmap pixmap(10, 10);
-		pixmap.fill(Qt::white);
+	ColorWidget::drawThumbnail(&painter, QColor(color), option->palette, pixmap.rect());
 
-		QPainter pixmapPainter(&pixmap);
-		pixmapPainter.setBrush(Qt::gray);
-		pixmapPainter.setPen(Qt::NoPen);
-		pixmapPainter.drawRect(0, 0, 5, 5);
-		pixmapPainter.drawRect(5, 5, 5, 5);
-		pixmapPainter.end();
-
-		iconPainter.setBrush(pixmap);
-		iconPainter.setPen(Qt::NoPen);
-		iconPainter.drawRoundedRect(icon.rect(), 2, 2);
-	}
-
-	iconPainter.setBrush(color);
-	iconPainter.setPen(option->palette.color(QPalette::Button));
-	iconPainter.drawRoundedRect(icon.rect(), 2, 2);
-	iconPainter.end();
+	painter.end();
 
 	option->features |= QStyleOptionViewItem::HasDecoration;
-	option->decorationSize = icon.size();
-	option->icon = QIcon(icon);
-	option->text = color.name().toUpper();
+	option->decorationSize = pixmap.size();
+	option->icon = QIcon(pixmap);
+	option->text = color.toUpper();
 }
 
 void ColorItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const

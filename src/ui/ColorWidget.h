@@ -34,6 +34,7 @@ public:
 
 	void setColor(const QString &color);
 	void setColor(const QColor &color);
+	static void drawThumbnail(QPainter *painter, const QColor &color, const QPalette &palette, const QRect &rectangle);
 	QColor getColor() const;
 
 protected:

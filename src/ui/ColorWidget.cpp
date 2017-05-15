@@ -61,26 +61,7 @@ void ColorWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.setRenderHints(QPainter::Antialiasing);
 
-	if (m_color.alpha() < 255)
-	{
-		QPixmap pixmap(10, 10);
-		pixmap.fill(Qt::white);
-
-		QPainter pixmapPainter(&pixmap);
-		pixmapPainter.setBrush(Qt::gray);
-		pixmapPainter.setPen(Qt::NoPen);
-		pixmapPainter.drawRect(0, 0, 5, 5);
-		pixmapPainter.drawRect(5, 5, 5, 5);
-		pixmapPainter.end();
-
-		painter.setBrush(pixmap);
-		painter.setPen(Qt::NoPen);
-		painter.drawRoundedRect(m_buttonRectangle, 2, 2);
-	}
-
-	painter.setBrush(m_color);
-	painter.setPen(palette().color(QPalette::Button));
-	painter.drawRoundedRect(m_buttonRectangle, 2, 2);
+	drawThumbnail(&painter, m_color, palette(), m_buttonRectangle);
 }
 
 void ColorWidget::resizeEvent(QResizeEvent *event)
@@ -147,6 +128,33 @@ void ColorWidget::selectColor()
 
 		emit colorChanged(dialog.currentColor());
 	}
+}
+
+void ColorWidget::drawThumbnail(QPainter *painter, const QColor &color, const QPalette &palette, const QRect &rectangle)
+{
+	painter->save();
+
+	if (color.alpha() < 255)
+	{
+		QPixmap pixmap(10, 10);
+		pixmap.fill(Qt::white);
+
+		QPainter pixmapPainter(&pixmap);
+		pixmapPainter.setBrush(Qt::gray);
+		pixmapPainter.setPen(Qt::NoPen);
+		pixmapPainter.drawRect(0, 0, 5, 5);
+		pixmapPainter.drawRect(5, 5, 5, 5);
+		pixmapPainter.end();
+
+		painter->setBrush(pixmap);
+		painter->setPen(Qt::NoPen);
+		painter->drawRoundedRect(rectangle, 2, 2);
+	}
+
+	painter->setBrush(color);
+	painter->setPen(palette.color(QPalette::Button));
+	painter->drawRoundedRect(rectangle, 2, 2);
+	painter->restore();
 }
 
 void ColorWidget::setColor(const QString &color)
