@@ -347,9 +347,15 @@ void ConfigurationContentsWidget::saveAll()
 				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
 
 				SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), valueIndex.data(Qt::EditRole));
+
+				m_model->setData(optionItem->index(), false, IsModifiedRole);
 			}
 		}
 	}
+
+	m_ui->configurationViewWidget->setModified(false);
+	m_ui->defaultsButton->setEnabled(false);
+	m_ui->saveButton->setEnabled(false);
 
 	updateActions();
 }
