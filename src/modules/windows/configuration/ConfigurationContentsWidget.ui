@@ -98,7 +98,7 @@
       <item>
        <layout class="QVBoxLayout" name="actionsLayout">
         <item>
-         <widget class="QPushButton" name="saveButton">
+         <widget class="QPushButton" name="saveAllButton">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -108,7 +108,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="defaultsButton">
+         <widget class="QPushButton" name="resetAllButton">
           <property name="enabled">
            <bool>false</bool>
           </property>

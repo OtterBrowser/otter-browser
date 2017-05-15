@@ -75,6 +75,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void saveAll(bool reset);
 
 protected slots:
 	void currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
@@ -82,7 +83,6 @@ protected slots:
 	void copyOptionValue();
 	void resetOption();
 	void saveOption();
-	void saveAll();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void showContextMenu(const QPoint &position);
 	void updateActions();

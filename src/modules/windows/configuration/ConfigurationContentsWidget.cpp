@@ -32,6 +32,7 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -172,6 +173,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	const QMetaEnum metaEnum(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())));
 	const QStringList options(SettingsManager::getOptions());
 	QStandardItem *groupItem(nullptr);
+	bool canResetAll(false);
 
 	for (int i = 0; i < options.count(); ++i)
 	{
@@ -209,6 +211,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 			font.setBold(true);
 
 			optionItems[0]->setFont(font);
+
+			canResetAll = true;
 		}
 
 		groupItem->appendRow(optionItems);
@@ -223,6 +227,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, NameRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->resetAllButton->setEnabled(canResetAll);
 
 	if (isSidebarPanel())
 	{
@@ -234,11 +239,19 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
 	{
-		m_ui->saveButton->setEnabled(true);
+		m_ui->resetAllButton->setEnabled(true);
+		m_ui->saveAllButton->setEnabled(true);
 	});
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->saveButton, SIGNAL(clicked()), this, SLOT(saveAll()));
+	connect(m_ui->resetAllButton, &QPushButton::clicked, [&]()
+	{
+		saveAll(true);
+	});
+	connect(m_ui->saveAllButton, &QPushButton::clicked, [&]()
+	{
+		saveAll(false);
+	});
 }
 
 ConfigurationContentsWidget::~ConfigurationContentsWidget()
@@ -340,8 +353,13 @@ void ConfigurationContentsWidget::saveOption()
 	}
 }
 
-void ConfigurationContentsWidget::saveAll()
+void ConfigurationContentsWidget::saveAll(bool reset)
 {
+	if (reset && QMessageBox::question(this, tr("Question"), tr("Do you really want to restore default values of all options?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+	{
+		return;
+	}
+
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
 		QStandardItem *groupItem(m_model->item(i, 0));
@@ -354,21 +372,47 @@ void ConfigurationContentsWidget::saveAll()
 		for (int j = 0; j < groupItem->rowCount(); ++j)
 		{
 			QStandardItem *optionItem(groupItem->child(j, 0));
+			const bool isModified(optionItem && optionItem->data(IsModifiedRole).toBool());
 
-			if (optionItem && optionItem->data(IsModifiedRole).toBool())
+			if (optionItem && (reset || isModified))
 			{
 				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
+				const QVariant defaultValue(SettingsManager::getOptionDefinition(valueIndex.data(IdentifierRole).toInt()).defaultValue);
 
-				SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), valueIndex.data(Qt::EditRole));
+				if (reset && valueIndex.data(Qt::EditRole) != defaultValue)
+				{
+					m_model->setData(valueIndex, defaultValue, Qt::EditRole);
 
-				m_model->setData(optionItem->index(), false, IsModifiedRole);
+					SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), defaultValue);
+
+					QFont font(optionItem->font());
+					font.setBold(false);
+
+					optionItem->setFont(font);
+				}
+				else if (!reset && isModified)
+				{
+					SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), valueIndex.data(Qt::EditRole));
+				}
+
+				if (isModified)
+				{
+					m_model->setData(optionItem->index(), false, IsModifiedRole);
+				}
 			}
 		}
 	}
 
 	m_ui->configurationViewWidget->setModified(false);
-	m_ui->defaultsButton->setEnabled(false);
-	m_ui->saveButton->setEnabled(false);
+	m_ui->saveAllButton->setEnabled(false);
+
+	if (reset)
+	{
+		m_ui->resetAllButton->setEnabled(false);
+	}
+
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 
 	updateActions();
 }
@@ -397,7 +441,7 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 				optionItem->setFont(font);
 
-				groupItem->child(j, 2)->setText(value.toString());
+				groupItem->child(j, 2)->setData(value, Qt::EditRole);
 
 				break;
 			}
@@ -432,7 +476,7 @@ void ConfigurationContentsWidget::updateActions()
 	const QModelIndex index(m_ui->configurationViewWidget->selectionModel()->hasSelection() ? m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2) : QModelIndex());
 	const int identifier(index.data(IdentifierRole).toInt());
 
-	if (identifier >= 0)
+	if (identifier >= 0 && index.isValid())
 	{
 		m_ui->nameLabelWidget->setText(SettingsManager::getOptionName(identifier));
 		m_ui->currentValueLabelWidget->setText(SettingsManager::createDisplayValue(identifier, SettingsManager::getOption(identifier)));
