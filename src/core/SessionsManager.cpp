@@ -599,11 +599,16 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
+				const QPoint position(sessionEntry.windows.at(j).history.at(k).position);
 				QJsonObject historyEntryObject;
 				historyEntryObject.insert(QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url);
 				historyEntryObject.insert(QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title);
-				historyEntryObject.insert(QLatin1String("position"), QString::number(sessionEntry.windows.at(j).history.at(k).position.x()) + QLatin1String(", ") + QString::number(sessionEntry.windows.at(j).history.at(k).position.y()));
 				historyEntryObject.insert(QLatin1String("zoom"), sessionEntry.windows.at(j).history.at(k).zoom);
+
+				if (position.x() != 0 || position.y() != 0)
+				{
+					historyEntryObject.insert(QLatin1String("position"), QStringLiteral("%1, %2").arg(position.x()).arg(position.y()));
+				}
 
 				windowHistoryArray.append(historyEntryObject);
 			}
