@@ -469,7 +469,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				for (int i = 0; i < m_privateWindows.count(); ++i)
 				{
-					m_privateWindows[i]->close();
+					m_privateWindows[i]->requestClose();
 				}
 			}
 
@@ -557,7 +557,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
 					}
 
-					activeWindow->close();
+					activeWindow->requestClose();
 				}
 
 				Window *window(new Window(mutableParameters, nullptr, this));

@@ -103,7 +103,7 @@ void MdiWindow::changeEvent(QEvent *event)
 
 void MdiWindow::closeEvent(QCloseEvent *event)
 {
-	m_window->close();
+	m_window->requestClose();
 
 	event->ignore();
 }

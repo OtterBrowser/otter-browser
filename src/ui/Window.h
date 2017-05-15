@@ -92,7 +92,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void close();
+	void requestClose();
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive();
 	void setUrl(const QUrl &url, bool isTyped = true);

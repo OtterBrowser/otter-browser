@@ -92,8 +92,6 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 
 	if (widget)
 	{
-		widget->setParent(this);
-
 		setContentsWidget(widget);
 	}
 
@@ -171,7 +169,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::SuspendTabAction:
-			if (m_contentsWidget)
+			if (!m_contentsWidget || m_contentsWidget->close())
 			{
 				m_session = getSession();
 
@@ -182,7 +180,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::CloseTabAction:
 			if (!isPinned())
 			{
-				close();
+				requestClose();
 			}
 
 			break;
@@ -323,11 +321,14 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 void Window::clear()
 {
-	setContentsWidget(new WebContentsWidget(m_parameters, QHash<int, QVariant>(), nullptr, this));
+	if (!m_contentsWidget || m_contentsWidget->close())
+	{
+		setContentsWidget(new WebContentsWidget(m_parameters, QHash<int, QVariant>(), nullptr, this));
 
-	m_isAboutToClose = false;
+		m_isAboutToClose = false;
 
-	emit urlChanged(getUrl(), true);
+		emit urlChanged(getUrl(), true);
+	}
 }
 
 void Window::attachAddressWidget(AddressWidget *widget)
@@ -366,13 +367,16 @@ void Window::detachSearchWidget(SearchWidget *widget)
 	m_searchWidgets.removeAll(widget);
 }
 
-void Window::close()
+void Window::requestClose()
 {
-	m_isAboutToClose = true;
+	if (!m_contentsWidget || m_contentsWidget->close())
+	{
+		m_isAboutToClose = true;
 
-	emit aboutToClose();
+		emit aboutToClose();
 
-	QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
+		QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
+	}
 }
 
 void Window::search(const QString &query, const QString &searchEngine)
@@ -381,6 +385,11 @@ void Window::search(const QString &query, const QString &searchEngine)
 
 	if (!widget)
 	{
+		if (m_contentsWidget && !m_contentsWidget->close())
+		{
+			return;
+		}
+
 		QVariantMap parameters;
 
 		if (isPrivate())
@@ -592,6 +601,11 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 	if (newWidget)
 	{
+		if (m_contentsWidget && !m_contentsWidget->close())
+		{
+			return;
+		}
+
 		setContentsWidget(newWidget);
 	}
 
@@ -657,6 +671,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		return;
 	}
 
+	m_contentsWidget->setParent(this);
+
 	if (!m_addressBar)
 	{
 		m_addressBar = new WindowToolBarWidget(ToolBarsManager::AddressBar, this);
@@ -707,7 +723,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	emit loadingStateChanged(m_contentsWidget->getLoadingState());
 	emit canZoomChanged(m_contentsWidget->canZoom());
 
-	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 	connect(m_contentsWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_contentsWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));

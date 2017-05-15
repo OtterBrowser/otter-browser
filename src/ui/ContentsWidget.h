@@ -88,10 +88,11 @@ protected:
 
 protected slots:
 	void triggerAction();
-	void close();
-	void cleanupDialog();
+	void handleAboutToClose();
+	void handleDialogFinished();
 
 private:
+	Window *m_window;
 	QWidget *m_layer;
 	QVector<QPointer<ContentsDialog> > m_dialogs;
 	int m_layerTimer;

@@ -942,7 +942,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 		}
 		else if (m_window)
 		{
-			m_window->close();
+			m_window->requestClose();
 		}
 	}
 	else if (m_window && !m_progressBarWidget && state == WebWidget::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
@@ -1130,7 +1130,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	{
 		widget->setWindowIdentifier(m_window->getIdentifier());
 
-		connect(m_webWidget, SIGNAL(requestedCloseWindow()), m_window, SLOT(close()));
+		connect(m_webWidget, SIGNAL(requestedCloseWindow()), m_window, SLOT(requestClose()));
 	}
 
 	handleLoadingStateChange(m_webWidget->getLoadingState());
@@ -1261,7 +1261,7 @@ void WebContentsWidget::setParent(Window *window)
 
 		m_webWidget->setWindowIdentifier(window->getIdentifier());
 
-		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
+		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(requestClose()));
 	}
 }
 

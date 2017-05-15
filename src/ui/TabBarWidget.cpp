@@ -245,7 +245,7 @@ void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_window && !m_window->isPinned() && event->button() == Qt::LeftButton && m_wasCloseButtonPressed && m_closeButtonRectangle.contains(event->pos()))
 	{
-		m_window->close();
+		m_window->requestClose();
 
 		event->accept();
 	}

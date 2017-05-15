@@ -26,13 +26,14 @@ namespace Otter
 {
 
 ContentsWidget::ContentsWidget(const QVariantMap &parameters, Window *window) : QWidget(window),
+	m_window(window),
 	m_layer(nullptr),
 	m_layerTimer(0),
 	m_sidebar(parameters.value(QLatin1String("sidebar"), -1).toInt())
 {
 	if (window)
 	{
-		connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+		connect(window, SIGNAL(aboutToClose()), this, SLOT(handleAboutToClose()));
 	}
 }
 
@@ -116,7 +117,7 @@ void ContentsWidget::triggerAction()
 	}
 }
 
-void ContentsWidget::close()
+void ContentsWidget::handleAboutToClose()
 {
 	for (int i = 0; i < m_dialogs.count(); ++i)
 	{
@@ -127,7 +128,7 @@ void ContentsWidget::close()
 	}
 }
 
-void ContentsWidget::cleanupDialog()
+void ContentsWidget::handleDialogFinished()
 {
 	ContentsDialog *dialog(qobject_cast<ContentsDialog*>(sender()));
 
@@ -183,7 +184,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		m_layer->raise();
 	}
 
-	connect(dialog, SIGNAL(finished(int,bool)), this, SLOT(cleanupDialog()));
+	connect(dialog, SIGNAL(finished(int,bool)), this, SLOT(handleDialogFinished()));
 
 	dialog->setParent(m_layer);
 	dialog->show();
@@ -253,9 +254,16 @@ void ContentsWidget::setUrl(const QUrl &url, bool isTyped)
 
 void ContentsWidget::setParent(Window *window)
 {
+	if (m_window)
+	{
+		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(handleAboutToClose()));
+	}
+
+	m_window = window;
+
 	if (window)
 	{
-		connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+		connect(window, SIGNAL(aboutToClose()), this, SLOT(handleAboutToClose()));
 	}
 
 	QWidget::setParent(window);
