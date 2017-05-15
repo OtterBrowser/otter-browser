@@ -252,16 +252,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	m_isAboutToClose = true;
 
-	if (isLastWindow)
-	{
-		if (SessionsManager::getCurrentSession() == QLatin1String("default"))
-		{
-			SessionsManager::saveSession();
-		}
-	}
-	else
+	if (!isLastWindow)
 	{
 		SessionsManager::storeClosedWindow(this);
+	}
+	else if (SessionsManager::getCurrentSession() == QLatin1String("default"))
+	{
+		SessionsManager::saveSession();
 	}
 
 	QHash<quint64, Window*>::const_iterator iterator;
