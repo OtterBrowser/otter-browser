@@ -179,11 +179,6 @@ void OptionWidget::reset()
 	}
 }
 
-void OptionWidget::setIndex(const QModelIndex &index)
-{
-	m_index = index;
-}
-
 void OptionWidget::setDefaultValue(const QVariant &value)
 {
 	m_defaultValue = value;
@@ -402,11 +397,6 @@ QVariant OptionWidget::getValue() const
 	}
 
 	return QVariant();
-}
-
-QModelIndex OptionWidget::getIndex() const
-{
-	return m_index;
 }
 
 bool OptionWidget::isModified() const

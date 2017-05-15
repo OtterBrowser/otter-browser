@@ -21,6 +21,8 @@
 #ifndef OTTER_PREFERENCESCONTENTPAGEWIDGET_H
 #define OTTER_PREFERENCESCONTENTPAGEWIDGET_H
 
+#include "../ItemDelegate.h"
+
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -30,6 +32,30 @@ namespace Ui
 {
 	class PreferencesContentPageWidget;
 }
+
+class ColorItemDelegate final : public ItemDelegate
+{
+public:
+	explicit ColorItemDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
+class FontItemDelegate final : public ItemDelegate
+{
+public:
+	explicit FontItemDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
 
 class PreferencesContentPageWidget final : public QWidget
 {
@@ -44,7 +70,6 @@ protected:
 
 protected slots:
 	void currentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
-	void fontChanged(QWidget *editor);
 	void currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void save();
 

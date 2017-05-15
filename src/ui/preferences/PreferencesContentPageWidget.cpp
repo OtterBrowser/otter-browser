@@ -20,13 +20,110 @@
 
 #include "PreferencesContentPageWidget.h"
 #include "../../core/SettingsManager.h"
-#include "../../ui/OptionDelegate.h"
 #include "../../ui/OptionWidget.h"
 
 #include "ui_PreferencesContentPageWidget.h"
 
+#include <QtGui/QPainter>
+
 namespace Otter
 {
+
+ColorItemDelegate::ColorItemDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void ColorItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	const QColor color(index.data(Qt::EditRole).toString());
+	QPixmap icon(option->fontMetrics.height(), option->fontMetrics.height());
+	icon.fill(Qt::transparent);
+
+	QPainter iconPainter(&icon);
+	iconPainter.setRenderHints(QPainter::Antialiasing);
+
+	if (color.alpha() < 255)
+	{
+		QPixmap pixmap(10, 10);
+		pixmap.fill(Qt::white);
+
+		QPainter pixmapPainter(&pixmap);
+		pixmapPainter.setBrush(Qt::gray);
+		pixmapPainter.setPen(Qt::NoPen);
+		pixmapPainter.drawRect(0, 0, 5, 5);
+		pixmapPainter.drawRect(5, 5, 5, 5);
+		pixmapPainter.end();
+
+		iconPainter.setBrush(pixmap);
+		iconPainter.setPen(Qt::NoPen);
+		iconPainter.drawRoundedRect(icon.rect(), 2, 2);
+	}
+
+	iconPainter.setBrush(color);
+	iconPainter.setPen(option->palette.color(QPalette::Button));
+	iconPainter.drawRoundedRect(icon.rect(), 2, 2);
+	iconPainter.end();
+
+	option->features |= QStyleOptionViewItem::HasDecoration;
+	option->decorationSize = icon.size();
+	option->icon = QIcon(icon);
+	option->text = color.name().toUpper();
+}
+
+void ColorItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+
+	if (widget)
+	{
+		model->setData(index, widget->getValue(), Qt::EditRole);
+	}
+}
+
+QWidget* ColorItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	OptionWidget *widget(new OptionWidget(QString(), index.data(Qt::EditRole), SettingsManager::ColorType, parent));
+
+	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+
+	return widget;
+}
+
+FontItemDelegate::FontItemDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void FontItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	const QString fontFamily(index.data(Qt::EditRole).toString());
+
+	option->font = QFont(fontFamily);
+	option->text = fontFamily;
+}
+
+void FontItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+
+	if (widget)
+	{
+		model->setData(index, widget->getValue(), Qt::EditRole);
+		model->setData(index.sibling(index.row(), 2), QFont(widget->getValue().toString()), Qt::FontRole);
+	}
+}
+
+QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	OptionWidget *widget(new OptionWidget(QString(), index.data(Qt::EditRole), SettingsManager::FontType, parent));
+
+	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+
+	return widget;
+}
 
 PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	QWidget(parent),
@@ -52,7 +149,6 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	const QVector<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
 	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
-	OptionDelegate *fontsDelegate(new OptionDelegate(this));
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
@@ -68,14 +164,13 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	}
 
 	m_ui->fontsViewWidget->setModel(fontsModel);
-	m_ui->fontsViewWidget->setItemDelegateForColumn(1, fontsDelegate);
+	m_ui->fontsViewWidget->setItemDelegateForColumn(1, new FontItemDelegate(this));
 
 	QStandardItemModel *colorsModel(new QStandardItemModel(this));
 	colorsModel->setHorizontalHeaderLabels(QStringList({tr("Type"), tr("Preview")}));
 
 	const QVector<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
 	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
-	OptionDelegate *colorsDelegate(new OptionDelegate(this));
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
@@ -89,10 +184,9 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	}
 
 	m_ui->colorsViewWidget->setModel(colorsModel);
-	m_ui->colorsViewWidget->setItemDelegateForColumn(1, colorsDelegate);
+	m_ui->colorsViewWidget->setItemDelegateForColumn(1, new ColorItemDelegate(this));
 
 	connect(m_ui->fontsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentFontChanged(QModelIndex,QModelIndex)));
-	connect(fontsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(fontChanged(QWidget*)));
 	connect(m_ui->colorsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentColorChanged(QModelIndex,QModelIndex)));
 }
 
@@ -118,17 +212,6 @@ void PreferencesContentPageWidget::currentFontChanged(const QModelIndex &current
 	if (currentIndex.isValid())
 	{
 		m_ui->fontsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
-	}
-}
-
-void PreferencesContentPageWidget::fontChanged(QWidget *editor)
-{
-	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
-	const QModelIndex index(widget ? widget->getIndex() : QModelIndex());
-
-	if (index.isValid())
-	{
-		m_ui->fontsViewWidget->model()->setData(index.sibling(index.row(), 2), QFont(index.data(Qt::EditRole).toString()), Qt::FontRole);
 	}
 }
 

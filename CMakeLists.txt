@@ -171,7 +171,6 @@ set(otter_src
 	src/ui/NotificationDialog.cpp
 	src/ui/OpenAddressDialog.cpp
 	src/ui/OpenBookmarkDialog.cpp
-	src/ui/OptionDelegate.cpp
 	src/ui/OptionWidget.cpp
 	src/ui/PreferencesDialog.cpp
 	src/ui/PreviewWidget.cpp

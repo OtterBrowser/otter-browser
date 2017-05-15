@@ -43,7 +43,6 @@ class OptionWidget final : public QWidget
 public:
 	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
 
-	void setIndex(const QModelIndex &index);
 	void setDefaultValue(const QVariant &value);
 	void setValue(const QVariant &value);
 	void setChoices(const QStringList &choices);
@@ -53,7 +52,6 @@ public:
 	QString getOption() const;
 	QVariant getDefaultValue() const;
 	QVariant getValue() const;
-	QModelIndex getIndex() const;
 	bool isModified() const;
 
 protected:
@@ -76,7 +74,6 @@ private:
 	QString m_option;
 	QVariant m_defaultValue;
 	QVariant m_value;
-	QModelIndex m_index;
 	SettingsManager::OptionType m_type;
 	bool m_isModified;
 

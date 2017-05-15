@@ -128,7 +128,7 @@ void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemMod
 		QFont font(optionIndex.data(Qt::FontRole).value<QFont>());
 		font.setBold(widget->getValue() != widget->getDefaultValue());
 
-		model->setData(index, widget->getValue());
+		model->setData(index, widget->getValue(), Qt::EditRole);
 		model->setData(optionIndex, font, Qt::FontRole);
 		model->setData(optionIndex, true, ConfigurationContentsWidget::IsModifiedRole);
 	}
@@ -141,7 +141,6 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 	const int identifier(index.data(ConfigurationContentsWidget::IdentifierRole).toInt());
 	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 	OptionWidget *widget(new OptionWidget(SettingsManager::getOptionName(identifier), index.data(Qt::EditRole), definition.type, parent));
-	widget->setIndex(index);
 	widget->setDefaultValue(definition.defaultValue);
 
 	if (definition.type == SettingsManager::EnumerationType)
