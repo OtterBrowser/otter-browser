@@ -74,6 +74,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
 
 protected:
+	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	void saveAll(bool reset);
 

@@ -290,6 +290,28 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 	}
 }
 
+void ConfigurationContentsWidget::closeEvent(QCloseEvent *event)
+{
+	if (m_ui->configurationViewWidget->isModified())
+	{
+		const int result(QMessageBox::question(this, tr("Question"), tr("The settings have been changed.\nDo you want to save them?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel));
+
+		if (result == QMessageBox::Cancel)
+		{
+			event->ignore();
+
+			return;
+		}
+
+		if (result == QMessageBox::Yes)
+		{
+			saveAll(false);
+		}
+	}
+
+	event->accept();
+}
+
 void ConfigurationContentsWidget::print(QPrinter *printer)
 {
 	m_ui->configurationViewWidget->render(printer);
