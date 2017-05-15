@@ -23,7 +23,6 @@
 #include "IconWidget.h"
 #include "FilePathWidget.h"
 
-#include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
 
 namespace Otter
@@ -41,8 +40,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 	m_resetButton(nullptr),
 	m_option(option),
 	m_value(value),
-	m_type(type),
-	m_isModified(false)
+	m_type(type)
 {
 	switch (type)
 	{
@@ -53,23 +51,21 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 			m_comboBox->addItem(tr("Yes"), QLatin1String("true"));
 			m_comboBox->setCurrentIndex(value.toBool() ? 1 : 0);
 
-			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
+			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markAsModified()));
 
 			break;
 		case SettingsManager::ColorType:
-			{
-				m_widget = m_colorWidget = new ColorWidget(this);
+			m_widget = m_colorWidget = new ColorWidget(this);
 
-				m_colorWidget->setColor(value.value<QColor>());
+			m_colorWidget->setColor(value.value<QColor>());
 
-				connect(m_colorWidget, SIGNAL(colorChanged(QColor)), this, SLOT(markModified()));
-			}
+			connect(m_colorWidget, SIGNAL(colorChanged(QColor)), this, SLOT(markAsModified()));
 
 			break;
 		case SettingsManager::EnumerationType:
 			m_widget = m_comboBox = new QComboBox(this);
 
-			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
+			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markAsModified()));
 
 			break;
 		case SettingsManager::FontType:
@@ -78,7 +74,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 			m_fontComboBox->setCurrentFont(QFont(value.toString()));
 			m_fontComboBox->lineEdit()->selectAll();
 
-			connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markModified()));
+			connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markAsModified()));
 
 			break;
 		case SettingsManager::IconType:
@@ -93,7 +89,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 				m_iconWidget->setIcon(value.value<QIcon>());
 			}
 
-			connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markModified()));
+			connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markAsModified()));
 
 			break;
 		case SettingsManager::IntegerType:
@@ -104,7 +100,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 			m_spinBox->setValue(value.toInt());
 			m_spinBox->selectAll();
 
-			connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markModified()));
+			connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markAsModified()));
 
 			break;
 		case SettingsManager::PathType:
@@ -113,7 +109,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 			m_filePathWidget->setPath(value.toString());
 			m_filePathWidget->setSelectFile(false);
 
-			connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markModified()));
+			connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markAsModified()));
 
 			break;
 		default:
@@ -127,7 +123,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 				m_lineEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
 			}
 
-			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markModified()));
+			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markAsModified()));
 
 			break;
 	}
@@ -155,10 +151,8 @@ void OptionWidget::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void OptionWidget::markModified()
+void OptionWidget::markAsModified()
 {
-	m_isModified = true;
-
 	if (m_resetButton)
 	{
 		m_resetButton->setEnabled(m_defaultValue != getValue());
@@ -170,8 +164,6 @@ void OptionWidget::markModified()
 void OptionWidget::reset()
 {
 	setValue(getDefaultValue());
-
-	m_isModified = false;
 
 	if (m_resetButton)
 	{
@@ -193,11 +185,6 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 		{
 			m_iconWidget->setDefaultIcon(value.toString());
 		}
-	}
-
-	if (!m_isModified)
-	{
-		reset();
 	}
 
 	if (!m_resetButton)
@@ -397,11 +384,6 @@ QVariant OptionWidget::getValue() const
 	}
 
 	return QVariant();
-}
-
-bool OptionWidget::isModified() const
-{
-	return m_isModified;
 }
 
 }

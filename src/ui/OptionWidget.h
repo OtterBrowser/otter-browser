@@ -52,13 +52,12 @@ public:
 	QString getOption() const;
 	QVariant getDefaultValue() const;
 	QVariant getValue() const;
-	bool isModified() const;
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;
 
 protected slots:
-	void markModified();
+	void markAsModified();
 	void reset();
 
 private:
@@ -75,7 +74,6 @@ private:
 	QVariant m_defaultValue;
 	QVariant m_value;
 	SettingsManager::OptionType m_type;
-	bool m_isModified;
 
 signals:
 	void commitData(QWidget *editor);
