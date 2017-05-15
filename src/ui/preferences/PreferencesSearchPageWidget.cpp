@@ -64,14 +64,6 @@ SearchEngineKeywordDelegate::SearchEngineKeywordDelegate(QObject *parent) : Item
 {
 }
 
-void SearchEngineKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(option)
-	Q_UNUSED(index)
-
-	editor->setGeometry(option.rect);
-}
-
 void SearchEngineKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QLineEdit *widget(qobject_cast<QLineEdit*>(editor));

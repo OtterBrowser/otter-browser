@@ -30,14 +30,6 @@ GestureActionDelegate::GestureActionDelegate(QObject *parent) : ItemDelegate(par
 {
 }
 
-void GestureActionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(option)
-	Q_UNUSED(index)
-
-	editor->setGeometry(option.rect);
-}
-
 void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));

@@ -30,14 +30,6 @@ ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent
 {
 }
 
-void ContentBlockingIntervalDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(option)
-	Q_UNUSED(index)
-
-	editor->setGeometry(option.rect);
-}
-
 void ContentBlockingIntervalDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QSpinBox *widget(qobject_cast<QSpinBox*>(editor));

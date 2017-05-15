@@ -31,7 +31,6 @@ class ContentBlockingIntervalDelegate final : public ItemDelegate
 public:
 	explicit ContentBlockingIntervalDelegate(QObject *parent = nullptr);
 
-	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	QString displayText(const QVariant &value, const QLocale &locale) const override;

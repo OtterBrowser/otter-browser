@@ -107,14 +107,6 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 	}
 }
 
-void OptionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(option)
-	Q_UNUSED(index)
-
-	editor->setGeometry(option.rect);
-}
-
 void OptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));

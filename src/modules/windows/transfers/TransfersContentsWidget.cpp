@@ -43,13 +43,6 @@ ProgressBarDelegate::ProgressBarDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
 
-void ProgressBarDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(index)
-
-	editor->setGeometry(option.rect);
-}
-
 void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
 	QProgressBar *progressBar(qobject_cast<QProgressBar*>(editor));
