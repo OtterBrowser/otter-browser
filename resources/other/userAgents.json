@@ -7,13 +7,13 @@
 	"separator",
 	{
 		"identifier": "chrome",
-		"title": "Mask as Google Chrome 55 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2869.0 Safari/537.36"
+		"title": "Mask as Google Chrome 58 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 	},
 	{
 		"identifier": "mobile",
-		"title": "Mask as Google Chrome 55 (mobile device)",
-		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2869.0 Mobile Safari/537.36"
+		"title": "Mask as Google Chrome 58 (mobile device)",
+		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Mobile Safari/537.36"
 	},
 	{
 		"identifier": "firefox",
@@ -22,8 +22,8 @@
 	},
 	{
 		"identifier": "edge",
-		"title": "Mask as Microsoft Edge 25 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586"
+		"title": "Mask as Microsoft Edge 40 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/15.15063"
 	},
 	{
 		"identifier": "internet-explorer",
@@ -32,8 +32,8 @@
 	},
 	{
 		"identifier": "opera",
-		"title": "Mask as Opera 12.16 (Windows)",
-		"value": "Opera/9.80 (Windows NT 6.1) Presto/2.12.388 Version/12.16"
+		"title": "Mask as Opera 12.18 (Windows)",
+		"value": "Opera/9.80 (Windows NT 6.1) Presto/2.12.388 Version/12.18"
 	},
 	{
 		"identifier": "safari",
