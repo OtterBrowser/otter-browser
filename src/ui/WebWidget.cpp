@@ -360,7 +360,7 @@ void WebWidget::handleAudibleStateChange(bool isAudible)
 	if (m_actions.contains(ActionsManager::MuteTabMediaAction))
 	{
 		m_actions[ActionsManager::MuteTabMediaAction]->setEnabled(isAudible || isAudioMuted());
-		m_actions[ActionsManager::MuteTabMediaAction]->setIcon(ThemesManager::createIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")));
+		m_actions[ActionsManager::MuteTabMediaAction]->setIcon(ThemesManager::createIcon(isAudioMuted() ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		m_actions[ActionsManager::MuteTabMediaAction]->setOverrideText(isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
 	}
 }
