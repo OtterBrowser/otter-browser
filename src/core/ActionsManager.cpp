@@ -211,7 +211,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), QString(), ThemesManager::createIcon(QLatin1String("preferences-desktop-locale")), ActionDefinition::ApplicationScope);
 	registerAction(CheckForUpdatesAction, QT_TRANSLATE_NOOP("actions", "Check for Updates…"), QString(), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(DiagnosticReportAction, QT_TRANSLATE_NOOP("actions", "Diagnostic Report…"), QString(), QIcon(), ActionDefinition::ApplicationScope);
-	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), QString(), ThemesManager::createIcon(QLatin1String("otter-browser")), ActionDefinition::ApplicationScope);
+	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), QString(), ThemesManager::createIcon(QLatin1String("otter-browser"), false), ActionDefinition::ApplicationScope);
 	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), ThemesManager::createIcon(QLatin1String("qt")), ActionDefinition::ApplicationScope);
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), ThemesManager::createIcon(QLatin1String("application-exit")), ActionDefinition::ApplicationScope);
 
