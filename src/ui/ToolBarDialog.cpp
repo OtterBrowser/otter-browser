@@ -589,15 +589,12 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 			const SearchEnginesManager::SearchEngineDefinition definition(SearchEnginesManager::getSearchEngine(options[QLatin1String("searchEngine")].toString()));
 
 			item->setText(tr("Search Field (%1)").arg(definition.title.isEmpty() ? tr("Unknown") : definition.title));
-
-			if (!definition.icon.isNull())
-			{
-				item->setIcon(definition.icon);
-			}
+			item->setIcon(definition.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : definition.icon);
 		}
 		else
 		{
 			item->setText(tr("Search Field"));
+			item->setIcon(ThemesManager::createIcon(QLatin1String("edit-find")));
 		}
 	}
 	else if (identifier == QLatin1String("StatusMessageWidget"))
