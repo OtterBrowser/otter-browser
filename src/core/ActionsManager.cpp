@@ -106,8 +106,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CopyMediaUrlToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Media Link to Clipboard"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(MediaControlsAction, QT_TRANSLATE_NOOP("actions", "Show Controls"), QT_TRANSLATE_NOOP("actions", "Show Media Controls"), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
 	registerAction(MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QT_TRANSLATE_NOOP("actions", "Playback Looping"), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
-	registerAction(MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"), QT_TRANSLATE_NOOP("actions", "Play Media"), QIcon(), ActionDefinition::WindowScope);
-	registerAction(MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"), QT_TRANSLATE_NOOP("actions", "Mute Media"), QIcon(), ActionDefinition::WindowScope);
+	registerAction(MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"), QT_TRANSLATE_NOOP("actions", "Play Media"), ThemesManager::createIcon(QLatin1String("media-playback-start")), ActionDefinition::WindowScope);
+	registerAction(MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"), QT_TRANSLATE_NOOP("actions", "Mute Media"), ThemesManager::createIcon(QLatin1String("audio-volume-muted")), ActionDefinition::WindowScope);
 	registerAction(FillPasswordAction, QT_TRANSLATE_NOOP("actions", "Log In"), QString(), ThemesManager::createIcon(QLatin1String("fill-password")), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QT_TRANSLATE_NOOP("actions", "Go to URL"), ThemesManager::createIcon(QLatin1String("go-jump-locationbar")), ActionDefinition::MainWindowScope);
 	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QT_TRANSLATE_NOOP("actions", "Go Back"), ThemesManager::createIcon(QLatin1String("go-previous")), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::HasMenuFlag));
