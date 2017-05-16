@@ -451,14 +451,7 @@ void ToolBarDialog::editEntry()
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		if (entries.at(i).widget->getValue() == entries.at(i).widget->getDefaultValue())
-		{
-			options.remove(entries.at(i).name);
-		}
-		else
-		{
-			options[entries.at(i).name] = entries.at(i).widget->getValue();
-		}
+		options[entries.at(i).name] = entries.at(i).widget->getValue();
 	}
 
 	QStandardItem *item(createEntry(identifier, options));
