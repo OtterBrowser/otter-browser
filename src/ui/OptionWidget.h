@@ -70,7 +70,6 @@ private:
 	QSpinBox *m_spinBox;
 	QPushButton *m_resetButton;
 	QVariant m_defaultValue;
-	QVariant m_value;
 	SettingsManager::OptionType m_type;
 
 signals:

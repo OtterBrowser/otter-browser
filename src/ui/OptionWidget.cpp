@@ -38,7 +38,6 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 	m_lineEdit(nullptr),
 	m_spinBox(nullptr),
 	m_resetButton(nullptr),
-	m_value(value),
 	m_type(type)
 {
 	switch (type)
@@ -63,6 +62,8 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			break;
 		case SettingsManager::EnumerationType:
 			m_widget = m_comboBox = new QComboBox(this);
+			m_comboBox->addItem(value.toString(), value);
+			m_comboBox->setCurrentIndex(0);
 
 			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markAsModified()));
 
@@ -199,8 +200,6 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 
 void OptionWidget::setValue(const QVariant &value)
 {
-	m_value = value;
-
 	if (m_colorWidget)
 	{
 		m_colorWidget->setColor(value.value<QColor>());
@@ -245,6 +244,8 @@ void OptionWidget::setChoices(const QStringList &choices)
 		return;
 	}
 
+	const QVariant value(m_comboBox->currentData());
+
 	m_comboBox->clear();
 
 	for (int i = 0; i < choices.count(); ++i)
@@ -259,7 +260,7 @@ void OptionWidget::setChoices(const QStringList &choices)
 		}
 	}
 
-	m_comboBox->setCurrentText(m_value.toString());
+	setValue(value);
 }
 
 void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> &choices)
@@ -269,9 +270,10 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 		return;
 	}
 
-	m_comboBox->clear();
-
+	const QVariant value(m_comboBox->currentData());
 	bool hasIcons(false);
+
+	m_comboBox->clear();
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
@@ -283,21 +285,11 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 		}
 	}
 
-	const QString value(m_value.toString());
-	bool hasFound(false);
-
 	for (int i = 0; i < choices.count(); ++i)
 	{
 		if (choices.at(i).isValid())
 		{
 			m_comboBox->addItem(choices.at(i).icon, choices.at(i).getTitle(), (choices.at(i).value.isEmpty() ? QVariant() : choices.at(i).value));
-
-			if (!hasFound && choices.at(i).value == value)
-			{
-				m_comboBox->setCurrentIndex(i);
-
-				hasFound = true;
-			}
 
 			if (hasIcons && choices.at(i).icon.isNull())
 			{
@@ -309,6 +301,8 @@ void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::C
 			m_comboBox->insertSeparator(i);
 		}
 	}
+
+	setValue(value);
 }
 
 void OptionWidget::setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical)
