@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2017 Marcin Mikołajczak <m4sk1n@o2.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -190,12 +191,13 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "No Proxy"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "System Configuration"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Default User Agent"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 50 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Mozilla Firefox 45 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Microsoft Edge 25 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Internet Explorer 10.0 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Opera 12.16 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Safari 9.0 (macOS)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 58 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 58 (Android)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Mozilla Firefox 53 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Microsoft Edge 40 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Internet Explorer 11.0 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Opera 12.18 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Safari 10.1 (macOS)"))
 
 	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
 
