@@ -146,7 +146,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"), QString(), ThemesManager::createIcon(QLatin1String("go-down")), ActionDefinition::WindowScope);
 	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"), QString(), ThemesManager::createIcon(QLatin1String("go-up")), ActionDefinition::WindowScope);
 	registerAction(QuickFindAction, QT_TRANSLATE_NOOP("actions", "Quick Find"), QString(), QIcon(), ActionDefinition::WindowScope);
-	registerAction(SearchAction, QT_TRANSLATE_NOOP("actions", "Search"), QString(), QIcon(), ActionDefinition::WindowScope);
+	registerAction(SearchAction, QT_TRANSLATE_NOOP("actions", "Search"), QString(), ThemesManager::createIcon(QLatin1String("edit-find")), ActionDefinition::WindowScope);
 	registerAction(CreateSearchAction, QT_TRANSLATE_NOOP("actions", "Create Search…"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(ZoomInAction, QT_TRANSLATE_NOOP("actions", "Zoom In"), QString(), ThemesManager::createIcon(QLatin1String("zoom-in")), ActionDefinition::WindowScope);
 	registerAction(ZoomOutAction, QT_TRANSLATE_NOOP("actions", "Zoom Out"), QString(), ThemesManager::createIcon(QLatin1String("zoom-out")), ActionDefinition::WindowScope);
