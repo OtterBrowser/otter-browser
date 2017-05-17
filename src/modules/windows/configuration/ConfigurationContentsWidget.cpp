@@ -430,12 +430,15 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 			if (optionItem && optionItem->index().sibling(j, 2).data(IdentifierRole).toInt() == identifier)
 			{
-				QFont font(optionItem->font());
-				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
+				if (!optionItem->data(IsModifiedRole).toBool())
+				{
+					QFont font(optionItem->font());
+					font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
 
-				optionItem->setFont(font);
+					optionItem->setFont(font);
 
-				groupItem->child(j, 2)->setData(value, Qt::EditRole);
+					groupItem->child(j, 2)->setData(value, Qt::EditRole);
+				}
 
 				break;
 			}
