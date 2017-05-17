@@ -515,6 +515,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	else if (identifier == QLatin1String("ClosedWindowsMenu"))
 	{
 		item->setText(tr("List of Closed Tabs and Windows"));
+		item->setIcon(ThemesManager::createIcon(QLatin1String("user-trash")));
 	}
 	else if (identifier == QLatin1String("AddressWidget"))
 	{
@@ -534,6 +535,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 	{
 		item->setText(tr("Content Blocking Details"));
+		item->setIcon(ThemesManager::createIcon(QLatin1String("content-blocking")));
 	}
 	else if (identifier == QLatin1String("ErrorConsoleWidget"))
 	{
