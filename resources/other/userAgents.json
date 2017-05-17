@@ -26,7 +26,7 @@
 		"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/15.15063"
 	},
 	{
-		"identifier": "internet-explorer",
+		"identifier": "internetExplorer",
 		"title": "Mask as Internet Explorer 11.0 (Windows)",
 		"value": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0)"
 	},
