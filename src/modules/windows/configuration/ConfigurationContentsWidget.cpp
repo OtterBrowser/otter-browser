@@ -100,6 +100,16 @@ void ConfigurationOptionDelegate::initStyleOption(QStyleOptionViewItem *option, 
 	}
 }
 
+void ConfigurationOptionDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+
+	if (widget && !index.sibling(index.row(), 0).data(ConfigurationContentsWidget::IsModifiedRole).toBool())
+	{
+		widget->setValue(index.data(Qt::EditRole));
+	}
+}
+
 void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
