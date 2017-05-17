@@ -428,7 +428,7 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 		{
 			QStandardItem *optionItem(groupItem->child(j, 0));
 
-			if (optionItem && name == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
+			if (optionItem && optionItem->index().sibling(j, 2).data(IdentifierRole).toInt() == identifier)
 			{
 				QFont font(optionItem->font());
 				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
