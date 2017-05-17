@@ -11,8 +11,8 @@
 		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 	},
 	{
-		"identifier": "mobile",
-		"title": "Mask as Google Chrome 58 (mobile device)",
+		"identifier": "chromeMobile",
+		"title": "Mask as Google Chrome 58 (Android)",
 		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Mobile Safari/537.36"
 	},
 	{
@@ -37,7 +37,7 @@
 	},
 	{
 		"identifier": "safari",
-		"title": "Mask as Safari 9.0 (macOS)",
-		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.3 Safari/601.2.4"
+		"title": "Mask as Safari 10.1 (macOS)",
+		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4"
 	}
 ]
