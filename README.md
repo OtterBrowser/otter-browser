@@ -44,11 +44,11 @@ DMG packages are available on [SourceForge](https://sourceforge.net/projects/ott
 
 Otter Browser is *your* browser. Because it is free software (GPL v3), you can contribute to make it better. New contributors are always welcome, whether you write code, make resources, report bugs, or suggest features.
 
-The browser is written in C++ from scratch and is based on the Qt5 framework, with some modules written in Javascript. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
+The browser is written in C++ from scratch and is based on the Qt5 framework. Some very specific features are written in JavaScript when workarounds are impossible. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
-To stay tuned on the development, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0) and two IRC channels at Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (main and international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (Polski / Polish).
+To stay tuned on the development, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0) and one of our IRC channels at Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (polski / Polish).
 
 Read *CONTRIBUTING.md* and don’t hesitate!
 
