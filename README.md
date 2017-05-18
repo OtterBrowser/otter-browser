@@ -25,7 +25,8 @@ To build Otter Browser, you will need the following depedencies: **Qt 5.4.0** (o
     make
     make install
 
-Detailed instructions are available in the *INSTALL* file at the root of the repository.
+Detailed instructions are available in the *INSTALL.md* file at the root 
+of the repository.
 
 ### Under Linux and *BSD
 
