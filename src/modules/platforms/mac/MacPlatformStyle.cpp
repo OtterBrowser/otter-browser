@@ -31,11 +31,40 @@ MacPlatformStyle::MacPlatformStyle(const QString &name) : Style(name)
 
 void MacPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (element == QStyle::CE_ToolBar)
+	switch (element)
 	{
-		QProxyStyle::drawControl(element, option, painter, widget);
+		case QStyle::CE_TabBarTab:
+			{
+				const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
 
-		return;
+				if (tabOption && tabOption->documentMode)
+				{
+					painter->save();
+
+					if (tabOption->position == QStyleOptionTab::Beginning || tabOption->position == QStyleOptionTab::Middle)
+					{
+						painter->setPen(QColor(100, 100, 100, 200));
+						painter->drawLine(option->rect.topRight(), option->rect.bottomRight());
+					}
+
+					if (option->state.testFlag(QStyle::State_MouseOver))
+					{
+						painter->fillRect(option->rect, QColor(0, 0, 0, (option->state.testFlag(QStyle::State_Selected) ? 80 : 50)));
+					}
+
+					painter->restore();
+
+					return;
+				}
+			}
+
+			break;
+		case QStyle::CE_ToolBar:
+			QProxyStyle::drawControl(element, option, painter, widget);
+
+			return;
+		default:
+			break;
 	}
 
 	Style::drawControl(element, option, painter, widget);
@@ -75,6 +104,53 @@ void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 			QProxyStyle::drawPrimitive(element, option, painter, widget);
 
 			return;
+		case QStyle::PE_FrameTabBarBase:
+			{
+				const QStyleOptionTabBarBase *tabBarBaseOption(qstyleoption_cast<const QStyleOptionTabBarBase*>(option));
+
+				if (tabBarBaseOption && tabBarBaseOption->documentMode)
+				{
+					painter->save();
+					painter->setPen(QColor(100, 100, 100, 200));
+
+					if (tabBarBaseOption->selectedTabRect.isValid())
+					{
+						QRect leftRectangle(tabBarBaseOption->tabBarRect);
+						leftRectangle.setRight(tabBarBaseOption->selectedTabRect.left());
+						leftRectangle.setLeft(option->rect.left());
+
+						QRect rightRectangle(tabBarBaseOption->tabBarRect);
+						rightRectangle.setLeft(tabBarBaseOption->selectedTabRect.right());
+						rightRectangle.setRight(option->rect.right());
+
+						painter->fillRect(leftRectangle, QColor(0, 0, 0, 50));
+						painter->fillRect(rightRectangle, QColor(0, 0, 0, 50));
+					}
+					else
+					{
+						painter->fillRect(tabBarBaseOption->tabBarRect, QColor(0, 0, 0, 50));
+					}
+
+					painter->drawLine(QPoint(option->rect.left(), tabBarBaseOption->tabBarRect.top()), QPoint(option->rect.right(), tabBarBaseOption->tabBarRect.top()));
+					painter->drawLine(QPoint(option->rect.left(), tabBarBaseOption->tabBarRect.bottom()), QPoint(option->rect.right(), tabBarBaseOption->tabBarRect.bottom()));
+
+					if (tabBarBaseOption->tabBarRect.left() != option->rect.left())
+					{
+						painter->drawLine(tabBarBaseOption->tabBarRect.topLeft(), tabBarBaseOption->tabBarRect.bottomLeft());
+					}
+
+					if (tabBarBaseOption->tabBarRect.right() != option->rect.right())
+					{
+						painter->drawLine(tabBarBaseOption->tabBarRect.topRight(), tabBarBaseOption->tabBarRect.bottomRight());
+					}
+
+					painter->restore();
+
+					return;
+				}
+			}
+
+			break;
 		default:
 			break;
 	}
