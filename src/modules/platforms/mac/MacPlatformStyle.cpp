@@ -76,26 +76,21 @@ void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 	{
 		case QStyle::PE_IndicatorTabClose:
 			{
-				const int size(pixelMetric(QStyle::PM_TabCloseIndicatorWidth, option, widget));
+				QRect rectangle(option->rect);
+
+				if (rectangle.width() > 8)
+				{
+					rectangle = QRect((rectangle.left() + ((rectangle.width() - 8) / 2)), (rectangle.top() + ((rectangle.height() - 8) / 2)), 8, 8);
+				}
+
+				QPen pen(QColor(60, 60, 60));
+				pen.setWidthF(1.25);
 
 				painter->save();
-				painter->translate(option->rect.topLeft());
-
-				if (option->rect.width() < size)
-				{
-					const qreal scale(option->rect.width() / static_cast<qreal>(size));
-
-					painter->scale(scale, scale);
-				}
-				else
-				{
-					const int offset((option->rect.width() - size) / 2);
-
-					painter->translate(offset, offset);
-				}
-
-				QProxyStyle::drawPrimitive(element, option, painter, widget);
-
+				painter->setRenderHint(QPainter::Antialiasing);
+				painter->setPen(pen);
+				painter->drawLine(rectangle.topLeft(), rectangle.bottomRight());
+				painter->drawLine(rectangle.topRight(), rectangle.bottomLeft());
 				painter->restore();
 			}
 
