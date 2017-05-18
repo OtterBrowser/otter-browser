@@ -43,7 +43,11 @@ DMG packages are available on [SourceForge](https://sourceforge.net/projects/ott
 
 Otter Browser is *your* browser. Because it is free software (GPL v3), you can contribute to make it better. New contributors are always welcome, whether you write code, make resources, report bugs, or suggest features.
 
-The browser is written in C++ from scratch and is based on the Qt5 framework. Other languages like JavaScript and Python 3 are sometimes used. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
+The browser is written primarily in C++ and leverages powerful features offered by the Qt5 framework.
+
+We also use JavaScript for interacting with rendering engines (when native APIs are not available) and Python 3 is our preferred language for creating tools to ease development.
+
+Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
