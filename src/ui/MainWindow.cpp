@@ -1058,7 +1058,14 @@ void MainWindow::triggerAction(bool isChecked)
 			parameters[QLatin1String("isChecked")] = isChecked;
 		}
 
-		triggerAction(action->getIdentifier(), parameters);
+		if (ActionsManager::getActionDefinition(action->getIdentifier()).scope == ActionsManager::ActionDefinition::ApplicationScope)
+		{
+			Application::triggerAction(action->getIdentifier(), parameters);
+		}
+		else
+		{
+			triggerAction(action->getIdentifier(), parameters);
+		}
 	}
 }
 
