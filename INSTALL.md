@@ -1,4 +1,9 @@
-To install Otter Browser from source you need to have [Qt SDK](https://www.qt.io/download-open-source/) (5.4.0 or newer) installed. You can use system wide libraries when available, but you will need to install header files for modules specified in *CMakeLists.txt* (listed in line starting with `qt5_use_modules`) and sometimes additional header files for GStreamer and libxml2. Sometimes you may need to manually add QtConcurrent to list of required modules in CMakeLists.txt, by adding it to the line starting with `qt5_use_modules(otter-browser`, resulting in `qt5_use_modules(otter-browser Concurrent`.
+Build and install instructions
+==============================
+
+To install Otter Browser from source you need to have [Qt SDK](https://www.qt.io/download-open-source/) (5.4.0 or newer) installed. You can use system wide libraries when available, but you will need to install header files for modules specified in *CMakeLists.txt* (listed in line starting with `qt5_use_modules`) and sometimes additional header files for GStreamer and libxml2.
+
+Sometimes you may need to manually add QtConcurrent to list of required modules in CMakeLists.txt, by adding it to the line starting with `qt5_use_modules(otter-browser`, resulting in `qt5_use_modules(otter-browser Concurrent`.
 
 CMake (3.1.0 or newer) is used as build system, you need to perform these steps to get clean build (last step is optional):
 
