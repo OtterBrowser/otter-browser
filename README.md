@@ -25,8 +25,7 @@ To build Otter Browser, you will need the following depedencies: **Qt 5.4.0** (o
     make
     make install
 
-Detailed instructions are available in the *INSTALL.md* file at the root 
-of the repository.
+Detailed instructions are available in the *INSTALL.md* file at the root of the repository.
 
 ### Under Linux and *BSD
 
@@ -44,7 +43,7 @@ DMG packages are available on [SourceForge](https://sourceforge.net/projects/ott
 
 Otter Browser is *your* browser. Because it is free software (GPL v3), you can contribute to make it better. New contributors are always welcome, whether you write code, make resources, report bugs, or suggest features.
 
-The browser is written in C++ from scratch and is based on the Qt5 framework. Some very specific features are written in JavaScript when workarounds are impossible. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
+The browser is written in C++ from scratch and is based on the Qt5 framework. Some very specific features are written in JavaScript. Have a look on [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that suits you.
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
