@@ -281,12 +281,19 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	const int overlap(style()->pixelMetric(QStyle::PM_TabBarBaseOverlap, &tabOption));
 	QPainter painter(this);
+	QTabBar *tabBar(findChild<TabBarWidget*>());
 	QStyleOptionTabBarBase tabBarBaseOption;
 	tabBarBaseOption.initFrom(this);
 	tabBarBaseOption.documentMode = true;
 	tabBarBaseOption.rect = contentsRect();
 	tabBarBaseOption.shape = tabOption.shape;
 	tabBarBaseOption.tabBarRect = contentsRect();
+
+	if (tabBar)
+	{
+		tabBarBaseOption.selectedTabRect = tabBar->tabRect(tabBar->currentIndex()).translated(tabBar->pos());
+		tabBarBaseOption.tabBarRect = tabBar->geometry();
+	}
 
 	if (overlap > 0)
 	{
