@@ -155,6 +155,7 @@ QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *opti
 				}
 
 				QStyleOptionTab tabOption;
+				tabOption.documentMode = true;
 				tabOption.rect = option->rect;
 				tabOption.shape = QTabBar::RoundedNorth;
 
@@ -212,7 +213,12 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, c
 		case QStyle::PM_TabBarTabHSpace:
 			if (QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
 			{
-				return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+				const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
+
+				if (tabOption && tabOption->documentMode)
+				{
+					return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+				}
 			}
 
 			break;
