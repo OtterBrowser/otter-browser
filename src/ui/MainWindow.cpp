@@ -1515,7 +1515,7 @@ void MainWindow::handleWindowClose(Window *window)
 
 	if (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool())
 	{
-		const WindowHistoryInformation history(window->getContentsWidget()->getHistory());
+		const WindowHistoryInformation history(window->getHistory());
 
 		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
 		{

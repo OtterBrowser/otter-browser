@@ -898,6 +898,20 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 	return state;
 }
 
+WindowHistoryInformation Window::getHistory() const
+{
+	if (m_contentsWidget)
+	{
+		return m_contentsWidget->getHistory();
+	}
+
+	WindowHistoryInformation history;
+	history.entries = m_session.history;
+	history.index = m_session.historyIndex;
+
+	return history;
+}
+
 SessionWindow Window::getSession() const
 {
 	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
