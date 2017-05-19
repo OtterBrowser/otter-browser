@@ -1513,7 +1513,7 @@ void MainWindow::handleWindowClose(Window *window)
 		return;
 	}
 
-	if (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool())
+	if (!m_isAboutToClose && (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool()))
 	{
 		const WindowHistoryInformation history(window->getHistory());
 
