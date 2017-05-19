@@ -68,6 +68,7 @@ QWidget* ColorItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 	Q_UNUSED(option)
 
 	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), SettingsManager::ColorType, parent));
+	widget->setFocus();
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 
@@ -102,6 +103,7 @@ QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 	Q_UNUSED(option)
 
 	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), SettingsManager::FontType, parent));
+	widget->setFocus();
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 

@@ -46,7 +46,10 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 {
 	Q_UNUSED(option)
 
-	return new QKeySequenceEdit(QKeySequence(index.data().toString()), parent);
+	QKeySequenceEdit *widget(new QKeySequenceEdit(QKeySequence(index.data().toString()), parent));
+	widget->setFocus();
+
+	return widget;
 }
 
 KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent) : Dialog(parent),

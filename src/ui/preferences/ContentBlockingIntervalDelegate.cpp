@@ -50,6 +50,7 @@ QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QS
 	widget->setMinimum(0);
 	widget->setMaximum(365);
 	widget->setValue(index.data(Qt::DisplayRole).toInt());
+	widget->setFocus();
 
 	return widget;
 }

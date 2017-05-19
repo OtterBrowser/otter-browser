@@ -58,6 +58,7 @@ QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOption
 
 	ActionComboBoxWidget *widget(new ActionComboBoxWidget(parent));
 	widget->setActionIdentifier(index.data(Qt::UserRole).toInt());
+	widget->setFocus();
 
 	return widget;
 }
