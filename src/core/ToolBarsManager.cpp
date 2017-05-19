@@ -286,8 +286,8 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		const QHash<QString, ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
-		ToolBarDefinition definition(defaultDefinitions.value(getToolBarName(identifier)));
+		const QHash<QString, ToolBarDefinition> definitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
+		ToolBarDefinition definition(definitions.value(getToolBarName(identifier)));
 		definition.identifier = identifier;
 
 		setToolBar(definition);
@@ -332,13 +332,13 @@ void ToolBarsManager::resetToolBars()
 	m_definitions.clear();
 	m_identifiers.clear();
 
-	const QHash<QString, ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
+	const QHash<QString, ToolBarDefinition> definitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
 
-	m_definitions.append(defaultDefinitions[QLatin1String("MenuBar")]);
-	m_definitions.append(defaultDefinitions[QLatin1String("TabBar")]);
-	m_definitions.append(defaultDefinitions[QLatin1String("AddressBar")]);
-	m_definitions.append(defaultDefinitions[QLatin1String("ProgressBar")]);
-	m_definitions.append(defaultDefinitions[QLatin1String("StatusBar")]);
+	m_definitions.append(definitions[QLatin1String("MenuBar")]);
+	m_definitions.append(definitions[QLatin1String("TabBar")]);
+	m_definitions.append(definitions[QLatin1String("AddressBar")]);
+	m_definitions.append(definitions[QLatin1String("ProgressBar")]);
+	m_definitions.append(definitions[QLatin1String("StatusBar")]);
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
@@ -614,31 +614,31 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 	if (m_definitions.isEmpty())
 	{
 		const QString bundledToolBarsPath(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true));
-		const QHash<QString, ToolBarsManager::ToolBarDefinition> defaultDefinitions(loadToolBars(bundledToolBarsPath, true));
+		const QHash<QString, ToolBarsManager::ToolBarDefinition> bundledDefinitions(loadToolBars(bundledToolBarsPath, true));
 
 		m_definitions.reserve(OtherToolBar);
 
 		for (int i = 0; i < OtherToolBar; ++i)
 		{
-			m_definitions.append(defaultDefinitions.value(getToolBarName(i)));
+			m_definitions.append(bundledDefinitions.value(getToolBarName(i)));
 		}
 
-		const QString customToolBarsPath(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json")));
+		const QString localToolBarsPath(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json")));
 
-		if (QFile::exists(customToolBarsPath) && bundledToolBarsPath != customToolBarsPath)
+		if (QFile::exists(localToolBarsPath) && bundledToolBarsPath != localToolBarsPath)
 		{
-			const QHash<QString, ToolBarDefinition> customDefinitions(loadToolBars(customToolBarsPath, false));
+			const QHash<QString, ToolBarDefinition> localDefinitions(loadToolBars(localToolBarsPath, false));
 
-			if (!customDefinitions.isEmpty())
+			if (!localDefinitions.isEmpty())
 			{
 				QHash<QString, ToolBarDefinition>::const_iterator iterator;
 
-				for (iterator = customDefinitions.constBegin(); iterator != customDefinitions.constEnd(); ++iterator)
+				for (iterator = localDefinitions.constBegin(); iterator != localDefinitions.constEnd(); ++iterator)
 				{
 					int identifier(getToolBarIdentifier(iterator.key()));
 
 //TODO Drop after migration
-					if (identifier < 0 && iterator.key() == QLatin1String("NavigationBar") && !customDefinitions.contains(QLatin1String("AddressBar")))
+					if (identifier < 0 && iterator.key() == QLatin1String("NavigationBar") && !localDefinitions.contains(QLatin1String("AddressBar")))
 					{
 						identifier = AddressBar;
 					}
