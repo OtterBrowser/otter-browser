@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -65,8 +65,24 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		QJsonObject settingsObject;
 		const QHash<ContentBlockingProfile::ProfileCategory, QString> categoryTitles({{ContentBlockingProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentBlockingProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentBlockingProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentBlockingProfile::SocialCategory, QLatin1String("social")}, {ContentBlockingProfile::RegionalCategory, QLatin1String("regional")}, {ContentBlockingProfile::OtherCategory, QLatin1String("other")}});
+		JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
+		QJsonObject mainObject(settings.object());
+		QJsonObject::iterator iterator(mainObject.begin());
+
+		while (iterator != mainObject.end())
+		{
+			const QJsonObject profileObject(mainObject.value(iterator.key()).toObject());
+
+			if (profileObject.value(QLatin1String("isHidden")).toBool())
+			{
+				++iterator;
+			}
+			else
+			{
+				iterator = mainObject.erase(iterator);
+			}
+		}
 
 		for (int i = 0; i < m_profiles.count(); ++i)
 		{
@@ -118,12 +134,11 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 				profileObject.insert(QLatin1String("languages"), languageNames);
 			}
 
-			settingsObject.insert(profile->getName(), profileObject);
+			mainObject.insert(profile->getName(), profileObject);
 		}
 
-		JsonSettings settings;
-		settings.setObject(settingsObject);
-		settings.save(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
+		settings.setObject(mainObject);
+		settings.save();
 	}
 }
 
@@ -182,6 +197,39 @@ void ContentBlockingManager::handleOptionChanged(int identifier, const QVariant 
 	{
 		m_profiles[i]->clear();
 	}
+}
+
+void ContentBlockingManager::removeProfile(ContentBlockingProfile *profile)
+{
+	if (!profile || !profile->remove())
+	{
+		Console::addMessage(tr("Failed to remove content blocking profile file: %1").arg(profile ? profile->getName() : tr("Unknown")), Console::OtherCategory, Console::ErrorLevel);
+
+		return;
+	}
+
+	JsonSettings localSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
+	QJsonObject localMainObject(localSettings.object());
+	QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
+
+	if (bundledMainObject.keys().contains(profile->getName()))
+	{
+		QJsonObject profileObject(localMainObject.value(profile->getName()).toObject());
+		profileObject.insert(QLatin1String("isHidden"), true);
+
+		localMainObject.insert(profile->getName(), profileObject);
+	}
+	else
+	{
+		localMainObject.remove(profile->getName());
+	}
+
+	localSettings.setObject(localMainObject);
+	localSettings.save();
+
+	m_profiles.removeAll(profile);
+
+	profile->deleteLater();
 }
 
 QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const QStringList &profiles)
@@ -387,15 +435,7 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 	{
 		QStringList profiles;
 		const QList<QFileInfo> existingProfiles(QDir(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking"))).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
-		QJsonObject bundledSettings;
-		QFile bundledFile(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true));
-
-		if (bundledFile.open(QIODevice::ReadOnly | QIODevice::Text))
-		{
-			bundledSettings = QJsonDocument::fromJson(bundledFile.readAll()).object();
-
-			bundledFile.close();
-		}
+		QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
 
 		for (int i = 0; i < existingProfiles.count(); ++i)
 		{
@@ -409,7 +449,7 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 
 		QJsonObject::const_iterator iterator;
 
-		for (iterator = bundledSettings.constBegin(); iterator != bundledSettings.constEnd(); ++iterator)
+		for (iterator = bundledMainObject.constBegin(); iterator != bundledMainObject.constEnd(); ++iterator)
 		{
 			const QString name(iterator.key());
 
@@ -423,22 +463,13 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 
 		m_profiles.reserve(profiles.count());
 
-		QJsonObject settingsObject;
-		QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
-
-		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-		{
-			settingsObject = QJsonDocument::fromJson(file.readAll()).object();
-
-			file.close();
-		}
-
+		QJsonObject localMainObject(JsonSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json"))).object());
 		const QHash<QString, ContentBlockingProfile::ProfileCategory> categoryTitles({{QLatin1String("advertisements"), ContentBlockingProfile::AdvertisementsCategory}, {QLatin1String("annoyance"), ContentBlockingProfile::AnnoyanceCategory}, {QLatin1String("privacy"), ContentBlockingProfile::PrivacyCategory}, {QLatin1String("social"), ContentBlockingProfile::SocialCategory}, {QLatin1String("regional"), ContentBlockingProfile::RegionalCategory}, {QLatin1String("other"), ContentBlockingProfile::OtherCategory}});
 
 		for (int i = 0; i < profiles.count(); ++i)
 		{
-			QJsonObject profileObject(settingsObject.value(profiles.at(i)).toObject());
-			const QJsonObject bundledProfileObject(bundledSettings.value(profiles.at(i)).toObject());
+			QJsonObject profileObject(localMainObject.value(profiles.at(i)).toObject());
+			const QJsonObject bundledProfileObject(bundledMainObject.value(profiles.at(i)).toObject());
 			QString title;
 			QUrl updateUrl;
 			ContentBlockingProfile::ProfileFlags flags(ContentBlockingProfile::NoFlags);
@@ -455,6 +486,11 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 			}
 			else
 			{
+				if (profileObject.value(QLatin1String("isHidden")).toBool())
+				{
+					continue;
+				}
+
 				updateUrl = QUrl(profileObject.value(QLatin1String("updateUrl")).toString());
 				title = profileObject.value(QLatin1String("title")).toString();
 
@@ -492,6 +528,8 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 			connect(profile, SIGNAL(profileModified(QString)), m_instance, SIGNAL(profileModified(QString)));
 			connect(profile, SIGNAL(profileModified(QString)), m_instance, SLOT(scheduleSave()));
 		}
+
+		m_profiles.squeeze();
 	}
 
 	return m_profiles;

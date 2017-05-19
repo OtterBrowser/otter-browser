@@ -73,6 +73,7 @@ public:
 	ProfileFlags getFlags() const;
 	int getUpdateInterval() const;
 	bool downloadRules();
+	bool remove();
 
 protected:
 	enum RuleOption : quint32

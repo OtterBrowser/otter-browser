@@ -891,6 +891,25 @@ bool ContentBlockingProfile::loadRules()
 	return true;
 }
 
+bool ContentBlockingProfile::remove()
+{
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name));
+
+	if (m_networkReply)
+	{
+		m_networkReply->abort();
+		m_networkReply->deleteLater();
+		m_networkReply = nullptr;
+	}
+
+	if (QFile::exists(path))
+	{
+		return QFile::remove(path);
+	}
+
+	return true;
+}
+
 bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const QStringList &ruleList) const
 {
 	for (int i = 0; i < ruleList.count(); ++i)

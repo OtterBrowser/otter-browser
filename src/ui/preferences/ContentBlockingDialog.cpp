@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -84,9 +84,10 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateProfile(QString)));
 	connect(m_ui->profilesViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(updateProfilesActions()));
-	connect(m_ui->updateProfileButton, SIGNAL(clicked(bool)), this, SLOT(updateProfile()));
 	connect(m_ui->addProfileButton, SIGNAL(clicked(bool)), this, SLOT(addProfile()));
 	connect(m_ui->editProfileButton, SIGNAL(clicked(bool)), this, SLOT(editProfile()));
+	connect(m_ui->updateProfileButton, SIGNAL(clicked(bool)), this, SLOT(updateProfile()));
+	connect(m_ui->removeProfileButton, SIGNAL(clicked(bool)), this, SLOT(removeProfile()));
 	connect(m_ui->confirmButtonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->confirmButtonBox, SIGNAL(rejected()), this, SLOT(close()));
 	connect(m_ui->enableCustomRulesCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateRulesActions()));
@@ -140,6 +141,72 @@ void ContentBlockingDialog::editProfile()
 	}
 }
 
+void ContentBlockingDialog::updateProfile(const QString &name)
+{
+	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+
+	if (!profile)
+	{
+		return;
+	}
+
+	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex categoryIndex(m_ui->profilesViewWidget->getIndex(i));
+
+		for (int j = 0; j < m_ui->profilesViewWidget->getRowCount(categoryIndex); ++j)
+		{
+			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
+
+			if (entryIndex.data(Qt::UserRole).toString() == name)
+			{
+				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+
+				ContentBlockingProfile::ProfileCategory category(profile->getCategory());
+				QString title(profile->getTitle());
+
+				if (category == ContentBlockingProfile::RegionalCategory)
+				{
+					const QVector<QLocale::Language> languages(profile->getLanguages());
+					QStringList languageNames;
+
+					for (int k = 0; k < languages.count(); ++k)
+					{
+						languageNames.append(QLocale::languageToString(languages.at(k)));
+					}
+
+					title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+				}
+
+				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
+				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
+
+				return;
+			}
+		}
+	}
+}
+
+void ContentBlockingDialog::removeProfile()
+{
+	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
+	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(Qt::UserRole).toString()));
+
+	if (profile)
+	{
+		ContentBlockingManager::removeProfile(profile);
+
+		m_ui->profilesViewWidget->model()->removeRow(index.row(), index.parent());
+
+		if (m_ui->profilesViewWidget->getRowCount(index.parent()) == 0)
+		{
+			m_ui->profilesViewWidget->model()->removeRow(index.parent().row(), index.parent().parent());
+		}
+
+		m_ui->profilesViewWidget->clearSelection();
+	}
+}
+
 void ContentBlockingDialog::updateProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
@@ -153,8 +220,10 @@ void ContentBlockingDialog::updateProfile()
 void ContentBlockingDialog::updateProfilesActions()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
+	const bool isEditable(index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren));
 
-	m_ui->editProfileButton->setEnabled(index.isValid() && index.flags().testFlag(Qt::ItemNeverHasChildren));
+	m_ui->editProfileButton->setEnabled(isEditable);
+	m_ui->removeProfileButton->setEnabled(isEditable);
 	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(Qt::UserRole + 1).toUrl().isValid());
 }
 
@@ -226,52 +295,6 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 	m_ui->profilesViewWidget->setData(QModelIndex(currentIndex.sibling(currentIndex.row(), 0)), profile->getUpdateUrl(), (Qt::UserRole + 1));
 	m_ui->profilesViewWidget->setData(QModelIndex(currentIndex.sibling(currentIndex.row(), 1)), profile->getUpdateInterval(), Qt::DisplayRole);
 	m_ui->profilesViewWidget->setData(QModelIndex(currentIndex.sibling(currentIndex.row(), 2)), profile->getLastUpdate(), Qt::DisplayRole);
-}
-
-void ContentBlockingDialog::updateProfile(const QString &name)
-{
-	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
-
-	if (!profile)
-	{
-		return;
-	}
-
-	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
-	{
-		const QModelIndex categoryIndex(m_ui->profilesViewWidget->getIndex(i));
-
-		for (int j = 0; j < m_ui->profilesViewWidget->getRowCount(categoryIndex); ++j)
-		{
-			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
-
-			if (entryIndex.data(Qt::UserRole).toString() == name)
-			{
-				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
-
-				ContentBlockingProfile::ProfileCategory category(profile->getCategory());
-				QString title(profile->getTitle());
-
-				if (category == ContentBlockingProfile::RegionalCategory)
-				{
-					const QVector<QLocale::Language> languages(profile->getLanguages());
-					QStringList languageNames;
-
-					for (int k = 0; k < languages.count(); ++k)
-					{
-						languageNames.append(QLocale::languageToString(languages.at(k)));
-					}
-
-					title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
-				}
-
-				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
-				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
-
-				return;
-			}
-		}
-	}
 }
 
 void ContentBlockingDialog::save()
