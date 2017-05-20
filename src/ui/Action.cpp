@@ -186,11 +186,6 @@ QVariantMap Action::getParameters() const
 	return m_parameters;
 }
 
-QVector<QKeySequence> Action::getShortcuts() const
-{
-	return getDefinition().shortcuts;
-}
-
 int Action::getIdentifier() const
 {
 	return m_identifier;

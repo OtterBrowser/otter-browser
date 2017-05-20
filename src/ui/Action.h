@@ -55,7 +55,6 @@ public:
 	ActionsManager::ActionDefinition getDefinition() const;
 	ActionsManager::ActionDefinition::State getState() const;
 	QVariantMap getParameters() const;
-	QVector<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event) override;
 	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
