@@ -275,7 +275,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
+	if (event->key() == Qt::Key_Escape && m_tabSwitcher && m_tabSwitcher->isVisible())
+	{
+		m_tabSwitcher->hide();
+	}
+	else if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
 	{
 		if (m_windows.count() < 2)
 		{
@@ -284,7 +288,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			return;
 		}
 
-		if (m_tabSwitcherTimer > 0)
+		if (m_tabSwitcher && m_tabSwitcher->isVisible())
+		{
+			m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
+		}
+		else if (m_tabSwitcherTimer > 0)
 		{
 			killTimer(m_tabSwitcherTimer);
 
