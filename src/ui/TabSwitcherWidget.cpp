@@ -70,6 +70,7 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	m_previewLabel->setAlignment(Qt::AlignCenter);
 	m_previewLabel->setStyleSheet(QLatin1String("border:1px solid gray;"));
 
+	connect(m_tabsView, SIGNAL(clicked(QModelIndex)), this, SLOT(selectTab(QModelIndex)));
 	connect(m_tabsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(handleCurrentTabChanged(QModelIndex)));
 }
 
@@ -218,6 +219,16 @@ void TabSwitcherWidget::accept()
 	m_mainWindow->setActiveWindowByIdentifier(m_tabsView->currentIndex().data(IdentifierRole).toULongLong());
 
 	hide();
+}
+
+void TabSwitcherWidget::selectTab(const QModelIndex &index)
+{
+	if (index.isValid())
+	{
+		m_mainWindow->setActiveWindowByIdentifier(index.data(IdentifierRole).toULongLong());
+
+		hide();
+	}
 }
 
 void TabSwitcherWidget::selectTab(bool next)
