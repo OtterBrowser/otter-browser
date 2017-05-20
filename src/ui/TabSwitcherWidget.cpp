@@ -75,7 +75,7 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 
 void TabSwitcherWidget::showEvent(QShowEvent *event)
 {
-	grabKeyboard();
+	setFocus();
 
 	MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(m_mainWindow));
 
@@ -110,8 +110,6 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 void TabSwitcherWidget::hideEvent(QHideEvent *event)
 {
-	releaseKeyboard();
-
 	QWidget::hideEvent(event);
 
 	disconnect(m_mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
