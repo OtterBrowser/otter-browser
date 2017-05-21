@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_QQTWEBENGINEPAGE_H
-#define OTTER_QQTWEBENGINEPAGE_H
+#ifndef OTTER_QTWEBENGINEPAGE_H
+#define OTTER_QTWEBENGINEPAGE_H
 
 #include "../../../../core/SessionsManager.h"
 
