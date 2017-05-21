@@ -319,11 +319,11 @@ QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 
 	if (index.row() != 0 && static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
 	{
-		size.setHeight(option.fontMetrics.height() * 1.75);
+		size.setHeight(option.fontMetrics.lineSpacing() * 1.75);
 	}
 	else
 	{
-		size.setHeight(option.fontMetrics.height() * 1.25);
+		size.setHeight(option.fontMetrics.lineSpacing() * 1.25);
 	}
 
 	return size;

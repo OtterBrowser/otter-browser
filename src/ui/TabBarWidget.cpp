@@ -1334,7 +1334,7 @@ void TabBarWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 				if (m_minimumTabSize.height() < 0)
 				{
-					m_minimumTabSize.setHeight((QFontMetrics(font()).height() * 1.25) + style()->pixelMetric(QStyle::PM_TabBarTabVSpace));
+					m_minimumTabSize.setHeight((QFontMetrics(font()).lineSpacing() * 1.25) + style()->pixelMetric(QStyle::PM_TabBarTabVSpace));
 				}
 
 				if (m_minimumTabSize.height() != oldValue)

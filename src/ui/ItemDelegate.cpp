@@ -76,7 +76,7 @@ QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 		return index.data(Qt::SizeHintRole).toSize();
 	}
 
-	const int height((index.data(Qt::FontRole).isValid() ? QFontMetrics(index.data(Qt::FontRole).value<QFont>()) : option.fontMetrics).height());
+	const int height((index.data(Qt::FontRole).isValid() ? QFontMetrics(index.data(Qt::FontRole).value<QFont>()) : option.fontMetrics).lineSpacing());
 	QSize size(index.data(Qt::SizeHintRole).toSize());
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
