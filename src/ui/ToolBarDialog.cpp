@@ -439,6 +439,8 @@ void ToolBarDialog::editEntry()
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		formLayout->addRow(entries.at(i).label, entries.at(i).widget);
+
+		entries.at(i).widget->setParent(&dialog);
 	}
 
 	connect(buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
