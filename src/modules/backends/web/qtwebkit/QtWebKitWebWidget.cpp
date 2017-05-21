@@ -2079,7 +2079,7 @@ Action* QtWebKitWebWidget::createAction(int identifier, const QVariantMap parame
 	return WebWidget::createAction(identifier, parameters, followState);
 }
 
-QtWebKitPage* QtWebKitWebWidget::getPage()
+QtWebKitPage* QtWebKitWebWidget::getPage() const
 {
 	return m_page;
 }

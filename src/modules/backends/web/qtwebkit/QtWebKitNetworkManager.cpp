@@ -548,7 +548,7 @@ void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
 	m_cookieJarProxy->setWidget(widget);
 }
 
-QtWebKitNetworkManager* QtWebKitNetworkManager::clone()
+QtWebKitNetworkManager* QtWebKitNetworkManager::clone() const
 {
 	return new QtWebKitNetworkManager((cache() == nullptr), m_cookieJarProxy->clone(nullptr), nullptr);
 }
@@ -809,7 +809,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	return reply;
 }
 
-CookieJar* QtWebKitNetworkManager::getCookieJar()
+CookieJar* QtWebKitNetworkManager::getCookieJar() const
 {
 	return m_cookieJar;
 }

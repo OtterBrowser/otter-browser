@@ -44,7 +44,7 @@ class QtWebKitNetworkManager final : public QNetworkAccessManager
 public:
 	explicit QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar *cookieJarProxy, QtWebKitWebWidget *parent);
 
-	CookieJar* getCookieJar();
+	CookieJar* getCookieJar() const;
 	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	WebWidget::SslInformation getSslInformation() const;
 	QStringList getBlockedElements() const;
@@ -63,7 +63,7 @@ protected:
 	void setFormRequest(const QUrl &url);
 	void setMainRequest(const QUrl &url);
 	void setWidget(QtWebKitWebWidget *widget);
-	QtWebKitNetworkManager *clone();
+	QtWebKitNetworkManager *clone() const;
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
 	QString getUserAgent() const;
 	QVariant getOption(int identifier, const QUrl &url) const;

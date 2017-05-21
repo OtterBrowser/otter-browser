@@ -134,7 +134,7 @@ protected:
 	void setHistory(const QVariantMap &history);
 #endif
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
-	QtWebKitPage* getPage();
+	QtWebKitPage* getPage() const;
 	QString getMessageToken() const;
 	QString getPluginToken() const;
 	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;

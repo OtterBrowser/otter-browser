@@ -443,7 +443,7 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool isChecked)
 	QWebPage::triggerAction(action, isChecked);
 }
 
-QtWebKitFrame* QtWebKitPage::getMainFrame()
+QtWebKitFrame* QtWebKitPage::getMainFrame() const
 {
 	return m_mainFrame;
 }

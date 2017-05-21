@@ -66,7 +66,7 @@ public:
 	~QtWebKitPage();
 
 	void triggerAction(WebAction action, bool isChecked = false) override;
-	QtWebKitFrame* getMainFrame();
+	QtWebKitFrame* getMainFrame() const;
 	QVariant runScript(const QString &path, QWebElement element = QWebElement());
 	bool event(QEvent *event) override;
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;
