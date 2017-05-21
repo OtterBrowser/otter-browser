@@ -39,12 +39,14 @@ void FilePasswordsStorageBackend::initialize()
 {
 	m_isInitialized = true;
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
 
-	if (!file.exists())
+	if (!QFile::exists(path))
 	{
 		return;
 	}
+
+	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
