@@ -195,7 +195,10 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 
 			optionItems[0]->setFont(font);
 
-			canResetAll = true;
+			if (identifier != SettingsManager::Browser_MigrationsOption)
+			{
+				canResetAll = true;
+			}
 		}
 
 		groupItem->appendRow(optionItems);
@@ -382,13 +385,14 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 			if (optionItem && (reset || isModified))
 			{
 				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
-				const QVariant defaultValue(SettingsManager::getOptionDefinition(valueIndex.data(IdentifierRole).toInt()).defaultValue);
+				const int identifier(valueIndex.data(IdentifierRole).toInt());
+				const QVariant defaultValue(SettingsManager::getOptionDefinition(identifier).defaultValue);
 
-				if (reset && valueIndex.data(Qt::EditRole) != defaultValue)
+				if (reset && identifier != SettingsManager::Browser_MigrationsOption && valueIndex.data(Qt::EditRole) != defaultValue)
 				{
 					m_model->setData(valueIndex, defaultValue, Qt::EditRole);
 
-					SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), defaultValue);
+					SettingsManager::setOption(identifier, defaultValue);
 
 					QFont font(optionItem->font());
 					font.setBold(false);
@@ -397,7 +401,7 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 				}
 				else if (!reset && isModified)
 				{
-					SettingsManager::setOption(valueIndex.data(IdentifierRole).toInt(), valueIndex.data(Qt::EditRole));
+					SettingsManager::setOption(identifier, valueIndex.data(Qt::EditRole));
 				}
 
 				if (isModified)
