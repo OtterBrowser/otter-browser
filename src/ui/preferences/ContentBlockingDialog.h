@@ -38,6 +38,12 @@ class ContentBlockingDialog final : public Dialog
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		NameRole = Qt::UserRole,
+		UpdateUrlRole
+	};
+
 	explicit ContentBlockingDialog(QWidget *parent = nullptr);
 	~ContentBlockingDialog();
 
