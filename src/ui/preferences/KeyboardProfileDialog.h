@@ -82,7 +82,6 @@ protected slots:
 private:
 	QString m_profile;
 	QModelIndex m_currentAction;
-	bool m_isModified;
 	Ui::KeyboardProfileDialog *m_ui;
 };
 

@@ -54,7 +54,6 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 
 KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent) : Dialog(parent),
 	m_profile(profile),
-	m_isModified(profiles[profile].isModified),
 	m_ui(new Ui::KeyboardProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -96,6 +95,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->shortcutsViewWidget->setModel(new QStandardItemModel(this));
 	m_ui->shortcutsViewWidget->setItemDelegate(new KeyboardShortcutDelegate(this));
+	m_ui->shortcutsViewWidget->setModified(profiles[profile].isModified);
 	m_ui->titleLineEdit->setText(profiles[profile].title);
 	m_ui->descriptionLineEdit->setText(profiles[profile].description);
 	m_ui->versionLineEdit->setText(profiles[profile].version);
@@ -129,8 +129,6 @@ void KeyboardProfileDialog::addShortcut()
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->shortcutsViewWidget->insertRow(items);
-
-	m_isModified = true;
 }
 
 void KeyboardProfileDialog::removeShortcut()
@@ -138,8 +136,6 @@ void KeyboardProfileDialog::removeShortcut()
 	m_ui->shortcutsViewWidget->removeRow();
 
 	saveShortcuts();
-
-	m_isModified = true;
 }
 
 void KeyboardProfileDialog::updateActionsActions()
@@ -216,7 +212,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 	profile.description = m_ui->descriptionLineEdit->text();
 	profile.version = m_ui->versionLineEdit->text();
 	profile.author = m_ui->authorLineEdit->text();
-	profile.isModified = m_isModified;
+	profile.isModified = m_ui->shortcutsViewWidget->isModified();
 
 	for (int i = 0; i < m_ui->actionsViewWidget->getRowCount(); ++i)
 	{

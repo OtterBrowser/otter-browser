@@ -65,7 +65,6 @@ QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOption
 
 MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QString, MouseProfile> &profiles, QWidget *parent) : Dialog(parent),
 	m_profile(profile),
-	m_isModified(profiles[profile].isModified),
 	m_ui(new Ui::MouseProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -116,6 +115,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 
 	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->gesturesViewWidget->setModel(gesturesModel);
+	m_ui->gesturesViewWidget->setModified(profiles[profile].isModified);
 	m_ui->stepsViewWidget->setModel(stepsModel);
 	m_ui->titleLineEdit->setText(profiles[profile].title);
 	m_ui->descriptionLineEdit->setText(profiles[profile].description);
@@ -166,8 +166,6 @@ void MouseProfileDialog::addGesture()
 		item->appendRow(items);
 
 		m_ui->gesturesViewWidget->setCurrentIndex(items[0]->index());
-
-		m_isModified = true;
 	}
 }
 
@@ -178,8 +176,6 @@ void MouseProfileDialog::removeGesture()
 	if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
 	{
 		item->parent()->removeRow(item->row());
-
-		m_isModified = true;
 	}
 }
 
@@ -200,15 +196,11 @@ void MouseProfileDialog::saveGesture()
 	const QModelIndex index(m_ui->gesturesViewWidget->currentIndex());
 
 	m_ui->gesturesViewWidget->setData(index.sibling(index.row(), 0), steps.join(QLatin1String(", ")), Qt::DisplayRole);
-
-	m_isModified = true;
 }
 
 void MouseProfileDialog::addStep()
 {
 	m_ui->stepsViewWidget->insertRow();
-
-	m_isModified = true;
 }
 
 void MouseProfileDialog::removeStep()
@@ -216,8 +208,6 @@ void MouseProfileDialog::removeStep()
 	m_ui->stepsViewWidget->removeRow();
 
 	saveGesture();
-
-	m_isModified = true;
 }
 
 void MouseProfileDialog::updateGesturesActions()
@@ -268,7 +258,7 @@ MouseProfile MouseProfileDialog::getProfile() const
 	profile.description = m_ui->descriptionLineEdit->text();
 	profile.version = m_ui->versionLineEdit->text();
 	profile.author = m_ui->authorLineEdit->text();
-	profile.isModified = m_isModified;
+	profile.isModified = m_ui->gesturesViewWidget->isModified();
 
 	for (int i = 0; i < m_ui->gesturesViewWidget->getSourceModel()->rowCount(); ++i)
 	{

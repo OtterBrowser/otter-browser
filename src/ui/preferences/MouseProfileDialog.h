@@ -75,7 +75,6 @@ protected slots:
 
 private:
 	QString m_profile;
-	bool m_isModified;
 	Ui::MouseProfileDialog *m_ui;
 };
 
