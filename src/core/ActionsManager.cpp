@@ -32,6 +32,7 @@ namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance(nullptr);
+QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > ActionsManager::m_extraShortcuts;
 QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
 int ActionsManager::m_actionIdentifierEnumerator(0);
 
@@ -383,6 +384,31 @@ QString ActionsManager::getActionName(int identifier)
 QVector<ActionsManager::ActionDefinition> ActionsManager::getActionDefinitions()
 {
 	return m_definitions;
+}
+
+QVector<QKeySequence> ActionsManager::getActionShortcuts(int identifier, const QVariantMap &parameters)
+{
+	if (identifier < 0 || identifier >= m_definitions.count() || (!parameters.isEmpty() && !m_extraShortcuts.contains(identifier)))
+	{
+		return QVector<QKeySequence>();
+	}
+
+	if (parameters.isEmpty())
+	{
+		return m_definitions[identifier].shortcuts;
+	}
+
+	const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(identifier));
+
+	for (int i = 0; i < definitions.count(); ++i)
+	{
+		if (definitions.at(i).first == parameters)
+		{
+			return definitions.at(i).second;
+		}
+	}
+
+	return QVector<QKeySequence>();
 }
 
 ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identifier)

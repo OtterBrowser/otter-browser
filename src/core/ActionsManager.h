@@ -295,6 +295,7 @@ public:
 	static QString createReport();
 	static QString getActionName(int identifier);
 	static QVector<ActionDefinition> getActionDefinitions();
+	static QVector<QKeySequence> getActionShortcuts(int identifier, const QVariantMap &parameters);
 	static ActionDefinition getActionDefinition(int identifier);
 	static int getActionIdentifier(const QString &name);
 
@@ -314,6 +315,7 @@ private:
 	int m_reloadTimer;
 
 	static ActionsManager *m_instance;
+	static QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > m_extraShortcuts;
 	static QVector<ActionDefinition> m_definitions;
 	static int m_actionIdentifierEnumerator;
 };
