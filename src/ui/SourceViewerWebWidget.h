@@ -38,7 +38,7 @@ public:
 	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = nullptr);
 
 	void print(QPrinter *printer) override;
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) const override;
 	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
 	QString getTitle() const override;
 	QString getSelectedText() const override;

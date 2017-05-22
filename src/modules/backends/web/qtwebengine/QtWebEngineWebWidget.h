@@ -40,7 +40,7 @@ class QtWebEngineWebWidget final : public WebWidget
 public:
 	void search(const QString &query, const QString &searchEngine) override;
 	void print(QPrinter *printer) override;
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) const override;
 	QWidget* getViewport() override;
 	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
 	QString getTitle() const override;

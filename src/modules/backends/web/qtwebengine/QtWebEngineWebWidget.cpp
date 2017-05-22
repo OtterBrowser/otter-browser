@@ -1440,7 +1440,7 @@ void QtWebEngineWebWidget::setOptions(const QHash<int, QVariant> &options, const
 	updateOptions(getUrl());
 }
 
-WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions)
+WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions) const
 {
 	QtWebEngineWebWidget *widget(new QtWebEngineWebWidget((this->isPrivate() || isPrivate), getBackend()));
 	widget->setOptions(getOptions(), excludedOptions);

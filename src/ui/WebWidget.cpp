@@ -1242,7 +1242,7 @@ Action* WebWidget::getExistingAction(int identifier)
 	return (m_actions.contains(identifier) ? m_actions[identifier] : nullptr);
 }
 
-WebBackend* WebWidget::getBackend()
+WebBackend* WebWidget::getBackend() const
 {
 	return m_backend;
 }

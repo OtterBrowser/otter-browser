@@ -410,7 +410,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 	m_sourceViewer->document()->setModified(false);
 }
 
-WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions)
+WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions) const
 {
 	Q_UNUSED(cloneHistory)
 	Q_UNUSED(isPrivate)
