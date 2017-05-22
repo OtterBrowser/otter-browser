@@ -1129,13 +1129,14 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 
 	KeyboardProfileDialog dialog(identifier, m_keyboardProfiles, this);
 
-	if (dialog.exec() == QDialog::Rejected)
+	if (dialog.exec() == QDialog::Rejected || !dialog.getProfile().isModified)
 	{
 		return;
 	}
 
 	m_keyboardProfiles[identifier] = dialog.getProfile();
 
+	m_ui->keyboardViewWidget->markAsModified();
 	m_ui->keyboardViewWidget->setData(index, (m_keyboardProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[identifier].title), Qt::DisplayRole);
 	m_ui->keyboardViewWidget->setData(index, m_keyboardProfiles[identifier].description, Qt::ToolTipRole);
 }
@@ -1318,13 +1319,14 @@ void PreferencesAdvancedPageWidget::editMouseProfile()
 
 	MouseProfileDialog dialog(identifier, m_mouseProfiles, this);
 
-	if (dialog.exec() == QDialog::Rejected)
+	if (dialog.exec() == QDialog::Rejected || !dialog.getProfile().isModified)
 	{
 		return;
 	}
 
 	m_mouseProfiles[identifier] = dialog.getProfile();
 
+	m_ui->mouseViewWidget->markAsModified();
 	m_ui->mouseViewWidget->setData(index, (m_mouseProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[identifier].title), Qt::DisplayRole);
 	m_ui->mouseViewWidget->setData(index, m_mouseProfiles[identifier].description, Qt::ToolTipRole);
 }
