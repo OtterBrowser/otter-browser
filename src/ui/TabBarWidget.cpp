@@ -472,7 +472,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 
 	setAcceptDrops(true);
 	setExpanding(false);
-	setTabsClosable(false);
 	setMovable(true);
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setElideMode(Qt::ElideRight);
