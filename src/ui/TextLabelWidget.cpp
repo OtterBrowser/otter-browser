@@ -29,7 +29,8 @@
 namespace Otter
 {
 
-TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent)
+TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent),
+	m_isEmpty(true)
 {
 	updateStyle();
 	setFrame(false);
@@ -81,6 +82,7 @@ void TextLabelWidget::clear()
 	QLineEdit::setText(tr("<empty>"));
 
 	m_url = QUrl();
+	m_isEmpty = true;
 
 	updateStyle();
 }
@@ -91,7 +93,15 @@ void TextLabelWidget::updateStyle()
 	font.setUnderline(m_url.isValid() && style()->styleHint(QStyle::SH_UnderlineShortcut) > 0);
 
 	QPalette palette(this->palette());
-	palette.setColor(QPalette::Text, QGuiApplication::palette().color(m_url.isValid() ? QPalette::Link : QPalette::WindowText));
+
+	if (m_isEmpty)
+	{
+		palette.setColor(QPalette::Text, QGuiApplication::palette().color(QPalette::Disabled, QPalette::WindowText));
+	}
+	else
+	{
+		palette.setColor(QPalette::Text, QGuiApplication::palette().color(m_url.isValid() ? QPalette::Link : QPalette::WindowText));
+	}
 
 	setCursor(m_url.isValid() ? Qt::PointingHandCursor : Qt::ArrowCursor);
 	setFont(font);
@@ -102,7 +112,14 @@ void TextLabelWidget::setText(const QString &text)
 {
 	if (text != this->text())
 	{
-		QLineEdit::setText(text.isEmpty() ? tr("<empty>") : text);
+		if (text.isEmpty() != m_isEmpty)
+		{
+			m_isEmpty = text.isEmpty();
+
+			updateStyle();
+		}
+
+		QLineEdit::setText(m_isEmpty ? tr("<empty>") : text);
 		setCursorPosition(0);
 	}
 
@@ -112,6 +129,7 @@ void TextLabelWidget::setText(const QString &text)
 void TextLabelWidget::setUrl(const QUrl &url)
 {
 	m_url = url;
+	m_isEmpty = url.isEmpty();
 
 	updateStyle();
 }
