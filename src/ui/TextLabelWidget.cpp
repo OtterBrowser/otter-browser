@@ -59,6 +59,11 @@ void TextLabelWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 {
+	if (m_isEmpty)
+	{
+		return;
+	}
+
 	QMenu menu(this);
 	menu.addAction(tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
 
