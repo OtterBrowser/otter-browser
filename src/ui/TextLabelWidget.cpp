@@ -138,9 +138,22 @@ bool TextLabelWidget::event(QEvent *event)
 {
 	const bool result(QLineEdit::event(event));
 
-	if (event->type() == QEvent::ApplicationPaletteChange || event->type() == QEvent::StyleChange)
+	switch (event->type())
 	{
-		updateStyle();
+		case QEvent::ApplicationPaletteChange:
+		case QEvent::StyleChange:
+			updateStyle();
+
+			break;
+		case QEvent::LanguageChange:
+			if (m_isEmpty)
+			{
+				QLineEdit::setText(tr("<empty>"));
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	return result;
