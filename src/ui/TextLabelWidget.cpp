@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent)
 	setReadOnly(true);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
+	QLineEdit::setText(tr("<empty>"));
 }
 
 void TextLabelWidget::mousePressEvent(QMouseEvent *event)
@@ -77,7 +78,7 @@ void TextLabelWidget::copyUrl()
 
 void TextLabelWidget::clear()
 {
-	QLineEdit::clear();
+	QLineEdit::setText(tr("<empty>"));
 
 	m_url = QUrl();
 
@@ -101,7 +102,7 @@ void TextLabelWidget::setText(const QString &text)
 {
 	if (text != this->text())
 	{
-		QLineEdit::setText(text);
+		QLineEdit::setText(text.isEmpty() ? tr("<empty>") : text);
 		setCursorPosition(0);
 	}
 
