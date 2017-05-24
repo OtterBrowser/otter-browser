@@ -24,6 +24,7 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "SidebarWidget.h"
+#include "Style.h"
 #include "TabBarWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
@@ -38,7 +39,6 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QLayout>
-#include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
 
 namespace Otter
@@ -251,6 +251,35 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		QToolBar::paintEvent(event);
 	}
 
+	if (getDefinition().type == ToolBarsManager::BookmarksBarType && !m_dragMovePosition.isNull())
+	{
+		QPainter painter(this);
+		QWidget *widget(widgetForAction(actionAt(m_dragMovePosition)));
+
+		switch (getArea())
+		{
+			case Qt::LeftToolBarArea:
+			case Qt::RightToolBarArea:
+				if (widget)
+				{
+					const int position((m_dragMovePosition.y() <= widget->geometry().center().y()) ? widget->geometry().top() : widget->geometry().bottom());
+
+					Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
+				}
+
+				break;
+			default:
+				if (widget)
+				{
+					const int position((m_dragMovePosition.x() <= widget->geometry().center().x()) ? widget->geometry().left() : widget->geometry().right());
+
+					Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
+				}
+
+				break;
+		}
+	}
+
 	if (m_identifier != ToolBarsManager::TabBar)
 	{
 		return;
@@ -426,6 +455,64 @@ void ToolBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		m_mainWindow->endToolBarDragging();
 	}
+}
+
+void ToolBarWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+
+		m_dragMovePosition = event->pos();
+
+		update();
+	}
+	else
+	{
+		event->ignore();
+	}
+}
+
+void ToolBarWidget::dragMoveEvent(QDragMoveEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+
+		m_dragMovePosition = event->pos();
+
+		update();
+	}
+	else
+	{
+		event->ignore();
+	}
+}
+
+void ToolBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+	QWidget::dragLeaveEvent(event);
+
+	m_dragMovePosition = QPoint();
+
+	update();
+}
+
+void ToolBarWidget::dropEvent(QDropEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+//TODO add bookmarks
+	}
+	else
+	{
+		event->ignore();
+	}
+
+	m_dragMovePosition = QPoint();
+
+	update();
 }
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
