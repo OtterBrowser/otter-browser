@@ -459,7 +459,7 @@ void ToolBarWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void ToolBarWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasUrls())
+	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
 	{
 		event->accept();
 
@@ -475,7 +475,7 @@ void ToolBarWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void ToolBarWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-	if (event->mimeData()->hasUrls())
+	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
 	{
 		event->accept();
 
@@ -500,7 +500,7 @@ void ToolBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
 
 void ToolBarWidget::dropEvent(QDropEvent *event)
 {
-	if (event->mimeData()->hasUrls())
+	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
 	{
 		event->accept();
 //TODO add bookmarks
