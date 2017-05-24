@@ -255,6 +255,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	{
 		QPainter painter(this);
 		QWidget *widget(widgetForAction(actionAt(m_dragMovePosition)));
+		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
 
 		switch (getArea())
 		{
@@ -262,7 +263,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 			case Qt::RightToolBarArea:
 				if (widget)
 				{
-					const int position((m_dragMovePosition.y() <= widget->geometry().center().y()) ? widget->geometry().top() : widget->geometry().bottom());
+					const int position((m_dragMovePosition.y() <= widget->geometry().center().y()) ? (widget->geometry().top() - spacing) : (widget->geometry().bottom() + spacing));
 
 					Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
 				}
@@ -271,7 +272,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 			default:
 				if (widget)
 				{
-					const int position((m_dragMovePosition.x() <= widget->geometry().center().x()) ? widget->geometry().left() : widget->geometry().right());
+					const int position((m_dragMovePosition.x() <= widget->geometry().center().x()) ? (widget->geometry().left() - spacing) : (widget->geometry().right() + spacing));
 
 					Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
 				}
