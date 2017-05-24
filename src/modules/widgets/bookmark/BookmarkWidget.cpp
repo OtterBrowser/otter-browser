@@ -75,7 +75,7 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		return;
 	}
 
-	const QString title(m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
+	QString title(m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt()));
 
 	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
@@ -117,7 +117,7 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		setMenu(nullptr);
 	}
 
-	setText(title);
+	setText(title.replace(QLatin1Char('&'), QLatin1String("&&")));
 	setStatusTip(m_bookmark->data(BookmarksModel::UrlRole).toString());
 	setIcon(m_bookmark->data(Qt::DecorationRole).value<QIcon>());
 }
