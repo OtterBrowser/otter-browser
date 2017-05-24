@@ -99,6 +99,7 @@ protected:
 	void dragMoveEvent(QDragMoveEvent *event) override;
 	void dragLeaveEvent(QDragLeaveEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
+	void updateDropIndex(const QPoint &position);
 	void updateToggleGeometry();
 
 protected slots:
@@ -120,8 +121,8 @@ private:
 	BookmarksItem *m_bookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
-	QPoint m_dragMovePosition;
 	int m_identifier;
+	int m_dropIndex;
 	bool m_isCollapsed;
 	bool m_isInitialized;
 

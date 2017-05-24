@@ -163,6 +163,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_bookmark(nullptr),
 	m_toggleButton(nullptr),
 	m_identifier(identifier),
+	m_dropIndex(-1),
 	m_isCollapsed(false),
 	m_isInitialized(false)
 {
@@ -251,33 +252,34 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		QToolBar::paintEvent(event);
 	}
 
-	if (getDefinition().type == ToolBarsManager::BookmarksBarType && !m_dragMovePosition.isNull())
+	if (getDefinition().type == ToolBarsManager::BookmarksBarType && m_dropIndex >= 0)
 	{
 		QPainter painter(this);
-		QWidget *widget(widgetForAction(actionAt(m_dragMovePosition)));
+		QWidget *widget(widgetForAction(actions().at(m_dropIndex)));
 		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
 
-		switch (getArea())
+		if (widget)
 		{
-			case Qt::LeftToolBarArea:
-			case Qt::RightToolBarArea:
-				if (widget)
-				{
-					const int position((m_dragMovePosition.y() <= widget->geometry().center().y()) ? (widget->geometry().top() - spacing) : (widget->geometry().bottom() + spacing));
+			switch (getArea())
+			{
+				case Qt::LeftToolBarArea:
+				case Qt::RightToolBarArea:
+					{
+						const int position(widget->geometry().top() - spacing);
 
-					Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
-				}
+						Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
+					}
 
-				break;
-			default:
-				if (widget)
-				{
-					const int position((m_dragMovePosition.x() <= widget->geometry().center().x()) ? (widget->geometry().left() - spacing) : (widget->geometry().right() + spacing));
+					break;
+				default:
+					{
+						const int position(widget->geometry().left() - spacing);
 
-					Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
-				}
+						Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
+					}
 
-				break;
+					break;
+			}
 		}
 	}
 
@@ -464,9 +466,7 @@ void ToolBarWidget::dragEnterEvent(QDragEnterEvent *event)
 	{
 		event->accept();
 
-		m_dragMovePosition = event->pos();
-
-		update();
+		updateDropIndex(event->pos());
 	}
 	else
 	{
@@ -480,9 +480,7 @@ void ToolBarWidget::dragMoveEvent(QDragMoveEvent *event)
 	{
 		event->accept();
 
-		m_dragMovePosition = event->pos();
-
-		update();
+		updateDropIndex(event->pos());
 	}
 	else
 	{
@@ -494,9 +492,7 @@ void ToolBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
 {
 	QWidget::dragLeaveEvent(event);
 
-	m_dragMovePosition = QPoint();
-
-	update();
+	updateDropIndex(QPoint());
 }
 
 void ToolBarWidget::dropEvent(QDropEvent *event)
@@ -504,16 +500,62 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
 	{
 		event->accept();
-//TODO add bookmarks
+
+		const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, urls.at(i), QString(), m_bookmark, (m_dropIndex + i));
+		}
 	}
 	else
 	{
 		event->ignore();
 	}
 
-	m_dragMovePosition = QPoint();
+	updateDropIndex(QPoint());
+}
 
-	update();
+void ToolBarWidget::updateDropIndex(const QPoint &position)
+{
+	int dropIndex(-1);
+
+	if (!position.isNull())
+	{
+		QAction *action(actionAt(position));
+		QWidget *widget(widgetForAction(action));
+
+		dropIndex = actions().indexOf(action);
+
+		if (widget)
+		{
+			switch (getArea())
+			{
+				case Qt::LeftToolBarArea:
+				case Qt::RightToolBarArea:
+					if (position.y() >= widget->geometry().center().y())
+					{
+						++dropIndex;
+					}
+
+					break;
+				default:
+					if (position.x() >= widget->geometry().center().x())
+					{
+						++dropIndex;
+					}
+
+					break;
+			}
+		}
+	}
+
+	if (dropIndex != m_dropIndex)
+	{
+		m_dropIndex = dropIndex;
+
+		update();
+	}
 }
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
