@@ -1021,7 +1021,7 @@ BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
 
 bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow)
 {
-	if (!bookmark || !newParent)
+	if (!bookmark || !newParent || bookmark == newParent || bookmark->isAncestorOf(newParent))
 	{
 		return false;
 	}
