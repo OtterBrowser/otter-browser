@@ -549,13 +549,43 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 	if (!position.isNull())
 	{
 		QAction *action(actionAt(position));
+		const Qt::ToolBarArea area(getArea());
+
+		if (!action)
+		{
+			const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing) * 2);
+
+			switch (area)
+			{
+				case Qt::LeftToolBarArea:
+				case Qt::RightToolBarArea:
+					action = (actionAt(position + QPoint(0, spacing)));
+
+					if (!action)
+					{
+						action = (actionAt(position - QPoint(0, spacing)));
+					}
+
+					break;
+				default:
+					action = (actionAt(position + QPoint(spacing, 0)));
+
+					if (!action)
+					{
+						action = (actionAt(position - QPoint(spacing, 0)));
+					}
+
+					break;
+			}
+		}
+
 		QWidget *widget(widgetForAction(action));
 
 		dropIndex = actions().indexOf(action);
 
 		if (widget)
 		{
-			switch (getArea())
+			switch (area)
 			{
 				case Qt::LeftToolBarArea:
 				case Qt::RightToolBarArea:
