@@ -3,7 +3,7 @@
 
 ***A browser controlled by the user, not vice-versa***
 
-[**Otter Browser**](https://otter-browser.org/) aims to recreate the best aspects of **Opera 12** and to revive its spirit. We are focused of providing the powerful features power users want while keeping the browser fast and lightweight. We also learned from history and decided to release the browser under the GNU GPL v3.
+[**Otter Browser**](https://otter-browser.org/) aims to recreate the best aspects of **Opera 12** and to revive its spirit. We are focused on providing the powerful features power users want while keeping the browser fast and lightweight. We also learned from history and decided to release the browser under the GNU GPL v3.
 
 [![SourceForge](https://img.shields.io/sourceforge/dt/otter-browser.svg)](https://sourceforge.net/projects/otter-browser/files/)
 
@@ -47,7 +47,7 @@ The browser is written primarily in C++ and leverages powerful features offered 
 
 We also use JavaScript for interacting with rendering engines (when native APIs are not available) and Python 3 is our preferred language for creating tools to ease development.
 
-Have a look at [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that resonates with you.
+Have a look at the [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that resonates with you.
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
