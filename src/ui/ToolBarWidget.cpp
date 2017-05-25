@@ -254,29 +254,55 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	if (getDefinition().type == ToolBarsManager::BookmarksBarType && m_dropIndex >= 0)
 	{
-		QPainter painter(this);
 		QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
+		const Qt::ToolBarArea area(getArea());
 		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
+		int position(-1);
 
 		if (widget)
 		{
-			switch (getArea())
+			switch (area)
 			{
 				case Qt::LeftToolBarArea:
 				case Qt::RightToolBarArea:
-					{
-						const int position(widget->geometry().top() - spacing);
-
-						Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
-					}
+					position = (widget->geometry().top() - spacing);
 
 					break;
 				default:
-					{
-						const int position(widget->geometry().left() - spacing);
+					position = (widget->geometry().left() - spacing);
 
-						Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
-					}
+					break;
+			}
+		}
+		else if (m_dropIndex > 0)
+		{
+			switch (area)
+			{
+				case Qt::LeftToolBarArea:
+				case Qt::RightToolBarArea:
+					position = (childrenRect().bottom() + spacing);
+
+					break;
+				default:
+					position = (childrenRect().right() + spacing);
+
+					break;
+			}
+		}
+
+		if (position >= 0)
+		{
+			QPainter painter(this);
+
+			switch (area)
+			{
+				case Qt::LeftToolBarArea:
+				case Qt::RightToolBarArea:
+					Application::getStyle()->drawDropZone(QLine(0, position, width(), position), &painter);
+
+					break;
+				default:
+					Application::getStyle()->drawDropZone(QLine(position, 0, position, height()), &painter);
 
 					break;
 			}
