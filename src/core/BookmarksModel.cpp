@@ -1071,6 +1071,21 @@ bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newPar
 	return true;
 }
 
+bool BookmarksModel::canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const
+{
+	const QModelIndex index(data->property("x-item-index").toModelIndex());
+
+	if (index.isValid())
+	{
+		BookmarksItem *bookmark(getBookmark(index));
+		BookmarksItem *newParent(getBookmark(parent));
+
+		return (bookmark && newParent && bookmark != newParent && !bookmark->isAncestorOf(newParent));
+	}
+
+	return QStandardItemModel::canDropMimeData(data, action, row, column, parent);
+}
+
 bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
 	const BookmarkType type(static_cast<BookmarkType>(parent.data(TypeRole).toInt()));

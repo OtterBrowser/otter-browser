@@ -109,6 +109,7 @@ public:
 	QVector<BookmarksItem*> getBookmarks(const QUrl &url) const;
 	FormatMode getFormatMode() const;
 	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);
+	bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool save(const QString &path) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
