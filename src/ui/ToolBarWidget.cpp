@@ -255,7 +255,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	if (getDefinition().type == ToolBarsManager::BookmarksBarType && m_dropIndex >= 0)
 	{
 		QPainter painter(this);
-		QWidget *widget(widgetForAction(actions().at(m_dropIndex)));
+		QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
 		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
 
 		if (widget)
