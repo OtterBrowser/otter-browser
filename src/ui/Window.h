@@ -62,9 +62,9 @@ public:
 	void detachSearchWidget(SearchWidget *widget);
 	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session);
-	Window* clone(bool cloneHistory, MainWindow *mainWindow);
+	Window* clone(bool cloneHistory, MainWindow *mainWindow) const;
 	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
-	MainWindow* getMainWindow();
+	MainWindow* getMainWindow() const;
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
 	QString getTitle() const;

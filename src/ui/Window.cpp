@@ -757,7 +757,7 @@ AddressWidget* Window::findAddressWidget() const
 	return m_addressWidgets.value(0, nullptr);
 }
 
-Window* Window::clone(bool cloneHistory, MainWindow *mainWindow)
+Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const
 {
 	if (!m_contentsWidget || !canClone())
 	{
@@ -784,7 +784,7 @@ Action* Window::createAction(int identifier, const QVariantMap parameters, bool 
 	return m_contentsWidget->createAction(identifier, parameters, followState);
 }
 
-MainWindow* Window::getMainWindow()
+MainWindow* Window::getMainWindow() const
 {
 	return m_mainWindow;
 }
