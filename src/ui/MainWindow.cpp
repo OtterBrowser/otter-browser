@@ -2079,7 +2079,7 @@ Action* MainWindow::createAction(int identifier, const QVariantMap parameters, b
 	return m_actions.value(identifier, nullptr);
 }
 
-TabBarWidget* MainWindow::getTabBar()
+TabBarWidget* MainWindow::getTabBar() const
 {
 	return m_tabBar;
 }

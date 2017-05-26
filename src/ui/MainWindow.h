@@ -60,7 +60,7 @@ public:
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
 	static MainWindow* findMainWindow(QObject *parent);
 	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
-	TabBarWidget* getTabBar();
+	TabBarWidget* getTabBar() const;
 	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
