@@ -36,6 +36,7 @@ public:
 	enum ToolBarIdentifier
 	{
 		MenuBar = 0,
+		BookmarksBar,
 		TabBar,
 		AddressBar,
 		ProgressBar,

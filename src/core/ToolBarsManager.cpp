@@ -45,6 +45,7 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
 {
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Menu Bar"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tab Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Address Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Navigation Bar"))

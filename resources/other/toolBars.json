@@ -9,6 +9,14 @@
 		]
 	},
 	{
+		"identifier": "BookmarksBar",
+		"title": "Bookmarks Bar",
+		"location": "top",
+		"normalVisibility": "hidden",
+		"buttonStyle": "textBesideIcon",
+		"bookmarksPath": "/"
+	},
+	{
 		"identifier": "TabBar",
 		"title": "Tab Bar",
 		"location": "top",
