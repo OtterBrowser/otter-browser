@@ -40,9 +40,9 @@ public:
 	explicit ContentsWidget(const QVariantMap &parameters, Window *window);
 
 	virtual void setParent(Window *window);
-	virtual ContentsWidget* clone(bool cloneHistory = true);
+	virtual ContentsWidget* clone(bool cloneHistory = true) const;
 	virtual Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
-	virtual WebWidget* getWebWidget();
+	virtual WebWidget* getWebWidget() const;
 	virtual QString parseQuery(const QString &query) const;
 	virtual QString getTitle() const = 0;
 	virtual QString getVersion() const;

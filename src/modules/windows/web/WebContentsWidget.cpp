@@ -1265,7 +1265,7 @@ void WebContentsWidget::setParent(Window *window)
 	}
 }
 
-WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
+WebContentsWidget* WebContentsWidget::clone(bool cloneHistory) const
 {
 	QVariantMap parameters;
 
@@ -1285,7 +1285,7 @@ Action* WebContentsWidget::createAction(int identifier, const QVariantMap parame
 	return m_webWidget->createAction(identifier, parameters, followState);
 }
 
-WebWidget* WebContentsWidget::getWebWidget()
+WebWidget* WebContentsWidget::getWebWidget() const
 {
 	return m_webWidget;
 }

@@ -69,9 +69,9 @@ public:
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer) override;
 	void setParent(Window *window) override;
-	WebContentsWidget* clone(bool cloneHistory = true) override;
+	WebContentsWidget* clone(bool cloneHistory = true) const override;
 	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
-	WebWidget* getWebWidget() override;
+	WebWidget* getWebWidget() const override;
 	QString parseQuery(const QString &query) const override;
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;

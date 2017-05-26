@@ -269,7 +269,7 @@ void ContentsWidget::setParent(Window *window)
 	QWidget::setParent(window);
 }
 
-ContentsWidget* ContentsWidget::clone(bool cloneHistory)
+ContentsWidget* ContentsWidget::clone(bool cloneHistory) const
 {
 	Q_UNUSED(cloneHistory)
 
@@ -285,7 +285,7 @@ Action* ContentsWidget::createAction(int identifier, const QVariantMap parameter
 	return nullptr;
 }
 
-WebWidget* ContentsWidget::getWebWidget()
+WebWidget* ContentsWidget::getWebWidget() const
 {
 	return nullptr;
 }
