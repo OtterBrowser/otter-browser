@@ -52,7 +52,7 @@ protected slots:
 private:
 	QUrl m_url;
 	QPoint m_dragStartPosition;
-	bool  m_isEmpty;
+	bool m_isEmpty;
 };
 
 }
