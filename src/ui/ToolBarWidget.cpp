@@ -552,6 +552,11 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 
 void ToolBarWidget::updateDropIndex(const QPoint &position)
 {
+	if (!m_bookmark)
+	{
+		return;
+	}
+
 	int dropIndex(-1);
 
 	m_dropBookmark = nullptr;
@@ -599,9 +604,29 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 			if (dropBookmark && static_cast<BookmarksModel::BookmarkType>(dropBookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::FolderBookmark)
 			{
-				m_dropBookmark = dropBookmark;
+				bool canNest(false);
 
-				dropIndex = -1;
+				if (widget)
+				{
+					const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
+					const int margin((isHorizontal ? widget->geometry().width() : widget->geometry().height()) / 3);
+
+					if (isHorizontal)
+					{
+						canNest = (position.x() >= (widget->geometry().left() + margin) && position.x() <= (widget->geometry().right() - margin));
+					}
+					else
+					{
+						canNest = (position.y() >= (widget->geometry().top() + margin) && position.y() <= (widget->geometry().bottom() - margin));
+					}
+				}
+
+				if (canNest)
+				{
+					m_dropBookmark = dropBookmark;
+
+					dropIndex = -1;
+				}
 			}
 		}
 
