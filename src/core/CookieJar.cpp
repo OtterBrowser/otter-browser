@@ -192,7 +192,7 @@ void CookieJar::save()
 	file.commit();
 }
 
-CookieJar* CookieJar::clone(QObject *parent)
+CookieJar* CookieJar::clone(QObject *parent) const
 {
 	CookieJar *cookieJar(new CookieJar(m_isPrivate, parent));
 	cookieJar->setAllCookies(allCookies());
