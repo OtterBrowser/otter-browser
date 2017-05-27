@@ -161,6 +161,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_window(window),
 	m_sidebarWidget(nullptr),
 	m_bookmark(nullptr),
+	m_dropBookmark(nullptr),
 	m_toggleButton(nullptr),
 	m_identifier(identifier),
 	m_dropIndex(-1),
@@ -531,7 +532,14 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 
 		for (int i = 0; i < urls.count(); ++i)
 		{
-			BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, urls.at(i), QString(), m_bookmark, (m_dropIndex + i));
+			if (m_dropBookmark)
+			{
+				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, urls.at(i), QString(), m_dropBookmark);
+			}
+			else
+			{
+				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, urls.at(i), QString(), m_bookmark, (m_dropIndex + i));
+			}
 		}
 	}
 	else
@@ -545,6 +553,8 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 void ToolBarWidget::updateDropIndex(const QPoint &position)
 {
 	int dropIndex(-1);
+
+	m_dropBookmark = nullptr;
 
 	if (!position.isNull())
 	{
@@ -583,7 +593,19 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 		dropIndex = actions().indexOf(action);
 
-		if (widget)
+		if (dropIndex >= 0 && dropIndex < m_bookmark->rowCount())
+		{
+			BookmarksItem *dropBookmark(BookmarksManager::getModel()->getBookmark(m_bookmark->index().child(dropIndex, 0)));
+
+			if (dropBookmark && static_cast<BookmarksModel::BookmarkType>(dropBookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::FolderBookmark)
+			{
+				m_dropBookmark = dropBookmark;
+
+				dropIndex = -1;
+			}
+		}
+
+		if (widget && dropIndex >= 0)
 		{
 			switch (area)
 			{

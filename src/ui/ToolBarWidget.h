@@ -119,6 +119,7 @@ private:
 	Window *m_window;
 	SidebarWidget *m_sidebarWidget;
 	BookmarksItem *m_bookmark;
+	BookmarksItem *m_dropBookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
 	int m_identifier;
