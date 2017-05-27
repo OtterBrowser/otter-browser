@@ -135,7 +135,7 @@ void NetworkManager::handleOnlineStateChanged(bool isOnline)
 	}
 }
 
-CookieJar* NetworkManager::getCookieJar()
+CookieJar* NetworkManager::getCookieJar() const
 {
 	return m_cookieJar;
 }

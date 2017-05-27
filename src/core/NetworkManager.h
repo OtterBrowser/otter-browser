@@ -64,7 +64,7 @@ public:
 
 	explicit NetworkManager(bool isPrivate = false, QObject *parent = nullptr);
 
-	CookieJar* getCookieJar();
+	CookieJar* getCookieJar() const;
 
 protected:
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
