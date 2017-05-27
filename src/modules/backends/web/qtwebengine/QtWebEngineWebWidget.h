@@ -89,7 +89,7 @@ protected:
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
-	QWebEnginePage* getPage();
+	QWebEnginePage* getPage() const;
 	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	QDateTime getLastUrlClickTime() const;
 	bool canGoBack() const override;

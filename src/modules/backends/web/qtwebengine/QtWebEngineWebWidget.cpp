@@ -1499,7 +1499,7 @@ Action* QtWebEngineWebWidget::createAction(int identifier, const QVariantMap par
 	return WebWidget::createAction(identifier, parameters, followState);
 }
 
-QWebEnginePage* QtWebEngineWebWidget::getPage()
+QWebEnginePage* QtWebEngineWebWidget::getPage() const
 {
 	return m_page;
 }
