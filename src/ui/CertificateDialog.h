@@ -59,6 +59,13 @@ public:
 		DigestSha256Field
 	};
 
+	enum DataRole
+	{
+		CertificateFieldRole = Qt::UserRole,
+		CertificateIndexRole,
+		ExtensionIndexRole
+	};
+
 	explicit CertificateDialog(QVector<QSslCertificate> certificates, QWidget *parent = nullptr);
 	~CertificateDialog();
 

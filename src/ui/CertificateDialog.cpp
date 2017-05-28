@@ -60,7 +60,7 @@ CertificateDialog::CertificateDialog(QVector<QSslCertificate> certificates, QWid
 		QStandardItem *parentCertificateItem(certificateItem);
 
 		certificateItem = new QStandardItem(certificates.at(i).subjectInfo(QSslCertificate::Organization).value(0, tr("Unknown")));
-		certificateItem->setData(i, Qt::UserRole);
+		certificateItem->setData(i, CertificateIndexRole);
 
 		if (parentCertificateItem)
 		{
@@ -103,7 +103,7 @@ void CertificateDialog::changeEvent(QEvent *event)
 
 void CertificateDialog::exportCertificate()
 {
-	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt()));
+	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
 
 	if (certificate.isNull())
 	{
@@ -144,7 +144,7 @@ void CertificateDialog::exportCertificate()
 
 void CertificateDialog::updateCertificate()
 {
-	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt()));
+	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
 
 	m_ui->detailsItemView->getSourceModel()->clear();
 
@@ -243,7 +243,7 @@ void CertificateDialog::updateCertificate()
 			title = tr("Subject Information Access");
 		}
 
-		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {(Qt::UserRole + 1), i}});
+		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {ExtensionIndexRole, i}});
 	}
 
 	QStandardItem *digestItem(createField(DigestField));
@@ -257,8 +257,8 @@ void CertificateDialog::updateCertificate()
 
 void CertificateDialog::updateValue()
 {
-	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt()));
-	const CertificateField field(static_cast<CertificateField>(m_ui->detailsItemView->currentIndex().data(Qt::UserRole).toInt()));
+	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
+	const CertificateField field(static_cast<CertificateField>(m_ui->detailsItemView->currentIndex().data(CertificateFieldRole).toInt()));
 
 	m_ui->valueTextEdit->clear();
 
@@ -329,7 +329,7 @@ void CertificateDialog::updateValue()
 			break;
 		case ExtensionField:
 			{
-				const QSslCertificateExtension extension(certificate.extensions().value(m_ui->detailsItemView->currentIndex().data(Qt::UserRole + 1).toInt()));
+				const QSslCertificateExtension extension(certificate.extensions().value(m_ui->detailsItemView->currentIndex().data(ExtensionIndexRole).toInt()));
 
 				m_ui->valueTextEdit->setPlainText(extension.isCritical() ? tr("Critical") : tr("Not Critical"));
 				m_ui->valueTextEdit->appendPlainText(tr("OID: %1").arg(extension.oid()));
@@ -458,7 +458,7 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 	}
 
 	QStandardItem *item(new QStandardItem(title));
-	item->setData(field, Qt::UserRole);
+	item->setData(field, CertificateFieldRole);
 
 	QMap<int, QVariant>::const_iterator iterator;
 
