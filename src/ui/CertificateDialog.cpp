@@ -243,11 +243,7 @@ void CertificateDialog::updateCertificate()
 			title = tr("Subject Information Access");
 		}
 
-		QMap<int, QVariant> data;
-		data[Qt::DisplayRole] = title;
-		data[Qt::UserRole + 1] = i;
-
-		createField(ExtensionField, extensionsItem, data);
+		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {(Qt::UserRole + 1), i}});
 	}
 
 	QStandardItem *digestItem(createField(DigestField));
