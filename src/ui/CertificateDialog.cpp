@@ -145,6 +145,7 @@ void CertificateDialog::exportCertificate()
 void CertificateDialog::updateCertificate()
 {
 	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
+	const QVariant field(m_ui->detailsItemView->currentIndex().data(CertificateFieldRole));
 
 	m_ui->detailsItemView->getSourceModel()->clear();
 
@@ -253,6 +254,16 @@ void CertificateDialog::updateCertificate()
 
 	m_ui->detailsItemView->expandAll();
 	m_ui->valueTextEdit->clear();
+
+	if (!field.isNull())
+	{
+		const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), CertificateFieldRole, field, 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
+
+		if (!indexes.isEmpty())
+		{
+			m_ui->detailsItemView->setCurrentIndex(indexes.first());
+		}
+	}
 }
 
 void CertificateDialog::updateValue()
