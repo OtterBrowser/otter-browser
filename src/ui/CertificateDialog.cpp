@@ -146,6 +146,7 @@ void CertificateDialog::updateCertificate()
 {
 	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
 	const QVariant field(m_ui->detailsItemView->currentIndex().data(CertificateFieldRole));
+	const QVariant title(m_ui->detailsItemView->currentIndex().data(Qt::DisplayRole));
 
 	m_ui->detailsItemView->getSourceModel()->clear();
 
@@ -257,7 +258,8 @@ void CertificateDialog::updateCertificate()
 
 	if (!field.isNull())
 	{
-		const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), CertificateFieldRole, field, 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
+		const bool isExtension(static_cast<CertificateField>(field.toInt()) == ExtensionField);
+		const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), (isExtension ? Qt::DisplayRole : CertificateFieldRole), (isExtension ? title : field), 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
 
 		if (!indexes.isEmpty())
 		{
