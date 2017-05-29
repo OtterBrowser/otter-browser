@@ -747,12 +747,12 @@ void ItemViewWidget::setModified(bool isModified)
 	emit needsActionsUpdate();
 }
 
-QStandardItemModel* ItemViewWidget::getSourceModel()
+QStandardItemModel* ItemViewWidget::getSourceModel() const
 {
 	return m_sourceModel;
 }
 
-QSortFilterProxyModel* ItemViewWidget::getProxyModel()
+QSortFilterProxyModel* ItemViewWidget::getProxyModel() const
 {
 	return m_proxyModel;
 }
