@@ -98,6 +98,8 @@ void CertificateDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		updateCertificate();
 	}
 }
 
