@@ -146,7 +146,7 @@ void CertificateDialog::updateCertificate()
 {
 	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
 	const QVariant field(m_ui->detailsItemView->currentIndex().data(CertificateFieldRole));
-	const QVariant title(m_ui->detailsItemView->currentIndex().data(Qt::DisplayRole));
+	const QVariant extension(m_ui->detailsItemView->currentIndex().data(ExtensionNameRole));
 
 	m_ui->detailsItemView->getSourceModel()->clear();
 
@@ -245,7 +245,7 @@ void CertificateDialog::updateCertificate()
 			title = tr("Subject Information Access");
 		}
 
-		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {ExtensionIndexRole, i}});
+		createField(ExtensionField, extensionsItem, {{Qt::DisplayRole, title}, {ExtensionIndexRole, i}, {ExtensionNameRole, certificate.extensions().at(i).name()}});
 	}
 
 	QStandardItem *digestItem(createField(DigestField));
@@ -259,7 +259,7 @@ void CertificateDialog::updateCertificate()
 	if (!field.isNull())
 	{
 		const bool isExtension(static_cast<CertificateField>(field.toInt()) == ExtensionField);
-		const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), (isExtension ? Qt::DisplayRole : CertificateFieldRole), (isExtension ? title : field), 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
+		const QModelIndexList indexes(m_ui->detailsItemView->getSourceModel()->match(m_ui->detailsItemView->getSourceModel()->index(0, 0), (isExtension ? ExtensionNameRole : CertificateFieldRole), (isExtension ? extension : field), 1, (Qt::MatchExactly | Qt::MatchRecursive | Qt::MatchWrap)));
 
 		if (!indexes.isEmpty())
 		{

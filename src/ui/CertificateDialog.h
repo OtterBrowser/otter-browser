@@ -63,7 +63,8 @@ public:
 	{
 		CertificateFieldRole = Qt::UserRole,
 		CertificateIndexRole,
-		ExtensionIndexRole
+		ExtensionIndexRole,
+		ExtensionNameRole
 	};
 
 	explicit CertificateDialog(QVector<QSslCertificate> certificates, QWidget *parent = nullptr);
