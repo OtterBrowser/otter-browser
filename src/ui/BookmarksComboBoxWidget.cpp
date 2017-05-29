@@ -122,7 +122,7 @@ void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 	connect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 }
 
-BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder()
+BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder() const
 {
 	BookmarksItem *item(qobject_cast<BookmarksModel*>(model())->getBookmark(currentData(BookmarksModel::IdentifierRole).toULongLong()));
 

@@ -38,7 +38,7 @@ public:
 
 	void setCurrentFolder(BookmarksItem *folder);
 	void setMode(BookmarksModel::FormatMode mode);
-	BookmarksItem* getCurrentFolder();
+	BookmarksItem* getCurrentFolder() const;
 
 protected slots:
 	void createFolder();
