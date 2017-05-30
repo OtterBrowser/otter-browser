@@ -79,8 +79,16 @@ include(GNUInstallDirs)
 option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.6)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires Qt 5.4)" ON)
 option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
+option(ENABLE_MULTIMEDIA "Link with Qt5Multimedia package" ON)
 
-find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
+# apparently the OPTIONAL_COMPONENTS part of find_package doesn't work with Qt, so this is more awkward than it should be
+# see http://cmake.3232098.n2.nabble.com/find-package-REQUIRED-ignores-OPTIONAL-COMPONENTS-td7592903.html
+if (ENABLE_MULTIMEDIA)
+        find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
+else (ENABLE_MULTIMEDIA)
+        find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Network PrintSupport Qml Widgets XmlPatterns)
+endif (ENABLE_MULTIMEDIA)
+
 find_package(Qt5WebEngineWidgets 5.6.0 QUIET)
 find_package(Qt5WebKitWidgets 5.4.0 QUIET)
 find_package(Hunspell 1.3.0 QUIET)
@@ -376,6 +384,10 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	)
 endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
+if (ENABLE_MULTIMEDIA)
+        add_definitions(-DOTTER_ENABLE_MULTIMEDIA)
+endif (ENABLE_MULTIMEDIA)
+
 if (ENABLE_CRASHREPORTS)
 	add_definitions(-DOTTER_ENABLE_CRASHREPORTS)
 	include_directories(${CMAKE_SOURCE_DIR}/3rdparty/breakpad/src/)
@@ -533,7 +545,10 @@ elseif (UNIX)
 	endif (ENABLE_CRASHREPORTS)
 endif (WIN32)
 
-target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Widgets Qt5::XmlPatterns)
+target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Widgets Qt5::XmlPatterns)
+if (ENABLE_MULTIMEDIA)
+        target_link_libraries(otter-browser Qt5::Multimedia)
+endif (ENABLE_MULTIMEDIA)
 
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
