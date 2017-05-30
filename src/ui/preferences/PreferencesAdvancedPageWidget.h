@@ -49,7 +49,10 @@ public:
 		IdentifierRole = Qt::UserRole,
 		SoundPathRole,
 		ShouldShowAlertRole,
-		ShouldShowNotificationRole
+		ShouldShowNotificationRole,
+		TransferModeRole,
+		DownloadsPathRole,
+		OpenCommandRole
 	};
 
 	explicit PreferencesAdvancedPageWidget(QWidget *parent = nullptr);

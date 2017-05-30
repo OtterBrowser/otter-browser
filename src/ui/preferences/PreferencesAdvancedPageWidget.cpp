@@ -181,9 +181,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		handlersSettings.beginGroup(handlers.at(i));
 
 		QStandardItem *item(new QStandardItem(handlers.at(i)));
-		item->setData(handlersSettings.getValue(QLatin1String("transferMode")), Qt::UserRole);
-		item->setData(handlersSettings.getValue(QLatin1String("downloadsPath")), (Qt::UserRole + 1));
-		item->setData(handlersSettings.getValue(QLatin1String("openCommand")), (Qt::UserRole + 2));
+		item->setData(handlersSettings.getValue(QLatin1String("transferMode")), TransferModeRole);
+		item->setData(handlersSettings.getValue(QLatin1String("downloadsPath")), DownloadsPathRole);
+		item->setData(handlersSettings.getValue(QLatin1String("openCommand")), OpenCommandRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		handlersSettings.endGroup();
@@ -557,7 +557,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	disconnect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
 
 	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
-	const QString mode(index.data(Qt::UserRole).toString());
+	const QString mode(index.data(TransferModeRole).toString());
 
 	if (mode == QLatin1String("save") || mode == QLatin1String("saveAs"))
 	{
@@ -575,9 +575,9 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsRemoveMimeTypeButton->setEnabled(index.isValid() && index.data(Qt::DisplayRole).toString() != QLatin1String("*"));
 	m_ui->downloadsOptionsWidget->setEnabled(index.isValid());
 	m_ui->downloadsSaveDirectlyCheckBox->setChecked(mode == QLatin1String("save"));
-	m_ui->downloadsFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
+	m_ui->downloadsFilePathWidget->setPath(index.data(DownloadsPathRole).toString());
 	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
-	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(Qt::UserRole + 2).toString());
+	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(OpenCommandRole).toString());
 
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
@@ -610,9 +610,9 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 			mode = QLatin1String("ask");
 		}
 
-		m_ui->downloadsItemView->setData(index, mode, Qt::UserRole);
-		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("save") || mode == QLatin1String("saveAs")) ? m_ui->downloadsFilePathWidget->getPath() : QString()), (Qt::UserRole + 1));
-		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("open")) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), (Qt::UserRole + 2));
+		m_ui->downloadsItemView->setData(index, mode, TransferModeRole);
+		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("save") || mode == QLatin1String("saveAs")) ? m_ui->downloadsFilePathWidget->getPath() : QString()), DownloadsPathRole);
+		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("open")) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
 	}
 
 	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
@@ -1584,9 +1584,9 @@ void PreferencesAdvancedPageWidget::save()
 		}
 
 		handlersSettings.beginGroup(index.data(Qt::DisplayRole).toString());
-		handlersSettings.setValue(QLatin1String("transferMode"), index.data(Qt::UserRole).toString());
-		handlersSettings.setValue(QLatin1String("downloadsPath"), index.data(Qt::UserRole + 1).toString());
-		handlersSettings.setValue(QLatin1String("openCommand"), index.data(Qt::UserRole + 2).toString());
+		handlersSettings.setValue(QLatin1String("transferMode"), index.data(TransferModeRole).toString());
+		handlersSettings.setValue(QLatin1String("downloadsPath"), index.data(DownloadsPathRole).toString());
+		handlersSettings.setValue(QLatin1String("openCommand"), index.data(OpenCommandRole).toString());
 		handlersSettings.endGroup();
 	}
 
