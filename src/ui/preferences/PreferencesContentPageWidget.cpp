@@ -139,11 +139,11 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	{
 		const QString family(SettingsManager::getOption(SettingsManager::getOptionIdentifier((QLatin1String("Content/") + fonts.at(i)))).toString());
 		QList<QStandardItem*> items({new QStandardItem(fontCategories.at(i)), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[1]->setData(QLatin1String("Content/") + fonts.at(i), Qt::UserRole);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[2]->setData(QFont(family), Qt::FontRole);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		fontsModel->appendRow(items);
 	}
@@ -161,9 +161,9 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	{
 		const QString color(SettingsManager::getOption(SettingsManager::getOptionIdentifier(QLatin1String("Content/") + colors.at(i))).toString());
 		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(color)});
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		items[1]->setData(QLatin1String("Content/") + colors.at(i), Qt::UserRole);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		colorsModel->appendRow(items);
 	}
