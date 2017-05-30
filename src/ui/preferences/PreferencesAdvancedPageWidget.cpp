@@ -119,10 +119,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	for (int i = 0; i < events.count(); ++i)
 	{
 		QList<QStandardItem*> items({new QStandardItem(QCoreApplication::translate("notifications", events.at(i).title.toUtf8())), new QStandardItem(QCoreApplication::translate("notifications", events.at(i).description.toUtf8()))});
-		items[0]->setData(events.at(i).identifier, Qt::UserRole);
-		items[0]->setData(events.at(i).playSound, (Qt::UserRole + 1));
-		items[0]->setData(events.at(i).showAlert, (Qt::UserRole + 2));
-		items[0]->setData(events.at(i).showNotification, (Qt::UserRole + 3));
+		items[0]->setData(events.at(i).identifier, IdentifierRole);
+		items[0]->setData(events.at(i).playSound, SoundPathRole);
+		items[0]->setData(events.at(i).showAlert, ShouldShowAlertRole);
+		items[0]->setData(events.at(i).showNotification, ShouldShowNotificationRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -485,13 +485,13 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	disconnect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 
 	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
-	const QString path(index.data(Qt::UserRole + 1).toString());
+	const QString path(index.data(SoundPathRole).toString());
 
 	m_ui->notificationOptionsWidget->setEnabled(index.isValid());
 	m_ui->notificationsPlaySoundButton->setEnabled(!path.isEmpty() && QFile::exists(path));
 	m_ui->notificationsPlaySoundFilePathWidget->setPath(path);
-	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(Qt::UserRole + 2).toBool());
-	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(Qt::UserRole + 3).toBool());
+	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(ShouldShowAlertRole).toBool());
+	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(ShouldShowNotificationRole).toBool());
 
 	connect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateNotificationsOptions()));
 	connect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
@@ -509,9 +509,9 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 		const QString path(m_ui->notificationsPlaySoundFilePathWidget->getPath());
 
 		m_ui->notificationsPlaySoundButton->setEnabled(!path.isEmpty() && QFile::exists(path));
-		m_ui->notificationsItemView->setData(index, path, (Qt::UserRole + 1));
-		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), (Qt::UserRole + 2));
-		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), (Qt::UserRole + 3));
+		m_ui->notificationsItemView->setData(index, path, SoundPathRole);
+		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), ShouldShowAlertRole);
+		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), ShouldShowNotificationRole);
 
 		connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
 	}
@@ -1511,7 +1511,7 @@ void PreferencesAdvancedPageWidget::save()
 	for (int i = 0; i < m_ui->notificationsItemView->getRowCount(); ++i)
 	{
 		const QModelIndex index(m_ui->notificationsItemView->getIndex(i, 0));
-		const QString eventName(NotificationsManager::getEventName(index.data(Qt::UserRole).toInt()));
+		const QString eventName(NotificationsManager::getEventName(index.data(IdentifierRole).toInt()));
 
 		if (eventName.isEmpty())
 		{
@@ -1519,9 +1519,9 @@ void PreferencesAdvancedPageWidget::save()
 		}
 
 		notificationsSettings.beginGroup(eventName);
-		notificationsSettings.setValue(QLatin1String("playSound"), index.data(Qt::UserRole + 1).toString());
-		notificationsSettings.setValue(QLatin1String("showAlert"), index.data(Qt::UserRole + 2).toBool());
-		notificationsSettings.setValue(QLatin1String("showNotification"), index.data(Qt::UserRole + 3).toBool());
+		notificationsSettings.setValue(QLatin1String("playSound"), index.data(SoundPathRole).toString());
+		notificationsSettings.setValue(QLatin1String("showAlert"), index.data(ShouldShowAlertRole).toBool());
+		notificationsSettings.setValue(QLatin1String("showNotification"), index.data(ShouldShowNotificationRole).toBool());
 		notificationsSettings.endGroup();
 	}
 

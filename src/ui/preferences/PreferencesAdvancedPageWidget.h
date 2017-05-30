@@ -44,6 +44,14 @@ class PreferencesAdvancedPageWidget final : public QWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		SoundPathRole,
+		ShouldShowAlertRole,
+		ShouldShowNotificationRole
+	};
+
 	explicit PreferencesAdvancedPageWidget(QWidget *parent = nullptr);
 	~PreferencesAdvancedPageWidget();
 
