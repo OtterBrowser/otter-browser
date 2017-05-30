@@ -565,7 +565,7 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 	}
 }
 
-Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index)
+Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 {
 	if (index.isValid() && m_model->item(index.row(), 0))
 	{

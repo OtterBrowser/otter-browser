@@ -73,7 +73,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	Transfer* getTransfer(const QModelIndex &index);
+	Transfer* getTransfer(const QModelIndex &index) const;
 	int findTransfer(Transfer *transfer) const;
 
 protected slots:
