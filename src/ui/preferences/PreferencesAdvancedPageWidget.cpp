@@ -123,8 +123,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		items[0]->setData(events.at(i).playSound, SoundPathRole);
 		items[0]->setData(events.at(i).showAlert, ShouldShowAlertRole);
 		items[0]->setData(events.at(i).showNotification, ShouldShowNotificationRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		notificationsModel->appendRow(items);
 	}
@@ -184,7 +184,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		item->setData(handlersSettings.getValue(QLatin1String("transferMode")), TransferModeRole);
 		item->setData(handlersSettings.getValue(QLatin1String("downloadsPath")), DownloadsPathRole);
 		item->setData(handlersSettings.getValue(QLatin1String("openCommand")), OpenCommandRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		handlersSettings.endGroup();
 
@@ -243,7 +243,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 			if (!cipher.isNull())
 			{
 				QStandardItem *item(new QStandardItem(cipher.name()));
-				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 				ciphersModel->appendRow(item);
 			}
@@ -257,7 +257,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 			if (useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i)))
 			{
 				QStandardItem *item(new QStandardItem(supportedCiphers.at(i).name()));
-				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 				ciphersModel->appendRow(item);
 			}
@@ -330,7 +330,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 		item->setToolTip(profile.description);
 		item->setData(profile.identifier, Qt::UserRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 		keyboardProfilesModel->appendRow(item);
 	}
@@ -366,7 +366,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 		item->setToolTip(profile.description);
 		item->setData(profile.identifier, Qt::UserRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 		mouseProfilesModel->appendRow(item);
 	}
@@ -526,7 +526,7 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 		if (QRegularExpression(QLatin1String("^[a-zA-Z\\-]+/[a-zA-Z0-9\\.\\+\\-_]+$")).match(mimeType).hasMatch())
 		{
 			QStandardItem *item(new QStandardItem(mimeType));
-			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 			m_ui->downloadsItemView->insertRow(item);
 			m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
@@ -1031,7 +1031,7 @@ void PreferencesAdvancedPageWidget::addCipher(QAction *action)
 	}
 
 	QStandardItem *item(new QStandardItem(action->text()));
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->ciphersViewWidget->insertRow(item);
 	m_ui->ciphersAddButton->menu()->removeAction(action);
@@ -1080,7 +1080,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 
 	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
 	item->setData(identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->keyboardViewWidget->insertRow(item);
 }
@@ -1105,7 +1105,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 	item->setToolTip(profile.description);
 	item->setData(profile.identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->keyboardViewWidget->insertRow(item);
 
@@ -1164,7 +1164,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 	QStandardItem *item(new QStandardItem(m_keyboardProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[newIdentifier].title));
 	item->setToolTip(m_keyboardProfiles[newIdentifier].description);
 	item->setData(newIdentifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->keyboardViewWidget->insertRow(item);
 }
@@ -1270,7 +1270,7 @@ void PreferencesAdvancedPageWidget::addMouseProfile()
 
 	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
 	item->setData(identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->mouseViewWidget->insertRow(item);
 }
@@ -1295,7 +1295,7 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 	QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 	item->setToolTip(profile.description);
 	item->setData(profile.identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->mouseViewWidget->insertRow(item);
 
@@ -1354,7 +1354,7 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 	QStandardItem *item(new QStandardItem(m_mouseProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[newIdentifier].title));
 	item->setToolTip(m_mouseProfiles[newIdentifier].description);
 	item->setData(newIdentifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->mouseViewWidget->insertRow(item);
 }
