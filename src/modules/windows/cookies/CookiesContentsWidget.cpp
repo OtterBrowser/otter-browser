@@ -203,7 +203,8 @@ void CookiesContentsWidget::removeCookies()
 	}
 
 	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
-	QList<QNetworkCookie> cookies;
+	QVector<QNetworkCookie> cookies;
+	cookies.reserve(indexes.count());
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
@@ -257,7 +258,8 @@ void CookiesContentsWidget::removeDomainCookies()
 		return;
 	}
 
-	QList<QNetworkCookie> cookies;
+	QVector<QNetworkCookie> cookies;
+	cookies.reserve(indexes.count());
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
