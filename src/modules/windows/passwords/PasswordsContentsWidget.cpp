@@ -92,6 +92,8 @@ void PasswordsContentsWidget::populatePasswords()
 				const bool isPassword(passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField);
 				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(isPassword ? QLatin1String("*****") : passwords.at(j).fields.at(k).value)});
 				fieldItems[0]->setData((isPassword ? QLatin1String("password") : QLatin1String("text")), FieldTypeRole);
+				fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
+				fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
 
 				setItem->appendRow(fieldItems);
 			}
