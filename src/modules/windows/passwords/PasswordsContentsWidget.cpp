@@ -89,9 +89,8 @@ void PasswordsContentsWidget::populatePasswords()
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
-				const bool isPassword(passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField);
-				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(isPassword ? QLatin1String("*****") : passwords.at(j).fields.at(k).value)});
-				fieldItems[0]->setData((isPassword ? QLatin1String("password") : QLatin1String("text")), FieldTypeRole);
+				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem((passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField) ? QLatin1String("*****") : passwords.at(j).fields.at(k).value)});
+				fieldItems[0]->setData(passwords.at(j).fields.at(k).type, FieldTypeRole);
 				fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
 				fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
 
@@ -330,7 +329,7 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 				{
 					const QModelIndex fieldIndex(setIndex.child(k, 0));
 
-					if (fieldIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive) || (fieldIndex.data(FieldTypeRole).toString() != QLatin1String("password") && fieldIndex.sibling(fieldIndex.row(), 1).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
+					if (fieldIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive) || (fieldIndex.data(FieldTypeRole).toInt() != PasswordsManager::PasswordField && fieldIndex.sibling(fieldIndex.row(), 1).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
 					{
 						hasFieldMatch = true;
 
@@ -404,7 +403,7 @@ PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const
 	for (int i = 0; i < m_model->rowCount(index); ++i)
 	{
 		const QModelIndex nameIndex(index.child(i, 0));
-		const bool isPassword(nameIndex.data(FieldTypeRole).toString() == QLatin1String("password"));
+		const bool isPassword(nameIndex.data(FieldTypeRole).toInt() == PasswordsManager::PasswordField);
 		PasswordsManager::FieldInformation field;
 		field.name = nameIndex.data(Qt::DisplayRole).toString();
 		field.value = (isPassword ? QString() : index.child(i, 1).data(Qt::DisplayRole).toString());
