@@ -125,7 +125,8 @@ void PasswordsContentsWidget::removePasswords()
 		return;
 	}
 
-	QList<PasswordsManager::PasswordInformation> passwords;
+	QVector<PasswordsManager::PasswordInformation> passwords;
+	passwords.reserve(indexes.count());
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
