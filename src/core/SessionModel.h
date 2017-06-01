@@ -40,7 +40,7 @@ protected:
 friend class SessionModel;
 };
 
-class MainWindowSessionItem : public QObject, public SessionItem
+class MainWindowSessionItem final : public QObject, public SessionItem
 {
 	Q_OBJECT
 
@@ -63,7 +63,7 @@ private:
 friend class SessionModel;
 };
 
-class WindowSessionItem : public SessionItem
+class WindowSessionItem final : public SessionItem
 {
 public:
 	Window* getActiveWindow() const override;
