@@ -45,7 +45,7 @@ protected slots:
 	void updateBranch(QStandardItem *branch = nullptr);
 
 private:
-	BookmarksModel::FormatMode m_mode;
+	BookmarksModel *m_model;
 };
 
 }

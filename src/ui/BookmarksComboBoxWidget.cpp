@@ -30,12 +30,12 @@ namespace Otter
 {
 
 BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : ComboBoxWidget(parent),
-	m_mode(BookmarksModel::BookmarksMode)
+	m_model(BookmarksManager::getModel())
 {
-	setModel(BookmarksManager::getModel());
+	setModel(m_model);
 	updateBranch();
 
-	connect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	connect(m_model, SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 }
 
 void BookmarksComboBoxWidget::createFolder()
@@ -44,7 +44,7 @@ void BookmarksComboBoxWidget::createFolder()
 
 	if (!title.isEmpty())
 	{
-		switch (m_mode)
+		switch (m_model->getFormatMode())
 		{
 			case BookmarksModel::BookmarksMode:
 				setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder()));
@@ -64,7 +64,7 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 {
 	if (!branch)
 	{
-		branch = qobject_cast<BookmarksModel*>(model())->invisibleRootItem();
+		branch = m_model->invisibleRootItem();
 	}
 
 	for (int i = 0; i < branch->rowCount(); ++i)
@@ -99,34 +99,21 @@ void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
 
 void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 {
-	disconnect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	disconnect(m_model, SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 
-	m_mode = mode;
+	m_model = ((mode == BookmarksModel::NotesMode) ? NotesManager::getModel() : BookmarksManager::getModel());
 
-	switch (mode)
-	{
-		case BookmarksModel::BookmarksMode:
-			setModel(BookmarksManager::getModel());
-
-			break;
-		case BookmarksModel::NotesMode:
-			setModel(NotesManager::getModel());
-
-			break;
-		default:
-			break;
-	}
-
+	setModel(m_model);
 	updateBranch();
 
-	connect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	connect(m_model, SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 }
 
 BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder() const
 {
-	BookmarksItem *item(qobject_cast<BookmarksModel*>(model())->getBookmark(currentData(BookmarksModel::IdentifierRole).toULongLong()));
+	BookmarksItem *item(m_model->getBookmark(currentData(BookmarksModel::IdentifierRole).toULongLong()));
 
-	return (item ? item : qobject_cast<BookmarksModel*>(model())->getRootItem());
+	return (item ? item : m_model->getRootItem());
 }
 
 }
