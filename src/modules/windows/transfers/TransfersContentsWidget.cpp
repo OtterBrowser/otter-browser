@@ -215,7 +215,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 		if (!isIndeterminate)
 		{
 			qint64 speedSum(0);
-			const QList<qint64> speeds(m_speeds[transfer]);
+			const QQueue<qint64> speeds(m_speeds[transfer]);
 
 			for (int i = 0; i < speeds.count(); ++i)
 			{
