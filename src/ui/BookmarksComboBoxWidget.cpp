@@ -126,7 +126,7 @@ BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder() const
 {
 	BookmarksItem *item(qobject_cast<BookmarksModel*>(model())->getBookmark(currentData(BookmarksModel::IdentifierRole).toULongLong()));
 
-	return (item ? item :qobject_cast<BookmarksModel*>(model())->getRootItem());
+	return (item ? item : qobject_cast<BookmarksModel*>(model())->getRootItem());
 }
 
 }
