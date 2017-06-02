@@ -797,12 +797,22 @@ void QtWebKitWebWidget::notifyContentStateChanged()
 
 void QtWebKitWebWidget::updateUndoText(const QString &text)
 {
-	createAction(ActionsManager::UndoAction)->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
+	Action *undoAction(getExistingAction(ActionsManager::UndoAction));
+
+	if (undoAction)
+	{
+		undoAction->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
+	}
 }
 
 void QtWebKitWebWidget::updateRedoText(const QString &text)
 {
-	createAction(ActionsManager::RedoAction)->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
+	Action *redoAction(getExistingAction(ActionsManager::RedoAction));
+
+	if (redoAction)
+	{
+		redoAction->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
+	}
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
