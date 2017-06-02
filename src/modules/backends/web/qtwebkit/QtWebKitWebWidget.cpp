@@ -2664,7 +2664,7 @@ bool QtWebKitWebWidget::canShowContextMenu(const QPoint &position) const
 
 bool QtWebKitWebWidget::canViewSource() const
 {
-	return !m_page->isViewingMedia();
+	return (!m_page->isViewingMedia() && !Utils::isUrlEmpty(getUrl()));
 }
 
 bool QtWebKitWebWidget::hasSelection() const

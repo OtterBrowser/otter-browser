@@ -1759,7 +1759,7 @@ bool QtWebEngineWebWidget::canShowContextMenu(const QPoint &position) const
 
 bool QtWebEngineWebWidget::canViewSource() const
 {
-	return !m_page->isViewingMedia();
+	return (!m_page->isViewingMedia() && !Utils::isUrlEmpty(getUrl()));
 }
 
 bool QtWebEngineWebWidget::hasSelection() const
