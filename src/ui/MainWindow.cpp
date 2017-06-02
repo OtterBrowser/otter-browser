@@ -2294,7 +2294,7 @@ SessionMainWindow MainWindow::getSession() const
 	return session;
 }
 
-QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area)
+QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area) const
 {
 	QVector<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly).toVector());
 

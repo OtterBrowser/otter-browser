@@ -69,7 +69,7 @@ public:
 	QUrl getUrl() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
 	SessionMainWindow getSession() const;
-	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
+	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
 	int getCurrentWindowIndex() const;
 	int getWindowCount() const;
