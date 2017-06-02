@@ -1678,14 +1678,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					getInspector();
 				}
 
+				Action *inspectPageAction(getExistingAction(ActionsManager::InspectPageAction));
 				const bool result(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
 
-				createAction(ActionsManager::InspectPageAction)->setChecked(result);
+				if (inspectPageAction)
+				{
+					inspectPageAction->setChecked(result);
+				}
 
 				emit requestedInspectorVisibilityChange(result);
-
-				return;
 			}
+
+			return;
 		case ActionsManager::InspectElementAction:
 			{
 				QVariantMap inspectPageParameters;
