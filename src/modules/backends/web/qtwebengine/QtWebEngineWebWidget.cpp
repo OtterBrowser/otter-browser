@@ -773,6 +773,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 #else
 			m_page->runJavaScript(QLatin1String("window.getSelection().empty()"));
 #endif
+			return;
 		case ActionsManager::ClearAllAction:
 			triggerAction(ActionsManager::SelectAllAction);
 			triggerAction(ActionsManager::DeleteAction);
