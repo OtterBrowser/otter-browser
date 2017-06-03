@@ -161,8 +161,8 @@ void AcceptLanguageDialog::addLanguage(const QString &language)
 
 	QList<QStandardItem*> items({new QStandardItem(text), new QStandardItem((language == QLatin1String("system")) ? QLocale::system().bcp47Name() : language)});
 	items[0]->setData(language, Qt::UserRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	m_model->appendRow(items);
 }
