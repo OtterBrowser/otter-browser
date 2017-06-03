@@ -347,13 +347,13 @@ endif (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
 
-	if (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 600)
+	if (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
 		list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
-	else (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 600)
+	else (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
 		add_definitions(-DOTTER_ENABLE_QTWEBKIT_LEGACY)
 
 		list(APPEND OTTER_BACKENDS_WEB "QtWebKit (legacy)")
-	endif (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 600)
+	endif (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
 
 	set(otter_src
 		${otter_src}
