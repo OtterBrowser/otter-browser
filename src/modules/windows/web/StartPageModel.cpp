@@ -85,6 +85,7 @@ void StartPageModel::reloadModel()
 				const QUrl url(bookmark->data(BookmarksModel::UrlRole).toUrl());
 				QStandardItem *item(bookmark->clone());
 				item->setData(identifier, BookmarksModel::IdentifierRole);
+				item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 				if (type == BookmarksModel::FolderBookmark && bookmark->rowCount() == 0)
 				{
@@ -110,6 +111,7 @@ void StartPageModel::reloadModel()
 		item->setData(QLatin1String("add"), Qt::AccessibleDescriptionRole);
 		item->setDragEnabled(false);
 		item->setDropEnabled(false);
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		appendRow(item);
 	}
