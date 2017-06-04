@@ -51,6 +51,9 @@ public slots:
 	void addTile(const QUrl &url);
 	void reloadTile(const QModelIndex &index, bool needsTitleUpdate = false);
 
+protected:
+	QString getThumbnailPath(quint64 identifier) const;
+
 protected slots:
 	void dragEnded();
 	void handleOptionChanged(int identifier);

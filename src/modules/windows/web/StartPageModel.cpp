@@ -91,7 +91,7 @@ void StartPageModel::reloadModel()
 				{
 					item->setEnabled(false);
 				}
-				else if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
+				else if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(getThumbnailPath(identifier)))
 				{
 					m_reloads[url] = {identifier, false};
 
@@ -272,11 +272,9 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 
 	if (!SessionsManager::isReadOnly() && !thumbnail.isNull())
 	{
-		const QString path(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
+		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
-		QDir().mkpath(path);
-
-		thumbnail.save(path + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
+		thumbnail.save(getThumbnailPath(m_reloads[url].first), "png");
 	}
 
 	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_reloads[url].first));
@@ -322,6 +320,11 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	connect(mimeData, SIGNAL(destroyed()), this, SLOT(dragEnded()));
 
 	return mimeData;
+}
+
+QString StartPageModel::getThumbnailPath(quint64 identifier) const
+{
+	return SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png");
 }
 
 QVariant StartPageModel::data(const QModelIndex &index, int role) const
