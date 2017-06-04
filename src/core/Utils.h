@@ -88,7 +88,6 @@ QString matchUrl(const QUrl &url, const QString &prefix);
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase = true);
 QString createErrorPage(const ErrorPageInformation &information);
 QString elideText(const QString &text, QWidget *widget = nullptr, int width = -1);
-QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatElapsedTime(int value);
 QString formatDateTime(const QDateTime &dateTime, QString format = {}, bool allowFancy = true);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
