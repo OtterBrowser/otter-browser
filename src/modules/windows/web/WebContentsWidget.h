@@ -70,7 +70,7 @@ public:
 	void print(QPrinter *printer) override;
 	void setParent(Window *window) override;
 	WebContentsWidget* clone(bool cloneHistory = true) const override;
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	WebWidget* getWebWidget() const override;
 	QString parseQuery(const QString &query) const override;
 	QString getTitle() const override;
@@ -82,7 +82,7 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPixmap getThumbnail() override;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WindowHistoryInformation getHistory() const override;
 	QStringList getStyleSheets() const override;
 	QVector<WebWidget::LinkUrl> getFeeds() const override;
@@ -100,7 +100,7 @@ public:
 public slots:
 	void goToHistoryIndex(int index) override;
 	void removeHistoryIndex(int index, bool purge = false) override;
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setOption(int identifier, const QVariant &value) override;
 	void setActiveStyleSheet(const QString &styleSheet) override;
 	void setHistory(const WindowHistoryInformation &history) override;

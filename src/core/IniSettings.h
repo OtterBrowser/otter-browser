@@ -41,10 +41,10 @@ public:
 	void setComment(const QString &comment);
 	void setValue(const QString &key, const QVariant &value);
 	QString getComment() const;
-	QVariant getValue(const QString &key, const QVariant &fallback = QVariant()) const;
+	QVariant getValue(const QString &key, const QVariant &fallback = {}) const;
 	QStringList getGroups() const;
 	QStringList getKeys() const;
-	bool save(const QString &path = QString(), bool isAtomic = true);
+	bool save(const QString &path = {}, bool isAtomic = true);
 	bool hasError() const;
 
 private:

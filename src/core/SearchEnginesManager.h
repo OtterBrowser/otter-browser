@@ -77,7 +77,7 @@ public:
 	static SearchEngineDefinition loadSearchEngine(QIODevice *device, const QString &identifier, bool checkKeyword = true);
 	static SearchEnginesManager* getInstance();
 	static QStandardItemModel* getSearchEnginesModel();
-	static SearchEngineDefinition getSearchEngine(const QString &identifier = QString(), bool byKeyword = false);
+	static SearchEngineDefinition getSearchEngine(const QString &identifier = {}, bool byKeyword = false);
 	static QStringList getSearchEngines();
 	static QStringList getSearchKeywords();
 	static bool hasSearchEngine(const QUrl &url);
@@ -112,7 +112,7 @@ class SearchEngineFetchJob : public QObject
 	Q_OBJECT
 
 public:
-	explicit SearchEngineFetchJob(const QUrl &url, const QString &identifier = QString(), bool saveSearchEngine = true, QObject *parent = nullptr);
+	explicit SearchEngineFetchJob(const QUrl &url, const QString &identifier = {}, bool saveSearchEngine = true, QObject *parent = nullptr);
 	~SearchEngineFetchJob();
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;

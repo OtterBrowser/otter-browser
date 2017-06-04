@@ -37,7 +37,7 @@ public:
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QVariant data(const QModelIndex &index, int role) const override;
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
+	QModelIndex index(int row, int column, const QModelIndex &parent = {}) const override;
 	QModelIndex sibling(int row, int column, const QModelIndex &index) const override;
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
 	int columnCount(const QModelIndex &parent) const override;

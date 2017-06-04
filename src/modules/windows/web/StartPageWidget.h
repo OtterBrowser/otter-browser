@@ -67,7 +67,7 @@ public:
 	explicit StartPageWidget(Window *parent);
 	~StartPageWidget();
 
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void scrollContents(const QPoint &delta);
 	void markForDeletion();
 	QPixmap getThumbnail();
@@ -91,7 +91,7 @@ protected slots:
 	void updateTile(const QModelIndex &index);
 	void updateSize();
 	void updateTiles();
-	void showContextMenu(const QPoint &position = QPoint());
+	void showContextMenu(const QPoint &position = {});
 
 private:
 	Window *m_window;

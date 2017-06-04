@@ -204,10 +204,10 @@ public:
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	void setParent(QWidget *parent);
-	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList());
+	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {});
 	void setWindowIdentifier(quint64 identifier);
-	virtual Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
-	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) const = 0;
+	virtual Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
+	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const = 0;
 	virtual QWidget* getInspector();
 	virtual QWidget* getViewport();
 	WebBackend* getBackend() const;
@@ -216,7 +216,7 @@ public:
 	virtual QString getCharacterEncoding() const;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
-	QVariant getOption(int identifier, const QUrl &url = QUrl()) const;
+	QVariant getOption(int identifier, const QUrl &url = {}) const;
 	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
@@ -225,7 +225,7 @@ public:
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const;
-	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
+	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 	virtual LinkUrl getActiveFrame() const;
 	virtual LinkUrl getActiveImage() const;
 	virtual LinkUrl getActiveLink() const;
@@ -251,7 +251,7 @@ public:
 	virtual bool isPrivate() const = 0;
 
 public slots:
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) = 0;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) = 0;
 	virtual void clearOptions();
 	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
 	virtual void goToHistoryIndex(int index) = 0;
@@ -285,7 +285,7 @@ protected:
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
-	bool calculateCheckedState(int identifier, const QVariantMap &parameters = QVariantMap());
+	bool calculateCheckedState(int identifier, const QVariantMap &parameters = {});
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
 	virtual bool canFastForward() const;

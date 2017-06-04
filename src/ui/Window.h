@@ -63,7 +63,7 @@ public:
 	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow) const;
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	MainWindow* getMainWindow() const;
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
@@ -74,7 +74,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	QDateTime getLastActivity() const;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	WindowState getWindowState() const;
@@ -91,7 +91,7 @@ public:
 	bool isPrivate() const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void requestClose();
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive();

@@ -39,7 +39,7 @@ public:
 	static void clearUpdate();
 	static QString getScriptPath();
 	static bool installUpdate();
-	static bool isReadyToInstall(QString path = QString());
+	static bool isReadyToInstall(QString path = {});
 
 protected:
 	Transfer* downloadFile(const QUrl url, const QString path);

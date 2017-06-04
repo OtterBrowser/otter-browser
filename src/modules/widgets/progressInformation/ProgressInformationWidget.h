@@ -53,7 +53,7 @@ public:
 	QSize sizeHint() const override;
 
 protected slots:
-	void updateStatus(WebWidget::PageInformation key, const QVariant &value = QVariant());
+	void updateStatus(WebWidget::PageInformation key, const QVariant &value = {});
 	void setWindow(Window *window);
 
 private:

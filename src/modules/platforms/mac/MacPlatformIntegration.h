@@ -49,7 +49,7 @@ public:
 	explicit MacPlatformIntegration(Application *parent);
 
 	void markNotificationClicked(quint64 identifier);
-	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
+	void runApplication(const QString &command, const QUrl &url = {}) const override;
 	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;
 	Style* createStyle(const QString &name) const override;
 	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;

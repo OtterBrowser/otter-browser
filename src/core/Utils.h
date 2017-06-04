@@ -82,7 +82,7 @@ struct SaveInformation
 namespace Utils
 {
 
-void runApplication(const QString &command, const QUrl &url = QUrl());
+void runApplication(const QString &command, const QUrl &url = {});
 void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr);
 QString matchUrl(const QUrl &url, const QString &prefix);
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase = true);
@@ -90,13 +90,13 @@ QString createErrorPage(const ErrorPageInformation &information);
 QString elideText(const QString &text, QWidget *widget = nullptr, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatElapsedTime(int value);
-QString formatDateTime(const QDateTime &dateTime, QString format = QString(), bool allowFancy = true);
+QString formatDateTime(const QDateTime &dateTime, QString format = {}, bool allowFancy = true);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
-QString formatFileTypes(const QStringList &filters = QStringList());
+QString formatFileTypes(const QStringList &filters = {});
 QString normalizePath(const QString &path);
 QUrl normalizeUrl(QUrl url);
-SaveInformation getSavePath(const QString &fileName, QString path = QString(), QStringList filters = QStringList(), bool forceAsk = false);
-QStringList getOpenPaths(const QStringList &fileNames = QStringList(), QStringList filters = QStringList(), bool selectMultiple = false);
+SaveInformation getSavePath(const QString &fileName, QString path = {}, QStringList filters = {}, bool forceAsk = false);
+QStringList getOpenPaths(const QStringList &fileNames = {}, QStringList filters = {}, bool selectMultiple = false);
 QVector<QUrl> extractUrls(const QMimeData *mimeData);
 QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 bool isUrlEmpty(const QUrl &url);

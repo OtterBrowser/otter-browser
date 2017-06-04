@@ -75,24 +75,24 @@ public:
 	QStandardItemModel* getSourceModel() const;
 	QSortFilterProxyModel* getProxyModel() const;
 	QStandardItem* getItem(const QModelIndex &index) const;
-	QStandardItem* getItem(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
-	QModelIndex getCheckedIndex(const QModelIndex &parent = QModelIndex()) const;
+	QStandardItem* getItem(int row, int column = 0, const QModelIndex &parent = {}) const;
+	QModelIndex getCheckedIndex(const QModelIndex &parent = {}) const;
 	QModelIndex getCurrentIndex(int column = 0) const;
-	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
+	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = {}) const;
 	QSize sizeHint() const override;
 	ViewMode getViewMode() const;
 	Qt::SortOrder getSortOrder() const;
 	int getSortColumn() const;
 	int getCurrentRow() const;
-	int getRowCount(const QModelIndex &parent = QModelIndex()) const;
-	int getColumnCount(const QModelIndex &parent = QModelIndex()) const;
+	int getRowCount(const QModelIndex &parent = {}) const;
+	int getColumnCount(const QModelIndex &parent = {}) const;
 	bool canMoveUp() const;
 	bool canMoveDown() const;
 	bool isExclusive() const;
 	bool isModified() const;
 
 public slots:
-	void insertRow(const QList<QStandardItem*> &items = QList<QStandardItem*>());
+	void insertRow(const QList<QStandardItem*> &items = {});
 	void insertRow(QStandardItem *item);
 	void removeRow();
 	void moveUpRow();
@@ -101,7 +101,7 @@ public slots:
 	void setSort(int column, Qt::SortOrder order);
 	void setColumnVisibility(int column, bool hide);
 	void setExclusive(bool isExclusive);
-	void setFilterString(const QString filter = QString());
+	void setFilterString(const QString filter = {});
 	void setFilterRoles(const QSet<int> &roles);
 	void setModified(bool isModified);
 

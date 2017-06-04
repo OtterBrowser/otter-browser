@@ -64,7 +64,7 @@ public:
 	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) = 0;
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
-	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
+	virtual QString getUserAgent(const QString &pattern = {}) const = 0;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	AddonType getType() const override;
 	virtual BackendCapabilities getCapabilities() const;

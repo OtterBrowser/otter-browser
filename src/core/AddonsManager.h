@@ -106,7 +106,7 @@ public:
 	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
 	static void loadUserScripts();
 	static UserScript* getUserScript(const QString &name);
-	static WebBackend* getWebBackend(const QString &name = QString());
+	static WebBackend* getWebBackend(const QString &name = {});
 	static SpecialPageInformation getSpecialPage(const QString &name);
 	static QStringList getUserScripts();
 	static QStringList getWebBackends();

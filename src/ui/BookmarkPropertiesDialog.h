@@ -40,7 +40,7 @@ class BookmarkPropertiesDialog final : public Dialog
 
 public:
 	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent = nullptr);
-	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = QString(), BookmarksItem *folder = nullptr, int index = -1, bool isUrl = true, QWidget *parent = nullptr);
+	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = {}, BookmarksItem *folder = nullptr, int index = -1, bool isUrl = true, QWidget *parent = nullptr);
 	~BookmarkPropertiesDialog();
 
 protected:

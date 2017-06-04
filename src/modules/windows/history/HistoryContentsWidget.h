@@ -52,7 +52,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -66,7 +66,7 @@ protected slots:
 	void removeEntry(HistoryEntryItem *entry);
 	void removeEntry();
 	void removeDomainEntries();
-	void openEntry(const QModelIndex &index = QModelIndex());
+	void openEntry(const QModelIndex &index = {});
 	void bookmarkEntry();
 	void copyEntryLink();
 	void showContextMenu(const QPoint &position);

@@ -39,7 +39,7 @@ public:
 	static void setLastUsedFolder(BookmarksItem *folder);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = nullptr, int index = -1);
+	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QUrl &url = {}, const QString &title = {}, BookmarksItem *parent = nullptr, int index = -1);
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
 	static BookmarksItem* getLastUsedFolder();

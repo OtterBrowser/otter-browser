@@ -101,10 +101,10 @@ public:
 
     int setProxy(const QString &host, quint16 port);
     int connectToHost(const QString &host, quint16 port=21);
-    int login(const QString &user = QString(), const QString &password = QString());
+    int login(const QString &user = {}, const QString &password = {});
     int close();
     int setTransferMode(TransferMode mode);
-    int list(const QString &dir = QString());
+    int list(const QString &dir = {});
     int cd(const QString &dir);
     int get(const QString &file, QIODevice *dev=0, TransferType type = Binary);
     int put(const QByteArray &data, const QString &file, TransferType type = Binary);

@@ -52,14 +52,14 @@ class MainWindow final : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(const QVariantMap &parameters = QVariantMap(), const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = nullptr);
+	explicit MainWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = nullptr);
 	~MainWindow();
 
 	void restore(const SessionMainWindow &session);
 	void restore(int index = 0);
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
 	static MainWindow* findMainWindow(QObject *parent);
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	TabBarWidget* getTabBar() const;
 	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;
@@ -67,7 +67,7 @@ public:
 	QVariant getOption(int identifier) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 	SessionMainWindow getSession() const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
@@ -82,8 +82,8 @@ public:
 public slots:
 	void triggerAction();
 	void triggerAction(bool isChecked);
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void openUrl(const QString &text = QString(), bool isPrivate = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = {});
+	void openUrl(const QString &text = {}, bool isPrivate = false);
 	void storeWindowState();
 	void restoreWindowState();
 	void raiseWindow();
@@ -107,7 +107,7 @@ protected:
 
 protected slots:
 	void saveToolBarPositions();
-	void open(const QUrl &url = QUrl(), SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
+	void open(const QUrl &url = {}, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void open(BookmarksItem *bookmark, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);

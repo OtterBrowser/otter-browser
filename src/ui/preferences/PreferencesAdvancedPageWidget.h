@@ -63,7 +63,7 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void updateReaddKeyboardProfileMenu();
 	void updateReaddMouseProfileMenu();
-	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;
+	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = {}) const;
 	QStringList getSelectedUpdateChannels() const;
 	KeyboardProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
 	MouseProfile loadMouseProfile(const QString &identifier, bool loadGestures) const;

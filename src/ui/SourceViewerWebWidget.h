@@ -38,8 +38,8 @@ public:
 	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = nullptr);
 
 	void print(QPrinter *printer) override;
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) const override;
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QString getSelectedText() const override;
 	QUrl getUrl() const override;
@@ -55,7 +55,7 @@ public:
 	bool isPrivate() const override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void goToHistoryIndex(int index) override;
 	void removeHistoryIndex(int index, bool purge = false) override;
 	void setOption(int identifier, const QVariant &value) override;
@@ -67,7 +67,7 @@ public slots:
 
 protected:
 	void pasteText(const QString &text) override;
-	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
+	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 
 protected slots:
 	void viewSourceReplyFinished();

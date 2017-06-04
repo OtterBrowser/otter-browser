@@ -107,7 +107,7 @@ public:
 	static QObject* getTrackedObject();
 	static QString getContextName(int identifier);
 	static int getContextIdentifier(const QString &name);
-	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericContext}), const QVariantMap &parameters = QVariantMap());
+	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericContext}), const QVariantMap &parameters = {});
 	static bool continueGesture(QObject *object);
 	static bool isTracking();
 

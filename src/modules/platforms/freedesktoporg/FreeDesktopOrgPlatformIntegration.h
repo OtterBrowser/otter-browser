@@ -43,7 +43,7 @@ public:
 	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
 	~FreeDesktopOrgPlatformIntegration();
 
-	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
+	void runApplication(const QString &command, const QUrl &url = {}) const override;
 	Style* createStyle(const QString &name) const override;
 	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
 	bool canShowNotifications() const override;

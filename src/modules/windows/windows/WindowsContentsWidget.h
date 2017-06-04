@@ -48,7 +48,7 @@ public:
 	WebWidget::LoadingState getLoadingState() const override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 
 protected:
 	void changeEvent(QEvent *event) override;

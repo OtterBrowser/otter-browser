@@ -164,9 +164,9 @@ public:
 	static SessionsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	static bool restoreClosedWindow(int index = -1);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = nullptr, bool isPrivate = false);
-	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = nullptr, bool isClean = true);
+	static bool saveSession(const QString &path = {}, const QString &title = {}, MainWindow *window = nullptr, bool isClean = true);
 	static bool saveSession(const SessionInformation &session);
-	static bool deleteSession(const QString &path = QString());
+	static bool deleteSession(const QString &path = {});
 	static bool isPrivate();
 	static bool isReadOnly();
 	static bool hasUrl(const QUrl &url, bool activate = false);

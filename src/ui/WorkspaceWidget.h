@@ -80,7 +80,7 @@ public:
 	int getWindowCount(Qt::WindowState state) const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void markAsRestored();
 	void updateActions();
 

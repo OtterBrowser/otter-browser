@@ -78,7 +78,7 @@ public:
 
 public slots:
 	void markAsErrorPage();
-	void updateStyleSheets(const QUrl &url = QUrl());
+	void updateStyleSheets(const QUrl &url = {});
 
 protected:
 	QtWebKitPage();

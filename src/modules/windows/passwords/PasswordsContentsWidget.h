@@ -51,7 +51,7 @@ public:
 	~PasswordsContentsWidget();
 
 	void print(QPrinter *printer) override;
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
@@ -60,7 +60,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 
 protected:
 	void changeEvent(QEvent *event) override;

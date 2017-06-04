@@ -46,8 +46,8 @@ public slots:
 	bool localHostOrDomainIs(const QString &host, QString domain) const;
 	bool dnsDomainIs(const QString &host, const QString &domain) const;
 	bool shExpMatch(const QString &string, const QString &expression) const;
-	bool weekdayRange(QString fromDay, QString toDay = QString(), const QString &gmt = QLatin1String("gmt")) const;
-	bool dateRange(const QVariant &arg1, const QVariant &arg2 = QVariant(), const QVariant &arg3 = QVariant(), const QVariant &arg4 = QVariant(), const QVariant &arg5 = QVariant(), const QVariant &arg6 = QVariant(), const QString &gmt = QLatin1String("gmt")) const;
+	bool weekdayRange(QString fromDay, QString toDay = {}, const QString &gmt = QLatin1String("gmt")) const;
+	bool dateRange(const QVariant &arg1, const QVariant &arg2 = {}, const QVariant &arg3 = {}, const QVariant &arg4 = {}, const QVariant &arg5 = {}, const QVariant &arg6 = {}, const QString &gmt = QLatin1String("gmt")) const;
 	bool timeRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt = QLatin1String("gmt")) const;
 
 protected:

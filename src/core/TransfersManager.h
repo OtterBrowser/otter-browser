@@ -61,9 +61,9 @@ public:
 
 	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 	Transfer(const QSettings &settings, QObject *parent = nullptr);
-	Transfer(const QUrl &source, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
-	Transfer(const QNetworkRequest &request, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
-	Transfer(QNetworkReply *reply, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
+	Transfer(const QUrl &source, const QString &target = {}, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
+	Transfer(const QNetworkRequest &request, const QString &target = {}, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
+	Transfer(QNetworkReply *reply, const QString &target = {}, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 	~Transfer();
 
 	virtual void setUpdateInterval(int interval);
@@ -138,12 +138,12 @@ public:
 	static void addTransfer(Transfer *transfer);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
-	static Transfer* startTransfer(const QUrl &source, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
-	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
-	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
+	static Transfer* startTransfer(const QUrl &source, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
+	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
+	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = {}, Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static QVector<Transfer*> getTransfers();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
-	static bool isDownloading(const QString &source, const QString &target = QString());
+	static bool isDownloading(const QString &source, const QString &target = {});
 
 protected:
 	explicit TransfersManager(QObject *parent);

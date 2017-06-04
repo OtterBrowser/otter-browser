@@ -303,7 +303,7 @@ protected:
 	explicit ActionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionDefinition::ActionScope scope = ActionDefinition::OtherScope, ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag);
+	static void registerAction(int identifier, const QString &text, const QString &description = {}, const QIcon &icon = {}, ActionDefinition::ActionScope scope = ActionDefinition::OtherScope, ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag);
 
 protected slots:
 	void handleOptionChanged(int identifier);

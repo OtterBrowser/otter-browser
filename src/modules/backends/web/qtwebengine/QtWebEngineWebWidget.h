@@ -40,9 +40,9 @@ class QtWebEngineWebWidget final : public WebWidget
 public:
 	void search(const QString &query, const QString &searchEngine) override;
 	void print(QPrinter *printer) override;
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) const override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
 	QWidget* getViewport() override;
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QString getSelectedText() const override;
 	QVariant getPageInformation(PageInformation key) const override;
@@ -69,7 +69,7 @@ public slots:
 	void clearOptions() override;
 	void goToHistoryIndex(int index) override;
 	void removeHistoryIndex(int index, bool purge = false) override;
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
 	void setOption(int identifier, const QVariant &value) override;
 	void setScrollPosition(const QPoint &position) override;
@@ -88,7 +88,7 @@ protected:
 	void pasteText(const QString &text) override;
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
-	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
+	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QWebEnginePage* getPage() const;
 	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	QDateTime getLastUrlClickTime() const;

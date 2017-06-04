@@ -41,7 +41,7 @@ public:
 
 	virtual void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true) const;
-	virtual Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true);
+	virtual Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	virtual WebWidget* getWebWidget() const;
 	virtual QString parseQuery(const QString &query) const;
 	virtual QString getTitle() const = 0;
@@ -54,7 +54,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail();
-	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap()) const;
+	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<WebWidget::LinkUrl> getFeeds() const;
@@ -70,7 +70,7 @@ public:
 	bool isSidebarPanel() const;
 
 public slots:
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {});
 	virtual void print(QPrinter *printer) = 0;
 	virtual void goToHistoryIndex(int index);
 	virtual void removeHistoryIndex(int index, bool purge = false);

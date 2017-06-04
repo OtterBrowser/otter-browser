@@ -48,7 +48,7 @@ public:
 	QString getVersion() const override;
 	QString getEngineVersion() const override;
 	QString getSslVersion() const override;
-	QString getUserAgent(const QString &pattern = QString()) const override;
+	QString getUserAgent(const QString &pattern = {}) const override;
 	QUrl getHomePage() const override;
 	BackendCapabilities getCapabilities() const override;
 	static int getOptionIdentifier(OptionIdentifier identifier);

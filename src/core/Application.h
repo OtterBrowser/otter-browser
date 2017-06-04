@@ -59,14 +59,14 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
-	static void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap(), QObject *target = nullptr);
+	static void triggerAction(int identifier, const QVariantMap &parameters = {}, QObject *target = nullptr);
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser);
 	static void setHidden(bool isHidden);
 	static void setLocale(const QString &locale);
-	static Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true, QObject *target = nullptr);
-	static MainWindow* createWindow(const QVariantMap &parameters = QVariantMap(), const SessionMainWindow &windows = SessionMainWindow());
+	static Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true, QObject *target = nullptr);
+	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	static MainWindow* getWindow();
 	static MainWindow* getActiveWindow();
@@ -77,7 +77,7 @@ public:
 	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
-	static ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = QVariantMap());
+	static ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {});
 	static QVector<MainWindow*> getWindows();
 	static bool canClose();
 	static bool isAboutToQuit();

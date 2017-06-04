@@ -51,10 +51,10 @@ public:
 
 	void search(const QString &query, const QString &searchEngine) override;
 	void print(QPrinter *printer) override;
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) const override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
 	QWidget* getInspector() override;
 	QWidget* getViewport() override;
-	Action* createAction(int identifier, const QVariantMap parameters = QVariantMap(), bool followState = true) override;
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;
 	QString getSelectedText() const override;
@@ -94,7 +94,7 @@ public slots:
 	void goToHistoryIndex(int index) override;
 	void removeHistoryIndex(int index, bool purge = false) override;
 	void fillPassword(const PasswordsManager::PasswordInformation &password) override;
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setActiveStyleSheet(const QString &styleSheet) override;
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
 	void setOption(int identifier, const QVariant &value) override;
@@ -133,7 +133,7 @@ protected:
 #else
 	void setHistory(const QVariantMap &history);
 #endif
-	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
+	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QtWebKitPage* getPage() const;
 	QString getMessageToken() const;
 	QString getPluginToken() const;

@@ -71,7 +71,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 
 protected:
 	void closeEvent(QCloseEvent *event) override;

@@ -292,19 +292,19 @@ public:
 	};
 
 	static void createInstance(const QString &path);
-	static void removeOverride(const QUrl &url, const QString &key = QString());
+	static void removeOverride(const QUrl &url, const QString &key = {});
 	static void updateOptionDefinition(int identifier, const OptionDefinition &definition);
-	static void setOption(int identifier, const QVariant &value, const QUrl &url = QUrl());
+	static void setOption(int identifier, const QVariant &value, const QUrl &url = {});
 	static SettingsManager* getInstance();
 	static QString createDisplayValue(int identifier, const QVariant &value);
 	static QString createReport();
 	static QString getGlobalPath();
 	static QString getOverridePath();
 	static QString getOptionName(int identifier);
-	static QVariant getOption(int identifier, const QUrl &url = QUrl());
+	static QVariant getOption(int identifier, const QUrl &url = {});
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
-	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = QVariant(), const QStringList &choices = QStringList());
+	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {});
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, int identifier = -1);
 
@@ -312,7 +312,7 @@ protected:
 	explicit SettingsManager(QObject *parent);
 
 	static QString getHost(const QUrl &url);
-	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = QVariant(), const QStringList &choices = QStringList());
+	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {});
 
 private:
 	static SettingsManager *m_instance;

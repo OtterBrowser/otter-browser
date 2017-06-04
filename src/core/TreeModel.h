@@ -53,7 +53,7 @@ public:
 	void setExclusive(bool isExclusive);
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QVariant data(const QModelIndex &index, int role) const override;
-	QVariantList getAllData(int role, int column = -1, const QModelIndex &parent = QModelIndex()) const;
+	QVariantList getAllData(int role, int column = -1, const QModelIndex &parent = {}) const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool isExclusive() const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;

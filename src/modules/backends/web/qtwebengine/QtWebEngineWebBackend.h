@@ -45,7 +45,7 @@ public:
 	QString getVersion() const override;
 	QString getEngineVersion() const override;
 	QString getSslVersion() const override;
-	QString getUserAgent(const QString &pattern = QString()) const override;
+	QString getUserAgent(const QString &pattern = {}) const override;
 	QStringList getBlockedElements(const QString &domain) const;
 	QUrl getHomePage() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
