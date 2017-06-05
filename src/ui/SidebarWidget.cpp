@@ -105,7 +105,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 				if (m_ui->panelsButton->menu())
 				{
-					QList<QAction*> actions(m_ui->panelsButton->menu()->actions());
+					const QList<QAction*> actions(m_ui->panelsButton->menu()->actions());
 
 					for (int i = 0; i < actions.count(); ++i)
 					{
