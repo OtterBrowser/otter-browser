@@ -96,7 +96,7 @@ void StartupDialog::setSession(int index)
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
 			QStandardItem *tabItem(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
-			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
+			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
 			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
 			tabItem->setData(tr("Title: %1\nAddress: %2").arg(tabItem->text()).arg(session.windows.at(i).windows.at(j).getUrl()), Qt::ToolTipRole);
 
