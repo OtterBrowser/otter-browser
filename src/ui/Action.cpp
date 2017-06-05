@@ -26,7 +26,7 @@ namespace Otter
 {
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
-	m_flags(CanTriggerAction | FollowsActionStateFlag),
+	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
 {
 	update(true);
@@ -34,7 +34,7 @@ Action::Action(int identifier, QObject *parent) : QAction(parent),
 
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
-	m_flags(CanTriggerAction | FollowsActionStateFlag),
+	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
 {
 	update(true);

@@ -36,7 +36,7 @@ public:
 	enum ActionFlag
 	{
 		NoFlag = 0,
-		CanTriggerAction = 1,
+		CanTriggerActionFlag = 1,
 		FollowsActionStateFlag = 2,
 		FollowsActiveObjectFlag = 4,
 		IsOverridingTextFlag = 8
