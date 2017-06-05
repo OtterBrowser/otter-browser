@@ -68,9 +68,9 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 		}
 
 		QList<QStandardItem*> items({new QStandardItem(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), new QStandardItem(sorted.at(i).path), new QStandardItem(tr("%n window(s) (%1)", "", sorted.at(i).windows.count()).arg(tr("%n tab(s)", "", windows)))});
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		model->appendRow(items);
 	}
