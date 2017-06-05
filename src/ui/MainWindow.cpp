@@ -2399,6 +2399,30 @@ bool MainWindow::event(QEvent *event)
 			updateWindowTitle();
 
 			break;
+		case QEvent::Move:
+			SessionsManager::markSessionModified();
+
+			break;
+		case QEvent::Resize:
+			if (m_tabSwitcher && m_tabSwitcher->isVisible())
+			{
+				m_tabSwitcher->resize(size());
+			}
+
+			SessionsManager::markSessionModified();
+
+			break;
+		case QEvent::StatusTip:
+			{
+				QStatusTipEvent *statusTipEvent(static_cast<QStatusTipEvent*>(event));
+
+				if (statusTipEvent)
+				{
+					emit statusMessageChanged(statusTipEvent->tip());
+				}
+			}
+
+			break;
 		case QEvent::WindowStateChange:
 			{
 				QWindowStateChangeEvent *stateChangeEvent(dynamic_cast<QWindowStateChangeEvent*>(event));
@@ -2481,29 +2505,9 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::WindowActivate:
+			SessionsManager::markSessionModified();
+
 			emit activated(this);
-		case QEvent::Resize:
-			if (m_tabSwitcher && m_tabSwitcher->isVisible())
-			{
-				m_tabSwitcher->resize(size());
-			}
-
-			SessionsManager::markSessionModified();
-
-			break;
-		case QEvent::StatusTip:
-			{
-				QStatusTipEvent *statusTipEvent(static_cast<QStatusTipEvent*>(event));
-
-				if (statusTipEvent)
-				{
-					emit statusMessageChanged(statusTipEvent->tip());
-				}
-			}
-
-			break;
-		case QEvent::Move:
-			SessionsManager::markSessionModified();
 
 			break;
 		default:
