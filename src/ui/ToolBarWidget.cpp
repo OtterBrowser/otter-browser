@@ -565,36 +565,34 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 	{
 		QAction *action(actionAt(position));
 		const Qt::ToolBarArea area(getArea());
+		const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
 
 		if (!action)
 		{
-			QPoint adjustedPosition(position);
 			const QPoint center(contentsRect().center());
 			const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing) * 2);
 
-			switch (area)
+			if (isHorizontal)
 			{
-				case Qt::LeftToolBarArea:
-				case Qt::RightToolBarArea:
-					adjustedPosition = QPoint(center.x(), position.y());
-					action = (actionAt(adjustedPosition + QPoint(0, spacing)));
+				const QPoint adjustedPosition(position.x(), center.y());
 
-					if (!action)
-					{
-						action = (actionAt(adjustedPosition - QPoint(0, spacing)));
-					}
+				action = (actionAt(adjustedPosition + QPoint(spacing, 0)));
 
-					break;
-				default:
-					adjustedPosition = QPoint(position.x(), center.y());
-					action = (actionAt(adjustedPosition + QPoint(spacing, 0)));
+				if (!action)
+				{
+					action = (actionAt(adjustedPosition - QPoint(spacing, 0)));
+				}
+			}
+			else
+			{
+				const QPoint adjustedPosition(center.x(), position.y());
 
-					if (!action)
-					{
-						action = (actionAt(adjustedPosition - QPoint(spacing, 0)));
-					}
+				action = (actionAt(adjustedPosition + QPoint(0, spacing)));
 
-					break;
+				if (!action)
+				{
+					action = (actionAt(adjustedPosition - QPoint(0, spacing)));
+				}
 			}
 		}
 
@@ -612,7 +610,6 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 				if (widget)
 				{
-					const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
 					const int margin((isHorizontal ? widget->geometry().width() : widget->geometry().height()) / 3);
 
 					if (isHorizontal)
@@ -636,23 +633,13 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 		if (widget && dropIndex >= 0)
 		{
-			switch (area)
+			if (isHorizontal && position.x() >= widget->geometry().center().x())
 			{
-				case Qt::LeftToolBarArea:
-				case Qt::RightToolBarArea:
-					if (position.y() >= widget->geometry().center().y())
-					{
-						++dropIndex;
-					}
-
-					break;
-				default:
-					if (position.x() >= widget->geometry().center().x())
-					{
-						++dropIndex;
-					}
-
-					break;
+				++dropIndex;
+			}
+			else if (!isHorizontal && position.y() >= widget->geometry().center().y())
+			{
+				++dropIndex;
 			}
 		}
 
