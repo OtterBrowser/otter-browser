@@ -631,21 +631,24 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 			}
 		}
 
-		if (widget && dropIndex >= 0)
+		if (!m_dropBookmark)
 		{
-			if (isHorizontal && position.x() >= widget->geometry().center().x())
+			if (widget && dropIndex >= 0)
 			{
-				++dropIndex;
+				if (isHorizontal && position.x() >= widget->geometry().center().x())
+				{
+					++dropIndex;
+				}
+				else if (!isHorizontal && position.y() >= widget->geometry().center().y())
+				{
+					++dropIndex;
+				}
 			}
-			else if (!isHorizontal && position.y() >= widget->geometry().center().y())
-			{
-				++dropIndex;
-			}
-		}
 
-		if (dropIndex < 0)
-		{
-			dropIndex = actions().count();
+			if (dropIndex < 0)
+			{
+				dropIndex = actions().count();
+			}
 		}
 	}
 
