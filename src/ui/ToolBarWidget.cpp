@@ -651,6 +651,11 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 					break;
 			}
 		}
+
+		if (dropIndex < 0)
+		{
+			dropIndex = actions().count();
+		}
 	}
 
 	if (dropIndex != m_dropIndex)
