@@ -568,26 +568,30 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 		if (!action)
 		{
+			QPoint adjustedPosition(position);
+			const QPoint center(contentsRect().center());
 			const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing) * 2);
 
 			switch (area)
 			{
 				case Qt::LeftToolBarArea:
 				case Qt::RightToolBarArea:
-					action = (actionAt(position + QPoint(0, spacing)));
+					adjustedPosition = QPoint(center.x(), position.y());
+					action = (actionAt(adjustedPosition + QPoint(0, spacing)));
 
 					if (!action)
 					{
-						action = (actionAt(position - QPoint(0, spacing)));
+						action = (actionAt(adjustedPosition - QPoint(0, spacing)));
 					}
 
 					break;
 				default:
-					action = (actionAt(position + QPoint(spacing, 0)));
+					adjustedPosition = QPoint(position.x(), center.y());
+					action = (actionAt(adjustedPosition + QPoint(spacing, 0)));
 
 					if (!action)
 					{
-						action = (actionAt(position - QPoint(spacing, 0)));
+						action = (actionAt(adjustedPosition - QPoint(spacing, 0)));
 					}
 
 					break;
