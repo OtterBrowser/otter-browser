@@ -111,21 +111,17 @@ QVariant BookmarksItem::data(int role) const
 
 	if (role == Qt::DecorationRole)
 	{
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()));
-
-		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark)
+		switch (static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()))
 		{
-			return ThemesManager::createIcon(QLatin1String("inode-directory"));
-		}
-
-		if (type == BookmarksModel::TrashBookmark)
-		{
-			return ThemesManager::createIcon(QLatin1String("user-trash"));
-		}
-
-		if (type == BookmarksModel::UrlBookmark)
-		{
-			return HistoryManager::getIcon(data(BookmarksModel::UrlRole).toUrl());
+			case BookmarksModel::FolderBookmark:
+			case BookmarksModel::RootBookmark:
+				return ThemesManager::createIcon(QLatin1String("inode-directory"));
+			case BookmarksModel::TrashBookmark:
+				return ThemesManager::createIcon(QLatin1String("user-trash"));
+			case BookmarksModel::UrlBookmark:
+				return HistoryManager::getIcon(data(BookmarksModel::UrlRole).toUrl());
+			default:
+				break;
 		}
 
 		return QVariant();
