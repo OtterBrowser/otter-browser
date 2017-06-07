@@ -285,7 +285,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 					break;
 				default:
-					position = (childrenRect().right() + spacing);
+					position = (isLeftToRight() ? (childrenRect().right() + spacing) : (childrenRect().left() - spacing));
 
 					break;
 			}
@@ -658,7 +658,14 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 				if (isHorizontal)
 				{
-					dropIndex = ((position.x() < center.x()) ? 0 : actions().count());
+					if (isLeftToRight())
+					{
+						dropIndex = ((position.x() < center.x()) ? 0 : actions().count());
+					}
+					else
+					{
+						dropIndex = ((position.x() < center.x()) ? actions().count() : 0);
+					}
 				}
 				else
 				{
