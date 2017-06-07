@@ -270,7 +270,14 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 					break;
 				default:
-					position = (widget->geometry().left() - spacing);
+					if (isLeftToRight())
+					{
+						position = (widget->geometry().left() - spacing);
+					}
+					else
+					{
+						position = (widget->geometry().right() + spacing);
+					}
 
 					break;
 			}
