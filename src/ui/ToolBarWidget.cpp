@@ -637,7 +637,14 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 			{
 				if (isHorizontal && position.x() >= widget->geometry().center().x())
 				{
-					++dropIndex;
+					if (isLeftToRight())
+					{
+						++dropIndex;
+					}
+					else
+					{
+						--dropIndex;
+					}
 				}
 				else if (!isHorizontal && position.y() >= widget->geometry().center().y())
 				{
