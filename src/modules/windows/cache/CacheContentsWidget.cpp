@@ -246,6 +246,8 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 					domainSizeItem->setData((domainSizeItem->data(Qt::UserRole).toLongLong() - size), Qt::UserRole);
 					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(Qt::UserRole).toLongLong()));
 				}
+
+				domainItem->setText(QStringLiteral("%1 (%2)").arg(entry.host()).arg(domainItem->rowCount()));
 			}
 		}
 	}
