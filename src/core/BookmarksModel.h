@@ -37,6 +37,7 @@ public:
 	void setItemData(const QVariant &value, int role);
 	QStandardItem* clone() const override;
 	QVariant data(int role) const override;
+	QVariant rawData(int role) const;
 	QVector<QUrl> getUrls() const;
 	bool isAncestorOf(BookmarksItem *child) const;
 
@@ -121,7 +122,7 @@ public slots:
 
 protected:
 	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
-	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark) const;
+	void writeBookmark(QXmlStreamWriter *writer, BookmarksItem *bookmark) const;
 	void removeBookmarkUrl(BookmarksItem *bookmark);
 	void readdBookmarkUrl(BookmarksItem *bookmark);
 
