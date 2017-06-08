@@ -92,28 +92,33 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 
 			populateProxies(proxy.children, item, selectedProxy);
 		}
-		else if (proxies.at(i).isEmpty())
-		{
-			type = SeparatorType;
-
-			if (!m_isEditor)
-			{
-				item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
-			}
-		}
 		else
 		{
-			item->setData(proxies.at(i), IdentifierRole);
-
-			if (m_isEditor)
+			if (proxies.at(i).isEmpty())
 			{
-				item->setCheckable(true);
+				type = SeparatorType;
 
-				if (proxy.identifier == selectedProxy)
+				if (!m_isEditor)
 				{
-					item->setData(Qt::Checked, Qt::CheckStateRole);
+					item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
 				}
 			}
+			else
+			{
+				item->setData(proxies.at(i), IdentifierRole);
+
+				if (m_isEditor)
+				{
+					item->setCheckable(true);
+
+					if (proxy.identifier == selectedProxy)
+					{
+						item->setData(Qt::Checked, Qt::CheckStateRole);
+					}
+				}
+			}
+
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 		}
 
 		insertRow(item, parent, -1, type);
@@ -157,29 +162,35 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 
 			populateUserAgents(userAgent.children, items[0], selectedUserAgent);
 		}
-		else if (userAgents.at(i).isEmpty())
-		{
-			type = SeparatorType;
-
-			if (!m_isEditor)
-			{
-				items[0]->setFlags(items[0]->flags() & ~Qt::ItemIsSelectable);
-			}
-		}
 		else
 		{
-			items[0]->setData(userAgents.at(i), IdentifierRole);
-			items[0]->setData(userAgent.value, UserAgentRole);
-
-			if (m_isEditor)
+			if (userAgents.at(i).isEmpty())
 			{
-				items[0]->setCheckable(true);
+				type = SeparatorType;
 
-				if (userAgent.identifier == selectedUserAgent)
+				if (!m_isEditor)
 				{
-					items[0]->setData(Qt::Checked, Qt::CheckStateRole);
+					items[0]->setFlags(items[0]->flags() & ~Qt::ItemIsSelectable);
 				}
 			}
+			else
+			{
+				items[0]->setData(userAgents.at(i), IdentifierRole);
+				items[0]->setData(userAgent.value, UserAgentRole);
+
+				if (m_isEditor)
+				{
+					items[0]->setCheckable(true);
+
+					if (userAgent.identifier == selectedUserAgent)
+					{
+						items[0]->setData(Qt::Checked, Qt::CheckStateRole);
+					}
+				}
+			}
+
+			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 		}
 
 		insertRow(items, parent, -1, type);
