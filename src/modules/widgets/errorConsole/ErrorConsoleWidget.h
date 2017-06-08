@@ -61,7 +61,7 @@ protected:
 	Q_DECLARE_FLAGS(MessagesScopes, MessagesScope)
 
 	void showEvent(QShowEvent *event) override;
-	void applyFilters(QStandardItem *item, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow);
+	void applyFilters(const QModelIndex &index, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow);
 	QVector<Console::MessageCategory> getCategories() const;
 	quint64 getCurrentWindow();
 

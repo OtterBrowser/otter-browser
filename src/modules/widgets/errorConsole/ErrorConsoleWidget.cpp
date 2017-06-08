@@ -199,7 +199,7 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	m_model->appendRow(messageItem);
 	m_model->sort(0, Qt::DescendingOrder);
 
-	applyFilters(messageItem, m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
+	applyFilters(messageItem->index(), m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
 }
 
 void ErrorConsoleWidget::clear()
@@ -239,7 +239,7 @@ void ErrorConsoleWidget::filterCategories()
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		applyFilters(m_model->item(i, 0), m_ui->filterLineEdit->text(), categories, currentWindow);
+		applyFilters(m_model->index(i, 0), m_ui->filterLineEdit->text(), categories, currentWindow);
 	}
 }
 
@@ -252,32 +252,27 @@ void ErrorConsoleWidget::filterMessages(const QString &filter)
 
 		for (int i = 0; i < m_model->rowCount(); ++i)
 		{
-			applyFilters(m_model->item(i, 0), filter, categories, currentWindow);
+			applyFilters(m_model->index(i, 0), filter, categories, currentWindow);
 		}
 	}
 }
 
-void ErrorConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
+void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
 {
-	if (!item)
-	{
-		return;
-	}
-
 	bool matched(true);
 
-	if (!filter.isEmpty() && !(item->data(SourceRole).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))
+	if (!filter.isEmpty() && !(index.data(SourceRole).toString().contains(filter, Qt::CaseInsensitive) || index.child(0, 0).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
 	{
 		matched = false;
 	}
 	else
 	{
-		const quint64 window(item->data(WindowRole).toULongLong());
+		const quint64 window(index.data(WindowRole).toULongLong());
 
-		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(item->data(CategoryRole).toInt())));
+		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
 	}
 
-	m_ui->consoleView->setRowHidden(item->row(), m_ui->consoleView->rootIndex(), !matched);
+	m_ui->consoleView->setRowHidden(index.row(), m_ui->consoleView->rootIndex(), !matched);
 }
 
 void ErrorConsoleWidget::showContextMenu(const QPoint position)
