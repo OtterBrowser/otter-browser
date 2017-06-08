@@ -151,9 +151,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			QStandardItem *entryItem(domainItem->child(i, 0));
-
-			if (entryItem && entry == entryItem->data(Qt::UserRole).toUrl())
+			if (domainItem->index().child(i, 0).data(Qt::UserRole).toUrl() == entry)
 			{
 				return;
 			}
@@ -231,8 +229,7 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 
 		if (domainItem)
 		{
-			QStandardItem *sizeItem(domainItem->child(entryItem->row(), 2));
-			const qint64 size(sizeItem ? sizeItem->data(Qt::UserRole).toLongLong() : 0);
+			const qint64 size(domainItem->index().child(entryItem->row(), 2).data(Qt::UserRole).toLongLong());
 
 			m_model->removeRow(entryItem->row(), domainItem->index());
 
@@ -278,12 +275,7 @@ void CacheContentsWidget::removeDomainEntries()
 
 	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
 	{
-		QStandardItem *entryItem(domainItem->child(i, 0));
-
-		if (entryItem)
-		{
-			cache->remove(entryItem->data(Qt::UserRole).toUrl());
-		}
+		cache->remove(domainItem->index().child(i, 0).data(Qt::UserRole).toUrl());
 	}
 }
 
@@ -510,18 +502,15 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *domainItem(m_model->item(i, 0));
+		const QModelIndex domainIndex(m_model->index(i, 0));
 
-		if (domainItem)
+		for (int j = 0; j < m_model->rowCount(domainIndex); ++j)
 		{
-			for (int j = 0; j < domainItem->rowCount(); ++j)
-			{
-				QStandardItem *entryItem(domainItem->child(j, 0));
+			const QModelIndex index(domainIndex.child(j, 0));
 
-				if (entryItem && entry == entryItem->data(Qt::UserRole).toUrl())
-				{
-					return entryItem;
-				}
+			if (index.data(Qt::UserRole).toUrl() == entry)
+			{
+				return m_model->itemFromIndex(index);
 			}
 		}
 	}
