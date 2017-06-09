@@ -1,0 +1,248 @@
+// Title: Default
+// Description: Default configuration
+// Type: mouse-profile
+// Author: Emdek <michal@emdek.pl>, Piotr Wójcik <chocimier@tlen.pl>
+// Version: 0.9
+
+[
+	{
+		"context": "Generic",
+		"gestures": [
+			{
+				"action": "GoBack",
+				"steps": [
+					"pressBack"
+				]
+			},
+			{
+				"action": "GoForward",
+				"steps": [
+					"pressForward"
+				]
+			},
+			{
+				"action": "GoForward",
+				"steps": [
+					"pressLeft",
+					"pressRight"
+				]
+			},
+			{
+				"action": "StartMoveScroll",
+				"steps": [
+					"pressMiddle"
+				]
+			},
+			{
+				"action": "CloseTab",
+				"steps": [
+					"pressRight",
+					"moveDown",
+					"moveRight",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "NewTab",
+				"steps": [
+					"pressRight",
+					"moveDown",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "Rewind",
+				"steps": [
+					"pressRight",
+					"moveLeft",
+					"moveDown",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "GoBack",
+				"steps": [
+					"pressRight",
+					"moveLeft",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "FastForward",
+				"steps": [
+					"pressRight",
+					"moveRight",
+					"moveUp",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "GoForward",
+				"steps": [
+					"pressRight",
+					"moveRight",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "Reload",
+				"steps": [
+					"pressRight",
+					"moveUp",
+					"moveDown",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "GoToParentDirectory",
+				"steps": [
+					"pressRight",
+					"moveUp",
+					"moveLeft",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "Stop",
+				"steps": [
+					"pressRight",
+					"moveUp",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "GoBack",
+				"steps": [
+					"pressRight",
+					"pressLeft"
+				]
+			},
+			{
+				"action": "ActivateTabOnRight",
+				"steps": [
+					"pressRight",
+					"scrollDown"
+				]
+			},
+			{
+				"action": "ActivateTabOnLeft",
+				"steps": [
+					"pressRight",
+					"scrollUp"
+				]
+			},
+			{
+				"action": "ZoomOut",
+				"steps": [
+					"scrollDown+ctrl"
+				]
+			},
+			{
+				"action": "ZoomIn",
+				"steps": [
+					"scrollUp+ctrl"
+				]
+			}
+		]
+	},
+	{
+		"context": "Link",
+		"gestures": [
+			{
+				"action": "OpenLinkInNewTab",
+				"steps": [
+					"pressLeft+alt",
+					"releaseLeft+alt"
+				]
+			},
+			{
+				"action": "OpenLinkInNewTabBackground",
+				"steps": [
+					"pressLeft+ctrl",
+					"releaseLeft+ctrl"
+				]
+			},
+			{
+				"action": "OpenLinkInNewTab",
+				"steps": [
+					"pressLeft+shift",
+					"releaseLeft+shift"
+				]
+			},
+			{
+				"action": "OpenLinkInNewTabBackground",
+				"steps": [
+					"pressMiddle"
+				]
+			},
+			{
+				"action": "OpenLinkInNewTabBackground",
+				"steps": [
+					"pressRight",
+					"moveDown",
+					"moveUp",
+					"releaseRight"
+				]
+			},
+			{
+				"action": "OpenLinkInNewTab",
+				"steps": [
+					"pressRight",
+					"moveDown",
+					"releaseRight"
+				]
+			}
+		]
+	},
+	{
+		"context": "NoTabHandle",
+		"gestures": [
+			{
+				"action": "NewTab",
+				"steps": [
+					"doubleClickLeft"
+				]
+			},
+			{
+				"action": "NewTabPrivate",
+				"steps": [
+					"doubleClickLeft+shift"
+				]
+			},
+			{
+				"action": "NewTab",
+				"steps": [
+					"pressMiddle"
+				]
+			}
+		]
+	},
+	{
+		"context": "TabHandle",
+		"gestures": [
+			{
+				"action": "CloseTab",
+				"steps": [
+					"pressLeft+shift"
+				]
+			},
+			{
+				"action": "CloseTab",
+				"steps": [
+					"pressMiddle"
+				]
+			}
+		]
+	},
+	{
+		"context": "ToolBar",
+		"gestures": [
+			{
+				"action": "NoAction",
+				"steps": [
+					"pressMiddle"
+				]
+			}
+		]
+	}
+]

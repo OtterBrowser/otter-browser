@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -64,14 +65,14 @@ QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOption
 }
 
 MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QString, MouseProfile> &profiles, QWidget *parent) : Dialog(parent),
-	m_profile(profile),
+	m_profile(profiles[profile]),
 	m_ui(new Ui::MouseProfileDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->gesturesViewWidget->setItemDelegateForColumn(1, new GestureActionDelegate(this));
 
 	QStandardItemModel *gesturesModel(new QStandardItemModel(this));
-	const QVector<QPair<QString, QString> > contexts({{QLatin1String("Generic"), tr("Generic")}, {QLatin1String("Link"), tr("Link")}, {QLatin1String("ContentEditable"), tr("Editable Content")}, {QLatin1String("TabHandle"), tr("Tab Handle")}, {QLatin1String("ActiveTabHandle"), tr("Tab Handle of Active Tab")}, {QLatin1String("NoTabHandle"), tr("Empty Area of Tab Bar")}, {QLatin1String("ToolBar"), tr("Any Toolbar")}});
+	const QVector<QPair<GesturesManager::GesturesContext, QString> > contexts({{GesturesManager::GesturesContext::GenericContext, tr("Generic")}, {GesturesManager::GesturesContext::LinkContext, tr("Link")}, {GesturesManager::GesturesContext::ContentEditableContext, tr("Editable Content")}, {GesturesManager::GesturesContext::TabHandleContext, tr("Tab Handle")}, {GesturesManager::GesturesContext::ActiveTabHandleContext, tr("Tab Handle of Active Tab")}, {GesturesManager::GesturesContext::NoTabHandleContext, tr("Empty Area of Tab Bar")}, {GesturesManager::GesturesContext::ToolBarContext, tr("Any Toolbar")}});
 
 	for (int i = 0; i < contexts.count(); ++i)
 	{
@@ -79,17 +80,32 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 		item->setData(contexts.at(i).first, Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		if (profiles[profile].gestures.contains(contexts.at(i).first))
-		{
-			QHash<QString, int>::const_iterator iterator;
+		const QHash<int, QVector<MouseProfile::Gesture> > definitions(m_profile.getDefinitions());
 
-			for (iterator = profiles[profile].gestures[contexts.at(i).first].constBegin(); iterator != profiles[profile].gestures[contexts.at(i).first].constEnd(); ++iterator)
+		if (definitions.contains(contexts.at(i).first))
+		{
+			const QVector<MouseProfile::Gesture> &gestures(definitions[contexts.at(i).first]);
+
+			for (int i = 0; i < gestures.count(); ++i)
 			{
-				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(iterator.value()));
-				QList<QStandardItem*> items({new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))), new QStandardItem(action.getText(true))});
+				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures[i].action));
+				QString steps;
+
+				for (int j = 0; j < gestures[i].steps.count(); ++j)
+				{
+					if (j > 0)
+					{
+						steps += QLatin1String(", ");
+					}
+
+					steps += gestures[i].steps.at(j).toString();
+				}
+
+				QList<QStandardItem*> items({new QStandardItem(steps), new QStandardItem(action.getText(true))});
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-				items[1]->setData(action.identifier, Qt::UserRole);
+				items[1]->setData(action.identifier, IdentifierRole);
+				items[1]->setData(gestures[i].parameters, ParametersRole);
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 
 				if (!action.defaultState.icon.isNull())
@@ -115,12 +131,12 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 
 	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->gesturesViewWidget->setModel(gesturesModel);
-	m_ui->gesturesViewWidget->setModified(profiles[profile].isModified);
+	m_ui->gesturesViewWidget->setModified(m_profile.isModified());
 	m_ui->stepsViewWidget->setModel(stepsModel);
-	m_ui->titleLineEdit->setText(profiles[profile].title);
-	m_ui->descriptionLineEdit->setText(profiles[profile].description);
-	m_ui->versionLineEdit->setText(profiles[profile].version);
-	m_ui->authorLineEdit->setText(profiles[profile].author);
+	m_ui->titleLineEdit->setText(m_profile.getTitle());
+	m_ui->descriptionLineEdit->setText(m_profile.getDescription());
+	m_ui->versionLineEdit->setText(m_profile.getVersion());
+	m_ui->authorLineEdit->setText(m_profile.getAuthor());
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->gesturesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->gesturesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateGesturesActions()));
@@ -253,12 +269,13 @@ void MouseProfileDialog::updateStepsActions()
 
 MouseProfile MouseProfileDialog::getProfile() const
 {
-	MouseProfile profile;
-	profile.title = m_ui->titleLineEdit->text();
-	profile.description = m_ui->descriptionLineEdit->text();
-	profile.version = m_ui->versionLineEdit->text();
-	profile.author = m_ui->authorLineEdit->text();
-	profile.isModified = m_ui->gesturesViewWidget->isModified();
+	MouseProfile profile(m_profile);
+	profile.setTitle(m_ui->titleLineEdit->text());
+	profile.setDescription(m_ui->descriptionLineEdit->text());
+	profile.setVersion(m_ui->versionLineEdit->text());
+	profile.setAuthor(m_ui->authorLineEdit->text());
+
+	QHash<int, QVector<MouseProfile::Gesture> > definitions;
 
 	for (int i = 0; i < m_ui->gesturesViewWidget->getSourceModel()->rowCount(); ++i)
 	{
@@ -266,7 +283,7 @@ MouseProfile MouseProfileDialog::getProfile() const
 
 		if (contextItem && contextItem->rowCount() > 0)
 		{
-			QHash<QString, int> gestures;
+			QVector<MouseProfile::Gesture> gestures;
 
 			for (int j = 0; j < contextItem->rowCount(); ++j)
 			{
@@ -276,20 +293,31 @@ MouseProfile MouseProfileDialog::getProfile() const
 				}
 
 				const QStringList steps(contextItem->child(j, 0)->data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts));
-				const int action(contextItem->child(j, 1)->data(Qt::UserRole).toInt());
+				const int action(contextItem->child(j, 1)->data(IdentifierRole).toInt());
 
 				if (!steps.isEmpty() && action >= 0)
 				{
-					gestures[steps.join(QLatin1Char(','))] = action;
+					MouseProfile::Gesture gesture;
+					gesture.action = action;
+					gesture.parameters = contextItem->child(j, 1)->data(ParametersRole).toMap();
+
+					for (int k = 0; k < steps.count(); ++k)
+					{
+						gesture.steps.append(MouseProfile::Gesture::Step::fromString(steps.at(k)));
+					}
+
+					gestures.append(gesture);
 				}
 			}
 
 			if (gestures.count() > 0)
 			{
-				profile.gestures[contextItem->data(Qt::UserRole).toString()] = gestures;
+				definitions[static_cast<GesturesManager::GesturesContext>(contextItem->data(Qt::UserRole).toInt())] = gestures;
 			}
 		}
 	}
+
+	profile.setDefinitions(definitions);
 
 	return profile;
 }

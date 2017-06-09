@@ -134,7 +134,7 @@
         <file>menu/menuButton.json</file>
         <file>menu/quickPreferences.json</file>
         <file>menu/webWidget.json</file>
-        <file>mouse/default.ini</file>
+        <file>mouse/default.json</file>
         <file>other/contentBlocking.json</file>
         <file>other/fastforward.ini</file>
         <file>other/fastforward.js</file>

@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-class GesturesProfile final : public Addon
+class MouseProfile final : public Addon
 {
 public:
 	struct Gesture
@@ -56,21 +56,27 @@ public:
 		QVector<Step> steps;
 		QVariantMap parameters;
 		int action = 0;
+
+		bool operator ==(const Gesture &other) const;
 	};
 
-	explicit GesturesProfile(const QString &identifier, bool onlyMetaData = false);
+	explicit MouseProfile(const QString &identifier = QString(), bool onlyMetaData = false);
 
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);
+	void setAuthor(const QString &author);
 	void setVersion(const QString &version);
 	void setDefinitions(const QHash<int, QVector<Gesture> > &definitions);
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
+	QString getAuthor() const;
 	QString getVersion() const override;
 	QHash<int, QVector<Gesture> > getDefinitions() const;
 	AddonType getType() const override;
-	bool save() const;
+	bool isModified() const;
+	bool save();
+	bool operator ==(const MouseProfile &other) const;
 
 private:
 	QString m_identifier;
@@ -79,6 +85,7 @@ private:
 	QString m_author;
 	QString m_version;
 	QHash<int, QVector<Gesture> > m_definitions;
+	bool m_isModified;
 };
 
 class GesturesManager final : public QObject
@@ -117,10 +124,10 @@ protected:
 	void timerEvent(QTimerEvent *event) override;
 	static void recognizeMoveStep(QInputEvent *event);
 	static void releaseObject();
-	static int matchGesture();
+	static MouseProfile::Gesture matchGesture();
 	static int calculateLastMoveDistance(bool measureFinished = false);
-	static int calculateGesturesDifference(const QVector<GesturesProfile::Gesture::Step> &steps);
-	static bool triggerAction(int gestureIdentifier);
+	static int calculateGesturesDifference(const QVector<MouseProfile::Gesture::Step> &steps);
+	static bool triggerAction(const MouseProfile::Gesture &gesture);
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected slots:
@@ -136,9 +143,9 @@ private:
 	static QPoint m_lastClick;
 	static QPoint m_lastPosition;
 	static QVariantMap m_paramaters;
-	static QHash<GesturesContext, QVector<GesturesProfile::Gesture> > m_gestures;
-	static QHash<GesturesContext, QVector<QVector<GesturesProfile::Gesture::Step> > > m_nativeGestures;
-	static QVector<GesturesProfile::Gesture::Step> m_steps;
+	static QHash<GesturesContext, QVector<MouseProfile::Gesture> > m_gestures;
+	static QHash<GesturesContext, QVector<QVector<MouseProfile::Gesture::Step> > > m_nativeGestures;
+	static QVector<MouseProfile::Gesture::Step> m_steps;
 	static QVector<QInputEvent*> m_events;
 	static QVector<GesturesContext> m_contexts;
 	static int m_gesturesContextEnumerator;

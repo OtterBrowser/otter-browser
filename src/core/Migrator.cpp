@@ -20,6 +20,7 @@
 
 #include "Migrator.h"
 #include "IniSettings.h"
+#include "JsonSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ToolBarsManager.h"
@@ -27,6 +28,8 @@
 
 #include <QtCore/QDate>
 #include <QtCore/QDir>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
 #include <QtCore/QSettings>
 #include <QtCore/QTextStream>
 #include <QtWidgets/QCheckBox>
@@ -37,6 +40,81 @@
 
 namespace Otter
 {
+
+class MouseProfilesIniToJsonMigration : public Migration
+{
+public:
+	MouseProfilesIniToJsonMigration() : Migration()
+	{
+	}
+
+	void createBackup() const override
+	{
+		const QString backupPath(createBackupPath(QLatin1String("mouse")));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QString("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			QFile::copy(entries.at(i).absoluteFilePath(), backupPath + entries.at(i).fileName());
+		}
+	}
+
+	void migrate() const override
+	{
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			IniSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + entries.at(i).completeBaseName() + QLatin1String(".ini")));
+			JsonSettings jsonSettings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + entries.at(i).completeBaseName() + QLatin1String(".json")));
+			jsonSettings.setComment(settings.getComment());
+
+			const QStringList contexts(settings.getGroups());
+			QJsonArray contextsArray;
+
+			for (int i = 0; i < contexts.count(); ++i)
+			{
+				QJsonObject contextObject{{QLatin1String("context"), contexts.at(i)}};
+				QJsonArray gesturesArray;
+
+				settings.beginGroup(contexts.at(i));
+
+				const QStringList gestures(settings.getKeys());
+
+				for (int j = 0; j < gestures.count(); ++j)
+				{
+					gesturesArray.append(QJsonObject{{QLatin1String("action"), settings.getValue(gestures.at(j)).toString()},{QLatin1String("steps"), QJsonArray::fromStringList(gestures.at(j).split(','))}});
+				}
+
+				contextObject.insert(QLatin1String("gestures"), gesturesArray);
+
+				contextsArray.append(contextObject);
+
+				settings.endGroup();
+			}
+
+			jsonSettings.setArray(contextsArray);
+			jsonSettings.save();
+
+			QFile::remove(entries.at(i).absoluteFilePath());
+		}
+	}
+
+	QString getName() const override
+	{
+		return QLatin1String("mouseProfilesIniToJson");
+	}
+
+	QString getTitle() const override
+	{
+		return QT_TRANSLATE_NOOP("migrations", "Mouse Configuration Profiles");
+	}
+
+	bool needsMigration() const override
+	{
+		return !QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty();
+	}
+};
 
 class OptionsRenameMigration final : public Migration
 {

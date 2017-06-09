@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,7 @@
 
 #include "../Dialog.h"
 #include "../ItemDelegate.h"
+#include "../../core/GesturesManager.h"
 
 namespace Otter
 {
@@ -30,17 +32,6 @@ namespace Ui
 {
 	class MouseProfileDialog;
 }
-
-struct MouseProfile
-{
-	QString identifier;
-	QString title;
-	QString description;
-	QString author;
-	QString version;
-	QHash<QString, QHash<QString, int> > gestures;
-	bool isModified = false;
-};
 
 class GestureActionDelegate final : public ItemDelegate
 {
@@ -56,6 +47,12 @@ class MouseProfileDialog final : public Dialog
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		ParametersRole
+	};
+
 	explicit MouseProfileDialog(const QString &profile, const QHash<QString, MouseProfile> &profiles, QWidget *parent = nullptr);
 	~MouseProfileDialog();
 
@@ -74,7 +71,7 @@ protected slots:
 	void updateStepsActions();
 
 private:
-	QString m_profile;
+	MouseProfile m_profile;
 	Ui::MouseProfileDialog *m_ui;
 };
 
