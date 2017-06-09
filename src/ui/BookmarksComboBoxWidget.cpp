@@ -81,7 +81,10 @@ void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
 		}
 	}
 
-	getView()->expandAll();
+	if (!parent.isValid())
+	{
+		getView()->expandAll();
+	}
 }
 
 void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
