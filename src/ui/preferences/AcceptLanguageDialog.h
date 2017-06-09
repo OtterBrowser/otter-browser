@@ -57,6 +57,5 @@ private:
 	Ui::AcceptLanguageDialog *m_ui;
 };
 
-
 }
 #endif
