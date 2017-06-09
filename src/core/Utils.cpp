@@ -410,7 +410,7 @@ QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
 {
 	if (value < 0)
 	{
-		return QString('?');
+		return QString(QLatin1Char('?'));
 	}
 
 	if (value > 1024)
