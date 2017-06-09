@@ -42,7 +42,7 @@ public:
 
 protected slots:
 	void createFolder();
-	void updateBranch(QStandardItem *branch = nullptr);
+	void updateBranch(const QModelIndex &parent = QModelIndex());
 
 private:
 	BookmarksModel *m_model;

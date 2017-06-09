@@ -60,28 +60,23 @@ void BookmarksComboBoxWidget::createFolder()
 	}
 }
 
-void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
+void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
 {
-	if (!branch)
+	for (int i = 0; i < m_model->rowCount(parent); ++i)
 	{
-		branch = m_model->invisibleRootItem();
-	}
+		const QModelIndex index(m_model->index(i, 0, parent));
 
-	for (int i = 0; i < branch->rowCount(); ++i)
-	{
-		QStandardItem *item(branch->child(i, 0));
-
-		if (item)
+		if (index.isValid())
 		{
-			const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
+			const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 			if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark)
 			{
-				updateBranch(item);
+				updateBranch(index);
 			}
 			else
 			{
-				getView()->setRowHidden(i, branch->index(), true);
+				getView()->setRowHidden(i, parent, true);
 			}
 		}
 	}
