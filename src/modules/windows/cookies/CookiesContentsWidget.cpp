@@ -164,9 +164,9 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 		for (int j = 0; j < domainItem->rowCount(); ++j)
 		{
-			if (cookie.hasSameIdentifier(getCookie(domainItem->child(j, 0)->index())))
+			if (cookie.hasSameIdentifier(getCookie(domainItem->index().child(j, 0))))
 			{
-				point = m_ui->cookiesViewWidget->visualRect(domainItem->child(j, 0)->index()).center();
+				point = m_ui->cookiesViewWidget->visualRect(domainItem->index().child(j, 0)).center();
 
 				domainItem->removeRow(j);
 
@@ -224,12 +224,7 @@ void CookiesContentsWidget::removeCookies()
 
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				QStandardItem *cookieItem(domainItem->child(j, 0));
-
-				if (cookieItem)
-				{
-					cookies.append(getCookie(cookieItem->index()));
-				}
+				cookies.append(getCookie(domainItem->index().child(j, 0)));
 			}
 		}
 		else
@@ -269,16 +264,11 @@ void CookiesContentsWidget::removeDomainCookies()
 		{
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				QStandardItem *cookieItem(domainItem->child(j, 0));
+				const QNetworkCookie cookie(getCookie(domainItem->index().child(j, 0)));
 
-				if (cookieItem)
+				if (!cookies.contains(cookie))
 				{
-					const QNetworkCookie cookie(getCookie(cookieItem->index()));
-
-					if (!cookies.contains(cookie))
-					{
-						cookies.append(cookie);
-					}
+					cookies.append(cookie);
 				}
 			}
 		}
