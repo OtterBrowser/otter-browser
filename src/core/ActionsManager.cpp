@@ -249,6 +249,7 @@ void ActionsManager::loadProfiles()
 	const QStringList shortcutProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
 	const bool enableSingleKeyShortcuts(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
+	functionKeyExpression.optimize();
 
 	for (int i = 0; i < shortcutProfiles.count(); ++i)
 	{
