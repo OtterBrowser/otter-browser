@@ -325,7 +325,7 @@ QString createErrorPage(const ErrorPageInformation &information)
 	}
 	else
 	{
-		QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+		const QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 		const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
 		QString hintsHtml;
 
