@@ -27,7 +27,6 @@
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
-#include <QtCore/QRegularExpression>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
 #include <QtNetwork/QNetworkRequest>
