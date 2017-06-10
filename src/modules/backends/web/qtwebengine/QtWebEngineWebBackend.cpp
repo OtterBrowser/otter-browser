@@ -47,8 +47,8 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	m_isInitialized(false)
 {
 	const QString userAgent(QWebEngineProfile::defaultProfile()->httpUserAgent());
-	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
-	QRegularExpression engineExpression(QLatin1String("Chrome/([\\d\\.]+)"));
+	const QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
+	const QRegularExpression engineExpression(QLatin1String("Chrome/([\\d\\.]+)"));
 
 	m_userAgentComponents[QLatin1String("platform")] = platformExpression.match(userAgent).captured(1);
 	m_userAgentComponents[QLatin1String("engineVersion")] = QLatin1String("AppleWebKit/537.36 (KHTML, like Gecko) Chrome/") + engineExpression.match(userAgent).captured(1);

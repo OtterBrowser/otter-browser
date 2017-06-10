@@ -119,7 +119,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				QString entriesHtml;
 				const QMimeDatabase database;
-				QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+				const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 				QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
 				file.open(QIODevice::ReadOnly | QIODevice::Text);
 

@@ -243,10 +243,10 @@ QString createErrorPage(const ErrorPageInformation &information)
 	variables[QLatin1String("introduction")] = introduction;
 
 	QString mainTemplate(stream.readAll());
-	QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	QRegularExpression basicActionsExpression(QLatin1String("<!--basicActions:begin-->(.*)<!--basicActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	QRegularExpression descriptionExpression(QLatin1String("<!--description:begin-->(.*)<!--description:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	QRegularExpression hintsExpression(QLatin1String("<!--hints:begin-->(.*)<!--hints:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	const QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	const QRegularExpression basicActionsExpression(QLatin1String("<!--basicActions:begin-->(.*)<!--basicActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	const QRegularExpression descriptionExpression(QLatin1String("<!--description:begin-->(.*)<!--description:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	const QRegularExpression hintsExpression(QLatin1String("<!--hints:begin-->(.*)<!--hints:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 
 	if (information.actions.isEmpty() && information.description.isEmpty())
 	{
@@ -255,7 +255,7 @@ QString createErrorPage(const ErrorPageInformation &information)
 	}
 	else
 	{
-		QRegularExpression actionExpression(QLatin1String("<!--action:begin-->(.*)<!--action:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+		const QRegularExpression actionExpression(QLatin1String("<!--action:begin-->(.*)<!--action:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 		const QString actionTemplate(actionExpression.match(mainTemplate).captured(1));
 		QString basicActionsHtml;
 		QString advancedActionsHtml;
