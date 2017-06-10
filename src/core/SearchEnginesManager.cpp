@@ -521,7 +521,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searches/") + searchEngine.identifier + QLatin1String(".xml")));
 
-	if (!file.open(QFile::WriteOnly))
+	if (!file.open(QIODevice::WriteOnly))
 	{
 		return false;
 	}
