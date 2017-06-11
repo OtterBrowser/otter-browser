@@ -64,7 +64,7 @@ protected:
 
 	void changeEvent(QEvent *event) override;
 	void addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent = nullptr);
-	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = {}, const QVariantMap &parameters = {});
+	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = {}, const QVariantMap &parameters = {}) const;
 	ActionsManager::ActionEntryDefinition getEntry(QStandardItem *item) const;
 
 protected slots:

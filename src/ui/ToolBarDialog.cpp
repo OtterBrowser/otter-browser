@@ -494,7 +494,7 @@ void ToolBarDialog::updateActions()
 	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("ConfigurationOptionWidget") || targetIdentifier == QLatin1String("ContentBlockingInformationWidget") || targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
 }
 
-QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options, const QVariantMap &parameters)
+QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options, const QVariantMap &parameters) const
 {
 	QStandardItem *item(new QStandardItem());
 	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
