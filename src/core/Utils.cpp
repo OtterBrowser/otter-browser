@@ -487,6 +487,11 @@ QUrl normalizeUrl(QUrl url)
 	return url;
 }
 
+QPixmap loadPixmapFromDataUri(const QString &data)
+{
+	return QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())));
+}
+
 QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool selectMultiple)
 {
 	Q_UNUSED(fileNames)

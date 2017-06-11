@@ -29,6 +29,7 @@
 #include "../core/SearchEnginesManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/TreeModel.h"
+#include "../core/Utils.h"
 
 #include "ui_ToolBarDialog.h"
 
@@ -662,7 +663,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 
 			if (data.startsWith(QLatin1String("data:image/")))
 			{
-				icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
+				icon = QIcon(Utils::loadPixmapFromDataUri(data));
 			}
 			else
 			{

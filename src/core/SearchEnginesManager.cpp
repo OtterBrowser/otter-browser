@@ -385,7 +385,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 
 					if (data.startsWith(QLatin1String("data:image/")))
 					{
-						searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
+						searchEngine.icon = QIcon(Utils::loadPixmapFromDataUri(data));
 					}
 					else
 					{

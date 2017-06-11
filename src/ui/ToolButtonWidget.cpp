@@ -22,6 +22,7 @@
 #include "Menu.h"
 #include "ToolBarWidget.h"
 #include "../core/ThemesManager.h"
+#include "../core/Utils.h"
 
 #include <QtCore/QEvent>
 #include <QtGui/QActionEvent>
@@ -227,7 +228,7 @@ QIcon ToolButtonWidget::getIcon() const
 
 		if (data.startsWith(QLatin1String("data:image/")))
 		{
-			return QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
+			return QIcon(Utils::loadPixmapFromDataUri(data));
 		}
 
 		return ThemesManager::createIcon(data);

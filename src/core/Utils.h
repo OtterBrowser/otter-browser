@@ -95,6 +95,7 @@ QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool a
 QString formatFileTypes(const QStringList &filters = {});
 QString normalizePath(const QString &path);
 QUrl normalizeUrl(QUrl url);
+QPixmap loadPixmapFromDataUri(const QString &data);
 SaveInformation getSavePath(const QString &fileName, QString path = {}, QStringList filters = {}, bool forceAsk = false);
 QStringList getOpenPaths(const QStringList &fileNames = {}, QStringList filters = {}, bool selectMultiple = false);
 QVector<QUrl> extractUrls(const QMimeData *mimeData);

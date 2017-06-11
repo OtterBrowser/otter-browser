@@ -336,7 +336,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 						if (data.startsWith(QLatin1String("data:image/")))
 						{
-							action->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())))));
+							action->setIcon(QIcon(Utils::loadPixmapFromDataUri(data)));
 						}
 						else
 						{
