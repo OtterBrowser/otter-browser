@@ -115,6 +115,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 					item->setCheckable(true);
 					item->setCheckState(Qt::Checked);
 					item->setData(definition.panels.at(i), TreeModel::UserRole);
+					item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 					panelsModel->insertRow(item);
 				}
@@ -126,6 +127,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
 						item->setCheckable(true);
 						item->setData(specialPages.at(i), TreeModel::UserRole);
+						item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 						panelsModel->insertRow(item);
 					}
