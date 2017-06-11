@@ -24,6 +24,7 @@
 #include "TransfersManager.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QBuffer>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -356,6 +357,17 @@ QString elideText(const QString &text, QWidget *widget, int width)
 	}
 
 	return (widget ? widget->fontMetrics() : QApplication::fontMetrics()).elidedText(text, Qt::ElideRight, qMax(100, width));
+}
+
+QString savePixmapAsDataUri(const QPixmap &pixmap)
+{
+	QByteArray data;
+	QBuffer buffer(&data);
+	buffer.open(QIODevice::WriteOnly);
+
+	pixmap.save(&buffer, "PNG");
+
+	return QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
 }
 
 QString formatElapsedTime(int value)

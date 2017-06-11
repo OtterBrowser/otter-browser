@@ -50,17 +50,6 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 	setIconSize(QSize(iconSize, iconSize));
 }
 
-QString IconWidget::createData(const QIcon &icon) const
-{
-	QByteArray data;
-	QBuffer buffer(&data);
-	buffer.open(QIODevice::WriteOnly);
-
-	icon.pixmap(16, 16).save(&buffer, "PNG");
-
-	return QLatin1String("data:image/png;base64,") + data.toBase64();
-}
-
 QIcon IconWidget::createIcon(const QString &data) const
 {
 	if (data.startsWith(QLatin1String("data:image/")))
@@ -163,7 +152,7 @@ void IconWidget::setIcon(const QIcon &icon)
 		return;
 	}
 
-	m_icon = createData(icon);
+	m_icon = Utils::savePixmapAsDataUri(icon.pixmap(16, 16));
 
 	QToolButton::setIcon(icon);
 
@@ -182,7 +171,7 @@ void IconWidget::setDefaultIcon(const QString &data)
 
 void IconWidget::setDefaultIcon(const QIcon &icon)
 {
-	setDefaultIcon(createData(icon));
+	setDefaultIcon(Utils::savePixmapAsDataUri(icon.pixmap(16, 16)));
 }
 
 QString IconWidget::getIcon() const

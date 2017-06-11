@@ -25,7 +25,6 @@
 #include "ThemesManager.h"
 #include "Utils.h"
 
-#include <QtCore/QBuffer>
 #include <QtCore/QDir>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
@@ -546,17 +545,12 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 	if (!searchEngine.icon.isNull())
 	{
 		const QSize size(searchEngine.icon.availableSizes().value(0, QSize(16, 16)));
-		QByteArray data;
-		QBuffer buffer(&data);
-		buffer.open(QIODevice::WriteOnly);
-
-		searchEngine.icon.pixmap(size).save(&buffer, "PNG");
 
 		writer.writeStartElement(QLatin1String("Image"));
 		writer.writeAttribute(QLatin1String("width"), QString::number(size.width()));
 		writer.writeAttribute(QLatin1String("height"), QString::number(size.height()));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("image/png"));
-		writer.writeCharacters(QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64())));
+		writer.writeCharacters(Utils::savePixmapAsDataUri(searchEngine.icon.pixmap(size)));
 		writer.writeEndElement();
 	}
 

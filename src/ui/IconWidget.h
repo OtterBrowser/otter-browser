@@ -43,7 +43,6 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event) override;
-	QString createData(const QIcon &icon) const;
 	QIcon createIcon(const QString &data) const;
 
 protected slots:
