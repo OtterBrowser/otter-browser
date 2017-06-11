@@ -22,7 +22,6 @@
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
-#include <QtCore/QBuffer>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
@@ -83,16 +82,10 @@ void IconWidget::selectFromFile()
 		return;
 	}
 
-	QByteArray data;
-	QBuffer buffer(&data);
-	buffer.open(QIODevice::WriteOnly);
-
 	QPixmap pixmap(path);
-	pixmap.save(&buffer, "PNG");
-
-	m_icon = QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
-
 	QIcon icon(pixmap);
+
+	m_icon = Utils::savePixmapAsDataUri(pixmap);
 
 	QToolButton::setIcon(icon);
 
