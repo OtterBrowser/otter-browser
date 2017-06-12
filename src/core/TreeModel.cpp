@@ -37,7 +37,7 @@ void TreeModel::setupItem(QStandardItem *item, TreeModel::ItemType type)
 
 	if (type != FolderType)
 	{
-		item->setFlags(item->flags() & ~Qt::ItemIsDropEnabled);
+		item->setFlags((item->flags() & ~Qt::ItemIsDropEnabled) | Qt::ItemNeverHasChildren);
 	}
 }
 
