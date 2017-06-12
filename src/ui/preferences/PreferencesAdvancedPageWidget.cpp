@@ -293,13 +293,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	for (iterator = defaultChannels.begin(); iterator != defaultChannels.end(); ++iterator)
 	{
 		QStandardItem *item(new QStandardItem(iterator.value()));
-		item->setData(iterator.key(), Qt::UserRole);
 		item->setCheckable(true);
-
-		if (availableUpdateChannels.contains(iterator.key()))
-		{
-			item->setCheckState(Qt::Checked);
-		}
+		item->setCheckState(availableUpdateChannels.contains(iterator.key()) ? Qt::Checked : Qt::Unchecked);
+		item->setData(iterator.key(), Qt::UserRole);
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		updateChannelsModel->appendRow(item);
 	}
