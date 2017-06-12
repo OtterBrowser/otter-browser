@@ -281,20 +281,15 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *updateChannelsModel(new QStandardItemModel(this));
-	const QStringList availableUpdateChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
+	const QStringList activeUpdateChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
+	const QMap<QString, QString> updateChannels({{QLatin1String("release"), tr("Stable version")}, {QLatin1String("beta"), tr("Beta version")}, {QLatin1String("weekly"), tr("Weekly development version")}});
+	QMap<QString, QString>::const_iterator iterator;
 
-	QMap<QString, QString> defaultChannels;
-	defaultChannels[QLatin1String("release")] = tr("Stable version");
-	defaultChannels[QLatin1String("beta")] = tr("Beta version");
-	defaultChannels[QLatin1String("weekly")] = tr("Weekly development version");
-
-	QMap<QString, QString>::iterator iterator;
-
-	for (iterator = defaultChannels.begin(); iterator != defaultChannels.end(); ++iterator)
+	for (iterator = updateChannels.constBegin(); iterator != updateChannels.constEnd(); ++iterator)
 	{
 		QStandardItem *item(new QStandardItem(iterator.value()));
 		item->setCheckable(true);
-		item->setCheckState(availableUpdateChannels.contains(iterator.key()) ? Qt::Checked : Qt::Unchecked);
+		item->setCheckState(activeUpdateChannels.contains(iterator.key()) ? Qt::Checked : Qt::Unchecked);
 		item->setData(iterator.key(), Qt::UserRole);
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
