@@ -135,7 +135,7 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 	std::vector<std::string> fileNames;
 	fileNames.push_back((url.isLocalFile() ? QDir::toNativeSeparators(url.toLocalFile()) : url.url()).toStdString());
 
-	std::vector<std::string> parsed(LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames));
+	std::vector<std::string> parsed(LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames, LibMimeApps::DesktopEntry::ParseOptions::NecessarilyUseUrl));
 
 	if (parsed.size() < 1)
 	{
