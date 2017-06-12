@@ -67,6 +67,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	for (int i = 0; i < navigationTitles.count(); ++i)
 	{
 		QStandardItem *item(new QStandardItem(navigationTitles.at(i)));
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		if (navigationTitles.at(i).isEmpty())
 		{
