@@ -41,12 +41,18 @@ namespace LibMimeApps
 class DesktopEntry
 {
 public:
+	enum class ParseOptions : unsigned int
+	{
+		Default = 0,
+		NecessarilyUseUrl = (1 << 0)
+	};
+
 	DesktopEntry();
 	explicit DesktopEntry(const std::string &baseDirectory, const std::string &relative, const std::string &language=std::string());
 	bool execAllowMultipleUrl();
 	bool execAllowRemoteUrl();
-	static std::vector<std::string> parseExec(const std::string &executable, const std::vector<std::string> &urls=std::vector<std::string>());
-	std::vector<std::string> parseExec(const std::vector<std::string> &urls=std::vector<std::string>());
+	static std::vector<std::string> parseExec(const std::string &executable, const std::vector<std::string> &urls=std::vector<std::string>(), ParseOptions options=ParseOptions::Default);
+	std::vector<std::string> parseExec(const std::vector<std::string> &urls=std::vector<std::string>(), ParseOptions options=ParseOptions::Default);
 	std::string name() const;
 	std::string icon() const;
 	std::string executable() const;
@@ -70,6 +76,8 @@ private:
 
 	friend class Index;
 };
+
+bool isSet(const DesktopEntry::ParseOptions options, const DesktopEntry::ParseOptions searchedFlag);
 
 }
 #endif

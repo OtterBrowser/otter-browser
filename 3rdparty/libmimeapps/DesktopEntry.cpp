@@ -82,18 +82,19 @@ bool DesktopEntry::execAllowRemoteUrl()
 	return allowRemote_;
 }
 
-std::vector<std::string> DesktopEntry::parseExec(const std::string &executable, const std::vector<std::string> &urls)
+std::vector<std::string> DesktopEntry::parseExec(const std::string &executable, const std::vector<std::string> &urls, ParseOptions options)
 {
 	DesktopEntry entry;
 	entry.executable_ = executable;
 
-	return entry.parseExec(urls);
+	return entry.parseExec(urls, options);
 }
 
-std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> &urls)
+std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> &urls, ParseOptions options)
 {
 	std::vector<std::string> result;
 	bool quoted = false;
+	bool urlUsed = false;
 
 	result.push_back(std::string());
 
@@ -127,6 +128,7 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 				{
 					result.back() += urls.front();
 				}
+				urlUsed = true;
 				break;
 
 			case 'U':
@@ -143,7 +145,7 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 				{
 					result.push_back(urls.at(i));
 				}
-
+				urlUsed = true;
 				break;
 
 			case 'i':
@@ -175,6 +177,11 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 		{
 			result.back().push_back(executable_.at(i));
 		}
+	}
+
+	if (!urlUsed && isSet(options, ParseOptions::NecessarilyUseUrl))
+	{
+		result.insert(result.end(), urls.begin(), urls.end());
 	}
 
 	return result;
@@ -218,6 +225,14 @@ bool DesktopEntry::noDisplay() const
 bool DesktopEntry::hidden() const
 {
 	return hidden_;
+}
+
+bool isSet(const DesktopEntry::ParseOptions options, const DesktopEntry::ParseOptions searchedFlag)
+{
+	const unsigned int intOptions = static_cast<unsigned int>(options);
+	const unsigned int intSearchedFlag = static_cast<unsigned int>(searchedFlag);
+
+	return ((intOptions & intSearchedFlag) == intSearchedFlag);
 }
 
 }
