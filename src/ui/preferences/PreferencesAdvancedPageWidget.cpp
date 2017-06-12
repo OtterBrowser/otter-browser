@@ -523,7 +523,13 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 
 	if (!mimeType.isEmpty())
 	{
-		if (QRegularExpression(QLatin1String("^[a-zA-Z\\-]+/[a-zA-Z0-9\\.\\+\\-_]+$")).match(mimeType).hasMatch())
+		const QModelIndexList indexes(m_ui->downloadsItemView->getSourceModel()->match(m_ui->downloadsItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, mimeType));
+
+		if (!indexes.isEmpty())
+		{
+			m_ui->downloadsItemView->setCurrentIndex(indexes.first());
+		}
+		else if (QRegularExpression(QLatin1String("^[a-zA-Z\\-]+/[a-zA-Z0-9\\.\\+\\-_]+$")).match(mimeType).hasMatch())
 		{
 			QStandardItem *item(new QStandardItem(mimeType));
 			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
