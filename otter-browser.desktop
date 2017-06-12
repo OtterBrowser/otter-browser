@@ -129,16 +129,20 @@ Actions=NewTab;NewPrivateTab;NewWindow;NewPrivateWindow;
 
 [Desktop Action NewTab]
 Name=New Tab
+Name[pl]=Nowa karta
 Exec=otter-browser --new-tab %u
 
 [Desktop Action NewPrivateTab]
 Name=New Private Tab
+Name[pl]=Nowa karta prywatna
 Exec=otter-browser --new-private-tab %u
 
 [Desktop Action NewWindow]
 Name=New Window
+Name[pl]=Nowe okno
 Exec=otter-browser --new-window %u
 
 [Desktop Action NewPrivateWindow]
 Name=New Private Window
+Name[pl]=Nowe okno prywatne
 Exec=otter-browser --new-private-window %u
