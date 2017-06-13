@@ -206,12 +206,19 @@ void QtWebEngineWebWidget::search(const QString &query, const QString &searchEng
 
 		if (method == QNetworkAccessManager::PostOperation)
 		{
+#if QT_VERSION < 0x050900
 			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/sendPost.js"));
 			file.open(QIODevice::ReadOnly);
 
 			m_page->runJavaScript(QString(file.readAll()).arg(request.url().toString()).arg(QString(body)));
 
 			file.close();
+#else
+			QWebEngineHttpRequest httpRequest(request.url(), QWebEngineHttpRequest::Post);
+			httpRequest.setPostData(body);
+
+			m_page->load(httpRequest);
+#endif
 		}
 		else
 		{
