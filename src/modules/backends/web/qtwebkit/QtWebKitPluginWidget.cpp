@@ -60,7 +60,6 @@ void QtWebKitPluginWidget::paintEvent(QPaintEvent *event)
 	}
 
 	const QRect rectangle(((width() - size) / 2), ((height() - size) / 2), size, size);
-
 	QPainter painter(this);
 	painter.setRenderHints(QPainter::Antialiasing);
 	painter.fillRect(rect(), Qt::transparent);
