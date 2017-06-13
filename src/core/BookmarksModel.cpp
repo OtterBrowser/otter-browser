@@ -680,18 +680,13 @@ void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
 		return;
 	}
 
-	if (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()) == FolderBookmark)
-	{
-		for (int i = 0; i < bookmark->rowCount(); ++i)
-		{
-			removeBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
-		}
-	}
-	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
+	const BookmarkType type(static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()));
+
+	if (type == UrlBookmark)
 	{
 		const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
 
-		if (m_urls.contains(url))
+		if (!url.isEmpty() && m_urls.contains(url))
 		{
 			m_urls[url].removeAll(bookmark);
 
@@ -699,6 +694,13 @@ void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
 			{
 				m_urls.remove(url);
 			}
+		}
+	}
+	else if (type == FolderBookmark)
+	{
+		for (int i = 0; i < bookmark->rowCount(); ++i)
+		{
+			removeBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
 		}
 	}
 }
