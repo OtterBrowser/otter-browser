@@ -712,23 +712,28 @@ void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
 		return;
 	}
 
-	if (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()) == FolderBookmark)
+	const BookmarkType type(static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()));
+
+	if (type == UrlBookmark)
+	{
+		const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
+
+		if (!url.isEmpty())
+		{
+			if (!m_urls.contains(url))
+			{
+				m_urls[url] = QVector<BookmarksItem*>();
+			}
+
+			m_urls[url].append(bookmark);
+		}
+	}
+	else if (type == FolderBookmark)
 	{
 		for (int i = 0; i < bookmark->rowCount(); ++i)
 		{
 			readdBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
 		}
-	}
-	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
-	{
-		const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
-
-		if (!m_urls.contains(url))
-		{
-			m_urls[url] = QVector<BookmarksItem*>();
-		}
-
-		m_urls[url].append(bookmark);
 	}
 }
 
