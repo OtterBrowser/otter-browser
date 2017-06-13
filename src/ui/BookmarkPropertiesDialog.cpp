@@ -39,7 +39,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()));
 
 	m_ui->setupUi(this);
-	m_ui->folderComboBox->setCurrentFolder(dynamic_cast<BookmarksItem*>(bookmark->parent()));
+	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksItem*>(bookmark->parent()));
 	m_ui->titleLineEdit->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
 	m_ui->addressLineEdit->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
 	m_ui->addressLineEdit->setVisible(type == BookmarksModel::UrlBookmark);

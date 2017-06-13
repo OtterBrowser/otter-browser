@@ -1614,7 +1614,7 @@ bool TabBarWidget::event(QEvent *event)
 
 				if (event->type() == QEvent::Wheel)
 				{
-					QWheelEvent *wheelEvent(dynamic_cast<QWheelEvent*>(event));
+					QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 					if (wheelEvent)
 					{
@@ -1623,7 +1623,7 @@ bool TabBarWidget::event(QEvent *event)
 				}
 				else
 				{
-					QMouseEvent *mouseEvent(dynamic_cast<QMouseEvent*>(event));
+					QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 					if (mouseEvent)
 					{

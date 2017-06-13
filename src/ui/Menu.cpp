@@ -1141,7 +1141,7 @@ void Menu::populateWindowsMenu()
 	{
 		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
-			WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+			WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
 			if (windowItem)
 			{

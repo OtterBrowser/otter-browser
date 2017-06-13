@@ -802,7 +802,7 @@ void ToolBarWidget::loadBookmarks()
 
 	for (int i = 0; i < m_bookmark->rowCount(); ++i)
 	{
-		BookmarksItem *bookmark(dynamic_cast<BookmarksItem*>(m_bookmark->child(i)));
+		BookmarksItem *bookmark(static_cast<BookmarksItem*>(m_bookmark->child(i)));
 
 		if (bookmark)
 		{

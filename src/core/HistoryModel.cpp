@@ -295,7 +295,7 @@ bool HistoryModel::save(const QString &path) const
 
 bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	HistoryEntryItem *entry(dynamic_cast<HistoryEntryItem*>(itemFromIndex(index)));
+	HistoryEntryItem *entry(static_cast<HistoryEntryItem*>(itemFromIndex(index)));
 
 	if (!entry)
 	{

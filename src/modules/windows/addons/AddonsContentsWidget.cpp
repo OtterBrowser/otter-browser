@@ -225,7 +225,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 
 	if (addon->getType() == Addon::UserScriptType)
 	{
-		UserScript *script(dynamic_cast<UserScript*>(addon));
+		UserScript *script(static_cast<UserScript*>(addon));
 
 		if (script)
 		{

@@ -104,7 +104,7 @@ void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		WindowSessionItem *item(dynamic_cast<WindowSessionItem*>(child(i)));
+		WindowSessionItem *item(static_cast<WindowSessionItem*>(child(i)));
 
 		if (item && item->getActiveWindow() == window)
 		{
@@ -121,7 +121,7 @@ void MainWindowSessionItem::handleWindowRemoved(quint64 identifier)
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		WindowSessionItem *item(dynamic_cast<WindowSessionItem*>(child(i)));
+		WindowSessionItem *item(static_cast<WindowSessionItem*>(child(i)));
 
 		if (item && item->getActiveWindow() == window)
 		{
@@ -249,7 +249,7 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 {
 	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		MainWindowSessionItem *item(dynamic_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
+		MainWindowSessionItem *item(static_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
 
 		if (item && item->getMainWindow() == mainWindow)
 		{
@@ -268,7 +268,7 @@ void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
 {
 	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		MainWindowSessionItem *item(dynamic_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
+		MainWindowSessionItem *item(static_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
 
 		if (item && item->getMainWindow() == mainWindow)
 		{

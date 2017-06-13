@@ -185,7 +185,7 @@ QVector<QUrl> BookmarksItem::getUrls() const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		BookmarksItem *bookmark(dynamic_cast<BookmarksItem*>(child(i, 0)));
+		BookmarksItem *bookmark(static_cast<BookmarksItem*>(child(i, 0)));
 
 		if (!bookmark)
 		{
@@ -318,7 +318,7 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 		else
 		{
 			BookmarksItem *trashItem(getTrashItem());
-			BookmarksItem *previousParent(dynamic_cast<BookmarksItem*>(bookmark->parent()));
+			BookmarksItem *previousParent(static_cast<BookmarksItem*>(bookmark->parent()));
 
 			m_trash[bookmark] = {bookmark->parent()->index(), bookmark->row()};
 
@@ -391,7 +391,7 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 		m_keywords.remove(bookmark->data(KeywordRole).toString());
 	}
 
-	emit bookmarkRemoved(bookmark, dynamic_cast<BookmarksItem*>(bookmark->parent()));
+	emit bookmarkRemoved(bookmark, static_cast<BookmarksItem*>(bookmark->parent()));
 
 	bookmark->parent()->removeRow(bookmark->row());
 
@@ -684,7 +684,7 @@ void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
 	{
 		for (int i = 0; i < bookmark->rowCount(); ++i)
 		{
-			removeBookmarkUrl(dynamic_cast<BookmarksItem*>(bookmark->child(i, 0)));
+			removeBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
 		}
 	}
 	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
@@ -714,7 +714,7 @@ void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
 	{
 		for (int i = 0; i < bookmark->rowCount(); ++i)
 		{
-			readdBookmarkUrl(dynamic_cast<BookmarksItem*>(bookmark->child(i, 0)));
+			readdBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
 		}
 	}
 	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
@@ -873,7 +873,7 @@ BookmarksItem* BookmarksModel::getItem(const QString &path) const
 		}
 	}
 
-	return dynamic_cast<BookmarksItem*>(item);
+	return static_cast<BookmarksItem*>(item);
 }
 
 QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
@@ -989,7 +989,7 @@ QVector<BookmarksItem *> BookmarksModel::findUrls(const QUrl &url, QStandardItem
 
 	for (int i = 0; i < branch->rowCount(); ++i)
 	{
-		BookmarksItem *item(dynamic_cast<BookmarksItem*>(branch->child(i)));
+		BookmarksItem *item(static_cast<BookmarksItem*>(branch->child(i)));
 
 		if (item)
 		{
@@ -1037,7 +1037,7 @@ bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newPar
 		return false;
 	}
 
-	BookmarksItem *previousParent(dynamic_cast<BookmarksItem*>(bookmark->parent()));
+	BookmarksItem *previousParent(static_cast<BookmarksItem*>(bookmark->parent()));
 
 	if (!previousParent)
 	{
@@ -1164,7 +1164,7 @@ bool BookmarksModel::save(const QString &path) const
 
 bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	BookmarksItem *bookmark(dynamic_cast<BookmarksItem*>(itemFromIndex(index)));
+	BookmarksItem *bookmark(static_cast<BookmarksItem*>(itemFromIndex(index)));
 
 	if (!bookmark)
 	{

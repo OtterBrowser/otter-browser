@@ -134,7 +134,7 @@ void HistoryContentsWidget::populateEntries()
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		addEntry(dynamic_cast<HistoryEntryItem*>(model->item(i, 0)));
+		addEntry(static_cast<HistoryEntryItem*>(model->item(i, 0)));
 	}
 
 	const QString expandBranches(SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString());

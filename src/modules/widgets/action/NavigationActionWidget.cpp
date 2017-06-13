@@ -134,7 +134,7 @@ bool NavigationActionWidget::event(QEvent *event)
 
 	if (event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent(dynamic_cast<QHelpEvent*>(event));
+		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
@@ -181,7 +181,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent(dynamic_cast<QContextMenuEvent*>(event));
+		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent)
 		{
@@ -211,7 +211,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(dynamic_cast<QKeyEvent*>(event));
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete && getWindow())
 		{

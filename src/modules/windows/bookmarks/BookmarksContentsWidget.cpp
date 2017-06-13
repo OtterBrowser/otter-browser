@@ -273,7 +273,7 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 				{
 					for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 					{
-						WindowSessionItem *windowItem(dynamic_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+						WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
 						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
 						{
@@ -353,7 +353,7 @@ BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
 
-	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : dynamic_cast<BookmarksItem*>(item->parent()));
+	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
 }
 
 QString BookmarksContentsWidget::getTitle() const

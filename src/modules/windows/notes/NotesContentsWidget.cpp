@@ -365,7 +365,7 @@ BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
 
-	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : dynamic_cast<BookmarksItem*>(item->parent()));
+	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
 }
 
 QString NotesContentsWidget::getTitle() const

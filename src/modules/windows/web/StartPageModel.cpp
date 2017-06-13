@@ -138,7 +138,7 @@ void StartPageModel::addTile(const QUrl &url)
 			{
 				if (m_bookmark->child(j) && m_bookmark->child(j)->data(Qt::DisplayRole) == directories.at(i))
 				{
-					m_bookmark = dynamic_cast<BookmarksItem*>(m_bookmark->child(j));
+					m_bookmark = static_cast<BookmarksItem*>(m_bookmark->child(j));
 
 					hasFound = true;
 

@@ -2425,7 +2425,7 @@ bool MainWindow::event(QEvent *event)
 			break;
 		case QEvent::WindowStateChange:
 			{
-				QWindowStateChangeEvent *stateChangeEvent(dynamic_cast<QWindowStateChangeEvent*>(event));
+				QWindowStateChangeEvent *stateChangeEvent(static_cast<QWindowStateChangeEvent*>(event));
 
 				SessionsManager::markSessionModified();
 

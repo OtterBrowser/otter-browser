@@ -41,7 +41,7 @@ void BookmarksImporter::goToParent()
 
 	if (m_currentFolder)
 	{
-		m_currentFolder = dynamic_cast<BookmarksItem*>(m_currentFolder->parent());
+		m_currentFolder = static_cast<BookmarksItem*>(m_currentFolder->parent());
 	}
 
 	if (!m_currentFolder)

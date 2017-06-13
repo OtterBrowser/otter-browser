@@ -974,7 +974,7 @@ void Application::showNotification(Notification *notification)
 
 void Application::showUpdateDetails()
 {
-	Notification *notification(dynamic_cast<Notification*>(sender()));
+	Notification *notification(static_cast<Notification*>(sender()));
 
 	if (notification)
 	{
