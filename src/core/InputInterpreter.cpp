@@ -71,6 +71,27 @@ void InputInterpreter::verifyLookup(const QHostInfo &host)
 
 void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints hints, bool ignoreBookmarks)
 {
+	const QString keyword(text.section(QLatin1Char(' '), 0, 0));
+	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
+
+	if (searchEngine.isValid())
+	{
+		emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
+
+		deleteLater();
+
+		return;
+	}
+
+	if (keyword == QLatin1String("?"))
+	{
+		emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
+
+		deleteLater();
+
+		return;
+	}
+
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{
 		BookmarksItem *bookmark(text.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(text.mid(11)) : BookmarksManager::getBookmark(text.mid(10).toULongLong()));
@@ -127,27 +148,6 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 	if (!address.isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
 	{
 		emit requestedOpenUrl(url, hints);
-
-		deleteLater();
-
-		return;
-	}
-
-	const QString keyword(text.section(QLatin1Char(' '), 0, 0));
-	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
-
-	if (searchEngine.isValid())
-	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
-
-		deleteLater();
-
-		return;
-	}
-
-	if (keyword == QLatin1String("?"))
-	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
 
 		deleteLater();
 
