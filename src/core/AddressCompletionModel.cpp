@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -98,6 +98,7 @@ void AddressCompletionModel::updateModel()
 
 		CompletionEntry completionEntry(QUrl(), title, QString(), icon, QDateTime(), SearchSuggestionType);
 		completionEntry.text = text;
+		completionEntry.keyword = keyword;
 
 		completions.append(completionEntry);
 	}

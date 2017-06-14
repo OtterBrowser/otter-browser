@@ -743,7 +743,7 @@ void AddressWidget::openUrl(const QModelIndex &index)
 
 	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType)
 	{
-		emit requestedSearch(index.data(AddressCompletionModel::TextRole).toString(), QString(), SessionsManager::CurrentTabOpen);
+		emit requestedSearch(index.data(AddressCompletionModel::TextRole).toString(), SearchEnginesManager::getSearchEngine(index.data(AddressCompletionModel::KeywordRole).toString(), true).identifier, SessionsManager::CurrentTabOpen);
 	}
 	else
 	{
