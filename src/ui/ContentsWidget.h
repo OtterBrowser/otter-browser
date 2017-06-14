@@ -117,7 +117,7 @@ signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);
-	void canZoomChanged(bool can);
+	void canZoomChanged(bool isAllowed);
 };
 
 }

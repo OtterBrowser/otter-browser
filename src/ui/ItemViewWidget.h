@@ -140,8 +140,8 @@ private:
 	bool m_isInitialized;
 
 signals:
-	void canMoveUpChanged(bool available);
-	void canMoveDownChanged(bool available);
+	void canMoveUpChanged(bool isAllowed);
+	void canMoveDownChanged(bool isAllowed);
 	void needsActionsUpdate();
 	void modified();
 	void sortChanged(int column, Qt::SortOrder order);
