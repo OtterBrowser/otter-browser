@@ -139,8 +139,6 @@ private:
 	bool m_isModified;
 	bool m_isInitialized;
 
-	static int m_treeIndentation;
-
 signals:
 	void canMoveUpChanged(bool available);
 	void canMoveDownChanged(bool available);

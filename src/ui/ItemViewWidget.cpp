@@ -190,8 +190,6 @@ void HeaderViewWidget::setSort(int column, Qt::SortOrder order)
 	emit sortChanged(column, order);
 }
 
-int ItemViewWidget::m_treeIndentation = 0;
-
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_headerWidget(new HeaderViewWidget(Qt::Horizontal, this)),
 	m_sourceModel(nullptr),
@@ -206,8 +204,6 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_isModified(false),
 	m_isInitialized(false)
 {
-	m_treeIndentation = indentation();
-
 	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption));
 	setHeader(m_headerWidget);
 	setItemDelegate(new ItemDelegate(this));
@@ -732,7 +728,7 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 {
 	m_viewMode = mode;
 
-	setIndentation((mode == TreeViewMode) ? m_treeIndentation : 0);
+	setIndentation((mode == TreeViewMode) ? style()->pixelMetric(QStyle::PM_TreeViewIndentation) : 0);
 }
 
 void ItemViewWidget::setModified(bool isModified)
