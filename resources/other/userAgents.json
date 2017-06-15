@@ -7,18 +7,18 @@
 	"separator",
 	{
 		"identifier": "chrome",
-		"title": "Mask as Google Chrome 58 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+		"title": "Mask as Google Chrome 59 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36"
 	},
 	{
 		"identifier": "chromeMobile",
-		"title": "Mask as Google Chrome 58 (Android)",
-		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Mobile Safari/537.36"
+		"title": "Mask as Google Chrome 59 (Android)",
+		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.92 Mobile Safari/537.36"
 	},
 	{
 		"identifier": "firefox",
-		"title": "Mask as Mozilla Firefox 53 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0; rv:53.0) Gecko/20100101 Firefox/53.0"
+		"title": "Mask as Mozilla Firefox 54 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0; rv:54.0) Gecko/20100101 Firefox/54.0"
 	},
 	{
 		"identifier": "edge",
