@@ -120,7 +120,7 @@ TransfersContentsWidget::~TransfersContentsWidget()
 
 void TransfersContentsWidget::changeEvent(QEvent *event)
 {
-	QWidget::changeEvent(event);
+	ContentsWidget::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange)
 	{

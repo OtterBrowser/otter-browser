@@ -83,6 +83,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
+	void changeEvent(QEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 

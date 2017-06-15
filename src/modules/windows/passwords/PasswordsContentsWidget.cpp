@@ -59,7 +59,7 @@ PasswordsContentsWidget::~PasswordsContentsWidget()
 
 void PasswordsContentsWidget::changeEvent(QEvent *event)
 {
-	QWidget::changeEvent(event);
+	ContentsWidget::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange)
 	{

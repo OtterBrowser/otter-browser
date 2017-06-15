@@ -54,6 +54,16 @@ void ContentsWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
+void ContentsWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		emit titleChanged(getTitle());
+	}
+}
+
 void ContentsWidget::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
