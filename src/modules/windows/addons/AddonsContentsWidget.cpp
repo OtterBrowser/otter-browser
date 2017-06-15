@@ -53,7 +53,7 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 
 	QTimer::singleShot(100, this, SLOT(populateAddons()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterAddons(QString)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->addonsViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->addonsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->addonsViewWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(save()));
 }
@@ -380,14 +380,6 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 		default:
 			break;
-	}
-}
-
-void AddonsContentsWidget::filterAddons(const QString &filter)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		m_ui->addonsViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
 	}
 }
 

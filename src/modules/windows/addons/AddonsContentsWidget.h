@@ -74,7 +74,6 @@ protected:
 
 protected slots:
 	void populateAddons();
-	void filterAddons(const QString &filter);
 	void addAddon();
 	void addAddon(Addon *addon);
 	void openAddon();
