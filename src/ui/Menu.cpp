@@ -218,7 +218,7 @@ void Menu::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange && !m_title.isEmpty())
 	{
-		setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+		QMenu::setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 	}
 }
 
