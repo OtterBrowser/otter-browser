@@ -70,6 +70,16 @@ void AddonsContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		for (int i = 0; i < m_model->rowCount(); ++i)
+		{
+			QStandardItem *item(m_model->item(i));
+
+			if (item && static_cast<Addon::AddonType>(item->data(TypeRole).toInt()) == Addon::UserScriptType)
+			{
+				item->setText(tr("User Scripts"));
+			}
+		}
 	}
 }
 
