@@ -52,7 +52,7 @@ CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Wind
 
 	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->cookiesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->cookiesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeCookies()));
@@ -420,14 +420,6 @@ void CookiesContentsWidget::updateActions()
 			m_ui->pathLabelWidget->setText(cookie.path());
 			m_ui->expiresLabelWidget->setText(cookie.expirationDate().isValid() ? Utils::formatDateTime(cookie.expirationDate()) : tr("this session only"));
 		}
-	}
-}
-
-void CookiesContentsWidget::filterCookies(const QString &filter)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		m_ui->cookiesViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
 	}
 }
 
