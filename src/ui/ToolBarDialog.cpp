@@ -362,7 +362,7 @@ void ToolBarDialog::editEntry()
 			optionNameEntry.label = tr("Option:");
 
 			OptionEntry scopeEntry;
-			scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::BooleanType, this);
+			scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, this);
 			scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
 			scopeEntry.widget->setDefaultValue(QLatin1String("window"));
 			scopeEntry.name = QLatin1String("scope");
