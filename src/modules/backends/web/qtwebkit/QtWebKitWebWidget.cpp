@@ -1424,6 +1424,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::UnselectAction:
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 			{
 				QWebFrame *frame(m_page->currentFrame() ? m_page->currentFrame() : m_page->mainFrame());
 				const QWebElement element(frame->findFirstElement(QLatin1String(":focus")));
@@ -1437,6 +1438,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					frame->documentElement().evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
 				}
 			}
+#else
+			m_page->triggerAction(QWebPage::Unselect);
+#endif
 
 			break;
 		case ActionsManager::ClearAllAction:
