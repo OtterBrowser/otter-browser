@@ -120,15 +120,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->installEventFilter(this);
 
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	if (isPrivate)
-	{
-		m_page->settings()->setAttribute(QWebSettings::LocalStorageEnabled, false);
-		m_page->settings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);
-		m_page->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
-	}
-#endif
-
 	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut));
 
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
@@ -835,13 +826,6 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	settings->setAttribute(QWebSettings::MediaEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaOption), url).toBool());
 	settings->setAttribute(QWebSettings::MediaSourceEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaSourceOption), url).toBool());
-
-	if (settings->testAttribute(QWebSettings::PrivateBrowsingEnabled))
-	{
-		settings->setAttribute(QWebSettings::LocalStorageEnabled, false);
-		settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);
-		settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
-	}
 #endif
 
 	disconnect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
