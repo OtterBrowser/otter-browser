@@ -1365,7 +1365,7 @@ QVariant WebWidget::getOption(int identifier, const QUrl &url) const
 	return SettingsManager::getOption(identifier, (url.isEmpty() ? getUrl() : url));
 }
 
-QVariant WebWidget::getPageInformation(WebWidget::PageInformation key) const
+QVariant WebWidget::getPageInformation(PageInformation key) const
 {
 	if (key == LoadingTimeInformation)
 	{
@@ -1734,7 +1734,7 @@ WebWidget::ContentStates WebWidget::getContentState() const
 	return RemoteContentState;
 }
 
-WebWidget::PermissionPolicy WebWidget::getPermission(WebWidget::FeaturePermission feature, const QUrl &url) const
+WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, const QUrl &url) const
 {
 	if (!url.isValid())
 	{

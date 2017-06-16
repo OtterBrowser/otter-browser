@@ -217,7 +217,7 @@ public:
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
 	QVariant getOption(int identifier, const QUrl &url = {}) const;
-	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
+	virtual QVariant getPageInformation(PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
