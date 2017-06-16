@@ -19,11 +19,11 @@
 
 #include "MacPlatformIntegration.h"
 #include "MacPlatformStyle.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 
