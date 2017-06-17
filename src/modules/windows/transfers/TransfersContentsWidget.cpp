@@ -672,7 +672,7 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	return QWidget::eventFilter(object, event);
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }

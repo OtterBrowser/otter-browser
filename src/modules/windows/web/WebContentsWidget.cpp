@@ -192,7 +192,7 @@ void WebContentsWidget::showEvent(QShowEvent *event)
 
 void WebContentsWidget::focusInEvent(QFocusEvent *event)
 {
-	QWidget::focusInEvent(event);
+	ContentsWidget::focusInEvent(event);
 
 	if (m_startPageWidget && m_startPageWidget->isVisible())
 	{
@@ -224,7 +224,7 @@ void WebContentsWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 {
-	QWidget::keyPressEvent(event);
+	ContentsWidget::keyPressEvent(event);
 
 	if (m_scrollMode == MoveScroll)
 	{

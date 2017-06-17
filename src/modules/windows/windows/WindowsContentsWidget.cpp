@@ -53,7 +53,7 @@ WindowsContentsWidget::~WindowsContentsWidget()
 
 void WindowsContentsWidget::changeEvent(QEvent *event)
 {
-	QWidget::changeEvent(event);
+	ContentsWidget::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange)
 	{
