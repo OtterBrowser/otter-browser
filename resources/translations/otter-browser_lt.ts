@@ -24,12 +24,12 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
         <source>Send for:</source>
-        <translation type="unfinished"/>
+        <translation>Siųsti:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="83"/>
         <source>Accessible using JavaScript:</source>
-        <translation>Prieinami iš JavaScript</translation>
+        <translation>Prieinamas naudojant JavaScript:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="100"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="175"/>
         <source>Typed history</source>
-        <translation type="unfinished"/>
+        <translation>Rašytas žurnalas</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="197"/>
@@ -2465,7 +2465,7 @@ Skaičiaus eilė: %2</translation>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
         <source>Directory is not readable</source>
-        <translation type="unfinished"/>
+        <translation>Katalogas yra neskaitomas</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="66"/>
@@ -6480,7 +6480,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="105"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Vietaženkliai</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="106"/>
@@ -8880,7 +8880,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Žurnalas</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
@@ -9211,7 +9211,7 @@ Programos ID: %2</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="59"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="798"/>
         <source>Try Again</source>
-        <translation type="unfinished"/>
+        <translation>Bandyti dar kartą</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="178"/>

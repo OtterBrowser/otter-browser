@@ -24,12 +24,12 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
         <source>Send for:</source>
-        <translation type="unfinished"/>
+        <translation>Enviar para:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="83"/>
         <source>Accessible using JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>Acessível usando JavaScript:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="100"/>
@@ -54,17 +54,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation type="unfinished"/>
+        <translation>Só esta sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Secure connections only</source>
-        <translation type="unfinished"/>
+        <translation>Só conexões seguras</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Any type of connection</source>
-        <translation type="unfinished"/>
+        <translation>Qualquer tipo de conexão</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
         <source>Select Files</source>
-        <translation type="unfinished"/>
+        <translation>Selecionar Arquivos</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
@@ -200,23 +200,24 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="139"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pergunta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="140"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Um script de usuário com este nome já existe:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="141"/>
         <source>Do you want to replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Você quer substituí-lo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="148"/>
         <source>Apply to all</source>
-        <translation type="unfinished"/>
+        <translation>Aplicar a todos</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="193"/>
@@ -232,7 +233,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="315"/>
         <source>Reload Addon</source>
-        <translation type="unfinished"/>
+        <translation>Recarregar Addon</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="317"/>
@@ -247,7 +248,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="390"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Addons</translation>
     </message>
 </context>
 <context>
@@ -275,7 +276,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="175"/>
         <source>Typed history</source>
-        <translation type="unfinished"/>
+        <translation>Histórico digitado</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="197"/>
@@ -339,7 +340,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="406"/>
         <source>Remove this Icon</source>
-        <translation type="unfinished"/>
+        <translation>Remover este Ícone</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="486"/>
@@ -349,32 +350,32 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="865"/>
         <source>Show website information</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar a informação do site da web</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="882"/>
         <source>Show feed list</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar lista de feeds</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="894"/>
         <source>Remove bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Remover favorito</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="905"/>
         <source>Add bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar favorito</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="927"/>
         <source>Load all plugins on the page</source>
-        <translation type="unfinished"/>
+        <translation>Carregar todos os plugins na página</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="941"/>
         <source>Log in</source>
-        <translation type="unfinished"/>
+        <translation>Logar</translation>
     </message>
 </context>
 <context>
@@ -533,7 +534,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation type="unfinished"/>
+        <translation>Lembrar senha</translation>
     </message>
 </context>
 <context>
@@ -571,7 +572,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation type="unfinished"/>
+        <translation>Última visita:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -714,13 +715,13 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Pasta...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Favorito...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="50"/>
@@ -818,7 +819,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="356"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Favoritos</translation>
     </message>
 </context>
 <context>
@@ -1308,7 +1309,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to clear:</source>
-        <translation type="unfinished"/>
+        <translation>Período a limpar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
@@ -1333,7 +1334,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms history</source>
-        <translation type="unfinished"/>
+        <translation>Limpar o histórico dos formulários</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
@@ -1429,7 +1430,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configuração Avançada</translation>
     </message>
 </context>
 <context>
@@ -1529,7 +1530,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Cosmetic filters:</source>
-        <translation type="unfinished"/>
+        <translation>Filtros cosméticos:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
@@ -1573,17 +1574,17 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="51"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Todos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="52"/>
         <source>Domain specific only</source>
-        <translation type="unfinished"/>
+        <translation>Só o domínio específico</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="53"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Nenhum</translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1642,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
         <source>WebSocket</source>
-        <translation type="unfinished"/>
+        <translation>WebSocket</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
@@ -1656,7 +1657,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="338"/>
         <source>Blocked Elements: {amount}</source>
-        <translation type="unfinished"/>
+        <translation>Elementos Bloqueados: {quantia}</translation>
     </message>
 </context>
 <context>
@@ -1728,7 +1729,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="448"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Regras Personalizadas</translation>
     </message>
 </context>
 <context>
@@ -1752,28 +1753,28 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nome:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="38"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Valor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="51"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Expira:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="64"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>só esta sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="71"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation type="unfinished"/>
+        <translation>MM.dd.aaaa HH:mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="81"/>
