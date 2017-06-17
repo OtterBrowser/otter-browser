@@ -32,7 +32,7 @@ class FreeDesktopOrgPlatformStyle : public Style
 public:
 	explicit FreeDesktopOrgPlatformStyle(const QString &name);
 
-	void drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 
 protected slots:
 	void checkForAmbianceTheme();

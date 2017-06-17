@@ -29,11 +29,11 @@ MacPlatformStyle::MacPlatformStyle(const QString &name) : Style(name)
 {
 }
 
-void MacPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void MacPlatformStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
 	switch (element)
 	{
-		case QStyle::CE_TabBarTab:
+		case CE_TabBarTab:
 			{
 				const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
 
@@ -47,9 +47,9 @@ void MacPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleO
 						painter->drawLine(option->rect.topRight(), option->rect.bottomRight());
 					}
 
-					if (option->state.testFlag(QStyle::State_MouseOver))
+					if (option->state.testFlag(State_MouseOver))
 					{
-						painter->fillRect(option->rect, QColor(0, 0, 0, (option->state.testFlag(QStyle::State_Selected) ? 80 : 50)));
+						painter->fillRect(option->rect, QColor(0, 0, 0, (option->state.testFlag(State_Selected) ? 80 : 50)));
 					}
 
 					painter->restore();
@@ -59,7 +59,7 @@ void MacPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleO
 			}
 
 			break;
-		case QStyle::CE_ToolBar:
+		case CE_ToolBar:
 			QProxyStyle::drawControl(element, option, painter, widget);
 
 			return;
@@ -70,11 +70,11 @@ void MacPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleO
 	Style::drawControl(element, option, painter, widget);
 }
 
-void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void MacPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
 	switch (element)
 	{
-		case QStyle::PE_IndicatorTabClose:
+		case PE_IndicatorTabClose:
 			{
 				QRect rectangle(option->rect);
 
@@ -95,11 +95,11 @@ void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 			}
 
 			return;
-		case QStyle::PE_PanelStatusBar:
+		case PE_PanelStatusBar:
 			QProxyStyle::drawPrimitive(element, option, painter, widget);
 
 			return;
-		case QStyle::PE_FrameTabBarBase:
+		case PE_FrameTabBarBase:
 			{
 				const QStyleOptionTabBarBase *tabBarBaseOption(qstyleoption_cast<const QStyleOptionTabBarBase*>(option));
 
@@ -153,9 +153,9 @@ void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 	Style::drawPrimitive(element, option, painter, widget);
 }
 
-int Otter::MacPlatformStyle::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+int Otter::MacPlatformStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
 {
-	if (metric == QStyle::PM_ToolBarIconSize)
+	if (metric == PM_ToolBarIconSize)
 	{
 		return 16;
 	}

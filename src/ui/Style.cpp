@@ -82,21 +82,21 @@ void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
 	painter->restore();
 }
 
-void Style::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void Style::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
 	QProxyStyle::drawControl(element, option, painter, widget);
 
-	if (element == QStyle::CE_ToolBar)
+	if (element == CE_ToolBar)
 	{
 		drawToolBarEdge(option, painter);
 	}
 }
 
-void Style::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void Style::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
 	switch (element)
 	{
-		case QStyle::PE_IndicatorItemViewItemCheck:
+		case PE_IndicatorItemViewItemCheck:
 			if (widget)
 			{
 				const ItemViewWidget *view(qobject_cast<const ItemViewWidget*>(widget));
@@ -107,14 +107,14 @@ void Style::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *
 					buttonOption.rect = option->rect;
 					buttonOption.state = option->state;
 
-					drawControl(QStyle::CE_RadioButton, &buttonOption, painter);
+					drawControl(CE_RadioButton, &buttonOption, painter);
 
 					return;
 				}
 			}
 
 			break;
-		case QStyle::PE_PanelStatusBar:
+		case PE_PanelStatusBar:
 			QProxyStyle::drawPrimitive(element, option, painter, widget);
 
 			painter->save();
@@ -143,11 +143,11 @@ QString Style::getName() const
 	return (baseStyle() ? baseStyle() : this)->objectName().toLower();
 }
 
-QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget) const
+QRect Style::subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const
 {
 	switch (element)
 	{
-		case QStyle::SE_TabBarTabLeftButton:
+		case SE_TabBarTabLeftButton:
 			{
 				if (qstyleoption_cast<const QStyleOptionTab*>(option))
 				{
@@ -170,21 +170,21 @@ QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *opti
 					tabOption.rightButtonSize = QSize(1, 1);
 				}
 
-				const int offset(QProxyStyle::subElementRect((QGuiApplication::isLeftToRight() ? QStyle::SE_TabBarTabLeftButton : QStyle::SE_TabBarTabRightButton), &tabOption, widget).left() - option->rect.left());
+				const int offset(QProxyStyle::subElementRect((QGuiApplication::isLeftToRight() ? SE_TabBarTabLeftButton : SE_TabBarTabRightButton), &tabOption, widget).left() - option->rect.left());
 				QRect rectangle(option->rect);
 				rectangle.setLeft(rectangle.left() + offset);
 				rectangle.setRight(rectangle.right() - offset);
 
 				return rectangle;
 			}
-		case QStyle::SE_ToolBarHandle:
+		case SE_ToolBarHandle:
 			if (widget)
 			{
 				const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
 
 				if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar && toolBar->isMovable())
 				{
-					const int offset(QProxyStyle::pixelMetric(QStyle::PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarFrameWidth, option, widget));
+					const int offset(QProxyStyle::pixelMetric(PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(PM_ToolBarFrameWidth, option, widget));
 					QRect rectangle(QProxyStyle::subElementRect(element, option, widget));
 
 					if (QGuiApplication::isLeftToRight())
@@ -206,34 +206,34 @@ QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *opti
 	return QProxyStyle::subElementRect(element, option, widget);
 }
 
-int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+int Style::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
 {
 	switch (metric)
 	{
-		case QStyle::PM_TabBarTabHSpace:
+		case PM_TabBarTabHSpace:
 			if (QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
 			{
 				const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
 
 				if (tabOption && tabOption->documentMode)
 				{
-					return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+					return QProxyStyle::pixelMetric(PM_TabBarTabVSpace, option, widget);
 				}
 			}
 
 			break;
-		case QStyle::PM_ToolBarItemMargin:
-		case QStyle::PM_ToolBarFrameWidth:
-		case QStyle::PM_ToolBarHandleExtent:
+		case PM_ToolBarItemMargin:
+		case PM_ToolBarFrameWidth:
+		case PM_ToolBarHandleExtent:
 			if (widget)
 			{
 				const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
 
 				if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar)
 				{
-					if (QStyle::PM_ToolBarHandleExtent)
+					if (PM_ToolBarHandleExtent)
 					{
-						return (QProxyStyle::pixelMetric(metric, option, widget) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarFrameWidth, option, widget));
+						return (QProxyStyle::pixelMetric(metric, option, widget) + QProxyStyle::pixelMetric(PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(PM_ToolBarFrameWidth, option, widget));
 					}
 
 					return 0;
@@ -246,14 +246,14 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, c
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-int Style::styleHint(QStyle::StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
+int Style::styleHint(StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
 {
 	if (!m_areToolTipsEnabled)
 	{
 		switch (hint)
 		{
-			case QStyle::SH_ToolTip_FallAsleepDelay:
-			case QStyle::SH_ToolTip_WakeUpDelay:
+			case SH_ToolTip_FallAsleepDelay:
+			case SH_ToolTip_WakeUpDelay:
 				return std::numeric_limits<int>::max();
 			default:
 				break;

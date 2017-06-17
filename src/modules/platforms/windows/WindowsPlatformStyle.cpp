@@ -41,21 +41,21 @@ WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForModernStyle()));
 }
 
-void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void WindowsPlatformStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
 	switch (element)
 	{
-		case QStyle::CE_MenuBarEmptyArea:
-		case QStyle::CE_MenuBarItem:
+		case CE_MenuBarEmptyArea:
+		case CE_MenuBarItem:
 			if (!m_isModernStyle)
 			{
 				break;
 			}
-		case QStyle::CE_ToolBar:
+		case CE_ToolBar:
 			{
 				bool shouldUseWindowBackground(true);
 
-				if (element == QStyle::CE_ToolBar)
+				if (element == CE_ToolBar)
 				{
 					const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
 					const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
@@ -104,7 +104,7 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 					}
 				}
 
-				const QRect rectantagle((widget && element == QStyle::CE_ToolBar) ? widget->rect() : option->rect);
+				const QRect rectantagle((widget && element == CE_ToolBar) ? widget->rect() : option->rect);
 
 				if (shouldUseWindowBackground)
 				{
@@ -122,14 +122,14 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 					painter->fillRect(rectantagle, Qt::white);
 				}
 
-				if (element == QStyle::CE_MenuBarItem)
+				if (element == CE_MenuBarItem)
 				{
 					QStyleOptionMenuItem menuItemOption(*qstyleoption_cast<const QStyleOptionMenuItem*>(option));
 					menuItemOption.palette.setColor(QPalette::Window, Qt::transparent);
 
 					Style::drawControl(element, &menuItemOption, painter, widget);
 				}
-				else if (element == QStyle::CE_ToolBar)
+				else if (element == CE_ToolBar)
 				{
 					drawToolBarEdge(option, painter);
 				}
@@ -142,15 +142,15 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 
 	Style::drawControl(element, option, painter, widget);
 
-	if (element == QStyle::CE_ToolBar)
+	if (element == CE_ToolBar)
 	{
 		drawToolBarEdge(option, painter);
 	}
 }
 
-void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void WindowsPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isModernStyle && element == QStyle::PE_PanelStatusBar)
+	if (m_isModernStyle && element == PE_PanelStatusBar)
 	{
 		painter->save();
 		painter->fillRect(option->rect, Qt::white);

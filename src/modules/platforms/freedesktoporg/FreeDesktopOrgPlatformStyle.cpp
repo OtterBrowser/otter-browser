@@ -37,9 +37,9 @@ FreeDesktopOrgPlatformStyle::FreeDesktopOrgPlatformStyle(const QString &name) : 
 	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForAmbianceTheme()));
 }
 
-void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void FreeDesktopOrgPlatformStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isGtkAmbianceTheme && element == QStyle::CE_ToolBar)
+	if (m_isGtkAmbianceTheme && element == CE_ToolBar)
 	{
 		const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
 		const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
