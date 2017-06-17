@@ -58,7 +58,7 @@ public:
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;
 	QString getSelectedText() const override;
-	QVariant getPageInformation(WebWidget::PageInformation key) const override;
+	QVariant getPageInformation(PageInformation key) const override;
 	QStringList getBlockedElements() const;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
@@ -76,8 +76,8 @@ public:
 	QVector<LinkUrl> getSearchEngines() const override;
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
-	WebWidget::ContentStates getContentState() const override;
-	WebWidget::LoadingState getLoadingState() const override;
+	ContentStates getContentState() const override;
+	LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
@@ -193,7 +193,7 @@ private:
 	QQueue<Transfer*> m_transfers;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
-	WebWidget::LoadingState m_loadingState;
+	LoadingState m_loadingState;
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
 	bool m_isAudioMuted;

@@ -66,7 +66,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_page(new QtWebEnginePage(isPrivate, this)),
 	m_iconReply(nullptr),
 	m_loadingTime(nullptr),
-	m_loadingState(WebWidget::FinishedLoadingState),
+	m_loadingState(FinishedLoadingState),
 	m_documentLoadingProgress(0),
 	m_focusProxyTimer(0),
 #if QT_VERSION < 0x050700
@@ -248,7 +248,7 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 void QtWebEngineWebWidget::pageLoadStarted()
 {
 	m_lastUrlClickTime = QDateTime();
-	m_loadingState = WebWidget::OngoingLoadingState;
+	m_loadingState = OngoingLoadingState;
 	m_documentLoadingProgress = 0;
 
 	if (!m_loadingTime)
@@ -261,20 +261,20 @@ void QtWebEngineWebWidget::pageLoadStarted()
 	setStatusMessage(QString(), true);
 
 	emit progressBarGeometryChanged();
-	emit loadingStateChanged(WebWidget::OngoingLoadingState);
+	emit loadingStateChanged(OngoingLoadingState);
 	emit pageInformationChanged(DocumentLoadingProgressInformation, 0);
 }
 
 void QtWebEngineWebWidget::pageLoadFinished()
 {
-	m_loadingState = WebWidget::FinishedLoadingState;
+	m_loadingState = FinishedLoadingState;
 
 	updateNavigationActions();
 	startReloadTimer();
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
-	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+	emit loadingStateChanged(FinishedLoadingState);
 }
 
 void QtWebEngineWebWidget::linkHovered(const QString &link)
@@ -706,7 +706,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::ReloadOrStopAction:
-			if (m_loadingState == WebWidget::OngoingLoadingState)
+			if (m_loadingState == OngoingLoadingState)
 			{
 				triggerAction(ActionsManager::StopAction);
 			}
@@ -1168,9 +1168,9 @@ void QtWebEngineWebWidget::notifyRenderProcessTerminated(QWebEnginePage::RenderP
 {
 	if (status != QWebEnginePage::NormalTerminationStatus)
 	{
-		m_loadingState = WebWidget::CrashedLoadingState;
+		m_loadingState = CrashedLoadingState;
 
-		emit loadingStateChanged(WebWidget::CrashedLoadingState);
+		emit loadingStateChanged(CrashedLoadingState);
 	}
 }
 
@@ -1375,7 +1375,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 	notifyIconChanged();
 }
 
-void QtWebEngineWebWidget::setPermission(FeaturePermission feature, const QUrl &url, WebWidget::PermissionPolicies policies)
+void QtWebEngineWebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
 {
 	WebWidget::setPermission(feature, url, policies);
 
@@ -1546,7 +1546,7 @@ QString QtWebEngineWebWidget::getSelectedText() const
 	return m_page->selectedText();
 }
 
-QVariant QtWebEngineWebWidget::getPageInformation(WebWidget::PageInformation key) const
+QVariant QtWebEngineWebWidget::getPageInformation(PageInformation key) const
 {
 	if (key == DocumentLoadingProgressInformation || key == TotalLoadingProgressInformation)
 	{
@@ -1617,7 +1617,7 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 		information.entries.append(entry);
 	}
 
-	if (m_loadingState == WebWidget::OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
+	if (m_loadingState == OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
 	{
 		WindowHistoryEntry entry;
 		entry.url = requestedUrl;
@@ -1856,7 +1856,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 		{
-			const WebWidget::HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
+			const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 
 			if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
 			{

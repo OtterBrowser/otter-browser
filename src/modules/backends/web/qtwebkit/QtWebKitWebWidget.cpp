@@ -85,7 +85,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(nullptr),
 	m_networkManager(networkManager),
-	m_loadingState(WebWidget::FinishedLoadingState),
+	m_loadingState(FinishedLoadingState),
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
 	m_isAudioMuted(false),
@@ -479,7 +479,7 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 
 void QtWebKitWebWidget::handleLoadStarted()
 {
-	if (m_loadingState == WebWidget::OngoingLoadingState)
+	if (m_loadingState == OngoingLoadingState)
 	{
 		return;
 	}
@@ -487,7 +487,7 @@ void QtWebKitWebWidget::handleLoadStarted()
 	m_thumbnail = QPixmap();
 	m_messageToken = QUuid::createUuid().toString();
 	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
-	m_loadingState = WebWidget::OngoingLoadingState;
+	m_loadingState = OngoingLoadingState;
 
 	updateNavigationActions();
 	setStatusMessage(QString());
@@ -495,7 +495,7 @@ void QtWebKitWebWidget::handleLoadStarted()
 
 	emit progressBarGeometryChanged();
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
-	emit loadingStateChanged(WebWidget::OngoingLoadingState);
+	emit loadingStateChanged(OngoingLoadingState);
 }
 
 void QtWebKitWebWidget::handleLoadProgress(int progress)
@@ -512,7 +512,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	}
 #endif
 
-	if (m_loadingState != WebWidget::OngoingLoadingState)
+	if (m_loadingState != OngoingLoadingState)
 	{
 		return;
 	}
@@ -520,7 +520,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	m_networkManager->handleLoadFinished(result);
 
 	m_thumbnail = QPixmap();
-	m_loadingState = WebWidget::FinishedLoadingState;
+	m_loadingState = FinishedLoadingState;
 
 	updateNavigationActions();
 	handleHistory();
@@ -528,7 +528,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
-	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+	emit loadingStateChanged(FinishedLoadingState);
 }
 
 void QtWebKitWebWidget::handleLinkHovered(const QString &link)
@@ -1326,7 +1326,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::ReloadOrStopAction:
-			if (m_loadingState == WebWidget::OngoingLoadingState)
+			if (m_loadingState == OngoingLoadingState)
 			{
 				triggerAction(ActionsManager::StopAction);
 			}
@@ -1930,7 +1930,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 	notifyIconChanged();
 }
 
-void QtWebKitWebWidget::setPermission(FeaturePermission feature, const QUrl &url, WebWidget::PermissionPolicies policies)
+void QtWebKitWebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
 {
 	WebWidget::setPermission(feature, url, policies);
 
@@ -2141,7 +2141,7 @@ QString QtWebKitWebWidget::getPluginToken() const
 	return m_pluginToken;
 }
 
-QVariant QtWebKitWebWidget::getPageInformation(WebWidget::PageInformation key) const
+QVariant QtWebKitWebWidget::getPageInformation(PageInformation key) const
 {
 	if (key == LoadingTimeInformation)
 	{
@@ -2182,7 +2182,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 
 QPixmap QtWebKitWebWidget::getThumbnail()
 {
-	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == WebWidget::OngoingLoadingState)
+	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == OngoingLoadingState)
 	{
 		return m_thumbnail;
 	}
@@ -2352,7 +2352,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		information.entries.append(entry);
 	}
 
-	if (m_loadingState == WebWidget::OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
+	if (m_loadingState == OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
 	{
 		WindowHistoryEntry entry;
 		entry.url = requestedUrl;
@@ -2569,15 +2569,15 @@ WebWidget::ContentStates QtWebKitWebWidget::getContentState() const
 
 	if (url.isEmpty() || url.scheme() == QLatin1String("about"))
 	{
-		return WebWidget::ApplicationContentState;
+		return ApplicationContentState;
 	}
 
 	if (url.scheme() == QLatin1String("file"))
 	{
-		return WebWidget::LocalContentState;
+		return LocalContentState;
 	}
 
-	return (m_networkManager->getContentState() | WebWidget::RemoteContentState);
+	return (m_networkManager->getContentState() | RemoteContentState);
 }
 
 WebWidget::LoadingState QtWebKitWebWidget::getLoadingState() const
@@ -2805,7 +2805,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 					{
-						const WebWidget::HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
+						const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 
 						if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
 						{
