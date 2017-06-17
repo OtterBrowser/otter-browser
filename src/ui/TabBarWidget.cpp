@@ -1462,16 +1462,14 @@ void TabBarWidget::setArea(Qt::ToolBarArea area)
 
 Window* TabBarWidget::getWindow(int index) const
 {
-	if (index < 0 || index >= count())
+	if (index >= 0 && index < count())
 	{
-		return nullptr;
-	}
+		TabHandleWidget *widget(qobject_cast<TabHandleWidget*>(tabButton(index, QTabBar::LeftSide)));
 
-	TabHandleWidget *widget(qobject_cast<TabHandleWidget*>(tabButton(index, QTabBar::LeftSide)));
-
-	if (widget)
-	{
-		return widget->getWindow();
+		if (widget)
+		{
+			return widget->getWindow();
+		}
 	}
 
 	return nullptr;
