@@ -16,8 +16,8 @@ Homepage: http://otter-browser.org/
 Package: otter-browser
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: gstreamer0.10-plugins-base,
- gstreamer0.10-plugins-good
+Recommends: gstreamer1.0-plugins-base,
+ gstreamer1.0-plugins-good
 Description: Web browser controlled by the user, not vice-versa
  Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI
  using Qt5
