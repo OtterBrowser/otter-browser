@@ -202,6 +202,8 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 	if (settings.isNull())
 	{
+		session.path = path;
+
 		return session;
 	}
 
