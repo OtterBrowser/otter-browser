@@ -951,21 +951,18 @@ WindowState Window::getWindowState() const
 {
 	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 	WindowState windowState;
-	windowState.state = Qt::WindowNoState;
+	windowState.state = Qt::WindowMaximized;
 
-	if (subWindow)
+	if (subWindow && !subWindow->isMaximized())
 	{
-		if (subWindow->isMaximized())
-		{
-			windowState.state = Qt::WindowMaximized;
-		}
-		else if (subWindow->isMinimized())
+		if (subWindow->isMinimized())
 		{
 			windowState.state = Qt::WindowMinimized;
 		}
 		else
 		{
 			windowState.geometry = subWindow->geometry();
+			windowState.state = Qt::WindowNoState;
 		}
 	}
 
