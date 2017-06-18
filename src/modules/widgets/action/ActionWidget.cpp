@@ -102,6 +102,12 @@ void ActionWidget::resetAction()
 		action = Application::createAction(m_identifier, QVariantMap(), true, this);
 	}
 
+	if (!action)
+	{
+		action = new Action(m_identifier, getParameters(), this);
+		action->setEnabled(false);
+	}
+
 	removeAction(defaultAction());
 	setDefaultAction(action);
 	setText(getText());
