@@ -94,7 +94,7 @@ void SessionsManager::clearClosedWindows()
 
 void SessionsManager::storeClosedWindow(MainWindow *window)
 {
-	if (!window)
+	if (!window || window->isPrivate())
 	{
 		return;
 	}
