@@ -21,6 +21,8 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
 
+#include <QtGui/QMouseEvent>
+
 namespace Otter
 {
 
@@ -30,10 +32,22 @@ PrivateWindowIndicatorWidget::PrivateWindowIndicatorWidget(const ActionsManager:
 	setIcon(ThemesManager::createIcon(QLatin1String("window-private"), false));
 	setText(definition.options.value(QLatin1String("text"), tr("Private Window")).toString());
 	setButtonStyle(Qt::ToolButtonTextBesideIcon);
+	setCheckable(true);
+	setChecked(true);
 
 	MainWindow *window(MainWindow::findMainWindow(parent));
 
 	m_isHidden = (window && !window->isPrivate());
+}
+
+void PrivateWindowIndicatorWidget::mousePressEvent(QMouseEvent *event)
+{
+	event->ignore();
+}
+
+void PrivateWindowIndicatorWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	event->ignore();
 }
 
 QSize PrivateWindowIndicatorWidget::minimumSizeHint() const

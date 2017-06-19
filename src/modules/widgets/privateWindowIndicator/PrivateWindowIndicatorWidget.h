@@ -35,6 +35,10 @@ public:
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 
+protected:
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+
 private:
 	bool m_isHidden;
 };
