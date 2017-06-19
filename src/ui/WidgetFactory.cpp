@@ -31,6 +31,7 @@
 #include "../modules/widgets/menuButton/MenuButtonWidget.h"
 #include "../modules/widgets/panelChooser/PanelChooserWidget.h"
 #include "../modules/widgets/progressInformation/ProgressInformationWidget.h"
+#include "../modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.h"
 #include "../modules/widgets/search/SearchWidget.h"
 #include "../modules/widgets/statusMessage/StatusMessageWidget.h"
 #include "../modules/widgets/zoom/ZoomWidget.h"
@@ -96,6 +97,11 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 	if (definition.action == QLatin1String("PanelChooserWidget"))
 	{
 		return new PanelChooserWidget(definition, parent);
+	}
+
+	if (definition.action == QLatin1String("PrivateWindowIndicator"))
+	{
+		return new PrivateWindowIndicatorWidget(definition, parent);
 	}
 
 	if (definition.action == QLatin1String("ProgressInformationDocumentProgressWidget") || definition.action == QLatin1String("ProgressInformationTotalProgressWidget") || definition.action == QLatin1String("ProgressInformationTotalSizeWidget") || definition.action == QLatin1String("ProgressInformationElementsWidget") || definition.action == QLatin1String("ProgressInformationSpeedWidget") || definition.action == QLatin1String("ProgressInformationElapsedTimeWidget") || definition.action == QLatin1String("ProgressInformationMessageWidget"))

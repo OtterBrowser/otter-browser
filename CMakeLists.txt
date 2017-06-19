@@ -233,6 +233,7 @@ set(otter_src
 	src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp
 	src/modules/widgets/menuButton/MenuButtonWidget.cpp
 	src/modules/widgets/panelChooser/PanelChooserWidget.cpp
+	src/modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.cpp
 	src/modules/widgets/progressInformation/ProgressInformationWidget.cpp
 	src/modules/widgets/search/SearchWidget.cpp
 	src/modules/widgets/statusMessage/StatusMessageWidget.cpp
