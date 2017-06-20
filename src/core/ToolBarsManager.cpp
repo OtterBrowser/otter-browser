@@ -338,7 +338,10 @@ void ToolBarsManager::resetToolBars()
 
 	for (int i = 0; i < OtherToolBar; ++i)
 	{
-		m_definitions.append(definitions.value(getToolBarName(i)));
+		ToolBarDefinition definition(definitions.value(getToolBarName(i)));
+		definition.identifier = i;
+
+		m_definitions.append(definition);
 
 		emit m_instance->toolBarModified(i);
 	}
