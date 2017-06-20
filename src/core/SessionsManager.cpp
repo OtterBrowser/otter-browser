@@ -371,7 +371,9 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap
 		return calculateOpenHints();
 	}
 
-	if (parameters[QLatin1String("hints")].type() == QVariant::Int)
+	const QVariant::Type type(parameters[QLatin1String("hints")].type());
+
+	if (type == QVariant::Int || type == QVariant::UInt)
 	{
 		return static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
 	}
