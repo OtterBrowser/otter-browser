@@ -494,7 +494,10 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		session.windows.append(windows.at(i)->getSession());
+		if (!windows.at(i)->isPrivate())
+		{
+			session.windows.append(windows.at(i)->getSession());
+		}
 	}
 
 	return saveSession(session);
