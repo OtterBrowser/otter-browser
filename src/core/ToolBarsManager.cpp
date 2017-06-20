@@ -330,22 +330,16 @@ void ToolBarsManager::resetToolBars()
 		emit m_instance->toolBarRemoved(customToolBars.at(i));
 	}
 
-	m_definitions.clear();
-	m_identifiers.clear();
-
 	const QHash<QString, ToolBarDefinition> definitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
 
-	m_definitions.append(definitions[QLatin1String("MenuBar")]);
-	m_definitions.append(definitions[QLatin1String("BookmarksBar")]);
-	m_definitions.append(definitions[QLatin1String("TabBar")]);
-	m_definitions.append(definitions[QLatin1String("AddressBar")]);
-	m_definitions.append(definitions[QLatin1String("ProgressBar")]);
-	m_definitions.append(definitions[QLatin1String("SideBar")]);
-	m_definitions.append(definitions[QLatin1String("StatusBar")]);
-	m_definitions.append(definitions[QLatin1String("ErrorConsoleBar")]);
+	m_identifiers.clear();
+	m_definitions.clear();
+	m_definitions.reserve(definitions.count());
 
-	for (int i = 0; i < m_definitions.count(); ++i)
+	for (int i = 0; i < OtherToolBar; ++i)
 	{
+		m_definitions.append(definitions.value(getToolBarName(i)));
+
 		emit m_instance->toolBarModified(i);
 	}
 
@@ -370,7 +364,13 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		QStringList toolBars({QLatin1String("MenuBar"), QLatin1String("BookmarksBar"), QLatin1String("TabBar"), QLatin1String("AddressBar"), QLatin1String("ProgressBar"), QLatin1String("SideBar"), QLatin1String("StatusBar"), QLatin1String("ErrorConsoleBar")});
+		QStringList toolBars;
+
+		for (int i = 0; i < OtherToolBar; ++i)
+		{
+			toolBars.append(getToolBarName(i));
+		}
+
 		toolBars.append(m_identifiers.values());
 
 		identifier = m_definitions.count();
