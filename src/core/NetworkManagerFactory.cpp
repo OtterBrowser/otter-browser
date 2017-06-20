@@ -190,7 +190,11 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 			}
 
 			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+
+			if (m_isEditor)
+			{
+				items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+			}
 		}
 
 		insertRow(items, parent, -1, type);
