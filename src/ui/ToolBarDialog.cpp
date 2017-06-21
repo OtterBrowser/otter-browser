@@ -525,6 +525,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	else if (identifier == QLatin1String("AddressWidget"))
 	{
 		item->setText(tr("Address Field"));
+		item->setIcon(ThemesManager::createIcon(QLatin1String("document-open")));
 	}
 	else if (identifier == QLatin1String("ConfigurationOptionWidget"))
 	{
