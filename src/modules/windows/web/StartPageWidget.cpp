@@ -612,6 +612,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 	else
 	{
 		menu.addAction(tr("Configure…"), this, SLOT(configure()));
+		menu.addSeparator();
 		menu.addAction(tr("Add Tile…"), this, SLOT(addTile()));
 	}
 
