@@ -597,7 +597,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 	if (index.isValid() && index.data(Qt::AccessibleDescriptionRole).toString() != QLatin1String("add"))
 	{
-		menu.addAction(tr("Open"), this, SLOT(openTile()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openTile()));
 		menu.addSeparator();
 		menu.addAction(tr("Edit…"), this, SLOT(editTile()));
 
@@ -607,13 +607,13 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 		}
 
 		menu.addSeparator();
-		menu.addAction(tr("Delete"), this, SLOT(removeTile()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(removeTile()));
 	}
 	else
 	{
 		menu.addAction(tr("Configure…"), this, SLOT(configure()));
 		menu.addSeparator();
-		menu.addAction(tr("Add Tile…"), this, SLOT(addTile()));
+		menu.addAction(ThemesManager::createIcon(QLatin1String("list-add")), tr("Add Tile…"), this, SLOT(addTile()));
 	}
 
 	menu.exec(hitPosition);
