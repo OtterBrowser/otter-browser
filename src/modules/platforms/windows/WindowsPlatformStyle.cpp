@@ -181,4 +181,14 @@ void WindowsPlatformStyle::checkForModernStyle()
 	}
 }
 
+int WindowsPlatformStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+{
+	if (metric == PM_ToolBarItemSpacing)
+	{
+		return 3;
+	}
+
+	return Style::pixelMetric(metric, option, widget);
+}
+
 }
