@@ -287,11 +287,7 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		const QHash<QString, ToolBarDefinition> definitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
-		ToolBarDefinition definition(definitions.value(getToolBarName(identifier)));
-		definition.identifier = identifier;
-
-		setToolBar(definition);
+		setToolBar(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true).value(getToolBarName(identifier)));
 	}
 }
 
@@ -338,10 +334,7 @@ void ToolBarsManager::resetToolBars()
 
 	for (int i = 0; i < OtherToolBar; ++i)
 	{
-		ToolBarDefinition definition(definitions.value(getToolBarName(i)));
-		definition.identifier = i;
-
-		m_definitions.append(definition);
+		m_definitions.append(definitions.value(getToolBarName(i)));
 
 		emit m_instance->toolBarModified(i);
 	}
@@ -563,6 +556,11 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
 		toolBar.hasToggle = toolBarObject.value(QLatin1String("hasToggle")).toBool();
 		toolBar.isDefault = isDefault;
+
+		if (isDefault)
+		{
+			toolBar.identifier = getToolBarIdentifier(identifier);
+		}
 
 		if (toolBar.normalVisibility == OnHoverVisibleToolBar)
 		{
