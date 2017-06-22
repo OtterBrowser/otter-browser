@@ -165,23 +165,26 @@ void ContentBlockingDialog::updateProfile(const QString &name)
 			{
 				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
-				ContentBlockingProfile::ProfileCategory category(profile->getCategory());
-				QString title(profile->getTitle());
-
-				if (category == ContentBlockingProfile::RegionalCategory)
+				if (profile)
 				{
-					const QVector<QLocale::Language> languages(profile->getLanguages());
-					QStringList languageNames;
+					QString title(profile->getTitle());
 
-					for (int k = 0; k < languages.count(); ++k)
+					if (profile->getCategory() == ContentBlockingProfile::RegionalCategory)
 					{
-						languageNames.append(QLocale::languageToString(languages.at(k)));
+						const QVector<QLocale::Language> languages(profile->getLanguages());
+						QStringList languageNames;
+
+						for (int k = 0; k < languages.count(); ++k)
+						{
+							languageNames.append(QLocale::languageToString(languages.at(k)));
+						}
+
+						title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
 					}
 
-					title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+					m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
 				}
 
-				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
 				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
 				return;
