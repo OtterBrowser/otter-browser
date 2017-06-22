@@ -68,7 +68,10 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 		{
 			while (!stream.atEnd())
 			{
-				customRulesModel->appendRow(new QStandardItem(stream.readLine().trimmed()));
+				QStandardItem *item(new QStandardItem(stream.readLine().trimmed()));
+				item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+				customRulesModel->appendRow(item);
 			}
 		}
 		else
