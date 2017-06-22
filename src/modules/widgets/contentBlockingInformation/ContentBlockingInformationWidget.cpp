@@ -145,6 +145,10 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 				type = tr("subframe");
 
 				break;
+			case NetworkManager::PopupType:
+				type = tr("pop-up");
+
+				break;
 			case NetworkManager::StyleSheetType:
 				type = tr("stylesheet");
 
