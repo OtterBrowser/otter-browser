@@ -36,8 +36,8 @@ namespace Otter
 {
 
 QVector<QChar> ContentBlockingProfile::m_separators({QLatin1Char('_'), QLatin1Char('-'), QLatin1Char('.'), QLatin1Char('%')});
-QHash<QString, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
-QHash<NetworkManager::ResourceType, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
+QHash<QString, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("popup"), PopupOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
+QHash<NetworkManager::ResourceType, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption},{NetworkManager::PopupType, PopupOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
 
 ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : QObject(parent),
 	m_root(nullptr),
@@ -256,7 +256,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 			{
 				ruleOptions |= option;
 			}
-			else if (option != WebSocketOption)
+			else if (option != WebSocketOption && option != PopupOption)
 			{
 				ruleOptions |= static_cast<RuleOption>(option * 2);
 			}
@@ -526,7 +526,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(Conte
 
 		for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
 		{
-			const bool supportsException(iterator.value() != WebSocketOption);
+			const bool supportsException(iterator.value() != WebSocketOption && iterator.value() != PopupOption);
 
 			if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2))))
 			{
@@ -544,6 +544,10 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(Conte
 				}
 			}
 		}
+	}
+	else if (resourceType == NetworkManager::PopupType)
+	{
+		isBlocked = false;
 	}
 
 	if (isBlocked)

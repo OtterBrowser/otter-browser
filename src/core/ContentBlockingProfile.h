@@ -96,8 +96,9 @@ protected:
 		XmlHttpRequestOption = 16384,
 		XmlHttpRequestExceptionOption = 32768,
 		WebSocketOption = 65536,
-		ElementHideOption = 131072,
-		GenericHideOption = 262144
+		PopupOption = 131072,
+		ElementHideOption = 262144,
+		GenericHideOption = 524288
 	};
 
 	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
