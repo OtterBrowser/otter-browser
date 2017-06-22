@@ -370,13 +370,13 @@ QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 {
 	QStringList subdomainList;
 	int dotPosition(domain.lastIndexOf(QLatin1Char('.')));
-	dotPosition = domain.lastIndexOf(QLatin1Char('.'), dotPosition - 1);
+	dotPosition = domain.lastIndexOf(QLatin1Char('.'), (dotPosition - 1));
 
 	while (dotPosition != -1)
 	{
 		subdomainList.append(domain.mid(dotPosition + 1));
 
-		dotPosition = domain.lastIndexOf(QLatin1Char('.'), dotPosition - 1);
+		dotPosition = domain.lastIndexOf(QLatin1Char('.'), (dotPosition - 1));
 	}
 
 	subdomainList.append(domain);
