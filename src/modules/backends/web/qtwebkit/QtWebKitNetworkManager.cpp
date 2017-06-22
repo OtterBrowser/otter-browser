@@ -96,7 +96,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 
 	setCookieJar(m_cookieJarProxy);
 
-	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
+	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(handleRequestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
 	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
@@ -161,7 +161,7 @@ void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
 
 		setParent(nullptr);
 
-		connect(reply, SIGNAL(finished()), this, SLOT(transferFinished()));
+		connect(reply, SIGNAL(finished()), this, SLOT(handleTransferFinished()));
 	}
 }
 
@@ -214,7 +214,7 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 	setPageInformation(WebWidget::BytesReceivedInformation, (m_pageInformation[WebWidget::BytesReceivedInformation].toLongLong() + difference));
 }
 
-void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
+void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 {
 	if (!reply || !m_replies.contains(reply))
 	{
@@ -249,7 +249,7 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 	disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 }
 
-void QtWebKitNetworkManager::transferFinished()
+void QtWebKitNetworkManager::handleTransferFinished()
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
