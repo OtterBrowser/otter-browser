@@ -566,17 +566,4 @@ bool ContentBlockingManager::areWildcardsEnabled()
 	return m_areWildcardsEnabled;
 }
 
-bool ContentBlockingManager::updateProfile(const QString &profile)
-{
-	for (int i = 0; i < m_profiles.count(); ++i)
-	{
-		if (m_profiles.at(i)->getName() == profile)
-		{
-			return m_profiles[i]->downloadRules();
-		}
-	}
-
-	return false;
-}
-
 }

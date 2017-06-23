@@ -216,10 +216,11 @@ void ContentBlockingDialog::removeProfile()
 void ContentBlockingDialog::updateProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
+	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(NameRole).toString()));
 
-	if (index.isValid())
+	if (profile)
 	{
-		ContentBlockingManager::updateProfile(index.data(NameRole).toString());
+		profile->downloadRules();
 	}
 }
 

@@ -67,7 +67,6 @@ public:
 	static QVector<int> getProfileList(const QStringList &names);
 	static CosmeticFiltersMode getCosmeticFiltersMode();
 	static bool areWildcardsEnabled();
-	static bool updateProfile(const QString &profile);
 
 public slots:
 	void scheduleSave();
