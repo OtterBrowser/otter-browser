@@ -85,7 +85,7 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	visibilityMenu->setEnabled(model()->columnCount() > 1);
 
 	QAction *showAllColumnsAction(nullptr);
-	bool allColumnsVisible(true);
+	bool areAllColumnsVisible(true);
 
 	if (visibilityMenu->isEnabled())
 	{
@@ -113,15 +113,15 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 
 			if (!action->isChecked())
 			{
-				allColumnsVisible = false;
+				areAllColumnsVisible = false;
 			}
 		}
 	}
 
 	if (showAllColumnsAction)
 	{
-		showAllColumnsAction->setChecked(allColumnsVisible);
-		showAllColumnsAction->setEnabled(!allColumnsVisible);
+		showAllColumnsAction->setChecked(areAllColumnsVisible);
+		showAllColumnsAction->setEnabled(!areAllColumnsVisible);
 	}
 
 	connect(sortMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleSort(QAction*)));
