@@ -453,7 +453,10 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 	{
 		if (items.isEmpty())
 		{
-			m_sourceModel->appendRow(new QStandardItem());
+			QStandardItem *item(new QStandardItem());
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+			m_sourceModel->appendRow(item);
 		}
 		else
 		{
