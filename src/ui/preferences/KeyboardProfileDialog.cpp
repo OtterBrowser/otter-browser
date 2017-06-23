@@ -125,10 +125,10 @@ void KeyboardProfileDialog::changeEvent(QEvent *event)
 
 void KeyboardProfileDialog::addShortcut()
 {
-	QList<QStandardItem*> items({new QStandardItem()});
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+	QStandardItem* item(new QStandardItem());
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->shortcutsViewWidget->insertRow(items);
+	m_ui->shortcutsViewWidget->insertRow(item);
 }
 
 void KeyboardProfileDialog::removeShortcut()
@@ -169,7 +169,7 @@ void KeyboardProfileDialog::updateActionsActions()
 		if (!shortcut.isEmpty())
 		{
 			QList<QStandardItem*> items({new QStandardItem(shortcut.toString())});
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 			m_ui->shortcutsViewWidget->getSourceModel()->appendRow(items);
 		}
