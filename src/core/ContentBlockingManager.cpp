@@ -513,15 +513,15 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 				}
 			}
 
-			const QJsonArray languages(profileObject.value(QLatin1String("languages")).toArray());
-			QStringList parsedLanguages;
+			const QJsonArray languagesArray(profileObject.value(QLatin1String("languages")).toArray());
+			QStringList languages;
 
-			for (int j = 0; j < languages.count(); ++j)
+			for (int j = 0; j < languagesArray.count(); ++j)
 			{
-				parsedLanguages.append(languages.at(j).toString());
+				languages.append(languagesArray.at(j).toString());
 			}
 
-			ContentBlockingProfile *profile(new ContentBlockingProfile(profiles.at(i), title, updateUrl, QDateTime::fromString(profileObject.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate), parsedLanguages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
+			ContentBlockingProfile *profile(new ContentBlockingProfile(profiles.at(i), title, updateUrl, QDateTime::fromString(profileObject.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate), languages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
 
 			m_profiles.append(profile);
 
