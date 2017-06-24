@@ -531,7 +531,7 @@ void ToolBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
 
 void ToolBarWidget::dropEvent(QDropEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
+	if (m_bookmark && event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
 	{
 		event->accept();
 
