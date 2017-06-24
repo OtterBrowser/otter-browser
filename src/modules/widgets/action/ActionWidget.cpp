@@ -37,6 +37,11 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ActionsManager:
 {
 	setWindow(window);
 
+	if (identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction)
+	{
+		setAcceptDrops(true);
+	}
+
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
@@ -87,6 +92,49 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 	setDefaultAction(action);
 	setText(getText());
 	setIcon(getIcon());
+}
+
+void ActionWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasUrls() && (m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction))
+	{
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
+	}
+}
+
+void ActionWidget::dropEvent(QDropEvent *event)
+{
+	if (event->mimeData()->hasUrls() && (m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction))
+	{
+		QVariantMap parameters(getParameters());
+		QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
+		SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, Qt::LeftButton, event->keyboardModifiers()));
+
+		if (m_identifier == ActionsManager::NewTabPrivateAction)
+		{
+			hints |= SessionsManager::PrivateOpen;
+		}
+
+		parameters[QLatin1String("hints")] = QVariant(hints);
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			QVariantMap actionParameters(parameters);
+			actionParameters[QLatin1String("url")] = urls.at(i);
+
+			Application::triggerAction(ActionsManager::OpenUrlAction, actionParameters, this);
+		}
+
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
+	}
 }
 
 void ActionWidget::resetAction()

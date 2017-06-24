@@ -42,6 +42,8 @@ public:
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
 	bool event(QEvent *event) override;
 
 protected slots:
