@@ -343,11 +343,13 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 {
 	if (frame == m_page->mainFrame())
 	{
-		setZoom(m_page->history()->currentItem().userData().toList().value(ZoomEntryData, getZoom()).toInt());
+		const QVariantList data(m_page->history()->currentItem().userData().toList());
+
+		setZoom(data.value(ZoomEntryData, getZoom()).toInt());
 
 		if (m_page->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
-			m_page->mainFrame()->setScrollPosition(m_page->history()->currentItem().userData().toList().value(PositionEntryData).toPoint());
+			m_page->mainFrame()->setScrollPosition(data.value(PositionEntryData).toPoint());
 		}
 	}
 }
