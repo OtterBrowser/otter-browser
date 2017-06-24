@@ -496,7 +496,7 @@ void ToolBarWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void ToolBarWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
+	if (canDrop(event))
 	{
 		event->accept();
 
@@ -510,7 +510,7 @@ void ToolBarWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void ToolBarWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
+	if (canDrop(event))
 	{
 		event->accept();
 
@@ -531,7 +531,7 @@ void ToolBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
 
 void ToolBarWidget::dropEvent(QDropEvent *event)
 {
-	if (m_bookmark && event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()))
+	if (canDrop(event))
 	{
 		event->accept();
 
@@ -1204,6 +1204,11 @@ int ToolBarWidget::getIconSize() const
 int ToolBarWidget::getMaximumButtonSize() const
 {
 	return getDefinition().maximumButtonSize;
+}
+
+bool ToolBarWidget::canDrop(QDropEvent *event) const
+{
+	return (m_bookmark && event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()));
 }
 
 bool ToolBarWidget::shouldBeVisible(bool isFullScreen) const
