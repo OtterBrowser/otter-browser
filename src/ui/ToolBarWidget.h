@@ -51,7 +51,7 @@ protected:
 	void dragMoveEvent(QDragMoveEvent *event) override;
 	void dragLeaveEvent(QDragLeaveEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
-	bool canDrop(const QMimeData *mimeData);
+	bool canDrop(QDropEvent *event);
 
 private:
 	MainWindow *m_mainWindow;

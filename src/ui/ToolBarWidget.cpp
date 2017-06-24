@@ -70,7 +70,7 @@ void ToolBarDropZoneWidget::paintEvent(QPaintEvent *event)
 
 void ToolBarDropZoneWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (canDrop(event->mimeData()))
+	if (canDrop(event))
 	{
 		event->accept();
 
@@ -86,7 +86,7 @@ void ToolBarDropZoneWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void ToolBarDropZoneWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-	if (canDrop(event->mimeData()))
+	if (canDrop(event))
 	{
 		event->accept();
 	}
@@ -107,7 +107,7 @@ void ToolBarDropZoneWidget::dragLeaveEvent(QDragLeaveEvent *event)
 
 void ToolBarDropZoneWidget::dropEvent(QDropEvent *event)
 {
-	if (!canDrop(event->mimeData()))
+	if (!canDrop(event))
 	{
 		event->ignore();
 
@@ -151,9 +151,9 @@ QSize ToolBarDropZoneWidget::sizeHint() const
 	return QSize(5, QToolBar::sizeHint().height());
 }
 
-bool ToolBarDropZoneWidget::canDrop(const QMimeData *mimeData)
+bool ToolBarDropZoneWidget::canDrop(QDropEvent *event)
 {
-	return (mimeData && !mimeData->property("x-toolbar-identifier").isNull() && m_mainWindow->toolBarArea(this) != Qt::NoToolBarArea);
+	return (!event->mimeData()->property("x-toolbar-identifier").isNull() && m_mainWindow->toolBarArea(this) != Qt::NoToolBarArea);
 }
 
 ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
