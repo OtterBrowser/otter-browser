@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,21 @@ void StatusMessageWidget::resizeEvent(QResizeEvent *event)
 {
 	QLabel::resizeEvent(event);
 
+	QFont font(parentWidget()->font());
+
+	if (QFontMetrics(font).height() > height())
+	{
+		int size(height());
+
+		font.setPixelSize(height());
+
+		while (size > 0 && QFontMetrics(font).height() > height())
+		{
+			font.setPixelSize(--size);
+		}
+	}
+
+	setFont(font);
 	setMessage(m_message);
 }
 
