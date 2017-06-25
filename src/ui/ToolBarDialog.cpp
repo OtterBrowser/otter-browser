@@ -603,6 +603,10 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 			item->setIcon(ThemesManager::createIcon(QLatin1String("edit-find")));
 		}
 	}
+	else if (identifier == QLatin1String("SizeGripWidget"))
+	{
+		item->setText(tr("Window Resize Handle"));
+	}
 	else if (identifier == QLatin1String("StatusMessageWidget"))
 	{
 		item->setText(tr("Status Message Field"));
