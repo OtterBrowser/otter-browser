@@ -25,7 +25,6 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
 
@@ -35,8 +34,8 @@ namespace Otter
 StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	m_toolBar(new ToolBarWidget(ToolBarsManager::StatusBar, nullptr, this))
 {
-	handleOptionChanged(SettingsManager::Interface_ShowSizeGripOption, SettingsManager::getOption(SettingsManager::Interface_ShowSizeGripOption));
 	setFixedHeight(m_toolBar->getIconSize());
+	setSizeGripEnabled(false);
 
 	QTimer::singleShot(100, this, SLOT(updateGeometries()));
 
@@ -44,17 +43,6 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	{
 		setFixedHeight(iconSize);
 	});
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
-}
-
-void StatusBarWidget::changeEvent(QEvent *event)
-{
-	QStatusBar::changeEvent(event);
-
-	if (event->type() == QEvent::LayoutDirectionChange)
-	{
-		updateGeometries();
-	}
 }
 
 void StatusBarWidget::paintEvent(QPaintEvent *event)
@@ -82,29 +70,10 @@ void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu->deleteLater();
 }
 
-void StatusBarWidget::handleOptionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Interface_ShowSizeGripOption)
-	{
-		setSizeGripEnabled(value.toBool());
-		updateGeometries();
-	}
-}
-
 void StatusBarWidget::updateGeometries()
 {
-	int offset(0);
-
-	if (isSizeGripEnabled())
-	{
-		QStyleOption option;
-		option.init(this);
-
-		offset = (style()->sizeFromContents(QStyle::CT_SizeGrip, &option, QSize(13, 13), this).expandedTo(QApplication::globalStrut())).height();
-	}
-
-	m_toolBar->setFixedSize((width() - offset), m_toolBar->getIconSize());
-	m_toolBar->move(((layoutDirection() == Qt::RightToLeft) ? offset : 0), 0);
+	m_toolBar->setFixedSize(size());
+	m_toolBar->move(0, 0);
 }
 
 }

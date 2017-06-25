@@ -129,7 +129,6 @@ public:
 		Interface_NewTabOpeningActionOption,
 		Interface_NotificationVisibilityDurationOption,
 		Interface_ShowScrollBarsOption,
-		Interface_ShowSizeGripOption,
 		Interface_StyleSheetOption,
 		Interface_TabCrashingActionOption,
 		Interface_TabSwitchingModeOption,

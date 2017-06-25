@@ -149,7 +149,6 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Interface_NewTabOpeningActionOption, EnumerationType, QLatin1String("maximizeTab"), QStringList({QLatin1String("doNothing"), QLatin1String("maximizeTab"), QLatin1String("cascadeAll"), QLatin1String("tileAll")}));
 	registerOption(Interface_NotificationVisibilityDurationOption, IntegerType, 5);
 	registerOption(Interface_ShowScrollBarsOption, BooleanType, true);
-	registerOption(Interface_ShowSizeGripOption, BooleanType, true);
 	registerOption(Interface_StyleSheetOption, PathType, QString());
 	registerOption(Interface_TabCrashingActionOption, EnumerationType, QLatin1String("ask"), QStringList({QLatin1String("ask"), QLatin1String("close"), QLatin1String("reload")}));
 	registerOption(Interface_TabSwitchingModeOption, EnumerationType, QLatin1String("sortByLastActivity"), QStringList({QLatin1String("sortByLastActivity"), QLatin1String("noSort"), QLatin1String("noSortWithoutList")}));

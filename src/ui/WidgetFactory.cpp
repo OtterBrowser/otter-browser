@@ -48,6 +48,8 @@
 #include "../modules/windows/web/WebContentsWidget.h"
 #include "../modules/windows/windows/WindowsContentsWidget.h"
 
+#include <QtWidgets/QSizeGrip>
+
 namespace Otter
 {
 
@@ -115,6 +117,11 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 		searchWidget->setOptions(definition.options);
 
 		return searchWidget;
+	}
+
+	if (definition.action == QLatin1String("SizeGripWidget"))
+	{
+		return new QSizeGrip(parent);
 	}
 
 	if (definition.action == QLatin1String("StatusMessageWidget"))
