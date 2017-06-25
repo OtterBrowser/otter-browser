@@ -559,7 +559,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	{
 		item->setText(tr("Sidebar Panel Chooser"));
 	}
-	else if (identifier == QLatin1String("PrivateWindowIndicator"))
+	else if (identifier == QLatin1String("PrivateWindowIndicatorWidget"))
 	{
 		item->setText(tr("Private Window Indicator"));
 		item->setIcon(ThemesManager::createIcon(QLatin1String("window-private")));

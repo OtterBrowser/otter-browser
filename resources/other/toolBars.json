@@ -24,7 +24,7 @@
 		"actions":
 		[
 			"MenuButtonWidget",
-			"PrivateWindowIndicator",
+			"PrivateWindowIndicatorWidget",
 			"TabBarWidget",
 			"NewTabAction",
 			"spacer",

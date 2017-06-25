@@ -101,7 +101,7 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 		return new PanelChooserWidget(definition, parent);
 	}
 
-	if (definition.action == QLatin1String("PrivateWindowIndicator"))
+	if (definition.action == QLatin1String("PrivateWindowIndicatorWidget"))
 	{
 		return new PrivateWindowIndicatorWidget(definition, parent);
 	}
