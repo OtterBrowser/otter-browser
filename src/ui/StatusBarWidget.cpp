@@ -36,6 +36,7 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 {
 	setFixedHeight(m_toolBar->getIconSize());
 	setSizeGripEnabled(false);
+	setStyleSheet(QLatin1String("padding:1px;"));
 
 	QTimer::singleShot(100, this, SLOT(updateGeometries()));
 
