@@ -30,8 +30,6 @@ class ToolBarWidget;
 
 class StatusBarWidget final : public QStatusBar
 {
-	Q_OBJECT
-
 public:
 	explicit StatusBarWidget(MainWindow *parent);
 
