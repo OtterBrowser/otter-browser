@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "ToolBarWidget.h"
 #include "../core/ActionsManager.h"
 
-#include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QStyle>
@@ -37,8 +36,6 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	setFixedHeight(m_toolBar->getIconSize());
 	setSizeGripEnabled(false);
 	setStyleSheet(QLatin1String("padding:1px;"));
-
-	QTimer::singleShot(100, this, SLOT(updateGeometries()));
 
 	connect(m_toolBar, &ToolBarWidget::iconSizeChanged, [&](int iconSize)
 	{
@@ -61,7 +58,8 @@ void StatusBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QStatusBar::resizeEvent(event);
 
-	updateGeometries();
+	m_toolBar->setFixedSize(size());
+	m_toolBar->move(0, 0);
 }
 
 void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -69,12 +67,6 @@ void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu *menu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::StatusBar));
 	menu->exec(event->globalPos());
 	menu->deleteLater();
-}
-
-void StatusBarWidget::updateGeometries()
-{
-	m_toolBar->setFixedSize(size());
-	m_toolBar->move(0, 0);
 }
 
 }
