@@ -24,7 +24,6 @@
 #include "WebWidget.h"
 
 #include <QtGui/QMovie>
-#include <QtWidgets/QProxyStyle>
 #include <QtWidgets/QTabBar>
 
 namespace Otter
