@@ -20,9 +20,7 @@
 #include "StatusBarWidget.h"
 #include "MainWindow.h"
 #include "ToolBarWidget.h"
-#include "../core/ActionsManager.h"
 
-#include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
@@ -60,13 +58,6 @@ void StatusBarWidget::resizeEvent(QResizeEvent *event)
 
 	m_toolBar->setFixedSize(size());
 	m_toolBar->move(0, 0);
-}
-
-void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
-{
-	QMenu *menu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::StatusBar));
-	menu->exec(event->globalPos());
-	menu->deleteLater();
 }
 
 }
