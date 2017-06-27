@@ -88,6 +88,9 @@ void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap, bool 
 		m_pixmapLabel->show();
 	}
 
+	const int width(m_textLabel->fontMetrics().width(text) + 8);
+
+	m_textLabel->setFixedWidth(((showFullText || pixmap.isNull()) && width < 260) ? width : 260);
 	m_textLabel->setText(showFullText ? text : m_textLabel->fontMetrics().elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), m_textLabel->width()));
 	m_textLabel->setWordWrap(showFullText);
 
