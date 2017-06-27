@@ -456,13 +456,17 @@ QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
 	}
 
 	QFile file(QString(":/modules/backends/web/qtwebkit/resources/%1.js").arg(path));
-	file.open(QIODevice::ReadOnly);
 
-	const QVariant result(element.evaluateJavaScript(file.readAll()));
+	if (file.open(QIODevice::ReadOnly))
+	{
+		const QVariant result(element.evaluateJavaScript(file.readAll()));
 
-	file.close();
+		file.close();
 
-	return result;
+		return result;
+	}
+
+	return QVariant();
 }
 
 QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
