@@ -87,11 +87,14 @@ void TabHandleWidget::timerEvent(QTimerEvent *event)
 
 		m_dragTimer = 0;
 
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-		if (mainWindow)
+		if (rect().contains(mapFromGlobal(QCursor::pos())))
 		{
-			mainWindow->setActiveWindowByIdentifier(m_window->getIdentifier());
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+			if (mainWindow)
+			{
+				mainWindow->setActiveWindowByIdentifier(m_window->getIdentifier());
+			}
 		}
 	}
 }
@@ -274,23 +277,11 @@ void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void TabHandleWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	event->accept();
+	Q_UNUSED(event);
 
 	if (m_dragTimer == 0 && m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
 	{
 		m_dragTimer = startTimer(500);
-	}
-}
-
-void TabHandleWidget::dragLeaveEvent(QDragLeaveEvent *event)
-{
-	Q_UNUSED(event)
-
-	if (m_dragTimer != 0)
-	{
-		killTimer(m_dragTimer);
-
-		m_dragTimer = 0;
 	}
 }
 
