@@ -43,6 +43,7 @@ public:
 	Window* getWindow() const;
 
 protected:
+	void timerEvent(QTimerEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void moveEvent(QMoveEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
@@ -50,6 +51,8 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dragLeaveEvent(QDragLeaveEvent *event) override;
 
 protected slots:
 	void markAsActive();
@@ -64,6 +67,7 @@ private:
 	QRect m_urlIconRectangle;
 	QRect m_thumbnailRectangle;
 	QRect m_titleRectangle;
+	int m_dragTimer;
 	bool m_isCloseButtonUnderMouse;
 	bool m_wasCloseButtonPressed;
 

@@ -61,10 +61,12 @@ bool TabBarWidget::m_isUrlIconEnabled(true);
 TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget(parent),
 	m_window(window),
 	m_tabBarWidget(parent),
+	m_dragTimer(0),
 	m_isCloseButtonUnderMouse(false),
 	m_wasCloseButtonPressed(false)
 {
 	handleLoadingStateChanged(window->getLoadingState());
+	setAcceptDrops(true);
 	setMouseTracking(true);
 
 	connect(window, SIGNAL(activated()), this, SLOT(markAsActive()));
@@ -75,6 +77,23 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	connect(parent, SIGNAL(currentChanged(int)), this, SLOT(updateGeometries()));
 	connect(parent, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateGeometries()));
 	connect(parent, SIGNAL(needsGeometriesUpdate()), this, SLOT(updateGeometries()));
+}
+
+void TabHandleWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_dragTimer)
+	{
+		killTimer(m_dragTimer);
+
+		m_dragTimer = 0;
+
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			mainWindow->setActiveWindowByIdentifier(m_window->getIdentifier());
+		}
+	}
 }
 
 void TabHandleWidget::paintEvent(QPaintEvent *event)
@@ -251,6 +270,28 @@ void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 
 	QWidget::mouseReleaseEvent(event);
+}
+
+void TabHandleWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	event->accept();
+
+	if (m_dragTimer == 0 && m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
+	{
+		m_dragTimer = startTimer(500);
+	}
+}
+
+void TabHandleWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+	Q_UNUSED(event)
+
+	if (m_dragTimer != 0)
+	{
+		killTimer(m_dragTimer);
+
+		m_dragTimer = 0;
+	}
 }
 
 void TabHandleWidget::markAsActive()
