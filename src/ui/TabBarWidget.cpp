@@ -277,9 +277,7 @@ void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void TabHandleWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	Q_UNUSED(event);
-
-	if (m_dragTimer == 0 && m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
+	if (m_dragTimer == 0 && event->mimeData()->property("x-window-identifier").isNull() && m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
 	{
 		m_dragTimer = startTimer(500);
 	}
