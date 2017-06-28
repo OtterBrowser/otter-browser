@@ -43,7 +43,6 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QMimeDatabase>
 #include <QtGui/QClipboard>
-#include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
