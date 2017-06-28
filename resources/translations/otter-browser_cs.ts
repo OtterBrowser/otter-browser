@@ -5935,32 +5935,32 @@ Adresa: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="542"/>
         <source>Progress Information (Document Progress)</source>
-        <translation>Informace o postupu (postup dokumentu)</translation>
+        <translation>Údaj o postupu (postup dokumentu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="546"/>
         <source>Progress Information (Total Progress)</source>
-        <translation>Informace o postupu (celkový postup)</translation>
+        <translation>Údaj o postupu (celkový postup)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="550"/>
         <source>Progress Information (Loaded Elements)</source>
-        <translation>Informace o postupu (nahrané prvky)</translation>
+        <translation>Údaj o postupu (nahrané prvky)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="554"/>
         <source>Progress Information (Loading Speed)</source>
-        <translation>Informace o postupu (rychlost nahrávání)</translation>
+        <translation>Údaj o postupu (rychlost nahrávání)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="558"/>
         <source>Progress Information (Elapsed Time)</source>
-        <translation>Informace o postupu (uplynulý čas)</translation>
+        <translation>Údaj o postupu (uplynulý čas)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="562"/>
         <source>Progress Information (Status Message)</source>
-        <translation>Informace o postupu (zpráva o stavu)</translation>
+        <translation>Údaj o postupu (zpráva o stavu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="570"/>
