@@ -128,11 +128,13 @@ void QtWebEnginePage::pageLoadFinished()
 			settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
 
 			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
-			file.open(QIODevice::ReadOnly);
 
-			runJavaScript(file.readAll());
+			if (file.open(QIODevice::ReadOnly))
+			{
+				runJavaScript(file.readAll());
 
-			file.close();
+				file.close();
+			}
 		}
 
 		if (isViewingMedia != m_isViewingMedia)

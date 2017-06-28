@@ -208,11 +208,13 @@ void QtWebEngineWebWidget::search(const QString &query, const QString &searchEng
 		{
 #if QT_VERSION < 0x050900
 			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/sendPost.js"));
-			file.open(QIODevice::ReadOnly);
 
-			m_page->runJavaScript(QString(file.readAll()).arg(request.url().toString()).arg(QString(body)));
+			if (file.open(QIODevice::ReadOnly))
+			{
+				m_page->runJavaScript(QString(file.readAll()).arg(request.url().toString()).arg(QString(body)));
 
-			file.close();
+				file.close();
+			}
 #else
 			QWebEngineHttpRequest httpRequest(request.url(), QWebEngineHttpRequest::Post);
 			httpRequest.setPostData(body);
@@ -789,7 +791,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CreateSearchAction:
 			{
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/createSearch.js"));
-				file.open(QIODevice::ReadOnly);
+
+				if (!file.open(QIODevice::ReadOnly))
+				{
+					return;
+				}
 
 				m_page->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()), [&](const QVariant &result)
 				{
@@ -1633,7 +1639,11 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)
 {
 	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
-	file.open(QIODevice::ReadOnly);
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return HitTestResult();
+	}
 
 	QEventLoop eventLoop;
 
