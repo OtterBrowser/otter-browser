@@ -2417,7 +2417,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 
 			if (parentElement.findAll(QLatin1String("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")).count() > 0)
 			{
-				result.flags |= IsFormTest;
+				result.flags |= HitTestResult::IsFormTest;
 			}
 		}
 	}
@@ -2430,50 +2430,50 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 		{
 			if (!nativeResult.element().hasAttribute(QLatin1String("disabled")) && !nativeResult.element().hasAttribute(QLatin1String("readonly")))
 			{
-				result.flags |= IsContentEditableTest;
+				result.flags |= HitTestResult::IsContentEditableTest;
 			}
 
 			if (nativeResult.element().evaluateJavaScript(QLatin1String("this.value")).toString().isEmpty())
 			{
-				result.flags |= IsEmptyTest;
+				result.flags |= HitTestResult::IsEmptyTest;
 			}
 		}
 	}
 	else if (nativeResult.isContentEditable())
 	{
-		result.flags |= IsContentEditableTest;
+		result.flags |= HitTestResult::IsContentEditableTest;
 	}
 
 	if (nativeResult.isContentSelected())
 	{
-		result.flags |= IsSelectedTest;
+		result.flags |= HitTestResult::IsSelectedTest;
 	}
 
 	if (nativeResult.element().evaluateJavaScript(QLatin1String("this.spellcheck")).toBool())
 	{
-		result.flags |= IsSpellCheckEnabled;
+		result.flags |= HitTestResult::IsSpellCheckEnabled;
 	}
 
 	if (result.mediaUrl.isValid())
 	{
 		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.controls")).toBool())
 		{
-			result.flags |= MediaHasControlsTest;
+			result.flags |= HitTestResult::MediaHasControlsTest;
 		}
 
 		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.looped")).toBool())
 		{
-			result.flags |= MediaIsLoopedTest;
+			result.flags |= HitTestResult::MediaIsLoopedTest;
 		}
 
 		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.muted")).toBool())
 		{
-			result.flags |= MediaIsMutedTest;
+			result.flags |= HitTestResult::MediaIsMutedTest;
 		}
 
 		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.paused")).toBool())
 		{
-			result.flags |= MediaIsPausedTest;
+			result.flags |= HitTestResult::MediaIsPausedTest;
 		}
 	}
 
@@ -2792,7 +2792,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					QVector<GesturesManager::GesturesContext> contexts;
 
-					if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+					if (getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
 					{
 						contexts.append(GesturesManager::ContentEditableContext);
 					}
@@ -2813,7 +2813,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 
-						if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+						if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
 						{
 							setClickPosition(mouseEvent->pos());
 
@@ -2824,7 +2824,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				break;
 			case QEvent::MouseButtonRelease:
-				if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && !getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+				if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
 				{
 					return true;
 				}

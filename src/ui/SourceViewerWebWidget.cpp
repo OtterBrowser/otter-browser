@@ -528,11 +528,11 @@ WebWidget::HitTestResult SourceViewerWebWidget::getHitTestResult(const QPoint &p
 {
 	HitTestResult result;
 	result.position = position;
-	result.flags = IsContentEditableTest;
+	result.flags = HitTestResult::IsContentEditableTest;
 
 	if (m_sourceViewer->document()->isEmpty())
 	{
-		result.flags |= IsEmptyTest;
+		result.flags |= HitTestResult::IsEmptyTest;
 	}
 
 	return result;

@@ -1847,7 +1847,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		QVector<GesturesManager::GesturesContext> contexts;
 
-		if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+		if (getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
 		{
 			contexts.append(GesturesManager::ContentEditableContext);
 		}
@@ -1868,7 +1868,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 
-			if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+			if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
 			{
 				setClickPosition(mouseEvent->pos());
 

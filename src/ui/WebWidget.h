@@ -105,22 +105,6 @@ public:
 
 	Q_DECLARE_FLAGS(FindFlags, FindFlag)
 
-	enum HitTestFlag
-	{
-		NoFlagsTest = 0,
-		IsContentEditableTest = 1,
-		IsEmptyTest = 2,
-		IsFormTest = 4,
-		IsSelectedTest = 8,
-		IsSpellCheckEnabled = 16,
-		MediaHasControlsTest = 32,
-		MediaIsLoopedTest = 64,
-		MediaIsMutedTest = 128,
-		MediaIsPausedTest = 256
-	};
-
-	Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
-
 	enum SaveFormat
 	{
 		UnknownSaveFormat = 0,
@@ -149,6 +133,22 @@ public:
 
 	struct HitTestResult
 	{
+		enum HitTestFlag
+		{
+			NoFlagsTest = 0,
+			IsContentEditableTest = 1,
+			IsEmptyTest = 2,
+			IsFormTest = 4,
+			IsSelectedTest = 8,
+			IsSpellCheckEnabled = 16,
+			MediaHasControlsTest = 32,
+			MediaIsLoopedTest = 64,
+			MediaIsMutedTest = 128,
+			MediaIsPausedTest = 256
+		};
+
+		Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
+
 		QString title;
 		QString tagName;
 		QString alternateText;

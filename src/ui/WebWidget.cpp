@@ -482,12 +482,12 @@ void WebWidget::showContextMenu(const QPoint &position)
 
 	QStringList flags;
 
-	if (m_hitResult.flags.testFlag(IsFormTest))
+	if (m_hitResult.flags.testFlag(HitTestResult::IsFormTest))
 	{
 		flags.append(QLatin1String("form"));
 	}
 
-	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && hasSelection)
+	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(HitTestResult::IsSelectedTest) && hasSelection)
 	{
 		flags.append(QLatin1String("selection"));
 	}
@@ -514,7 +514,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 		flags.append(QLatin1String("media"));
 	}
 
-	if (m_hitResult.flags.testFlag(IsContentEditableTest))
+	if (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest))
 	{
 		flags.append(QLatin1String("edit"));
 	}
@@ -623,7 +623,7 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::CutAction))
 	{
-		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection && m_hitResult.flags.testFlag(IsContentEditableTest));
+		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection && m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest));
 	}
 
 	if (m_actions.contains(ActionsManager::CopyAction))
@@ -643,7 +643,7 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::PasteAction))
 	{
-		m_actions[ActionsManager::PasteAction]->setEnabled(canPaste && m_hitResult.flags.testFlag(IsContentEditableTest));
+		m_actions[ActionsManager::PasteAction]->setEnabled(canPaste && m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest));
 	}
 
 	if (m_actions.contains(ActionsManager::PasteAndGoAction))
@@ -653,17 +653,17 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::PasteNoteAction))
 	{
-		m_actions[ActionsManager::PasteNoteAction]->setEnabled(canPaste && m_hitResult.flags.testFlag(IsContentEditableTest) && NotesManager::getModel()->getRootItem()->hasChildren());
+		m_actions[ActionsManager::PasteNoteAction]->setEnabled(canPaste && m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && NotesManager::getModel()->getRootItem()->hasChildren());
 	}
 
 	if (m_actions.contains(ActionsManager::DeleteAction))
 	{
-		m_actions[ActionsManager::DeleteAction]->setEnabled(m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+		m_actions[ActionsManager::DeleteAction]->setEnabled(m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
 	}
 
 	if (m_actions.contains(ActionsManager::SelectAllAction))
 	{
-		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsEmptyTest));
+		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
 	}
 
 	if (m_actions.contains(ActionsManager::UnselectAction))
@@ -673,7 +673,7 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::CheckSpellingAction))
 	{
-		m_actions[ActionsManager::CheckSpellingAction]->setChecked(m_hitResult.flags.testFlag(IsSpellCheckEnabled));
+		m_actions[ActionsManager::CheckSpellingAction]->setChecked(m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled));
 		m_actions[ActionsManager::CheckSpellingAction]->setEnabled(canSpellCheck);
 	}
 
@@ -684,7 +684,7 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::ClearAllAction))
 	{
-		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
 	}
 
 	if (m_actions.contains(ActionsManager::SearchAction))
@@ -700,7 +700,7 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::CreateSearchAction))
 	{
-		m_actions[ActionsManager::CreateSearchAction]->setEnabled(m_hitResult.flags.testFlag(IsFormTest));
+		m_actions[ActionsManager::CreateSearchAction]->setEnabled(m_hitResult.flags.testFlag(HitTestResult::IsFormTest));
 	}
 
 	updateLinkActions();
@@ -878,8 +878,8 @@ void WebWidget::updateMediaActions()
 {
 	const bool isMedia(m_hitResult.mediaUrl.isValid());
 	const bool isVideo(m_hitResult.tagName == QLatin1String("video"));
-	const bool isPaused(m_hitResult.flags.testFlag(MediaIsPausedTest));
-	const bool isMuted(m_hitResult.flags.testFlag(MediaIsMutedTest));
+	const bool isPaused(m_hitResult.flags.testFlag(HitTestResult::MediaIsPausedTest));
+	const bool isMuted(m_hitResult.flags.testFlag(HitTestResult::MediaIsMutedTest));
 
 	if (m_actions.contains(ActionsManager::SaveMediaToDiskAction))
 	{
@@ -895,13 +895,13 @@ void WebWidget::updateMediaActions()
 
 	if (m_actions.contains(ActionsManager::MediaControlsAction))
 	{
-		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.flags.testFlag(MediaHasControlsTest));
+		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.flags.testFlag(HitTestResult::MediaHasControlsTest));
 		m_actions[ActionsManager::MediaControlsAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(ActionsManager::MediaLoopAction))
 	{
-		m_actions[ActionsManager::MediaLoopAction]->setChecked(m_hitResult.flags.testFlag(MediaIsLoopedTest));
+		m_actions[ActionsManager::MediaLoopAction]->setChecked(m_hitResult.flags.testFlag(HitTestResult::MediaIsLoopedTest));
 		m_actions[ActionsManager::MediaLoopAction]->setEnabled(isMedia);
 	}
 
@@ -1473,24 +1473,24 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::MediaControlsAction:
-			state.isChecked = m_hitResult.flags.testFlag(MediaHasControlsTest);
+			state.isChecked = m_hitResult.flags.testFlag(HitTestResult::MediaHasControlsTest);
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
 		case ActionsManager::MediaLoopAction:
-			state.isChecked = m_hitResult.flags.testFlag(MediaIsLoopedTest);
+			state.isChecked = m_hitResult.flags.testFlag(HitTestResult::MediaIsLoopedTest);
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
 		case ActionsManager::MediaPlayPauseAction:
-			state.text = (m_hitResult.flags.testFlag(MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
-			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause"));
+			state.text = (m_hitResult.flags.testFlag(HitTestResult::MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
+			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(HitTestResult::MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
 		case ActionsManager::MediaMuteAction:
-			state.text = (m_hitResult.flags.testFlag(MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
-			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted"));
+			state.text = (m_hitResult.flags.testFlag(HitTestResult::MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
+			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(HitTestResult::MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
@@ -1558,7 +1558,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::CutAction:
-			state.isEnabled = (this->hasSelection() && !getSelectedText().trimmed().isEmpty() && m_hitResult.flags.testFlag(IsContentEditableTest));
+			state.isEnabled = (this->hasSelection() && !getSelectedText().trimmed().isEmpty() && m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest));
 
 			break;
 		case ActionsManager::CopyAction:
@@ -1569,7 +1569,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::PasteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
 
 			break;
 		case ActionsManager::PasteAndGoAction:
@@ -1577,23 +1577,23 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::PasteNoteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText() && NotesManager::getModel()->getRootItem()->hasChildren());
+			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText() && NotesManager::getModel()->getRootItem()->hasChildren());
 
 			break;
 		case ActionsManager::DeleteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
 
 			break;
 		case ActionsManager::SelectAllAction:
-			state.isEnabled = (!m_hitResult.flags.testFlag(IsEmptyTest));
+			state.isEnabled = (!m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
 
 			break;
 		case ActionsManager::ClearAllAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
 
 			break;
 		case ActionsManager::CheckSpellingAction:
-			state.isChecked = (m_hitResult.flags.testFlag(IsSpellCheckEnabled));
+			state.isChecked = (m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled));
 			state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !getDictionaries().isEmpty());
 
 			break;
@@ -1612,7 +1612,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::CreateSearchAction:
-			state.isEnabled = m_hitResult.flags.testFlag(IsFormTest);
+			state.isEnabled = m_hitResult.flags.testFlag(HitTestResult::IsFormTest);
 
 			break;
 		case ActionsManager::BookmarkPageAction:
@@ -1837,11 +1837,11 @@ bool WebWidget::calculateCheckedState(int identifier, const QVariantMap &paramet
 	switch (identifier)
 	{
 		case ActionsManager::MediaControlsAction:
-			return !m_hitResult.flags.testFlag(MediaHasControlsTest);
+			return !m_hitResult.flags.testFlag(HitTestResult::MediaHasControlsTest);
 		case ActionsManager::MediaLoopAction:
-			return !m_hitResult.flags.testFlag(MediaIsLoopedTest);
+			return !m_hitResult.flags.testFlag(HitTestResult::MediaIsLoopedTest);
 		case ActionsManager::CheckSpellingAction:
-			return !m_hitResult.flags.testFlag(IsSpellCheckEnabled);
+			return !m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled);
 		case ActionsManager::InspectPageAction:
 			return !isInspecting();
 		default:
