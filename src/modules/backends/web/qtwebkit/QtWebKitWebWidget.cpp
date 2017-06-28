@@ -899,7 +899,11 @@ void QtWebKitWebWidget::removeHistoryIndex(int index, bool purge)
 void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
 {
 	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formFiller.js"));
-	file.open(QIODevice::ReadOnly);
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return;
+	}
 
 	QJsonArray fieldsArray;
 

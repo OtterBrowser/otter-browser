@@ -106,11 +106,13 @@ void QtWebKitFrame::handleLoadFinished()
 	{
 		const QVector<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/errorPage.js"));
-		file.open(QIODevice::ReadOnly);
 
-		m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken(), (sslErrors.isEmpty() ? QByteArray() : sslErrors.first().second.certificate().digest().toBase64()), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
+		if (file.open(QIODevice::ReadOnly))
+		{
+			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken(), (sslErrors.isEmpty() ? QByteArray() : sslErrors.first().second.certificate().digest().toBase64()), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
 
-		file.close();
+			file.close();
+		}
 	}
 
 	runUserScripts(m_widget->getUrl());
@@ -387,9 +389,13 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 	if (!userSyleSheet.isEmpty())
 	{
 		QFile file(userSyleSheet);
-		file.open(QIODevice::ReadOnly);
 
-		styleSheet.append(file.readAll());
+		if (file.open(QIODevice::ReadOnly))
+		{
+			styleSheet.append(file.readAll());
+
+			file.close();
+		}
 	}
 
 	settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + styleSheet.toUtf8().toBase64()));
