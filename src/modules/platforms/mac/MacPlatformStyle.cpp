@@ -75,6 +75,7 @@ void MacPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
 	switch (element)
 	{
 		case PE_IndicatorTabClose:
+			if (widget && widget->underMouse())
 			{
 				QRect rectangle(option->rect);
 
