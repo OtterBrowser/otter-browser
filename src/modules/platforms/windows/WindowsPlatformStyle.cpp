@@ -150,15 +150,40 @@ void WindowsPlatformStyle::drawControl(ControlElement element, const QStyleOptio
 
 void WindowsPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isModernStyle && element == PE_PanelStatusBar)
+	if (m_isModernStyle)
 	{
-		painter->save();
-		painter->fillRect(option->rect, Qt::white);
-		painter->setPen(QPen(Qt::lightGray, 1));
-		painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
-		painter->restore();
+		switch (element)
+		{
+			case PE_IndicatorTabClose:
+				{
+					QRect rectangle(option->rect);
 
-		return;
+					if (rectangle.width() > 8)
+					{
+						rectangle = QRect((rectangle.left() + ((rectangle.width() - 8) / 2)), (rectangle.top() + ((rectangle.height() - 8) / 2)), 8, 8);
+					}
+
+					QPen pen(option->state.testFlag(QStyle::State_Raised) ? QColor(252, 58, 58) : QColor(106, 106, 106));
+					pen.setWidthF(1.25);
+
+					painter->save();
+					painter->setRenderHint(QPainter::Antialiasing);
+					painter->setPen(pen);
+					painter->drawLine(rectangle.topLeft(), rectangle.bottomRight());
+					painter->drawLine(rectangle.topRight(), rectangle.bottomLeft());
+					painter->restore();
+				}
+
+				return;
+		case PE_PanelStatusBar:
+			painter->save();
+			painter->fillRect(option->rect, Qt::white);
+			painter->setPen(QPen(Qt::lightGray, 1));
+			painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
+			painter->restore();
+
+			return;
+		}
 	}
 
 	Style::drawPrimitive(element, option, painter, widget);
