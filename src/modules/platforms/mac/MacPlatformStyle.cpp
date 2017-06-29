@@ -80,7 +80,9 @@ void MacPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
 
 				if (rectangle.width() > 8)
 				{
-					rectangle = QRect((rectangle.left() + ((rectangle.width() - 8) / 2)), (rectangle.top() + ((rectangle.height() - 8) / 2)), 8, 8);
+					const int offset((8 - rectangle.width()) / 2);
+
+					rectangle = rectangle.marginsAdded(QMargins(offset, offset, offset, offset));
 				}
 
 				QPen pen(QColor(60, 60, 60));
