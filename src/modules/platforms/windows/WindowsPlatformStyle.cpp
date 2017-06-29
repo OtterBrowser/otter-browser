@@ -158,9 +158,9 @@ void WindowsPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleO
 				{
 					QRect rectangle(option->rect);
 
-					if (rectangle.width() > 8)
+					if (rectangle.width() > 10)
 					{
-						const int offset((8 - rectangle.width()) / 2);
+						const int offset((10 - rectangle.width()) / 2);
 
 						rectangle = rectangle.marginsAdded(QMargins(offset, offset, offset, offset));
 					}
