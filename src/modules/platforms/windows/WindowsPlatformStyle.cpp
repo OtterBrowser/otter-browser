@@ -160,7 +160,9 @@ void WindowsPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleO
 
 					if (rectangle.width() > 8)
 					{
-						rectangle = QRect((rectangle.left() + ((rectangle.width() - 8) / 2)), (rectangle.top() + ((rectangle.height() - 8) / 2)), 8, 8);
+						const int offset((8 - rectangle.width()) / 2);
+
+						rectangle = rectangle.marginsAdded(QMargins(offset, offset, offset, offset));
 					}
 
 					QPen pen(option->state.testFlag(QStyle::State_Raised) ? QColor(252, 58, 58) : QColor(106, 106, 106));
