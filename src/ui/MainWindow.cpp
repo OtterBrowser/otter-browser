@@ -631,7 +631,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			for (int i = 0; i < m_windows.count(); ++i)
 			{
-				Window *window(getWindowByIndex(i));
+				const Window *window(getWindowByIndex(i));
 
 				if (window && !Utils::isUrlEmpty(window->getUrl()))
 				{
@@ -643,7 +643,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::OpenBookmarkAction:
 			if (parameters.contains(QLatin1String("bookmark")))
 			{
-				BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
+				const BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
 
 				if (!bookmark)
 				{
@@ -1002,7 +1002,7 @@ void MainWindow::triggerAction()
 {
 	QVariantMap parameters;
 	int identifier(-1);
-	Shortcut *shortcut(qobject_cast<Shortcut*>(sender()));
+	const Shortcut *shortcut(qobject_cast<Shortcut*>(sender()));
 
 	if (shortcut)
 	{
@@ -1028,7 +1028,7 @@ void MainWindow::triggerAction()
 	}
 	else
 	{
-		Action *action(qobject_cast<Action*>(sender()));
+		const Action *action(qobject_cast<Action*>(sender()));
 
 		if (action)
 		{
@@ -1052,7 +1052,7 @@ void MainWindow::triggerAction()
 
 void MainWindow::triggerAction(bool isChecked)
 {
-	Action *action(qobject_cast<Action*>(sender()));
+	const Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
@@ -1300,7 +1300,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	{
 		for (int i = 0; i < m_windows.count(); ++i)
 		{
-			Window *window(getWindowByIndex(i));
+			const Window *window(getWindowByIndex(i));
 
 			if (!window || !window->isPinned())
 			{
@@ -1524,8 +1524,8 @@ void MainWindow::handleWindowClose(Window *window)
 
 		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
 		{
-			Window *nextWindow(getWindowByIndex(index + 1));
-			Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
+			const Window *nextWindow(getWindowByIndex(index + 1));
+			const Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
 
 			ClosedWindow closedWindow;
 			closedWindow.window = window->getSession();
@@ -1603,7 +1603,7 @@ void MainWindow::handleWindowClose(Window *window)
 
 void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 {
-	Window *modifiedWindow(qobject_cast<Window*>(sender()));
+	const Window *modifiedWindow(qobject_cast<Window*>(sender()));
 
 	if (!modifiedWindow)
 	{
@@ -1625,7 +1625,7 @@ void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		Window *window(getWindowByIndex(i));
+		const Window *window(getWindowByIndex(i));
 
 		if ((window && window->isPinned()) || (!isPinned && window == modifiedWindow))
 		{
@@ -1958,7 +1958,7 @@ void MainWindow::setActiveWindowByIdentifier(quint64 identifier)
 {
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		Window *window(getWindowByIndex(i));
+		const Window *window(getWindowByIndex(i));
 
 		if (window && window->getIdentifier() == identifier)
 		{
@@ -2020,7 +2020,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	}
 
 	MainWindow *window(nullptr);
-	QWidget *widget(qobject_cast<QWidget*>(parent));
+	const QWidget *widget(qobject_cast<QWidget*>(parent));
 
 	if (widget && widget->window())
 	{
@@ -2133,21 +2133,21 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 QVariant MainWindow::getOption(int identifier) const
 {
-	Window *window(m_workspace->getActiveWindow());
+	const Window *window(m_workspace->getActiveWindow());
 
 	return (window ? window->getOption(identifier) : QVariant());
 }
 
 QString MainWindow::getTitle() const
 {
-	Window *window(m_workspace->getActiveWindow());
+	const Window *window(m_workspace->getActiveWindow());
 
 	return (window ? window->getTitle() : tr("Empty"));
 }
 
 QUrl MainWindow::getUrl() const
 {
-	Window *window(m_workspace->getActiveWindow());
+	const Window *window(m_workspace->getActiveWindow());
 
 	return (window ? window->getUrl() : QUrl());
 }
@@ -2219,7 +2219,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::OpenBookmarkAction:
 			{
-				BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
+				const BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
 
 				if (bookmark)
 				{
@@ -2279,7 +2279,7 @@ SessionMainWindow MainWindow::getSession() const
 
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		Window *window(getWindowByIndex(i));
+		const Window *window(getWindowByIndex(i));
 
 		if (window && !window->isPrivate())
 		{
@@ -2348,7 +2348,7 @@ int MainWindow::getWindowIndex(quint64 identifier) const
 {
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		Window *window(getWindowByIndex(i));
+		const Window *window(getWindowByIndex(i));
 
 		if (window && window->getIdentifier() == identifier)
 		{
@@ -2363,7 +2363,7 @@ bool MainWindow::hasUrl(const QUrl &url, bool activate)
 {
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		Window *window(getWindowByIndex(i));
+		const Window *window(getWindowByIndex(i));
 
 		if (window && window->getUrl() == url)
 		{
