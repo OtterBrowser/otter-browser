@@ -458,21 +458,24 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
 
-	setStyle(ThemesManager::createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
+	Style *style(ThemesManager::createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
+	QString styleSheet(style->getStyleSheet());
+	const QString styleSheetPath(SettingsManager::getOption(SettingsManager::Interface_StyleSheetOption).toString());
 
-	const QString styleSheet(SettingsManager::getOption(SettingsManager::Interface_StyleSheetOption).toString());
-
-	if (!styleSheet.isEmpty())
+	if (!styleSheetPath.isEmpty())
 	{
-		QFile file(styleSheet);
+		QFile file(styleSheetPath);
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			setStyleSheet(file.readAll());
+			styleSheet += file.readAll();
 
 			file.close();
 		}
 	}
+
+	setStyle(style);
+	setStyleSheet(styleSheet);
 
 	QDesktopServices::setUrlHandler(QLatin1String("ftp"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");

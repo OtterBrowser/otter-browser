@@ -382,25 +382,7 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 
 Style* MacPlatformIntegration::createStyle(const QString &name) const
 {
-	const bool isMacintoshStyle(name.isEmpty() || name.toLower() == QLatin1String("macintosh"));
-	const QString styleSheetPath(SettingsManager::getOption(SettingsManager::Interface_StyleSheetOption).toString());
-	QString styleSheet(isMacintoshStyle ? QLatin1String("QToolBar QLineEdit {border:1px solid #AFAFAF;border-radius:4px;}") : QString());
-
-	if (!styleSheetPath.isEmpty())
-	{
-		QFile file(styleSheetPath);
-
-		if (file.open(QIODevice::ReadOnly))
-		{
-			styleSheet.append(file.readAll());
-
-			file.close();
-		}
-	}
-
-	Application::getInstance()->setStyleSheet(styleSheet);
-
-	if (isMacintoshStyle)
+	if (name.isEmpty() || name.toLower() == QLatin1String("macintosh"))
 	{
 		return new MacPlatformStyle(name);
 	}

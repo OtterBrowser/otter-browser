@@ -143,6 +143,11 @@ QString Style::getName() const
 	return (baseStyle() ? baseStyle() : this)->objectName().toLower();
 }
 
+QString Style::getStyleSheet() const
+{
+	return QString();
+}
+
 QRect Style::subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const
 {
 	switch (element)
