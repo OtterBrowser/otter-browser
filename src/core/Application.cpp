@@ -805,7 +805,7 @@ void Application::handleNewConnection()
 
 	socket->waitForReadyRead(1000);
 
-	MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
+	const MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
 	QString data;
 	QTextStream stream(socket);
 	stream >> data;
@@ -977,7 +977,7 @@ void Application::showNotification(Notification *notification)
 
 void Application::showUpdateDetails()
 {
-	Notification *notification(static_cast<Notification*>(sender()));
+	const Notification *notification(static_cast<Notification*>(sender()));
 
 	if (notification)
 	{
@@ -1122,7 +1122,7 @@ QString Application::createReport(ReportOptions options)
 	ActionsManager::createInstance();
 	AddonsManager::createInstance();
 
-	WebBackend *webBackend(AddonsManager::getWebBackend());
+	const WebBackend *webBackend(AddonsManager::getWebBackend());
 	QString report;
 	QTextStream stream(&report);
 	stream.setFieldAlignment(QTextStream::AlignLeft);
@@ -1335,7 +1335,7 @@ bool Application::canClose()
 		messageBox.setDefaultButton(QMessageBox::Cancel);
 		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
-		QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
+		const QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
 		const int result(messageBox.exec());
 
 		SettingsManager::setOption(SettingsManager::Choices_WarnQuitTransfersOption, !messageBox.checkBox()->isChecked());
@@ -1384,7 +1384,7 @@ bool Application::canClose()
 			messageBox.setDefaultButton(QMessageBox::Yes);
 			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
-			QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
+			const QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
 			const int result(messageBox.exec());
 
 			if (messageBox.checkBox()->isChecked())
