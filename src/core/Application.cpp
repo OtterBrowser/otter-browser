@@ -318,7 +318,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	if (!isReadOnly)
 	{
-		QStorageInfo storageInformation(profilePath);
+		const QStorageInfo storageInformation(profilePath);
 
 		if (storageInformation.bytesAvailable() > -1 && storageInformation.bytesAvailable() < 10000000)
 		{
@@ -416,7 +416,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	setLocale(SettingsManager::getOption(SettingsManager::Browser_LocaleOption).toString());
 	setQuitOnLastWindowClosed(true);
 
-	WebBackend *webBackend(AddonsManager::getWebBackend());
+	const WebBackend *webBackend(AddonsManager::getWebBackend());
 
 	if (!QSslSocket::supportsSsl() || (webBackend && webBackend->getSslVersion().isEmpty()))
 	{
