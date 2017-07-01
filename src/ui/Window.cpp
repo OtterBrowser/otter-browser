@@ -339,7 +339,7 @@ void Window::attachAddressWidget(AddressWidget *widget)
 
 		if (widget->isVisible() && isActive() && Utils::isUrlEmpty(m_contentsWidget->getUrl()))
 		{
-			AddressWidget *addressWidget(qobject_cast<AddressWidget*>(QApplication::focusWidget()));
+			const AddressWidget *addressWidget(qobject_cast<AddressWidget*>(QApplication::focusWidget()));
 
 			if (!addressWidget)
 			{
@@ -877,7 +877,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 			break;
 		case ActionsManager::AlwaysOnTopTabAction:
 			{
-				QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+				const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
 				if (subWindow)
 				{
@@ -914,7 +914,7 @@ WindowHistoryInformation Window::getHistory() const
 
 SessionWindow Window::getSession() const
 {
-	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+	const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 	SessionWindow session;
 
 	if (m_contentsWidget)
@@ -949,7 +949,7 @@ SessionWindow Window::getSession() const
 
 WindowState Window::getWindowState() const
 {
-	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+	const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 	WindowState windowState;
 	windowState.state = Qt::WindowMaximized;
 
