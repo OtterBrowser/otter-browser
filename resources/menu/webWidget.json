@@ -20,6 +20,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "1 Minute",
 							"parameters":
 							{
@@ -29,6 +30,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "30 Minutes",
 							"parameters":
 							{
@@ -38,6 +40,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "1 Hour",
 							"parameters":
 							{
@@ -47,6 +50,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "2 Hours",
 							"parameters":
 							{
@@ -56,6 +60,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "6 Hours",
 							"parameters":
 							{
@@ -65,6 +70,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "Never",
 							"parameters":
 							{
@@ -74,6 +80,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "Custom…",
 							"parameters":
 							{
@@ -84,6 +91,7 @@
 						{
 							"type": "action",
 							"identifier": "ScheduleReload",
+							"group": "scheduleReload",
 							"title": "Page Default",
 							"parameters":
 							{
