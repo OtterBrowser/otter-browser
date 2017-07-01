@@ -95,6 +95,7 @@ private:
 	QActionGroup *m_actionGroup;
 	BookmarksItem *m_bookmark;
 	QString m_title;
+	QHash<QString, QActionGroup*> m_actionGroups;
 	MenuRole m_role;
 	int m_option;
 };

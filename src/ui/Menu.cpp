@@ -325,6 +325,24 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 					action->setParameters(parameters);
 					action->setState(Application::getActionState(identifier, parameters));
 
+					if (object.contains(QLatin1String("group")))
+					{
+						const QString group(object.value(QLatin1String("group")).toString());
+
+						if (m_actionGroups.contains(group))
+						{
+							m_actionGroups[group]->addAction(action);
+						}
+						else
+						{
+							QActionGroup *actionGroup(new QActionGroup(this));
+							actionGroup->setExclusive(true);
+							actionGroup->addAction(action);
+
+							m_actionGroups[group] = actionGroup;
+						}
+					}
+
 					if (!text.isEmpty())
 					{
 						action->setOverrideText(text);
