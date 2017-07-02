@@ -268,6 +268,73 @@
 				"MediaMute",
 				"MediaLoop",
 				"MediaControls",
+				{
+					"type": "menu",
+					"title": "Playback Rate",
+					"actions":
+					[
+						{
+							"type": "action",
+							"identifier": "MediaPlaybackRate",
+							"group": "playbackRate",
+							"title": "0.5x",
+							"parameters":
+							{
+								"rate": 0.5
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "MediaPlaybackRate",
+							"group": "playbackRate",
+							"title": "1x",
+							"parameters":
+							{
+								"rate": 1
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "MediaPlaybackRate",
+							"group": "playbackRate",
+							"title": "1.12x",
+							"parameters":
+							{
+								"rate": 1.12
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "MediaPlaybackRate",
+							"group": "playbackRate",
+							"title": "1.25x",
+							"parameters":
+							{
+								"rate": 1.25
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "MediaPlaybackRate",
+							"group": "playbackRate",
+							"title": "1.5x",
+							"parameters":
+							{
+								"rate": 1.5
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "MediaPlaybackRate",
+							"group": "playbackRate",
+							"title": "2x",
+							"parameters":
+							{
+								"rate": 2
+							}
+						}
+					]
+				},
 				"separator",
 				"InspectElement",
 				"separator"
