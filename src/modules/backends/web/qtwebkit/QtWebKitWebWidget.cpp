@@ -2475,6 +2475,8 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 		{
 			result.flags |= HitTestResult::MediaIsPausedTest;
 		}
+
+		result.playbackRate = nativeResult.element().evaluateJavaScript(QLatin1String("this.playbackRate")).toReal();
 	}
 
 	return result;

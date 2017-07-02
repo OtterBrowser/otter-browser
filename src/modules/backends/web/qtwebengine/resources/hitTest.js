@@ -80,6 +80,7 @@ if (element)
 		}
 
 		result.mediaUrl = createUrl(element.src);
+		result.playbackRate = element.playbackRate;
 	}
 
 	if (result.tagName == 'input' || result.tagName == 'textarea')
