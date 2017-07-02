@@ -107,7 +107,7 @@ public:
 		MediaLoopAction,
 		MediaPlayPauseAction,
 		MediaMuteAction,
-		MediaPlayBackRateAction,
+		MediaPlaybackRateAction,
 		FillPasswordAction,
 		GoAction,
 		GoBackAction,

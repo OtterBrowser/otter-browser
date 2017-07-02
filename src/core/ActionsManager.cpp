@@ -109,7 +109,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QT_TRANSLATE_NOOP("actions", "Playback Looping"), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"), QT_TRANSLATE_NOOP("actions", "Play Media"), ThemesManager::createIcon(QLatin1String("media-playback-start")), ActionDefinition::WindowScope);
 	registerAction(MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"), QT_TRANSLATE_NOOP("actions", "Mute Media"), ThemesManager::createIcon(QLatin1String("audio-volume-muted")), ActionDefinition::WindowScope);
-	registerAction(MediaPlayBackRateAction, QT_TRANSLATE_NOOP("actions", "Playback Rate"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsCheckableFlag);
+	registerAction(MediaPlaybackRateAction, QT_TRANSLATE_NOOP("actions", "Playback Rate"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsCheckableFlag);
 	registerAction(FillPasswordAction, QT_TRANSLATE_NOOP("actions", "Log In"), QString(), ThemesManager::createIcon(QLatin1String("fill-password")), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QT_TRANSLATE_NOOP("actions", "Go to URL"), ThemesManager::createIcon(QLatin1String("go-jump-locationbar")), ActionDefinition::MainWindowScope);
 	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QT_TRANSLATE_NOOP("actions", "Go Back"), ThemesManager::createIcon(QLatin1String("go-previous")), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::HasMenuFlag));
