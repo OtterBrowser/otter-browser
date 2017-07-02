@@ -1289,6 +1289,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_page->triggerAction(QWebPage::ToggleMediaMute);
 
 			return;
+		case ActionsManager::MediaPlaybackRateAction:
+			{
+				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
+				element.evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
+			}
+
+			return;
 		case ActionsManager::GoBackAction:
 			m_page->triggerAction(QWebPage::Back);
 

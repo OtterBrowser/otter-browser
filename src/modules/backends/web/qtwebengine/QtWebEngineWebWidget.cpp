@@ -668,6 +668,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			m_page->triggerAction(QWebEnginePage::ToggleMediaMute);
 
 			return;
+		case ActionsManager::MediaPlaybackRateAction:
+			m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.playbackRate = %3; }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()).arg(parameters.value(QLatin1String("rate"), 1).toReal()));
+
+			return;
 		case ActionsManager::GoBackAction:
 			m_page->triggerAction(QWebEnginePage::Back);
 
