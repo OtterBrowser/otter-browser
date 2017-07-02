@@ -1493,6 +1493,16 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
+		case ActionsManager::MediaPlaybackRateAction:
+			{
+				const qreal rate(parameters.value(QLatin1String("rate")).toReal());
+
+				state.text = tr("Playback Rate: %1x").arg(QLocale().toString(rate));
+				state.isChecked = (rate == m_hitResult.playbackRate);
+				state.isEnabled = m_hitResult.mediaUrl.isValid();
+			}
+
+			break;
 		case ActionsManager::FillPasswordAction:
 			state.isEnabled = (!Utils::isUrlEmpty(getUrl()) && PasswordsManager::hasPasswords(getUrl(), PasswordsManager::FormPassword));
 
