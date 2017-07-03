@@ -1550,10 +1550,20 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				if (reloadTime < 0)
 				{
 					state.isChecked = (!m_options.contains(SettingsManager::Content_PageReloadTimeOption) || m_options[SettingsManager::Content_PageReloadTimeOption].toInt() < 0);
+					state.text = tr("Page Defaults");
 				}
 				else
 				{
 					state.isChecked = (m_options.contains(SettingsManager::Content_PageReloadTimeOption) && reloadTime == m_options[SettingsManager::Content_PageReloadTimeOption].toInt());
+
+					if (reloadTime == 0)
+					{
+						state.text = tr("Never Reload");
+					}
+					else
+					{
+						state.text = tr("Reload Every: %n seconds", "", reloadTime).arg(reloadTime);
+					}
 				}
 			}
 
