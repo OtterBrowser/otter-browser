@@ -29,6 +29,17 @@ Detailed instructions are available in the *INSTALL.md* file in the root of the 
 
 ### Under Linux and *BSD
 
+[![Arch Linux logo](https://github.com/m4sk1n/logos/raw/master/32x32/archlinux.png)](https://u.m4sk.in/arch)
+[![CentOS logo](https://github.com/m4sk1n/logos/raw/master/32x32/centos.png)](https://u.m4sk.in/centos)
+[![Fedora logo](https://github.com/m4sk1n/logos/raw/master/32x32/fedora.png)](https://u.m4sk.in/fedora)
+[![FreeBSD logo](https://github.com/m4sk1n/logos/raw/master/32x32/freebsd.png)](https://u.m4sk.in/freebsd)
+[![Gentoo logo](https://github.com/m4sk1n/logos/raw/master/32x32/gentoo.png)](https://u.m4sk.in/gentoo)
+[![openSUSE logo](https://github.com/m4sk1n/logos/raw/master/32x32/opensuse.png)](https://u.m4sk.in/suse)
+[![Sparky Linux logo](https://github.com/m4sk1n/logos/raw/master/32x32/sparky.png)](https://u.m4sk.in/sparky)
+[![Ubuntu logo](https://github.com/m4sk1n/logos/raw/master/32x32/ubuntu.png)](https://u.m4sk.in/ubuntu)
+[![Void Linux logo](https://github.com/m4sk1n/logos/raw/master/32x32/void.png)](https://u.m4sk.in/void)
+[![Tux](https://github.com/m4sk1n/logos/raw/master/32x32/tux.png)](https://u.m4sk.in/appimage)
+
 Linux users can use the official AppImage version available on [SourceForge](https://sourceforge.net/projects/otter-browser/files/). It is a single executable file that doesn’t need any dependencies to be installed. The AppImage version should run under any system installed after 2012 provided it has OpenSSL 1.0.x (not 1.1.x) and GStreamer 1.x (with codecs). The browser is also available in the repositories of a wide range of Linux distributions and *BSD systems. Read more on [the dedicated wiki page](https://github.com/OtterBrowser/otter-browser/wiki/Packages).
 
 ### Under Windows
@@ -51,7 +62,7 @@ Have a look at the [open issues](https://github.com/OtterBrowser/otter-browser/
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
-To stay informed of Otter development, bug fixes and new features, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0). We also have two IRC channels on Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (polski / Polish).
+To stay informed about Otter development, bug fixes and new features, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0). We also have two IRC channels on Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (polski / Polish).
 
 Read *CONTRIBUTING.md* and don’t hesitate!
 
