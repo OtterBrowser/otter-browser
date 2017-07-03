@@ -96,7 +96,7 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 
 	initStyleOption(&option);
 
-	option.text = option.fontMetrics.elidedText(option.text, Qt::ElideRight, (option.rect.width() - (option.fontMetrics.width(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));
+	option.text = option.fontMetrics.elidedText(option.text, (isRightToLeft() ? Qt::ElideLeft : Qt::ElideRight), (option.rect.width() - (option.fontMetrics.width(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));
 
 	painter.drawComplexControl(QStyle::CC_ToolButton, option);
 }
