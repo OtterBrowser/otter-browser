@@ -339,7 +339,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	m_isNavigatingCompletion(false),
 	m_isUsingSimpleMode(false)
 {
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (!toolBar)
 	{
@@ -535,7 +535,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(tr("Remove this Icon"), this, SLOT(removeEntry()))->setData(entry);
 	}
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 	if (toolBar)
 	{
@@ -756,7 +756,7 @@ void AddressWidget::openUrl(const QModelIndex &index)
 
 void AddressWidget::removeEntry()
 {
-	QAction *action(qobject_cast<QAction*>(sender()));
+	const QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action)
 	{
@@ -1035,7 +1035,7 @@ void AddressWidget::updateGeometries()
 						continue;
 					}
 
-					Action *loadPluginsAction(m_window->createAction(ActionsManager::LoadPluginsAction));
+					const Action *loadPluginsAction(m_window->createAction(ActionsManager::LoadPluginsAction));
 
 					if (!loadPluginsAction || !loadPluginsAction->isEnabled())
 					{
@@ -1213,7 +1213,7 @@ void AddressWidget::setCompletion(const QString &filter)
 
 void AddressWidget::setWindow(Window *window)
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
@@ -1250,7 +1250,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(window, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(updateGeometries()));
 		connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 
-		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
@@ -1344,7 +1344,7 @@ bool AddressWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
