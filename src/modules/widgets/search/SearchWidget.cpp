@@ -150,7 +150,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 	handleOptionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption));
 	handleOptionChanged(SettingsManager::Search_SearchEnginesSuggestionsOption, SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption));
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
@@ -268,7 +268,7 @@ void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(tr("Clear All"), this, SLOT(clear()))->setEnabled(!text().isEmpty());
 	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()))->setEnabled(!text().isEmpty());
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 	if (toolBar)
 	{
@@ -336,7 +336,7 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 		return;
 	}
 
-	QStandardItemModel *model(SearchEnginesManager::getSearchEnginesModel());
+	const QStandardItemModel *model(SearchEnginesManager::getSearchEnginesModel());
 	int row(getCurrentIndex().row());
 
 	for (int i = 0; i < model->rowCount(); ++i)
@@ -734,7 +734,7 @@ void SearchWidget::setQuery(const QString &query)
 
 void SearchWidget::setWindow(Window *window)
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
@@ -766,7 +766,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 		connect(window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleWindowOptionChanged(int,QVariant)));
 
-		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
@@ -807,7 +807,7 @@ bool SearchWidget::event(QEvent *event)
 {
 	if (isEnabled() && event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
