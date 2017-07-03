@@ -255,7 +255,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	if (getDefinition().type == ToolBarsManager::BookmarksBarType && m_dropIndex >= 0)
 	{
-		QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
+		const QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
 		const Qt::ToolBarArea area(getArea());
 		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
 		int position(-1);
@@ -347,7 +347,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 
 	const int overlap(style()->pixelMetric(QStyle::PM_TabBarBaseOverlap, &tabOption));
 	QPainter painter(this);
-	QTabBar *tabBar(findChild<TabBarWidget*>());
+	const QTabBar *tabBar(findChild<TabBarWidget*>());
 	QStyleOptionTabBarBase tabBarBaseOption;
 	tabBarBaseOption.initFrom(this);
 	tabBarBaseOption.documentMode = true;
@@ -409,7 +409,7 @@ void ToolBarWidget::resizeEvent(QResizeEvent *event)
 
 	if (m_identifier == ToolBarsManager::TabBar)
 	{
-		TabBarWidget *tabBar(findChild<TabBarWidget*>());
+		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
 
 		if (tabBar)
 		{
@@ -603,7 +603,7 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 			}
 		}
 
-		QWidget *widget(widgetForAction(action));
+		const QWidget *widget(widgetForAction(action));
 
 		dropIndex = actions().indexOf(action);
 
@@ -944,7 +944,7 @@ void ToolBarWidget::updateVisibility()
 {
 	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
 	{
-		TabBarWidget *tabBar(findChild<TabBarWidget*>());
+		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
 
 		if (tabBar)
 		{
