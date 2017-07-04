@@ -62,19 +62,19 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu menu(this);
 	QMenu *sortMenu(menu.addMenu(tr("Sorting")));
 	QAction *sortAscendingAction(sortMenu->addAction(tr("Sort Ascending")));
-	sortAscendingAction->setData(-2);
+	sortAscendingAction->setData(AscendingOrder);
 	sortAscendingAction->setCheckable(true);
 	sortAscendingAction->setChecked(sortColumn >= 0 && sortOrder == Qt::AscendingOrder);
 
 	QAction *sortDescendingAction(sortMenu->addAction(tr("Sort Descending")));
-	sortDescendingAction->setData(-3);
+	sortDescendingAction->setData(DescendingOrder);
 	sortDescendingAction->setCheckable(true);
 	sortDescendingAction->setChecked(sortColumn >= 0 && sortOrder == Qt::DescendingOrder);
 
 	sortMenu->addSeparator();
 
 	QAction *noSortAction(sortMenu->addAction(tr("No Sorting")));
-	noSortAction->setData(-1);
+	noSortAction->setData(NoOrder);
 	noSortAction->setCheckable(true);
 	noSortAction->setChecked(sortColumn < 0);
 
@@ -149,13 +149,13 @@ void HeaderViewWidget::toggleSort(QAction *action)
 	{
 		const int value(action->data().toInt());
 
-		if (value == -2 || value == -3)
+		if (value == AscendingOrder || value == DescendingOrder)
 		{
 			const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 			if (view)
 			{
-				setSort(view->getSortColumn(), ((value == -2) ? Qt::AscendingOrder : Qt::DescendingOrder));
+				setSort(view->getSortColumn(), ((value == AscendingOrder) ? Qt::AscendingOrder : Qt::DescendingOrder));
 			}
 		}
 		else

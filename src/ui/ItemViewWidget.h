@@ -42,6 +42,13 @@ public slots:
 	void setSort(int column, Qt::SortOrder order);
 
 protected:
+	enum SortOrder
+	{
+		NoOrder = -3,
+		AscendingOrder = -2,
+		DescendingOrder = -1
+	};
+
 	void showEvent(QShowEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 
