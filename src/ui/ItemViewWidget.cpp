@@ -50,7 +50,7 @@ void HeaderViewWidget::showEvent(QShowEvent *event)
 
 void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
+	const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 	if (!view)
 	{
@@ -59,7 +59,6 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	const int sortColumn(view->getSortColumn());
 	const int sortOrder(view->getSortOrder());
-
 	QMenu menu(this);
 	QMenu *sortMenu(menu.addMenu(tr("Sorting")));
 	QAction *sortAscendingAction(sortMenu->addAction(tr("Sort Ascending")));
@@ -146,7 +145,7 @@ void HeaderViewWidget::toggleSort(QAction *action)
 
 		if (value == -2 || value == -3)
 		{
-			ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
+			const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 			if (view)
 			{
@@ -162,7 +161,7 @@ void HeaderViewWidget::toggleSort(QAction *action)
 
 void HeaderViewWidget::toggleSort(int column)
 {
-	ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
+	const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 	if (!view)
 	{
