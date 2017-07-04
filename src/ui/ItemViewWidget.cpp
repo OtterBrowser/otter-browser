@@ -64,12 +64,12 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	QAction *sortAscendingAction(sortMenu->addAction(tr("Sort Ascending")));
 	sortAscendingAction->setData(-2);
 	sortAscendingAction->setCheckable(true);
-	sortAscendingAction->setChecked(sortOrder == Qt::AscendingOrder);
+	sortAscendingAction->setChecked(sortColumn >= 0 && sortOrder == Qt::AscendingOrder);
 
 	QAction *sortDescendingAction(sortMenu->addAction(tr("Sort Descending")));
 	sortDescendingAction->setData(-3);
 	sortDescendingAction->setCheckable(true);
-	sortDescendingAction->setChecked(sortOrder == Qt::DescendingOrder);
+	sortDescendingAction->setChecked(sortColumn >= 0 && sortOrder == Qt::DescendingOrder);
 
 	sortMenu->addSeparator();
 
