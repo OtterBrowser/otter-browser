@@ -227,16 +227,16 @@ int Style::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWi
 			}
 
 			break;
-		case PM_ToolBarItemMargin:
 		case PM_ToolBarFrameWidth:
 		case PM_ToolBarHandleExtent:
+		case PM_ToolBarItemMargin:
 			if (widget)
 			{
 				const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
 
 				if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar)
 				{
-					if (PM_ToolBarHandleExtent)
+					if (metric == PM_ToolBarHandleExtent)
 					{
 						return (QProxyStyle::pixelMetric(metric, option, widget) + QProxyStyle::pixelMetric(PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(PM_ToolBarFrameWidth, option, widget));
 					}
