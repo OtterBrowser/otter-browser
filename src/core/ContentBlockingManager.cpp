@@ -86,7 +86,7 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_profiles.count(); ++i)
 		{
-			ContentBlockingProfile *profile(m_profiles.at(i));
+			const ContentBlockingProfile *profile(m_profiles.at(i));
 
 			if (profile == nullptr || profile->getName() == QLatin1String("custom"))
 			{
