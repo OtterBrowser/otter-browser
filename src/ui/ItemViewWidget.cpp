@@ -78,11 +78,11 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	noSortAction->setCheckable(true);
 	noSortAction->setChecked(sortColumn < 0);
 
-	QActionGroup actionGroup(sortMenu);
-	actionGroup.addAction(sortAscendingAction);
-	actionGroup.addAction(sortDescendingAction);
-	actionGroup.addAction(noSortAction);
-	actionGroup.setExclusive(true);
+	QActionGroup orderActionGroup(sortMenu);
+	orderActionGroup.setExclusive(true);
+	orderActionGroup.addAction(sortAscendingAction);
+	orderActionGroup.addAction(sortDescendingAction);
+	orderActionGroup.addAction(noSortAction);
 
 	sortMenu->addSeparator();
 
@@ -101,6 +101,9 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 		visibilityMenu->addSeparator();
 	}
 
+	QActionGroup columnsActionGroup(sortMenu);
+	columnsActionGroup.setExclusive(true);
+
 	for (int i = 0; i < model()->columnCount(); ++i)
 	{
 		const QString title(model()->headerData(i, orientation()).toString());
@@ -108,6 +111,8 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 		action->setData(i);
 		action->setCheckable(true);
 		action->setChecked(i == sortColumn);
+
+		columnsActionGroup.addAction(action);
 
 		if (visibilityMenu->isEnabled())
 		{
