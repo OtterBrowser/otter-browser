@@ -78,6 +78,12 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	noSortAction->setCheckable(true);
 	noSortAction->setChecked(sortColumn < 0);
 
+	QActionGroup actionGroup(sortMenu);
+	actionGroup.addAction(sortAscendingAction);
+	actionGroup.addAction(sortDescendingAction);
+	actionGroup.addAction(noSortAction);
+	actionGroup.setExclusive(true);
+
 	sortMenu->addSeparator();
 
 	QMenu *visibilityMenu(menu.addMenu(tr("Visible Columns")));
