@@ -41,6 +41,7 @@ public:
 	explicit StartPageModel(QObject *parent = nullptr);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
+	static QString getThumbnailPath(quint64 identifier);
 	QVariant data(const QModelIndex &index, int role) const override;
 	QStringList mimeTypes() const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
@@ -50,9 +51,6 @@ public slots:
 	void reloadModel();
 	void addTile(const QUrl &url);
 	void reloadTile(const QModelIndex &index, bool needsTitleUpdate = false);
-
-protected:
-	QString getThumbnailPath(quint64 identifier) const;
 
 protected slots:
 	void dragEnded();

@@ -99,7 +99,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		painter->setBrush(Qt::white);
 		painter->setPen(Qt::transparent);
 		painter->drawRect(rectangle);
-		painter->drawPixmap(rectangle, QPixmap(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(index.data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png")));
+		painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())));
 	}
 	else if (tileBackgroundMode == QLatin1String("favicon"))
 	{

@@ -322,7 +322,7 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	return mimeData;
 }
 
-QString StartPageModel::getThumbnailPath(quint64 identifier) const
+QString StartPageModel::getThumbnailPath(quint64 identifier)
 {
 	return SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png");
 }
