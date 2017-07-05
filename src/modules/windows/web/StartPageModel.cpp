@@ -249,9 +249,22 @@ void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem 
 		m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
 	}
 
-	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent)))
+	if (m_bookmark)
 	{
-		reloadModel();
+		if (bookmark->parent() != m_bookmark)
+		{
+			const QString path(getThumbnailPath(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
+
+			if (QFile::exists(path))
+			{
+				QFile::remove(path);
+			}
+		}
+
+		if (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(bookmark) || m_bookmark->isAncestorOf(previousParent))
+		{
+			reloadModel();
+		}
 	}
 }
 
