@@ -259,6 +259,13 @@ void StartPageModel::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksIte
 {
 	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent)))
 	{
+		const QString path(getThumbnailPath(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
+
+		if (QFile::exists(path))
+		{
+			QFile::remove(path);
+		}
+
 		reloadModel();
 	}
 }
