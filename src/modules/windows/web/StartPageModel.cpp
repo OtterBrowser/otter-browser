@@ -70,7 +70,7 @@ void StartPageModel::reloadModel()
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			QStandardItem *bookmark(m_bookmark->child(i));
+			const QStandardItem *bookmark(m_bookmark->child(i));
 
 			if (bookmark)
 			{
@@ -156,7 +156,7 @@ void StartPageModel::addTile(const QUrl &url)
 		connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
 	}
 
-	BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), m_bookmark));
+	const BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), m_bookmark));
 
 	if (bookmark)
 	{
