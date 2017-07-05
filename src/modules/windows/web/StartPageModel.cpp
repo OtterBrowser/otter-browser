@@ -290,7 +290,7 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 		return;
 	}
 
-	if (!SessionsManager::isReadOnly() && !thumbnail.isNull())
+	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && BookmarksManager::getBookmark(m_reloads[url].first))
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
