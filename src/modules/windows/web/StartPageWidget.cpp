@@ -416,7 +416,7 @@ void StartPageWidget::removeTile()
 
 	if (bookmark)
 	{
-		const QString path(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png"));
+		const QString path(StartPageModel::getThumbnailPath(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
 
 		if (QFile::exists(path))
 		{
