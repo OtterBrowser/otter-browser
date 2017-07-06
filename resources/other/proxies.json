@@ -1,12 +1,10 @@
 [
 	{
 		"identifier": "noProxy",
-		"title": "No Proxy",
 		"type": "noProxy"
 	},
 	{
 		"identifier": "system",
-		"title": "System Configuration",
 		"type": "systemProxy"
 	}
 ]

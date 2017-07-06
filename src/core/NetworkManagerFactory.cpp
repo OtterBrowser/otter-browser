@@ -201,9 +201,6 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
-	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "No Proxy"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "System Configuration"))
-
 	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
 
 	connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SIGNAL(onlineStateChanged(bool)));

@@ -77,7 +77,20 @@ struct ProxyDefinition
 
 	QString getTitle() const
 	{
-		return (title.isEmpty() ? QCoreApplication::translate("proxies", "(Untitled)") : QCoreApplication::translate("proxies", title.toUtf8().constData()));
+		if (title.isEmpty())
+		{
+			if (identifier == QLatin1String("noProxy"))
+			{
+				return QCoreApplication::translate("proxies", "No Proxy");
+			}
+
+			if (identifier == QLatin1String("system"))
+			{
+				return QCoreApplication::translate("proxies", "System Configuration");
+			}
+		}
+
+		return (title.isEmpty() ? QCoreApplication::translate("proxies", "(Untitled)") : title);
 	}
 
 	bool isValid() const
