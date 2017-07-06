@@ -114,7 +114,7 @@ ThemesManager* ThemesManager::getInstance()
 Style* ThemesManager::createStyle(const QString &name)
 {
 	Style *style(nullptr);
-	PlatformIntegration *integration(Application::getPlatformIntegration());
+	const PlatformIntegration *integration(Application::getPlatformIntegration());
 
 	if (integration)
 	{
@@ -184,7 +184,7 @@ bool ThemesManager::nativeEventFilter(const QByteArray &eventType, void *message
 	Q_UNUSED(eventType)
 	Q_UNUSED(result)
 
-	MSG *nativeMessage(static_cast<MSG*>(message));
+	const MSG *nativeMessage(static_cast<MSG*>(message));
 
 	if (nativeMessage && nativeMessage->message == WM_THEMECHANGED)
 	{
