@@ -681,7 +681,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	hidePreview();
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	QVariantMap parameters;
 	QMenu menu(this);
 	menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, this));
@@ -781,9 +781,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	connect(minimizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 	connect(maximizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
-
-	if (toolBar)
+	if (qobject_cast<ToolBarWidget*>(parentWidget()))
 	{
 		menu.addMenu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::TabBar, {cycleAction, thumbnailsAction}, &menu));
 	}
@@ -814,7 +812,7 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 
 	if (event->button() == Qt::LeftButton)
 	{
-		Window *window(getWindow(tabAt(event->pos())));
+		const Window *window(getWindow(tabAt(event->pos())));
 
 		m_isIgnoringTabDrag = (count() == 1);
 
@@ -849,11 +847,11 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 		updateSize();
 
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 		if (mainWindow)
 		{
-			Window *window(mainWindow->getWindowByIdentifier(m_draggedWindow));
+			const Window *window(mainWindow->getWindowByIdentifier(m_draggedWindow));
 
 			if (window)
 			{
@@ -962,7 +960,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 		{
 			for (int i = 0; i < count(); ++i)
 			{
-				Window *window(getWindow(i));
+				const Window *window(getWindow(i));
 
 				if (window && window->getIdentifier() == windowIdentifier)
 				{
@@ -1126,7 +1124,7 @@ void TabBarWidget::tabHovered(int index)
 
 	if (!m_isDraggingTab)
 	{
-		Window *window(getWindow(index));
+		const Window *window(getWindow(index));
 
 		if (window)
 		{
@@ -1428,7 +1426,7 @@ void TabBarWidget::updatePinnedTabsAmount()
 
 	for (int i = 0; i < count(); ++i)
 	{
-		Window *window(getWindow(i));
+		const Window *window(getWindow(i));
 
 		if (window && window->isPinned())
 		{
@@ -1494,7 +1492,7 @@ Window* TabBarWidget::getWindow(int index) const
 {
 	if (index >= 0 && index < count())
 	{
-		TabHandleWidget *widget(qobject_cast<TabHandleWidget*>(tabButton(index, QTabBar::LeftSide)));
+		const TabHandleWidget *widget(qobject_cast<TabHandleWidget*>(tabButton(index, QTabBar::LeftSide)));
 
 		if (widget)
 		{
@@ -1511,7 +1509,7 @@ QStyleOptionTab TabBarWidget::createStyleOptionTab(int index) const
 
 	initStyleOption(&tabOption, index);
 
-	QWidget *widget(tabButton(index, QTabBar::LeftSide));
+	const QWidget *widget(tabButton(index, QTabBar::LeftSide));
 
 	if (widget)
 	{
@@ -1534,7 +1532,7 @@ QSize TabBarWidget::tabSizeHint(int index) const
 {
 	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
-		Window *window(getWindow(index));
+		const Window *window(getWindow(index));
 		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), (parentWidget() ? parentWidget()->height() : height())), m_maximumTabSize.height()));
 
 		if (window && window->isPinned())
@@ -1566,7 +1564,7 @@ QSize TabBarWidget::sizeHint() const
 
 		for (int i = 0; i < count(); ++i)
 		{
-			Window *window(getWindow(i));
+			const Window *window(getWindow(i));
 
 			size += ((window && window->isPinned()) ? m_minimumTabSize.width() : m_maximumTabSize.width());
 		}
@@ -1642,7 +1640,7 @@ bool TabBarWidget::event(QEvent *event)
 
 				if (event->type() == QEvent::Wheel)
 				{
-					QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
+					const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 					if (wheelEvent)
 					{
@@ -1651,7 +1649,7 @@ bool TabBarWidget::event(QEvent *event)
 				}
 				else
 				{
-					QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+					const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 					if (mouseEvent)
 					{
@@ -1661,7 +1659,7 @@ bool TabBarWidget::event(QEvent *event)
 
 				if (tab >= 0)
 				{
-					Window *window(getWindow(tab));
+					const Window *window(getWindow(tab));
 
 					if (window)
 					{
