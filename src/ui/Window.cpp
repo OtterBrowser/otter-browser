@@ -839,9 +839,9 @@ QIcon Window::getIcon() const
 	return (m_contentsWidget ? m_contentsWidget->getIcon() : HistoryManager::getIcon(m_session.getUrl()));
 }
 
-QPixmap Window::getThumbnail() const
+QPixmap Window::createThumbnail() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getThumbnail() : QPixmap());
+	return (m_contentsWidget ? m_contentsWidget->createThumbnail() : QPixmap());
 }
 
 QDateTime Window::getLastActivity() const

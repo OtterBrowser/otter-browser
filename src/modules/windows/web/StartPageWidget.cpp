@@ -619,7 +619,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 	menu.exec(hitPosition);
 }
 
-QPixmap StartPageWidget::getThumbnail()
+QPixmap StartPageWidget::createThumbnail()
 {
 	if (m_thumbnail.isNull())
 	{

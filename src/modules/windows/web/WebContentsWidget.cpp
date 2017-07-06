@@ -1379,14 +1379,14 @@ QIcon WebContentsWidget::getIcon() const
 	return m_webWidget->getIcon();
 }
 
-QPixmap WebContentsWidget::getThumbnail()
+QPixmap WebContentsWidget::createThumbnail()
 {
 	if (m_startPageWidget && m_startPageWidget->isVisibleTo(this))
 	{
-		return m_startPageWidget->getThumbnail();
+		return m_startPageWidget->createThumbnail();
 	}
 
-	return m_webWidget->getThumbnail();
+	return m_webWidget->createThumbnail();
 }
 
 ActionsManager::ActionDefinition::State WebContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

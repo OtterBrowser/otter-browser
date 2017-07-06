@@ -48,7 +48,7 @@ public:
 	QVariant getPageInformation(PageInformation key) const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	QPixmap getThumbnail() override;
+	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;

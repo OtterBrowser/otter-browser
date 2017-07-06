@@ -81,7 +81,7 @@ public:
 	QVariant getPageInformation(WebWidget::PageInformation key) const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	QPixmap getThumbnail() override;
+	QPixmap createThumbnail() override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WindowHistoryInformation getHistory() const override;
 	QStringList getStyleSheets() const override;

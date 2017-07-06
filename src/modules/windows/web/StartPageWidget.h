@@ -70,7 +70,7 @@ public:
 	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void scrollContents(const QPoint &delta);
 	void markForDeletion();
-	QPixmap getThumbnail();
+	QPixmap createThumbnail();
 	bool event(QEvent *event) override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 

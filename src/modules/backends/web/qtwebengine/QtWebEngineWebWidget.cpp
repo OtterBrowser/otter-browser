@@ -1594,7 +1594,7 @@ QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
 	return m_lastUrlClickTime;
 }
 
-QPixmap QtWebEngineWebWidget::getThumbnail()
+QPixmap QtWebEngineWebWidget::createThumbnail()
 {
 	return QPixmap();
 }

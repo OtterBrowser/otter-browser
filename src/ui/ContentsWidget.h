@@ -53,7 +53,7 @@ public:
 	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
-	virtual QPixmap getThumbnail();
+	virtual QPixmap createThumbnail();
 	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QStringList getStyleSheets() const;

@@ -2193,7 +2193,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 	return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : icon);
 }
 
-QPixmap QtWebKitWebWidget::getThumbnail()
+QPixmap QtWebKitWebWidget::createThumbnail()
 {
 	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == OngoingLoadingState)
 	{

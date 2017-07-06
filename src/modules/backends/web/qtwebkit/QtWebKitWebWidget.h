@@ -62,7 +62,7 @@ public:
 	QStringList getBlockedElements() const;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	QPixmap getThumbnail() override;
+	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
 	QRect getProgressBarGeometry() const override;
 	LinkUrl getActiveFrame() const override;

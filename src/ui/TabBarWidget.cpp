@@ -156,7 +156,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_thumbnailRectangle.isValid())
 	{
-		const QPixmap thumbnail(m_window->getThumbnail());
+		const QPixmap thumbnail(m_window->createThumbnail());
 
 		if (thumbnail.isNull())
 		{
@@ -861,7 +861,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 				mimeData->setProperty("x-url-title", window->getTitle());
 				mimeData->setProperty("x-window-identifier", window->getIdentifier());
 
-				const QPixmap thumbnail(window->getThumbnail());
+				const QPixmap thumbnail(window->createThumbnail());
 
 				QDrag *drag(new QDrag(this));
 				drag->setMimeData(mimeData);
@@ -1219,7 +1219,7 @@ void TabBarWidget::showPreview(int index, int delay)
 
 		const bool isActive(index == currentIndex());
 
-		m_previewWidget->setPreview(window->getTitle(), ((isActive || m_areThumbnailsEnabled) ? QPixmap() : window->getThumbnail()), isActive);
+		m_previewWidget->setPreview(window->getTitle(), ((isActive || m_areThumbnailsEnabled) ? QPixmap() : window->createThumbnail()), isActive);
 
 		switch (shape())
 		{

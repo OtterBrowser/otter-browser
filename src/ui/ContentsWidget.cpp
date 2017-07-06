@@ -334,7 +334,7 @@ QVariant ContentsWidget::getPageInformation(WebWidget::PageInformation key) cons
 	return QVariant();
 }
 
-QPixmap ContentsWidget::getThumbnail()
+QPixmap ContentsWidget::createThumbnail()
 {
 	return QPixmap();
 }

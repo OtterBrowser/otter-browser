@@ -72,7 +72,7 @@ public:
 	QVariant getOption(int identifier) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
-	QPixmap getThumbnail() const;
+	QPixmap createThumbnail() const;
 	QDateTime getLastActivity() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 	WindowHistoryInformation getHistory() const;

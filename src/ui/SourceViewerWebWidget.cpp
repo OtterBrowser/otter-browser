@@ -500,7 +500,7 @@ QIcon SourceViewerWebWidget::getIcon() const
 	return HistoryManager::getIcon(getRequestedUrl());
 }
 
-QPixmap SourceViewerWebWidget::getThumbnail()
+QPixmap SourceViewerWebWidget::createThumbnail()
 {
 	return QPixmap();
 }

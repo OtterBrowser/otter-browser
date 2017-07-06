@@ -223,7 +223,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
-	virtual QPixmap getThumbnail() = 0;
+	virtual QPixmap createThumbnail() = 0;
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const;
