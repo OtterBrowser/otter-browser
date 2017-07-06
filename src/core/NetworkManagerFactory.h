@@ -2,7 +2,6 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2017 Marcin Mikołajczak <me@m4sk.in>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -90,6 +89,7 @@ struct ProxyDefinition
 struct UserAgentDefinition
 {
 	QString identifier;
+	QString name;
 	QString title;
 	QString value;
 	QStringList children;
@@ -97,7 +97,20 @@ struct UserAgentDefinition
 
 	QString getTitle() const
 	{
-		return (title.isEmpty() ? QCoreApplication::translate("userAgents", "(Untitled)") : QCoreApplication::translate("userAgents", title.toUtf8().constData()));
+		if (title.isEmpty())
+		{
+			if (identifier == QLatin1String("default"))
+			{
+				return QCoreApplication::translate("userAgents", "Default User Agent");
+			}
+
+			if (!name.isEmpty())
+			{
+				return QCoreApplication::translate("userAgents", "Mask as {name}").replace(QLatin1String("{name}"), QString(name).replace(QLatin1Char('&'), QLatin1String("&&")));
+			}
+		}
+
+		return (title.isEmpty() ? QCoreApplication::translate("userAgents", "(Untitled)") : title);
 	}
 
 	bool isValid() const

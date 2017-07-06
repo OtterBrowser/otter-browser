@@ -2,7 +2,6 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2017 Marcin Mikołajczak <me@m4sk.in>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +29,6 @@
 #include "SettingsManager.h"
 #include "WebBackend.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
@@ -205,14 +203,6 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
 	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "No Proxy"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "System Configuration"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Default User Agent"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 59 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 59 (Android)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Mozilla Firefox 54 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Microsoft Edge 40 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Internet Explorer 11.0 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Opera 12.18 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Safari 10.1 (macOS)"))
 
 	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
 
@@ -451,6 +441,7 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefi
 	{
 		UserAgentDefinition userAgent;
 		userAgent.identifier = identifier;
+		userAgent.name = userAgentObject.value(QLatin1String("name")).toString();
 		userAgent.title = userAgentObject.value(QLatin1String("title")).toString();
 
 		if (identifier == QLatin1String("default"))

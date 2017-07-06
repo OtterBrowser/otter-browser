@@ -1,43 +1,42 @@
 [
 	{
 		"identifier": "default",
-		"title": "Default User Agent",
 		"value": "Mozilla/5.0 {platform} {engineVersion} {applicationVersion}"
 	},
 	"separator",
 	{
 		"identifier": "chrome",
-		"title": "Mask as Google Chrome 59 (Windows)",
+		"name": "Google Chrome 59 (Windows)",
 		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36"
 	},
 	{
 		"identifier": "chromeMobile",
-		"title": "Mask as Google Chrome 59 (Android)",
+		"name": "Google Chrome 59 (Android)",
 		"value": "Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.92 Mobile Safari/537.36"
 	},
 	{
 		"identifier": "firefox",
-		"title": "Mask as Mozilla Firefox 54 (Windows)",
+		"name": "Mozilla Firefox 54 (Windows)",
 		"value": "Mozilla/5.0 (Windows NT 10.0; rv:54.0) Gecko/20100101 Firefox/54.0"
 	},
 	{
 		"identifier": "edge",
-		"title": "Mask as Microsoft Edge 40 (Windows)",
+		"name": "Microsoft Edge 40 (Windows)",
 		"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/15.15063"
 	},
 	{
 		"identifier": "internetExplorer",
-		"title": "Mask as Internet Explorer 11.0 (Windows)",
+		"name": "Internet Explorer 11.0 (Windows)",
 		"value": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0)"
 	},
 	{
 		"identifier": "opera",
-		"title": "Mask as Opera 12.18 (Windows)",
+		"name": "Opera 12.18 (Windows)",
 		"value": "Opera/9.80 (Windows NT 6.1) Presto/2.12.388 Version/12.18"
 	},
 	{
 		"identifier": "safari",
-		"title": "Mask as Safari 10.1 (macOS)",
+		"name": "Safari 10.1 (macOS)",
 		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4"
 	}
 ]
