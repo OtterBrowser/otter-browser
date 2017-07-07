@@ -543,6 +543,10 @@ file(GLOB _qm_files resources/translations/*.qm)
 
 foreach(_current_QM_FILE ${_qm_files})
 	install(FILES ${_current_QM_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/otter-browser/locale/)
+
+	if (APPLE)
+		file(COPY ${_current_QM_FILE} DESTINATION "Otter Browser.app/Contents/Resources/locale/")
+	endif(APPLE)
 endforeach(_current_QM_FILE)
 
 install(FILES resources/icons/otter-browser-16.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps/ RENAME otter-browser.png)

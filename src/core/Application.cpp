@@ -105,7 +105,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	QString profilePath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter"));
 	QString cachePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
 
+#if defined(Q_OS_MAC)
+	m_localePath = QFileInfo(applicationDirPath() + QLatin1String("/../Resources/locale/")).absoluteFilePath();
+#else
 	m_localePath = OTTER_INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
+#endif
 
 	if (QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
 	{
