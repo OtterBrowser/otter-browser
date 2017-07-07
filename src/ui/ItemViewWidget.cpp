@@ -160,7 +160,22 @@ void HeaderViewWidget::toggleSort(QAction *action)
 
 			if (view)
 			{
-				setSort(view->getSortColumn(), ((value == AscendingOrder) ? Qt::AscendingOrder : Qt::DescendingOrder));
+				int column(view->getSortColumn());
+
+				if (column < 0)
+				{
+					for (int i = 0; i < count(); ++i)
+					{
+						column = logicalIndex(i);
+
+						if (!isSectionHidden(column))
+						{
+							break;
+						}
+					}
+				}
+
+				setSort(column, ((value == AscendingOrder) ? Qt::AscendingOrder : Qt::DescendingOrder));
 			}
 		}
 		else
