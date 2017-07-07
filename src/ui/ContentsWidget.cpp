@@ -112,7 +112,7 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 
 void ContentsWidget::triggerAction()
 {
-	Action *action(qobject_cast<Action*>(sender()));
+	const Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
@@ -163,7 +163,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		return;
 	}
 
-	Window *window(qobject_cast<Window*>(parent()));
+	const Window *window(qobject_cast<Window*>(parent()));
 
 	if (window && window->isAboutToClose())
 	{
