@@ -54,7 +54,7 @@ void runApplication(const QString &command, const QUrl &url)
 		return;
 	}
 
-	PlatformIntegration *integration(Application::getPlatformIntegration());
+	const PlatformIntegration *integration(Application::getPlatformIntegration());
 
 	if (integration)
 	{
@@ -68,7 +68,7 @@ void runApplication(const QString &command, const QUrl &url)
 
 void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent)
 {
-	PlatformIntegration *integration(Application::getPlatformIntegration());
+	const PlatformIntegration *integration(Application::getPlatformIntegration());
 
 	if (integration)
 	{
