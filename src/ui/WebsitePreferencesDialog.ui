@@ -307,6 +307,9 @@
          </property>
         </widget>
        </item>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="keepCookiesModeComboBox"/>
+       </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="enableCookiesOverrideCheckBox">
          <property name="text">
@@ -315,6 +318,16 @@
         </widget>
        </item>
        <item row="9" column="0" colspan="3">
+        <widget class="QLabel" name="cookiesLabel">
+         <property name="text">
+          <string>Cookies:</string>
+         </property>
+         <property name="buddy">
+          <cstring>cookiesViewWidget</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="3">
         <layout class="QHBoxLayout" name="cookiesViewLayout">
          <item>
           <widget class="Otter::ItemViewWidget" name="cookiesViewWidget">
@@ -405,7 +418,7 @@
          </item>
         </layout>
        </item>
-       <item row="10" column="2">
+       <item row="11" column="2">
         <spacer name="privacyHorizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -424,9 +437,6 @@
           <string/>
          </property>
         </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QComboBox" name="keepCookiesModeComboBox"/>
        </item>
        <item row="5" column="2">
         <widget class="QComboBox" name="cookiesPolicyComboBox"/>
@@ -712,7 +722,7 @@
        <item row="2" column="1">
         <widget class="QLabel" name="contentBlockingProfilesLabel">
          <property name="text">
-          <string>Profiles</string>
+          <string>Profiles:</string>
          </property>
         </widget>
        </item>
