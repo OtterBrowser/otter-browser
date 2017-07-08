@@ -103,7 +103,7 @@ QVariant BookmarksItem::data(int role) const
 				break;
 			case BookmarksModel::RootBookmark:
 				{
-					BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
+					const BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
 
 					if (model && model->getFormatMode() == BookmarksModel::NotesMode)
 					{
@@ -185,7 +185,7 @@ QVector<QUrl> BookmarksItem::getUrls() const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		BookmarksItem *bookmark(static_cast<BookmarksItem*>(child(i, 0)));
+		const BookmarksItem *bookmark(static_cast<BookmarksItem*>(child(i, 0)));
 
 		if (!bookmark)
 		{
@@ -362,7 +362,6 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 	readdBookmarkUrl(bookmark);
 
 	BookmarksItem *trashItem(getTrashItem());
-
 	trashItem->setEnabled(trashItem->rowCount() > 0);
 
 	emit bookmarkModified(bookmark);
@@ -1095,7 +1094,7 @@ bool BookmarksModel::canDropMimeData(const QMimeData *data, Qt::DropAction actio
 
 	if (index.isValid())
 	{
-		BookmarksItem *bookmark(getBookmark(index));
+		const BookmarksItem *bookmark(getBookmark(index));
 		BookmarksItem *newParent(getBookmark(parent));
 
 		return (bookmark && newParent && bookmark != newParent && !bookmark->isAncestorOf(newParent));
