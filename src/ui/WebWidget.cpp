@@ -94,7 +94,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 void WebWidget::triggerAction()
 {
-	Action *action(qobject_cast<Action*>(sender()));
+	const Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
@@ -203,7 +203,7 @@ void WebWidget::pasteNote(QAction *action)
 {
 	if (action && action->data().isValid())
 	{
-		BookmarksItem *note(NotesManager::getModel()->getBookmark(action->data().toModelIndex()));
+		const BookmarksItem *note(NotesManager::getModel()->getBookmark(action->data().toModelIndex()));
 
 		if (note)
 		{
@@ -222,7 +222,7 @@ void WebWidget::selectDictionary(QAction *action)
 
 void WebWidget::selectDictionaryMenuAboutToShow()
 {
-	QMenu *menu(qobject_cast<QMenu*>(sender()));
+	const QMenu *menu(qobject_cast<QMenu*>(sender()));
 
 	if (!menu)
 	{
@@ -256,7 +256,7 @@ void WebWidget::openInApplicationMenuAboutToShow()
 		return;
 	}
 
-	Action *parentAction(qobject_cast<Action*>(menu->menuAction()));
+	const Action *parentAction(qobject_cast<Action*>(menu->menuAction()));
 	QString query(QLatin1String("{pageUrl}"));
 
 	if (parentAction)
