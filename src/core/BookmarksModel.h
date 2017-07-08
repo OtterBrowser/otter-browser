@@ -40,6 +40,7 @@ public:
 	QVariant rawData(int role) const;
 	QVector<QUrl> getUrls() const;
 	bool isAncestorOf(BookmarksItem *child) const;
+	bool operator<(const QStandardItem &other) const override;
 
 protected:
 	explicit BookmarksItem();

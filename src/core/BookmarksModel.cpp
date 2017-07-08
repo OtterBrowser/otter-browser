@@ -233,6 +233,18 @@ bool BookmarksItem::isAncestorOf(BookmarksItem *child) const
 	return false;
 }
 
+bool BookmarksItem::operator<(const QStandardItem &other) const
+{
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()));
+
+	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
+	{
+		return false;
+	}
+
+	return QStandardItem::operator<(other);
+}
+
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
 	m_rootItem(new BookmarksItem()),
 	m_trashItem(new BookmarksItem()),
