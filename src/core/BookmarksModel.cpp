@@ -1157,11 +1157,9 @@ bool BookmarksModel::save(const QString &path) const
 	writer.writeStartElement(QLatin1String("xbel"));
 	writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
 
-	QStandardItem *rootItem(item(0, 0));
-
-	for (int i = 0; i < rootItem->rowCount(); ++i)
+	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		writeBookmark(&writer, static_cast<BookmarksItem*>(rootItem->child(i, 0)));
+		writeBookmark(&writer, static_cast<BookmarksItem*>(m_rootItem->child(i, 0)));
 	}
 
 	writer.writeEndDocument();
