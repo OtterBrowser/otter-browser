@@ -62,7 +62,7 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 		setText(definition.options.value(QLatin1String("text")).toString());
 	}
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar)
 	{
@@ -207,7 +207,7 @@ QString ToolButtonWidget::getText() const
 
 	if (defaultAction())
 	{
-		Action *action(qobject_cast<Action*>(defaultAction()));
+		const Action *action(qobject_cast<Action*>(defaultAction()));
 
 		if (action)
 		{
