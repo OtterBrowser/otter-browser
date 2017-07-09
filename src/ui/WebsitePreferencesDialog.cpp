@@ -63,7 +63,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 
 	for (int i = 0; i < textCodecs.count(); ++i)
 	{
-		QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
+		const QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
 
 		if (!codec)
 		{
@@ -332,7 +332,7 @@ void WebsitePreferencesDialog::updateCookiesActions()
 
 void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 {
-	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+	const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
 	if (!profile)
 	{
@@ -349,7 +349,7 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 
 			if (entryIndex.data(Qt::UserRole).toString() == name)
 			{
-				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+				const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
@@ -451,14 +451,14 @@ void WebsitePreferencesDialog::valueChanged()
 		return;
 	}
 
-	QWidget *tab(qobject_cast<QWidget*>(widget->parent()));
+	const QWidget *tab(qobject_cast<QWidget*>(widget->parent()));
 
 	if (!tab)
 	{
 		return;
 	}
 
-	QGridLayout *layout(qobject_cast<QGridLayout*>(tab->layout()));
+	const QGridLayout *layout(qobject_cast<QGridLayout*>(tab->layout()));
 
 	if (!layout)
 	{
