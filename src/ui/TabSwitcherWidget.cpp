@@ -299,7 +299,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 		color.setAlpha(150);
 	}
 
-	QStandardItem* item(new QStandardItem(window->getIcon(), window->getTitle()));
+	QStandardItem *item(new QStandardItem(window->getIcon(), window->getTitle()));
 	item->setData(color, Qt::TextColorRole);
 	item->setData(window->getIdentifier(), IdentifierRole);
 	item->setData(index, OrderRole);
