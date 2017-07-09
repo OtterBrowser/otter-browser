@@ -349,8 +349,6 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 
 			if (entryIndex.data(Qt::UserRole).toString() == name)
 			{
-				const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
-
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
