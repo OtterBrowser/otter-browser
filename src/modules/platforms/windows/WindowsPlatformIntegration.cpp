@@ -30,7 +30,7 @@
 #include "../../../ui/NotificationDialog.h"
 #include "../../../ui/TrayIcon.h"
 
-#include <Windows.h>
+#include <windows.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>

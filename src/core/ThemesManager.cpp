@@ -32,7 +32,7 @@
 #include <QtWidgets/QWidget>
 
 #if defined(Q_OS_WIN32)
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 namespace Otter

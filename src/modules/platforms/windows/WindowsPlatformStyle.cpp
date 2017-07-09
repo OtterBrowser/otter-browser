@@ -27,7 +27,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleOption>
 
-#include <Windows.h>
+#include <windows.h>
 
 namespace Otter
 {
