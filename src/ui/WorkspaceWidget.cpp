@@ -598,7 +598,7 @@ void WorkspaceWidget::handleActiveSubWindowChanged(QMdiSubWindow *subWindow)
 {
 	if (subWindow)
 	{
-		Window *window(qobject_cast<Window*>(subWindow->widget()));
+		const Window *window(qobject_cast<Window*>(subWindow->widget()));
 
 		if (window)
 		{
