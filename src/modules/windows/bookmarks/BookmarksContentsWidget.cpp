@@ -130,11 +130,11 @@ void BookmarksContentsWidget::restoreBookmark()
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
+	const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
-		QAction *action(qobject_cast<QAction*>(sender()));
+		const QAction *action(qobject_cast<QAction*>(sender()));
 
 		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
 	}
@@ -188,7 +188,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 			}
 		}
 
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 		Action *bookmarkAllOpenPagesAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, this));
 		bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowCount() > 0);
 
@@ -267,13 +267,13 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			{
-				MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
+				const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
 
 				if (mainWindowItem)
 				{
 					for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 					{
-						WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+						const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
 						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
 						{
@@ -380,7 +380,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->bookmarksViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -398,11 +398,11 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
+			const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
@@ -414,12 +414,12 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
 			const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(helpEvent->pos()));
-			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index));
+			const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index));
 
 			if (bookmark)
 			{
@@ -431,7 +431,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
