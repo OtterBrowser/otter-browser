@@ -73,7 +73,7 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent 
 	m_bytesReceived(settings.value(QLatin1String("bytesReceived")).toLongLong()),
 	m_bytesTotal(settings.value(QLatin1String("bytesTotal")).toLongLong()),
 	m_options(NoOption),
-	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived) ? FinishedState : ErrorState),
+	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived && QFile::exists(settings.value(QLatin1String("target")).toString())) ? FinishedState : ErrorState),
 	m_updateTimer(0),
 	m_updateInterval(0),
 	m_isSelectingPath(false)
