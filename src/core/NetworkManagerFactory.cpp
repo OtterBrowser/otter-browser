@@ -29,6 +29,7 @@
 #include "SettingsManager.h"
 #include "WebBackend.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
@@ -202,6 +203,16 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
 	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
+	const QStringList paths({QDir(QCoreApplication::applicationDirPath()).filePath(QLatin1String("certificates")), SessionsManager::getWritableDataPath(QLatin1String("certificates"))});
+
+	for (int i = 0; i < paths.count(); ++i)
+	{
+		if (QFile::exists(paths.at(i)))
+		{
+			QSslSocket::addDefaultCaCertificates(QDir(paths.at(i)).filePath(QLatin1String("*")), QSsl::Pem, QRegExp::Wildcard);
+		}
+
+	}
 
 	connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SIGNAL(onlineStateChanged(bool)));
 }
