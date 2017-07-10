@@ -129,16 +129,48 @@ Actions=NewTab;NewPrivateTab;NewWindow;NewPrivateWindow;
 
 [Desktop Action NewTab]
 Name=New Tab
+Name[cs]=Nový list
+Name[de]=Neuer Tab
+Name[el]=Νέα Καρτέλα
+Name[es]=Nueva pestaña
+Name[et]=Uus kaart
+Name[fi]=Uusi välilehti
+Name[fr]=Nouvel onglet
+Name[pl]=Nowa karta
 Exec=otter-browser --new-tab %u
 
 [Desktop Action NewPrivateTab]
 Name=New Private Tab
+Name[cs]=Nový soukromý list
+Name[de]=Neuer privater Tab
+Name[el]=Νέα ιδιωτική καρτέλα
+Name[es]=Nueva pestaña privada
+Name[et]=Uus privaatkaart
+Name[fi]=Uusi yksityinen välilehti
+Name[fr]=Nouvel onglet privé
+Name[pl]=Nowa karta prywatna
 Exec=otter-browser --new-private-tab %u
 
 [Desktop Action NewWindow]
 Name=New Window
+Name[cs]=Nové okno
+Name[de]=Neues Fenster
+Name[el]=Νέο παράθυρο
+Name[es]=Nueva ventana
+Name[et]=Uus aken
+Name[fi]=Uusi ikkuna
+Name[fr]=Nouvelle fenêtre
+Name[pl]=Nowe okno
 Exec=otter-browser --new-window %u
 
 [Desktop Action NewPrivateWindow]
 Name=New Private Window
+Name[cs]=Nové soukromé okno
+Name[de]=Neues privates Fenster
+Name[el]=Νέο ιδιωτικό παράθυρο
+Name[es]=Nueva ventana privada
+Name[et]=Uus privaataken
+Name[fi]=Uusi yksityinen ikkuna
+Name[fr]=Nouvelle fenêtre privée
+Name[pl]=Nowe okno prywatne
 Exec=otter-browser --new-private-window %u
