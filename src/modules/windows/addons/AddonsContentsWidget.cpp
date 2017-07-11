@@ -235,7 +235,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 
 	if (addon->getType() == Addon::UserScriptType)
 	{
-		UserScript *script(static_cast<UserScript*>(addon));
+		const UserScript *script(static_cast<UserScript*>(addon));
 
 		if (script)
 		{
@@ -258,7 +258,7 @@ void AddonsContentsWidget::openAddon()
 
 			if (type == Addon::UserScriptType)
 			{
-				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+				const UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
 
 				if (script)
 				{
@@ -325,7 +325,7 @@ void AddonsContentsWidget::save()
 
 	for (int i = 0; i < userScriptsItem->rowCount(); ++i)
 	{
-		QStandardItem *item(userScriptsItem->child(i));
+		const QStandardItem *item(userScriptsItem->child(i));
 
 		if (item && !item->data(NameRole).toString().isEmpty())
 		{
@@ -446,7 +446,7 @@ bool AddonsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->addonsViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
 		{
@@ -457,7 +457,7 @@ bool AddonsContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
