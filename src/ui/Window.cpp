@@ -407,7 +407,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 	emit urlChanged(getUrl(), true);
 }
 
-void Window::markAsActive()
+void Window::markAsActive(bool updateLastActivity)
 {
 	if (m_suspendTimer > 0)
 	{
@@ -421,7 +421,10 @@ void Window::markAsActive()
 		setUrl(m_session.getUrl(), false);
 	}
 
-	m_lastActivity = QDateTime::currentDateTime();
+	if (updateLastActivity)
+	{
+		m_lastActivity = QDateTime::currentDateTime();
+	}
 
 	emit activated();
 }

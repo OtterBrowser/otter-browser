@@ -94,7 +94,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void requestClose();
 	void search(const QString &query, const QString &searchEngine);
-	void markAsActive();
+	void markAsActive(bool updateLastActivity = true);
 	void setUrl(const QUrl &url, bool isTyped = true);
 	void setZoom(int zoom);
 	void setPinned(bool isPinned);
