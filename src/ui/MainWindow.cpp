@@ -272,63 +272,70 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Escape && m_tabSwitcher && m_tabSwitcher->isVisible())
+	switch (event->key())
 	{
-		m_tabSwitcher->hide();
-	}
-	else if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
-	{
-		if (m_windows.count() < 2)
-		{
-			event->accept();
-
-			return;
-		}
-
-		if (m_tabSwitcher && m_tabSwitcher->isVisible())
-		{
-			m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
-		}
-		else if (m_tabSwitcherTimer > 0)
-		{
-			killTimer(m_tabSwitcherTimer);
-
-			m_tabSwitcherTimer = 0;
-
-			if (!m_tabSwitcher)
+		case Qt::Key_Backtab:
+		case Qt::Key_Tab:
+			if (m_windows.count() < 2)
 			{
-				m_tabSwitcher = new TabSwitcherWidget(this);
+				event->accept();
+
+				return;
 			}
 
-			m_tabSwitcher->raise();
-			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show(TabSwitcherWidget::KeyboardReason);
-			m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
-		}
-		else
-		{
-			const QString tabSwitchingMode(SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString());
-
-			if (m_tabSwitcherTimer == 0 && tabSwitchingMode != QLatin1String("noSortWithoutList"))
+			if (m_tabSwitcher && m_tabSwitcher->isVisible())
 			{
-				m_tabSwitcherTimer = startTimer(200);
+				m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
 			}
-
-			if (tabSwitchingMode == QLatin1String("sortByLastActivity"))
+			else if (m_tabSwitcherTimer > 0)
 			{
-				triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
+				killTimer(m_tabSwitcherTimer);
+
+				m_tabSwitcherTimer = 0;
+
+				if (!m_tabSwitcher)
+				{
+					m_tabSwitcher = new TabSwitcherWidget(this);
+				}
+
+				m_tabSwitcher->raise();
+				m_tabSwitcher->resize(size());
+				m_tabSwitcher->show(TabSwitcherWidget::KeyboardReason);
+				m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
 			}
 			else
 			{
-				triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
-			}
-		}
+				const QString tabSwitchingMode(SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString());
 
-		event->accept();
-	}
-	else
-	{
-		QMainWindow::keyPressEvent(event);
+				if (m_tabSwitcherTimer == 0 && tabSwitchingMode != QLatin1String("noSortWithoutList"))
+				{
+					m_tabSwitcherTimer = startTimer(200);
+				}
+
+				if (tabSwitchingMode == QLatin1String("sortByLastActivity"))
+				{
+					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
+				}
+				else
+				{
+					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
+				}
+			}
+
+			event->accept();
+
+			break;
+		case Qt::Key_Escape:
+			if (m_tabSwitcher && m_tabSwitcher->isVisible())
+			{
+				m_tabSwitcher->hide();
+			}
+
+			break;
+		default:
+			QMainWindow::keyPressEvent(event);
+
+			break;
 	}
 }
 
