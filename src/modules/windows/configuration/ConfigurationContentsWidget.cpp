@@ -112,7 +112,7 @@ void ConfigurationOptionDelegate::setEditorData(QWidget *editor, const QModelInd
 
 void ConfigurationOptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+	const OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
 	if (widget)
 	{
@@ -370,7 +370,7 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem(m_model->item(i, 0));
+		const QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (!groupItem)
 		{
@@ -432,7 +432,7 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem(m_model->item(i, 0));
+		const QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (!groupItem || !name.startsWith(groupItem->text()))
 		{
@@ -526,7 +526,7 @@ bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
