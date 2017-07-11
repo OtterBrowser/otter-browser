@@ -114,7 +114,7 @@ void CacheContentsWidget::populateCache()
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Type"), tr("Size"), tr("Last Modified"), tr("Expires")}));
 	m_model->setSortRole(Qt::DisplayRole);
 
-	NetworkCache *cache(NetworkManagerFactory::getCache());
+	const NetworkCache *cache(NetworkManagerFactory::getCache());
 	const QVector<QUrl> entries(cache->getEntries());
 
 	for (int i = 0; i < entries.count(); ++i)
@@ -266,7 +266,7 @@ void CacheContentsWidget::removeEntry()
 void CacheContentsWidget::removeDomainEntries()
 {
 	const QModelIndex index(m_ui->cacheViewWidget->currentIndex());
-	QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
+	const QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
 
 	if (!domainItem)
 	{
@@ -308,7 +308,7 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 
 	if (url.isValid())
 	{
-		QAction *action(qobject_cast<QAction*>(sender()));
+		const QAction *action(qobject_cast<QAction*>(sender()));
 
 		emit requestedOpenUrl(url, (action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen));
 	}
@@ -316,7 +316,7 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 
 void CacheContentsWidget::copyEntryLink()
 {
-	QStandardItem *entryItem(findEntry(getEntry(m_ui->cacheViewWidget->currentIndex())));
+	const QStandardItem *entryItem(findEntry(getEntry(m_ui->cacheViewWidget->currentIndex())));
 
 	if (entryItem)
 	{
@@ -578,7 +578,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->cacheViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -596,7 +596,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->cacheViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
@@ -619,7 +619,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
