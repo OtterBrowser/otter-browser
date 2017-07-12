@@ -1533,9 +1533,9 @@ void MainWindow::handleWindowClose(Window *window)
 		{
 			const Window *nextWindow(getWindowByIndex(index + 1));
 			const Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
-
 			ClosedWindow closedWindow;
 			closedWindow.window = window->getSession();
+			closedWindow.icon = window->getIcon();
 			closedWindow.nextWindow = (nextWindow ? nextWindow->getIdentifier() : 0);
 			closedWindow.previousWindow = (previousWindow ? previousWindow->getIdentifier() : 0);
 			closedWindow.isPrivate = window->isPrivate();

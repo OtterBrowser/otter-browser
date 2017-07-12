@@ -118,6 +118,7 @@ struct SessionInformation
 struct ClosedWindow
 {
 	SessionWindow window;
+	QIcon icon;
 	quint64 nextWindow = 0;
 	quint64 previousWindow = 0;
 	bool isPrivate = false;
