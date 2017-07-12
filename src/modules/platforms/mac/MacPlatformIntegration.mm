@@ -78,7 +78,7 @@ static MacPlatformIntegrationDockIconView *getSharedDockIconView = nil;
 
 	NSRect boundary = [self bounds];
 
-	[[NSApp applicationIconImage] drawInRect:boundary fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+	[[NSApp applicationIconImage] drawInRect:boundary fromRect:NSZeroRect operation:NSCompositingOperationCopy fraction:1.0];
 
 	if (m_value < 0)
 	{
