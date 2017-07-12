@@ -130,7 +130,7 @@ void HistoryContentsWidget::populateEntries()
 		}
 	}
 
-	HistoryModel *model(HistoryManager::getBrowsingHistoryModel());
+	const HistoryModel *model(HistoryManager::getBrowsingHistoryModel());
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
@@ -286,7 +286,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem(m_model->item(i, 0));
+		const QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (!groupItem)
 		{
@@ -295,7 +295,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 		for (int j = (groupItem->rowCount() - 1); j >= 0; --j)
 		{
-			QStandardItem *entryItem(groupItem->child(j, 0));
+			const QStandardItem *entryItem(groupItem->child(j, 0));
 
 			if (entryItem && host == QUrl(entryItem->text()).host())
 			{
@@ -320,7 +320,7 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 
 	if (url.isValid())
 	{
-		QAction *action(qobject_cast<QAction*>(sender()));
+		const QAction *action(qobject_cast<QAction*>(sender()));
 
 		emit requestedOpenUrl(url, (action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen));
 	}
@@ -328,7 +328,7 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 
 void HistoryContentsWidget::bookmarkEntry()
 {
-	QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
+	const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
 
 	if (entryItem)
 	{
@@ -338,7 +338,7 @@ void HistoryContentsWidget::bookmarkEntry()
 
 void HistoryContentsWidget::copyEntryLink()
 {
-	QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
+	const QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
 
 	if (entryItem)
 	{
@@ -376,7 +376,7 @@ QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem(m_model->item(i, 0));
+		const QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (groupItem)
 		{
@@ -429,7 +429,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->historyViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -447,7 +447,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->historyViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
@@ -470,7 +470,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
