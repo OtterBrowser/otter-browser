@@ -76,7 +76,7 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 
 void CookiesContentsWidget::populateCookies()
 {
-	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
+	const CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	const QVector<QNetworkCookie> cookies(cookieJar->getCookies());
 
 	for (int i = 0; i < cookies.count(); ++i)
@@ -215,7 +215,7 @@ void CookiesContentsWidget::removeCookies()
 
 		if (indexes.at(i).parent() == m_model->invisibleRootItem()->index())
 		{
-			QStandardItem *domainItem(m_model->itemFromIndex(indexes.at(i)));
+			const QStandardItem *domainItem(m_model->itemFromIndex(indexes.at(i)));
 
 			if (!domainItem)
 			{
@@ -229,7 +229,7 @@ void CookiesContentsWidget::removeCookies()
 		}
 		else
 		{
-			QStandardItem *cookieItem(m_model->itemFromIndex(indexes.at(i)));
+			const QStandardItem *cookieItem(m_model->itemFromIndex(indexes.at(i)));
 
 			if (cookieItem)
 			{
@@ -258,7 +258,7 @@ void CookiesContentsWidget::removeDomainCookies()
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomain(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
+		const QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomain(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
 
 		if (domainItem)
 		{
@@ -501,7 +501,7 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->cookiesViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
 		{
@@ -512,7 +512,7 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
