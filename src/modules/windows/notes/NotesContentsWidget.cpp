@@ -120,7 +120,7 @@ void NotesContentsWidget::restoreNote()
 
 void NotesContentsWidget::openUrl(const QModelIndex &index)
 {
-	BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
+	const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
 
 	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid())
 	{
@@ -392,11 +392,11 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
+			const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
@@ -408,12 +408,12 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
 			const QModelIndex index(m_ui->notesViewWidget->indexAt(helpEvent->pos()));
-			BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index));
+			const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index));
 
 			if (bookmark)
 			{
@@ -425,7 +425,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
