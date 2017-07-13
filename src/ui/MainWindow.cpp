@@ -69,6 +69,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
 	m_isRestored(false),
+	m_isSwitchingTabs(false),
 	m_hasToolBars(!parameters.value(QLatin1String("noToolBars"), false).toBool()),
 	m_ui(new Ui::MainWindow)
 {
@@ -341,11 +342,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Control && m_tabSwitcherTimer > 0)
+	if (event->key() == Qt::Key_Control)
 	{
-		killTimer(m_tabSwitcherTimer);
+		if (m_tabSwitcherTimer > 0)
+		{
+			killTimer(m_tabSwitcherTimer);
 
-		m_tabSwitcherTimer = 0;
+			m_tabSwitcherTimer = 0;
+		}
+
+		m_isSwitchingTabs = false;
 	}
 
 	QMainWindow::keyReleaseEvent(event);
@@ -1946,7 +1952,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 		m_workspace->setActiveWindow(window);
 
 		window->setFocus();
-		window->markAsActive();
+		window->markAsActive(!m_isSwitchingTabs);
 
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 

@@ -146,6 +146,7 @@ private:
 	bool m_isDraggingToolBar;
 	bool m_isPrivate;
 	bool m_isRestored;
+	bool m_isSwitchingTabs;
 	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 
