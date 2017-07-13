@@ -40,17 +40,21 @@ QtWebKitWebBackend* QtWebKitWebBackend::m_instance(nullptr);
 QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget(nullptr);
 QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 int QtWebKitWebBackend::m_enableMediaOption(-1);
 int QtWebKitWebBackend::m_enableMediaSourceOption(-1);
 int QtWebKitWebBackend::m_enableWebSecurityOption(-1);
+#endif
 
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
 	m_instance = this;
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	m_enableMediaOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMedia"), SettingsManager::BooleanType, true);
 	m_enableMediaSourceOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMediaSource"), SettingsManager::BooleanType, false);
 	m_enableWebSecurityOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableWebSecurity"), SettingsManager::BooleanType, true);
+#endif
 
 	const QString cachePath(SessionsManager::getCachePath());
 
@@ -268,6 +272,7 @@ WebBackend::BackendCapabilities QtWebKitWebBackend::getCapabilities() const
 
 int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier identifier)
 {
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	switch (identifier)
 	{
 		case QtWebKitBackend_EnableMediaOption:
@@ -279,6 +284,7 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 		default:
 			return -1;
 	}
+#endif
 
 	return -1;
 }

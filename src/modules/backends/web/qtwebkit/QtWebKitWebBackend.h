@@ -35,9 +35,11 @@ class QtWebKitWebBackend final : public WebBackend
 public:
 	enum OptionIdentifier
 	{
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QtWebKitBackend_EnableMediaOption = 0,
 		QtWebKitBackend_EnableMediaSourceOption,
 		QtWebKitBackend_EnableWebSecurityOption
+#endif
 	};
 
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
@@ -70,9 +72,11 @@ private:
 	static QPointer<WebWidget> m_activeWidget;
 	static QMap<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	static int m_enableMediaOption;
 	static int m_enableMediaSourceOption;
 	static int m_enableWebSecurityOption;
+#endif
 
 signals:
 	void activeDictionaryChanged(const QString &dictionary);
