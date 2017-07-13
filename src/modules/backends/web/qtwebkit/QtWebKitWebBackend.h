@@ -36,7 +36,8 @@ public:
 	enum OptionIdentifier
 	{
 		QtWebKitBackend_EnableMediaOption = 0,
-		QtWebKitBackend_EnableMediaSourceOption
+		QtWebKitBackend_EnableMediaSourceOption,
+		QtWebKitBackend_EnableWebSecurityOption
 	};
 
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
@@ -71,6 +72,7 @@ private:
 	static QMap<QString, QString> m_userAgents;
 	static int m_enableMediaOption;
 	static int m_enableMediaSourceOption;
+	static int m_enableWebSecurityOption;
 
 signals:
 	void activeDictionaryChanged(const QString &dictionary);
