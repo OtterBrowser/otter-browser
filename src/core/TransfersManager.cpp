@@ -500,7 +500,7 @@ void Transfer::markFinished(bool reset)
 	m_timeFinished = (reset ? QDateTime() : QDateTime::currentDateTime());
 }
 
-void Transfer::openTarget()
+void Transfer::openTarget() const
 {
 	Utils::runApplication(m_openCommand, QUrl::fromLocalFile(getTarget()));
 }

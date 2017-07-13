@@ -80,7 +80,7 @@ public:
 	virtual TransferState getState() const;
 
 public slots:
-	void openTarget();
+	void openTarget() const;
 	virtual void cancel();
 	virtual void stop();
 	void setOpenCommand(const QString &command);

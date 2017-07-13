@@ -338,7 +338,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 
 void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 {
-	Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
+	const Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer)
 	{
@@ -348,7 +348,7 @@ void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 
 void TransfersContentsWidget::openTransfer(QAction *action)
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
+	const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer && action && !action->data().isNull())
 	{
@@ -358,7 +358,7 @@ void TransfersContentsWidget::openTransfer(QAction *action)
 
 void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 {
-	Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
+	const Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer)
 	{
@@ -368,7 +368,7 @@ void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 
 void TransfersContentsWidget::copyTransferInformation()
 {
-	QStandardItem *item(m_model->itemFromIndex(m_ui->transfersViewWidget->currentIndex()));
+	const QStandardItem *item(m_model->itemFromIndex(m_ui->transfersViewWidget->currentIndex()));
 
 	if (item)
 	{
@@ -419,7 +419,7 @@ void TransfersContentsWidget::clearFinishedTransfers()
 
 void TransfersContentsWidget::showContextMenu(const QPoint &position)
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->indexAt(position)));
+	const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->indexAt(position)));
 	QMenu menu(this);
 
 	if (transfer)
@@ -472,7 +472,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 
 void TransfersContentsWidget::updateActions()
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
+	const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
 
 	if (transfer && transfer->getState() == Transfer::ErrorState)
 	{
@@ -531,11 +531,11 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			}
 			else
 			{
-				QWidget *widget(focusWidget());
+				const QWidget *widget(focusWidget());
 
 				if (widget->metaObject()->className() == QLatin1String("Otter::TextLabelWidget"))
 				{
-					TextLabelWidget *label(qobject_cast<TextLabelWidget*>(widget));
+					const TextLabelWidget *label(qobject_cast<const TextLabelWidget*>(widget));
 
 					if (label)
 					{
@@ -646,7 +646,7 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->transfersViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -664,7 +664,7 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->downloadLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
