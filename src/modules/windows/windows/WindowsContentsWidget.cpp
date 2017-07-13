@@ -97,7 +97,7 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 	{
 		if (type == SessionModel::MainWindowEntity)
 		{
-			MainWindowSessionItem *mainWindowItem(static_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+			const MainWindowSessionItem *mainWindowItem(static_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
 
 			if (mainWindowItem)
 			{
@@ -109,7 +109,7 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 		}
 		else if (type == SessionModel::WindowEntity)
 		{
-			WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
 
 			if (windowItem)
 			{
