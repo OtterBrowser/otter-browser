@@ -33,7 +33,7 @@ namespace Otter
 ZoomWidget::ZoomWidget(Window *window, QWidget *parent) : QSlider(parent),
 	m_window(nullptr)
 {
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	setRange(0, 300);
 	setTracking(true);
