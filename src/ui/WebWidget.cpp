@@ -1562,7 +1562,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 					}
 					else
 					{
-						state.text = tr("Reload Every: %n seconds", "", reloadTime).arg(reloadTime);
+						state.text = tr("Reload Every: %n seconds", "", reloadTime);
 					}
 				}
 			}
