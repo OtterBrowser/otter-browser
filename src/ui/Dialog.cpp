@@ -52,7 +52,7 @@ void Dialog::showEvent(QShowEvent *event)
 
 			if (settingsObject.contains(name))
 			{
-				QJsonObject sizeObject(settingsObject.value(name).toObject().value(QLatin1String("size")).toObject());
+				const QJsonObject sizeObject(settingsObject.value(name).toObject().value(QLatin1String("size")).toObject());
 
 				if (!sizeObject.isEmpty() && sizeObject.value(QLatin1String("width")).toInt() > 0 && sizeObject.value(QLatin1String("height")).toInt() > 0)
 				{
