@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -85,7 +85,7 @@ void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
 
 void TrayIcon::triggerAction(QAction *action)
 {
-	Action *actionObject(qobject_cast<Action*>(action));
+	const Action *actionObject(qobject_cast<Action*>(action));
 
 	if (!actionObject)
 	{
