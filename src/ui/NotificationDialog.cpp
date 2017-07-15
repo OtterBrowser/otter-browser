@@ -149,7 +149,7 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
