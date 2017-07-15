@@ -280,7 +280,7 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 
-	QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
+	const QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
 	QMenu menu;
 
 	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
@@ -373,7 +373,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 {
 	triggerAction(ActionsManager::StopAction);
 
-	QTextCodec *codec(nullptr);
+	const QTextCodec *codec(nullptr);
 
 	if (hasOption(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
