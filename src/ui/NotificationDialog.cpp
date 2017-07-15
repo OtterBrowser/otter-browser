@@ -163,14 +163,12 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
-			else
-			{
-				m_notification->markClicked();
 
-				m_animation->stop();
+			m_notification->markClicked();
 
-				close();
-			}
+			m_animation->stop();
+
+			close();
 		}
 	}
 
