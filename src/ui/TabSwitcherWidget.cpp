@@ -78,7 +78,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 {
 	setFocus();
 
-	MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(m_mainWindow));
+	const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(m_mainWindow));
 
 	if (mainWindowItem)
 	{
@@ -86,7 +86,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
-			WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
 			if (windowItem)
 			{
@@ -97,7 +97,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	m_model->sort(0, ((SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() == QLatin1String("noSort")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
-	Window *activeWindow(m_mainWindow->getActiveWindow());
+	const Window *activeWindow(m_mainWindow->getActiveWindow());
 	const int contentsHeight(m_model->rowCount() * 22);
 
 	m_tabsView->setCurrentIndex(m_model->index((activeWindow ? findRow(activeWindow->getIdentifier()) : 0), 0));
@@ -159,7 +159,7 @@ void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 {
-	Window *window(m_mainWindow->getWindowByIdentifier(index.data(IdentifierRole).toULongLong()));
+	const Window *window(m_mainWindow->getWindowByIdentifier(index.data(IdentifierRole).toULongLong()));
 
 	m_previewLabel->setMovie(nullptr);
 	m_previewLabel->setPixmap(QPixmap());
@@ -240,7 +240,7 @@ void TabSwitcherWidget::selectTab(bool next)
 
 void TabSwitcherWidget::setTitle(const QString &title)
 {
-	Window *window(qobject_cast<Window*>(sender()));
+	const Window *window(qobject_cast<Window*>(sender()));
 
 	if (window)
 	{
@@ -255,7 +255,7 @@ void TabSwitcherWidget::setTitle(const QString &title)
 
 void TabSwitcherWidget::setIcon(const QIcon &icon)
 {
-	Window *window(qobject_cast<Window*>(sender()));
+	const Window *window(qobject_cast<Window*>(sender()));
 
 	if (window)
 	{
@@ -270,7 +270,7 @@ void TabSwitcherWidget::setIcon(const QIcon &icon)
 
 void TabSwitcherWidget::setLoadingState(WebWidget::LoadingState state)
 {
-	Window *window(qobject_cast<Window*>(sender()));
+	const Window *window(qobject_cast<Window*>(sender()));
 
 	if (window)
 	{
@@ -334,7 +334,7 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_tabsView->viewport() && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton)
 		{
