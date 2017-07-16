@@ -61,7 +61,7 @@ void FreeDesktopOrgPlatformStyle::drawControl(ControlElement element, const QSty
 			}
 			else
 			{
-				MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
+				const MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
 
 				if (mainWindow)
 				{
