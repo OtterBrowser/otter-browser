@@ -44,7 +44,7 @@ public:
 	virtual void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const;
 	virtual Style* createStyle(const QString &name) const;
 	virtual QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
-	virtual QString getPlatform() const;
+	virtual QString getPlatformName() const;
 	virtual bool canShowNotifications() const;
 	virtual bool canSetAsDefaultBrowser() const;
 	virtual bool isDefaultBrowser() const;

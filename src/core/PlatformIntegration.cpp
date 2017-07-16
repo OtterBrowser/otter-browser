@@ -81,7 +81,7 @@ QString PlatformIntegration::getUpdaterBinary() const
 	return QLatin1String("updater");
 }
 
-QString PlatformIntegration::getPlatform() const
+QString PlatformIntegration::getPlatformName() const
 {
 	return QString();
 }

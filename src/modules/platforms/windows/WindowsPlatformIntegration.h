@@ -96,7 +96,7 @@ public:
 	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;
 	Style* createStyle(const QString &name) const override;
 	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
-	QString getPlatform() const override;
+	QString getPlatformName() const override;
 	bool canShowNotifications() const override;
 	bool canSetAsDefaultBrowser() const override;
 	bool isDefaultBrowser() const override;

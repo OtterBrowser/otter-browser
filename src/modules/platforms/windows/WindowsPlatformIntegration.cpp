@@ -438,7 +438,7 @@ QString WindowsPlatformIntegration::getUpdaterBinary() const
 	return QLatin1String("updater.exe");
 }
 
-QString WindowsPlatformIntegration::getPlatform() const
+QString WindowsPlatformIntegration::getPlatformName() const
 {
 	if (QSysInfo::buildCpuArchitecture() == QLatin1String("x86_64"))
 	{
