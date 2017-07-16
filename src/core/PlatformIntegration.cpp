@@ -76,6 +76,11 @@ QVector<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(
 	return QVector<ApplicationInformation>();
 }
 
+QString PlatformIntegration::getPreferredPasswordsBackend() const
+{
+	return QLatin1String("file");
+}
+
 QString PlatformIntegration::getUpdaterBinary() const
 {
 	return QLatin1String("updater");
