@@ -42,7 +42,7 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ActionsManager:
 		setAcceptDrops(true);
 	}
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
@@ -194,7 +194,7 @@ bool ActionWidget::event(QEvent *event)
 	if (event->type() == QEvent::ToolTip)
 	{
 		Action *action(qobject_cast<Action*>(defaultAction()));
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (action && helpEvent)
 		{
