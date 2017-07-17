@@ -82,8 +82,8 @@ void IconWidget::selectFromFile()
 		return;
 	}
 
-	QPixmap pixmap(path);
-	QIcon icon(pixmap);
+	const QPixmap pixmap(path);
+	const QIcon icon(pixmap);
 
 	m_icon = Utils::savePixmapAsDataUri(pixmap);
 
