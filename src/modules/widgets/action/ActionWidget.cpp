@@ -193,7 +193,7 @@ bool ActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		Action *action(qobject_cast<Action*>(defaultAction()));
+		const Action *action(qobject_cast<Action*>(defaultAction()));
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (action && helpEvent)
