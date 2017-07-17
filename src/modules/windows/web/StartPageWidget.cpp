@@ -83,7 +83,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		case BestFitBackground:
 			{
 				const QString key(QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
-				QPixmap *cachedBackground(QPixmapCache::find(key));
+				const QPixmap *cachedBackground(QPixmapCache::find(key));
 
 				if (cachedBackground)
 				{
@@ -118,7 +118,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		case StretchBackground:
 			{
 				const QString key(QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
-				QPixmap *cachedBackground(QPixmapCache::find(key));
+				const QPixmap *cachedBackground(QPixmapCache::find(key));
 
 				if (cachedBackground)
 				{
@@ -363,7 +363,7 @@ void StartPageWidget::openTile()
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
-		BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+		const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 		if (bookmark && bookmark->rowCount() > 0)
 		{
@@ -654,7 +654,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		if (event->type() == QEvent::Wheel)
 		{
-			QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
+			const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 			if (wheelEvent)
 			{
@@ -663,7 +663,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else
 		{
-			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			if (mouseEvent)
 			{
@@ -688,7 +688,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 	if (object == m_listView && event->type() == QEvent::KeyRelease)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent)
 		{
@@ -710,7 +710,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+					const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
@@ -749,7 +749,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
@@ -758,7 +758,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseMove)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->buttons().testFlag(Qt::LeftButton) && ((m_urlOpenTime.isValid() && m_urlOpenTime.msecsTo(QTime::currentTime()) < 1000) || m_window->getLoadingState() != WebWidget::FinishedLoadingState))
 		{
@@ -784,7 +784,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+					const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
