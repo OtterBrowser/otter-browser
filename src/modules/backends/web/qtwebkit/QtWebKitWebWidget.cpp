@@ -2000,15 +2000,20 @@ void QtWebKitWebWidget::setOption(int identifier, const QVariant &value)
 
 	updateOptions(getUrl());
 
-	if (identifier == SettingsManager::Content_DefaultCharacterEncodingOption)
+	switch (identifier)
 	{
-		m_page->triggerAction(QWebPage::Reload);
-	}
-	else if (identifier == SettingsManager::Browser_SpellCheckDictionaryOption)
-	{
-		emit widgetActivated(this);
+		case SettingsManager::Content_DefaultCharacterEncodingOption:
+			m_page->triggerAction(QWebPage::Reload);
 
-		resetSpellCheck(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
+			break;
+		case SettingsManager::Browser_SpellCheckDictionaryOption:
+			emit widgetActivated(this);
+
+			resetSpellCheck(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
+
+			break;
+		default:
+			break;
 	}
 }
 
