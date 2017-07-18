@@ -91,87 +91,92 @@ void NavigationActionWidget::updateMenu()
 
 bool NavigationActionWidget::event(QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	switch (event->type())
 	{
-		GesturesManager::startGesture(this, event, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
-	}
-
-	if (event->type() == QEvent::ContextMenu)
-	{
-		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
-
-		if (contextMenuEvent)
-		{
-			if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
+		case QEvent::ContextMenu:
 			{
-				contextMenuEvent->accept();
+				QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
-				return true;
-			}
-
-			event->accept();
-
-			Window *window(getWindow());
-			QMenu menu(this);
-			menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::ClearTabHistoryAction) : Application::createAction(ActionsManager::ClearTabHistoryAction, QVariantMap(), true, this));
-			menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::PurgeTabHistoryAction) : Application::createAction(ActionsManager::PurgeTabHistoryAction, QVariantMap(), true, this));
-
-			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
-
-			if (toolBar)
-			{
-				menu.addSeparator();
-				menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QVector<QAction*>(), &menu)->actions());
-			}
-
-			menu.exec(contextMenuEvent->globalPos());
-
-			return true;
-		}
-
-		return false;
-	}
-
-	if (event->type() == QEvent::ToolTip)
-	{
-		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
-
-		if (helpEvent)
-		{
-			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(getIdentifier()).shortcuts);
-			QString toolTip(text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
-
-			if (getWindow())
-			{
-				const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
-
-				if (!history.entries.isEmpty())
+				if (contextMenuEvent)
 				{
-					int index(-1);
+					if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
+					{
+						contextMenuEvent->accept();
 
-					if (getIdentifier() == ActionsManager::GoBackAction && history.index > 0)
-					{
-						index = (history.index - 1);
-					}
-					else if (getIdentifier() == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
-					{
-						index = (history.index + 1);
+						return true;
 					}
 
-					if (index >= 0)
-					{
-						QString title(history.entries.at(index).title);
-						title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
+					event->accept();
 
-						toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
+					Window *window(getWindow());
+					QMenu menu(this);
+					menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::ClearTabHistoryAction) : Application::createAction(ActionsManager::ClearTabHistoryAction, QVariantMap(), true, this));
+					menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::PurgeTabHistoryAction) : Application::createAction(ActionsManager::PurgeTabHistoryAction, QVariantMap(), true, this));
+
+					ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+
+					if (toolBar)
+					{
+						menu.addSeparator();
+						menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QVector<QAction*>(), &menu)->actions());
 					}
+
+					menu.exec(contextMenuEvent->globalPos());
+
+					return true;
 				}
 			}
 
-			QToolTip::showText(helpEvent->globalPos(), toolTip);
-		}
+			return false;
+		case QEvent::MouseButtonDblClick:
+		case QEvent::MouseButtonPress:
+		case QEvent::Wheel:
+			GesturesManager::startGesture(this, event, {GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 
-		return true;
+			break;
+		case QEvent::ToolTip:
+			{
+				const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+
+				if (helpEvent)
+				{
+					const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(getIdentifier()).shortcuts);
+					QString toolTip(text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+
+					if (getWindow())
+					{
+						const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
+
+						if (!history.entries.isEmpty())
+						{
+							int index(-1);
+
+							if (getIdentifier() == ActionsManager::GoBackAction && history.index > 0)
+							{
+								index = (history.index - 1);
+							}
+							else if (getIdentifier() == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
+							{
+								index = (history.index + 1);
+							}
+
+							if (index >= 0)
+							{
+								QString title(history.entries.at(index).title);
+								title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
+
+								toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
+							}
+						}
+					}
+
+					QToolTip::showText(helpEvent->globalPos(), toolTip);
+				}
+			}
+
+			return true;
+		default:
+			break;
 	}
 
 	return ActionWidget::event(event);
