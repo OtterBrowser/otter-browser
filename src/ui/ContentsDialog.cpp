@@ -324,13 +324,19 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 		{
 			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-			m_offset = mouseEvent->pos();
+			if (mouseEvent)
+			{
+				m_offset = mouseEvent->pos();
+			}
 		}
 		else if (event->type() == QEvent::MouseMove)
 		{
 			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-			move(mapToParent(mouseEvent->pos()) - m_offset);
+			if (mouseEvent)
+			{
+				move(mapToParent(mouseEvent->pos()) - m_offset);
+			}
 		}
 	}
 	else if (object == m_closeLabel && event->type() == QEvent::MouseButtonPress)
