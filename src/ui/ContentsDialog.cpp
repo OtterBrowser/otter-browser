@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 			scrollLayout->addWidget(m_payloadWidget);
 
-			QDialog *dialog(qobject_cast<QDialog*>(m_payloadWidget));
+			const QDialog *dialog(qobject_cast<QDialog*>(m_payloadWidget));
 
 			if (dialog)
 			{
@@ -322,20 +322,20 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 	{
 		if (event->type() == QEvent::MouseButtonPress)
 		{
-			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			m_offset = mouseEvent->pos();
 		}
 		else if (event->type() == QEvent::MouseMove)
 		{
-			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			move(mapToParent(mouseEvent->pos()) - m_offset);
 		}
 	}
 	else if (object == m_closeLabel && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
@@ -344,7 +344,7 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
