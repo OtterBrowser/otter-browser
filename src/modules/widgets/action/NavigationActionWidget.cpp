@@ -113,7 +113,7 @@ bool NavigationActionWidget::event(QEvent *event)
 					menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::ClearTabHistoryAction) : Application::createAction(ActionsManager::ClearTabHistoryAction, QVariantMap(), true, this));
 					menu.addAction(window ? window->getContentsWidget()->createAction(ActionsManager::PurgeTabHistoryAction) : Application::createAction(ActionsManager::PurgeTabHistoryAction, QVariantMap(), true, this));
 
-					ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+					const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 					if (toolBar)
 					{
