@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -134,7 +134,7 @@ bool NavigationActionWidget::event(QEvent *event)
 
 	if (event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
@@ -181,11 +181,11 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
+		const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent)
 		{
-			QAction *action(menu()->activeAction());
+			const QAction *action(menu()->activeAction());
 
 			if (action && action->data().type() == QVariant::Int)
 			{
@@ -211,11 +211,11 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete && getWindow())
 		{
-			QAction *action(menu()->activeAction());
+			const QAction *action(menu()->activeAction());
 
 			if (action && action->data().type() == QVariant::Int)
 			{
