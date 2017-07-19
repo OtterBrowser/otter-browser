@@ -159,80 +159,85 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 	QMenu menu(this);
 
-	if (type == BookmarksModel::TrashBookmark)
+	switch (type)
 	{
-		menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
-	}
-	else if (type == BookmarksModel::UnknownBookmark)
-	{
-		menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
-		menu.addAction(tr("Add Bookmark…"), this, SLOT(addBookmark()));
-		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
-	}
-	else
-	{
-		const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
+		case BookmarksModel::TrashBookmark:
+			menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 
-		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
-		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(SessionsManager::NewWindowOpen);
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+			break;
+		case BookmarksModel::UnknownBookmark:
+			menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+			menu.addAction(tr("Add Bookmark…"), this, SLOT(addBookmark()));
+			menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
-		if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && index.child(0, 0).data(BookmarksModel::TypeRole).toInt() == 0))
-		{
-			for (int i = 0; i < menu.actions().count(); ++i)
+			break;
+		default:
 			{
-				menu.actions().at(i)->setEnabled(false);
-			}
-		}
+				const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
 
-		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-		Action *bookmarkAllOpenPagesAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, this));
-		bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowCount() > 0);
-
-		Action *copyLinkAction(new Action(ActionsManager::CopyLinkToClipboardAction, this));
-		copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
-
-		menu.addSeparator();
-		menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, QVariantMap(), true, this));
-		menu.addAction(bookmarkAllOpenPagesAction);
-		menu.addSeparator();
-		menu.addAction(copyLinkAction);
-
-		if (!isInTrash)
-		{
-			menu.addSeparator();
-
-			QMenu *addMenu(menu.addMenu(tr("Add Bookmark")));
-			addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
-			addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
-			addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
-		}
-
-		if (type != BookmarksModel::RootBookmark)
-		{
-			menu.addSeparator();
-
-			if (isInTrash)
-			{
-				menu.addAction(tr("Restore Bookmark"), this, SLOT(restoreBookmark()));
-			}
-			else
-			{
-				menu.addAction(createAction(ActionsManager::DeleteAction));
-			}
-
-			if (type != BookmarksModel::SeparatorBookmark)
-			{
+				menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
+				menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
+				menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 				menu.addSeparator();
-				menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
-			}
-		}
+				menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(SessionsManager::NewWindowOpen);
+				menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
-		connect(bookmarkAllOpenPagesAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
-		connect(copyLinkAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
+				if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && index.child(0, 0).data(BookmarksModel::TypeRole).toInt() == 0))
+				{
+					for (int i = 0; i < menu.actions().count(); ++i)
+					{
+						menu.actions().at(i)->setEnabled(false);
+					}
+				}
+
+				const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+				Action *bookmarkAllOpenPagesAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, this));
+				bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowCount() > 0);
+
+				Action *copyLinkAction(new Action(ActionsManager::CopyLinkToClipboardAction, this));
+				copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
+
+				menu.addSeparator();
+				menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, QVariantMap(), true, this));
+				menu.addAction(bookmarkAllOpenPagesAction);
+				menu.addSeparator();
+				menu.addAction(copyLinkAction);
+
+				if (!isInTrash)
+				{
+					menu.addSeparator();
+
+					QMenu *addMenu(menu.addMenu(tr("Add Bookmark")));
+					addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+					addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+					addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
+				}
+
+				if (type != BookmarksModel::RootBookmark)
+				{
+					menu.addSeparator();
+
+					if (isInTrash)
+					{
+						menu.addAction(tr("Restore Bookmark"), this, SLOT(restoreBookmark()));
+					}
+					else
+					{
+						menu.addAction(createAction(ActionsManager::DeleteAction));
+					}
+
+					if (type != BookmarksModel::SeparatorBookmark)
+					{
+						menu.addSeparator();
+						menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
+					}
+				}
+
+				connect(bookmarkAllOpenPagesAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
+				connect(copyLinkAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
+			}
+
+			break;
 	}
 
 	menu.exec(m_ui->bookmarksViewWidget->mapToGlobal(position));
