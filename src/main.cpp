@@ -69,7 +69,7 @@ bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIden
 
 		qDebug("Crash dump saved to: %s", dumpPath.toLocal8Bit().constData());
 
-		MainWindow *mainWindow(Application::getActiveWindow());
+		const MainWindow *mainWindow(Application::getActiveWindow());
 
 		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), QStringList({dumpPath, (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())}));
 	}
@@ -85,7 +85,7 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 	{
 		qDebug("Crash dump saved to: %s", descriptor.path());
 
-		MainWindow *mainWindow(Application::getActiveWindow());
+		const MainWindow *mainWindow(Application::getActiveWindow());
 
 		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), QStringList({descriptor.path(), (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())}));
 	}
