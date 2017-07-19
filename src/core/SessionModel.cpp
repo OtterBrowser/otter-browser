@@ -38,42 +38,49 @@ Window* SessionItem::getActiveWindow() const
 
 QVariant SessionItem::data(int role) const
 {
-	if (role == Qt::DecorationRole)
+	switch (role)
 	{
-		const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(data(SessionModel::TypeRole).toInt()));
-
-		if (type == SessionModel::SessionEntity)
-		{
-			return ThemesManager::createIcon(QLatin1String("inode-directory"));
-		}
-
-		if (type == SessionModel::TrashEntity)
-		{
-			return ThemesManager::createIcon(QLatin1String("user-trash"));
-		}
-	}
-	else if (role == SessionModel::IsTrashedRole)
-	{
-		QModelIndex parent(index().parent());
-
-		while (parent.isValid())
-		{
-			const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(parent.data(SessionModel::TypeRole).toInt()));
-
-			if (type == SessionModel::TrashEntity)
+		case Qt::DecorationRole:
 			{
-				return true;
+				const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(data(SessionModel::TypeRole).toInt()));
+
+				if (type == SessionModel::SessionEntity)
+				{
+					return ThemesManager::createIcon(QLatin1String("inode-directory"));
+				}
+
+				if (type == SessionModel::TrashEntity)
+				{
+					return ThemesManager::createIcon(QLatin1String("user-trash"));
+				}
 			}
 
-			if (type == SessionModel::SessionEntity)
+			break;
+		case SessionModel::IsTrashedRole:
 			{
-				break;
+				QModelIndex parent(index().parent());
+
+				while (parent.isValid())
+				{
+					const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(parent.data(SessionModel::TypeRole).toInt()));
+
+					if (type == SessionModel::TrashEntity)
+					{
+						return true;
+					}
+
+					if (type == SessionModel::SessionEntity)
+					{
+						break;
+					}
+
+					parent = parent.parent();
+				}
 			}
 
-			parent = parent.parent();
-		}
-
-		return false;
+			return false;
+		default:
+			break;
 	}
 
 	return QStandardItem::data(role);
