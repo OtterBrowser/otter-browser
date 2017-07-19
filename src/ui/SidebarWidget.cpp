@@ -142,7 +142,7 @@ void SidebarWidget::reload()
 
 void SidebarWidget::addWebPanel()
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	QString url;
 
 	if (mainWindow)
