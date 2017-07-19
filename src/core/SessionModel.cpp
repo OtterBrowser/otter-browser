@@ -84,7 +84,7 @@ MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionIt
 {
 	for (int i = 0; i < mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window(mainWindow->getTabBar()->getWindow(i));
+		const Window *window(mainWindow->getTabBar()->getWindow(i));
 
 		if (window)
 		{
@@ -104,7 +104,7 @@ void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		WindowSessionItem *item(static_cast<WindowSessionItem*>(child(i)));
+		const WindowSessionItem *item(static_cast<WindowSessionItem*>(child(i)));
 
 		if (item && item->getActiveWindow() == window)
 		{
@@ -117,11 +117,11 @@ void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 
 void MainWindowSessionItem::handleWindowRemoved(quint64 identifier)
 {
-	Window *window(m_mainWindow->getWindowByIdentifier(identifier));
+	const Window *window(m_mainWindow->getWindowByIdentifier(identifier));
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		WindowSessionItem *item(static_cast<WindowSessionItem*>(child(i)));
+		const WindowSessionItem *item(static_cast<WindowSessionItem*>(child(i)));
 
 		if (item && item->getActiveWindow() == window)
 		{
@@ -197,7 +197,7 @@ QVariant WindowSessionItem::data(int role) const
 			return SessionModel::WindowEntity;
 		case SessionModel::IndexRole:
 			{
-				MainWindow *mainWindow(MainWindow::findMainWindow(m_window));
+				const MainWindow *mainWindow(MainWindow::findMainWindow(m_window));
 
 				return (mainWindow ? mainWindow->getWindowIndex(m_window->getIdentifier()) : -1);
 			}
@@ -249,7 +249,7 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 {
 	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		MainWindowSessionItem *item(static_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
+		const MainWindowSessionItem *item(static_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
 
 		if (item && item->getMainWindow() == mainWindow)
 		{
@@ -268,7 +268,7 @@ void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
 {
 	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		MainWindowSessionItem *item(static_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
+		const MainWindowSessionItem *item(static_cast<MainWindowSessionItem*>(m_rootItem->child(i)));
 
 		if (item && item->getMainWindow() == mainWindow)
 		{
