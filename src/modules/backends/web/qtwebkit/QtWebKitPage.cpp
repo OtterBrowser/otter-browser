@@ -480,16 +480,9 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebWidget *widget(nullptr);
-		QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
-		bool isPopup(true);
+		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
 
-		if (m_widget)
-		{
-			popupsPolicy = m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_widget->getRequestedUrl()).toString();
-			isPopup = currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty();
-		}
-
-		if (isPopup)
+		if (!m_widget || currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty())
 		{
 			if (popupsPolicy == QLatin1String("blockAll"))
 			{
@@ -518,7 +511,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 
 		widget->handleLoadStarted();
 
-		emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(popupsPolicy == QLatin1String("openAllInBackground") ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
+		emit requestedNewWindow(widget, SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
 
 		return widget->getPage();
 	}
