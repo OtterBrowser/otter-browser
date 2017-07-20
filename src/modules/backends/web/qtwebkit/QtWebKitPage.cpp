@@ -485,7 +485,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 
 		if (m_widget)
 		{
-			popupsPolicy = m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString();
+			popupsPolicy = m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_widget->getRequestedUrl()).toString();
 			isPopup = currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty();
 		}
 
