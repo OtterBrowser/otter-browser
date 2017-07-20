@@ -31,7 +31,7 @@ StatusMessageWidget::StatusMessageWidget(QWidget *parent) : QLabel(parent)
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setIndent(style()->pixelMetric(QStyle::PM_ButtonMargin));
 
-	MainWindow *window(MainWindow::findMainWindow(parent));
+	const MainWindow *window(MainWindow::findMainWindow(parent));
 
 	if (window)
 	{
