@@ -1867,7 +1867,7 @@ Expoente: %2</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>You are about to delete %n cookie(s).</source>
-        <translation><numerusform>Está prestes a apagar %n cookie.</numerusform><numerusform>Está prestes a apagar %n cookie(s).</numerusform></translation>
+        <translation><numerusform>Está prestes a apagar %n cookie.</numerusform><numerusform>Está prestes a apagar %n cookies.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
