@@ -120,8 +120,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->installEventFilter(this);
 
-	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut));
-
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
 	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getOption(SettingsManager::Content_BackgroundColorOption));
 	handleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountWindowOption));
@@ -159,7 +157,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_networkManager, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(notifyContentStateChanged()));
-	connect(selectAllShortcut, SIGNAL(activated()), createAction(ActionsManager::SelectAllAction), SLOT(trigger()));
+	connect(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), &QShortcut::activated, [&]()
+	{
+		triggerAction(ActionsManager::SelectAllAction);
+	});
 }
 
 QtWebKitWebWidget::~QtWebKitWebWidget()
