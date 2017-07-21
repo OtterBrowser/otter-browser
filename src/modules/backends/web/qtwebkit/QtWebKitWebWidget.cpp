@@ -361,7 +361,7 @@ void QtWebKitWebWidget::clearPluginToken()
 
 	while (!frames.isEmpty())
 	{
-		QWebFrame *frame(frames.takeFirst());
+		const QWebFrame *frame(frames.takeFirst());
 		QWebElement element(frame->documentElement().findFirst(QStringLiteral("object[data-otter-browser=\"%1\"], embed[data-otter-browser=\"%1\"]").arg(m_pluginToken)));
 
 		if (!element.isNull())
@@ -927,7 +927,7 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 
 	while (!frames.isEmpty())
 	{
-		QWebFrame *frame(frames.takeFirst());
+		const QWebFrame *frame(frames.takeFirst());
 		frame->documentElement().evaluateJavaScript(script);
 
 		frames.append(frame->childFrames());
@@ -1442,7 +1442,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::UnselectAction:
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 			{
-				QWebFrame *frame(m_page->currentFrame() ? m_page->currentFrame() : m_page->mainFrame());
+				const QWebFrame *frame(m_page->currentFrame() ? m_page->currentFrame() : m_page->mainFrame());
 				const QWebElement element(frame->findFirstElement(QLatin1String(":focus")));
 
 				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
@@ -1640,7 +1640,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				while (!frames.isEmpty())
 				{
-					QWebFrame *frame(frames.takeFirst());
+					const QWebFrame *frame(frames.takeFirst());
 					const QWebElementCollection elements(frame->documentElement().findAll(QLatin1String("object, embed")));
 
 					for (int i = 0; i < elements.count(); ++i)
@@ -1718,7 +1718,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		case ActionsManager::FullScreenAction:
 			{
-				MainWindow *mainWindow(MainWindow::findMainWindow(this));
+				const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 				if (mainWindow && !mainWindow->isFullScreen())
 				{
@@ -2289,7 +2289,7 @@ QRect QtWebKitWebWidget::getProgressBarGeometry() const
 
 WebWidget::LinkUrl QtWebKitWebWidget::getActiveFrame() const
 {
-	QWebFrame *frame(m_page->frameAt(getClickPosition()));
+	const QWebFrame *frame(m_page->frameAt(getClickPosition()));
 	LinkUrl link;
 
 	if (frame && frame != m_page->mainFrame())
@@ -2353,7 +2353,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 	m_page->history()->currentItem().setUserData(data);
 
-	QWebHistory *history(m_page->history());
+	const QWebHistory *history(m_page->history());
 	WindowHistoryInformation information;
 	information.index = history->currentItemIndex();
 
@@ -2389,7 +2389,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &position)
 {
-	QWebFrame *frame(m_page->frameAt(position));
+	const QWebFrame *frame(m_page->frameAt(position));
 
 	if (!frame)
 	{
@@ -2743,11 +2743,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
 		{
-			QWidget *widget(childAt(mouseEvent->pos()));
+			const QWidget *widget(childAt(mouseEvent->pos()));
 			const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));
 			const QString tagName(hitResult.element().tagName().toLower());
 
@@ -2768,7 +2768,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			case QEvent::ContextMenu:
 				{
-					QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
+					const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 					if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
 					{
@@ -2782,10 +2782,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				}
 
 				break;
-
 			case QEvent::KeyPress:
 				{
-					QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+					const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 					if (keyEvent->key() == Qt::Key_Escape && m_page->hasSelection())
 					{
@@ -2866,7 +2865,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						return true;
 					}
 
-					QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+					const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 					if (keyEvent->modifiers() == Qt::ControlModifier)
 					{
