@@ -1610,7 +1610,7 @@ QPoint QtWebEngineWebWidget::getScrollPosition() const
 
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
-	QWebEngineHistory *history(m_page->history());
+	const QWebEngineHistory *history(m_page->history());
 	WindowHistoryInformation information;
 	information.index = history->currentItemIndex();
 
@@ -1827,7 +1827,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView && event->type() == QEvent::ChildAdded)
 	{
-		QChildEvent *childEvent(static_cast<QChildEvent*>(event));
+		const QChildEvent *childEvent(static_cast<QChildEvent*>(event));
 
 		if (childEvent->child())
 		{
@@ -1836,7 +1836,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
@@ -1882,7 +1882,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_webView && event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
+		const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
 		{
