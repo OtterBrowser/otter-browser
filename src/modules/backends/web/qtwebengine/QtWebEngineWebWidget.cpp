@@ -993,6 +993,7 @@ void QtWebEngineWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError e
 	reply->deleteLater();
 }
 
+#if QT_VERSION < 0x050700
 void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 {
 	if (m_iconReply && m_iconReply->url() != url)
@@ -1013,6 +1014,7 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 
 	connect(m_iconReply, SIGNAL(finished()), this, SLOT(iconReplyFinished()));
 }
+#endif
 
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {

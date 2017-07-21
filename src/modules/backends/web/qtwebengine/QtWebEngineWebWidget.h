@@ -108,7 +108,9 @@ protected slots:
 	void linkHovered(const QString &link);
 	void iconReplyFinished();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
+#if QT_VERSION < 0x050700
 	void handleIconChange(const QUrl &url);
+#endif
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
 	void handleFullScreenRequest(QWebEngineFullScreenRequest request);
