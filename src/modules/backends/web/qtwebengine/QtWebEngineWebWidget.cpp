@@ -1250,17 +1250,17 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 
 void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 {
+#if QT_VERSION < 0x050700
 	m_page->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()), [&](const QVariant &result)
 	{
-#if QT_VERSION < 0x050700
 		if (result.isValid())
 		{
 			m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
 		}
-#else
-		Q_UNUSED(result)
-#endif
 	});
+#else
+	m_page->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()));
+#endif
 }
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
