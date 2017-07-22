@@ -257,7 +257,7 @@ void ToolBarsManager::addSideBar()
 
 void ToolBarsManager::configureToolBar(int identifier)
 {
-	QAction *action(qobject_cast<QAction*>(sender()));
+	const QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && identifier < 0)
 	{
@@ -277,7 +277,7 @@ void ToolBarsManager::configureToolBar(int identifier)
 
 void ToolBarsManager::resetToolBar(int identifier)
 {
-	QAction *action(qobject_cast<QAction*>(sender()));
+	const QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && identifier < 0)
 	{
@@ -292,7 +292,7 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 void ToolBarsManager::removeToolBar(int identifier)
 {
-	QAction *action(qobject_cast<QAction*>(sender()));
+	const QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && identifier < 0)
 	{
