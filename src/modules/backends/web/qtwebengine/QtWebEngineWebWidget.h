@@ -106,7 +106,9 @@ protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
 	void linkHovered(const QString &link);
+#if QT_VERSION < 0x050700
 	void iconReplyFinished();
+#endif
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 #if QT_VERSION < 0x050700
 	void handleIconChange(const QUrl &url);
@@ -129,7 +131,9 @@ protected slots:
 private:
 	QWebEngineView *m_webView;
 	QtWebEnginePage *m_page;
+#if QT_VERSION < 0x050700
 	QNetworkReply *m_iconReply;
+#endif
 	QTime *m_loadingTime;
 	QIcon m_icon;
 	QDateTime m_lastUrlClickTime;

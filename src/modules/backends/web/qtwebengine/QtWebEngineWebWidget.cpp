@@ -64,7 +64,9 @@ namespace Otter
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(nullptr),
 	m_page(new QtWebEnginePage(isPrivate, this)),
+#if QT_VERSION < 0x050700
 	m_iconReply(nullptr),
+#endif
 	m_loadingTime(nullptr),
 	m_loadingState(FinishedLoadingState),
 	m_documentLoadingProgress(0),
@@ -964,6 +966,7 @@ void QtWebEngineWebWidget::pasteText(const QString &text)
 	QGuiApplication::clipboard()->setMimeData(mimeData);
 }
 
+#if QT_VERSION < 0x050700
 void QtWebEngineWebWidget::iconReplyFinished()
 {
 	if (!m_iconReply)
@@ -978,6 +981,7 @@ void QtWebEngineWebWidget::iconReplyFinished()
 	m_iconReply->deleteLater();
 	m_iconReply = nullptr;
 }
+#endif
 
 void QtWebEngineWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
 {
