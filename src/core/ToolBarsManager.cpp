@@ -21,7 +21,6 @@
 #include "JsonSettings.h"
 #include "SessionsManager.h"
 #include "Utils.h"
-#include "../ui/BookmarksComboBoxWidget.h"
 #include "../ui/ToolBarDialog.h"
 
 #include <QtCore/QFile>
