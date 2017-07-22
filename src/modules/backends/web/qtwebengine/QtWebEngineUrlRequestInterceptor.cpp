@@ -164,6 +164,11 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 	{
 		request.setHttpHeader(QStringLiteral("DNT").toLatin1(), ((doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
 	}
+
+	if (!SettingsManager::getOption(SettingsManager::Network_EnableReferrerOption).toBool())
+	{
+		request.setHttpHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+	}
 }
 
 }
