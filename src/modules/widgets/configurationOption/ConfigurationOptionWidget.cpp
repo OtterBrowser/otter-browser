@@ -83,7 +83,7 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const Actio
 	{
 		setWindow(window);
 
-		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 		if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 		{
