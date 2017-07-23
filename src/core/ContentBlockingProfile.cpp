@@ -355,7 +355,7 @@ void ContentBlockingProfile::deleteNode(Node *node) const
 	delete node;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
 {
 	ContentBlockingManager::CheckResult result;
 	ContentBlockingManager::CheckResult currentResult;
@@ -378,7 +378,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(No
 
 		for (int j = 0; j < node->children.count(); ++j)
 		{
-			Node *nextNode(node->children.at(j));
+			const Node *nextNode(node->children.at(j));
 
 			if (nextNode->value == QLatin1Char('*'))
 			{
@@ -462,7 +462,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(No
 	return result;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const
 {
 	switch (rule->ruleMatch)
 	{
@@ -836,7 +836,7 @@ bool ContentBlockingProfile::downloadRules()
 	return true;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const
+ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const
 {
 	ContentBlockingManager::CheckResult result;
 

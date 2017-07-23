@@ -139,9 +139,9 @@ protected:
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const;
 	void addRule(ContentBlockingRule *rule, const QString &ruleString) const;
 	void deleteNode(Node *node) const;
-	ContentBlockingManager::CheckResult checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
-	ContentBlockingManager::CheckResult checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
-	ContentBlockingManager::CheckResult evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
+	ContentBlockingManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
+	ContentBlockingManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
+	ContentBlockingManager::CheckResult evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 
