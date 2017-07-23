@@ -39,16 +39,15 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QString name(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
-		const QLocale locale(name);
+		const QLocale locale(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
 
 		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 		{
-			entries.append({tr("Unknown [%1]").arg(name), name});
+			entries.append({tr("Unknown [%1]").arg(locale.name()), locale.name()});
 		}
 		else
 		{
-			entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(name), name});
+			entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.name()), locale.name()});
 		}
 	}
 
