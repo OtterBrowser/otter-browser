@@ -43,7 +43,9 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 		{
-			entries.append({tr("Unknown [%1]").arg(locale.name()), locale.name()});
+			const QString name(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
+
+			entries.append({tr("Unknown [%1]").arg(name), name});
 		}
 		else
 		{
