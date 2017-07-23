@@ -1031,7 +1031,7 @@ void Application::setLocale(const QString &locale)
 	m_qtTranslator->load(QLatin1String("qt_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : locale)), m_localePath);
 
-	QLocale::setDefault(QLocale(identifier));
+	QLocale::setDefault(Utils::createLocale(identifier));
 }
 
 Action* Application::createAction(int identifier, const QVariantMap parameters, bool followState, QObject *target)

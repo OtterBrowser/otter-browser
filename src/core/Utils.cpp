@@ -487,6 +487,16 @@ QUrl normalizeUrl(QUrl url)
 	return url;
 }
 
+QLocale createLocale(const QString &name)
+{
+	if (name == QLatin1String("pt"))
+	{
+		return QLocale(QLocale::Portuguese, QLocale::Portugal);
+	}
+
+	return QLocale(name);
+}
+
 QPixmap loadPixmapFromDataUri(const QString &data)
 {
 	return QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())));
