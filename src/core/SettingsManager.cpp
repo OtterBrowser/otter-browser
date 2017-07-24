@@ -107,7 +107,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Choices_WarnOpenMultipleDroppedUrlsOption, BooleanType, true);
 	registerOption(Choices_WarnQuitOption, EnumerationType, QLatin1String("noWarn"), QStringList({QLatin1String("alwaysWarn"), QLatin1String("warnOpenTabs"), QLatin1String("noWarn")}));
 	registerOption(Choices_WarnQuitTransfersOption, BooleanType, true);
-	registerOption(Content_BackgroundColorOption, ColorType, QLatin1String("#FFFFFF"));
+	registerOption(Content_BackgroundColorOption, ColorType, QColor(0xFF, 0xFF, 0xFF));
 	registerOption(Content_CursiveFontOption, FontType, QLatin1String("Impact"));
 	registerOption(Content_DefaultCharacterEncodingOption, StringType, QLatin1String("auto"));
 	registerOption(Content_DefaultFixedFontSizeOption, IntegerType, 16);
@@ -115,15 +115,15 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Content_DefaultZoomOption, IntegerType, 100);
 	registerOption(Content_FantasyFontOption, FontType, QLatin1String("Comic Sans MS"));
 	registerOption(Content_FixedFontOption, FontType, QLatin1String("DejaVu Sans Mono"));
-	registerOption(Content_LinkColorOption, ColorType, QLatin1String("#0000EE"));
+	registerOption(Content_LinkColorOption, ColorType, QColor(0, 0, 0xEE));
 	registerOption(Content_MinimumFontSizeOption, IntegerType, -1);
 	registerOption(Content_PageReloadTimeOption, IntegerType, -1);
 	registerOption(Content_SansSerifFontOption, FontType, QLatin1String("DejaVu Sans"));
 	registerOption(Content_SerifFontOption, FontType, QLatin1String("DejaVu Serif"));
 	registerOption(Content_StandardFontOption, FontType, QLatin1String("DejaVu Serif"));
-	registerOption(Content_TextColorOption, ColorType, QLatin1String("#000000"));
+	registerOption(Content_TextColorOption, ColorType, QColor(0, 0, 0));
 	registerOption(Content_UserStyleSheetOption, PathType, QString());
-	registerOption(Content_VisitedLinkColorOption, ColorType, QLatin1String("#551A8B"));
+	registerOption(Content_VisitedLinkColorOption, ColorType, QColor(0x55, 0x1A, 0x8B));
 	registerOption(Content_ZoomTextOnlyOption, BooleanType, false);
 	registerOption(ContentBlocking_CosmeticFiltersModeOption, EnumerationType, QLatin1String("all"), QStringList({QLatin1String("all"), QLatin1String("domainOnly"), QLatin1String("none")}));
 	registerOption(ContentBlocking_EnableContentBlockingOption, BooleanType, true);
@@ -205,7 +205,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Sessions_OptionsExludedFromSavingOption, ListType, QStringList());
 	registerOption(SourceViewer_ShowLineNumbersOption, BooleanType, true);
 	registerOption(SourceViewer_WrapLinesOption, BooleanType, false);
-	registerOption(StartPage_BackgroundColorOption, ColorType, QString());
+	registerOption(StartPage_BackgroundColorOption, ColorType, QColor());
 	registerOption(StartPage_BackgroundModeOption, EnumerationType, QLatin1String("standard"), QStringList({QLatin1String("standard"), QLatin1String("bestFit"), QLatin1String("center"), QLatin1String("stretch"), QLatin1String("tile")}));
 	registerOption(StartPage_BackgroundPathOption, StringType, QString());
 	registerOption(StartPage_BookmarksFolderOption, StringType, QLatin1String("/Start Page/"));
@@ -331,7 +331,7 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 		case SettingsManager::BooleanType:
 			return (value.toBool() ? tr("Yes") : tr("No"));
 		case SettingsManager::ColorType:
-			return value.toString().toUpper();
+			return (value.value<QColor>().isValid() ? value.value<QColor>().name(QColor::HexRgb).toUpper() : tr("Invalid"));
 		case SettingsManager::EnumerationType:
 			{
 				const QString key(value.toString());
