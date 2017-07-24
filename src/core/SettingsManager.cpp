@@ -284,6 +284,7 @@ void SettingsManager::updateOptionDefinition(int identifier, const SettingsManag
 void SettingsManager::setOption(int identifier, const QVariant &value, const QUrl &url)
 {
 	const QString name(getOptionName(identifier));
+	const OptionType type(getOptionDefinition(identifier).type);
 
 	if (!url.isEmpty())
 	{
@@ -295,7 +296,7 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 		}
 		else
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).setValue(overrideName, value);
+			QSettings(m_overridePath, QSettings::IniFormat).setValue(overrideName, ((type == ColorType) ? value.value<QColor>().name(QColor::HexArgb).toUpper() : value));
 		}
 
 		if (!m_hasWildcardedOverrides && overrideName.startsWith(QLatin1Char('*')))
@@ -310,7 +311,7 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 
 	if (getOption(identifier) != value)
 	{
-		QSettings(m_globalPath, QSettings::IniFormat).setValue(name, value);
+		QSettings(m_globalPath, QSettings::IniFormat).setValue(name, ((type == ColorType) ? value.value<QColor>().name(QColor::HexArgb).toUpper() : value));
 
 		emit m_instance->optionChanged(identifier, value);
 	}
