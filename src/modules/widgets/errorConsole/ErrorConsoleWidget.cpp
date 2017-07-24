@@ -40,13 +40,13 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 	m_ui->setupUi(this);
 	m_ui->closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar)
 	{
 		connect(m_ui->closeButton, &QToolButton::clicked, [&]()
 		{
-			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+			const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 			if (toolBar)
 			{
@@ -103,7 +103,7 @@ void ErrorConsoleWidget::showEvent(QShowEvent *event)
 {
 	if (!m_model)
 	{
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 		if (mainWindow)
 		{
@@ -319,8 +319,8 @@ QVector<Console::MessageCategory> ErrorConsoleWidget::getCategories() const
 
 quint64 ErrorConsoleWidget::getCurrentWindow()
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	Window *currentWindow(mainWindow ? mainWindow->getActiveWindow() : nullptr);
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const Window *currentWindow(mainWindow ? mainWindow->getActiveWindow() : nullptr);
 
 	return (currentWindow ? currentWindow->getIdentifier() : 0);
 }
