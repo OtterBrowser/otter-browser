@@ -52,7 +52,7 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	setDefaultAction(new QAction(this));
 	setWindow(window);
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
