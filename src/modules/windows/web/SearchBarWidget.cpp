@@ -120,11 +120,11 @@ void SearchBarWidget::setResultsFound(bool found)
 //TODO Ensure that text is readable
 		if (found)
 		{
-			palette.setColor(QPalette::Base, QColor(QLatin1String("#CEF6DF")));
+			palette.setColor(QPalette::Base, QColor(0xCE, 0xF6, 0xDF));
 		}
 		else
 		{
-			palette.setColor(QPalette::Base, QColor(QLatin1String("#F1E7E4")));
+			palette.setColor(QPalette::Base, QColor(0xF1, 0xE7, 0xE4));
 		}
 	}
 
