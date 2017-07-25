@@ -2065,7 +2065,7 @@ Expoente: %2</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Week</source>
-        <translation>Ínicio da semana</translation>
+        <translation>Início da semana</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
@@ -2075,12 +2075,12 @@ Expoente: %2</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Month</source>
-        <translation>Ínicio do mês</translation>
+        <translation>Início do mês</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Year</source>
-        <translation>Ínicio do ano</translation>
+        <translation>Início do ano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
@@ -2164,7 +2164,7 @@ Expoente: %2</translation>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="62"/>
         <source>Failed to open history file: %1</source>
-        <translation>Falhou ao abrir o ficheiro de histórico: %1</translation>
+        <translation>Falha ao abrir o ficheiro de histórico: %1</translation>
     </message>
 </context>
 <context>
@@ -2327,7 +2327,7 @@ Expoente: %2</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="118"/>
         <source>Failed to import selected type.</source>
-        <translation>Falhou ao importar o ficheiro selecionado.</translation>
+        <translation>Falha ao importar o ficheiro selecionado.</translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2571,7 @@ Expoente: %2</translation>
         <location filename="../../src/ui/MainWindow.cpp" line="851"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
-        <translation>Este endereço já se encontra nos marcadores.
+        <translation>Você já tem este endereço nos marcadores.
 Deseja continuar?</translation>
     </message>
 </context>
@@ -2595,7 +2595,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
         <source>Confirm new password:</source>
-        <translation>Confrimação da nova palavra-passe:</translation>
+        <translation>Confirmação da nova palavra-passe:</translation>
     </message>
 </context>
 <context>
@@ -2937,7 +2937,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="166"/>
         <source>Open source page</source>
-        <translation>Abrir página de código</translation>
+        <translation>Abrir página fonte</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="192"/>
@@ -3286,7 +3286,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="56"/>
         <source>Always Ask What to Do for This Website</source>
-        <translation>Perguntar sempre qual ação a aplicar</translation>
+        <translation>Perguntar sempre qual a ação a aplicar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
@@ -3431,7 +3431,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="417"/>
         <source>JavaScript Options…</source>
-        <translation>Opções JavaScript...</translation>
+        <translation>Opções de JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="428"/>
@@ -4240,7 +4240,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="124"/>
         <source>Remember search history</source>
-        <translation>Memorizar histórico de pesquisa</translation>
+        <translation>Memorizar histórico de pesquisas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
@@ -7735,7 +7735,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Copiar ligação para a área de transferência</translation>
+        <translation>Copiar ligação</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="383"/>
@@ -7781,7 +7781,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation>Copiar ligação da frame para a área de transferência</translation>
+        <translation>Copiar ligação da frame</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
@@ -7819,12 +7819,12 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Copy Image to Clipboard</source>
-        <translation>Copiar imagem para a área de transferência</translation>
+        <translation>Copiar imagem</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Copiar ligação da imagem para a área de transferência</translation>
+        <translation>Copiar ligação da imagem</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
@@ -7844,7 +7844,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation>Copiar ligação multimédia para a área de transferência</translation>
+        <translation>Copiar ligação multimédia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="403"/>
@@ -8826,12 +8826,12 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1000"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation>Copiar ligação do vídeo para a área de transferência</translation>
+        <translation>Copiar ligação do vídeo</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1000"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation>Copiar ligação do áudio para a área de transferência</translation>
+        <translation>Copiar ligação do áudio</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1018"/>
