@@ -35,6 +35,7 @@
 #include <QtCore/QProcess>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QUrl>
+#include <QtWidgets/QMessageBox>
 
 using namespace Otter;
 
@@ -97,6 +98,8 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 
 int main(int argc, char *argv[])
 {
+	QT_REQUIRE_VERSION(argc, argv, QT_VERSION_STR)
+
 #if !defined(Q_OS_WIN32)
 	qSetMessagePattern(QLatin1String("%{if-category}%{category}: %{endif}%{message}\n"));
 	qInstallMessageHandler(otterMessageHander);
