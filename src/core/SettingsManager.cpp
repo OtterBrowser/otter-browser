@@ -272,6 +272,20 @@ void SettingsManager::registerOption(int identifier, SettingsManager::OptionType
 	m_definitions.append(definition);
 }
 
+void SettingsManager::saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type)
+{
+	if (type == ColorType)
+	{
+		const QColor color(value.value<QColor>());
+
+		QSettings(path, QSettings::IniFormat).setValue(key, (color.isValid() ? color.name(QColor::HexArgb).toUpper() : QString()));
+	}
+	else
+	{
+		QSettings(path, QSettings::IniFormat).setValue(key, value);
+	}
+}
+
 void SettingsManager::updateOptionDefinition(int identifier, const SettingsManager::OptionDefinition &definition)
 {
 	if (identifier >= 0 && identifier < m_definitions.count())
@@ -296,7 +310,7 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 		}
 		else
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).setValue(overrideName, ((type == ColorType) ? value.value<QColor>().name(QColor::HexArgb).toUpper() : value));
+			saveOption(m_overridePath, overrideName, value, type);
 		}
 
 		if (!m_hasWildcardedOverrides && overrideName.startsWith(QLatin1Char('*')))
@@ -311,7 +325,7 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 
 	if (getOption(identifier) != value)
 	{
-		QSettings(m_globalPath, QSettings::IniFormat).setValue(name, ((type == ColorType) ? value.value<QColor>().name(QColor::HexArgb).toUpper() : value));
+		saveOption(m_globalPath, name, value, type);
 
 		emit m_instance->optionChanged(identifier, value);
 	}

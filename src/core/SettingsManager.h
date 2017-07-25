@@ -312,6 +312,7 @@ protected:
 
 	static QString getHost(const QUrl &url);
 	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {});
+	static void saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type);
 
 private:
 	static SettingsManager *m_instance;
