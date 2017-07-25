@@ -331,7 +331,13 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 		case SettingsManager::BooleanType:
 			return (value.toBool() ? tr("Yes") : tr("No"));
 		case SettingsManager::ColorType:
-			return (value.value<QColor>().isValid() ? value.value<QColor>().name(QColor::HexRgb).toUpper() : tr("Invalid"));
+			{
+				const QColor color(value.value<QColor>());
+
+				return (color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : tr("Invalid"));
+			}
+
+			break;
 		case SettingsManager::EnumerationType:
 			{
 				const QString key(value.toString());
