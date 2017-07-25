@@ -90,7 +90,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 	setSizePolicy(((m_type == MessageType) ? QSizePolicy::Expanding : QSizePolicy::Fixed), QSizePolicy::Preferred);
 	setWindow(window);
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
