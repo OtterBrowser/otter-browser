@@ -1108,7 +1108,9 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 	updatePageActions(url);
 	updateNavigationActions();
 
+#if QT_VERSION < 0x050700
 	m_icon = QIcon();
+#endif
 
 	emit iconChanged(getIcon());
 	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);

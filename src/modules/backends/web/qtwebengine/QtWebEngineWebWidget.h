@@ -135,7 +135,9 @@ private:
 	QNetworkReply *m_iconReply;
 #endif
 	QTime *m_loadingTime;
+#if QT_VERSION < 0x050700
 	QIcon m_icon;
+#endif
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 #if QT_VERSION < 0x050700
