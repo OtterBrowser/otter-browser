@@ -160,12 +160,17 @@ QString createIdentifier(const QString &source, const QStringList &exclude, bool
 		number = match.captured(1).toInt();
 	}
 
-	while (exclude.contains(identifier + QLatin1Char('_') + QString::number(number)))
+	QString result;
+
+	do
 	{
+		result = identifier + QLatin1Char('_') + QString::number(number);
+
 		++number;
 	}
+	while (exclude.contains(result));
 
-	return identifier + QLatin1Char('_') + QString::number(number);
+	return result;
 }
 
 QString createErrorPage(const ErrorPageInformation &information)
