@@ -1115,7 +1115,9 @@ void MainWindow::openUrl(const QString &text, bool isPrivate)
 	connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
 	connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 
-	if (!m_workspace->getActiveWindow() || (m_workspace->getActiveWindow()->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())))
+	const Window *window(m_workspace->getActiveWindow());
+
+	if (!window || (window->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())))
 	{
 		hints |= SessionsManager::CurrentTabOpen;
 	}
