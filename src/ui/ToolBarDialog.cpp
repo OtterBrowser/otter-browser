@@ -262,7 +262,7 @@ void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry,
 
 void ToolBarDialog::addEntry()
 {
-	QStandardItem *sourceItem(m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow()));
+	const QStandardItem *sourceItem(m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow()));
 
 	if (sourceItem)
 	{
@@ -397,7 +397,7 @@ void ToolBarDialog::editEntry()
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
 		{
-			BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+			const BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
 
 			if (bookmark)
 			{
@@ -621,7 +621,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+		const BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
 
 		if (bookmark)
 		{
@@ -752,7 +752,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 			for (int i = 0; i < m_ui->panelsViewWidget->model()->rowCount(); ++i)
 			{
-				QStandardItem *item(m_ui->panelsViewWidget->getItem(i));
+				const QStandardItem *item(m_ui->panelsViewWidget->getItem(i));
 
 				if (item->data(Qt::CheckStateRole).toInt() == Qt::Checked)
 				{
