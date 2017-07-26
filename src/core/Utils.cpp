@@ -123,17 +123,17 @@ QString matchUrl(const QUrl &url, const QString &prefix)
 	return QString();
 }
 
-QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase)
+QString createIdentifier(const QString &source, const QStringList &exclude, bool toLowerCase)
 {
 	QString identifier;
 
-	if (!base.isEmpty())
+	if (!source.isEmpty())
 	{
-		identifier = base;
+		identifier = source;
 
 		if (toLowerCase)
 		{
-			identifier = base.toLower();
+			identifier = source.toLower();
 		}
 
 		identifier.remove(QRegularExpression(QLatin1String("[^A-Za-z0-9\\-_]")));
