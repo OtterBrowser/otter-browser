@@ -141,7 +141,6 @@ private:
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	int m_mouseTrackerTimer;
-	int m_tabSwitcherTimer;
 	bool m_isAboutToClose;
 	bool m_isDraggingToolBar;
 	bool m_isPrivate;

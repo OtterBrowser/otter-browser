@@ -64,7 +64,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_statusBar(nullptr),
 	m_currentWindow(nullptr),
 	m_mouseTrackerTimer(0),
-	m_tabSwitcherTimer(0),
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
@@ -217,24 +216,6 @@ void MainWindow::timerEvent(QTimerEvent *event)
 			}
 		}
 	}
-	else if (event->timerId() == m_tabSwitcherTimer)
-	{
-		killTimer(m_tabSwitcherTimer);
-
-		m_tabSwitcherTimer = 0;
-
-		if (m_windows.count() > 1)
-		{
-			if (!m_tabSwitcher)
-			{
-				m_tabSwitcher = new TabSwitcherWidget(this);
-			}
-
-			m_tabSwitcher->raise();
-			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show(TabSwitcherWidget::KeyboardReason);
-		}
-	}
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -284,16 +265,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 				return;
 			}
 
-			if (m_tabSwitcher && m_tabSwitcher->isVisible())
+			if (SettingsManager::getOption(SettingsManager::TabSwitcher_ShowListOption).toBool())
 			{
-				m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
-			}
-			else if (m_tabSwitcherTimer > 0)
-			{
-				killTimer(m_tabSwitcherTimer);
-
-				m_tabSwitcherTimer = 0;
-
 				if (!m_tabSwitcher)
 				{
 					m_tabSwitcher = new TabSwitcherWidget(this);
@@ -306,11 +279,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			}
 			else
 			{
-				if (m_tabSwitcherTimer == 0 && SettingsManager::getOption(SettingsManager::TabSwitcher_ShowListOption).toBool())
-				{
-					m_tabSwitcherTimer = startTimer(200);
-				}
-
 				if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
 				{
 					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
@@ -342,13 +310,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Control)
 	{
-		if (m_tabSwitcherTimer > 0)
-		{
-			killTimer(m_tabSwitcherTimer);
-
-			m_tabSwitcherTimer = 0;
-		}
-
 		m_isSwitchingTabs = false;
 	}
 
