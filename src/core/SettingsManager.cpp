@@ -229,6 +229,8 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(TabBar_RequireModifierToSwitchTabOnScrollOption, BooleanType, true);
 	registerOption(TabBar_ShowCloseButtonOption, BooleanType, true);
 	registerOption(TabBar_ShowUrlIconOption, BooleanType, true);
+	registerOption(TabSwitcher_OrderByLastActivityOption, BooleanType, true);
+	registerOption(TabSwitcher_ShowListOption, BooleanType, true);
 	registerOption(Updates_ActiveChannelsOption, ListType, QStringList());
 	registerOption(Updates_AutomaticInstallOption, BooleanType, false);
 	registerOption(Updates_CheckIntervalOption, IntegerType, 7);
