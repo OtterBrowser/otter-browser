@@ -306,14 +306,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			}
 			else
 			{
-				const QString tabSwitchingMode(SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString());
-
-				if (m_tabSwitcherTimer == 0 && tabSwitchingMode != QLatin1String("noSortWithoutList"))
+				if (m_tabSwitcherTimer == 0 && SettingsManager::getOption(SettingsManager::TabSwitcher_ShowListOption).toBool())
 				{
 					m_tabSwitcherTimer = startTimer(200);
 				}
 
-				if (tabSwitchingMode == QLatin1String("sortByLastActivity"))
+				if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
 				{
 					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
 				}

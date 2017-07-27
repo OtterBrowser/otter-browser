@@ -131,7 +131,6 @@ public:
 		Interface_ShowScrollBarsOption,
 		Interface_StyleSheetOption,
 		Interface_TabCrashingActionOption,
-		Interface_TabSwitchingModeOption,
 		Interface_UseFancyDateTimeFormatOption,
 		Interface_UseNativeNotificationsOption,
 		Interface_UseSystemIconThemeOption,

@@ -82,7 +82,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	if (mainWindowItem)
 	{
-		const bool useSorting(SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() != QLatin1String("noSort"));
+		const bool useSorting(SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool());
 
 		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
@@ -95,7 +95,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 		}
 	}
 
-	m_model->sort(0, ((SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() == QLatin1String("noSort")) ? Qt::AscendingOrder : Qt::DescendingOrder));
+	m_model->sort(0, (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool() ? Qt::DescendingOrder : Qt::AscendingOrder));
 
 	const Window *activeWindow(m_mainWindow->getActiveWindow());
 	const int contentsHeight(m_model->rowCount() * 22);
@@ -193,7 +193,7 @@ void TabSwitcherWidget::handleWindowAdded(quint64 identifier)
 
 	if (window)
 	{
-		m_model->insertRow(0, createRow(window, ((SettingsManager::getOption(SettingsManager::Interface_TabSwitchingModeOption).toString() == QLatin1String("noSort")) ? QVariant(-1) : QVariant(window->getLastActivity()))));
+		m_model->insertRow(0, createRow(window, (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool() ? QVariant(window->getLastActivity()) : QVariant(-1))));
 	}
 }
 
