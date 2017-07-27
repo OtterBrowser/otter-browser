@@ -146,7 +146,7 @@ void ContentBlockingDialog::editProfile()
 
 void ContentBlockingDialog::updateProfile(const QString &name)
 {
-	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+	const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
 	if (!profile)
 	{
@@ -163,28 +163,22 @@ void ContentBlockingDialog::updateProfile(const QString &name)
 
 			if (entryIndex.data(NameRole).toString() == name)
 			{
-				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+				QString title(profile->getTitle());
 
-				if (profile)
+				if (profile->getCategory() == ContentBlockingProfile::RegionalCategory)
 				{
-					QString title(profile->getTitle());
+					const QVector<QLocale::Language> languages(profile->getLanguages());
+					QStringList languageNames;
 
-					if (profile->getCategory() == ContentBlockingProfile::RegionalCategory)
+					for (int k = 0; k < languages.count(); ++k)
 					{
-						const QVector<QLocale::Language> languages(profile->getLanguages());
-						QStringList languageNames;
-
-						for (int k = 0; k < languages.count(); ++k)
-						{
-							languageNames.append(QLocale::languageToString(languages.at(k)));
-						}
-
-						title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+						languageNames.append(QLocale::languageToString(languages.at(k)));
 					}
 
-					m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
+					title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
 				}
 
+				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
 				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
 				return;
