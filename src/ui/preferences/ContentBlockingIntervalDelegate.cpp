@@ -32,7 +32,7 @@ ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent
 
 void ContentBlockingIntervalDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QSpinBox *widget(qobject_cast<QSpinBox*>(editor));
+	const QSpinBox *widget(qobject_cast<QSpinBox*>(editor));
 
 	if (widget)
 	{
