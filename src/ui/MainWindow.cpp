@@ -569,23 +569,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ActivatePreviouslyUsedTabAction:
 		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
 			{
-				QHash<quint64, Window*>::const_iterator iterator;
-				QMultiMap<qint64, quint64> map;
-				const bool includeMinimized(parameters.contains(QLatin1String("includeMinimized")));
+				const QVector<quint64> windows(createOrderedWindowList(parameters.contains(QLatin1String("includeMinimized"))));
 
-				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+				if (windows.count() > 1)
 				{
-					if (includeMinimized || !iterator.value()->isMinimized())
-					{
-						map.insert(iterator.value()->getLastActivity().toMSecsSinceEpoch(), iterator.value()->getIdentifier());
-					}
-				}
-
-				const QList<quint64> list(map.values());
-
-				if (list.count() > 1)
-				{
-					setActiveWindowByIdentifier((identifier == ActionsManager::ActivatePreviouslyUsedTabAction) ? list.at(list.count() - 2) : list.first());
+					setActiveWindowByIdentifier((identifier == ActionsManager::ActivatePreviouslyUsedTabAction) ? windows.at(windows.count() - 2) : windows.first());
 				}
 			}
 
@@ -2304,6 +2292,22 @@ QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area) const
 QVector<ClosedWindow> MainWindow::getClosedWindows() const
 {
 	return m_closedWindows;
+}
+
+QVector<quint64> MainWindow::createOrderedWindowList(bool includeMinimized) const
+{
+	QHash<quint64, Window*>::const_iterator iterator;
+	QMultiMap<qint64, quint64> map;
+
+	for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
+	{
+		if (includeMinimized || !iterator.value()->isMinimized())
+		{
+			map.insert(iterator.value()->getLastActivity().toMSecsSinceEpoch(), iterator.value()->getIdentifier());
+		}
+	}
+
+	return map.values().toVector();
 }
 
 int MainWindow::getCurrentWindowIndex() const

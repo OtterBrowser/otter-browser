@@ -103,6 +103,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
+	QVector<quint64> createOrderedWindowList(bool includeMinimized) const;
 	bool event(QEvent *event) override;
 
 protected slots:
