@@ -138,10 +138,12 @@ private:
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;
+	QVector<quint64> m_tabSwitchingOrderList;
 	QHash<quint64, Window*> m_windows;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	int m_mouseTrackerTimer;
+	int m_tabSwitchingOrderIndex;
 	bool m_isAboutToClose;
 	bool m_isDraggingToolBar;
 	bool m_isPrivate;

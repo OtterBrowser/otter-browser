@@ -64,6 +64,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_statusBar(nullptr),
 	m_currentWindow(nullptr),
 	m_mouseTrackerTimer(0),
+	m_tabSwitchingOrderIndex(-1),
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
@@ -283,7 +284,32 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 				if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
 				{
-					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
+					if (m_tabSwitchingOrderIndex < 0)
+					{
+						m_tabSwitchingOrderIndex = 0;
+						m_tabSwitchingOrderList = createOrderedWindowList(false);
+					}
+
+					if (event->key() == Qt::Key_Tab)
+					{
+						--m_tabSwitchingOrderIndex;
+
+						if (m_tabSwitchingOrderIndex < 0)
+						{
+							m_tabSwitchingOrderIndex = (m_tabSwitchingOrderList.count() - 1);
+						}
+					}
+					else
+					{
+						++m_tabSwitchingOrderIndex;
+
+						if (m_tabSwitchingOrderIndex >= m_tabSwitchingOrderList.count())
+						{
+							m_tabSwitchingOrderIndex = 0;
+						}
+					}
+
+					setActiveWindowByIdentifier(m_tabSwitchingOrderList.value(m_tabSwitchingOrderIndex));
 				}
 				else
 				{
@@ -312,9 +338,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Control)
+	if (event->key() == Qt::Key_Control && m_tabSwitchingOrderIndex >= 0)
 	{
-		m_isSwitchingTabs = false;
+		m_tabSwitchingOrderIndex = -1;
+
+		m_tabSwitchingOrderList.clear();
 	}
 
 	QMainWindow::keyReleaseEvent(event);
