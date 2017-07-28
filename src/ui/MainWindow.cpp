@@ -277,41 +277,38 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 				m_tabSwitcher->show(TabSwitcherWidget::KeyboardReason);
 				m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
 			}
-			else
+			else if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
 			{
-				if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
+				if (m_tabSwitchingOrderIndex < 0)
 				{
+					m_tabSwitchingOrderList = createOrderedWindowList(false);
+					m_tabSwitchingOrderIndex = (m_tabSwitchingOrderList.count() - 1);
+				}
+
+				if (event->key() == Qt::Key_Tab)
+				{
+					--m_tabSwitchingOrderIndex;
+
 					if (m_tabSwitchingOrderIndex < 0)
 					{
-						m_tabSwitchingOrderIndex = 0;
-						m_tabSwitchingOrderList = createOrderedWindowList(false);
+						m_tabSwitchingOrderIndex = (m_tabSwitchingOrderList.count() - 1);
 					}
-
-					if (event->key() == Qt::Key_Tab)
-					{
-						--m_tabSwitchingOrderIndex;
-
-						if (m_tabSwitchingOrderIndex < 0)
-						{
-							m_tabSwitchingOrderIndex = (m_tabSwitchingOrderList.count() - 1);
-						}
-					}
-					else
-					{
-						++m_tabSwitchingOrderIndex;
-
-						if (m_tabSwitchingOrderIndex >= m_tabSwitchingOrderList.count())
-						{
-							m_tabSwitchingOrderIndex = 0;
-						}
-					}
-
-					setActiveWindowByIdentifier(m_tabSwitchingOrderList.value(m_tabSwitchingOrderIndex), false);
 				}
 				else
 				{
-					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
+					++m_tabSwitchingOrderIndex;
+
+					if (m_tabSwitchingOrderIndex >= m_tabSwitchingOrderList.count())
+					{
+						m_tabSwitchingOrderIndex = 0;
+					}
 				}
+
+				setActiveWindowByIdentifier(m_tabSwitchingOrderList.value(m_tabSwitchingOrderIndex), false);
+			}
+			else
+			{
+				triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
 			}
 
 			event->accept();
