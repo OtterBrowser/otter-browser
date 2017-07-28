@@ -90,8 +90,8 @@ public slots:
 	void search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void clearClosedWindows();
 	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const WindowState &state = WindowState(), bool isAlwaysOnTop = false);
-	void setActiveWindowByIndex(int index);
-	void setActiveWindowByIdentifier(quint64 identifier);
+	void setActiveWindowByIndex(int index, bool updateLastActivity = true);
+	void setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity = true);
 	void setOption(int identifier, const QVariant &value);
 
 protected:

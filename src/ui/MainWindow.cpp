@@ -69,7 +69,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
 	m_isRestored(false),
-	m_isSwitchingTabs(false),
 	m_hasToolBars(!parameters.value(QLatin1String("noToolBars"), false).toBool()),
 	m_ui(new Ui::MainWindow)
 {
@@ -280,8 +279,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			}
 			else
 			{
-				m_isSwitchingTabs = true;
-
 				if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
 				{
 					if (m_tabSwitchingOrderIndex < 0)
@@ -309,14 +306,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 						}
 					}
 
-					setActiveWindowByIdentifier(m_tabSwitchingOrderList.value(m_tabSwitchingOrderIndex));
+					setActiveWindowByIdentifier(m_tabSwitchingOrderList.value(m_tabSwitchingOrderIndex), false);
 				}
 				else
 				{
 					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
 				}
-
-				m_isSwitchingTabs = false;
 			}
 
 			event->accept();
@@ -1898,7 +1893,7 @@ void MainWindow::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void MainWindow::setActiveWindowByIndex(int index)
+void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 {
 	if (!m_isRestored || index >= m_windows.count())
 	{
@@ -1931,7 +1926,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 		m_workspace->setActiveWindow(window);
 
 		window->setFocus();
-		window->markAsActive(!m_isSwitchingTabs);
+		window->markAsActive(updateLastActivity);
 
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
@@ -1946,7 +1941,7 @@ void MainWindow::setActiveWindowByIndex(int index)
 	emit currentWindowChanged(window ? window->getIdentifier() : 0);
 }
 
-void MainWindow::setActiveWindowByIdentifier(quint64 identifier)
+void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity)
 {
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
@@ -1954,7 +1949,7 @@ void MainWindow::setActiveWindowByIdentifier(quint64 identifier)
 
 		if (window && window->getIdentifier() == identifier)
 		{
-			setActiveWindowByIndex(i);
+			setActiveWindowByIndex(i, updateLastActivity);
 
 			break;
 		}
