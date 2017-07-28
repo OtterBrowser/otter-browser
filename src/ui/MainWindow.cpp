@@ -279,6 +279,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			}
 			else
 			{
+				m_isSwitchingTabs = true;
+
 				if (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool())
 				{
 					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
@@ -287,6 +289,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 				{
 					triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
 				}
+
+				m_isSwitchingTabs = false;
 			}
 
 			event->accept();
