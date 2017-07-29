@@ -39,7 +39,8 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	m_tabsView(new ItemViewWidget(this)),
 	m_previewLabel(new QLabel(this)),
 	m_loadingMovie(nullptr),
-	m_reason(KeyboardReason)
+	m_reason(KeyboardReason),
+	m_isIgnoringMinimizedTabs(SettingsManager::getOption(SettingsManager::TabSwitcher_IgnoreMinimizedTabsOption).toBool())
 {
 	QFrame *frame(new QFrame(this));
 	QHBoxLayout *mainLayout(new QHBoxLayout(this));
@@ -88,7 +89,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 		{
 			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
-			if (windowItem)
+			if (windowItem && (!m_isIgnoringMinimizedTabs || (windowItem->getActiveWindow() && windowItem->getActiveWindow()->getWindowState().state != Qt::WindowMinimized)))
 			{
 				m_model->appendRow(createRow(windowItem->getActiveWindow(), (useSorting ? QVariant(windowItem->getActiveWindow()->getLastActivity()) : QVariant(i))));
 			}
@@ -191,7 +192,7 @@ void TabSwitcherWidget::handleWindowAdded(quint64 identifier)
 {
 	Window *window(m_mainWindow->getWindowByIdentifier(identifier));
 
-	if (window)
+	if (window && (!m_isIgnoringMinimizedTabs || window->getWindowState().state != Qt::WindowMinimized))
 	{
 		m_model->insertRow(0, createRow(window, (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool() ? QVariant(window->getLastActivity()) : QVariant(-1))));
 	}

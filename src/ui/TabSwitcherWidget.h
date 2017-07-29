@@ -80,6 +80,7 @@ private:
 	QLabel *m_previewLabel;
 	QMovie *m_loadingMovie;
 	SwitcherReason m_reason;
+	bool m_isIgnoringMinimizedTabs;
 };
 
 }
