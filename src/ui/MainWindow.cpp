@@ -1390,6 +1390,11 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 			closePrivateTabsAction->setEnabled(false);
 		}
 
+		if (m_tabSwitchingOrderIndex >= 0)
+		{
+			m_tabSwitchingOrderList.removeAll(window->getIdentifier());
+		}
+
 		emit windowRemoved(window->getIdentifier());
 	}
 }
@@ -1562,6 +1567,11 @@ void MainWindow::handleWindowClose(Window *window)
 	}
 
 	m_tabBar->removeTab(index);
+
+	if (m_tabSwitchingOrderIndex >= 0)
+	{
+		m_tabSwitchingOrderList.removeAll(window->getIdentifier());
+	}
 
 	emit windowRemoved(window->getIdentifier());
 
