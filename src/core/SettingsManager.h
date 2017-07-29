@@ -208,6 +208,7 @@ public:
 		TabBar_RequireModifierToSwitchTabOnScrollOption,
 		TabBar_ShowCloseButtonOption,
 		TabBar_ShowUrlIconOption,
+		TabSwitcher_IgnoreMinimizedTabsOption,
 		TabSwitcher_OrderByLastActivityOption,
 		TabSwitcher_ShowListOption,
 		Updates_ActiveChannelsOption,

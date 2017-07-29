@@ -281,7 +281,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			{
 				if (m_tabSwitchingOrderIndex < 0)
 				{
-					m_tabSwitchingOrderList = createOrderedWindowList(false);
+					m_tabSwitchingOrderList = createOrderedWindowList(SettingsManager::getOption(SettingsManager::TabSwitcher_IgnoreMinimizedTabsOption).toBool());
 					m_tabSwitchingOrderIndex = (m_tabSwitchingOrderList.count() - 1);
 				}
 
