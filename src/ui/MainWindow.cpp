@@ -1301,6 +1301,11 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	m_tabBar->addTab(index, window);
 	m_workspace->addWindow(window, state, isAlwaysOnTop);
 
+	if (m_tabSwitchingOrderIndex >= 0)
+	{
+		m_tabSwitchingOrderList.append(window->getIdentifier());
+	}
+
 	createAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
 
 	if (!hints.testFlag(SessionsManager::BackgroundOpen) || m_windows.count() < 2)
