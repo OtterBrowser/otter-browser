@@ -54,6 +54,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
+	void activateWindow(const QModelIndex &index);
 	void showContextMenu(const QPoint &position);
 
 private:

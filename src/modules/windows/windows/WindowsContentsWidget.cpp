@@ -44,6 +44,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
 
 	connect(m_ui->windowsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->windowsViewWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(activateWindow(QModelIndex)));
 }
 
 WindowsContentsWidget::~WindowsContentsWidget()
@@ -82,6 +83,14 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 			break;
 		default:
 			break;
+	}
+}
+
+void WindowsContentsWidget::activateWindow(const QModelIndex &index)
+{
+	if (static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()) == SessionModel::WindowEntity)
+	{
+		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}}, parentWidget());
 	}
 }
 
