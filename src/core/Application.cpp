@@ -653,7 +653,26 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 	if (scope == ActionsManager::ActionDefinition::MainWindowScope || scope == ActionsManager::ActionDefinition::WindowScope)
 	{
-		MainWindow *mainWindow(target ? MainWindow::findMainWindow(target) : m_activeWindow.data());
+		MainWindow *mainWindow(nullptr);
+
+		if (parameters.contains(QLatin1String("window")))
+		{
+			const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
+
+			for (int i = 0; i < m_windows.count(); ++i)
+			{
+				if (m_windows.at(i)->getIdentifier() == windowIdentifier)
+				{
+					mainWindow = m_windows.at(i);
+
+					break;
+				}
+			}
+		}
+		else
+		{
+			mainWindow = (target ? MainWindow::findMainWindow(target) : m_activeWindow.data());
+		}
 
 		if (scope == ActionsManager::ActionDefinition::WindowScope)
 		{
