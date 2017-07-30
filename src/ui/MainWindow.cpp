@@ -56,6 +56,8 @@
 namespace Otter
 {
 
+quint64 MainWindow::m_identifierCounter(0);
+
 MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
@@ -63,6 +65,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_menuBar(nullptr),
 	m_statusBar(nullptr),
 	m_currentWindow(nullptr),
+	m_identifier(++m_identifierCounter),
 	m_mouseTrackerTimer(0),
 	m_tabSwitchingOrderIndex(-1),
 	m_isAboutToClose(false),
@@ -2347,6 +2350,11 @@ QVector<quint64> MainWindow::createOrderedWindowList(bool includeMinimized) cons
 	}
 
 	return map.values().toVector();
+}
+
+quint64 MainWindow::getIdentifier() const
+{
+	return m_identifier;
 }
 
 int MainWindow::getCurrentWindowIndex() const

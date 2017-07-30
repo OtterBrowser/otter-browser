@@ -71,6 +71,7 @@ public:
 	SessionMainWindow getSession() const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
+	quint64 getIdentifier() const;
 	int getCurrentWindowIndex() const;
 	int getWindowCount() const;
 	int getWindowIndex(quint64 identifier) const;
@@ -142,6 +143,7 @@ private:
 	QHash<quint64, Window*> m_windows;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
+	quint64 m_identifier;
 	int m_mouseTrackerTimer;
 	int m_tabSwitchingOrderIndex;
 	bool m_isAboutToClose;
@@ -150,6 +152,8 @@ private:
 	bool m_isRestored;
 	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
+
+	static quint64 m_identifierCounter;
 
 signals:
 	void activated(MainWindow *window);
