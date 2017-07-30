@@ -164,6 +164,8 @@ QVariant MainWindowSessionItem::data(int role) const
 			return m_mainWindow->getUrl();
 		case SessionModel::IconRole:
 			return ThemesManager::createIcon(QLatin1String("window"));
+		case SessionModel::IdentifierRole:
+			return m_mainWindow->getIdentifier();
 		case SessionModel::TypeRole:
 			return SessionModel::MainWindowEntity;
 		case SessionModel::IndexRole:
