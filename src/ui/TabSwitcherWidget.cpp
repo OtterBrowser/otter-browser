@@ -343,7 +343,7 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (index.isValid())
 			{
-				Application::triggerAction(ActionsManager::CloseTabAction, {{QLatin1String("window"), index.data(IdentifierRole).toULongLong()}}, parentWidget());
+				Application::triggerAction(ActionsManager::CloseTabAction, {{QLatin1String("tab"), index.data(IdentifierRole).toULongLong()}}, parentWidget());
 			}
 
 			return true;

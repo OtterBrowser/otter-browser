@@ -476,7 +476,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (parameters.contains(QLatin1String("urlPlaceholder")))
 				{
-					Window *window(parameters.contains(QLatin1String("window")) ? getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()) : m_workspace->getActiveWindow());
+					Window *window(parameters.contains(QLatin1String("tab")) ? getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong()) : m_workspace->getActiveWindow());
 
 					if (window)
 					{
@@ -922,9 +922,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 	Window *window(nullptr);
 
-	if (parameters.contains(QLatin1String("window")))
+	if (parameters.contains(QLatin1String("tab")))
 	{
-		window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+		window = getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong());
 	}
 	else
 	{

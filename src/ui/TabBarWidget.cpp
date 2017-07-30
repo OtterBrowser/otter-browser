@@ -693,7 +693,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (window)
 		{
-			parameters[QLatin1String("window")] = window->getIdentifier();
+			parameters[QLatin1String("tab")] = window->getIdentifier();
 
 			const int amount(count() - m_pinnedTabsAmount);
 			const bool isPinned(window->isPinned());
@@ -872,7 +872,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 				if (!drag->target())
 				{
-					Application::triggerAction(ActionsManager::DetachTabAction, {{QLatin1String("window"), window->getIdentifier()}}, parentWidget());
+					Application::triggerAction(ActionsManager::DetachTabAction, {{QLatin1String("tab"), window->getIdentifier()}}, parentWidget());
 				}
 			}
 		}
@@ -896,7 +896,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		if (m_isDetachingTab)
 		{
-			Application::triggerAction(ActionsManager::DetachTabAction, {{QLatin1String("window"), m_draggedWindow}}, parentWidget());
+			Application::triggerAction(ActionsManager::DetachTabAction, {{QLatin1String("tab"), m_draggedWindow}}, parentWidget());
 
 			m_isDetachingTab = false;
 		}
@@ -1663,7 +1663,7 @@ bool TabBarWidget::event(QEvent *event)
 
 					if (window)
 					{
-						parameters[QLatin1String("window")] = window->getIdentifier();
+						parameters[QLatin1String("tab")] = window->getIdentifier();
 					}
 				}
 

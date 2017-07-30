@@ -1312,7 +1312,7 @@ void Menu::selectWindow(QAction *action)
 {
 	if (action)
 	{
-		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("window"), action->data().toULongLong()}}, parentWidget());
+		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), action->data().toULongLong()}}, parentWidget());
 	}
 }
 

@@ -318,9 +318,9 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 	MdiWindow *subWindow(nullptr);
 
-	if (parameters.contains(QLatin1String("window")))
+	if (parameters.contains(QLatin1String("tab")))
 	{
-		Window *window(m_mainWindow->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()));
+		Window *window(m_mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong()));
 
 		if (window)
 		{

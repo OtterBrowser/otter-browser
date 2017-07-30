@@ -661,9 +661,9 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			if (target)
 			{
-				if (mainWindow && parameters.contains(QLatin1String("window")))
+				if (mainWindow && parameters.contains(QLatin1String("tab")))
 				{
-					window = mainWindow->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+					window = mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong());
 				}
 				else
 				{

@@ -90,7 +90,7 @@ void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 {
 	if (static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()) == SessionModel::WindowEntity)
 	{
-		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}}, parentWidget());
+		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, parentWidget());
 	}
 }
 
@@ -124,7 +124,7 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 			{
 				Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
 				closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
-				closeTabAction->setParameters({{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
+				closeTabAction->setParameters({{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}});
 
 				menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
 				menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
@@ -156,7 +156,7 @@ QUrl WindowsContentsWidget::getUrl() const
 
 QIcon WindowsContentsWidget::getIcon() const
 {
-	return ThemesManager::createIcon(QLatin1String("window"), false);
+	return ThemesManager::createIcon(QLatin1String("tab"), false);
 }
 
 WebWidget::LoadingState WindowsContentsWidget::getLoadingState() const
