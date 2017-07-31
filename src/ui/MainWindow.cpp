@@ -335,6 +335,16 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Control && m_tabSwitchingOrderIndex >= 0)
 	{
+		if (m_tabSwitchingOrderIndex != (m_tabSwitchingOrderList.count() - 1))
+		{
+			Window *window(m_windows.value(m_tabSwitchingOrderList.value(m_tabSwitchingOrderIndex)));
+
+			if (window)
+			{
+				window->markAsActive();
+			}
+		}
+
 		m_tabSwitchingOrderIndex = -1;
 
 		m_tabSwitchingOrderList.clear();
