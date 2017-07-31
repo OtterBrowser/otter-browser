@@ -577,6 +577,23 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			}
 
 			return;
+		case ActionsManager::ActivateWindowAction:
+			{
+				const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
+
+				for (int i = 0; i < m_windows.count(); ++i)
+				{
+					if (m_windows.at(i)->getIdentifier() == windowIdentifier)
+					{
+						m_windows.at(i)->raise();
+						m_windows.at(i)->activateWindow();
+
+						break;
+					}
+				}
+			}
+
+			return;
 		case ActionsManager::WorkOfflineAction:
 			SettingsManager::setOption(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters));
 

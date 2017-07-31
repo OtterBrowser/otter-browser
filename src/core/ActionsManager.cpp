@@ -172,6 +172,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ActivateTabAction, QT_TRANSLATE_NOOP("actions", "Activate Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(ActivateTabOnLeftAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"), QString(), QIcon(), ActionDefinition::MainWindowScope);
+	registerAction(ActivateWindowAction, QT_TRANSLATE_NOOP("actions", "Activate Window"), QString(), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), ThemesManager::createIcon(QLatin1String("bookmarks-organize")), ActionDefinition::MainWindowScope);
 	registerAction(BookmarkPageAction, QT_TRANSLATE_NOOP("actions", "Bookmark Page…"), QString(), ThemesManager::createIcon(QLatin1String("bookmark-new")), ActionDefinition::WindowScope);
 	registerAction(BookmarkAllOpenPagesAction, QT_TRANSLATE_NOOP("actions", "Bookmark All Open Pages"), QString(), QIcon(), ActionDefinition::MainWindowScope);

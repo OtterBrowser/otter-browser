@@ -170,6 +170,7 @@ public:
 		ActivateTabAction,
 		ActivateTabOnLeftAction,
 		ActivateTabOnRightAction,
+		ActivateWindowAction,
 		BookmarksAction,
 		BookmarkPageAction,
 		BookmarkAllOpenPagesAction,
