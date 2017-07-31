@@ -103,6 +103,13 @@ void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 
 				if (window)
 				{
+					const MainWindow *mainWindow(window->getMainWindow());
+
+					if (mainWindow)
+					{
+						Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), mainWindow->getIdentifier()}});
+					}
+
 					Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, window->getMainWindow());
 				}
 			}
