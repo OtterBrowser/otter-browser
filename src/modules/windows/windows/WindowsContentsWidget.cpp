@@ -97,7 +97,15 @@ void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 
 			break;
 		case SessionModel::WindowEntity:
-			Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, parentWidget());
+			{
+				const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(m_ui->windowsViewWidget->getSourceModel()->itemFromIndex(index)));
+				const Window *window(windowItem ? windowItem->getActiveWindow() : nullptr);
+
+				if (window)
+				{
+					Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, window->getMainWindow());
+				}
+			}
 
 			break;
 		default:
