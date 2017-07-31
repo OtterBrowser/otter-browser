@@ -88,9 +88,20 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 {
-	if (static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()) == SessionModel::WindowEntity)
+	const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
+
+	switch (type)
 	{
-		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, parentWidget());
+		case SessionModel::MainWindowEntity:
+			Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
+
+			break;
+		case SessionModel::WindowEntity:
+			Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, parentWidget());
+
+			break;
+		default:
+			break;
 	}
 }
 
