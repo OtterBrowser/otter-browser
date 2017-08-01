@@ -381,6 +381,8 @@ void QtWebKitWebWidget::clearPluginToken()
 		loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 	}
 
+	emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+
 	m_pluginToken = QString();
 }
 
@@ -797,6 +799,8 @@ void QtWebKitWebWidget::updateUndoText(const QString &text)
 	{
 		undoAction->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
 	}
+
+	emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction}));
 }
 
 void QtWebKitWebWidget::updateRedoText(const QString &text)
@@ -807,6 +811,8 @@ void QtWebKitWebWidget::updateRedoText(const QString &text)
 	{
 		redoAction->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
 	}
+
+	emit actionsStateChanged(QVector<int>({ActionsManager::RedoAction}));
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
@@ -1657,6 +1663,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 				}
+
+				emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 			}
 
 			return;
@@ -1700,6 +1708,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					inspectPageAction->setChecked(result);
 				}
 
+				emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction}));
 				emit requestedInspectorVisibilityChange(result);
 			}
 
