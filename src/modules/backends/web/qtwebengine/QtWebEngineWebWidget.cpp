@@ -1216,6 +1216,8 @@ void QtWebEngineWebWidget::updateUndo()
 		action->setEnabled(m_page->action(QWebEnginePage::Undo)->isEnabled());
 		action->setText(m_page->action(QWebEnginePage::Undo)->text());
 	}
+
+	emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction}));
 }
 
 void QtWebEngineWebWidget::updateRedo()
@@ -1227,6 +1229,8 @@ void QtWebEngineWebWidget::updateRedo()
 		action->setEnabled(m_page->action(QWebEnginePage::Redo)->isEnabled());
 		action->setText(m_page->action(QWebEnginePage::Redo)->text());
 	}
+
+	emit actionsStateChanged(QVector<int>({ActionsManager::RedoAction}));
 }
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
