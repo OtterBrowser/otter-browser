@@ -382,6 +382,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	{
 		m_isAboutToQuit = true;
 
+		if (m_localServer)
+		{
+			m_localServer->close();
+		}
+
 		exit();
 
 		return;
@@ -799,6 +804,11 @@ void Application::handleOptionChanged(int identifier, const QVariant &value)
 void Application::handleAboutToQuit()
 {
 	m_isAboutToQuit = true;
+
+	if (m_localServer)
+	{
+		m_localServer->close();
+	}
 
 	QStringList clearSettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList());
 	clearSettings.removeAll(QString());
