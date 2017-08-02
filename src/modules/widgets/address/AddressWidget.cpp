@@ -1029,22 +1029,13 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case LoadPluginsEntry:
+				if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState || !m_window->getActionState(ActionsManager::LoadPluginsAction).isEnabled)
 				{
-					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState)
-					{
-						continue;
-					}
-
-					const Action *loadPluginsAction(m_window->createAction(ActionsManager::LoadPluginsAction));
-
-					if (!loadPluginsAction || !loadPluginsAction->isEnabled())
-					{
-						continue;
-					}
-
-					definition.title = QT_TR_NOOP("Load all plugins on the page");
-					definition.icon = ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
+					continue;
 				}
+
+				definition.title = QT_TR_NOOP("Load all plugins on the page");
+				definition.icon = ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
 
 				break;
 			case FillPasswordEntry:
