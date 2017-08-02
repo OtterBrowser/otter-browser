@@ -141,6 +141,7 @@ protected slots:
 	void openUrl(const QModelIndex &index);
 	void removeEntry();
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void updateGeometries();
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);

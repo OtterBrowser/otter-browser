@@ -893,6 +893,14 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
+void AddressWidget::handleActionsStateChanged(const QVector<int> &identifiers)
+{
+	if (identifiers.contains(ActionsManager::LoadPluginsAction) && m_layout.contains(LoadPluginsEntry))
+	{
+		updateGeometries();
+	}
+}
+
 void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHints hints)
 {
 	if (hints == SessionsManager::DefaultOpen)
@@ -1218,6 +1226,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		disconnect(m_window.data(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
 		disconnect(m_window.data(), SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(updateGeometries()));
 		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 	}
@@ -1240,6 +1249,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
 		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		connect(window, SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
 		connect(window, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(updateGeometries()));
 		connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
 
