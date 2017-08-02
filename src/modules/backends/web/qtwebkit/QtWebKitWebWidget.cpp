@@ -2775,6 +2775,14 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		switch (event->type())
 		{
+			case QEvent::ChildAdded:
+			case QEvent::ChildRemoved:
+				if (!m_canLoadPlugins)
+				{
+					emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+				}
+
+				break;
 			case QEvent::ContextMenu:
 				{
 					const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
