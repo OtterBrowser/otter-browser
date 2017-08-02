@@ -655,6 +655,8 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 			case LoadPluginsEntry:
 				m_window->triggerAction(ActionsManager::LoadPluginsAction);
 
+				updateGeometries();
+
 				event->accept();
 
 				return;
