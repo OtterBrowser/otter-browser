@@ -2777,7 +2777,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			case QEvent::ChildAdded:
 			case QEvent::ChildRemoved:
-				if (!m_canLoadPlugins)
+				if (!m_canLoadPlugins && m_loadingState == FinishedLoadingState)
 				{
 					emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 				}
