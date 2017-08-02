@@ -2623,7 +2623,7 @@ int QtWebKitWebWidget::getZoom() const
 
 int QtWebKitWebWidget::getAmountOfNotLoadedPlugins() const
 {
-	return findChildren<QtWebKitPluginWidget*>().count();
+	return (m_canLoadPlugins ? 0 : findChildren<QtWebKitPluginWidget*>().count());
 }
 
 int QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
