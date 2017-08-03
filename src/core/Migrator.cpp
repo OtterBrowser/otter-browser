@@ -59,6 +59,7 @@ public:
 	void migrate() const override
 	{
 		QMap<QString, SettingsManager::OptionIdentifier> optionsMap;
+		optionsMap[QLatin1String("Browser/DelayRestoringOfBackgroundTabs")] = SettingsManager::Sessions_DeferTabsLoadingOption;
 		optionsMap[QLatin1String("Browser/EnableFullScreen")] = SettingsManager::Permissions_EnableFullScreenOption;
 		optionsMap[QLatin1String("Browser/EnableGeolocation")] = SettingsManager::Permissions_EnableGeolocationOption;
 		optionsMap[QLatin1String("Browser/EnableImages")] = SettingsManager::Permissions_EnableImagesOption;

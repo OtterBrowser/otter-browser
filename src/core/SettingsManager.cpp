@@ -75,7 +75,6 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Backends_PasswordsOption, EnumerationType, QLatin1String("file"), QStringList(QLatin1String("file")));
 	registerOption(Backends_WebOption, EnumerationType, QLatin1String("qtwebkit"), QStringList(QLatin1String("qtwebkit")));
 	registerOption(Browser_AlwaysAskWhereToSaveDownloadOption, BooleanType, true);
-	registerOption(Browser_DelayRestoringOfBackgroundTabsOption, BooleanType, true);
 	registerOption(Browser_EnableMouseGesturesOption, BooleanType, true);
 	registerOption(Browser_EnableSingleKeyShortcutsOption, BooleanType, true);
 	registerOption(Browser_EnableSpellCheckOption, BooleanType, true);
@@ -199,6 +198,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Security_AllowMixedContentOption, BooleanType, false);
 	registerOption(Security_CiphersOption, ListType, QStringList(QLatin1String("default")));
 	registerOption(Security_IgnoreSslErrorsOption, ListType, QStringList());
+	registerOption(Sessions_DeferTabsLoadingOption, BooleanType, true);
 	registerOption(Sessions_OpenInExistingWindowOption, BooleanType, false);
 	registerOption(Sessions_OptionsExludedFromInheritingOption, ListType, QStringList(QLatin1String("Content/PageReloadTime")));
 	registerOption(Sessions_OptionsExludedFromSavingOption, ListType, QStringList());

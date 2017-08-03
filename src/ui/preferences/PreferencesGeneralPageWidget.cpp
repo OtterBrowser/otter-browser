@@ -60,7 +60,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
 	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool());
 	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
-	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool());
+	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Sessions_DeferTabsLoadingOption).toBool());
 	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
 
@@ -147,7 +147,7 @@ void PreferencesGeneralPageWidget::save()
 	SettingsManager::setOption(SettingsManager::Paths_DownloadsOption, m_ui->downloadsFilePathWidget->getPath());
 	SettingsManager::setOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption, m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Browser_OpenLinksInNewTabOption, m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
-	SettingsManager::setOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption, m_ui->delayTabsLoadingCheckBox->isChecked());
+	SettingsManager::setOption(SettingsManager::Sessions_DeferTabsLoadingOption, m_ui->delayTabsLoadingCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Browser_ReuseCurrentTabOption, m_ui->reuseCurrentTabCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::TabBar_OpenNextToActiveOption, m_ui->openNextToActiveheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Network_AcceptLanguageOption, m_acceptLanguage);
