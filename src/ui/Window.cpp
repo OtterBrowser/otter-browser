@@ -982,7 +982,7 @@ QSize Window::sizeHint() const
 
 WebWidget::LoadingState Window::getLoadingState() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getLoadingState() : WebWidget::DelayedLoadingState);
+	return (m_contentsWidget ? m_contentsWidget->getLoadingState() : WebWidget::DeferredLoadingState);
 }
 
 WebWidget::ContentStates Window::getContentState() const
