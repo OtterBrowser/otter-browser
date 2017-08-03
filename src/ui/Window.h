@@ -61,7 +61,7 @@ public:
 	void attachSearchWidget(SearchWidget *widget);
 	void detachSearchWidget(SearchWidget *widget);
 	void setOption(int identifier, const QVariant &value);
-	void setSession(const SessionWindow &session);
+	void setSession(const SessionWindow &session, bool deferLoading = false);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow) const;
 	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	MainWindow* getMainWindow() const;

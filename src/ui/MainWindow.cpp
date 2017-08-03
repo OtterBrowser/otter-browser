@@ -1185,7 +1185,7 @@ void MainWindow::restore(const SessionMainWindow &session)
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
 			Window *window(new Window(parameters, nullptr, this));
-			window->setSession(session.windows.at(i));
+			window->setSession(session.windows.at(i), SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool());
 
 			if (index < 0 && session.windows.at(i).state.state != Qt::WindowMinimized)
 			{
@@ -1250,7 +1250,7 @@ void MainWindow::restore(int index)
 	}
 
 	Window *window(new Window(parameters, nullptr, this));
-	window->setSession(closedWindow.window);
+	window->setSession(closedWindow.window, false);
 
 	m_closedWindows.removeAt(index);
 

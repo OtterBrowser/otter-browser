@@ -498,13 +498,13 @@ void Window::updateNavigationBar()
 	}
 }
 
-void Window::setSession(const SessionWindow &session)
+void Window::setSession(const SessionWindow &session, bool deferLoading)
 {
 	m_session = session;
 
 	setPinned(session.isPinned);
 
-	if (SettingsManager::getOption(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool())
+	if (deferLoading)
 	{
 		setWindowTitle(session.getTitle());
 	}
