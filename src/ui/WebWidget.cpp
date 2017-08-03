@@ -605,7 +605,7 @@ void WebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::LoadPluginsAction))
 	{
-		m_actions[ActionsManager::LoadPluginsAction]->setEnabled(getAmountOfNotLoadedPlugins() > 0);
+		m_actions[ActionsManager::LoadPluginsAction]->setEnabled(getAmountOfDeferredPlugins() > 0);
 	}
 
 	if (m_actions.contains(ActionsManager::ViewSourceAction))
@@ -1639,7 +1639,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::LoadPluginsAction:
-			state.isEnabled = (getAmountOfNotLoadedPlugins() > 0);
+			state.isEnabled = (getAmountOfDeferredPlugins() > 0);
 
 			break;
 		case ActionsManager::EnableJavaScriptAction:
@@ -1839,7 +1839,7 @@ quint64 WebWidget::getWindowIdentifier() const
 	return m_windowIdentifier;
 }
 
-int WebWidget::getAmountOfNotLoadedPlugins() const
+int WebWidget::getAmountOfDeferredPlugins() const
 {
 	return 0;
 }

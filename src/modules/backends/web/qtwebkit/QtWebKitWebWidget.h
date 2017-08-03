@@ -138,7 +138,7 @@ protected:
 	QString getMessageToken() const;
 	QString getPluginToken() const;
 	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;
-	int getAmountOfNotLoadedPlugins() const override;
+	int getAmountOfDeferredPlugins() const override;
 	bool canLoadPlugins() const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;

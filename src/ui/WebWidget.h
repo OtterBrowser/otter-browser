@@ -286,7 +286,7 @@ protected:
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;
-	virtual int getAmountOfNotLoadedPlugins() const;
+	virtual int getAmountOfDeferredPlugins() const;
 	bool calculateCheckedState(int identifier, const QVariantMap &parameters = {});
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;

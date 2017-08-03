@@ -2621,7 +2621,7 @@ int QtWebKitWebWidget::getZoom() const
 	return (m_page->mainFrame()->zoomFactor() * 100);
 }
 
-int QtWebKitWebWidget::getAmountOfNotLoadedPlugins() const
+int QtWebKitWebWidget::getAmountOfDeferredPlugins() const
 {
 	return (m_canLoadPlugins ? 0 : findChildren<QtWebKitPluginWidget*>().count());
 }
