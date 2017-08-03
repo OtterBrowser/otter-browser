@@ -141,7 +141,7 @@ void ActionWidget::resetAction()
 {
 	Action *action(nullptr);
 
-	if (m_window && !m_window->isAboutToClose() && ActionsManager::getActionDefinition(m_identifier).scope == ActionsManager::ActionDefinition::WindowScope && m_window->getLoadingState() != WebWidget::DelayedLoadingState)
+	if (m_window && !m_window->isAboutToClose() && ActionsManager::getActionDefinition(m_identifier).scope == ActionsManager::ActionDefinition::WindowScope && m_window->getLoadingState() != WebWidget::DeferredLoadingState)
 	{
 		action = m_window->createAction(m_identifier);
 	}

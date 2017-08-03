@@ -170,7 +170,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 		return;
 	}
 
-	if (window->getLoadingState() == WebWidget::DelayedLoadingState || window->getLoadingState() == WebWidget::OngoingLoadingState)
+	if (window->getLoadingState() == WebWidget::DeferredLoadingState || window->getLoadingState() == WebWidget::OngoingLoadingState)
 	{
 		if (!m_loadingMovie)
 		{
@@ -281,7 +281,7 @@ void TabSwitcherWidget::setLoadingState(WebWidget::LoadingState state)
 		{
 			QColor color(palette().color(QPalette::Text));
 
-			if (state == WebWidget::DelayedLoadingState)
+			if (state == WebWidget::DeferredLoadingState)
 			{
 				color.setAlpha(150);
 			}
@@ -295,7 +295,7 @@ QStandardItem* TabSwitcherWidget::createRow(Window *window, const QVariant &inde
 {
 	QColor color(palette().color(QPalette::Text));
 
-	if (window->getLoadingState() == WebWidget::DelayedLoadingState)
+	if (window->getLoadingState() == WebWidget::DeferredLoadingState)
 	{
 		color.setAlpha(150);
 	}

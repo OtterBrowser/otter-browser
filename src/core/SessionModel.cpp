@@ -219,7 +219,7 @@ QVariant WindowSessionItem::data(int role) const
 		case SessionModel::IsPrivateRole:
 			return m_window->isPrivate();
 		case SessionModel::IsSuspendedRole:
-			return (m_window->getLoadingState() == WebWidget::DelayedLoadingState);
+			return (m_window->getLoadingState() == WebWidget::DeferredLoadingState);
 		default:
 			break;
 	}

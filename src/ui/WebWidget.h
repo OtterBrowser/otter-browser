@@ -67,7 +67,7 @@ public:
 
 	enum LoadingState
 	{
-		DelayedLoadingState = 0,
+		DeferredLoadingState = 0,
 		OngoingLoadingState,
 		FinishedLoadingState,
 		CrashedLoadingState

@@ -187,7 +187,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 	{
 		QColor color(palette().color(QPalette::Text));
 
-		if (m_window->getLoadingState() == WebWidget::DelayedLoadingState)
+		if (m_window->getLoadingState() == WebWidget::DeferredLoadingState)
 		{
 			color.setAlpha(150);
 		}
@@ -719,7 +719,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 			menu.addAction(cloneTabAction);
 			menu.addAction(pinTabAction);
-			menu.addAction((window && window->getLoadingState() != WebWidget::DelayedLoadingState) ? window->createAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
+			menu.addAction((window && window->getLoadingState() != WebWidget::DeferredLoadingState) ? window->createAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
 			menu.addSeparator();
 			menu.addAction(detachTabAction);
 			menu.addSeparator();
