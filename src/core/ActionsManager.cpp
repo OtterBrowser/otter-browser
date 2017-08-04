@@ -179,7 +179,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(CookiesAction, QT_TRANSLATE_NOOP("actions", "Cookies"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), ThemesManager::createIcon(QLatin1String("preferences-plugin")), ActionDefinition::WindowScope);
+	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load All Plugins on the Page"), QString(), ThemesManager::createIcon(QLatin1String("preferences-plugin")), ActionDefinition::WindowScope);
 	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
 	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag | ActionDefinition::IsCheckedFlag));
 	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
