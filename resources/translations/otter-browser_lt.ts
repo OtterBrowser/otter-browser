@@ -2470,7 +2470,7 @@ Skaičiaus eilė: %2</translation>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="66"/>
         <source>Cannot read directory listing</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyksta perskaityti katalogo sąrašo</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="104"/>
@@ -3586,7 +3586,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1431"/>
         <source>Enable mouse gestures</source>
-        <translation>Įjungti komandas pele</translation>
+        <translation>Įjungti pelės gestus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="64"/>
@@ -5829,7 +5829,7 @@ Adresas: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="350"/>
         <source>Option:</source>
-        <translation type="unfinished"/>
+        <translation>Parinktis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="353"/>
@@ -8682,7 +8682,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/Menu.cpp" line="626"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Galiojimo pabaigos</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="630"/>
@@ -8697,12 +8697,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/Menu.cpp" line="638"/>
         <source>Only Existing</source>
-        <translation type="unfinished"/>
+        <translation>Tik esamus</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="642"/>
         <source>Only Read Existing</source>
-        <translation type="unfinished"/>
+        <translation>Skaityti tik esamus</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="646"/>
@@ -8717,12 +8717,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/Menu.cpp" line="658"/>
         <source>Block All</source>
-        <translation type="unfinished"/>
+        <translation>Blokuoti visus</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="662"/>
         <source>Only Cached</source>
-        <translation type="unfinished"/>
+        <translation>Tik iš podėlio</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="666"/>
@@ -8732,7 +8732,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/Menu.cpp" line="670"/>
         <source>On Demand</source>
-        <translation type="unfinished"/>
+        <translation>Pareikalavus</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="674"/>
