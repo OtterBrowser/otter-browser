@@ -531,6 +531,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	handleHistory();
 	startReloadTimer();
 
+	emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
