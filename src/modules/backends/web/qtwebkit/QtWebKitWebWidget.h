@@ -174,6 +174,7 @@ protected slots:
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature nativeFeature, bool cancel);
 	void notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void notifyContentStateChanged();
+	void updateAmountOfDeferredPlugins();
 	void updateUndoText(const QString &text);
 	void updateRedoText(const QString &text);
 	void updateOptions(const QUrl &url);
@@ -192,6 +193,7 @@ private:
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	LoadingState m_loadingState;
+	int m_amountOfDeferredPlugins;
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
 	bool m_isAudioMuted;

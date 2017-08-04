@@ -85,6 +85,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_inspector(nullptr),
 	m_networkManager(networkManager),
 	m_loadingState(FinishedLoadingState),
+	m_amountOfDeferredPlugins(0),
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
 	m_isAudioMuted(false),
@@ -526,11 +527,11 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	m_thumbnail = QPixmap();
 	m_loadingState = FinishedLoadingState;
 
+	updateAmountOfDeferredPlugins();
 	updateNavigationActions();
 	handleHistory();
 	startReloadTimer();
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
@@ -789,6 +790,18 @@ void QtWebKitWebWidget::notifySavePasswordRequested(const PasswordsManager::Pass
 void QtWebKitWebWidget::notifyContentStateChanged()
 {
 	emit contentStateChanged(getContentState());
+}
+
+void QtWebKitWebWidget::updateAmountOfDeferredPlugins()
+{
+	const int amountOfDeferredPlugins(m_canLoadPlugins ? 0 : findChildren<QtWebKitPluginWidget*>().count());
+
+	if (amountOfDeferredPlugins != m_amountOfDeferredPlugins)
+	{
+		m_amountOfDeferredPlugins = amountOfDeferredPlugins;
+
+		emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+	}
 }
 
 void QtWebKitWebWidget::updateUndoText(const QString &text)
@@ -2623,7 +2636,7 @@ int QtWebKitWebWidget::getZoom() const
 
 int QtWebKitWebWidget::getAmountOfDeferredPlugins() const
 {
-	return (m_canLoadPlugins ? 0 : findChildren<QtWebKitPluginWidget*>().count());
+	return m_amountOfDeferredPlugins;
 }
 
 int QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
@@ -2779,7 +2792,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			case QEvent::ChildRemoved:
 				if (!m_canLoadPlugins && m_loadingState == FinishedLoadingState)
 				{
-					emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+					updateAmountOfDeferredPlugins();
 				}
 
 				break;
