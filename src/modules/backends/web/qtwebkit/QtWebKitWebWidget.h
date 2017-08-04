@@ -39,7 +39,6 @@ class QtWebKitInspector;
 class QtWebKitNetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitPage;
-class QtWebKitPluginFactory;
 class SourceViewerWebWidget;
 
 class QtWebKitWebWidget final : public WebWidget
@@ -182,7 +181,6 @@ protected slots:
 private:
 	QWebView *m_webView;
 	QtWebKitPage *m_page;
-	QtWebKitPluginFactory *m_pluginFactory;
 	QtWebKitInspector *m_inspector;
 	QtWebKitNetworkManager *m_networkManager;
 	QString m_messageToken;

@@ -82,7 +82,6 @@ namespace Otter
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(nullptr),
-	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(nullptr),
 	m_networkManager(networkManager),
 	m_loadingState(FinishedLoadingState),
@@ -112,7 +111,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_page = new QtWebKitPage(m_networkManager, this);
 	m_page->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_page->setParent(m_webView);
-	m_page->setPluginFactory(m_pluginFactory);
+	m_page->setPluginFactory(new QtWebKitPluginFactory(this));
 	m_page->setVisibilityState(isVisible() ? QWebPage::VisibilityStateVisible : QWebPage::VisibilityStateHidden);
 
 	m_webView->setPage(m_page);
