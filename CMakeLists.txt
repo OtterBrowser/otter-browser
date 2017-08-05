@@ -86,11 +86,11 @@ find_package(Qt5WebEngineWidgets 5.6.0 QUIET)
 find_package(Qt5WebKitWidgets 5.4.0 QUIET)
 find_package(Hunspell 1.3.0 QUIET)
 
-set_package_properties(Qt5WebEngineCore PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
-set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKit PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKitWidgets PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
-set_package_properties(Hunspell PROPERTIES URL "http://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
+set_package_properties(Qt5WebEngineCore PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
+set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
+set_package_properties(Qt5WebKit PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
+set_package_properties(Qt5WebKitWidgets PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
+set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
 set(otter_src
 	src/main.cpp
