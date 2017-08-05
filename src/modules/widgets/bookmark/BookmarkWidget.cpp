@@ -80,12 +80,16 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 
 	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
 	{
-		Menu *menu(new Menu(Menu::BookmarksMenuRole, this));
-		menu->menuAction()->setData(m_bookmark->index());
+		if (!menu())
+		{
+			Menu *menu(new Menu(Menu::BookmarksMenuRole, this));
+			menu->menuAction()->setData(m_bookmark->index());
+
+			setMenu(menu);
+		}
 
 		setPopupMode(QToolButton::InstantPopup);
 		setToolTip(title);
-		setMenu(menu);
 		setEnabled(m_bookmark->rowCount() > 0);
 	}
 	else
