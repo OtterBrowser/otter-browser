@@ -42,7 +42,7 @@
      <item row="0" column="1">
       <widget class="QComboBox" name="startupBehaviorComboBox"/>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="homePageLabel">
        <property name="text">
         <string>Home page:</string>
@@ -52,10 +52,10 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <widget class="QLineEdit" name="homePageLineEdit"/>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="homePageLayout" stretch="1,0,0,0">
        <item>
         <spacer name="horizontalSpacer">
@@ -92,6 +92,13 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="delayTabsLoadingCheckBox">
+       <property name="text">
+        <string>Do not load the tab contents until selected</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -152,13 +159,6 @@
     <widget class="QCheckBox" name="tabsInsteadOfWindowsCheckBox">
      <property name="text">
       <string>Open new windows in a new tab instead</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="delayTabsLoadingCheckBox">
-     <property name="text">
-      <string>Delay loading of tabs until selected</string>
      </property>
     </widget>
    </item>
