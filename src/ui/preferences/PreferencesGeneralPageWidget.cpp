@@ -110,15 +110,16 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 {
 	if (action)
 	{
-		const QString url(action->data().toModelIndex().data(BookmarksModel::UrlRole).toString());
+		const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
+		const QString url(bookmark ? bookmark->data(BookmarksModel::UrlRole).toString() : QString());
 
-		if (!url.isEmpty())
+		if (url.isEmpty())
 		{
-			m_ui->homePageLineEdit->setText(url);
+			m_ui->homePageLineEdit->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
 		}
 		else
 		{
-			m_ui->homePageLineEdit->setText(QLatin1String("bookmarks:") + QString::number(action->data().toModelIndex().data(BookmarksModel::IdentifierRole).toULongLong()));
+			m_ui->homePageLineEdit->setText(url);
 		}
 	}
 }

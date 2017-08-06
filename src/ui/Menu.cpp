@@ -228,7 +228,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 	{
 		const QAction *action(actionAt(event->pos()));
 
-		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
+		if (action && action->isEnabled() && action->data().type() == QVariant::ULongLong)
 		{
 			QWidget *menu(this);
 
@@ -263,7 +263,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 	{
 		const QAction *action(actionAt(event->pos()));
 
-		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
+		if (action && action->isEnabled() && action->data().type() == QVariant::ULongLong)
 		{
 			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toULongLong());
 

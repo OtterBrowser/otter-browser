@@ -203,7 +203,7 @@ void WebWidget::pasteNote(QAction *action)
 {
 	if (action && action->data().isValid())
 	{
-		const BookmarksItem *note(NotesManager::getModel()->getBookmark(action->data().toModelIndex()));
+		const BookmarksItem *note(NotesManager::getModel()->getBookmark(action->data().toULongLong()));
 
 		if (note)
 		{

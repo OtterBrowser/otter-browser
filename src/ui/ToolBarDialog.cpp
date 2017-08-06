@@ -471,9 +471,9 @@ void ToolBarDialog::editEntry()
 
 void ToolBarDialog::addBookmark(QAction *action)
 {
-	if (action && action->data().type() == QVariant::ModelIndex)
+	if (action && action->data().type() == QVariant::ULongLong)
 	{
-		m_ui->currentEntriesItemView->insertRow(createEntry(QLatin1String("bookmarks:") + QString::number(action->data().toModelIndex().data(BookmarksModel::IdentifierRole).toULongLong())));
+		m_ui->currentEntriesItemView->insertRow(createEntry(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong())));
 	}
 }
 
