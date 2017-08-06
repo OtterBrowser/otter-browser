@@ -168,6 +168,18 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
+		case ActionsManager::MaximizeTabAction:
+		case ActionsManager::MinimizeTabAction:
+		case ActionsManager::RestoreTabAction:
+		case ActionsManager::AlwaysOnTopTabAction:
+			{
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("tab")] = m_identifier;
+
+				m_mainWindow->triggerAction(identifier, mutableParameters);
+			}
+
+			break;
 		case ActionsManager::SuspendTabAction:
 			if (!m_contentsWidget || m_contentsWidget->close())
 			{
