@@ -421,6 +421,8 @@ void CookiesContentsWidget::updateActions()
 			m_ui->expiresLabelWidget->setText(cookie.expirationDate().isValid() ? Utils::formatDateTime(cookie.expirationDate()) : tr("this session only"));
 		}
 	}
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
 QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)

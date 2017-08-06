@@ -483,6 +483,8 @@ void CacheContentsWidget::updateActions()
 	{
 		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
 QStandardItem* CacheContentsWidget::findDomain(const QString &domain)

@@ -511,6 +511,8 @@ void TransfersContentsWidget::updateActions()
 		m_ui->downloadedLabelWidget->clear();
 		m_ui->progressLabelWidget->clear();
 	}
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
 void TransfersContentsWidget::print(QPrinter *printer)

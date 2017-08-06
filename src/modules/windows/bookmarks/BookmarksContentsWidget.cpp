@@ -311,6 +311,8 @@ void BookmarksContentsWidget::updateActions()
 	{
 		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
