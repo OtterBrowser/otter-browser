@@ -83,7 +83,7 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		if (!menu())
 		{
 			Menu *menu(new Menu(Menu::BookmarksMenuRole, this));
-			menu->menuAction()->setData(m_bookmark->index());
+			menu->menuAction()->setData(m_bookmark->data(BookmarksModel::IdentifierRole));
 
 			setMenu(menu);
 		}

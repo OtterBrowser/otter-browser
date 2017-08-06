@@ -69,7 +69,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event) override;
 
 protected slots:
-	void populateModelMenu();
+	void populateBookmarksMenu();
 	void populateOptionMenu();
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
@@ -80,7 +80,7 @@ protected slots:
 	void populateToolBarsMenu();
 	void populateUserAgentMenu();
 	void populateWindowsMenu();
-	void clearModelMenu();
+	void clearBookmarksMenu();
 	void clearClosedWindows();
 	void restoreClosedWindow();
 	void openBookmark();

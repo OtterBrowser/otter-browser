@@ -76,15 +76,15 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 				{
 					if (m_role == NotesMenuRole)
 					{
-						connect(NotesManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
+						connect(NotesManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
 					}
 					else
 					{
-						connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
+						connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
 					}
 				}
 
-				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateModelMenu()));
+				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
 			}
 
 			break;
@@ -243,7 +243,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), BookmarksManager::getModel()->getBookmark(action->data().toModelIndex())->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
+			Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), BookmarksManager::getModel()->getBookmark(action->data().toULongLong())->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
 
 			return;
 		}
@@ -260,7 +260,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 
 		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
 		{
-			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
+			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toULongLong());
 
 			QMenu contextMenu(this);
 			contextMenu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
@@ -534,38 +534,27 @@ void Menu::load(int option)
 	connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
 }
 
-void Menu::populateModelMenu()
+void Menu::populateBookmarksMenu()
 {
 	Menu *menu(qobject_cast<Menu*>(sender()));
 
-	if (!menu || !menu->menuAction())
+	if (!menu || !menu->menuAction() || ((!menu->actions().isEmpty() && !(m_role == BookmarksMenuRole && menuAction()->data().toULongLong() == 0 && menu->actions().count() == 3))))
 	{
 		return;
 	}
 
-	QModelIndex index(menu->menuAction()->data().toModelIndex());
+	const BookmarksModel *model((m_role == NotesMenuRole) ? NotesManager::getModel() : BookmarksManager::getModel());
+	BookmarksItem *bookmark(model->getBookmark(menu->menuAction()->data().toULongLong()));
 
-	if (!menu->actions().isEmpty() && !(m_role == BookmarksMenuRole && !index.isValid() && menu->actions().count() == 3))
+	if (!bookmark)
 	{
-		return;
+		bookmark = model->getRootItem();
 	}
 
-	if (!index.isValid())
-	{
-		index = ((m_role == NotesMenuRole) ? NotesManager::getModel() : BookmarksManager::getModel())->getRootItem()->index();
-	}
-
-	const QAbstractItemModel *model(index.model());
-
-	if (!model)
-	{
-		return;
-	}
-
-	if (model->rowCount(index) > 1 && m_role == BookmarksMenuRole)
+	if (bookmark->rowCount() > 1 && m_role == BookmarksMenuRole)
 	{
 		Action *openAllAction(menu->addAction());
-		openAllAction->setData(index);
+		openAllAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
 		openAllAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		openAllAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open All"));
 
@@ -577,39 +566,39 @@ void Menu::populateModelMenu()
 	if (m_role == BookmarkSelectorMenuRole)
 	{
 		Action *addFolderAction(menu->addAction());
-		addFolderAction->setData(index);
+		addFolderAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
 		addFolderAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		addFolderAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "This Folder"));
 
 		menu->addSeparator();
 	}
 
-	for (int i = 0; i < model->rowCount(index); ++i)
+	for (int i = 0; i < bookmark->rowCount(); ++i)
 	{
-		const QModelIndex childIndex(index.child(i, 0));
+		const QModelIndex index(bookmark->index().child(i, 0));
 
-		if (!childIndex.isValid())
+		if (!index.isValid())
 		{
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(childIndex.data(BookmarksModel::TypeRole).toInt()));
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
 			Action *action(menu->addAction());
-			action->setData(childIndex);
-			action->setIcon(childIndex.data(Qt::DecorationRole).value<QIcon>());
-			action->setToolTip(childIndex.data(BookmarksModel::DescriptionRole).toString());
-			action->setStatusTip(childIndex.data(BookmarksModel::UrlRole).toString());
+			action->setData(index.data(BookmarksModel::IdentifierRole));
+			action->setIcon(index.data(Qt::DecorationRole).value<QIcon>());
+			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
+			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
 
-			if (childIndex.data(BookmarksModel::TitleRole).toString().isEmpty())
+			if (index.data(BookmarksModel::TitleRole).toString().isEmpty())
 			{
 				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
 			}
 			else
 			{
-				action->setText(Utils::elideText(QString(childIndex.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
+				action->setText(Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
 			}
 
 			if (type == BookmarksModel::UrlBookmark && m_role == BookmarksMenuRole)
@@ -618,7 +607,7 @@ void Menu::populateModelMenu()
 			}
 			else if (type == BookmarksModel::FolderBookmark)
 			{
-				if (model->rowCount(childIndex) > 0)
+				if (model->rowCount(index) > 0)
 				{
 					action->setMenu(new Menu(m_role, this));
 				}
@@ -1180,9 +1169,9 @@ void Menu::populateWindowsMenu()
 	}
 }
 
-void Menu::clearModelMenu()
+void Menu::clearBookmarksMenu()
 {
-	const int offset((m_role == BookmarksMenuRole && menuAction() && !menuAction()->data().toModelIndex().isValid()) ? 3 : 0);
+	const int offset((m_role == BookmarksMenuRole && menuAction() && menuAction()->data().toULongLong() == 0) ? 3 : 0);
 
 	for (int i = (actions().count() - 1); i >= offset; --i)
 	{
@@ -1191,17 +1180,14 @@ void Menu::clearModelMenu()
 		removeAction(actions().at(i));
 	}
 
-	if (m_role != BookmarksMenuRole && menuAction())
+	if (m_role == NotesMenuRole && menuAction())
 	{
-		const QAbstractItemModel *model(menuAction()->data().toModelIndex().model());
+		const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(menuAction()->data().toULongLong()));
 
-		if (model)
-		{
-			menuAction()->setEnabled(model->rowCount(menuAction()->data().toModelIndex()) > 0);
-		}
+		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
 	}
 
-	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateModelMenu()));
+	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
 }
 
 void Menu::clearClosedWindows()
@@ -1253,12 +1239,12 @@ void Menu::openBookmark()
 
 	const QAction *action(qobject_cast<QAction*>(sender()));
 
-	if (action && action->data().type() == QVariant::ModelIndex)
+	if (action && action->data().type() == QVariant::ULongLong)
 	{
-		m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
+		m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toULongLong());
 	}
 
-	const SessionsManager::OpenHints hints(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen);
+	const SessionsManager::OpenHints hints((action && action->data().type() != QVariant::ULongLong) ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen);
 
 	Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((hints == SessionsManager::DefaultOpen) ? SessionsManager::calculateOpenHints() : hints)}}, parentWidget());
 

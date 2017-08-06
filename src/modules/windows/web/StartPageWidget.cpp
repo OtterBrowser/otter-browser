@@ -717,7 +717,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						m_ignoreEnter = true;
 
 						Menu menu(Menu::BookmarksMenuRole, this);
-						menu.menuAction()->setData(bookmark->index());
+						menu.menuAction()->setData(bookmark->data(BookmarksModel::IdentifierRole));
 						menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
 					}
 				}
@@ -791,7 +791,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						m_ignoreEnter = true;
 
 						Menu menu(Menu::BookmarksMenuRole, this);
-						menu.menuAction()->setData(bookmark->index());
+						menu.menuAction()->setData(bookmark->data(BookmarksModel::IdentifierRole));
 						menu.exec(mouseEvent->globalPos());
 					}
 
