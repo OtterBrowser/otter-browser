@@ -621,13 +621,8 @@ void WorkspaceWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 void WorkspaceWidget::updateActions()
 {
-	const Qt::WindowStates state((m_mdi && m_mdi->currentSubWindow()) ? m_mdi->currentSubWindow()->windowState() : Qt::WindowNoState);
 	const int windowCount(m_mainWindow->getWindowCount());
 
-	m_mainWindow->createAction(ActionsManager::MaximizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMaximized));
-	m_mainWindow->createAction(ActionsManager::MinimizeTabAction)->setEnabled(!state.testFlag(Qt::WindowMinimized));
-	m_mainWindow->createAction(ActionsManager::RestoreTabAction)->setEnabled(state.testFlag(Qt::WindowMaximized) || state.testFlag(Qt::WindowMinimized));
-	m_mainWindow->createAction(ActionsManager::AlwaysOnTopTabAction)->setChecked(m_mdi && m_mdi->currentSubWindow() && m_mdi->currentSubWindow()->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 	m_mainWindow->createAction(ActionsManager::MaximizeAllAction)->setEnabled(getWindowCount(Qt::WindowMaximized) != windowCount);
 	m_mainWindow->createAction(ActionsManager::MinimizeAllAction)->setEnabled(getWindowCount(Qt::WindowMinimized) != windowCount);
 	m_mainWindow->createAction(ActionsManager::RestoreAllAction)->setEnabled(getWindowCount(Qt::WindowNoState) != windowCount);
