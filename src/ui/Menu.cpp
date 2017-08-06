@@ -243,7 +243,12 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), BookmarksManager::getModel()->getBookmark(action->data().toULongLong())->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
+			const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
+
+			if (bookmark)
+			{
+				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
+			}
 
 			return;
 		}
