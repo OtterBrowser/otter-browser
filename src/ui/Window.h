@@ -105,6 +105,7 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void setContentsWidget(ContentsWidget *widget);
 	AddressWidget* findAddressWidget() const;
+	bool event(QEvent *event) override;
 
 protected slots:
 	void handleIconChanged(const QIcon &icon);

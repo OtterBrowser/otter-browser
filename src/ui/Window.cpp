@@ -1042,4 +1042,25 @@ bool Window::isPrivate() const
 	return (m_contentsWidget ? m_contentsWidget->isPrivate() : SessionsManager::calculateOpenHints(m_parameters).testFlag(SessionsManager::PrivateOpen));
 }
 
+bool Window::event(QEvent *event)
+{
+	if (event->type() == QEvent::ParentChange)
+	{
+		QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+		if (subWindow)
+		{
+			connect(subWindow, &QMdiSubWindow::windowStateChanged, [&](Qt::WindowStates oldState, Qt::WindowStates newState)
+			{
+				Q_UNUSED(oldState)
+				Q_UNUSED(newState)
+
+				emit actionsStateChanged(QVector<int>({ActionsManager::MaximizeTabAction, ActionsManager::MinimizeTabAction, ActionsManager::RestoreTabAction}));
+			});
+		}
+	}
+
+	return QWidget::event(event);
+}
+
 }
