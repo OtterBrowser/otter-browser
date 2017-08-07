@@ -383,6 +383,19 @@ QIcon BookmarksContentsWidget::getIcon() const
 	return ThemesManager::createIcon(QLatin1String("bookmarks"), false);
 }
 
+ActionsManager::ActionDefinition::State BookmarksContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (identifier == ActionsManager::DeleteAction)
+	{
+		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+		state.isEnabled = m_ui->deleteButton->isEnabled();
+
+		return state;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
+}
+
 bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->bookmarksViewWidget && event->type() == QEvent::KeyPress)

@@ -571,6 +571,19 @@ QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const
 	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toUrl() : QUrl());
 }
 
+ActionsManager::ActionDefinition::State CacheContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (identifier == ActionsManager::DeleteAction)
+	{
+		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+		state.isEnabled = m_ui->deleteButton->isEnabled();
+
+		return state;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
+}
+
 WebWidget::LoadingState CacheContentsWidget::getLoadingState() const
 {
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);

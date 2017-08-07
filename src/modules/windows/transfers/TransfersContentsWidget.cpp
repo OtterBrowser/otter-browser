@@ -621,6 +621,28 @@ QIcon TransfersContentsWidget::getIcon() const
 	return ThemesManager::createIcon(QLatin1String("transfers"), false);
 }
 
+ActionsManager::ActionDefinition::State TransfersContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	switch (identifier)
+	{
+		case ActionsManager::CopyAction:
+		case ActionsManager::DeleteAction:
+			{
+				const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+				state.isEnabled = (transfer != nullptr);
+
+				return state;
+			}
+
+			break;
+		default:
+			break;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
+}
+
 WebWidget::LoadingState TransfersContentsWidget::getLoadingState() const
 {
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);

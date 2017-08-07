@@ -494,6 +494,19 @@ QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
 	return (cookies.isEmpty() ? QNetworkCookie() : cookies.first());
 }
 
+ActionsManager::ActionDefinition::State CookiesContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (identifier == ActionsManager::DeleteAction)
+	{
+		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+		state.isEnabled = m_ui->deleteButton->isEnabled();
+
+		return state;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
+}
+
 WebWidget::LoadingState CookiesContentsWidget::getLoadingState() const
 {
 	return (m_isLoading ? WebWidget::OngoingLoadingState : WebWidget::FinishedLoadingState);
