@@ -658,6 +658,7 @@ void Window::setPinned(bool isPinned)
 	{
 		m_isPinned = isPinned;
 
+		emit actionsStateChanged(QVector<int>({ActionsManager::PinTabAction, ActionsManager::CloseTabAction}));
 		emit isPinnedChanged(isPinned);
 	}
 }

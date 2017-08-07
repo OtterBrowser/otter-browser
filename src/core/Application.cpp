@@ -787,17 +787,28 @@ void Application::periodicUpdateCheck()
 
 void Application::handleOptionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Browser_EnableTrayIconOption)
+	switch (identifier)
 	{
-		if (!m_trayIcon && value.toBool())
-		{
-			m_trayIcon = new TrayIcon(this);
-		}
-		else if (m_trayIcon && !value.toBool())
-		{
-			m_trayIcon->deleteLater();
-			m_trayIcon = nullptr;
-		}
+		case SettingsManager::Browser_EnableTrayIconOption:
+			if (!m_trayIcon && value.toBool())
+			{
+				m_trayIcon = new TrayIcon(this);
+			}
+			else if (m_trayIcon && !value.toBool())
+			{
+				m_trayIcon->deleteLater();
+				m_trayIcon = nullptr;
+			}
+
+			break;
+		case SettingsManager::Interface_LockToolBarsOption:
+			emit actionsStateChanged(QVector<int>({ActionsManager::LockToolBarsAction}));
+
+			break;
+		case SettingsManager::Network_WorkOfflineOption:
+			emit actionsStateChanged(QVector<int>({ActionsManager::WorkOfflineAction}));
+
+			break;
 	}
 }
 

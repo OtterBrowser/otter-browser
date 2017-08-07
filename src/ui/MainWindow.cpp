@@ -147,7 +147,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	}
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(handleToolBarAdded(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
@@ -483,6 +482,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				m_privateWindows[i]->requestClose();
 			}
+
+			emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
 
 			return;
 		case ActionsManager::OpenUrlAction:
@@ -1288,6 +1289,8 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		createAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
 
 		m_privateWindows.append(window);
+
+		emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
 	}
 
 	if (index < 0)
@@ -1320,8 +1323,6 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	{
 		m_tabSwitchingOrderList.append(window->getIdentifier());
 	}
-
-	createAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
 
 	if (!hints.testFlag(SessionsManager::BackgroundOpen) || m_windows.count() < 2)
 	{
@@ -1577,7 +1578,6 @@ void MainWindow::handleWindowClose(Window *window)
 		}
 		else
 		{
-			createAction(ActionsManager::CloseTabAction)->setEnabled(false);
 			setCurrentWindow(nullptr);
 
 			m_workspace->setActiveWindow(nullptr);
@@ -1619,17 +1619,7 @@ void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 {
 	const Window *modifiedWindow(qobject_cast<Window*>(sender()));
 
-	if (!modifiedWindow)
-	{
-		return;
-	}
-
-	if (modifiedWindow == m_workspace->getActiveWindow())
-	{
-		createAction(ActionsManager::CloseTabAction)->setEnabled(!isPinned);
-	}
-
-	if (!m_isRestored || !SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool())
+	if (!modifiedWindow || !m_isRestored || !SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool())
 	{
 		return;
 	}
@@ -1674,21 +1664,6 @@ void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 	if ((isPinned && index > amountOfLeadingPinnedTabs) || (!isPinned && index < amountOfLeadingPinnedTabs))
 	{
 		m_tabBar->moveTab(index, amountOfLeadingPinnedTabs);
-	}
-}
-
-void MainWindow::handleOptionChanged(int identifier, const QVariant &value)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Interface_LockToolBarsOption:
-			createAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
-
-			break;
-		case SettingsManager::Network_WorkOfflineOption:
-			createAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
-
-			break;
 	}
 }
 
@@ -1757,6 +1732,8 @@ void MainWindow::handleToolBarModified(int identifier)
 				}
 
 				createAction(ActionsManager::ShowMenuBarAction)->setChecked(showMenuBar);
+
+				emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
 			}
 
 			break;
@@ -1945,7 +1922,6 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 
 	window = getWindowByIndex(index);
 
-	createAction(ActionsManager::CloseTabAction)->setEnabled(window && !window->isPinned());
 	setCurrentWindow(window);
 
 	if (window)
@@ -1962,7 +1938,6 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
 	}
 
-	createAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
 	updateWindowTitle();
 
 	emit currentWindowChanged(window ? window->getIdentifier() : 0);
@@ -2479,6 +2454,8 @@ bool MainWindow::event(QEvent *event)
 						{
 							m_statusBar->hide();
 						}
+
+						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction}));
 					}
 					else
 					{
@@ -2493,6 +2470,8 @@ bool MainWindow::event(QEvent *event)
 						{
 							m_statusBar->show();
 						}
+
+						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction}));
 					}
 
 					if (!windowState().testFlag(Qt::WindowFullScreen))

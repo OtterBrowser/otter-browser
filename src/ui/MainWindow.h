@@ -114,7 +114,6 @@ protected slots:
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
 	void handleWindowIsPinnedChanged(bool isPinned);
-	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleToolBarAdded(int identifier);
 	void handleToolBarModified(int identifier);
 	void handleToolBarMoved(int identifier);
