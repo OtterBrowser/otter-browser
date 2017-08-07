@@ -127,10 +127,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	createAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool());
 	createAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	createAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
-	createAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
-	createAction(ActionsManager::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
-	createAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
-	createAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
 	if (m_hasToolBars && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{

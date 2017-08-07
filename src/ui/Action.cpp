@@ -108,6 +108,22 @@ void Action::update(bool reset)
 				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first"));
 
 				break;
+			case ActionsManager::PreferencesAction:
+				setMenuRole(QAction::PreferencesRole);
+
+				break;
+			case ActionsManager::AboutQtAction:
+				setMenuRole(QAction::AboutQtRole);
+
+				break;
+			case ActionsManager::ExitAction:
+				setMenuRole(QAction::QuitRole);
+
+				break;
+			case ActionsManager::AboutApplicationAction:
+				setMenuRole(QAction::AboutRole);
+
+				break;
 			default:
 				break;
 		}
