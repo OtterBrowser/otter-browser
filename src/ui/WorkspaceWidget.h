@@ -101,6 +101,9 @@ private:
 	QPointer<Window> m_activeWindow;
 	int m_restoreTimer;
 	bool m_isRestored;
+
+signals:
+	void actionsStateChanged(const QVector<int> &identifiers);
 };
 
 }

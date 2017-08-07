@@ -173,6 +173,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	restore(session);
 	updateWindowTitle();
+
+	connect(m_workspace, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
 }
 
 MainWindow::~MainWindow()

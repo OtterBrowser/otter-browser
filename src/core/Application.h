@@ -115,6 +115,7 @@ private:
 signals:
 	void windowAdded(MainWindow *window);
 	void windowRemoved(MainWindow *window);
+	void actionsStateChanged(const QVector<int> &identifiers);
 	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 };
 

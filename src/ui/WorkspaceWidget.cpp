@@ -628,6 +628,8 @@ void WorkspaceWidget::updateActions()
 	m_mainWindow->createAction(ActionsManager::RestoreAllAction)->setEnabled(getWindowCount(Qt::WindowNoState) != windowCount);
 	m_mainWindow->createAction(ActionsManager::CascadeAllAction)->setEnabled(windowCount > 0);
 	m_mainWindow->createAction(ActionsManager::TileAllAction)->setEnabled(windowCount > 0);
+
+	emit actionsStateChanged(QVector<int>({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction}));
 }
 
 void WorkspaceWidget::showContextMenu(const QPoint &position)
