@@ -569,9 +569,9 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 {
-	if (index.isValid() && m_model->item(index.row(), 0))
+	if (index.isValid())
 	{
-		return static_cast<Transfer*>(m_model->item(index.row(), 0)->data(Qt::UserRole).value<void*>());
+		return static_cast<Transfer*>(index.sibling(index.row(), 0).data(Qt::UserRole).value<void*>());
 	}
 
 	return nullptr;
