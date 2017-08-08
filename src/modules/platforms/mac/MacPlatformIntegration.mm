@@ -30,7 +30,6 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeData>
-#include <QtCore/QSysInfo>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QXmlStreamWriter>
 #include <QtGui/QDesktopServices>
@@ -340,11 +339,6 @@ void MacPlatformIntegration::updateTransfersProgress()
 
 void MacPlatformIntegration::showNotification(Notification *notification)
 {
-	if (QSysInfo::MacintoshVersion < QSysInfo::MV_10_8)
-	{
-		return;
-	}
-
 	QString title;
 
 	switch (notification->getLevel())
@@ -427,7 +421,7 @@ QVector<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeTy
 
 bool MacPlatformIntegration::canShowNotifications() const
 {
-	return (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_8);
+	return true;
 }
 
 }
