@@ -1983,6 +1983,18 @@ void MainWindow::setCurrentWindow(Window *window)
 			}
 		}
 	}
+
+	if (previousWindow)
+	{
+		disconnect(previousWindow, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+		disconnect(previousWindow, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+	}
+
+	if (window)
+	{
+		connect(window, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+		connect(window, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+	}
 }
 
 void MainWindow::setStatusMessage(const QString &message)
