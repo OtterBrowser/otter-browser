@@ -154,7 +154,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QStringList pluginSearchPaths(QWebSettings::pluginSearchPaths());
-		pluginSearchPaths.append(QCoreApplication::applicationDirPath());
+		pluginSearchPaths.append(QDir::toNativeSeparators(QCoreApplication::applicationDirPath()));
 
 		QWebSettings::setPluginSearchPaths(pluginSearchPaths);
 #endif
