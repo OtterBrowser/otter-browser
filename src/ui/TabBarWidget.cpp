@@ -20,6 +20,7 @@
 
 #include "TabBarWidget.h"
 #include "Action.h"
+#include "AnimationWidget.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "PreviewWidget.h"
@@ -52,7 +53,7 @@ namespace Otter
 {
 
 QIcon TabHandleWidget::m_lockedIcon;
-QMovie* TabHandleWidget::m_loadingMovie(nullptr);
+Animation* TabHandleWidget::m_loadingAnimation(nullptr);
 bool TabBarWidget::m_areThumbnailsEnabled(true);
 bool TabBarWidget::m_isLayoutReversed(false);
 bool TabBarWidget::m_isCloseButtonEnabled(true);
@@ -144,9 +145,9 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_urlIconRectangle.isValid())
 	{
-		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingMovie)
+		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingAnimation)
 		{
-			painter.drawPixmap(m_urlIconRectangle, m_loadingMovie->currentPixmap());
+			painter.drawPixmap(m_urlIconRectangle, m_loadingAnimation->getCurrentPixmap());
 		}
 		else
 		{
@@ -164,9 +165,9 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 			if (m_thumbnailRectangle.height() >= 16 && m_thumbnailRectangle.width() >= 16)
 			{
-				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingMovie)
+				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingAnimation)
 				{
-					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_loadingMovie->currentPixmap());
+					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_loadingAnimation->getCurrentPixmap());
 				}
 				else
 				{
@@ -303,14 +304,13 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 {
 	if (state == WebWidget::OngoingLoadingState)
 	{
-		if (!m_loadingMovie)
+		if (!m_loadingAnimation)
 		{
-			m_loadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), QCoreApplication::instance());
-			m_loadingMovie->setSpeed(100);
-			m_loadingMovie->start();
+			m_loadingAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), QCoreApplication::instance());
+			m_loadingAnimation->start();
 		}
 
-		connect(m_loadingMovie, SIGNAL(frameChanged(int)), this, SLOT(update()));
+		connect(m_loadingAnimation, SIGNAL(frameChanged()), this, SLOT(update()));
 	}
 }
 

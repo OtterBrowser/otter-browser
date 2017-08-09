@@ -23,12 +23,12 @@
 
 #include "WebWidget.h"
 
-#include <QtGui/QMovie>
 #include <QtWidgets/QTabBar>
 
 namespace Otter
 {
 
+class Animation;
 class PreviewWidget;
 class TabBarWidget;
 class Window;
@@ -70,7 +70,7 @@ private:
 	bool m_isCloseButtonUnderMouse;
 	bool m_wasCloseButtonPressed;
 
-	static QMovie *m_loadingMovie;
+	static Animation *m_loadingAnimation;
 	static QIcon m_lockedIcon;
 };
 
