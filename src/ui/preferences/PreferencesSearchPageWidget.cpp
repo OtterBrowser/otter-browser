@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "PreferencesSearchPageWidget.h"
+#include "../AnimationWidget.h"
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
@@ -39,7 +40,7 @@
 namespace Otter
 {
 
-QMovie* PreferencesSearchPageWidget::m_updateMovie = nullptr;
+Animation* PreferencesSearchPageWidget::m_updateAnimation = nullptr;
 
 SearchEngineTitleDelegate::SearchEngineTitleDelegate(QObject *parent) : ItemDelegate(parent)
 {
@@ -51,11 +52,11 @@ void SearchEngineTitleDelegate::initStyleOption(QStyleOptionViewItem *option, co
 
 	if (index.data(PreferencesSearchPageWidget::IsUpdatingRole).toBool())
 	{
-		QMovie *movie(PreferencesSearchPageWidget::getUpdateMovie());
+		Animation *animation(PreferencesSearchPageWidget::getUpdateAnimation());
 
-		if (movie)
+		if (animation)
 		{
-			option->icon = QIcon(movie->currentPixmap());
+			option->icon = QIcon(animation->getCurrentPixmap());
 		}
 	}
 }
@@ -255,12 +256,12 @@ void PreferencesSearchPageWidget::updateSearchEngine()
 
 	if (!identifier.isEmpty() && m_searchEngines.contains(identifier) && !m_updateJobs.contains(identifier))
 	{
-		if (!m_updateMovie)
+		if (!m_updateAnimation)
 		{
-			m_updateMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), this);
-			m_updateMovie->start();
+			m_updateAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), this);
+			m_updateAnimation->start();
 
-			connect(m_updateMovie, SIGNAL(frameChanged(int)), m_ui->searchViewWidget, SLOT(update()));
+			connect(m_updateAnimation, SIGNAL(frameChanged()), m_ui->searchViewWidget, SLOT(update()));
 		}
 
 		m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
@@ -418,8 +419,8 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 
 		if (m_updateJobs.isEmpty())
 		{
-			m_updateMovie->deleteLater();
-			m_updateMovie = nullptr;
+			m_updateAnimation->deleteLater();
+			m_updateAnimation = nullptr;
 		}
 	}
 
@@ -551,9 +552,9 @@ void PreferencesSearchPageWidget::save()
 	updateReaddSearchEngineMenu();
 }
 
-QMovie* PreferencesSearchPageWidget::getUpdateMovie()
+Animation* PreferencesSearchPageWidget::getUpdateAnimation()
 {
-	return m_updateMovie;
+	return m_updateAnimation;
 }
 
 QStringList PreferencesSearchPageWidget::getKeywords(const QAbstractItemModel *model, int excludeRow)

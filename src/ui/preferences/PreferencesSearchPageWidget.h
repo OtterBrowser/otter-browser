@@ -24,7 +24,6 @@
 #include "../ItemDelegate.h"
 #include "../../core/SearchEnginesManager.h"
 
-#include <QtGui/QMovie>
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -34,6 +33,8 @@ namespace Ui
 {
 	class PreferencesSearchPageWidget;
 }
+
+class Animation;
 
 class SearchEngineTitleDelegate final : public ItemDelegate
 {
@@ -66,7 +67,7 @@ public:
 	explicit PreferencesSearchPageWidget(QWidget *parent = nullptr);
 	~PreferencesSearchPageWidget();
 
-	static QMovie* getUpdateMovie();
+	static Animation* getUpdateAnimation();
 	static QStringList getKeywords(const QAbstractItemModel *model, int excludeRow = -1);
 
 protected:
@@ -92,7 +93,7 @@ private:
 	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> > m_searchEngines;
 	Ui::PreferencesSearchPageWidget *m_ui;
 
-	static QMovie *m_updateMovie;
+	static Animation* m_updateAnimation;
 
 signals:
 	void settingsModified();
