@@ -11,7 +11,6 @@
         <file>cursors/scroll-vertical.png</file>
         <file>files/error.html</file>
         <file>files/listing.html</file>
-        <file>icons/loading.gif</file>
         <file>icons/otter-browser-16.png</file>
         <file>icons/otter-browser-32.png</file>
         <file>icons/otter-browser-48.png</file>
@@ -83,6 +82,7 @@
         <file>icons/theme/inode-directory.png</file>
         <file>icons/theme/list-add.png</file>
         <file>icons/theme/list-remove.png</file>
+        <file>icons/theme/loading.gif</file>
         <file>icons/theme/media-playback-pause.png</file>
         <file>icons/theme/media-playback-start.png</file>
         <file>icons/theme/notes.png</file>
