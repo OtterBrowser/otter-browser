@@ -43,6 +43,7 @@ public:
 	static void createInstance();
 	static ThemesManager* getInstance();
 	static Style* createStyle(const QString &name);
+	static QString getAnimationPath(const QString &name);
 	static QIcon createIcon(const QString &name, bool fromTheme = true);
 
 protected:

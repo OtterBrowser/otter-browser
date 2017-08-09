@@ -129,6 +129,19 @@ Style* ThemesManager::createStyle(const QString &name)
 	return style;
 }
 
+QString ThemesManager::getAnimationPath(const QString &name)
+{
+	const QString iconPath(m_iconThemePath + name);
+	const QString svgPath(iconPath + QLatin1String(".svg"));
+
+	if (QFile::exists(svgPath))
+	{
+		return svgPath;
+	}
+
+	return iconPath + QLatin1String(".gif");
+}
+
 QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
 {
 	if (m_useSystemIconTheme && fromTheme && QIcon::hasThemeIcon(name))
