@@ -150,7 +150,7 @@ QWidget* TileDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 
 	editor->setAlignment(Qt::AlignCenter);
 
-	QMovie *movie(new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), editor));
+	QMovie *movie(new QMovie(ThemesManager::getAnimationPath(QLatin1String("loading")), QByteArray(), editor));
 	movie->start();
 
 	editor->setMovie(movie);

@@ -174,7 +174,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 	{
 		if (!m_loadingMovie)
 		{
-			m_loadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), m_previewLabel);
+			m_loadingMovie = new QMovie(ThemesManager::getAnimationPath(QLatin1String("loading")), QByteArray(), m_previewLabel);
 			m_loadingMovie->start();
 		}
 
