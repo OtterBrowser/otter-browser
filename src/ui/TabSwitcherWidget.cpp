@@ -179,8 +179,6 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 		}
 
 		m_previewLabel->setMovie(m_loadingMovie);
-
-		m_loadingMovie->setSpeed((window->getLoadingState() == WebWidget::OngoingLoadingState) ? 100 : 10);
 	}
 	else
 	{
