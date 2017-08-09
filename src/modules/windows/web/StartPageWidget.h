@@ -26,6 +26,7 @@
 #include <QtCore/QTime>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QStyledItemDelegate>
 
 namespace Otter
 {
@@ -33,6 +34,17 @@ namespace Otter
 class SearchWidget;
 class StartPageModel;
 class Window;
+
+class TileDelegate final : public QStyledItemDelegate
+{
+public:
+	explicit TileDelegate(QObject *parent = nullptr);
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
 
 class StartPageContentsWidget final : public QWidget
 {
