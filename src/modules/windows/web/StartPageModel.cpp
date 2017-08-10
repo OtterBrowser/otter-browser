@@ -290,26 +290,28 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 		return;
 	}
 
-	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && BookmarksManager::getBookmark(m_reloads[url].first))
+	const QPair<quint64, bool> information(m_reloads[url]);
+
+	m_reloads.remove(url);
+
+	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && BookmarksManager::getBookmark(information.first))
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
-		thumbnail.save(getThumbnailPath(m_reloads[url].first), "png");
+		thumbnail.save(getThumbnailPath(information.first), "png");
 	}
 
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_reloads[url].first));
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(information.first));
 
 	if (bookmark)
 	{
-		if (m_reloads[url].second)
+		if (information.second)
 		{
 			bookmark->setData(title, BookmarksModel::TitleRole);
 		}
 
 		emit isReloadingTileChanged(index(bookmark->index().row(), bookmark->index().column()));
 	}
-
-	m_reloads.remove(url);
 }
 
 QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
