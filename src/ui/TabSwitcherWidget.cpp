@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TabSwitcherWidget.h"
+#include "AnimationWidget.h"
 #include "MainWindow.h"
 #include "Window.h"
 #include "../core/Application.h"
@@ -25,7 +26,6 @@
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QKeyEvent>
-#include <QtGui/QMovie>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -38,7 +38,7 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	m_model(new QStandardItemModel(this)),
 	m_tabsView(new ItemViewWidget(this)),
 	m_previewLabel(new QLabel(this)),
-	m_loadingMovie(nullptr),
+	m_loadingAnimation(nullptr),
 	m_reason(KeyboardReason),
 	m_isIgnoringMinimizedTabs(SettingsManager::getOption(SettingsManager::TabSwitcher_IgnoreMinimizedTabsOption).toBool())
 {
@@ -172,16 +172,27 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 
 	if (window->getLoadingState() == WebWidget::DeferredLoadingState || window->getLoadingState() == WebWidget::OngoingLoadingState)
 	{
-		if (!m_loadingMovie)
+		if (!m_loadingAnimation)
 		{
-			m_loadingMovie = new QMovie(ThemesManager::getAnimationPath(QLatin1String("loading")), QByteArray(), m_previewLabel);
-			m_loadingMovie->start();
+			m_loadingAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), m_previewLabel);
+
+			connect(m_loadingAnimation, &Animation::frameChanged, [&]()
+			{
+				m_previewLabel->setPixmap(m_loadingAnimation->getCurrentPixmap());
+			});
 		}
 
-		m_previewLabel->setMovie(m_loadingMovie);
+		m_loadingAnimation->start();
+
+		m_previewLabel->setPixmap(m_loadingAnimation->getCurrentPixmap());
 	}
 	else
 	{
+		if (m_loadingAnimation && m_loadingAnimation->isRunning())
+		{
+			m_loadingAnimation->stop();
+		}
+
 		m_previewLabel->setPixmap((window->getLoadingState() == WebWidget::CrashedLoadingState) ? ThemesManager::createIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->createThumbnail());
 	}
 }

@@ -28,6 +28,7 @@
 namespace Otter
 {
 
+class Animation;
 class Window;
 
 class TabSwitcherWidget final : public QWidget
@@ -78,7 +79,7 @@ private:
 	QStandardItemModel *m_model;
 	ItemViewWidget *m_tabsView;
 	QLabel *m_previewLabel;
-	QMovie *m_loadingMovie;
+	Animation *m_loadingAnimation;
 	SwitcherReason m_reason;
 	bool m_isIgnoringMinimizedTabs;
 };
