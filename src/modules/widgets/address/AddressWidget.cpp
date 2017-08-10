@@ -401,11 +401,16 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	if (m_entries.contains(HistoryDropdownEntry))
 	{
-		QStyleOption arrow;
-		arrow.initFrom(this);
-		arrow.rect = m_entries[HistoryDropdownEntry].rectangle;
+		QStyleOption arrowOption;
+		arrowOption.initFrom(this);
+		arrowOption.rect = m_entries[HistoryDropdownEntry].rectangle;
 
-		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
+		if (HistoryManager::getTypedHistoryModel()->rowCount() == 0)
+		{
+			arrowOption.palette.setCurrentColorGroup(QPalette::Disabled);
+		}
+
+		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrowOption, &painter, this);
 	}
 
 	if (m_isUsingSimpleMode)
@@ -452,7 +457,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 void AddressWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Down && !isPopupVisible())
+	if (event->key() == Qt::Key_Down && !isPopupVisible() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
 	{
 		m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
 
@@ -667,7 +672,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 				return;
 			case HistoryDropdownEntry:
-				if (!isPopupVisible())
+				if (!isPopupVisible() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
 				{
 					m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
 
