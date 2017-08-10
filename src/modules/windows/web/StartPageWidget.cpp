@@ -30,7 +30,7 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../modules/widgets/search/SearchWidget.h"
-#include "../../../ui/AnimationWidget.h"
+#include "../../../ui/Animation.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/Menu.h"

@@ -20,7 +20,7 @@
 
 #include "TabBarWidget.h"
 #include "Action.h"
-#include "AnimationWidget.h"
+#include "Animation.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "PreviewWidget.h"

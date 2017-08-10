@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "TabSwitcherWidget.h"
-#include "AnimationWidget.h"
+#include "Animation.h"
 #include "MainWindow.h"
 #include "Window.h"
 #include "../core/Application.h"

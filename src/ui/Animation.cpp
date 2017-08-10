@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "AnimationWidget.h"
+#include "Animation.h"
 
 #include <QtCore/QFile>
 #include <QtGui/QPainter>
@@ -169,21 +169,6 @@ QPixmap Animation::getCurrentPixmap() const
 bool Animation::isRunning() const
 {
 	return (m_gifMovie ? (m_gifMovie->state() == QMovie::Running) : (m_svgRenderer != nullptr));
-}
-
-AnimationWidget::AnimationWidget(Animation *animation, QWidget *parent) : QLabel(parent),
-	m_animation(animation)
-{
-	if (animation)
-	{
-		connect(animation, &Animation::frameChanged, [&]()
-		{
-			if (m_animation)
-			{
-				setPixmap(m_animation->getCurrentPixmap());
-			}
-		});
-	}
 }
 
 }

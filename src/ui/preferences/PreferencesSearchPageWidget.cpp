@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "PreferencesSearchPageWidget.h"
-#include "../AnimationWidget.h"
+#include "../Animation.h"
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"

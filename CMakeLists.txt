@@ -144,7 +144,7 @@ set(otter_src
 	src/ui/AcceptCookieDialog.cpp
 	src/ui/Action.cpp
 	src/ui/ActionComboBoxWidget.cpp
-	src/ui/AnimationWidget.cpp
+	src/ui/Animation.cpp
 	src/ui/ApplicationComboBoxWidget.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp

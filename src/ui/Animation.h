@@ -17,12 +17,11 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_ANIMATIONWIDGET_H
-#define OTTER_ANIMATIONWIDGET_H
+#ifndef OTTER_ANIMATION_H
+#define OTTER_ANIMATION_H
 
 #include <QtGui/QMovie>
 #include <QtSvg/QSvgRenderer>
-#include <QtWidgets/QLabel>
 
 namespace Otter
 {
@@ -62,17 +61,6 @@ private:
 
 signals:
 	void frameChanged();
-};
-
-class AnimationWidget final : public QLabel
-{
-	Q_OBJECT
-
-public:
-	explicit AnimationWidget(Animation *animation, QWidget *parent = nullptr);
-
-private:
-	Animation *m_animation;
 };
 
 }
