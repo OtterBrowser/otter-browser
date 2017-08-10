@@ -31,6 +31,7 @@
 namespace Otter
 {
 
+class Animation;
 class SearchWidget;
 class StartPageModel;
 class Window;
@@ -41,8 +42,6 @@ public:
 	explicit TileDelegate(QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
@@ -82,6 +81,7 @@ public:
 	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void scrollContents(const QPoint &delta);
 	void markForDeletion();
+	static Animation* getLoadingAnimation();
 	QPixmap createThumbnail();
 	bool event(QEvent *event) override;
 	bool eventFilter(QObject *object, QEvent *event) override;
@@ -100,9 +100,8 @@ protected slots:
 	void reloadTile();
 	void removeTile();
 	void handleOptionChanged(int identifier, const QVariant &value);
-	void updateTile(const QModelIndex &index);
+	void handleIsReloadingTileChanged(const QModelIndex &index);
 	void updateSize();
-	void updateTiles();
 	void showContextMenu(const QPoint &position = {});
 
 private:
@@ -117,6 +116,7 @@ private:
 	bool m_ignoreEnter;
 
 	static StartPageModel *m_model;
+	static Animation *m_loadingAnimation;
 	static QPointer<StartPagePreferencesDialog> m_preferencesDialog;
 };
 

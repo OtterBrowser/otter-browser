@@ -30,6 +30,7 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../modules/widgets/search/SearchWidget.h"
+#include "../../../ui/AnimationWidget.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/Menu.h"
@@ -40,7 +41,6 @@
 #include <QtGui/QDrag>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QMovie>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmapCache>
 #include <QtWidgets/QGridLayout>
@@ -50,6 +50,7 @@ namespace Otter
 {
 
 StartPageModel* StartPageWidget::m_model(nullptr);
+Animation* StartPageWidget::m_loadingAnimation(nullptr);
 QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullptr);
 
 TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
@@ -59,6 +60,7 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	const int textHeight(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5);
+	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 	const QString tileBackgroundMode(SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption).toString());
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
@@ -68,10 +70,8 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 
-	if (index.data(StartPageModel::IsDraggedRole).toBool() || index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+	if (isAddTile || index.data(StartPageModel::IsDraggedRole).toBool())
 	{
-		const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
-
 		if (isAddTile && (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus)))
 		{
 			painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
@@ -126,6 +126,20 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, rectangle);
 	}
 
+	if (index.data(StartPageModel::IsReloadingRole).toBool())
+	{
+		const Animation *animation(StartPageWidget::getLoadingAnimation());
+
+		if (animation)
+		{
+			const QPixmap pixmap(animation->getCurrentPixmap());
+			QRect pixmapRectangle(QPoint(0, 0), pixmap.size());
+			pixmapRectangle.moveCenter(rectangle.center());
+
+			painter->drawPixmap(pixmapRectangle, pixmap);
+		}
+	}
+
 	painter->setClipping(false);
 	painter->setPen(QGuiApplication::palette().color((index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled), QPalette::Text));
 
@@ -149,33 +163,6 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setBrush(Qt::transparent);
 	painter->drawPath(path);
-}
-
-void TileDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(index)
-
-	QRect rectangle(option.rect);
-	rectangle.adjust(3, 3, -3, -(3 + (option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5)));
-
-	editor->setGeometry(rectangle);
-}
-
-QWidget* TileDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	Q_UNUSED(option)
-	Q_UNUSED(index)
-
-	QLabel *editor(new QLabel(parent));
-
-	editor->setAlignment(Qt::AlignCenter);
-
-	QMovie *movie(new QMovie(ThemesManager::getAnimationPath(QLatin1String("loading")), QByteArray(), editor));
-	movie->start();
-
-	editor->setMovie(movie);
-
-	return editor;
 }
 
 QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -326,12 +313,12 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	setWidget(m_contentsWidget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
-	updateTiles();
+	updateSize();
 	handleOptionChanged(SettingsManager::StartPage_BackgroundPathOption, SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption));
 	handleOptionChanged(SettingsManager::StartPage_ShowSearchFieldOption, SettingsManager::getOption(SettingsManager::StartPage_ShowSearchFieldOption));
 
-	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
-	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
+	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateSize()));
+	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(handleIsReloadingTileChanged(QModelIndex)));
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
@@ -542,7 +529,13 @@ void StartPageWidget::editTile()
 
 void StartPageWidget::reloadTile()
 {
-	m_listView->openPersistentEditor(m_currentIndex);
+	if (!m_loadingAnimation)
+	{
+		m_loadingAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), this);
+		m_loadingAnimation->start();
+
+		connect(m_loadingAnimation, SIGNAL(frameChanged()), m_listView, SLOT(update()));
+	}
 
 	m_model->reloadTile(m_currentIndex);
 }
@@ -683,12 +676,17 @@ void StartPageWidget::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
-void StartPageWidget::updateTile(const QModelIndex &index)
+void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 {
 	m_listView->update(index);
-	m_listView->closePersistentEditor(index);
 
 	m_thumbnail = QPixmap();
+
+	if (m_loadingAnimation && m_model->match(m_model->index(0, 0), StartPageModel::IsReloadingRole, true, 1, Qt::MatchExactly).isEmpty())
+	{
+		m_loadingAnimation->deleteLater();
+		m_loadingAnimation = nullptr;
+	}
 }
 
 void StartPageWidget::updateSize()
@@ -705,19 +703,6 @@ void StartPageWidget::updateSize()
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
 
 	m_thumbnail = QPixmap();
-}
-
-void StartPageWidget::updateTiles()
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		if (m_model->index(i, 0).data(StartPageModel::IsReloadingRole).toBool())
-		{
-			m_listView->openPersistentEditor(m_model->index(i, 0));
-		}
-	}
-
-	updateSize();
 }
 
 void StartPageWidget::showContextMenu(const QPoint &position)
@@ -754,6 +739,11 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 	}
 
 	menu.exec(hitPosition);
+}
+
+Animation* StartPageWidget::getLoadingAnimation()
+{
+	return m_loadingAnimation;
 }
 
 QPixmap StartPageWidget::createThumbnail()
