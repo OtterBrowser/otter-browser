@@ -52,7 +52,7 @@ void SearchEngineTitleDelegate::initStyleOption(QStyleOptionViewItem *option, co
 
 	if (index.data(PreferencesSearchPageWidget::IsUpdatingRole).toBool())
 	{
-		Animation *animation(PreferencesSearchPageWidget::getUpdateAnimation());
+		const Animation *animation(PreferencesSearchPageWidget::getUpdateAnimation());
 
 		if (animation)
 		{
