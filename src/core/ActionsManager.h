@@ -222,7 +222,7 @@ public:
 	{
 		enum ActionCategory
 		{
-			UnknownCategory = 0,
+			OtherCategory = 0,
 			PageCategory,
 			NavigationCategory,
 			EditingCategory,
@@ -231,7 +231,6 @@ public:
 			ImageCategory,
 			MediaCategory,
 			BookmarkCategory,
-			OtherCategory,
 			UserCategory
 		};
 
@@ -270,6 +269,7 @@ public:
 		State defaultState;
 		QVector<QKeySequence> shortcuts;
 		ActionFlags flags = IsEnabledFlag;
+		ActionCategory category = OtherCategory;
 		ActionScope scope = OtherScope;
 		int identifier = -1;
 
@@ -306,7 +306,7 @@ protected:
 	explicit ActionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static void registerAction(int identifier, const QString &text, const QString &description = {}, const QIcon &icon = {}, ActionDefinition::ActionScope scope = ActionDefinition::OtherScope, ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag);
+	static void registerAction(int identifier, const QString &text, const QString &description = {}, const QIcon &icon = {}, ActionDefinition::ActionScope scope = ActionDefinition::OtherScope, ActionDefinition::ActionFlags flags = ActionDefinition::IsEnabledFlag, ActionDefinition::ActionCategory category = ActionDefinition::OtherCategory);
 
 protected slots:
 	void handleOptionChanged(int identifier);
