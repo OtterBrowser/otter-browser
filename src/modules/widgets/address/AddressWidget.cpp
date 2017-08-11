@@ -457,34 +457,49 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 void AddressWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Down && !isPopupVisible() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
+	switch (event->key())
 	{
-		m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
-
-		showCompletion(true);
-	}
-	else if (m_window && event->key() == Qt::Key_Escape)
-	{
-		const QUrl url(m_window->getUrl());
-		const QString text(this->text().trimmed());
-
-		if (text.isEmpty() || text != url.toString())
-		{
-			setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
-
-			if (!text.isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
+		case Qt::Key_Down:
+			if (!isPopupVisible() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
 			{
-				selectAll();
+				m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
+
+				showCompletion(true);
 			}
-		}
-		else
-		{
-			m_window->setFocus();
-		}
-	}
-	else if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
-	{
-		handleUserInput(text().trimmed(), SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen, Qt::LeftButton, event->modifiers()));
+
+			break;
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+			if (!m_isUsingSimpleMode)
+			{
+				handleUserInput(text().trimmed(), SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen, Qt::LeftButton, event->modifiers()));
+			}
+
+			break;
+		case Qt::Key_Escape:
+			if (m_window)
+			{
+				const QUrl url(m_window->getUrl());
+				const QString text(this->text().trimmed());
+
+				if (text.isEmpty() || text != url.toString())
+				{
+					setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
+
+					if (!text.isEmpty() && SettingsManager::getOption(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
+					{
+						selectAll();
+					}
+				}
+				else
+				{
+					m_window->setFocus();
+				}
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	LineEditWidget::keyPressEvent(event);
