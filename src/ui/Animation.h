@@ -45,6 +45,7 @@ public:
 	QPixmap getCurrentPixmap() const;
 	bool isRunning() const;
 	void setColor(const QColor &color);
+	void setScaledSize(const QSize &size);
 
 public slots:
 	void start();
@@ -58,6 +59,7 @@ private:
 	QSvgRenderer *m_svgRenderer;
 	QString m_path;
 	QColor m_color;
+	QSize m_scaledSize;
 	AnimationFormat m_format;
 
 signals:

@@ -144,6 +144,19 @@ void Animation::setColor(const QColor &color)
 	}
 }
 
+void Animation::setScaledSize(const QSize &size)
+{
+	if (size != m_scaledSize)
+	{
+		m_scaledSize = size;
+
+		if (m_gifMovie)
+		{
+			m_gifMovie->setScaledSize(size);
+		}
+	}
+}
+
 QPixmap Animation::getCurrentPixmap() const
 {
 	if (m_gifMovie)
@@ -153,7 +166,7 @@ QPixmap Animation::getCurrentPixmap() const
 
 	if (m_svgRenderer)
 	{
-		QPixmap pixmap(m_svgRenderer->defaultSize());
+		QPixmap pixmap(m_scaledSize.isValid() ? m_scaledSize : m_svgRenderer->defaultSize());
 		pixmap.fill(Qt::transparent);
 
 		QPainter painter(&pixmap);
