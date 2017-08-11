@@ -488,7 +488,7 @@ void ConfigurationContentsWidget::updateActions()
 	const QModelIndex index(m_ui->configurationViewWidget->selectionModel()->hasSelection() ? m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2) : QModelIndex());
 	const int identifier(index.data(IdentifierRole).toInt());
 
-	if (identifier >= 0 && index.isValid())
+	if (identifier >= 0 && index.parent().isValid())
 	{
 		m_ui->nameLabelWidget->setText(SettingsManager::getOptionName(identifier));
 		m_ui->currentValueLabelWidget->setText(SettingsManager::createDisplayValue(identifier, SettingsManager::getOption(identifier)));
