@@ -20,6 +20,7 @@
 #ifndef OTTER_ANIMATION_H
 #define OTTER_ANIMATION_H
 
+#include <QtGui/QColor>
 #include <QtGui/QMovie>
 #include <QtSvg/QSvgRenderer>
 
