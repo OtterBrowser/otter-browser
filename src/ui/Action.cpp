@@ -29,7 +29,7 @@ Action::Action(int identifier, QObject *parent) : QAction(parent),
 	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
 {
-	update(true);
+	initialize();
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
@@ -37,7 +37,7 @@ Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) :
 	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
 {
-	update(true);
+	initialize();
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent) : QAction(parent),
@@ -45,6 +45,38 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags,
 	m_flags(flags),
 	m_identifier(identifier)
 {
+	initialize();
+}
+
+void Action::initialize()
+{
+	switch (m_identifier)
+	{
+		case ActionsManager::PreferencesAction:
+			setMenuRole(QAction::PreferencesRole);
+
+			break;
+		case ActionsManager::AboutQtAction:
+			setMenuRole(QAction::AboutQtRole);
+
+			break;
+		case ActionsManager::ExitAction:
+			setMenuRole(QAction::QuitRole);
+
+			break;
+		case ActionsManager::AboutApplicationAction:
+			setMenuRole(QAction::AboutRole);
+
+			break;
+		default:
+			break;
+	}
+
+	if (m_identifier > 0)
+	{
+		setCheckable(getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
+	}
+
 	update(true);
 }
 
@@ -108,27 +140,9 @@ void Action::update(bool reset)
 				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first"));
 
 				break;
-			case ActionsManager::PreferencesAction:
-				setMenuRole(QAction::PreferencesRole);
-
-				break;
-			case ActionsManager::AboutQtAction:
-				setMenuRole(QAction::AboutQtRole);
-
-				break;
-			case ActionsManager::ExitAction:
-				setMenuRole(QAction::QuitRole);
-
-				break;
-			case ActionsManager::AboutApplicationAction:
-				setMenuRole(QAction::AboutRole);
-
-				break;
 			default:
 				break;
 		}
-
-		setCheckable(definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
 	}
 	else
 	{

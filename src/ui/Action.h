@@ -63,6 +63,7 @@ public slots:
 	void setup(Action *action = nullptr);
 
 protected:
+	void initialize();
 	void update(bool reset = false);
 
 private:
