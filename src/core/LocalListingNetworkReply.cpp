@@ -121,14 +121,14 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		{
 			QByteArray byteArray;
 			QBuffer buffer(&byteArray);
-			QPixmap pixmap(QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))).pixmap(16, 16));
+			QIcon icon(QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))));
 
-			if (pixmap.isNull())
+			if (icon.isNull())
 			{
-				pixmap = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false).pixmap(16, 16);
+				icon = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
 			}
 
-			pixmap.save(&buffer, "PNG");
+			icon.pixmap(16, 16).save(&buffer, "PNG");
 
 			icons[mimeType.name()] = QString(byteArray.toBase64());
 		}
