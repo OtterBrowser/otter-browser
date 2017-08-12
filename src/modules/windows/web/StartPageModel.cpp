@@ -193,7 +193,7 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 			else
 			{
 				QPixmap thumbnail(size);
-				thumbnail.fill();
+				thumbnail.fill(Qt::white);
 
 				QPainter painter(&thumbnail);
 
