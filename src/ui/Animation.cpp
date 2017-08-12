@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Animation.h"
+#include "../core/Application.h"
 
 #include <QtCore/QFile>
 #include <QtGui/QPainter>
@@ -167,6 +168,7 @@ QPixmap Animation::getCurrentPixmap() const
 	if (m_svgRenderer)
 	{
 		QPixmap pixmap(m_scaledSize.isValid() ? m_scaledSize : m_svgRenderer->defaultSize());
+		pixmap.setDevicePixelRatio(Application::getInstance()->devicePixelRatio());
 		pixmap.fill(Qt::transparent);
 
 		QPainter painter(&pixmap);
