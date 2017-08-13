@@ -19,6 +19,7 @@
 
 #include "SourceViewerWebWidget.h"
 #include "Action.h"
+#include "Menu.h"
 #include "SourceViewerWidget.h"
 #include "../core/Console.h"
 #include "../core/HistoryManager.h"
@@ -281,31 +282,25 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 
 	const QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
-	QMenu menu;
+	const QPoint menuPosition(position.isNull() ? QCursor::pos() : mapToGlobal(position));
 
 	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
 	{
+		QMenu menu;
 		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers")));
 		showLineNumbersAction->setCheckable(true);
 		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
 
 		connect(showLineNumbersAction, SIGNAL(triggered(bool)), this, SLOT(setShowLineNumbers(bool)));
+
+		menu.exec(menuPosition);
 	}
 	else
 	{
-		menu.addAction(createAction(ActionsManager::UndoAction));
-		menu.addAction(createAction(ActionsManager::RedoAction));
-		menu.addSeparator();
-		menu.addAction(createAction(ActionsManager::CutAction));
-		menu.addAction(createAction(ActionsManager::CopyAction));
-		menu.addAction(createAction(ActionsManager::PasteAction));
-		menu.addAction(createAction(ActionsManager::DeleteAction));
-		menu.addSeparator();
-		menu.addAction(createAction(ActionsManager::SelectAllAction));
-		menu.addAction(createAction(ActionsManager::ClearAllAction));
+		Menu menu(Menu::NoMenuRole, this);
+		menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")});
+		menu.exec(menuPosition);
 	}
-
-	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
 }
 
 void SourceViewerWebWidget::setShowLineNumbers(bool show)

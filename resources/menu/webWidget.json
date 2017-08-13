@@ -144,7 +144,14 @@
 			"includeIn": "edit",
 			"actions":
 			[
-				"PasteNote",
+				{
+					"type": "include",
+					"excludeFrom": "source",
+					"actions":
+					[
+						"PasteNote"
+					]
+				},
 				"separator",
 				"Undo",
 				"Redo",
@@ -154,7 +161,14 @@
 				"Paste",
 				"Delete",
 				"separator",
-				"CopyToNote",
+				{
+					"type": "include",
+					"excludeFrom": "source",
+					"actions":
+					[
+						"CopyToNote"
+					]
+				},
 				"separator",
 				"SelectAll",
 				"ClearAll",
@@ -180,11 +194,18 @@
 						"separator"
 					]
 				},
-				"InspectElement",
-				"separator",
-				"CheckSpelling",
-				"SelectDictionary",
-				"separator"
+				{
+					"type": "include",
+					"excludeFrom": "source",
+					"actions":
+					[
+						"InspectElement",
+						"separator",
+						"CheckSpelling",
+						"SelectDictionary",
+						"separator"
+					]
+				}
 			]
 		},
 		{
