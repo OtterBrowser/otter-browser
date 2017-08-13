@@ -29,8 +29,6 @@
 namespace Otter
 {
 
-class Action;
-
 class ActionsManager final : public QObject
 {
 	Q_OBJECT
