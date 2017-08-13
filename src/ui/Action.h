@@ -22,6 +22,7 @@
 
 #include "../core/ActionsManager.h"
 
+#include <QtCore/QPointer>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QShortcut>
 
@@ -38,8 +39,7 @@ public:
 		NoFlag = 0,
 		CanTriggerActionFlag = 1,
 		FollowsActionStateFlag = 2,
-		FollowsActiveObjectFlag = 4,
-		IsOverridingTextFlag = 8
+		IsOverridingTextFlag = 4
 	};
 
 	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
@@ -48,6 +48,7 @@ public:
 	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent);
 
+	void setFollowedObject(QObject *object, ActionExecutor *actionUser);
 	void setOverrideText(const QString &text);
 	void setState(const ActionsManager::ActionDefinition::State &state);
 	void setParameters(const QVariantMap &parameters);
@@ -65,8 +66,16 @@ public slots:
 protected:
 	void initialize();
 	void update(bool reset = false);
+	void updateState();
+
+protected slots:
+	void triggerAction(bool isChecked = false);
+	void handleActionsStateChanged(const QVector<int> &identifiers);
+	void handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 
 private:
+	ActionExecutor *m_actionExecutor;
+	QPointer<QObject> m_followedObject;
 	QString m_overrideText;
 	QVariantMap m_parameters;
 	ActionFlags m_flags;

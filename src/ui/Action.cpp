@@ -26,6 +26,7 @@ namespace Otter
 {
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
+	m_actionExecutor(nullptr),
 	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
 {
@@ -33,6 +34,7 @@ Action::Action(int identifier, QObject *parent) : QAction(parent),
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
+	m_actionExecutor(nullptr),
 	m_parameters(parameters),
 	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
@@ -41,6 +43,7 @@ Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) :
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent) : QAction(parent),
+	m_actionExecutor(nullptr),
 	m_parameters(parameters),
 	m_flags(flags),
 	m_identifier(identifier)
@@ -77,6 +80,11 @@ void Action::initialize()
 		setCheckable(getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
 	}
 
+	if (m_flags.testFlag(CanTriggerActionFlag))
+	{
+		connect(this, SIGNAL(triggered(bool)), this, SLOT(triggerAction(bool)));
+	}
+
 	update(true);
 }
 
@@ -99,6 +107,42 @@ void Action::setup(Action *action)
 
 	setCheckable(action->isCheckable());
 	setState(action->getState());
+}
+
+void Action::triggerAction(bool isChecked)
+{
+	if (m_followedObject)
+	{
+		if (m_identifier > 0 && getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+		{
+			QVariantMap parameters(m_parameters);
+			parameters[QLatin1String("isChecked")] = isChecked;
+
+			m_actionExecutor->triggerAction(m_identifier, parameters);
+		}
+		else
+		{
+			m_actionExecutor->triggerAction(m_identifier, m_parameters);
+		}
+	}
+}
+
+void Action::handleActionsStateChanged(const QVector<int> &identifiers)
+{
+	if (identifiers.contains(m_identifier))
+	{
+		updateState();
+	}
+}
+
+void Action::handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories)
+{
+	const ActionsManager::ActionDefinition::ActionCategory category(getDefinition().category);
+
+	if (category != ActionsManager::ActionDefinition::OtherCategory && categories.testFlag(category))
+	{
+		updateState();
+	}
 }
 
 void Action::update(bool reset)
@@ -160,6 +204,59 @@ void Action::update(bool reset)
 	}
 
 	setState(state);
+}
+
+void Action::updateState()
+{
+	ActionsManager::ActionDefinition::State state;
+
+	if (m_followedObject)
+	{
+		state = m_actionExecutor->getActionState(m_identifier, m_parameters);
+	}
+	else
+	{
+		state = getDefinition().defaultState;
+		state.isEnabled = false;
+	}
+
+	state.text = getText();
+
+	setState(state);
+}
+
+void Action::setFollowedObject(QObject *object, ActionExecutor *actionUser)
+{
+	if (m_followedObject)
+	{
+		if (object->inherits("Otter::MainWindow"))
+		{
+			disconnect(m_followedObject.data(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
+		}
+
+		disconnect(m_followedObject.data(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		disconnect(m_followedObject.data(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+	}
+
+	m_followedObject = object;
+	m_actionExecutor = actionUser;
+
+	if (object)
+	{
+		updateState();
+
+		connect(object, SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+
+		if (getDefinition().category != ActionsManager::ActionDefinition::OtherCategory)
+		{
+			connect(object, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+		}
+
+		if (object->inherits("Otter::MainWindow"))
+		{
+			connect(object, SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
+		}
+	}
 }
 
 void Action::setOverrideText(const QString &text)
