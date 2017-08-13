@@ -283,19 +283,19 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 	QMenu::contextMenuEvent(event);
 }
 
-void Menu::load(const QString &path, const QStringList &options)
+void Menu::load(const QString &path, const QStringList &options, ActionExecutor::Object executor)
 {
 	QFile file(SessionsManager::getReadableDataPath(path));
 
 	if (file.open(QIODevice::ReadOnly))
 	{
-		load(QJsonDocument::fromJson(file.readAll()).object(), options);
+		load(QJsonDocument::fromJson(file.readAll()).object(), options, executor);
 
 		file.close();
 	}
 }
 
-void Menu::load(const QJsonObject &definition, const QStringList &options)
+void Menu::load(const QJsonObject &definition, const QStringList &options, ActionExecutor::Object executor)
 {
 	const QString identifier(definition.value(QLatin1String("identifier")).toString());
 
@@ -306,6 +306,20 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 	setObjectName(identifier);
 	setTitle(definition.value(QLatin1String("title")).toString());
+
+	if (!executor.isValid())
+	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			executor = ActionExecutor::Object(mainWindow, mainWindow);
+		}
+		else
+		{
+			executor = ActionExecutor::Object(Application::getInstance(), Application::getInstance());
+		}
+	}
 
 	const QJsonArray actions(definition.value(QLatin1String("actions")).toArray());
 
@@ -325,10 +339,8 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 				if (identifier >= 0)
 				{
 					const QString text(object.value(QLatin1String("title")).toString());
-					const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-					Action *action(addAction(identifier, false));
-					action->setParameters(parameters);
-					action->setState(Application::getInstance()->getActionState(identifier, parameters));
+					Action *action(new Action(identifier, parameters, this));
+					action->setExecutor(executor);
 
 					if (object.contains(QLatin1String("group")))
 					{
@@ -366,11 +378,6 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 							action->setIcon(ThemesManager::createIcon(data));
 						}
 					}
-
-					if (mainWindow)
-					{
-						connect(action, SIGNAL(triggered(bool)), mainWindow, SLOT(triggerAction(bool)));
-					}
 				}
 				else
 				{
@@ -398,7 +405,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			}
 			else
 			{
-				menu->load(object, options);
+				menu->load(object, options, executor);
 			}
 
 			if (type == QLatin1String("menu"))
@@ -432,31 +439,10 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 				if (identifier >= 0)
 				{
-					QAction *action(nullptr);
+					Action *action(new Action(identifier, this));
+					action->setExecutor(executor);
 
-					if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::WindowScope)
-					{
-						const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-						if (mainWindow)
-						{
-							Window *window(mainWindow->getActiveWindow());
-
-							if (window)
-							{
-								action = window->createAction(identifier);
-							}
-						}
-					}
-
-					if (action)
-					{
-						QMenu::addAction(action);
-					}
-					else
-					{
-						addAction(identifier, true);
-					}
+					QMenu::addAction(action);
 				}
 				else
 				{

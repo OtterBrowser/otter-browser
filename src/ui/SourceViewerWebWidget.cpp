@@ -298,7 +298,7 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	else
 	{
 		Menu menu(Menu::NoMenuRole, this);
-		menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")});
+		menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")}, ActionExecutor::Object(this, this));
 		menu.exec(menuPosition);
 	}
 }

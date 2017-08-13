@@ -20,6 +20,8 @@
 #ifndef OTTER_MENU_H
 #define OTTER_MENU_H
 
+#include "../core/ActionsManager.h"
+
 #include <QtCore/QJsonObject>
 #include <QtWidgets/QMenu>
 
@@ -55,8 +57,8 @@ public:
 
 	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = nullptr);
 
-	void load(const QString &path, const QStringList &options = {});
-	void load(const QJsonObject &definition, const QStringList &options = {});
+	void load(const QString &path, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
+	void load(const QJsonObject &definition, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(int option);
 	void setTitle(const QString &title);
 	Action* addAction(int identifier = -1, bool useGlobal = false);

@@ -544,7 +544,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_isTabPreferencesMenuVisible = true;
 
 				Menu menu(Menu::NoMenuRole, this);
-				menu.load(QLatin1String("menu/quickPreferences.json"));
+				menu.load(QLatin1String("menu/quickPreferences.json"), {}, ActionExecutor::Object(this, this));
 				menu.exec(QCursor::pos());
 
 				m_isTabPreferencesMenuVisible = false;

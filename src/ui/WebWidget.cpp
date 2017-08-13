@@ -540,7 +540,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 	}
 
 	Menu menu(Menu::NoMenuRole, this);
-	menu.load(QLatin1String("menu/webWidget.json"), flags);
+	menu.load(QLatin1String("menu/webWidget.json"), flags, ActionExecutor::Object(this, this));
 	menu.exec(mapToGlobal(hitPosition));
 }
 
