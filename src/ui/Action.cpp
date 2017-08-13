@@ -205,6 +205,8 @@ void Action::update(bool reset)
 
 void Action::updateState()
 {
+	const ActionsManager::ActionDefinition definition(getDefinition());
+	const QVector<QKeySequence> shortcuts(m_parameters.isEmpty() ? definition.shortcuts : ActionsManager::getActionShortcuts(m_identifier, m_parameters));
 	ActionsManager::ActionDefinition::State state;
 
 	if (m_executor.isValid())
@@ -213,11 +215,19 @@ void Action::updateState()
 	}
 	else
 	{
-		state = getDefinition().defaultState;
+		state = definition.defaultState;
 		state.isEnabled = false;
 	}
 
-	state.text = getText();
+	if (m_flags.testFlag(IsOverridingTextFlag))
+	{
+		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
+	}
+
+	if (!shortcuts.isEmpty())
+	{
+		state.text += QLatin1Char('\t') + shortcuts.first().toString(QKeySequence::NativeText);
+	}
 
 	setState(state);
 }

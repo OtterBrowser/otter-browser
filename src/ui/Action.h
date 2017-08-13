@@ -65,12 +65,12 @@ public slots:
 protected:
 	void initialize();
 	void update(bool reset = false);
-	void updateState();
 
 protected slots:
 	void triggerAction(bool isChecked = false);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
+	void updateState();
 
 private:
 	ActionExecutor::Object m_executor;
