@@ -93,7 +93,7 @@ void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 	switch (type)
 	{
 		case SessionModel::MainWindowEntity:
-			Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
+			Application::getInstance()->triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
 
 			break;
 		case SessionModel::WindowEntity:
@@ -107,7 +107,7 @@ void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 
 					if (mainWindow)
 					{
-						Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), mainWindow->getIdentifier()}});
+						Application::getInstance()->triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), mainWindow->getIdentifier()}});
 					}
 
 					Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}}, window->getMainWindow());

@@ -93,7 +93,7 @@ bool Application::m_isAboutToQuit(false);
 bool Application::m_isHidden(false);
 bool Application::m_isUpdating(false);
 
-Application::Application(int &argc, char **argv) : QApplication(argc, argv)
+Application::Application(int &argc, char **argv) : QApplication(argc, argv), ActionExecutor()
 {
 	setApplicationName(QLatin1String("Otter"));
 	setApplicationDisplayName(QLatin1String("Otter Browser"));
@@ -500,6 +500,11 @@ Application::~Application()
 	{
 		m_windows.at(i)->deleteLater();
 	}
+}
+
+void Application::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	triggerAction(identifier, parameters);
 }
 
 void Application::triggerAction(int identifier, const QVariantMap &parameters, QObject *target)
@@ -1327,7 +1332,7 @@ QString Application::getLocalePath()
 	return m_localePath;
 }
 
-ActionsManager::ActionDefinition::State Application::getActionState(int identifier, const QVariantMap &parameters)
+ActionsManager::ActionDefinition::State Application::getActionState(int identifier, const QVariantMap &parameters) const
 {
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
 

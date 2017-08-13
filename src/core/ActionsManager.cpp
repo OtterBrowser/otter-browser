@@ -435,4 +435,12 @@ int ActionsManager::getActionIdentifier(const QString &name)
 	return m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
+ActionExecutor::ActionExecutor()
+{
+}
+
+ActionExecutor::~ActionExecutor()
+{
+}
+
 }

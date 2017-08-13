@@ -58,7 +58,7 @@ namespace Otter
 
 quint64 MainWindow::m_identifierCounter(0);
 
-MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent), ActionExecutor(),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
 	m_tabBar(nullptr),
@@ -1035,7 +1035,7 @@ void MainWindow::triggerAction()
 	{
 		if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::ApplicationScope)
 		{
-			Application::triggerAction(identifier, parameters);
+			Application::getInstance()->triggerAction(identifier, parameters);
 		}
 		else
 		{
@@ -1059,7 +1059,7 @@ void MainWindow::triggerAction(bool isChecked)
 
 		if (ActionsManager::getActionDefinition(action->getIdentifier()).scope == ActionsManager::ActionDefinition::ApplicationScope)
 		{
-			Application::triggerAction(action->getIdentifier(), parameters);
+			Application::getInstance()->triggerAction(action->getIdentifier(), parameters);
 		}
 		else
 		{
@@ -2165,7 +2165,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 		case ActionsManager::ActionDefinition::MainWindowScope:
 			break;
 		case ActionsManager::ActionDefinition::ApplicationScope:
-			return Application::getActionState(identifier, parameters);
+			return Application::getInstance()->getActionState(identifier, parameters);
 		default:
 			return definition.defaultState;
 	}

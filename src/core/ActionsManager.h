@@ -321,6 +321,16 @@ private:
 	static int m_actionIdentifierEnumerator;
 };
 
+class ActionExecutor
+{
+public:
+	ActionExecutor();
+	virtual ~ActionExecutor();
+
+	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const = 0;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) = 0;
+};
+
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionCategories)

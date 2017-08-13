@@ -74,7 +74,7 @@ void WindowToolBarWidget::paintEvent(QPaintEvent *event)
 	style()->drawControl(QStyle::CE_ToolBar, &toolBarOption, &painter, this);
 }
 
-Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->centralWidget()),
+Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->centralWidget()), ActionExecutor(),
 	m_mainWindow(mainWindow),
 	m_addressBar(nullptr),
 	m_contentsWidget(nullptr),

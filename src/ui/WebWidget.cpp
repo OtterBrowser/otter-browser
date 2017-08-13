@@ -50,7 +50,7 @@ namespace Otter
 
 QString WebWidget::m_fastForwardScript;
 
-WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
+WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent), ActionExecutor(),
 	m_parent(parent),
 	m_backend(backend),
 	m_pasteNoteMenu(nullptr),
@@ -90,6 +90,12 @@ void WebWidget::timerEvent(QTimerEvent *event)
 			triggerAction(ActionsManager::ReloadAction);
 		}
 	}
+}
+
+void WebWidget::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	Q_UNUSED(identifier)
+	Q_UNUSED(parameters)
 }
 
 void WebWidget::triggerAction()

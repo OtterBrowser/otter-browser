@@ -46,7 +46,7 @@ class Menu;
 class Transfer;
 class WebBackend;
 
-class WebWidget : public QWidget
+class WebWidget : public QWidget, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -227,7 +227,7 @@ public:
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const;
-	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	virtual LinkUrl getActiveFrame() const;
 	virtual LinkUrl getActiveImage() const;
 	virtual LinkUrl getActiveLink() const;
@@ -253,7 +253,7 @@ public:
 	virtual bool isPrivate() const = 0;
 
 public slots:
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) = 0;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	virtual void clearOptions();
 	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
 	virtual void goToHistoryIndex(int index) = 0;

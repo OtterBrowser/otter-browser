@@ -48,7 +48,7 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 };
 
-class Window final : public QWidget
+class Window final : public QWidget, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -74,7 +74,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap createThumbnail() const;
 	QDateTime getLastActivity() const;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	WindowState getWindowState() const;
@@ -91,7 +91,7 @@ public:
 	bool isPrivate() const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = {});
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void requestClose();
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive(bool updateLastActivity = true);

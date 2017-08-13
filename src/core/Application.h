@@ -40,7 +40,7 @@ class PlatformIntegration;
 class Style;
 class TrayIcon;
 
-class Application : public QApplication
+class Application : public QApplication, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -60,7 +60,7 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
-	static void triggerAction(int identifier, const QVariantMap &parameters = {}, QObject *target = nullptr);
+	static void triggerAction(int identifier, const QVariantMap &parameters, QObject *target);
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser);
@@ -78,7 +78,7 @@ public:
 	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
-	static ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {});
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	static QVector<MainWindow*> getWindows();
 	static bool canClose();
 	static bool isAboutToQuit();
@@ -87,6 +87,7 @@ public:
 	static bool isRunning();
 
 public slots:
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void close();
 
 protected slots:

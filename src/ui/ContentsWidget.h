@@ -32,7 +32,7 @@ class Action;
 class ContentsDialog;
 class Window;
 
-class ContentsWidget : public QWidget
+class ContentsWidget : public QWidget, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -54,7 +54,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap createThumbnail();
-	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<WebWidget::LinkUrl> getFeeds() const;
@@ -70,7 +70,7 @@ public:
 	bool isSidebarPanel() const;
 
 public slots:
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = {});
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	virtual void print(QPrinter *printer) = 0;
 	virtual void goToHistoryIndex(int index);
 	virtual void removeHistoryIndex(int index, bool purge = false);

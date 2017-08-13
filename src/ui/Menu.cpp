@@ -328,7 +328,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 					const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 					Action *action(addAction(identifier, false));
 					action->setParameters(parameters);
-					action->setState(Application::getActionState(identifier, parameters));
+					action->setState(Application::getInstance()->getActionState(identifier, parameters));
 
 					if (object.contains(QLatin1String("group")))
 					{

@@ -47,7 +47,7 @@ class ToolBarWidget;
 class Window;
 class WorkspaceWidget;
 
-class MainWindow final : public QMainWindow
+class MainWindow final : public QMainWindow, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -67,7 +67,7 @@ public:
 	QVariant getOption(int identifier) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	SessionMainWindow getSession() const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
@@ -83,7 +83,7 @@ public:
 public slots:
 	void triggerAction();
 	void triggerAction(bool isChecked);
-	void triggerAction(int identifier, const QVariantMap &parameters = {});
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void openUrl(const QString &text = {}, bool isPrivate = false);
 	void storeWindowState();
 	void restoreWindowState();
