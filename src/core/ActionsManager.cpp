@@ -435,6 +435,49 @@ int ActionsManager::getActionIdentifier(const QString &name)
 	return m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
+ActionExecutor::Object::Object() : m_executor(nullptr)
+{
+}
+
+ActionExecutor::Object::Object(QObject *object, ActionExecutor *executor) : m_object(object), m_executor(executor)
+{
+}
+
+ActionExecutor::Object::Object(const ActionExecutor::Object &other) : m_object(other.m_object), m_executor(other.m_executor)
+{
+}
+
+ActionsManager::ActionDefinition::State ActionExecutor::Object::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (!m_object.isNull())
+	{
+		return m_executor->getActionState(identifier, parameters);
+	}
+
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+	state.isEnabled = false;
+
+	return state;
+}
+
+void ActionExecutor::Object::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	if (!m_object.isNull())
+	{
+		m_executor->triggerAction(identifier, parameters);
+	}
+}
+
+QObject* ActionExecutor::Object::getObject() const
+{
+	return m_object.data();
+}
+
+bool ActionExecutor::Object::isValid() const
+{
+	return !m_object.isNull();
+}
+
 ActionExecutor::ActionExecutor()
 {
 }

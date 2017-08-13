@@ -22,7 +22,6 @@
 
 #include "../core/ActionsManager.h"
 
-#include <QtCore/QPointer>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QShortcut>
 
@@ -48,7 +47,7 @@ public:
 	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent);
 
-	void setFollowedObject(QObject *object, ActionExecutor *actionUser);
+	void setExecutor(ActionExecutor::Object executor);
 	void setOverrideText(const QString &text);
 	void setState(const ActionsManager::ActionDefinition::State &state);
 	void setParameters(const QVariantMap &parameters);
@@ -74,8 +73,7 @@ protected slots:
 	void handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 
 private:
-	ActionExecutor *m_actionExecutor;
-	QPointer<QObject> m_followedObject;
+	ActionExecutor::Object m_executor;
 	QString m_overrideText;
 	QVariantMap m_parameters;
 	ActionFlags m_flags;

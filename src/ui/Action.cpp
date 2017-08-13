@@ -26,7 +26,6 @@ namespace Otter
 {
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
-	m_actionExecutor(nullptr),
 	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
 {
@@ -34,7 +33,6 @@ Action::Action(int identifier, QObject *parent) : QAction(parent),
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
-	m_actionExecutor(nullptr),
 	m_parameters(parameters),
 	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
 	m_identifier(identifier)
@@ -43,7 +41,6 @@ Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) :
 }
 
 Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent) : QAction(parent),
-	m_actionExecutor(nullptr),
 	m_parameters(parameters),
 	m_flags(flags),
 	m_identifier(identifier)
@@ -111,18 +108,18 @@ void Action::setup(Action *action)
 
 void Action::triggerAction(bool isChecked)
 {
-	if (m_followedObject)
+	if (m_executor.isValid())
 	{
 		if (m_identifier > 0 && getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
 		{
 			QVariantMap parameters(m_parameters);
 			parameters[QLatin1String("isChecked")] = isChecked;
 
-			m_actionExecutor->triggerAction(m_identifier, parameters);
+			m_executor.triggerAction(m_identifier, parameters);
 		}
 		else
 		{
-			m_actionExecutor->triggerAction(m_identifier, m_parameters);
+			m_executor.triggerAction(m_identifier, m_parameters);
 		}
 	}
 }
@@ -210,9 +207,9 @@ void Action::updateState()
 {
 	ActionsManager::ActionDefinition::State state;
 
-	if (m_followedObject)
+	if (m_executor.isValid())
 	{
-		state = m_actionExecutor->getActionState(m_identifier, m_parameters);
+		state = m_executor.getActionState(m_identifier, m_parameters);
 	}
 	else
 	{
@@ -225,36 +222,35 @@ void Action::updateState()
 	setState(state);
 }
 
-void Action::setFollowedObject(QObject *object, ActionExecutor *actionUser)
+void Action::setExecutor(ActionExecutor::Object executor)
 {
-	if (m_followedObject)
+	if (m_executor.isValid())
 	{
-		if (object->inherits("Otter::MainWindow"))
+		if (executor.getObject()->inherits("Otter::MainWindow"))
 		{
-			disconnect(m_followedObject.data(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
+			disconnect(m_executor.getObject(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
 		}
 
-		disconnect(m_followedObject.data(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
-		disconnect(m_followedObject.data(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+		disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
 	}
 
-	m_followedObject = object;
-	m_actionExecutor = actionUser;
+	m_executor = executor;
 
-	if (object)
+	if (executor.isValid())
 	{
 		updateState();
 
-		connect(object, SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		connect(executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
 
 		if (getDefinition().category != ActionsManager::ActionDefinition::OtherCategory)
 		{
-			connect(object, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+			connect(executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
 		}
 
-		if (object->inherits("Otter::MainWindow"))
+		if (executor.getObject()->inherits("Otter::MainWindow"))
 		{
-			connect(object, SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
+			connect(executor.getObject(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
 		}
 	}
 }

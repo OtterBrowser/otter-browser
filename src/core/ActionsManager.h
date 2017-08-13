@@ -23,6 +23,7 @@
 #define OTTER_ACTIONSMANAGER_H
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QPointer>
 #include <QtCore/QVariantMap>
 #include <QtGui/QIcon>
 
@@ -324,6 +325,23 @@ private:
 class ActionExecutor
 {
 public:
+	class Object
+	{
+	public:
+		explicit Object();
+		explicit Object(QObject *object, ActionExecutor *executor);
+		Object(const Object &other);
+
+		ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
+		void triggerAction(int identifier, const QVariantMap &parameters = {});
+		QObject *getObject() const;
+		bool isValid() const;
+
+	private:
+		QPointer<QObject> m_object;
+		ActionExecutor *m_executor;
+	};
+
 	ActionExecutor();
 	virtual ~ActionExecutor();
 
