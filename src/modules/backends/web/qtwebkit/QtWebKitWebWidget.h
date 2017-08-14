@@ -53,7 +53,6 @@ public:
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
 	QWidget* getInspector() override;
 	QWidget* getViewport() override;
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QString getActiveStyleSheet() const override;
 	QString getSelectedText() const override;
@@ -175,8 +174,6 @@ protected slots:
 	void notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void notifyContentStateChanged();
 	void updateAmountOfDeferredPlugins();
-	void updateUndoText(const QString &text);
-	void updateRedoText(const QString &text);
 	void updateOptions(const QUrl &url);
 
 private:

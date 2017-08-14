@@ -123,7 +123,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
 	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getOption(SettingsManager::Content_BackgroundColorOption));
 	handleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountWindowOption));
-	updateEditActions();
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
@@ -134,7 +133,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
 	connect(m_page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
 	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(handleLinkHovered(QString)));
-	connect(m_page, SIGNAL(microFocusChanged()), this, SLOT(updateEditActions()));
+	connect(m_page, &QWebPage::microFocusChanged, [&]()
+	{
+		emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	});
 	connect(m_page, SIGNAL(printRequested(QWebFrame*)), this, SLOT(handlePrintRequest(QWebFrame*)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -146,14 +148,17 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(handleLoadProgress(int)));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished(bool)));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(notifyMuteTabMediaActionStateChanged()));
 #endif
-	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
 	connect(m_page->mainFrame(), SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_page->mainFrame(), SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_page->mainFrame(), SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
+	connect(m_page->undoStack(), SIGNAL(canRedoChanged(bool)), this, SLOT(notifyRedoActionStateChanged()));
+	connect(m_page->undoStack(), SIGNAL(redoTextChanged(QString)), this, SLOT(notifyRedoActionStateChanged()));
+	connect(m_page->undoStack(), SIGNAL(canUndoChanged(bool)), this, SLOT(notifyUndoActionStateChanged()));
+	connect(m_page->undoStack(), SIGNAL(undoTextChanged(QString)), this, SLOT(notifyUndoActionStateChanged()));
 	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_networkManager, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(notifyContentStateChanged()));
@@ -374,13 +379,6 @@ void QtWebKitWebWidget::clearPluginToken()
 		frames.append(frame->childFrames());
 	}
 
-	Action *loadPluginsAction(getExistingAction(ActionsManager::LoadPluginsAction));
-
-	if (loadPluginsAction)
-	{
-		loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-	}
-
 	emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 
 	m_pluginToken = QString();
@@ -494,7 +492,6 @@ void QtWebKitWebWidget::handleLoadStarted()
 	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
 	m_loadingState = OngoingLoadingState;
 
-	updateNavigationActions();
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
 
@@ -528,7 +525,6 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	m_loadingState = FinishedLoadingState;
 
 	updateAmountOfDeferredPlugins();
-	updateNavigationActions();
 	handleHistory();
 	startReloadTimer();
 
@@ -724,8 +720,6 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	m_isNavigating = false;
 
 	updateOptions(url);
-	updatePageActions(url);
-	updateNavigationActions();
 
 	emit urlChanged(url);
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
@@ -802,30 +796,6 @@ void QtWebKitWebWidget::updateAmountOfDeferredPlugins()
 
 		emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 	}
-}
-
-void QtWebKitWebWidget::updateUndoText(const QString &text)
-{
-	Action *undoAction(getExistingAction(ActionsManager::UndoAction));
-
-	if (undoAction)
-	{
-		undoAction->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
-	}
-
-	emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction}));
-}
-
-void QtWebKitWebWidget::updateRedoText(const QString &text)
-{
-	Action *redoAction(getExistingAction(ActionsManager::RedoAction));
-
-	if (redoAction)
-	{
-		redoAction->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
-	}
-
-	emit actionsStateChanged(QVector<int>({ActionsManager::RedoAction}));
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
@@ -987,8 +957,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			m_page->history()->clear();
 
-			updateNavigationActions();
-
 			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 
 			return;
@@ -997,7 +965,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_isAudioMuted = !m_isAudioMuted;
 
 			muteAudio(m_page->mainFrame(), m_isAudioMuted);
-			handleAudibleStateChange(m_page->recentlyAudible());
+
+			emit actionsStateChanged(QVector<int>({ActionsManager::MuteTabMediaAction}));
 
 			return;
 #endif
@@ -1670,13 +1639,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					frames.append(frame->childFrames());
 				}
 
-				Action *loadPluginsAction(getExistingAction(ActionsManager::LoadPluginsAction));
-
-				if (loadPluginsAction)
-				{
-					loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-				}
-
 				emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
 			}
 
@@ -1713,16 +1675,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					getInspector();
 				}
 
-				Action *inspectPageAction(getExistingAction(ActionsManager::InspectPageAction));
-				const bool result(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
-
-				if (inspectPageAction)
-				{
-					inspectPageAction->setChecked(result);
-				}
-
 				emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction}));
-				emit requestedInspectorVisibilityChange(result);
+				emit requestedInspectorVisibilityChange(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
 			}
 
 			return;
@@ -1802,9 +1756,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	{
 		m_page->history()->clear();
 
-		updateNavigationActions();
 		updateOptions(QUrl());
-		updatePageActions(QUrl());
 
 		if (m_page->getMainFrame())
 		{
@@ -1873,7 +1825,6 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
-	updatePageActions(url);
 
 	m_page->triggerAction(QWebPage::Reload);
 
@@ -1903,7 +1854,6 @@ void QtWebKitWebWidget::setHistory(const QVariantMap &history)
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
-	updatePageActions(url);
 
 	m_page->triggerAction(QWebPage::Reload);
 
@@ -2091,37 +2041,6 @@ QWidget* QtWebKitWebWidget::getInspector()
 QWidget* QtWebKitWebWidget::getViewport()
 {
 	return m_webView;
-}
-
-Action* QtWebKitWebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::UndoAction));
-		action->setEnabled(m_page->undoStack()->canUndo());
-
-		updateUndoText(m_page->undoStack()->undoText());
-
-		connect(m_page->undoStack(), SIGNAL(canUndoChanged(bool)), action, SLOT(setEnabled(bool)));
-		connect(m_page->undoStack(), SIGNAL(undoTextChanged(QString)), this, SLOT(updateUndoText(QString)));
-
-		return action;
-	}
-
-	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::RedoAction));
-		action->setEnabled(m_page->undoStack()->canRedo());
-
-		updateRedoText(m_page->undoStack()->redoText());
-
-		connect(m_page->undoStack(), SIGNAL(canRedoChanged(bool)), action, SLOT(setEnabled(bool)));
-		connect(m_page->undoStack(), SIGNAL(redoTextChanged(QString)), this, SLOT(updateRedoText(QString)));
-
-		return action;
-	}
-
-	return WebWidget::createAction(identifier, parameters, followState);
 }
 
 QtWebKitPage* QtWebKitWebWidget::getPage() const

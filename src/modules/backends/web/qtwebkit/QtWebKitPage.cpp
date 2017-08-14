@@ -376,6 +376,11 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 	{
 		m_isViewingMedia = isViewingMedia;
 
+		if (m_widget)
+		{
+			emit m_widget->actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+		}
+
 		emit viewingMediaChanged(m_isViewingMedia);
 	}
 

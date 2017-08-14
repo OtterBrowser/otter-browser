@@ -57,7 +57,10 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SLOT(handleZoomChange()));
-	connect(m_sourceViewer, SIGNAL(copyAvailable(bool)), this, SLOT(updateEditActions()));
+	connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), this, SLOT(notifyRedoActionStateChanged()));
+	connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), this, SLOT(notifyUndoActionStateChanged()));
+	connect(m_sourceViewer, SIGNAL(copyAvailable(bool)), this, SLOT(notifyEditingActionsStateChanged()));
+	connect(m_sourceViewer, SIGNAL(cursorPositionChanged()), this, SLOT(notifyEditingActionsStateChanged()));
 }
 
 void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -101,9 +104,8 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			m_isLoading = false;
 
+			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 			emit loadingStateChanged(WebWidget::FinishedLoadingState);
-
-			updateNavigationActions();
 
 			return;
 		case ActionsManager::ReloadAction:
@@ -139,9 +141,8 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_isLoading = true;
 
+				emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 				emit loadingStateChanged(WebWidget::OngoingLoadingState);
-
-				updateNavigationActions();
 			}
 
 			return;
@@ -169,9 +170,8 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_isLoading = true;
 
+				emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 				emit loadingStateChanged(WebWidget::OngoingLoadingState);
-
-				updateNavigationActions();
 			}
 
 			return;
@@ -254,7 +254,7 @@ void SourceViewerWebWidget::viewSourceReplyFinished()
 		m_viewSourceReply->deleteLater();
 		m_viewSourceReply = nullptr;
 
-		updateNavigationActions();
+		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	}
 }
 
@@ -274,10 +274,14 @@ void SourceViewerWebWidget::handleZoomChange()
 	SessionsManager::markSessionModified();
 }
 
+void SourceViewerWebWidget::notifyEditingActionsStateChanged()
+{
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+}
+
 void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 {
 	updateHitTestResult(position);
-	updateEditActions();
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 
@@ -414,11 +418,38 @@ WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const
 	return nullptr;
 }
 
-Action* SourceViewerWebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
+QString SourceViewerWebWidget::getTitle() const
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
+	return (m_url.isValid() ? tr("Source Viewer: %1").arg(m_url.toDisplayString().mid(12)) : tr("Source Viewer"));
+}
 
+QString SourceViewerWebWidget::getSelectedText() const
+{
+	return m_sourceViewer->textCursor().selectedText();
+}
+
+QUrl SourceViewerWebWidget::getUrl() const
+{
+	return m_url;
+}
+
+QIcon SourceViewerWebWidget::getIcon() const
+{
+	return HistoryManager::getIcon(getRequestedUrl());
+}
+
+QPixmap SourceViewerWebWidget::createThumbnail()
+{
+	return QPixmap();
+}
+
+QPoint SourceViewerWebWidget::getScrollPosition() const
+{
+	return QPoint();
+}
+
+ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
@@ -449,60 +480,17 @@ Action* SourceViewerWebWidget::createAction(int identifier, const QVariantMap pa
 		case ActionsManager::ActivateContentAction:
 			break;
 		default:
-			return nullptr;
+			{
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+				state.isEnabled = false;
+
+				return state;
+			}
+
+			break;
 	}
 
-	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::UndoAction));
-		action->setEnabled(m_sourceViewer->document()->isUndoAvailable());
-
-		connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), action, SLOT(setEnabled(bool)));
-
-		return action;
-	}
-
-	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::RedoAction));
-		action->setEnabled(m_sourceViewer->document()->isRedoAvailable());
-
-		connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), action, SLOT(setEnabled(bool)));
-
-		return action;
-	}
-
-	return WebWidget::createAction(identifier);
-}
-
-QString SourceViewerWebWidget::getTitle() const
-{
-	return (m_url.isValid() ? tr("Source Viewer: %1").arg(m_url.toDisplayString().mid(12)) : tr("Source Viewer"));
-}
-
-QString SourceViewerWebWidget::getSelectedText() const
-{
-	return m_sourceViewer->textCursor().selectedText();
-}
-
-QUrl SourceViewerWebWidget::getUrl() const
-{
-	return m_url;
-}
-
-QIcon SourceViewerWebWidget::getIcon() const
-{
-	return HistoryManager::getIcon(getRequestedUrl());
-}
-
-QPixmap SourceViewerWebWidget::createThumbnail()
-{
-	return QPixmap();
-}
-
-QPoint SourceViewerWebWidget::getScrollPosition() const
-{
-	return QPoint();
+	return WebWidget::getActionState(identifier, parameters);
 }
 
 WindowHistoryInformation SourceViewerWebWidget::getHistory() const

@@ -208,7 +208,7 @@ public:
 	void setParent(QWidget *parent);
 	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {});
 	void setWindowIdentifier(quint64 identifier);
-	virtual Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
+	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const = 0;
 	virtual QWidget* getInspector();
 	virtual QWidget* getViewport();
@@ -279,7 +279,6 @@ protected:
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
 	void setClickPosition(const QPoint &position);
-	Action* getExistingAction(int identifier);
 	QString suggestSaveFileName(SaveFormat format) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	HitTestResult getCurrentHitTestResult() const;
@@ -306,16 +305,10 @@ protected slots:
 	void selectDictionaryMenuAboutToShow();
 	void openInApplicationMenuAboutToShow();
 	void handleLoadingStateChange(WebWidget::LoadingState state);
-	void handleAudibleStateChange(bool isAudible);
 	void handleWindowCloseRequest();
-	virtual void updatePageActions(const QUrl &url);
-	virtual void updateNavigationActions();
-	virtual void updateEditActions();
-	virtual void updateLinkActions();
-	virtual void updateFrameActions();
-	virtual void updateImageActions();
-	virtual void updateMediaActions();
-	virtual void updateBookmarkActions();
+	void notifyMuteTabMediaActionStateChanged();
+	void notifyRedoActionStateChanged();
+	void notifyUndoActionStateChanged();
 	void setStatusMessage(const QString &message, bool override = false);
 
 private:
@@ -326,7 +319,6 @@ private:
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
 	QPoint m_clickPosition;
-	QHash<int, Action*> m_actions;
 	QHash<int, QVariant> m_options;
 	HitTestResult m_hitResult;
 	quint64 m_windowIdentifier;

@@ -100,14 +100,16 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
 #if QT_VERSION >= 0x050700
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange()));
 #endif
-	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
+	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(notifyNavigationActionsChanged()));
 	connect(m_page, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_page, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 #if QT_VERSION < 0x050700
 	connect(m_page, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(notifyIconChanged()));
 #endif
+	connect(m_page->action(QWebEnginePage::Redo), &QAction::changed, this, &QtWebEngineWebWidget::notifyRedoActionStateChanged);
+	connect(m_page->action(QWebEnginePage::Undo), &QAction::changed, this, &QtWebEngineWebWidget::notifyUndoActionStateChanged);
 }
 
 void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
@@ -138,7 +140,7 @@ void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 
 		m_updateNavigationActionsTimer = 0;
 
-		WebWidget::updateNavigationActions();
+		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	}
 	else
 	{
@@ -273,10 +275,9 @@ void QtWebEngineWebWidget::pageLoadFinished()
 {
 	m_loadingState = FinishedLoadingState;
 
-	updateNavigationActions();
+	notifyNavigationActionsChanged();
 	startReloadTimer();
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
 }
@@ -349,16 +350,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			m_page->history()->clear();
 
-			updateNavigationActions();
-
-			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+			notifyNavigationActionsChanged();
 
 			return;
 #if QT_VERSION >= 0x050700
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
-			handleAudibleStateChange(m_page->recentlyAudible());
+			notifyMuteTabMediaActionStateChanged();
 
 			return;
 #endif
@@ -1104,9 +1103,8 @@ void QtWebEngineWebWidget::notifyTitleChanged()
 
 void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 {
+	notifyNavigationActionsChanged();
 	updateOptions(url);
-	updatePageActions(url);
-	updateNavigationActions();
 
 #if QT_VERSION < 0x050700
 	m_icon = QIcon();
@@ -1114,7 +1112,7 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 
 	emit iconChanged(getIcon());
 	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);
-	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 
 	SessionsManager::markSessionModified();
 }
@@ -1199,38 +1197,12 @@ void QtWebEngineWebWidget::notifyDocumentLoadingProgress(int progress)
 	emit pageInformationChanged(DocumentLoadingProgressInformation, progress);
 }
 
-void QtWebEngineWebWidget::updateNavigationActions()
+void QtWebEngineWebWidget::notifyNavigationActionsChanged()
 {
 	if (m_updateNavigationActionsTimer == 0)
 	{
 		m_updateNavigationActionsTimer = startTimer(0);
 	}
-}
-
-void QtWebEngineWebWidget::updateUndo()
-{
-	Action *action(getExistingAction(ActionsManager::UndoAction));
-
-	if (action)
-	{
-		action->setEnabled(m_page->action(QWebEnginePage::Undo)->isEnabled());
-		action->setText(m_page->action(QWebEnginePage::Undo)->text());
-	}
-
-	emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction}));
-}
-
-void QtWebEngineWebWidget::updateRedo()
-{
-	Action *action(getExistingAction(ActionsManager::RedoAction));
-
-	if (action)
-	{
-		action->setEnabled(m_page->action(QWebEnginePage::Redo)->isEnabled());
-		action->setText(m_page->action(QWebEnginePage::Redo)->text());
-	}
-
-	emit actionsStateChanged(QVector<int>({ActionsManager::RedoAction}));
 }
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
@@ -1281,9 +1253,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 	{
 		m_page->history()->clear();
 
-		updateNavigationActions();
 		updateOptions(QUrl());
-		updatePageActions(QUrl());
 
 		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
 
@@ -1296,7 +1266,9 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 #endif
 		}
 
-		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+		notifyNavigationActionsChanged();
+
+		emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 
 		return;
 	}
@@ -1319,11 +1291,12 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
-	updatePageActions(url);
 
 	m_page->triggerAction(QWebEnginePage::Reload);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+	notifyNavigationActionsChanged();
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 }
 
 void QtWebEngineWebWidget::setHistory(QDataStream &stream)
@@ -1494,41 +1467,6 @@ QWidget* QtWebEngineWebWidget::getViewport()
 	return (focusWidget() ? focusWidget() : m_webView);
 }
 
-Action* QtWebEngineWebWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::UndoAction));
-
-		updateUndo();
-
-		connect(m_page->action(QWebEnginePage::Undo), SIGNAL(changed()), this, SLOT(updateUndo()));
-
-		return action;
-	}
-
-	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::RedoAction));
-
-		updateRedo();
-
-		connect(m_page->action(QWebEnginePage::Redo), SIGNAL(changed()), this, SLOT(updateRedo()));
-
-		return action;
-	}
-
-	if (identifier == ActionsManager::InspectElementAction && !getExistingAction(ActionsManager::InspectElementAction))
-	{
-		Action *action(WebWidget::createAction(ActionsManager::InspectElementAction));
-		action->setEnabled(false);
-
-		return action;
-	}
-
-	return WebWidget::createAction(identifier, parameters, followState);
-}
-
 QWebEnginePage* QtWebEngineWebWidget::getPage() const
 {
 	return m_page;
@@ -1618,6 +1556,27 @@ QPoint QtWebEngineWebWidget::getScrollPosition() const
 #else
 	return m_page->scrollPosition().toPoint();
 #endif
+}
+
+ActionsManager::ActionDefinition::State QtWebEngineWebWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	switch (identifier)
+	{
+		case ActionsManager::InspectPageAction:
+		case ActionsManager::InspectElementAction:
+			{
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+				state.isEnabled = false;
+
+				return state;
+			}
+
+			break;
+		default:
+			break;
+	}
+
+	return WebWidget::getActionState(identifier, parameters);
 }
 
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const

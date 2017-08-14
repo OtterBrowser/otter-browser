@@ -39,13 +39,13 @@ public:
 
 	void print(QPrinter *printer) override;
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QString getSelectedText() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	WebWidget::LoadingState getLoadingState() const override;
@@ -72,6 +72,7 @@ protected:
 protected slots:
 	void viewSourceReplyFinished();
 	void handleZoomChange();
+	void notifyEditingActionsStateChanged();
 	void showContextMenu(const QPoint &position = QPoint(-1, -1)) override;
 	void setShowLineNumbers(bool show);
 

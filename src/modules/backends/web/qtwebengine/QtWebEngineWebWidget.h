@@ -42,7 +42,6 @@ public:
 	void print(QPrinter *printer) override;
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
 	QWidget* getViewport() override;
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QString getSelectedText() const override;
 	QVariant getPageInformation(PageInformation key) const override;
@@ -50,6 +49,7 @@ public:
 	QIcon getIcon() const override;
 	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
@@ -124,9 +124,7 @@ protected slots:
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature nativeFeature, bool cancel);
 	void notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status);
 	void notifyDocumentLoadingProgress(int progress);
-	void updateNavigationActions() override;
-	void updateUndo();
-	void updateRedo();
+	void notifyNavigationActionsChanged();
 
 private:
 	QWebEngineView *m_webView;
