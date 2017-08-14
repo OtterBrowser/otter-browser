@@ -367,18 +367,11 @@ bool Action::event(QEvent *event)
 	return QAction::event(event);
 }
 
-bool Action::calculateCheckedState(const QVariantMap &parameters, Action *action)
+bool Action::calculateCheckedState(const QVariantMap &parameters)
 {
 	if (parameters.contains(QLatin1String("isChecked")))
 	{
 		return parameters.value(QLatin1String("isChecked")).toBool();
-	}
-
-	if (action)
-	{
-		action->toggle();
-
-		return action->isChecked();
 	}
 
 	return true;

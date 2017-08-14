@@ -57,7 +57,7 @@ public:
 	QVariantMap getParameters() const;
 	int getIdentifier() const;
 	bool event(QEvent *event) override;
-	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
+	static bool calculateCheckedState(const QVariantMap &parameters);
 
 protected:
 	void initialize();
