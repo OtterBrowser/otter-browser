@@ -166,7 +166,11 @@ void Action::updateState()
 	else
 	{
 		state = definition.defaultState;
-		state.isEnabled = false;
+
+		if (m_flags.testFlag(FollowsActionStateFlag))
+		{
+			state.isEnabled = false;
+		}
 	}
 
 	if (m_flags.testFlag(IsOverridingTextFlag))

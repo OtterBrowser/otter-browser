@@ -579,7 +579,7 @@ void Menu::populateBookmarksMenu()
 		{
 			Action *action(menu->addAction());
 			action->setData(index.data(BookmarksModel::IdentifierRole));
-			action->setIcon(index.data(Qt::DecorationRole).value<QIcon>());
+			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
 			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
 
@@ -589,7 +589,7 @@ void Menu::populateBookmarksMenu()
 			}
 			else
 			{
-				action->setText(Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
+				action->setOverrideText(Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
 			}
 
 			if (type == BookmarksModel::UrlBookmark && m_role == BookmarksMenuRole)
@@ -1306,7 +1306,7 @@ void Menu::setTitle(const QString &title)
 
 Action* Menu::addAction(int identifier, bool useGlobal)
 {
-	Action *action(useGlobal ? Application::createAction(identifier, QVariantMap(), true, this) : new Action(identifier, this));
+	Action *action(useGlobal ? Application::createAction(identifier, {}, true, this) : new Action(identifier, {}, Action::NoFlag, this));
 
 	QMenu::addAction(action);
 
