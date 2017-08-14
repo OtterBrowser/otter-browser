@@ -211,7 +211,7 @@ QString ToolButtonWidget::getText() const
 
 		if (action)
 		{
-			return action->getText();
+			return action->getState().text;
 		}
 
 		return defaultAction()->text();

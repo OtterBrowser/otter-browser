@@ -52,7 +52,6 @@ public:
 	void setOverrideText(const QString &text);
 	void setOverrideIcon(const QIcon &icon);
 	void setParameters(const QVariantMap &parameters);
-	QString getText() const;
 	ActionsManager::ActionDefinition getDefinition() const;
 	ActionsManager::ActionDefinition::State getState() const;
 	QVariantMap getParameters() const;
