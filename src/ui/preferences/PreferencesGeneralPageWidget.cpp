@@ -41,7 +41,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui(new Ui::PreferencesGeneralPageWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->startupBehaviorComboBox->addItem(tr("Continue previous session"), QLatin1String("continuePrevious"));
+	m_ui->startupBehaviorComboBox->addItem(tr("Show windows and tabs from the last time"), QLatin1String("continuePrevious"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show startup dialog"), QLatin1String("showDialog"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show home page"), QLatin1String("startHomePage"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show start page"), QLatin1String("startStartPage"));
