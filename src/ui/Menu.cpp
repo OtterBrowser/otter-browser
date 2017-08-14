@@ -1005,20 +1005,17 @@ void Menu::populateToolBarsMenu()
 {
 	clear();
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions());
 
 	if (mainWindow)
 	{
 		for (int i = 0; i < definitions.count(); ++i)
 		{
-			const QVariantMap parameters({{QLatin1String("toolBar"), definitions.at(i).identifier}});
-			Action *action(addAction(ActionsManager::ShowToolBarAction));
-			action->setCheckable(true);
-			action->setParameters(parameters);
-			action->setState(mainWindow->getActionState(ActionsManager::ShowToolBarAction, parameters));
+			Action *action(new Action(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), definitions.at(i).identifier}}, this));
+			action->setExecutor(ActionExecutor::Object(mainWindow, mainWindow));
 
-			connect(action, SIGNAL(triggered(bool)), mainWindow, SLOT(triggerAction(bool)));
+			QMenu::addAction(action);
 		}
 
 		addSeparator();
