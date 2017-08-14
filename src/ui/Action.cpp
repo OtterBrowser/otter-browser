@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "Action.h"
+#include "MainWindow.h"
+#include "../core/Application.h"
 #include "../core/ThemesManager.h"
-
-#include <QtGui/QGuiApplication>
 
 namespace Otter
 {
@@ -222,6 +222,38 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 		disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
 		disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+	}
+
+	if (executor.isValid())
+	{
+		switch (getDefinition().scope)
+		{
+			case ActionsManager::ActionDefinition::MainWindowScope:
+				if (!executor.getObject()->inherits("Otter::Application") && !executor.getObject()->inherits("Otter::MainWindow"))
+				{
+					MainWindow *mainWindow(MainWindow::findMainWindow(executor.getObject()));
+
+					if (mainWindow)
+					{
+						executor = ActionExecutor::Object(mainWindow, mainWindow);
+					}
+					else
+					{
+						executor = ActionExecutor::Object();
+					}
+				}
+
+				break;
+			case ActionsManager::ActionDefinition::ApplicationScope:
+				if (!executor.getObject()->inherits("Otter::Application"))
+				{
+					executor = ActionExecutor::Object(Application::getInstance(), Application::getInstance());
+				}
+
+				break;
+			default:
+				break;
+		}
 	}
 
 	m_executor = executor;
