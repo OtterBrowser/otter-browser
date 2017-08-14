@@ -50,6 +50,8 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags,
 
 void Action::initialize()
 {
+	const ActionsManager::ActionDefinition definition(getDefinition());
+
 	switch (m_identifier)
 	{
 		case ActionsManager::PreferencesAction:
@@ -72,9 +74,11 @@ void Action::initialize()
 			break;
 	}
 
-	if (m_identifier > 0)
+	setShortcutContext(Qt::WidgetShortcut);
+
+	if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
 	{
-		setCheckable(getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag));
+		setCheckable(true);
 	}
 
 	if (m_flags.testFlag(CanTriggerActionFlag))
@@ -82,7 +86,8 @@ void Action::initialize()
 		connect(this, SIGNAL(triggered(bool)), this, SLOT(triggerAction(bool)));
 	}
 
-	update(true);
+	updateIcon();
+	updateState();
 }
 
 void Action::triggerAction(bool isChecked)
@@ -121,71 +126,37 @@ void Action::handleActionsStateChanged(ActionsManager::ActionDefinition::ActionC
 	}
 }
 
-void Action::update(bool reset)
+void Action::updateIcon()
 {
-	if (m_identifier < 0)
+	if (!m_flags.testFlag(IsOverridingIconFlag))
 	{
-		if (m_flags.testFlag(IsOverridingTextFlag))
-		{
-			setText(QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()));
-		}
-
-		return;
-	}
-
-	const ActionsManager::ActionDefinition definition(getDefinition());
-	const QVector<QKeySequence> shortcuts(m_parameters.isEmpty() ? definition.shortcuts : ActionsManager::getActionShortcuts(m_identifier, m_parameters));
-	ActionsManager::ActionDefinition::State state;
-
-	if (reset)
-	{
-		state = definition.defaultState;
-		state.text = QCoreApplication::translate("actions", state.text.toUtf8().constData());
-
 		switch (m_identifier)
 		{
 			case ActionsManager::GoBackAction:
-				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next"));
+				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
 
 				break;
 			case ActionsManager::GoForwardAction:
-				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous"));
+				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
 
 				break;
 			case ActionsManager::RewindAction:
-				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last"));
+				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last")));
 
 				break;
 			case ActionsManager::FastForwardAction:
-				state.icon = ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first"));
+				setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first")));
 
 				break;
 			default:
 				break;
 		}
 	}
-	else
-	{
-		state = getState();
-	}
-
-	if (m_flags.testFlag(IsOverridingTextFlag))
-	{
-		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
-	}
-
-	if (!shortcuts.isEmpty())
-	{
-		state.text += QLatin1Char('\t') + shortcuts.first().toString(QKeySequence::NativeText);
-	}
-
-	setState(state);
 }
 
 void Action::updateState()
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
-	const QVector<QKeySequence> shortcuts(m_parameters.isEmpty() ? definition.shortcuts : ActionsManager::getActionShortcuts(m_identifier, m_parameters));
 	ActionsManager::ActionDefinition::State state;
 
 	if (m_executor.isValid())
@@ -203,11 +174,7 @@ void Action::updateState()
 		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
 
-	if (!shortcuts.isEmpty())
-	{
-		state.text += QLatin1Char('\t') + shortcuts.first().toString(QKeySequence::NativeText);
-	}
-
+	setShortcut((m_parameters.isEmpty() && !definition.shortcuts.isEmpty()) ? definition.shortcuts.first() : QKeySequence());
 	setState(state);
 }
 
@@ -282,7 +249,7 @@ void Action::setOverrideText(const QString &text)
 
 	m_flags |= IsOverridingTextFlag;
 
-	update();
+	setState(getState());
 }
 
 void Action::setOverrideIcon(const QIcon &icon)
@@ -308,7 +275,7 @@ void Action::setParameters(const QVariantMap &parameters)
 {
 	m_parameters = parameters;
 
-	update();
+	updateState();
 }
 
 Otter::ActionsManager::ActionDefinition Action::getDefinition() const
@@ -342,22 +309,11 @@ bool Action::event(QEvent *event)
 	switch (event->type())
 	{
 		case QEvent::LanguageChange:
-			update();
+			setState(getState());
 
 			break;
 		case QEvent::LayoutDirectionChange:
-			switch (m_identifier)
-			{
-				case ActionsManager::GoBackAction:
-				case ActionsManager::GoForwardAction:
-				case ActionsManager::RewindAction:
-				case ActionsManager::FastForwardAction:
-					update(true);
-
-					break;
-				default:
-					break;
-			}
+			updateIcon();
 
 			break;
 		default:

@@ -61,7 +61,7 @@ public:
 
 protected:
 	void initialize();
-	void update(bool reset = false);
+	void updateIcon();
 	void setState(const ActionsManager::ActionDefinition::State &state);
 
 protected slots:
