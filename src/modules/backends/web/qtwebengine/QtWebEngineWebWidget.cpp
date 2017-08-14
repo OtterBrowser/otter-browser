@@ -100,7 +100,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
 #if QT_VERSION >= 0x050700
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange()));
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(notifyMuteTabMediaActionStateChanged()));
 #endif
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(notifyNavigationActionsChanged()));
 	connect(m_page, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
