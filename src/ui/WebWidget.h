@@ -306,9 +306,11 @@ protected slots:
 	void openInApplicationMenuAboutToShow();
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleWindowCloseRequest();
+	void notifyFillPasswordActionStateChanged();
 	void notifyMuteTabMediaActionStateChanged();
 	void notifyRedoActionStateChanged();
 	void notifyUndoActionStateChanged();
+	void notifyPageActionsChanged();
 	void setStatusMessage(const QString &message, bool override = false);
 
 private:

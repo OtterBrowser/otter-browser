@@ -62,14 +62,8 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	Q_UNUSED(isPrivate)
 
 	connect(this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
-	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, [&]()
-	{
-		emit actionsStateChanged(ActionsManager::ActionDefinition::BookmarkCategory);
-	});
-	connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, [&]()
-	{
-		emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
-	});
+	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(notifyPageActionsChanged()));
+	connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(notifyFillPasswordActionStateChanged()));
 }
 
 void WebWidget::timerEvent(QTimerEvent *event)
@@ -439,6 +433,11 @@ void WebWidget::handleWindowCloseRequest()
 	showDialog(dialog, false);
 }
 
+void WebWidget::notifyFillPasswordActionStateChanged()
+{
+	emit actionsStateChanged(QVector<int>(ActionsManager::FillPasswordAction));
+}
+
 void WebWidget::notifyMuteTabMediaActionStateChanged()
 {
 	emit actionsStateChanged(QVector<int>({ActionsManager::MuteTabMediaAction}));
@@ -452,6 +451,11 @@ void WebWidget::notifyRedoActionStateChanged()
 void WebWidget::notifyUndoActionStateChanged()
 {
 	emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction}));
+}
+
+void WebWidget::notifyPageActionsChanged()
+{
+	emit actionsStateChanged(ActionsManager::ActionDefinition::BookmarkCategory);
 }
 
 void WebWidget::updateHitTestResult(const QPoint &position)
