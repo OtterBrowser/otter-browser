@@ -59,9 +59,6 @@ public:
 	bool event(QEvent *event) override;
 	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
 
-public slots:
-	void setup(Action *action = nullptr);
-
 protected:
 	void initialize();
 	void update(bool reset = false);

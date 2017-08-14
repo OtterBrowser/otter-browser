@@ -85,27 +85,6 @@ void Action::initialize()
 	update(true);
 }
 
-void Action::setup(Action *action)
-{
-	if (!action)
-	{
-		action = qobject_cast<Action*>(sender());
-	}
-
-	if (!action)
-	{
-		update(true);
-		setEnabled(false);
-
-		return;
-	}
-
-	m_identifier = action->getIdentifier();
-
-	setCheckable(action->isCheckable());
-	setState(action->getState());
-}
-
 void Action::triggerAction(bool isChecked)
 {
 	if (m_executor.isValid())
