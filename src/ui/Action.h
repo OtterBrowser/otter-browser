@@ -38,7 +38,8 @@ public:
 		NoFlag = 0,
 		CanTriggerActionFlag = 1,
 		FollowsActionStateFlag = 2,
-		IsOverridingTextFlag = 4
+		IsOverridingTextFlag = 4,
+		IsOverridingIconFlag = 8
 	};
 
 	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
@@ -49,7 +50,7 @@ public:
 
 	void setExecutor(ActionExecutor::Object executor);
 	void setOverrideText(const QString &text);
-	void setState(const ActionsManager::ActionDefinition::State &state);
+	void setOverrideIcon(const QIcon &icon);
 	void setParameters(const QVariantMap &parameters);
 	QString getText() const;
 	ActionsManager::ActionDefinition getDefinition() const;
@@ -62,6 +63,7 @@ public:
 protected:
 	void initialize();
 	void update(bool reset = false);
+	void setState(const ActionsManager::ActionDefinition::State &state);
 
 protected slots:
 	void triggerAction(bool isChecked = false);

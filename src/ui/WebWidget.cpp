@@ -298,7 +298,7 @@ void WebWidget::openInApplicationMenuAboutToShow()
 		for (int i = 0; i < applications.count(); ++i)
 		{
 			Action *action(menu->addAction(ActionsManager::OpenUrlAction));
-			action->setIcon(applications.at(i).icon);
+			action->setOverrideIcon(applications.at(i).icon);
 			action->setOverrideText(((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name));
 			action->setParameters({{QLatin1String("application"), applications.at(i).command}, {QLatin1String("urlPlaceholder"), query}});
 

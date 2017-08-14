@@ -523,7 +523,7 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 		Action *closeAction(new Action(ActionsManager::CloseTabAction, menu));
 		closeAction->setEnabled(true);
 		closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
-		closeAction->setIcon(QIcon());
+		closeAction->setOverrideIcon(QIcon());
 
 		menu->addAction(closeAction);
 		menu->addAction(m_mainWindow->createAction(ActionsManager::RestoreTabAction));

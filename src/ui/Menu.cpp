@@ -371,11 +371,11 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 
 						if (data.startsWith(QLatin1String("data:image/")))
 						{
-							action->setIcon(QIcon(Utils::loadPixmapFromDataUri(data)));
+							action->setOverrideIcon(QIcon(Utils::loadPixmapFromDataUri(data)));
 						}
 						else
 						{
-							action->setIcon(ThemesManager::createIcon(data));
+							action->setOverrideIcon(ThemesManager::createIcon(data));
 						}
 					}
 				}

@@ -253,12 +253,23 @@ void Action::setOverrideText(const QString &text)
 	update();
 }
 
+void Action::setOverrideIcon(const QIcon &icon)
+{
+	m_flags |= IsOverridingIconFlag;
+
+	setIcon(icon);
+}
+
 void Action::setState(const ActionsManager::ActionDefinition::State &state)
 {
 	setText(state.text);
-	setIcon(state.icon);
 	setEnabled(state.isEnabled);
 	setChecked(state.isChecked);
+
+	if (!m_flags.testFlag(IsOverridingIconFlag))
+	{
+		setIcon(state.icon);
+	}
 }
 
 void Action::setParameters(const QVariantMap &parameters)
