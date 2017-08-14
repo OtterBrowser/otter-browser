@@ -504,7 +504,7 @@ Application::~Application()
 
 void Application::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	triggerAction(identifier, parameters);
+	triggerAction(identifier, parameters, nullptr);
 }
 
 void Application::triggerAction(int identifier, const QVariantMap &parameters, QObject *target)
