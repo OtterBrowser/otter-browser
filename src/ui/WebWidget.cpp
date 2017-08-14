@@ -753,7 +753,6 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 	}
 
 	Action *action(new Action(identifier, parameters, ((followState ? Action::FollowsActionStateFlag : Action::NoFlag) | Action::CanTriggerActionFlag), this));
-	action->setState(getActionState(identifier));
 	action->setExecutor(ActionExecutor::Object(this, this));
 
 	switch (identifier)
