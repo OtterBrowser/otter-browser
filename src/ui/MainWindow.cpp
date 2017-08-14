@@ -79,8 +79,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	setUnifiedTitleAndToolBarOnMac(true);
 
-	m_actions.fill(nullptr, ActionsManager::getActionDefinitions().count());
-
 	updateShortcuts();
 
 	m_workspace->updateActions();
@@ -1960,30 +1958,6 @@ void MainWindow::setCurrentWindow(Window *window)
 
 	m_currentWindow = window;
 
-	for (int i = 0; i < m_actions.count(); ++i)
-	{
-		if (m_actions[i] && m_actions[i]->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
-		{
-			const int identifier(m_actions[i]->getIdentifier());
-			Action *previousAction(previousWindow ? previousWindow->createAction(identifier) : nullptr);
-			Action *currentAction(window ? window->createAction(identifier) : nullptr);
-
-			if (previousAction)
-			{
-				disconnect(previousAction, SIGNAL(changed()), m_actions[i], SLOT(setup()));
-			}
-
-			m_actions[i]->blockSignals(true);
-			m_actions[i]->setup(currentAction);
-			m_actions[i]->blockSignals(false);
-
-			if (currentAction)
-			{
-				connect(currentAction, SIGNAL(changed()), m_actions[i], SLOT(setup()));
-			}
-		}
-	}
-
 	if (previousWindow)
 	{
 		disconnect(previousWindow, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
@@ -2046,34 +2020,16 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 
 Action* MainWindow::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
-
-	if (identifier < 0 || identifier >= m_actions.count())
+	if (identifier < 0)
 	{
 		return nullptr;
 	}
 
-	if (!m_actions[identifier])
-	{
-		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
-		Action *action(new Action(identifier, this));
+	Action *action(new Action(identifier, parameters, ((followState ? Action::FollowsActionStateFlag : Action::NoFlag) | Action::CanTriggerActionFlag), this));
+	action->setExecutor(ActionExecutor::Object(this, this));
 
-		m_actions[identifier] = action;
+	return action;
 
-		addAction(action);
-
-		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
-		{
-			connect(action, SIGNAL(toggled(bool)), this, SLOT(triggerAction(bool)));
-		}
-		else
-		{
-			connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-		}
-	}
-
-	return m_actions.value(identifier, nullptr);
 }
 
 TabBarWidget* MainWindow::getTabBar() const

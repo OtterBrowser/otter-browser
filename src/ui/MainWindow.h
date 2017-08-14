@@ -134,7 +134,6 @@ private:
 	Window *m_currentWindow;
 	QString m_currentBookmark;
 	QString m_windowTitle;
-	QVector<Action*> m_actions;
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;
