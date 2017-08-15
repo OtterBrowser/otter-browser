@@ -761,6 +761,14 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 
 	switch (identifier)
 	{
+		case ActionsManager::OpenLinkInApplicationAction:
+		case ActionsManager::OpenFrameInApplicationAction:
+		case ActionsManager::OpenPageInApplicationAction:
+			action->setMenu(new Menu(Menu::NoMenuRole, this));
+
+			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+
+			break;
 		case ActionsManager::PasteNoteAction:
 			if (!m_pasteNoteMenu)
 			{
@@ -772,26 +780,8 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 			action->setMenu(m_pasteNoteMenu);
 
 			break;
-		case ActionsManager::OpenLinkInApplicationAction:
-			action->setMenu(new Menu(Menu::NoMenuRole, this));
-
-			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-
-			break;
-		case ActionsManager::OpenFrameInApplicationAction:
-			action->setMenu(new Menu(Menu::NoMenuRole, this));
-
-			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
-
-			break;
 		case ActionsManager::SearchAction:
 			action->setParameters({{QLatin1String("searchEngine"), getOption(SettingsManager::Search_DefaultQuickSearchEngineOption)}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
-
-			break;
-		case ActionsManager::OpenPageInApplicationAction:
-			action->setMenu(new Menu(Menu::NoMenuRole, this));
-
-			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
 
 			break;
 		case ActionsManager::SelectDictionaryAction:
