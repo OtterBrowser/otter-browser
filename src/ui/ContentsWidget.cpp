@@ -19,6 +19,7 @@
 
 #include "ContentsWidget.h"
 #include "Action.h"
+#include "BookmarkPropertiesDialog.h"
 #include "ContentsDialog.h"
 #include "Window.h"
 
@@ -149,6 +150,30 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 				connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
 
 				printPreviewDialog.exec();
+			}
+
+			break;
+		case ActionsManager::BookmarkPageAction:
+			{
+				const QUrl url(parameters.value(QLatin1String("url"), getUrl()).toUrl().adjusted(QUrl::RemovePassword));
+
+				if (url.isEmpty())
+				{
+					break;
+				}
+
+				const QVector<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
+
+				if (bookmarks.isEmpty())
+				{
+					BookmarkPropertiesDialog dialog(url, parameters.value(QLatin1String("title"), getTitle()).toString(), parameters.value(QLatin1String("description")).toString(), nullptr, -1, true, this);
+					dialog.exec();
+				}
+				else
+				{
+					BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
+					dialog.exec();
+				}
 			}
 
 			break;

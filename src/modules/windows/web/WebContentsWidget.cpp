@@ -528,6 +528,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::PrintAction:
 		case ActionsManager::PrintPreviewAction:
+		case ActionsManager::BookmarkPageAction:
 			ContentsWidget::triggerAction(identifier, parameters);
 
 			break;
