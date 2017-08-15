@@ -51,7 +51,7 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 	}
 	else if (definition.action.endsWith(QLatin1String("Menu")))
 	{
-		menu = new Menu(Menu::getRole(definition.action), this);
+		menu = new Menu(Menu::getMenuRoleIdentifier(definition.action), this);
 
 		setDefaultAction(menu->menuAction());
 	}

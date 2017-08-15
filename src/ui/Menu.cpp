@@ -397,7 +397,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 				continue;
 			}
 
-			Menu *menu(new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this));
+			Menu *menu(new Menu(getMenuRoleIdentifier(object.value(QLatin1String("identifier")).toString()), this));
 
 			if (parameters.contains(QLatin1String("option")))
 			{
@@ -423,13 +423,13 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 		else
 		{
 			const QString rawIdentifier(actions.at(i).toString());
-			const Menu::MenuRole role(rawIdentifier.endsWith(QLatin1String("Menu")) ? Menu::getRole(rawIdentifier) : Menu::NoMenuRole);
+			const MenuRole role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : NoMenuRole);
 
 			if (rawIdentifier == QLatin1String("separator"))
 			{
 				addSeparator();
 			}
-			else if (role != Menu::NoMenuRole)
+			else if (role != NoMenuRole)
 			{
 				addMenu(new Menu(role, this));
 			}
@@ -1318,64 +1318,64 @@ Menu::MenuRole Menu::getRole() const
 	return m_role;
 }
 
-Menu::MenuRole Menu::getRole(const QString &identifier)
+Menu::MenuRole Menu::getMenuRoleIdentifier(const QString &name)
 {
-	if (identifier == QLatin1String("BookmarksMenu"))
+	if (name == QLatin1String("BookmarksMenu"))
 	{
 		return BookmarksMenuRole;
 	}
 
-	if (identifier == QLatin1String("CharacterEncodingMenu"))
+	if (name == QLatin1String("CharacterEncodingMenu"))
 	{
 		return CharacterEncodingMenuRole;
 	}
 
-	if (identifier == QLatin1String("ClosedWindowsMenu"))
+	if (name == QLatin1String("ClosedWindowsMenu"))
 	{
 		return ClosedWindowsMenu;
 	}
 
-	if (identifier == QLatin1String("ImportExportMenu"))
+	if (name == QLatin1String("ImportExportMenu"))
 	{
 		return ImportExportMenuRole;
 	}
 
-	if (identifier == QLatin1String("ProxyMenu"))
+	if (name == QLatin1String("ProxyMenu"))
 	{
 		return ProxyMenuRole;
 	}
 
-	if (identifier == QLatin1String("SearchMenu"))
+	if (name == QLatin1String("SearchMenu"))
 	{
 		return SearchMenuRole;
 	}
 
-	if (identifier == QLatin1String("SessionsMenu"))
+	if (name == QLatin1String("SessionsMenu"))
 	{
 		return SessionsMenuRole;
 	}
 
-	if (identifier == QLatin1String("StyleSheetsMenu"))
+	if (name == QLatin1String("StyleSheetsMenu"))
 	{
 		return StyleSheetsMenuRole;
 	}
 
-	if (identifier == QLatin1String("ToolBarsMenu"))
+	if (name == QLatin1String("ToolBarsMenu"))
 	{
 		return ToolBarsMenuRole;
 	}
 
-	if (identifier == QLatin1String("UserAgentMenu"))
+	if (name == QLatin1String("UserAgentMenu"))
 	{
 		return UserAgentMenuRole;
 	}
 
-	if (identifier == QLatin1String("ValidateMenu"))
+	if (name == QLatin1String("ValidateMenu"))
 	{
 		return ValidateMenuRole;
 	}
 
-	if (identifier == QLatin1String("WindowsMenu"))
+	if (name == QLatin1String("WindowsMenu"))
 	{
 		return WindowsMenuRole;
 	}

@@ -63,7 +63,7 @@ public:
 	void setTitle(const QString &title);
 	Action* addAction(int identifier = -1, bool useGlobal = false);
 	MenuRole getRole() const;
-	static MenuRole getRole(const QString &identifier);
+	static MenuRole getMenuRoleIdentifier(const QString &name);
 
 protected:
 	void changeEvent(QEvent *event) override;
