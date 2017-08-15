@@ -85,7 +85,6 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 	void ensureInitialized();
-	void pasteText(const QString &text) override;
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;

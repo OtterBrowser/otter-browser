@@ -190,7 +190,7 @@ void WebWidget::pasteNote(QAction *action)
 
 		if (note)
 		{
-			pasteText(note->data(BookmarksModel::DescriptionRole).toString());
+			triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), note->data(BookmarksModel::DescriptionRole).toString()}});
 		}
 	}
 }

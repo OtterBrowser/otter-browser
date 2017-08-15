@@ -123,7 +123,6 @@ protected:
 #endif
 	void openRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
-	void pasteText(const QString &text) override;
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
 	void handleNavigationRequest(const QUrl &url, QWebPage::NavigationType type);

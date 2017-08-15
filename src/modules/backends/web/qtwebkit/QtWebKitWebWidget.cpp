@@ -681,23 +681,6 @@ void QtWebKitWebWidget::openFormRequest(const QNetworkRequest &request, QNetwork
 	emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 }
 
-void QtWebKitWebWidget::pasteText(const QString &text)
-{
-	QMimeData *mimeData(new QMimeData());
-	const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());
-
-	for (int i = 0; i < mimeTypes.count(); ++i)
-	{
-		mimeData->setData(mimeTypes.at(i), QGuiApplication::clipboard()->mimeData()->data(mimeTypes.at(i)));
-	}
-
-	QGuiApplication::clipboard()->setText(text);
-
-	triggerAction(ActionsManager::PasteAction);
-
-	QGuiApplication::clipboard()->setMimeData(mimeData);
-}
-
 void QtWebKitWebWidget::startDelayedTransfer(Transfer *transfer)
 {
 	m_transfers.enqueue(transfer);
@@ -1416,7 +1399,26 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::PasteAction:
-			m_page->triggerAction(QWebPage::Paste);
+			if (parameters.contains(QLatin1String("text")))
+			{
+				QMimeData *mimeData(new QMimeData());
+				const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());
+
+				for (int i = 0; i < mimeTypes.count(); ++i)
+				{
+					mimeData->setData(mimeTypes.at(i), QGuiApplication::clipboard()->mimeData()->data(mimeTypes.at(i)));
+				}
+
+				QGuiApplication::clipboard()->setText(parameters[QLatin1String("text")].toString());
+
+				m_page->triggerAction(QWebPage::Paste);
+
+				QGuiApplication::clipboard()->setMimeData(mimeData);
+			}
+			else
+			{
+				m_page->triggerAction(QWebPage::Paste);
+			}
 
 			return;
 		case ActionsManager::DeleteAction:

@@ -770,7 +770,26 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::PasteAction:
-			m_page->triggerAction(QWebEnginePage::Paste);
+			if (parameters.contains(QLatin1String("text")))
+			{
+				QMimeData *mimeData(new QMimeData());
+				const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());
+
+				for (int i = 0; i < mimeTypes.count(); ++i)
+				{
+					mimeData->setData(mimeTypes.at(i), QGuiApplication::clipboard()->mimeData()->data(mimeTypes.at(i)));
+				}
+
+				QGuiApplication::clipboard()->setText(parameters[QLatin1String("text")].toString());
+
+				m_page->triggerAction(QWebEnginePage::Paste);
+
+				QGuiApplication::clipboard()->setMimeData(mimeData);
+			}
+			else
+			{
+				m_page->triggerAction(QWebEnginePage::Paste);
+			}
 
 			return;
 		case ActionsManager::DeleteAction:
@@ -942,23 +961,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		default:
 			break;
 	}
-}
-
-void QtWebEngineWebWidget::pasteText(const QString &text)
-{
-	QMimeData *mimeData(new QMimeData());
-	const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());
-
-	for (int i = 0; i < mimeTypes.count(); ++i)
-	{
-		mimeData->setData(mimeTypes.at(i), QGuiApplication::clipboard()->mimeData()->data(mimeTypes.at(i)));
-	}
-
-	QGuiApplication::clipboard()->setText(text);
-
-	triggerAction(ActionsManager::PasteAction);
-
-	QGuiApplication::clipboard()->setMimeData(mimeData);
 }
 
 #if QT_VERSION < 0x050700

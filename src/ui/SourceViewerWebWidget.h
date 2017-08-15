@@ -66,7 +66,6 @@ public slots:
 	void setContents(const QByteArray &contents, const QString &contentType);
 
 protected:
-	void pasteText(const QString &text) override;
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 
 protected slots:

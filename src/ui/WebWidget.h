@@ -274,7 +274,6 @@ protected:
 
 	void timerEvent(QTimerEvent *event) override;
 	void openUrl(const QUrl &url, SessionsManager::OpenHints hints);
-	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
 	void startTransfer(Transfer *transfer);
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);

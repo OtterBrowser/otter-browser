@@ -208,7 +208,14 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			return;
 		case ActionsManager::PasteAction:
-			m_sourceViewer->paste();
+			if (parameters.contains(QLatin1String("text")))
+			{
+				m_sourceViewer->textCursor().insertText(parameters[QLatin1String("text")].toString());
+			}
+			else
+			{
+				m_sourceViewer->paste();
+			}
 
 			return;
 		case ActionsManager::DeleteAction:
@@ -238,11 +245,6 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 void SourceViewerWebWidget::print(QPrinter *printer)
 {
 	m_sourceViewer->print(printer);
-}
-
-void SourceViewerWebWidget::pasteText(const QString &text)
-{
-	Q_UNUSED(text)
 }
 
 void SourceViewerWebWidget::viewSourceReplyFinished()
