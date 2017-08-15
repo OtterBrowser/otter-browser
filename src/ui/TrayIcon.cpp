@@ -34,18 +34,47 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_trayIcon(new QSystemTrayIcon(this)),
 	m_autoHideTimer(0)
 {
+	const QVector<int> actions({-1, ActionsManager::NewTabAction, ActionsManager::NewTabPrivateAction, -1, ActionsManager::BookmarksAction, ActionsManager::TransfersAction, ActionsManager::HistoryAction, ActionsManager::NotesAction, -1, ActionsManager::ExitAction});
+	ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 	Menu *menu(new Menu());
-	menu->addAction()->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show Windows"));
-	menu->addSeparator();
-	menu->addAction(ActionsManager::NewTabAction);
-	menu->addAction(ActionsManager::NewTabPrivateAction);
-	menu->addSeparator();
-	menu->addAction(ActionsManager::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
-	menu->addAction(ActionsManager::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
-	menu->addAction(ActionsManager::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
-	menu->addAction(ActionsManager::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
-	menu->addSeparator();
-	menu->addAction(ActionsManager::ExitAction);
+	menu->addAction(tr("Show Windows"), this, SLOT(handleActivated()));
+
+	for (int i = 0; i < actions.count(); ++i)
+	{
+		if (actions.at(i) < 0)
+		{
+			menu->addSeparator();
+		}
+		else
+		{
+			Action *action(new Action(actions.at(i), {}, Action::CanTriggerActionFlag, menu));
+			action->setExecutor(executor);
+
+			switch (actions.at(i))
+			{
+				case ActionsManager::BookmarksAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+
+					break;
+				case ActionsManager::TransfersAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
+
+					break;
+				case ActionsManager::HistoryAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+
+					break;
+				case ActionsManager::NotesAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+
+					break;
+				default:
+					break;
+			}
+
+			menu->addAction(action);
+		}
+	}
 
 	m_trayIcon->setIcon(parent->windowIcon());
 	m_trayIcon->setContextMenu(menu);
@@ -57,9 +86,8 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	connect(Application::getInstance(), SIGNAL(aboutToQuit()), this, SLOT(hide()));
 	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
 	connect(parent, SIGNAL(destroyed()), this, SLOT(deleteLater()));
-	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
 	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
-	connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(activated(QSystemTrayIcon::ActivationReason)));
+	connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(handleActivated(QSystemTrayIcon::ActivationReason)));
 }
 
 void TrayIcon::timerEvent(QTimerEvent *event)
@@ -74,36 +102,12 @@ void TrayIcon::timerEvent(QTimerEvent *event)
 	}
 }
 
-void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
+void TrayIcon::handleActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::Trigger)
 	{
 		Application *application(Application::getInstance());
 		application->setHidden(!application->isHidden());
-	}
-}
-
-void TrayIcon::triggerAction(QAction *action)
-{
-	const Action *actionObject(qobject_cast<Action*>(action));
-
-	if (!actionObject)
-	{
-		return;
-	}
-
-	if (actionObject->getIdentifier() < 0)
-	{
-		activated(QSystemTrayIcon::Trigger);
-	}
-	else
-	{
-		MainWindow *window(Application::getActiveWindow());
-
-		if (window)
-		{
-			window->triggerAction(actionObject->getIdentifier());
-		}
 	}
 }
 
@@ -116,7 +120,10 @@ void TrayIcon::hide()
 
 void TrayIcon::updateMenu()
 {
-	m_trayIcon->contextMenu()->actions().at(0)->setText(Application::isHidden() ? tr("Show Windows") : tr("Hide Windows"));
+	if (!m_trayIcon->contextMenu()->actions().isEmpty())
+	{
+		m_trayIcon->contextMenu()->actions().at(0)->setText(Application::isHidden() ? tr("Show Windows") : tr("Hide Windows"));
+	}
 }
 
 void TrayIcon::showMessage(Notification *notification)

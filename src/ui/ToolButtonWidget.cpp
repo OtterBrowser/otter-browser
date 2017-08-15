@@ -21,6 +21,7 @@
 #include "Action.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
+#include "../core/Application.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
@@ -113,15 +114,20 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ActionsManager::ActionE
 			}
 			else
 			{
-				menu->addAction(ActionsManager::getActionIdentifier(entries.at(i).action), true);
+				Action *action(new Action(ActionsManager::getActionIdentifier(entries.at(i).action), menu));
+				action->setExecutor(ActionExecutor::Object(Application::getInstance(), Application::getInstance()));
+
+				menu->addAction(action);
 			}
 		}
 		else
 		{
 			Menu *subMenu(new Menu());
-			Action *subMenuAction(menu->addAction());
+			Action *subMenuAction(new Action(-1, menu));
 			subMenuAction->setText(entries.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
 			subMenuAction->setMenu(subMenu);
+
+			menu->addAction(subMenuAction);
 
 			addMenu(subMenu, entries.at(i).entries);
 		}

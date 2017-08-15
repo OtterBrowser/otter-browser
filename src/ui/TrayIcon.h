@@ -44,8 +44,7 @@ public slots:
 
 protected slots:
 	void timerEvent(QTimerEvent *event) override;
-	void activated(QSystemTrayIcon::ActivationReason reason);
-	void triggerAction(QAction *action);
+	void handleActivated(QSystemTrayIcon::ActivationReason reason = QSystemTrayIcon::Trigger);
 	void updateMenu();
 	void messageClicked();
 	void messageIgnored();

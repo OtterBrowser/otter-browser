@@ -66,7 +66,6 @@ public:
 	void setExecutor(ActionExecutor::Object executor);
 	void setActionParameters(const QVariantMap &parameters);
 	void setMenuOptions(const QVariantMap &options);
-	Action* addAction(int identifier = -1, bool useGlobal = false);
 	int getRole() const;
 	static int getMenuRoleIdentifier(const QString &name);
 
