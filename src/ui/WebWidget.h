@@ -214,6 +214,7 @@ public:
 	virtual QWidget* getViewport();
 	WebBackend* getBackend() const;
 	virtual QString getTitle() const = 0;
+	virtual QString getDescription() const;
 	virtual QString getActiveStyleSheet() const;
 	virtual QString getCharacterEncoding() const;
 	virtual QString getSelectedText() const;

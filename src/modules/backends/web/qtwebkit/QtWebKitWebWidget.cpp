@@ -1612,14 +1612,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			return;
-		case ActionsManager::BookmarkPageAction:
-			{
-				const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
-
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}, {QLatin1String("description"), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description)}}, parentWidget());
-			}
-
-			return;
 		case ActionsManager::LoadPluginsAction:
 			{
 				m_canLoadPlugins = true;
@@ -2076,6 +2068,13 @@ QString QtWebKitWebWidget::getTitle() const
 	}
 
 	return title;
+}
+
+QString QtWebKitWebWidget::getDescription() const
+{
+	const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
+
+	return (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description);
 }
 
 QString QtWebKitWebWidget::getActiveStyleSheet() const

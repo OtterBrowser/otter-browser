@@ -876,10 +876,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			return;
-		case ActionsManager::BookmarkPageAction:
-			Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getUrl()}, {QLatin1String("title"), getTitle()}}, parentWidget());
-
-			return;
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{

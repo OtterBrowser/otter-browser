@@ -46,6 +46,7 @@ public:
 	Window* getWindow() const;
 	virtual QString parseQuery(const QString &query) const;
 	virtual QString getTitle() const = 0;
+	virtual QString getDescription() const;
 	virtual QString getVersion() const;
 	virtual QString getActiveStyleSheet() const;
 	virtual QString getStatusMessage() const;

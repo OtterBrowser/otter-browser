@@ -74,6 +74,7 @@ public:
 	WebWidget* getWebWidget() const override;
 	QString parseQuery(const QString &query) const override;
 	QString getTitle() const override;
+	QString getDescription() const override;
 	QString getActiveStyleSheet() const override;
 	QString getStatusMessage() const override;
 	QLatin1String getType() const override;

@@ -773,6 +773,11 @@ WebBackend* WebWidget::getBackend() const
 	return m_backend;
 }
 
+QString WebWidget::getDescription() const
+{
+	return QString();
+}
+
 QString WebWidget::suggestSaveFileName(SaveFormat format) const
 {
 	const QUrl url(getUrl());

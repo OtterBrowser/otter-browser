@@ -1351,6 +1351,11 @@ QString WebContentsWidget::getTitle() const
 	return ((m_startPageWidget && m_startPageWidget->isVisibleTo(this)) ? tr("Start Page") : m_webWidget->getTitle());
 }
 
+QString WebContentsWidget::getDescription() const
+{
+	return ((m_startPageWidget && m_startPageWidget->isVisibleTo(this)) ? QString() : m_webWidget->getDescription());
+}
+
 QString WebContentsWidget::getActiveStyleSheet() const
 {
 	return m_webWidget->getActiveStyleSheet();

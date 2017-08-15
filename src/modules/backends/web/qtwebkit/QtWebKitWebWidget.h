@@ -54,6 +54,7 @@ public:
 	QWidget* getInspector() override;
 	QWidget* getViewport() override;
 	QString getTitle() const override;
+	QString getDescription() const override;
 	QString getActiveStyleSheet() const override;
 	QString getSelectedText() const override;
 	QVariant getPageInformation(PageInformation key) const override;

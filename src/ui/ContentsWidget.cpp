@@ -166,7 +166,7 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 
 				if (bookmarks.isEmpty())
 				{
-					BookmarkPropertiesDialog dialog(url, parameters.value(QLatin1String("title"), getTitle()).toString(), parameters.value(QLatin1String("description")).toString(), nullptr, -1, true, this);
+					BookmarkPropertiesDialog dialog(url, parameters.value(QLatin1String("title"), getTitle()).toString(), parameters.value(QLatin1String("description"), getDescription()).toString(), nullptr, -1, true, this);
 					dialog.exec();
 				}
 				else
@@ -380,6 +380,11 @@ Window* ContentsWidget::getWindow() const
 QString ContentsWidget::parseQuery(const QString &query) const
 {
 	return query;
+}
+
+QString ContentsWidget::getDescription() const
+{
+	return QString();
 }
 
 QString ContentsWidget::getVersion() const
