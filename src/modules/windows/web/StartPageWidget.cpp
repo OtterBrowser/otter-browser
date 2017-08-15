@@ -119,7 +119,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		painter->setBrush(Qt::white);
 		painter->setPen(Qt::transparent);
 		painter->drawRect(rectangle);
-		painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())));
+		painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())), QRect(0, 0, rectangle.width(), rectangle.height()));
 	}
 	else if (tileBackgroundMode == QLatin1String("favicon"))
 	{
@@ -172,7 +172,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
 
-	return QSize((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() * zoom), (SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() * zoom));
+	return QSize(((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom), ((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
 }
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
@@ -692,8 +692,8 @@ void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 void StartPageWidget::updateSize()
 {
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
-	const int tileHeight(SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() * zoom);
-	const int tileWidth(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() * zoom);
+	const int tileHeight((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom);
+	const int tileWidth((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom);
 	const int tilesPerRow(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
 	const int amount(m_model->rowCount());
 	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, int((width() - 50) / tileWidth)));
