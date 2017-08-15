@@ -22,6 +22,7 @@
 #include "../../../core/TransfersManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
+#include "../../../ui/Menu.h"
 
 #include "ui_TransfersContentsWidget.h"
 
@@ -32,7 +33,6 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QProgressBar>
 
@@ -346,16 +346,6 @@ void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 	}
 }
 
-void TransfersContentsWidget::openTransfer(QAction *action)
-{
-	const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
-
-	if (transfer && action && !action->data().isNull())
-	{
-		Utils::runApplication(action->data().toString(), QUrl::fromLocalFile(transfer->getTarget()));
-	}
-}
-
 void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 {
 	const Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
@@ -426,25 +416,12 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 	{
 		menu.addAction(tr("Open"), this, SLOT(openTransfer()));
 
-		const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(transfer->getMimeType()));
+		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenuRole, this));
+		openWithMenu->setExecutor(ActionExecutor::Object(this, this));
+		openWithMenu->setActionParameters({{QLatin1String("url"), transfer->getTarget()}});
+		openWithMenu->setMenuOptions({{QLatin1String("mimeType"), transfer->getMimeType().name()}});
 
-		if (applications.count() > 1)
-		{
-			QMenu *applicationsMenu(menu.addMenu(tr("Open With")));
-
-			for (int i = 0; i < applications.count(); ++i)
-			{
-				applicationsMenu->addAction(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name))->setData(applications.at(i).command);
-
-				if (i == 0)
-				{
-					applicationsMenu->addSeparator();
-				}
-			}
-
-			connect(applicationsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openTransfer(QAction*)));
-		}
-
+		menu.addMenu(openWithMenu);
 		menu.addAction(tr("Open Folder"), this, SLOT(openTransferFolder()));
 		menu.addSeparator();
 		menu.addAction(((transfer->getState() == Transfer::ErrorState) ? tr("Resume") : tr("Stop")), this, SLOT(stopResumeTransfer()))->setEnabled(transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState);

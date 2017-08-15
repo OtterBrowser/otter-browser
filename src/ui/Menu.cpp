@@ -39,6 +39,7 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QMetaEnum>
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QTextCodec>
 #include <QtGui/QMouseEvent>
 
@@ -151,6 +152,12 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
 			}
+
+			break;
+		case OpenInApplicationMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Open with"));
+
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateOpenInApplicationMenu()));
 
 			break;
 		case ProxyMenuRole:
@@ -310,19 +317,9 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 	setObjectName(identifier);
 	setTitle(definition.value(QLatin1String("title")).toString());
 
-	if (!executor.isValid())
-	{
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	m_executor = executor;
 
-		if (mainWindow)
-		{
-			executor = ActionExecutor::Object(mainWindow, mainWindow);
-		}
-		else
-		{
-			executor = ActionExecutor::Object(Application::getInstance(), Application::getInstance());
-		}
-	}
+	executor = getExecutor();
 
 	const QJsonArray actions(definition.value(QLatin1String("actions")).toArray());
 
@@ -832,6 +829,43 @@ void Menu::populateClosedWindowsMenu()
 	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearClosedWindows()));
 }
 
+void Menu::populateOpenInApplicationMenu()
+{
+	const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(m_menuOptions.value(QLatin1String("mimeType")).toString())));
+	const ActionExecutor::Object executor(getExecutor());
+	QVariantMap parameters(m_actionParameters);
+
+	if (applications.isEmpty())
+	{
+		parameters[QLatin1String("application")] = QString();
+
+		Action *action(new Action(ActionsManager::OpenUrlAction, parameters, this));
+		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Application"));
+		action->setExecutor(executor);
+
+		QMenu::addAction(action);
+	}
+	else
+	{
+		for (int i = 0; i < applications.count(); ++i)
+		{
+			parameters[QLatin1String("application")] = applications.at(i).command;
+
+			Action *action(new Action(ActionsManager::OpenUrlAction, parameters, this));
+			action->setOverrideIcon(applications.at(i).icon);
+			action->setOverrideText(((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name));
+			action->setExecutor(executor);
+
+			QMenu::addAction(action);
+
+			if (i == 0)
+			{
+				addSeparator();
+			}
+		}
+	}
+}
+
 void Menu::populateProxiesMenu()
 {
 	if (m_actionGroup)
@@ -1307,6 +1341,21 @@ void Menu::setTitle(const QString &title)
 	QMenu::setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 }
 
+void Menu::setExecutor(ActionExecutor::Object executor)
+{
+	m_executor = executor;
+}
+
+void Menu::setActionParameters(const QVariantMap &parameters)
+{
+	m_actionParameters = parameters;
+}
+
+void Menu::setMenuOptions(const QVariantMap &options)
+{
+	m_menuOptions = options;
+}
+
 Action* Menu::addAction(int identifier, bool useGlobal)
 {
 	Action *action(useGlobal ? Application::createAction(identifier, {}, true, this) : new Action(identifier, {}, Action::NoFlag, this));
@@ -1314,6 +1363,23 @@ Action* Menu::addAction(int identifier, bool useGlobal)
 	QMenu::addAction(action);
 
 	return action;
+}
+
+ActionExecutor::Object Menu::getExecutor()
+{
+	if (m_executor.isValid())
+	{
+		return m_executor;
+	}
+
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow)
+	{
+		return ActionExecutor::Object(mainWindow, mainWindow);
+	}
+
+	return ActionExecutor::Object(Application::getInstance(), Application::getInstance());
 }
 
 int Menu::getRole() const

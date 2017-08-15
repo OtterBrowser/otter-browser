@@ -41,7 +41,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
-#include <QtCore/QMimeDatabase>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QToolTip>
 
@@ -244,64 +243,6 @@ void WebWidget::selectDictionaryMenuAboutToShow()
 		if (action)
 		{
 			action->setChecked(action->data().toString() == dictionary);
-		}
-	}
-}
-
-void WebWidget::openInApplicationMenuAboutToShow()
-{
-	Menu *menu(qobject_cast<Menu*>(sender()));
-
-	if (!menu || !menu->actions().isEmpty())
-	{
-		return;
-	}
-
-	const Action *parentAction(qobject_cast<Action*>(menu->menuAction()));
-	QString query(QLatin1String("{pageUrl}"));
-
-	if (parentAction)
-	{
-		switch (parentAction->getIdentifier())
-		{
-			case ActionsManager::OpenLinkInApplicationAction:
-				query = QLatin1String("{linkUrl}");
-
-				break;
-			case ActionsManager::OpenFrameInApplicationAction:
-				query = QLatin1String("{frameUrl}");
-
-				break;
-			default:
-				break;
-		}
-	}
-
-	const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html"))));
-
-	if (applications.isEmpty())
-	{
-		Action *action(menu->addAction(ActionsManager::OpenUrlAction));
-		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Application"));
-		action->setParameters({{QLatin1String("application"), QString()}, {QLatin1String("urlPlaceholder"), query}});
-
-		connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-	else
-	{
-		for (int i = 0; i < applications.count(); ++i)
-		{
-			Action *action(menu->addAction(ActionsManager::OpenUrlAction));
-			action->setOverrideIcon(applications.at(i).icon);
-			action->setOverrideText(((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name));
-			action->setParameters({{QLatin1String("application"), applications.at(i).command}, {QLatin1String("urlPlaceholder"), query}});
-
-			connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
-			if (i == 0)
-			{
-				menu->addSeparator();
-			}
 		}
 	}
 }
@@ -764,9 +705,29 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 		case ActionsManager::OpenLinkInApplicationAction:
 		case ActionsManager::OpenFrameInApplicationAction:
 		case ActionsManager::OpenPageInApplicationAction:
-			action->setMenu(new Menu(Menu::NoMenuRole, this));
+			{
+				Menu *menu(new Menu(Menu::OpenInApplicationMenuRole, this));
+				menu->setExecutor(ActionExecutor::Object(this, this));
+				menu->setMenuOptions({{QLatin1String("mimeType"), QLatin1String("text/html")}});
 
-			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+				switch (identifier)
+				{
+					case ActionsManager::OpenLinkInApplicationAction:
+						menu->setActionParameters({{QLatin1String("urlPlaceholder"), QLatin1String("{linkUrl}")}});
+
+						break;
+					case ActionsManager::OpenFrameInApplicationAction:
+						menu->setActionParameters({{QLatin1String("urlPlaceholder"), QLatin1String("{frameUrl}")}});
+
+						break;
+					default:
+						menu->setActionParameters({{QLatin1String("urlPlaceholder"), QLatin1String("{pageUrl}")}});
+
+						break;
+				}
+
+				action->setMenu(menu);
+			}
 
 			break;
 		case ActionsManager::PasteNoteAction:

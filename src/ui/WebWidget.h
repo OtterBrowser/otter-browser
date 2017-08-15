@@ -303,7 +303,6 @@ protected slots:
 	void pasteNote(QAction *action);
 	void selectDictionary(QAction *action);
 	void selectDictionaryMenuAboutToShow();
-	void openInApplicationMenuAboutToShow();
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleWindowCloseRequest();
 	void notifyFillPasswordActionStateChanged();

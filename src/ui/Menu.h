@@ -46,6 +46,7 @@ public:
 		CharacterEncodingMenuRole,
 		ClosedWindowsMenu,
 		ImportExportMenuRole,
+		OpenInApplicationMenuRole,
 		ProxyMenuRole,
 		SearchMenuRole,
 		SessionsMenuRole,
@@ -62,6 +63,9 @@ public:
 	void load(const QJsonObject &definition, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(int option);
 	void setTitle(const QString &title);
+	void setExecutor(ActionExecutor::Object executor);
+	void setActionParameters(const QVariantMap &parameters);
+	void setMenuOptions(const QVariantMap &options);
 	Action* addAction(int identifier = -1, bool useGlobal = false);
 	int getRole() const;
 	static int getMenuRoleIdentifier(const QString &name);
@@ -70,12 +74,14 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	ActionExecutor::Object getExecutor();
 
 protected slots:
 	void populateBookmarksMenu();
 	void populateOptionMenu();
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
+	void populateOpenInApplicationMenu();
 	void populateProxiesMenu();
 	void populateSearchMenu();
 	void populateSessionsMenu();
@@ -98,7 +104,10 @@ private:
 	QActionGroup *m_actionGroup;
 	BookmarksItem *m_bookmark;
 	QString m_title;
+	ActionExecutor::Object m_executor;
 	QHash<QString, QActionGroup*> m_actionGroups;
+	QVariantMap m_actionParameters;
+	QVariantMap m_menuOptions;
 	int m_role;
 	int m_option;
 
