@@ -123,7 +123,11 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	}
 	else if (tileBackgroundMode == QLatin1String("favicon"))
 	{
-		HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, rectangle);
+		const int faviconSize(((rectangle.height() > rectangle.width()) ? rectangle.width() : rectangle.height()) / 4);
+		QRect faviconRectangle(0, 0, faviconSize, faviconSize);
+		faviconRectangle.moveCenter(rectangle.center());
+
+		HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, faviconRectangle);
 	}
 
 	if (index.data(StartPageModel::IsReloadingRole).toBool())
