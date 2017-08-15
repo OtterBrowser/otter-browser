@@ -1841,9 +1841,10 @@ void QtWebKitWebWidget::setHistory(QDataStream &stream)
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
-	updatePageActions(url);
 
 	m_page->triggerAction(QWebPage::Reload);
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 }
 #else
 void QtWebKitWebWidget::setHistory(const QVariantMap &history)
