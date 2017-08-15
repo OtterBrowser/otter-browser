@@ -52,7 +52,6 @@ QString WebWidget::m_fastForwardScript;
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent), ActionExecutor(),
 	m_parent(parent),
 	m_backend(backend),
-	m_pasteNoteMenu(nullptr),
 	m_windowIdentifier(0),
 	m_loadingTime(0),
 	m_loadingTimer(0),
@@ -713,17 +712,6 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 			}
 
 			break;
-		case ActionsManager::PasteNoteAction:
-			if (!m_pasteNoteMenu)
-			{
-				m_pasteNoteMenu = new Menu(Menu::NotesMenuRole, this);
-
-				connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
-			}
-
-			action->setMenu(m_pasteNoteMenu);
-
-			break;
 		case ActionsManager::SearchAction:
 			action->setParameters({{QLatin1String("searchEngine"), getOption(SettingsManager::Search_DefaultQuickSearchEngineOption)}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
 
@@ -1135,15 +1123,11 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::PasteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText())));
 
 			break;
 		case ActionsManager::PasteAndGoAction:
 			state.isEnabled = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
-
-			break;
-		case ActionsManager::PasteNoteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText() && NotesManager::getModel()->getRootItem()->hasChildren());
 
 			break;
 		case ActionsManager::DeleteAction:

@@ -134,7 +134,6 @@ public:
 		CopyToNoteAction,
 		PasteAction,
 		PasteAndGoAction,
-		PasteNoteAction,
 		DeleteAction,
 		SelectAllAction,
 		UnselectAction,

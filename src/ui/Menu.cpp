@@ -69,23 +69,15 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 	{
 		case BookmarksMenuRole:
 		case BookmarkSelectorMenuRole:
-		case NotesMenuRole:
 			{
-				setTitle((role == NotesMenuRole) ? QT_TRANSLATE_NOOP("actions", "Notes") : QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+				setTitle(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 				installEventFilter(this);
 
 				const Menu *parentMenu(qobject_cast<Menu*>(parent));
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
-					if (m_role == NotesMenuRole)
-					{
-						connect(NotesManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
-					}
-					else
-					{
-						connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
-					}
+					connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
 				}
 
 				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
@@ -151,6 +143,21 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 				importOperaSessionAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Session…"));
 
 				connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
+			}
+
+			break;
+		case NotesMenuRole:
+			{
+				setTitle(QT_TRANSLATE_NOOP("actions", "Insert Note"));
+
+				const Menu *parentMenu(qobject_cast<Menu*>(parent));
+
+				if (!parentMenu || parentMenu->getRole() != m_role)
+				{
+					connect(NotesManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
+				}
+
+				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateNotesMenu()));
 			}
 
 			break;
@@ -550,7 +557,7 @@ void Menu::populateBookmarksMenu()
 		return;
 	}
 
-	const BookmarksModel *model((m_role == NotesMenuRole) ? NotesManager::getModel() : BookmarksManager::getModel());
+	const BookmarksModel *model(BookmarksManager::getModel());
 	BookmarksItem *bookmark(model->getBookmark(menu->menuAction()->data().toULongLong()));
 
 	if (!bookmark)
@@ -569,8 +576,7 @@ void Menu::populateBookmarksMenu()
 
 		connect(openAllAction, SIGNAL(triggered()), this, SLOT(openBookmark()));
 	}
-
-	if (m_role == BookmarkSelectorMenuRole)
+	else if (m_role == BookmarkSelectorMenuRole)
 	{
 		Action *addFolderAction(menu->addAction());
 		addFolderAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
@@ -843,6 +849,72 @@ void Menu::populateClosedWindowsMenu()
 	}
 
 	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearClosedWindows()));
+}
+
+void Menu::populateNotesMenu()
+{
+	Menu *menu(qobject_cast<Menu*>(sender()));
+
+	if (!menu || !menu->menuAction() || !menu->actions().isEmpty())
+	{
+		return;
+	}
+
+	const BookmarksModel *model(NotesManager::getModel());
+	BookmarksItem *bookmark(model->getBookmark(menu->menuAction()->data().toULongLong()));
+
+	if (!bookmark)
+	{
+		bookmark = model->getRootItem();
+	}
+
+	for (int i = 0; i < bookmark->rowCount(); ++i)
+	{
+		const QModelIndex index(bookmark->index().child(i, 0));
+
+		if (!index.isValid())
+		{
+			continue;
+		}
+
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+
+		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
+		{
+			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, this));
+			action->setExecutor(getExecutor());
+			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
+			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
+			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
+
+			if (index.data(BookmarksModel::TitleRole).toString().isEmpty())
+			{
+				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
+			}
+			else
+			{
+				action->setOverrideText(Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
+			}
+
+			if (type == BookmarksModel::FolderBookmark)
+			{
+				if (model->rowCount(index) > 0)
+				{
+					action->setMenu(new Menu(m_role, this));
+				}
+				else
+				{
+					action->setEnabled(false);
+				}
+			}
+
+			QMenu::addAction(action);
+		}
+		else
+		{
+			menu->addSeparator();
+		}
+	}
 }
 
 void Menu::populateOpenInApplicationMenu()
@@ -1212,20 +1284,13 @@ void Menu::populateWindowsMenu()
 
 void Menu::clearBookmarksMenu()
 {
-	const int offset((m_role == BookmarksMenuRole && menuAction() && menuAction()->data().toULongLong() == 0) ? 3 : 0);
+	const int offset((menuAction() && menuAction()->data().toULongLong() == 0) ? 3 : 0);
 
 	for (int i = (actions().count() - 1); i >= offset; --i)
 	{
 		actions().at(i)->deleteLater();
 
 		removeAction(actions().at(i));
-	}
-
-	if (m_role == NotesMenuRole && menuAction())
-	{
-		const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(menuAction()->data().toULongLong()));
-
-		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
 	}
 
 	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
@@ -1241,6 +1306,20 @@ void Menu::clearClosedWindows()
 	}
 
 	SessionsManager::clearClosedWindows();
+}
+
+void Menu::clearNotesMenu()
+{
+	clear();
+
+	if (menuAction())
+	{
+		const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(menuAction()->data().toULongLong()));
+
+		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
+	}
+
+	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateNotesMenu()));
 }
 
 void Menu::restoreClosedWindow()
@@ -1262,6 +1341,7 @@ void Menu::restoreClosedWindow()
 		SessionsManager::restoreClosedWindow(-index - 1);
 	}
 }
+
 
 void Menu::openBookmark()
 {

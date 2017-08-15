@@ -42,7 +42,6 @@ namespace Otter
 class Action;
 class ContentsDialog;
 class ContentsWidget;
-class Menu;
 class Transfer;
 class WebBackend;
 
@@ -315,7 +314,6 @@ protected slots:
 private:
 	ContentsWidget *m_parent;
 	WebBackend *m_backend;
-	Menu *m_pasteNoteMenu;
 	QUrl m_requestedUrl;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;

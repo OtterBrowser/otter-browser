@@ -142,8 +142,8 @@
 			"actions":
 			[
 				{
-					"type": "action",
-					"identifier": "PasteNote",
+					"type": "menu",
+					"identifier": "NotesMenu",
 					"excludeFrom": "source"
 				},
 				"separator",

@@ -137,7 +137,6 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CopyToNoteAction, QT_TRANSLATE_NOOP("actions", "Copy to Note"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), ThemesManager::createIcon(QLatin1String("edit-paste")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(PasteAndGoAction, QT_TRANSLATE_NOOP("actions", "Paste and Go"), QString(), QIcon(), ActionDefinition::WindowScope);
-	registerAction(PasteNoteAction, QT_TRANSLATE_NOOP("actions", "Insert Note"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::HasMenuFlag), ActionDefinition::EditingCategory);
 	registerAction(DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), ThemesManager::createIcon(QLatin1String("edit-delete")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), ThemesManager::createIcon(QLatin1String("edit-select-all")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(UnselectAction, QT_TRANSLATE_NOOP("actions", "Deselect"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);

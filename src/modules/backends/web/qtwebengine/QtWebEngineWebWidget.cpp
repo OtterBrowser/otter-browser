@@ -770,7 +770,16 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::PasteAction:
-			if (parameters.contains(QLatin1String("text")))
+			if (parameters.contains(QLatin1String("note")))
+			{
+				const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(parameters[QLatin1String("note")].toULongLong()));
+
+				if (bookmark)
+				{
+					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->data(BookmarksModel::DescriptionRole).toString()}});
+				}
+			}
+			else if (parameters.contains(QLatin1String("text")))
 			{
 				QMimeData *mimeData(new QMimeData());
 				const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());

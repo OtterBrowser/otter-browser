@@ -208,7 +208,16 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			return;
 		case ActionsManager::PasteAction:
-			if (parameters.contains(QLatin1String("text")))
+			if (parameters.contains(QLatin1String("note")))
+			{
+				const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(parameters[QLatin1String("note")].toULongLong()));
+
+				if (bookmark)
+				{
+					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->data(BookmarksModel::DescriptionRole).toString()}});
+				}
+			}
+			else if (parameters.contains(QLatin1String("text")))
 			{
 				m_sourceViewer->textCursor().insertText(parameters[QLatin1String("text")].toString());
 			}
