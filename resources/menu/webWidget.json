@@ -106,12 +106,9 @@
 				"Print",
 				"separator",
 				{
-					"type": "include",
-					"includeIn": "form",
-					"actions":
-					[
-						"CreateSearch"
-					]
+					"type": "action",
+					"identifier": "CreateSearch",
+					"includeIn": "form"
 				},
 				"InspectElement",
 				"ViewSource",
@@ -145,12 +142,9 @@
 			"actions":
 			[
 				{
-					"type": "include",
-					"excludeFrom": "source",
-					"actions":
-					[
-						"PasteNote"
-					]
+					"type": "action",
+					"identifier": "PasteNote",
+					"excludeFrom": "source"
 				},
 				"separator",
 				"Undo",
@@ -162,12 +156,9 @@
 				"Delete",
 				"separator",
 				{
-					"type": "include",
-					"excludeFrom": "source",
-					"actions":
-					[
-						"CopyToNote"
-					]
+					"type": "action",
+					"identifier": "CopyToNote",
+					"excludeFrom": "source"
 				},
 				"separator",
 				"SelectAll",
