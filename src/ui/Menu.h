@@ -59,8 +59,8 @@ public:
 
 	explicit Menu(int role = NoMenuRole, QWidget *parent = nullptr);
 
-	void load(const QString &path, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
-	void load(const QJsonObject &definition, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
+	void load(const QString &path, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());
+	void load(const QJsonObject &definition, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(int option);
 	void setTitle(const QString &title);
 	void setExecutor(ActionExecutor::Object executor);
@@ -74,7 +74,9 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	void appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor);
 	ActionExecutor::Object getExecutor();
+	bool canInclude(const QJsonObject &definition, const QStringList &options);
 
 protected slots:
 	void populateBookmarksMenu();

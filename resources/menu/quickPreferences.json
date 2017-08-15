@@ -3,21 +3,21 @@
 	[
 		{
 			"type": "menu",
-			"parameters":
+			"options":
 			{
 				"option": "Permissions/ScriptsCanOpenWindows"
 			}
 		},
 		{
 			"type": "menu",
-			"parameters":
+			"options":
 			{
 				"option": "Permissions/EnableImages"
 			}
 		},
 		{
 			"type": "menu",
-			"parameters":
+			"options":
 			{
 				"option": "Permissions/EnablePlugins"
 			}
@@ -26,21 +26,21 @@
 		"separator",
 		{
 			"type": "menu",
-			"parameters":
+			"options":
 			{
 				"option": "Network/CookiesPolicy"
 			}
 		},
 		{
 			"type": "menu",
-			"parameters":
+			"options":
 			{
 				"option": "Network/ThirdPartyCookiesPolicy"
 			}
 		},
 		{
 			"type": "menu",
-			"parameters":
+			"options":
 			{
 				"option": "Network/CookiesKeepMode"
 			}

@@ -293,19 +293,19 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 	QMenu::contextMenuEvent(event);
 }
 
-void Menu::load(const QString &path, const QStringList &options, ActionExecutor::Object executor)
+void Menu::load(const QString &path, const QStringList &includeSections, ActionExecutor::Object executor)
 {
 	QFile file(SessionsManager::getReadableDataPath(path));
 
 	if (file.open(QIODevice::ReadOnly))
 	{
-		load(QJsonDocument::fromJson(file.readAll()).object(), options, executor);
+		load(QJsonDocument::fromJson(file.readAll()).object(), includeSections, executor);
 
 		file.close();
 	}
 }
 
-void Menu::load(const QJsonObject &definition, const QStringList &options, ActionExecutor::Object executor)
+void Menu::load(const QJsonObject &definition, const QStringList &includeSections, ActionExecutor::Object executor)
 {
 	const QString identifier(definition.value(QLatin1String("identifier")).toString());
 
@@ -325,132 +325,23 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		if (actions.at(i).isObject())
+		if (actions.at(i).isObject() && actions.at(i).toObject().value(QLatin1String("type")) == QLatin1String("include"))
 		{
 			const QJsonObject object(actions.at(i).toObject());
-			const QString type(object.value(QLatin1String("type")).toString());
-			const QVariantMap parameters(object.value(QLatin1String("parameters")).toVariant().toMap());
 
-			if (type == QLatin1String("action"))
+			if (canInclude(object, includeSections))
 			{
-				const QString rawIdentifier(object.value(QLatin1String("identifier")).toString());
-				const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
+				const QJsonArray subActions(object.value(QLatin1String("actions")).toArray());
 
-				if (identifier >= 0)
+				for (int j = 0; j < subActions.count(); ++j)
 				{
-					const QString text(object.value(QLatin1String("title")).toString());
-					Action *action(new Action(identifier, parameters, this));
-					action->setExecutor(executor);
-
-					if (object.contains(QLatin1String("group")))
-					{
-						const QString group(object.value(QLatin1String("group")).toString());
-
-						if (m_actionGroups.contains(group))
-						{
-							m_actionGroups[group]->addAction(action);
-						}
-						else
-						{
-							QActionGroup *actionGroup(new QActionGroup(this));
-							actionGroup->setExclusive(true);
-							actionGroup->addAction(action);
-
-							m_actionGroups[group] = actionGroup;
-						}
-					}
-
-					if (!text.isEmpty())
-					{
-						action->setOverrideText(text);
-					}
-
-					if (object.contains(QLatin1String("icon")))
-					{
-						const QString data(object.value(QLatin1String("icon")).toString());
-
-						if (data.startsWith(QLatin1String("data:image/")))
-						{
-							action->setOverrideIcon(QIcon(Utils::loadPixmapFromDataUri(data)));
-						}
-						else
-						{
-							action->setOverrideIcon(ThemesManager::createIcon(data));
-						}
-					}
-
-					QMenu::addAction(action);
-				}
-				else
-				{
-					Console::addMessage(tr("Failed to create menu action: %1").arg(rawIdentifier), Console::OtherCategory, Console::ErrorLevel);
-				}
-
-				continue;
-			}
-
-			if (object.contains(QLatin1String("excludeFrom")) && options.contains(object.value(QLatin1String("excludeFrom")).toString()))
-			{
-				continue;
-			}
-
-			if (object.contains(QLatin1String("includeIn")) && !options.contains(object.value(QLatin1String("includeIn")).toString()))
-			{
-				continue;
-			}
-
-			Menu *menu(new Menu(getMenuRoleIdentifier(object.value(QLatin1String("identifier")).toString()), this));
-
-			if (parameters.contains(QLatin1String("option")))
-			{
-				menu->load(SettingsManager::getOptionIdentifier(parameters.value(QLatin1String("option")).toString()));
-			}
-			else
-			{
-				menu->load(object, options, executor);
-			}
-
-			if (type == QLatin1String("menu"))
-			{
-				addMenu(menu);
-			}
-			else if (type == QLatin1String("include"))
-			{
-				for (int j = 0; j < menu->actions().count(); ++j)
-				{
-					QMenu::addAction(menu->actions().at(j));
+					appendAction(subActions.at(j), includeSections, executor);
 				}
 			}
 		}
 		else
 		{
-			const QString rawIdentifier(actions.at(i).toString());
-			const int role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : NoMenuRole);
-
-			if (rawIdentifier == QLatin1String("separator"))
-			{
-				addSeparator();
-			}
-			else if (role != NoMenuRole)
-			{
-				addMenu(new Menu(role, this));
-			}
-			else
-			{
-				const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
-
-				if (identifier >= 0)
-				{
-					Action *action(new Action(identifier, this));
-					action->setExecutor(executor);
-
-					QMenu::addAction(action);
-				}
-				else
-				{
-					Console::addMessage(tr("Failed to create menu action: %1").arg(rawIdentifier), Console::OtherCategory, Console::ErrorLevel);
-				}
-			}
+			appendAction(actions.at(i), includeSections, executor);
 		}
 	}
 }
@@ -525,6 +416,129 @@ void Menu::load(int option)
 
 	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateOptionMenu()));
 	connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+}
+
+void Menu::appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor)
+{
+	if (definition.isObject())
+	{
+		const QJsonObject object(definition.toObject());
+
+		if (!canInclude(object, includeSections))
+		{
+			return;
+		}
+
+		const QString type(object.value(QLatin1String("type")).toString());
+		const QVariantMap parameters(object.value(QLatin1String("parameters")).toVariant().toMap());
+
+		if (type == QLatin1String("action"))
+		{
+			const QString rawIdentifier(object.value(QLatin1String("identifier")).toString());
+			const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
+
+			if (identifier < 0)
+			{
+				Console::addMessage(tr("Failed to create menu action: %1").arg(rawIdentifier), Console::OtherCategory, Console::ErrorLevel);
+
+				return;
+			}
+
+			Action *action(new Action(identifier, parameters, this));
+			action->setExecutor(executor);
+
+			if (object.contains(QLatin1String("group")))
+			{
+				const QString group(object.value(QLatin1String("group")).toString());
+
+				if (m_actionGroups.contains(group))
+				{
+					m_actionGroups[group]->addAction(action);
+				}
+				else
+				{
+					QActionGroup *actionGroup(new QActionGroup(this));
+					actionGroup->setExclusive(true);
+					actionGroup->addAction(action);
+
+					m_actionGroups[group] = actionGroup;
+				}
+			}
+
+			if (object.contains(QLatin1String("icon")))
+			{
+				const QString data(object.value(QLatin1String("icon")).toString());
+
+				if (data.startsWith(QLatin1String("data:image/")))
+				{
+					action->setOverrideIcon(QIcon(Utils::loadPixmapFromDataUri(data)));
+				}
+				else
+				{
+					action->setOverrideIcon(ThemesManager::createIcon(data));
+				}
+			}
+
+			if (object.contains(QLatin1String("title")))
+			{
+				action->setOverrideText(object.value(QLatin1String("title")).toString());
+			}
+
+			QMenu::addAction(action);
+		}
+		else if (type == QLatin1String("menu"))
+		{
+			const QVariantMap options(object.value(QLatin1String("options")).toVariant().toMap());
+			Menu *menu(new Menu(getMenuRoleIdentifier(object.value(QLatin1String("identifier")).toString()), this));
+			menu->setActionParameters(parameters);
+			menu->setMenuOptions(options);
+
+			if (object.contains(QLatin1String("actions")))
+			{
+				menu->load(object, includeSections, executor);
+			}
+			else if (options.contains(QLatin1String("option")))
+			{
+				menu->load(SettingsManager::getOptionIdentifier(options.value(QLatin1String("option")).toString()));
+			}
+
+			addMenu(menu);
+		}
+	}
+	else
+	{
+		const QString rawIdentifier(definition.toString());
+
+		if (rawIdentifier == QLatin1String("separator"))
+		{
+			addSeparator();
+		}
+		else
+		{
+			const int role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : NoMenuRole);
+
+			if (role == NoMenuRole)
+			{
+				const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
+
+				if (identifier >= 0)
+				{
+					Action *action(new Action(identifier, this));
+					action->setExecutor(executor);
+
+					QMenu::addAction(action);
+				}
+				else
+				{
+					Console::addMessage(tr("Failed to create menu action: %1").arg(rawIdentifier), Console::OtherCategory, Console::ErrorLevel);
+				}
+			}
+			else
+			{
+				addMenu(new Menu(role, this));
+			}
+		}
+	}
 }
 
 void Menu::populateBookmarksMenu()
@@ -1402,6 +1416,21 @@ int Menu::getMenuRoleIdentifier(const QString &name)
 	}
 
 	return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(name.toLatin1());
+}
+
+bool Menu::canInclude(const QJsonObject &definition, const QStringList &options)
+{
+	if (definition.contains(QLatin1String("excludeFrom")) && options.contains(definition.value(QLatin1String("excludeFrom")).toString()))
+	{
+		return false;
+	}
+
+	if (definition.contains(QLatin1String("includeIn")) && !options.contains(definition.value(QLatin1String("includeIn")).toString()))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 }
