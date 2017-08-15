@@ -281,6 +281,7 @@ protected:
 	void setClickPosition(const QPoint &position);
 	QString suggestSaveFileName(SaveFormat format) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
+	ActionExecutor::Object getExecutor();
 	HitTestResult getCurrentHitTestResult() const;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;

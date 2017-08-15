@@ -300,6 +300,11 @@ WebWidget* ContentsWidget::getWebWidget() const
 	return nullptr;
 }
 
+Window* ContentsWidget::getWindow() const
+{
+	return m_window;
+}
+
 QString ContentsWidget::parseQuery(const QString &query) const
 {
 	return query;

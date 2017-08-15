@@ -487,7 +487,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 	}
 
 	Menu menu(Menu::NoMenuRole, this);
-	menu.load(QLatin1String("menu/webWidget.json"), flags, ActionExecutor::Object(this, this));
+	menu.load(QLatin1String("menu/webWidget.json"), flags, getExecutor());
 	menu.exec(mapToGlobal(hitPosition));
 }
 
@@ -698,7 +698,7 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 	}
 
 	Action *action(new Action(identifier, parameters, ((followState ? Action::FollowsActionStateFlag : Action::NoFlag) | Action::CanTriggerActionFlag), this));
-	action->setExecutor(ActionExecutor::Object(this, this));
+	action->setExecutor(getExecutor());
 
 	switch (identifier)
 	{
@@ -931,6 +931,21 @@ QPoint WebWidget::getClickPosition() const
 QRect WebWidget::getProgressBarGeometry() const
 {
 	return (isVisible() ? QRect(QPoint(0, (height() - 30)), QSize(width(), 30)) : QRect());
+}
+
+ActionExecutor::Object WebWidget::getExecutor()
+{
+	if (m_parent)
+	{
+		if (m_parent->getWindow())
+		{
+			return ActionExecutor::Object(m_parent->getWindow(), m_parent->getWindow());
+		}
+
+		return ActionExecutor::Object(m_parent, m_parent);
+	}
+
+	return ActionExecutor::Object(this, this);
 }
 
 ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier, const QVariantMap &parameters) const
