@@ -38,13 +38,16 @@
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
+#include <QtCore/QMetaEnum>
 #include <QtCore/QTextCodec>
 #include <QtGui/QMouseEvent>
 
 namespace Otter
 {
 
-Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
+int Menu::m_menuRoleIdentifierEnumerator(-1);
+
+Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 	m_actionGroup(nullptr),
 	m_bookmark(nullptr),
 	m_role(role),
@@ -423,7 +426,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 		else
 		{
 			const QString rawIdentifier(actions.at(i).toString());
-			const MenuRole role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : NoMenuRole);
+			const int role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : NoMenuRole);
 
 			if (rawIdentifier == QLatin1String("separator"))
 			{
@@ -1313,74 +1316,24 @@ Action* Menu::addAction(int identifier, bool useGlobal)
 	return action;
 }
 
-Menu::MenuRole Menu::getRole() const
+int Menu::getRole() const
 {
 	return m_role;
 }
 
-Menu::MenuRole Menu::getMenuRoleIdentifier(const QString &name)
+int Menu::getMenuRoleIdentifier(const QString &name)
 {
-	if (name == QLatin1String("BookmarksMenu"))
+	if (m_menuRoleIdentifierEnumerator < 0)
 	{
-		return BookmarksMenuRole;
+		m_menuRoleIdentifierEnumerator = Menu::staticMetaObject.indexOfEnumerator(QLatin1String("MenuRole").data());
 	}
 
-	if (name == QLatin1String("CharacterEncodingMenu"))
+	if (!name.endsWith(QLatin1String("Role")))
 	{
-		return CharacterEncodingMenuRole;
+		return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Role")).toLatin1());
 	}
 
-	if (name == QLatin1String("ClosedWindowsMenu"))
-	{
-		return ClosedWindowsMenu;
-	}
-
-	if (name == QLatin1String("ImportExportMenu"))
-	{
-		return ImportExportMenuRole;
-	}
-
-	if (name == QLatin1String("ProxyMenu"))
-	{
-		return ProxyMenuRole;
-	}
-
-	if (name == QLatin1String("SearchMenu"))
-	{
-		return SearchMenuRole;
-	}
-
-	if (name == QLatin1String("SessionsMenu"))
-	{
-		return SessionsMenuRole;
-	}
-
-	if (name == QLatin1String("StyleSheetsMenu"))
-	{
-		return StyleSheetsMenuRole;
-	}
-
-	if (name == QLatin1String("ToolBarsMenu"))
-	{
-		return ToolBarsMenuRole;
-	}
-
-	if (name == QLatin1String("UserAgentMenu"))
-	{
-		return UserAgentMenuRole;
-	}
-
-	if (name == QLatin1String("ValidateMenu"))
-	{
-		return ValidateMenuRole;
-	}
-
-	if (name == QLatin1String("WindowsMenu"))
-	{
-		return WindowsMenuRole;
-	}
-
-	return NoMenuRole;
+	return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
 }

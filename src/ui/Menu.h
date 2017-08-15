@@ -34,6 +34,7 @@ class BookmarksItem;
 class Menu : public QMenu
 {
 	Q_OBJECT
+	Q_ENUMS(MenuRole)
 
 public:
 	enum MenuRole
@@ -55,15 +56,15 @@ public:
 		WindowsMenuRole
 	};
 
-	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = nullptr);
+	explicit Menu(int role = NoMenuRole, QWidget *parent = nullptr);
 
 	void load(const QString &path, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(const QJsonObject &definition, const QStringList &options = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(int option);
 	void setTitle(const QString &title);
 	Action* addAction(int identifier = -1, bool useGlobal = false);
-	MenuRole getRole() const;
-	static MenuRole getMenuRoleIdentifier(const QString &name);
+	int getRole() const;
+	static int getMenuRoleIdentifier(const QString &name);
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -98,8 +99,10 @@ private:
 	BookmarksItem *m_bookmark;
 	QString m_title;
 	QHash<QString, QActionGroup*> m_actionGroups;
-	MenuRole m_role;
+	int m_role;
 	int m_option;
+
+	static int m_menuRoleIdentifierEnumerator;
 };
 
 }
