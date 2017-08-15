@@ -92,23 +92,6 @@ void WebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 	Q_UNUSED(parameters)
 }
 
-void WebWidget::triggerAction()
-{
-	const Action *action(qobject_cast<Action*>(sender()));
-
-	if (action)
-	{
-		QVariantMap parameters(action->getParameters());
-
-		if (action->isCheckable())
-		{
-			parameters[QLatin1String("isChecked")] = action->isChecked();
-		}
-
-		Application::triggerAction(action->getIdentifier(), parameters, parentWidget());
-	}
-}
-
 void WebWidget::search(const QString &query, const QString &searchEngine)
 {
 	Q_UNUSED(query)

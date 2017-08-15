@@ -300,7 +300,6 @@ protected:
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
-	void triggerAction();
 	void pasteNote(QAction *action);
 	void selectDictionary(QAction *action);
 	void selectDictionaryMenuAboutToShow();
