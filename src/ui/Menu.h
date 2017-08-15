@@ -44,7 +44,7 @@ public:
 		BookmarkSelectorMenuRole,
 		NotesMenuRole,
 		CharacterEncodingMenuRole,
-		ClosedWindowsMenu,
+		ClosedWindowsMenuRole,
 		ImportExportMenuRole,
 		OpenInApplicationMenuRole,
 		ProxyMenuRole,

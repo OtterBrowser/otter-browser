@@ -93,7 +93,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
 
 			break;
-		case ClosedWindowsMenu:
+		case ClosedWindowsMenuRole:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Closed Tabs and Windows"));
 				setIcon(ThemesManager::createIcon(QLatin1String("user-trash")));
