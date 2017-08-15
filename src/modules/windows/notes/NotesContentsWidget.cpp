@@ -202,8 +202,6 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
@@ -248,6 +246,8 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

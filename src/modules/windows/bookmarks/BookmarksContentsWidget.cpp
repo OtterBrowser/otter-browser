@@ -245,8 +245,6 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::DeleteAction:
@@ -290,6 +288,8 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

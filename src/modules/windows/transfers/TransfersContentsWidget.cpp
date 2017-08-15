@@ -499,8 +499,6 @@ void TransfersContentsWidget::print(QPrinter *printer)
 
 void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::CopyAction:
@@ -540,6 +538,8 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

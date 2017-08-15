@@ -85,8 +85,6 @@ void CacheContentsWidget::print(QPrinter *printer)
 
 void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::DeleteAction:
@@ -104,6 +102,8 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

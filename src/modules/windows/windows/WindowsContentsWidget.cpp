@@ -69,8 +69,6 @@ void WindowsContentsWidget::print(QPrinter *printer)
 
 void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::SelectAllAction:
@@ -82,6 +80,8 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

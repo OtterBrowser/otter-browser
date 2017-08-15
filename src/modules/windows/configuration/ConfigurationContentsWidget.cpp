@@ -257,8 +257,6 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 
 void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::FindAction:
@@ -272,6 +270,8 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

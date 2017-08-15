@@ -90,8 +90,6 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 
 void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::FindAction:
@@ -105,6 +103,8 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

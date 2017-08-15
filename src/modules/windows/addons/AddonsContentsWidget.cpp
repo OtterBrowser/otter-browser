@@ -366,8 +366,6 @@ void AddonsContentsWidget::print(QPrinter *printer)
 
 void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::SelectAllAction:
@@ -389,6 +387,8 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

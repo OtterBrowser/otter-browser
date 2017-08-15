@@ -526,6 +526,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			setScrollMode(NoScroll);
 
 			break;
+		case ActionsManager::PrintAction:
+		case ActionsManager::PrintPreviewAction:
+			ContentsWidget::triggerAction(identifier, parameters);
+
+			break;
 		case ActionsManager::EnableJavaScriptAction:
 			m_webWidget->setOption(SettingsManager::Permissions_EnableJavaScriptOption, Action::calculateCheckedState(parameters));
 

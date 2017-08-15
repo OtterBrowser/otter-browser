@@ -42,10 +42,7 @@
 #include "../modules/windows/windows/WindowsContentsWidget.h"
 
 #include <QtCore/QTimer>
-#include <QtPrintSupport/QPrintDialog>
-#include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtGui/QPainter>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QMdiSubWindow>
 
@@ -250,43 +247,6 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 					dialog.exec();
 				}
-			}
-
-			break;
-		case ActionsManager::PrintAction:
-			{
-				QPrinter printer;
-				printer.setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
-				printer.setDocName(getTitle());
-
-				QPrintDialog printDialog(&printer, this);
-				printDialog.setWindowTitle(tr("Print Page"));
-
-				if (printDialog.exec() != QDialog::Accepted)
-				{
-					break;
-				}
-
-				getContentsWidget()->print(&printer);
-			}
-
-			break;
-		case ActionsManager::PrintPreviewAction:
-			{
-				QPrintPreviewDialog printPreviewDialog(this);
-				printPreviewDialog.printer()->setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
-				printPreviewDialog.printer()->setDocName(getTitle());
-				printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
-				printPreviewDialog.setWindowTitle(tr("Print Preview"));
-
-				if (QApplication::activeWindow())
-				{
-					printPreviewDialog.resize(QApplication::activeWindow()->size());
-				}
-
-				connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
-
-				printPreviewDialog.exec();
 			}
 
 			break;

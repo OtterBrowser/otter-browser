@@ -283,8 +283,6 @@ void PasswordsContentsWidget::print(QPrinter *printer)
 
 void PasswordsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::SelectAllAction:
@@ -306,6 +304,8 @@ void PasswordsContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }

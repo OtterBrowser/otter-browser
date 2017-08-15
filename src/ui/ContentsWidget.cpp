@@ -22,6 +22,11 @@
 #include "ContentsDialog.h"
 #include "Window.h"
 
+#include "../core/Application.h"
+
+#include <QtPrintSupport/QPrintDialog>
+#include <QtPrintSupport/QPrintPreviewDialog>
+
 namespace Otter
 {
 
@@ -106,8 +111,50 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 
 void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(identifier)
 	Q_UNUSED(parameters)
+
+	switch (identifier)
+	{
+		case ActionsManager::PrintAction:
+			{
+				QPrinter printer;
+				printer.setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
+				printer.setDocName(getTitle());
+
+				QPrintDialog printDialog(&printer, this);
+				printDialog.setWindowTitle(tr("Print Page"));
+
+				if (printDialog.exec() != QDialog::Accepted)
+				{
+					break;
+				}
+
+				print(&printer);
+			}
+
+			break;
+		case ActionsManager::PrintPreviewAction:
+			{
+				QPrintPreviewDialog printPreviewDialog(this);
+				printPreviewDialog.printer()->setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
+				printPreviewDialog.printer()->setDocName(getTitle());
+				printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+				printPreviewDialog.setWindowTitle(tr("Print Preview"));
+
+				if (QApplication::activeWindow())
+				{
+					printPreviewDialog.resize(QApplication::activeWindow()->size());
+				}
+
+				connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
+
+				printPreviewDialog.exec();
+			}
+
+			break;
+		default:
+			break;
+	}
 }
 
 void ContentsWidget::triggerAction()

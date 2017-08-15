@@ -362,8 +362,6 @@ void CookiesContentsWidget::print(QPrinter *printer)
 
 void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
-
 	switch (identifier)
 	{
 		case ActionsManager::SelectAllAction:
@@ -385,6 +383,8 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
 			break;
 	}
 }
