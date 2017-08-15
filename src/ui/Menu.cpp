@@ -378,6 +378,8 @@ void Menu::load(const QJsonObject &definition, const QStringList &options, Actio
 							action->setOverrideIcon(ThemesManager::createIcon(data));
 						}
 					}
+
+					QMenu::addAction(action);
 				}
 				else
 				{
