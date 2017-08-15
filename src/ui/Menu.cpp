@@ -1418,14 +1418,14 @@ int Menu::getMenuRoleIdentifier(const QString &name)
 	return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
-bool Menu::canInclude(const QJsonObject &definition, const QStringList &options)
+bool Menu::canInclude(const QJsonObject &definition, const QStringList &includeSections)
 {
-	if (definition.contains(QLatin1String("excludeFrom")) && options.contains(definition.value(QLatin1String("excludeFrom")).toString()))
+	if (definition.contains(QLatin1String("excludeFrom")) && includeSections.contains(definition.value(QLatin1String("excludeFrom")).toString()))
 	{
 		return false;
 	}
 
-	if (definition.contains(QLatin1String("includeIn")) && !options.contains(definition.value(QLatin1String("includeIn")).toString()))
+	if (definition.contains(QLatin1String("includeIn")) && !includeSections.contains(definition.value(QLatin1String("includeIn")).toString()))
 	{
 		return false;
 	}

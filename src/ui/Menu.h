@@ -76,7 +76,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor);
 	ActionExecutor::Object getExecutor();
-	bool canInclude(const QJsonObject &definition, const QStringList &options);
+	bool canInclude(const QJsonObject &definition, const QStringList &includeSections);
 
 protected slots:
 	void populateBookmarksMenu();
