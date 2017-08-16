@@ -243,10 +243,10 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 	m_executor = executor;
 
+	updateState();
+
 	if (executor.isValid())
 	{
-		updateState();
-
 		if (executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged()") >= 0)
 		{
 			connect(executor.getObject(), SIGNAL(actionsStateChanged()), this, SLOT(updateState()));
