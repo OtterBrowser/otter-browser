@@ -48,20 +48,14 @@ public:
 	virtual QString getTitle() const = 0;
 	virtual QString getDescription() const;
 	virtual QString getVersion() const;
-	virtual QString getActiveStyleSheet() const;
 	virtual QString getStatusMessage() const;
 	virtual QLatin1String getType() const = 0;
 	virtual QVariant getOption(int identifier) const;
-	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap createThumbnail();
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	virtual WindowHistoryInformation getHistory() const;
-	virtual QStringList getStyleSheets() const;
-	virtual QVector<WebWidget::LinkUrl> getFeeds() const;
-	virtual QVector<WebWidget::LinkUrl> getSearchEngines() const;
-	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	virtual WebWidget::ContentStates getContentState() const;
 	virtual WebWidget::LoadingState getLoadingState() const;
 	int getSidebar() const;
@@ -78,7 +72,6 @@ public slots:
 	virtual void removeHistoryIndex(int index, bool purge = false);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setOption(int identifier, const QVariant &value);
-	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool isTyped = true);

@@ -75,20 +75,13 @@ public:
 	QString parseQuery(const QString &query) const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
-	QString getActiveStyleSheet() const override;
-	QString getStatusMessage() const override;
 	QLatin1String getType() const override;
 	QVariant getOption(int identifier) const override;
-	QVariant getPageInformation(WebWidget::PageInformation key) const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPixmap createThumbnail() override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	WindowHistoryInformation getHistory() const override;
-	QStringList getStyleSheets() const override;
-	QVector<WebWidget::LinkUrl> getFeeds() const override;
-	QVector<WebWidget::LinkUrl> getSearchEngines() const override;
-	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
 	QHash<int, QVariant> getOptions() const;
 	WebWidget::ContentStates getContentState() const override;
 	WebWidget::LoadingState getLoadingState() const override;
@@ -103,7 +96,6 @@ public slots:
 	void removeHistoryIndex(int index, bool purge = false) override;
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setOption(int identifier, const QVariant &value) override;
-	void setActiveStyleSheet(const QString &styleSheet) override;
 	void setHistory(const WindowHistoryInformation &history) override;
 	void setZoom(int zoom) override;
 	void setUrl(const QUrl &url, bool isTyped = true) override;

@@ -1198,11 +1198,6 @@ void WebContentsWidget::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void WebContentsWidget::setActiveStyleSheet(const QString &styleSheet)
-{
-	m_webWidget->setActiveStyleSheet(styleSheet);
-}
-
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 1 && QUrl(history.entries.at(0).url).scheme() == QLatin1String("view-source"))
@@ -1356,16 +1351,6 @@ QString WebContentsWidget::getDescription() const
 	return ((m_startPageWidget && m_startPageWidget->isVisibleTo(this)) ? QString() : m_webWidget->getDescription());
 }
 
-QString WebContentsWidget::getActiveStyleSheet() const
-{
-	return m_webWidget->getActiveStyleSheet();
-}
-
-QString WebContentsWidget::getStatusMessage() const
-{
-	return m_webWidget->getStatusMessage();
-}
-
 QLatin1String WebContentsWidget::getType() const
 {
 	return QLatin1String("web");
@@ -1374,11 +1359,6 @@ QLatin1String WebContentsWidget::getType() const
 QVariant WebContentsWidget::getOption(int identifier) const
 {
 	return m_webWidget->getOption(identifier);
-}
-
-QVariant WebContentsWidget::getPageInformation(WebWidget::PageInformation key) const
-{
-	return m_webWidget->getPageInformation(key);
 }
 
 QUrl WebContentsWidget::getUrl() const
@@ -1409,26 +1389,6 @@ ActionsManager::ActionDefinition::State WebContentsWidget::getActionState(int id
 WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
-}
-
-QStringList WebContentsWidget::getStyleSheets() const
-{
-	return m_webWidget->getStyleSheets();
-}
-
-QVector<WebWidget::LinkUrl> WebContentsWidget::getFeeds() const
-{
-	return m_webWidget->getFeeds();
-}
-
-QVector<WebWidget::LinkUrl> WebContentsWidget::getSearchEngines() const
-{
-	return m_webWidget->getSearchEngines();
-}
-
-QVector<NetworkManager::ResourceInformation> WebContentsWidget::getBlockedRequests() const
-{
-	return m_webWidget->getBlockedRequests();
 }
 
 QHash<int, QVariant> WebContentsWidget::getOptions() const

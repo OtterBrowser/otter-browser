@@ -313,11 +313,6 @@ void ContentsWidget::setOption(int identifier, const QVariant &value)
 	Q_UNUSED(value)
 }
 
-void ContentsWidget::setActiveStyleSheet(const QString &styleSheet)
-{
-	Q_UNUSED(styleSheet)
-}
-
 void ContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
@@ -392,11 +387,6 @@ QString ContentsWidget::getVersion() const
 	return QCoreApplication::applicationVersion();
 }
 
-QString ContentsWidget::getActiveStyleSheet() const
-{
-	return QString();
-}
-
 QString ContentsWidget::getStatusMessage() const
 {
 	return QString();
@@ -405,13 +395,6 @@ QString ContentsWidget::getStatusMessage() const
 QVariant ContentsWidget::getOption(int identifier) const
 {
 	Q_UNUSED(identifier)
-
-	return QVariant();
-}
-
-QVariant ContentsWidget::getPageInformation(WebWidget::PageInformation key) const
-{
-	Q_UNUSED(key)
 
 	return QVariant();
 }
@@ -441,26 +424,6 @@ WindowHistoryInformation ContentsWidget::getHistory() const
 	information.entries.append(entry);
 
 	return information;
-}
-
-QStringList ContentsWidget::getStyleSheets() const
-{
-	return QStringList();
-}
-
-QVector<WebWidget::LinkUrl> ContentsWidget::getFeeds() const
-{
-	return QVector<WebWidget::LinkUrl>();
-}
-
-QVector<WebWidget::LinkUrl> ContentsWidget::getSearchEngines() const
-{
-	return QVector<WebWidget::LinkUrl>();
-}
-
-QVector<NetworkManager::ResourceInformation> ContentsWidget::getBlockedRequests() const
-{
-	return QVector<NetworkManager::ResourceInformation>();
 }
 
 WebWidget::ContentStates ContentsWidget::getContentState() const

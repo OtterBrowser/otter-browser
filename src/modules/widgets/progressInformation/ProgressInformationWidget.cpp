@@ -130,7 +130,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 		case ElementsType:
 			if (key == WebWidget::RequestsFinishedInformation)
 			{
-				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg(m_window ? m_window->getContentsWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
+				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg((m_window && m_window->getContentsWidget()->getWebWidget()) ? m_window->getContentsWidget()->getWebWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
 			}
 
 			break;
@@ -210,9 +210,9 @@ void ProgressInformationWidget::setWindow(Window *window)
 
 	m_window = window;
 
-	if (window)
+	if (window && window->getContentsWidget()->getWebWidget())
 	{
-		updateStatus(type, window->getContentsWidget()->getPageInformation(type));
+		updateStatus(type, window->getContentsWidget()->getWebWidget()->getPageInformation(type));
 
 		connect(m_window, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 	}
