@@ -684,10 +684,6 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 
 	switch (identifier)
 	{
-		case ActionsManager::SearchAction:
-			action->setParameters({{QLatin1String("searchEngine"), getOption(SettingsManager::Search_DefaultQuickSearchEngineOption)}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
-
-			break;
 		case ActionsManager::SelectDictionaryAction:
 			{
 				const QVector<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());

@@ -479,7 +479,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::SearchAction:
 			{
-				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.value(QLatin1String("searchEngine")).toString()));
+				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.value(QLatin1String("searchEngine"), getOption(SettingsManager::Search_DefaultQuickSearchEngineOption)).toString()));
 
 				if (!searchEngine.isValid())
 				{
@@ -487,7 +487,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 
 				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints());
-				const QString query(parameters.contains(QLatin1String("queryPlaceholder")) ? parseQuery(parameters[QLatin1String("queryPlaceholder")].toString()) : parameters.value(QLatin1String("query")).toString());
+				const QString query(parameters.contains(QLatin1String("query")) ? parameters.value(QLatin1String("query")).toString() : parseQuery(parameters.value(QLatin1String("queryPlaceholder"), QLatin1String("{selection}")).toString()));
 
 				if (hints == SessionsManager::CurrentTabOpen)
 				{
