@@ -924,18 +924,20 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			return;
-		case ActionsManager::PurgeTabHistoryAction:
-			for (int i = 0; i < m_page->history()->count(); ++i)
+		case ActionsManager::ClearTabHistoryAction:
+			if (parameters.value(QLatin1String("clearGlobalHistory")).toBool())
 			{
-				const quint64 identifier(m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toULongLong());
-
-				if (identifier > 0)
+				for (int i = 0; i < m_page->history()->count(); ++i)
 				{
-					HistoryManager::removeEntry(identifier);
+					const quint64 identifier(m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toULongLong());
+
+					if (identifier > 0)
+					{
+						HistoryManager::removeEntry(identifier);
+					}
 				}
 			}
 
-		case ActionsManager::ClearTabHistoryAction:
 			setUrl(QUrl(QLatin1String("about:blank")));
 
 			m_page->history()->clear();
@@ -943,6 +945,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 
 			return;
+		case ActionsManager::PurgeTabHistoryAction:
+			triggerAction(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}});
+
+			break;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		case ActionsManager::MuteTabMediaAction:
 			m_isAudioMuted = !m_isAudioMuted;

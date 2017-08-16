@@ -1513,7 +1513,7 @@ void MainWindow::handleWindowClose(Window *window)
 	{
 		const WindowHistoryInformation history(window->getHistory());
 
-		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
+		if (!history.isEmpty())
 		{
 			const Window *nextWindow(getWindowByIndex(index + 1));
 			const Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);

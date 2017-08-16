@@ -343,8 +343,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 #endif
 
 			return;
-		case ActionsManager::PurgeTabHistoryAction:
-///TODO
 		case ActionsManager::ClearTabHistoryAction:
 			setUrl(QUrl(QLatin1String("about:blank")));
 

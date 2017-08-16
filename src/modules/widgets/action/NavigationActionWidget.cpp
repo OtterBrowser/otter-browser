@@ -126,8 +126,9 @@ bool NavigationActionWidget::event(QEvent *event)
 					Action *clearTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, &menu));
 					clearTabHistoryAction->setExecutor(executor);
 
-					Action *purgeTabHistoryAction(new Action(ActionsManager::PurgeTabHistoryAction, &menu));
+					Action *purgeTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, &menu));
 					purgeTabHistoryAction->setExecutor(executor);
+					purgeTabHistoryAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Purge Tab History"));
 
 					menu.addAction(clearTabHistoryAction);
 					menu.addAction(purgeTabHistoryAction);

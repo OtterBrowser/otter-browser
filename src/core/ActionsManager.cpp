@@ -55,8 +55,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MinimizeTabAction, QT_TRANSLATE_NOOP("actions", "Minimize"), QT_TRANSLATE_NOOP("actions", "Minimize Tab"), QIcon(), ActionDefinition::WindowScope);
 	registerAction(RestoreTabAction, QT_TRANSLATE_NOOP("actions", "Restore"), QT_TRANSLATE_NOOP("actions", "Restore Tab"), QIcon(), ActionDefinition::WindowScope);
 	registerAction(AlwaysOnTopTabAction, QT_TRANSLATE_NOOP("actions", "Stay on Top"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
-	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local Tab History"), QIcon(), ActionDefinition::WindowScope);
-	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local and Global Tab History"), QIcon(), ActionDefinition::WindowScope);
+	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local Tab History"), QIcon(), ActionDefinition::WindowScope, ActionDefinition::NoFlags, ActionsManager::ActionDefinition::NavigationCategory);
+	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local and Global Tab History"), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsDeprecatedFlag, ActionsManager::ActionDefinition::NavigationCategory);
 	registerAction(MuteTabMediaAction, QT_TRANSLATE_NOOP("actions", "Mute Tab Media"), QString(), ThemesManager::createIcon(QLatin1String("audio-volume-muted")), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(SuspendTabAction, QT_TRANSLATE_NOOP("actions", "Suspend Tab"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), ThemesManager::createIcon(QLatin1String("tab-close")), ActionDefinition::WindowScope);

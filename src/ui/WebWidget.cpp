@@ -810,6 +810,19 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 	switch (identifier)
 	{
+		case ActionsManager::ClearTabHistoryAction:
+			state.isEnabled = !getHistory().isEmpty();
+
+			if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
+			{
+				state.text = QT_TRANSLATE_NOOP("actions", "Purge Tab History");
+			}
+
+			break;
+		case ActionsManager::PurgeTabHistoryAction:
+			state.isEnabled = !getHistory().isEmpty();
+
+			break;
 		case ActionsManager::OpenLinkAction:
 		case ActionsManager::OpenLinkInCurrentTabAction:
 		case ActionsManager::OpenLinkInNewTabAction:

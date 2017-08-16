@@ -48,6 +48,11 @@ struct WindowHistoryInformation
 {
 	QVector<WindowHistoryEntry> entries;
 	int index = -1;
+
+	bool isEmpty() const
+	{
+		return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.first().url))));
+	}
 };
 
 struct SessionWindow
