@@ -2118,6 +2118,10 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			state.isEnabled = ((m_isPrivate && m_windows.count() > 0) || m_privateWindows.count() > 0);
 
 			break;
+		case ActionsManager::OpenUrlAction:
+			state.isEnabled = !parameters.isEmpty();
+
+			break;
 		case ActionsManager::ReopenTabAction:
 			state.isEnabled = !m_closedWindows.isEmpty();
 
@@ -2162,6 +2166,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				{
 					state.text = bookmark->data(Qt::DisplayRole).toString();
 					state.icon = bookmark->data(Qt::DecorationRole).value<QIcon>();
+					state.isEnabled = true;
 				}
 				else
 				{
