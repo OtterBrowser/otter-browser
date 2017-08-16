@@ -238,8 +238,7 @@ public:
 			IsCheckableFlag = 2,
 			IsDeprecatedFlag = 4,
 			IsImmutableFlag = 8,
-			HasMenuFlag = 16,
-			RequiresParameters = 32
+			RequiresParameters = 16
 		};
 
 		Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
