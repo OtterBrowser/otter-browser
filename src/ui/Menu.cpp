@@ -1019,6 +1019,8 @@ void Menu::populateOpenInApplicationMenu()
 			}
 		}
 	}
+
+	disconnect(this, SIGNAL(aboutToShow()), this, SLOT(populateOpenInApplicationMenu()));
 }
 
 void Menu::populateProxiesMenu()
