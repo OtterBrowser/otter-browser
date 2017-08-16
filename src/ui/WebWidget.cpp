@@ -684,34 +684,6 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 
 	switch (identifier)
 	{
-		case ActionsManager::OpenLinkInApplicationAction:
-		case ActionsManager::OpenFrameInApplicationAction:
-		case ActionsManager::OpenPageInApplicationAction:
-			{
-				Menu *menu(new Menu(Menu::OpenInApplicationMenuRole, this));
-				menu->setExecutor(ActionExecutor::Object(this, this));
-				menu->setMenuOptions({{QLatin1String("mimeType"), QLatin1String("text/html")}});
-
-				switch (identifier)
-				{
-					case ActionsManager::OpenLinkInApplicationAction:
-						menu->setActionParameters({{QLatin1String("urlPlaceholder"), QLatin1String("{linkUrl}")}});
-
-						break;
-					case ActionsManager::OpenFrameInApplicationAction:
-						menu->setActionParameters({{QLatin1String("urlPlaceholder"), QLatin1String("{frameUrl}")}});
-
-						break;
-					default:
-						menu->setActionParameters({{QLatin1String("urlPlaceholder"), QLatin1String("{pageUrl}")}});
-
-						break;
-				}
-
-				action->setMenu(menu);
-			}
-
-			break;
 		case ActionsManager::SearchAction:
 			action->setParameters({{QLatin1String("searchEngine"), getOption(SettingsManager::Search_DefaultQuickSearchEngineOption)}, {QLatin1String("queryPlaceholder"), QLatin1String("{selection}")}});
 
@@ -940,7 +912,6 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-		case ActionsManager::OpenLinkInApplicationAction:
 		case ActionsManager::CopyLinkToClipboardAction:
 		case ActionsManager::SaveLinkToDiskAction:
 		case ActionsManager::SaveLinkToDownloadsAction:
@@ -955,7 +926,6 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::OpenFrameInCurrentTabAction:
 		case ActionsManager::OpenFrameInNewTabAction:
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
-		case ActionsManager::OpenFrameInApplicationAction:
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 		case ActionsManager::ReloadFrameAction:
 		case ActionsManager::ViewFrameSourceAction:
