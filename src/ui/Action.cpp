@@ -178,6 +178,11 @@ void Action::updateState()
 		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
 
+	if (definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters) && m_parameters.isEmpty())
+	{
+		state.isEnabled = false;
+	}
+
 	setShortcut((m_parameters.isEmpty() && !definition.shortcuts.isEmpty()) ? definition.shortcuts.first() : QKeySequence());
 	setState(state);
 }
