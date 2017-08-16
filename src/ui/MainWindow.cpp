@@ -2090,6 +2090,7 @@ QUrl MainWindow::getUrl() const
 ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifier, const QVariantMap &parameters) const
 {
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
+	ActionsManager::ActionDefinition::State state(definition.defaultState);
 
 	switch (definition.scope)
 	{
@@ -2099,7 +2100,9 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				return m_workspace->getActiveWindow()->getActionState(identifier, parameters);
 			}
 
-			return definition.defaultState;
+			state.isEnabled = false;
+
+			return state;
 		case ActionsManager::ActionDefinition::MainWindowScope:
 			break;
 		case ActionsManager::ActionDefinition::ApplicationScope:
@@ -2107,8 +2110,6 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 		default:
 			return definition.defaultState;
 	}
-
-	ActionsManager::ActionDefinition::State state(definition.defaultState);
 
 	switch (identifier)
 	{
