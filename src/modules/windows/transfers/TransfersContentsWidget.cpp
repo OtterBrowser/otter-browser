@@ -417,15 +417,18 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 
 	if (transfer)
 	{
-		menu.addAction(tr("Open"), this, SLOT(openTransfer()));
+		const bool canOpen(QFileInfo(transfer->getTarget()).exists());
+
+		menu.addAction(tr("Open"), this, SLOT(openTransfer()))->setEnabled(canOpen);
 
 		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenuRole, this));
+		openWithMenu->setEnabled(canOpen);
 		openWithMenu->setExecutor(ActionExecutor::Object(this, this));
 		openWithMenu->setActionParameters({{QLatin1String("url"), transfer->getTarget()}});
 		openWithMenu->setMenuOptions({{QLatin1String("mimeType"), transfer->getMimeType().name()}});
 
 		menu.addMenu(openWithMenu);
-		menu.addAction(tr("Open Folder"), this, SLOT(openTransferFolder()));
+		menu.addAction(tr("Open Folder"), this, SLOT(openTransferFolder()))->setEnabled(canOpen || QFileInfo(transfer->getTarget()).dir().exists());
 		menu.addSeparator();
 		menu.addAction(((transfer->getState() == Transfer::ErrorState) ? tr("Resume") : tr("Stop")), this, SLOT(stopResumeTransfer()))->setEnabled(transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState);
 		menu.addAction(tr("Redownload"), this, SLOT(redownloadTransfer()));
