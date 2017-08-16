@@ -72,7 +72,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions…"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(SaveSessionAction, QT_TRANSLATE_NOOP("actions", "Save Current Session…"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
-	registerAction(OpenUrlAction, QT_TRANSLATE_NOOP("actions", "Open URL"), QString(), QIcon(), ActionDefinition::MainWindowScope);
+	registerAction(OpenUrlAction, QT_TRANSLATE_NOOP("actions", "Open URL"), QString(), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::RequiresParameters);
 	registerAction(OpenLinkAction, QT_TRANSLATE_NOOP("actions", "Open"), QString(), ThemesManager::createIcon(QLatin1String("document-open")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::LinkCategory);
 	registerAction(OpenLinkInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open in This Tab"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::LinkCategory);
 	registerAction(OpenLinkInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::LinkCategory);
@@ -173,7 +173,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), ThemesManager::createIcon(QLatin1String("bookmarks-organize")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(BookmarkPageAction, QT_TRANSLATE_NOOP("actions", "Bookmark Page…"), QString(), ThemesManager::createIcon(QLatin1String("bookmark-new")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::PageCategory);
 	registerAction(BookmarkAllOpenPagesAction, QT_TRANSLATE_NOOP("actions", "Bookmark All Open Pages"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"), QString(), QIcon(), ActionDefinition::MainWindowScope);
+	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"), QString(), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::RequiresParameters);
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(CookiesAction, QT_TRANSLATE_NOOP("actions", "Cookies"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load All Plugins on the Page"), QString(), ThemesManager::createIcon(QLatin1String("preferences-plugin")), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
@@ -185,7 +185,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(WorkOfflineAction, QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(FullScreenAction, QT_TRANSLATE_NOOP("actions", "Full Screen"), QString(), ThemesManager::createIcon(QLatin1String("view-fullscreen")), ActionDefinition::MainWindowScope);
 	registerAction(ShowTabSwitcherAction, QT_TRANSLATE_NOOP("actions", "Show Tab Switcher"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(ShowToolBarAction, QT_TRANSLATE_NOOP("actions", "Show Toolbar"), QString(), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::IsCheckableFlag);
+	registerAction(ShowToolBarAction, QT_TRANSLATE_NOOP("actions", "Show Toolbar"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsCheckableFlag | ActionDefinition::RequiresParameters));
 	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsDeprecatedFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsDeprecatedFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), ThemesManager::createIcon(QLatin1String("sidebar-show")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsDeprecatedFlag | ActionDefinition::IsCheckableFlag));

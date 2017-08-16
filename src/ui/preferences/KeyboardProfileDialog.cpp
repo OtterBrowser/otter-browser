@@ -63,7 +63,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag))
+		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
 		}

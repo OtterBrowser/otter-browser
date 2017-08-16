@@ -175,7 +175,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		if (actions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag))
+		if (actions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || actions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
 			continue;
 		}
