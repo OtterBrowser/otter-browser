@@ -503,6 +503,15 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 			addAction(action);
 		}
+		else if (type == QLatin1String("include"))
+		{
+			const QJsonArray actions(object.value(QLatin1String("actions")).toArray());
+
+			for (int i = 0; i < actions.count(); ++i)
+			{
+				appendAction(actions.at(i), includeSections, executor);
+			}
+		}
 		else if (type == QLatin1String("menu"))
 		{
 			const QVariantMap options(object.value(QLatin1String("options")).toVariant().toMap());
