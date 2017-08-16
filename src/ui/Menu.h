@@ -45,6 +45,7 @@ public:
 		NotesMenuRole,
 		CharacterEncodingMenuRole,
 		ClosedWindowsMenuRole,
+		DictionariesMenuRole,
 		ImportExportMenuRole,
 		OpenInApplicationMenuRole,
 		ProxyMenuRole,
@@ -82,6 +83,7 @@ protected slots:
 	void populateOptionMenu();
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
+	void populateDictionariesMenu();
 	void populateNotesMenu();
 	void populateOpenInApplicationMenu();
 	void populateProxiesMenu();
@@ -98,6 +100,7 @@ protected slots:
 	void openBookmark();
 	void openImporter(QAction *action);
 	void openSession(QAction *action);
+	void selectDictionary(QAction *action);
 	void selectOption(QAction *action);
 	void selectStyleSheet(QAction *action);
 	void selectWindow(QAction *action);

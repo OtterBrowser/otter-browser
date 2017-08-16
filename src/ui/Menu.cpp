@@ -112,6 +112,13 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			}
 
 			break;
+		case DictionariesMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Dictionaries"));
+
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateDictionariesMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectDictionary(QAction*)));
+
+			break;
 		case ImportExportMenuRole:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
@@ -862,6 +869,46 @@ void Menu::populateClosedWindowsMenu()
 	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearClosedWindows()));
 }
 
+void Menu::populateDictionariesMenu()
+{
+	clear();
+
+	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+	if (!mainWindow)
+	{
+		return;
+	}
+
+	Window *window(mainWindow->getActiveWindow());
+
+	if (!window || !window->getContentsWidget()->getWebWidget())
+	{
+		return;
+	}
+
+	QString dictionary(window->getContentsWidget()->getWebWidget()->getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString());
+
+	if (dictionary.isEmpty())
+	{
+		dictionary = SpellCheckManager::getDefaultDictionary();
+	}
+
+	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(window->getContentsWidget()->getWebWidget()->getDictionaries());
+	QActionGroup *actionGroup(new QActionGroup(this));
+	actionGroup->setExclusive(true);
+
+	for (int i = 0; i < dictionaries.count(); ++i)
+	{
+		QAction *action(addAction(dictionaries.at(i).title));
+		action->setCheckable(true);
+		action->setChecked(dictionaries.at(i).name == dictionary);
+		action->setData(dictionaries.at(i).name);
+
+		actionGroup->addAction(action);
+	}
+}
+
 void Menu::populateNotesMenu()
 {
 	Menu *menu(qobject_cast<Menu*>(sender()));
@@ -1116,7 +1163,7 @@ void Menu::populateStyleSheetsMenu()
 		return;
 	}
 
-	Window *window(mainWindow->getWindowByIndex(-1));
+	Window *window(mainWindow->getActiveWindow());
 
 	if (!window || !window->getContentsWidget()->getWebWidget())
 	{
@@ -1134,7 +1181,6 @@ void Menu::populateStyleSheetsMenu()
 	for (int i = 0; i < styleSheets.count(); ++i)
 	{
 		QAction *action(addAction(styleSheets.at(i)));
-
 		action->setCheckable(true);
 		action->setChecked(styleSheets.at(i) == activeStyleSheet);
 
@@ -1417,6 +1463,23 @@ void Menu::openSession(QAction *action)
 	}
 }
 
+void Menu::selectDictionary(QAction *action)
+{
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+	if (!mainWindow)
+	{
+		return;
+	}
+
+	Window *window(mainWindow->getActiveWindow());
+
+	if (window && window->getContentsWidget()->getWebWidget() && action)
+	{
+		window->getContentsWidget()->getWebWidget()->setOption(SettingsManager::Browser_SpellCheckDictionaryOption, action->data().toString());
+	}
+}
+
 void Menu::selectOption(QAction *action)
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
@@ -1436,7 +1499,7 @@ void Menu::selectStyleSheet(QAction *action)
 		return;
 	}
 
-	Window *window(mainWindow->getWindowByIndex(-1));
+	Window *window(mainWindow->getActiveWindow());
 
 	if (window && window->getContentsWidget()->getWebWidget() && action)
 	{

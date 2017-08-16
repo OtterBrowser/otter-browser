@@ -193,7 +193,7 @@
 						"InspectElement",
 						"separator",
 						"CheckSpelling",
-						"SelectDictionary",
+						"DictionariesMenu",
 						"separator"
 					]
 				}
