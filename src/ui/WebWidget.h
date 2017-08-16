@@ -207,7 +207,6 @@ public:
 	void setParent(QWidget *parent);
 	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {});
 	void setWindowIdentifier(quint64 identifier);
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const = 0;
 	virtual QWidget* getInspector();
 	virtual QWidget* getViewport();
@@ -281,7 +280,6 @@ protected:
 	void setClickPosition(const QPoint &position);
 	QString suggestSaveFileName(SaveFormat format) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
-	ActionExecutor::Object getExecutor();
 	HitTestResult getCurrentHitTestResult() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;

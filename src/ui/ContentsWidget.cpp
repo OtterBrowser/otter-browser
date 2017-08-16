@@ -355,11 +355,23 @@ ContentsWidget* ContentsWidget::clone(bool cloneHistory) const
 
 Action* ContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(identifier)
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
+	if (identifier < 0)
+	{
+		return nullptr;
+	}
 
-	return nullptr;
+	Action *action(new Action(identifier, parameters, ((followState ? Action::FollowsActionStateFlag : Action::NoFlag) | Action::CanTriggerActionFlag), this));
+
+	if (m_window)
+	{
+		action->setExecutor(ActionExecutor::Object(m_window, m_window));
+	}
+	else
+	{
+		action->setExecutor(ActionExecutor::Object(this, this));
+	}
+
+	return action;
 }
 
 WebWidget* ContentsWidget::getWebWidget() const

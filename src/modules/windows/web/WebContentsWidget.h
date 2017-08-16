@@ -70,7 +70,6 @@ public:
 	void print(QPrinter *printer) override;
 	void setParent(Window *window) override;
 	WebContentsWidget* clone(bool cloneHistory = true) const override;
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	WebWidget* getWebWidget() const override;
 	QString parseQuery(const QString &query) const override;
 	QString getTitle() const override;
