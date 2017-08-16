@@ -175,6 +175,11 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
+		if (actions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag))
+		{
+			continue;
+		}
+
 		QStandardItem *item(new QStandardItem(actions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), IdentifierRole);

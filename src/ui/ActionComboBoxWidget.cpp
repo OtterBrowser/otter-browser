@@ -43,6 +43,11 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(par
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
+		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag))
+		{
+			continue;
+		}
+
 		QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
