@@ -23,11 +23,10 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../ui/ToolButtonWidget.h"
 
-#include <QtCore/QPointer>
-
 namespace Otter
 {
 
+class Action;
 class Window;
 
 class ActionWidget : public ToolButtonWidget
@@ -37,7 +36,6 @@ class ActionWidget : public ToolButtonWidget
 public:
 	explicit ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
-	Window* getWindow() const;
 	int getIdentifier() const;
 
 protected:
@@ -47,12 +45,10 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void resetAction();
 	void setWindow(Window *window);
 
 private:
-	QPointer<Window> m_window;
-	int m_identifier;
+	Action *m_action;
 };
 
 }

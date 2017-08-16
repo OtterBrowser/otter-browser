@@ -34,7 +34,8 @@
 namespace Otter
 {
 
-NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ActionWidget(((definition.action == QLatin1String("GoBackAction")) ? ActionsManager::GoBackAction : ActionsManager::GoForwardAction), window, definition, parent)
+NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ActionWidget(((definition.action == QLatin1String("GoBackAction")) ? ActionsManager::GoBackAction : ActionsManager::GoForwardAction), window, definition, parent),
+	m_window(window)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);
@@ -42,15 +43,22 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 
 	menu()->installEventFilter(this);
 
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
+	{
+		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+	}
+
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
 
 void NavigationActionWidget::goToHistoryIndex(QAction *action)
 {
-	if (getWindow() && action && action->data().type() == QVariant::Int)
+	if (m_window && action && action->data().type() == QVariant::Int)
 	{
-		getWindow()->getContentsWidget()->goToHistoryIndex(action->data().toInt());
+		m_window->getContentsWidget()->goToHistoryIndex(action->data().toInt());
 	}
 }
 
@@ -64,14 +72,14 @@ void NavigationActionWidget::addMenuEntry(int index, const WindowHistoryEntry &e
 
 void NavigationActionWidget::updateMenu()
 {
-	if (!menu() || !getWindow())
+	if (!menu() || !m_window)
 	{
 		return;
 	}
 
 	menu()->clear();
 
-	const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
+	const WindowHistoryInformation history(m_window->getContentsWidget()->getHistory());
 
 	if (getIdentifier() == ActionsManager::GoBackAction)
 	{
@@ -87,6 +95,11 @@ void NavigationActionWidget::updateMenu()
 			addMenuEntry(i, history.entries.at(i));
 		}
 	}
+}
+
+void NavigationActionWidget::setWindow(Window *window)
+{
+	m_window = window;
 }
 
 bool NavigationActionWidget::event(QEvent *event)
@@ -108,10 +121,16 @@ bool NavigationActionWidget::event(QEvent *event)
 
 					event->accept();
 
-					Window *window(getWindow());
+					ActionExecutor::Object executor(m_window, m_window);
 					QMenu menu(this);
-					menu.addAction(window ? window->createAction(ActionsManager::ClearTabHistoryAction) : Application::createAction(ActionsManager::ClearTabHistoryAction, QVariantMap(), true, this));
-					menu.addAction(window ? window->createAction(ActionsManager::PurgeTabHistoryAction) : Application::createAction(ActionsManager::PurgeTabHistoryAction, QVariantMap(), true, this));
+					Action *clearTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, &menu));
+					clearTabHistoryAction->setExecutor(executor);
+
+					Action *purgeTabHistoryAction(new Action(ActionsManager::PurgeTabHistoryAction, &menu));
+					purgeTabHistoryAction->setExecutor(executor);
+
+					menu.addAction(clearTabHistoryAction);
+					menu.addAction(purgeTabHistoryAction);
 
 					const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
@@ -143,9 +162,9 @@ bool NavigationActionWidget::event(QEvent *event)
 					const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(getIdentifier()).shortcuts);
 					QString toolTip(text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
-					if (getWindow())
+					if (m_window)
 					{
-						const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
+						const WindowHistoryInformation history(m_window->getContentsWidget()->getHistory());
 
 						if (!history.entries.isEmpty())
 						{
@@ -203,13 +222,13 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					menu()->close();
 
-					getWindow()->getContentsWidget()->removeHistoryIndex(action->data().toInt());
+					m_window->getContentsWidget()->removeHistoryIndex(action->data().toInt());
 				}
 				else if (selectedAction == purgeEntryAction)
 				{
 					menu()->close();
 
-					getWindow()->getContentsWidget()->removeHistoryIndex(action->data().toInt(), true);
+					m_window->getContentsWidget()->removeHistoryIndex(action->data().toInt(), true);
 				}
 			}
 		}
@@ -218,7 +237,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete && getWindow())
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete && m_window)
 		{
 			const QAction *action(menu()->activeAction());
 
@@ -226,7 +245,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				menu()->close();
 
-				getWindow()->getContentsWidget()->removeHistoryIndex(action->data().toInt(), keyEvent->modifiers().testFlag(Qt::ShiftModifier));
+				m_window->getContentsWidget()->removeHistoryIndex(action->data().toInt(), keyEvent->modifiers().testFlag(Qt::ShiftModifier));
 			}
 		}
 	}

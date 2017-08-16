@@ -32,10 +32,25 @@ namespace Otter
 {
 
 ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_window(window),
-	m_identifier(identifier)
+	m_action(new Action(identifier, definition.parameters, this))
 {
+	setDefaultAction(m_action);
 	setWindow(window);
+
+	if (isCustomized())
+	{
+		const QVariantMap options(getOptions());
+
+		if (options.contains(QLatin1String("icon")))
+		{
+			m_action->setOverrideIcon(getIcon());
+		}
+
+		if (options.contains(QLatin1String("text")))
+		{
+			m_action->setOverrideText(getText());
+		}
+	}
 
 	if (identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction)
 	{
@@ -59,8 +74,8 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		return;
 	}
 
-	int identifier(m_identifier);
-	QVariantMap parameters(getParameters());
+	int identifier(m_action->getIdentifier());
+	QVariantMap parameters(m_action->getParameters());
 
 	if (identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction)
 	{
@@ -83,20 +98,16 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	Application::triggerAction(identifier, parameters, this);
 
-	QAction *action(defaultAction());
-
 	setDefaultAction(nullptr);
 
 	ToolButtonWidget::mouseReleaseEvent(event);
 
-	setDefaultAction(action);
-	setText(getText());
-	setIcon(getIcon());
+	setDefaultAction(m_action);
 }
 
 void ActionWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction))
+	if (event->mimeData()->hasUrls() && (m_action->getIdentifier() == ActionsManager::NewTabAction || m_action->getIdentifier() == ActionsManager::NewTabPrivateAction))
 	{
 		event->accept();
 	}
@@ -108,13 +119,13 @@ void ActionWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void ActionWidget::dropEvent(QDropEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction))
+	if (event->mimeData()->hasUrls() && (m_action->getIdentifier() == ActionsManager::NewTabAction || m_action->getIdentifier() == ActionsManager::NewTabPrivateAction))
 	{
 		QVariantMap parameters(getParameters());
 		QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
 		SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, Qt::LeftButton, event->keyboardModifiers()));
 
-		if (m_identifier == ActionsManager::NewTabPrivateAction)
+		if (m_action->getIdentifier() == ActionsManager::NewTabPrivateAction)
 		{
 			hints |= SessionsManager::PrivateOpen;
 		}
@@ -137,70 +148,34 @@ void ActionWidget::dropEvent(QDropEvent *event)
 	}
 }
 
-void ActionWidget::resetAction()
+void ActionWidget::setWindow(Window *window)
 {
-	Action *action(nullptr);
-
-	if (m_window && !m_window->isAboutToClose() && ActionsManager::getActionDefinition(m_identifier).scope == ActionsManager::ActionDefinition::WindowScope && m_window->getLoadingState() != WebWidget::DeferredLoadingState)
+	if (m_action->getDefinition().scope == ActionsManager::ActionDefinition::WindowScope)
 	{
-		action = m_window->createAction(m_identifier);
+		m_action->setExecutor(ActionExecutor::Object(window, window));
 	}
 	else
 	{
-		action = Application::createAction(m_identifier, QVariantMap(), true, this);
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		m_action->setExecutor(ActionExecutor::Object(mainWindow, mainWindow));
 	}
-
-	if (!action)
-	{
-		action = new Action(m_identifier, getParameters(), this);
-		action->setEnabled(false);
-	}
-
-	removeAction(defaultAction());
-	setDefaultAction(action);
-	setText(getText());
-	setIcon(getIcon());
-}
-
-void ActionWidget::setWindow(Window *window)
-{
-	if (m_window && !m_window->isAboutToClose())
-	{
-		disconnect(m_window, SIGNAL(actionsStateChanged()), this, SLOT(resetAction()));
-	}
-
-	m_window = window;
-
-	if (window)
-	{
-		connect(window, SIGNAL(actionsStateChanged()), this, SLOT(resetAction()));
-	}
-
-	resetAction();
-}
-
-Window* ActionWidget::getWindow() const
-{
-	return m_window;
 }
 
 int ActionWidget::getIdentifier() const
 {
-	return m_identifier;
+	return m_action->getIdentifier();
 }
 
 bool ActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		const Action *action(qobject_cast<Action*>(defaultAction()));
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
-		if (action && helpEvent)
+		if (helpEvent)
 		{
-			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(action ? action->getIdentifier() : m_identifier).shortcuts);
-
-			QToolTip::showText(helpEvent->globalPos(), text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+			QToolTip::showText(helpEvent->globalPos(), text() + (m_action->shortcut().isEmpty() ? QString() : QLatin1String(" (") + m_action->shortcut().toString(QKeySequence::NativeText) + QLatin1Char(')')));
 		}
 
 		return true;

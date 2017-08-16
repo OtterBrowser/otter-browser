@@ -24,6 +24,8 @@
 #include "ActionWidget.h"
 #include "../../../core/SessionsManager.h"
 
+#include <QtCore/QPointer>
+
 namespace Otter
 {
 
@@ -43,6 +45,10 @@ protected:
 protected slots:
 	void goToHistoryIndex(QAction *action);
 	void updateMenu();
+	void setWindow(Window *window);
+
+private:
+	QPointer<Window> m_window;
 };
 
 }
