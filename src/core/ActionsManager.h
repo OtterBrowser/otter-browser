@@ -236,11 +236,10 @@ public:
 			NoFlags = 0,
 			IsEnabledFlag = 1,
 			IsCheckableFlag = 2,
-			IsCheckedFlag = 4,
-			IsDeprecatedFlag = 8,
-			IsImmutableFlag = 16,
-			HasMenuFlag = 32,
-			RequiresParameters = 64
+			IsDeprecatedFlag = 4,
+			IsImmutableFlag = 8,
+			HasMenuFlag = 16,
+			RequiresParameters = 32
 		};
 
 		Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
