@@ -662,7 +662,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 			if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
 			{
-				addressWidget->setFocus();
+				QTimer::singleShot(100, addressWidget, SLOT(setFocus()));
 			}
 		}
 	}
