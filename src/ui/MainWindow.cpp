@@ -1917,6 +1917,7 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 	updateWindowTitle();
 
 	emit currentWindowChanged(window ? window->getIdentifier() : 0);
+	emit actionsStateChanged();
 }
 
 void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity)

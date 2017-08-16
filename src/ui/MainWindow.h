@@ -162,6 +162,7 @@ signals:
 	void currentWindowChanged(quint64 identifier);
 	void closedWindowsAvailableChanged(bool available);
 	void areToolBarsVisibleChanged(bool areVisible);
+	void actionsStateChanged();
 	void actionsStateChanged(const QVector<int> &identifiers);
 	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 

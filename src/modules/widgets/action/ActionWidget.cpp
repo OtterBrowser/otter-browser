@@ -166,14 +166,14 @@ void ActionWidget::setWindow(Window *window)
 {
 	if (m_window && !m_window->isAboutToClose())
 	{
-		disconnect(m_window, SIGNAL(widgetChanged()), this, SLOT(resetAction()));
+		disconnect(m_window, SIGNAL(actionsStateChanged()), this, SLOT(resetAction()));
 	}
 
 	m_window = window;
 
 	if (window)
 	{
-		connect(window, SIGNAL(widgetChanged()), this, SLOT(resetAction()));
+		connect(window, SIGNAL(actionsStateChanged()), this, SLOT(resetAction()));
 	}
 
 	resetAction();

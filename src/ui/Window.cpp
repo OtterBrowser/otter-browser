@@ -619,7 +619,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			m_addressBar = nullptr;
 		}
 
-		emit widgetChanged();
+		emit actionsStateChanged();
 
 		return;
 	}
@@ -669,10 +669,10 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	m_session = SessionWindow();
 
-	emit widgetChanged();
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit urlChanged(m_contentsWidget->getUrl());
 	emit iconChanged(m_contentsWidget->getIcon());
+	emit actionsStateChanged();
 	emit loadingStateChanged(m_contentsWidget->getLoadingState());
 	emit canZoomChanged(m_contentsWidget->canZoom());
 

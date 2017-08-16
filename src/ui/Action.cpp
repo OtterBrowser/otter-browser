@@ -189,20 +189,29 @@ void Action::updateState()
 
 void Action::setExecutor(ActionExecutor::Object executor)
 {
+	const ActionsManager::ActionDefinition definition(getDefinition());
+
 	if (m_executor.isValid())
 	{
-		if (executor.getObject()->inherits("Otter::MainWindow"))
+		if (m_executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged()") >= 0)
 		{
-			disconnect(m_executor.getObject(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
+			disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged()), this, SLOT(updateState()));
 		}
 
-		disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
-		disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+		if (m_executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(QVector<int>)") >= 0)
+		{
+			disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		}
+
+		if (definition.category != ActionsManager::ActionDefinition::OtherCategory &&  m_executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)") >= 0)
+		{
+			disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+		}
 	}
 
 	if (executor.isValid())
 	{
-		switch (getDefinition().scope)
+		switch (definition.scope)
 		{
 			case ActionsManager::ActionDefinition::MainWindowScope:
 				if (!executor.getObject()->inherits("Otter::Application") && !executor.getObject()->inherits("Otter::MainWindow"))
@@ -238,16 +247,19 @@ void Action::setExecutor(ActionExecutor::Object executor)
 	{
 		updateState();
 
-		connect(executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
-
-		if (getDefinition().category != ActionsManager::ActionDefinition::OtherCategory)
+		if (executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged()") >= 0)
 		{
-			connect(executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+			connect(executor.getObject(), SIGNAL(actionsStateChanged()), this, SLOT(updateState()));
 		}
 
-		if (executor.getObject()->inherits("Otter::MainWindow"))
+		if (executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(QVector<int>)") >= 0)
 		{
-			connect(executor.getObject(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(updateState()));
+			connect(executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		}
+
+		if (definition.category != ActionsManager::ActionDefinition::OtherCategory &&  executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)") >= 0)
+		{
+			connect(executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
 		}
 	}
 }
