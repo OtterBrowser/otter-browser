@@ -20,7 +20,7 @@
 #ifndef OTTER_WIDGETFACTORY_H
 #define OTTER_WIDGETFACTORY_H
 
-#include "../core/ActionsManager.h"
+#include "../core/ToolBarsManager.h"
 
 #include <QtWidgets/QWidget>
 
@@ -33,7 +33,7 @@ class Window;
 namespace WidgetFactory
 {
 
-QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent, Window *window = nullptr);
+QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent, Window *window = nullptr);
 QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow = nullptr, int sidebar = -1);
 
 }

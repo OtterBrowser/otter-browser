@@ -277,14 +277,6 @@ public:
 		}
 	};
 
-	struct ActionEntryDefinition
-	{
-		QString action;
-		QVariantMap options;
-		QVariantMap parameters;
-		QVector<ActionEntryDefinition> entries;
-	};
-
 	static void createInstance();
 	static void loadProfiles();
 	static ActionsManager* getInstance();

@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-PanelChooserWidget::PanelChooserWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent)
+PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::InstantPopup);

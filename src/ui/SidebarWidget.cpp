@@ -47,7 +47,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 
 	m_resizerWidget = new ResizerWidget(m_ui->containerWidget, this);
 
-	ActionsManager::ActionEntryDefinition definition;
+	ToolBarsManager::ToolBarDefinition::Entry definition;
 	definition.parameters[QLatin1String("sidebar")] = m_toolBarWidget->getIdentifier();
 
 	QToolBar *toolbar(new QToolBar(this));

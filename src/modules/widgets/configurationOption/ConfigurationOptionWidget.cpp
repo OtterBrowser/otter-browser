@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QWidget(parent),
+ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : QWidget(parent),
 	m_optionWidget(nullptr),
 	m_window(window),
 	m_scope(WindowScope),

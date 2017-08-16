@@ -36,7 +36,7 @@ class ConfigurationOptionWidget final : public QWidget
 	Q_OBJECT
 
 public:
-	explicit ConfigurationOptionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
+	explicit ConfigurationOptionWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 protected:
 	enum OptionScope

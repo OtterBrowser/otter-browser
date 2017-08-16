@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-ProgressInformationWidget::ProgressInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QWidget(parent),
+ProgressInformationWidget::ProgressInformationWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : QWidget(parent),
 	m_window(nullptr),
 	m_label(nullptr),
 	m_progressBar(nullptr),

@@ -34,7 +34,7 @@ class ContentBlockingInformationWidget final : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
+	explicit ContentBlockingInformationWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 	QString getText() const override;
 	QIcon getIcon() const override;

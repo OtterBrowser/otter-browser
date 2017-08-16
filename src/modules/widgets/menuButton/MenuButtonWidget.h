@@ -32,7 +32,7 @@ class MenuButtonWidget final : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit MenuButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent);
+	explicit MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent);
 
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;

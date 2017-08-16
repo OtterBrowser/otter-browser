@@ -812,7 +812,7 @@ void ToolBarWidget::loadBookmarks()
 			}
 			else
 			{
-				addWidget(new BookmarkWidget(bookmark, ActionsManager::ActionEntryDefinition(), this));
+				addWidget(new BookmarkWidget(bookmark, ToolBarsManager::ToolBarDefinition::Entry(), this));
 			}
 		}
 	}

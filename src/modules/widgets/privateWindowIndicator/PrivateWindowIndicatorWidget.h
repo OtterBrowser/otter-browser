@@ -30,7 +30,7 @@ class PrivateWindowIndicatorWidget final : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit PrivateWindowIndicatorWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent);
+	explicit PrivateWindowIndicatorWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent);
 
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;

@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-PrivateWindowIndicatorWidget::PrivateWindowIndicatorWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
+PrivateWindowIndicatorWidget::PrivateWindowIndicatorWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_isHidden(false)
 {
 	setIcon(ThemesManager::createIcon(QLatin1String("window-private"), false));

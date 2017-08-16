@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-MenuButtonWidget::MenuButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
+MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_menu(new Menu(Menu::NoMenuRole, this)),
 	m_isHidden(false)
 {

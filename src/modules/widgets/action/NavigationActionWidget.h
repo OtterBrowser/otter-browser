@@ -32,7 +32,7 @@ class NavigationActionWidget final : public ActionWidget
 	Q_OBJECT
 
 public:
-	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
+	explicit NavigationActionWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 

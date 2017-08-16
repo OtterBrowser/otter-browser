@@ -20,7 +20,7 @@
 #ifndef OTTER_PROGRESSINFORMATIONWIDGET_H
 #define OTTER_PROGRESSINFORMATIONWIDGET_H
 
-#include "../../../core/ActionsManager.h"
+#include "../../../core/ToolBarsManager.h"
 #include "../../../ui/WebWidget.h"
 
 #include <QtWidgets/QLabel>
@@ -48,7 +48,7 @@ public:
 		MessageType
 	};
 
-	explicit ProgressInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
+	explicit ProgressInformationWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 	QSize sizeHint() const override;
 

@@ -241,7 +241,7 @@ void ToolBarDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent)
+void ToolBarDialog::addEntry(const ToolBarsManager::ToolBarDefinition::Entry &entry, QStandardItem *parent)
 {
 	QStandardItem *item(createEntry(entry.action, entry.options, entry.parameters));
 
@@ -708,9 +708,9 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	return item;
 }
 
-ActionsManager::ActionEntryDefinition ToolBarDialog::getEntry(QStandardItem *item) const
+ToolBarsManager::ToolBarDefinition::Entry ToolBarDialog::getEntry(QStandardItem *item) const
 {
-	ActionsManager::ActionEntryDefinition definition;
+	ToolBarsManager::ToolBarDefinition::Entry definition;
 
 	if (!item)
 	{

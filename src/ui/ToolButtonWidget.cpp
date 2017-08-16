@@ -33,7 +33,7 @@
 namespace Otter
 {
 
-ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QToolButton(parent),
+ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : QToolButton(parent),
 	m_parameters(definition.parameters),
 	m_isCustomized(false)
 {
@@ -102,7 +102,7 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 	painter.drawComplexControl(QStyle::CC_ToolButton, option);
 }
 
-void ToolButtonWidget::addMenu(Menu *menu, const QVector<ActionsManager::ActionEntryDefinition> &entries)
+void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBarDefinition::Entry> &entries)
 {
 	for (int i = 0; i < entries.count(); ++i)
 	{

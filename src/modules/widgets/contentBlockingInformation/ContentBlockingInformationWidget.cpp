@@ -34,7 +34,7 @@
 namespace Otter
 {
 
-ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
+ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_window(window),
 	m_elementsMenu(nullptr),
 	m_profilesMenu(nullptr),

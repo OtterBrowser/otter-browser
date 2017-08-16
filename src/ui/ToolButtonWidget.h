@@ -35,7 +35,7 @@ class ToolButtonWidget : public QToolButton
 	Q_OBJECT
 
 public:
-	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
+	explicit ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 	virtual QString getText() const;
 	virtual QIcon getIcon() const;
@@ -49,7 +49,7 @@ public slots:
 protected:
 	void actionEvent(QActionEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
-	void addMenu(Menu *menu, const QVector<ActionsManager::ActionEntryDefinition> &entries);
+	void addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBarDefinition::Entry> &entries);
 	bool event(QEvent *event) override;
 
 protected slots:

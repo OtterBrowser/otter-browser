@@ -434,7 +434,7 @@ QString ToolBarsManager::getToolBarName(int identifier)
 	return m_identifiers.value(identifier);
 }
 
-QJsonValue ToolBarsManager::encodeEntry(const ActionsManager::ActionEntryDefinition &definition)
+QJsonValue ToolBarsManager::encodeEntry(const ToolBarDefinition::Entry &definition)
 {
 	if (definition.entries.isEmpty() && definition.options.isEmpty() && definition.parameters.isEmpty())
 	{
@@ -469,9 +469,9 @@ QJsonValue ToolBarsManager::encodeEntry(const ActionsManager::ActionEntryDefinit
 	return QJsonValue(action);
 }
 
-ActionsManager::ActionEntryDefinition ToolBarsManager::decodeEntry(const QJsonValue &value)
+ToolBarsManager::ToolBarDefinition::Entry ToolBarsManager::decodeEntry(const QJsonValue &value)
 {
-	ActionsManager::ActionEntryDefinition definition;
+	ToolBarDefinition::Entry definition;
 
 	if (value.isString())
 	{
@@ -687,7 +687,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 
 		if (!hasMenuBar)
 		{
-			ActionsManager::ActionEntryDefinition definition;
+			ToolBarDefinition::Entry definition;
 			definition.action = QLatin1String("MenuBarWidget");
 
 			m_definitions[MenuBar].entries.prepend(definition);
@@ -707,7 +707,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 
 		if (!hasTabBar)
 		{
-			ActionsManager::ActionEntryDefinition definition;
+			ToolBarDefinition::Entry definition;
 			definition.action = QLatin1String("TabBarWidget");
 
 			m_definitions[TabBar].entries.prepend(definition);

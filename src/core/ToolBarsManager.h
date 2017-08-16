@@ -63,11 +63,19 @@ public:
 
 	struct ToolBarDefinition
 	{
+		struct Entry
+		{
+			QString action;
+			QVariantMap options;
+			QVariantMap parameters;
+			QVector<Entry> entries;
+		};
+
 		QString title;
 		QString bookmarksPath;
 		QString currentPanel;
 		QStringList panels;
-		QVector<ActionsManager::ActionEntryDefinition> entries;
+		QVector<Entry> entries;
 		ToolBarType type = ActionsBarType;
 		ToolBarVisibility normalVisibility = AlwaysVisibleToolBar;
 		ToolBarVisibility fullScreenVisibility = AlwaysHiddenToolBar;
@@ -112,9 +120,9 @@ protected:
 	explicit ToolBarsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static QJsonValue encodeEntry(const ActionsManager::ActionEntryDefinition &definition);
-	static ActionsManager::ActionEntryDefinition decodeEntry(const QJsonValue &value);
-	static QHash<QString, ToolBarsManager::ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
+	static QJsonValue encodeEntry(const ToolBarDefinition::Entry &definition);
+	static ToolBarDefinition::Entry decodeEntry(const QJsonValue &value);
+	static QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
 
 protected slots:
 	void scheduleSave();
@@ -125,7 +133,7 @@ private:
 
 	static ToolBarsManager *m_instance;
 	static QMap<int, QString> m_identifiers;
-	static QVector<ToolBarsManager::ToolBarDefinition> m_definitions;
+	static QVector<ToolBarDefinition> m_definitions;
 	static int m_toolBarIdentifierEnumerator;
 	static bool m_areToolBarsLocked;
 

@@ -56,7 +56,7 @@ namespace Otter
 namespace WidgetFactory
 {
 
-QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent, Window *window)
+QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent, Window *window)
 {
 	if (definition.action == QLatin1String("spacer"))
 	{
