@@ -137,7 +137,6 @@ public:
 		UnselectAction,
 		ClearAllAction,
 		CheckSpellingAction,
-		SelectDictionaryAction,
 		FindAction,
 		FindNextAction,
 		FindPreviousAction,
