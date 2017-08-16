@@ -53,7 +53,8 @@ public:
 	enum DataRole
 	{
 		BytesReceivedRole = Qt::UserRole,
-		BytesTotalRole
+		BytesTotalRole,
+		StateRole
 	};
 
 	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window);

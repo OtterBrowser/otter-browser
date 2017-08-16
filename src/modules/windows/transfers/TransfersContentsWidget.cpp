@@ -49,11 +49,13 @@ void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 
 	if (progressBar)
 	{
+		const Transfer::TransferState state(static_cast<Transfer::TransferState>(index.data(TransfersContentsWidget::StateRole).toInt()));
 		const qint64 bytesTotal(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong());
 		const bool isIndeterminate(bytesTotal <= 0);
+		const bool hasError(state == Transfer::UnknownState || state == Transfer::ErrorState);
 
-		progressBar->setRange(0, (isIndeterminate ? 0 : 100));
-		progressBar->setValue(isIndeterminate ? -1 : qFloor((static_cast<qreal>(index.data(TransfersContentsWidget::BytesReceivedRole).toLongLong()) / bytesTotal) * 100));
+		progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
+		progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : qFloor((static_cast<qreal>(index.data(TransfersContentsWidget::BytesReceivedRole).toLongLong()) / bytesTotal) * 100));
 		progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
 	}
 }
@@ -271,6 +273,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 			case 3:
 				m_model->setData(index, transfer->getBytesReceived(), BytesReceivedRole);
 				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
+				m_model->setData(index, transfer->getState(), StateRole);
 
 				break;
 			case 4:
