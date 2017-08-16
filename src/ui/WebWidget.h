@@ -235,6 +235,7 @@ public:
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
 	virtual QStringList getStyleSheets() const;
+	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual QVector<LinkUrl> getFeeds() const;
 	virtual QVector<LinkUrl> getSearchEngines() const;
 	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
@@ -282,7 +283,6 @@ protected:
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	ActionExecutor::Object getExecutor();
 	HitTestResult getCurrentHitTestResult() const;
-	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfDeferredPlugins() const;
@@ -299,9 +299,6 @@ protected:
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
-	void pasteNote(QAction *action);
-	void selectDictionary(QAction *action);
-	void selectDictionaryMenuAboutToShow();
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleWindowCloseRequest();
 	void notifyFillPasswordActionStateChanged();

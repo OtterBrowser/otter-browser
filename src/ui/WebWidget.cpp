@@ -31,7 +31,6 @@
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"
 #include "../core/IniSettings.h"
-#include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
@@ -178,54 +177,6 @@ void WebWidget::startTransfer(Transfer *transfer)
 			}
 
 			break;
-	}
-}
-
-void WebWidget::pasteNote(QAction *action)
-{
-	if (action && action->data().isValid())
-	{
-		const BookmarksItem *note(NotesManager::getModel()->getBookmark(action->data().toULongLong()));
-
-		if (note)
-		{
-			triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), note->data(BookmarksModel::DescriptionRole).toString()}});
-		}
-	}
-}
-
-void WebWidget::selectDictionary(QAction *action)
-{
-	if (action)
-	{
-		setOption(SettingsManager::Browser_SpellCheckDictionaryOption, action->data().toString());
-	}
-}
-
-void WebWidget::selectDictionaryMenuAboutToShow()
-{
-	const QMenu *menu(qobject_cast<QMenu*>(sender()));
-
-	if (!menu)
-	{
-		return;
-	}
-
-	QString dictionary(getOption(SettingsManager::Browser_SpellCheckDictionaryOption, getUrl()).toString());
-
-	if (dictionary.isEmpty())
-	{
-		dictionary = SpellCheckManager::getDefaultDictionary();
-	}
-
-	for (int i = 0; i < menu->actions().count(); ++i)
-	{
-		QAction *action(menu->actions().at(i));
-
-		if (action)
-		{
-			action->setChecked(action->data().toString() == dictionary);
-		}
 	}
 }
 
@@ -681,35 +632,6 @@ Action* WebWidget::createAction(int identifier, const QVariantMap parameters, bo
 
 	Action *action(new Action(identifier, parameters, ((followState ? Action::FollowsActionStateFlag : Action::NoFlag) | Action::CanTriggerActionFlag), this));
 	action->setExecutor(getExecutor());
-
-	switch (identifier)
-	{
-		case ActionsManager::SelectDictionaryAction:
-			{
-				const QVector<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
-				QMenu *menu(new QMenu(this));
-				QActionGroup *dictionariesGroup(new QActionGroup(menu));
-				dictionariesGroup->setExclusive(true);
-
-				action->setMenu(menu);
-
-				for (int i = 0; i < dictionaries.count(); ++i)
-				{
-					QAction *action(menu->addAction(dictionaries.at(i).title));
-					action->setCheckable(true);
-					action->setData(dictionaries.at(i).name);
-
-					dictionariesGroup->addAction(action);
-				}
-
-				connect(menu, SIGNAL(aboutToShow()), this, SLOT(selectDictionaryMenuAboutToShow()));
-				connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(selectDictionary(QAction*)));
-			}
-
-			break;
-		default:
-			break;
-	}
 
 	return action;
 }
