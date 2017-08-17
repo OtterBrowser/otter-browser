@@ -300,7 +300,6 @@ protected slots:
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleWindowCloseRequest();
 	void notifyFillPasswordActionStateChanged();
-	void notifyMuteTabMediaActionStateChanged();
 	void notifyRedoActionStateChanged();
 	void notifyUndoActionStateChanged();
 	void notifyPageActionsChanged();
@@ -348,6 +347,7 @@ signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);
+	void isAudibleChanged(bool isAudible);
 	void isFullScreenChanged(bool isFullScreen);
 };
 

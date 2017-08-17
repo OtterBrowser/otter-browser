@@ -100,7 +100,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
 #if QT_VERSION >= 0x050700
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(notifyMuteTabMediaActionStateChanged()));
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(isAudivleChanged(bool)));
 #endif
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(notifyNavigationActionsChanged()));
 	connect(m_page, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
@@ -355,7 +355,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
-			notifyMuteTabMediaActionStateChanged();
+			emit actionsStateChanged(QVector<int>({ActionsManager::MuteTabMediaAction}));
 
 			return;
 #endif

@@ -312,11 +312,6 @@ void WebWidget::notifyFillPasswordActionStateChanged()
 	emit actionsStateChanged(QVector<int>(ActionsManager::FillPasswordAction));
 }
 
-void WebWidget::notifyMuteTabMediaActionStateChanged()
-{
-	emit actionsStateChanged(QVector<int>({ActionsManager::MuteTabMediaAction}));
-}
-
 void WebWidget::notifyRedoActionStateChanged()
 {
 	emit actionsStateChanged(QVector<int>({ActionsManager::RedoAction}));
@@ -934,7 +929,6 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::MuteTabMediaAction:
-			state.isEnabled = (isAudible() || isAudioMuted());
 			state.icon = ThemesManager::createIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium"));
 			state.text = (isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
 
