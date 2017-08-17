@@ -312,6 +312,21 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 
 		connect(m_loadingAnimation, SIGNAL(frameChanged()), this, SLOT(update()));
 	}
+	else if (m_loadingAnimation)
+	{
+		for (int i = 0; i < m_tabBarWidget->count(); ++i)
+		{
+			const Window *window(m_tabBarWidget->getWindow(i));
+
+			if (window && window->getLoadingState() == WebWidget::OngoingLoadingState)
+			{
+				return;
+			}
+		}
+
+		m_loadingAnimation->deleteLater();
+		m_loadingAnimation = nullptr;
+	}
 }
 
 void TabHandleWidget::updateGeometries()
