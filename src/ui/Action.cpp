@@ -50,8 +50,6 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags,
 
 void Action::initialize()
 {
-	const ActionsManager::ActionDefinition definition(getDefinition());
-
 	switch (m_identifier)
 	{
 		case ActionsManager::PreferencesAction:
@@ -76,7 +74,7 @@ void Action::initialize()
 
 	setShortcutContext(Qt::WidgetShortcut);
 
-	if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+	if (getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
 	{
 		setCheckable(true);
 	}
@@ -88,6 +86,8 @@ void Action::initialize()
 
 	updateIcon();
 	updateState();
+
+	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcut()));
 }
 
 void Action::triggerAction(bool isChecked)
@@ -154,6 +154,13 @@ void Action::updateIcon()
 	}
 }
 
+void Action::updateShortcut()
+{
+	const ActionsManager::ActionDefinition definition(getDefinition());
+
+	setShortcut((m_parameters.isEmpty() && !definition.shortcuts.isEmpty()) ? definition.shortcuts.first() : QKeySequence());
+}
+
 void Action::updateState()
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
@@ -183,7 +190,7 @@ void Action::updateState()
 		state.isEnabled = false;
 	}
 
-	setShortcut((m_parameters.isEmpty() && !definition.shortcuts.isEmpty()) ? definition.shortcuts.first() : QKeySequence());
+	updateShortcut();
 	setState(state);
 }
 

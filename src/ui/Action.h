@@ -68,6 +68,7 @@ protected slots:
 	void triggerAction(bool isChecked = false);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
+	void updateShortcut();
 	void updateState();
 
 private:
