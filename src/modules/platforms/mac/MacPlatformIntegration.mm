@@ -179,16 +179,47 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 	[[MacPlatformIntegrationUserNotificationCenterDelegate alloc] initWithPlatformIntegration:this];
 	[[NSApp dockTile] setContentView:[MacPlatformIntegrationDockIconView getSharedDockIconView]];
 
+	const QVector<int> actions({ActionsManager::NewTabAction, ActionsManager::NewTabPrivateAction, -1, ActionsManager::BookmarksAction, ActionsManager::TransfersAction, ActionsManager::HistoryAction, ActionsManager::NotesAction});
+	ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 	Menu *menu(new Menu());
-	menu->addAction(ActionsManager::NewTabAction);
-	menu->addAction(ActionsManager::NewTabPrivateAction);
-	menu->addAction(ActionsManager::NewWindowAction);
-	menu->addAction(ActionsManager::NewWindowPrivateAction);
-	menu->addSeparator();
-	menu->addAction(ActionsManager::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
-	menu->addAction(ActionsManager::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
-	menu->addAction(ActionsManager::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
-	menu->addAction(ActionsManager::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+
+	for (int i = 0; i < actions.count(); ++i)
+	{
+		if (actions.at(i) < 0)
+		{
+			menu->addSeparator();
+		}
+		else
+		{
+			Action *action(new Action(actions.at(i), {}, Action::CanTriggerActionFlag, menu));
+			action->setExecutor(executor);
+
+			switch (actions.at(i))
+			{
+				case ActionsManager::BookmarksAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+
+					break;
+				case ActionsManager::TransfersAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
+
+					break;
+				case ActionsManager::HistoryAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+
+					break;
+				case ActionsManager::NotesAction:
+					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+
+					break;
+				default:
+					break;
+			}
+
+			menu->addAction(action);
+		}
+	}
+
 	menu->setAsDockMenu();
 
 	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfersProgress()));
