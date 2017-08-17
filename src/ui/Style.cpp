@@ -114,6 +114,31 @@ void Style::drawPrimitive(PrimitiveElement element, const QStyleOption *option, 
 			}
 
 			break;
+		case QStyle::PE_IndicatorTabClose:
+			{
+				const int size(pixelMetric(QStyle::PM_TabCloseIndicatorWidth, option, widget));
+
+				if (option->rect.width() < size)
+				{
+					const qreal scale(option->rect.width() / static_cast<qreal>(size));
+					QStyleOption indicatorOption;
+					indicatorOption.state = option->state;
+					indicatorOption.rect = QRect(0, 0, size, size);
+
+					painter->save();
+					painter->setRenderHint(QPainter::SmoothPixmapTransform);
+					painter->translate(option->rect.topLeft());
+					painter->scale(scale, scale);
+
+					QProxyStyle::drawPrimitive(element, &indicatorOption, painter, widget);
+
+					painter->restore();
+
+					return;
+				}
+			}
+
+			break;
 		case PE_PanelStatusBar:
 			QProxyStyle::drawPrimitive(element, option, painter, widget);
 
