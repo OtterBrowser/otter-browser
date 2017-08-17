@@ -809,6 +809,18 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 	switch (identifier)
 	{
+		case ActionsManager::CloneTabAction:
+			state.isEnabled = canClone();
+
+			break;
+		case ActionsManager::DetachTabAction:
+			state.isEnabled = (m_mainWindow->getWindowCount() > 1);
+
+			break;
+		case ActionsManager::PinTabAction:
+			state.text = (m_isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
+
+			break;
 		case ActionsManager::CloseTabAction:
 			state.isEnabled = !m_isPinned;
 
