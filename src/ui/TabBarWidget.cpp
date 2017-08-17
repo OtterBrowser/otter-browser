@@ -681,8 +681,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	hidePreview();
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	QVariantMap parameters;
+	ActionExecutor::Object executor;
 	QMenu menu(this);
 	menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, this));
 	menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, this));
@@ -693,45 +692,35 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (window)
 		{
-			parameters[QLatin1String("tab")] = window->getIdentifier();
+			executor = ActionExecutor::Object(window, window);
 
-			const int amount(count() - m_pinnedTabsAmount);
-			const bool isPinned(window->isPinned());
 			Action *cloneTabAction(new Action(ActionsManager::CloneTabAction, &menu));
-			cloneTabAction->setEnabled(window->canClone());
-			cloneTabAction->setParameters(parameters);
+			cloneTabAction->setExecutor(executor);
 
 			Action *pinTabAction(new Action(ActionsManager::PinTabAction, &menu));
-			pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
-			pinTabAction->setParameters(parameters);
+			pinTabAction->setExecutor(executor);
+
+			Action *muteTabMediaAction(new Action(ActionsManager::MuteTabMediaAction, &menu));
+			muteTabMediaAction->setExecutor(executor);
 
 			Action *detachTabAction(new Action(ActionsManager::DetachTabAction, &menu));
-			detachTabAction->setEnabled(count() > 1);
-			detachTabAction->setParameters(parameters);
+			detachTabAction->setExecutor(executor);
 
 			Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
-			closeTabAction->setEnabled(!isPinned);
-			closeTabAction->setParameters(parameters);
+			closeTabAction->setExecutor(executor);
 
-			Action *closeOtherTabsAction(new Action(ActionsManager::CloseOtherTabsAction, &menu));
-			closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
-			closeOtherTabsAction->setParameters(parameters);
+			Action *closeOtherTabsAction(new Action(ActionsManager::CloseOtherTabsAction, {{QLatin1String("tab"), window->getIdentifier()}}, &menu));
+			closeOtherTabsAction->setExecutor(executor);
 
 			menu.addAction(cloneTabAction);
 			menu.addAction(pinTabAction);
-			menu.addAction((window && window->getLoadingState() != WebWidget::DeferredLoadingState) ? window->createAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
+			menu.addAction(muteTabMediaAction);
 			menu.addSeparator();
 			menu.addAction(detachTabAction);
 			menu.addSeparator();
 			menu.addAction(closeTabAction);
 			menu.addAction(closeOtherTabsAction);
 			menu.addAction(Application::createAction(ActionsManager::ClosePrivateTabsAction, QVariantMap(), true, this));
-
-			connect(cloneTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-			connect(pinTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-			connect(detachTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-			connect(closeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-			connect(closeOtherTabsAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 		}
 	}
 
@@ -739,16 +728,13 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
 	Action *restoreTabAction(new Action(ActionsManager::RestoreTabAction, &menu));
-	restoreTabAction->setEnabled(m_clickedTab >= 0);
-	restoreTabAction->setParameters(parameters);
+	restoreTabAction->setExecutor(executor);
 
 	Action *minimizeTabAction(new Action(ActionsManager::MinimizeTabAction, &menu));
-	minimizeTabAction->setEnabled(m_clickedTab >= 0);
-	minimizeTabAction->setParameters(parameters);
+	minimizeTabAction->setExecutor(executor);
 
 	Action *maximizeTabAction(new Action(ActionsManager::MaximizeTabAction, &menu));
-	maximizeTabAction->setEnabled(m_clickedTab >= 0);
-	maximizeTabAction->setParameters(parameters);
+	maximizeTabAction->setExecutor(executor);
 
 	arrangeMenu->addAction(restoreTabAction);
 	arrangeMenu->addAction(minimizeTabAction);
@@ -777,9 +763,6 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
 	});
-	connect(restoreTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-	connect(minimizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-	connect(maximizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 
 	if (qobject_cast<ToolBarWidget*>(parentWidget()))
 	{
