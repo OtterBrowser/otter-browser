@@ -148,7 +148,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(handleLoadProgress(int)));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished(bool)));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(isAudibleChanged(bool)));
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SIGNAL(isAudibleChanged(bool)));
 #endif
 	connect(m_page->mainFrame(), SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_page->mainFrame(), SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
