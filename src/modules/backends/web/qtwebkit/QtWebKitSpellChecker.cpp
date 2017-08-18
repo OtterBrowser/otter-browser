@@ -27,8 +27,9 @@
 namespace Otter
 {
 
-QtWebKitSpellChecker::QtWebKitSpellChecker() : QWebSpellChecker(),
-	m_speller(nullptr)
+Sonnet::Speller* QtWebKitSpellChecker::m_speller(nullptr);
+
+QtWebKitSpellChecker::QtWebKitSpellChecker() : QWebSpellChecker()
 {
 	setDictionary(QtWebKitWebBackend::getActiveDictionary());
 
@@ -159,6 +160,21 @@ QString QtWebKitSpellChecker::autoCorrectSuggestionForMisspelledWord(const QStri
 	Q_UNUSED(word)
 
 	return QString();
+}
+
+QStringList QtWebKitSpellChecker::getSuggestions(const QString &word)
+{
+	if (!m_speller)
+	{
+		m_speller = new Sonnet::Speller(QtWebKitWebBackend::getActiveDictionary());
+	}
+
+	if (m_speller->isCorrect(word))
+	{
+		return QStringList();
+	}
+
+	return m_speller->suggest(word);
 }
 
 bool QtWebKitSpellChecker::isContinousSpellCheckingEnabled() const

@@ -44,6 +44,7 @@ public:
 	void ignoreWordInSpellDocument(const QString &word) override;
 	void guessesForWord(const QString &word, const QString &context, QStringList &guesses) override;
 	QString autoCorrectSuggestionForMisspelledWord(const QString &word) override;
+	static QStringList getSuggestions(const QString &word);
 	bool isContinousSpellCheckingEnabled() const override;
 	bool isGrammarCheckingEnabled() override;
 
@@ -54,7 +55,7 @@ protected slots:
 	void setDictionary(const QString &dictionary);
 
 private:
-	Sonnet::Speller *m_speller;
+	static Sonnet::Speller *m_speller;
 };
 
 }
