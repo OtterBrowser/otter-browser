@@ -114,10 +114,7 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 			}
 			else
 			{
-				Action *action(new Action(ActionsManager::getActionIdentifier(entries.at(i).action), menu));
-				action->setExecutor(ActionExecutor::Object(Application::getInstance(), Application::getInstance()));
-
-				menu->addAction(action);
+				menu->addAction(new Action(ActionsManager::getActionIdentifier(entries.at(i).action), {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), menu));
 			}
 		}
 		else

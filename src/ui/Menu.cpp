@@ -461,8 +461,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				return;
 			}
 
-			Action *action(new Action(identifier, parameters, this));
-			action->setExecutor(executor);
+			Action *action(new Action(identifier, parameters, executor, this));
 
 			if (object.contains(QLatin1String("group")))
 			{
@@ -549,10 +548,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 				if (identifier >= 0)
 				{
-					Action *action(new Action(identifier, this));
-					action->setExecutor(executor);
-
-					addAction(action);
+					addAction(new Action(identifier, {}, executor, this));
 				}
 				else
 				{
@@ -948,8 +944,7 @@ void Menu::populateNotesMenu()
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
-			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, this));
-			action->setExecutor(getExecutor());
+			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, getExecutor(), this));
 			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
 			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
@@ -994,8 +989,7 @@ void Menu::populateOpenInApplicationMenu()
 	{
 		parameters[QLatin1String("application")] = QString();
 
-		Action *action(new Action(ActionsManager::OpenUrlAction, parameters, this));
-		action->setExecutor(executor);
+		Action *action(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
 		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Application"));
 
 		addAction(action);
@@ -1006,8 +1000,7 @@ void Menu::populateOpenInApplicationMenu()
 		{
 			parameters[QLatin1String("application")] = applications.at(i).command;
 
-			Action *action(new Action(ActionsManager::OpenUrlAction, parameters, this));
-			action->setExecutor(executor);
+			Action *action(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
 			action->setOverrideIcon(applications.at(i).icon);
 			action->setOverrideText(((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name));
 
@@ -1091,8 +1084,7 @@ void Menu::populateSearchMenu()
 
 		if (searchEngine.isValid())
 		{
-			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenuRole) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, this));
-			action->setExecutor(executor);
+			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenuRole) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
 			action->setOverrideIcon(searchEngine.icon);
 			action->setOverrideText(searchEngine.title);
 			action->setToolTip(searchEngine.description);
@@ -1112,14 +1104,9 @@ void Menu::populateSessionsMenu()
 	clear();
 
 	ActionExecutor::Object executor(getExecutor());
-	Action *saveSessionAction(new Action(ActionsManager::SaveSessionAction, this));
-	saveSessionAction->setExecutor(executor);
 
-	Action *sessionsAction(new Action(ActionsManager::SessionsAction, this));
-	sessionsAction->setExecutor(executor);
-
-	addAction(saveSessionAction);
-	addAction(sessionsAction);
+	addAction(new Action(ActionsManager::SaveSessionAction, {}, executor, this));
+	addAction(new Action(ActionsManager::SessionsAction, {}, executor, this));
 	addSeparator();
 
 	m_actionGroup = new QActionGroup(this);
@@ -1210,10 +1197,7 @@ void Menu::populateToolBarsMenu()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		Action *action(new Action(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), definitions.at(i).identifier}}, this));
-		action->setExecutor(executor);
-
-		addAction(action);
+		addAction(new Action(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), definitions.at(i).identifier}}, executor, this));
 	}
 
 	addSeparator();
@@ -1236,17 +1220,11 @@ void Menu::populateToolBarsMenu()
 	addNewMenu->addAction(addBookmarksBarAction);
 	addNewMenu->addAction(addSideBarAction);
 
-	Action *lockToolBarsAction(new Action(ActionsManager::LockToolBarsAction, this));
-	lockToolBarsAction->setExecutor(executor);
-
-	Action *resetToolBarsAction(new Action(ActionsManager::ResetToolBarsAction, this));
-	resetToolBarsAction->setExecutor(executor);
-
 	addAction(addNewAction);
 	addSeparator();
-	addAction(lockToolBarsAction);
+	addAction(new Action(ActionsManager::LockToolBarsAction, {}, executor, this));
 	addSeparator();
-	addAction(resetToolBarsAction);
+	addAction(new Action(ActionsManager::ResetToolBarsAction, {}, executor, this));
 
 	connect(addToolBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addToolBar()));
 	connect(addBookmarksBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));

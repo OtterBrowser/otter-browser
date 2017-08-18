@@ -711,32 +711,14 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			executor = ActionExecutor::Object(window, window);
 
-			Action *cloneTabAction(new Action(ActionsManager::CloneTabAction, &menu));
-			cloneTabAction->setExecutor(executor);
-
-			Action *pinTabAction(new Action(ActionsManager::PinTabAction, &menu));
-			pinTabAction->setExecutor(executor);
-
-			Action *muteTabMediaAction(new Action(ActionsManager::MuteTabMediaAction, &menu));
-			muteTabMediaAction->setExecutor(executor);
-
-			Action *detachTabAction(new Action(ActionsManager::DetachTabAction, &menu));
-			detachTabAction->setExecutor(executor);
-
-			Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
-			closeTabAction->setExecutor(executor);
-
-			Action *closeOtherTabsAction(new Action(ActionsManager::CloseOtherTabsAction, {{QLatin1String("tab"), window->getIdentifier()}}, &menu));
-			closeOtherTabsAction->setExecutor(executor);
-
-			menu.addAction(cloneTabAction);
-			menu.addAction(pinTabAction);
-			menu.addAction(muteTabMediaAction);
+			menu.addAction(new Action(ActionsManager::CloneTabAction, {}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::PinTabAction, {}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::MuteTabMediaAction, {}, executor, &menu));
 			menu.addSeparator();
-			menu.addAction(detachTabAction);
+			menu.addAction(new Action(ActionsManager::DetachTabAction, {}, executor, &menu));
 			menu.addSeparator();
-			menu.addAction(closeTabAction);
-			menu.addAction(closeOtherTabsAction);
+			menu.addAction(new Action(ActionsManager::CloseTabAction, {}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::CloseOtherTabsAction, {{QLatin1String("tab"), window->getIdentifier()}}, executor, &menu));
 			menu.addAction(Application::createAction(ActionsManager::ClosePrivateTabsAction, QVariantMap(), true, this));
 		}
 	}
@@ -744,18 +726,9 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addSeparator();
 
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	Action *restoreTabAction(new Action(ActionsManager::RestoreTabAction, &menu));
-	restoreTabAction->setExecutor(executor);
-
-	Action *minimizeTabAction(new Action(ActionsManager::MinimizeTabAction, &menu));
-	minimizeTabAction->setExecutor(executor);
-
-	Action *maximizeTabAction(new Action(ActionsManager::MaximizeTabAction, &menu));
-	maximizeTabAction->setExecutor(executor);
-
-	arrangeMenu->addAction(restoreTabAction);
-	arrangeMenu->addAction(minimizeTabAction);
-	arrangeMenu->addAction(maximizeTabAction);
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, &menu));
+	arrangeMenu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, executor, &menu));
+	arrangeMenu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, executor, &menu));
 	arrangeMenu->addSeparator();
 	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
 	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));

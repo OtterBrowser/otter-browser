@@ -191,8 +191,7 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 		}
 		else
 		{
-			Action *action(new Action(actions.at(i), {}, Action::CanTriggerActionFlag, menu));
-			action->setExecutor(executor);
+			Action *action(new Action(actions.at(i), {}, executor, menu));
 
 			switch (actions.at(i))
 			{
