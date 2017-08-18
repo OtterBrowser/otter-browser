@@ -326,6 +326,8 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 
 		m_loadingAnimation->deleteLater();
 		m_loadingAnimation = nullptr;
+
+		update();
 	}
 }
 
