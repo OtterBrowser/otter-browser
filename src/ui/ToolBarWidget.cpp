@@ -732,20 +732,21 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
 	});
 
+	ActionExecutor::Object executor(m_mainWindow, m_mainWindow);
 	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, this));
-	menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, this));
+	menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
 	menu.addSeparator();
 
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreTabAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, arrangeMenu));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, executor, arrangeMenu));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, QVariantMap(), true, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, executor, arrangeMenu));
 
 	menu.addMenu(createCustomizationMenu(m_identifier, {cycleAction, thumbnailsAction}, &menu));
 	menu.exec(event->globalPos());
