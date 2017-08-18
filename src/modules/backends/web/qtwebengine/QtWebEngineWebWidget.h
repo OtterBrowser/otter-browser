@@ -49,9 +49,10 @@ public:
 	QIcon getIcon() const override;
 	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
+	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;
@@ -89,7 +90,6 @@ protected:
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QWebEnginePage* getPage() const;
-	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	QDateTime getLastUrlClickTime() const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;
