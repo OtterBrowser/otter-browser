@@ -698,10 +698,12 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	hidePreview();
 
-	ActionExecutor::Object executor;
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	ActionExecutor::Object mainWindowExecutor(mainWindow, mainWindow);
+	ActionExecutor::Object windowExecutor;
 	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, this));
-	menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, this));
+	menu.addAction(new Action(ActionsManager::NewTabAction, {}, mainWindowExecutor, &menu));
+	menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, mainWindowExecutor, &menu));
 
 	if (m_clickedTab >= 0)
 	{
@@ -709,33 +711,33 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (window)
 		{
-			executor = ActionExecutor::Object(window, window);
+			windowExecutor = ActionExecutor::Object(window, window);
 
-			menu.addAction(new Action(ActionsManager::CloneTabAction, {}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::PinTabAction, {}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::MuteTabMediaAction, {}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::CloneTabAction, {}, windowExecutor, &menu));
+			menu.addAction(new Action(ActionsManager::PinTabAction, {}, windowExecutor, &menu));
+			menu.addAction(new Action(ActionsManager::MuteTabMediaAction, {}, windowExecutor, &menu));
 			menu.addSeparator();
-			menu.addAction(new Action(ActionsManager::DetachTabAction, {}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::DetachTabAction, {}, windowExecutor, &menu));
 			menu.addSeparator();
-			menu.addAction(new Action(ActionsManager::CloseTabAction, {}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::CloseOtherTabsAction, {{QLatin1String("tab"), window->getIdentifier()}}, executor, &menu));
-			menu.addAction(Application::createAction(ActionsManager::ClosePrivateTabsAction, QVariantMap(), true, this));
+			menu.addAction(new Action(ActionsManager::CloseTabAction, {}, windowExecutor, &menu));
+			menu.addAction(new Action(ActionsManager::CloseOtherTabsAction, {{QLatin1String("tab"), window->getIdentifier()}}, windowExecutor, &menu));
+			menu.addAction(new Action(ActionsManager::ClosePrivateTabsAction, {}, mainWindowExecutor, &menu));
 		}
 	}
 
 	menu.addSeparator();
 
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, &menu));
-	arrangeMenu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, executor, &menu));
-	arrangeMenu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, executor, &menu));
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, windowExecutor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, windowExecutor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, windowExecutor, arrangeMenu));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::MinimizeAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, mainWindowExecutor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, mainWindowExecutor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, mainWindowExecutor, arrangeMenu));
 	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(Application::createAction(ActionsManager::CascadeAllAction, QVariantMap(), true, this));
-	arrangeMenu->addAction(Application::createAction(ActionsManager::TileAllAction, QVariantMap(), true, this));
+	arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, mainWindowExecutor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, mainWindowExecutor, arrangeMenu));
 
 	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
 	cycleAction->setCheckable(true);
@@ -764,7 +766,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		customizationMenu->addAction(cycleAction);
 		customizationMenu->addAction(thumbnailsAction);
 		customizationMenu->addSeparator();
-		customizationMenu->addAction(Application::createAction(ActionsManager::LockToolBarsAction, QVariantMap(), true, this));
+		customizationMenu->addAction(new Action(ActionsManager::LockToolBarsAction, {}, mainWindowExecutor, &menu));
 	}
 
 	menu.exec(event->globalPos());
