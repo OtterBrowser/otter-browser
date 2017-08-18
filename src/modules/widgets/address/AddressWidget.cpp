@@ -521,7 +521,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (!m_isUsingSimpleMode)
 		{
-			menu.addAction(Application::createAction(ActionsManager::PasteAndGoAction, QVariantMap(), true, this));
+			menu.addAction(new Action(ActionsManager::PasteAndGoAction, {}, ActionExecutor::Object(m_window, m_window), this));
 		}
 
 		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
@@ -537,18 +537,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (entry == WebsiteInformationEntry && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
 		{
-			if (m_window)
-			{
-				menu.addAction(m_window->createAction(ActionsManager::WebsiteInformationAction));
-			}
-			else
-			{
-				Action *websiteInformationAction(new Action(ActionsManager::WebsiteInformationAction, &menu));
-				websiteInformationAction->setEnabled(false);
-
-				menu.addAction(websiteInformationAction);
-			}
-
+			menu.addAction(new Action(ActionsManager::WebsiteInformationAction, {}, ActionExecutor::Object(m_window, m_window), &menu));
 			menu.addSeparator();
 		}
 
