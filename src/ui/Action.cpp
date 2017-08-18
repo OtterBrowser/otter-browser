@@ -48,6 +48,15 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags,
 	initialize();
 }
 
+Action::Action(int identifier, const QVariantMap &parameters, ActionExecutor::Object executor, QObject *parent) : QAction(parent),
+	m_parameters(parameters),
+	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
+	m_identifier(identifier)
+{
+	initialize();
+	setExecutor(executor);
+}
+
 void Action::initialize()
 {
 	switch (m_identifier)
