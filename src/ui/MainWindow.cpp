@@ -985,55 +985,30 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 	}
 }
 
-void MainWindow::triggerAction()
+void MainWindow::triggerShortcut()
 {
-	QVariantMap parameters;
-	int identifier(-1);
 	const Shortcut *shortcut(qobject_cast<Shortcut*>(sender()));
 
-	if (shortcut)
+	if (!shortcut)
 	{
-		if (shortcut->getParameters().isEmpty())
-		{
-			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(shortcut->getIdentifier()));
+		return;
+	}
 
-			if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
-			{
-				Action *action(createAction(definition.identifier));
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(shortcut->getIdentifier()));
+	QVariantMap parameters(shortcut->getParameters());
 
-				if (action)
-				{
-					action->toggle();
+	if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+	{
+		parameters[QLatin1String("isChecked")] = !getActionState(shortcut->getIdentifier(), parameters).isChecked;
+	}
 
-					return;
-				}
-			}
-		}
-
-		identifier = shortcut->getIdentifier();
-		parameters = shortcut->getParameters();
+	if (definition.scope == ActionsManager::ActionDefinition::ApplicationScope)
+	{
+		Application::getInstance()->triggerAction(shortcut->getIdentifier(), parameters);
 	}
 	else
 	{
-		const Action *action(qobject_cast<Action*>(sender()));
-
-		if (action)
-		{
-			identifier = action->getIdentifier();
-			parameters = action->getParameters();
-		}
-	}
-
-	if (identifier >= 0)
-	{
-		if (ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::ApplicationScope)
-		{
-			Application::getInstance()->triggerAction(identifier, parameters);
-		}
-		else
-		{
-			triggerAction(identifier, parameters);
-		}
+		triggerAction(shortcut->getIdentifier(), parameters);
 	}
 }
 
@@ -1857,7 +1832,7 @@ void MainWindow::updateShortcuts()
 
 				m_shortcuts.append(shortcut);
 
-				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerAction()));
+				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerShortcut()));
 			}
 		}
 	}
