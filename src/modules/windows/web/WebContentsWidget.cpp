@@ -39,7 +39,6 @@
 #include "../../../core/ToolBarsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
-#include "../../../ui/Action.h"
 #include "../../../ui/CertificateDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
@@ -533,11 +532,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::EnableJavaScriptAction:
-			m_webWidget->setOption(SettingsManager::Permissions_EnableJavaScriptOption, Action::calculateCheckedState(parameters));
+			m_webWidget->setOption(SettingsManager::Permissions_EnableJavaScriptOption, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
 			break;
 		case ActionsManager::EnableReferrerAction:
-			m_webWidget->setOption(SettingsManager::Network_EnableReferrerOption, Action::calculateCheckedState(parameters));
+			m_webWidget->setOption(SettingsManager::Network_EnableReferrerOption, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
 			break;
 		case ActionsManager::QuickPreferencesAction:

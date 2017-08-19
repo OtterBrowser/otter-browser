@@ -725,7 +725,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			if (parameters.contains(QLatin1String("toolBar")))
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt()));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -734,7 +734,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -743,7 +743,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowTabBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -784,7 +784,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowErrorConsoleAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ErrorConsoleBar));
-				definition.normalVisibility = (Action::calculateCheckedState(parameters) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}

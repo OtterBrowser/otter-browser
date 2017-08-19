@@ -605,11 +605,11 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::WorkOfflineAction:
-			SettingsManager::setOption(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters));
+			SettingsManager::setOption(SettingsManager::Network_WorkOfflineOption, parameters.value(QLatin1String("isChecked"), !m_instance->getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
 		case ActionsManager::LockToolBarsAction:
-			ToolBarsManager::setToolBarsLocked(Action::calculateCheckedState(parameters));
+			ToolBarsManager::setToolBarsLocked(parameters.value(QLatin1String("isChecked"), !m_instance->getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
 		case ActionsManager::ResetToolBarsAction:

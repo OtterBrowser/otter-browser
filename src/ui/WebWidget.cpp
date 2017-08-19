@@ -21,7 +21,6 @@
 **************************************************************************/
 
 #include "WebWidget.h"
-#include "Action.h"
 #include "ContentsDialog.h"
 #include "ContentsWidget.h"
 #include "Menu.h"
@@ -1272,7 +1271,7 @@ bool WebWidget::calculateCheckedState(int identifier, const QVariantMap &paramet
 			break;
 	}
 
-	return Action::calculateCheckedState(parameters);
+	return parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool();
 }
 
 bool WebWidget::canGoBack() const

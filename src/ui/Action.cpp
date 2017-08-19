@@ -360,16 +360,6 @@ bool Action::event(QEvent *event)
 	return QAction::event(event);
 }
 
-bool Action::calculateCheckedState(const QVariantMap &parameters)
-{
-	if (parameters.contains(QLatin1String("isChecked")))
-	{
-		return parameters.value(QLatin1String("isChecked")).toBool();
-	}
-
-	return true;
-}
-
 Shortcut::Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent) : QShortcut(sequence, parent),
 	m_identifier(identifier)
 {
