@@ -1012,30 +1012,6 @@ void MainWindow::triggerShortcut()
 	}
 }
 
-void MainWindow::triggerAction(bool isChecked)
-{
-	const Action *action(qobject_cast<Action*>(sender()));
-
-	if (action)
-	{
-		QVariantMap parameters(action->getParameters());
-
-		if (action->isCheckable())
-		{
-			parameters[QLatin1String("isChecked")] = isChecked;
-		}
-
-		if (ActionsManager::getActionDefinition(action->getIdentifier()).scope == ActionsManager::ActionDefinition::ApplicationScope)
-		{
-			Application::getInstance()->triggerAction(action->getIdentifier(), parameters);
-		}
-		else
-		{
-			triggerAction(action->getIdentifier(), parameters);
-		}
-	}
-}
-
 void MainWindow::open(const QUrl &url, SessionsManager::OpenHints hints)
 {
 	triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});

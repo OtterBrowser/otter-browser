@@ -81,7 +81,6 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(bool isChecked);
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void openUrl(const QString &text = {}, bool isPrivate = false);
 	void storeWindowState();
