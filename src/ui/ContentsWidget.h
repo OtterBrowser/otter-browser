@@ -83,7 +83,6 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 
 protected slots:
-	void triggerAction();
 	void handleAboutToClose();
 	void handleDialogFinished();
 

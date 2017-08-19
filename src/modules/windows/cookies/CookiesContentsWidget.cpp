@@ -462,8 +462,6 @@ Action* CookiesContentsWidget::createAction(int identifier, const QVariantMap pa
 
 	m_actions[identifier] = action;
 
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
 	return action;
 }
 

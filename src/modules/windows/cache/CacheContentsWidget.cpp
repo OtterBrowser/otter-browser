@@ -541,8 +541,6 @@ Action* CacheContentsWidget::createAction(int identifier, const QVariantMap para
 
 	m_actions[identifier] = action;
 
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
 	return action;
 }
 

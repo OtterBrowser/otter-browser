@@ -182,23 +182,6 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 	}
 }
 
-void ContentsWidget::triggerAction()
-{
-	const Action *action(qobject_cast<Action*>(sender()));
-
-	if (action)
-	{
-		if (action->isCheckable())
-		{
-			triggerAction(action->getIdentifier(), {{QLatin1String("isChecked"), action->isChecked()}});
-		}
-		else
-		{
-			triggerAction(action->getIdentifier());
-		}
-	}
-}
-
 void ContentsWidget::handleAboutToClose()
 {
 	for (int i = 0; i < m_dialogs.count(); ++i)

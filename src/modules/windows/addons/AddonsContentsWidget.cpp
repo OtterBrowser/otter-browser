@@ -412,8 +412,6 @@ Action* AddonsContentsWidget::createAction(int identifier, const QVariantMap par
 
 	m_actions[identifier] = action;
 
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
 	return action;
 }
 

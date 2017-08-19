@@ -579,8 +579,6 @@ Action* TransfersContentsWidget::createAction(int identifier, const QVariantMap 
 
 	m_actions[identifier] = action;
 
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
 	return action;
 }
 

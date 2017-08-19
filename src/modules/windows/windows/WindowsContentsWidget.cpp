@@ -148,16 +148,10 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 			if (windowItem)
 			{
-				Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
-				closeTabAction->setEnabled(!index.data(SessionModel::IsPinnedRole).toBool());
-				closeTabAction->setParameters({{QLatin1String("tab"), index.data(SessionModel::IdentifierRole).toULongLong()}});
-
 				menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
 				menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
 				menu.addSeparator();
-				menu.addAction(closeTabAction);
-
-				connect(closeTabAction, SIGNAL(triggered()), windowItem->getActiveWindow()->getMainWindow(), SLOT(triggerAction()));
+				menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(windowItem->getActiveWindow(), windowItem->getActiveWindow()), &menu));
 			}
 		}
 	}

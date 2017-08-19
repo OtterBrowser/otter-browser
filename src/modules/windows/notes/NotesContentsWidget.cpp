@@ -345,8 +345,6 @@ Action* NotesContentsWidget::createAction(int identifier, const QVariantMap para
 					connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateActions()));
 				}
 
-				connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
 				return action;
 			}
 	}

@@ -190,18 +190,13 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					}
 				}
 
-				const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-				Action *bookmarkAllOpenPagesAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, this));
-				bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowCount() > 0);
-
-				Action *copyLinkAction(new Action(ActionsManager::CopyLinkToClipboardAction, this));
-				copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
+				MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 				menu.addSeparator();
-				menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, QVariantMap(), true, this));
-				menu.addAction(bookmarkAllOpenPagesAction);
+				menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, {}, true, &menu));
+				menu.addAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 				menu.addSeparator();
-				menu.addAction(copyLinkAction);
+				menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, &menu));
 
 				if (!isInTrash)
 				{
@@ -232,9 +227,6 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 						menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
 					}
 				}
-
-				connect(bookmarkAllOpenPagesAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
-				connect(copyLinkAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
 			}
 
 			break;
@@ -343,8 +335,6 @@ Action* BookmarksContentsWidget::createAction(int identifier, const QVariantMap 
 	}
 
 	m_actions[identifier] = action;
-
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
 	return action;
 }
