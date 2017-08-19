@@ -85,7 +85,6 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	QHash<Addon::AddonType, int> m_types;
-	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	Ui::AddonsContentsWidget *m_ui;
 };

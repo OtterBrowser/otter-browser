@@ -75,7 +75,6 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	Ui::CookiesContentsWidget *m_ui;
 };

@@ -76,7 +76,6 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	Ui::PasswordsContentsWidget *m_ui;
 };

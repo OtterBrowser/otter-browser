@@ -70,7 +70,6 @@ protected slots:
 	void updateText();
 
 private:
-	QHash<int, Action*> m_actions;
 	Ui::NotesContentsWidget *m_ui;
 };
 

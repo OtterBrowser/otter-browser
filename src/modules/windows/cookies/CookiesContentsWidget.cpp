@@ -440,27 +440,17 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 
 Action* CookiesContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
-
-	if (m_actions.contains(identifier))
-	{
-		return m_actions[identifier];
-	}
-
 	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
 	{
 		return nullptr;
 	}
 
-	Action *action(new Action(identifier, this));
+	Action *action(ContentsWidget::createAction(identifier, parameters, followState));
 
 	if (identifier == ActionsManager::DeleteAction)
 	{
 		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Cookie"));
 	}
-
-	m_actions[identifier] = action;
 
 	return action;
 }

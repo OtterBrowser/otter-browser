@@ -272,15 +272,7 @@ void NotesContentsWidget::updateActions(bool updateText)
 		connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
 	}
 
-	if (m_actions.contains(ActionsManager::PasteAction))
-	{
-		m_actions[ActionsManager::PasteAction]->setEnabled(!QGuiApplication::clipboard()->text().isEmpty());
-	}
-
-	if (m_actions.contains(ActionsManager::DeleteAction))
-	{
-		m_actions[ActionsManager::DeleteAction]->setEnabled(m_ui->deleteButton->isEnabled());
-	}
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
 void NotesContentsWidget::updateText()
@@ -314,14 +306,6 @@ void NotesContentsWidget::print(QPrinter *printer)
 
 Action* NotesContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
-
-	if (m_actions.contains(identifier))
-	{
-		return m_actions[identifier];
-	}
-
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
@@ -330,9 +314,7 @@ Action* NotesContentsWidget::createAction(int identifier, const QVariantMap para
 		case ActionsManager::PasteAction:
 		case ActionsManager::DeleteAction:
 			{
-				Action *action(new Action(identifier, this));
-
-				m_actions[identifier] = action;
+				Action *action(ContentsWidget::createAction(identifier, parameters, followState));
 
 				if (identifier == ActionsManager::CopyLinkToClipboardAction)
 				{

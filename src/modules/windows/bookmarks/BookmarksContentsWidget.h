@@ -71,7 +71,6 @@ protected slots:
 	void updateActions();
 
 private:
-	QHash<int, Action*> m_actions;
 	Ui::BookmarksContentsWidget *m_ui;
 };
 

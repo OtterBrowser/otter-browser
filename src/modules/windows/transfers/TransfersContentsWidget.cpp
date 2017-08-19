@@ -562,24 +562,12 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 
 Action* TransfersContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
-
-	if (m_actions.contains(identifier))
-	{
-		return m_actions[identifier];
-	}
-
 	if (identifier != ActionsManager::CopyAction && identifier != ActionsManager::DeleteAction)
 	{
 		return nullptr;
 	}
 
-	Action *action(new Action(identifier, this));
-
-	m_actions[identifier] = action;
-
-	return action;
+	return ContentsWidget::createAction(identifier, parameters, followState);
 }
 
 QString TransfersContentsWidget::getTitle() const

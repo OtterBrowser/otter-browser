@@ -299,11 +299,6 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)));
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 
-	if (m_actions.contains(ActionsManager::DeleteAction))
-	{
-		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
-	}
-
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
@@ -314,27 +309,17 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 
 Action* BookmarksContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
-
-	if (m_actions.contains(identifier))
-	{
-		return m_actions[identifier];
-	}
-
 	if (identifier != ActionsManager::DeleteAction)
 	{
 		return nullptr;
 	}
 
-	Action *action(new Action(identifier, this));
+	Action *action(ContentsWidget::createAction(identifier, parameters, followState));
 
 	if (identifier == ActionsManager::DeleteAction)
 	{
 		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Bookmark"));
 	}
-
-	m_actions[identifier] = action;
 
 	return action;
 }

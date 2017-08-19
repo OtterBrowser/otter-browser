@@ -352,24 +352,12 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 
 Action* PasswordsContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
 {
-	Q_UNUSED(parameters)
-	Q_UNUSED(followState)
-
-	if (m_actions.contains(identifier))
-	{
-		return m_actions[identifier];
-	}
-
 	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
 	{
 		return nullptr;
 	}
 
-	Action *action(new Action(identifier, this));
-
-	m_actions[identifier] = action;
-
-	return action;
+	return ContentsWidget::createAction(identifier, parameters, followState);
 }
 
 QString PasswordsContentsWidget::getTitle() const
