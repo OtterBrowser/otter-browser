@@ -728,16 +728,6 @@ Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const
 	return new Window(parameters, m_contentsWidget->clone(cloneHistory), mainWindow);
 }
 
-Action* Window::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (!m_contentsWidget)
-	{
-		setUrl(m_session.getUrl(), false);
-	}
-
-	return m_contentsWidget->createAction(identifier, parameters, followState);
-}
-
 MainWindow* Window::getMainWindow() const
 {
 	return m_mainWindow;
