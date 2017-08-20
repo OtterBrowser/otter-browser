@@ -78,7 +78,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_ui->setupUi(this);
 
 	setUnifiedTitleAndToolBarOnMac(true);
-
 	updateShortcuts();
 
 	m_workspace->updateActions();
@@ -139,6 +138,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
 	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(handleToolBarAdded(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarMoved(int)), this, SLOT(handleToolBarMoved(int)));
@@ -1451,6 +1451,14 @@ void MainWindow::saveToolBarPositions()
 	}
 }
 
+void MainWindow::handleOptionChanged(int identifier)
+{
+	if (identifier == SettingsManager::Browser_HomePageOption)
+	{
+		emit actionsStateChanged(QVector<int>({ActionsManager::GoToHomePageAction}));
+	}
+}
+
 void MainWindow::handleWindowClose(Window *window)
 {
 	const int index(window ? getWindowIndex(window->getIdentifier()) : -1);
@@ -2076,7 +2084,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::GoToHomePageAction:
-			state.isEnabled = !SettingsManager::getOption(SettingsManager::Browser_HomePageOption).isNull();
+			state.isEnabled = !SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString().isEmpty();
 
 			break;
 		case ActionsManager::CascadeAllAction:
