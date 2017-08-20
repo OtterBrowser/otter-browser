@@ -191,11 +191,12 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 				}
 
 				MainWindow *mainWindow(MainWindow::findMainWindow(this));
+				ActionExecutor::Object executor(this, this);
 
 				menu.addSeparator();
 				menu.addAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 				menu.addSeparator();
-				menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, &menu));
+				menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, executor, &menu));
 
 				if (!isInTrash)
 				{
@@ -217,7 +218,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					}
 					else
 					{
-						menu.addAction(createAction(ActionsManager::DeleteAction));
+						menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
 					}
 
 					if (type != BookmarksModel::SeparatorBookmark)
@@ -298,29 +299,12 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)));
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory | ActionsManager::ActionDefinition::LinkCategory);
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
 {
 	m_ui->bookmarksViewWidget->render(printer);
-}
-
-Action* BookmarksContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier != ActionsManager::DeleteAction)
-	{
-		return nullptr;
-	}
-
-	Action *action(ContentsWidget::createAction(identifier, parameters, followState));
-
-	if (identifier == ActionsManager::DeleteAction)
-	{
-		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Bookmark"));
-	}
-
-	return action;
 }
 
 BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
@@ -359,12 +343,21 @@ QIcon BookmarksContentsWidget::getIcon() const
 
 ActionsManager::ActionDefinition::State BookmarksContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	if (identifier == ActionsManager::DeleteAction)
-	{
-		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
-		state.isEnabled = m_ui->deleteButton->isEnabled();
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
 
-		return state;
+	switch (identifier)
+	{
+		case ActionsManager::CopyLinkToClipboardAction:
+			state.isEnabled = (static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
+
+			return state;
+		case ActionsManager::DeleteAction:
+			state.text = QT_TRANSLATE_NOOP("actions", "Remove Bookmark");
+			state.isEnabled = m_ui->deleteButton->isEnabled();
+
+			return state;
+		default:
+			break;
 	}
 
 	return ContentsWidget::getActionState(identifier, parameters);
