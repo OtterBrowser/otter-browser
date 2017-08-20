@@ -115,6 +115,13 @@ void PasswordsContentsWidget::populatePasswords()
 		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 		connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(populatePasswords()));
+		connect(m_ui->passwordsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&](const QItemSelection &selected, const QItemSelection &deselected)
+		{
+			Q_UNUSED(selected)
+			Q_UNUSED(deselected)
+
+			emit actionsStateChanged(QVector<int>({ActionsManager::DeleteAction}));
+		});
 	}
 }
 
@@ -352,16 +359,6 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 	}
 }
 
-Action* PasswordsContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
-	{
-		return nullptr;
-	}
-
-	return ContentsWidget::createAction(identifier, parameters, followState);
-}
-
 QString PasswordsContentsWidget::getTitle() const
 {
 	return tr("Passwords");
@@ -380,6 +377,27 @@ QUrl PasswordsContentsWidget::getUrl() const
 QIcon PasswordsContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("dialog-password"), false);
+}
+
+ActionsManager::ActionDefinition::State PasswordsContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+
+	switch (identifier)
+	{
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = true;
+
+			return state;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = (m_ui->passwordsViewWidget->selectionModel() && !m_ui->passwordsViewWidget->selectionModel()->selectedIndexes().isEmpty());
+
+			return state;
+		default:
+			break;
+		}
+
+	return ContentsWidget::getActionState(identifier, parameters);
 }
 
 PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const QModelIndex &index) const
