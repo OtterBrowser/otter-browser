@@ -38,9 +38,6 @@ public:
 	explicit MdiWidget(QWidget *parent);
 
 	bool eventFilter(QObject *object, QEvent *event) override;
-
-protected:
-	void contextMenuEvent(QContextMenuEvent *event) override;
 };
 
 class MdiWindow : public QMdiSubWindow

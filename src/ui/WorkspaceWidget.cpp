@@ -36,18 +36,8 @@ namespace Otter
 
 MdiWidget::MdiWidget(QWidget *parent) : QMdiArea(parent)
 {
-}
-
-void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
-{
-	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::RestoreAllAction, QVariantMap(), true, this));
-	menu.addAction(Application::createAction(ActionsManager::MaximizeAllAction, QVariantMap(), true, this));
-	menu.addAction(Application::createAction(ActionsManager::MinimizeAllAction, QVariantMap(), true, this));
-	menu.addSeparator();
-	menu.addAction(Application::createAction(ActionsManager::CascadeAllAction, QVariantMap(), true, this));
-	menu.addAction(Application::createAction(ActionsManager::TileAllAction, QVariantMap(), true, this));
-	menu.exec(event->globalPos());
+	setContextMenuPolicy(Qt::CustomContextMenu);
+	setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
 }
 
 bool MdiWidget::eventFilter(QObject *object, QEvent *event)
@@ -279,8 +269,6 @@ void WorkspaceWidget::createMdi()
 	Window *activeWindow(m_activeWindow);
 
 	m_mdi = new MdiWidget(this);
-	m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
-	m_mdi->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	layout()->addWidget(m_mdi);
 
