@@ -41,6 +41,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/InputInterpreter.h"
+#include "../core/SessionModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/TransfersManager.h"
@@ -616,13 +617,21 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::BookmarkAllOpenPagesAction:
-			for (int i = 0; i < m_windows.count(); ++i)
 			{
-				const Window *window(getWindowByIndex(i));
+				BookmarksItem *parent(parameters.contains(QLatin1String("folder")) ? BookmarksManager::getBookmark(parameters[QLatin1String("folder")].toULongLong()) : nullptr);
+				const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(this));
 
-				if (window && !Utils::isUrlEmpty(window->getUrl()))
+				if (mainWindowItem)
 				{
-					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, window->getUrl(), window->getTitle());
+					for (int i = 0; i < mainWindowItem->rowCount(); ++i)
+					{
+						const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
+
+						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
+						{
+							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, windowItem->getActiveWindow()->getUrl(), windowItem->getActiveWindow()->getTitle(), parent);
+						}
+					}
 				}
 			}
 

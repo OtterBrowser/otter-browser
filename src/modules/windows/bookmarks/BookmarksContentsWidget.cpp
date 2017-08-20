@@ -192,9 +192,15 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 				MainWindow *mainWindow(MainWindow::findMainWindow(this));
 				ActionExecutor::Object executor(this, this);
+				QVariantMap parameters;
+
+				if (type == BookmarksModel::FolderBookmark)
+				{
+					parameters[QLatin1String("folder")] = index.data(BookmarksModel::IdentifierRole);
+				}
 
 				menu.addSeparator();
-				menu.addAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
+				menu.addAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, parameters, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 				menu.addSeparator();
 				menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, executor, &menu));
 
@@ -258,25 +264,6 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::ActivateContentAction:
 			m_ui->bookmarksViewWidget->setFocus();
-
-			break;
-		case ActionsManager::BookmarkAllOpenPagesAction:
-			{
-				const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
-
-				if (mainWindowItem)
-				{
-					for (int i = 0; i < mainWindowItem->rowCount(); ++i)
-					{
-						const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
-
-						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
-						{
-							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, windowItem->getActiveWindow()->getUrl(), windowItem->getActiveWindow()->getTitle(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
-						}
-					}
-				}
-			}
 
 			break;
 		default:
