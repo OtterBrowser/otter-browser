@@ -471,9 +471,6 @@ void TransfersContentsWidget::updateActions()
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState));
 	m_ui->redownloadButton->setEnabled(transfer);
 
-	createAction(ActionsManager::CopyAction)->setEnabled(transfer);
-	createAction(ActionsManager::DeleteAction)->setEnabled(transfer);
-
 	if (transfer)
 	{
 		const bool isIndeterminate(transfer->getBytesTotal() <= 0);
@@ -558,16 +555,6 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 	}
 
 	return nullptr;
-}
-
-Action* TransfersContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier != ActionsManager::CopyAction && identifier != ActionsManager::DeleteAction)
-	{
-		return nullptr;
-	}
-
-	return ContentsWidget::createAction(identifier, parameters, followState);
 }
 
 QString TransfersContentsWidget::getTitle() const
