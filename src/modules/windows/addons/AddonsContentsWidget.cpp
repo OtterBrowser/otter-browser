@@ -24,7 +24,6 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/Action.h"
 
 #include "ui_AddonsContentsWidget.h"
 
@@ -106,6 +105,14 @@ void AddonsContentsWidget::populateAddons()
 	m_isLoading = false;
 
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
+
+	connect(m_ui->addonsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&](const QItemSelection &selected, const QItemSelection &deselected)
+	{
+		Q_UNUSED(selected)
+		Q_UNUSED(deselected)
+
+		emit actionsStateChanged(QVector<int>({ActionsManager::DeleteAction}));
+	});
 }
 
 void AddonsContentsWidget::addAddon()
@@ -393,16 +400,6 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 	}
 }
 
-Action* AddonsContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
-	{
-		return nullptr;
-	}
-
-	return ContentsWidget::createAction(identifier, parameters, followState);
-}
-
 QString AddonsContentsWidget::getTitle() const
 {
 	return tr("Addons");
@@ -421,6 +418,27 @@ QUrl AddonsContentsWidget::getUrl() const
 QIcon AddonsContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
+}
+
+ActionsManager::ActionDefinition::State AddonsContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+
+	switch (identifier)
+	{
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = true;
+
+			return state;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = (m_ui->addonsViewWidget->selectionModel() && !m_ui->addonsViewWidget->selectionModel()->selectedIndexes().isEmpty());
+
+			return state;
+		default:
+			break;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
 }
 
 WebWidget::LoadingState AddonsContentsWidget::getLoadingState() const
