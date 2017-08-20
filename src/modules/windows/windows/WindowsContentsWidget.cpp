@@ -122,11 +122,13 @@ void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 
 void WindowsContentsWidget::showContextMenu(const QPoint &position)
 {
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QModelIndex index(m_ui->windowsViewWidget->indexAt(position));
 	SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
+	ActionExecutor::Object executor(mainWindow, mainWindow);
 	QMenu menu(this);
-	menu.addAction(Application::createAction(ActionsManager::NewWindowAction, QVariantMap(), true, this));
-	menu.addAction(Application::createAction(ActionsManager::NewWindowPrivateAction, QVariantMap(), true, this));
+	menu.addAction(new Action(ActionsManager::NewWindowAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::NewWindowPrivateAction, {}, executor, &menu));
 
 	if (!index.data(SessionModel::IsTrashedRole).toBool())
 	{
@@ -148,8 +150,10 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 			if (windowItem)
 			{
-				menu.addAction(Application::createAction(ActionsManager::NewTabAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
-				menu.addAction(Application::createAction(ActionsManager::NewTabPrivateAction, QVariantMap(), true, windowItem->getActiveWindow()->getMainWindow()));
+				executor = ActionExecutor::Object(windowItem->getActiveWindow()->getMainWindow(), windowItem->getActiveWindow()->getMainWindow());
+
+				menu.addAction(new Action(ActionsManager::NewTabAction, QVariantMap(), executor, &menu));
+				menu.addAction(new Action(ActionsManager::NewTabPrivateAction, QVariantMap(), executor, &menu));
 				menu.addSeparator();
 				menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(windowItem->getActiveWindow(), windowItem->getActiveWindow()), &menu));
 			}

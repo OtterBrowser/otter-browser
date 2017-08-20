@@ -193,7 +193,6 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 				MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 				menu.addSeparator();
-				menu.addAction(Application::createAction(ActionsManager::BookmarkPageAction, {}, true, &menu));
 				menu.addAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 				menu.addSeparator();
 				menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, &menu));

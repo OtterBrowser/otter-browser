@@ -25,6 +25,7 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/CookiePropertiesDialog.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_CookiesContentsWidget.h"
 
@@ -327,6 +328,7 @@ void CookiesContentsWidget::cookieProperties()
 
 void CookiesContentsWidget::showContextMenu(const QPoint &position)
 {
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(position));
 	QMenu menu(this);
 	menu.addAction(tr("Add Cookie…"), this, SLOT(addCookie()));
@@ -344,7 +346,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 
 	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
-	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, QVariantMap(), true, this));
+	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 
 	if (index.parent() != m_model->invisibleRootItem()->index())
 	{

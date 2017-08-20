@@ -25,6 +25,7 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_CacheContentsWidget.h"
 
@@ -326,6 +327,7 @@ void CacheContentsWidget::copyEntryLink()
 
 void CacheContentsWidget::showContextMenu(const QPoint &position)
 {
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QModelIndex index(m_ui->cacheViewWidget->indexAt(position));
 	const QUrl entry(getEntry(index));
 	QMenu menu(this);
@@ -350,7 +352,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 	}
 
-	menu.addAction(Application::createAction(ActionsManager::ClearHistoryAction, QVariantMap(), true, this));
+	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 	menu.exec(m_ui->cacheViewWidget->mapToGlobal(position));
 }
 
