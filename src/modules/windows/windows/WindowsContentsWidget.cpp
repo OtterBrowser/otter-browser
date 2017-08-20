@@ -154,8 +154,8 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 			{
 				executor = ActionExecutor::Object(windowItem->getActiveWindow()->getMainWindow(), windowItem->getActiveWindow()->getMainWindow());
 
-				menu.addAction(new Action(ActionsManager::NewTabAction, QVariantMap(), executor, &menu));
-				menu.addAction(new Action(ActionsManager::NewTabPrivateAction, QVariantMap(), executor, &menu));
+				menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
+				menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
 				menu.addSeparator();
 				menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(windowItem->getActiveWindow(), windowItem->getActiveWindow()), &menu));
 			}

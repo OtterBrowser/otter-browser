@@ -83,7 +83,7 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
 	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
 	{
-		Application::triggerAction(ActionsManager::PasswordsAction, QVariantMap(), this);
+		Application::triggerAction(ActionsManager::PasswordsAction, {}, this);
 	});
 }
 

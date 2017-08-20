@@ -172,7 +172,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		}
 		else if (activeSubWindows > 1)
 		{
-			Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, QVariantMap(), mdiArea());
+			Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, mdiArea());
 		}
 
 		SessionsManager::markSessionModified();
@@ -358,7 +358,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				}
 				else if (wasActive && activeSubWindows > 1)
 				{
-					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, QVariantMap(), m_mainWindow);
+					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, m_mainWindow);
 				}
 			}
 

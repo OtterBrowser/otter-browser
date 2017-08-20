@@ -444,7 +444,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 		if (entry != UnknownEntry && entry != AddressEntry && entry != HistoryDropdownEntry)
 		{
-			Application::triggerAction(ActionsManager::ActivateContentAction, QVariantMap(), this);
+			Application::triggerAction(ActionsManager::ActivateContentAction, {}, this);
 
 			return;
 		}

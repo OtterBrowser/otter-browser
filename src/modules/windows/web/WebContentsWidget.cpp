@@ -240,7 +240,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 		{
 			triggerAction(ActionsManager::StopAction);
 
-			Application::triggerAction(ActionsManager::ActivateAddressFieldAction, QVariantMap(), this);
+			Application::triggerAction(ActionsManager::ActivateAddressFieldAction, {}, this);
 
 			event->accept();
 		}

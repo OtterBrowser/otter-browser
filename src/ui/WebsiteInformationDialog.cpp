@@ -263,7 +263,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	connect(m_ui->preferencesDetailsButton, &QPushButton::clicked, [&]()
 	{
-		Application::triggerAction(ActionsManager::WebsitePreferencesAction, QVariantMap(), this);
+		Application::triggerAction(ActionsManager::WebsitePreferencesAction, {}, this);
 	});
 	connect(m_ui->certificateDetailsButton, &QPushButton::clicked, [&]()
 	{
