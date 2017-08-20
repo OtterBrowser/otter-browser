@@ -284,7 +284,6 @@ protected:
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfDeferredPlugins() const;
-	bool calculateCheckedState(int identifier, const QVariantMap &parameters = {});
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
 	virtual bool canFastForward() const;

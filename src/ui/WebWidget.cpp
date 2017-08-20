@@ -1065,6 +1065,10 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			state.isEnabled = canViewSource();
 
 			break;
+		case ActionsManager::InspectPageAction:
+			state.isChecked = isInspecting();
+
+			break;
 		case ActionsManager::WebsitePreferencesAction:
 			state.isEnabled = (!Utils::isUrlEmpty(getUrl()) && getUrl().scheme() != QLatin1String("about"));
 
@@ -1253,25 +1257,6 @@ quint64 WebWidget::getWindowIdentifier() const
 int WebWidget::getAmountOfDeferredPlugins() const
 {
 	return 0;
-}
-
-bool WebWidget::calculateCheckedState(int identifier, const QVariantMap &parameters)
-{
-	switch (identifier)
-	{
-		case ActionsManager::MediaControlsAction:
-			return !m_hitResult.flags.testFlag(HitTestResult::MediaHasControlsTest);
-		case ActionsManager::MediaLoopAction:
-			return !m_hitResult.flags.testFlag(HitTestResult::MediaIsLoopedTest);
-		case ActionsManager::CheckSpellingAction:
-			return !m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled);
-		case ActionsManager::InspectPageAction:
-			return !isInspecting();
-		default:
-			break;
-	}
-
-	return parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool();
 }
 
 bool WebWidget::canGoBack() const

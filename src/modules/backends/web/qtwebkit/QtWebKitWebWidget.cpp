@@ -1253,11 +1253,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::MediaControlsAction:
-			m_page->triggerAction(QWebPage::ToggleMediaControls, calculateCheckedState(ActionsManager::MediaControlsAction, parameters));
+			m_page->triggerAction(QWebPage::ToggleMediaControls, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
 		case ActionsManager::MediaLoopAction:
-			m_page->triggerAction(QWebPage::ToggleMediaLoop, calculateCheckedState(ActionsManager::MediaLoopAction, parameters));
+			m_page->triggerAction(QWebPage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
 		case ActionsManager::MediaPlayPauseAction:
@@ -1472,12 +1472,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CheckSpellingAction:
 			{
 				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
-				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(calculateCheckedState(ActionsManager::CheckSpellingAction, parameters) ? QLatin1String("true") : QLatin1String("false")));
+				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? QLatin1String("true") : QLatin1String("false")));
 
 				resetSpellCheck(element);
 			}
 
-			break;
+			return;
 		case ActionsManager::CreateSearchAction:
 			{
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
@@ -1678,15 +1678,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::InspectPageAction:
+			if (!m_inspector)
 			{
-				if (!m_inspector)
-				{
-					getInspector();
-				}
-
-				emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction}));
-				emit requestedInspectorVisibilityChange(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
+				getInspector();
 			}
+
+			emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction}));
+			emit requestedInspectorVisibilityChange(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
 		case ActionsManager::InspectElementAction:
