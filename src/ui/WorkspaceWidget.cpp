@@ -505,6 +505,8 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 	{
 		disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
+		ActionExecutor::Object mainWindowExecutor(m_mainWindow, m_mainWindow);
+		ActionExecutor::Object windowExecutor(window, window);
 		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
 		QMenu *menu(new QMenu(mdiWindow));
@@ -514,19 +516,19 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 		closeAction->setOverrideIcon(QIcon());
 
 		menu->addAction(closeAction);
-		menu->addAction(m_mainWindow->createAction(ActionsManager::RestoreTabAction));
-		menu->addAction(m_mainWindow->createAction(ActionsManager::MinimizeTabAction));
-		menu->addAction(m_mainWindow->createAction(ActionsManager::MaximizeTabAction));
-		menu->addAction(m_mainWindow->createAction(ActionsManager::AlwaysOnTopTabAction));
+		menu->addAction(new Action(ActionsManager::RestoreTabAction, {}, windowExecutor, menu));
+		menu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, windowExecutor, menu));
+		menu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, windowExecutor, menu));
+		menu->addAction(new Action(ActionsManager::AlwaysOnTopTabAction, {}, windowExecutor, menu));
 		menu->addSeparator();
 
 		QMenu *arrangeMenu(menu->addMenu(tr("Arrange")));
-		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::RestoreAllAction));
-		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::MaximizeAllAction));
-		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::MinimizeAllAction));
+		arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, mainWindowExecutor, arrangeMenu));
+		arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, mainWindowExecutor, arrangeMenu));
+		arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, mainWindowExecutor, arrangeMenu));
 		arrangeMenu->addSeparator();
-		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::CascadeAllAction));
-		arrangeMenu->addAction(m_mainWindow->createAction(ActionsManager::TileAllAction));
+		arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, mainWindowExecutor, arrangeMenu));
+		arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, mainWindowExecutor, arrangeMenu));
 
 		mdiWindow->show();
 		mdiWindow->lower();
@@ -609,14 +611,6 @@ void WorkspaceWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 void WorkspaceWidget::updateActions()
 {
-	const int windowCount(m_mainWindow->getWindowCount());
-
-	m_mainWindow->createAction(ActionsManager::MaximizeAllAction)->setEnabled(getWindowCount(Qt::WindowMaximized) != windowCount);
-	m_mainWindow->createAction(ActionsManager::MinimizeAllAction)->setEnabled(getWindowCount(Qt::WindowMinimized) != windowCount);
-	m_mainWindow->createAction(ActionsManager::RestoreAllAction)->setEnabled(getWindowCount(Qt::WindowNoState) != windowCount);
-	m_mainWindow->createAction(ActionsManager::CascadeAllAction)->setEnabled(windowCount > 0);
-	m_mainWindow->createAction(ActionsManager::TileAllAction)->setEnabled(windowCount > 0);
-
 	emit actionsStateChanged(QVector<int>({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction}));
 }
 

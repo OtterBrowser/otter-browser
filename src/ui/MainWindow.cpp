@@ -1952,20 +1952,6 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	return window;
 }
 
-Action* MainWindow::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier < 0)
-	{
-		return nullptr;
-	}
-
-	Action *action(new Action(identifier, parameters, ((followState ? Action::FollowsActionStateFlag : Action::NoFlag) | Action::CanTriggerActionFlag), this));
-	action->setExecutor(ActionExecutor::Object(this, this));
-
-	return action;
-
-}
-
 TabBarWidget* MainWindow::getTabBar() const
 {
 	return m_tabBar;

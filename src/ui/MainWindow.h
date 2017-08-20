@@ -59,7 +59,6 @@ public:
 	void restore(int index = 0);
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
 	static MainWindow* findMainWindow(QObject *parent);
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	TabBarWidget* getTabBar() const;
 	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;

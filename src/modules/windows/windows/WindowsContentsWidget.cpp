@@ -138,10 +138,12 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 			if (mainWindowItem)
 			{
-				menu.addAction(mainWindowItem->getMainWindow()->createAction(ActionsManager::NewTabAction));
-				menu.addAction(mainWindowItem->getMainWindow()->createAction(ActionsManager::NewTabPrivateAction));
+				executor = ActionExecutor::Object(mainWindowItem->getMainWindow(), mainWindowItem->getMainWindow());
+
+				menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
+				menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
 				menu.addSeparator();
-				menu.addAction(mainWindowItem->getMainWindow()->createAction(ActionsManager::CloseWindowAction));
+				menu.addAction(new Action(ActionsManager::CloseWindowAction, {}, executor, &menu));
 			}
 		}
 		else if (type == SessionModel::WindowEntity)
