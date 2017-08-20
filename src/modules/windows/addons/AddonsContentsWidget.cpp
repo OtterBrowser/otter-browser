@@ -385,7 +385,6 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->filterLineEdit->setFocus();
 
 			break;

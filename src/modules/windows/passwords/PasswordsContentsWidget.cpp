@@ -304,7 +304,6 @@ void PasswordsContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->filterLineEdit->setFocus();
 
 			break;

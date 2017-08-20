@@ -94,7 +94,6 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->filterLineEdit->setFocus();
 
 			break;

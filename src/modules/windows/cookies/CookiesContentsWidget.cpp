@@ -376,7 +376,6 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->filterLineEdit->setFocus();
 
 			break;

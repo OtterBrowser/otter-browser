@@ -261,7 +261,6 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 	{
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->filterLineEdit->setFocus();
 
 			break;

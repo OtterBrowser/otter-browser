@@ -95,7 +95,6 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 	{
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->filterLineEdit->setFocus();
 
 			break;
