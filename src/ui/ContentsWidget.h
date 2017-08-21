@@ -41,7 +41,6 @@ public:
 
 	virtual void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true) const;
-	virtual Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true);
 	virtual WebWidget* getWebWidget() const;
 	Window* getWindow() const;
 	virtual QString parseQuery(const QString &query) const;
