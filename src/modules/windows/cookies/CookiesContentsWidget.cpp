@@ -338,7 +338,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 	{
 		if (index.parent() != m_model->invisibleRootItem()->index())
 		{
-			menu.addAction(createAction(ActionsManager::DeleteAction));
+			menu.addAction(new Action(ActionsManager::DeleteAction, {}, ActionExecutor::Object(this, this), &menu));
 		}
 
 		menu.addAction(tr("Remove All Cookies from This Domain…"), this, SLOT(removeDomainCookies()));
@@ -396,12 +396,6 @@ void CookiesContentsWidget::updateActions()
 
 	m_ui->propertiesButton->setEnabled(false);
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
-
-	if (m_ui->deleteButton->isEnabled() != createAction(ActionsManager::DeleteAction)->isEnabled())
-	{
-		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
-	}
-
 	m_ui->nameLabelWidget->clear();
 	m_ui->valueLabelWidget->clear();
 	m_ui->domainLabelWidget->clear();
@@ -439,23 +433,6 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 	return nullptr;
 }
 
-Action* CookiesContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
-	{
-		return nullptr;
-	}
-
-	Action *action(ContentsWidget::createAction(identifier, parameters, followState));
-
-	if (identifier == ActionsManager::DeleteAction)
-	{
-		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Cookie"));
-	}
-
-	return action;
-}
-
 QString CookiesContentsWidget::getTitle() const
 {
 	return tr("Cookies");
@@ -485,12 +462,21 @@ QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
 
 ActionsManager::ActionDefinition::State CookiesContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	if (identifier == ActionsManager::DeleteAction)
-	{
-		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
-		state.isEnabled = m_ui->deleteButton->isEnabled();
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
 
-		return state;
+	switch (identifier)
+	{
+		case ActionsManager::DeleteAction:
+			state.text = QT_TRANSLATE_NOOP("actions", "Remove Cookie");
+			state.isEnabled = m_ui->deleteButton->isEnabled();
+
+			return state;
+		case ActionsManager::SelectAllAction:
+			state.isEnabled = true;
+
+			return state;
+		default:
+			break;
 	}
 
 	return ContentsWidget::getActionState(identifier, parameters);
