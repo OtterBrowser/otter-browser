@@ -480,11 +480,6 @@ void CacheContentsWidget::updateActions()
 		}
 	}
 
-	if (m_ui->deleteButton->isEnabled() != createAction(ActionsManager::DeleteAction)->isEnabled())
-	{
-		createAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
-	}
-
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
@@ -521,16 +516,6 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 	}
 
 	return nullptr;
-}
-
-Action* CacheContentsWidget::createAction(int identifier, const QVariantMap parameters, bool followState)
-{
-	if (identifier != ActionsManager::DeleteAction)
-	{
-		return nullptr;
-	}
-
-	return ContentsWidget::createAction(identifier, parameters, followState);
 }
 
 QString CacheContentsWidget::getTitle() const

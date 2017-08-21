@@ -43,7 +43,6 @@ public:
 	~CacheContentsWidget();
 
 	void print(QPrinter *printer) override;
-	Action* createAction(int identifier, const QVariantMap parameters = {}, bool followState = true) override;
 	QString getTitle() const override;
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
