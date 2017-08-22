@@ -131,7 +131,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 			currentState = KeywordState;
 			currentStateBegin = position;
 		}
-		else if (currentState == KeywordState && buffer == QLatin1String("!DOCTYPE"))
+		else if (currentState == KeywordState && buffer.compare(QLatin1String("!DOCTYPE"), Qt::CaseInsensitive) == 0)
 		{
 			currentState = DoctypeState;
 		}
