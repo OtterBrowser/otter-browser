@@ -49,6 +49,7 @@ public:
 		AttributeState,
 		EntityState,
 		ValueState,
+		CharacterDataState,
 		CommentState
 	};
 

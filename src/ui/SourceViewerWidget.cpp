@@ -135,6 +135,15 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 		{
 			currentState = DoctypeState;
 		}
+		else if (currentState == KeywordState && buffer == QLatin1String("![CDATA["))
+		{
+			currentState = CharacterDataState;
+		}
+		else if (currentState == CharacterDataState && buffer.endsWith(QLatin1String("]]>")))
+		{
+			currentState = NoState;
+			currentStateBegin = position;
+		}
 		else if (currentState == KeywordState && buffer == QLatin1String("!--"))
 		{
 			currentState = CommentState;
