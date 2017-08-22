@@ -622,7 +622,6 @@ QString Transfer::getSuggestedFileName()
 		return m_suggestedFileName;
 	}
 
-	QUrl url;
 	QString fileName;
 
 	if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
@@ -643,16 +642,12 @@ QString Transfer::getSuggestedFileName()
 			fileName = fileName.section(QLatin1String("; "), 0, 0);
 		}
 
-		url = QUrl(fileName);
-
-		fileName = url.fileName();
+		fileName = QUrl(fileName).fileName();
 	}
 
 	if (fileName.isEmpty())
 	{
-		url = m_source;
-
-		fileName = url.fileName();
+		fileName = m_source.fileName();
 	}
 
 	if (fileName.isEmpty())
