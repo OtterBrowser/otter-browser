@@ -627,7 +627,16 @@ QString Transfer::getSuggestedFileName()
 
 	if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
 	{
-		fileName = QRegularExpression(QLatin1String("[\\s;]filename=[\"]?([^\"]+)[\"]?[\\s;]?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1);
+		const QString contenDispositionHeader(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()));
+
+		if (contenDispositionHeader.contains(QLatin1String("filename*=")))
+		{
+			fileName = QRegularExpression(QLatin1String("[\\s;]filename\\*=[\"]?[a-zA-Z0-9\\-_]+\\'[a-zA-Z0-9\\-]?\\'([^\"]+)[\"]?[\\s;]?")).match(contenDispositionHeader).captured(1);
+		}
+		else
+		{
+			fileName = QRegularExpression(QLatin1String("[\\s;]filename=[\"]?([^\"]+)[\"]?[\\s;]?")).match(contenDispositionHeader).captured(1);
+		}
 
 		if (fileName.contains(QLatin1String("; ")))
 		{
