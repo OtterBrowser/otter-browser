@@ -36,14 +36,6 @@ QtWebKitSpellChecker::QtWebKitSpellChecker() : QWebSpellChecker()
 	connect(QtWebKitWebBackend::getInstance(), SIGNAL(activeDictionaryChanged(QString)), this, SLOT(setDictionary(QString)));
 }
 
-QtWebKitSpellChecker::~QtWebKitSpellChecker()
-{
-	if (m_speller)
-	{
-		delete m_speller;
-	}
-}
-
 void QtWebKitSpellChecker::toggleContinousSpellChecking()
 {
 }

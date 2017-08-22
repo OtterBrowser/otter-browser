@@ -34,7 +34,6 @@ class QtWebKitSpellChecker final : public QWebSpellChecker
 
 public:
 	explicit QtWebKitSpellChecker();
-	~QtWebKitSpellChecker();
 
 	void toggleContinousSpellChecking() override;
 	void toggleGrammarChecking() override;
