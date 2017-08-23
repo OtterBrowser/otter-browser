@@ -619,7 +619,7 @@ QString Transfer::getSuggestedFileName()
 {
 	if (!m_reply)
 	{
-		return m_suggestedFileName;
+		return (m_suggestedFileName.isEmpty() ? tr("file") : m_suggestedFileName);
 	}
 
 	QString fileName;
