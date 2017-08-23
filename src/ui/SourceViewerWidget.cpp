@@ -364,7 +364,7 @@ void SourceViewerWidget::focusInEvent(QFocusEvent *event)
 {
 	QPlainTextEdit::focusInEvent(event);
 
-	if (event->reason() != Qt::MouseFocusReason && !m_findText.isEmpty())
+	if (event->reason() != Qt::MouseFocusReason && event->reason() != Qt::PopupFocusReason && !m_findText.isEmpty())
 	{
 		setTextCursor(m_findTextSelection);
 	}
