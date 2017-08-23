@@ -4615,7 +4615,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="307"/>
         <source>Do not use this proxy for:</source>
-        <translation>Não utilizareste  proxy para:</translation>
+        <translation>Não utilizar este  proxy para:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="328"/>
@@ -4750,7 +4750,7 @@ Deseja continuar?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="556"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="570"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation>Tem a ceteza de que deseja enviar novamente os dados?</translation>
+        <translation>Tem a certeza de que deseja enviar novamente os dados?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="556"/>
