@@ -27,6 +27,7 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionTitleBar>
 #include <QtWidgets/QVBoxLayout>
@@ -234,6 +235,19 @@ void WorkspaceWidget::timerEvent(QTimerEvent *event)
 		m_restoreTimer = 0;
 
 		connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+	}
+}
+
+void WorkspaceWidget::paintEvent(QPaintEvent *event)
+{
+	if (!m_mdi && !m_activeWindow)
+	{
+		QPainter painter(this);
+		painter.fillRect(rect(), palette().brush(QPalette::Dark));
+	}
+	else
+	{
+		QWidget::paintEvent(event);
 	}
 }
 
