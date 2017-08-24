@@ -76,7 +76,6 @@ public:
 	AddonType getType() const override;
 	bool isModified() const;
 	bool save();
-	bool operator ==(const MouseProfile &other) const;
 
 private:
 	QString m_identifier;
