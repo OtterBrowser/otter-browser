@@ -1379,10 +1379,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::CopyAction:
-			m_page->triggerAction(QWebPage::Copy);
-
-			return;
-		case ActionsManager::CopyPlainTextAction:
+			if (parameters.value(QLatin1String("mode")) == QLatin1String("plainText"))
 			{
 				const QString text(getSelectedText());
 
@@ -1391,6 +1388,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					QApplication::clipboard()->setText(text);
 				}
 			}
+			else
+			{
+				m_page->triggerAction(QWebPage::Copy);
+			}
+
+			return;
+		case ActionsManager::CopyPlainTextAction:
+			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}});
 
 			return;
 		case ActionsManager::CopyAddressAction:
