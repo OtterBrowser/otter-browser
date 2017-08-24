@@ -21,11 +21,10 @@
 #ifndef OTTER_GESTURESMANAGER_H
 #define OTTER_GESTURESMANAGER_H
 
-#include <QtCore/QObject>
-#include <QtGui/QMouseEvent>
-
 #include "AddonsManager.h"
 #include "../../3rdparty/mousegestures/MouseGestures.h"
+
+#include <QtGui/QInputEvent>
 
 namespace Otter
 {
