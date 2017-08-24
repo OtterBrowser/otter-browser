@@ -318,8 +318,14 @@ MouseProfile MouseProfileDialog::getProfile() const
 	}
 
 	profile.setDefinitions(definitions);
+	profile.setModified(m_ui->gesturesViewWidget->isModified());
 
 	return profile;
+}
+
+bool MouseProfileDialog::isModified() const
+{
+	return m_ui->gesturesViewWidget->isModified();
 }
 
 }

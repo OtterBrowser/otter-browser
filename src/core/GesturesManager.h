@@ -66,6 +66,7 @@ public:
 	void setAuthor(const QString &author);
 	void setVersion(const QString &version);
 	void setDefinitions(const QHash<int, QVector<Gesture> > &definitions);
+	void setModified(bool isModified);
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;

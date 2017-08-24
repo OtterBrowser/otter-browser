@@ -57,6 +57,7 @@ public:
 	~MouseProfileDialog();
 
 	MouseProfile getProfile() const;
+	bool isModified() const;
 
 protected:
 	void changeEvent(QEvent *event) override;

@@ -496,6 +496,11 @@ void MouseProfile::setDefinitions(const QHash<int, QVector<MouseProfile::Gesture
 	}
 }
 
+void MouseProfile::setModified(bool isModified)
+{
+	m_isModified = isModified;
+}
+
 QString MouseProfile::getName() const
 {
 	return m_identifier;
