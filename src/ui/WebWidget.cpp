@@ -359,56 +359,56 @@ void WebWidget::showContextMenu(const QPoint &position)
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 
-	QStringList flags;
+	QStringList includeSections;
 
 	if (m_hitResult.flags.testFlag(HitTestResult::IsFormTest))
 	{
-		flags.append(QLatin1String("form"));
+		includeSections.append(QLatin1String("form"));
 	}
 
 	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(HitTestResult::IsSelectedTest) && hasSelection)
 	{
-		flags.append(QLatin1String("selection"));
+		includeSections.append(QLatin1String("selection"));
 	}
 
 	if (m_hitResult.linkUrl.isValid())
 	{
 		if (m_hitResult.linkUrl.scheme() == QLatin1String("mailto"))
 		{
-			flags.append(QLatin1String("mail"));
+			includeSections.append(QLatin1String("mail"));
 		}
 		else
 		{
-			flags.append(QLatin1String("link"));
+			includeSections.append(QLatin1String("link"));
 		}
 	}
 
 	if (!m_hitResult.imageUrl.isEmpty())
 	{
-		flags.append(QLatin1String("image"));
+		includeSections.append(QLatin1String("image"));
 	}
 
 	if (m_hitResult.mediaUrl.isValid())
 	{
-		flags.append(QLatin1String("media"));
+		includeSections.append(QLatin1String("media"));
 	}
 
 	if (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest))
 	{
-		flags.append(QLatin1String("edit"));
+		includeSections.append(QLatin1String("edit"));
 	}
 
-	if (flags.isEmpty() || (flags.count() == 1 && flags.first() == QLatin1String("form")))
+	if (includeSections.isEmpty() || (includeSections.count() == 1 && includeSections.first() == QLatin1String("form")))
 	{
-		flags.append(QLatin1String("standard"));
+		includeSections.append(QLatin1String("standard"));
 
 		if (m_hitResult.frameUrl.isValid())
 		{
-			flags.append(QLatin1String("frame"));
+			includeSections.append(QLatin1String("frame"));
 		}
 	}
 
-	if (flags.isEmpty())
+	if (includeSections.isEmpty())
 	{
 		return;
 	}
@@ -432,7 +432,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 	}
 
 	Menu menu(Menu::NoMenuRole, this);
-	menu.load(QLatin1String("menu/webWidget.json"), flags, executor);
+	menu.load(QLatin1String("menu/webWidget.json"), includeSections, executor);
 	menu.exec(mapToGlobal(hitPosition));
 }
 
