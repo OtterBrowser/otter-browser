@@ -503,7 +503,7 @@ QString MouseProfile::getName() const
 
 QString MouseProfile::getTitle() const
 {
-	return m_title;
+	return (m_title.isEmpty() ? QCoreApplication::translate("Otter::MouseProfile", "(Untitled)") : m_title);
 }
 
 QString MouseProfile::getDescription() const
