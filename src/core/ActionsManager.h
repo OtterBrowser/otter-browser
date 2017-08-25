@@ -22,7 +22,8 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
-#include <QtCore/QCoreApplication>
+#include "AddonsManager.h"
+
 #include <QtCore/QPointer>
 #include <QtCore/QVariantMap>
 #include <QtGui/QIcon>
@@ -30,12 +31,57 @@
 namespace Otter
 {
 
+class KeyboardProfile final : public Addon
+{
+public:
+	struct Action
+	{
+		QVariantMap parameters;
+		QVector<QKeySequence> shortcuts;
+		int action = -1;
+
+		bool operator ==(const Action &other) const;
+	};
+
+	explicit KeyboardProfile(const QString &identifier = QString(), bool onlyMetaData = false);
+
+	void setTitle(const QString &title);
+	void setDescription(const QString &description);
+	void setAuthor(const QString &author);
+	void setVersion(const QString &version);
+	void setDefinitions(const QHash<int, QVector<Action> > &definitions);
+	void setModified(bool isModified);
+	QString getName() const override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getAuthor() const;
+	QString getVersion() const override;
+	QHash<int, QVector<Action> > getDefinitions() const;
+	bool isModified() const;
+	bool save();
+
+private:
+	QString m_identifier;
+	QString m_title;
+	QString m_description;
+	QString m_author;
+	QString m_version;
+	QHash<int, QVector<Action> > m_definitions;
+	bool m_isModified;
+};
+
 class ActionsManager final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(ActionIdentifier)
 
 public:
+	enum GesturesContext
+	{
+		UnknownContext = 0,
+		GenericContext
+	};
+
 	enum ActionIdentifier
 	{
 		RunMacroAction = 0,

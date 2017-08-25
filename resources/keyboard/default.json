@@ -1,0 +1,364 @@
+// Title: Default
+// Description: Default configuration
+// Type: keyboard-profile
+// Author: Emdek <michal@emdek.pl>
+// Version: 0.9
+
+[
+	{
+		"context": "Generic",
+		"actions": [
+			{
+				"action": "NewTab",
+				"shortcuts": [
+					"Ctrl+T"
+				]
+			},
+			{
+				"action": "NewTabPrivate",
+				"shortcuts": [
+					"Ctrl+Alt+T"
+				]
+			},
+			{
+				"action": "NewWindow",
+				"shortcuts": [
+					"Ctrl+N"
+				]
+			},
+			{
+				"action": "NewWindowPrivate",
+				"shortcuts": [
+					"Ctrl+Alt+N",
+					"Ctrl+Shift+N"
+				]
+			},
+			{
+				"action": "Open",
+				"shortcuts": [
+					"Ctrl+O"
+				]
+			},
+			{
+				"action": "Save",
+				"shortcuts": [
+					"Ctrl+S"
+				]
+			},
+			{
+				"action": "CloseTab",
+				"shortcuts": [
+					"Ctrl+W",
+					"Ctrl+F4"
+				]
+			},
+			{
+				"action": "ClosePrivateTabs",
+				"shortcuts": [
+					"Ctrl+Shift+Q"
+				]
+			},
+			{
+				"action": "ReopenTab",
+				"shortcuts": [
+					"Ctrl+Shift+T"
+				]
+			},
+			{
+				"action": "Reload",
+				"shortcuts": [
+					"F5",
+					"Ctrl+R"
+				]
+			},
+			{
+				"action": "ReloadAndBypassCache",
+				"shortcuts": [
+					"Ctrl+F5",
+					"Ctrl+Shift+R"
+				]
+			},
+			{
+				"action": "Undo",
+				"shortcuts": [
+					"Ctrl+Z"
+				]
+			},
+			{
+				"action": "Redo",
+				"shortcuts": [
+					"Ctrl+Y",
+					"Ctrl+Shift+Z"
+				]
+			},
+			{
+				"action": "Cut",
+				"shortcuts": [
+					"Ctrl+X",
+					"Shift+Del"
+				]
+			},
+			{
+				"action": "Copy",
+				"shortcuts": [
+					"Ctrl+C",
+					"Ctrl+Ins"
+				]
+			},
+			{
+				"action": "Copy",
+				"parameters": {
+					"mode": "plainText"
+				},
+				"shortcuts": [
+					"Ctrl+Alt+C"
+				]
+			},
+			{
+				"action": "Paste",
+				"shortcuts": [
+					"Ctrl+V",
+					"Shift+Ins"
+				]
+			},
+			{
+				"action": "PasteAndGo",
+				"shortcuts": [
+					"Ctrl+Shift+V"
+				]
+			},
+			{
+				"action": "Delete",
+				"shortcuts": [
+					"Delete"
+				]
+			},
+			{
+				"action": "SelectAll",
+				"shortcuts": [
+					"Ctrl+A"
+				]
+			},
+			{
+				"action": "Find",
+				"shortcuts": [
+					"Ctrl+F"
+				]
+			},
+			{
+				"action": "FindNext",
+				"shortcuts": [
+					"Ctrl+G",
+					"F3"
+				]
+			},
+			{
+				"action": "FindPrevious",
+				"shortcuts": [
+					"Ctrl+Shift+G",
+					"Shift+F3"
+				]
+			},
+			{
+				"action": "QuickFind",
+				"shortcuts": [
+					"/",
+					"."
+				]
+			},
+			{
+				"action": "ZoomIn",
+				"shortcuts": [
+					"Ctrl++",
+					"0",
+					"+",
+					"=",
+					"Ctrl+="
+				]
+			},
+			{
+				"action": "ZoomOut",
+				"shortcuts": [
+					"Ctrl+-",
+					"9",
+					"-"
+				]
+			},
+			{
+				"action": "ZoomOriginal",
+				"shortcuts": [
+					"Ctrl+0"
+				]
+			},
+			{
+				"action": "FillPassword",
+				"shortcuts": [
+					"Ctrl+Enter",
+					"Ctrl+Return"
+				]
+			},
+
+			{
+				"action": "GoBack",
+				"shortcuts": [
+					"Z",
+					"Backspace",
+					"Alt+Left",
+					"Ctrl+Left"
+				]
+			},
+			{
+				"action": "GoForward",
+				"shortcuts": [
+					"X",
+					"Shift+Backspace",
+					"Alt+Right",
+					"Ctrl+Right"
+				]
+			},
+			{
+				"action": "GoToPage",
+				"shortcuts": [
+					"F2"
+				]
+			},
+			{
+				"action": "GoToHomePage",
+				"shortcuts": [
+					"Ctrl+Space",
+					"Alt+Home"
+				]
+			},
+			{
+				"action": "GoToParentDirectory",
+				"shortcuts": [
+					"Ctrl+Backspace"
+				]
+			},
+			{
+				"action": "Print",
+				"shortcuts": [
+					"Ctrl+P"
+				]
+			},
+			{
+				"action": "PrintPreview",
+				"shortcuts": [
+					"Ctrl+Shift+P"
+				]
+			},
+			{
+				"action": "ActivateAddressField",
+				"shortcuts": [
+					"F8",
+					"Alt+D",
+					"Ctrl+L"
+				]
+			},
+			{
+				"action": "ActivateSearchField",
+				"shortcuts": [
+					"Ctrl+K",
+					"Ctrl+E"
+				]
+			},
+			{
+				"action": "ActivateContent",
+				"shortcuts": [
+					"F9"
+				]
+			},
+			{
+				"action": "ActivateTabOnLeft",
+				"shortcuts": [
+					"1",
+					"Ctrl+Shift+F6"
+				]
+			},
+			{
+				"action": "ActivateTabOnRight",
+				"shortcuts": [
+					"2",
+					"Ctrl+F6"
+				]
+			},
+			{
+				"action": "Bookmarks",
+				"shortcuts": [
+					"Ctrl+Shift+B"
+				]
+			},
+			{
+				"action": "BookmarkPage",
+				"shortcuts": [
+					"Ctrl+D"
+				]
+			},
+			{
+				"action": "QuickBookmarkAccess",
+				"shortcuts": [
+					"Shift+F2"
+				]
+			},
+			{
+				"action": "ViewSource",
+				"shortcuts": [
+					"Ctrl+U"
+				]
+			},
+			{
+				"action": "FullScreen",
+				"shortcuts": [
+					"F11"
+				]
+			},
+			{
+				"action": "ShowToolBar",
+				"parameters":
+				{
+					"toolBar": "MenuBar"
+				},
+				"shortcuts": [
+					"Alt+F11"
+				]
+			},
+			{
+				"action": "ShowToolBar",
+				"parameters": {
+					"toolBar": "SideBar"
+				},
+				"shortcuts": [
+					"F4"
+				]
+			},
+			{
+				"action": "ShowToolBar",
+				"parameters": {
+					"toolBar": "ErrorConsoleBar"
+				},
+				"shortcuts": [
+					"Ctrl+Shift+O"
+				]
+			},
+			{
+				"action": "Preferences",
+				"shortcuts": [
+					"Ctrl+F12",
+					"Alt+P"
+				]
+			},
+			{
+				"action": "QuickPreferences",
+				"shortcuts": [
+					"F12"
+				]
+			},
+			{
+				"action": "Exit",
+				"shortcuts": [
+					"Ctrl+Q"
+				]
+			}
+		]
+	}
+]

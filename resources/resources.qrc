@@ -128,8 +128,7 @@
         <file>icons/theme/zoom-in.png</file>
         <file>icons/theme/zoom-original.png</file>
         <file>icons/theme/zoom-out.png</file>
-        <file>keyboard/default.ini</file>
-        <file>keyboard/platform.ini</file>
+        <file>keyboard/default.json</file>
         <file>menu/menuBar.json</file>
         <file>menu/menuButton.json</file>
         <file>menu/quickPreferences.json</file>

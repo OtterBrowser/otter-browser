@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "KeyboardProfileDialog.h"
-#include "../../core/ActionsManager.h"
 
 #include "ui_KeyboardProfileDialog.h"
 
@@ -53,43 +52,37 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 }
 
 KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent) : Dialog(parent),
-	m_profile(profile),
+	m_profile(profiles[profile]),
 	m_ui(new Ui::KeyboardProfileDialog)
 {
 	m_ui->setupUi(this);
 
 	QStandardItemModel *model(new QStandardItemModel(this));
-	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
+	const QVector<KeyboardProfile::Action> definitions(m_profile.getDefinitions().value(ActionsManager::GenericContext));
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
-		{
-			continue;
-		}
-
-		QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
+		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(definitions.at(i).action));
+		QStandardItem *item(new QStandardItem(action.getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(definitions.at(i).identifier, IdentifierRole);
-		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
+		item->setData(definitions.at(i).action, IdentifierRole);
+		item->setData(definitions.at(i).parameters, ParametersRole);
+		item->setToolTip(ActionsManager::getActionName(definitions.at(i).action));
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
-		if (!definitions.at(i).defaultState.icon.isNull())
+		if (!action.defaultState.icon.isNull())
 		{
-			item->setIcon(definitions.at(i).defaultState.icon);
+			item->setIcon(action.defaultState.icon);
 		}
 
-		if (profiles[profile].shortcuts.contains(definitions.at(i).identifier))
+		QStringList shortcuts;
+
+		for (int j = 0; j < definitions.at(i).shortcuts.count(); ++j)
 		{
-			QStringList shortcuts;
-
-			for (int j = 0; j < profiles[profile].shortcuts[definitions.at(i).identifier].count(); ++j)
-			{
-				shortcuts.append(profiles[profile].shortcuts[definitions.at(i).identifier].at(j).toString());
-			}
-
-			item->setData(shortcuts.join(QLatin1Char(' ')), ShortcutsRole);
+			shortcuts.append(definitions.at(i).shortcuts.at(j).toString());
 		}
+
+		item->setData(shortcuts.join(QLatin1Char(' ')), ShortcutsRole);
 
 		model->appendRow(item);
 	}
@@ -100,11 +93,11 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->shortcutsViewWidget->setModel(new QStandardItemModel(this));
 	m_ui->shortcutsViewWidget->setItemDelegate(new KeyboardShortcutDelegate(this));
-	m_ui->shortcutsViewWidget->setModified(profiles[profile].isModified);
-	m_ui->titleLineEdit->setText(profiles[profile].title);
-	m_ui->descriptionLineEdit->setText(profiles[profile].description);
-	m_ui->versionLineEdit->setText(profiles[profile].version);
-	m_ui->authorLineEdit->setText(profiles[profile].author);
+	m_ui->shortcutsViewWidget->setModified(m_profile.isModified());
+	m_ui->titleLineEdit->setText(m_profile.getTitle());
+	m_ui->descriptionLineEdit->setText(m_profile.getDescription());
+	m_ui->versionLineEdit->setText(m_profile.getVersion());
+	m_ui->authorLineEdit->setText(m_profile.getAuthor());
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActionsActions()));
@@ -213,11 +206,12 @@ void KeyboardProfileDialog::saveShortcuts()
 KeyboardProfile KeyboardProfileDialog::getProfile() const
 {
 	KeyboardProfile profile;
-	profile.title = m_ui->titleLineEdit->text();
-	profile.description = m_ui->descriptionLineEdit->text();
-	profile.version = m_ui->versionLineEdit->text();
-	profile.author = m_ui->authorLineEdit->text();
-	profile.isModified = m_ui->shortcutsViewWidget->isModified();
+	profile.setTitle(m_ui->titleLineEdit->text());
+	profile.setDescription(m_ui->descriptionLineEdit->text());
+	profile.setVersion(m_ui->versionLineEdit->text());
+	profile.setAuthor(m_ui->authorLineEdit->text());
+
+	QVector<KeyboardProfile::Action> definitions;
 
 	for (int i = 0; i < m_ui->actionsViewWidget->getRowCount(); ++i)
 	{
@@ -225,18 +219,29 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 
 		if (!rawShortcuts.isEmpty())
 		{
-			QVector<QKeySequence> shortcuts;
+			KeyboardProfile::Action definition;
+			definition.parameters = m_ui->actionsViewWidget->getIndex(i, 0).data(ParametersRole).toMap();
+			definition.shortcuts.reserve(rawShortcuts.count());
+			definition.action = m_ui->actionsViewWidget->getIndex(i, 0).data(IdentifierRole).toInt();
 
 			for (int j = 0; j < rawShortcuts.count(); ++j)
 			{
-				shortcuts.append(QKeySequence(rawShortcuts.at(j)));
+				definition.shortcuts.append(QKeySequence(rawShortcuts.at(j)));
 			}
 
-			profile.shortcuts[m_ui->actionsViewWidget->getIndex(i, 0).data(IdentifierRole).toInt()] = shortcuts;
+			definitions.append(definition);
 		}
 	}
 
+	profile.setDefinitions({{ActionsManager::GenericContext, definitions}});
+	profile.setModified(m_ui->actionsViewWidget->isModified());
+
 	return profile;
+}
+
+bool KeyboardProfileDialog::isModified() const
+{
+	return m_ui->actionsViewWidget->isModified();
 }
 
 }

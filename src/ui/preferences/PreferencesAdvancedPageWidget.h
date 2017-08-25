@@ -35,8 +35,8 @@ namespace Ui
 	class PreferencesAdvancedPageWidget;
 }
 
-struct MouseProfile;
 struct KeyboardProfile;
+struct MouseProfile;
 class ItemViewWidget;
 
 class PreferencesAdvancedPageWidget final : public QWidget
@@ -65,7 +65,6 @@ protected:
 	void updateReaddMouseProfileMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = {}) const;
 	QStringList getSelectedUpdateChannels() const;
-	KeyboardProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
 
 protected slots:
 	void playNotificationSound();

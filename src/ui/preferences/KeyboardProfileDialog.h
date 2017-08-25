@@ -22,6 +22,7 @@
 
 #include "../Dialog.h"
 #include "../ItemDelegate.h"
+#include "../../core/ActionsManager.h"
 
 #include <QtCore/QModelIndex>
 
@@ -32,17 +33,6 @@ namespace Ui
 {
 	class KeyboardProfileDialog;
 }
-
-struct KeyboardProfile
-{
-	QString identifier;
-	QString title;
-	QString description;
-	QString author;
-	QString version;
-	QHash<int, QVector<QKeySequence> > shortcuts;
-	bool isModified = false;
-};
 
 class KeyboardShortcutDelegate final : public ItemDelegate
 {
@@ -61,13 +51,15 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
-		ShortcutsRole
+		ShortcutsRole,
+		ParametersRole
 	};
 
 	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = nullptr);
 	~KeyboardProfileDialog();
 
 	KeyboardProfile getProfile() const;
+	bool isModified() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -80,7 +72,7 @@ protected slots:
 	void saveShortcuts();
 
 private:
-	QString m_profile;
+	KeyboardProfile m_profile;
 	QModelIndex m_currentAction;
 	Ui::KeyboardProfileDialog *m_ui;
 };

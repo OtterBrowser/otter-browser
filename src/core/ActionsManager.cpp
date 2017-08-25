@@ -20,16 +20,258 @@
 **************************************************************************/
 
 #include "ActionsManager.h"
+#include "JsonSettings.h"
 #include "ThemesManager.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QRegularExpression>
-#include <QtCore/QSettings>
 #include <QtCore/QTextStream>
 
 namespace Otter
 {
+
+bool KeyboardProfile::Action::operator ==(const KeyboardProfile::Action &other) const
+{
+	return (shortcuts == other.shortcuts && parameters == other.parameters && action == other.action);
+}
+
+KeyboardProfile::KeyboardProfile(const QString &identifier, bool onlyMetaData) : Addon(),
+	m_identifier(identifier),
+	m_isModified(false)
+{
+	if (identifier.isEmpty())
+	{
+		return;
+	}
+
+	const JsonSettings settings(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".json")));
+	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
+
+	for (int i = 0; i < comments.count(); ++i)
+	{
+		const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
+		const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
+
+		if (key == QLatin1String("Title"))
+		{
+			m_title = value;
+		}
+		else if (key == QLatin1String("Description"))
+		{
+			m_description = value;
+		}
+		else if (key == QLatin1String("Author"))
+		{
+			m_author = value;
+		}
+		else if (key == QLatin1String("Version"))
+		{
+			m_version = value;
+		}
+	}
+
+	if (onlyMetaData)
+	{
+		return;
+	}
+
+	const QJsonArray contextsArray(settings.array());
+	const bool enableSingleKeyShortcuts(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
+	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
+	functionKeyExpression.optimize();
+
+	for (int i = 0; i < contextsArray.count(); ++i)
+	{
+		const QJsonArray actionsArray(contextsArray.at(i).toObject().value(QLatin1String("actions")).toArray());
+		QVector<Action> definitions;
+		definitions.reserve(actionsArray.count());
+
+		for (int j = 0; j < actionsArray.count(); ++j)
+		{
+			const QJsonObject actionObject(actionsArray.at(j).toObject());
+			const int action(ActionsManager::getActionIdentifier(actionObject.value(QLatin1String("action")).toString()));
+
+			if (action < 0)
+			{
+				continue;
+			}
+
+			const QJsonArray shortcutsArray(actionObject.value(QLatin1String("shortcuts")).toArray());
+			QVector<QKeySequence> shortcuts;
+			shortcuts.reserve(shortcutsArray.count());
+
+			for (int k = 0; k < shortcutsArray.count(); ++k)
+			{
+				const QString rawShortcut(shortcutsArray.at(k).toString());
+
+				if (!enableSingleKeyShortcuts && !functionKeyExpression.match(rawShortcut).hasMatch() && (!rawShortcut.contains(QLatin1Char('+')) || rawShortcut == QLatin1String("+")))
+				{
+					continue;
+				}
+
+				shortcuts.append(QKeySequence(rawShortcut));
+			}
+
+			if (shortcuts.isEmpty())
+			{
+				continue;
+			}
+
+			KeyboardProfile::Action definition;
+			definition.shortcuts = shortcuts;
+			definition.parameters = actionObject.value(QLatin1String("parameters")).toVariant().toMap();
+			definition.action = action;
+
+			definitions.append(definition);
+		}
+
+		m_definitions[ActionsManager::GenericContext] = definitions;
+	}
+}
+
+void KeyboardProfile::setTitle(const QString &title)
+{
+	if (title != m_title)
+	{
+		m_title = title;
+		m_isModified = true;
+	}
+}
+
+void KeyboardProfile::setDescription(const QString &description)
+{
+	if (description != m_description)
+	{
+		m_description = description;
+		m_isModified = true;
+	}
+}
+
+void KeyboardProfile::setAuthor(const QString &author)
+{
+	if (author != m_author)
+	{
+		m_author = author;
+		m_isModified = true;
+	}
+}
+
+void KeyboardProfile::setVersion(const QString &version)
+{
+	if (version != m_version)
+	{
+		m_version = version;
+		m_isModified = true;
+	}
+}
+
+void KeyboardProfile::setDefinitions(const QHash<int, QVector<KeyboardProfile::Action> > &definitions)
+{
+	if (definitions != m_definitions)
+	{
+		m_definitions = definitions;
+		m_isModified = true;
+	}
+}
+
+void KeyboardProfile::setModified(bool isModified)
+{
+	m_isModified = isModified;
+}
+
+QString KeyboardProfile::getName() const
+{
+	return m_identifier;
+}
+
+QString KeyboardProfile::getTitle() const
+{
+	return (m_title.isEmpty() ? QCoreApplication::translate("Otter::KeyboardProfile", "(Untitled)") : m_title);
+}
+
+QString KeyboardProfile::getDescription() const
+{
+	return m_description;
+}
+
+QString KeyboardProfile::getAuthor() const
+{
+	return m_author;
+}
+
+QString KeyboardProfile::getVersion() const
+{
+	return m_version;
+}
+
+QHash<int, QVector<KeyboardProfile::Action> > KeyboardProfile::getDefinitions() const
+{
+	return m_definitions;
+}
+
+bool KeyboardProfile::isModified() const
+{
+	return m_isModified;
+}
+
+bool KeyboardProfile::save()
+{
+	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + m_identifier + QLatin1String(".json")));
+	QString comment;
+	QTextStream stream(&comment);
+	stream.setCodec("UTF-8");
+	stream << QLatin1String("Title: ") << (m_title.isEmpty() ? QT_TR_NOOP("(Untitled)") : m_title) << QLatin1Char('\n');
+	stream << QLatin1String("Description: ") << m_description << QLatin1Char('\n');
+	stream << QLatin1String("Type: keyboard-profile\n");
+	stream << QLatin1String("Author: ") << m_author << QLatin1Char('\n');
+	stream << QLatin1String("Version: ") << m_version;
+
+	settings.setComment(comment);
+
+	QJsonArray contextsArray;
+	QHash<int, QVector<KeyboardProfile::Action> >::const_iterator contextsIterator;
+
+	for (contextsIterator = m_definitions.begin(); contextsIterator != m_definitions.end(); ++contextsIterator)
+	{
+		QJsonArray actionsArray;
+
+		for (int i = 0; i < contextsIterator.value().count(); ++i)
+		{
+			const KeyboardProfile::Action &action(contextsIterator.value().at(i));
+			QJsonArray shortcutsArray;
+
+			for (int j = 0; j < action.shortcuts.count(); ++j)
+			{
+				shortcutsArray.append(action.shortcuts.at(j).toString());
+			}
+
+			QJsonObject actionObject{{QLatin1String("action"), ActionsManager::getActionName(action.action)}, {QLatin1String("steps"), shortcutsArray}};
+
+			if (!action.parameters.isEmpty())
+			{
+				actionObject.insert(QLatin1String("parameters"), QJsonObject::fromVariantMap(action.parameters));
+			}
+
+			actionsArray.append(actionObject);
+		}
+
+		contextsArray.append(QJsonObject({{QLatin1String("context"), QLatin1String("Generic")}, {QLatin1String("actions"), actionsArray}}));
+	}
+
+	settings.setArray(contextsArray);
+
+	const bool result(settings.save());
+
+	if (result)
+	{
+		m_isModified = false;
+	}
+
+	return result;
+}
 
 ActionsManager* ActionsManager::m_instance(nullptr);
 QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > ActionsManager::m_extraShortcuts;
@@ -130,7 +372,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), ThemesManager::createIcon(QLatin1String("edit-redo")), ActionDefinition::WindowScope);
 	registerAction(CutAction, QT_TRANSLATE_NOOP("actions", "Cut"), QString(), ThemesManager::createIcon(QLatin1String("edit-cut")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(CopyAction, QT_TRANSLATE_NOOP("actions", "Copy"), QString(), ThemesManager::createIcon(QLatin1String("edit-copy")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
-	registerAction(CopyPlainTextAction, QT_TRANSLATE_NOOP("actions", "Copy as Plain Text"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
+	registerAction(CopyPlainTextAction, QT_TRANSLATE_NOOP("actions", "Copy as Plain Text"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsDeprecatedFlag), ActionDefinition::EditingCategory);
 	registerAction(CopyAddressAction, QT_TRANSLATE_NOOP("actions", "Copy Address"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(CopyToNoteAction, QT_TRANSLATE_NOOP("actions", "Copy to Note"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), ThemesManager::createIcon(QLatin1String("edit-paste")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
@@ -241,56 +483,7 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 
 void ActionsManager::loadProfiles()
 {
-	QHash<int, QVector<QKeySequence> > actionShortcuts;
-	QVector<QKeySequence> allShortcuts;
-	const QStringList shortcutProfiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
-	const bool enableSingleKeyShortcuts(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
-	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
-	functionKeyExpression.optimize();
-
-	for (int i = 0; i < shortcutProfiles.count(); ++i)
-	{
-		const QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList rawActions(profile.childGroups());
-
-		for (int j = 0; j < rawActions.count(); ++j)
-		{
-			const int action(ActionsManager::getActionIdentifier(rawActions.at(j)));
-			const QStringList rawShortcuts(profile.value(rawActions.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
-			QVector<QKeySequence> shortcuts;
-
-			if (actionShortcuts.contains(action))
-			{
-				shortcuts = actionShortcuts[action];
-			}
-
-			for (int k = 0; k < rawShortcuts.count(); ++k)
-			{
-				if (!enableSingleKeyShortcuts && !functionKeyExpression.match(rawShortcuts.at(k)).hasMatch() && (!rawShortcuts.at(k).contains(QLatin1Char('+')) || rawShortcuts.at(k) == QLatin1String("+")))
-				{
-					continue;
-				}
-
-				const QKeySequence shortcut(rawShortcuts.at(k));
-
-				if (!shortcut.isEmpty() && !allShortcuts.contains(shortcut))
-				{
-					shortcuts.append(shortcut);
-					allShortcuts.append(shortcut);
-				}
-			}
-
-			if (!shortcuts.isEmpty())
-			{
-				actionShortcuts[action] = shortcuts;
-			}
-		}
-	}
-
-	for (int i = 0; i < m_definitions.count(); ++i)
-	{
-		m_definitions[i].shortcuts = actionShortcuts.value(i);
-	}
+///TODO
 
 	emit m_instance->shortcutsChanged();
 }
