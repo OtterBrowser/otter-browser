@@ -165,9 +165,7 @@ void Action::updateIcon()
 
 void Action::updateShortcut()
 {
-	const ActionsManager::ActionDefinition definition(getDefinition());
-
-	setShortcut((m_parameters.isEmpty() && !definition.shortcuts.isEmpty()) ? definition.shortcuts.first() : QKeySequence());
+	setShortcut(ActionsManager::getActionShortcut(m_identifier, m_parameters));
 }
 
 void Action::updateState()

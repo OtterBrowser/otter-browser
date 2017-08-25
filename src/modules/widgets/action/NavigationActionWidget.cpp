@@ -160,8 +160,8 @@ bool NavigationActionWidget::event(QEvent *event)
 
 				if (helpEvent)
 				{
-					const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(getIdentifier()).shortcuts);
-					QString toolTip(text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+					const QKeySequence shortcut(ActionsManager::getActionShortcut(getIdentifier()));
+					QString toolTip(text() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
 					if (m_window)
 					{
@@ -185,7 +185,7 @@ bool NavigationActionWidget::event(QEvent *event)
 								QString title(history.entries.at(index).title);
 								title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
 
-								toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
+								toolTip = title + QLatin1String(" (") + text() + (shortcut.isEmpty() ? QString() : QLatin1String(" - ") + shortcut.toString(QKeySequence::NativeText)) + QLatin1Char(')');
 							}
 						}
 					}

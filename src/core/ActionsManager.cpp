@@ -621,21 +621,16 @@ QString ActionsManager::getActionName(int identifier)
 	return QString();
 }
 
-QVector<ActionsManager::ActionDefinition> ActionsManager::getActionDefinitions()
-{
-	return m_definitions;
-}
-
-QVector<QKeySequence> ActionsManager::getActionShortcuts(int identifier, const QVariantMap &parameters)
+QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap &parameters)
 {
 	if (identifier < 0 || identifier >= m_definitions.count() || (!parameters.isEmpty() && !m_extraShortcuts.contains(identifier)))
 	{
-		return QVector<QKeySequence>();
+		return QKeySequence();
 	}
 
 	if (parameters.isEmpty())
 	{
-		return m_definitions[identifier].shortcuts;
+		return m_definitions[identifier].shortcuts.value(0);
 	}
 
 	const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(identifier));
@@ -644,11 +639,16 @@ QVector<QKeySequence> ActionsManager::getActionShortcuts(int identifier, const Q
 	{
 		if (definitions.at(i).first == parameters)
 		{
-			return definitions.at(i).second;
+			return definitions.at(i).second.first();
 		}
 	}
 
-	return QVector<QKeySequence>();
+	return QKeySequence();
+}
+
+QVector<ActionsManager::ActionDefinition> ActionsManager::getActionDefinitions()
+{
+	return m_definitions;
 }
 
 ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identifier)

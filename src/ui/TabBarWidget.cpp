@@ -253,9 +253,9 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 		{
 			m_tabBarWidget->hidePreview();
 
-			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::CloseTabAction).shortcuts);
+			const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::CloseTabAction));
 
-			setToolTip(tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+			setToolTip(tr("Close Tab") + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
 		}
 	}
 
