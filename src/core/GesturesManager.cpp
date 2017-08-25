@@ -411,39 +411,33 @@ MouseProfile::MouseProfile(const QString &identifier, bool onlyMetaData) : Addon
 		for (int j = 0; j < gesturesArray.count(); ++j)
 		{
 			const QJsonObject actionObject(gesturesArray.at(j).toObject());
-			const QJsonArray rawMouseActions(actionObject.value(QLatin1String("steps")).toArray());
-			const QString actionIdentifier(actionObject.value(QLatin1String("action")).toString());
-			const QVariantMap parameters(actionObject.value(QLatin1String("parameters")).toVariant().toMap());
-			int action(ActionsManager::getActionIdentifier(actionIdentifier));
+			const QJsonArray rawSteps(actionObject.value(QLatin1String("steps")).toArray());
 
-			if (rawMouseActions.isEmpty())
+			if (rawSteps.isEmpty())
 			{
 				continue;
 			}
 
-			if (action < 0)
+			const QString actionIdentifier(actionObject.value(QLatin1String("action")).toString());
+			const bool isNativeGesture(actionIdentifier == QLatin1String("NoAction"));
+			const int action(isNativeGesture ? NATIVE_GESTURE : ActionsManager::getActionIdentifier(actionIdentifier));
+
+			if (action < 0 && !isNativeGesture)
 			{
-				if (actionIdentifier == QLatin1String("NoAction"))
-				{
-					action = NATIVE_GESTURE;
-				}
-				else
-				{
-					continue;
-				}
+				continue;
 			}
 
 			QVector<MouseProfile::Gesture::Step> steps;
-			steps.reserve(rawMouseActions.count());
+			steps.reserve(rawSteps.count());
 
-			for (int k = 0; k < rawMouseActions.count(); ++k)
+			for (int k = 0; k < rawSteps.count(); ++k)
 			{
-				steps.append(Gesture::Step::fromString(rawMouseActions.at(k).toString()));
+				steps.append(Gesture::Step::fromString(rawSteps.at(k).toString()));
 			}
 
 			MouseProfile::Gesture definition;
 			definition.steps = steps;
-			definition.parameters = parameters;
+			definition.parameters = actionObject.value(QLatin1String("parameters")).toVariant().toMap();
 			definition.action = action;
 
 			m_definitions[context].append(definition);
