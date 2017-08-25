@@ -81,7 +81,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Browser_EnableTrayIconOption, BooleanType, true);
 	registerOption(Browser_HomePageOption, StringType, QString());
 	registerOption(Browser_InactiveTabTimeUntilSuspendOption, IntegerType, -1);
-	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, ListType, QStringList({QLatin1String("platform"), QLatin1String("default")}));
+	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, ListType, QStringList(QLatin1String("default")));
 	registerOption(Browser_LocaleOption, StringType, QLatin1String("system"));
 	registerOption(Browser_MigrationsOption, ListType, QStringList());
 	registerOption(Browser_MouseProfilesOrderOption, ListType, QStringList(QLatin1String("default")));
