@@ -483,7 +483,56 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 
 void ActionsManager::loadProfiles()
 {
-///TODO
+	QHash<int, QVector<QKeySequence> > actionShortcuts;
+	QVector<QKeySequence> allShortcuts;
+	const QStringList profiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		const QHash<int, QVector<KeyboardProfile::Action> > definitions(KeyboardProfile(profiles.at(i)).getDefinitions());
+		QHash<int, QVector<KeyboardProfile::Action> >::const_iterator iterator;
+
+		for (iterator = definitions.constBegin(); iterator != definitions.constEnd(); ++iterator)
+		{
+			for (int j = 0; j < iterator.value().count(); ++j)
+			{
+				const KeyboardProfile::Action definition(iterator.value().at(j));
+
+				if (!definition.parameters.isEmpty())
+				{
+					continue;
+				}
+
+				QVector<QKeySequence> shortcuts;
+
+				if (actionShortcuts.contains(definition.action))
+				{
+					shortcuts = actionShortcuts[definition.action];
+				}
+
+				for (int k = 0; k < definition.shortcuts.count(); ++k)
+				{
+					const QKeySequence shortcut(definition.shortcuts.at(k));
+
+					if (!allShortcuts.contains(shortcut))
+					{
+						shortcuts.append(shortcut);
+						allShortcuts.append(shortcut);
+					}
+				}
+
+				if (!shortcuts.isEmpty())
+				{
+					actionShortcuts[definition.action] = shortcuts;
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < m_definitions.count(); ++i)
+	{
+		m_definitions[i].shortcuts = actionShortcuts.value(i);
+	}
 
 	emit m_instance->shortcutsChanged();
 }
