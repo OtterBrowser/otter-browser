@@ -483,6 +483,8 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 
 void ActionsManager::loadProfiles()
 {
+	m_extraShortcuts.clear();
+
 	QHash<int, QVector<QKeySequence> > actionShortcuts;
 	QVector<QKeySequence> allShortcuts;
 	const QStringList profiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
@@ -497,12 +499,6 @@ void ActionsManager::loadProfiles()
 			for (int j = 0; j < iterator.value().count(); ++j)
 			{
 				const KeyboardProfile::Action definition(iterator.value().at(j));
-
-				if (!definition.parameters.isEmpty())
-				{
-					continue;
-				}
-
 				QVector<QKeySequence> shortcuts;
 
 				if (actionShortcuts.contains(definition.action))
@@ -523,7 +519,14 @@ void ActionsManager::loadProfiles()
 
 				if (!shortcuts.isEmpty())
 				{
-					actionShortcuts[definition.action] = shortcuts;
+					if (definition.parameters.isEmpty())
+					{
+						actionShortcuts[definition.action] = shortcuts;
+					}
+					else
+					{
+						m_extraShortcuts.insert(definition.action, {definition.parameters, shortcuts});
+					}
 				}
 			}
 		}
