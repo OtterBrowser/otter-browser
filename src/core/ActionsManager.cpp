@@ -583,25 +583,46 @@ QString ActionsManager::createReport()
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		if (!m_shortcuts.contains(i))
+		if (m_shortcuts.contains(i))
 		{
-			continue;
+			const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
+
+			stream << QLatin1Char('\t');
+			stream.setFieldWidth(30);
+			stream << getActionName(i);
+			stream.setFieldWidth(20);
+
+			for (int j = 0; j < shortcuts.count(); ++j)
+			{
+				stream << shortcuts.at(j).toString(QKeySequence::PortableText);
+			}
+
+			stream.setFieldWidth(0);
+			stream << QLatin1Char('\n');
 		}
 
-		const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
-
-		stream << QLatin1Char('\t');
-		stream.setFieldWidth(30);
-		stream << getActionName(m_definitions.at(i).identifier);
-		stream.setFieldWidth(20);
-
-		for (int j = 0; j < shortcuts.count(); ++j)
+		if (m_extraShortcuts.contains(i))
 		{
-			stream << shortcuts.at(j).toString(QKeySequence::PortableText);
-		}
+			const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(i));
 
-		stream.setFieldWidth(0);
-		stream << QLatin1Char('\n');
+			for (int j = 0; j < definitions.count(); ++j)
+			{
+				const QVector<QKeySequence> shortcuts(definitions[j].second);
+
+				stream << QLatin1Char('\t');
+				stream.setFieldWidth(30);
+				stream << getActionName(i) + QLatin1Char(' ') + QJsonDocument(QJsonObject::fromVariantMap(definitions[j].first)).toJson(QJsonDocument::Compact);
+				stream.setFieldWidth(20);
+
+				for (int j = 0; j < shortcuts.count(); ++j)
+				{
+					stream << shortcuts.at(j).toString(QKeySequence::PortableText);
+				}
+
+				stream.setFieldWidth(0);
+				stream << QLatin1Char('\n');
+			}
+		}
 	}
 
 	stream << QLatin1Char('\n');
