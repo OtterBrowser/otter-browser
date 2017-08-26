@@ -306,7 +306,6 @@ public:
 
 		QString description;
 		State defaultState;
-		QVector<QKeySequence> shortcuts;
 		ActionFlags flags = IsEnabledFlag;
 		ActionCategory category = OtherCategory;
 		ActionScope scope = OtherScope;
@@ -349,6 +348,7 @@ private:
 	int m_reloadTimer;
 
 	static ActionsManager *m_instance;
+	static QMap<int, QVector<QKeySequence> > m_shortcuts;
 	static QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > m_extraShortcuts;
 	static QVector<ActionDefinition> m_definitions;
 	static int m_actionIdentifierEnumerator;

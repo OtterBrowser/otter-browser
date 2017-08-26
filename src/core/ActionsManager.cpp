@@ -274,6 +274,7 @@ bool KeyboardProfile::save()
 }
 
 ActionsManager* ActionsManager::m_instance(nullptr);
+QMap<int, QVector<QKeySequence> > ActionsManager::m_shortcuts;
 QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > ActionsManager::m_extraShortcuts;
 QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
 int ActionsManager::m_actionIdentifierEnumerator(0);
@@ -483,9 +484,9 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 
 void ActionsManager::loadProfiles()
 {
+	m_shortcuts.clear();
 	m_extraShortcuts.clear();
 
-	QHash<int, QVector<QKeySequence> > actionShortcuts;
 	QVector<QKeySequence> allShortcuts;
 	const QStringList profiles(SettingsManager::getOption(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
 
@@ -501,9 +502,9 @@ void ActionsManager::loadProfiles()
 				const KeyboardProfile::Action definition(iterator.value().at(j));
 				QVector<QKeySequence> shortcuts;
 
-				if (actionShortcuts.contains(definition.action))
+				if (m_shortcuts.contains(definition.action))
 				{
-					shortcuts = actionShortcuts[definition.action];
+					shortcuts = m_shortcuts[definition.action];
 				}
 
 				for (int k = 0; k < definition.shortcuts.count(); ++k)
@@ -521,7 +522,7 @@ void ActionsManager::loadProfiles()
 				{
 					if (definition.parameters.isEmpty())
 					{
-						actionShortcuts[definition.action] = shortcuts;
+						m_shortcuts[definition.action] = shortcuts;
 					}
 					else
 					{
@@ -530,11 +531,6 @@ void ActionsManager::loadProfiles()
 				}
 			}
 		}
-	}
-
-	for (int i = 0; i < m_definitions.count(); ++i)
-	{
-		m_definitions[i].shortcuts = actionShortcuts.value(i);
 	}
 
 	emit m_instance->shortcutsChanged();
@@ -586,19 +582,21 @@ QString ActionsManager::createReport()
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		if (m_definitions.at(i).shortcuts.isEmpty())
+		if (!m_shortcuts.contains(i))
 		{
 			continue;
 		}
+
+		const QVector<QKeySequence> shortcuts(m_shortcuts[i]);
 
 		stream << QLatin1Char('\t');
 		stream.setFieldWidth(30);
 		stream << getActionName(m_definitions.at(i).identifier);
 		stream.setFieldWidth(20);
 
-		for (int j = 0; j < m_definitions.at(i).shortcuts.count(); ++j)
+		for (int j = 0; j < shortcuts.count(); ++j)
 		{
-			stream << m_definitions.at(i).shortcuts.at(j).toString(QKeySequence::PortableText);
+			stream << shortcuts.at(j).toString(QKeySequence::PortableText);
 		}
 
 		stream.setFieldWidth(0);
@@ -626,23 +624,21 @@ QString ActionsManager::getActionName(int identifier)
 
 QKeySequence ActionsManager::getActionShortcut(int identifier, const QVariantMap &parameters)
 {
-	if (identifier < 0 || identifier >= m_definitions.count() || (!parameters.isEmpty() && !m_extraShortcuts.contains(identifier)))
+	if (parameters.isEmpty() && m_shortcuts.contains(identifier))
 	{
-		return QKeySequence();
+		return m_shortcuts[identifier].first();
 	}
 
-	if (parameters.isEmpty())
+	if (!parameters.isEmpty() && m_extraShortcuts.contains(identifier))
 	{
-		return m_definitions[identifier].shortcuts.value(0);
-	}
+		const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(identifier));
 
-	const QList<QPair<QVariantMap, QVector<QKeySequence> > > definitions(m_extraShortcuts.values(identifier));
-
-	for (int i = 0; i < definitions.count(); ++i)
-	{
-		if (definitions.at(i).first == parameters)
+		for (int i = 0; i < definitions.count(); ++i)
 		{
-			return definitions.at(i).second.first();
+			if (definitions.at(i).first == parameters)
+			{
+				return definitions.at(i).second.first();
+			}
 		}
 	}
 
