@@ -1197,7 +1197,7 @@ void Menu::populateToolBarsMenu()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		addAction(new Action(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), definitions.at(i).identifier}}, executor, this));
+		addAction(new Action(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::getToolBarName(definitions.at(i).identifier)}}, executor, this));
 	}
 
 	addSeparator();
