@@ -21,14 +21,15 @@
 
 #include "ActionsManager.h"
 #include "JsonSettings.h"
+#include "SessionsManager.h"
 #include "ThemesManager.h"
-#include "../ui/MainWindow.h"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
+#include <QtGui/QKeySequence>
 
 namespace Otter
 {
