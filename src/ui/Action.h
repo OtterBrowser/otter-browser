@@ -34,18 +34,15 @@ class Action final : public QAction
 public:
 	enum ActionFlag
 	{
-		NoFlag = 0,
-		CanTriggerActionFlag = 1,
-		FollowsActionStateFlag = 2,
-		IsOverridingTextFlag = 4,
-		IsOverridingIconFlag = 8
+		NoFlags = 0,
+		IsOverridingTextFlag = 1,
+		IsOverridingIconFlag = 2
 	};
 
 	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
 
 	explicit Action(int identifier, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, QObject *parent);
-	explicit Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent);
 	explicit Action(int identifier, const QVariantMap &parameters, ActionExecutor::Object executor, QObject *parent);
 
 	void setExecutor(ActionExecutor::Object executor);

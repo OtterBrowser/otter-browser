@@ -123,23 +123,23 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
 
-				Action *importOperaBookmarksAction(new Action(-1, {}, Action::NoFlag, this));
+				Action *importOperaBookmarksAction(new Action(-1, {}, this));
 				importOperaBookmarksAction->setData(QLatin1String("OperaBookmarks"));
 				importOperaBookmarksAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…"));
 
-				Action *importHtmlBookmarksAction(new Action(-1, {}, Action::NoFlag, this));
+				Action *importHtmlBookmarksAction(new Action(-1, {}, this));
 				importHtmlBookmarksAction->setData(QLatin1String("HtmlBookmarks"));
 				importHtmlBookmarksAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…"));
 
-				Action *importOperaNotesAction(new Action(-1, {}, Action::NoFlag, this));
+				Action *importOperaNotesAction(new Action(-1, {}, this));
 				importOperaNotesAction->setData(QLatin1String("OperaNotes"));
 				importOperaNotesAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Notes…"));
 
-				Action *importOperaSearchEnginesAction(new Action(-1, {}, Action::NoFlag, this));
+				Action *importOperaSearchEnginesAction(new Action(-1, {}, this));
 				importOperaSearchEnginesAction->setData(QLatin1String("OperaSearchEngines"));
 				importOperaSearchEnginesAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…"));
 
-				Action *importOperaSessionAction(new Action(-1, {}, Action::NoFlag, this));
+				Action *importOperaSessionAction(new Action(-1, {}, this));
 				importOperaSessionAction->setData(QLatin1String("OperaSession"));
 				importOperaSessionAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Session…"));
 
@@ -582,7 +582,7 @@ void Menu::populateBookmarksMenu()
 
 	if (bookmark->rowCount() > 1 && m_role == BookmarksMenuRole)
 	{
-		Action *openAllAction(new Action(-1, {}, Action::NoFlag, this));
+		Action *openAllAction(new Action(-1, {}, this));
 		openAllAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
 		openAllAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		openAllAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open All"));
@@ -594,7 +594,7 @@ void Menu::populateBookmarksMenu()
 	}
 	else if (m_role == BookmarkSelectorMenuRole)
 	{
-		Action *addFolderAction(new Action(-1, {}, Action::NoFlag, this));
+		Action *addFolderAction(new Action(-1, {}, this));
 		addFolderAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
 		addFolderAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		addFolderAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "This Folder"));
@@ -616,7 +616,7 @@ void Menu::populateBookmarksMenu()
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
-			Action *action(new Action(-1, {}, Action::NoFlag, this));
+			Action *action(new Action(-1, {}, this));
 			action->setData(index.data(BookmarksModel::IdentifierRole));
 			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
 			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
@@ -690,7 +690,7 @@ void Menu::populateOptionMenu()
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		Action *action(new Action(-1, {}, Action::NoFlag, this));
+		Action *action(new Action(-1, {}, this));
 		action->setCheckable(true);
 		action->setChecked(choices.at(i).value == value);
 		action->setData(choices.at(i).value);
@@ -780,7 +780,7 @@ void Menu::populateCharacterEncodingMenu()
 		m_actionGroup = new QActionGroup(this);
 		m_actionGroup->setExclusive(true);
 
-		Action *defaultAction(new Action(-1, {}, Action::NoFlag, this));
+		Action *defaultAction(new Action(-1, {}, this));
 		defaultAction->setData(QLatin1String("auto"));
 		defaultAction->setCheckable(true);
 		defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Auto Detect"));
@@ -837,7 +837,7 @@ void Menu::populateClosedWindowsMenu()
 {
 	clear();
 
-	Action *clearAction(new Action(-1, {}, Action::NoFlag, this));
+	Action *clearAction(new Action(-1, {}, this));
 	clearAction->setData(0);
 	clearAction->setIcon(ThemesManager::createIcon(QLatin1String("edit-clear")));
 	clearAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Clear"));
@@ -1041,7 +1041,7 @@ void Menu::populateProxiesMenu()
 		else
 		{
 			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
-			Action *action(new Action(-1, {}, Action::NoFlag, this));
+			Action *action(new Action(-1, {}, this));
 			action->setData(proxies.at(i));
 			action->setText(Utils::elideText(definition.getTitle(), this));
 
@@ -1148,7 +1148,7 @@ void Menu::populateStyleSheetsMenu()
 	clear();
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	Action *defaultAction(new Action(-1, {}, Action::NoFlag, this));
+	Action *defaultAction(new Action(-1, {}, this));
 	defaultAction->setData(-1);
 	defaultAction->setCheckable(true);
 	defaultAction->setChecked(true);
@@ -1203,17 +1203,17 @@ void Menu::populateToolBarsMenu()
 	addSeparator();
 
 	Menu *addNewMenu(new Menu(NoMenuRole, this));
-	Action *addNewAction(new Action(-1, {}, Action::NoFlag, this));
+	Action *addNewAction(new Action(-1, {}, this));
 	addNewAction->setMenu(addNewMenu);
 	addNewAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add New"));
 
-	Action *addToolBarAction(new Action(-1, {}, Action::NoFlag, addNewMenu));
+	Action *addToolBarAction(new Action(-1, {}, addNewMenu));
 	addToolBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Toolbar…"));
 
-	Action *addBookmarksBarAction(new Action(-1, {}, Action::NoFlag, addNewMenu));
+	Action *addBookmarksBarAction(new Action(-1, {}, addNewMenu));
 	addBookmarksBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Bookmarks Bar…"));
 
-	Action *addSideBarAction(new Action(-1, {}, Action::NoFlag, addNewMenu));
+	Action *addSideBarAction(new Action(-1, {}, addNewMenu));
 	addSideBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Sidebar…"));
 
 	addNewMenu->addAction(addToolBarAction);
@@ -1287,7 +1287,7 @@ void Menu::populateUserAgentMenu()
 	{
 		addSeparator();
 
-		Action *customAction(new Action(-1, {}, Action::NoFlag, this));
+		Action *customAction(new Action(-1, {}, this));
 		customAction->setData(QLatin1String("custom"));
 		customAction->setCheckable(true);
 		customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
@@ -1327,7 +1327,7 @@ void Menu::populateWindowsMenu()
 
 			if (windowItem)
 			{
-				Action *action(new Action(-1, {}, Action::NoFlag, this));
+				Action *action(new Action(-1, {}, this));
 				action->setData(windowItem->getActiveWindow()->getIdentifier());
 				action->setOverrideIcon(windowItem->getActiveWindow()->getIcon());
 

@@ -26,7 +26,7 @@ namespace Otter
 {
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
-	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
+	m_flags(NoFlags),
 	m_identifier(identifier)
 {
 	initialize();
@@ -34,15 +34,7 @@ Action::Action(int identifier, QObject *parent) : QAction(parent),
 
 Action::Action(int identifier, const QVariantMap &parameters, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
-	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
-	m_identifier(identifier)
-{
-	initialize();
-}
-
-Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags, QObject *parent) : QAction(parent),
-	m_parameters(parameters),
-	m_flags(flags),
+	m_flags(NoFlags),
 	m_identifier(identifier)
 {
 	initialize();
@@ -50,7 +42,7 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionFlags flags,
 
 Action::Action(int identifier, const QVariantMap &parameters, ActionExecutor::Object executor, QObject *parent) : QAction(parent),
 	m_parameters(parameters),
-	m_flags(CanTriggerActionFlag | FollowsActionStateFlag),
+	m_flags(NoFlags),
 	m_identifier(identifier)
 {
 	initialize();
@@ -59,6 +51,8 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionExecutor::Ob
 
 void Action::initialize()
 {
+	const ActionsManager::ActionDefinition definition(getDefinition());
+
 	switch (m_identifier)
 	{
 		case ActionsManager::PreferencesAction:
@@ -83,13 +77,13 @@ void Action::initialize()
 
 	setShortcutContext(Qt::WidgetShortcut);
 
-	if (getDefinition().flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+	if (definition.isValid())
 	{
-		setCheckable(true);
-	}
+		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+		{
+			setCheckable(true);
+		}
 
-	if (m_flags.testFlag(CanTriggerActionFlag))
-	{
 		connect(this, SIGNAL(triggered(bool)), this, SLOT(triggerAction(bool)));
 	}
 
@@ -177,14 +171,10 @@ void Action::updateState()
 	{
 		state = m_executor.getActionState(m_identifier, m_parameters);
 	}
-	else
+	else if (definition.isValid())
 	{
 		state = definition.defaultState;
-
-		if (m_flags.testFlag(FollowsActionStateFlag))
-		{
-			state.isEnabled = false;
-		}
+		state.isEnabled = false;
 	}
 
 	if (m_flags.testFlag(IsOverridingTextFlag))
@@ -192,7 +182,7 @@ void Action::updateState()
 		state.text = QCoreApplication::translate("actions", m_overrideText.toUtf8().constData());
 	}
 
-	if (definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters) && m_parameters.isEmpty())
+	if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters) && m_parameters.isEmpty())
 	{
 		state.isEnabled = false;
 	}
