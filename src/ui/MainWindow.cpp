@@ -993,33 +993,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 	}
 }
 
-void MainWindow::triggerShortcut()
-{
-	const Shortcut *shortcut(qobject_cast<Shortcut*>(sender()));
-
-	if (!shortcut)
-	{
-		return;
-	}
-
-	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(shortcut->getIdentifier()));
-	QVariantMap parameters(shortcut->getParameters());
-
-	if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
-	{
-		parameters[QLatin1String("isChecked")] = !getActionState(shortcut->getIdentifier(), parameters).isChecked;
-	}
-
-	if (definition.scope == ActionsManager::ActionDefinition::ApplicationScope)
-	{
-		Application::getInstance()->triggerAction(shortcut->getIdentifier(), parameters);
-	}
-	else
-	{
-		triggerAction(shortcut->getIdentifier(), parameters);
-	}
-}
-
 void MainWindow::open(const QUrl &url, SessionsManager::OpenHints hints)
 {
 	triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
@@ -1820,11 +1793,7 @@ void MainWindow::updateShortcuts()
 		{
 			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
 			{
-				Shortcut *shortcut(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], definitions[i].parameters, this));
-
-				m_shortcuts.append(shortcut);
-
-				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerShortcut()));
+				m_shortcuts.append(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], definitions[i].parameters, this));
 			}
 		}
 	}
@@ -2475,20 +2444,32 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 	return QMainWindow::eventFilter(object, event);
 }
 
-Shortcut::Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent) : QShortcut(sequence, parent),
+Shortcut::Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, MainWindow *parent) : QShortcut(sequence, parent),
+	m_mainWindow(parent),
 	m_parameters(parameters),
 	m_identifier(identifier)
 {
+	connect(this, &Shortcut::activated, this, &Shortcut::triggerAction);
 }
 
-QVariantMap Shortcut::getParameters() const
+void Shortcut::triggerAction()
 {
-	return m_parameters;
-}
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(m_identifier));
+	QVariantMap parameters(m_parameters);
 
-int Shortcut::getIdentifier() const
-{
-	return m_identifier;
+	if (definition.isValid() && definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
+	{
+		parameters[QLatin1String("isChecked")] = !m_mainWindow->getActionState(m_identifier, parameters).isChecked;
+	}
+
+	if (definition.scope == ActionsManager::ActionDefinition::ApplicationScope)
+	{
+		Application::getInstance()->triggerAction(m_identifier, parameters);
+	}
+	else
+	{
+		m_mainWindow->triggerAction(m_identifier, parameters);
+	}
 }
 
 }

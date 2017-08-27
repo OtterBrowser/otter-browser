@@ -105,7 +105,6 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void triggerShortcut();
 	void saveToolBarPositions();
 	void open(const QUrl &url = {}, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void open(BookmarksItem *bookmark, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
@@ -174,12 +173,13 @@ class Shortcut final : public QShortcut
 	Q_OBJECT
 
 public:
-	explicit Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent = nullptr);
+	explicit Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, MainWindow *parent);
 
-	QVariantMap getParameters() const;
-	int getIdentifier() const;
+protected slots:
+	void triggerAction();
 
 private:
+	MainWindow *m_mainWindow;
 	QVariantMap m_parameters;
 	int m_identifier;
 };
