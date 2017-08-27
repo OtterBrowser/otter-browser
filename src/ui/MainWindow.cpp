@@ -1812,24 +1812,24 @@ void MainWindow::updateShortcuts()
 
 	m_shortcuts.clear();
 
-///TODO
-//	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
-//	const QList<QKeySequence> standardShortcuts({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
+	const QVector<KeyboardProfile::Action> definitions(ActionsManager::getShortcutDefinitions());
+	const QList<QKeySequence> standardShortcuts({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
 
-//	for (int i = 0; i < definitions.count(); ++i)
-//	{
-//		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
-//		{
-//			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
-//			{
-//				Shortcut *shortcut(new Shortcut(definitions[i].identifier, definitions[i].shortcuts[j], this));
+	for (int i = 0; i < definitions.count(); ++i)
+	{
+		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
+		{
+			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
+			{
+				Shortcut *shortcut(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], this));
+				shortcut->setParameters(definitions[i].parameters);
 
-//				m_shortcuts.append(shortcut);
+				m_shortcuts.append(shortcut);
 
-//				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerShortcut()));
-//			}
-//		}
-//	}
+				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerShortcut()));
+			}
+		}
+	}
 }
 
 void MainWindow::setOption(int identifier, const QVariant &value)

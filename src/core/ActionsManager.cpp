@@ -681,6 +681,37 @@ QVector<ActionsManager::ActionDefinition> ActionsManager::getActionDefinitions()
 	return m_definitions;
 }
 
+QVector<KeyboardProfile::Action> ActionsManager::getShortcutDefinitions()
+{
+	QVector<KeyboardProfile::Action> definitions;
+	definitions.reserve(m_shortcuts.count() + m_extraShortcuts.count());
+
+	QMap<int, QVector<QKeySequence> >::iterator shortcutsIterator;
+
+	for (shortcutsIterator = m_shortcuts.begin(); shortcutsIterator != m_shortcuts.end(); ++shortcutsIterator)
+	{
+		KeyboardProfile::Action definition;
+		definition.shortcuts = shortcutsIterator.value();
+		definition.action = shortcutsIterator.key();
+
+		definitions.append(definition);
+	}
+
+	QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > >::iterator extraShortcutsIterator;
+
+	for (extraShortcutsIterator = m_extraShortcuts.begin(); extraShortcutsIterator != m_extraShortcuts.end(); ++extraShortcutsIterator)
+	{
+		KeyboardProfile::Action definition;
+		definition.parameters = extraShortcutsIterator.value().first;
+		definition.shortcuts = extraShortcutsIterator.value().second;
+		definition.action = extraShortcutsIterator.key();
+
+		definitions.append(definition);
+	}
+
+	return definitions;
+}
+
 ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identifier)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())

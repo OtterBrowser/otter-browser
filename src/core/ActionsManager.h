@@ -329,6 +329,7 @@ public:
 	static QString getActionName(int identifier);
 	static QKeySequence getActionShortcut(int identifier, const QVariantMap &parameters = {});
 	static QVector<ActionDefinition> getActionDefinitions();
+	static QVector<KeyboardProfile::Action> getShortcutDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
 	static int getActionIdentifier(const QString &name);
 
