@@ -358,30 +358,4 @@ bool Action::event(QEvent *event)
 	return QAction::event(event);
 }
 
-Shortcut::Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent) : QShortcut(sequence, parent),
-	m_identifier(identifier)
-{
-}
-
-Shortcut::Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent) : QShortcut(sequence, parent),
-	m_parameters(parameters),
-	m_identifier(identifier)
-{
-}
-
-void Shortcut::setParameters(const QVariantMap &parameters)
-{
-	m_parameters = parameters;
-}
-
-QVariantMap Shortcut::getParameters() const
-{
-	return m_parameters;
-}
-
-int Shortcut::getIdentifier() const
-{
-	return m_identifier;
-}
-
 }

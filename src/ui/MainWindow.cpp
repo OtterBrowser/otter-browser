@@ -20,7 +20,6 @@
 **************************************************************************/
 
 #include "MainWindow.h"
-#include "Action.h"
 #include "ClearHistoryDialog.h"
 #include "ContentsWidget.h"
 #include "WorkspaceWidget.h"
@@ -1821,8 +1820,7 @@ void MainWindow::updateShortcuts()
 		{
 			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
 			{
-				Shortcut *shortcut(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], this));
-				shortcut->setParameters(definitions[i].parameters);
+				Shortcut *shortcut(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], definitions[i].parameters, this));
 
 				m_shortcuts.append(shortcut);
 
@@ -2475,6 +2473,22 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 	}
 
 	return QMainWindow::eventFilter(object, event);
+}
+
+Shortcut::Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent) : QShortcut(sequence, parent),
+	m_parameters(parameters),
+	m_identifier(identifier)
+{
+}
+
+QVariantMap Shortcut::getParameters() const
+{
+	return m_parameters;
+}
+
+int Shortcut::getIdentifier() const
+{
+	return m_identifier;
 }
 
 }

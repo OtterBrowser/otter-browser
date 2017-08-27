@@ -26,6 +26,7 @@
 #include "../core/SessionsManager.h"
 
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QShortcut>
 
 namespace Otter
 {
@@ -35,7 +36,6 @@ namespace Ui
 	class MainWindow;
 }
 
-class Action;
 class BookmarksItem;
 class ContentsWidget;
 class MenuBarWidget;
@@ -167,6 +167,21 @@ signals:
 
 friend class ToolBarDropZoneWidget;
 friend class ToolBarWidget;
+};
+
+class Shortcut final : public QShortcut
+{
+	Q_OBJECT
+
+public:
+	explicit Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent = nullptr);
+
+	QVariantMap getParameters() const;
+	int getIdentifier() const;
+
+private:
+	QVariantMap m_parameters;
+	int m_identifier;
 };
 
 }

@@ -23,7 +23,6 @@
 #include "../core/ActionsManager.h"
 
 #include <QtWidgets/QAction>
-#include <QtWidgets/QShortcut>
 
 namespace Otter
 {
@@ -76,23 +75,6 @@ private:
 	QString m_overrideText;
 	QVariantMap m_parameters;
 	ActionFlags m_flags;
-	int m_identifier;
-};
-
-class Shortcut final : public QShortcut
-{
-	Q_OBJECT
-
-public:
-	explicit Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent = nullptr);
-	explicit Shortcut(int identifier, const QKeySequence &sequence, const QVariantMap &parameters, QWidget *parent = nullptr);
-
-	void setParameters(const QVariantMap &parameters);
-	QVariantMap getParameters() const;
-	int getIdentifier() const;
-
-private:
-	QVariantMap m_parameters;
 	int m_identifier;
 };
 
