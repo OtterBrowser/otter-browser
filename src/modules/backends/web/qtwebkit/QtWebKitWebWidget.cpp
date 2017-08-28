@@ -1269,10 +1269,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::MediaPlaybackRateAction:
-			{
-				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
-				element.evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
-			}
+			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element().evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
 			return;
 		case ActionsManager::GoBackAction:
@@ -1403,10 +1400,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::CopyToNoteAction:
-			{
-				BookmarksItem *note(NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl()));
-				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
-			}
+			NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl())->setData(getSelectedText(), BookmarksModel::DescriptionRole);
 
 			return;
 		case ActionsManager::PasteAction:
@@ -1693,14 +1687,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::InspectElementAction:
-			{
-				QVariantMap inspectPageParameters;
-				inspectPageParameters[QLatin1String("isChecked")] = true;
+			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}});
 
-				triggerAction(ActionsManager::InspectPageAction, inspectPageParameters);
-
-				m_page->triggerAction(QWebPage::InspectElement);
-			}
+			m_page->triggerAction(QWebPage::InspectElement);
 
 			return;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
