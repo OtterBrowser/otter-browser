@@ -21,7 +21,8 @@
 
 #include "ui_KeyboardProfileDialog.h"
 
-#include <QtWidgets/QInputDialog>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtWidgets/QKeySequenceEdit>
 
 namespace Otter
@@ -63,16 +64,19 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	for (int i = 0; i < definitions.count(); ++i)
 	{
 		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(definitions.at(i).action));
-		QStandardItem *item(new QStandardItem(action.getText(true)));
-		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(definitions.at(i).action, IdentifierRole);
-		item->setData(definitions.at(i).parameters, ParametersRole);
-		item->setToolTip(ActionsManager::getActionName(definitions.at(i).action));
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		const QString parameters(definitions.at(i).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(definitions.at(i).parameters)).toJson(QJsonDocument::Compact));
+		QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters)});
+		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+		items[0]->setData(definitions.at(i).action, IdentifierRole);
+		items[0]->setData(definitions.at(i).parameters, ParametersRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(ActionsManager::getActionName(definitions.at(i).action)));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[1]->setToolTip(parameters);
 
 		if (!action.defaultState.icon.isNull())
 		{
-			item->setIcon(action.defaultState.icon);
+			items[0]->setIcon(action.defaultState.icon);
 		}
 
 		QStringList shortcuts;
@@ -82,12 +86,12 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 			shortcuts.append(definitions.at(i).shortcuts.at(j).toString());
 		}
 
-		item->setData(shortcuts.join(QLatin1Char(' ')), ShortcutsRole);
+		items[0]->setData(shortcuts.join(QLatin1Char(' ')), ShortcutsRole);
 
-		model->appendRow(item);
+		model->appendRow(items);
 	}
 
-	model->setHorizontalHeaderLabels(QStringList(tr("Action")));
+	model->setHorizontalHeaderLabels({tr("Action"), tr("Parameters")});
 	model->sort(0);
 
 	m_ui->actionsViewWidget->setModel(model);

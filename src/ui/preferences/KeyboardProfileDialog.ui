@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>600</width>
     <height>400</height>
    </rect>
   </property>
@@ -48,6 +48,9 @@
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
          </property>
+         <attribute name="headerDefaultSectionSize">
+          <number>200</number>
+         </attribute>
         </widget>
        </item>
        <item>
