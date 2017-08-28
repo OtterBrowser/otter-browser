@@ -48,7 +48,6 @@ public:
 	void setExecutor(ActionExecutor::Object executor);
 	void setOverrideText(const QString &text);
 	void setOverrideIcon(const QIcon &icon);
-	void setParameters(const QVariantMap &parameters);
 	ActionsManager::ActionDefinition getDefinition() const;
 	ActionsManager::ActionDefinition::State getState() const;
 	QVariantMap getParameters() const;

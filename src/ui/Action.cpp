@@ -296,13 +296,6 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	}
 }
 
-void Action::setParameters(const QVariantMap &parameters)
-{
-	m_parameters = parameters;
-
-	updateState();
-}
-
 Otter::ActionsManager::ActionDefinition Action::getDefinition() const
 {
 	return ActionsManager::getActionDefinition(m_identifier);
