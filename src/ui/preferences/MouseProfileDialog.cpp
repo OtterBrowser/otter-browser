@@ -24,6 +24,9 @@
 
 #include "ui_MouseProfileDialog.h"
 
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+
 namespace Otter
 {
 
@@ -101,12 +104,16 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 					steps += gestures[i].steps.at(j).toString();
 				}
 
-				QList<QStandardItem*> items({new QStandardItem(steps), new QStandardItem(action.getText(true))});
+				const QString parameters(gestures.at(i).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(gestures.at(i).parameters)).toJson(QJsonDocument::Compact));
+				QList<QStandardItem*> items({new QStandardItem(steps), new QStandardItem(action.getText(true)), new QStandardItem(parameters)});
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 				items[1]->setData(action.identifier, IdentifierRole);
 				items[1]->setData(gestures[i].parameters, ParametersRole);
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
+				items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(ActionsManager::getActionName(gestures.at(i).action)));
+				items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
+				items[2]->setToolTip(parameters);
 
 				if (!action.defaultState.icon.isNull())
 				{
@@ -123,7 +130,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 		gesturesModel->appendRow(items);
 	}
 
-	gesturesModel->setHorizontalHeaderLabels(QStringList({tr("Context and Steps"), tr("Action")}));
+	gesturesModel->setHorizontalHeaderLabels(QStringList({tr("Context and Steps"), tr("Action"), tr("Parameters")}));
 	gesturesModel->sort(0);
 
 	QStandardItemModel *stepsModel(new QStandardItemModel(this));
