@@ -24,6 +24,7 @@
 
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QTimer>
 #include <QtWidgets/QKeySequenceEdit>
 #include <QtWidgets/QToolButton>
 
@@ -92,7 +93,7 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 	Q_UNUSED(option)
 
 	const QKeySequence shortcut(index.data(Qt::DisplayRole).toString());
-	QKeySequenceEdit *widget(new QKeySequenceEdit(shortcut, parent));
+	QPointer<QKeySequenceEdit> widget(new QKeySequenceEdit(shortcut, parent));
 	widget->setFocus();
 
 	QVBoxLayout *layout(widget->findChild<QVBoxLayout*>());
@@ -110,6 +111,25 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 		connect(widget, &QKeySequenceEdit::keySequenceChanged, [=](const QKeySequence &shortcut)
 		{
 			button->setEnabled(!shortcut.isEmpty());
+
+			if (!shortcut.isEmpty())
+			{
+				const QModelIndexList indexes(index.model()->match(index.model()->index(0, 2), Qt::DisplayRole, shortcut.toString(), 1, Qt::MatchExactly));
+
+				if (!indexes.isEmpty() && indexes.first() != index)
+				{
+					widget->clear();
+					widget->setStyleSheet(QLatin1String("QLineEdit {background:#F1E7E4;}"));
+
+					QTimer::singleShot(1000, [=]()
+					{
+						if (widget)
+						{
+							widget->setStyleSheet(QString());
+						}
+					});
+				}
+			}
 		});
 	}
 
