@@ -84,7 +84,21 @@ void KeyboardShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 
 	if (widget)
 	{
-		model->setData(index, widget->keySequence().toString());
+		const QKeySequence shortcut(widget->keySequence());
+
+		if (!shortcut.isEmpty())
+		{
+			const QModelIndexList indexes(index.model()->match(index.model()->index(0, 2), Qt::DisplayRole, shortcut.toString(), 1, Qt::MatchExactly));
+
+			if (!indexes.isEmpty() && indexes.first() != index)
+			{
+				model->setData(index, QString());
+
+				return;
+			}
+		}
+
+		model->setData(index, shortcut.toString());
 	}
 }
 
