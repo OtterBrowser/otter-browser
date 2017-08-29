@@ -91,7 +91,8 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 {
 	Q_UNUSED(option)
 
-	QKeySequenceEdit *widget(new QKeySequenceEdit(QKeySequence(index.data().toString()), parent));
+	const QKeySequence shortcut(index.data(Qt::DisplayRole).toString());
+	QKeySequenceEdit *widget(new QKeySequenceEdit(shortcut, parent));
 	widget->setFocus();
 
 	QVBoxLayout *layout(widget->findChild<QVBoxLayout*>());
@@ -100,11 +101,16 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 	{
 		QToolButton *button(new QToolButton(widget));
 		button->setText(tr("Clear"));
+		button->setEnabled(!shortcut.isEmpty());
 
 		layout->setDirection(QBoxLayout::LeftToRight);
 		layout->addWidget(button);
 
 		connect(button, &QToolButton::clicked, widget, &QKeySequenceEdit::clear);
+		connect(widget, &QKeySequenceEdit::keySequenceChanged, [=](const QKeySequence &shortcut)
+		{
+			button->setEnabled(!shortcut.isEmpty());
+		});
 	}
 
 	return widget;
