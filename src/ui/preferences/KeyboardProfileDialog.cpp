@@ -25,6 +25,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtWidgets/QKeySequenceEdit>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -92,6 +93,19 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 
 	QKeySequenceEdit *widget(new QKeySequenceEdit(QKeySequence(index.data().toString()), parent));
 	widget->setFocus();
+
+	QVBoxLayout *layout(widget->findChild<QVBoxLayout*>());
+
+	if (layout)
+	{
+		QToolButton *button(new QToolButton(widget));
+		button->setText(tr("Clear"));
+
+		layout->setDirection(QBoxLayout::LeftToRight);
+		layout->addWidget(button);
+
+		connect(button, &QToolButton::clicked, widget, &QKeySequenceEdit::clear);
+	}
 
 	return widget;
 }
