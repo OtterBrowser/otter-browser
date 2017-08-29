@@ -41,10 +41,10 @@
 namespace Otter
 {
 
-class MouseProfilesIniToJsonMigration : public Migration
+class KeyboardAndMouseProfilesIniToJsonMigration : public Migration
 {
 public:
-	MouseProfilesIniToJsonMigration() : Migration()
+	KeyboardAndMouseProfilesIniToJsonMigration() : Migration()
 	{
 	}
 
@@ -102,12 +102,12 @@ public:
 
 	QString getName() const override
 	{
-		return QLatin1String("mouseProfilesIniToJson");
+		return QLatin1String("keyboardAndMouseProfilesIniToJson");
 	}
 
 	QString getTitle() const override
 	{
-		return QT_TRANSLATE_NOOP("migrations", "Mouse Configuration Profiles");
+		return QT_TRANSLATE_NOOP("migrations", "Keyboard and Mouse Configuration Profiles");
 	}
 
 	bool needsMigration() const override
