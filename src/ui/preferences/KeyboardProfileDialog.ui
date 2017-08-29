@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>800</width>
     <height>400</height>
    </rect>
   </property>
@@ -23,54 +23,23 @@
       <attribute name="title">
        <string>Actions</string>
       </attribute>
-      <layout class="QVBoxLayout" name="actionsLayout" stretch="0,2,1">
+      <layout class="QHBoxLayout" name="hactionsLayout">
        <item>
-        <widget class="QLineEdit" name="filterLineEdit">
-         <property name="placeholderText">
-          <string>Search…</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Otter::ItemViewWidget" name="actionsViewWidget">
-         <property name="editTriggers">
-          <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <attribute name="headerDefaultSectionSize">
-          <number>200</number>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="shortcutsLayout">
+        <layout class="QVBoxLayout" name="actionsViewLayout">
          <item>
-          <widget class="Otter::ItemViewWidget" name="shortcutsViewWidget">
-           <property name="editTriggers">
-            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+          <widget class="QLineEdit" name="filterLineEdit">
+           <property name="placeholderText">
+            <string>Search…</string>
            </property>
-           <property name="dragEnabled">
+           <property name="clearButtonEnabled">
             <bool>true</bool>
            </property>
-           <property name="dragDropOverwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="dragDropMode">
-            <enum>QAbstractItemView::InternalMove</enum>
-           </property>
-           <property name="defaultDropAction">
-            <enum>Qt::MoveAction</enum>
+          </widget>
+         </item>
+         <item>
+          <widget class="Otter::ItemViewWidget" name="actionsViewWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
            </property>
            <property name="alternatingRowColors">
             <bool>true</bool>
@@ -81,47 +50,47 @@
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
            </property>
+           <attribute name="headerDefaultSectionSize">
+            <number>200</number>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="actionsButtonsLayout" stretch="0,0,1">
+         <item>
+          <widget class="QPushButton" name="addActionButton">
+           <property name="text">
+            <string>Add</string>
+           </property>
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="shosrtcutsButtonsLayout" stretch="0,0,1">
-           <item>
-            <widget class="QPushButton" name="addShortcutButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Add</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="removeShortcutButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Remove</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="shortcutsSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::MinimumExpanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="removeActionButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="actionsSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::MinimumExpanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>

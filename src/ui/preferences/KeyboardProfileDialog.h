@@ -34,6 +34,15 @@ namespace Ui
 	class KeyboardProfileDialog;
 }
 
+class KeyboardActionDelegate final : public ItemDelegate
+{
+public:
+	explicit KeyboardActionDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
+
 class KeyboardShortcutDelegate final : public ItemDelegate
 {
 public:
@@ -41,6 +50,9 @@ public:
 
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
 class KeyboardProfileDialog final : public Dialog
@@ -51,7 +63,6 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
-		ShortcutsRole,
 		ParametersRole
 	};
 
@@ -65,15 +76,12 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void addShortcut();
-	void removeShortcut();
-	void updateActionsActions();
-	void updateShortcutsActions();
-	void saveShortcuts();
+	void addAction();
+	void removeAction();
+	void updateActions();
 
 private:
 	KeyboardProfile m_profile;
-	QModelIndex m_currentAction;
 	Ui::KeyboardProfileDialog *m_ui;
 };
 
