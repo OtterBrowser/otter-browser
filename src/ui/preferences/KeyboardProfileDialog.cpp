@@ -205,7 +205,7 @@ void KeyboardProfileDialog::changeEvent(QEvent *event)
 
 void KeyboardProfileDialog::addAction()
 {
-	QList<QStandardItem*> items({new QStandardItem()});
+	QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(), new QStandardItem()});
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
