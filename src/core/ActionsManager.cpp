@@ -249,7 +249,7 @@ bool KeyboardProfile::save()
 				shortcutsArray.append(action.shortcuts.at(j).toString());
 			}
 
-			QJsonObject actionObject{{QLatin1String("action"), ActionsManager::getActionName(action.action)}, {QLatin1String("steps"), shortcutsArray}};
+			QJsonObject actionObject{{QLatin1String("action"), ActionsManager::getActionName(action.action)}, {QLatin1String("shortcuts"), shortcutsArray}};
 
 			if (!action.parameters.isEmpty())
 			{
