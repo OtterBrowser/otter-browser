@@ -95,7 +95,7 @@ void NotificationsManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new NotificationsManager(QCoreApplication::instance());
-		m_eventIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("EventIdentifier").data());
+		m_eventIdentifierEnumerator = NotificationsManager::staticMetaObject.indexOfEnumerator(QLatin1String("EventIdentifier").data());
 	}
 }
 
@@ -143,7 +143,7 @@ QString NotificationsManager::getEventName(int identifier)
 		return m_identifiers[identifier];
 	}
 
-	QString name(m_instance->metaObject()->enumerator(m_eventIdentifierEnumerator).valueToKey(identifier));
+	QString name(NotificationsManager::staticMetaObject.enumerator(m_eventIdentifierEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{

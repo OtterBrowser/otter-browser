@@ -61,7 +61,7 @@ void ToolBarsManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ToolBarsManager(QCoreApplication::instance());
-		m_toolBarIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
+		m_toolBarIdentifierEnumerator = ToolBarsManager::staticMetaObject.indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
 		m_areToolBarsLocked = SettingsManager::getOption(SettingsManager::Interface_LockToolBarsOption).toBool();
 	}
 }
@@ -428,7 +428,7 @@ QString ToolBarsManager::getToolBarName(int identifier)
 {
 	if (identifier < OtherToolBar)
 	{
-		return m_instance->metaObject()->enumerator(m_toolBarIdentifierEnumerator).valueToKey(identifier);
+		return ToolBarsManager::staticMetaObject.enumerator(m_toolBarIdentifierEnumerator).valueToKey(identifier);
 	}
 
 	return m_identifiers.value(identifier);
@@ -739,7 +739,7 @@ int ToolBarsManager::getToolBarIdentifier(const QString &name)
 		return identifier;
 	}
 
-	return m_instance->metaObject()->enumerator(m_toolBarIdentifierEnumerator).keyToValue(name.toLatin1());
+	return ToolBarsManager::staticMetaObject.enumerator(m_toolBarIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
 bool ToolBarsManager::areToolBarsLocked()

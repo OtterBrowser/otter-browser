@@ -638,7 +638,7 @@ void GesturesManager::createInstance()
 		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
 
 		m_instance = new GesturesManager(QCoreApplication::instance());
-		m_gesturesContextEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("GesturesContext").data());
+		m_gesturesContextEnumerator = GesturesManager::staticMetaObject.indexOfEnumerator(QLatin1String("GesturesContext").data());
 
 		loadProfiles();
 	}
@@ -819,7 +819,7 @@ QObject* GesturesManager::getTrackedObject()
 
 QString GesturesManager::getContextName(int identifier)
 {
-	QString name(m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).valueToKey(identifier));
+	QString name(GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -885,10 +885,10 @@ int GesturesManager::getContextIdentifier(const QString &name)
 {
 	if (!name.endsWith(QLatin1String("Context")))
 	{
-		return m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).keyToValue(QString(name + QLatin1String("Context")).toLatin1());
+		return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue(QString(name + QLatin1String("Context")).toLatin1());
 	}
 
-	return m_instance->metaObject()->enumerator(m_gesturesContextEnumerator).keyToValue(name.toLatin1());
+	return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue(name.toLatin1());
 }
 
 int GesturesManager::calculateLastMoveDistance(bool measureFinished)

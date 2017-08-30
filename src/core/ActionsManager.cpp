@@ -465,7 +465,7 @@ void ActionsManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ActionsManager(QCoreApplication::instance());
-		m_actionIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data());
+		m_actionIdentifierEnumerator = ActionsManager::staticMetaObject.indexOfEnumerator(QLatin1String("ActionIdentifier").data());
 
 		loadProfiles();
 	}
@@ -641,7 +641,7 @@ QString ActionsManager::createReport()
 
 QString ActionsManager::getActionName(int identifier)
 {
-	QString name(m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).valueToKey(identifier));
+	QString name(ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -726,10 +726,10 @@ int ActionsManager::getActionIdentifier(const QString &name)
 {
 	if (!name.endsWith(QLatin1String("Action")))
 	{
-		return m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Action")).toLatin1());
+		return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Action")).toLatin1());
 	}
 
-	return m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
+	return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
 ActionExecutor::Object::Object() : m_executor(nullptr)
