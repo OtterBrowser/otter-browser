@@ -1024,6 +1024,11 @@ void AddressWidget::updateGeometries()
 				{
 					const QUrl url(getUrl());
 
+					if (Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about"))
+					{
+						continue;
+					}
+
 					definition.icon = ThemesManager::createIcon(QLatin1String("bookmarks"), false);
 
 					if (BookmarksManager::hasBookmark(url))
@@ -1033,15 +1038,7 @@ void AddressWidget::updateGeometries()
 					}
 					else
 					{
-						if (Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about"))
-						{
-							definition.title = QString();
-						}
-						else
-						{
-							definition.title = QT_TR_NOOP("Add bookmark");
-						}
-
+						definition.title = QT_TR_NOOP("Add bookmark");
 						definition.mode = QIcon::Disabled;
 					}
 				}
