@@ -721,6 +721,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addSeparator();
 			menu.addAction(new Action(ActionsManager::CloseTabAction, {}, windowExecutor, &menu));
 			menu.addAction(new Action(ActionsManager::CloseOtherTabsAction, {{QLatin1String("tab"), window->getIdentifier()}}, windowExecutor, &menu));
+			menu.addAction(new Action(ActionsManager::CloseTabsToTheLeftAction, {{QLatin1String("tab"), window->getIdentifier()}}, windowExecutor, &menu));
+			menu.addAction(new Action(ActionsManager::CloseTabsToTheRightAction, {{QLatin1String("tab"), window->getIdentifier()}}, windowExecutor, &menu));
 			menu.addAction(new Action(ActionsManager::ClosePrivateTabsAction, {}, mainWindowExecutor, &menu));
 		}
 	}

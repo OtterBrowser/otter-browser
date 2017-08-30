@@ -961,6 +961,28 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
+		case ActionsManager::CloseTabsToTheLeftAction:
+			if (window)
+			{
+				for (int index=0; index < getWindowIndex(window->getIdentifier()); index++)
+				{
+					Window *leftWindow=getWindowByIndex(index);
+					if (!leftWindow->isPinned()) leftWindow->requestClose();
+				}
+			}
+
+			break;
+		case ActionsManager::CloseTabsToTheRightAction:
+			if (window)
+			{
+				for (int index=getWindowIndex(window->getIdentifier()) + 1; index < getWindowCount(); index++)
+				{
+					Window *rightWindow=getWindowByIndex(index);
+					if (!rightWindow->isPinned()) rightWindow->requestClose();
+				}
+			}
+
+			break;
 		case ActionsManager::ActivateTabAction:
 			if (window)
 			{

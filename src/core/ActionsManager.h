@@ -104,6 +104,8 @@ public:
 		SuspendTabAction,
 		CloseTabAction,
 		CloseOtherTabsAction,
+		CloseTabsToTheLeftAction,
+		CloseTabsToTheRightAction,
 		ClosePrivateTabsAction,
 		ClosePrivateTabsPanicAction,
 		ReopenTabAction,
