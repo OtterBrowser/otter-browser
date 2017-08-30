@@ -305,6 +305,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SuspendTabAction, QT_TRANSLATE_NOOP("actions", "Suspend Tab"), QString(), QIcon(), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), ThemesManager::createIcon(QLatin1String("tab-close")), ActionDefinition::WindowScope);
 	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), ThemesManager::createIcon(QLatin1String("tab-close-other")), ActionDefinition::MainWindowScope);
+	registerAction(CloseTabsToTheLeftAction, QT_TRANSLATE_NOOP("actions", "Close Tabs to the Left"), QString(), QIcon(), ActionDefinition::MainWindowScope);
+	registerAction(CloseTabsToTheRightAction, QT_TRANSLATE_NOOP("actions", "Close Tabs to the Right"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::NoFlags);
 	registerAction(ClosePrivateTabsPanicAction, QT_TRANSLATE_NOOP("actions", "Close Private Tabs and Windows"), QString(), QIcon(), ActionDefinition::ApplicationScope);
 	registerAction(ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope);
