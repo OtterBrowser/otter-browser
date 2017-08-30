@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "Migrator.h"
+#include "ActionsManager.h"
 #include "IniSettings.h"
 #include "JsonSettings.h"
 #include "SessionsManager.h"
@@ -41,7 +42,7 @@
 namespace Otter
 {
 
-class KeyboardAndMouseProfilesIniToJsonMigration : public Migration
+class KeyboardAndMouseProfilesIniToJsonMigration final : public Migration
 {
 public:
 	KeyboardAndMouseProfilesIniToJsonMigration() : Migration()
@@ -50,23 +51,105 @@ public:
 
 	void createBackup() const override
 	{
-		const QString backupPath(createBackupPath(QLatin1String("mouse")));
-		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QString("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+		const QString keyboardBackupPath(createBackupPath(QLatin1String("keyboard")));
+		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QString("keyboard"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (int i = 0; i < keyboardEntries.count(); ++i)
 		{
-			QFile::copy(entries.at(i).absoluteFilePath(), backupPath + entries.at(i).fileName());
+			QFile::copy(keyboardEntries.at(i).absoluteFilePath(), keyboardBackupPath + keyboardEntries.at(i).fileName());
+		}
+
+		const QString mouseBackupPath(createBackupPath(QLatin1String("mouse")));
+		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QString("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+
+		for (int i = 0; i < mouseEntries.count(); ++i)
+		{
+			QFile::copy(mouseEntries.at(i).absoluteFilePath(), mouseBackupPath + mouseEntries.at(i).fileName());
 		}
 	}
 
 	void migrate() const override
 	{
-		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (int i = 0; i < keyboardEntries.count(); ++i)
 		{
-			IniSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + entries.at(i).completeBaseName() + QLatin1String(".ini")));
-			JsonSettings jsonSettings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + entries.at(i).completeBaseName() + QLatin1String(".json")));
+			KeyboardProfile profile(keyboardEntries.at(i).baseName());
+			QVector<KeyboardProfile::Action> definitions;
+			IniSettings settings(keyboardEntries.at(i).absoluteFilePath());
+			const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
+
+			for (int i = 0; i < comments.count(); ++i)
+			{
+				const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
+				const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
+
+				if (key == QLatin1String("Title"))
+				{
+					profile.setTitle(value);
+				}
+				else if (key == QLatin1String("Description"))
+				{
+					profile.setDescription(value);
+				}
+				else if (key == QLatin1String("Author"))
+				{
+					profile.setAuthor(value);
+				}
+				else if (key == QLatin1String("Version"))
+				{
+					profile.setVersion(value);
+				}
+			}
+
+			const QStringList actions(settings.getGroups());
+
+			for (int j = 0; j < actions.count(); ++j)
+			{
+				const int action(ActionsManager::getActionIdentifier(actions.at(j)));
+
+				if (action < 0)
+				{
+					continue;
+				}
+
+				settings.beginGroup(actions.at(j));
+
+				const QStringList shortcuts(settings.getValue(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
+				KeyboardProfile::Action definition;
+				definition.shortcuts.reserve(shortcuts.count());
+				definition.action = action;
+
+				for (int j = 0; j < shortcuts.count(); ++j)
+				{
+					const QKeySequence shortcut(QKeySequence(shortcuts.at(j)));
+
+					if (!shortcut.isEmpty())
+					{
+						definition.shortcuts.append(shortcut);
+					}
+				}
+
+				if (!definition.shortcuts.isEmpty())
+				{
+					definitions.append(definition);
+				}
+
+				settings.endGroup();
+			}
+
+			profile.setDefinitions({{ActionsManager::GenericContext, definitions}});
+			profile.save();
+
+			QFile::remove(keyboardEntries.at(i).absoluteFilePath());
+		}
+
+		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+
+		for (int i = 0; i < mouseEntries.count(); ++i)
+		{
+			IniSettings settings(mouseEntries.at(i).absoluteFilePath());
+			JsonSettings jsonSettings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + mouseEntries.at(i).completeBaseName() + QLatin1String(".json")));
 			jsonSettings.setComment(settings.getComment());
 
 			const QStringList contexts(settings.getGroups());
@@ -96,7 +179,7 @@ public:
 			jsonSettings.setArray(contextsArray);
 			jsonSettings.save();
 
-			QFile::remove(entries.at(i).absoluteFilePath());
+			QFile::remove(mouseEntries.at(i).absoluteFilePath());
 		}
 	}
 
@@ -112,7 +195,7 @@ public:
 
 	bool needsMigration() const override
 	{
-		return !QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty();
+		return (!QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty() || !QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty());
 	}
 };
 
@@ -435,7 +518,7 @@ bool Migration::needsMigration() const
 
 bool Migrator::run()
 {
-	const QVector<Migration*> availableMigrations({new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
+	const QVector<Migration*> availableMigrations({new KeyboardAndMouseProfilesIniToJsonMigration(), new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
 	QVector<Migration*> possibleMigrations;
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 
