@@ -537,7 +537,10 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (entry == WebsiteInformationEntry && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
 		{
-			menu.addAction(new Action(ActionsManager::WebsiteInformationAction, {}, ActionExecutor::Object(m_window, m_window), &menu));
+			ActionExecutor::Object executor(m_window, m_window);
+
+			menu.addAction(new Action(ActionsManager::WebsiteInformationAction, {}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::WebsitePreferencesAction, {}, executor, &menu));
 			menu.addSeparator();
 		}
 
