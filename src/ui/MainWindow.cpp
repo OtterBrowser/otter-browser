@@ -761,7 +761,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 
-				if (definition.identifier >= 0)
+				if (definition.isValid())
 				{
 					const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
 					ToolBarsManager::ToolBarVisibility visibility(isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility);
@@ -802,7 +802,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 
-				if (definition.identifier >= 0 && !definition.currentPanel.isEmpty())
+				if (definition.isValid() && !definition.currentPanel.isEmpty())
 				{
 					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}});
 				}
@@ -814,7 +814,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 				definition.currentPanel = QString();
 
-				if (definition.identifier >= 0)
+				if (definition.isValid())
 				{
 					ToolBarsManager::setToolBar(definition);
 				}

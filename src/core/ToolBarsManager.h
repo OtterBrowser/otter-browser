@@ -95,6 +95,11 @@ public:
 		{
 			return (isDefault ? QCoreApplication::translate("actions", title.toUtf8()) : title);
 		}
+
+		bool isValid() const
+		{
+			return (identifier >= 0);
+		}
 	};
 
 	static void createInstance();
