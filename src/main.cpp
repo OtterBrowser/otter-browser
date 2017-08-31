@@ -144,34 +144,45 @@ int main(int argc, char *argv[])
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), nullptr, isPrivate);
 	}
-	else if (startupBehavior != QLatin1String("startEmpty"))
+	else
 	{
-		WindowHistoryEntry entry;
-
-		if (startupBehavior == QLatin1String("startHomePage"))
-		{
-			entry.url = SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString();
-		}
-		else if (startupBehavior == QLatin1String("startStartPage"))
-		{
-			entry.url = QLatin1String("about:start");
-		}
-		else
-		{
-			entry.url = QLatin1String("about:blank");
-		}
-
-		SessionWindow tab;
-		tab.history.append(entry);
-		tab.historyIndex = 0;
-
-		SessionMainWindow window;
-		window.windows.append(tab);
-
-		SessionInformation sessionData;
+		SessionInformation sessionData(SessionsManager::getSession(QLatin1String("default")));
 		sessionData.path = QLatin1String("default");
 		sessionData.title = QCoreApplication::translate("main", "Default");
-		sessionData.windows.append(window);
+
+		SessionMainWindow window;
+
+		if (!sessionData.windows.isEmpty())
+		{
+			window.geometry = sessionData.windows.first().geometry;
+		}
+
+		if (startupBehavior != QLatin1String("startEmpty"))
+		{
+			WindowHistoryEntry entry;
+
+			if (startupBehavior == QLatin1String("startHomePage"))
+			{
+				entry.url = SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString();
+			}
+			else if (startupBehavior == QLatin1String("startStartPage"))
+			{
+				entry.url = QLatin1String("about:start");
+			}
+			else
+			{
+				entry.url = QLatin1String("about:blank");
+			}
+
+			SessionWindow tab;
+			tab.history = {entry};
+			tab.historyIndex = 0;
+
+			window.windows = {tab};
+			window.index = 0;
+		}
+
+		sessionData.windows = {window};
 		sessionData.index = 0;
 
 		SessionsManager::restoreSession(sessionData, nullptr, isPrivate);
