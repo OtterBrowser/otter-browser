@@ -48,7 +48,6 @@
 #elif defined(Q_OS_UNIX)
 #include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
 #endif
-#include "../ui/Action.h"
 #include "../ui/LocaleDialog.h"
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"

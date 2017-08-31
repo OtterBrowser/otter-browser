@@ -42,7 +42,6 @@
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
-#include "../../../../ui/Action.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"

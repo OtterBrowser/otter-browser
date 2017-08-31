@@ -32,7 +32,6 @@
 #include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
 #include "../../../../core/WebBackend.h"
-#include "../../../../ui/Action.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"

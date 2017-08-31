@@ -39,7 +39,6 @@
 namespace Otter
 {
 
-class Action;
 class ContentsDialog;
 class ContentsWidget;
 class Transfer;

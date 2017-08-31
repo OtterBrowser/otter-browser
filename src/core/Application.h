@@ -33,7 +33,6 @@
 namespace Otter
 {
 
-class Action;
 class MainWindow;
 class Notification;
 class PlatformIntegration;

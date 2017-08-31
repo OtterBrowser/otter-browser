@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "ContentsWidget.h"
-#include "Action.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ContentsDialog.h"
 #include "Window.h"

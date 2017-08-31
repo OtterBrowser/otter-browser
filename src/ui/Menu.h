@@ -28,7 +28,6 @@
 namespace Otter
 {
 
-class Action;
 class BookmarksItem;
 
 class Menu : public QMenu

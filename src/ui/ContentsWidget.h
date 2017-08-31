@@ -28,7 +28,6 @@
 namespace Otter
 {
 
-class Action;
 class ContentsDialog;
 class Window;
 

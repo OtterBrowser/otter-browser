@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "SourceViewerWebWidget.h"
-#include "Action.h"
 #include "Menu.h"
 #include "SourceViewerWidget.h"
 #include "../core/Console.h"
