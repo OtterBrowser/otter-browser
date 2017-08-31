@@ -4,7 +4,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation>Acceptera Cookie</translation>
+        <translation>Ta emot Kaka</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
         <source>Send for:</source>
-        <translation type="unfinished"/>
+        <translation>Sänd för:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="83"/>
         <source>Accessible using JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>Åtkomlig med JavaScript:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="100"/>
@@ -39,32 +39,32 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>Hemsidan %1 begärde att få lägga till en ny cookie.</translation>
+        <translation>Webbplatsen %1 begärde att få lägga till en ny kaka.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>Hemsidan %1 gjorde en förfrågning om att uppdatera existerande cookie.</translation>
+        <translation>Webbplatsen %1 gjorde en förfrågning om att uppdatera existerande kaka.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation>Hemsidan %1 gjorde en förfrågning om att ta bort existerande cookie.</translation>
+        <translation>Webbplatsen %1 begärde att få ta bort existerande kaka.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation type="unfinished"/>
+        <translation>Enbart denna sessionen</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Secure connections only</source>
-        <translation type="unfinished"/>
+        <translation>Enbart säkra anslutningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Any type of connection</source>
-        <translation type="unfinished"/>
+        <translation>Alla typer anslutuningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
@@ -79,12 +79,12 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="64"/>
         <source>Accept</source>
-        <translation>Acceptera</translation>
+        <translation>Ta emot</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="68"/>
         <source>Accept For This Session Only</source>
-        <translation>Acceptera enbart för den här sessionen</translation>
+        <translation>Ta emot enbart för den här sessionen</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="71"/>
@@ -97,7 +97,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>Föredraget språk för hemsida</translation>
+        <translation>Föredraget språk för webbplatser</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="60"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Okänt [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="77"/>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Okänt</translation>
     </message>
 </context>
 <context>
@@ -172,7 +172,7 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="139"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
 </context>
 <context>
@@ -180,74 +180,77 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="81"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Användarsskript</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
         <source>Select Files</source>
-        <translation type="unfinished"/>
+        <translation>Välj filer</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Användars-skriptfiler (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="139"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="140"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Det finns redan ett användarsskript med detta namnet:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="141"/>
         <source>Do you want to replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du ersätta det?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="148"/>
         <source>Apply to all</source>
-        <translation type="unfinished"/>
+        <translation>Verkställ för alla</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="193"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="193"/>
         <source>Failed to import following User Script file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Misslyckades med att importera det följande användarsskriptet:
+%1</numerusform><numerusform>Misslyckades med att importera de följande användarskriptena:
+%1</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="315"/>
         <source>Reload Addon</source>
-        <translation type="unfinished"/>
+        <translation>Hämta om tillägg</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="317"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort tillägg…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="321"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till tillägg…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="390"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Tillägg</translation>
     </message>
 </context>
 <context>
@@ -255,32 +258,32 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="93"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Sök med %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="110"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bokmärken</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="144"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Lokala filer</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="160"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historik</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="175"/>
         <source>Typed history</source>
-        <translation type="unfinished"/>
+        <translation>Inmatad historik</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="197"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Speciella sidor</translation>
     </message>
 </context>
 <context>
@@ -289,7 +292,7 @@
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="222"/>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="246"/>
         <source>Enter address or search…</source>
-        <translation>Fyll i adress eller sök...</translation>
+        <translation>Fyll i adress eller sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="368"/>
@@ -339,7 +342,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="406"/>
         <source>Remove this Icon</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort denna ikonen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="486"/>
@@ -349,32 +352,32 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="865"/>
         <source>Show website information</source>
-        <translation type="unfinished"/>
+        <translation>Visa information om webbplatsen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="882"/>
         <source>Show feed list</source>
-        <translation type="unfinished"/>
+        <translation>Visa flödeslista</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="894"/>
         <source>Remove bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort bokmärket</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="905"/>
         <source>Add bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till bokmärke</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="927"/>
         <source>Load all plugins on the page</source>
-        <translation type="unfinished"/>
+        <translation>Hämta alla insticksprogram på webbplatsen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="941"/>
         <source>Log in</source>
-        <translation type="unfinished"/>
+        <translation>Logga in</translation>
     </message>
 </context>
 <context>
@@ -390,19 +393,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="307"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Profilkatalogen (%1) är inte skrivbar, applikationen körs i enbart läsande läge.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="330"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Din profilkatalog (%1) har bilivit fullare än lediga diskutrymmet.
+Det kan leda till felfunktioner eller även dataförlust.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="334"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Din profilkatalog (%1) har lite ledigt diskutrymme kvar (%2 återstår).
+Det kan leda till felfunktioner eller även dataförlust.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="340"/>
@@ -421,23 +426,24 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="343"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Fortsätt i enbart läsande läge</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Ignorera</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="346"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="417"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>Understödet för SSL är inte tillgängligt eller ofullständigt.
+Några hemsidor kan arbeta felaktigt eller inte alls.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="594"/>
@@ -488,7 +494,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="139"/>
         <source>Other…</source>
-        <translation>Andra...</translation>
+        <translation>Andra…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
@@ -531,7 +537,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation type="unfinished"/>
+        <translation>Kom ihåg lösenord</translation>
     </message>
 </context>
 <context>
@@ -559,7 +565,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Ny…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -569,7 +575,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation type="unfinished"/>
+        <translation>Besöktest senast:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -591,7 +597,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="50"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="54"/>
         <source>Unknown</source>
-        <translation>Okänd:</translation>
+        <translation>Okänd</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="67"/>
@@ -670,7 +676,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -690,7 +696,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation>Nyckelord</translation>
+        <translation>Nyckelord:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="130"/>
@@ -701,7 +707,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="140"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="228"/>
         <source>Properties…</source>
-        <translation>Egenskaper...</translation>
+        <translation>Egenskaper…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="150"/>
@@ -712,13 +718,13 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till mapp…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till bokmärke…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="50"/>
@@ -730,42 +736,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adress</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelord</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Lade till</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modifierad</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Besökt</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Besök</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="162"/>
@@ -780,22 +786,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Tab</source>
-        <translation>Öppna i en ny flik</translation>
+        <translation>Öppna i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
         <source>Open in New Background Tab</source>
-        <translation>Öppna i en ny bakgrundsflik</translation>
+        <translation>Öppna i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
         <source>Open in New Window</source>
-        <translation>Öppna i ett nytt fönster</translation>
+        <translation>Öppna i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
         <source>Open in New Background Window</source>
-        <translation>Öppna i ett nytt bakgrundfönster</translation>
+        <translation>Öppna i nytt bakgrundfönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
@@ -816,7 +822,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="356"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bokmärken</translation>
     </message>
 </context>
 <context>
@@ -834,7 +840,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Ny…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -863,7 +869,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/BookmarksModel.cpp" line="99"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="226"/>
         <source>Notes</source>
-        <translation>Noteringar</translation>
+        <translation>Anteckningar</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="102"/>
@@ -918,7 +924,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
@@ -993,22 +999,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="341"/>
         <source>Open in New Tab</source>
-        <translation>Öppna i en ny flik</translation>
+        <translation>Öppna i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="342"/>
         <source>Open in New Background Tab</source>
-        <translation>Öppna i en ny bakgrundsflik</translation>
+        <translation>Öppna i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="344"/>
         <source>Open in New Window</source>
-        <translation>Öppna i ett nytt fönster</translation>
+        <translation>Öppna i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="345"/>
         <source>Open in New Background Window</source>
-        <translation>Öppna i ett nytt bakgrundfönster</translation>
+        <translation>Öppna i nytt bakgrundfönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="347"/>
@@ -1056,7 +1062,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
         <source>Export…</source>
-        <translation>Exportera...</translation>
+        <translation>Exportera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
@@ -1082,17 +1088,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER-kodade X.509 certifikat (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM-kodade X.509 certifikat (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Textfiler (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
@@ -1107,12 +1113,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="179"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifierare av auktoritetsnyckel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifierare av subjektsnyckel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="187"/>
@@ -1122,42 +1128,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="191"/>
         <source>Certificate Policies</source>
-        <translation type="unfinished"/>
+        <translation>Riktlinjer för certfikat</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="195"/>
         <source>Policy Mappings</source>
-        <translation type="unfinished"/>
+        <translation>Avbildning av riktlinjer</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="199"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Alternativt namn för subjekt</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="203"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Alternativt namn för utfärdare</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="207"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Attributer av subjektskatalog</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="211"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Grundläggande inskränkningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="215"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Namnsinskränkningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="219"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Riktlinjeinskränkningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="223"/>
@@ -1167,27 +1173,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="227"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>CRL-distributionsställen</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="231"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Förhindra alla riktlinjer</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="235"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Delta-CRL-distributionsställe</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="239"/>
         <source>Authority Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Åtkomst till auktoritetsinformation</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="243"/>
         <source>Subject Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Åtkomst till subjektsinformation</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="325"/>
@@ -1195,7 +1201,10 @@ Are you sure that you want to restore this session anyway?</source>
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>Modulo:
+%1
+
+Exponent: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="338"/>
@@ -1230,12 +1239,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="405"/>
         <source>Certificate Signature Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Certifikatets signaturalgoritm</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="409"/>
         <source>Issuer</source>
-        <translation>Utgivare</translation>
+        <translation>Utfärdare</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="413"/>
@@ -1255,12 +1264,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="425"/>
         <source>Subject</source>
-        <translation>Ämne</translation>
+        <translation>Subjekt</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="429"/>
         <source>Subject Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Subjektets publika nyckel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="433"/>
@@ -1303,7 +1312,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to clear:</source>
-        <translation type="unfinished"/>
+        <translation>Period att rensas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
@@ -1328,7 +1337,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms history</source>
-        <translation type="unfinished"/>
+        <translation>Rensa formulärhistorik</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
@@ -1366,7 +1375,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="120"/>
         <source>Select Color…</source>
-        <translation>Välj färg...</translation>
+        <translation>Välj färg…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="121"/>
@@ -1389,7 +1398,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
@@ -1409,12 +1418,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="227"/>
         <source>Copy Option Name</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera optionsnamn</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="228"/>
         <source>Copy Option Value</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera optionsvärde</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="230"/>
@@ -1424,7 +1433,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Avancerad konfiguration</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1441,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>Räckvidd</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
@@ -1449,7 +1458,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <source>CSS</source>
-        <translation type="unfinished"/>
+        <translation>CSS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
@@ -1471,22 +1480,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="185"/>
         <source>Filter…</source>
-        <translation>Filter...</translation>
+        <translation>Filter…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="43"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Alla flikar</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="48"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Enbart nuvarande flik</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="54"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Andra källor</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="263"/>
@@ -1504,37 +1513,37 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Allmänt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Profiler</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
         <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
-        <translation type="unfinished"/>
+        <translation>Välj listor som du vill använda för innehållblockering (AdBlock Plus-kompatibla):</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="82"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Cosmetic filters:</source>
-        <translation type="unfinished"/>
+        <translation>Kosmetiska filter:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Enable wildcard expressions</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera Jokeruttryck</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="108"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera anpassade regler</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="121"/>
@@ -1563,22 +1572,22 @@ Exponent: %2</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="176"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="333"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Anpassade regler</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="51"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="52"/>
         <source>Domain specific only</source>
-        <translation type="unfinished"/>
+        <translation>Enbart domänbundna</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="53"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Inga</translation>
     </message>
 </context>
 <context>
@@ -1586,72 +1595,72 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
         <source>Active Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Aktiva profiler</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="47"/>
         <source>Blocked Elements</source>
-        <translation type="unfinished"/>
+        <translation>Blockerade element</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="143"/>
         <source>main frame</source>
-        <translation type="unfinished"/>
+        <translation>huvudram</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="147"/>
         <source>subframe</source>
-        <translation type="unfinished"/>
+        <translation>underram</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="151"/>
         <source>stylesheet</source>
-        <translation type="unfinished"/>
+        <translation>stilmall</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="155"/>
         <source>script</source>
-        <translation type="unfinished"/>
+        <translation>skript</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="159"/>
         <source>image</source>
-        <translation type="unfinished"/>
+        <translation>bild</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="163"/>
         <source>object</source>
-        <translation type="unfinished"/>
+        <translation>objekt</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="167"/>
         <source>object subrequest</source>
-        <translation type="unfinished"/>
+        <translation>objekt-underbegäran</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="171"/>
         <source>XHR</source>
-        <translation type="unfinished"/>
+        <translation>XHR</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
         <source>WebSocket</source>
-        <translation type="unfinished"/>
+        <translation>WebSocket</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
         <source>other</source>
-        <translation type="unfinished"/>
+        <translation>andra</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="198"/>
         <source>Enable Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera innehållsblockering</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="338"/>
         <source>Blocked Elements: {amount}</source>
-        <translation type="unfinished"/>
+        <translation>Blockerade element: {antal}</translation>
     </message>
 </context>
 <context>
@@ -1678,52 +1687,52 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="191"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="191"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervall för uppdateringar</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="191"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Senaste uppdatering</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="240"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Reklam</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="240"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Inkräktande</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="240"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Integritet</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="240"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Socialt</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="240"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Regionalt</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="240"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Andra</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="448"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Anpassade regler</translation>
     </message>
 </context>
 <context>
@@ -1747,58 +1756,58 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Namn:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="38"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Värde:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="51"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Slutar gälla:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="64"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>enbart denna sessionen</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="71"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation type="unfinished"/>
+        <translation>yyyy-MM-dd HH::mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="81"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Domän:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="97"/>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="112"/>
         <source>Send only for secure connections</source>
-        <translation type="unfinished"/>
+        <translation>Sänd endast för säkra anslutningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="119"/>
         <source>Allow accessing using JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt åtkomst med JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.cpp" line="35"/>
         <source>Add Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till kaka</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.cpp" line="39"/>
         <source>Edit Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Redigera kaka</translation>
     </message>
 </context>
 <context>
@@ -1806,7 +1815,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
@@ -1831,18 +1840,18 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="165"/>
         <source>Add…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="175"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="359"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Egenskaper…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="185"/>
@@ -1858,7 +1867,7 @@ Exponent: %2</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>You are about to delete %n cookie(s).</source>
-        <translation><numerusform>Du är på väg att ta bort %n cookie(s).</numerusform><numerusform>Du är på väg att ta bort % cookie(s).</numerusform></translation>
+        <translation><numerusform>Du är på väg att ta bort %n kaka.</numerusform><numerusform>Du är på väg att ta bort %n kakor.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
@@ -1869,32 +1878,32 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="312"/>
         <source>You are about to delete all cookies.</source>
-        <translation>Du är på väg att ta bort alla cookies.</translation>
+        <translation>Du är på väg att ta bort alla kakor.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="339"/>
         <source>Add Cookie…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till kaka…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="349"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation>Ta bort alla cookies från den här domänen...</translation>
+        <translation>Ta bort alla kakor från den här domänen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="352"/>
         <source>Remove All Cookies…</source>
-        <translation>Ta bort alla cookies...</translation>
+        <translation>Ta bort alla kakor…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="428"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>enbart denna sessionen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="482"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Kakor</translation>
     </message>
 </context>
 <context>
@@ -1902,12 +1911,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation type="unfinished"/>
+        <translation>Undantag för kakor från tredjepart</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation>Acceptera ALLTID cookies från tredjepart:</translation>
+        <translation>TA EMOT alltid tredjepartskakor från:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
@@ -1930,7 +1939,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation>Neka ALLTID tredjepartscookies från:</translation>
+        <translation>NEKA alltid tredjepartskakor från:</translation>
     </message>
 </context>
 <context>
@@ -1938,27 +1947,27 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="45"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att öppna lösenordsfilen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="98"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att spara lösenordsfilen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="191"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ta bort lösenordsfilen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="320"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>Krypterad fil</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="325"/>
         <source>Stores passwords in AES encrypted file.</source>
-        <translation type="unfinished"/>
+        <translation>Lagrar lösenord i AES-krypterad fil.</translation>
     </message>
 </context>
 <context>
@@ -1967,7 +1976,7 @@ Exponent: %2</source>
         <location filename="../../src/ui/FilePathWidget.cpp" line="34"/>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Browse…</source>
-        <translation>Bläddra...</translation>
+        <translation>Bläddra…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="73"/>
@@ -2013,12 +2022,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="65"/>
         <source>Sort Ascending</source>
-        <translation type="unfinished"/>
+        <translation>Sortera uppstigande</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="70"/>
         <source>Sort Descending</source>
-        <translation type="unfinished"/>
+        <translation>Sortera nedstigande</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="77"/>
@@ -2041,7 +2050,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
@@ -2107,27 +2116,27 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
         <source>Open in New Tab</source>
-        <translation>Öppna i en ny flik</translation>
+        <translation>Öppna i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="357"/>
         <source>Open in New Background Tab</source>
-        <translation>Öppna i en ny bakgrundsflik</translation>
+        <translation>Öppna i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="359"/>
         <source>Open in New Window</source>
-        <translation>Öppna i ett nytt fönster</translation>
+        <translation>Öppna i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="360"/>
         <source>Open in New Background Window</source>
-        <translation>Öppna i ett nytt bakgrundfönster</translation>
+        <translation>Öppna i nytt bakgrundfönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
         <source>Add to Bookmarks…</source>
-        <translation>Lägg till i Bokmärken...</translation>
+        <translation>Lägg till i Bokmärken…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
@@ -2155,7 +2164,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="62"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att öppna historikfilen: %1</translation>
     </message>
 </context>
 <context>
@@ -2198,17 +2207,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="126"/>
         <source>Select From File…</source>
-        <translation>Välj från fil...</translation>
+        <translation>Välj från fil…</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="127"/>
         <source>Select From Theme…</source>
-        <translation>Välj från tema...</translation>
+        <translation>Välj från tema…</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="132"/>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>Återställ</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="136"/>
@@ -2236,7 +2245,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="36"/>
         <source>File size:</source>
-        <translation type="unfinished"/>
+        <translation>Filens storlek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="43"/>
@@ -2246,12 +2255,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative text:</source>
-        <translation type="unfinished"/>
+        <translation>Alternativ text:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="57"/>
         <source>Long description:</source>
-        <translation type="unfinished"/>
+        <translation>Lång beskrivning:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="37"/>
@@ -2283,13 +2292,13 @@ Exponent: %2</source>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="96"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 bildpunkter vid %3 bitar per bildpunkt i %n ram</numerusform><numerusform>%1 x %2 bildpunkter vid %3 bitar per bildpunkt i %n ramar</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="107"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 bildpunkter vid %3 bitar per bildpunkt</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="111"/>
@@ -2336,12 +2345,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="39"/>
         <source>Allow changing of status field</source>
-        <translation>Tillåt ändring av statusfältet</translation>
+        <translation>Tillåt ändring av statusraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="49"/>
         <source>Allow script to hide address bar</source>
-        <translation>Tillåt skriptet att gömma adressfältet</translation>
+        <translation>Tillåt skriptet att gömma adressraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="56"/>
@@ -2351,7 +2360,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
         <source>Allow to receive right mouse button clicks</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt att ta emot högra musknappens klickar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="72"/>
@@ -2361,7 +2370,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="88"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt at byta till helskärmsläge:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2397,7 +2406,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="91"/>
@@ -2450,17 +2459,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="60"/>
         <source>Directory does not exist</source>
-        <translation type="unfinished"/>
+        <translation>Katalogen finns inte</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
         <source>Directory is not readable</source>
-        <translation type="unfinished"/>
+        <translation>Katalogen är inte läsbar</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="66"/>
         <source>Cannot read directory listing</source>
-        <translation type="unfinished"/>
+        <translation>Katalogupplistningen kan inte läsas</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="104"/>
@@ -2503,7 +2512,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="32"/>
         <source>Custom path:</source>
-        <translation>Anpassad genväg:</translation>
+        <translation>Anpassad sökväg:</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="43"/>
@@ -2518,12 +2527,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="47"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Okänt [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"/>
+        <translation>Översättningsfiler (*.qm)</translation>
     </message>
 </context>
 <context>
@@ -2536,7 +2545,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="709"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Webbläsare kontrollerad av användaren, inte tvärtom.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="715"/>
@@ -2571,22 +2580,22 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="14"/>
         <source>Set Master Password</source>
-        <translation type="unfinished"/>
+        <translation>Ställ in huvudlösenordet</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
         <source>Current password:</source>
-        <translation type="unfinished"/>
+        <translation>Nuvarande lösenord:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
         <source>New password:</source>
-        <translation type="unfinished"/>
+        <translation>Nytt lösenord:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
         <source>Confirm new password:</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta nytt lösenord:</translation>
     </message>
 </context>
 <context>
@@ -2599,22 +2608,22 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="258"/>
         <source>Open in New Tab</source>
-        <translation>Öppna i en ny flik</translation>
+        <translation>Öppna i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="259"/>
         <source>Open in New Background Tab</source>
-        <translation>Öppna i en ny bakgrundsflik</translation>
+        <translation>Öppna i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="261"/>
         <source>Open in New Window</source>
-        <translation>Öppna i ett nytt fönster</translation>
+        <translation>Öppna i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="262"/>
         <source>Open in New Background Window</source>
-        <translation>Öppna i ett nytt bakgrundfönster</translation>
+        <translation>Öppna i nytt bakgrundfönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="761"/>
@@ -2646,33 +2655,34 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="352"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="353"/>
         <source>Configuration of %1 needs to be updated to new version.
 Do you want to migrate it?</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurationen av %1 måste uppdateras till nyare version.
+Vill du omvandla den?</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="355"/>
         <source>Create backup</source>
-        <translation type="unfinished"/>
+        <translation>Skapa säkerhetskopia</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="356"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Ja</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="358"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Nej</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="359"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -2690,7 +2700,7 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
@@ -2757,12 +2767,12 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="82"/>
         <source>Empty Area of Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Tom yta av flikraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="82"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Någon verktygsrad</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="118"/>
@@ -2791,17 +2801,17 @@ Do you want to migrate it?</source>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="58"/>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="162"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Utan titel)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="191"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort element</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="192"/>
         <source>Purge Entry</source>
-        <translation type="unfinished"/>
+        <translation>Rensa element</translation>
     </message>
 </context>
 <context>
@@ -2810,12 +2820,12 @@ Do you want to migrate it?</source>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="326"/>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="357"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ladda automatiska proxykonfigurationen (PAC): %1</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="344"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ladda automatiska proxykonfigurationen (PAC). Ogiltig webbadress: %1</translation>
     </message>
 </context>
 <context>
@@ -2832,7 +2842,11 @@ Do you want to migrate it?</source>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Det uppträdde SSL-fel:
+
+%1
+
+Vill du fortsätta?</translation>
     </message>
 </context>
 <context>
@@ -2848,17 +2862,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adress:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
         <source>Date:</source>
-        <translation type="unfinished"/>
+        <translation>Datum:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="136"/>
@@ -2874,7 +2888,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till mapp…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
@@ -2893,7 +2907,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="59"/>
         <source>Add note…</source>
-        <translation>Lägg till anteckning...</translation>
+        <translation>Lägg till anteckning…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="98"/>
@@ -2933,7 +2947,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="371"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Anteckningar</translation>
     </message>
 </context>
 <context>
@@ -3016,17 +3030,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="42"/>
         <source>Opera Session</source>
-        <translation>Opera-session</translation>
+        <translation>Session för Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="47"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importerar sessioner från webbläsaren Opera version 12 eller tidigare</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="97"/>
         <source>Opera session files (*.win)</source>
-        <translation>Sessionsfiler för Opera (*.win)</translation>
+        <translation>Sessions-filer för Opera (*.win)</translation>
     </message>
 </context>
 <context>
@@ -3080,12 +3094,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du uppdatera inloggningsdatan för %1?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du spara inloggningsdatan för %1?</translation>
     </message>
 </context>
 <context>
@@ -3093,67 +3107,67 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Ställ in #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Du är på väg att ta bort %n lösenord.</numerusform><numerusform>Du är på väg att ta bort %n lösenord.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du fortsätta?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Du är på väg att ta bort alla lösenord.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort lösenord</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort alla lösenord från denna domänen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort alla lösenord…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="373"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord</translation>
     </message>
 </context>
 <context>
@@ -3186,7 +3200,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="41"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation type="unfinished"/>
+        <translation>%1 vill byta till helskärmsläge.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="46"/>
@@ -3221,7 +3235,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="76"/>
         <source>%1 wants to play audio.</source>
-        <translation type="unfinished"/>
+        <translation>%1 vill spela upp ljud.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="81"/>
@@ -3257,27 +3271,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="44"/>
         <source>Open All Pop-Ups from This Website</source>
-        <translation>Öppna alla pop-ups från den här hemsidan</translation>
+        <translation>Öppna alla extrafönster från den här webbplatsen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="48"/>
         <source>Open Pop-Ups from This Website in Background</source>
-        <translation type="unfinished"/>
+        <translation>Öppna extrafönster från denna webbplatsen i bakgrunden</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="52"/>
         <source>Block All Pop-Ups from This Website</source>
-        <translation>Blockera alla pop-ups från den här hemsidan</translation>
+        <translation>Blockera alla extrafönster från den här webbplatsen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="56"/>
         <source>Always Ask What to Do for This Website</source>
-        <translation>Fråga alltid vad som ska göras med den här hemsidan</translation>
+        <translation>Fråga alltid vad som ska göras med den här webbplatsen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
         <source>Blocked Pop-ups</source>
-        <translation>Blockerade popups</translation>
+        <translation>Blockerade extrafönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
@@ -3287,7 +3301,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="100"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 vill öppna %n extrafönster.</numerusform><numerusform>%1 vill öppna %n extrafönster.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3302,17 +3316,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="62"/>
         <source>Smooth scrolling</source>
-        <translation type="unfinished"/>
+        <translation>Mjuk rullning</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="69"/>
         <source>Check spelling</source>
-        <translation type="unfinished"/>
+        <translation>Kontrollera rättstavning</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="82"/>
         <source>Address Field Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Förslag för adressfältet</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="91"/>
@@ -3332,22 +3346,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="115"/>
         <source>Local paths</source>
-        <translation type="unfinished"/>
+        <translation>Lokala sökvägar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="130"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>Adresskomplettering</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="139"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>Visa Kategoriöverskrifter</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="148"/>
         <source>Display mode:</source>
-        <translation type="unfinished"/>
+        <translation>Visningsläge:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="185"/>
@@ -3367,7 +3381,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Markera elementet i aktivitetshanteraren</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="263"/>
@@ -3377,7 +3391,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Föredra nativa aviseringar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="300"/>
@@ -3387,12 +3401,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>Widget style:</source>
-        <translation>Stil för widget:</translation>
+        <translation>Stil för komponenter:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
         <source>Style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Stilmall:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="343"/>
@@ -3407,7 +3421,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="393"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>Bilder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="410"/>
@@ -3417,7 +3431,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="417"/>
         <source>JavaScript Options…</source>
-        <translation>Alternativ för JavaScript...</translation>
+        <translation>Alternativ för JavaScript…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="428"/>
@@ -3427,7 +3441,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="445"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Användars-stilmall:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="480"/>
@@ -3467,7 +3481,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="609"/>
         <source>Do not ask for folder, save directly to</source>
-        <translation>Fråga inte efter en mapp, spara direkt till</translation>
+        <translation>Fråga inte efter mapp, spara direkt till</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="624"/>
@@ -3482,12 +3496,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="720"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Sänd referensinformation</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="733"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Användaragent</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="776"/>
@@ -3495,7 +3509,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1194"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1347"/>
         <source>Edit…</source>
-        <translation>Redigera...</translation>
+        <translation>Redigera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="816"/>
@@ -3505,7 +3519,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="916"/>
         <source>SSL Ciphers</source>
-        <translation type="unfinished"/>
+        <translation>SSL-kodningsmetoder</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="996"/>
@@ -3561,12 +3575,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1278"/>
         <source>Enable single key shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera entangents-genvägar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1298"/>
         <source>Mouse Actions and Gestures</source>
-        <translation type="unfinished"/>
+        <translation>Mus-aktioner och -gester</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1431"/>
@@ -3631,12 +3645,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="104"/>
         <source>Compact</source>
-        <translation type="unfinished"/>
+        <translation>Kompakt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="105"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>Spalter</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
@@ -3663,22 +3677,22 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="166"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>Stilmallar (*.css)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="149"/>
         <source>All images</source>
-        <translation type="unfinished"/>
+        <translation>Alla bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="150"/>
         <source>Cached images</source>
-        <translation type="unfinished"/>
+        <translation>Cachade bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="151"/>
         <source>No images</source>
-        <translation type="unfinished"/>
+        <translation>Inga bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="158"/>
@@ -3699,34 +3713,34 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="217"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="210"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="225"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till mapp…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="211"/>
         <source>Add User Agent…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till användaragent…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="212"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="227"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till separerare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="226"/>
         <source>Add Proxy…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till proxy…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="286"/>
@@ -3775,7 +3789,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="341"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="377"/>
         <source>New…</source>
-        <translation>Ny...</translation>
+        <translation>Ny…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="342"/>
@@ -3809,7 +3823,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="819"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="879"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Mappens namn</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="657"/>
@@ -3817,13 +3831,13 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="819"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="879"/>
         <source>Select folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Välj mappens namn:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="674"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="836"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1181"/>
@@ -3854,7 +3868,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="35"/>
         <source>Pop-ups:</source>
-        <translation>Pop-uprutor:</translation>
+        <translation>Extrafönster:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="56"/>
@@ -3884,7 +3898,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
         <source>Default proportional font size:</source>
-        <translation type="unfinished"/>
+        <translation>Standardsstorlek av proportionella typsnitt:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="153"/>
@@ -3896,7 +3910,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
         <source>Default fixed-width font size:</source>
-        <translation type="unfinished"/>
+        <translation>Standardstorlek av typsnitt med fast bredd:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="195"/>
@@ -3957,32 +3971,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Fixed-width font</source>
-        <translation type="unfinished"/>
+        <translation>Typsnitt med fast bredd</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Serif font</source>
-        <translation type="unfinished"/>
+        <translation>Serif-typsnitt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Sans-serif font</source>
-        <translation type="unfinished"/>
+        <translation>Sans-serif-typsnitt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Cursive font</source>
-        <translation type="unfinished"/>
+        <translation>Kursivt typsnitt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Fantasy font</source>
-        <translation type="unfinished"/>
+        <translation>Fantasi-typsnitt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="60"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation type="unfinished"/>
+        <translation>Flygande bäckasiner söka hwila på mjuka tuvor</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
@@ -4063,7 +4077,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="48"/>
         <source>Home page:</source>
-        <translation>Hemsida:</translation>
+        <translation>Startsida:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="76"/>
@@ -4103,12 +4117,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>Öppna nya fönster i en ny flik istället</translation>
+        <translation>Öppna nya fönster i ny flik istället</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>Fördröj laddningen av flikar tills de blir valda</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
@@ -4118,12 +4132,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="175"/>
         <source>Open new tab next to active</source>
-        <translation>Öppna en ny flik intill en aktiv</translation>
+        <translation>Öppna ny flik intill den aktiva</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
         <source>When closing tab:</source>
-        <translation>När en flik stängs:</translation>
+        <translation>När fliken stängs:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
@@ -4138,7 +4152,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera den fösta fliken som blev öppnad av nuvarande fliken</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
@@ -4148,12 +4162,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred webpage language:</source>
-        <translation type="unfinished"/>
+        <translation>Föredraget språk för hemsidor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
         <source>Edit…</source>
-        <translation>Redigera...</translation>
+        <translation>Redigera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="275"/>
@@ -4188,7 +4202,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="47"/>
         <source>Show empty page</source>
-        <translation>Visa en tom sida</translation>
+        <translation>Visa tom sida</translation>
     </message>
 </context>
 <context>
@@ -4231,22 +4245,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
         <source>Remember form history</source>
-        <translation type="unfinished"/>
+        <translation>Kom ihåg formulär-historik</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>
         <source>Template…</source>
-        <translation>Mall...</translation>
+        <translation>Mall…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="170"/>
         <source>Enable cookies</source>
-        <translation>Aktivera cookies</translation>
+        <translation>Aktivera kakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="215"/>
         <source>Accept cookies:</source>
-        <translation>Acceptera cookies:</translation>
+        <translation>Ta emot kakor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="228"/>
@@ -4256,12 +4270,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
         <source>Accept third-party cookies:</source>
-        <translation>Acceptera cookies från tredjepart:</translation>
+        <translation>Ta emot kakor från tredjepart:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
         <source>Exceptions…</source>
-        <translation>Undantag...</translation>
+        <translation>Undantag…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
@@ -4271,7 +4285,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
         <source>Settings…</source>
-        <translation>Inställningar...</translation>
+        <translation>Inställningar…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="319"/>
@@ -4286,7 +4300,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="348"/>
         <source>Manage…</source>
-        <translation>Hantera...</translation>
+        <translation>Hantera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="362"/>
@@ -4296,7 +4310,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="385"/>
         <source>Change…</source>
-        <translation>Ändra...</translation>
+        <translation>Ändra…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="40"/>
@@ -4311,7 +4325,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="42"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Informera hemsidor inte om vad jag föredrar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="53"/>
@@ -4356,7 +4370,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="21"/>
         <source>Search…</source>
-        <translation>Sök...</translation>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="66"/>
@@ -4366,12 +4380,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="76"/>
         <source>Edit…</source>
-        <translation>Redigera...</translation>
+        <translation>Redigera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="86"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Uppdatering</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="96"/>
@@ -4406,12 +4420,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="129"/>
         <source>New…</source>
-        <translation>Ny...</translation>
+        <translation>Ny…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="130"/>
         <source>File…</source>
-        <translation type="unfinished"/>
+        <translation>Fil…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="131"/>
@@ -4426,12 +4440,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Välj fil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="199"/>
         <source>Open Search files (*.xml)</source>
-        <translation type="unfinished"/>
+        <translation>Öppna sök-filer (*.xml)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="294"/>
@@ -4454,23 +4468,23 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="435"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="336"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
         <source>Failed to open Open Search file.</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att öppna Opera-sökfil.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelordet används redan. Vill du ändå fortsätta?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="435"/>
         <source>Failed to update search engine.</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att uppdatera sökmotorn.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="506"/>
@@ -4483,42 +4497,42 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="110"/>
         <source>Document: %p%</source>
-        <translation type="unfinished"/>
+        <translation>Dokument: %p%</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="110"/>
         <source>Document: ?</source>
-        <translation type="unfinished"/>
+        <translation>Dokument: ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="118"/>
         <source>Total: ?</source>
-        <translation type="unfinished"/>
+        <translation>Totalt: ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="118"/>
         <source>Total: %p%</source>
-        <translation type="unfinished"/>
+        <translation>Totalt: %p%</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="126"/>
         <source>Total: %1</source>
-        <translation type="unfinished"/>
+        <translation>Totalt: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="133"/>
         <source>Elements: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Element: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="140"/>
         <source>Speed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Hastighet: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="150"/>
         <source>Time: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tid: %1</translation>
     </message>
 </context>
 <context>
@@ -4526,112 +4540,112 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Titel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="38"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Allmänt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="44"/>
         <source>Manual</source>
-        <translation type="unfinished"/>
+        <translation>Manuellt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="144"/>
         <source>Port</source>
-        <translation type="unfinished"/>
+        <translation>Port</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="151"/>
         <source>Protocol</source>
-        <translation type="unfinished"/>
+        <translation>Protokoll</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="158"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Servrar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="165"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="172"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="179"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="193"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="207"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="229"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automatisk</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="273"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till PAC-filen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="286"/>
         <source>Use system authentication</source>
-        <translation type="unfinished"/>
+        <translation>Använd system-autentisering</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="301"/>
         <source>Exceptions</source>
-        <translation type="unfinished"/>
+        <translation>Undantag</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="307"/>
         <source>Do not use this proxy for:</source>
-        <translation type="unfinished"/>
+        <translation>Använd denna proxyn int för:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="328"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="338"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="348"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="372"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
-        <translation type="unfinished"/>
+        <translation>Exempel: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.cpp" line="93"/>
         <source>Add Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till proxy</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.cpp" line="93"/>
         <source>Edit Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Redigera proxy</translation>
     </message>
 </context>
 <context>
@@ -4639,7 +4653,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="77"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Nätverksfel %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="94"/>
@@ -4685,7 +4699,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="190"/>
         <source>Receiving data from %1…</source>
-        <translation>Tar emot data från %1</translation>
+        <translation>Tar emot data från %1…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="243"/>
@@ -4696,17 +4710,17 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="275"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="300"/>
         <source>Waiting for authentication…</source>
-        <translation>Inväntar autentisering...</translation>
+        <translation>Inväntar autentisering…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="378"/>
         <source>Loading finished</source>
-        <translation type="unfinished"/>
+        <translation>Laddning slutförd</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="707"/>
         <source>Sending request to %1…</source>
-        <translation>Skickar förfrågning till %1...</translation>
+        <translation>Skickar förfrågning till %1…</translation>
     </message>
 </context>
 <context>
@@ -4723,7 +4737,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="614"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="654"/>
         <source>Disable JavaScript popups</source>
-        <translation>Inaktivera JavaScript-popups</translation>
+        <translation>Inaktivera JavaScript-extrafönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="556"/>
@@ -4736,7 +4750,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="556"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="570"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>Är du säker på att du vill skicka om formulär-datan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="556"/>
@@ -4758,17 +4772,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="771"/>
         <source>WebKit error %1</source>
-        <translation type="unfinished"/>
+        <translation>WebKit fel %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="775"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Nätverksfel %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="821"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation>Skriptet på den här hemsidan verkar ha ett problem.</translation>
+        <translation>Skriptet på den här webbplatsen verkar ha ett problem.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="821"/>
@@ -4782,7 +4796,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="34"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="43"/>
         <source>Click to load content (%1) handled by plugin from: %2</source>
-        <translation type="unfinished"/>
+        <translation>Klicka för att ladda innehållet (%1) som hanteras av insticksmodulen från: %2</translation>
     </message>
 </context>
 <context>
@@ -4790,7 +4804,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="182"/>
         <source>WebKit Backend (legacy)</source>
-        <translation type="unfinished"/>
+        <translation>Bakände för WebKit (föråldrad)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="184"/>
@@ -4800,7 +4814,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="190"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation type="unfinished"/>
+        <translation>Bakände som använder QtWebKit-modulen</translation>
     </message>
 </context>
 <context>
@@ -4866,7 +4880,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="14"/>
         <source>Automatic Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>Automatisk omhämtning för sidor</translation>
     </message>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="29"/>
@@ -4907,7 +4921,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
         <source>Session identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Sessionens identifierare:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
@@ -4923,7 +4937,8 @@ Do you want to continue?</source>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Det finns redan en session med den angivna identifieraren.
+Vill du överskriva den?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
@@ -4941,7 +4956,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="35"/>
         <source>Find…</source>
-        <translation>Hitta...</translation>
+        <translation>Hitta…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
@@ -4984,7 +4999,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation>Ändra ikon...</translation>
+        <translation>Ändra ikon…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
@@ -4999,12 +5014,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Kodning:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
         <source>Form address:</source>
-        <translation type="unfinished"/>
+        <translation>Formulär-adress:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="117"/>
@@ -5014,7 +5029,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="133"/>
         <source>Results Query</source>
-        <translation type="unfinished"/>
+        <translation>Förfrågning om resultat</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="141"/>
@@ -5032,23 +5047,23 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="169"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="277"/>
         <source>POST method</source>
-        <translation type="unfinished"/>
+        <translation>POST metod</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="210"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="318"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Datakodning (enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="238"/>
         <source>Suggestions Query</source>
-        <translation type="unfinished"/>
+        <translation>Förfrågning om föreslag</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="127"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Platshållare</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="128"/>
@@ -5066,7 +5081,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="172"/>
         <source>Manage Search Engines…</source>
-        <translation>Hantera sökmotorer...</translation>
+        <translation>Hantera sökmotorer…</translation>
     </message>
 </context>
 <context>
@@ -5077,7 +5092,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="468"/>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="470"/>
         <source>Search using %1</source>
-        <translation type="unfinished"/>
+        <translation>Sök med %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="298"/>
@@ -5107,7 +5122,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="304"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Klistra in och kör</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="305"/>
@@ -5132,37 +5147,37 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="356"/>
         <source>Add %1</source>
-        <translation type="unfinished"/>
+        <translation>Läg till %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="356"/>
         <source>(untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(utan titel)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="559"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="559"/>
         <source>Failed to add search engine.</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att lägga till sökmotor.</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="850"/>
         <source>Select Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Välj sökmotor</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="857"/>
         <source>Add Search Engine…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till sökmotor…</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="864"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Sök efter</translation>
     </message>
 </context>
 <context>
@@ -5170,42 +5185,42 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation type="unfinished"/>
+        <translation>Välj lösenord</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation type="unfinished"/>
+        <translation>Välj en sats av anmälningsinformationer:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="42"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Ställ in #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="84"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="84"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen ta bort den här satsen av anmälningsinformationer?</translation>
     </message>
 </context>
 <context>
@@ -5268,12 +5283,12 @@ Do you want to overwrite it?</source>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n fönster (%1)</numerusform><numerusform>%n fönster (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n tab(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n flik</numerusform><numerusform>%n flikar</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
@@ -5314,7 +5329,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.ui" line="50"/>
         <source>Panels</source>
-        <translation type="unfinished"/>
+        <translation>Paneler</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="128"/>
@@ -5324,12 +5339,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="128"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation type="unfinished"/>
+        <translation>Indata adress av webbplatsen som skall visas i panelen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="347"/>
         <source>Add Web Panel…</source>
-        <translation>Lägg till webbpanel...</translation>
+        <translation>Lägg till webbpanel…</translation>
     </message>
 </context>
 <context>
@@ -5347,7 +5362,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
-        <translation>Misslyckades med att spara fil:</translation>
+        <translation>Misslyckades med att spara fil.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
@@ -5358,22 +5373,23 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>Dokumentet har ändrats.
+Vill du spara ändringarna eller kasta dem?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="296"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Visa radnummer</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="491"/>
         <source>Source Viewer: %1</source>
-        <translation type="unfinished"/>
+        <translation>Granskare för källor: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="491"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>Granskare för källor</translation>
     </message>
 </context>
 <context>
@@ -5382,7 +5398,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="168"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="169"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till kakel…</translation>
     </message>
 </context>
 <context>
@@ -5390,22 +5406,22 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Egenskaper för startsida</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation>Använd en anpassad bakgrundsbild</translation>
+        <translation>Använd anpassad bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Skalningsläge:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation>Genväg till bild:</translation>
+        <translation>Sökväg till bild:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="89"/>
@@ -5440,7 +5456,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Visa kakel för att lägga till nya element</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
@@ -5455,7 +5471,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centrum</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
@@ -5465,7 +5481,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="44"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Kakel</translation>
     </message>
 </context>
 <context>
@@ -5473,7 +5489,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="342"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till kakel</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="615"/>
@@ -5483,12 +5499,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="617"/>
         <source>Edit…</source>
-        <translation>Redigera...</translation>
+        <translation>Redigera…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="621"/>
         <source>Reload</source>
-        <translation>Ladda om</translation>
+        <translation>Hämta om</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="625"/>
@@ -5498,12 +5514,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="629"/>
         <source>Configure…</source>
-        <translation>Ställ in...</translation>
+        <translation>Ställ in…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="630"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till kakel…</translation>
     </message>
 </context>
 <context>
@@ -5549,7 +5565,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/StartupDialog.cpp" line="101"/>
         <source>Title: %1
 Address: %2</source>
-        <translation type="unfinished"/>
+        <translation>Titel: %1 Adress: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="198"/>
@@ -5567,12 +5583,12 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="733"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>Växla flikar med mushjulet</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="737"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Visa minibilder i flikar</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="765"/>
@@ -5582,22 +5598,22 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1005"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1006"/>
         <source>You are about to open %n URL(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Du är på väg att öppna %n webbadress.</numerusform><numerusform>Du är på väg att öppna %n webbadresser.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1007"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du fortsätta?</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1011"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Visa inte det här meddelandet igen</translation>
     </message>
 </context>
 <context>
@@ -5605,7 +5621,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="236"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Stäng flik</translation>
     </message>
 </context>
 <context>
@@ -5613,17 +5629,17 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="61"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="65"/>
         <source>Copy Link Location</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera länkens adress</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Välj allt</translation>
     </message>
 </context>
 <context>
@@ -5631,7 +5647,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation>Redigera verktygsfältet</translation>
+        <translation>Redigera verktygsraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="22"/>
@@ -5641,7 +5657,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="45"/>
         <source>Entries</source>
-        <translation type="unfinished"/>
+        <translation>Element</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="106"/>
@@ -5651,28 +5667,28 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="116"/>
         <source>Edit…</source>
-        <translation>Redigera...</translation>
+        <translation>Redigera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="125"/>
         <source>Current entries:</source>
-        <translation type="unfinished"/>
+        <translation>Nuvarande element:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="230"/>
         <source>Available entries:</source>
-        <translation type="unfinished"/>
+        <translation>Tillgängliga element:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="237"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="247"/>
         <source>Filter…</source>
-        <translation>Filter...</translation>
+        <translation>Filter…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="283"/>
         <source>Bookmarks folder:</source>
-        <translation type="unfinished"/>
+        <translation>Mapp för bokmärken:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="327"/>
@@ -5687,7 +5703,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="348"/>
         <source>Visibility in full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Synlighet i helskärmsläget:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="361"/>
@@ -5713,7 +5729,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="400"/>
         <source>Maximum size of item:</source>
-        <translation type="unfinished"/>
+        <translation>Max storlek för element:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="410"/>
@@ -5723,22 +5739,22 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="425"/>
         <source>Display toggle button</source>
-        <translation type="unfinished"/>
+        <translation>Visa knapp för omkoppling</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="47"/>
         <source>Bookmarks Bar</source>
-        <translation type="unfinished"/>
+        <translation>Bokmärkesrad</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="51"/>
         <source>Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Sidorad</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="55"/>
         <source>Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Verktygsrad</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="66"/>
@@ -5756,37 +5772,37 @@ Address: %2</source>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="75"/>
         <source>Visible only when needed</source>
-        <translation type="unfinished"/>
+        <translation>Endast synlig vid behov</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="76"/>
         <source>Visible only when cursor is close to screen edge</source>
-        <translation type="unfinished"/>
+        <translation>Endast synlig när muspekaren är nära till skärmkanten</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="81"/>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Respektera stilen</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="82"/>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Enbart ikoner</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="83"/>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Enbart text</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="84"/>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Text bredvid ikon</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="85"/>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Text under ikon</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="315"/>
@@ -5812,32 +5828,32 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="350"/>
         <source>Option:</source>
-        <translation type="unfinished"/>
+        <translation>Alternativ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="353"/>
         <source>Global</source>
-        <translation type="unfinished"/>
+        <translation>Globalt</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="353"/>
         <source>Tab</source>
-        <translation type="unfinished"/>
+        <translation>Flik</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="356"/>
         <source>Scope:</source>
-        <translation type="unfinished"/>
+        <translation>Räckvidd:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="368"/>
         <source>Blocked Elements: {amount}</source>
-        <translation type="unfinished"/>
+        <translation>Blockerade element: {antal}</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="373"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Meny</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="382"/>
@@ -5848,37 +5864,37 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="402"/>
         <source>Icon:</source>
-        <translation type="unfinished"/>
+        <translation>Ikon:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="403"/>
         <source>Text:</source>
-        <translation type="unfinished"/>
+        <translation>Text:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="412"/>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Redigera element</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="492"/>
         <source>--- separator ---</source>
-        <translation type="unfinished"/>
+        <translation>--- separerare ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="496"/>
         <source>--- spacer ---</source>
-        <translation type="unfinished"/>
+        <translation>--- platshållare ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="500"/>
         <source>Arbitrary List of Actions</source>
-        <translation type="unfinished"/>
+        <translation>Slumpmässig lista av händelser</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="507"/>
         <source>List of Closed Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Lista av stängda flikar och fönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="511"/>
@@ -5888,17 +5904,17 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="517"/>
         <source>Configuration Widget (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurations-komponent (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="521"/>
         <source>Configuration Widget</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurations-komponent</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="526"/>
         <source>Content Blocking Details</source>
-        <translation type="unfinished"/>
+        <translation>Detaljer för innehållsblockering</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="530"/>
@@ -5913,37 +5929,37 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="538"/>
         <source>Sidebar Panel Chooser</source>
-        <translation type="unfinished"/>
+        <translation>Sidoradens panelurval</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="542"/>
         <source>Progress Information (Document Progress)</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsinformation (dokumentets förlopp)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="546"/>
         <source>Progress Information (Total Progress)</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsinformation (totala förloppet)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="550"/>
         <source>Progress Information (Loaded Elements)</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsinformation (hämtade element)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="554"/>
         <source>Progress Information (Loading Speed)</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsinformation (laddningshastighet)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="558"/>
         <source>Progress Information (Elapsed Time)</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsinformation (förfluten tid)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="562"/>
         <source>Progress Information (Status Message)</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsinformation (statusmeddelande)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="570"/>
@@ -5958,17 +5974,17 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="584"/>
         <source>Status Message Field</source>
-        <translation type="unfinished"/>
+        <translation>Statusmeddelandets fält</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="588"/>
         <source>Tab Bar</source>
-        <translation>Tabbfält</translation>
+        <translation>Flikrad</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="592"/>
         <source>Zoom Slider</source>
-        <translation type="unfinished"/>
+        <translation>Zoomningsregel</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="611"/>
@@ -5979,7 +5995,7 @@ Address: %2</source>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="620"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="636"/>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt element</translation>
     </message>
 </context>
 <context>
@@ -5988,17 +6004,17 @@ Address: %2</source>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="227"/>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="721"/>
         <source>Toggle Visibility</source>
-        <translation type="unfinished"/>
+        <translation>Koppla om synlighet</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="447"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>Växla flikar med mushjulet</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="451"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Visa minibilder i flikar</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="473"/>
@@ -6018,22 +6034,22 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="853"/>
         <source>Configure…</source>
-        <translation>Ställ in...</translation>
+        <translation>Ställ in…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="855"/>
         <source>Reset to Defaults…</source>
-        <translation>Återställ till Standarder...</translation>
+        <translation>Återställ till Standarder…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="872"/>
         <source>Remove…</source>
-        <translation>Ta bort...</translation>
+        <translation>Ta bort…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="876"/>
         <source>Toolbars</source>
-        <translation>Verktygsfält</translation>
+        <translation>Verktygsrader</translation>
     </message>
 </context>
 <context>
@@ -6041,32 +6057,32 @@ Address: %2</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="280"/>
         <source>Reset Toolbar</source>
-        <translation>Återställ verktygsfält</translation>
+        <translation>Återställ verktygsrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="280"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen återställa denna verktygsraden till den förvalda konfigurationen?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="299"/>
         <source>Remove Toolbar</source>
-        <translation>Ta bort verktygsfält</translation>
+        <translation>Ta bort verktygsrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="299"/>
         <source>Do you really want to remove this toolbar?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen ta bort denna verktygsraden?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="313"/>
         <source>Reset Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Återställ verktygsrader</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="313"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen återställa alla verktygsrader till den förvalda konfigurationen?</translation>
     </message>
 </context>
 <context>
@@ -6144,7 +6160,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>Kom ihåg urvalet för denna filtyp</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
@@ -6169,7 +6185,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (%2% downloaded)</source>
-        <translation>%1 (%2% nerladdat)</translation>
+        <translation>%1 (%2% hämtat)</translation>
     </message>
 </context>
 <context>
@@ -6177,7 +6193,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="31"/>
         <source>Quick Download…</source>
-        <translation>Snabb nerladdning...</translation>
+        <translation>Snabb nerladdning…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="114"/>
@@ -6197,7 +6213,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="144"/>
         <source>Downloaded:</source>
-        <translation>Nerladdat:</translation>
+        <translation>Hämtat:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="151"/>
@@ -6215,7 +6231,7 @@ Vill du skriva över den?
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="194"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="407"/>
         <source>Redownload</source>
-        <translation>Ladda ner igen</translation>
+        <translation>Hämta om</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="69"/>
@@ -6250,7 +6266,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="69"/>
         <source>Finished</source>
-        <translation type="unfinished"/>
+        <translation>Slutfört</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="163"/>
@@ -6272,13 +6288,9 @@ Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
         <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Källa: %1
-
 Mål: %2
-
 Storlek: %3
-
-Nerladdad: %4
-
+Hämtat: %4
 Framgång: %5&lt;/div&gt;</translation>
     </message>
     <message>
@@ -6320,12 +6332,12 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="425"/>
         <source>Clear Finished Transfers</source>
-        <translation>Rensa bort färdiga överföringar</translation>
+        <translation>Rensa bort slutförda överföringar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="555"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Överföringar</translation>
     </message>
 </context>
 <context>
@@ -6367,12 +6379,12 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation>Sök efter uppdateringar...</translation>
+        <translation>Sök efter uppdateringar…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
         <source>Checking for updates…</source>
-        <translation>Söker efter uppdateringar...</translation>
+        <translation>Söker efter uppdateringar…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="93"/>
@@ -6387,12 +6399,12 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="103"/>
         <source>Details…</source>
-        <translation>Detaljer...</translation>
+        <translation>Detaljer…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Download</source>
-        <translation>Ladda ner</translation>
+        <translation>Hämta</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="119"/>
@@ -6402,12 +6414,12 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="129"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Några av uppdateringarna innehåller inte paket för din plattform. Försök att kolla senare för nya uppdateringar eller besök detaljsidan för mera information.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
         <source>Downloading:</source>
-        <translation>Laddar ner:</translation>
+        <translation>Hämtar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="188"/>
@@ -6434,7 +6446,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Se felkonsolen för mera information.</translation>
     </message>
 </context>
 <context>
@@ -6442,47 +6454,47 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Titel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="29"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Värde:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="47"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Förhandsgranska</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="52"/>
         <source>Add User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till användaragent</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="52"/>
         <source>Edit User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Redigera användaragent</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="105"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Platshållare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="106"/>
         <source>Platform</source>
-        <translation type="unfinished"/>
+        <translation>Plattform</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="107"/>
         <source>Engine Version</source>
-        <translation type="unfinished"/>
+        <translation>Motorens version</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="108"/>
         <source>Aplication Version</source>
-        <translation type="unfinished"/>
+        <translation>Applikationens version</translation>
     </message>
 </context>
 <context>
@@ -6490,42 +6502,42 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="540"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>Återställ alternativ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="888"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="888"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Denna fliken har kraschat.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="888"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du hämta om den?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="889"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Visa inte detta meddelande igen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1115"/>
         <source>Select User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Visa användaragent</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1115"/>
         <source>Enter User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Slå in användaragent:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1224"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Startsida</translation>
     </message>
 </context>
 <context>
@@ -6553,47 +6565,47 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="518"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="518"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation type="unfinished"/>
+        <translation>Webbplatsen vill stänga denna fliken. Vill du tillåta det?</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="519"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Visa inte detta meddelande igen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="801"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Inga sökmotorer är fastställda</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="949"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation>Öppna bilden i en ny flik (Utan namn)</translation>
+        <translation>Öppna bilden i ny flik (Utan namn)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="949"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild i ny flik (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="955"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild i ny bakgrundsflik (utan titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="955"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild i ny bakgrundsflik (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1318"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 minut</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1319"/>
@@ -6623,12 +6635,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1324"/>
         <source>Custom…</source>
-        <translation>Anpassad...</translation>
+        <translation>Anpassad…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1326"/>
         <source>Page Default</source>
-        <translation type="unfinished"/>
+        <translation>Sidans förval</translation>
     </message>
 </context>
 <context>
@@ -6651,7 +6663,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="83"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Kodning:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="90"/>
@@ -6661,7 +6673,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="97"/>
         <source>Elements:</source>
-        <translation type="unfinished"/>
+        <translation>Element:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="104"/>
@@ -6676,7 +6688,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="137"/>
         <source>Permissions</source>
-        <translation type="unfinished"/>
+        <translation>Rättigheter</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
@@ -6687,17 +6699,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
-        <translation>Detaljer...</translation>
+        <translation>Detaljer…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Ställ in kakor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Ställ in kakor från tredjepart:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
@@ -6707,7 +6719,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation type="unfinished"/>
+        <translation>Åtkomst till din ort:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
@@ -6717,7 +6729,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation>Ladda bilder:</translation>
+        <translation>Hämta bilder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
@@ -6727,12 +6739,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
         <source>Show pop-up windows:</source>
-        <translation>Visa pop-up-fönster:</translation>
+        <translation>Visa extrafönster:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
         <source>Enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Byt till helskärmsläge:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
@@ -6747,27 +6759,27 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="316"/>
         <source>Issued to:</source>
-        <translation type="unfinished"/>
+        <translation>Utfärdat till:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="323"/>
         <source>Issued by:</source>
-        <translation type="unfinished"/>
+        <translation>Utfärdat av:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="330"/>
         <source>Issued on:</source>
-        <translation type="unfinished"/>
+        <translation>Utfärdat den:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="337"/>
         <source>Expires on:</source>
-        <translation type="unfinished"/>
+        <translation>Giltigt till:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="350"/>
         <source>Cipher</source>
-        <translation type="unfinished"/>
+        <translation>Kodningsmetod</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="357"/>
@@ -6782,12 +6794,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="371"/>
         <source>Encryption method:</source>
-        <translation type="unfinished"/>
+        <translation>Kodningsmetod:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="378"/>
         <source>Key exchange method:</source>
-        <translation type="unfinished"/>
+        <translation>Metod för nyckelutbyte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
@@ -6802,28 +6814,28 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="47"/>
         <source>This website was marked as fraud.</source>
-        <translation>Den här hemsidan markerades som en bluff.</translation>
+        <translation>Den här webbplatsen markerades som en bluff.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="52"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="62"/>
         <source>Your connection with this website is not private.</source>
-        <translation>Din anslutning med den här hemsidan är inte privat.</translation>
+        <translation>Din anslutning med den här webbplatsen är inte privat.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="57"/>
         <source>Your connection with this website is private.</source>
-        <translation>Din anslutning till den här hemsidan är privat.</translation>
+        <translation>Din anslutning till den här webbplatsen är privat.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="67"/>
         <source>You are viewing content from your local filesystem.</source>
-        <translation type="unfinished"/>
+        <translation>Du betraktar innehåll av dit lokala filsystem.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="72"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation type="unfinished"/>
+        <translation>Du betraktar en säker sida av Otter Browser.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="77"/>
@@ -6838,7 +6850,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n blockerad)</numerusform><numerusform>%1 (%n blockerade)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
@@ -6885,14 +6897,14 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
         <source>Only cached</source>
-        <translation type="unfinished"/>
+        <translation>Endast cachade</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Fråga alltid</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
@@ -6925,12 +6937,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="14"/>
         <source>Website Preferences</source>
-        <translation>Egenskaper för hemsida</translation>
+        <translation>Egenskaper för webbplats</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="25"/>
         <source>Website:</source>
-        <translation>Hemsida:</translation>
+        <translation>Webbplats:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="44"/>
@@ -6944,7 +6956,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="644"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="708"/>
         <source>Override</source>
-        <translation type="unfinished"/>
+        <translation>Skriv över</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="73"/>
@@ -6954,22 +6966,22 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="90"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Kodning:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="110"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Användars-stilmall:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="153"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>Bilder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="170"/>
         <source>Pop-ups:</source>
-        <translation>Pop-uprutor:</translation>
+        <translation>Extrafönster:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
@@ -6989,12 +7001,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="269"/>
         <source>Enable cookies</source>
-        <translation>Aktivera cookies</translation>
+        <translation>Aktivera kakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="294"/>
         <source>Accept cookies:</source>
-        <translation>Acceptera cookies</translation>
+        <translation>Ta emot kakor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="303"/>
@@ -7004,12 +7016,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="337"/>
         <source>Add…</source>
-        <translation>Lägg till...</translation>
+        <translation>Lägg till…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="347"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Egenskaper…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="357"/>
@@ -7019,22 +7031,22 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="399"/>
         <source>Accept third-party cookies:</source>
-        <translation>Acceptera tredjepartscookies:</translation>
+        <translation>Ta emot kakor från tredjepart:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="438"/>
         <source>Scripting</source>
-        <translation type="unfinished"/>
+        <translation>Skripter</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="458"/>
         <source>Allow to receive right mouse button clicks</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt att ta emot högra musknappens klickar</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
         <source>Allow changing of status field</source>
-        <translation>Tillåt ändring av statusfältet</translation>
+        <translation>Tillåt ändring av statusraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="499"/>
@@ -7044,7 +7056,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="512"/>
         <source>Allow script to hide address bar</source>
-        <translation>Tillåt skriptet att gömma adressfältet</translation>
+        <translation>Tillåt skriptet att gömma adressraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="519"/>
@@ -7064,7 +7076,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="597"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt at byta till helskärmsläge:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="608"/>
@@ -7074,12 +7086,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="637"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Sänd referensinformation</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="651"/>
         <source>Proxy:</source>
-        <translation type="unfinished"/>
+        <translation>Proxy:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="661"/>
@@ -7094,12 +7106,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="715"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Profiler</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="745"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera anpassade regler</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
@@ -7131,17 +7143,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
         <source>All images</source>
-        <translation type="unfinished"/>
+        <translation>Alla bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
         <source>Cached images</source>
-        <translation type="unfinished"/>
+        <translation>Cachade bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>No images</source>
-        <translation type="unfinished"/>
+        <translation>Inga bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
@@ -7186,7 +7198,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Informera hemsidor inte om vad jag föredrar</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
@@ -7222,12 +7234,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="114"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="114"/>
         <source>Path</source>
-        <translation>Genväg</translation>
+        <translation>Sökväg</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="114"/>
@@ -7242,12 +7254,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="287"/>
         <source>this session only</source>
-        <translation type="unfinished"/>
+        <translation>enbart denna sessionen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="389"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>Stilmallar (*.css)</translation>
     </message>
 </context>
 <context>
@@ -7273,7 +7285,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="325"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Du är på väg att öppna %n bokmärke(n)</numerusform><numerusform>Du är på väg att öppna %n bokmärke(n)</numerusform></translation>
+        <translation><numerusform>Du är på väg att öppna %n bokmärke(n).</numerusform><numerusform>Du är på väg att öppna %n bokmärke(n).</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="326"/>
@@ -7298,22 +7310,22 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="76"/>
         <source>New tab</source>
-        <translation type="unfinished"/>
+        <translation>Ny flik</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="77"/>
         <source>New private tab</source>
-        <translation type="unfinished"/>
+        <translation>Ny privat flik</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="78"/>
         <source>New window</source>
-        <translation type="unfinished"/>
+        <translation>Nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="79"/>
         <source>New private window</source>
-        <translation type="unfinished"/>
+        <translation>Nytt privat fönster</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="175"/>
@@ -7323,18 +7335,18 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="202"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att köra kommandot &quot;%1&quot; (argument: &quot;%2&quot;)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="289"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ingen giltig ändelse för den givna MIME-typen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="356"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="406"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ladda en giltig applikations-sökväg för MIME-typen %1: %2</translation>
     </message>
 </context>
 <context>
@@ -7348,7 +7360,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="660"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Verktygsrader</translation>
     </message>
 </context>
 <context>
@@ -7375,22 +7387,22 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="917"/>
         <source>Connection refused to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Anslutningen till värden %1 avvisades</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="921"/>
         <source>Connection timed out to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Tidsgränsen för värden %1 nåddes</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1027"/>
         <source>Connected to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Ansluten till värden %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1246"/>
         <source>Connection refused for data connection</source>
-        <translation type="unfinished"/>
+        <translation>Anslutning avvisades för dataanslutning</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1422"/>
@@ -7415,13 +7427,15 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2345"/>
         <source>Listing directory failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Listkatalog misslyckades:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2349"/>
         <source>Changing directory failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att byta katalog:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2353"/>
@@ -7455,7 +7469,8 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2369"/>
         <source>Removing directory failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ta bort katalog:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2397"/>
@@ -7468,12 +7483,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>New Tab</source>
-        <translation>Ny fli</translation>
+        <translation>Ny flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>New Private Tab</source>
-        <translation>Ny privat fli</translation>
+        <translation>Ny privat flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="342"/>
@@ -7488,12 +7503,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Open…</source>
-        <translation>Öppna...</translation>
+        <translation>Öppna…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Save…</source>
-        <translation>Spara...</translation>
+        <translation>Spara…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="346"/>
@@ -7509,7 +7524,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>Koppla av flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="349"/>
@@ -7544,38 +7559,38 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Stay on Top</source>
-        <translation type="unfinished"/>
+        <translation>Stanna längst upp</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Clear Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Rensa flik-historik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Remove Local Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort lokal flik-historik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Purge Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Töm flik-historik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Remove Local and Global Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort lokal och global flik-historik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <location filename="../../src/ui/WebWidget.cpp" line="455"/>
         <source>Mute Tab Media</source>
-        <translation type="unfinished"/>
+        <translation>Stum flik media</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>Låt flik vila</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="357"/>
@@ -7585,27 +7600,27 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Stäng andra flikar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Close All Private Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Stäng alla privata flikar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Close All Private Tabs in Current Window</source>
-        <translation type="unfinished"/>
+        <translation>Stäng alla privata flikar i detta fönstret</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Close Private Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Stäng alla privata flikar och fönster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna nyligen stängd flik igen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
@@ -7630,7 +7645,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Kakel</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>
@@ -7640,12 +7655,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Manage Sessions…</source>
-        <translation>Hantera sessioner...</translation>
+        <translation>Hantera sessioner…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Save Current Session…</source>
-        <translation>Spara nuvarande session...</translation>
+        <translation>Spara nuvarande session…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
@@ -7667,55 +7682,55 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
         <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Open in New Tab</source>
-        <translation>Öppna i en ny flik</translation>
+        <translation>Öppna i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Open in New Background Tab</source>
-        <translation>Öppna i en ny bakgrundsflik</translation>
+        <translation>Öppna i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Open in New Window</source>
-        <translation>Öppna i ett nytt fönster</translation>
+        <translation>Öppna i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Open in New Background Window</source>
-        <translation>Öppna i ett nytt bakgrundfönster</translation>
+        <translation>Öppna i nytt bakgrundfönster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Open in New Private Tab</source>
-        <translation>Öppna i en ny privat flik</translation>
+        <translation>Öppna i ny privat flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Open in New Private Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna i ny privat bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Open in New Private Window</source>
-        <translation>Öppna i ett nytt privat fönster</translation>
+        <translation>Öppna i nytt privat fönster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Open in New Private Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Öppna i nytt privat bakgrundsfönster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open with…</source>
-        <translation>Öppna med...</translation>
+        <translation>Öppna med…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open Link with External Application</source>
-        <translation>Öppna länken med en extern applikation</translation>
+        <translation>Öppna länken med extern applikation</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="382"/>
@@ -7726,12 +7741,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
         <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <location filename="../../src/ui/WebWidget.cpp" line="886"/>
         <source>Bookmark Link…</source>
-        <translation>Bokmärk länk...</translation>
+        <translation>Bokmärkeslänk…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Save Link Target As…</source>
-        <translation>Spara länkmålet som...</translation>
+        <translation>Spara länkmålet som…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="385"/>
@@ -7751,55 +7766,55 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Open Frame in New Tab</source>
-        <translation>Öppna ramen i en ny flik</translation>
+        <translation>Öppna ramen i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna ram i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Open Frame with External Application</source>
-        <translation type="unfinished"/>
+        <translation>Öppna ram med extern applikation</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera ramens länk till klippbordet</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Reload</source>
-        <translation>Ladda om</translation>
+        <translation>Hämta om</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Reload Frame</source>
-        <translation>Ladda om ram</translation>
+        <translation>Hämta om ram</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>View Frame Source</source>
-        <translation type="unfinished"/>
+        <translation>Visa ramens källa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <location filename="../../src/ui/WebWidget.cpp" line="955"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild i ny bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Save Image…</source>
-        <translation>Spara bild...</translation>
+        <translation>Spara bild…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
@@ -7814,17 +7829,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Reload Image</source>
-        <translation>Ladda om bild</translation>
+        <translation>Hämta om bild</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Image Properties…</source>
-        <translation>Bildegenskaper...</translation>
+        <translation>Bildegenskaper…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Save Media…</source>
-        <translation>Spara media...</translation>
+        <translation>Spara media…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="402"/>
@@ -7839,7 +7854,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Ögla</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
@@ -7856,12 +7871,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Log In</source>
-        <translation type="unfinished"/>
+        <translation>Logga in</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Go</source>
-        <translation type="unfinished"/>
+        <translation>Kör</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="409"/>
@@ -7886,17 +7901,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Go to Parent Directory</source>
-        <translation type="unfinished"/>
+        <translation>Gå upp en nivå</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>Spola bakåt</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>Spola framåt</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="416"/>
@@ -7906,37 +7921,37 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Stop Scheduled Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>Stoppa köad omhämting av sidan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>Stoppa alla sidor</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Reload or Stop</source>
-        <translation type="unfinished"/>
+        <translation>Hämta om eller stopp</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Reload and Bypass Cache</source>
-        <translation type="unfinished"/>
+        <translation>Hämta om och ignorera cachen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Reload All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Hämta om alla flikar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Reload Every</source>
-        <translation type="unfinished"/>
+        <translation>Hämta om alla</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Show Context Menu</source>
-        <translation type="unfinished"/>
+        <translation>Visa snabbmeny</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="425"/>
@@ -7961,7 +7976,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera som text</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -7981,12 +7996,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Klistra in och kör</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Insert Note</source>
-        <translation type="unfinished"/>
+        <translation>Klistra in anteckning</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
@@ -8001,7 +8016,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Deselect</source>
-        <translation type="unfinished"/>
+        <translation>Upphäv</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8011,7 +8026,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Kontrollera rättstavning</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
@@ -8021,7 +8036,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Find…</source>
-        <translation>Hitta...</translation>
+        <translation>Hitta…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="442"/>
@@ -8036,7 +8051,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Snabbsök</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="445"/>
@@ -8047,12 +8062,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="446"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Sök med</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="447"/>
         <source>Create Search…</source>
-        <translation>Skapa sökning...</translation>
+        <translation>Skapa sökning…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="448"/>
@@ -8067,7 +8082,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Originalstorlek</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="451"/>
@@ -8092,32 +8107,32 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="455"/>
         <source>Page Left</source>
-        <translation type="unfinished"/>
+        <translation>Sida vänster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Page Right</source>
-        <translation type="unfinished"/>
+        <translation>Sida höger</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera rullning med vänster musknapp</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera rullning med mellersta musknappen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Exit Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Lämna rullningsläget</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="460"/>
         <source>Print…</source>
-        <translation>Skriv ut...</translation>
+        <translation>Skriv ut…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="461"/>
@@ -8142,12 +8157,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="465"/>
         <source>Go to Previously Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Gå till den senast använda fliken</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="466"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Gå till den minst nyss använda fliken</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="467"/>
@@ -8172,7 +8187,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="471"/>
         <source>Bookmark Page…</source>
-        <translation>Bokmärk sidan...</translation>
+        <translation>Bokmärk sidan…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="472"/>
@@ -8187,17 +8202,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="474"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Snabb bokmärkestillgång</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="475"/>
         <source>Cookies</source>
-        <translation>Cookies</translation>
+        <translation>Kakor</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="476"/>
         <source>Load Plugins</source>
-        <translation>Ladda insticksprogram</translation>
+        <translation>Hämta insticksprogram</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="477"/>
@@ -8207,7 +8222,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="478"/>
         <source>Enable Referrer</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera referensinformationer</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="479"/>
@@ -8217,7 +8232,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open Current Page with External Application</source>
-        <translation type="unfinished"/>
+        <translation>Öppna nuvarande sidan med extern applikation</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="481"/>
@@ -8232,7 +8247,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="483"/>
         <source>Inspect Element…</source>
-        <translation type="unfinished"/>
+        <translation>Granska element…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="484"/>
@@ -8248,17 +8263,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Show Tab Switcher</source>
-        <translation type="unfinished"/>
+        <translation>Visa flikbytare</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="487"/>
         <source>Show Menubar</source>
-        <translation>Visa menyfält</translation>
+        <translation>Visa menyrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="488"/>
         <source>Show Tabbar</source>
-        <translation>Visa flikfält</translation>
+        <translation>Visa flikrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="489"/>
@@ -8273,17 +8288,17 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="491"/>
         <source>Lock Toolbars</source>
-        <translation>Lås verktygsfält</translation>
+        <translation>Lås verktygsrader</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="492"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Återställ till Standarder…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="492"/>
         <source>Reset Toolbars to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Återställ verktygsrader till Standarder…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="493"/>
@@ -8298,7 +8313,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="495"/>
         <source>Content Blocking…</source>
-        <translation>Innehållsblockering...</translation>
+        <translation>Innehållsblockering…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="496"/>
@@ -8308,24 +8323,24 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="497"/>
         <source>Clear History…</source>
-        <translation>Rensa historik...</translation>
+        <translation>Rensa historik…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Tillägg</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="499"/>
         <location filename="../../src/ui/Menu.cpp" line="68"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
-        <translation>Noteringar</translation>
+        <translation>Anteckningar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="500"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="501"/>
@@ -8336,92 +8351,92 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="502"/>
         <source>Preferences…</source>
-        <translation>Egenskaper...</translation>
+        <translation>Egenskaper…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="503"/>
         <source>Website Preferences…</source>
-        <translation>Egenskaper för hemsida...</translation>
+        <translation>Egenskaper för webbplats…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="504"/>
         <source>Quick Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Snabbinställningar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>Återställ alternativ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Website Information…</source>
-        <translation type="unfinished"/>
+        <translation>Information om webbplatsen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
         <source>Website Certificate Information…</source>
-        <translation type="unfinished"/>
+        <translation>Information om webbplatsens certifikat…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="508"/>
         <source>Switch Application Language…</source>
-        <translation type="unfinished"/>
+        <translation>Byt applikationens språk…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="509"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Sök efter uppdateringar…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="510"/>
         <source>Diagnostic Report…</source>
-        <translation type="unfinished"/>
+        <translation>Diagnostisk rapport…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="511"/>
         <source>About Otter…</source>
-        <translation type="unfinished"/>
+        <translation>Om Otter…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="512"/>
         <source>About Qt…</source>
-        <translation type="unfinished"/>
+        <translation>Om Qt…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="513"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Menu Bar</source>
-        <translation>Menyfält</translation>
+        <translation>Menyrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
         <source>Tab Bar</source>
-        <translation>Tabbfält</translation>
+        <translation>Flikrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Navigation Bar</source>
-        <translation type="unfinished"/>
+        <translation>Navigeringsrad</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="50"/>
         <source>Progress Bar</source>
-        <translation type="unfinished"/>
+        <translation>Förloppsindikator</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="51"/>
         <source>Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Sidorad</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="52"/>
         <source>Status Bar</source>
-        <translation type="unfinished"/>
+        <translation>Statusrad</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="330"/>
@@ -8431,12 +8446,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="470"/>
         <source>Remove Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort kaka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="337"/>
         <source>Copy address of source page</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera källsidans adress</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="51"/>
@@ -8498,12 +8513,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/Menu.cpp" line="90"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Teckenkondning</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="100"/>
         <source>Closed Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Stängda flikar och fönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
@@ -8513,27 +8528,27 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/Menu.cpp" line="123"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importera bokmärken för Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="127"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importera HTML-bokmärken…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importera anteckningar för Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="139"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Importera sökmotorer för Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="145"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Importera session för Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="152"/>
@@ -8553,7 +8568,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/Menu.cpp" line="175"/>
         <source>Toolbars</source>
-        <translation>Verktygsfält</translation>
+        <translation>Verktygsrader</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="181"/>
@@ -8568,47 +8583,47 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/Menu.cpp" line="405"/>
         <source>Keep Cookie Until</source>
-        <translation type="unfinished"/>
+        <translation>Behåll kaka tills</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="409"/>
         <source>Accept Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Ta emot kakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="413"/>
         <source>Accept Third-party Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Ta emot kakor från tredjepart</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="421"/>
         <source>Geolocation</source>
-        <translation type="unfinished"/>
+        <translation>Geografisk platsinformation</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="425"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>Bilder</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="429"/>
         <source>Capture Audio</source>
-        <translation type="unfinished"/>
+        <translation>Teckna upp ljud</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="433"/>
         <source>Capture Video</source>
-        <translation type="unfinished"/>
+        <translation>Teckna upp video</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="437"/>
         <source>Playback Audio</source>
-        <translation type="unfinished"/>
+        <translation>Spela upp ljud</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="441"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Aviseringar</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="445"/>
@@ -8618,155 +8633,155 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/Menu.cpp" line="449"/>
         <source>Pointer Lock</source>
-        <translation type="unfinished"/>
+        <translation>Spärr för muspekare</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="453"/>
         <source>Closing Windows by JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Stäng fönster genom JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="457"/>
         <source>Pop-Ups</source>
-        <translation type="unfinished"/>
+        <translation>Extrafönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="503"/>
         <location filename="../../src/ui/Menu.cpp" line="650"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Öppna alla</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="515"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>Denna mappen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="541"/>
         <location filename="../../src/ui/Menu.cpp" line="944"/>
         <location filename="../../src/ui/Menu.cpp" line="1085"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Utan titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="614"/>
         <source>Ask What to Do</source>
-        <translation type="unfinished"/>
+        <translation>Fråga vad som ska göras</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="618"/>
         <source>Always Allow</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt alltid</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="622"/>
         <source>Always Deny</source>
-        <translation type="unfinished"/>
+        <translation>Neka alltid</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="626"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Upphör att gälla</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="630"/>
         <source>Current Sessions is Closed</source>
-        <translation type="unfinished"/>
+        <translation>Den nuvarande sessionen är stängd</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="634"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Alltid</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="638"/>
         <source>Only Existing</source>
-        <translation type="unfinished"/>
+        <translation>Endast existerande</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="642"/>
         <source>Only Read Existing</source>
-        <translation type="unfinished"/>
+        <translation>Läs endast existerande</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="646"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Ignorera</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="654"/>
         <source>Open in Background</source>
-        <translation type="unfinished"/>
+        <translation>Öppna alla i bakgrunden</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="658"/>
         <source>Block All</source>
-        <translation type="unfinished"/>
+        <translation>Blockera alla</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="662"/>
         <source>Only Cached</source>
-        <translation type="unfinished"/>
+        <translation>Endast cachade</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="666"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>Aktiverad</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="670"/>
         <source>On Demand</source>
-        <translation type="unfinished"/>
+        <translation>Vid begäran</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="674"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>Inaktiverad</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="695"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Upptäck automatiskt</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="751"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Rensa</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="894"/>
         <source>Default Style</source>
-        <translation type="unfinished"/>
+        <translation>Standardstil</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="960"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till ny</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="963"/>
         <source>Add Toolbar…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till verktygsrad…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="966"/>
         <source>Add Bookmarks Bar…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till bokmärkesrad…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="969"/>
         <source>Add Sidebar…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till sidorad…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1042"/>
         <source>Custom User Agent…</source>
-        <translation type="unfinished"/>
+        <translation>Anpassad användaragent…</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="674"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Lossa fliken</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
@@ -8776,57 +8791,57 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="455"/>
         <source>Unmute Tab Media</source>
-        <translation type="unfinished"/>
+        <translation>Sätt på ljud ur flikens media</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="653"/>
         <source>Edit Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Redigera Bokmärke…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="653"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till bokmärke…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="886"/>
         <source>Edit Link Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Redigera länk-bokmärke…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="949"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="994"/>
         <source>Save Video…</source>
-        <translation type="unfinished"/>
+        <translation>Spara video…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="994"/>
         <source>Save Audio…</source>
-        <translation type="unfinished"/>
+        <translation>Spara ljud…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1000"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera videons länk till klippbordet</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1000"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera ljudets länk till klippbordet</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1018"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Paus</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1025"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Sätt på ljud</translation>
     </message>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="506"/>
@@ -8839,47 +8854,47 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Tillägg</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bokmärken</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Cache</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Avancerad konfiguration</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Kakor</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historik</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Anteckningar</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="90"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Överföringar</translation>
     </message>
 </context>
 <context>
@@ -8887,120 +8902,122 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="148"/>
         <source>Failed to find User Script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att hitta användars-skriptfilen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="116"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>Webbadress att öppnas</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Använder &lt;sökväg&gt; som katalog för cachen</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="118"/>
         <source>Uses &lt;path&gt; as profile directory</source>
-        <translation type="unfinished"/>
+        <translation>Använder &lt;sökväg&gt; som profil-katalog</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation type="unfinished"/>
+        <translation>Återupptar sessionen &lt;session&gt; falls den existerar</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Starts private session</source>
-        <translation type="unfinished"/>
+        <translation>Startar privat session</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="121"/>
         <source>Forces session chooser dialog</source>
-        <translation type="unfinished"/>
+        <translation>Visar dialogen som väljer session</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="122"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation type="unfinished"/>
+        <translation>Ställer in profil- och cache-sökvägarna som kataloger inom samma katalog där applikationens körbara fil befinner sig</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="123"/>
         <source>Loads URL in new tab</source>
-        <translation type="unfinished"/>
+        <translation>Hämtar webbadress i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="124"/>
         <source>Loads URL in new private tab</source>
-        <translation type="unfinished"/>
+        <translation>Hämtar webbadress i ny privat flik</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="125"/>
         <source>Loads URL in new window</source>
-        <translation type="unfinished"/>
+        <translation>Hämtar webbadress i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="126"/>
         <source>Loads URL in new private window</source>
-        <translation type="unfinished"/>
+        <translation>Hämtar webbadress i nytt privat fönster</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="127"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>Användingen ska undvikas att skriva data till disk</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="128"/>
         <source>Prints out diagnostic report and exits application</source>
-        <translation type="unfinished"/>
+        <translation>Sriver ut en diagnostisk rapport och avslutar applikationen</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="100"/>
         <source>Failed to open content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att öppna profilfil för innehållsblockering: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="109"/>
         <source>Failed to load content blocking profile file: invalid header</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ladda profilfil för innehållsblockering: ogiltigt huvud</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="591"/>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="615"/>
         <source>Failed to update content blocking profile: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att uppdatera profilen för innehållsblockering: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="603"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att uppdatera profilen för innehållsblockering: kontrollsumman stämmer inte överens</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="808"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att uppdatera profilen för innehållsblockering, webbadressen är tom</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="812"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att uppdatera profilen för innehållsblockering, webbadressen (%1) är ogiltig</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="415"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att tolka element av proxyns automatiska konfiguration (PAC): %1</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="131"/>
         <source>Failed to install update
 Updater: %1
 Script: %2</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att installera uppdatering
+Programm: %1
+Skript: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Startsida</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="90"/>
@@ -9010,43 +9027,44 @@ Script: %2</source>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Det var inte möjligt att kolla för uppdateringar. Ogiltig webbadress: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Det var inte möjligt att kolla för uppdateringar: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="96"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>Det var inte möjligt att tolka versionsnummret: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Updater.cpp" line="84"/>
         <source>Downloaded update script is not valid: %1</source>
-        <translation type="unfinished"/>
+        <translation>Uppdaterings-skriptet som hämtades är inte giltigt: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Det var inte möjligt att hämta uppdateringen: %1
+Fel: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="61"/>
         <source>Failed to open User Script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att öppna användars-skriptfilen: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="134"/>
         <source>Invalid match rule for User Script: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig regel om överensstämmelse för användarsskriptet: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="180"/>
         <source>Failed to locate header of User Script file</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att hitta huvudet av användars-skriptfilen</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="171"/>
@@ -9056,33 +9074,34 @@ Error: %2</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="658"/>
         <source>Request blocked with rule: %1</source>
-        <translation type="unfinished"/>
+        <translation>Förfrågan blockerad med regeln: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="501"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att köra filbindelse-förvaltningen, felkod: %1
+Applikations-ID: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="520"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att köra filbindelse-förvaltningen, felkod: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="575"/>
         <source>Failed to register application to system registry: %1, %2</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att registrera applikationen i system-registret: %1, %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="76"/>
         <source>Failed to load custom rules: invalid adblock header</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att ladda anpassade regler: ogiltigt huvud för reklamblockeringen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="312"/>
         <source>Failed to create a file with custom rules: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades med att skapa en fil med anpassade regler: %1</translation>
     </message>
 </context>
 <context>
@@ -9090,12 +9109,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="41"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Alternativ</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="42"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Sessioner</translation>
     </message>
 </context>
 <context>
@@ -9108,7 +9127,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>File transfer was completed</source>
-        <translation type="unfinished"/>
+        <translation>Överföringen slutfördes</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="90"/>
@@ -9118,7 +9137,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="90"/>
         <source>Update is available to be downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Uppdateringen är tillgänglig för hämtning</translation>
     </message>
 </context>
 <context>
@@ -9126,18 +9145,18 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="190"/>
         <source>No Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Ingen proxy</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="191"/>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="616"/>
         <source>System Configuration</source>
-        <translation type="unfinished"/>
+        <translation>System-konfiguration</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="80"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Utan titel)</translation>
     </message>
 </context>
 <context>
@@ -9146,42 +9165,42 @@ Application ID: %2</source>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="192"/>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="646"/>
         <source>Default User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Standard-användaragent</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="193"/>
         <source>Mask as Google Chrome 50 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ge ut för Google Chrome 50 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="194"/>
         <source>Mask as Mozilla Firefox 45 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ge ut för Mozilla Firefox 45 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="195"/>
         <source>Mask as Microsoft Edge 25 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ge ut för Microsoft Edge 25 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="196"/>
         <source>Mask as Internet Explorer 10.0 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ge ut för Internet Explorer 10.0 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="197"/>
         <source>Mask as Opera 12.16 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ge ut för Opera 12.16 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="198"/>
         <source>Mask as Safari 9.0 (macOS)</source>
-        <translation type="unfinished"/>
+        <translation>Ge ut för Safari 9.0 (macOS)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="94"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Utan titel)</translation>
     </message>
 </context>
 <context>
@@ -9191,82 +9210,82 @@ Application ID: %2</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="59"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="798"/>
         <source>Try Again</source>
-        <translation type="unfinished"/>
+        <translation>Försök igen</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="178"/>
         <source>The owner of &lt;strong&gt;%1&lt;/strong&gt; has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation type="unfinished"/>
+        <translation>Ägaren av &lt;strong&gt;%1&lt;/strong&gt; har konfigurerat servern felaktigt. Anslutningen till denna webbplatsen avbröts för att skydda dinna informationer mot missbruk.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="182"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation type="unfinished"/>
+        <translation>Du försökte att nå adressen &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, som för närvarande inte är tillgänglig. Se upp med att webbadressen är rätt stavad och försök sedan att hämta om sidan.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="186"/>
         <source>Check the file name for capitalization or other typing errors.</source>
-        <translation type="unfinished"/>
+        <translation>Pröva stavningen av filnamnet (storbokstäver eller andra fel).</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="186"/>
         <source>Check to see if the file was moved, renamed or deleted.</source>
-        <translation type="unfinished"/>
+        <translation>Pröva om filen flyttades, bytte namn eller togs bort.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="190"/>
         <source>Check the address for typing errors.</source>
-        <translation type="unfinished"/>
+        <translation>Pröva adressen på stavningsfel.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="190"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
-        <translation type="unfinished"/>
+        <translation>Pröva att din nätverksanslutning är aktiv. Kolla om andra applikationer, som arbetar med samma anslutning, fungerar.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="190"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation type="unfinished"/>
+        <translation>Pröva att inga brandväggs- eller säkerhetsinställningar stör Otters verksamhet.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="190"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation type="unfinished"/>
+        <translation>Försök att inaktivera proxy-servrar genom att trycka F12-tangenten, om inte du är säker att en proxy behövs, och hämta sedan om sidan.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="199"/>
         <source>Connection is insecure</source>
-        <translation type="unfinished"/>
+        <translation>Anslutningen är osäker</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="203"/>
         <source>Connection refused</source>
-        <translation type="unfinished"/>
+        <translation>Anslutningen avvisades</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="207"/>
         <source>File not found</source>
-        <translation type="unfinished"/>
+        <translation>Filen hittades inte</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="211"/>
         <source>Server not found</source>
-        <translation type="unfinished"/>
+        <translation>Servern hittades inte</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="215"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Nätverksfel</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="229"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="256"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Avancerat</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="421"/>
@@ -9274,54 +9293,54 @@ Application ID: %2</source>
         <location filename="../../src/core/Utils.cpp" line="467"/>
         <location filename="../../src/core/Utils.cpp" line="537"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Alla filer (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="471"/>
         <source>Open Files</source>
-        <translation type="unfinished"/>
+        <translation>Öppna filer</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="475"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Öppna fil</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="533"/>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 filer (*.%2)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="543"/>
         <source>Save File</source>
-        <translation type="unfinished"/>
+        <translation>Spara fil</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="565"/>
         <location filename="../../src/core/Utils.cpp" line="574"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="565"/>
         <source>This path is already used by different download, pick another one.</source>
-        <translation type="unfinished"/>
+        <translation>Denna sökvägen används redan av en annan överföring. Välj en annan.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="574"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Målsökvägen är inte skrivbar. Välj en annan.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="782"/>
         <source>Go Back</source>
-        <translation type="unfinished"/>
+        <translation>Gå bakåt</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="787"/>
         <source>Load Insecure Page</source>
-        <translation type="unfinished"/>
+        <translation>Hämta osäker sida</translation>
     </message>
 </context>
 </TS>
