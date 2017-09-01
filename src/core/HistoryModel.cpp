@@ -72,7 +72,7 @@ HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *paren
 	{
 		const QJsonObject entryObject(historyArray.at(i).toObject());
 
-		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), QLatin1String("yyyy-MM-dd hh:mm:ss")));
+		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
 	}
 
 	setSortRole(TimeVisitedRole);
@@ -281,7 +281,7 @@ bool HistoryModel::save(const QString &path) const
 			QJsonObject entryObject;
 			entryObject.insert(QLatin1String("url"), entry->data(UrlRole).toUrl().toString());
 			entryObject.insert(QLatin1String("title"), entry->data(TitleRole).toString());
-			entryObject.insert(QLatin1String("time"), entry->data(TimeVisitedRole).toDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss")));
+			entryObject.insert(QLatin1String("time"), entry->data(TimeVisitedRole).toDateTime().toString(Qt::ISODate));
 
 			historyArray.prepend(entryObject);
 		}
