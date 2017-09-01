@@ -108,9 +108,9 @@ public:
     static bool equal(const QUrlInfo &i1, const QUrlInfo &i2,
                        int sortBy);
 
-    bool operator==(const QUrlInfo &i) const;
-    inline bool operator!=(const QUrlInfo &i) const
-    { return !operator==(i); }
+    bool operator==(const QUrlInfo &other) const;
+    inline bool operator!=(const QUrlInfo &other) const
+    { return !operator==(other); }
 
 private:
     QUrlInfoPrivate *d;

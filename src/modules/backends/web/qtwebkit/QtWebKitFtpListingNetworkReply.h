@@ -46,7 +46,7 @@ public slots:
 
 protected slots:
 	void processCommand(int command, bool isError);
-	void addEntry(const QUrlInfo &urlInfo);
+	void addEntry(const QUrlInfo &entry);
 	void processData();
 
 private:

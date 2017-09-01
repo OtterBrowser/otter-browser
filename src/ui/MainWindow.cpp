@@ -619,7 +619,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			{
-				BookmarksItem *parent(parameters.contains(QLatin1String("folder")) ? BookmarksManager::getBookmark(parameters[QLatin1String("folder")].toULongLong()) : nullptr);
 				const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(this));
 
 				if (mainWindowItem)
@@ -630,7 +629,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
 						{
-							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, windowItem->getActiveWindow()->getUrl(), windowItem->getActiveWindow()->getTitle(), parent);
+							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, windowItem->getActiveWindow()->getUrl(), windowItem->getActiveWindow()->getTitle(), (parameters.contains(QLatin1String("folder")) ? BookmarksManager::getBookmark(parameters[QLatin1String("folder")].toULongLong()) : nullptr));
 						}
 					}
 				}

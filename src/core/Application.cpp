@@ -870,7 +870,6 @@ void Application::handleNewConnection()
 
 	socket->waitForReadyRead(1000);
 
-	const MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
 	QString data;
 	QTextStream stream(socket);
 	stream >> data;
@@ -890,6 +889,8 @@ void Application::handleNewConnection()
 
 	if (session.isEmpty())
 	{
+		const MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
+
 		if (!window || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->isPrivate()))
 		{
 			QVariantMap parameters;

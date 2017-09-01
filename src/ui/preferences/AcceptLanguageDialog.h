@@ -46,7 +46,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	void addLanguage(const QString &languageCode);
+	void addLanguage(const QString &language);
 
 protected slots:
 	void addLanguage();
