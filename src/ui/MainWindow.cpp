@@ -437,10 +437,12 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::GoToHomePageAction:
 			{
 				const QString homePage(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
+				QVariantMap mutableParameters(parameters);
+				mutableParameters[QLatin1String("url")] = QUrl(homePage);
 
 				if (!homePage.isEmpty())
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(homePage)}});
+					triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
 				}
 			}
 
