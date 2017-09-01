@@ -348,6 +348,12 @@
 				]
 			},
 			{
+				"action": "WebsitePreferences",
+				"shortcuts": [
+					"Alt+F12"
+				]
+			},
+			{
 				"action": "QuickPreferences",
 				"shortcuts": [
 					"F12"
