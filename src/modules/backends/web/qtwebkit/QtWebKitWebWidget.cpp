@@ -2476,7 +2476,7 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
+		const QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{
@@ -2504,7 +2504,7 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
+		const QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{
