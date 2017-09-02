@@ -24,7 +24,6 @@
 
 #include "../../../core/PasswordsManager.h"
 #include "../../../ui/ContentsWidget.h"
-#include "../../../ui/WebWidget.h"
 
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
@@ -39,7 +38,6 @@ class ProgressBarWidget;
 class SearchBarWidget;
 class StartPageWidget;
 class WebsiteInformationDialog;
-class WebWidget;
 
 class WebContentsWidget final : public ContentsWidget
 {
