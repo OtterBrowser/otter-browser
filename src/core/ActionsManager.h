@@ -358,7 +358,7 @@ private:
 class ActionExecutor
 {
 public:
-	class Object
+	class Object final
 	{
 	public:
 		explicit Object();
