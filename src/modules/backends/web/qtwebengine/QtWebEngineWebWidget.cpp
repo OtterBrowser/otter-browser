@@ -593,11 +593,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ImagePropertiesAction:
 			if (m_hitResult.imageUrl.scheme() == QLatin1String("data"))
 			{
-				QVariantMap properties;
-				properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
-				properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
-
-				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
+				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, {{QLatin1String("alternativeText"), m_hitResult.alternateText}, {QLatin1String("longDescription"), m_hitResult.longDescription}}, nullptr, this));
 				imagePropertiesDialog->setButtonsVisible(false);
 
 				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
@@ -611,9 +607,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			{
 				m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()), [&](const QVariant &result)
 				{
-					QVariantMap properties;
-					properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
-					properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
+					QVariantMap properties({{QLatin1String("alternativeText"), m_hitResult.alternateText}, {QLatin1String("longDescription"), m_hitResult.longDescription}});
 
 					if (result.isValid())
 					{
