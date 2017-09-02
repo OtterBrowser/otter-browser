@@ -1212,10 +1212,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::ImagePropertiesAction:
 			{
-				QVariantMap properties;
-				properties[QLatin1String("alternativeText")] = getCurrentHitTestResult().alternateText;
-				properties[QLatin1String("longDescription")] = getCurrentHitTestResult().longDescription;
-
+				QVariantMap properties({{QLatin1String("alternativeText"), getCurrentHitTestResult().alternateText}, {QLatin1String("longDescription"), getCurrentHitTestResult().longDescription}});
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
 
 				if (!hitResult.pixmap().isNull())
@@ -1789,24 +1786,16 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		QVariantMap position;
-		position[QLatin1String("x")] = history.entries.at(i).position.x();
-		position[QLatin1String("y")] = history.entries.at(i).position.y();
-
 		QVariantMap entry;
 		entry[QLatin1String("pageScaleFactor")] = 0;
 		entry[QLatin1String("title")] = history.entries.at(i).title;
 		entry[QLatin1String("urlString")] = QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded());
-		entry[QLatin1String("scrollPosition")] = position;
+		entry[QLatin1String("scrollPosition")] = QVariantMap({{QLatin1String("x"), history.entries.at(i).position.x()}, {QLatin1String("y"), history.entries.at(i).position.y()}});
 
 		entries.append(entry);
 	}
 
-	QVariantMap map;
-	map[QLatin1String("currentItemIndex")] = index;
-	map[QLatin1String("history")] = entries;
-
-	m_page->history()->loadFromMap(map);
+	m_page->history()->loadFromMap({{QLatin1String("currentItemIndex"), index}, {QLatin1String("history"), entries}});
 #endif
 
 	for (int i = 0; i < history.entries.count(); ++i)
