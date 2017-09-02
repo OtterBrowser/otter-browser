@@ -1737,7 +1737,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 {
-	QWebElementCollection styleSheets(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
+	const QWebElementCollection styleSheets(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
 
 	for (int i = 0; i < styleSheets.count(); ++i)
 	{
