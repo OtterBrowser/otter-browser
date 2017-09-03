@@ -608,7 +608,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::LockToolBarsAction:
-			ToolBarsManager::setToolBarsLocked(parameters.value(QLatin1String("isChecked"), !m_instance->getActionState(identifier, parameters).isChecked).toBool());
+			SettingsManager::setOption(SettingsManager::Interface_LockToolBarsOption, parameters.value(QLatin1String("isChecked"), !m_instance->getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
 		case ActionsManager::ResetToolBarsAction:

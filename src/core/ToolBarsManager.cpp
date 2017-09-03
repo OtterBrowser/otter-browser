@@ -413,13 +413,6 @@ void ToolBarsManager::scheduleSave()
 	}
 }
 
-void ToolBarsManager::setToolBarsLocked(bool locked)
-{
-	SettingsManager::setOption(SettingsManager::Interface_LockToolBarsOption, locked);
-
-	emit m_instance->toolBarsLockedChanged(locked);
-}
-
 ToolBarsManager* ToolBarsManager::getInstance()
 {
 	return m_instance;

@@ -105,7 +105,6 @@ public:
 	static void createInstance();
 	static void resetToolBars();
 	static void setToolBar(ToolBarsManager::ToolBarDefinition definition);
-	static void setToolBarsLocked(bool locked);
 	static ToolBarsManager* getInstance();
 	static QString getToolBarName(int identifier);
 	static QVector<ToolBarsManager::ToolBarDefinition> getToolBarDefinitions(Qt::ToolBarAreas areas = Qt::AllToolBarAreas);
