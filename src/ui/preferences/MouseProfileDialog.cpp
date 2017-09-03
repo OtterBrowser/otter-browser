@@ -125,6 +125,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 
 		QList<QStandardItem*> items({item, new QStandardItem(), new QStandardItem()});
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		gesturesModel->appendRow(items);
 	}
