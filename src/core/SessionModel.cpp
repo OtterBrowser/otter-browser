@@ -227,10 +227,9 @@ QVariant WindowSessionItem::data(int role) const
 	return SessionItem::data(role);
 }
 
-SessionModel::SessionModel(const QString &path, QObject *parent) : QStandardItemModel(parent),
+SessionModel::SessionModel(QObject *parent) : QStandardItemModel(parent),
 	m_rootItem(new SessionItem()),
-	m_trashItem(new SessionItem()),
-	m_path(path)
+	m_trashItem(new SessionItem())
 {
 	m_rootItem->setData(SessionEntity, TypeRole);
 	m_rootItem->setData(tr("Session"), TitleRole);

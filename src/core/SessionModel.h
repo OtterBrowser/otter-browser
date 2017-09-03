@@ -109,7 +109,7 @@ public:
 		IsTrashedRole
 	};
 
-	explicit SessionModel(const QString &path, QObject *parent);
+	explicit SessionModel(QObject *parent);
 
 	SessionItem* getRootItem() const;
 	SessionItem* getTrashItem() const;
@@ -122,7 +122,6 @@ protected slots:
 private:
 	SessionItem *m_rootItem;
 	SessionItem *m_trashItem;
-	QString m_path;
 	QMap<MainWindow*, MainWindowSessionItem*> m_mainWindowItems;
 };
 

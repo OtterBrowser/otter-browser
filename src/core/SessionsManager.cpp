@@ -134,7 +134,7 @@ SessionModel* SessionsManager::getModel()
 {
 	if (!m_model)
 	{
-		m_model = new SessionModel(SessionsManager::getSessionPath(getCurrentSession()), m_instance);
+		m_model = new SessionModel(m_instance);
 	}
 
 	return m_model;
