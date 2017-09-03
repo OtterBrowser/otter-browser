@@ -360,6 +360,7 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
 		QStringList toolBars;
+		toolBars.reserve(m_definitions.count());
 
 		for (int i = 0; i < OtherToolBar; ++i)
 		{
