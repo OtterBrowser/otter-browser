@@ -191,6 +191,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->actionsViewWidget->setItemDelegateForColumn(0, new KeyboardActionDelegate(this));
 	m_ui->actionsViewWidget->setItemDelegateForColumn(2, new KeyboardShortcutDelegate(this));
+	m_ui->actionsViewWidget->setModified(m_profile.isModified());
 	m_ui->titleLineEdit->setText(m_profile.getTitle());
 	m_ui->descriptionLineEdit->setText(m_profile.getDescription());
 	m_ui->versionLineEdit->setText(m_profile.getVersion());
