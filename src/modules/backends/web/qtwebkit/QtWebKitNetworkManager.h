@@ -63,7 +63,7 @@ protected:
 	void setFormRequest(const QUrl &url);
 	void setMainRequest(const QUrl &url);
 	void setWidget(QtWebKitWebWidget *widget);
-	QtWebKitNetworkManager *clone() const;
+	QtWebKitNetworkManager* clone() const;
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
 	QString getUserAgent() const;
 	QVariant getOption(int identifier, const QUrl &url) const;
