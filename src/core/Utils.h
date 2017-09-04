@@ -50,6 +50,7 @@ struct ErrorPageInformation
 	enum ErrorType
 	{
 		OtherError = 0,
+		BlockedContentError,
 		ConnectionInsecureError,
 		ConnectionRefusedError,
 		FileNotFoundError,

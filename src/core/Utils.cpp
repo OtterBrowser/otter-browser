@@ -179,26 +179,33 @@ QString createErrorPage(const ErrorPageInformation &information)
 	QString introduction;
 	QStringList hints;
 
-	if (information.type == ErrorPageInformation::ConnectionInsecureError)
+	switch (information.type)
 	{
-		introduction = QCoreApplication::translate("utils", "The owner of <strong>%1</strong> has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
-	}
-	else if (information.type == ErrorPageInformation::FraudAttemptError)
-	{
-		introduction = QCoreApplication::translate("utils", "This web page at <strong>%1</strong> has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
-	}
-	else
-	{
-		introduction = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(information.url.toDisplayString());
+		case ErrorPageInformation::BlockedContentError:
+			introduction = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which was blocked by content blocker.").arg(information.url.toDisplayString());
 
-		if (information.url.isLocalFile())
-		{
-			hints = QStringList({QCoreApplication::translate("utils", "Check the file name for capitalization or other typing errors."), QCoreApplication::translate("utils", "Check to see if the file was moved, renamed or deleted.")});
-		}
-		else
-		{
-			hints = QStringList({QCoreApplication::translate("utils", "Check the address for typing errors."), QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
-		}
+			break;
+		case ErrorPageInformation::ConnectionInsecureError:
+			introduction = QCoreApplication::translate("utils", "The owner of <strong>%1</strong> has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
+
+			break;
+		case ErrorPageInformation::FraudAttemptError:
+			introduction = QCoreApplication::translate("utils", "This web page at <strong>%1</strong> has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
+
+			break;
+		default:
+			introduction = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(information.url.toDisplayString());
+
+			if (information.url.isLocalFile())
+			{
+				hints = QStringList({QCoreApplication::translate("utils", "Check the file name for capitalization or other typing errors."), QCoreApplication::translate("utils", "Check to see if the file was moved, renamed or deleted.")});
+			}
+			else
+			{
+				hints = QStringList({QCoreApplication::translate("utils", "Check the address for typing errors."), QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
+			}
+
+			break;
 	}
 
 	if (title.isEmpty())
