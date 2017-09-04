@@ -212,6 +212,10 @@ QString createErrorPage(const ErrorPageInformation &information)
 	{
 		switch (information.type)
 		{
+			case ErrorPageInformation::BlockedContentError:
+				title = QCoreApplication::translate("utils", "Address blocked");
+
+				break;
 			case ErrorPageInformation::ConnectionInsecureError:
 				title = QCoreApplication::translate("utils", "Connection is insecure");
 
