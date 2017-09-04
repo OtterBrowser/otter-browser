@@ -172,6 +172,7 @@ public:
 		Search_DefaultQuickSearchEngineOption,
 		Search_DefaultSearchEngineOption,
 		Search_EnableFindInPageAsYouTypeOption,
+		Search_EnableFindInPageHighlightAllOption,
 		Search_ReuseLastQuickFindQueryOption,
 		Search_SearchEnginesOrderOption,
 		Search_SearchEnginesSuggestionsOption,

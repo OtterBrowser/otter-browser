@@ -33,6 +33,7 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent),
 	m_ui->setupUi(this);
 	m_ui->nextButton->setIcon(ThemesManager::createIcon(QLatin1String("go-down")));
 	m_ui->previousButton->setIcon(ThemesManager::createIcon(QLatin1String("go-up")));
+	m_ui->highlightButton->setChecked(SettingsManager::getOption(SettingsManager::Search_EnableFindInPageHighlightAllOption).toBool());
 	m_ui->closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 
 	connect(m_ui->queryLineEdit, SIGNAL(textEdited(QString)), this, SIGNAL(queryChanged()));
@@ -87,7 +88,14 @@ void SearchBarWidget::notifyRequestedSearch()
 
 void SearchBarWidget::notifyFlagsChanged()
 {
-	emit flagsChanged(getFlags());
+	const WebWidget::FindFlags flags(getFlags());
+
+	if (flags.testFlag(WebWidget::HighlightAllFind) != SettingsManager::getOption(SettingsManager::Search_EnableFindInPageHighlightAllOption).toBool())
+	{
+		SettingsManager::setOption(SettingsManager::Search_EnableFindInPageHighlightAllOption, flags.testFlag(WebWidget::HighlightAllFind));
+	}
+
+	emit flagsChanged(flags);
 }
 
 void SearchBarWidget::selectAll()
