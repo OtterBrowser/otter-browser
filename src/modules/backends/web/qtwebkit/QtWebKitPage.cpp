@@ -817,7 +817,28 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		}
 		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
 		{
-			information.type = ErrorPageInformation::UnsupportedAddressTypeError;
+			const QVector<NetworkManager::ResourceInformation> blockeckedRequests(m_networkManager->getBlockedRequests());
+			bool isBlockedContent(false);
+
+			for (int i = 0; i < blockeckedRequests.count(); ++i)
+			{
+				if (blockeckedRequests.at(i).resourceType == NetworkManager::MainFrameType && blockeckedRequests.at(i).url == url)
+				{
+					isBlockedContent = true;
+
+					break;
+				}
+			}
+
+			if (isBlockedContent)
+			{
+				information.description.clear();
+				information.type = ErrorPageInformation::BlockedContentError;
+			}
+			else
+			{
+				information.type = ErrorPageInformation::UnsupportedAddressTypeError;
+			}
 		}
 		else if (errorOption->domain == QWebPage::WebKit)
 		{
@@ -842,7 +863,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 
 			information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
 		}
-		else
+		else if (information.type != ErrorPageInformation::BlockedContentError)
 		{
 			ErrorPageInformation::PageAction reloadAction;
 			reloadAction.name = QLatin1String("reloadPage");
