@@ -98,7 +98,8 @@ public:
 		NoFlagsFind = 0,
 		BackwardFind = 1,
 		CaseSensitiveFind = 2,
-		HighlightAllFind = 4
+		ExactMatchFind = 4,
+		HighlightAllFind = 8
 	};
 
 	Q_DECLARE_FLAGS(FindFlags, FindFlag)
