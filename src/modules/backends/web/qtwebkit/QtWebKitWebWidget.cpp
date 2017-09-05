@@ -2603,6 +2603,11 @@ bool QtWebKitWebWidget::canFastForward() const
 	return m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(false)).toBool();
 }
 
+bool QtWebKitWebWidget::canInspect() const
+{
+	return true;
+}
+
 bool QtWebKitWebWidget::canRedo() const
 {
 	return m_page->undoStack()->canRedo();

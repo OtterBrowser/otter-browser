@@ -1067,6 +1067,11 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::InspectPageAction:
 			state.isChecked = isInspecting();
+			state.isEnabled = canInspect();
+
+			break;
+		case ActionsManager::InspectElementAction:
+			state.isEnabled = canInspect();
 
 			break;
 		case ActionsManager::WebsitePreferencesAction:
@@ -1270,6 +1275,11 @@ bool WebWidget::canGoForward() const
 }
 
 bool WebWidget::canFastForward() const
+{
+	return false;
+}
+
+bool WebWidget::canInspect() const
 {
 	return false;
 }

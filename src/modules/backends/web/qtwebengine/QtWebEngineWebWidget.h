@@ -52,7 +52,6 @@ public:
 	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
-	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	QHash<QByteArray, QByteArray> getHeaders() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;

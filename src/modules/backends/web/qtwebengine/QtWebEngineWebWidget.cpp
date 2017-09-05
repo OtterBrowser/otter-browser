@@ -1561,27 +1561,6 @@ QPoint QtWebEngineWebWidget::getScrollPosition() const
 #endif
 }
 
-ActionsManager::ActionDefinition::State QtWebEngineWebWidget::getActionState(int identifier, const QVariantMap &parameters) const
-{
-	switch (identifier)
-	{
-		case ActionsManager::InspectPageAction:
-		case ActionsManager::InspectElementAction:
-			{
-				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
-				state.isEnabled = false;
-
-				return state;
-			}
-
-			break;
-		default:
-			break;
-	}
-
-	return WebWidget::getActionState(identifier, parameters);
-}
-
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
 	const QWebEngineHistory *history(m_page->history());

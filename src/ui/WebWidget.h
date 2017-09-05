@@ -286,6 +286,7 @@ protected:
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
 	virtual bool canFastForward() const;
+	virtual bool canInspect() const;
 	virtual bool canRedo() const;
 	virtual bool canUndo() const;
 	virtual bool canShowContextMenu(const QPoint &position) const;
