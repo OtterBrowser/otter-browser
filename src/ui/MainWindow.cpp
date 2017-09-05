@@ -572,7 +572,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ReopenTabAction:
-			restore();
+			restore(parameters.value(QLatin1String("index"), 0).toInt());
 
 			return;
 		case ActionsManager::StopAllAction:
@@ -2046,7 +2046,16 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::ReopenTabAction:
-			state.isEnabled = !m_closedWindows.isEmpty();
+			if (!m_closedWindows.isEmpty() && parameters.contains(QLatin1String("index")))
+			{
+				const int index(parameters[QLatin1String("index")].toInt());
+
+				state.isEnabled = (index >= 0 && index < m_closedWindows.count());
+			}
+			else
+			{
+				state.isEnabled = !m_closedWindows.isEmpty();
+			}
 
 			break;
 		case ActionsManager::MaximizeAllAction:
