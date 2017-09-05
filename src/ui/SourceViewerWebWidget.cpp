@@ -491,7 +491,7 @@ ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(in
 			break;
 		default:
 			{
-				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 				state.isEnabled = false;
 
 				return state;

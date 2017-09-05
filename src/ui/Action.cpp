@@ -173,7 +173,7 @@ void Action::updateState()
 	}
 	else if (definition.isValid())
 	{
-		state = definition.defaultState;
+		state = definition.getDefaultState();
 		state.isEnabled = false;
 	}
 

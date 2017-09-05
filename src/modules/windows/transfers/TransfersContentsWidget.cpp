@@ -583,7 +583,7 @@ ActionsManager::ActionDefinition::State TransfersContentsWidget::getActionState(
 		case ActionsManager::DeleteAction:
 			{
 				const Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
-				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 				state.isEnabled = (transfer != nullptr);
 
 				return state;

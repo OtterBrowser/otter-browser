@@ -2014,7 +2014,7 @@ QUrl MainWindow::getUrl() const
 ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifier, const QVariantMap &parameters) const
 {
 	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
-	ActionsManager::ActionDefinition::State state(definition.defaultState);
+	ActionsManager::ActionDefinition::State state(definition.getDefaultState());
 
 	switch (definition.scope)
 	{
@@ -2032,7 +2032,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 		case ActionsManager::ActionDefinition::ApplicationScope:
 			return Application::getInstance()->getActionState(identifier, parameters);
 		default:
-			return definition.defaultState;
+			return definition.getDefaultState();
 	}
 
 	switch (identifier)

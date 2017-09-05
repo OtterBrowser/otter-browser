@@ -380,7 +380,7 @@ QIcon PasswordsContentsWidget::getIcon() const
 
 ActionsManager::ActionDefinition::State PasswordsContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 
 	switch (identifier)
 	{

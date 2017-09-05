@@ -1338,14 +1338,14 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 				return m_activeWindow->getActionState(identifier, parameters);
 			}
 
-			return definition.defaultState;
+			return definition.getDefaultState();
 		case ActionsManager::ActionDefinition::ApplicationScope:
 			break;
 		default:
-			return definition.defaultState;
+			return definition.getDefaultState();
 	}
 
-	ActionsManager::ActionDefinition::State state(definition.defaultState);
+	ActionsManager::ActionDefinition::State state(definition.getDefaultState());
 
 	switch (identifier)
 	{

@@ -800,7 +800,7 @@ QRect WebWidget::getProgressBarGeometry() const
 
 ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 
 	switch (identifier)
 	{

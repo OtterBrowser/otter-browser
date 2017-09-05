@@ -547,7 +547,7 @@ ActionsManager::ActionDefinition::State CacheContentsWidget::getActionState(int 
 {
 	if (identifier == ActionsManager::DeleteAction)
 	{
-		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 		state.isEnabled = m_ui->deleteButton->isEnabled();
 
 		return state;

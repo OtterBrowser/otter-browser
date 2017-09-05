@@ -1568,7 +1568,7 @@ ActionsManager::ActionDefinition::State QtWebEngineWebWidget::getActionState(int
 		case ActionsManager::InspectPageAction:
 		case ActionsManager::InspectElementAction:
 			{
-				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 				state.isEnabled = false;
 
 				return state;

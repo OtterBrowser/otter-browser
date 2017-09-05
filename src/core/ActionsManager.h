@@ -316,6 +316,14 @@ public:
 			return QCoreApplication::translate("actions", ((preferDescription && !description.isEmpty()) ? description : defaultState.text).toUtf8().constData());
 		}
 
+		State getDefaultState() const
+		{
+			State state(defaultState);
+			state.text = getText(false);
+
+			return state;
+		}
+
 		bool isValid() const
 		{
 			return (identifier >= 0);

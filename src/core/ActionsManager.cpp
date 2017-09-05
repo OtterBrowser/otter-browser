@@ -751,7 +751,7 @@ ActionsManager::ActionDefinition::State ActionExecutor::Object::getActionState(i
 		return m_executor->getActionState(identifier, parameters);
 	}
 
-	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 	state.isEnabled = false;
 
 	return state;

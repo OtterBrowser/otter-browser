@@ -795,7 +795,7 @@ QDateTime Window::getLastActivity() const
 
 ActionsManager::ActionDefinition::State Window::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 
 	switch (identifier)
 	{

@@ -381,7 +381,7 @@ ActionsManager::ActionDefinition::State ContentsWidget::getActionState(int ident
 {
 	Q_UNUSED(parameters)
 
-	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).defaultState);
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 	state.isEnabled = false;
 
 	return state;
