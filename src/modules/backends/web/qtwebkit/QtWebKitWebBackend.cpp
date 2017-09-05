@@ -267,7 +267,7 @@ QString QtWebKitWebBackend::getActiveDictionary()
 
 WebBackend::BackendCapabilities QtWebKitWebBackend::getCapabilities() const
 {
-	return (CacheManagementCapability | CookiesManagementCapability | PasswordsManagementCapability | PluginsOnDemandCapability | UserScriptsCapability | UserStyleSheetsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability | TabCookiesPolicyCapability | TabContentFilteringCapability | TabDoNotTrackCapability | TabProxyCapability | TabReferrerCapability | TabUserAgentCapability);
+	return (CacheManagementCapability | CookiesManagementCapability | PasswordsManagementCapability | PluginsOnDemandCapability | UserScriptsCapability | UserStyleSheetsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability | TabCookiesPolicyCapability | TabContentFilteringCapability | TabDoNotTrackCapability | TabProxyCapability | TabReferrerCapability | TabUserAgentCapability | FindInPageHighlightAllCapability);
 }
 
 int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier identifier)
