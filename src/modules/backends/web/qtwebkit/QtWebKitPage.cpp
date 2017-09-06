@@ -454,32 +454,6 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool isChecked)
 	QWebPage::triggerAction(action, isChecked);
 }
 
-QtWebKitFrame* QtWebKitPage::getMainFrame() const
-{
-	return m_mainFrame;
-}
-
-QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
-{
-	if (element.isNull())
-	{
-		element = mainFrame()->documentElement();
-	}
-
-	QFile file(QString(":/modules/backends/web/qtwebkit/resources/%1.js").arg(path));
-
-	if (file.open(QIODevice::ReadOnly))
-	{
-		const QVariant result(element.evaluateJavaScript(file.readAll()));
-
-		file.close();
-
-		return result;
-	}
-
-	return QVariant();
-}
-
 QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
@@ -524,6 +498,11 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	return QWebPage::createWindow(type);
 }
 
+QtWebKitFrame* QtWebKitPage::getMainFrame() const
+{
+	return m_mainFrame;
+}
+
 QString QtWebKitPage::chooseFile(QWebFrame *frame, const QString &suggestedFile)
 {
 	Q_UNUSED(frame)
@@ -544,6 +523,27 @@ QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
 QString QtWebKitPage::getDefaultUserAgent() const
 {
 	return QWebPage::userAgentForUrl(QUrl());
+}
+
+QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
+{
+	if (element.isNull())
+	{
+		element = mainFrame()->documentElement();
+	}
+
+	QFile file(QString(":/modules/backends/web/qtwebkit/resources/%1.js").arg(path));
+
+	if (file.open(QIODevice::ReadOnly))
+	{
+		const QVariant result(element.evaluateJavaScript(file.readAll()));
+
+		file.close();
+
+		return result;
+	}
+
+	return QVariant();
 }
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
