@@ -572,6 +572,10 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			}
 
 			return;
+		case ActionsManager::ReopenWindowAction:
+			SessionsManager::restoreClosedWindow(parameters.value(QLatin1String("index"), 0).toInt());
+
+			return;
 		case ActionsManager::SessionsAction:
 			{
 				SessionsManagerDialog dialog(m_activeWindow);
@@ -1349,6 +1353,22 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 
 	switch (identifier)
 	{
+		case ActionsManager::ReopenWindowAction:
+			if (!SessionsManager::getClosedWindows().isEmpty())
+			{
+				if (parameters.contains(QLatin1String("index")))
+				{
+					const int index(parameters[QLatin1String("index")].toInt());
+
+					state.isEnabled = (index >= 0 && index < SessionsManager::getClosedWindows().count());
+				}
+				else
+				{
+					state.isEnabled = true;
+				}
+			}
+
+			break;
 		case ActionsManager::WorkOfflineAction:
 			state.isChecked = SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool();
 

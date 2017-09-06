@@ -307,13 +307,14 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), ThemesManager::createIcon(QLatin1String("tab-close-other")), ActionDefinition::MainWindowScope);
 	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::NoFlags);
 	registerAction(ClosePrivateTabsPanicAction, QT_TRANSLATE_NOOP("actions", "Close Private Tabs and Windows"), QString(), QIcon(), ActionDefinition::ApplicationScope);
-	registerAction(ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope);
+	registerAction(ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::NoFlags);
 	registerAction(MaximizeAllAction, QT_TRANSLATE_NOOP("actions", "Maximize All"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(MinimizeAllAction, QT_TRANSLATE_NOOP("actions", "Minimize All"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(RestoreAllAction, QT_TRANSLATE_NOOP("actions", "Restore All"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(CascadeAllAction, QT_TRANSLATE_NOOP("actions", "Cascade"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(TileAllAction, QT_TRANSLATE_NOOP("actions", "Tile"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"), QString(), QIcon(), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
+	registerAction(ReopenWindowAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Window"), QString(), QIcon(), ActionDefinition::ApplicationScope, ActionDefinition::NoFlags);
 	registerAction(SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions…"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(SaveSessionAction, QT_TRANSLATE_NOOP("actions", "Save Current Session…"), QString(), QIcon(), ActionDefinition::ApplicationScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(OpenUrlAction, QT_TRANSLATE_NOOP("actions", "Open URL"), QString(), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::RequiresParameters);

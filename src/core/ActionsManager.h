@@ -113,6 +113,7 @@ public:
 		CascadeAllAction,
 		TileAllAction,
 		CloseWindowAction,
+		ReopenWindowAction,
 		SessionsAction,
 		SaveSessionAction,
 		OpenUrlAction,
