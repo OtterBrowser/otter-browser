@@ -2046,15 +2046,18 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::ReopenTabAction:
-			if (!m_closedWindows.isEmpty() && parameters.contains(QLatin1String("index")))
+			if (!m_closedWindows.isEmpty())
 			{
-				const int index(parameters[QLatin1String("index")].toInt());
+				if (parameters.contains(QLatin1String("index")))
+				{
+					const int index(parameters[QLatin1String("index")].toInt());
 
-				state.isEnabled = (index >= 0 && index < m_closedWindows.count());
-			}
-			else
-			{
-				state.isEnabled = !m_closedWindows.isEmpty();
+					state.isEnabled = (index >= 0 && index < m_closedWindows.count());
+				}
+				else
+				{
+					state.isEnabled = true;
+				}
 			}
 
 			break;
