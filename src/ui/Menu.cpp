@@ -838,7 +838,7 @@ void Menu::populateClosedWindowsMenu()
 	clear();
 
 	Action *clearAction(new Action(-1, {}, this));
-	clearAction->setData(0);
+	clearAction->setEnabled(false);
 	clearAction->setIcon(ThemesManager::createIcon(QLatin1String("edit-clear")));
 	clearAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Clear"));
 
@@ -849,25 +849,42 @@ void Menu::populateClosedWindowsMenu()
 
 	if (!windows.isEmpty())
 	{
+		ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
+
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), this), this, SLOT(restoreClosedWindow()))->setData(-(i + 1));
+			Action *action((i == 0) ? new Action(ActionsManager::ReopenWindowAction, {}, executor, this) : new Action(ActionsManager::ReopenWindowAction, {{QLatin1String("index"), i}}, executor, this));
+			action->setOverrideText(Utils::elideText(tr("Window - %1").arg(windows.at(i)), this));
+
+			addAction(action);
 		}
 
 		addSeparator();
+
+		clearAction->setEnabled(true);
 	}
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	if (mainWindow)
 	{
 		const QVector<ClosedWindow> tabs(mainWindow->getClosedWindows());
 
-		for (int i = 0; i < tabs.count(); ++i)
+		if (!tabs.isEmpty())
 		{
-			QAction *action(addAction((tabs.at(i).isPrivate ? ThemesManager::createIcon(QLatin1String("tab-private")) : tabs.at(i).icon), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this), this, SLOT(restoreClosedWindow())));
-			action->setData(i + 1);
-			action->setStatusTip(tabs.at(i).window.getUrl());
+			ActionExecutor::Object executor(mainWindow, mainWindow);
+
+			for (int i = 0; i < tabs.count(); ++i)
+			{
+				Action *action((i == 0) ? new Action(ActionsManager::ReopenTabAction, {}, executor, this) : new Action(ActionsManager::ReopenTabAction, {{QLatin1String("index"), i}}, executor, this));
+				action->setOverrideIcon(tabs.at(i).isPrivate ? ThemesManager::createIcon(QLatin1String("tab-private")) : tabs.at(i).icon);
+				action->setOverrideText(Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this));
+				action->setStatusTip(tabs.at(i).window.getUrl());
+
+				addAction(action);
+			}
+
+			clearAction->setEnabled(true);
 		}
 	}
 
@@ -1385,27 +1402,6 @@ void Menu::clearNotesMenu()
 
 	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateNotesMenu()));
 }
-
-void Menu::restoreClosedWindow()
-{
-	const QAction *action(qobject_cast<QAction*>(sender()));
-	const int index((action && action->data().type() == QVariant::Int) ? action->data().toInt() : 0);
-
-	if (index > 0)
-	{
-		MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-		if (mainWindow)
-		{
-			mainWindow->restore(index - 1);
-		}
-	}
-	else if (index < 0)
-	{
-		SessionsManager::restoreClosedWindow(-index - 1);
-	}
-}
-
 
 void Menu::openBookmark()
 {
