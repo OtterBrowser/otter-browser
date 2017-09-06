@@ -505,7 +505,18 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 
 	const bool hasBlockedDomains(!rule->blockedDomains.isEmpty());
 	const bool hasAllowedDomains(!rule->allowedDomains.isEmpty());
-	bool isBlocked(hasBlockedDomains ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : true);
+	bool isBlocked(true);
+
+	if (hasBlockedDomains)
+	{
+		isBlocked = resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains);
+
+		if (!isBlocked)
+		{
+			return ContentBlockingManager::CheckResult();
+		}
+	}
+
 	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
 
 	if (rule->ruleOptions.testFlag(ThirdPartyExceptionOption) || rule->ruleOptions.testFlag(ThirdPartyOption))
