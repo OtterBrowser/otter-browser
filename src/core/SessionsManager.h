@@ -168,7 +168,7 @@ public:
 	static QStringList getSessions();
 	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
 	static SessionsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
-	static bool restoreClosedWindow(int index = -1);
+	static bool restoreClosedWindow(int index = 0);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = nullptr, bool isPrivate = false);
 	static bool saveSession(const QString &path = {}, const QString &title = {}, MainWindow *window = nullptr, bool isClean = true);
 	static bool saveSession(const SessionInformation &session);

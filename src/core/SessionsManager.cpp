@@ -417,12 +417,12 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap
 
 bool SessionsManager::restoreClosedWindow(int index)
 {
-	if (index < 0)
+	if (index < 0 || index >= m_closedWindows.count())
 	{
-		index = 0;
+		return false;
 	}
 
-	Application::createWindow(QVariantMap(), m_closedWindows.value(index, SessionMainWindow()));
+	Application::createWindow(QVariantMap(), m_closedWindows[index]);
 
 	m_closedWindows.removeAt(index);
 
