@@ -29,8 +29,7 @@
 			{
 				"action": "NewWindowPrivate",
 				"shortcuts": [
-					"Ctrl+Alt+N",
-					"Ctrl+Shift+N"
+					"Ctrl+Alt+N"
 				]
 			},
 			{
@@ -62,6 +61,12 @@
 				"action": "ReopenTab",
 				"shortcuts": [
 					"Ctrl+Shift+T"
+				]
+			},
+			{
+				"action": "ReopenWindow",
+				"shortcuts": [
+					"Ctrl+Shift+N"
 				]
 			},
 			{
