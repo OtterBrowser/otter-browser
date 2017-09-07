@@ -24,6 +24,7 @@
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
@@ -831,13 +832,21 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 				{
 					isBlockedContent = true;
 
+					information.description.clear();
+
+					if (blockeckedRequests.at(i).metaData.contains(NetworkManager::ContentBlockingRuleMetaData))
+					{
+						const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
+
+						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)")).arg(QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
+					}
+
 					break;
 				}
 			}
 
 			if (isBlockedContent)
 			{
-				information.description.clear();
 				information.type = ErrorPageInformation::BlockedContentError;
 			}
 			else
