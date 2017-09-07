@@ -330,6 +330,11 @@ ContentBlockingProfile* ContentBlockingManager::getProfile(const QString &profil
 	return nullptr;
 }
 
+ContentBlockingProfile* ContentBlockingManager::getProfile(int identifier)
+{
+	return m_profiles.value(identifier, nullptr);
+}
+
 ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
 {
 	if (profiles.isEmpty())
@@ -350,7 +355,8 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	{
 		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
 		{
-			const CheckResult currentResult(m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType));
+			CheckResult currentResult(m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType));
+			currentResult.profile = profiles[i];
 
 			if (currentResult.isBlocked)
 			{

@@ -45,9 +45,9 @@ public:
 
 	struct CheckResult
 	{
-		QString profile;
 		QString rule;
 		CosmeticFiltersMode comesticFiltersMode = AllFiltersMode;
+		int profile = -1;
 		bool isBlocked = false;
 		bool isException = false;
 	};
@@ -58,6 +58,7 @@ public:
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentBlockingManager* getInstance();
 	static ContentBlockingProfile* getProfile(const QString &profile);
+	static ContentBlockingProfile* getProfile(int identifier);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	static QStringList createSubdomainList(const QString &domain);
 	static QStringList getStyleSheet(const QVector<int> &profiles);
