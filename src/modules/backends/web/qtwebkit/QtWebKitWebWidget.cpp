@@ -704,6 +704,7 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	updateOptions(url);
 
 	emit urlChanged(url);
+	emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction, ActionsManager::InspectElementAction}));
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
 
 	SessionsManager::markSessionModified();
@@ -2606,7 +2607,7 @@ bool QtWebKitWebWidget::canFastForward() const
 
 bool QtWebKitWebWidget::canInspect() const
 {
-	return true;
+	return !Utils::isUrlEmpty(getUrl());
 }
 
 bool QtWebKitWebWidget::canRedo() const
