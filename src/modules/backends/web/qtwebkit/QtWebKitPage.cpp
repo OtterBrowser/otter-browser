@@ -821,12 +821,13 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		}
 		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
 		{
+			const QUrl normalizedUrl(Utils::normalizeUrl(url));
 			const QVector<NetworkManager::ResourceInformation> blockeckedRequests(m_networkManager->getBlockedRequests());
 			bool isBlockedContent(false);
 
 			for (int i = 0; i < blockeckedRequests.count(); ++i)
 			{
-				if (blockeckedRequests.at(i).resourceType == NetworkManager::MainFrameType && blockeckedRequests.at(i).url == url)
+				if (blockeckedRequests.at(i).resourceType == NetworkManager::MainFrameType && Utils::normalizeUrl(blockeckedRequests.at(i).url) == normalizedUrl)
 				{
 					isBlockedContent = true;
 
