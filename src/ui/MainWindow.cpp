@@ -49,6 +49,7 @@
 
 #include "ui_MainWindow.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
@@ -161,8 +162,11 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 		restoreGeometry(session.geometry);
 	}
 
-	restore(session);
-	updateWindowTitle();
+	QTimer::singleShot(0, [=]()
+	{
+		restore(session);
+		updateWindowTitle();
+	});
 
 	connect(m_workspace, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
 }
