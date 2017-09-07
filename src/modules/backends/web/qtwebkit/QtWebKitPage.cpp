@@ -771,10 +771,13 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			domain = QLatin1String("HTTP");
 		}
 
-		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+		const QString logMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString));
+		const quint64 windowIdentifier(m_widget ? m_widget->getWindowIdentifier() : 0);
 
 		if (errorOption->domain == QWebPage::WebKit && (errorOption->error == 102 || errorOption->error == 203))
 		{
+			Console::addMessage(logMessage, Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, windowIdentifier);
+
 			return false;
 		}
 
@@ -786,6 +789,8 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 
 		if (errorOption->domain == QWebPage::QtNetwork && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
 		{
+			Console::addMessage(logMessage, Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, windowIdentifier);
+
 			return false;
 		}
 
@@ -888,6 +893,11 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		}
 
 		errorOutput->content = Utils::createErrorPage(information).toUtf8();
+
+		if (information.type != ErrorPageInformation::BlockedContentError)
+		{
+			Console::addMessage(logMessage, Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, windowIdentifier);
+		}
 
 		return true;
 	}
