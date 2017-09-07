@@ -120,6 +120,11 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->installEventFilter(this);
 
+	if (parameters.contains(QLatin1String("size")))
+	{
+		m_page->setViewportSize(parameters[QLatin1String("size")].toSize());
+	}
+
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
 	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getOption(SettingsManager::Content_BackgroundColorOption));
 	handleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountWindowOption));

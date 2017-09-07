@@ -718,7 +718,7 @@ Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const
 		return nullptr;
 	}
 
-	QVariantMap parameters;
+	QVariantMap parameters({{QLatin1String("size"), size()}});
 
 	if (isPrivate())
 	{

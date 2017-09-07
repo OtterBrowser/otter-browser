@@ -513,6 +513,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				QVariantMap mutableParameters(parameters);
 				mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
+				if (!parameters.contains(QLatin1String("size")))
+				{
+					mutableParameters[QLatin1String("size")] = m_workspace->size();
+				}
+
 				if (hints.testFlag(SessionsManager::NewWindowOpen))
 				{
 					Application::createWindow(mutableParameters);
@@ -1100,15 +1105,15 @@ void MainWindow::restore(const SessionMainWindow &session)
 	}
 	else
 	{
-		QVariantMap parameters;
-
-		if (m_isPrivate)
-		{
-			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
-		}
-
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
+			QVariantMap parameters({{QLatin1String("size"), ((session.windows.at(i).state.state == Qt::WindowMaximized || !session.windows.at(i).state.geometry.isValid()) ? m_workspace->size() : session.windows.at(i).state.geometry.size())}});
+
+			if (m_isPrivate)
+			{
+				parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
+			}
+
 			Window *window(new Window(parameters, nullptr, this));
 			window->setSession(session.windows.at(i), SettingsManager::getOption(SettingsManager::Sessions_DeferTabsLoadingOption).toBool());
 
@@ -1167,7 +1172,7 @@ void MainWindow::restore(int index)
 		}
 	}
 
-	QVariantMap parameters;
+	QVariantMap parameters({{QLatin1String("size"), ((closedWindow.window.state.state == Qt::WindowMaximized || !closedWindow.window.state.geometry.isValid()) ? m_workspace->size() : closedWindow.window.state.geometry.size())}});
 
 	if (m_isPrivate || closedWindow.isPrivate)
 	{
@@ -1982,7 +1987,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 	}
 	else
 	{
-		window = new Window({{QLatin1String("hints"), QVariant(hints)}}, widget, this);
+		window = new Window({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("size"), ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? m_workspace->size() : QSize(800, 600))}}, widget, this);
 
 		addWindow(window, hints, index);
 	}
