@@ -78,7 +78,7 @@ public slots:
 	void setUrl(const QUrl &url, bool isTyped = true) override;
 
 protected:
-	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = nullptr);
+	explicit QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
 	void showEvent(QShowEvent *event) override;

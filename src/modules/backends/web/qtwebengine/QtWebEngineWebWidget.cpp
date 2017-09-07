@@ -60,9 +60,9 @@
 namespace Otter
 {
 
-QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
+QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
-	m_page(new QtWebEnginePage(isPrivate, this)),
+	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
 #if QT_VERSION < 0x050700
 	m_iconReply(nullptr),
 #endif
@@ -1448,7 +1448,7 @@ void QtWebEngineWebWidget::setOptions(const QHash<int, QVariant> &options, const
 
 WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions) const
 {
-	QtWebEngineWebWidget *widget(new QtWebEngineWebWidget((this->isPrivate() || isPrivate), getBackend()));
+	QtWebEngineWebWidget *widget((this->isPrivate() || isPrivate) ? new QtWebEngineWebWidget({{QLatin1String("hints"), SessionsManager::PrivateOpen}}, getBackend()) : new QtWebEngineWebWidget({}, getBackend()));
 	widget->setOptions(getOptions(), excludedOptions);
 
 	if (cloneHistory)

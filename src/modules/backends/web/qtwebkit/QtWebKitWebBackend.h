@@ -44,7 +44,7 @@ public:
 
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
 
-	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) override;
+	WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;

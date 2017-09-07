@@ -47,7 +47,7 @@ namespace Otter
 
 QString WebWidget::m_fastForwardScript;
 
-WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent), ActionExecutor(),
+WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : QWidget(parent), ActionExecutor(),
 	m_parent(parent),
 	m_backend(backend),
 	m_windowIdentifier(0),
@@ -55,7 +55,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_loadingTimer(0),
 	m_reloadTimer(0)
 {
-	Q_UNUSED(isPrivate)
+	Q_UNUSED(parameters)
 
 	connect(this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(notifyPageActionsChanged()));

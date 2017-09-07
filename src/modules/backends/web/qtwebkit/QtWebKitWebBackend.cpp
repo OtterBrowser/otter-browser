@@ -144,7 +144,7 @@ void QtWebKitWebBackend::setActiveWidget(WebWidget *widget)
 	emit activeDictionaryChanged(getActiveDictionary());
 }
 
-WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *parent)
+WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
 	{
@@ -175,7 +175,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	}
 
-	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate, this, nullptr, parent));
+	QtWebKitWebWidget *widget(new QtWebKitWebWidget(parameters, this, nullptr, parent));
 
 	connect(widget, SIGNAL(widgetActivated(WebWidget*)), this, SLOT(setActiveWidget(WebWidget*)));
 

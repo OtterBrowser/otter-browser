@@ -210,7 +210,7 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 	}
 }
 
-WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *parent)
+WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
 	{
@@ -251,7 +251,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		connect(QWebEngineProfile::defaultProfile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 	}
 
-	return new QtWebEngineWebWidget(isPrivate, this, parent);
+	return new QtWebEngineWebWidget(parameters, this, parent);
 }
 
 QString QtWebEngineWebBackend::getName() const

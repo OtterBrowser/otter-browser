@@ -110,7 +110,7 @@ protected:
 		PositionEntryData
 	};
 
-	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);
+	explicit QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
 	void showEvent(QShowEvent *event) override;

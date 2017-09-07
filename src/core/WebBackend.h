@@ -63,7 +63,7 @@ public:
 
 	explicit WebBackend(QObject *parent = nullptr);
 
-	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) = 0;
+	virtual WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) = 0;
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = {}) const = 0;

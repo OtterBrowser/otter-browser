@@ -240,9 +240,13 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 		{
 			widget = qobject_cast<QtWebEngineWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 		}
+		else if (profile()->isOffTheRecord())
+		{
+			widget = new QtWebEngineWebWidget({{QLatin1String("hints"), SessionsManager::PrivateOpen}}, nullptr, nullptr);
+		}
 		else
 		{
-			widget = new QtWebEngineWebWidget(false, nullptr, nullptr);
+			widget = new QtWebEngineWebWidget({}, nullptr, nullptr);
 		}
 
 		widget->pageLoadStarted();

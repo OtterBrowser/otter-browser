@@ -37,7 +37,7 @@
 namespace Otter
 {
 
-SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget(isPrivate, nullptr, parent),
+SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget({}, nullptr, parent),
 	m_sourceViewer(new SourceViewerWidget(this)),
 	m_networkManager(nullptr),
 	m_viewSourceReply(nullptr),

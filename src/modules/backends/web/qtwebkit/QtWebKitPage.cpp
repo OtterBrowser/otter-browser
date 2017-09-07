@@ -483,9 +483,13 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 		{
 			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 		}
+		else if (settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
+		{
+			widget = new QtWebKitWebWidget({{QLatin1String("hints"), SessionsManager::PrivateOpen}}, nullptr, nullptr);
+		}
 		else
 		{
-			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), nullptr, nullptr);
+			widget = new QtWebKitWebWidget({}, nullptr, nullptr);
 		}
 
 		widget->handleLoadStarted();

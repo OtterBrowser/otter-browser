@@ -1104,7 +1104,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 			}
 		}
 
-		widget = webBackend->createWidget(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this);
+		widget = webBackend->createWidget(parameters, this);
 
 		if (m_window)
 		{
