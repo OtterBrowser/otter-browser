@@ -118,7 +118,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 	runUserScripts(m_widget->getUrl());
 
-	if (SettingsManager::getOption(SettingsManager::Browser_RememberPasswordsOption).toBool())
+	if (m_widget->getOption(SettingsManager::Browser_RememberPasswordsOption).toBool())
 	{
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formExtractor.js"));
 
@@ -130,16 +130,16 @@ void QtWebKitFrame::handleLoadFinished()
 		}
 	}
 
-	if (!m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
+	if (!m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool())
 	{
 		return;
 	}
 
-	const QUrl url(m_widget->getUrl());
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList()));
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
 
 	if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 	{
+		const QUrl url(m_widget->getUrl());
 		const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url, url, NetworkManager::OtherType).comesticFiltersMode);
 
 		if (mode != ContentBlockingManager::NoFiltersMode)
@@ -358,10 +358,9 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
-	const QUrl currentUrl(url.isEmpty() ? mainFrame()->url() : url);
-	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getOption(SettingsManager::Content_TextColorOption).toString()).arg(SettingsManager::getOption(SettingsManager::Content_LinkColorOption).toString()).arg(SettingsManager::getOption(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
+	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(getOption(SettingsManager::Content_TextColorOption).toString()).arg(getOption(SettingsManager::Content_LinkColorOption).toString()).arg(getOption(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
 	const QWebElement mediaElement(mainFrame()->findFirstElement(QLatin1String("img, audio source, video source")));
-	const bool isViewingMedia(!mediaElement.isNull() && QUrl(mediaElement.attribute(QLatin1String("src"))) == currentUrl);
+	const bool isViewingMedia(!mediaElement.isNull() && QUrl(mediaElement.attribute(QLatin1String("src"))) == (url.isEmpty() ? mainFrame()->url() : url));
 
 	if (isViewingMedia && mediaElement.tagName().toLower() == QLatin1String("img"))
 	{
@@ -385,12 +384,12 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		emit viewingMediaChanged(m_isViewingMedia);
 	}
 
-	if (!SettingsManager::getOption(SettingsManager::Interface_ShowScrollBarsOption).toBool())
+	if (!getOption(SettingsManager::Interface_ShowScrollBarsOption).toBool())
 	{
 		styleSheet.append(QLatin1String("body::-webkit-scrollbar {display:none;}"));
 	}
 
-	const QString userSyleSheet(m_widget ? m_widget->getOption(SettingsManager::Content_UserStyleSheetOption, currentUrl).toString() : QString());
+	const QString userSyleSheet(getOption(SettingsManager::Content_UserStyleSheetOption).toString());
 
 	if (!userSyleSheet.isEmpty())
 	{
@@ -460,7 +459,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebWidget *widget(nullptr);
-		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
+		const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
 
 		if (!m_widget || currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty())
 		{
@@ -549,6 +548,19 @@ QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
 	}
 
 	return QVariant();
+}
+
+QVariant QtWebKitPage::getOption(int identifier) const
+{
+	if (m_widget)
+	{
+		return m_widget->getOption(identifier);
+	}
+
+	QUrl url(mainFrame()->url());
+	url = (url.isEmpty() ? mainFrame()->requestedUrl() : url);
+
+	return SettingsManager::getOption(identifier, url);
 }
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)

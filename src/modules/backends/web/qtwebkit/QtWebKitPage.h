@@ -93,6 +93,7 @@ protected:
 	QString chooseFile(QWebFrame *frame, const QString &suggestedFile) override;
 	QString userAgentForUrl(const QUrl &url) const override;
 	QString getDefaultUserAgent() const;
+	QVariant getOption(int identifier) const;
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type) override;
 	bool javaScriptConfirm(QWebFrame *frame, const QString &message) override;
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result) override;
