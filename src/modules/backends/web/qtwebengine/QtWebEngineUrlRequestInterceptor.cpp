@@ -21,6 +21,7 @@
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 
@@ -145,12 +146,14 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 		if (result.isBlocked)
 		{
+			const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(result.profile));
+
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
+
 			if (storeBlockedUrl && !m_blockedElements.value(request.firstPartyUrl().host()).contains(request.requestUrl().url()))
 			{
 				m_blockedElements[request.firstPartyUrl().host()].append(request.requestUrl().url());
 			}
-
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked with rule: %1").arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
 
 			request.block(true);
 

@@ -25,6 +25,7 @@
 #include "QtWebKitPage.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
+#include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/CookieJar.h"
 #include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkCache.h"
@@ -681,7 +682,9 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 			if (result.isBlocked)
 			{
-				Console::addMessage(QCoreApplication::translate("main", "Request blocked with rule: %1").arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+				const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(result.profile));
+
+				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 				if (storeBlockedUrl)
 				{
