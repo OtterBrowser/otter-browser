@@ -79,7 +79,6 @@ public:
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {});
 	void markAsRestored();
-	void updateActions();
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -91,6 +90,7 @@ protected:
 protected slots:
 	void handleActiveSubWindowChanged(QMdiSubWindow *subWindow);
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void notifyActionsStateChanged();
 	void showContextMenu(const QPoint &position);
 
 private:
