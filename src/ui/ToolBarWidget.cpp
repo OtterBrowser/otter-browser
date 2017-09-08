@@ -1160,7 +1160,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 	removeAction->setData(identifier);
 	removeAction->setEnabled(definition.identifier >= ToolBarsManager::OtherToolBar);
 
-	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu))->setText(tr("Toolbars"));
+	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu));
 
 	return menu;
 }
