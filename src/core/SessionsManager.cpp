@@ -535,9 +535,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	const QStringList excludedOptions(SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromSavingOption).toStringList());
 	QJsonArray mainWindowsArray;
-	QJsonObject sessionObject;
-	sessionObject.insert(QLatin1String("title"), session.title);
-	sessionObject.insert(QLatin1String("currentIndex"), 1);
+	QJsonObject sessionObject({{QLatin1String("title"), session.title}, {QLatin1String("currentIndex"), 1}});
 
 	if (!session.isClean)
 	{
@@ -547,15 +545,12 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
 		const SessionMainWindow sessionEntry(session.windows.at(i));
-		QJsonObject mainWindowObject;
-		mainWindowObject.insert(QLatin1String("currentIndex"), (sessionEntry.index + 1));
-		mainWindowObject.insert(QLatin1String("geometry"), QString(sessionEntry.geometry.toBase64()));
-
+		QJsonObject mainWindowObject({{QLatin1String("currentIndex"), (sessionEntry.index + 1)}, {QLatin1String("geometry"), QString(sessionEntry.geometry.toBase64())}});
 		QJsonArray windowsArray;
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
-			QJsonObject windowObject;
+			QJsonObject windowObject({{QLatin1String("currentIndex"), (sessionEntry.windows.at(j).historyIndex + 1)}});
 
 			if (!sessionEntry.windows.at(j).options.isEmpty())
 			{
@@ -575,8 +570,6 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 				windowObject.insert(QLatin1String("options"), optionsObject);
 			}
-
-			windowObject.insert(QLatin1String("currentIndex"), (sessionEntry.windows.at(j).historyIndex + 1));
 
 			if (sessionEntry.windows.at(j).state.state == Qt::WindowMaximized)
 			{
@@ -613,10 +606,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
 				const QPoint position(sessionEntry.windows.at(j).history.at(k).position);
-				QJsonObject historyEntryObject;
-				historyEntryObject.insert(QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url);
-				historyEntryObject.insert(QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title);
-				historyEntryObject.insert(QLatin1String("zoom"), sessionEntry.windows.at(j).history.at(k).zoom);
+				QJsonObject historyEntryObject({{QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url}, {QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title}, {QLatin1String("zoom"), sessionEntry.windows.at(j).history.at(k).zoom}});
 
 				if (position.x() != 0 || position.y() != 0)
 				{
