@@ -274,16 +274,11 @@ bool HistoryModel::save(const QString &path) const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		QStandardItem *entry(item(i));
+		const QModelIndex index(this->index(i, 0));
 
-		if (entry)
+		if (index.isValid())
 		{
-			QJsonObject entryObject;
-			entryObject.insert(QLatin1String("url"), entry->data(UrlRole).toUrl().toString());
-			entryObject.insert(QLatin1String("title"), entry->data(TitleRole).toString());
-			entryObject.insert(QLatin1String("time"), entry->data(TimeVisitedRole).toDateTime().toString(Qt::ISODate));
-
-			historyArray.prepend(entryObject);
+			historyArray.prepend(QJsonObject({{QLatin1String("url"), index.data(UrlRole).toUrl().toString()}, {QLatin1String("title"), index.data(TitleRole).toString()}, {QLatin1String("time"), index.data(TimeVisitedRole).toDateTime().toString(Qt::ISODate)}}));
 		}
 	}
 
