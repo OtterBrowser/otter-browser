@@ -231,7 +231,6 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			setTitle(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectWindow(QAction*)));
 
 			break;
 		default:
@@ -1334,28 +1333,22 @@ void Menu::populateWindowsMenu()
 
 	clear();
 
-	const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(MainWindow::findMainWindow(this)));
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(mainWindow));
 
 	if (mainWindowItem)
 	{
+		ActionExecutor::Object executor(mainWindow, mainWindow);
+
 		for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 		{
 			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
 			if (windowItem)
 			{
-				Action *action(new Action(-1, {}, this));
-				action->setData(windowItem->getActiveWindow()->getIdentifier());
+				Action *action(new Action(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}}, executor, this));
 				action->setOverrideIcon(windowItem->getActiveWindow()->getIcon());
-
-				if (windowItem->getActiveWindow()->getTitle().isEmpty())
-				{
-					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
-				}
-				else
-				{
-					action->setText(Utils::elideText(windowItem->getActiveWindow()->getTitle()));
-				}
+				action->setOverrideText(Utils::elideText((windowItem->getActiveWindow()->getTitle().isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : windowItem->getActiveWindow()->getTitle()), this));
 
 				addAction(action);
 			}
@@ -1489,14 +1482,6 @@ void Menu::selectStyleSheet(QAction *action)
 	if (window && window->getContentsWidget()->getWebWidget() && action)
 	{
 		window->getContentsWidget()->getWebWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
-	}
-}
-
-void Menu::selectWindow(QAction *action)
-{
-	if (action)
-	{
-		Application::triggerAction(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), action->data().toULongLong()}}, parentWidget());
 	}
 }
 

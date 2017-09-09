@@ -101,7 +101,6 @@ protected slots:
 	void selectDictionary(QAction *action);
 	void selectOption(QAction *action);
 	void selectStyleSheet(QAction *action);
-	void selectWindow(QAction *action);
 	void updateClosedWindowsMenu();
 
 private:
