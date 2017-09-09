@@ -96,9 +96,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 				continue;
 			}
 
-			QJsonObject definitionObject;
-			definitionObject.insert(QLatin1String("identifier"), QJsonValue(identifier));
-			definitionObject.insert(QLatin1String("title"), QJsonValue(m_definitions[i].title));
+			QJsonObject definitionObject({{QLatin1String("identifier"), QJsonValue(identifier)}, {QLatin1String("title"), QJsonValue(m_definitions[i].title)}, {QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility))}, {QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].fullScreenVisibility))}});
 
 			switch (m_definitions[i].type)
 			{
@@ -114,9 +112,6 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 				default:
 					break;
 			}
-
-			definitionObject.insert(QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility)));
-			definitionObject.insert(QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].fullScreenVisibility)));
 
 			if (m_definitions[i].location != Qt::NoToolBarArea)
 			{
@@ -435,32 +430,31 @@ QJsonValue ToolBarsManager::encodeEntry(const ToolBarDefinition::Entry &definiti
 		return QJsonValue(definition.action);
 	}
 
-	QJsonObject action;
-	action.insert(QLatin1String("identifier"), QJsonValue(definition.action));
+	QJsonObject actionObject({{QLatin1String("identifier"), QJsonValue(definition.action)}});
 
 	if (!definition.entries.isEmpty())
 	{
-		QJsonArray actions;
+		QJsonArray actionsArray;
 
 		for (int i = 0; i < definition.entries.count(); ++i)
 		{
-			actions.append(encodeEntry(definition.entries.at(i)));
+			actionsArray.append(encodeEntry(definition.entries.at(i)));
 		}
 
-		action.insert(QLatin1String("actions"), actions);
+		actionObject.insert(QLatin1String("actions"), actionsArray);
 	}
 
 	if (!definition.options.isEmpty())
 	{
-		action.insert(QLatin1String("options"), QJsonValue::fromVariant(definition.options));
+		actionObject.insert(QLatin1String("options"), QJsonValue::fromVariant(definition.options));
 	}
 
 	if (!definition.parameters.isEmpty())
 	{
-		action.insert(QLatin1String("parameters"), QJsonValue::fromVariant(definition.parameters));
+		actionObject.insert(QLatin1String("parameters"), QJsonValue::fromVariant(definition.parameters));
 	}
 
-	return QJsonValue(action);
+	return QJsonValue(actionObject);
 }
 
 ToolBarsManager::ToolBarDefinition::Entry ToolBarsManager::decodeEntry(const QJsonValue &value)
@@ -474,21 +468,21 @@ ToolBarsManager::ToolBarDefinition::Entry ToolBarsManager::decodeEntry(const QJs
 		return definition;
 	}
 
-	const QJsonObject object(value.toObject());
+	const QJsonObject actionObject(value.toObject());
 
-	definition.action = object.value(QLatin1String("identifier")).toString();
-	definition.options = object.value(QLatin1String("options")).toObject().toVariantMap();
-	definition.parameters = object.value(QLatin1String("parameters")).toObject().toVariantMap();
+	definition.action = actionObject.value(QLatin1String("identifier")).toString();
+	definition.options = actionObject.value(QLatin1String("options")).toObject().toVariantMap();
+	definition.parameters = actionObject.value(QLatin1String("parameters")).toObject().toVariantMap();
 
-	if (object.contains(QLatin1String("actions")))
+	if (actionObject.contains(QLatin1String("actions")))
 	{
-		const QJsonArray actions(object.value(QLatin1String("actions")).toArray());
+		const QJsonArray actionsArray(actionObject.value(QLatin1String("actions")).toArray());
 
-		definition.entries.reserve(actions.count());
+		definition.entries.reserve(actionsArray.count());
 
-		for (int i = 0; i < actions.count(); ++i)
+		for (int i = 0; i < actionsArray.count(); ++i)
 		{
-			definition.entries.append(decodeEntry(actions.at(i)));
+			definition.entries.append(decodeEntry(actionsArray.at(i)));
 		}
 	}
 
