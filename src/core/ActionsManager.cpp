@@ -410,10 +410,10 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ActivateContentAction, QT_TRANSLATE_NOOP("actions", "Activate Content"), QString(), QIcon(), ActionDefinition::WindowScope);
 	registerAction(ActivatePreviouslyUsedTabAction, QT_TRANSLATE_NOOP("actions", "Go to Previously Used Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(ActivateLeastRecentlyUsedTabAction, QT_TRANSLATE_NOOP("actions", "Go to Least Recently Used Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(ActivateTabAction, QT_TRANSLATE_NOOP("actions", "Activate Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope);
+	registerAction(ActivateTabAction, QT_TRANSLATE_NOOP("actions", "Activate Tab"), QString(), QIcon(), ActionDefinition::MainWindowScope, ActionDefinition::RequiresParameters);
 	registerAction(ActivateTabOnLeftAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"), QString(), QIcon(), ActionDefinition::MainWindowScope);
 	registerAction(ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"), QString(), QIcon(), ActionDefinition::MainWindowScope);
-	registerAction(ActivateWindowAction, QT_TRANSLATE_NOOP("actions", "Activate Window"), QString(), QIcon(), ActionDefinition::ApplicationScope);
+	registerAction(ActivateWindowAction, QT_TRANSLATE_NOOP("actions", "Activate Window"), QString(), QIcon(), ActionDefinition::ApplicationScope, ActionDefinition::RequiresParameters);
 	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), ThemesManager::createIcon(QLatin1String("bookmarks-organize")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(BookmarkPageAction, QT_TRANSLATE_NOOP("actions", "Bookmark Page…"), QString(), ThemesManager::createIcon(QLatin1String("bookmark-new")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::PageCategory);
 	registerAction(BookmarkAllOpenPagesAction, QT_TRANSLATE_NOOP("actions", "Bookmark All Open Pages"), QString(), QIcon(), ActionDefinition::MainWindowScope);

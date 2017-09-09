@@ -1369,6 +1369,22 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 			}
 
 			break;
+		case ActionsManager::ActivateWindowAction:
+			{
+				const quint64 windowIdentifier(parameters.value(QLatin1String("window")).toULongLong());
+
+				for (int i = 0; i < m_windows.count(); ++i)
+				{
+					if (m_windows.at(i)->getIdentifier() == windowIdentifier)
+					{
+						state.isEnabled = true;
+
+						break;
+					}
+				}
+			}
+
+			break;
 		case ActionsManager::WorkOfflineAction:
 			state.isChecked = SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption).toBool();
 
