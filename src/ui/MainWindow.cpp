@@ -2100,6 +2100,10 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			state.isEnabled = (m_windows.count() > 1);
 
 			break;
+		case ActionsManager::ActivateTabAction:
+			state.isEnabled = m_windows.contains(parameters.value(QLatin1String("tab"), 0).toULongLong());
+
+			break;
 		case ActionsManager::OpenBookmarkAction:
 			{
 				const BookmarksItem *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
