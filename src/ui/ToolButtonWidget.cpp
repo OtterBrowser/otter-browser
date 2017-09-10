@@ -127,7 +127,7 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 		else
 		{
 			Menu *subMenu(new Menu());
-			Action *subMenuAction(new Action(-1, menu));
+			QAction *subMenuAction(new QAction(menu));
 			subMenuAction->setText(entries.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
 			subMenuAction->setMenu(subMenu);
 
