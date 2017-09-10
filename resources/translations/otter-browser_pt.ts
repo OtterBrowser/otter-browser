@@ -6570,7 +6570,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="518"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation>A página web está a tentar fechar este separador. Deseja permitir?</translation>
+        <translation>A página web está a tentar fechar este separador, permite?</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="519"/>
