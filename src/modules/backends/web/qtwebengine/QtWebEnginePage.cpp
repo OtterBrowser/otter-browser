@@ -271,7 +271,7 @@ QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 		rules[i] = rules[i].replace(QLatin1Char('\''), QLatin1String("\\'"));
 	}
 
-	return QStringLiteral("'%1'").arg(rules.join("','"));
+	return QLatin1Char('\'') + rules.join(QLatin1String("','")) + QLatin1Char('\'');
 }
 
 QStringList QtWebEnginePage::chooseFiles(QWebEnginePage::FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)
