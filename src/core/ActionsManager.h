@@ -374,9 +374,10 @@ public:
 		explicit Object(QObject *object, ActionExecutor *executor);
 		Object(const Object &other);
 
-		ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 		void triggerAction(int identifier, const QVariantMap &parameters = {});
-		QObject *getObject() const;
+		QObject* getObject() const;
+		Object& operator=(const Object &other);
+		ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
 		bool isValid() const;
 
 	private:

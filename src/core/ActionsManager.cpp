@@ -741,21 +741,8 @@ ActionExecutor::Object::Object(QObject *object, ActionExecutor *executor) : m_ob
 {
 }
 
-ActionExecutor::Object::Object(const ActionExecutor::Object &other) : m_object(other.m_object), m_executor(other.m_executor)
+ActionExecutor::Object::Object(const Object &other) : m_object(other.m_object), m_executor(other.m_executor)
 {
-}
-
-ActionsManager::ActionDefinition::State ActionExecutor::Object::getActionState(int identifier, const QVariantMap &parameters) const
-{
-	if (!m_object.isNull())
-	{
-		return m_executor->getActionState(identifier, parameters);
-	}
-
-	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
-	state.isEnabled = false;
-
-	return state;
 }
 
 void ActionExecutor::Object::triggerAction(int identifier, const QVariantMap &parameters)
@@ -769,6 +756,30 @@ void ActionExecutor::Object::triggerAction(int identifier, const QVariantMap &pa
 QObject* ActionExecutor::Object::getObject() const
 {
 	return m_object.data();
+}
+
+ActionExecutor::Object& ActionExecutor::Object::operator=(const Object &other)
+{
+	if (this != &other)
+	{
+		m_object = other.m_object;
+		m_executor = other.m_executor;
+	}
+
+	return *this;
+}
+
+ActionsManager::ActionDefinition::State ActionExecutor::Object::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (!m_object.isNull())
+	{
+		return m_executor->getActionState(identifier, parameters);
+	}
+
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
+	state.isEnabled = false;
+
+	return state;
 }
 
 bool ActionExecutor::Object::isValid() const
