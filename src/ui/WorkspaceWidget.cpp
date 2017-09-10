@@ -524,7 +524,7 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
 		QMenu *menu(new QMenu(mdiWindow));
-		Action *closeAction(new Action(ActionsManager::CloseTabAction, menu));
+		Action *closeAction(new Action(ActionsManager::CloseTabAction, {}, menu));
 		closeAction->setEnabled(true);
 		closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
 		closeAction->setOverrideIcon(QIcon());

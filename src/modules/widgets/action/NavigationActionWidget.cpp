@@ -123,7 +123,7 @@ bool NavigationActionWidget::event(QEvent *event)
 
 					ActionExecutor::Object executor(m_window, m_window);
 					QMenu menu(this);
-					Action *clearTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, &menu));
+					Action *clearTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, {}, &menu));
 					clearTabHistoryAction->setExecutor(executor);
 
 					Action *purgeTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, &menu));
