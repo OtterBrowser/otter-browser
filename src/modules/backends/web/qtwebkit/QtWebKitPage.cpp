@@ -246,7 +246,7 @@ QtWebKitPage::~QtWebKitPage()
 	m_popups.clear();
 }
 
-void QtWebKitPage::removePopup(const QUrl &url)
+void QtWebKitPage::validatePopup(const QUrl &url)
 {
 	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
 
@@ -257,7 +257,31 @@ void QtWebKitPage::removePopup(const QUrl &url)
 		page->deleteLater();
 	}
 
-	emit requestedPopupWindow(mainFrame()->url(), url);
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
+
+	if (!profiles.isEmpty())
+	{
+		const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(profiles, mainFrame()->url(), url, NetworkManager::PopupType));
+
+		if (result.isBlocked)
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentBlockingManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+
+			return;
+		}
+	}
+
+	const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
+
+	if (popupsPolicy == QLatin1String("ask"))
+	{
+		emit requestedPopupWindow(mainFrame()->url(), url);
+	}
+	else
+	{
+		QtWebKitWebWidget *widget(createWidget((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
+		widget->setUrl(url);
+	}
 }
 
 void QtWebKitPage::markAsErrorPage()
@@ -468,33 +492,18 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 				return nullptr;
 			}
 
-			if (popupsPolicy == QLatin1String("ask"))
+			if (popupsPolicy == QLatin1String("ask") || !getOption(SettingsManager::ContentBlocking_ProfilesOption).isNull())
 			{
 				QtWebKitPage *page(new QtWebKitPage());
 				page->markAsPopup();
 
-				connect(page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(removePopup(QUrl)));
+				connect(page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(validatePopup(QUrl)));
 
 				return page;
 			}
 		}
 
-		if (m_widget)
-		{
-			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
-		}
-		else if (settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
-		{
-			widget = new QtWebKitWebWidget({{QLatin1String("hints"), SessionsManager::PrivateOpen}}, nullptr, nullptr);
-		}
-		else
-		{
-			widget = new QtWebKitWebWidget({}, nullptr, nullptr);
-		}
-
-		widget->handleLoadStarted();
-
-		emit requestedNewWindow(widget, SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
+		widget = createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
 
 		return widget->getPage();
 	}
@@ -505,6 +514,30 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 QtWebKitFrame* QtWebKitPage::getMainFrame() const
 {
 	return m_mainFrame;
+}
+
+QtWebKitWebWidget* QtWebKitPage::createWidget(SessionsManager::OpenHints hints)
+{
+	QtWebKitWebWidget *widget(nullptr);
+
+	if (m_widget)
+	{
+		widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
+	}
+	else if (settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
+	{
+		widget = new QtWebKitWebWidget({{QLatin1String("hints"), SessionsManager::PrivateOpen}}, nullptr, nullptr);
+	}
+	else
+	{
+		widget = new QtWebKitWebWidget({}, nullptr, nullptr);
+	}
+
+	widget->handleLoadStarted();
+
+	emit requestedNewWindow(widget, hints);
+
+	return widget;
 }
 
 QString QtWebKitPage::chooseFile(QWebFrame *frame, const QString &suggestedFile)

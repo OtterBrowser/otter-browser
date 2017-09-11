@@ -90,6 +90,7 @@ protected:
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source) override;
 #endif
 	QWebPage* createWindow(WebWindowType type) override;
+	QtWebKitWebWidget* createWidget(SessionsManager::OpenHints hints);
 	QString chooseFile(QWebFrame *frame, const QString &suggestedFile) override;
 	QString userAgentForUrl(const QUrl &url) const override;
 	QString getDefaultUserAgent() const;
@@ -99,7 +100,7 @@ protected:
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result) override;
 
 protected slots:
-	void removePopup(const QUrl &url);
+	void validatePopup(const QUrl &url);
 	void handleOptionChanged(int identifier);
 	void handleLoadFinished();
 	void handleFrameCreation(QWebFrame *frame);
