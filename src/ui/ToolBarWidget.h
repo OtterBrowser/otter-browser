@@ -86,6 +86,7 @@ public slots:
 	void resetGeometry();
 
 protected:
+	void timerEvent(QTimerEvent *event) override;
 	void changeEvent(QEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void showEvent(QShowEvent *event) override;
@@ -104,6 +105,7 @@ protected:
 	void updateToggleGeometry();
 
 protected slots:
+	void scheduleBookmarksReload();
 	void loadBookmarks();
 	void toggleVisibility();
 	void notifyWindowChanged(quint64 identifier);
@@ -123,6 +125,7 @@ private:
 	BookmarksItem *m_dropBookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
+	int m_reloadTimer;
 	int m_identifier;
 	int m_dropIndex;
 	bool m_isCollapsed;
