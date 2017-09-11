@@ -50,6 +50,7 @@ int Menu::m_menuRoleIdentifierEnumerator(-1);
 
 Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 	m_actionGroup(nullptr),
+	m_clickedAction(nullptr),
 	m_bookmark(nullptr),
 	m_role(role),
 	m_option(-1)
@@ -248,13 +249,27 @@ void Menu::changeEvent(QEvent *event)
 	}
 }
 
+void Menu::hideEvent(QHideEvent *event)
+{
+	m_clickedAction = nullptr;
+
+	QMenu::hideEvent(event);
+}
+
+void Menu::mousePressEvent(QMouseEvent *event)
+{
+	m_clickedAction = actionAt(event->pos());
+
+	QMenu::mousePressEvent(event);
+}
+
 void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_role == BookmarksMenuRole && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
 	{
 		const QAction *action(actionAt(event->pos()));
 
-		if (action && action->isEnabled() && action->data().type() == QVariant::ULongLong)
+		if (action && action == m_clickedAction && action->isEnabled() && action->data().type() == QVariant::ULongLong)
 		{
 			QWidget *menu(this);
 
@@ -276,9 +291,13 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
 			}
 
+			m_clickedAction = nullptr;
+
 			return;
 		}
 	}
+
+	m_clickedAction = nullptr;
 
 	QMenu::mouseReleaseEvent(event);
 }

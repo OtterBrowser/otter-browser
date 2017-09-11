@@ -71,6 +71,8 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void hideEvent(QHideEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor);
@@ -105,6 +107,7 @@ protected slots:
 
 private:
 	QActionGroup *m_actionGroup;
+	QAction *m_clickedAction;
 	BookmarksItem *m_bookmark;
 	QString m_title;
 	ActionExecutor::Object m_executor;
