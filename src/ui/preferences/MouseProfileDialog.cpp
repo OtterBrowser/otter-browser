@@ -146,6 +146,10 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->versionLineEdit->setText(m_profile.getVersion());
 	m_ui->authorLineEdit->setText(m_profile.getAuthor());
 
+	connect(m_ui->titleLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->descriptionLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->versionLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->authorLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->gesturesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->gesturesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateGesturesActions()));
 	connect(m_ui->addGestureButton, SIGNAL(clicked()), this, SLOT(addGesture()));
