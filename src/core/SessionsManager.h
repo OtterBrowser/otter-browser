@@ -106,7 +106,16 @@ struct SessionWindow
 
 struct SessionMainWindow
 {
+	struct ToolBarState
+	{
+		Qt::ToolBarArea location = Qt::NoToolBarArea;
+		int identifier = -1;
+		int row = -1;
+		bool isVisible = false;
+	};
+
 	QVector<SessionWindow> windows;
+	QVector<ToolBarState> toolBars;
 	QByteArray geometry;
 	int index = -1;
 };
