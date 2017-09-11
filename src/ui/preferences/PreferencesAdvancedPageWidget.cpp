@@ -1072,7 +1072,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 		return;
 	}
 
-	m_keyboardProfiles[identifier] = KeyboardProfile();
+	m_keyboardProfiles[identifier] = KeyboardProfile(identifier);
 
 	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
 	item->setData(identifier, Qt::UserRole);
@@ -1130,11 +1130,13 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 		return;
 	}
 
-	m_keyboardProfiles[identifier] = dialog.getProfile();
+	const KeyboardProfile profile(dialog.getProfile());
+
+	m_keyboardProfiles[identifier] = profile;
 
 	m_ui->keyboardViewWidget->markAsModified();
-	m_ui->keyboardViewWidget->setData(index, m_keyboardProfiles[identifier].getTitle(), Qt::DisplayRole);
-	m_ui->keyboardViewWidget->setData(index, m_keyboardProfiles[identifier].getDescription(), Qt::ToolTipRole);
+	m_ui->keyboardViewWidget->setData(index, profile.getTitle(), Qt::DisplayRole);
+	m_ui->keyboardViewWidget->setData(index, profile.getDescription(), Qt::ToolTipRole);
 }
 
 void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
@@ -1265,7 +1267,7 @@ void PreferencesAdvancedPageWidget::addMouseProfile()
 		return;
 	}
 
-	m_mouseProfiles[identifier] = MouseProfile();
+	m_mouseProfiles[identifier] = MouseProfile(identifier);
 
 	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
 	item->setData(identifier, Qt::UserRole);
@@ -1323,11 +1325,13 @@ void PreferencesAdvancedPageWidget::editMouseProfile()
 		return;
 	}
 
-	m_mouseProfiles[identifier] = dialog.getProfile();
+	const MouseProfile profile(dialog.getProfile());
+
+	m_mouseProfiles[identifier] = profile;
 
 	m_ui->mouseViewWidget->markAsModified();
-	m_ui->mouseViewWidget->setData(index, m_mouseProfiles[identifier].getTitle(), Qt::DisplayRole);
-	m_ui->mouseViewWidget->setData(index, m_mouseProfiles[identifier].getDescription(), Qt::ToolTipRole);
+	m_ui->mouseViewWidget->setData(index, profile.getTitle(), Qt::DisplayRole);
+	m_ui->mouseViewWidget->setData(index, profile.getDescription(), Qt::ToolTipRole);
 }
 
 void PreferencesAdvancedPageWidget::cloneMouseProfile()

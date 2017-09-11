@@ -240,7 +240,7 @@ void KeyboardProfileDialog::updateActions()
 
 KeyboardProfile KeyboardProfileDialog::getProfile() const
 {
-	KeyboardProfile profile;
+	KeyboardProfile profile(m_profile);
 	profile.setTitle(m_ui->titleLineEdit->text());
 	profile.setDescription(m_ui->descriptionLineEdit->text());
 	profile.setVersion(m_ui->versionLineEdit->text());
