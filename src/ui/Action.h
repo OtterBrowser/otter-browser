@@ -48,7 +48,6 @@ public:
 	void setOverrideText(const QString &text);
 	void setOverrideIcon(const QIcon &icon);
 	ActionsManager::ActionDefinition getDefinition() const;
-	ActionsManager::ActionDefinition::State getState() const;
 	QVariantMap getParameters() const;
 	int getIdentifier() const;
 	bool event(QEvent *event) override;
@@ -57,6 +56,7 @@ protected:
 	void initialize();
 	void updateIcon();
 	void setState(const ActionsManager::ActionDefinition::State &state);
+	ActionsManager::ActionDefinition::State getState() const;
 
 protected slots:
 	void triggerAction(bool isChecked = false);

@@ -217,13 +217,6 @@ QString ToolButtonWidget::getText() const
 
 	if (defaultAction())
 	{
-		const Action *action(qobject_cast<Action*>(defaultAction()));
-
-		if (action)
-		{
-			return action->getState().text;
-		}
-
 		return defaultAction()->text();
 	}
 
