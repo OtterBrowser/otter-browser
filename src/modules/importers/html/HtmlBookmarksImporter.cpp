@@ -255,7 +255,11 @@ bool HtmlBookmarksImporter::import(const QString &path)
 	page.settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 	page.mainFrame()->setHtml(file.readAll());
 
+	BookmarksManager::getModel()->beginImport(getCurrentFolder(), page.mainFrame()->findAllElements(QLatin1String("a[href]")).count(), page.mainFrame()->findAllElements(QLatin1String("a[shortcuturl]")).count());
+
 	processElement(page.mainFrame()->documentElement().findFirst(QLatin1String("dl")));
+
+	BookmarksManager::getModel()->endImport();
 
 	file.close();
 
