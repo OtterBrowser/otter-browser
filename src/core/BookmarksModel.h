@@ -93,6 +93,8 @@ public:
 
 	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = nullptr);
 
+	void beginImport(BookmarksItem *target, int estimatedAmount = 0);
+	void endImport();
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);
 	void removeBookmark(BookmarksItem *bookmark);
@@ -136,6 +138,7 @@ protected slots:
 private:
 	BookmarksItem *m_rootItem;
 	BookmarksItem *m_trashItem;
+	BookmarksItem *m_importTargetItem;
 	QHash<BookmarksItem*, QPair<QModelIndex, int> > m_trash;
 	QHash<QUrl, QVector<BookmarksItem*> > m_urls;
 	QHash<QString, BookmarksItem*> m_keywords;

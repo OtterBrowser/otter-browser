@@ -248,6 +248,7 @@ bool BookmarksItem::operator<(const QStandardItem &other) const
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
 	m_rootItem(new BookmarksItem()),
 	m_trashItem(new BookmarksItem()),
+	m_importTargetItem(nullptr),
 	m_mode(mode)
 {
 	m_rootItem->setData(RootBookmark, TypeRole);
@@ -310,6 +311,38 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(modelModified()));
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(notifyBookmarkModified(QModelIndex)));
 	connect(this, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(modelModified()));
+}
+
+void BookmarksModel::beginImport(BookmarksItem *target, int estimatedAmount)
+{
+	m_importTargetItem = target;
+
+	beginResetModel();
+	blockSignals(true);
+
+	if (estimatedAmount > 0)
+	{
+		m_urls.reserve(estimatedAmount * 0.9);
+		m_keywords.reserve(estimatedAmount * 0.5);
+	}
+}
+
+void BookmarksModel::endImport()
+{
+	m_urls.squeeze();
+	m_keywords.squeeze();
+
+	blockSignals(false);
+	endResetModel();
+
+	if (m_importTargetItem)
+	{
+		emit bookmarkModified(m_importTargetItem);
+
+		m_importTargetItem = nullptr;
+	}
+
+	emit modelModified();
 }
 
 void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
