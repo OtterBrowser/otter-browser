@@ -128,6 +128,7 @@ protected:
 	void readdBookmarkUrl(BookmarksItem *bookmark);
 	void handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword = {});
 	void handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl = {});
+	static QDateTime readDateTime(QXmlStreamReader *reader, const QString &attribute);
 
 protected slots:
 	void notifyBookmarkModified(const QModelIndex &index);

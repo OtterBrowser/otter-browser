@@ -415,9 +415,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 
 	if (reader->name() == QLatin1String("folder"))
 	{
-		bookmark = addBookmark(FolderBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}}, parent);
-		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), TimeAddedRole);
-		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), TimeModifiedRole);
+		bookmark = addBookmark(FolderBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}}, parent);
 
 		while (reader->readNext())
 		{
@@ -425,11 +423,11 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 			{
 				if (reader->name() == QLatin1String("title"))
 				{
-					bookmark->setData(reader->readElementText().trimmed(), TitleRole);
+					bookmark->setItemData(reader->readElementText().trimmed(), TitleRole);
 				}
 				else if (reader->name() == QLatin1String("desc"))
 				{
-					bookmark->setData(reader->readElementText().trimmed(), DescriptionRole);
+					bookmark->setItemData(reader->readElementText().trimmed(), DescriptionRole);
 				}
 				else if (reader->name() == QLatin1String("folder") || reader->name() == QLatin1String("bookmark") || reader->name() == QLatin1String("separator"))
 				{
@@ -449,7 +447,14 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 									{
 										if (reader->name() == QLatin1String("keyword"))
 										{
-											bookmark->setData(reader->readElementText().trimmed(), KeywordRole);
+											const QString keyword(reader->readElementText().trimmed());
+
+											if (!keyword.isEmpty())
+											{
+												bookmark->setItemData(keyword, KeywordRole);
+
+												handleKeywordChanged(bookmark, keyword);
+											}
 										}
 										else
 										{
@@ -490,10 +495,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
-		bookmark = addBookmark(UrlBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {UrlRole, reader->attributes().value(QLatin1String("href")).toString()}}, parent);
-		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), TimeAddedRole);
-		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), TimeModifiedRole);
-		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate), TimeVisitedRole);
+		bookmark = addBookmark(UrlBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {UrlRole, reader->attributes().value(QLatin1String("href")).toString()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}, {TimeVisitedRole, readDateTime(reader, QLatin1String("visited"))}}, parent);
 
 		while (reader->readNext())
 		{
@@ -501,11 +503,11 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 			{
 				if (reader->name() == QLatin1String("title"))
 				{
-					bookmark->setData(reader->readElementText().trimmed(), TitleRole);
+					bookmark->setItemData(reader->readElementText().trimmed(), TitleRole);
 				}
 				else if (reader->name() == QLatin1String("desc"))
 				{
-					bookmark->setData(reader->readElementText().trimmed(), DescriptionRole);
+					bookmark->setItemData(reader->readElementText().trimmed(), DescriptionRole);
 				}
 				else if (reader->name() == QLatin1String("info"))
 				{
@@ -521,11 +523,18 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 									{
 										if (reader->name() == QLatin1String("keyword"))
 										{
-											bookmark->setData(reader->readElementText().trimmed(), KeywordRole);
+											const QString keyword(reader->readElementText().trimmed());
+
+											if (!keyword.isEmpty())
+											{
+												bookmark->setItemData(keyword, KeywordRole);
+
+												handleKeywordChanged(bookmark, keyword);
+											}
 										}
 										else if (reader->name() == QLatin1String("visits"))
 										{
-											bookmark->setData(reader->readElementText().toInt(), VisitsRole);
+											bookmark->setItemData(reader->readElementText().toInt(), VisitsRole);
 										}
 										else
 										{
@@ -973,6 +982,11 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 	return mimeData;
 }
 
+QDateTime BookmarksModel::readDateTime(QXmlStreamReader *reader, const QString &attribute)
+{
+	return QDateTime::fromString(reader->attributes().value(attribute).toString(), Qt::ISODate);
+}
+
 QStringList BookmarksModel::mimeTypes() const
 {
 	return QStringList(QLatin1String("text/uri-list"));
@@ -1049,7 +1063,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 	return allMatches;
 }
 
-QVector<BookmarksItem *> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
+QVector<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
 {
 	if (!branch)
 	{
@@ -1084,7 +1098,7 @@ QVector<BookmarksItem *> BookmarksModel::findUrls(const QUrl &url, QStandardItem
 	return items;
 }
 
-QVector<BookmarksItem *> BookmarksModel::getBookmarks(const QUrl &url) const
+QVector<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
 {
 	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
