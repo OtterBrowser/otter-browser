@@ -133,9 +133,15 @@ void BookmarkPropertiesDialog::saveBookmark()
 	{
 		if (!m_bookmark)
 		{
+			QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, m_ui->titleLineEdit->text()}});
 			const bool isUrl(m_ui->addressLineEdit->isVisible());
 
-			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), (isUrl ? QUrl(m_ui->addressLineEdit->text()) : QUrl()), m_ui->titleLineEdit->text(), m_ui->folderComboBox->getCurrentFolder(), m_index);
+			if (isUrl)
+			{
+				metaData[BookmarksModel::UrlRole] = QUrl(m_ui->addressLineEdit->text());
+			}
+
+			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), metaData, m_ui->folderComboBox->getCurrentFolder(), m_index);
 		}
 
 		const QString keyword(m_ui->keywordLineEdit->text());

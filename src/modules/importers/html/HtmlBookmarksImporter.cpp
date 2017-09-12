@@ -54,7 +54,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 	{
 		if (entryElement.tagName().toLower() == QLatin1String("hr"))
 		{
-			BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
+			BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, {}, getCurrentFolder());
 		}
 		else
 		{
@@ -77,16 +77,21 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 
 			if (type != BookmarksModel::UnknownBookmark && !matchedElement.isNull())
 			{
-				const QUrl url((type == BookmarksModel::UrlBookmark) ? matchedElement.attribute(QLatin1String("HREF")) : QUrl());
+				QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, matchedElement.toPlainText()}});
 
-				if (type == BookmarksModel::UrlBookmark && !allowDuplicates() && BookmarksManager::hasBookmark(url))
+				if (type == BookmarksModel::UrlBookmark)
 				{
-					entryElement = entryElement.nextSibling();
+					const QUrl url(matchedElement.attribute(QLatin1String("HREF")));
 
-					continue;
+					if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
+					{
+						entryElement = entryElement.nextSibling();
+
+						continue;
+					}
+
+					metaData[BookmarksModel::UrlRole] = url;
 				}
-
-				BookmarksItem *bookmark(BookmarksManager::addBookmark(type, url, matchedElement.toPlainText(), getCurrentFolder()));
 
 				if (matchedElement.hasAttribute(QLatin1String("SHORTCUTURL")))
 				{
@@ -94,49 +99,52 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 
 					if (!keyword.isEmpty() && !BookmarksManager::hasKeyword(keyword))
 					{
-						bookmark->setData(keyword, BookmarksModel::KeywordRole);
+						metaData[BookmarksModel::KeywordRole] = keyword;
 					}
 				}
 
 				if (matchedElement.hasAttribute(QLatin1String("ADD_DATE")))
 				{
-					const QDateTime time(getDateTime(matchedElement, QLatin1String("ADD_DATE")));
+					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("ADD_DATE")));
 
-					if (time.isValid())
+					if (dateTime.isValid())
 					{
-						bookmark->setData(time, BookmarksModel::TimeAddedRole);
-						bookmark->setData(time, BookmarksModel::TimeModifiedRole);
+						metaData[BookmarksModel::TimeAddedRole] = dateTime;
+						metaData[BookmarksModel::TimeModifiedRole] = dateTime;
 					}
 				}
 
 				if (matchedElement.hasAttribute(QLatin1String("LAST_MODIFIED")))
 				{
-					const QDateTime time(getDateTime(matchedElement, QLatin1String("LAST_MODIFIED")));
+					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_MODIFIED")));
 
-					if (time.isValid())
+					if (dateTime.isValid())
 					{
-						bookmark->setData(time, BookmarksModel::TimeModifiedRole);
+						metaData[BookmarksModel::TimeModifiedRole] = dateTime;
 					}
 				}
+
+				if (type == BookmarksModel::UrlBookmark && matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
+				{
+					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_VISITED")));
+
+					if (dateTime.isValid())
+					{
+						metaData[BookmarksModel::TimeVisitedRole] = dateTime;
+					}
+				}
+
+				BookmarksItem *bookmark(BookmarksManager::addBookmark(type, metaData, getCurrentFolder()));
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
 					setCurrentFolder(bookmark);
 					processElement(entryElement);
 				}
-				else if (matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
-				{
-					const QDateTime time(getDateTime(matchedElement, QLatin1String("LAST_VISITED")));
-
-					if (time.isValid())
-					{
-						bookmark->setData(time, BookmarksModel::TimeVisitedRole);
-					}
-				}
 
 				if (entryElement.nextSibling().tagName().toLower() == QLatin1String("dd"))
 				{
-					bookmark->setData(entryElement.nextSibling().toPlainText(), BookmarksModel::DescriptionRole);
+					bookmark->setItemData(entryElement.nextSibling().toPlainText(), BookmarksModel::DescriptionRole);
 
 					entryElement = entryElement.nextSibling();
 				}
@@ -233,7 +241,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 			if (m_optionsWidget->isImportingIntoSubfolder())
 			{
-				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName()));
+				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, m_optionsWidget->getSubfolderName()}}));
 			}
 		}
 		else

@@ -554,11 +554,11 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 		{
 			if (m_dropBookmark)
 			{
-				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, urls.at(i), QString(), m_dropBookmark);
+				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, urls.at(i)}}, m_dropBookmark);
 			}
 			else
 			{
-				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, urls.at(i), QString(), m_bookmark, (m_dropIndex + i));
+				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, urls.at(i)}}, m_bookmark, (m_dropIndex + i));
 			}
 		}
 	}

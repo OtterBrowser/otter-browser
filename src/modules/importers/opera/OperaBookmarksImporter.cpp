@@ -134,7 +134,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 			if (m_optionsWidget->isImportingIntoSubfolder())
 			{
-				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName(), BookmarksManager::getModel()->getRootItem()));
+				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, m_optionsWidget->getSubfolderName()}}, BookmarksManager::getModel()->getRootItem()));
 			}
 			else
 			{
@@ -165,17 +165,17 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 		if (line.startsWith(QLatin1String("#URL")))
 		{
-			bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, QUrl(), QString(), getCurrentFolder());
+			bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {}, getCurrentFolder());
 			type = UrlEntry;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
-			bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), QString(), getCurrentFolder());
+			bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, {}, getCurrentFolder());
 			type = FolderStartEntry;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
-			bookmark = BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
+			bookmark = BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, {}, getCurrentFolder());
 			type = SeparatorEntry;
 		}
 		else if (line == QLatin1String("-"))

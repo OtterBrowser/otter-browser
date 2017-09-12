@@ -636,7 +636,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 						if (windowItem && !Utils::isUrlEmpty(windowItem->getActiveWindow()->getUrl()))
 						{
-							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, windowItem->getActiveWindow()->getUrl(), windowItem->getActiveWindow()->getTitle(), (parameters.contains(QLatin1String("folder")) ? BookmarksManager::getBookmark(parameters[QLatin1String("folder")].toULongLong()) : nullptr));
+							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, windowItem->getActiveWindow()->getUrl()}, {BookmarksModel::TitleRole, windowItem->getActiveWindow()->getTitle()}}, (parameters.contains(QLatin1String("folder")) ? BookmarksManager::getBookmark(parameters[QLatin1String("folder")].toULongLong()) : nullptr));
 						}
 					}
 				}

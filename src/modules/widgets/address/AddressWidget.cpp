@@ -727,7 +727,7 @@ void AddressWidget::addBookmark(QAction *action)
 		}
 		else
 		{
-			BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, url, m_window->getTitle(), BookmarksManager::getModel()->getItem(action->data().toString()));
+			BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}, {BookmarksModel::TitleRole, m_window->getTitle()}}, BookmarksManager::getModel()->getItem(action->data().toString()));
 		}
 	}
 }

@@ -132,24 +132,14 @@ BookmarksModel* BookmarksManager::getModel()
 	return m_model;
 }
 
-BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent, int index)
+BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksItem *parent, int index)
 {
 	if (!m_model)
 	{
 		getModel();
 	}
 
-	if (type == BookmarksModel::SeparatorBookmark)
-	{
-		return m_model->addBookmark(type, {}, parent, index);
-	}
-
-	if (type == BookmarksModel::FolderBookmark)
-	{
-		return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}}, parent, index);
-	}
-
-	return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}, {BookmarksModel::UrlRole, url}}, parent, index);
+	return m_model->addBookmark(type, metaData, parent, index);
 }
 
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
