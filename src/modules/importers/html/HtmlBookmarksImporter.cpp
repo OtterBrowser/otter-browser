@@ -77,7 +77,6 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 
 			if (type != BookmarksModel::UnknownBookmark && !matchedElement.isNull())
 			{
-				const QString keyword(matchedElement.attribute(QLatin1String("SHORTCUTURL")));
 				const QUrl url((type == BookmarksModel::UrlBookmark) ? matchedElement.attribute(QLatin1String("HREF")) : QUrl());
 
 				if (type == BookmarksModel::UrlBookmark && !allowDuplicates() && BookmarksManager::hasBookmark(url))
@@ -89,33 +88,50 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 
 				BookmarksItem *bookmark(BookmarksManager::addBookmark(type, url, matchedElement.toPlainText(), getCurrentFolder()));
 
-				if (!keyword.isEmpty() && !BookmarksManager::hasKeyword(keyword))
+				if (matchedElement.hasAttribute(QLatin1String("SHORTCUTURL")))
 				{
-					bookmark->setData(keyword, BookmarksModel::KeywordRole);
+					const QString keyword(matchedElement.attribute(QLatin1String("SHORTCUTURL")));
+
+					if (!keyword.isEmpty() && !BookmarksManager::hasKeyword(keyword))
+					{
+						bookmark->setData(keyword, BookmarksModel::KeywordRole);
+					}
 				}
 
-				if (!matchedElement.attribute(QLatin1String("ADD_DATE")).isEmpty())
+				if (matchedElement.hasAttribute(QLatin1String("ADD_DATE")))
 				{
-					const QDateTime time(QDateTime::fromTime_t(matchedElement.attribute(QLatin1String("ADD_DATE")).toUInt()));
+					const QDateTime time(getDateTime(matchedElement, QLatin1String("ADD_DATE")));
 
-					bookmark->setData(time, BookmarksModel::TimeAddedRole);
-					bookmark->setData(time, BookmarksModel::TimeModifiedRole);
+					if (time.isValid())
+					{
+						bookmark->setData(time, BookmarksModel::TimeAddedRole);
+						bookmark->setData(time, BookmarksModel::TimeModifiedRole);
+					}
 				}
 
-				if (!matchedElement.attribute(QLatin1String("LAST_MODIFIED")).isEmpty())
+				if (matchedElement.hasAttribute(QLatin1String("LAST_MODIFIED")))
 				{
-					bookmark->setData(QDateTime::fromTime_t(matchedElement.attribute(QLatin1String("LAST_MODIFIED")).toUInt()), BookmarksModel::TimeModifiedRole);
-				}
+					const QDateTime time(getDateTime(matchedElement, QLatin1String("LAST_MODIFIED")));
 
-				if (!matchedElement.attribute(QLatin1String("LAST_VISITED")).isEmpty())
-				{
-					bookmark->setData(QDateTime::fromTime_t(matchedElement.attribute(QLatin1String("LAST_VISITED")).toUInt()), BookmarksModel::TimeVisitedRole);
+					if (time.isValid())
+					{
+						bookmark->setData(time, BookmarksModel::TimeModifiedRole);
+					}
 				}
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
 					setCurrentFolder(bookmark);
 					processElement(entryElement);
+				}
+				else if (matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
+				{
+					const QDateTime time(getDateTime(matchedElement, QLatin1String("LAST_VISITED")));
+
+					if (time.isValid())
+					{
+						bookmark->setData(time, BookmarksModel::TimeVisitedRole);
+					}
 				}
 
 				if (entryElement.nextSibling().tagName().toLower() == QLatin1String("dd"))
@@ -178,6 +194,21 @@ QUrl HtmlBookmarksImporter::getHomePage() const
 {
 	return QUrl(QLatin1String("https://otter-browser.org/"));
 }
+
+#ifdef OTTER_ENABLE_QTWEBKIT
+QDateTime HtmlBookmarksImporter::getDateTime(const QWebElement &element, const QString &attribute)
+{
+#if QT_VERSION < 0x050800
+	const uint seconds(element.attribute(attribute).toUInt());
+
+	return ((seconds > 0) ? QDateTime::fromTime_t(seconds) : QDateTime());
+#else
+	const qint64 seconds(element.attribute(attribute).toLongLong());
+
+	return ((seconds != 0) ? QDateTime::fromSecsSinceEpoch(seconds) : QDateTime());
+#endif
+}
+#endif
 
 QStringList HtmlBookmarksImporter::getFileFilters() const
 {

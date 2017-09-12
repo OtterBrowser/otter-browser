@@ -55,6 +55,7 @@ public slots:
 #ifdef OTTER_ENABLE_QTWEBKIT
 protected:
 	void processElement(const QWebElement &element);
+	static QDateTime getDateTime(const QWebElement &element, const QString &attribute);
 #endif
 
 private:
