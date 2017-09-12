@@ -93,7 +93,7 @@ public:
 
 	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = nullptr);
 
-	void beginImport(BookmarksItem *target, int estimatedAmount = 0);
+	void beginImport(BookmarksItem *target, int estimatedUrlsAmount = 0, int estimatedKeywordsAmount = 0);
 	void endImport();
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);

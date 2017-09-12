@@ -313,17 +313,21 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 	connect(this, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(modelModified()));
 }
 
-void BookmarksModel::beginImport(BookmarksItem *target, int estimatedAmount)
+void BookmarksModel::beginImport(BookmarksItem *target, int estimatedUrlsAmount, int estimatedKeywordsAmount)
 {
 	m_importTargetItem = target;
 
 	beginResetModel();
 	blockSignals(true);
 
-	if (estimatedAmount > 0)
+	if (estimatedUrlsAmount > 0)
 	{
-		m_urls.reserve(estimatedAmount * 0.9);
-		m_keywords.reserve(estimatedAmount * 0.5);
+		m_urls.reserve(m_urls.count() + estimatedUrlsAmount);
+	}
+
+	if (estimatedKeywordsAmount > 0)
+	{
+		m_keywords.reserve(m_keywords.count() + estimatedKeywordsAmount);
 	}
 }
 
