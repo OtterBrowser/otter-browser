@@ -759,6 +759,42 @@ void BookmarksModel::emptyTrash()
 	emit modelModified();
 }
 
+void BookmarksModel::handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword)
+{
+	if (!oldKeyword.isEmpty() && m_keywords.contains(oldKeyword))
+	{
+		m_keywords.remove(oldKeyword);
+	}
+
+	if (!newKeyword.isEmpty())
+	{
+		m_keywords[newKeyword] = bookmark;
+	}
+}
+
+void BookmarksModel::handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl)
+{
+	if (!oldUrl.isEmpty() && m_urls.contains(oldUrl))
+	{
+		m_urls[oldUrl].removeAll(bookmark);
+
+		if (m_urls[oldUrl].isEmpty())
+		{
+			m_urls.remove(oldUrl);
+		}
+	}
+
+	if (!newUrl.isEmpty())
+	{
+		if (!m_urls.contains(newUrl))
+		{
+			m_urls[newUrl] = QVector<BookmarksItem*>();
+		}
+
+		m_urls[newUrl].append(bookmark);
+	}
+}
+
 void BookmarksModel::notifyBookmarkModified(const QModelIndex &index)
 {
 	BookmarksItem *bookmark(getBookmark(index));
@@ -1189,43 +1225,11 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 
 	if (role == UrlRole && value.toUrl() != index.data(UrlRole).toUrl())
 	{
-		const QUrl oldUrl(Utils::normalizeUrl(index.data(UrlRole).toUrl()));
-		const QUrl newUrl(Utils::normalizeUrl(value.toUrl()));
-
-		if (!oldUrl.isEmpty() && m_urls.contains(oldUrl))
-		{
-			m_urls[oldUrl].removeAll(bookmark);
-
-			if (m_urls[oldUrl].isEmpty())
-			{
-				m_urls.remove(oldUrl);
-			}
-		}
-
-		if (!newUrl.isEmpty())
-		{
-			if (!m_urls.contains(newUrl))
-			{
-				m_urls[newUrl] = QVector<BookmarksItem*>();
-			}
-
-			m_urls[newUrl].append(bookmark);
-		}
+		handleUrlChanged(bookmark, Utils::normalizeUrl(value.toUrl()), Utils::normalizeUrl(index.data(UrlRole).toUrl()));
 	}
 	else if (role == KeywordRole && value.toString() != index.data(KeywordRole).toString())
 	{
-		const QString oldKeyword(index.data(KeywordRole).toString());
-		const QString newKeyword(value.toString());
-
-		if (!oldKeyword.isEmpty() && m_keywords.contains(oldKeyword))
-		{
-			m_keywords.remove(oldKeyword);
-		}
-
-		if (!newKeyword.isEmpty())
-		{
-			m_keywords[newKeyword] = bookmark;
-		}
+		handleKeywordChanged(bookmark, value.toString(), index.data(KeywordRole).toString());
 	}
 	else if (m_mode == NotesMode && role == DescriptionRole)
 	{

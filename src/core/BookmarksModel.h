@@ -126,6 +126,8 @@ protected:
 	void writeBookmark(QXmlStreamWriter *writer, BookmarksItem *bookmark) const;
 	void removeBookmarkUrl(BookmarksItem *bookmark);
 	void readdBookmarkUrl(BookmarksItem *bookmark);
+	void handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword);
+	void handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl);
 
 protected slots:
 	void notifyBookmarkModified(const QModelIndex &index);
