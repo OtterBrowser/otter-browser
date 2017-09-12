@@ -88,15 +88,17 @@ BookmarksItem* NotesManager::addNote(BookmarksModel::BookmarkType type, const QU
 		getModel();
 	}
 
-	BookmarksItem *bookmark(m_model->addBookmark(type, 0, url, title, parent));
-
-	if (bookmark)
+	if (type == BookmarksModel::SeparatorBookmark)
 	{
-		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeAddedRole);
-		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeModifiedRole);
+		return m_model->addBookmark(type, {}, parent);
 	}
 
-	return bookmark;
+	if (type == BookmarksModel::FolderBookmark || url.isEmpty())
+	{
+		return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}}, parent);
+	}
+
+	return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}, {BookmarksModel::UrlRole, url}}, parent);
 }
 
 }

@@ -148,7 +148,7 @@ void StartPageModel::addTile(const QUrl &url)
 
 			if (!hasFound)
 			{
-				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, 0, QUrl(), directories.at(i), m_bookmark);
+				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, directories.at(i)}}, m_bookmark);
 			}
 		}
 
@@ -156,7 +156,7 @@ void StartPageModel::addTile(const QUrl &url)
 		connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
 	}
 
-	const BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), m_bookmark));
+	const BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}}, m_bookmark));
 
 	if (bookmark)
 	{

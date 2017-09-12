@@ -415,7 +415,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 
 	if (reader->name() == QLatin1String("folder"))
 	{
-		bookmark = addBookmark(FolderBookmark, reader->attributes().value(QLatin1String("id")).toULongLong(), QUrl(), QString(), parent);
+		bookmark = addBookmark(FolderBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}}, parent);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), TimeAddedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), TimeModifiedRole);
 
@@ -490,7 +490,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
-		bookmark = addBookmark(UrlBookmark,reader->attributes().value(QLatin1String("id")).toULongLong(), reader->attributes().value(QLatin1String("href")).toString(), QString(), parent);
+		bookmark = addBookmark(UrlBookmark, {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {UrlRole, reader->attributes().value(QLatin1String("href")).toString()}}, parent);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), TimeAddedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), TimeModifiedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate), TimeVisitedRole);
@@ -566,7 +566,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 	}
 	else if (reader->name() == QLatin1String("separator"))
 	{
-		addBookmark(SeparatorBookmark, 0, QUrl(), QString(), parent);
+		addBookmark(SeparatorBookmark, {}, parent);
 
 		reader->readNext();
 	}
@@ -805,7 +805,7 @@ void BookmarksModel::notifyBookmarkModified(const QModelIndex &index)
 	}
 }
 
-BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent, int index)
+BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksItem *parent, int index)
 {
 	BookmarksItem *bookmark(new BookmarksItem());
 
@@ -823,25 +823,38 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 		bookmark->setDropEnabled(false);
 	}
 
-	bookmark->setData(type, TypeRole);
-	bookmark->setData(url, UrlRole);
-	bookmark->setData(title, TitleRole);
-
-	if (type != RootBookmark && type != TrashBookmark && type != FolderBookmark)
+	if (type == FolderBookmark || type == UrlBookmark)
 	{
-		bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
-	}
+		const QModelIndex index(bookmark->index());
+		const QDateTime currentDateTime(QDateTime::currentDateTime());
+		quint64 identifier(metaData.value(IdentifierRole).toULongLong());
 
-	if (type != TrashBookmark && type != UnknownBookmark)
-	{
 		if (identifier == 0 || m_identifiers.contains(identifier))
 		{
 			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
 		}
 
-		bookmark->setData(identifier, IdentifierRole);
-
 		m_identifiers[identifier] = bookmark;
+
+		QStandardItemModel::setData(index, identifier, IdentifierRole);
+		QStandardItemModel::setData(index, type, TypeRole);
+		QStandardItemModel::setData(index, metaData.value(TitleRole), TitleRole);
+		QStandardItemModel::setData(index, currentDateTime, TimeAddedRole);
+		QStandardItemModel::setData(index, currentDateTime, TimeModifiedRole);
+
+		if (type == UrlBookmark)
+		{
+			const QUrl url(metaData.value(UrlRole).toUrl());
+
+			if (!url.isEmpty())
+			{
+				QStandardItemModel::setData(index, url, UrlRole);
+
+				handleUrlChanged(bookmark, url);
+			}
+
+			bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
+		}
 	}
 
 	emit bookmarkAdded(bookmark);
@@ -1170,7 +1183,7 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				addBookmark(UrlBookmark, 0, urls.at(i), (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString()), getBookmark(parent), row);
+				addBookmark(UrlBookmark, {{UrlRole, urls.at(i)}, {TitleRole, (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString())}}, getBookmark(parent), row);
 			}
 
 			return true;

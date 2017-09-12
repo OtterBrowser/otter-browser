@@ -96,7 +96,7 @@ public:
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);
 	void removeBookmark(BookmarksItem *bookmark);
-	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = {}, const QString &title = {}, BookmarksItem *parent = nullptr, int index = -1);
+	BookmarksItem* addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksItem *parent = nullptr, int index = -1);
 	BookmarksItem* getBookmark(const QString &keyword) const;
 	BookmarksItem* getBookmark(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(quint64 identifier) const;
@@ -126,8 +126,8 @@ protected:
 	void writeBookmark(QXmlStreamWriter *writer, BookmarksItem *bookmark) const;
 	void removeBookmarkUrl(BookmarksItem *bookmark);
 	void readdBookmarkUrl(BookmarksItem *bookmark);
-	void handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword);
-	void handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl);
+	void handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword = {});
+	void handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl = {});
 
 protected slots:
 	void notifyBookmarkModified(const QModelIndex &index);

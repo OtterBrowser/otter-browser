@@ -139,15 +139,17 @@ BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, 
 		getModel();
 	}
 
-	BookmarksItem *bookmark(m_model->addBookmark(type, 0, url, title, parent, index));
-
-	if (bookmark)
+	if (type == BookmarksModel::SeparatorBookmark)
 	{
-		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeAddedRole);
-		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeModifiedRole);
+		return m_model->addBookmark(type, {}, parent, index);
 	}
 
-	return bookmark;
+	if (type == BookmarksModel::FolderBookmark)
+	{
+		return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}}, parent, index);
+	}
+
+	return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}, {BookmarksModel::UrlRole, url}}, parent, index);
 }
 
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
