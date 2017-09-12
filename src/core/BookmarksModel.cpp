@@ -826,7 +826,6 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 	if (type == FolderBookmark || type == UrlBookmark)
 	{
 		const QModelIndex index(bookmark->index());
-		const QDateTime currentDateTime(QDateTime::currentDateTime());
 		quint64 identifier(metaData.value(IdentifierRole).toULongLong());
 
 		if (identifier == 0 || m_identifiers.contains(identifier))
@@ -836,11 +835,18 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 
 		m_identifiers[identifier] = bookmark;
 
+		if (!metaData.contains(TimeAddedRole) || !metaData.contains(TimeModifiedRole))
+		{
+			const QDateTime currentDateTime(QDateTime::currentDateTime());
+
+			QStandardItemModel::setData(index, currentDateTime, TimeAddedRole);
+			QStandardItemModel::setData(index, currentDateTime, TimeModifiedRole);
+		}
+
+		setItemData(index, metaData);
+
 		QStandardItemModel::setData(index, identifier, IdentifierRole);
 		QStandardItemModel::setData(index, type, TypeRole);
-		QStandardItemModel::setData(index, metaData.value(TitleRole), TitleRole);
-		QStandardItemModel::setData(index, currentDateTime, TimeAddedRole);
-		QStandardItemModel::setData(index, currentDateTime, TimeModifiedRole);
 
 		if (type == UrlBookmark)
 		{
@@ -848,8 +854,6 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 
 			if (!url.isEmpty())
 			{
-				QStandardItemModel::setData(index, url, UrlRole);
-
 				handleUrlChanged(bookmark, url);
 			}
 
