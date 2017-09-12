@@ -51,7 +51,7 @@ void BookmarksComboBoxWidget::createFolder()
 
 				break;
 			case BookmarksModel::NotesMode:
-				setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder()));
+				setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, getCurrentFolder()));
 
 				break;
 			default:

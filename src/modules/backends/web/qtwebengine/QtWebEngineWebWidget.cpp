@@ -759,10 +759,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::CopyToNoteAction:
-			{
-				BookmarksItem *note(NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl()));
-				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
-			}
+			NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl()}, {BookmarksModel::DescriptionRole, getSelectedText()}});
 
 			return;
 		case ActionsManager::PasteAction:

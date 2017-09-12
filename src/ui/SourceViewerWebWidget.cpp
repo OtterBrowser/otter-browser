@@ -200,10 +200,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			return;
 		case ActionsManager::CopyToNoteAction:
-			{
-				BookmarksItem *note(NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl()));
-				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
-			}
+			NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl()}, {BookmarksModel::DescriptionRole, getSelectedText()}});
 
 			return;
 		case ActionsManager::PasteAction:

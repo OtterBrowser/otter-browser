@@ -202,17 +202,17 @@ bool OperaNotesImporter::import(const QString &path)
 
 		if (line.startsWith(QLatin1String("#NOTE")))
 		{
-			note = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), getCurrentFolder());
+			note = NotesManager::addNote(BookmarksModel::UrlBookmark, {}, getCurrentFolder());
 			type = NoteEntry;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
-			note = NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), QString(), getCurrentFolder());
+			note = NotesManager::addNote(BookmarksModel::FolderBookmark, {}, getCurrentFolder());
 			type = FolderStartEntry;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
-			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
+			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, getCurrentFolder());
 			type = SeparatorEntry;
 		}
 		else if (line == QLatin1String("-"))

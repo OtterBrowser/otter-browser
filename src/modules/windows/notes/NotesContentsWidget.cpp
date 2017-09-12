@@ -98,7 +98,7 @@ void NotesContentsWidget::changeEvent(QEvent *event)
 
 void NotesContentsWidget::addNote()
 {
-	NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex()));
+	NotesManager::addNote(BookmarksModel::UrlBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::addFolder()
@@ -107,13 +107,13 @@ void NotesContentsWidget::addFolder()
 
 	if (!title.isEmpty())
 	{
-		NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, findFolder(m_ui->notesViewWidget->currentIndex()));
+		NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, findFolder(m_ui->notesViewWidget->currentIndex()));
 	}
 }
 
 void NotesContentsWidget::addSeparator()
 {
-	NotesManager::addNote(BookmarksModel::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex()));
+	NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::removeNote()
@@ -232,8 +232,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 		case ActionsManager::PasteAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex())));
-				bookmark->setData(QGuiApplication::clipboard()->text(), BookmarksModel::DescriptionRole);
+				BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, QGuiApplication::clipboard()->text()}}, findFolder(m_ui->notesViewWidget->currentIndex())));
 			}
 
 			break;
@@ -293,10 +292,12 @@ void NotesContentsWidget::updateText()
 	}
 	else
 	{
-		BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(index)));
-		bookmark->setData(m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
+		const BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, m_ui->textEdit->toPlainText()}}, findFolder(index)));
 
-		m_ui->notesViewWidget->setCurrentIndex(bookmark->index());
+		if (bookmark)
+		{
+			m_ui->notesViewWidget->setCurrentIndex(bookmark->index());
+		}
 
 		updateActions(false);
 	}

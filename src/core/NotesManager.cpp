@@ -81,24 +81,14 @@ BookmarksModel* NotesManager::getModel()
 	return m_model;
 }
 
-BookmarksItem* NotesManager::addNote(BookmarksModel::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent)
+BookmarksItem* NotesManager::addNote(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksItem *parent)
 {
 	if (!m_model)
 	{
 		getModel();
 	}
 
-	if (type == BookmarksModel::SeparatorBookmark)
-	{
-		return m_model->addBookmark(type, {}, parent);
-	}
-
-	if (type == BookmarksModel::FolderBookmark || url.isEmpty())
-	{
-		return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}}, parent);
-	}
-
-	return m_model->addBookmark(type, {{BookmarksModel::TitleRole, title}, {BookmarksModel::UrlRole, url}}, parent);
+	return m_model->addBookmark(type, metaData, parent);
 }
 
 }

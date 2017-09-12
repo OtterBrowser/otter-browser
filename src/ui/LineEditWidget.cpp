@@ -316,7 +316,7 @@ void LineEditWidget::copyToNote()
 
 	if (!note.isEmpty())
 	{
-		NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), note);
+		NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, note}});
 	}
 }
 

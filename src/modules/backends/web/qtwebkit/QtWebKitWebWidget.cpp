@@ -1401,7 +1401,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::CopyToNoteAction:
-			NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl())->setData(getSelectedText(), BookmarksModel::DescriptionRole);
+			NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl()}, {BookmarksModel::DescriptionRole, getSelectedText()}});
 
 			return;
 		case ActionsManager::PasteAction:

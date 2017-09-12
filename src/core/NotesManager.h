@@ -35,7 +35,7 @@ public:
 	static void createInstance();
 	static NotesManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarksItem* addNote(BookmarksModel::BookmarkType type, const QUrl &url = {}, const QString &title = {}, BookmarksItem *parent = nullptr);
+	static BookmarksItem* addNote(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksItem *parent = nullptr);
 
 protected:
 	explicit NotesManager(QObject *parent);
