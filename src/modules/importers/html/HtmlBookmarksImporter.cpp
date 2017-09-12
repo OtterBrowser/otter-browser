@@ -102,11 +102,6 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 					bookmark->setData(time, BookmarksModel::TimeModifiedRole);
 				}
 
-				if (!matchedElement.attribute(QLatin1String("ADD_DATE")).isEmpty())
-				{
-					bookmark->setData(QDateTime::fromTime_t(matchedElement.attribute(QLatin1String("ADD_DATE")).toUInt()), BookmarksModel::TimeAddedRole);
-				}
-
 				if (!matchedElement.attribute(QLatin1String("LAST_MODIFIED")).isEmpty())
 				{
 					bookmark->setData(QDateTime::fromTime_t(matchedElement.attribute(QLatin1String("LAST_MODIFIED")).toUInt()), BookmarksModel::TimeModifiedRole);
