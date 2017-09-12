@@ -818,14 +818,12 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 {
 	BookmarksItem *bookmark(new BookmarksItem());
 
-	if (parent)
+	if (!parent)
 	{
-		parent->insertRow(((index < 0) ? parent->rowCount() : index), bookmark);
+		parent = getRootItem();
 	}
-	else
-	{
-		getRootItem()->insertRow(((index < 0) ? getRootItem()->rowCount() : index), bookmark);
-	}
+
+	parent->insertRow(((index < 0) ? parent->rowCount() : index), bookmark);
 
 	if (type == UrlBookmark || type == SeparatorBookmark)
 	{
@@ -834,7 +832,6 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 
 	if (type == FolderBookmark || type == UrlBookmark)
 	{
-		const QModelIndex index(bookmark->index());
 		quint64 identifier(metaData.value(IdentifierRole).toULongLong());
 
 		if (identifier == 0 || m_identifiers.contains(identifier))
@@ -844,18 +841,17 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 
 		m_identifiers[identifier] = bookmark;
 
+		setItemData(bookmark->index(), metaData);
+
+		bookmark->setItemData(identifier, IdentifierRole);
+
 		if (!metaData.contains(TimeAddedRole) || !metaData.contains(TimeModifiedRole))
 		{
 			const QDateTime currentDateTime(QDateTime::currentDateTime());
 
-			QStandardItemModel::setData(index, currentDateTime, TimeAddedRole);
-			QStandardItemModel::setData(index, currentDateTime, TimeModifiedRole);
+			bookmark->setItemData(currentDateTime, TimeAddedRole);
+			bookmark->setItemData(currentDateTime, TimeModifiedRole);
 		}
-
-		setItemData(index, metaData);
-
-		QStandardItemModel::setData(index, identifier, IdentifierRole);
-		QStandardItemModel::setData(index, type, TypeRole);
 
 		if (type == UrlBookmark)
 		{
@@ -869,6 +865,8 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 			bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
 		}
 	}
+
+	bookmark->setItemData(type, TypeRole);
 
 	emit bookmarkAdded(bookmark);
 	emit modelModified();
