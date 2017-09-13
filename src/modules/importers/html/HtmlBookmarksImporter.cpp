@@ -83,7 +83,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 				{
 					const QUrl url(matchedElement.attribute(QLatin1String("HREF")));
 
-					if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
+					if (!areDuplicatesAllowed() && BookmarksManager::hasBookmark(url))
 					{
 						entryElement = entryElement.nextSibling();
 
@@ -255,7 +255,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 	page.settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 	page.mainFrame()->setHtml(file.readAll());
 
-	BookmarksManager::getModel()->beginImport(getCurrentFolder(), page.mainFrame()->findAllElements(QLatin1String("a[href]")).count(), page.mainFrame()->findAllElements(QLatin1String("a[shortcuturl]")).count());
+	BookmarksManager::getModel()->beginImport(getImportFolder(), page.mainFrame()->findAllElements(QLatin1String("a[href]")).count(), page.mainFrame()->findAllElements(QLatin1String("a[shortcuturl]")).count());
 
 	processElement(page.mainFrame()->documentElement().findFirst(QLatin1String("dl")));
 

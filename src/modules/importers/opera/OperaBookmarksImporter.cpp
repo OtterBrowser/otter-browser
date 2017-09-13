@@ -186,7 +186,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 		{
 			const QUrl url(line.section(QLatin1Char('='), 1, -1));
 
-			if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
+			if (!areDuplicatesAllowed() && BookmarksManager::hasBookmark(url))
 			{
 				bookmark->remove();
 				bookmark = nullptr;

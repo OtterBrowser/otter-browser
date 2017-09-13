@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "BookmarksImporter.h"
-#include "BookmarksManager.h"
 
 namespace Otter
 {
@@ -27,7 +26,7 @@ namespace Otter
 BookmarksImporter::BookmarksImporter(QObject *parent): Importer(parent),
 	m_currentFolder(nullptr),
 	m_importFolder(nullptr),
-	m_allowDuplicates(true)
+	m_areDuplicatesAllowed(true)
 {
 	setImportFolder(BookmarksManager::getModel()->getRootItem());
 }
@@ -57,7 +56,7 @@ void BookmarksImporter::removeAllBookmarks()
 
 void BookmarksImporter::setAllowDuplicates(bool allow)
 {
-	m_allowDuplicates = allow;
+	m_areDuplicatesAllowed = allow;
 }
 
 void BookmarksImporter::setCurrentFolder(BookmarksItem *folder)
@@ -76,14 +75,19 @@ BookmarksItem* BookmarksImporter::getCurrentFolder() const
 	return m_currentFolder;
 }
 
+BookmarksItem* BookmarksImporter::getImportFolder() const
+{
+	return m_importFolder;
+}
+
 Importer::ImportType BookmarksImporter::getImportType() const
 {
 	return BookmarksImport;
 }
 
-bool BookmarksImporter::allowDuplicates() const
+bool BookmarksImporter::areDuplicatesAllowed() const
 {
-	return m_allowDuplicates;
+	return m_areDuplicatesAllowed;
 }
 
 }
