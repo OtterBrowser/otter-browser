@@ -45,7 +45,7 @@ void BookmarksImporter::goToParent()
 
 	if (!m_currentFolder)
 	{
-		m_currentFolder = BookmarksManager::getModel()->getRootItem();
+		m_currentFolder = (m_importFolder ? m_importFolder : BookmarksManager::getModel()->getRootItem());
 	}
 }
 
