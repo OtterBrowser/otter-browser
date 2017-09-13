@@ -20,9 +20,11 @@
 
 #include "OperaNotesImporter.h"
 #include "../../../core/NotesManager.h"
+#include "../../../ui/BookmarksComboBoxWidget.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
 #include <QtWidgets/QFormLayout>
@@ -32,11 +34,10 @@ namespace Otter
 
 OperaNotesImporter::OperaNotesImporter(QObject *parent): Importer(parent),
 	m_folderComboBox(nullptr),
-	m_currentFolder(nullptr),
-	m_importFolder(nullptr),
+	m_currentFolder(NotesManager::getModel()->getRootItem()),
+	m_importFolder(NotesManager::getModel()->getRootItem()),
 	m_optionsWidget(nullptr)
 {
-	setImportFolder(NotesManager::getModel()->getRootItem());
 }
 
 OperaNotesImporter::~OperaNotesImporter()
@@ -45,40 +46,6 @@ OperaNotesImporter::~OperaNotesImporter()
 	{
 		m_optionsWidget->deleteLater();
 	}
-}
-
-void OperaNotesImporter::goToParent()
-{
-	if (m_currentFolder == m_importFolder)
-	{
-		return;
-	}
-
-	if (m_currentFolder)
-	{
-		m_currentFolder = static_cast<BookmarksItem*>(m_currentFolder->parent());
-	}
-
-	if (!m_currentFolder)
-	{
-		m_currentFolder = NotesManager::getModel()->getRootItem();
-	}
-}
-
-void OperaNotesImporter::setCurrentFolder(BookmarksItem *folder)
-{
-	m_currentFolder = folder;
-}
-
-void OperaNotesImporter::setImportFolder(BookmarksItem *folder)
-{
-	m_importFolder = folder;
-	m_currentFolder = folder;
-}
-
-BookmarksItem* OperaNotesImporter::getCurrentFolder() const
-{
-	return m_currentFolder;
 }
 
 QWidget* OperaNotesImporter::getOptionsWidget()
@@ -182,8 +149,11 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (m_optionsWidget)
 	{
-		setImportFolder(m_folderComboBox->getCurrentFolder());
+		m_importFolder = m_folderComboBox->getCurrentFolder();
+		m_currentFolder = m_importFolder;
 	}
+
+	NotesManager::getModel()->beginImport(m_importFolder, ((file.size() > 0) ? (file.size() / 250) : 0));
 
 	BookmarksItem *note(nullptr);
 	OperaNoteEntry type(NoEntry);
@@ -202,17 +172,17 @@ bool OperaNotesImporter::import(const QString &path)
 
 		if (line.startsWith(QLatin1String("#NOTE")))
 		{
-			note = NotesManager::addNote(BookmarksModel::UrlBookmark, {}, getCurrentFolder());
+			note = NotesManager::addNote(BookmarksModel::UrlBookmark, {}, m_currentFolder);
 			type = NoteEntry;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
-			note = NotesManager::addNote(BookmarksModel::FolderBookmark, {}, getCurrentFolder());
+			note = NotesManager::addNote(BookmarksModel::FolderBookmark, {}, m_currentFolder);
 			type = FolderStartEntry;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
-			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, getCurrentFolder());
+			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, m_currentFolder);
 			type = SeparatorEntry;
 		}
 		else if (line == QLatin1String("-"))
@@ -239,19 +209,29 @@ bool OperaNotesImporter::import(const QString &path)
 			{
 				if (type == FolderStartEntry)
 				{
-					setCurrentFolder(note);
+					m_currentFolder = note;
 				}
 
 				note = nullptr;
 			}
-			else if (type == FolderEndEntry)
+			else if (type == FolderEndEntry && m_currentFolder != m_importFolder)
 			{
-				goToParent();
+				if (m_currentFolder)
+				{
+					m_currentFolder = static_cast<BookmarksItem*>(m_currentFolder->parent());
+				}
+
+				if (!m_currentFolder)
+				{
+					m_currentFolder = (m_importFolder ? m_importFolder : NotesManager::getModel()->getRootItem());
+				}
 			}
 
 			type = NoEntry;
 		}
 	}
+
+	NotesManager::getModel()->endImport();
 
 	file.close();
 

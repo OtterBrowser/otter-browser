@@ -22,12 +22,12 @@
 #define OTTER_OPERANOTESIMPORTER_H
 
 #include "../../../core/Importer.h"
-#include "../../../ui/BookmarksComboBoxWidget.h"
-
-#include <QtCore/QFile>
 
 namespace Otter
 {
+
+class BookmarksComboBoxWidget;
+class BookmarksItem;
 
 class OperaNotesImporter final : public Importer
 {
@@ -37,7 +37,6 @@ public:
 	explicit OperaNotesImporter(QObject *parent = nullptr);
 	~OperaNotesImporter();
 
-	BookmarksItem* getCurrentFolder() const;
 	QWidget* getOptionsWidget() override;
 	QString getTitle() const override;
 	QString getDescription() const override;
@@ -60,10 +59,6 @@ protected:
 		FolderEndEntry,
 		SeparatorEntry
 	};
-
-	void goToParent();
-	void setCurrentFolder(BookmarksItem *folder);
-	void setImportFolder(BookmarksItem *folder);
 
 private:
 	BookmarksComboBoxWidget *m_folderComboBox;
