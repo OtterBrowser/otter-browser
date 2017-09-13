@@ -752,7 +752,6 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 			break;
 		case ToolBarsManager::SideBarType:
-			definition.currentPanel = m_definition.currentPanel;
 			definition.panels.clear();
 
 			for (int i = 0; i < m_ui->panelsViewWidget->model()->rowCount(); ++i)
@@ -763,6 +762,11 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 				{
 					definition.panels.append(item->data(TreeModel::UserRole).toString());
 				}
+			}
+
+			if (!definition.panels.contains(definition.currentPanel))
+			{
+				definition.currentPanel.clear();
 			}
 
 			break;
