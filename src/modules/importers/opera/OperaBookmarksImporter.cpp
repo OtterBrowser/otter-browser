@@ -148,6 +148,10 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 	}
 
+	const int estimatedAmount((file.size() > 0) ? (file.size() / 250) : 0);
+
+	BookmarksManager::getModel()->beginImport(getImportFolder(), estimatedAmount, qMin(estimatedAmount, 100));
+
 	BookmarksItem *bookmark(nullptr);
 	OperaBookmarkEntry type(NoEntry);
 	bool isHeader(true);
@@ -240,6 +244,8 @@ bool OperaBookmarksImporter::import(const QString &path)
 			type = NoEntry;
 		}
 	}
+
+	BookmarksManager::getModel()->endImport();
 
 	file.close();
 
