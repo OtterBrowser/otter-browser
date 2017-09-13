@@ -196,7 +196,9 @@ void SidebarWidget::selectPanel()
 
 void SidebarWidget::selectPanel(const QString &identifier)
 {
-	if (!identifier.isEmpty() && identifier == m_currentPanel)
+	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+
+	if (!identifier.isEmpty() && (identifier == m_currentPanel || !definition.panels.contains(identifier)))
 	{
 		return;
 	}
@@ -242,8 +244,6 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	m_resizerWidget->setVisible(widget != nullptr);
 
 	m_currentPanel = identifier;
-
-	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
 
 	if (identifier != definition.currentPanel)
 	{
@@ -324,12 +324,41 @@ void SidebarWidget::updatePanels()
 		return;
 	}
 
+	const QStringList panels(definition.panels);
+
 	qDeleteAll(m_buttons.begin(), m_buttons.end());
 
 	m_buttons.clear();
 
+	QHash<QString, QWidget*>::iterator iterator(m_panels.begin());
+
+	while (iterator != m_panels.end())
+	{
+		if (!panels.contains(iterator.key()))
+		{
+			iterator.value()->hide();
+
+			if (iterator.key() == m_currentPanel)
+			{
+				m_currentPanel = QString();
+
+				m_ui->panelLayout->removeWidget(iterator.value());
+				m_ui->containerWidget->hide();
+
+				m_resizerWidget->hide();
+			}
+
+			iterator.value()->deleteLater();
+
+			iterator = m_panels.erase(iterator);
+		}
+		else
+		{
+			++iterator;
+		}
+	}
+
 	QMenu *menu(new QMenu(m_ui->panelsButton));
-	const QStringList panels(definition.panels);
 	const QStringList specialPages(AddonsManager::getSpecialPages());
 
 	for (int i = 0; i < specialPages.count(); ++i)
