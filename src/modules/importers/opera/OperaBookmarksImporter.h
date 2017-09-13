@@ -22,12 +22,11 @@
 #define OTTER_OPERABOOKMARKSIMPORTER_H
 
 #include "../../../core/BookmarksImporter.h"
-#include "../../../ui/BookmarksImporterWidget.h"
-
-#include <QtCore/QFile>
 
 namespace Otter
 {
+
+class BookmarksImporterWidget;
 
 class OperaBookmarksImporter final : public BookmarksImporter
 {

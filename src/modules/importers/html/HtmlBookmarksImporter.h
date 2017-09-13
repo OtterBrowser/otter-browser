@@ -22,15 +22,15 @@
 #define OTTER_HTMLBOOKMARKSIMPORTER_H
 
 #include "../../../core/BookmarksImporter.h"
-#include "../../../ui/BookmarksImporterWidget.h"
 
-#include <QtCore/QFile>
 #ifdef OTTER_ENABLE_QTWEBKIT
 #include <QtWebKit/QWebElement>
 #endif
 
 namespace Otter
 {
+
+class BookmarksImporterWidget;
 
 class HtmlBookmarksImporter final : public BookmarksImporter
 {

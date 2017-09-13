@@ -20,9 +20,11 @@
 
 #include "OperaBookmarksImporter.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../ui/BookmarksImporterWidget.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
 

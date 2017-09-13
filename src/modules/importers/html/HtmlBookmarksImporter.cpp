@@ -20,8 +20,10 @@
 
 #include "HtmlBookmarksImporter.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../ui/BookmarksImporterWidget.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QFile>
 #ifdef OTTER_ENABLE_QTWEBKIT
 //TODO QtWebKit should not be used directly
 #include <QtWebKitWidgets/QWebPage>
