@@ -44,6 +44,7 @@ public:
 protected:
 	explicit ImportDialog(Importer *importer, QWidget *parent);
 
+	void closeEvent(QCloseEvent *event) override;
 	void changeEvent(QEvent *event) override;
 
 protected slots:

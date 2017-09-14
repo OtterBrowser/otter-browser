@@ -28,6 +28,7 @@
 
 #include "ui_ImportDialog.h"
 
+#include <QtGui/QCloseEvent>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -55,6 +56,16 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 	connect(m_ui->importPathWidget, &FilePathWidget::pathChanged, this, &ImportDialog::setPath);
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &ImportDialog::handleImportRequested);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
+}
+
+void ImportDialog::closeEvent(QCloseEvent *event)
+{
+	if (m_ui->buttonBox->button(QDialogButtonBox::Abort))
+	{
+		m_importer->cancel();
+	}
+
+	event->accept();
 }
 
 ImportDialog::~ImportDialog()
