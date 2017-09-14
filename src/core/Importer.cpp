@@ -30,6 +30,21 @@ void Importer::cancel()
 {
 }
 
+void Importer::notifyImportStarted(int type, int total)
+{
+	emit importStarted(static_cast<ImportType>(type), total);
+}
+
+void Importer::notifyImportProgress(int type, int total, int amount)
+{
+	emit importProgress(static_cast<ImportType>(type), total, amount);
+}
+
+void Importer::notifyImportFinished(int type, int result, int total)
+{
+	emit importFinished(static_cast<ImportType>(type), static_cast<ImportResult>(result), total);
+}
+
 Addon::AddonType Importer::getType() const
 {
 	return ImporterType;

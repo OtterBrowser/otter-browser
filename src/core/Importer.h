@@ -67,6 +67,11 @@ public slots:
 	virtual void cancel();
 	virtual bool import(const QString &path) = 0;
 
+protected slots:
+	void notifyImportStarted(int type, int total);
+	void notifyImportProgress(int type, int total, int amount);
+	void notifyImportFinished(int type, int result, int total);
+
 signals:
 	void importStarted(ImportType type, int total);
 	void importProgress(ImportType type, int total, int amount);
