@@ -59,7 +59,9 @@ public slots:
 	virtual bool import(const QString &path) = 0;
 
 signals:
-	void importProgress(int amount, int total, ImportType type);
+	void importStarted(ImportType type, int total);
+	void importProgress(ImportType type, int total, int amount);
+	void importFinished(ImportType type, int total, bool isSuccess);
 };
 
 }
