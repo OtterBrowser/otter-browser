@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "ImportDialog.h"
+#include "../core/ThemesManager.h"
 #include "../modules/importers/html/HtmlBookmarksImporter.h"
 #include "../modules/importers/opera/OperaBookmarksImporter.h"
 #include "../modules/importers/opera/OperaNotesImporter.h"
@@ -46,13 +47,16 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 
 	if (widget)
 	{
-		m_ui->optionBox->addWidget(widget);
+		widget->setParent(this);
+
+		m_ui->extraOptionsLayout->addWidget(widget);
 	}
 
 	setWindowTitle(m_importer->getTitle());
 
-	connect(m_ui->importPathWidget, SIGNAL(pathChanged(QString)), this, SLOT(setPath(QString)));
-	connect(this, SIGNAL(accepted()), this, SLOT(import()));
+	connect(m_ui->importPathWidget, &FilePathWidget::pathChanged, this, &ImportDialog::setPath);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &ImportDialog::handleImportRequested);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
 }
 
 ImportDialog::~ImportDialog()
@@ -111,12 +115,77 @@ void ImportDialog::setPath(const QString &path)
 	m_path = path;
 }
 
-void ImportDialog::import()
+void ImportDialog::handleImportRequested()
 {
-	if (!m_importer->import(m_path))
+	m_ui->messageLayout->setDirection(isLeftToRight() ? QBoxLayout::LeftToRight : QBoxLayout::RightToLeft);
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("task-ongoing")).pixmap(32, 32));
+	m_ui->buttonBox->clear();
+	m_ui->buttonBox->addButton(QDialogButtonBox::Abort);
+	m_ui->buttonBox->setEnabled(m_importer->canCancel());
+	m_ui->stackedWidget->setCurrentIndex(1);
+
+	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::reject);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &Importer::cancel);
+	connect(m_importer, &Importer::importStarted, this, &ImportDialog::handleImportStarted);
+	connect(m_importer, &Importer::importProgress, this, &ImportDialog::handleImportProgress);
+	connect(m_importer, &Importer::importFinished, this, &ImportDialog::handleImportFinished);
+
+	m_importer->import(m_path);
+}
+
+void ImportDialog::handleImportStarted(Importer::ImportType type, int total)
+{
+	Q_UNUSED(type)
+
+	handleImportProgress(type, total, 0);
+
+	m_ui->messageTextLabel->setText(tr("Processing…"));
+}
+
+void ImportDialog::handleImportProgress(Importer::ImportType type, int total, int amount)
+{
+	Q_UNUSED(type)
+
+	if (total > 0)
 	{
-		QMessageBox::critical(this, tr("Error"), tr("Failed to import selected type."));
+		m_ui->progressBar->setRange(0, total);
+		m_ui->progressBar->setValue(amount);
 	}
+	else
+	{
+		m_ui->progressBar->setRange(0, 0);
+		m_ui->progressBar->setValue(-1);
+	}
+}
+
+void ImportDialog::handleImportFinished(Importer::ImportType type, Importer::ImportResult result, int total)
+{
+	handleImportProgress(type, total, total);
+
+	m_ui->messageIconLabel->setPixmap(ThemesManager::createIcon((result == Importer::SuccessfullImport) ? QLatin1String("task-complete") : QLatin1String("task-reject")).pixmap(32, 32));
+
+	switch (result)
+	{
+		case Importer::FailedImport:
+			m_ui->messageTextLabel->setText(tr("Failed to import data."));
+
+			break;
+		case Importer::CancelledImport:
+			m_ui->messageTextLabel->setText(tr("Import cancelled by the user."));
+
+			break;
+		default:
+			m_ui->messageTextLabel->setText(tr("Import finished successfully."));
+
+			break;
+	}
+
+	m_ui->buttonBox->clear();
+	m_ui->buttonBox->addButton(QDialogButtonBox::Close);
+	m_ui->buttonBox->setEnabled(true);
+
+	disconnect(m_ui->buttonBox, &QDialogButtonBox::rejected, m_importer, &Importer::cancel);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &ImportDialog::close);
 }
 
 }
