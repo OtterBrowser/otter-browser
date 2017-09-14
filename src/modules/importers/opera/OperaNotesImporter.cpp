@@ -134,6 +134,8 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
+		emit importFinished(NotesImport, FailedImport, 0);
+
 		return false;
 	}
 
@@ -144,14 +146,20 @@ bool OperaNotesImporter::import(const QString &path)
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
+		emit importFinished(NotesImport, FailedImport, 0);
+
 		return false;
 	}
+
+	emit importStarted(NotesImport, -1);
 
 	if (m_optionsWidget)
 	{
 		m_importFolder = m_folderComboBox->getCurrentFolder();
 		m_currentFolder = m_importFolder;
 	}
+
+	int totalAmount(0);
 
 	NotesManager::getModel()->beginImport(m_importFolder, ((file.size() > 0) ? (file.size() / 250) : 0));
 
@@ -174,16 +182,22 @@ bool OperaNotesImporter::import(const QString &path)
 		{
 			note = NotesManager::addNote(BookmarksModel::UrlBookmark, {}, m_currentFolder);
 			type = NoteEntry;
+
+			++totalAmount;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
 			note = NotesManager::addNote(BookmarksModel::FolderBookmark, {}, m_currentFolder);
 			type = FolderStartEntry;
+
+			++totalAmount;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
 			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, m_currentFolder);
 			type = SeparatorEntry;
+
+			++totalAmount;
 		}
 		else if (line == QLatin1String("-"))
 		{
@@ -232,6 +246,8 @@ bool OperaNotesImporter::import(const QString &path)
 	}
 
 	NotesManager::getModel()->endImport();
+
+	emit importFinished(NotesImport, SuccessfullImport, totalAmount);
 
 	file.close();
 

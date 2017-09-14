@@ -114,6 +114,15 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 {
 	IniSettings settings(getSuggestedPath(path), this);
 
+	if (settings.hasError())
+	{
+		emit importFinished(SearchEnginesImport, FailedImport, 0);
+
+		return false;
+	}
+
+	emit importStarted(SearchEnginesImport, -1);
+
 	if (m_optionsWidget->isChecked())
 	{
 		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, QStringList());
@@ -132,6 +141,8 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 	{
 		identifiers.append(allSearchEngines.at(i).baseName());
 	}
+
+	int totalAmount(0);
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
@@ -182,7 +193,11 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 		identifiers.append(searchEngine.identifier);
 		keywords.append(searchEngine.keyword);
+
+		++totalAmount;
 	}
+
+	emit importFinished(SearchEnginesImport, SuccessfullImport, totalAmount);
 
 	return true;
 }

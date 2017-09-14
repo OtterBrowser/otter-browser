@@ -60,6 +60,8 @@ protected:
 
 private:
 	BookmarksImporterWidget *m_optionsWidget;
+	int m_currentAmount;
+	int m_totalAmount;
 };
 
 }

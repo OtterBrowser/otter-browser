@@ -105,8 +105,12 @@ bool OperaSessionImporter::import(const QString &path)
 
 	if (originalSession.getValue(QLatin1String("version")).toInt() == 0)
 	{
+		emit importFinished(SessionsImport, FailedImport, 0);
+
 		return false;
 	}
+
+	emit importStarted(SessionsImport, 1);
 
 	SessionInformation session;
 	session.title = QFileInfo(path).completeBaseName();
@@ -254,6 +258,8 @@ bool OperaSessionImporter::import(const QString &path)
 	const bool result(SessionsManager::saveSession(session));
 
 	qDeleteAll(mainWindows);
+
+	emit importFinished(SessionsImport, (result ? SuccessfullImport : FailedImport), 1);
 
 	return result;
 }
