@@ -46,7 +46,7 @@ protected:
 	void javaScriptAlert(const QUrl &url, const QString &message) override;
 	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source) override;
 	QWebEnginePage* createWindow(WebWindowType type) override;
-	QtWebEngineWebWidget* QtWebEnginePage::createWidget(SessionsManager::OpenHints hints);
+	QtWebEngineWebWidget* createWidget(SessionsManager::OpenHints hints);
 	QString createJavaScriptList(QStringList rules) const;
 	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes) override;
 	bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame) override;
