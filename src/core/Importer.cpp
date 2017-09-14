@@ -26,9 +26,18 @@ Importer::Importer(QObject *parent) : QObject(parent), Addon()
 {
 }
 
+void Importer::cancel()
+{
+}
+
 Addon::AddonType Importer::getType() const
 {
 	return ImporterType;
+}
+
+bool Importer::canCancel()
+{
+	return false;
 }
 
 }

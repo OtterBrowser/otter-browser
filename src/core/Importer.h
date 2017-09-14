@@ -46,6 +46,13 @@ public:
 		NotesImport = 1024
 	};
 
+	enum ImportResult
+	{
+		SuccessfullImport = 0,
+		FailedImport,
+		CancelledImport
+	};
+
 	explicit Importer(QObject *parent = nullptr);
 
 	virtual QWidget* getOptionsWidget() = 0;
@@ -54,14 +61,16 @@ public:
 	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const override;
 	virtual ImportType getImportType() const = 0;
+	virtual bool canCancel();
 
 public slots:
+	virtual void cancel();
 	virtual bool import(const QString &path) = 0;
 
 signals:
 	void importStarted(ImportType type, int total);
 	void importProgress(ImportType type, int total, int amount);
-	void importFinished(ImportType type, int total, bool isSuccess);
+	void importFinished(ImportType type, ImportResult result, int total);
 };
 
 }
