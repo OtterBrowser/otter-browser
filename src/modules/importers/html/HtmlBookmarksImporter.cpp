@@ -41,14 +41,6 @@ HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : BookmarksImporte
 {
 }
 
-HtmlBookmarksImporter::~HtmlBookmarksImporter()
-{
-	if (m_optionsWidget)
-	{
-		m_optionsWidget->deleteLater();
-	}
-}
-
 #ifdef OTTER_ENABLE_QTWEBKIT
 void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
@@ -170,11 +162,11 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 }
 #endif
 
-QWidget* HtmlBookmarksImporter::getOptionsWidget()
+QWidget* HtmlBookmarksImporter::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new BookmarksImporterWidget();
+		m_optionsWidget = new BookmarksImporterWidget(parent);
 	}
 
 	return m_optionsWidget;

@@ -35,9 +35,8 @@ class OperaNotesImporter final : public Importer
 
 public:
 	explicit OperaNotesImporter(QObject *parent = nullptr);
-	~OperaNotesImporter();
 
-	QWidget* getOptionsWidget() override;
+	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;

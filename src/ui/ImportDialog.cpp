@@ -43,12 +43,10 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 
 	m_importer->setParent(this);
 
-	QWidget *widget(m_importer->getOptionsWidget());
+	QWidget *widget(m_importer->createOptionsWidget(this));
 
 	if (widget)
 	{
-		widget->setParent(this);
-
 		m_ui->extraOptionsLayout->addWidget(widget);
 	}
 

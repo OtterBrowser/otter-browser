@@ -40,19 +40,11 @@ OperaNotesImporter::OperaNotesImporter(QObject *parent): Importer(parent),
 {
 }
 
-OperaNotesImporter::~OperaNotesImporter()
-{
-	if (m_optionsWidget)
-	{
-		m_optionsWidget->deleteLater();
-	}
-}
-
-QWidget* OperaNotesImporter::getOptionsWidget()
+QWidget* OperaNotesImporter::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new QWidget();
+		m_optionsWidget = new QWidget(parent);
 
 		QFormLayout *layout(new QFormLayout(m_optionsWidget));
 		layout->setMargin(0);

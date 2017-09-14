@@ -32,8 +32,10 @@ OperaSessionImporter::OperaSessionImporter(QObject *parent): Importer(parent)
 {
 }
 
-QWidget* OperaSessionImporter::getOptionsWidget()
+QWidget* OperaSessionImporter::createOptionsWidget(QWidget *parent)
 {
+	Q_UNUSED(parent)
+
 	return nullptr;
 }
 

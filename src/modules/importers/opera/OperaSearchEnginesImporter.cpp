@@ -38,19 +38,11 @@ OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : Import
 {
 }
 
-OperaSearchEnginesImporter::~OperaSearchEnginesImporter()
-{
-	if (m_optionsWidget)
-	{
-		m_optionsWidget->deleteLater();
-	}
-}
-
-QWidget* OperaSearchEnginesImporter::getOptionsWidget()
+QWidget* OperaSearchEnginesImporter::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new QCheckBox(tr("Remove existing search engines"));
+		m_optionsWidget = new QCheckBox(tr("Remove existing search engines"), parent);
 		m_optionsWidget->setChecked(true);
 	}
 

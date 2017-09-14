@@ -34,9 +34,8 @@ class OperaBookmarksImporter final : public BookmarksImporter
 
 public:
 	explicit OperaBookmarksImporter(QObject *parent = nullptr);
-	~OperaBookmarksImporter();
 
-	QWidget* getOptionsWidget() override;
+	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;

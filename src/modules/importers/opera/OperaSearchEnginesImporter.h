@@ -34,9 +34,8 @@ class OperaSearchEnginesImporter final : public Importer
 
 public:
 	explicit OperaSearchEnginesImporter(QObject *parent = nullptr);
-	~OperaSearchEnginesImporter();
 
-	QWidget* getOptionsWidget() override;
+	QWidget* createOptionsWidget(QWidget *parent) override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;

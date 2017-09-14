@@ -36,19 +36,11 @@ OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent): BookmarksImport
 {
 }
 
-OperaBookmarksImporter::~OperaBookmarksImporter()
-{
-	if (m_optionsWidget)
-	{
-		m_optionsWidget->deleteLater();
-	}
-}
-
-QWidget* OperaBookmarksImporter::getOptionsWidget()
+QWidget* OperaBookmarksImporter::createOptionsWidget(QWidget *parent)
 {
 	if (!m_optionsWidget)
 	{
-		m_optionsWidget = new BookmarksImporterWidget();
+		m_optionsWidget = new BookmarksImporterWidget(parent);
 	}
 
 	return m_optionsWidget;
