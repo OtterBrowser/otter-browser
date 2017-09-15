@@ -110,7 +110,7 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 	}
 }
 
-void SessionsManager::markSessionModified()
+void SessionsManager::markSessionAsModified()
 {
 	if (!m_isPrivate && !m_isDirty && m_sessionPath == QLatin1String("default"))
 	{

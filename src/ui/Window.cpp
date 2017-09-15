@@ -478,7 +478,7 @@ void Window::setOption(int identifier, const QVariant &value)
 			m_session.options[identifier] = value;
 		}
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 
 		emit optionChanged(identifier, value);
 	}

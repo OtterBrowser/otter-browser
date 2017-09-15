@@ -597,7 +597,7 @@ void QtWebKitWebWidget::handleHistory()
 
 		m_page->history()->currentItem().setUserData(data);
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 		BookmarksManager::updateVisits(url.toString());
 	}
 	else if (identifier > 0)
@@ -711,7 +711,7 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction, ActionsManager::InspectElementAction}));
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void QtWebKitWebWidget::notifyIconChanged()
@@ -1862,7 +1862,7 @@ void QtWebKitWebWidget::setZoom(int zoom)
 	{
 		m_page->mainFrame()->setZoomFactor(qBound(0.1, (static_cast<qreal>(zoom) / 100), static_cast<qreal>(100)));
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 
 		emit zoomChanged(zoom);
 		emit progressBarGeometryChanged();

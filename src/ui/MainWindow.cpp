@@ -2309,7 +2309,7 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::Move:
-			SessionsManager::markSessionModified();
+			SessionsManager::markSessionAsModified();
 
 			break;
 		case QEvent::Resize:
@@ -2318,7 +2318,7 @@ bool MainWindow::event(QEvent *event)
 				m_tabSwitcher->resize(size());
 			}
 
-			SessionsManager::markSessionModified();
+			SessionsManager::markSessionAsModified();
 
 			break;
 		case QEvent::StatusTip:
@@ -2336,7 +2336,7 @@ bool MainWindow::event(QEvent *event)
 			{
 				QWindowStateChangeEvent *stateChangeEvent(static_cast<QWindowStateChangeEvent*>(event));
 
-				SessionsManager::markSessionModified();
+				SessionsManager::markSessionAsModified();
 
 				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
@@ -2414,7 +2414,7 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::WindowActivate:
-			SessionsManager::markSessionModified();
+			SessionsManager::markSessionAsModified();
 
 			emit activated(this);
 

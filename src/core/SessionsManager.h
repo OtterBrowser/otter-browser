@@ -162,7 +162,7 @@ public:
 	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false);
 	static void clearClosedWindows();
 	static void storeClosedWindow(MainWindow *window);
-	static void markSessionModified();
+	static void markSessionAsModified();
 	static void removeStoredUrl(const QString &url);
 	static SessionsManager* getInstance();
 	static SessionModel* getModel();

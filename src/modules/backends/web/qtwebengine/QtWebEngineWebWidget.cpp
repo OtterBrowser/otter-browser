@@ -1114,7 +1114,7 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);
 	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void QtWebEngineWebWidget::notifyIconChanged()
@@ -1314,7 +1314,7 @@ void QtWebEngineWebWidget::setZoom(int zoom)
 	{
 		m_page->setZoomFactor(qBound(0.1, (static_cast<qreal>(zoom) / 100), static_cast<qreal>(100)));
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 
 		emit zoomChanged(zoom);
 		emit progressBarGeometryChanged();

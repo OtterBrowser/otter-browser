@@ -544,7 +544,7 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 		m_options[identifier] = value;
 	}
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 
 	switch (identifier)
 	{

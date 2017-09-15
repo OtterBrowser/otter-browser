@@ -79,7 +79,7 @@ void MdiWindow::restoreState()
 		showNormal();
 	}
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void MdiWindow::changeEvent(QEvent *event)
@@ -88,7 +88,7 @@ void MdiWindow::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::WindowStateChange)
 	{
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 	}
 }
 
@@ -103,14 +103,14 @@ void MdiWindow::moveEvent(QMoveEvent *event)
 {
 	QMdiSubWindow::moveEvent(event);
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void MdiWindow::resizeEvent(QResizeEvent *event)
 {
 	QMdiSubWindow::resizeEvent(event);
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void MdiWindow::focusInEvent(QFocusEvent *event)
@@ -139,7 +139,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 		showMaximized();
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 	}
 	else if (!isMinimized() && style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
 	{
@@ -176,7 +176,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 			Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, mdiArea());
 		}
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 	}
 	else if (isMinimized())
 	{
@@ -490,7 +490,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 	}
 
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void WorkspaceWidget::markAsRestored()

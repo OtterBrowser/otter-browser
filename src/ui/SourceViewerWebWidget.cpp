@@ -278,7 +278,7 @@ void SourceViewerWebWidget::removeHistoryIndex(int index, bool purge)
 
 void SourceViewerWebWidget::handleZoomChange()
 {
-	SessionsManager::markSessionModified();
+	SessionsManager::markSessionAsModified();
 }
 
 void SourceViewerWebWidget::notifyEditingActionsStateChanged()
@@ -357,7 +357,7 @@ void SourceViewerWebWidget::setZoom(int zoom)
 	{
 		m_sourceViewer->setZoom(zoom);
 
-		SessionsManager::markSessionModified();
+		SessionsManager::markSessionAsModified();
 
 		emit zoomChanged(zoom);
 	}
