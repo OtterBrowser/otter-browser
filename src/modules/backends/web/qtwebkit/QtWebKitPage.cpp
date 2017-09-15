@@ -913,28 +913,51 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			information.title = tr("Network error %1").arg(errorOption->error);
 		}
 
-		if (information.type == ErrorPageInformation::ConnectionInsecureError)
+		switch (information.type)
 		{
-			ErrorPageInformation::PageAction goBackAction;
-			goBackAction.name = QLatin1String("goBack");
-			goBackAction.title = QCoreApplication::translate("utils", "Go Back");
-			goBackAction.type = ErrorPageInformation::MainAction;
+			case ErrorPageInformation::BlockedContentError:
+				{
+					ErrorPageInformation::PageAction goBackAction;
+					goBackAction.name = QLatin1String("goBack");
+					goBackAction.title = QCoreApplication::translate("utils", "Go Back");
+					goBackAction.type = ErrorPageInformation::MainAction;
 
-			ErrorPageInformation::PageAction addExceptionAction;
-			addExceptionAction.name = QLatin1String("addSslErrorException");
-			addExceptionAction.title = QCoreApplication::translate("utils", "Load Insecure Page");
-			addExceptionAction.type = ErrorPageInformation::AdvancedAction;
+					ErrorPageInformation::PageAction addExceptionAction;
+					addExceptionAction.name = QLatin1String("addContentBlockingException");
+					addExceptionAction.title = QCoreApplication::translate("utils", "Load Blocked Page");
+					addExceptionAction.type = ErrorPageInformation::AdvancedAction;
 
-			information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
-		}
-		else if (information.type != ErrorPageInformation::BlockedContentError)
-		{
-			ErrorPageInformation::PageAction reloadAction;
-			reloadAction.name = QLatin1String("reloadPage");
-			reloadAction.title = QCoreApplication::translate("utils", "Try Again");
-			reloadAction.type = ErrorPageInformation::MainAction;
+					information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
+				}
 
-			information.actions = QVector<ErrorPageInformation::PageAction>({reloadAction});
+				break;
+			case ErrorPageInformation::ConnectionInsecureError:
+				{
+					ErrorPageInformation::PageAction goBackAction;
+					goBackAction.name = QLatin1String("goBack");
+					goBackAction.title = QCoreApplication::translate("utils", "Go Back");
+					goBackAction.type = ErrorPageInformation::MainAction;
+
+					ErrorPageInformation::PageAction addExceptionAction;
+					addExceptionAction.name = QLatin1String("addSslErrorException");
+					addExceptionAction.title = QCoreApplication::translate("utils", "Load Insecure Page");
+					addExceptionAction.type = ErrorPageInformation::AdvancedAction;
+
+					information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
+				}
+
+				break;
+			default:
+				{
+					ErrorPageInformation::PageAction reloadAction;
+					reloadAction.name = QLatin1String("reloadPage");
+					reloadAction.title = QCoreApplication::translate("utils", "Try Again");
+					reloadAction.type = ErrorPageInformation::MainAction;
+
+					information.actions = QVector<ErrorPageInformation::PageAction>({reloadAction});
+				}
+
+				break;
 		}
 
 		errorOutput->content = Utils::createErrorPage(information).toUtf8();

@@ -97,6 +97,7 @@ private:
 	QUrl m_mainRequestUrl;
 	WebWidget::SslInformation m_sslInformation;
 	QStringList m_blockedElements;
+	QStringList m_unblockedHosts;
 	QVector<QNetworkReply*> m_transfers;
 	QVector<NetworkManager::ResourceInformation> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;

@@ -436,6 +436,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
 	m_userAgent = m_backend->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value);
+	m_unblockedHosts = getOption(SettingsManager::ContentBlocking_IgnoreHostsOption, url).toStringList();
 
 	const QString doNotTrackPolicyValue(getOption(SettingsManager::Network_DoNotTrackPolicyOption, url).toString());
 
@@ -585,6 +586,24 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, url);
 				}
 			}
+			else if (type == QLatin1String("add-content-blocking-exception"))
+			{
+				const QUrl url(m_widget->getUrl());
+				const QString host(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+				QStringList ignoredHosts;
+
+				if (m_widget->hasOption(SettingsManager::ContentBlocking_IgnoreHostsOption))
+				{
+					ignoredHosts = m_widget->getOption(SettingsManager::ContentBlocking_IgnoreHostsOption).toStringList();
+				}
+
+				if (!ignoredHosts.contains(host))
+				{
+					ignoredHosts.append(host);
+
+					m_widget->setOption(SettingsManager::ContentBlocking_IgnoreHostsOption, ignoredHosts);
+				}
+			}
 			else if (type == QLatin1String("save-password"))
 			{
 				const QJsonArray fieldsArray(payloadObject.value(QLatin1String("fields")).toArray());
@@ -635,7 +654,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		const QUrl baseUrl(m_widget->isNavigating() ? request.url() : m_widget->getUrl());
 
-		if (!m_contentBlockingProfiles.isEmpty())
+		if (!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(baseUrl.host().isEmpty() ? QLatin1String("localhost") : baseUrl.host())))
 		{
 			const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
 			const QString path(request.url().path());
