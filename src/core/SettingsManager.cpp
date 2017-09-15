@@ -127,6 +127,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(ContentBlocking_CosmeticFiltersModeOption, EnumerationType, QLatin1String("all"), QStringList({QLatin1String("all"), QLatin1String("domainOnly"), QLatin1String("none")}));
 	registerOption(ContentBlocking_EnableContentBlockingOption, BooleanType, true);
 	registerOption(ContentBlocking_EnableWildcardsOption, BooleanType, true);
+	registerOption(ContentBlocking_IgnoreHostsOption, ListType, QStringList());
 	registerOption(ContentBlocking_ProfilesOption, ListType, QStringList());
 	registerOption(History_BrowsingLimitAmountGlobalOption, IntegerType, 1000);
 	registerOption(History_BrowsingLimitAmountWindowOption, IntegerType, 50);

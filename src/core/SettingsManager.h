@@ -107,6 +107,7 @@ public:
 		ContentBlocking_CosmeticFiltersModeOption,
 		ContentBlocking_EnableContentBlockingOption,
 		ContentBlocking_EnableWildcardsOption,
+		ContentBlocking_IgnoreHostsOption,
 		ContentBlocking_ProfilesOption,
 		History_BrowsingLimitAmountGlobalOption,
 		History_BrowsingLimitAmountWindowOption,
