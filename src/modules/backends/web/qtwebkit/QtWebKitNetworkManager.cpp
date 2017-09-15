@@ -570,11 +570,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
 			const QString type(request.rawHeader(QByteArray("X-Otter-Type")));
+			const QJsonObject payloadObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
 
 			if (type == QLatin1String("add-ssl-error-exception"))
 			{
-				const QJsonObject exceptionObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
-				const QString digest(exceptionObject.value(QLatin1String("digest")).toString());
+				const QString digest(payloadObject.value(QLatin1String("digest")).toString());
 				const QUrl url(m_widget->getUrl());
 				QStringList exceptions(getOption(SettingsManager::Security_IgnoreSslErrorsOption, url).toStringList());
 
@@ -587,10 +587,9 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			}
 			else if (type == QLatin1String("save-password"))
 			{
-				const QJsonObject passwordObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
-				const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
+				const QJsonArray fieldsArray(payloadObject.value(QLatin1String("fields")).toArray());
 				PasswordsManager::PasswordInformation password;
-				password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
+				password.url = QUrl(payloadObject.value(QLatin1String("url")).toString());
 				password.timeAdded = QDateTime::currentDateTime();
 				password.fields.reserve(fieldsArray.count());
 				password.type = PasswordsManager::FormPassword;
