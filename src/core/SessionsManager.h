@@ -118,6 +118,7 @@ struct SessionMainWindow
 	QVector<ToolBarState> toolBars;
 	QByteArray geometry;
 	int index = -1;
+	bool hasToolBarsState = false;
 };
 
 struct SessionInformation
