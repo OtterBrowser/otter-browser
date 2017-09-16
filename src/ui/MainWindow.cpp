@@ -1795,6 +1795,8 @@ void MainWindow::updateShortcuts()
 	const QVector<KeyboardProfile::Action> definitions(ActionsManager::getShortcutDefinitions());
 	const QList<QKeySequence> standardShortcuts({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
 
+	m_shortcuts.reserve(definitions.count() * 2);
+
 	for (int i = 0; i < definitions.count(); ++i)
 	{
 		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
@@ -1805,6 +1807,8 @@ void MainWindow::updateShortcuts()
 			}
 		}
 	}
+
+	m_shortcuts.squeeze();
 }
 
 void MainWindow::setOption(int identifier, const QVariant &value)
