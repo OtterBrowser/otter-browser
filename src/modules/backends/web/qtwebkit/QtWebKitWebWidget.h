@@ -25,11 +25,8 @@
 
 #include <QtCore/QQueue>
 #include <QtNetwork/QNetworkReply>
-#include <QtWebKitWidgets/QWebHitTestResult>
-#include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebView>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {

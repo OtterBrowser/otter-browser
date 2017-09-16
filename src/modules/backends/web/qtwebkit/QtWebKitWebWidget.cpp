@@ -67,7 +67,6 @@
 #endif
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
-#include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>

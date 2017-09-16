@@ -37,13 +37,10 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QWheelEvent>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
-#include <QtWebKit/QWebElement>
 #include <QtWebKit/QWebHistory>
-#include <QtWebKitWidgets/QWebFrame>
 
 namespace Otter
 {
