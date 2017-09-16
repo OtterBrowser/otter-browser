@@ -32,6 +32,7 @@
 #include <QtCore/QRegularExpression>
 #include <QtWebKit/QWebHistoryInterface>
 #include <QtWebKit/QWebSettings>
+#include <QtWebKitWidgets/QWebFrame>
 
 namespace Otter
 {

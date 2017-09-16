@@ -65,8 +65,9 @@
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 #include <QtWebKit/QWebFullScreenRequest>
 #endif
-#include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
+#include <QtWebKit/QWebHistory>
+#include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
