@@ -1775,107 +1775,131 @@ bool QtWebEngineWebWidget::isScrollBar(const QPoint &position) const
 
 bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_webView && event->type() == QEvent::ChildAdded)
+	switch (event->type())
 	{
-		const QChildEvent *childEvent(static_cast<QChildEvent*>(event));
+		case QEvent::ChildAdded:
 
-		if (childEvent->child())
-		{
-			childEvent->child()->installEventFilter(this);
-		}
-	}
-	else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
-	{
-		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent)
-		{
-			setClickPosition(mouseEvent->pos());
-			updateHitTestResult(mouseEvent->pos());
-
-			if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
+			if (object == m_webView)
 			{
-				m_lastUrlClickTime = QDateTime::currentDateTime();
+				const QChildEvent *childEvent(static_cast<QChildEvent*>(event));
+
+				if (childEvent->child())
+				{
+					childEvent->child()->installEventFilter(this);
+				}
 			}
-		}
 
-		QVector<GesturesManager::GesturesContext> contexts;
-
-		if (getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
-		{
-			contexts.append(GesturesManager::ContentEditableContext);
-		}
-
-		if (getCurrentHitTestResult().linkUrl.isValid())
-		{
-			contexts.append(GesturesManager::LinkContext);
-		}
-
-		contexts.append(GesturesManager::GenericContext);
-
-		if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
-		{
-			return true;
-		}
-
-		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
-		{
-			const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
-
-			if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+			break;
+		case QEvent::ContextMenu:
+			if (object == m_webView)
 			{
-				setClickPosition(mouseEvent->pos());
+				const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
-				QTimer::singleShot(250, this, SLOT(showContextMenu()));
+				if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
+				{
+					triggerAction(ActionsManager::ContextMenuAction, {{QLatin1String("context"), contextMenuEvent->reason()}});
+				}
 			}
-		}
-	}
-	else if (object == m_webView && event->type() == QEvent::ContextMenu)
-	{
-		const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
-		if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
-		{
-			triggerAction(ActionsManager::ContextMenuAction, {{QLatin1String("context"), contextMenuEvent->reason()}});
-		}
-	}
-	else if (object == m_webView && (event->type() == QEvent::Move || event->type() == QEvent::Resize))
-	{
-		emit progressBarGeometryChanged();
-	}
-	else if (event->type() == QEvent::ToolTip)
-	{
-		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+			break;
+		case QEvent::MouseButtonDblClick:
+		case QEvent::MouseButtonPress:
+		case QEvent::Wheel:
+			{
+				const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (helpEvent)
-		{
-			handleToolTipEvent(helpEvent, m_webView);
-		}
+				if (mouseEvent)
+				{
+					setClickPosition(mouseEvent->pos());
+					updateHitTestResult(mouseEvent->pos());
 
-		return true;
-	}
-	else if (event->type() == QEvent::ShortcutOverride)
-	{
-		QEventLoop eventLoop;
+					if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
+					{
+						m_lastUrlClickTime = QDateTime::currentDateTime();
+					}
+				}
 
-		m_page->runJavaScript(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;"), [&](const QVariant &result)
-		{
-			m_isEditing = result.toBool();
+				QVector<GesturesManager::GesturesContext> contexts;
 
-			eventLoop.quit();
-		});
+				if (getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
+				{
+					contexts.append(GesturesManager::ContentEditableContext);
+				}
 
-		connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+				if (getCurrentHitTestResult().linkUrl.isValid())
+				{
+					contexts.append(GesturesManager::LinkContext);
+				}
 
-		eventLoop.exec();
+				contexts.append(GesturesManager::GenericContext);
 
-		if (m_isEditing)
-		{
-			event->accept();
+				if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
+				{
+					return true;
+				}
 
-			return true;
-		}
+				if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
+				{
+					const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
+
+					if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+					{
+						setClickPosition(mouseEvent->pos());
+
+						QTimer::singleShot(250, this, SLOT(showContextMenu()));
+					}
+				}
+			}
+
+			break;
+		case QEvent::Move:
+		case QEvent::Resize:
+			if (object == m_webView)
+			{
+				emit progressBarGeometryChanged();
+			}
+
+			break;
+		case QEvent::ShortcutOverride:
+			{
+				QEventLoop eventLoop;
+
+				m_page->runJavaScript(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;"), [&](const QVariant &result)
+				{
+					m_isEditing = result.toBool();
+
+					eventLoop.quit();
+				});
+
+				connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+				connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+				eventLoop.exec();
+
+				if (m_isEditing)
+				{
+					event->accept();
+
+					return true;
+				}
+			}
+
+			break;
+		case QEvent::ToolTip:
+			{
+				QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+
+				if (helpEvent)
+				{
+					handleToolTipEvent(helpEvent, m_webView);
+				}
+
+				return true;
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	return QObject::eventFilter(object, event);
