@@ -112,6 +112,20 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 				addToolBar(area, toolBar);
 			}
 		}
+
+		if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
+		{
+			m_menuBar = new MenuBarWidget(this);
+
+			setMenuBar(m_menuBar);
+		}
+
+		if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
+		{
+			m_statusBar = new StatusBarWidget(this);
+
+			setStatusBar(m_statusBar);
+		}
 	}
 	else
 	{
@@ -120,20 +134,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	}
 
 	setCentralWidget(m_workspace);
-
-	if (m_hasToolBars && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
-	{
-		m_menuBar = new MenuBarWidget(this);
-
-		setMenuBar(m_menuBar);
-	}
-
-	if (m_hasToolBars && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
-	{
-		m_statusBar = new StatusBarWidget(this);
-
-		setStatusBar(m_statusBar);
-	}
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
 	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
