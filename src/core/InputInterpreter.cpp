@@ -69,27 +69,30 @@ void InputInterpreter::verifyLookup(const QHostInfo &host)
 	deleteLater();
 }
 
-void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints hints, bool ignoreBookmarks)
+void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints hints, InterpreterFlags flags)
 {
-	const QString keyword(text.section(QLatin1Char(' '), 0, 0));
-	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
-
-	if (searchEngine.isValid())
+	if (!flags.testFlag(NoSearchKeywordsFlag))
 	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
+		const QString keyword(text.section(QLatin1Char(' '), 0, 0));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
 
-		deleteLater();
+		if (searchEngine.isValid())
+		{
+			emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
 
-		return;
-	}
+			deleteLater();
 
-	if (keyword == QLatin1String("?"))
-	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
+			return;
+		}
 
-		deleteLater();
+		if (keyword == QLatin1String("?"))
+		{
+			emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
 
-		return;
+			deleteLater();
+
+			return;
+		}
 	}
 
 	if (text.startsWith(QLatin1String("bookmarks:")))
@@ -106,7 +109,7 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 		}
 	}
 
-	if (!ignoreBookmarks)
+	if (!flags.testFlag(NoBookmarkKeywordsFlag))
 	{
 		BookmarksItem *bookmark(BookmarksManager::getBookmark(text));
 
@@ -143,9 +146,8 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 	}
 
 	const QUrl url(QUrl::fromUserInput(text));
-	const QHostAddress address(text);
 
-	if (!address.isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
+	if (!QHostAddress(text).isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
 	{
 		emit requestedOpenUrl(url, hints);
 
@@ -154,26 +156,29 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 		return;
 	}
 
-	const int lookupTimeout(SettingsManager::getOption(SettingsManager::AddressField_HostLookupTimeoutOption).toInt());
-
-	if (url.isValid() && lookupTimeout > 0)
+	if (!flags.testFlag(NoHostLookupFlag))
 	{
-		m_text = text;
-		m_hints = hints;
+		const int lookupTimeout(SettingsManager::getOption(SettingsManager::AddressField_HostLookupTimeoutOption).toInt());
 
-		if (m_timer != 0)
+		if (url.isValid() && lookupTimeout > 0)
 		{
-			QHostInfo::abortHostLookup(m_lookup);
+			m_text = text;
+			m_hints = hints;
 
-			killTimer(m_timer);
+			if (m_timer != 0)
+			{
+				QHostInfo::abortHostLookup(m_lookup);
 
-			m_timer = 0;
+				killTimer(m_timer);
+
+				m_timer = 0;
+			}
+
+			m_lookup = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
+			m_timer = startTimer(lookupTimeout);
+
+			return;
 		}
-
-		m_lookup = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
-		m_timer = startTimer(lookupTimeout);
-
-		return;
 	}
 
 	emit requestedSearch(text, QString(), hints);

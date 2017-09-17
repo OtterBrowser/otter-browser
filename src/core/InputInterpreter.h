@@ -35,9 +35,19 @@ class InputInterpreter final : public QObject
 	Q_OBJECT
 
 public:
+	enum InterpreterFlag
+	{
+		NoFlags = 0,
+		NoBookmarkKeywordsFlag = 1,
+		NoHostLookupFlag = 2,
+		NoSearchKeywordsFlag = 4
+	};
+
+	Q_DECLARE_FLAGS(InterpreterFlags, InterpreterFlag)
+
 	explicit InputInterpreter(QObject *parent = nullptr);
 
-	void interpret(const QString &text, SessionsManager::OpenHints hints, bool ignoreBookmarks = false);
+	void interpret(const QString &text, SessionsManager::OpenHints hints, InterpreterFlags flags = NoFlags);
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -58,5 +68,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::InputInterpreter::InterpreterFlags)
 
 #endif

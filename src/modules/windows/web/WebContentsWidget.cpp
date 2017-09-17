@@ -358,7 +358,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
 					connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 
-					interpreter->interpret(text, SessionsManager::calculateOpenHints(), true);
+					interpreter->interpret(text, SessionsManager::calculateOpenHints(), InputInterpreter::NoBookmarkKeywordsFlag);
 				}
 			}
 
@@ -420,7 +420,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					hints = SessionsManager::calculateOpenHints(parameters);
 				}
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), hints, true);
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), hints, InputInterpreter::NoBookmarkKeywordsFlag);
 			}
 
 			break;
