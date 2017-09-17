@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "OpenAddressDialog.h"
+#include "../core/BookmarksModel.h"
 #include "../core/InputInterpreter.h"
 #include "../modules/widgets/address/AddressWidget.h"
 
@@ -30,8 +31,9 @@
 namespace Otter
 {
 
-OpenAddressDialog::OpenAddressDialog(QWidget *parent) : Dialog(parent),
+OpenAddressDialog::OpenAddressDialog(ActionExecutor::Object executor, QWidget *parent) : Dialog(parent),
 	m_addressWidget(nullptr),
+	m_executor(executor),
 	m_ui(new Ui::OpenAddressDialog)
 {
 	m_ui->setupUi(this);
@@ -78,7 +80,7 @@ void OpenAddressDialog::handleUserInput()
 {
 	const QString text(m_addressWidget->text().trimmed());
 
-	if (text.isEmpty())
+	if (!text.isEmpty())
 	{
 		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
 
@@ -89,11 +91,25 @@ void OpenAddressDialog::handleUserInput()
 			switch (result.type)
 			{
 				case InputInterpreter::InterpreterResult::BookmarkType:
-					emit requestedOpenBookmark(result.bookmark, hints);
+					if (m_executor.isValid())
+					{
+						m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(hints)}});
+					}
+					else
+					{
+						emit requestedOpenBookmark(result.bookmark, hints);
+					}
 
 					break;
 				case InputInterpreter::InterpreterResult::UrlType:
-					emit requestedOpenUrl(result.url, hints);
+					if (m_executor.isValid())
+					{
+						m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+					}
+					else
+					{
+						emit requestedOpenUrl(result.url, hints);
+					}
 
 					break;
 				case InputInterpreter::InterpreterResult::SearchType:

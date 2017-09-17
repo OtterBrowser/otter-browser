@@ -462,7 +462,7 @@ void StartPageWidget::configure()
 
 void StartPageWidget::addTile()
 {
-	OpenAddressDialog dialog(this);
+	OpenAddressDialog dialog(ActionExecutor::Object(), this);
 	dialog.setWindowTitle(tr("Add Tile"));
 
 	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), m_model, SLOT(addTile(QUrl)));

@@ -22,6 +22,7 @@
 #define OTTER_OPENADDRESSDIALOG_H
 
 #include "Dialog.h"
+#include "../core/ActionsManager.h"
 #include "../core/SessionsManager.h"
 
 namespace Otter
@@ -34,14 +35,13 @@ namespace Ui
 
 class AddressWidget;
 class BookmarksItem;
-class InputInterpreter;
 
 class OpenAddressDialog final : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit OpenAddressDialog(QWidget *parent = nullptr);
+	explicit OpenAddressDialog(ActionExecutor::Object executor, QWidget *parent = nullptr);
 	~OpenAddressDialog();
 
 	void setText(const QString &text);
@@ -55,6 +55,7 @@ protected slots:
 
 private:
 	AddressWidget *m_addressWidget;
+	ActionExecutor::Object m_executor;
 	Ui::OpenAddressDialog *m_ui;
 
 signals:

@@ -426,10 +426,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::GoToPageAction:
 			{
-				OpenAddressDialog dialog(this);
+				OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
 
-				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
-				connect(&dialog, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
 				connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 
 				dialog.exec();

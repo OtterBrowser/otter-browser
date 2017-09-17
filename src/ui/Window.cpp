@@ -233,15 +233,13 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 				else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 				{
-					OpenAddressDialog dialog(this);
+					OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
 
 					if (identifier == ActionsManager::ActivateSearchFieldAction)
 					{
 						dialog.setText(QLatin1String("? "));
 					}
 
-					connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
-					connect(&dialog, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
 					connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
 
 					dialog.exec();
