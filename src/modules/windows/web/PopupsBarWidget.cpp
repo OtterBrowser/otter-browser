@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +20,7 @@
 
 #include "PopupsBarWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_PopupsBarWidget.h"
 
@@ -27,10 +29,11 @@
 namespace Otter
 {
 
-PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidget(parent),
+PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget *parent) : QWidget(parent),
 	m_popupsMenu(nullptr),
 	m_popupsGroup(new QActionGroup(this)),
 	m_parentUrl(parentUrl),
+	m_isPrivate(isPrivate),
 	m_ui(new Ui::PopupsBarWidget)
 {
 	m_ui->setupUi(this);
@@ -102,10 +105,14 @@ void PopupsBarWidget::addPopup(const QUrl &url)
 
 void PopupsBarWidget::openUrl(QAction *action)
 {
-	if (!action)
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (!action || !mainWindow)
 	{
 		return;
 	}
+
+	const SessionsManager::OpenHints hints(m_isPrivate ? (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen) : SessionsManager::NewTabOpen);
 
 	if (action->data().isNull())
 	{
@@ -115,14 +122,14 @@ void PopupsBarWidget::openUrl(QAction *action)
 
 			if (!url.isEmpty())
 			{
-				emit requestedNewWindow(url, SessionsManager::NewTabOpen);
+				mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 			}
 		}
 
 		return;
 	}
 
-	emit requestedNewWindow(action->data().toUrl(), SessionsManager::NewTabOpen);
+	mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), action->data().toUrl()}, {QLatin1String("hints"), QVariant(hints)}});
 }
 
 void PopupsBarWidget::handleOptionChanged(int identifier)

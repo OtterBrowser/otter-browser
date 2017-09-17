@@ -865,10 +865,9 @@ void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QU
 {
 	if (!m_popupsBarWidget)
 	{
-		m_popupsBarWidget = new PopupsBarWidget(parentUrl, this);
+		m_popupsBarWidget = new PopupsBarWidget(parentUrl, isPrivate(), this);
 
 		connect(m_popupsBarWidget, SIGNAL(requestedClose()), this, SLOT(closePopupsBar()));
-		connect(m_popupsBarWidget, SIGNAL(requestedNewWindow(QUrl,SessionsManager::OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,SessionsManager::OpenHints)));
 
 		m_layout->insertWidget(0, m_popupsBarWidget);
 
@@ -1001,16 +1000,6 @@ void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies po
 
 		widget->deleteLater();
 	}
-}
-
-void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints)
-{
-	if (isPrivate())
-	{
-		hints |= SessionsManager::PrivateOpen;
-	}
-
-	emit requestedOpenUrl(url, hints);
 }
 
 void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints)

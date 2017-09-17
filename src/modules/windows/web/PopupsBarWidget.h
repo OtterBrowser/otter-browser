@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@ class PopupsBarWidget final : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PopupsBarWidget(const QUrl &parentUrl, QWidget *parent = nullptr);
+	explicit PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget *parent = nullptr);
 	~PopupsBarWidget();
 
 	void addPopup(const QUrl &url);
@@ -52,11 +53,11 @@ private:
 	QMenu *m_popupsMenu;
 	QActionGroup *m_popupsGroup;
 	QUrl m_parentUrl;
+	bool m_isPrivate;
 	Ui::PopupsBarWidget *m_ui;
 
 signals:
 	void requestedClose();
-	void requestedNewWindow(const QUrl &url, SessionsManager::OpenHints hints);
 };
 
 }

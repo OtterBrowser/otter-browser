@@ -123,7 +123,6 @@ protected slots:
 	void handleInspectorVisibilityChangeRequest(bool isVisible);
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
-	void notifyRequestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void updateFindHighlight(WebWidget::FindFlags flags);
 
