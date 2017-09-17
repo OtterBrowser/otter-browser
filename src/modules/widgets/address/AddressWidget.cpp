@@ -929,11 +929,17 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 			switch (result.type)
 			{
 				case InputInterpreter::InterpreterResult::BookmarkType:
-					emit requestedOpenBookmark(result.bookmark, hints);
+					if (m_executor.isValid())
+					{
+						m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(hints)}});
+					}
 
 					break;
 				case InputInterpreter::InterpreterResult::UrlType:
-					emit requestedOpenUrl(result.url, hints);
+					if (m_executor.isValid())
+					{
+						m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+					}
 
 					break;
 				case InputInterpreter::InterpreterResult::SearchType:
@@ -1238,14 +1244,12 @@ void AddressWidget::setCompletion(const QString &filter)
 
 void AddressWidget::setWindow(Window *window)
 {
-	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
 		m_window->detachAddressWidget(this);
 
-		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
-		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), m_window.data(), SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_window.data(), SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
@@ -1261,15 +1265,11 @@ void AddressWidget::setWindow(Window *window)
 	{
 		if (mainWindow)
 		{
-			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow, SLOT(open(QUrl,SessionsManager::OpenHints)));
-			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), mainWindow, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
 			disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 		}
 
 		window->attachAddressWidget(this);
 
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
 		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
@@ -1286,9 +1286,21 @@ void AddressWidget::setWindow(Window *window)
 	}
 	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
 	{
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow, SLOT(open(QUrl,SessionsManager::OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), mainWindow, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+	}
+
+	if (!mainWindow)
+	{
+		mainWindow = MainWindow::findMainWindow(window);
+	}
+
+	if (mainWindow)
+	{
+		m_executor = ActionExecutor::Object(mainWindow, mainWindow);
+	}
+	else
+	{
+		m_executor = ActionExecutor::Object();
 	}
 
 	setIcon(window ? window->getIcon() : QIcon());
