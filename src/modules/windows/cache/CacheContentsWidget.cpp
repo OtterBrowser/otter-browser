@@ -309,8 +309,12 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 	if (url.isValid())
 	{
 		const QAction *action(qobject_cast<QAction*>(sender()));
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-		emit requestedOpenUrl(url, (action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen));
+		if (mainWindow)
+		{
+			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen)}});
+		}
 	}
 }
 
@@ -594,11 +598,12 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 				return ContentsWidget::eventFilter(object, event);
 			}
 
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
 			const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl());
 
-			if (url.isValid())
+			if (mainWindow && url.isValid())
 			{
-				emit requestedOpenUrl(url, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
+				mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}});
 
 				return true;
 			}
