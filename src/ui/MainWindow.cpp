@@ -460,10 +460,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::QuickBookmarkAccessAction:
 			{
-				OpenBookmarkDialog dialog(this);
-
-				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), this, SLOT(open(BookmarksItem*)));
-
+				OpenBookmarkDialog dialog(ActionExecutor::Object(this, this), this);
 				dialog.exec();
 			}
 

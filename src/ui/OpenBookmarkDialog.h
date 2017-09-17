@@ -21,7 +21,7 @@
 #define OTTER_OPENBOOKMARKDIALOG_H
 
 #include "Dialog.h"
-#include "../core/BookmarksManager.h"
+#include "../core/ActionsManager.h"
 
 #include <QtWidgets/QCompleter>
 
@@ -38,7 +38,7 @@ class OpenBookmarkDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit OpenBookmarkDialog(QWidget *parent = nullptr);
+	explicit OpenBookmarkDialog(ActionExecutor::Object executor, QWidget *parent = nullptr);
 	~OpenBookmarkDialog();
 
 protected:
@@ -50,10 +50,8 @@ protected slots:
 
 private:
 	QCompleter *m_completer;
+	ActionExecutor::Object m_executor;
 	Ui::OpenBookmarkDialog *m_ui;
-
-signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark);
 };
 
 }
