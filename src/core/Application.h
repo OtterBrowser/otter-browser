@@ -62,7 +62,7 @@ public:
 	static void triggerAction(int identifier, const QVariantMap &parameters, QObject *target);
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
-	static void handlePositionalArguments(QCommandLineParser *parser);
+	static void handlePositionalArguments(QCommandLineParser *parser, bool forceOpen = false);
 	static void setHidden(bool isHidden);
 	static void setLocale(const QString &locale);
 	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &windows = SessionMainWindow());

@@ -927,12 +927,12 @@ void Application::handleNewConnection()
 		}
 	}
 
-	handlePositionalArguments(&m_commandLineParser);
+	handlePositionalArguments(&m_commandLineParser, true);
 
 	delete socket;
 }
 
-void Application::handlePositionalArguments(QCommandLineParser *parser)
+void Application::handlePositionalArguments(QCommandLineParser *parser, bool forceOpen)
 {
 	SessionsManager::OpenHints openHints(SessionsManager::DefaultOpen);
 
@@ -955,7 +955,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 
 	const QStringList urls((openHints == SessionsManager::DefaultOpen || !parser->positionalArguments().isEmpty()) ? parser->positionalArguments() : QStringList(QString()));
 
-	if (urls.isEmpty())
+	if (!forceOpen && urls.isEmpty())
 	{
 		return;
 	}
@@ -971,13 +971,20 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		for (int i = 0; i < urls.count(); ++i)
+		if (urls.isEmpty())
 		{
 			window = createWindow(parameters);
-
-			if (!urls.at(i).isEmpty())
+		}
+		else
+		{
+			for (int i = 0; i < urls.count(); ++i)
 			{
-				window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}});
+				window = createWindow(parameters);
+
+				if (!urls.at(i).isEmpty())
+				{
+					window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}});
+				}
 			}
 		}
 	}
@@ -987,9 +994,16 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 
 		if (window)
 		{
-			for (int i = 0; i < urls.count(); ++i)
+			if (urls.isEmpty())
 			{
-				window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+				window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
+			}
+			else
+			{
+				for (int i = 0; i < urls.count(); ++i)
+				{
+					window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+				}
 			}
 		}
 	}
