@@ -22,7 +22,6 @@
 #ifndef OTTER_ADDRESSWIDGET_H
 #define OTTER_ADDRESSWIDGET_H
 
-#include "../../../core/ActionsManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../ui/LineEditWidget.h"
 
@@ -151,7 +150,6 @@ protected slots:
 private:
 	QPointer<Window> m_window;
 	AddressCompletionModel *m_completionModel;
-	ActionExecutor::Object m_executor;
 	QPoint m_dragStartPosition;
 	QVector<EntryIdentifier> m_layout;
 	QHash<EntryIdentifier, EntryDefinition> m_entries;

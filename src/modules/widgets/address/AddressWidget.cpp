@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "AddressWidget.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/AddressCompletionModel.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
@@ -926,19 +927,22 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 
 		if (result.isValid())
 		{
+			MainWindow *mainWindow(m_window ? MainWindow::findMainWindow(m_window) : MainWindow::findMainWindow(this));
+			ActionExecutor::Object executor(mainWindow, mainWindow);
+
 			switch (result.type)
 			{
 				case InputInterpreter::InterpreterResult::BookmarkType:
-					if (m_executor.isValid())
+					if (executor.isValid())
 					{
-						m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(hints)}});
+						executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(hints)}});
 					}
 
 					break;
 				case InputInterpreter::InterpreterResult::UrlType:
-					if (m_executor.isValid())
+					if (executor.isValid())
 					{
-						m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+						executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
 					}
 
 					break;
@@ -1244,7 +1248,7 @@ void AddressWidget::setCompletion(const QString &filter)
 
 void AddressWidget::setWindow(Window *window)
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
@@ -1287,20 +1291,6 @@ void AddressWidget::setWindow(Window *window)
 	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
 	{
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
-	}
-
-	if (!mainWindow)
-	{
-		mainWindow = MainWindow::findMainWindow(window);
-	}
-
-	if (mainWindow)
-	{
-		m_executor = ActionExecutor::Object(mainWindow, mainWindow);
-	}
-	else
-	{
-		m_executor = ActionExecutor::Object();
 	}
 
 	setIcon(window ? window->getIcon() : QIcon());
