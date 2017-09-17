@@ -922,13 +922,28 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 
 	if (!text.isEmpty())
 	{
-		InputInterpreter *interpreter(new InputInterpreter(this));
+		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
 
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
+		if (result.isValid())
+		{
+			switch (result.type)
+			{
+				case InputInterpreter::InterpreterResult::BookmarkType:
+					emit requestedOpenBookmark(result.bookmark, hints);
 
-		interpreter->interpret(text, hints);
+					break;
+				case InputInterpreter::InterpreterResult::UrlType:
+					emit requestedOpenUrl(result.url, hints);
+
+					break;
+				case InputInterpreter::InterpreterResult::SearchType:
+					emit requestedSearch(result.searchQuery, result.searchEngine, hints);
+
+					break;
+				default:
+					break;
+			}
+		}
 	}
 }
 

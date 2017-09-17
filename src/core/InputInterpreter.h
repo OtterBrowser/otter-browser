@@ -21,9 +21,8 @@
 #ifndef OTTER_INPUTINTERPRETER_H
 #define OTTER_INPUTINTERPRETER_H
 
-#include "../core/SessionsManager.h"
-
-#include <QtNetwork/QHostInfo>
+#include <QtCore/QObject>
+#include <QtCore/QUrl>
 
 namespace Otter
 {
@@ -45,26 +44,31 @@ public:
 
 	Q_DECLARE_FLAGS(InterpreterFlags, InterpreterFlag)
 
+	struct InterpreterResult
+	{
+		enum ResultType
+		{
+			UnknownType = 0,
+			BookmarkType,
+			SearchType,
+			UrlType
+		};
+
+		BookmarksItem *bookmark = nullptr;
+		QString searchEngine;
+		QString searchQuery;
+		QUrl url;
+		ResultType type = UnknownType;
+
+		bool isValid() const
+		{
+			return (type != UnknownType);
+		}
+	};
+
 	explicit InputInterpreter(QObject *parent = nullptr);
 
-	void interpret(const QString &text, SessionsManager::OpenHints hints, InterpreterFlags flags = NoFlags);
-
-protected:
-	void timerEvent(QTimerEvent *event) override;
-
-protected slots:
-	void verifyLookup(const QHostInfo &host);
-
-private:
-	QString m_text;
-	SessionsManager::OpenHints m_hints;
-	int m_lookup;
-	int m_timer;
-
-signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
-	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
+	static InterpreterResult interpret(const QString &text, InterpreterFlags flags = NoFlags);
 };
 
 }

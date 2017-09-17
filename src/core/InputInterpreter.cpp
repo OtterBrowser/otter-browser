@@ -21,56 +21,31 @@
 #include "InputInterpreter.h"
 #include "BookmarksManager.h"
 #include "SearchEnginesManager.h"
+#include "SettingsManager.h"
 #include "Utils.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTimer>
+#include <QtNetwork/QHostInfo>
 
 namespace Otter
 {
 
-InputInterpreter::InputInterpreter(QObject *parent) : QObject(parent),
-	m_lookup(0),
-	m_timer(0)
+InputInterpreter::InputInterpreter(QObject *parent) : QObject(parent)
 {
 }
 
-void InputInterpreter::timerEvent(QTimerEvent *event)
+InputInterpreter::InterpreterResult InputInterpreter::interpret(const QString &text, InterpreterFlags flags)
 {
-	if (event->timerId() == m_timer)
+	InterpreterResult result;
+
+	if (text.isEmpty())
 	{
-		QHostInfo::abortHostLookup(m_lookup);
-
-		killTimer(m_timer);
-
-		m_timer = 0;
-
-		emit requestedSearch(m_text, SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString(), m_hints);
-
-		m_text.clear();
-	}
-}
-
-void InputInterpreter::verifyLookup(const QHostInfo &host)
-{
-	killTimer(m_timer);
-
-	m_timer = 0;
-
-	if (host.error() == QHostInfo::NoError)
-	{
-		emit requestedOpenUrl(QUrl::fromUserInput(m_text), m_hints);
-	}
-	else
-	{
-		emit requestedSearch(m_text, QString(), m_hints);
+		return result;
 	}
 
-	deleteLater();
-}
-
-void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints hints, InterpreterFlags flags)
-{
 	if (!flags.testFlag(NoSearchKeywordsFlag))
 	{
 		const QString keyword(text.section(QLatin1Char(' '), 0, 0));
@@ -78,20 +53,19 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 
 		if (searchEngine.isValid())
 		{
-			emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
+			result.searchEngine = searchEngine.identifier;
+			result.searchQuery = text.section(QLatin1Char(' '), 1);
+			result.type = InterpreterResult::SearchType;
 
-			deleteLater();
-
-			return;
+			return result;
 		}
 
 		if (keyword == QLatin1String("?"))
 		{
-			emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
+			result.searchQuery = text.section(QLatin1Char(' '), 1);
+			result.type = InterpreterResult::SearchType;
 
-			deleteLater();
-
-			return;
+			return result;
 		}
 	}
 
@@ -101,11 +75,10 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 
 		if (bookmark)
 		{
-			emit requestedOpenBookmark(bookmark, hints);
+			result.bookmark = bookmark;
+			result.type = InterpreterResult::BookmarkType;
 
-			deleteLater();
-
-			return;
+			return result;
 		}
 	}
 
@@ -115,11 +88,10 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 
 		if (bookmark)
 		{
-			emit requestedOpenBookmark(bookmark, hints);
+			result.bookmark = bookmark;
+			result.type = InterpreterResult::BookmarkType;
 
-			deleteLater();
-
-			return;
+			return result;
 		}
 	}
 
@@ -127,66 +99,80 @@ void InputInterpreter::interpret(const QString &text, SessionsManager::OpenHints
 
 	if (localPath != text)
 	{
-		emit requestedOpenUrl(localPath, hints);
+		result.url = QUrl::fromLocalFile(localPath);
+		result.type = InterpreterResult::UrlType;
 
-		deleteLater();
-
-		return;
+		return result;
 	}
 
 	const QFileInfo fileInformation(text);
 
 	if (fileInformation.exists() && fileInformation.isAbsolute())
 	{
-		emit requestedOpenUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()), hints);
+		result.url = QUrl::fromLocalFile(fileInformation.canonicalFilePath());
+		result.type = InterpreterResult::UrlType;
 
-		deleteLater();
-
-		return;
+		return result;
 	}
 
 	const QUrl url(QUrl::fromUserInput(text));
 
 	if (!QHostAddress(text).isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
 	{
-		emit requestedOpenUrl(url, hints);
+		result.url = url;
+		result.type = InterpreterResult::UrlType;
 
-		deleteLater();
-
-		return;
+		return result;
 	}
 
+#if QT_VERSION >= 0x050900
 	if (!flags.testFlag(NoHostLookupFlag))
 	{
 		const int lookupTimeout(SettingsManager::getOption(SettingsManager::AddressField_HostLookupTimeoutOption).toInt());
 
 		if (url.isValid() && lookupTimeout > 0)
 		{
-			m_text = text;
-			m_hints = hints;
-
-			if (m_timer != 0)
+			QEventLoop eventLoop;
+			const int lookupIdentifier(QHostInfo::lookupHost(url.host(), [&](const QHostInfo &information)
 			{
-				QHostInfo::abortHostLookup(m_lookup);
+				if (information.error() == QHostInfo::NoError)
+				{
+					result.url = QUrl::fromUserInput(text);
+					result.type = InterpreterResult::UrlType;
+				}
 
-				killTimer(m_timer);
+				eventLoop.quit();
+			}));
 
-				m_timer = 0;
+			QTimer timer;
+			timer.setSingleShot(true);
+
+			connect(&timer, &QTimer::timeout, [&]()
+			{
+				QHostInfo::abortHostLookup(lookupIdentifier);
+
+				eventLoop.quit();
+			});
+
+			timer.start(lookupTimeout);
+
+			if (result.type == InterpreterResult::UnknownType)
+			{
+				eventLoop.exec();
 			}
 
-			m_lookup = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
-			m_timer = startTimer(lookupTimeout);
-
-			return;
+			if (result.type == InterpreterResult::UrlType)
+			{
+				return result;
+			}
 		}
 	}
+#endif
 
-	emit requestedSearch(text, QString(), hints);
+	result.searchQuery = text;
+	result.type = InterpreterResult::SearchType;
 
-	deleteLater();
-
-	return;
+	return result;
 }
 
 }
-

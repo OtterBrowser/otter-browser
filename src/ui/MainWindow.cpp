@@ -428,8 +428,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				OpenAddressDialog dialog(this);
 
-				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
 				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
 				connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 
 				dialog.exec();
@@ -1025,24 +1025,39 @@ void MainWindow::openUrl(const QString &text, bool isPrivate)
 		return;
 	}
 
-	InputInterpreter *interpreter(new InputInterpreter(this));
+	const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
 
-	connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
-	connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
-	connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
-
-	const Window *window(m_workspace->getActiveWindow());
-
-	if (!window || (window->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())))
+	if (result.isValid())
 	{
-		hints |= SessionsManager::CurrentTabOpen;
-	}
-	else
-	{
-		hints |= SessionsManager::NewTabOpen;
-	}
+		const Window *window(m_workspace->getActiveWindow());
 
-	interpreter->interpret(text, hints);
+		if (!window || (window->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())))
+		{
+			hints |= SessionsManager::CurrentTabOpen;
+		}
+		else
+		{
+			hints |= SessionsManager::NewTabOpen;
+		}
+
+		switch (result.type)
+		{
+			case InputInterpreter::InterpreterResult::BookmarkType:
+				open(result.bookmark, hints);
+
+				break;
+			case InputInterpreter::InterpreterResult::UrlType:
+				open(result.url, hints);
+
+				break;
+			case InputInterpreter::InterpreterResult::SearchType:
+				search(result.searchQuery, result.searchEngine, hints);
+
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void MainWindow::search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)

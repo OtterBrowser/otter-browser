@@ -349,16 +349,35 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 	{
 		case ActionsManager::OpenSelectionAsLinkAction:
 			{
-				const QString text(m_webWidget->getSelectedText());
+				const QString text(m_webWidget->getSelectedText().trimmed());
 
 				if (!text.isEmpty())
 				{
-					InputInterpreter *interpreter(new InputInterpreter(this));
+					const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, (InputInterpreter::NoBookmarkKeywordsFlag | InputInterpreter::NoHostLookupFlag | InputInterpreter::NoSearchKeywordsFlag)));
 
-					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
-					connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
+					if (result.isValid())
+					{
+						SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints());
 
-					interpreter->interpret(text, SessionsManager::calculateOpenHints(), InputInterpreter::NoBookmarkKeywordsFlag);
+						if (parameters.contains(QLatin1String("hints")))
+						{
+							hints = SessionsManager::calculateOpenHints(parameters);
+						}
+
+						switch (result.type)
+						{
+							case InputInterpreter::InterpreterResult::UrlType:
+								emit requestedOpenUrl(result.url, hints);
+
+								break;
+							case InputInterpreter::InterpreterResult::SearchType:
+								emit requestedSearch(result.searchQuery, result.searchEngine, hints);
+
+								break;
+							default:
+								break;
+						}
+					}
 				}
 			}
 
@@ -408,19 +427,31 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::PasteAndGoAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				InputInterpreter *interpreter(new InputInterpreter(this));
+				const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(QGuiApplication::clipboard()->text().trimmed(), (InputInterpreter::NoBookmarkKeywordsFlag | InputInterpreter::NoHostLookupFlag | InputInterpreter::NoSearchKeywordsFlag)));
 
-				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
-				connect(interpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
-
-				SessionsManager::OpenHints hints(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? SessionsManager::NewTabOpen : SessionsManager::CurrentTabOpen);
-
-				if (parameters.contains(QLatin1String("hints")))
+				if (result.isValid())
 				{
-					hints = SessionsManager::calculateOpenHints(parameters);
-				}
+					SessionsManager::OpenHints hints(SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? SessionsManager::NewTabOpen : SessionsManager::CurrentTabOpen);
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), hints, InputInterpreter::NoBookmarkKeywordsFlag);
+					if (parameters.contains(QLatin1String("hints")))
+					{
+						hints = SessionsManager::calculateOpenHints(parameters);
+					}
+
+					switch (result.type)
+					{
+						case InputInterpreter::InterpreterResult::UrlType:
+							emit requestedOpenUrl(result.url, hints);
+
+							break;
+						case InputInterpreter::InterpreterResult::SearchType:
+							emit requestedSearch(result.searchQuery, result.searchEngine, hints);
+
+							break;
+						default:
+							break;
+					}
+				}
 			}
 
 			break;

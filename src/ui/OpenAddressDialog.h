@@ -55,12 +55,11 @@ protected slots:
 
 private:
 	AddressWidget *m_addressWidget;
-	InputInterpreter *m_inputInterpreter;
 	Ui::OpenAddressDialog *m_ui;
 
 signals:
 	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
-	void requestedLoadUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
 };
 

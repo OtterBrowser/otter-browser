@@ -32,7 +32,6 @@ namespace Otter
 
 OpenAddressDialog::OpenAddressDialog(QWidget *parent) : Dialog(parent),
 	m_addressWidget(nullptr),
-	m_inputInterpreter(nullptr),
 	m_ui(new Ui::OpenAddressDialog)
 {
 	m_ui->setupUi(this);
@@ -77,21 +76,37 @@ void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
 
 void OpenAddressDialog::handleUserInput()
 {
-	if (m_addressWidget->text().trimmed().isEmpty())
-	{
-		close();
-	}
-	else if (!m_inputInterpreter)
-	{
-		m_inputInterpreter = new InputInterpreter(this);
+	const QString text(m_addressWidget->text().trimmed());
 
-		connect(m_inputInterpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)));
-		connect(m_inputInterpreter, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedLoadUrl(QUrl,SessionsManager::OpenHints)));
-		connect(m_inputInterpreter, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
-		connect(m_inputInterpreter, SIGNAL(destroyed()), this, SLOT(accept()));
+	if (text.isEmpty())
+	{
+		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
 
-		m_inputInterpreter->interpret(m_addressWidget->text(), SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen));
+		if (result.isValid())
+		{
+			const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen));
+
+			switch (result.type)
+			{
+				case InputInterpreter::InterpreterResult::BookmarkType:
+					emit requestedOpenBookmark(result.bookmark, hints);
+
+					break;
+				case InputInterpreter::InterpreterResult::UrlType:
+					emit requestedOpenUrl(result.url, hints);
+
+					break;
+				case InputInterpreter::InterpreterResult::SearchType:
+					emit requestedSearch(result.searchQuery, result.searchEngine, hints);
+
+					break;
+				default:
+					break;
+			}
+		}
 	}
+
+	close();
 }
 
 void OpenAddressDialog::setText(const QString &text)
