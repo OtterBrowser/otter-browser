@@ -1052,52 +1052,6 @@ void MainWindow::open(BookmarksItem *bookmark, SessionsManager::OpenHints hints)
 	}
 }
 
-void MainWindow::openUrl(const QString &text, bool isPrivate)
-{
-	SessionsManager::OpenHints hints(isPrivate ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen);
-
-	if (text.isEmpty())
-	{
-		triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), (hints | ActionsManager::NewTabAction)}});
-
-		return;
-	}
-
-	const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
-
-	if (result.isValid())
-	{
-		const Window *window(m_workspace->getActiveWindow());
-
-		if (!window || (window->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())))
-		{
-			hints |= SessionsManager::CurrentTabOpen;
-		}
-		else
-		{
-			hints |= SessionsManager::NewTabOpen;
-		}
-
-		switch (result.type)
-		{
-			case InputInterpreter::InterpreterResult::BookmarkType:
-				open(result.bookmark, hints);
-
-				break;
-			case InputInterpreter::InterpreterResult::UrlType:
-				open(result.url, hints);
-
-				break;
-			case InputInterpreter::InterpreterResult::SearchType:
-				search(result.searchQuery, result.searchEngine, hints);
-
-				break;
-			default:
-				break;
-		}
-	}
-}
-
 void MainWindow::search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
 {
 	Window *window(m_workspace->getActiveWindow());

@@ -977,7 +977,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 
 			if (!urls.at(i).isEmpty())
 			{
-				window->openUrl(urls.at(i));
+				window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}});
 			}
 		}
 	}
@@ -989,7 +989,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 		{
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				window->openUrl(urls.at(i), openHints.testFlag(SessionsManager::PrivateOpen));
+				window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
 			}
 		}
 	}
@@ -1127,7 +1127,7 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 
 	if (parameters.contains(QLatin1String("url")))
 	{
-		window->openUrl(parameters[QLatin1String("url")].toString());
+		window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), parameters[QLatin1String("url")].toString()}, {QLatin1String("needsInterpretation"), true}});
 	}
 
 	emit m_instance->windowAdded(window);
