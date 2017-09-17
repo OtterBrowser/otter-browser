@@ -411,7 +411,12 @@ void SearchWidget::sendRequest(const QString &query)
 
 		if (searchEngine.formUrl.isValid())
 		{
-			emit requestedOpenUrl(searchEngine.formUrl, SessionsManager::calculateOpenHints());
+			MainWindow *mainWindow(m_window ? MainWindow::findMainWindow(m_window) : MainWindow::findMainWindow(this));
+
+			if (mainWindow)
+			{
+				mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), searchEngine.formUrl}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints())}});
+			}
 		}
 	}
 	else
@@ -740,7 +745,6 @@ void SearchWidget::setWindow(Window *window)
 	{
 		m_window->detachSearchWidget(this);
 
-		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
@@ -760,7 +764,6 @@ void SearchWidget::setWindow(Window *window)
 
 		setSearchEngine(window->getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,SessionsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateGeometries()));
