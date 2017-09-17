@@ -1039,14 +1039,6 @@ void MainWindow::open(const QUrl &url, SessionsManager::OpenHints hints)
 	triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
 }
 
-void MainWindow::open(BookmarksItem *bookmark, SessionsManager::OpenHints hints)
-{
-	if (bookmark)
-	{
-		triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(hints)}});
-	}
-}
-
 void MainWindow::search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
 {
 	Window *window(m_workspace->getActiveWindow());
@@ -1283,7 +1275,6 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	});
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle()));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SLOT(open(QUrl,SessionsManager::OpenHints)));
-	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,SessionsManager::OpenHints)), this, SLOT(open(BookmarksItem*,SessionsManager::OpenHints)));
 	connect(window, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), this, SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(handleWindowClose(Window*)));

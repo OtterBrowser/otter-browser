@@ -106,7 +106,6 @@ protected:
 protected slots:
 	void saveToolBarPositions();
 	void open(const QUrl &url = {}, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
-	void open(BookmarksItem *bookmark, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void removeStoredUrl(const QString &url);
 	void handleOptionChanged(int identifier);
 	void handleWindowClose(Window *window);
