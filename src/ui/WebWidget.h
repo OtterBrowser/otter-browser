@@ -326,7 +326,6 @@ signals:
 	void aboutToReload();
 	void needsAttention();
 	void requestedCloseWindow();
-	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &search, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
