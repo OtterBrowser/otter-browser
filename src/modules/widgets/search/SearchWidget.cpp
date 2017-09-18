@@ -696,17 +696,17 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 		{
 			setText(query);
 		}
-
-		if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
-		{
-			PreferencesDialog dialog(QLatin1String("search"), this);
-			dialog.exec();
-		}
 	}
 
 	update();
 	setEnabled(true);
 	hidePopup();
+
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
+	{
+		PreferencesDialog dialog(QLatin1String("search"), this);
+		dialog.exec();
+	}
 }
 
 void SearchWidget::setOptions(const QVariantMap &options)
