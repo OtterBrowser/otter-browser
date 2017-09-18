@@ -793,9 +793,11 @@ QPoint WebWidget::getClickPosition() const
 	return m_clickPosition;
 }
 
-QRect WebWidget::getProgressBarGeometry() const
+QRect WebWidget::getGeometry(bool excludeScrollBars) const
 {
-	return (isVisible() ? QRect(QPoint(0, (height() - 30)), QSize(width(), 30)) : QRect());
+	Q_UNUSED(excludeScrollBars)
+
+	return geometry();
 }
 
 ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier, const QVariantMap &parameters) const

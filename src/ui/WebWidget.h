@@ -225,7 +225,7 @@ public:
 	virtual QPixmap createThumbnail() = 0;
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
-	virtual QRect getProgressBarGeometry() const;
+	virtual QRect getGeometry(bool excludeScrollBars = false) const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	virtual LinkUrl getActiveFrame() const;
 	virtual LinkUrl getActiveImage() const;
@@ -333,7 +333,7 @@ signals:
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void requestedGeometryChange(const QRect &geometry);
 	void requestedInspectorVisibilityChange(bool isVisible);
-	void progressBarGeometryChanged();
+	void geometryChanged();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

@@ -1155,7 +1155,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 			m_createStartPageTimer = startTimer(50);
 		}
 
-		connect(m_splitter, SIGNAL(splitterMoved(int,int)), widget, SIGNAL(progressBarGeometryChanged()));
+		connect(m_splitter, SIGNAL(splitterMoved(int,int)), widget, SIGNAL(geometryChanged()));
 	}
 
 	bool isHidden(m_isStartPageEnabled && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));

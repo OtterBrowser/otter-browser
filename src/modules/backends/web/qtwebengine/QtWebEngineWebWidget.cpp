@@ -265,7 +265,7 @@ void QtWebEngineWebWidget::pageLoadStarted()
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
 
-	emit progressBarGeometryChanged();
+	emit geometryChanged();
 	emit loadingStateChanged(OngoingLoadingState);
 	emit pageInformationChanged(DocumentLoadingProgressInformation, 0);
 }
@@ -1317,7 +1317,7 @@ void QtWebEngineWebWidget::setZoom(int zoom)
 		SessionsManager::markSessionAsModified();
 
 		emit zoomChanged(zoom);
-		emit progressBarGeometryChanged();
+		emit geometryChanged();
 	}
 }
 
@@ -1856,7 +1856,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		case QEvent::Resize:
 			if (object == m_webView)
 			{
-				emit progressBarGeometryChanged();
+				emit geometryChanged();
 			}
 
 			break;

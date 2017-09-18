@@ -60,7 +60,7 @@ public:
 	QIcon getIcon() const override;
 	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
-	QRect getProgressBarGeometry() const override;
+	QRect getGeometry(bool excludeScrollBars = false) const override;
 	LinkUrl getActiveFrame() const override;
 	LinkUrl getActiveImage() const override;
 	LinkUrl getActiveLink() const override;

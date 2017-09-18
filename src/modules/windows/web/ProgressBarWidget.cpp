@@ -52,7 +52,7 @@ ProgressBarWidget::ProgressBarWidget(Window *window, WebWidget *parent) : QFrame
 	updateLoadingState(window->getLoadingState());
 	setAutoFillBackground(true);
 
-	connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(updateLoadingState(WebWidget::LoadingState)));
+	connect(window, &Window::loadingStateChanged, this, &ProgressBarWidget::updateLoadingState);
 }
 
 void ProgressBarWidget::timerEvent(QTimerEvent *event)
@@ -72,18 +72,19 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WebWidget::OngoingLoadingState))
 		{
-			QRect geometry(m_webWidget->getProgressBarGeometry());
+			QRect geometry(m_webWidget->getGeometry(true));
 
 			if (!isVisible())
 			{
-				connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+				connect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressBarWidget::scheduleGeometryUpdate);
 			}
 
 			if (!geometry.isValid())
 			{
-				geometry = QRect(QPoint(0, (m_webWidget->height() - 30)), QSize(m_webWidget->width(), 30));
+				geometry = m_webWidget->geometry();
 			}
 
+			geometry.setTop(geometry.bottom() - 30);
 			geometry.translate(m_webWidget->mapTo(m_window->getContentsWidget(), QPoint(0, 0)));
 
 			setGeometry(geometry);
@@ -92,7 +93,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 		}
 		else
 		{
-			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressBarWidget::scheduleGeometryUpdate);
 
 			hide();
 		}
@@ -113,7 +114,7 @@ void ProgressBarWidget::updateLoadingState(WebWidget::LoadingState state)
 
 		if (m_window && m_webWidget)
 		{
-			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressBarWidget::scheduleGeometryUpdate);
 		}
 	}
 }

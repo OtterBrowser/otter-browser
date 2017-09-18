@@ -158,8 +158,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	connect(m_page->mainFrame(), SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_page->mainFrame(), SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_page->mainFrame(), SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
-	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
-	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
+	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(geometryChanged()));
+	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(geometryChanged()));
 	connect(m_page->undoStack(), SIGNAL(canRedoChanged(bool)), this, SLOT(notifyRedoActionStateChanged()));
 	connect(m_page->undoStack(), SIGNAL(redoTextChanged(QString)), this, SLOT(notifyRedoActionStateChanged()));
 	connect(m_page->undoStack(), SIGNAL(canUndoChanged(bool)), this, SLOT(notifyUndoActionStateChanged()));
@@ -500,7 +500,7 @@ void QtWebKitWebWidget::handleLoadStarted()
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
 
-	emit progressBarGeometryChanged();
+	emit geometryChanged();
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
 	emit loadingStateChanged(OngoingLoadingState);
 }
@@ -1865,7 +1865,7 @@ void QtWebKitWebWidget::setZoom(int zoom)
 		SessionsManager::markSessionAsModified();
 
 		emit zoomChanged(zoom);
-		emit progressBarGeometryChanged();
+		emit geometryChanged();
 	}
 }
 
@@ -2201,20 +2201,20 @@ QPoint QtWebKitWebWidget::getScrollPosition() const
 	return m_page->mainFrame()->scrollPosition();
 }
 
-QRect QtWebKitWebWidget::getProgressBarGeometry() const
+QRect QtWebKitWebWidget::getGeometry(bool excludeScrollBars) const
 {
-	if (!isVisible())
+	if (!excludeScrollBars)
 	{
-		return QRect();
+		return geometry();
 	}
 
-	QRect geometry(QPoint(0, (height() - 30)), QSize(width(), 30));
+	QRect geometry(this->geometry());
 	const QRect horizontalScrollBar(m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal));
 	const QRect verticalScrollBar(m_page->mainFrame()->scrollBarGeometry(Qt::Vertical));
 
 	if (horizontalScrollBar.height() > 0 && geometry.intersects(horizontalScrollBar))
 	{
-		geometry.moveTop(m_webView->height() - 30 - horizontalScrollBar.height());
+		geometry.moveTop(m_webView->height() - horizontalScrollBar.height());
 	}
 
 	if (verticalScrollBar.width() > 0 && geometry.intersects(verticalScrollBar))
@@ -2809,7 +2809,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				return QObject::eventFilter(object, event);
 			case QEvent::Move:
 			case QEvent::Resize:
-				emit progressBarGeometryChanged();
+				emit geometryChanged();
 
 				break;
 			case QEvent::ShortcutOverride:
