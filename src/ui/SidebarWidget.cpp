@@ -208,7 +208,6 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (widget && mainWindow)
 	{
-		connect(widget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), mainWindow, SLOT(open(QUrl,SessionsManager::OpenHints)));
 		connect(widget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
 		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), mainWindow, SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
 	}

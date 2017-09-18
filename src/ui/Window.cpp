@@ -386,23 +386,6 @@ void Window::handleIconChanged(const QIcon &icon)
 	}
 }
 
-void Window::handleOpenUrlRequest(const QUrl &url, SessionsManager::OpenHints hints)
-{
-	if (hints == SessionsManager::DefaultOpen || hints == SessionsManager::CurrentTabOpen)
-	{
-		setUrl(url);
-
-		return;
-	}
-
-	if (isPrivate())
-	{
-		hints |= SessionsManager::PrivateOpen;
-	}
-
-	emit requestedOpenUrl(url, hints);
-}
-
 void Window::handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
 {
 	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == SessionsManager::DefaultOpen || hints == SessionsManager::CurrentTabOpen))
@@ -676,7 +659,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	connect(m_contentsWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_contentsWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));
-	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,SessionsManager::OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedGeometryChange(QRect)), this, SLOT(handleGeometryChangeRequest(QRect)));

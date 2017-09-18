@@ -367,7 +367,19 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 						switch (result.type)
 						{
 							case InputInterpreter::InterpreterResult::UrlType:
-								emit requestedOpenUrl(result.url, hints);
+								if (hints.testFlag(SessionsManager::CurrentTabOpen) && hints.testFlag(SessionsManager::PrivateOpen) == isPrivate())
+								{
+									setUrl(result.url);
+								}
+								else
+								{
+									MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+									if (mainWindow)
+									{
+										mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+									}
+								}
 
 								break;
 							case InputInterpreter::InterpreterResult::SearchType:
@@ -441,7 +453,19 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					switch (result.type)
 					{
 						case InputInterpreter::InterpreterResult::UrlType:
-							emit requestedOpenUrl(result.url, hints);
+							if (hints.testFlag(SessionsManager::CurrentTabOpen) && hints.testFlag(SessionsManager::PrivateOpen) == isPrivate())
+							{
+								setUrl(result.url);
+							}
+							else
+							{
+								MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+								if (mainWindow)
+								{
+									mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+								}
+							}
 
 							break;
 						case InputInterpreter::InterpreterResult::SearchType:
