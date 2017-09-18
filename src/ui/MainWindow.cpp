@@ -1523,7 +1523,7 @@ void MainWindow::handleWindowClose(Window *window)
 		triggerAction(ActionsManager::NewTabAction);
 	}
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
+	emit actionsStateChanged(QVector<int>({ActionsManager::CloseOtherTabsAction, ActionsManager::ClosePrivateTabsAction}));
 }
 
 void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
@@ -1984,6 +1984,8 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 		addWindow(window, hints, index);
 	}
+
+	emit actionsStateChanged(QVector<int>({ActionsManager::CloseOtherTabsAction}));
 
 	return window;
 }
