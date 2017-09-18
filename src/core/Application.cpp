@@ -1120,7 +1120,7 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 
 	m_windows.prepend(window);
 
-	const bool inBackground(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::BackgroundOpen));
+	const bool inBackground(parameters.contains(QLatin1String("hints")) ? SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::BackgroundOpen) : false);
 
 	if (inBackground)
 	{
