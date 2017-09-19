@@ -78,7 +78,7 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 {
 	m_ui->setupUi(this);
 
-	m_model->setHorizontalHeaderLabels(QStringList({QString(), tr("Filename"), tr("Size"), tr("Progress"), tr("Time"), tr("Speed"), tr("Started"), tr("Finished")}));
+	m_model->setHorizontalHeaderLabels(QStringList({tr("Status"), tr("Filename"), tr("Size"), tr("Progress"), tr("Time"), tr("Speed"), tr("Started"), tr("Finished")}));
 	m_model->setHeaderData(0, Qt::Horizontal, QSize(28, 0), Qt::SizeHintRole);
 
 	m_ui->transfersViewWidget->setModel(m_model);
