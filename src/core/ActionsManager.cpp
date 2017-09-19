@@ -282,6 +282,7 @@ bool KeyboardProfile::save()
 ActionsManager* ActionsManager::m_instance(nullptr);
 QMap<int, QVector<QKeySequence> > ActionsManager::m_shortcuts;
 QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > ActionsManager::m_extraShortcuts;
+QSet<QKeySequence> ActionsManager::m_disallowedShortcuts;
 QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
 int ActionsManager::m_actionIdentifierEnumerator(0);
 
@@ -736,6 +737,16 @@ int ActionsManager::getActionIdentifier(const QString &name)
 	}
 
 	return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
+}
+
+bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut)
+{
+	if (m_disallowedShortcuts.isEmpty())
+	{
+		m_disallowedShortcuts = QSet<QKeySequence>({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
+	}
+
+	return !m_disallowedShortcuts.contains(shortcut);
 }
 
 ActionExecutor::Object::Object() : m_executor(nullptr)

@@ -1780,7 +1780,6 @@ void MainWindow::updateShortcuts()
 	m_shortcuts.clear();
 
 	const QVector<KeyboardProfile::Action> definitions(ActionsManager::getShortcutDefinitions());
-	const QList<QKeySequence> standardShortcuts({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
 
 	m_shortcuts.reserve(definitions.count() * 2);
 
@@ -1788,7 +1787,7 @@ void MainWindow::updateShortcuts()
 	{
 		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
 		{
-			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
+			if (ActionsManager::isShortcutAllowed(definitions[i].shortcuts[j]))
 			{
 				m_shortcuts.append(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], definitions[i].parameters, this));
 			}

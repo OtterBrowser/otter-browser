@@ -25,6 +25,7 @@
 #include "AddonsManager.h"
 
 #include <QtCore/QPointer>
+#include <QtCore/QSet>
 #include <QtCore/QVariantMap>
 #include <QtGui/QIcon>
 
@@ -348,6 +349,7 @@ public:
 	static QVector<KeyboardProfile::Action> getShortcutDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
 	static int getActionIdentifier(const QString &name);
+	static bool isShortcutAllowed(const QKeySequence &shortcut);
 
 protected:
 	explicit ActionsManager(QObject *parent);
@@ -367,6 +369,7 @@ private:
 	static ActionsManager *m_instance;
 	static QMap<int, QVector<QKeySequence> > m_shortcuts;
 	static QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > m_extraShortcuts;
+	static QSet<QKeySequence> m_disallowedShortcuts;
 	static QVector<ActionDefinition> m_definitions;
 	static int m_actionIdentifierEnumerator;
 };
