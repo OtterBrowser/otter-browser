@@ -354,7 +354,7 @@ bool MouseProfile::Gesture::operator ==(const Gesture &other) const
 	return (steps == other.steps && parameters == other.parameters && action == other.action);
 }
 
-MouseProfile::MouseProfile(const QString &identifier, bool onlyMetaData) : Addon(),
+MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : Addon(),
 	m_identifier(identifier),
 	m_isModified(false)
 {
@@ -389,7 +389,7 @@ MouseProfile::MouseProfile(const QString &identifier, bool onlyMetaData) : Addon
 		}
 	}
 
-	if (onlyMetaData)
+	if (mode == MetaDataOnlyMode)
 	{
 		return;
 	}

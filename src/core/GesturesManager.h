@@ -32,6 +32,13 @@ namespace Otter
 class MouseProfile final : public Addon
 {
 public:
+	enum LoadMode
+	{
+		StandardMode = 0,
+		MetaDataOnlyMode,
+		FullMode
+	};
+
 	struct Gesture
 	{
 		struct Step
@@ -59,7 +66,7 @@ public:
 		bool operator ==(const Gesture &other) const;
 	};
 
-	explicit MouseProfile(const QString &identifier = QString(), bool onlyMetaData = false);
+	explicit MouseProfile(const QString &identifier = QString(), LoadMode mode = StandardMode);
 
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);

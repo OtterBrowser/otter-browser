@@ -347,7 +347,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	for (int i = 0; i < mouseProfiles.count(); ++i)
 	{
-		const MouseProfile profile(mouseProfiles.at(i));
+		const MouseProfile profile(mouseProfiles.at(i), MouseProfile::FullMode);
 
 		if (profile.getName().isEmpty())
 		{
@@ -1284,7 +1284,7 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 	}
 
 	const QString identifier(action->data().toString());
-	const MouseProfile profile(identifier);
+	const MouseProfile profile(identifier, MouseProfile::FullMode);
 
 	if (profile.getName().isEmpty())
 	{
@@ -1350,8 +1350,8 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 		return;
 	}
 
-	const MouseProfile profile(identifier);
-	MouseProfile newProfile(newIdentifier);
+	const MouseProfile profile(identifier, MouseProfile::FullMode);
+	MouseProfile newProfile(newIdentifier, MouseProfile::MetaDataOnlyMode);
 	newProfile.setAuthor(profile.getAuthor());
 	newProfile.setDefinitions(profile.getDefinitions());
 	newProfile.setDescription(profile.getDescription());
@@ -1433,7 +1433,7 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 
 		if (!m_mouseProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			MouseProfile profile(identifier);
+			MouseProfile profile(identifier, MouseProfile::MetaDataOnlyMode);
 
 			if (!profile.getName().isEmpty())
 			{
