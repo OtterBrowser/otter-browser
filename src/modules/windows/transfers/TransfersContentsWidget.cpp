@@ -79,11 +79,9 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	m_ui->setupUi(this);
 
 	m_model->setHorizontalHeaderLabels(QStringList({QString(), tr("Filename"), tr("Size"), tr("Progress"), tr("Time"), tr("Speed"), tr("Started"), tr("Finished")}));
+	m_model->setHeaderData(0, Qt::Horizontal, QSize(28, 0), Qt::SizeHintRole);
 
 	m_ui->transfersViewWidget->setModel(m_model);
-	m_ui->transfersViewWidget->header()->resizeSection(0, 30);
-	m_ui->transfersViewWidget->header()->setSectionResizeMode(0, QHeaderView::Fixed);
-	m_ui->transfersViewWidget->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersViewWidget->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-ongoing")));
