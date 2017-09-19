@@ -33,6 +33,7 @@ namespace Otter
 
 HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)
 {
+	setMinimumSectionSize(0);
 	setTextElideMode(Qt::ElideRight);
 	setSectionsMovable(true);
 
