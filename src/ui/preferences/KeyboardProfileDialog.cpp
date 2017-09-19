@@ -253,6 +253,7 @@ void KeyboardProfileDialog::addAction()
 	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
 
 	m_ui->actionsViewWidget->insertRow(items);
+	m_ui->actionsViewWidget->setCurrentIndex(items[1]->index());
 }
 
 void KeyboardProfileDialog::removeAction()
