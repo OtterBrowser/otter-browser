@@ -84,11 +84,25 @@ void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
 
 void Style::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	QProxyStyle::drawControl(element, option, painter, widget);
-
-	if (element == CE_ToolBar)
+	switch (element)
 	{
-		drawToolBarEdge(option, painter);
+		case CE_HeaderLabel:
+			if (option->rect.width() >= 30)
+			{
+				QProxyStyle::drawControl(element, option, painter, widget);
+			}
+
+			break;
+		case CE_ToolBar:
+			QProxyStyle::drawControl(element, option, painter, widget);
+
+			drawToolBarEdge(option, painter);
+
+			break;
+		default:
+			QProxyStyle::drawControl(element, option, painter, widget);
+
+			break;
 	}
 }
 
