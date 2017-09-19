@@ -311,7 +311,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
-		const KeyboardProfile profile(keyboardProfiles.at(i));
+		const KeyboardProfile profile(keyboardProfiles.at(i), KeyboardProfile::FullMode);
 
 		if (profile.getName().isEmpty())
 		{
@@ -1089,7 +1089,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	}
 
 	const QString identifier(action->data().toString());
-	const KeyboardProfile profile(identifier);
+	const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
 
 	if (profile.getName().isEmpty())
 	{
@@ -1155,8 +1155,8 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 		return;
 	}
 
-	const KeyboardProfile profile(identifier);
-	KeyboardProfile newProfile(newIdentifier);
+	const KeyboardProfile profile(identifier, KeyboardProfile::FullMode);
+	KeyboardProfile newProfile(newIdentifier, KeyboardProfile::MetaDataOnlyMode);
 	newProfile.setAuthor(profile.getAuthor());
 	newProfile.setDefinitions(profile.getDefinitions());
 	newProfile.setDescription(profile.getDescription());
@@ -1238,7 +1238,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 		if (!m_keyboardProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			const KeyboardProfile profile(identifier, true);
+			const KeyboardProfile profile(identifier, KeyboardProfile::MetaDataOnlyMode);
 
 			if (!profile.getName().isEmpty())
 			{

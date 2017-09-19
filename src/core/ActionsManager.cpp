@@ -39,7 +39,7 @@ bool KeyboardProfile::Action::operator ==(const KeyboardProfile::Action &other) 
 	return (shortcuts == other.shortcuts && parameters == other.parameters && action == other.action);
 }
 
-KeyboardProfile::KeyboardProfile(const QString &identifier, bool onlyMetaData) : Addon(),
+KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Addon(),
 	m_identifier(identifier),
 	m_isModified(false)
 {
@@ -74,15 +74,20 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, bool onlyMetaData) :
 		}
 	}
 
-	if (onlyMetaData)
+	if (mode == MetaDataOnlyMode)
 	{
 		return;
 	}
 
 	const QJsonArray contextsArray(settings.array());
-	const bool enableSingleKeyShortcuts(SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
-	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
-	functionKeyExpression.optimize();
+	QRegularExpression functionKeyExpression;
+	const bool enableSingleKeyShortcuts((mode == FullMode) ? true : SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
+
+	if (enableSingleKeyShortcuts)
+	{
+		functionKeyExpression.setPattern(QLatin1String("F\\d+"));
+		functionKeyExpression.optimize();
+	}
 
 	for (int i = 0; i < contextsArray.count(); ++i)
 	{

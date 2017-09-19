@@ -34,6 +34,13 @@ namespace Otter
 class KeyboardProfile final : public Addon
 {
 public:
+	enum LoadMode
+	{
+		StandardMode = 0,
+		MetaDataOnlyMode,
+		FullMode
+	};
+
 	struct Action
 	{
 		QVariantMap parameters;
@@ -43,7 +50,7 @@ public:
 		bool operator ==(const Action &other) const;
 	};
 
-	explicit KeyboardProfile(const QString &identifier = QString(), bool onlyMetaData = false);
+	explicit KeyboardProfile(const QString &identifier = QString(), LoadMode mode = StandardMode);
 
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);
