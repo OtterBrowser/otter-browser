@@ -25,6 +25,7 @@
 #include "../../core/ActionsManager.h"
 
 #include <QtCore/QModelIndex>
+#include <QtWidgets/QKeySequenceEdit>
 
 namespace Otter
 {
@@ -35,6 +36,17 @@ namespace Ui
 }
 
 class KeyboardProfileDialog;
+
+class ShortcutWidget final : public QKeySequenceEdit
+{
+	Q_OBJECT
+
+public:
+	explicit ShortcutWidget(const QKeySequence &shortcut, QWidget *parent = nullptr);
+
+signals:
+	void commitData(QWidget *editor);
+};
 
 class KeyboardActionDelegate final : public ItemDelegate
 {

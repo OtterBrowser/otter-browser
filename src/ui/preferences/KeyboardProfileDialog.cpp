@@ -26,11 +26,33 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QTimer>
-#include <QtWidgets/QKeySequenceEdit>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
 {
+
+ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : QKeySequenceEdit(shortcut, parent)
+{
+	QVBoxLayout *layout(findChild<QVBoxLayout*>());
+
+	if (layout)
+	{
+		QToolButton *button(new QToolButton(this));
+		button->setText(tr("Clear"));
+		button->setEnabled(!shortcut.isEmpty());
+
+		layout->setDirection(QBoxLayout::LeftToRight);
+		layout->addWidget(button);
+
+		connect(button, &QToolButton::clicked, this, &ShortcutWidget::clear);
+		connect(this, &ShortcutWidget::keySequenceChanged, [=](const QKeySequence &shortcut)
+		{
+			button->setEnabled(!shortcut.isEmpty());
+
+			emit commitData(this);
+		});
+	}
+}
 
 KeyboardActionDelegate::KeyboardActionDelegate(QObject *parent) : ItemDelegate(parent)
 {
@@ -82,7 +104,7 @@ void KeyboardShortcutDelegate::initStyleOption(QStyleOptionViewItem *option, con
 
 void KeyboardShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QKeySequenceEdit *widget(qobject_cast<QKeySequenceEdit*>(editor));
+	ShortcutWidget *widget(qobject_cast<ShortcutWidget*>(editor));
 
 	if (widget)
 	{
@@ -121,46 +143,29 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 	Q_UNUSED(option)
 
 	const QKeySequence shortcut(index.data(Qt::DisplayRole).toString());
-	QPointer<QKeySequenceEdit> widget(new QKeySequenceEdit(shortcut, parent));
+	ShortcutWidget *widget(new ShortcutWidget(shortcut, parent));
 	widget->setFocus();
 
-	QVBoxLayout *layout(widget->findChild<QVBoxLayout*>());
-
-	if (layout)
+	connect(widget, &ShortcutWidget::commitData, this, &KeyboardShortcutDelegate::commitData);
+	connect(widget, &ShortcutWidget::keySequenceChanged, [=](const QKeySequence &shortcut)
 	{
-		QToolButton *button(new QToolButton(widget));
-		button->setText(tr("Clear"));
-		button->setEnabled(!shortcut.isEmpty());
-
-		layout->setDirection(QBoxLayout::LeftToRight);
-		layout->addWidget(button);
-
-		connect(button, &QToolButton::clicked, widget, &QKeySequenceEdit::clear);
-		connect(widget, &QKeySequenceEdit::keySequenceChanged, [=](const QKeySequence &shortcut)
+		if (!shortcut.isEmpty())
 		{
-			button->setEnabled(!shortcut.isEmpty());
+			const KeyboardProfileDialog::ValidationResult result(m_dialog->validateShortcut(shortcut, index));
 
-			if (!shortcut.isEmpty())
+			if (!result.text.isEmpty())
 			{
-				const KeyboardProfileDialog::ValidationResult result(m_dialog->validateShortcut(shortcut, index));
+				widget->setStyleSheet(QLatin1String("QLineEdit {background:#F1E7E4;}"));
+				widget->setToolTip(result.text);
 
-				if (!result.text.isEmpty())
+				QTimer::singleShot(1000, widget, [=]()
 				{
-					widget->setStyleSheet(QLatin1String("QLineEdit {background:#F1E7E4;}"));
-					widget->setToolTip(result.text);
-
-					QTimer::singleShot(1000, m_dialog, [=]()
-					{
-						if (widget)
-						{
-							widget->setStyleSheet(QString());
-							widget->setToolTip(QString());
-						}
-					});
-				}
+					widget->setStyleSheet(QString());
+					widget->setToolTip(QString());
+				});
 			}
-		});
-	}
+		}
+	});
 
 	return widget;
 }
