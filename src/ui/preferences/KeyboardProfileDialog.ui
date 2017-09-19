@@ -50,6 +50,12 @@
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
            </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
            <attribute name="headerDefaultSectionSize">
             <number>200</number>
            </attribute>

@@ -34,6 +34,8 @@ namespace Ui
 	class KeyboardProfileDialog;
 }
 
+class KeyboardProfileDialog;
+
 class KeyboardActionDelegate final : public ItemDelegate
 {
 public:
@@ -46,13 +48,16 @@ public:
 class KeyboardShortcutDelegate final : public ItemDelegate
 {
 public:
-	explicit KeyboardShortcutDelegate(QObject *parent);
+	explicit KeyboardShortcutDelegate(KeyboardProfileDialog *parent);
 
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+
+private:
+	KeyboardProfileDialog *m_dialog;
 };
 
 class KeyboardProfileDialog final : public Dialog
@@ -63,13 +68,22 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
-		ParametersRole
+		ParametersRole,
+		IsIgnoredRole
+	};
+
+	struct ValidationResult
+	{
+		QString text;
+		QIcon icon;
+		bool isError = false;
 	};
 
 	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = nullptr);
 	~KeyboardProfileDialog();
 
 	KeyboardProfile getProfile() const;
+	ValidationResult validateShortcut(const QKeySequence &shortcut, const QModelIndex &index) const;
 	bool isModified() const;
 
 protected:
