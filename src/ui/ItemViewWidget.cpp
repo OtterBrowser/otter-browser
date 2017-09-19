@@ -27,6 +27,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QDropEvent>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -214,6 +215,29 @@ void HeaderViewWidget::setSort(int column, Qt::SortOrder order)
 	setSortIndicator(column, order);
 
 	emit sortChanged(column, order);
+}
+
+bool HeaderViewWidget::viewportEvent(QEvent *event)
+{
+	if (event->type() == QEvent::ToolTip && model())
+	{
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const int column(logicalIndexAt(helpEvent->pos()));
+
+		if (column >= 0)
+		{
+			const QString text(model()->headerData(column, orientation(), Qt::DisplayRole).toString());
+
+			if (!text.isEmpty())
+			{
+				QToolTip::showText(helpEvent->globalPos(), text, this);
+
+				return true;
+			}
+		}
+	}
+
+	return QHeaderView::viewportEvent(event);
 }
 
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),

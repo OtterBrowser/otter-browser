@@ -51,6 +51,7 @@ protected:
 
 	void showEvent(QShowEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
+	bool viewportEvent(QEvent *event) override;
 
 protected slots:
 	void toggleColumnVisibility(QAction *action);
