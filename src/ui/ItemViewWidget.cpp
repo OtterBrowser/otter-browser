@@ -372,6 +372,19 @@ void ItemViewWidget::ensureInitialized()
 		return;
 	}
 
+	if (m_headerWidget)
+	{
+		for (int i = 0; i < m_headerWidget->count(); ++i)
+		{
+			const QSize size(model()->headerData(i, Qt::Horizontal, Qt::SizeHintRole).toSize());
+
+			if (size.isValid())
+			{
+				m_headerWidget->resizeSection(i, size.width());
+			}
+		}
+	}
+
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
 	settings.beginGroup(type);
 
