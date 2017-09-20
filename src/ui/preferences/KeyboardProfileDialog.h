@@ -91,7 +91,7 @@ public:
 		bool isError = false;
 	};
 
-	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = nullptr);
+	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, bool areSingleKeyShortcutsAllowed, QWidget *parent = nullptr);
 	~KeyboardProfileDialog();
 
 	KeyboardProfile getProfile() const;
@@ -108,6 +108,7 @@ protected slots:
 
 private:
 	KeyboardProfile m_profile;
+	bool m_areSingleKeyShortcutsAllowed;
 	Ui::KeyboardProfileDialog *m_ui;
 };
 

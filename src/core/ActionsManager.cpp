@@ -369,8 +369,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ReloadAllAction, QT_TRANSLATE_NOOP("actions", "Reload All Tabs"), QString(), ThemesManager::createIcon(QLatin1String("view-refresh")), ActionDefinition::MainWindowScope);
 	registerAction(ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Schedule Page Reload"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag));
 	registerAction(ContextMenuAction, QT_TRANSLATE_NOOP("actions", "Show Context Menu"), QString(), QIcon(), ActionDefinition::WindowScope);
-	registerAction(UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), ThemesManager::createIcon(QLatin1String("edit-undo")), ActionDefinition::WindowScope);
-	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), ThemesManager::createIcon(QLatin1String("edit-redo")), ActionDefinition::WindowScope);
+	registerAction(UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), ThemesManager::createIcon(QLatin1String("edit-undo")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
+	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), ThemesManager::createIcon(QLatin1String("edit-redo")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(CutAction, QT_TRANSLATE_NOOP("actions", "Cut"), QString(), ThemesManager::createIcon(QLatin1String("edit-cut")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(CopyAction, QT_TRANSLATE_NOOP("actions", "Copy"), QString(), ThemesManager::createIcon(QLatin1String("edit-copy")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(CopyPlainTextAction, QT_TRANSLATE_NOOP("actions", "Copy as Plain Text"), QString(), QIcon(), ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsDeprecatedFlag), ActionDefinition::EditingCategory);

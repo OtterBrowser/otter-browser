@@ -1123,7 +1123,7 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 		return;
 	}
 
-	KeyboardProfileDialog dialog(identifier, m_keyboardProfiles, this);
+	KeyboardProfileDialog dialog(identifier, m_keyboardProfiles, m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked(), this);
 
 	if (dialog.exec() == QDialog::Rejected || !dialog.isModified())
 	{

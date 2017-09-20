@@ -170,8 +170,9 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 	return widget;
 }
 
-KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent) : Dialog(parent),
+KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, bool areSingleKeyShortcutsAllowed, QWidget *parent) : Dialog(parent),
 	m_profile(profiles[profile]),
+	m_areSingleKeyShortcutsAllowed(areSingleKeyShortcutsAllowed),
 	m_ui(new Ui::KeyboardProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -186,7 +187,8 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 
 		for (int j = 0; j < definitions.at(i).shortcuts.count(); ++j)
 		{
-			QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(definitions.at(i).shortcuts.at(j).toString())});
+			const QKeySequence shortcut(definitions.at(i).shortcuts.at(j));
+			QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(shortcut.toString())});
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 			items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 			items[1]->setData(definitions.at(i).action, IdentifierRole);
@@ -203,6 +205,19 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 			}
 
 			model->appendRow(items);
+
+			const ValidationResult result(validateShortcut(shortcut, items[3]->index()));
+
+			if (!result.text.isEmpty())
+			{
+				items[0]->setData(result.icon, Qt::DecorationRole);
+				items[0]->setData(result.text, Qt::ToolTipRole);
+
+				if (result.isError)
+				{
+					items[1]->setData(true, KeyboardProfileDialog::IsIgnoredRole);
+				}
+			}
 		}
 	}
 
@@ -349,6 +364,8 @@ KeyboardProfileDialog::ValidationResult KeyboardProfileDialog::validateShortcut(
 		return {};
 	}
 
+	ValidationResult result;
+	QStringList messages;
 	QModelIndexList indexes(index.model()->match(index.model()->index(0, 3), Qt::DisplayRole, shortcut.toString(), 2, Qt::MatchExactly));
 	indexes.removeAll(index);
 
@@ -357,15 +374,35 @@ KeyboardProfileDialog::ValidationResult KeyboardProfileDialog::validateShortcut(
 		const QModelIndex matchedIndex(indexes.first());
 		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(matchedIndex.sibling(matchedIndex.row(), 1).data(IdentifierRole).toInt()));
 
-		ValidationResult result;
-		result.text = tr("Shortcut already used by %1").arg(definition.isValid() ? definition.getText(true) : tr("unknown action"));
-		result.icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
-		result.isError = true;
+		messages.append(tr("This shortcut already used by %1").arg(definition.isValid() ? definition.getText(true) : tr("unknown action")));
 
-		return result;
+		result.isError = true;
 	}
 
-	return {};
+	if (!ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowStandardShortcutCheck, false))
+	{
+		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(index.sibling(index.row(), 1).data(IdentifierRole).toInt()));
+
+		if (!definition.isValid() || definition.category != ActionsManager::ActionDefinition::EditingCategory)
+		{
+			messages.append(tr("This shortcut cannot be used because it would be overriden by a native hotkey used by an editing action"));
+
+			result.isError = true;
+		}
+	}
+
+	if (!m_areSingleKeyShortcutsAllowed && !ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false))
+	{
+		messages.append(tr("Single key shortcuts are currently disabled"));
+	}
+
+	if (!messages.isEmpty())
+	{
+		result.text = messages.join(QLatin1Char('\n'));
+		result.icon = (ThemesManager::createIcon(result.isError ? QLatin1String("dialog-error") : QLatin1String("dialog-warning")));
+	}
+
+	return result;
 }
 
 bool KeyboardProfileDialog::isModified() const
