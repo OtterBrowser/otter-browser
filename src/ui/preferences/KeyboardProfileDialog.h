@@ -81,7 +81,14 @@ public:
 	{
 		IdentifierRole = Qt::UserRole,
 		ParametersRole,
-		IsIgnoredRole
+		StatusRole
+	};
+
+	enum ShortcutStatus
+	{
+		ErrorStatus = 0,
+		WarningStatus,
+		NormalStatus
 	};
 
 	struct ValidationResult
