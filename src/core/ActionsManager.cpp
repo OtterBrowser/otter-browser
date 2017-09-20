@@ -274,7 +274,7 @@ bool KeyboardProfile::save()
 ActionsManager* ActionsManager::m_instance(nullptr);
 QMap<int, QVector<QKeySequence> > ActionsManager::m_shortcuts;
 QMultiMap<int, QPair<QVariantMap, QVector<QKeySequence> > > ActionsManager::m_extraShortcuts;
-QSet<QKeySequence> ActionsManager::m_disallowedShortcuts;
+QVector<QKeySequence> ActionsManager::m_disallowedShortcuts;
 QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
 int ActionsManager::m_actionIdentifierEnumerator(0);
 
@@ -747,7 +747,7 @@ bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutChe
 	{
 		if (m_disallowedShortcuts.isEmpty())
 		{
-			m_disallowedShortcuts = QSet<QKeySequence>({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
+			m_disallowedShortcuts = QVector<QKeySequence>({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
 		}
 
 		if (m_disallowedShortcuts.contains(shortcut))
