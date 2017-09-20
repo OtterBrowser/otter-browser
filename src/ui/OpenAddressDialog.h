@@ -59,8 +59,8 @@ private:
 	Ui::OpenAddressDialog *m_ui;
 
 signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark, SessionsManager::OpenHints hints);
-	void requestedOpenUrl(const QUrl &url, SessionsManager::OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark);
+	void requestedOpenUrl(const QUrl &url);
 	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
 };
 

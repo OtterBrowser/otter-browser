@@ -97,7 +97,7 @@ void OpenAddressDialog::handleUserInput()
 					}
 					else
 					{
-						emit requestedOpenBookmark(result.bookmark, hints);
+						emit requestedOpenBookmark(result.bookmark);
 					}
 
 					break;
@@ -108,7 +108,7 @@ void OpenAddressDialog::handleUserInput()
 					}
 					else
 					{
-						emit requestedOpenUrl(result.url, hints);
+						emit requestedOpenUrl(result.url);
 					}
 
 					break;
