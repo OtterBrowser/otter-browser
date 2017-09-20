@@ -306,7 +306,8 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 
 	if (!url.isEmpty())
 	{
-		const QString overrideName(getHost(url) + QLatin1Char('/') + name);
+		const QString host(getHost(url));
+		const QString overrideName(host + QLatin1Char('/') + name);
 
 		if (value.isNull())
 		{
@@ -322,7 +323,7 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 			m_hasWildcardedOverrides = true;
 		}
 
-		emit m_instance->optionChanged(identifier, value, url);
+		emit m_instance->hostOptionChanged(identifier, value, host);
 
 		return;
 	}

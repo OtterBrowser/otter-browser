@@ -330,7 +330,7 @@ private:
 
 signals:
 	void optionChanged(int identifier, const QVariant &value);
-	void optionChanged(int identifier, const QVariant &value, const QUrl &url);
+	void hostOptionChanged(int identifier, const QVariant &value, const QString &host);
 };
 
 }
