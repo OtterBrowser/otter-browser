@@ -27,7 +27,6 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
-#include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 #include <QtGui/QKeySequence>
 
@@ -80,14 +79,7 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Add
 	}
 
 	const QJsonArray contextsArray(settings.array());
-	QRegularExpression functionKeyExpression;
-	const bool enableSingleKeyShortcuts((mode == FullMode) ? true : SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
-
-	if (enableSingleKeyShortcuts)
-	{
-		functionKeyExpression.setPattern(QLatin1String("F\\d+"));
-		functionKeyExpression.optimize();
-	}
+	const bool enableSingleKeyShortcuts(false);//(mode == FullMode) ? true : SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 
 	for (int i = 0; i < contextsArray.count(); ++i)
 	{
@@ -112,13 +104,14 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Add
 			for (int k = 0; k < shortcutsArray.count(); ++k)
 			{
 				const QString rawShortcut(shortcutsArray.at(k).toString());
+				const QKeySequence shortcut(rawShortcut);
 
-				if (!enableSingleKeyShortcuts && !functionKeyExpression.match(rawShortcut).hasMatch() && (!rawShortcut.contains(QLatin1Char('+')) || rawShortcut == QLatin1String("+")))
+				if (shortcut.isEmpty() || (!enableSingleKeyShortcuts && (!rawShortcut.contains(QLatin1Char('+')) || shortcut[0] == Qt::Key_Plus) && shortcut[0] != Qt::Key_Delete && !(shortcut[0] >= Qt::Key_F1 && shortcut[0] <= Qt::Key_F35)))
 				{
 					continue;
 				}
 
-				shortcuts.append(QKeySequence(rawShortcut));
+				shortcuts.append(shortcut);
 			}
 
 			if (shortcuts.isEmpty())
