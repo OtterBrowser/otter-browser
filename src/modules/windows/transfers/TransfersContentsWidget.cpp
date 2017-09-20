@@ -49,12 +49,11 @@ void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 	if (progressBar)
 	{
 		const Transfer::TransferState state(static_cast<Transfer::TransferState>(index.data(TransfersContentsWidget::StateRole).toInt()));
-		const qint64 bytesTotal(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong());
-		const bool isIndeterminate(bytesTotal <= 0);
+		const bool isIndeterminate(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong() <= 0);
 		const bool hasError(state == Transfer::UnknownState || state == Transfer::ErrorState);
 
 		progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
-		progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : qFloor((static_cast<qreal>(index.data(TransfersContentsWidget::BytesReceivedRole).toLongLong()) / bytesTotal) * 100));
+		progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : index.data(TransfersContentsWidget::ProgressRole).toInt());
 		progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
 	}
 }
@@ -83,6 +82,7 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 
 	m_ui->transfersViewWidget->setModel(m_model);
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
+	m_ui->transfersViewWidget->setSortRoleMapping({{0, StateRole}, {2, BytesTotalRole}, {3, ProgressRole}});
 	m_ui->transfersViewWidget->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-ongoing")));
 	m_ui->redownloadButton->setIcon(ThemesManager::createIcon(QLatin1String("view-refresh")));
@@ -259,17 +259,24 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 
 		switch (i)
 		{
+			case 0:
+				m_model->setData(index, icon, Qt::DecorationRole);
+				m_model->setData(index, transfer->getState(), StateRole);
+
+				break;
 			case 1:
 				m_model->setData(index, QFileInfo(transfer->getTarget()).fileName(), Qt::DisplayRole);
 
 				break;
 			case 2:
 				m_model->setData(index, Utils::formatUnit(transfer->getBytesTotal(), false, 1), Qt::DisplayRole);
+				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
 
 				break;
 			case 3:
 				m_model->setData(index, transfer->getBytesReceived(), BytesReceivedRole);
 				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
+				m_model->setData(index, ((transfer->getBytesTotal() > 0) ? qFloor((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : -1), ProgressRole);
 				m_model->setData(index, transfer->getState(), StateRole);
 
 				break;
@@ -290,8 +297,6 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 
 				break;
 			default:
-				m_model->setData(index, icon, Qt::DecorationRole);
-
 				break;
 		}
 	}

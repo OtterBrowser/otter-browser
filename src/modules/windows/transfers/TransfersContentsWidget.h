@@ -54,6 +54,7 @@ public:
 	{
 		BytesReceivedRole = Qt::UserRole,
 		BytesTotalRole,
+		ProgressRole,
 		StateRole
 	};
 
