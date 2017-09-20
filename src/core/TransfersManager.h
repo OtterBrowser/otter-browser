@@ -53,10 +53,10 @@ public:
 	enum TransferState
 	{
 		UnknownState = 0,
-		RunningState = 1,
-		FinishedState = 2,
-		ErrorState = 3,
-		CancelledState = 4
+		ErrorState,
+		CancelledState,
+		RunningState,
+		FinishedState
 	};
 
 	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
