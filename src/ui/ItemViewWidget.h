@@ -79,6 +79,7 @@ public:
 	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model) override;
 	void setModel(QAbstractItemModel *model, bool useSortProxy);
+	void setSortRoleMapping(const QMap<int, int> &mapping);
 	void setViewMode(ViewMode mode);
 	QStandardItemModel* getSourceModel() const;
 	QSortFilterProxyModel* getProxyModel() const;
@@ -135,6 +136,7 @@ private:
 	QStandardItemModel *m_sourceModel;
 	QSortFilterProxyModel *m_proxyModel;
 	QString m_filterString;
+	QMap<int, int> m_sortRoleMapping;
 	QSet<QModelIndex> m_expandedBranches;
 	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;

@@ -264,10 +264,9 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 	viewport()->setAcceptDrops(true);
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
-	connect(this, SIGNAL(sortChanged(int,Qt::SortOrder)), m_headerWidget, SLOT(setSort(int,Qt::SortOrder)));
-	connect(m_headerWidget, SIGNAL(sortChanged(int,Qt::SortOrder)), this, SLOT(setSort(int,Qt::SortOrder)));
-	connect(m_headerWidget, SIGNAL(columnVisibilityChanged(int,bool)), this, SLOT(setColumnVisibility(int,bool)));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ItemViewWidget::handleOptionChanged);
+	connect(m_headerWidget, &HeaderViewWidget::sortChanged, this, &ItemViewWidget::setSort);
+	connect(m_headerWidget, &HeaderViewWidget::columnVisibilityChanged, this, &ItemViewWidget::setColumnVisibility);
 	connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 }
 
@@ -659,9 +658,32 @@ void ItemViewWidget::setSort(int column, Qt::SortOrder order)
 	m_sortColumn = column;
 	m_sortOrder = order;
 
+	const int sortRole(m_proxyModel ? m_proxyModel->sortRole() : (m_sourceModel ? m_sourceModel->sortRole() : Qt::DisplayRole));
+
+	if (m_sortRoleMapping.contains(column))
+	{
+		if (m_proxyModel)
+		{
+			m_proxyModel->setSortRole(m_sortRoleMapping[column]);
+		}
+		else if (m_sourceModel)
+		{
+			m_sourceModel->setSortRole(m_sortRoleMapping[column]);
+		}
+	}
+
 	sortByColumn(column, order);
 	update();
 	saveState();
+
+	if (m_proxyModel)
+	{
+		m_proxyModel->setSortRole(sortRole);
+	}
+	else if (m_sourceModel)
+	{
+		m_sourceModel->setSortRole(sortRole);
+	}
 
 	emit sortChanged(column, order);
 }
@@ -788,6 +810,11 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(markAsModified()));
 	connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(markAsModified()));
 	connect(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(markAsModified()));
+}
+
+void ItemViewWidget::setSortRoleMapping(const QMap<int, int> &mapping)
+{
+	m_sortRoleMapping = mapping;
 }
 
 void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
