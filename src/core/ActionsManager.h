@@ -84,6 +84,13 @@ class ActionsManager final : public QObject
 	Q_ENUMS(ActionIdentifier)
 
 public:
+	enum ShortcutCheck
+	{
+		AllChecks = 0,
+		DisallowSingleKeyShortcutCheck,
+		DisallowStandardShortcutCheck
+	};
+
 	enum GesturesContext
 	{
 		UnknownContext = 0,
@@ -349,7 +356,7 @@ public:
 	static QVector<KeyboardProfile::Action> getShortcutDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
 	static int getActionIdentifier(const QString &name);
-	static bool isShortcutAllowed(const QKeySequence &shortcut);
+	static bool isShortcutAllowed(const QKeySequence &shortcut, ShortcutCheck check = AllChecks, bool areSingleKeyShortcutsAllowed = true);
 
 protected:
 	explicit ActionsManager(QObject *parent);

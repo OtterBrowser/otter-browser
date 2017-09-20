@@ -79,7 +79,7 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Add
 	}
 
 	const QJsonArray contextsArray(settings.array());
-	const bool enableSingleKeyShortcuts(false);//(mode == FullMode) ? true : SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
+	const bool areSingleKeyShortcutsAllowed((mode == FullMode) ? true : SettingsManager::getOption(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 
 	for (int i = 0; i < contextsArray.count(); ++i)
 	{
@@ -103,10 +103,9 @@ KeyboardProfile::KeyboardProfile(const QString &identifier, LoadMode mode) : Add
 
 			for (int k = 0; k < shortcutsArray.count(); ++k)
 			{
-				const QString rawShortcut(shortcutsArray.at(k).toString());
-				const QKeySequence shortcut(rawShortcut);
+				const QKeySequence shortcut(shortcutsArray.at(k).toString());
 
-				if (shortcut.isEmpty() || (!enableSingleKeyShortcuts && (!rawShortcut.contains(QLatin1Char('+')) || shortcut[0] == Qt::Key_Plus) && shortcut[0] != Qt::Key_Delete && !(shortcut[0] >= Qt::Key_F1 && shortcut[0] <= Qt::Key_F35)))
+				if (shortcut.isEmpty() || (!areSingleKeyShortcutsAllowed && !ActionsManager::isShortcutAllowed(shortcut, ActionsManager::DisallowSingleKeyShortcutCheck, false)))
 				{
 					continue;
 				}
@@ -732,14 +731,32 @@ int ActionsManager::getActionIdentifier(const QString &name)
 	return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
-bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut)
+bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutCheck check, bool areSingleKeyShortcutsAllowed)
 {
-	if (m_disallowedShortcuts.isEmpty())
+	if (shortcut.isEmpty())
 	{
-		m_disallowedShortcuts = QSet<QKeySequence>({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
+		return false;
 	}
 
-	return !m_disallowedShortcuts.contains(shortcut);
+	if ((check == AllChecks || check == DisallowSingleKeyShortcutCheck) && (!areSingleKeyShortcutsAllowed && (shortcut[0] == Qt::Key_Plus || !shortcut.toString(QKeySequence::PortableText).contains(QLatin1Char('+'))) && shortcut[0] != Qt::Key_Delete && !(shortcut[0] >= Qt::Key_F1 && shortcut[0] <= Qt::Key_F35)))
+	{
+		return false;
+	}
+
+	if (check == AllChecks || check == DisallowStandardShortcutCheck)
+	{
+		if (m_disallowedShortcuts.isEmpty())
+		{
+			m_disallowedShortcuts = QSet<QKeySequence>({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
+		}
+
+		if (m_disallowedShortcuts.contains(shortcut))
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 ActionExecutor::Object::Object() : m_executor(nullptr)
