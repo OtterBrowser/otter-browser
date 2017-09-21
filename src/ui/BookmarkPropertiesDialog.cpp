@@ -44,7 +44,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	m_ui->addressLineEditWidget->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
 	m_ui->addressLineEditWidget->setVisible(type == BookmarksModel::UrlBookmark);
 	m_ui->addressLabel->setVisible(type == BookmarksModel::UrlBookmark);
-	m_ui->descriptionTextEdit->setPlainText(m_bookmark->data(BookmarksModel::DescriptionRole).toString());
+	m_ui->descriptionTextEditWidget->setPlainText(m_bookmark->data(BookmarksModel::DescriptionRole).toString());
 	m_ui->keywordLineEditWidget->setText(m_bookmark->data(BookmarksModel::KeywordRole).toString());
 	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TitleRole).toDateTime()) : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime()) : tr("Unknown"));
@@ -71,7 +71,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 		m_ui->newFolderButton->hide();
 		m_ui->titleLineEditWidget->setReadOnly(true);
 		m_ui->addressLineEditWidget->setReadOnly(true);
-		m_ui->descriptionTextEdit->setReadOnly(true);
+		m_ui->descriptionTextEditWidget->setReadOnly(true);
 		m_ui->keywordLineEditWidget->setReadOnly(true);
 	}
 	else
@@ -95,7 +95,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QStrin
 	m_ui->addressLineEditWidget->setText(url.toString());
 	m_ui->addressLineEditWidget->setVisible(isUrl);
 	m_ui->addressLabel->setVisible(isUrl);
-	m_ui->descriptionTextEdit->setPlainText(description);
+	m_ui->descriptionTextEditWidget->setPlainText(description);
 	m_ui->visitsLabel->hide();
 	m_ui->visitsLabelWidget->hide();
 	m_ui->lastVisitLabel->hide();
@@ -155,7 +155,7 @@ void BookmarkPropertiesDialog::saveBookmark()
 
 		m_bookmark->setData(m_ui->addressLineEditWidget->text(), BookmarksModel::UrlRole);
 		m_bookmark->setData(m_ui->titleLineEditWidget->text(), BookmarksModel::TitleRole);
-		m_bookmark->setData(m_ui->descriptionTextEdit->toPlainText(), BookmarksModel::DescriptionRole);
+		m_bookmark->setData(m_ui->descriptionTextEditWidget->toPlainText(), BookmarksModel::DescriptionRole);
 		m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
 
 		if (m_bookmark->parent() != m_ui->folderComboBox->getCurrentFolder())

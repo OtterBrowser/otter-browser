@@ -53,7 +53,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="valueTextEdit">
+    <widget class="Otter::TextEditWidget" name="valueTextEditWidget">
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -76,6 +76,11 @@
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::TextEditWidget</class>
+   <extends>QPlainTextEdit</extends>
+   <header>src/ui/TextEditWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

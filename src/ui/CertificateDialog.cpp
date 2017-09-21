@@ -256,7 +256,7 @@ void CertificateDialog::updateCertificate()
 	createField(DigestSha1Field, digestItem);
 
 	m_ui->detailsItemView->expandAll();
-	m_ui->valueTextEdit->clear();
+	m_ui->valueTextEditWidget->clear();
 
 	if (!field.isNull())
 	{
@@ -275,7 +275,7 @@ void CertificateDialog::updateValue()
 	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(CertificateIndexRole).toInt()));
 	const CertificateField field(static_cast<CertificateField>(m_ui->detailsItemView->currentIndex().data(CertificateFieldRole).toInt()));
 
-	m_ui->valueTextEdit->clear();
+	m_ui->valueTextEditWidget->clear();
 
 	switch (field)
 	{
@@ -285,15 +285,15 @@ void CertificateDialog::updateValue()
 		case DigestField:
 			break;
 		case VersionField:
-			m_ui->valueTextEdit->setPlainText(QString(certificate.version()));
+			m_ui->valueTextEditWidget->setPlainText(QString(certificate.version()));
 
 			break;
 		case SerialNumberField:
-			m_ui->valueTextEdit->setPlainText(formatHex(QString(certificate.serialNumber()), QLatin1Char(':')));
+			m_ui->valueTextEditWidget->setPlainText(formatHex(QString(certificate.serialNumber()), QLatin1Char(':')));
 
 			break;
 		case SignatureAlgorithmField:
-			m_ui->valueTextEdit->setPlainText(QRegularExpression(QLatin1String("Signature Algorithm:(.+)")).match(certificate.toText()).captured(1).trimmed());
+			m_ui->valueTextEditWidget->setPlainText(QRegularExpression(QLatin1String("Signature Algorithm:(.+)")).match(certificate.toText()).captured(1).trimmed());
 
 			break;
 		case IssuerField:
@@ -302,17 +302,17 @@ void CertificateDialog::updateValue()
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
-					m_ui->valueTextEdit->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i))).arg(certificate.issuerInfo(attributes.at(i)).join(QLatin1String(", "))));
+					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i))).arg(certificate.issuerInfo(attributes.at(i)).join(QLatin1String(", "))));
 				}
 			}
 
 			break;
 		case ValidityNotBeforeField:
-			m_ui->valueTextEdit->setPlainText(certificate.effectiveDate().toString(QLatin1String("yyyy-MM-dd hh:mm:ss t")));
+			m_ui->valueTextEditWidget->setPlainText(certificate.effectiveDate().toString(QLatin1String("yyyy-MM-dd hh:mm:ss t")));
 
 			break;
 		case ValidityNotAfterField:
-			m_ui->valueTextEdit->setPlainText(certificate.expiryDate().toString(QLatin1String("yyyy-MM-dd hh:mm:ss t")));
+			m_ui->valueTextEditWidget->setPlainText(certificate.expiryDate().toString(QLatin1String("yyyy-MM-dd hh:mm:ss t")));
 
 			break;
 		case SubjectField:
@@ -321,7 +321,7 @@ void CertificateDialog::updateValue()
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
-					m_ui->valueTextEdit->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i))).arg(certificate.subjectInfo(attributes.at(i)).join(QLatin1String(", "))));
+					m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(QString(attributes.at(i))).arg(certificate.subjectInfo(attributes.at(i)).join(QLatin1String(", "))));
 				}
 			}
 
@@ -333,25 +333,25 @@ void CertificateDialog::updateValue()
 
 				if (match.hasMatch())
 				{
-					m_ui->valueTextEdit->setPlainText(tr("Modulus:\n%1\n\nExponent: %2").arg(formatHex(match.captured(1).trimmed().mid(3))).arg(match.captured(2).trimmed()));
+					m_ui->valueTextEditWidget->setPlainText(tr("Modulus:\n%1\n\nExponent: %2").arg(formatHex(match.captured(1).trimmed().mid(3))).arg(match.captured(2).trimmed()));
 				}
 			}
 
 			break;
 		case PublicKeyAlgorithmField:
-			m_ui->valueTextEdit->setPlainText(QRegularExpression(QLatin1String("Public Key Algorithm:(.+)")).match(certificate.toText()).captured(1).trimmed());
+			m_ui->valueTextEditWidget->setPlainText(QRegularExpression(QLatin1String("Public Key Algorithm:(.+)")).match(certificate.toText()).captured(1).trimmed());
 
 			break;
 		case ExtensionField:
 			{
 				const QSslCertificateExtension extension(certificate.extensions().value(m_ui->detailsItemView->currentIndex().data(ExtensionIndexRole).toInt()));
 
-				m_ui->valueTextEdit->setPlainText(extension.isCritical() ? tr("Critical") : tr("Not Critical"));
-				m_ui->valueTextEdit->appendPlainText(tr("OID: %1").arg(extension.oid()));
+				m_ui->valueTextEditWidget->setPlainText(extension.isCritical() ? tr("Critical") : tr("Not Critical"));
+				m_ui->valueTextEditWidget->appendPlainText(tr("OID: %1").arg(extension.oid()));
 
 				if (!extension.value().isNull())
 				{
-					m_ui->valueTextEdit->appendPlainText(tr("Value:"));
+					m_ui->valueTextEditWidget->appendPlainText(tr("Value:"));
 
 					if (extension.value().type() == QVariant::List)
 					{
@@ -359,7 +359,7 @@ void CertificateDialog::updateValue()
 
 						for (int i = 0; i < list.count(); ++i)
 						{
-							m_ui->valueTextEdit->appendPlainText(list.at(i).toString());
+							m_ui->valueTextEditWidget->appendPlainText(list.at(i).toString());
 						}
 					}
 					else if (extension.value().type() == QVariant::Map)
@@ -369,33 +369,33 @@ void CertificateDialog::updateValue()
 
 						for (iterator = map.constBegin(); iterator != map.constEnd(); ++iterator)
 						{
-							m_ui->valueTextEdit->appendPlainText(QStringLiteral("%1 = %2").arg(iterator.key()).arg(iterator.value().toString()));
+							m_ui->valueTextEditWidget->appendPlainText(QStringLiteral("%1 = %2").arg(iterator.key()).arg(iterator.value().toString()));
 						}
 					}
 					else
 					{
-						m_ui->valueTextEdit->appendPlainText(extension.value().toString());
+						m_ui->valueTextEditWidget->appendPlainText(extension.value().toString());
 					}
 				}
 			}
 
 			break;
 		case DigestSha1Field:
-			m_ui->valueTextEdit->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha1).toHex())));
+			m_ui->valueTextEditWidget->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha1).toHex())));
 
 			break;
 		case DigestSha256Field:
-			m_ui->valueTextEdit->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha256).toHex())));
+			m_ui->valueTextEditWidget->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha256).toHex())));
 
 			break;
 		default:
 			break;
 	}
 
-	QTextCursor cursor(m_ui->valueTextEdit->textCursor());
+	QTextCursor cursor(m_ui->valueTextEditWidget->textCursor());
 	cursor.setPosition(0);
 
-	m_ui->valueTextEdit->setTextCursor(cursor);
+	m_ui->valueTextEditWidget->setTextCursor(cursor);
 }
 
 QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateField field, QStandardItem *parent, const QMap<int, QVariant> &data)

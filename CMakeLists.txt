@@ -191,6 +191,7 @@ set(otter_src
 	src/ui/Style.cpp
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
+	src/ui/TextEditWidget.cpp
 	src/ui/TextLabelWidget.cpp
 	src/ui/ToolBarDialog.cpp
 	src/ui/ToolBarWidget.cpp

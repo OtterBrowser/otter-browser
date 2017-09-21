@@ -56,7 +56,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEditWidget->installEventFilter(this);
-	m_ui->textEdit->setPlaceholderText(tr("Add note…"));
+	m_ui->textEditWidget->setPlaceholderText(tr("Add note…"));
 
 	if (isSidebarPanel())
 	{
@@ -70,11 +70,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	connect(NotesManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeNote()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addNote()));
-	connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
-	connect(m_ui->textEdit, &QPlainTextEdit::selectionChanged, [&]()
-	{
-		emit actionsStateChanged(QVector<int>({ActionsManager::CopyAction, ActionsManager::CutAction}));
-	});
+	connect(m_ui->textEditWidget, SIGNAL(textChanged()), this, SLOT(updateText()));
 	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->notesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->notesViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
 	connect(m_ui->notesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -269,11 +265,11 @@ void NotesContentsWidget::updateActions(bool updateText)
 
 	if (updateText)
 	{
-		disconnect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
+		disconnect(m_ui->textEditWidget, SIGNAL(textChanged()), this, SLOT(updateText()));
 
-		m_ui->textEdit->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
+		m_ui->textEditWidget->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
 
-		connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
+		connect(m_ui->textEditWidget, SIGNAL(textChanged()), this, SLOT(updateText()));
 	}
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
@@ -287,12 +283,12 @@ void NotesContentsWidget::updateText()
 
 	if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 	{
-		m_ui->notesViewWidget->model()->setData(index, m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
+		m_ui->notesViewWidget->model()->setData(index, m_ui->textEditWidget->toPlainText(), BookmarksModel::DescriptionRole);
 		m_ui->notesViewWidget->model()->setData(index, QDateTime::currentDateTime(), BookmarksModel::TimeModifiedRole);
 	}
 	else
 	{
-		const BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, m_ui->textEdit->toPlainText()}}, findFolder(index)));
+		const BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, m_ui->textEditWidget->toPlainText()}}, findFolder(index)));
 
 		if (bookmark)
 		{
@@ -357,11 +353,11 @@ ActionsManager::ActionDefinition::State NotesContentsWidget::getActionState(int 
 			return state;
 		case ActionsManager::CutAction:
 		case ActionsManager::CopyAction:
-			state.isEnabled = m_ui->textEdit->textCursor().hasSelection();
+			state.isEnabled = m_ui->textEditWidget->textCursor().hasSelection();
 
 			return state;
 		case ActionsManager::PasteAction:
-			state.isEnabled = m_ui->textEdit->canPaste();
+			state.isEnabled = m_ui->textEditWidget->canPaste();
 
 			return state;
 		case ActionsManager::DeleteAction:
