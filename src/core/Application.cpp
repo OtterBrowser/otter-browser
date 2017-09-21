@@ -85,6 +85,7 @@ QTranslator* Application::m_qtTranslator(nullptr);
 QTranslator* Application::m_applicationTranslator(nullptr);
 QLocalServer* Application::m_localServer(nullptr);
 QPointer<MainWindow> Application::m_activeWindow(nullptr);
+QPointer<QObject> Application::m_nonMenuFocusObject(nullptr);
 QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
 QVector<MainWindow*> Application::m_windows;
@@ -489,8 +490,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
-	connect(this, SIGNAL(aboutToQuit()), this, SLOT(handleAboutToQuit()));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &Application::handleOptionChanged);
+	connect(this, &Application::aboutToQuit, this, &Application::handleAboutToQuit);
+	connect(this, &Application::focusObjectChanged, this, &Application::handleFocusObjectChanged);
 }
 
 Application::~Application()
@@ -932,6 +934,14 @@ void Application::handleNewConnection()
 	delete socket;
 }
 
+void Application::handleFocusObjectChanged(QObject *object)
+{
+	if (!object || (object && !object->inherits("QMenu")))
+	{
+		m_nonMenuFocusObject = object;
+	}
+}
+
 void Application::handlePositionalArguments(QCommandLineParser *parser, bool forceOpen)
 {
 	SessionsManager::OpenHints openHints(SessionsManager::DefaultOpen);
@@ -1172,6 +1182,11 @@ MainWindow* Application::getWindow()
 MainWindow* Application::getActiveWindow()
 {
 	return m_activeWindow;
+}
+
+QObject* Application::getFocusObject(bool ignoreMenus)
+{
+	return (ignoreMenus ? m_nonMenuFocusObject.data() : focusObject());
 }
 
 Style* Application::getStyle()

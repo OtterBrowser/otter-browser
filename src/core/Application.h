@@ -69,6 +69,7 @@ public:
 	static Application* getInstance();
 	static MainWindow* getWindow();
 	static MainWindow* getActiveWindow();
+	static QObject* getFocusObject(bool ignoreMenus);
 	static Style* getStyle();
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
@@ -94,6 +95,7 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleAboutToQuit();
 	void handleNewConnection();
+	void handleFocusObjectChanged(QObject *object);
 	void handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates);
 	void showUpdateDetails();
 
@@ -105,6 +107,7 @@ private:
 	static QTranslator *m_applicationTranslator;
 	static QLocalServer *m_localServer;
 	static QPointer<MainWindow> m_activeWindow;
+	static QPointer<QObject> m_nonMenuFocusObject;
 	static QString m_localePath;
 	static QCommandLineParser m_commandLineParser;
 	static QVector<MainWindow*> m_windows;
