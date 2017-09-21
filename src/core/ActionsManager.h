@@ -306,6 +306,7 @@ public:
 		enum ActionScope
 		{
 			OtherScope = 0,
+			EditorScope,
 			WindowScope,
 			MainWindowScope,
 			ApplicationScope
