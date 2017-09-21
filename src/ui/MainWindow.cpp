@@ -377,6 +377,13 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 {
+	if (m_editorExecutor.isValid() && m_editorExecutor.getObject() == Application::getFocusObject(true) && ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::EditorScope)
+	{
+		m_editorExecutor.triggerAction(identifier, parameters);
+
+		return;
+	}
+
 	switch (identifier)
 	{
 		case ActionsManager::NewTabAction:
@@ -1328,6 +1335,23 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 	}
 }
 
+void MainWindow::setActiveEditorExecutor(ActionExecutor::Object executor)
+{
+	if (m_editorExecutor.isValid())
+	{
+		disconnect(m_editorExecutor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+	}
+
+	m_editorExecutor = executor;
+
+	if (executor.isValid())
+	{
+		connect(executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+	}
+
+	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+}
+
 void MainWindow::storeWindowState()
 {
 	m_previousState = windowState();
@@ -2017,7 +2041,13 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 	switch (definition.scope)
 	{
+		case ActionsManager::ActionDefinition::EditorScope:
 		case ActionsManager::ActionDefinition::WindowScope:
+			if (definition.scope == ActionsManager::ActionDefinition::EditorScope && m_editorExecutor.isValid() && m_editorExecutor.getObject() == Application::getFocusObject(true))
+			{
+				return m_editorExecutor.getActionState(identifier, parameters);
+			}
+
 			if (m_workspace->getActiveWindow())
 			{
 				return m_workspace->getActiveWindow()->getActionState(identifier, parameters);

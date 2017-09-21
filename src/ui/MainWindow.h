@@ -58,6 +58,7 @@ public:
 	void restore(const SessionMainWindow &session);
 	void restore(int index = 0);
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
+	void setActiveEditorExecutor(ActionExecutor::Object executor);
 	static MainWindow* findMainWindow(QObject *parent);
 	TabBarWidget* getTabBar() const;
 	Window* getActiveWindow() const;
@@ -129,6 +130,7 @@ private:
 	Window *m_currentWindow;
 	QString m_currentBookmark;
 	QString m_windowTitle;
+	ActionExecutor::Object m_editorExecutor;
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;

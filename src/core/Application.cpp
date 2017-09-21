@@ -683,7 +683,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 	const ActionsManager::ActionDefinition::ActionScope scope(ActionsManager::getActionDefinition(identifier).scope);
 
-	if (scope == ActionsManager::ActionDefinition::MainWindowScope || scope == ActionsManager::ActionDefinition::WindowScope)
+	if (scope == ActionsManager::ActionDefinition::MainWindowScope || scope == ActionsManager::ActionDefinition::WindowScope || scope == ActionsManager::ActionDefinition::EditorScope)
 	{
 		MainWindow *mainWindow(nullptr);
 
@@ -1364,6 +1364,7 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 
 	switch (definition.scope)
 	{
+		case ActionsManager::ActionDefinition::EditorScope:
 		case ActionsManager::ActionDefinition::WindowScope:
 		case ActionsManager::ActionDefinition::MainWindowScope:
 			if (m_activeWindow)

@@ -228,6 +228,18 @@ void LineEditWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void LineEditWidget::focusInEvent(QFocusEvent *event)
+{
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow)
+	{
+		mainWindow->setActiveEditorExecutor(ActionExecutor::Object(this, this));
+	}
+
+	QLineEdit::focusInEvent(event);
+}
+
 void LineEditWidget::keyPressEvent(QKeyEvent *event)
 {
 	if ((event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) && !m_completion.isEmpty())
