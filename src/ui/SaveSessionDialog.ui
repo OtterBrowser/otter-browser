@@ -22,7 +22,7 @@
         <string>Session title:</string>
        </property>
        <property name="buddy">
-        <cstring>titleLineEdit</cstring>
+        <cstring>titleLineEditWidget</cstring>
        </property>
       </widget>
      </item>
@@ -32,15 +32,15 @@
         <string>Session identifier:</string>
        </property>
        <property name="buddy">
-        <cstring>identifierLineEdit</cstring>
+        <cstring>identifierLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="titleLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="titleLineEditWidget"/>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="identifierLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="identifierLineEditWidget"/>
      </item>
     </layout>
    </item>
@@ -60,6 +60,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -218,16 +218,16 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	m_ui->actionsViewWidget->setItemDelegateForColumn(3, new KeyboardShortcutDelegate(this));
 	m_ui->actionsViewWidget->setSortRoleMapping({{0, StatusRole}});
 	m_ui->actionsViewWidget->setModified(m_profile.isModified());
-	m_ui->titleLineEdit->setText(m_profile.getTitle());
-	m_ui->descriptionLineEdit->setText(m_profile.getDescription());
-	m_ui->versionLineEdit->setText(m_profile.getVersion());
-	m_ui->authorLineEdit->setText(m_profile.getAuthor());
+	m_ui->titleLineEditWidget->setText(m_profile.getTitle());
+	m_ui->descriptionLineEditWidget->setText(m_profile.getDescription());
+	m_ui->versionLineEditWidget->setText(m_profile.getVersion());
+	m_ui->authorLineEditWidget->setText(m_profile.getAuthor());
 
-	connect(m_ui->titleLineEdit, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->descriptionLineEdit, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->versionLineEdit, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->authorLineEdit, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->filterLineEdit, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->titleLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->descriptionLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->versionLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->authorLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->filterLineEditWidget, &QLineEdit::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->actionsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &KeyboardProfileDialog::updateActions);
 	connect(m_ui->addActionButton, &QPushButton::clicked, this, &KeyboardProfileDialog::addAction);
 	connect(m_ui->removeActionButton, &QPushButton::clicked, this, &KeyboardProfileDialog::removeAction);
@@ -274,10 +274,10 @@ void KeyboardProfileDialog::updateActions()
 KeyboardProfile KeyboardProfileDialog::getProfile() const
 {
 	KeyboardProfile profile(m_profile);
-	profile.setTitle(m_ui->titleLineEdit->text());
-	profile.setDescription(m_ui->descriptionLineEdit->text());
-	profile.setVersion(m_ui->versionLineEdit->text());
-	profile.setAuthor(m_ui->authorLineEdit->text());
+	profile.setTitle(m_ui->titleLineEditWidget->text());
+	profile.setDescription(m_ui->descriptionLineEditWidget->text());
+	profile.setVersion(m_ui->versionLineEditWidget->text());
+	profile.setAuthor(m_ui->authorLineEditWidget->text());
 
 	QMap<int, QVector<QPair<QVariantMap, QVector<QKeySequence> > > > actions;
 

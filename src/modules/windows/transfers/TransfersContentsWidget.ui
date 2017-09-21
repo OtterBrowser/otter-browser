@@ -26,7 +26,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
-      <widget class="QLineEdit" name="downloadLineEdit">
+      <widget class="Otter::LineEditWidget" name="downloadLineEditWidget">
        <property name="placeholderText">
         <string>Quick Download…</string>
        </property>
@@ -233,9 +233,14 @@
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>downloadLineEdit</tabstop>
+  <tabstop>downloadLineEditWidget</tabstop>
   <tabstop>transfersViewWidget</tabstop>
  </tabstops>
  <resources/>

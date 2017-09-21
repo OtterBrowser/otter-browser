@@ -48,11 +48,11 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	m_ui->setupUi(this);
 	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->addonsViewWidget->installEventFilter(this);
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	QTimer::singleShot(100, this, SLOT(populateAddons()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->addonsViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->addonsViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->addonsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->addonsViewWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(save()));
 }
@@ -385,7 +385,7 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -458,13 +458,13 @@ bool AddonsContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

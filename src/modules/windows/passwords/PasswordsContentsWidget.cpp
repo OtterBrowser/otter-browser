@@ -42,14 +42,14 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 {
 	m_ui->setupUi(this);
 	m_ui->passwordsViewWidget->installEventFilter(this);
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->passwordsViewWidget->setModel(m_model);
 
 	QTimer::singleShot(100, this, SLOT(populatePasswords()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterPasswords(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), this, SLOT(filterPasswords(QString)));
 	connect(m_ui->passwordsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
@@ -304,7 +304,7 @@ void PasswordsContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -437,13 +437,13 @@ bool PasswordsContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

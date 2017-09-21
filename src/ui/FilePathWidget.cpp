@@ -19,11 +19,11 @@
 **************************************************************************/
 
 #include "FilePathWidget.h"
+#include "LineEditWidget.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QStandardPaths>
-#include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
 
 namespace Otter
@@ -47,12 +47,12 @@ QVariant FileSystemCompleterModel::data(const QModelIndex &index, int role) cons
 
 FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_browseButton(new QPushButton(tr("Browse…"), this)),
-	m_lineEdit(new QLineEdit(this)),
+	m_lineEditWidget(new LineEditWidget(this)),
 	m_completer(nullptr),
 	m_selectFile(true)
 {
 	QHBoxLayout *layout(new QHBoxLayout(this));
-	layout->addWidget(m_lineEdit);
+	layout->addWidget(m_lineEditWidget);
 	layout->addWidget(m_browseButton);
 	layout->setContentsMargins(0, 0, 0, 0);
 
@@ -60,8 +60,8 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	setFocusPolicy(Qt::StrongFocus);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	connect(m_lineEdit, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
-	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged(QString)));
+	connect(m_lineEditWidget, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
+	connect(m_lineEditWidget, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged(QString)));
 	connect(m_browseButton, SIGNAL(clicked()), this, SLOT(selectPath()));
 }
 
@@ -79,17 +79,17 @@ void FilePathWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	m_lineEdit->setFocus();
+	m_lineEditWidget->setFocus();
 }
 
 void FilePathWidget::selectPath()
 {
-	QString path(m_lineEdit->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEdit->text());
+	QString path(m_lineEditWidget->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEditWidget->text());
 	path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
 
 	if (!path.isEmpty())
 	{
-		m_lineEdit->setText(QDir::toNativeSeparators(path));
+		m_lineEditWidget->setText(QDir::toNativeSeparators(path));
 	}
 }
 
@@ -104,11 +104,11 @@ void FilePathWidget::updateCompleter()
 
 		m_completer->setModel(model);
 
-		m_lineEdit->setCompleter(m_completer);
+		m_lineEditWidget->setCompleter(m_completer);
 
 		m_completer->complete();
 
-		disconnect(m_lineEdit, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
+		disconnect(m_lineEditWidget, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
 	}
 }
 
@@ -124,12 +124,12 @@ void FilePathWidget::setSelectFile(bool mode)
 
 void FilePathWidget::setPath(const QString &path)
 {
-	m_lineEdit->setText(path);
+	m_lineEditWidget->setText(path);
 }
 
 QString FilePathWidget::getPath() const
 {
-	return m_lineEdit->text();
+	return m_lineEditWidget->text();
 }
 
 }

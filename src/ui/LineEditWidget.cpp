@@ -168,6 +168,17 @@ bool PopupViewWidget::event(QEvent *event)
 	return ItemViewWidget::event(event);
 }
 
+LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit(text, parent),
+	m_popupViewWidget(nullptr),
+	m_dropMode(PasteDropMode),
+	m_selectionStart(-1),
+	m_shouldIgnoreCompletion(false),
+	m_shouldSelectAllOnFocus(false),
+	m_shouldSelectAllOnRelease(false)
+{
+	setDragEnabled(true);
+}
+
 LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_popupViewWidget(nullptr),
 	m_dropMode(PasteDropMode),

@@ -21,13 +21,15 @@
 #ifndef OTTER_FILEPATHWIDGET_H
 #define OTTER_FILEPATHWIDGET_H
 
+#include <QtWidgets/QCompleter>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QFileSystemModel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 
 namespace Otter
 {
+
+class LineEditWidget;
 
 class FileSystemCompleterModel final : public QFileSystemModel
 {
@@ -60,7 +62,7 @@ protected slots:
 
 private:
 	QPushButton *m_browseButton;
-	QLineEdit *m_lineEdit;
+	LineEditWidget *m_lineEditWidget;
 	QCompleter *m_completer;
 	QString m_filter;
 	bool m_selectFile;

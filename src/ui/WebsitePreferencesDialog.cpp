@@ -55,7 +55,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyLabel, SLOT(setEnabled(bool)));
 	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyComboBox, SLOT(setEnabled(bool)));
 
-	m_ui->websiteLineEdit->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+	m_ui->websiteLineEditWidget->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
 	m_ui->encodingComboBox->addItem(tr("Auto Detect"), QLatin1String("auto"));
 
@@ -198,7 +198,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 {
 	QStringList contentBlockingProfiles;
 	QUrl url;
-	url.setHost(m_ui->websiteLineEdit->text());
+	url.setHost(m_ui->websiteLineEditWidget->text());
 
 	switch (m_ui->buttonBox->buttonRole(button))
 	{
@@ -268,7 +268,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 
 void WebsitePreferencesDialog::addCookie()
 {
-	const QString domain(m_ui->websiteLineEdit->text());
+	const QString domain(m_ui->websiteLineEditWidget->text());
 	QNetworkCookie cookie;
 	cookie.setDomain(domain.startsWith(QLatin1String("*.")) ? domain.mid(1) : domain);
 
@@ -361,7 +361,7 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 void WebsitePreferencesDialog::updateValues(bool isChecked)
 {
 	QUrl url;
-	url.setHost(m_ui->websiteLineEdit->text());
+	url.setHost(m_ui->websiteLineEditWidget->text());
 
 	if (isChecked)
 	{

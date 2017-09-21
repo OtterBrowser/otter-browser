@@ -29,7 +29,7 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 	m_ui(new Ui::ProxyPropertiesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->titleLineEdit->setText(proxy.getTitle());
+	m_ui->titleLineEditWidget->setText(proxy.getTitle());
 
 	if (proxy.type == ProxyDefinition::AutomaticProxy)
 	{
@@ -43,7 +43,7 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 		if (proxy.servers.contains(ProxyDefinition::AnyProtocol))
 		{
 			m_ui->allCheckBox->setChecked(true);
-			m_ui->allServersLineEdit->setText(proxy.servers[ProxyDefinition::AnyProtocol].hostName);
+			m_ui->allServersLineEditWidget->setText(proxy.servers[ProxyDefinition::AnyProtocol].hostName);
 			m_ui->allPortSpinBox->setValue(proxy.servers[ProxyDefinition::AnyProtocol].port);
 		}
 		else
@@ -51,28 +51,28 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 			if (proxy.servers.contains(ProxyDefinition::HttpProtocol))
 			{
 				m_ui->httpCheckBox->setChecked(true);
-				m_ui->httpServersLineEdit->setText(proxy.servers[ProxyDefinition::HttpProtocol].hostName);
+				m_ui->httpServersLineEditWidget->setText(proxy.servers[ProxyDefinition::HttpProtocol].hostName);
 				m_ui->httpPortSpinBox->setValue(proxy.servers[ProxyDefinition::HttpProtocol].port);
 			}
 
 			if (proxy.servers.contains(ProxyDefinition::HttpsProtocol))
 			{
 				m_ui->httpsCheckBox->setChecked(true);
-				m_ui->httpsServersLineEdit->setText(proxy.servers[ProxyDefinition::HttpsProtocol].hostName);
+				m_ui->httpsServersLineEditWidget->setText(proxy.servers[ProxyDefinition::HttpsProtocol].hostName);
 				m_ui->httpsPortSpinBox->setValue(proxy.servers[ProxyDefinition::HttpsProtocol].port);
 			}
 
 			if (proxy.servers.contains(ProxyDefinition::FtpProtocol))
 			{
 				m_ui->ftpCheckBox->setChecked(true);
-				m_ui->ftpServersLineEdit->setText(proxy.servers[ProxyDefinition::FtpProtocol].hostName);
+				m_ui->ftpServersLineEditWidget->setText(proxy.servers[ProxyDefinition::FtpProtocol].hostName);
 				m_ui->ftpPortSpinBox->setValue(proxy.servers[ProxyDefinition::FtpProtocol].port);
 			}
 
 			if (proxy.servers.contains(ProxyDefinition::SocksProtocol))
 			{
 				m_ui->socksCheckBox->setChecked(true);
-				m_ui->socksServersLineEdit->setText(proxy.servers[ProxyDefinition::SocksProtocol].hostName);
+				m_ui->socksServersLineEditWidget->setText(proxy.servers[ProxyDefinition::SocksProtocol].hostName);
 				m_ui->socksPortSpinBox->setValue(proxy.servers[ProxyDefinition::SocksProtocol].port);
 			}
 		}
@@ -152,16 +152,16 @@ void ProxyPropertiesDialog::updateProxyType()
 		m_ui->manualConfigurationWidget->setEnabled(true);
 		m_ui->automaticConfigurationWidget->setEnabled(false);
 		m_ui->httpCheckBox->setEnabled(usesSeparateServers);
-		m_ui->httpServersLineEdit->setEnabled(usesSeparateServers);
+		m_ui->httpServersLineEditWidget->setEnabled(usesSeparateServers);
 		m_ui->httpPortSpinBox->setEnabled(usesSeparateServers);
 		m_ui->httpsCheckBox->setEnabled(usesSeparateServers);
-		m_ui->httpsServersLineEdit->setEnabled(usesSeparateServers);
+		m_ui->httpsServersLineEditWidget->setEnabled(usesSeparateServers);
 		m_ui->httpsPortSpinBox->setEnabled(usesSeparateServers);
 		m_ui->ftpCheckBox->setEnabled(usesSeparateServers);
-		m_ui->ftpServersLineEdit->setEnabled(usesSeparateServers);
+		m_ui->ftpServersLineEditWidget->setEnabled(usesSeparateServers);
 		m_ui->ftpPortSpinBox->setEnabled(usesSeparateServers);
 		m_ui->socksCheckBox->setEnabled(usesSeparateServers);
-		m_ui->socksServersLineEdit->setEnabled(usesSeparateServers);
+		m_ui->socksServersLineEditWidget->setEnabled(usesSeparateServers);
 		m_ui->socksPortSpinBox->setEnabled(usesSeparateServers);
 	}
 	else
@@ -174,7 +174,7 @@ void ProxyPropertiesDialog::updateProxyType()
 ProxyDefinition ProxyPropertiesDialog::getProxy() const
 {
 	ProxyDefinition proxy(m_proxy);
-	proxy.title = m_ui->titleLineEdit->text();
+	proxy.title = m_ui->titleLineEditWidget->text();
 	proxy.usesSystemAuthentication = m_ui->usesSystemAuthenticationCheckBox->isChecked();
 	proxy.exceptions.clear();
 	proxy.servers.clear();
@@ -190,28 +190,28 @@ ProxyDefinition ProxyPropertiesDialog::getProxy() const
 
 		if (m_ui->allCheckBox->isChecked())
 		{
-			proxy.servers[ProxyDefinition::AnyProtocol] = ProxyDefinition::ProxyServer(m_ui->allServersLineEdit->text(), m_ui->allPortSpinBox->value());
+			proxy.servers[ProxyDefinition::AnyProtocol] = ProxyDefinition::ProxyServer(m_ui->allServersLineEditWidget->text(), m_ui->allPortSpinBox->value());
 		}
 		else
 		{
 			if (m_ui->httpCheckBox->isChecked())
 			{
-				proxy.servers[ProxyDefinition::HttpProtocol] = ProxyDefinition::ProxyServer(m_ui->httpServersLineEdit->text(), m_ui->httpPortSpinBox->value());
+				proxy.servers[ProxyDefinition::HttpProtocol] = ProxyDefinition::ProxyServer(m_ui->httpServersLineEditWidget->text(), m_ui->httpPortSpinBox->value());
 			}
 
 			if (m_ui->httpsCheckBox->isChecked())
 			{
-				proxy.servers[ProxyDefinition::HttpsProtocol] = ProxyDefinition::ProxyServer(m_ui->httpsServersLineEdit->text(), m_ui->httpsPortSpinBox->value());
+				proxy.servers[ProxyDefinition::HttpsProtocol] = ProxyDefinition::ProxyServer(m_ui->httpsServersLineEditWidget->text(), m_ui->httpsPortSpinBox->value());
 			}
 
 			if (m_ui->ftpCheckBox->isChecked())
 			{
-				proxy.servers[ProxyDefinition::FtpProtocol] = ProxyDefinition::ProxyServer(m_ui->ftpServersLineEdit->text(), m_ui->ftpPortSpinBox->value());
+				proxy.servers[ProxyDefinition::FtpProtocol] = ProxyDefinition::ProxyServer(m_ui->ftpServersLineEditWidget->text(), m_ui->ftpPortSpinBox->value());
 			}
 
 			if (m_ui->socksCheckBox->isChecked())
 			{
-				proxy.servers[ProxyDefinition::SocksProtocol] = ProxyDefinition::ProxyServer(m_ui->socksServersLineEdit->text(), m_ui->socksPortSpinBox->value());
+				proxy.servers[ProxyDefinition::SocksProtocol] = ProxyDefinition::ProxyServer(m_ui->socksServersLineEditWidget->text(), m_ui->socksPortSpinBox->value());
 			}
 		}
 	}

@@ -86,7 +86,7 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	m_ui->transfersViewWidget->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-ongoing")));
 	m_ui->redownloadButton->setIcon(ThemesManager::createIcon(QLatin1String("view-refresh")));
-	m_ui->downloadLineEdit->installEventFilter(this);
+	m_ui->downloadLineEditWidget->installEventFilter(this);
 
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
 
@@ -107,7 +107,7 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	connect(m_ui->transfersViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openTransfer(QModelIndex)));
 	connect(m_ui->transfersViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->transfersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
-	connect(m_ui->downloadLineEdit, SIGNAL(returnPressed()), this, SLOT(startQuickTransfer()));
+	connect(m_ui->downloadLineEditWidget, SIGNAL(returnPressed()), this, SLOT(startQuickTransfer()));
 	connect(m_ui->stopResumeButton, SIGNAL(clicked()), this, SLOT(stopResumeTransfer()));
 	connect(m_ui->redownloadButton, SIGNAL(clicked()), this, SLOT(redownloadTransfer()));
 }
@@ -402,9 +402,9 @@ void TransfersContentsWidget::redownloadTransfer()
 
 void TransfersContentsWidget::startQuickTransfer()
 {
-	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
+	TransfersManager::startTransfer(m_ui->downloadLineEditWidget->text(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
 
-	m_ui->downloadLineEdit->clear();
+	m_ui->downloadLineEditWidget->clear();
 }
 
 void TransfersContentsWidget::clearFinishedTransfers()
@@ -533,8 +533,8 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->downloadLineEdit->setFocus();
-			m_ui->downloadLineEdit->selectAll();
+			m_ui->downloadLineEditWidget->setFocus();
+			m_ui->downloadLineEditWidget->selectAll();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -643,13 +643,13 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->downloadLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->downloadLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->downloadLineEdit->clear();
+			m_ui->downloadLineEditWidget->clear();
 		}
 	}
 

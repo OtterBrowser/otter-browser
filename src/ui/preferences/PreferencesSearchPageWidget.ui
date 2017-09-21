@@ -16,7 +16,7 @@
      <item>
       <layout class="QVBoxLayout" name="searchViewLayout">
        <item>
-        <widget class="QLineEdit" name="searchFilterLineEdit">
+        <widget class="Otter::LineEditWidget" name="searchFilterLineEditWidget">
          <property name="placeholderText">
           <string>Search…</string>
          </property>
@@ -168,6 +168,11 @@
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

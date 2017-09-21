@@ -21,6 +21,7 @@
 #include "OptionWidget.h"
 #include "ColorWidget.h"
 #include "IconWidget.h"
+#include "LineEditWidget.h"
 #include "FilePathWidget.h"
 
 #include <QtWidgets/QHBoxLayout>
@@ -35,7 +36,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 	m_iconWidget(nullptr),
 	m_comboBox(nullptr),
 	m_fontComboBox(nullptr),
-	m_lineEdit(nullptr),
+	m_lineEditWidget(nullptr),
 	m_spinBox(nullptr),
 	m_resetButton(nullptr),
 	m_type(type)
@@ -113,17 +114,17 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 
 			break;
 		default:
-			m_widget = m_lineEdit = new QLineEdit(((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString()), this);
+			m_widget = m_lineEditWidget = new LineEditWidget(((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString()), this);
 
-			m_lineEdit->setClearButtonEnabled(true);
-			m_lineEdit->selectAll();
+			m_lineEditWidget->setClearButtonEnabled(true);
+			m_lineEditWidget->selectAll();
 
 			if (type == SettingsManager::PasswordType)
 			{
-				m_lineEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+				m_lineEditWidget->setEchoMode(QLineEdit::PasswordEchoOnEdit);
 			}
 
-			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markAsModified()));
+			connect(m_lineEditWidget, SIGNAL(textChanged(QString)), this, SLOT(markAsModified()));
 
 			break;
 	}
@@ -227,9 +228,9 @@ void OptionWidget::setValue(const QVariant &value)
 			m_iconWidget->setIcon(value.value<QIcon>());
 		}
 	}
-	else if (m_lineEdit)
+	else if (m_lineEditWidget)
 	{
-		m_lineEdit->setText((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString());
+		m_lineEditWidget->setText((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString());
 	}
 	else if (m_spinBox)
 	{
@@ -351,19 +352,19 @@ QVariant OptionWidget::getValue() const
 		return m_iconWidget->getIcon();
 	}
 
-	if (m_lineEdit)
+	if (m_lineEditWidget)
 	{
-		if (m_lineEdit->text().isEmpty())
+		if (m_lineEditWidget->text().isEmpty())
 		{
 			return QVariant();
 		}
 
 		if (m_type == SettingsManager::ListType)
 		{
-			return m_lineEdit->text().split(QLatin1String(", "), QString::SkipEmptyParts);
+			return m_lineEditWidget->text().split(QLatin1String(", "), QString::SkipEmptyParts);
 		}
 
-		return m_lineEdit->text();
+		return m_lineEditWidget->text();
 	}
 
 	if (m_spinBox)

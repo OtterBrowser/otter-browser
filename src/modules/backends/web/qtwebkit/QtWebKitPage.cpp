@@ -31,6 +31,7 @@
 #include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
+#include "../../../../ui/LineEditWidget.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
@@ -40,7 +41,6 @@
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QInputDialog>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -726,7 +726,7 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	emit m_widget->needsAttention();
 
 	QWidget *widget(new QWidget(m_widget));
-	QLineEdit *lineEdit(new QLineEdit(defaultValue, widget));
+	LineEditWidget *lineEdit(new LineEditWidget(defaultValue, widget));
 	QLabel *label(new QLabel(message, widget));
 	label->setBuddy(lineEdit);
 	label->setTextFormat(Qt::PlainText);

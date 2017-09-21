@@ -39,10 +39,10 @@ CookiePropertiesDialog::CookiePropertiesDialog(const QNetworkCookie &cookie, QWi
 		setWindowTitle(tr("Edit Cookie"));
 	}
 
-	m_ui->nameLineEdit->setText(QString(cookie.name()));
-	m_ui->valueLineEdit->setText(QString(cookie.value()));
-	m_ui->domainLineEdit->setText(cookie.domain());
-	m_ui->pathLineEdit->setText(cookie.path());
+	m_ui->nameLineEditWidget->setText(QString(cookie.name()));
+	m_ui->valueLineEditWidget->setText(QString(cookie.value()));
+	m_ui->domainLineEditWidget->setText(cookie.domain());
+	m_ui->pathLineEditWidget->setText(cookie.path());
 	m_ui->isSessionOnlyCheckBox->setChecked(!cookie.expirationDate().isValid());
 	m_ui->expiresDateTimeEdit->setDateTime(cookie.expirationDate());
 	m_ui->expiresDateTimeEdit->setEnabled(cookie.expirationDate().isValid());
@@ -75,10 +75,10 @@ QNetworkCookie CookiePropertiesDialog::getOriginalCookie() const
 QNetworkCookie CookiePropertiesDialog::getModifiedCookie() const
 {
 	QNetworkCookie cookie(m_cookie);
-	cookie.setName(m_ui->nameLineEdit->text().toUtf8());
-	cookie.setValue(m_ui->valueLineEdit->text().toUtf8());
-	cookie.setDomain(m_ui->domainLineEdit->text());
-	cookie.setPath(m_ui->pathLineEdit->text());
+	cookie.setName(m_ui->nameLineEditWidget->text().toUtf8());
+	cookie.setValue(m_ui->valueLineEditWidget->text().toUtf8());
+	cookie.setDomain(m_ui->domainLineEditWidget->text());
+	cookie.setPath(m_ui->pathLineEditWidget->text());
 	cookie.setExpirationDate(m_ui->isSessionOnlyCheckBox->isChecked() ? QDateTime() : m_ui->expiresDateTimeEdit->dateTime());
 	cookie.setSecure(m_ui->isSecureCheckBox->isChecked());
 	cookie.setHttpOnly(m_ui->isHttpOnlyCheckBox->isChecked());

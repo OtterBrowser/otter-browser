@@ -20,6 +20,7 @@
 
 #include "PreferencesSearchPageWidget.h"
 #include "../Animation.h"
+#include "../LineEditWidget.h"
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
@@ -80,7 +81,7 @@ QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyle
 	Q_UNUSED(option)
 
 	const QStringList keywords(PreferencesSearchPageWidget::getKeywords(index.model(), index.row()));
-	QLineEdit *widget(new QLineEdit(index.data(Qt::DisplayRole).toString(), parent));
+	LineEditWidget *widget(new LineEditWidget(index.data(Qt::DisplayRole).toString(), parent));
 	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), widget));
 	widget->setFocus();
 
@@ -130,7 +131,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 	updateReaddSearchEngineMenu();
 
-	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->searchViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->searchFilterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->searchViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownSearchButton, SLOT(setEnabled(bool)));
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
 	connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchEngineActions()));

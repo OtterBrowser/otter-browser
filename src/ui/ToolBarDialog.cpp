@@ -61,7 +61,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	m_ui->setupUi(this);
 	m_ui->stackedWidget->setCurrentIndex(definition.type);
-	m_ui->titleLineEdit->setText(m_definition.getTitle());
+	m_ui->titleLineEditWidget->setText(m_definition.getTitle());
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
 	m_ui->maximumButtonSizeSpinBox->setValue(qMax(0, m_definition.maximumButtonSize));
 	m_ui->normalVisibilityComboBox->addItem(tr("Always visible"), ToolBarsManager::AlwaysVisibleToolBar);
@@ -221,8 +221,8 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	connect(m_ui->currentEntriesItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 	connect(m_ui->currentEntriesItemView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->currentEntriesItemView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->availableEntriesFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->availableEntriesItemView, SLOT(setFilterString(QString)));
-	connect(m_ui->currentEntriesFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->currentEntriesItemView, SLOT(setFilterString(QString)));
+	connect(m_ui->availableEntriesFilterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->availableEntriesItemView, SLOT(setFilterString(QString)));
+	connect(m_ui->currentEntriesFilterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->currentEntriesItemView, SLOT(setFilterString(QString)));
 	connect(m_ui->editEntryButton, SIGNAL(clicked(bool)), this, SLOT(editEntry()));
 }
 
@@ -737,7 +737,7 @@ ToolBarsManager::ToolBarDefinition::Entry ToolBarDialog::getEntry(QStandardItem 
 ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 {
 	ToolBarsManager::ToolBarDefinition definition(m_definition);
-	definition.title = m_ui->titleLineEdit->text();
+	definition.title = m_ui->titleLineEditWidget->text();
 	definition.normalVisibility = static_cast<ToolBarsManager::ToolBarVisibility>(m_ui->normalVisibilityComboBox->currentData().toInt());
 	definition.fullScreenVisibility = static_cast<ToolBarsManager::ToolBarVisibility>(m_ui->fullScreenVisibilityComboBox->currentData().toInt());
 	definition.buttonStyle = static_cast<Qt::ToolButtonStyle>(m_ui->buttonStyleComboBox->currentData().toInt());

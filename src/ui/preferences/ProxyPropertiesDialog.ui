@@ -19,12 +19,12 @@
         <string>Title:</string>
        </property>
        <property name="buddy">
-        <cstring>titleLineEdit</cstring>
+        <cstring>titleLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="titleLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="titleLineEditWidget"/>
      </item>
     </layout>
    </item>
@@ -85,7 +85,7 @@
              <number>0</number>
             </property>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="httpServersLineEdit">
+             <widget class="Otter::LineEditWidget" name="httpServersLineEditWidget">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -112,7 +112,7 @@
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="httpsServersLineEdit">
+             <widget class="Otter::LineEditWidget" name="httpsServersLineEditWidget">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -181,7 +181,7 @@
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QLineEdit" name="socksServersLineEdit">
+             <widget class="Otter::LineEditWidget" name="socksServersLineEditWidget">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -195,7 +195,7 @@
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLineEdit" name="ftpServersLineEdit">
+             <widget class="Otter::LineEditWidget" name="ftpServersLineEditWidget">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -209,7 +209,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="allServersLineEdit"/>
+             <widget class="Otter::LineEditWidget" name="allServersLineEditWidget"/>
             </item>
             <item row="1" column="2">
              <widget class="QSpinBox" name="allPortSpinBox">
@@ -391,15 +391,20 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
   <customwidget>
-   <class>Otter::FilePathWidget</class>
-   <extends>QWidget</extends>
-   <header>src/ui/FilePathWidget.h</header>
-   <container>1</container>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

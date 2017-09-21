@@ -212,7 +212,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, NameRole}));
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 	m_ui->resetAllButton->setEnabled(canResetAll);
 
 	if (isSidebarPanel())
@@ -229,7 +229,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		m_ui->saveAllButton->setEnabled(true);
 	});
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->resetAllButton, &QPushButton::clicked, [&]()
 	{
 		saveAll(true);
@@ -261,7 +261,7 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 	{
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -523,13 +523,13 @@ QIcon ConfigurationContentsWidget::getIcon() const
 
 bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

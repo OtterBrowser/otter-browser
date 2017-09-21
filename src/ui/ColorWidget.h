@@ -20,10 +20,12 @@
 #ifndef OTTER_COLORWIDGET_H
 #define OTTER_COLORWIDGET_H
 
-#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
+
+class LineEditWidget;
 
 class ColorWidget final : public QWidget
 {
@@ -50,7 +52,7 @@ protected slots:
 	void selectColor();
 
 private:
-	QLineEdit *m_lineEdit;
+	LineEditWidget *m_lineEditWidget;
 	QColor m_color;
 	QRect m_buttonRectangle;
 

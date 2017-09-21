@@ -49,7 +49,7 @@ CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->cacheViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->cacheViewWidget->installEventFilter(this);
 	m_ui->cacheViewWidget->viewport()->installEventFilter(this);
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	if (isSidebarPanel())
 	{
@@ -58,7 +58,7 @@ CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *
 
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->cacheViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->cacheViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->cacheViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
 	connect(m_ui->cacheViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeDomainEntriesOrEntry()));
@@ -94,7 +94,7 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -609,13 +609,13 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

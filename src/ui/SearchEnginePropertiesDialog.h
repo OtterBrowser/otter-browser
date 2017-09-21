@@ -33,6 +33,8 @@ namespace Ui
 	class SearchEnginePropertiesDialog;
 }
 
+class LineEditWidget;
+
 class SearchEnginePropertiesDialog final : public Dialog
 {
 	Q_OBJECT
@@ -51,7 +53,7 @@ protected slots:
 	void insertPlaceholder(QAction *action);
 
 private:
-	QLineEdit *m_currentLineEdit;
+	LineEditWidget *m_currentLineEditWidget;
 	QString m_identifier;
 	QStringList m_keywords;
 	Ui::SearchEnginePropertiesDialog *m_ui;

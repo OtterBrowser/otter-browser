@@ -22,14 +22,14 @@
         <string>Title:</string>
        </property>
        <property name="buddy">
-        <cstring>titleLineEdit</cstring>
+        <cstring>titleLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLineEdit" name="titleLineEdit"/>
+        <widget class="Otter::LineEditWidget" name="titleLineEditWidget"/>
        </item>
        <item>
         <widget class="Otter::IconWidget" name="iconButton">
@@ -58,12 +58,12 @@
         <string>Description:</string>
        </property>
        <property name="buddy">
-        <cstring>descriptionLineEdit</cstring>
+        <cstring>descriptionLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="descriptionLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="descriptionLineEditWidget"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="keywordLabel">
@@ -71,12 +71,12 @@
         <string>Keyword:</string>
        </property>
        <property name="buddy">
-        <cstring>keywordLineEdit</cstring>
+        <cstring>keywordLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="keywordLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="keywordLineEditWidget"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="encodingLabel">
@@ -84,12 +84,12 @@
         <string>Encoding:</string>
        </property>
        <property name="buddy">
-        <cstring>encodingLineEdit</cstring>
+        <cstring>encodingLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="encodingLineEdit">
+      <widget class="Otter::LineEditWidget" name="encodingLineEditWidget">
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -101,15 +101,15 @@
         <string>Form address:</string>
        </property>
        <property name="buddy">
-        <cstring>formAddressLineEdit</cstring>
+        <cstring>formAddressLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="formAddressLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="formAddressLineEditWidget"/>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="updateAddressLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="updateAddressLineEditWidget"/>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="updateAddressLabel">
@@ -117,7 +117,7 @@
         <string>Update address:</string>
        </property>
        <property name="buddy">
-        <cstring>updateAddressLineEdit</cstring>
+        <cstring>updateAddressLineEditWidget</cstring>
        </property>
       </widget>
      </item>
@@ -141,12 +141,12 @@
             <string>Address:</string>
            </property>
            <property name="buddy">
-            <cstring>resultsAddressLineEdit</cstring>
+            <cstring>resultsAddressLineEditWidget</cstring>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="resultsAddressLineEdit"/>
+          <widget class="Otter::LineEditWidget" name="resultsAddressLineEditWidget"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="reultsQueryLabel">
@@ -154,12 +154,12 @@
             <string>Query:</string>
            </property>
            <property name="buddy">
-            <cstring>resultsQueryLineEdit</cstring>
+            <cstring>resultsQueryLineEditWidget</cstring>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="resultsQueryLineEdit"/>
+          <widget class="Otter::LineEditWidget" name="resultsQueryLineEditWidget"/>
          </item>
         </layout>
        </item>
@@ -249,15 +249,15 @@
             <string>Address:</string>
            </property>
            <property name="buddy">
-            <cstring>suggestionsAddressLineEdit</cstring>
+            <cstring>suggestionsAddressLineEditWidget</cstring>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="suggestionsAddressLineEdit"/>
+          <widget class="Otter::LineEditWidget" name="suggestionsAddressLineEditWidget"/>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="suggestionsQueryLineEdit"/>
+          <widget class="Otter::LineEditWidget" name="suggestionsQueryLineEditWidget"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="suggestionsQueryLabel">
@@ -265,7 +265,7 @@
             <string>Query:</string>
            </property>
            <property name="buddy">
-            <cstring>suggestionsQueryLineEdit</cstring>
+            <cstring>suggestionsQueryLineEditWidget</cstring>
            </property>
           </widget>
          </item>
@@ -374,22 +374,27 @@
    <extends>QToolButton</extends>
    <header>src/ui/IconWidget.h</header>
   </customwidget>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>titleLineEdit</tabstop>
+  <tabstop>titleLineEditWidget</tabstop>
   <tabstop>iconButton</tabstop>
-  <tabstop>descriptionLineEdit</tabstop>
-  <tabstop>keywordLineEdit</tabstop>
-  <tabstop>encodingLineEdit</tabstop>
-  <tabstop>formAddressLineEdit</tabstop>
-  <tabstop>updateAddressLineEdit</tabstop>
+  <tabstop>descriptionLineEditWidget</tabstop>
+  <tabstop>keywordLineEditWidget</tabstop>
+  <tabstop>encodingLineEditWidget</tabstop>
+  <tabstop>formAddressLineEditWidget</tabstop>
+  <tabstop>updateAddressLineEditWidget</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>resultsAddressLineEdit</tabstop>
-  <tabstop>resultsQueryLineEdit</tabstop>
+  <tabstop>resultsAddressLineEditWidget</tabstop>
+  <tabstop>resultsQueryLineEditWidget</tabstop>
   <tabstop>resultsPostMethodCheckBox</tabstop>
   <tabstop>resultsEnctypeComboBox</tabstop>
-  <tabstop>suggestionsAddressLineEdit</tabstop>
-  <tabstop>suggestionsQueryLineEdit</tabstop>
+  <tabstop>suggestionsAddressLineEditWidget</tabstop>
+  <tabstop>suggestionsQueryLineEditWidget</tabstop>
   <tabstop>suggestionsPostMethodCheckBox</tabstop>
   <tabstop>suggestionsEnctypeComboBox</tabstop>
  </tabstops>

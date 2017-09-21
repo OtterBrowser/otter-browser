@@ -50,7 +50,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	const int startupBehaviorIndex(m_ui->startupBehaviorComboBox->findData(SettingsManager::getOption(SettingsManager::Browser_StartupBehaviorOption).toString()));
 
 	m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
-	m_ui->homePageLineEdit->setText(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
+	m_ui->homePageLineEditWidget->setText(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
 
 	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->useBookmarkAsHomePageButton));
 
@@ -102,7 +102,7 @@ void PreferencesGeneralPageWidget::useCurrentAsHomePage()
 
 	if (item)
 	{
-		m_ui->homePageLineEdit->setText(item->data(SessionModel::UrlRole).toUrl().toString(QUrl::RemovePassword));
+		m_ui->homePageLineEditWidget->setText(item->data(SessionModel::UrlRole).toUrl().toString(QUrl::RemovePassword));
 	}
 }
 
@@ -115,18 +115,18 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 
 		if (url.isEmpty())
 		{
-			m_ui->homePageLineEdit->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
+			m_ui->homePageLineEditWidget->setText(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()));
 		}
 		else
 		{
-			m_ui->homePageLineEdit->setText(url);
+			m_ui->homePageLineEditWidget->setText(url);
 		}
 	}
 }
 
 void PreferencesGeneralPageWidget::restoreHomePage()
 {
-	m_ui->homePageLineEdit->setText(SettingsManager::getOptionDefinition(SettingsManager::Browser_HomePageOption).defaultValue.toString());
+	m_ui->homePageLineEditWidget->setText(SettingsManager::getOptionDefinition(SettingsManager::Browser_HomePageOption).defaultValue.toString());
 }
 
 void PreferencesGeneralPageWidget::setupAcceptLanguage()
@@ -144,7 +144,7 @@ void PreferencesGeneralPageWidget::setupAcceptLanguage()
 void PreferencesGeneralPageWidget::save()
 {
 	SettingsManager::setOption(SettingsManager::Browser_StartupBehaviorOption, m_ui->startupBehaviorComboBox->currentData().toString());
-	SettingsManager::setOption(SettingsManager::Browser_HomePageOption, m_ui->homePageLineEdit->text());
+	SettingsManager::setOption(SettingsManager::Browser_HomePageOption, m_ui->homePageLineEditWidget->text());
 	SettingsManager::setOption(SettingsManager::Paths_DownloadsOption, m_ui->downloadsFilePathWidget->getPath());
 	SettingsManager::setOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption, m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setOption(SettingsManager::Browser_OpenLinksInNewTabOption, m_ui->tabsInsteadOfWindowsCheckBox->isChecked());

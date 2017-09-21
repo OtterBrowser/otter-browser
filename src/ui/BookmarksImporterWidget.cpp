@@ -61,7 +61,7 @@ void BookmarksImporterWidget::removeStateChanged(bool isChecked)
 
 void BookmarksImporterWidget::toSubfolderChanged(bool isChecked)
 {
-	m_ui->subfolderNameLineEdit->setEnabled(isChecked);
+	m_ui->subfolderNameLineEditWidget->setEnabled(isChecked);
 }
 
 BookmarksItem* BookmarksImporterWidget::getTargetFolder() const
@@ -71,7 +71,7 @@ BookmarksItem* BookmarksImporterWidget::getTargetFolder() const
 
 QString BookmarksImporterWidget::getSubfolderName() const
 {
-	return m_ui->subfolderNameLineEdit->text();
+	return m_ui->subfolderNameLineEditWidget->text();
 }
 
 bool BookmarksImporterWidget::hasToRemoveExisting() const

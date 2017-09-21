@@ -141,16 +141,16 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->gesturesViewWidget->setItemDelegateForColumn(0, new GestureActionDelegate(this));
 	m_ui->gesturesViewWidget->setModified(m_profile.isModified());
 	m_ui->stepsViewWidget->setModel(stepsModel);
-	m_ui->titleLineEdit->setText(m_profile.getTitle());
-	m_ui->descriptionLineEdit->setText(m_profile.getDescription());
-	m_ui->versionLineEdit->setText(m_profile.getVersion());
-	m_ui->authorLineEdit->setText(m_profile.getAuthor());
+	m_ui->titleLineEditWidget->setText(m_profile.getTitle());
+	m_ui->descriptionLineEditWidget->setText(m_profile.getDescription());
+	m_ui->versionLineEditWidget->setText(m_profile.getVersion());
+	m_ui->authorLineEditWidget->setText(m_profile.getAuthor());
 
-	connect(m_ui->titleLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->descriptionLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->versionLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->authorLineEdit, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->gesturesViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->titleLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->descriptionLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->versionLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->authorLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->gesturesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->gesturesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateGesturesActions()));
 	connect(m_ui->addGestureButton, SIGNAL(clicked()), this, SLOT(addGesture()));
 	connect(m_ui->removeGestureButton, SIGNAL(clicked()), this, SLOT(removeGesture()));
@@ -283,10 +283,10 @@ void MouseProfileDialog::updateStepsActions()
 MouseProfile MouseProfileDialog::getProfile() const
 {
 	MouseProfile profile(m_profile);
-	profile.setTitle(m_ui->titleLineEdit->text());
-	profile.setDescription(m_ui->descriptionLineEdit->text());
-	profile.setVersion(m_ui->versionLineEdit->text());
-	profile.setAuthor(m_ui->authorLineEdit->text());
+	profile.setTitle(m_ui->titleLineEditWidget->text());
+	profile.setDescription(m_ui->descriptionLineEditWidget->text());
+	profile.setVersion(m_ui->versionLineEditWidget->text());
+	profile.setAuthor(m_ui->authorLineEditWidget->text());
 
 	QHash<int, QVector<MouseProfile::Gesture> > definitions;
 

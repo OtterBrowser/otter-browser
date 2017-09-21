@@ -55,7 +55,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->notesViewWidget->setFilterRoles(QSet<int>({BookmarksModel::UrlRole, BookmarksModel::TitleRole, BookmarksModel::DescriptionRole, BookmarksModel::KeywordRole}));
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 	m_ui->textEdit->setPlaceholderText(tr("Add note…"));
 
 	if (isSidebarPanel())
@@ -75,7 +75,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	{
 		emit actionsStateChanged(QVector<int>({ActionsManager::CopyAction, ActionsManager::CutAction}));
 	});
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->notesViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->notesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->notesViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
 	connect(m_ui->notesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
@@ -242,7 +242,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -410,13 +410,13 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

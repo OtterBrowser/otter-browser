@@ -55,7 +55,7 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->historyViewWidget->setModel(m_model, true);
 	m_ui->historyViewWidget->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -69,7 +69,7 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryModified(HistoryEntryItem*)), this, SLOT(modifyEntry(HistoryEntryItem*)));
 	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryRemoved(HistoryEntryItem*)), this, SLOT(removeEntry(HistoryEntryItem*)));
 	connect(HistoryManager::getInstance(), SIGNAL(dayChanged()), this, SLOT(populateEntries()));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->historyViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->historyViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->historyViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
 	connect(m_ui->historyViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
@@ -95,7 +95,7 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 	{
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -474,13 +474,13 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

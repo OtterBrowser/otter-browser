@@ -25,12 +25,12 @@
         <set>Qt::NoTextInteraction</set>
        </property>
        <property name="buddy">
-        <cstring>nameLineEdit</cstring>
+        <cstring>nameLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="nameLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="nameLineEditWidget"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="valueLabel">
@@ -38,12 +38,12 @@
         <string>Value:</string>
        </property>
        <property name="buddy">
-        <cstring>valueLineEdit</cstring>
+        <cstring>valueLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="valueLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="valueLineEditWidget"/>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="expiresLabel">
@@ -84,12 +84,12 @@
         <set>Qt::NoTextInteraction</set>
        </property>
        <property name="buddy">
-        <cstring>domainLineEdit</cstring>
+        <cstring>domainLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="domainLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="domainLineEditWidget"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="pathLabel">
@@ -97,12 +97,12 @@
         <string>Path:</string>
        </property>
        <property name="buddy">
-        <cstring>pathLineEdit</cstring>
+        <cstring>pathLineEditWidget</cstring>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="pathLineEdit"/>
+      <widget class="Otter::LineEditWidget" name="pathLineEditWidget"/>
      </item>
     </layout>
    </item>
@@ -145,11 +145,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>nameLineEdit</tabstop>
-  <tabstop>valueLineEdit</tabstop>
-  <tabstop>domainLineEdit</tabstop>
-  <tabstop>pathLineEdit</tabstop>
+  <tabstop>nameLineEditWidget</tabstop>
+  <tabstop>valueLineEditWidget</tabstop>
+  <tabstop>domainLineEditWidget</tabstop>
+  <tabstop>pathLineEditWidget</tabstop>
   <tabstop>isSessionOnlyCheckBox</tabstop>
   <tabstop>expiresDateTimeEdit</tabstop>
   <tabstop>isSecureCheckBox</tabstop>

@@ -25,7 +25,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="actionsLayout" stretch="0,0,1">
        <item>
-        <widget class="QLineEdit" name="filterLineEdit">
+        <widget class="Otter::LineEditWidget" name="filterLineEditWidget">
          <property name="placeholderText">
           <string>Search…</string>
          </property>
@@ -188,7 +188,7 @@
           <string>Title:</string>
          </property>
          <property name="buddy">
-          <cstring>titleLineEdit</cstring>
+          <cstring>titleLineEditWidget</cstring>
          </property>
         </widget>
        </item>
@@ -198,7 +198,7 @@
           <string>Description:</string>
          </property>
          <property name="buddy">
-          <cstring>descriptionLineEdit</cstring>
+          <cstring>descriptionLineEditWidget</cstring>
          </property>
         </widget>
        </item>
@@ -208,7 +208,7 @@
           <string>Version:</string>
          </property>
          <property name="buddy">
-          <cstring>versionLineEdit</cstring>
+          <cstring>versionLineEditWidget</cstring>
          </property>
         </widget>
        </item>
@@ -218,21 +218,21 @@
           <string>Author:</string>
          </property>
          <property name="buddy">
-          <cstring>authorLineEdit</cstring>
+          <cstring>authorLineEditWidget</cstring>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="titleLineEdit"/>
+        <widget class="Otter::LineEditWidget" name="titleLineEditWidget"/>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="descriptionLineEdit"/>
+        <widget class="Otter::LineEditWidget" name="descriptionLineEditWidget"/>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="versionLineEdit"/>
+        <widget class="Otter::LineEditWidget" name="versionLineEditWidget"/>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="authorLineEdit"/>
+        <widget class="Otter::LineEditWidget" name="authorLineEditWidget"/>
        </item>
       </layout>
      </widget>
@@ -255,6 +255,11 @@
    <class>Otter::ItemViewWidget</class>
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

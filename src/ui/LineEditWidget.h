@@ -64,6 +64,7 @@ public:
 		ReplaceAndNotifyDropMode
 	};
 
+	explicit LineEditWidget(const QString &text, QWidget *parent = nullptr);
 	explicit LineEditWidget(QWidget *parent = nullptr);
 	~LineEditWidget();
 

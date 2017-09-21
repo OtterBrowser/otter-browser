@@ -19,17 +19,17 @@
 
 #include "ActionComboBoxWidget.h"
 #include "ItemViewWidget.h"
+#include "LineEditWidget.h"
 #include "../core/ActionsManager.h"
 
 #include <QtCore/QTimer>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QStylePainter>
 
 namespace Otter
 {
 
 ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(parent),
-	m_filterLineEdit(nullptr),
+	m_filterLineEditWidget(nullptr),
 	m_wasPopupVisible(false)
 {
 	setEditable(true);
@@ -136,30 +136,30 @@ bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::Show || event->type() == QEvent::Move || event->type() == QEvent::Resize)
 	{
-		if (!m_filterLineEdit)
+		if (!m_filterLineEditWidget)
 		{
-			m_filterLineEdit = new QLineEdit(getView()->viewport()->parentWidget());
-			m_filterLineEdit->setClearButtonEnabled(true);
-			m_filterLineEdit->setPlaceholderText(tr("Search…"));
+			m_filterLineEditWidget = new LineEditWidget(getView()->viewport()->parentWidget());
+			m_filterLineEditWidget->setClearButtonEnabled(true);
+			m_filterLineEditWidget->setPlaceholderText(tr("Search…"));
 
-			getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEdit->height()));
+			getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
 
-			connect(m_filterLineEdit, SIGNAL(textChanged(QString)), getView(), SLOT(setFilterString(QString)));
+			connect(m_filterLineEditWidget, SIGNAL(textChanged(QString)), getView(), SLOT(setFilterString(QString)));
 		}
 
 		if (event->type() == QEvent::Show)
 		{
-			QTimer::singleShot(0, m_filterLineEdit, SLOT(setFocus()));
+			QTimer::singleShot(0, m_filterLineEditWidget, SLOT(setFocus()));
 		}
 		else
 		{
-			m_filterLineEdit->resize(getView()->width(), m_filterLineEdit->height());
-			m_filterLineEdit->move(0, (getView()->height() - m_filterLineEdit->height()));
+			m_filterLineEditWidget->resize(getView()->width(), m_filterLineEditWidget->height());
+			m_filterLineEditWidget->move(0, (getView()->height() - m_filterLineEditWidget->height()));
 		}
 	}
-	else if (event->type() == QEvent::Hide && m_filterLineEdit)
+	else if (event->type() == QEvent::Hide && m_filterLineEditWidget)
 	{
-		m_filterLineEdit->clear();
+		m_filterLineEditWidget->clear();
 	}
 
 	return QObject::eventFilter(object, event);

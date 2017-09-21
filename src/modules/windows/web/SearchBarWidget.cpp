@@ -36,8 +36,8 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent),
 	m_ui->highlightButton->setChecked(SettingsManager::getOption(SettingsManager::Search_EnableFindInPageHighlightAllOption).toBool());
 	m_ui->closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 
-	connect(m_ui->queryLineEdit, SIGNAL(textEdited(QString)), this, SIGNAL(queryChanged()));
-	connect(m_ui->queryLineEdit, SIGNAL(returnPressed()), this, SLOT(notifyRequestedSearch()));
+	connect(m_ui->queryLineEditWidget, SIGNAL(textEdited(QString)), this, SIGNAL(queryChanged()));
+	connect(m_ui->queryLineEditWidget, SIGNAL(returnPressed()), this, SLOT(notifyRequestedSearch()));
 	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(notifyFlagsChanged()));
 	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(notifyFlagsChanged()));
 	connect(m_ui->nextButton, SIGNAL(clicked()), this, SLOT(notifyRequestedSearch()));
@@ -68,7 +68,7 @@ void SearchBarWidget::keyPressEvent(QKeyEvent *event)
 	{
 		hide();
 
-		m_ui->queryLineEdit->clear();
+		m_ui->queryLineEditWidget->clear();
 
 		emit requestedSearch(getFlags());
 	}
@@ -100,13 +100,13 @@ void SearchBarWidget::notifyFlagsChanged()
 
 void SearchBarWidget::selectAll()
 {
-	m_ui->queryLineEdit->setFocus();
-	m_ui->queryLineEdit->selectAll();
+	m_ui->queryLineEditWidget->setFocus();
+	m_ui->queryLineEditWidget->selectAll();
 }
 
 void SearchBarWidget::setQuery(const QString &query)
 {
-	m_ui->queryLineEdit->setText(query);
+	m_ui->queryLineEditWidget->setText(query);
 }
 
 void SearchBarWidget::setVisible(bool visible)
@@ -123,7 +123,7 @@ void SearchBarWidget::setResultsFound(bool found)
 {
 	QPalette palette(this->palette());
 
-	if (!m_ui->queryLineEdit->text().isEmpty())
+	if (!m_ui->queryLineEditWidget->text().isEmpty())
 	{
 //TODO Ensure that text is readable
 		if (found)
@@ -136,14 +136,14 @@ void SearchBarWidget::setResultsFound(bool found)
 		}
 	}
 
-	m_ui->queryLineEdit->setPalette(palette);
+	m_ui->queryLineEditWidget->setPalette(palette);
 	m_ui->nextButton->setEnabled(found);
 	m_ui->previousButton->setEnabled(found);
 }
 
 QString SearchBarWidget::getQuery() const
 {
-	return m_ui->queryLineEdit->text();
+	return m_ui->queryLineEditWidget->text();
 }
 
 WebWidget::FindFlags SearchBarWidget::getFlags() const

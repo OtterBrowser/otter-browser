@@ -37,7 +37,7 @@ AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *auth
 	m_ui->serverValueLabel->setText(url.host());
 	m_ui->messageValueLabel->setText(authenticator->realm());
 	m_ui->userComboBox->setCurrentText(authenticator->user());
-	m_ui->passwordLineEdit->setText(authenticator->password());
+	m_ui->passwordLineEditWidget->setText(authenticator->password());
 
 	if (type == HttpAuthentication)
 	{
@@ -69,7 +69,7 @@ void AuthenticationDialog::changeEvent(QEvent *event)
 void AuthenticationDialog::setup()
 {
 	m_authenticator->setUser(m_ui->userComboBox->currentText());
-	m_authenticator->setPassword(m_ui->passwordLineEdit->text());
+	m_authenticator->setPassword(m_ui->passwordLineEditWidget->text());
 
 	if (m_ui->rememberPasswordCheckBox->isChecked() && !m_authenticator->user().isEmpty() && !m_authenticator->password().isEmpty())
 	{

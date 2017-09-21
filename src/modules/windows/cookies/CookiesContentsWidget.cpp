@@ -44,7 +44,7 @@ CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Wind
 {
 	m_ui->setupUi(this);
 	m_ui->cookiesViewWidget->installEventFilter(this);
-	m_ui->filterLineEdit->installEventFilter(this);
+	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	if (isSidebarPanel())
 	{
@@ -53,7 +53,7 @@ CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Wind
 
 	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->cookiesViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->cookiesViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->cookiesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeCookies()));
@@ -376,7 +376,7 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEdit->setFocus();
+			m_ui->filterLineEditWidget->setFocus();
 
 			break;
 		case ActionsManager::ActivateContentAction:
@@ -500,13 +500,13 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->filterLineEdit->clear();
+			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

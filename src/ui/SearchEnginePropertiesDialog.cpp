@@ -30,7 +30,7 @@ namespace Otter
 {
 
 SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, QWidget *parent) : Dialog(parent),
-	m_currentLineEdit(nullptr),
+	m_currentLineEditWidget(nullptr),
 	m_identifier(searchEngine.identifier),
 	m_keywords(keywords),
 	m_ui(new Ui::SearchEnginePropertiesDialog)
@@ -38,28 +38,28 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 	m_ui->setupUi(this);
 	m_ui->iconButton->setIcon(searchEngine.icon);
 	m_ui->iconButton->setDefaultIcon(QLatin1String("edit-find"));
-	m_ui->titleLineEdit->setText(searchEngine.title);
-	m_ui->descriptionLineEdit->setText(searchEngine.description);
-	m_ui->keywordLineEdit->setText(searchEngine.keyword);
-	m_ui->keywordLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), m_ui->keywordLineEdit));
-	m_ui->encodingLineEdit->setText(searchEngine.encoding);
-	m_ui->formAddressLineEdit->setText(searchEngine.formUrl.toString());
-	m_ui->updateAddressLineEdit->setText(searchEngine.selfUrl.toString());
+	m_ui->titleLineEditWidget->setText(searchEngine.title);
+	m_ui->descriptionLineEditWidget->setText(searchEngine.description);
+	m_ui->keywordLineEditWidget->setText(searchEngine.keyword);
+	m_ui->keywordLineEditWidget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), m_ui->keywordLineEditWidget));
+	m_ui->encodingLineEditWidget->setText(searchEngine.encoding);
+	m_ui->formAddressLineEditWidget->setText(searchEngine.formUrl.toString());
+	m_ui->updateAddressLineEditWidget->setText(searchEngine.selfUrl.toString());
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
 
-	m_ui->resultsAddressLineEdit->setText(searchEngine.resultsUrl.url);
-	m_ui->resultsAddressLineEdit->installEventFilter(this);
-	m_ui->resultsQueryLineEdit->setText(searchEngine.resultsUrl.parameters.toString(QUrl::FullyDecoded));
-	m_ui->resultsQueryLineEdit->installEventFilter(this);
+	m_ui->resultsAddressLineEditWidget->setText(searchEngine.resultsUrl.url);
+	m_ui->resultsAddressLineEditWidget->installEventFilter(this);
+	m_ui->resultsQueryLineEditWidget->setText(searchEngine.resultsUrl.parameters.toString(QUrl::FullyDecoded));
+	m_ui->resultsQueryLineEditWidget->installEventFilter(this);
 	m_ui->resultsPostMethodCheckBox->setChecked(searchEngine.resultsUrl.method == QLatin1String("post"));
 	m_ui->resultsEnctypeComboBox->setCurrentText(searchEngine.resultsUrl.enctype);
 
-	m_ui->suggestionsAddressLineEdit->setText(searchEngine.suggestionsUrl.url);
-	m_ui->suggestionsAddressLineEdit->installEventFilter(this);
-	m_ui->suggestionsQueryLineEdit->setText(searchEngine.suggestionsUrl.parameters.toString(QUrl::FullyDecoded));
-	m_ui->suggestionsQueryLineEdit->installEventFilter(this);
+	m_ui->suggestionsAddressLineEditWidget->setText(searchEngine.suggestionsUrl.url);
+	m_ui->suggestionsAddressLineEditWidget->installEventFilter(this);
+	m_ui->suggestionsQueryLineEditWidget->setText(searchEngine.suggestionsUrl.parameters.toString(QUrl::FullyDecoded));
+	m_ui->suggestionsQueryLineEditWidget->installEventFilter(this);
 	m_ui->suggestionsPostMethodCheckBox->setChecked(searchEngine.suggestionsUrl.method == QLatin1String("post"));
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(searchEngine.suggestionsUrl.enctype);
 }
@@ -81,32 +81,32 @@ void SearchEnginePropertiesDialog::changeEvent(QEvent *event)
 
 void SearchEnginePropertiesDialog::insertPlaceholder(QAction *action)
 {
-	if (m_currentLineEdit && !action->data().toString().isEmpty())
+	if (m_currentLineEditWidget && !action->data().toString().isEmpty())
 	{
-		m_currentLineEdit->insert(QStringLiteral("{%1}").arg(action->data().toString()));
+		m_currentLineEditWidget->insert(QStringLiteral("{%1}").arg(action->data().toString()));
 	}
 }
 
 SearchEnginesManager::SearchEngineDefinition SearchEnginePropertiesDialog::getSearchEngine() const
 {
-	const QString keyword(m_ui->keywordLineEdit->text().trimmed());
+	const QString keyword(m_ui->keywordLineEditWidget->text().trimmed());
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
 	searchEngine.identifier = m_identifier;
-	searchEngine.title = m_ui->titleLineEdit->text();
-	searchEngine.description = m_ui->descriptionLineEdit->text();
+	searchEngine.title = m_ui->titleLineEditWidget->text();
+	searchEngine.description = m_ui->descriptionLineEditWidget->text();
 	searchEngine.keyword = (m_keywords.contains(keyword) ? QString() : keyword);
-	searchEngine.encoding = m_ui->encodingLineEdit->text();
-	searchEngine.formUrl = QUrl(m_ui->formAddressLineEdit->text());
-	searchEngine.selfUrl = QUrl(m_ui->updateAddressLineEdit->text());
+	searchEngine.encoding = m_ui->encodingLineEditWidget->text();
+	searchEngine.formUrl = QUrl(m_ui->formAddressLineEditWidget->text());
+	searchEngine.selfUrl = QUrl(m_ui->updateAddressLineEditWidget->text());
 	searchEngine.icon = m_ui->iconButton->icon();
-	searchEngine.resultsUrl.url = m_ui->resultsAddressLineEdit->text();
+	searchEngine.resultsUrl.url = m_ui->resultsAddressLineEditWidget->text();
 	searchEngine.resultsUrl.enctype = m_ui->resultsEnctypeComboBox->currentText();
 	searchEngine.resultsUrl.method = (m_ui->resultsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
-	searchEngine.resultsUrl.parameters = QUrlQuery(m_ui->resultsQueryLineEdit->text());
-	searchEngine.suggestionsUrl.url = m_ui->suggestionsAddressLineEdit->text();
+	searchEngine.resultsUrl.parameters = QUrlQuery(m_ui->resultsQueryLineEditWidget->text());
+	searchEngine.suggestionsUrl.url = m_ui->suggestionsAddressLineEditWidget->text();
 	searchEngine.suggestionsUrl.enctype = m_ui->suggestionsEnctypeComboBox->currentText();
 	searchEngine.suggestionsUrl.method = (m_ui->suggestionsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
-	searchEngine.suggestionsUrl.parameters = QUrlQuery(m_ui->suggestionsQueryLineEdit->text());
+	searchEngine.suggestionsUrl.parameters = QUrlQuery(m_ui->suggestionsQueryLineEditWidget->text());
 
 	return searchEngine;
 }
@@ -115,13 +115,13 @@ bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
-		QLineEdit *lineEdit(qobject_cast<QLineEdit*>(object));
+		LineEditWidget *lineEditWidget(qobject_cast<LineEditWidget*>(object));
 
-		if (lineEdit)
+		if (lineEditWidget)
 		{
-			m_currentLineEdit = lineEdit;
+			m_currentLineEditWidget = lineEditWidget;
 
-			QMenu *contextMenu(lineEdit->createStandardContextMenu());
+			QMenu *contextMenu(lineEditWidget->createStandardContextMenu());
 			contextMenu->addSeparator();
 
 			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
@@ -133,7 +133,7 @@ bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
 			contextMenu->deleteLater();
 
-			m_currentLineEdit = nullptr;
+			m_currentLineEditWidget = nullptr;
 
 			return true;
 		}

@@ -90,7 +90,7 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 	connect(m_ui->javaScriptButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->otherButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterMessages(QString)));
+	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), this, SLOT(filterMessages(QString)));
 	connect(m_ui->consoleView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
@@ -199,7 +199,7 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	m_model->appendRow(messageItem);
 	m_model->sort(0, Qt::DescendingOrder);
 
-	applyFilters(messageItem->index(), m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
+	applyFilters(messageItem->index(), m_ui->filterLineEditWidget->text(), getCategories(), getCurrentWindow());
 }
 
 void ErrorConsoleWidget::clear()
@@ -239,7 +239,7 @@ void ErrorConsoleWidget::filterCategories()
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		applyFilters(m_model->index(i, 0), m_ui->filterLineEdit->text(), categories, currentWindow);
+		applyFilters(m_model->index(i, 0), m_ui->filterLineEditWidget->text(), categories, currentWindow);
 	}
 }
 

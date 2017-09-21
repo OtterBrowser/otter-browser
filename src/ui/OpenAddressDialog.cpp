@@ -26,7 +26,6 @@
 #include "ui_OpenAddressDialog.h"
 
 #include <QtGui/QKeyEvent>
-#include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
