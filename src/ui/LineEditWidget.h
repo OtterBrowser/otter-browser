@@ -80,8 +80,6 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters) override;
-	void copyToNote();
-	void deleteText();
 	void setCompletion(const QString &completion);
 
 protected:

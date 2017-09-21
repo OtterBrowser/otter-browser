@@ -462,21 +462,6 @@ void LineEditWidget::activate(Qt::FocusReason reason)
 	}
 }
 
-void LineEditWidget::copyToNote()
-{
-	const QString note(hasSelectedText() ? selectedText() : text());
-
-	if (!note.isEmpty())
-	{
-		NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, note}});
-	}
-}
-
-void LineEditWidget::deleteText()
-{
-	del();
-}
-
 void LineEditWidget::showPopup()
 {
 	if (!m_popupViewWidget)

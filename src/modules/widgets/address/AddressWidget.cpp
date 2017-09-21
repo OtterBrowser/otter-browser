@@ -513,24 +513,26 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (entry == UnknownEntry || entry == AddressEntry)
 	{
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-undo")), tr("Undo"), this, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(isUndoAvailable());
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-redo")), tr("Redo"), this, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(isRedoAvailable());
+		ActionExecutor::Object executor(this, this);
+
+		menu.addAction(new Action(ActionsManager::UndoAction, {}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::RedoAction, {}, executor, &menu));
 		menu.addSeparator();
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-cut")), tr("Cut"), this, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(hasSelectedText());
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-paste")), tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+		menu.addAction(new Action(ActionsManager::CutAction, {}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::CopyAction, {}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::PasteAction, {}, executor, &menu));
 
 		if (!m_isUsingSimpleMode)
 		{
 			menu.addAction(new Action(ActionsManager::PasteAndGoAction, {}, ActionExecutor::Object(m_window, m_window), this));
 		}
 
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
+		menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
 		menu.addSeparator();
-		menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!text().isEmpty());
+		menu.addAction(new Action(ActionsManager::CopyToNoteAction, {}, executor, &menu));
 		menu.addSeparator();
-		menu.addAction(tr("Clear All"), this, SLOT(clear()))->setEnabled(!text().isEmpty());
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
+		menu.addAction(new Action(ActionsManager::ClearAllAction, {}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::SelectAllAction, {}, executor, &menu));
 	}
 	else
 	{
