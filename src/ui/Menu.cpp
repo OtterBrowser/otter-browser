@@ -980,6 +980,7 @@ void Menu::populateNotesMenu()
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
 			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, getExecutor(), this));
+			action->setData(index.data(BookmarksModel::IdentifierRole));
 			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
 			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
