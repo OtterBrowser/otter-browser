@@ -19,10 +19,12 @@
 **************************************************************************/
 
 #include "LineEditWidget.h"
+#include "MainWindow.h"
 #include "../core/NotesManager.h"
 
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
+#include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
 
 namespace Otter
@@ -168,15 +170,18 @@ bool PopupViewWidget::event(QEvent *event)
 	return ItemViewWidget::event(event);
 }
 
-LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit(text, parent),
+LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit(text, parent), ActionExecutor(),
 	m_popupViewWidget(nullptr),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
 	m_shouldIgnoreCompletion(false),
 	m_shouldSelectAllOnFocus(false),
-	m_shouldSelectAllOnRelease(false)
+	m_shouldSelectAllOnRelease(false),
+	m_hadSelection(false),
+	m_wasEmpty(text.isEmpty())
+
 {
-	setDragEnabled(true);
+	initialize();
 }
 
 LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
@@ -185,9 +190,11 @@ LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_selectionStart(-1),
 	m_shouldIgnoreCompletion(false),
 	m_shouldSelectAllOnFocus(false),
-	m_shouldSelectAllOnRelease(false)
+	m_shouldSelectAllOnRelease(false),
+	m_hadSelection(false),
+	m_wasEmpty(true)
 {
-	setDragEnabled(true);
+	initialize();
 }
 
 LineEditWidget::~LineEditWidget()
@@ -196,6 +203,18 @@ LineEditWidget::~LineEditWidget()
 	{
 		m_popupViewWidget->deleteLater();
 	}
+}
+
+void LineEditWidget::initialize()
+{
+	setDragEnabled(true);
+
+	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, [&]()
+	{
+		emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
+	});
+	connect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::handleSelectionChanged);
+	connect(this, &LineEditWidget::textChanged, this, &LineEditWidget::handleTextChanged);
 }
 
 void LineEditWidget::resizeEvent(QResizeEvent *event)
@@ -280,6 +299,96 @@ void LineEditWidget::dropEvent(QDropEvent *event)
 	}
 }
 
+void LineEditWidget::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	switch (identifier)
+	{
+		case ActionsManager::UndoAction:
+			if (!isReadOnly())
+			{
+				undo();
+			}
+
+			break;
+		case ActionsManager::RedoAction:
+			if (!isReadOnly())
+			{
+				redo();
+			}
+
+			break;
+		case ActionsManager::CutAction:
+			if (!isReadOnly())
+			{
+				cut();
+			}
+
+			break;
+		case ActionsManager::CopyAction:
+			copy();
+
+			break;
+		case ActionsManager::CopyToNoteAction:
+			{
+				const QString text(hasSelectedText() ? selectedText() : this->text());
+
+				if (!text.isEmpty())
+				{
+					NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, text}});
+				}
+			}
+
+			break;
+		case ActionsManager::PasteAction:
+			if (!isReadOnly())
+			{
+				if (parameters.contains(QLatin1String("note")))
+				{
+					const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(parameters[QLatin1String("note")].toULongLong()));
+
+					if (bookmark)
+					{
+						insert(bookmark->data(BookmarksModel::DescriptionRole).toString());
+					}
+				}
+				else if (parameters.contains(QLatin1String("text")))
+				{
+					insert(parameters[QLatin1String("text")].toString());
+				}
+				else
+				{
+					paste();
+				}
+			}
+
+			break;
+		case ActionsManager::DeleteAction:
+			if (!isReadOnly())
+			{
+				del();
+			}
+
+			break;
+		case ActionsManager::SelectAllAction:
+			selectAll();
+
+			break;
+		case ActionsManager::UnselectAction:
+			deselect();
+
+			break;
+		case ActionsManager::ClearAllAction:
+			if (!isReadOnly())
+			{
+				clear();
+			}
+
+			break;
+		default:
+			break;
+	}
+}
+
 void LineEditWidget::clearSelectAllOnRelease()
 {
 	if (m_shouldSelectAllOnRelease && hasSelectedText())
@@ -287,6 +396,26 @@ void LineEditWidget::clearSelectAllOnRelease()
 		disconnect(this, SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
 
 		m_shouldSelectAllOnRelease = false;
+	}
+}
+
+void LineEditWidget::handleSelectionChanged()
+{
+	if (hasSelectedText() != m_hadSelection)
+	{
+		m_hadSelection = hasSelectedText();
+
+		emit actionsStateChanged(QVector<int>({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction}));
+	}
+}
+
+void LineEditWidget::handleTextChanged(const QString &text)
+{
+	if (text.isEmpty() != m_wasEmpty)
+	{
+		m_wasEmpty = text.isEmpty();
+
+		emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction}));
 	}
 }
 
@@ -413,6 +542,64 @@ PopupViewWidget* LineEditWidget::getPopup()
 	}
 
 	return m_popupViewWidget;
+}
+
+ActionsManager::ActionDefinition::State LineEditWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
+	ActionsManager::ActionDefinition::State state(definition.getDefaultState());
+	state.isEnabled = false;
+
+	if (definition.scope == ActionsManager::ActionDefinition::EditorScope)
+	{
+		switch (definition.identifier)
+		{
+			case ActionsManager::UndoAction:
+				state.isEnabled = (!isReadOnly() && isUndoAvailable());
+
+				break;
+			case ActionsManager::RedoAction:
+				state.isEnabled = (!isReadOnly() && isRedoAvailable());
+
+				break;
+			case ActionsManager::CutAction:
+				state.isEnabled = (!isReadOnly() && hasSelectedText());
+
+				break;
+			case ActionsManager::CopyAction:
+				state.isEnabled = hasSelectedText();
+
+				break;
+			case ActionsManager::CopyToNoteAction:
+				state.isEnabled = hasSelectedText();
+
+				break;
+			case ActionsManager::PasteAction:
+				state.isEnabled = (!isReadOnly() && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText())));
+
+				break;
+			case ActionsManager::DeleteAction:
+				state.isEnabled = (!isReadOnly() && hasSelectedText());
+
+				break;
+			case ActionsManager::SelectAllAction:
+				state.isEnabled = !text().isEmpty();
+
+				break;
+			case ActionsManager::UnselectAction:
+				state.isEnabled = hasSelectedText();
+
+				break;
+			case ActionsManager::ClearAllAction:
+				state.isEnabled = (!isReadOnly() && !text().isEmpty());
+
+				break;
+			default:
+				break;
+		}
+	}
+
+	return state;
 }
 
 bool LineEditWidget::isPopupVisible() const

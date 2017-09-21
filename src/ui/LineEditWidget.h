@@ -22,6 +22,7 @@
 #define OTTER_LINEEDITWIDGET_H
 
 #include "ItemViewWidget.h"
+#include "../core/ActionsManager.h"
 
 #include <QtWidgets/QLineEdit>
 
@@ -52,7 +53,7 @@ private:
 	LineEditWidget *m_lineEditWidget;
 };
 
-class LineEditWidget : public QLineEdit
+class LineEditWidget : public QLineEdit, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -74,9 +75,11 @@ public:
 	void setDropMode(DropMode mode);
 	void setSelectAllOnFocus(bool select);
 	PopupViewWidget* getPopup();
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters) const override;
 	bool isPopupVisible() const;
 
 public slots:
+	void triggerAction(int identifier, const QVariantMap &parameters) override;
 	void copyToNote();
 	void deleteText();
 	void setCompletion(const QString &completion);
@@ -87,9 +90,12 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
+	void initialize();
 
 protected slots:
 	void clearSelectAllOnRelease();
+	void handleSelectionChanged();
+	void handleTextChanged(const QString &text);
 
 private:
 	PopupViewWidget *m_popupViewWidget;
@@ -99,8 +105,11 @@ private:
 	bool m_shouldIgnoreCompletion;
 	bool m_shouldSelectAllOnFocus;
 	bool m_shouldSelectAllOnRelease;
+	bool m_hadSelection;
+	bool m_wasEmpty;
 
 signals:
+	void actionsStateChanged(const QVector<int> &identifiers);
 	void textDropped(const QString &text);
 };
 
