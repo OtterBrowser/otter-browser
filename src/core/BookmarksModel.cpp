@@ -97,6 +97,24 @@ QVariant BookmarksItem::data(int role) const
 			case BookmarksModel::FolderBookmark:
 				if (QStandardItem::data(role).isNull())
 				{
+					if (type == BookmarksModel::UrlBookmark)
+					{
+						const BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
+
+						if (model && model->getFormatMode() == BookmarksModel::NotesMode)
+						{
+							const QString text(data(BookmarksModel::DescriptionRole).toString());
+							const int newLinePosition(text.indexOf(QLatin1Char('\n')));
+
+							if (newLinePosition > 0 && newLinePosition < (text.count() - 1))
+							{
+								return text.left(newLinePosition) + QStringLiteral("…");
+							}
+
+							return text;
+						}
+					}
+
 					return QCoreApplication::translate("Otter::BookmarksModel", "(Untitled)");
 				}
 
