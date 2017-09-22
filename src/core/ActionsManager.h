@@ -99,6 +99,7 @@ public:
 	enum ActionIdentifier
 	{
 		RunMacroAction = 0,
+		SetOptionAction,
 		NewTabAction,
 		NewTabPrivateAction,
 		NewWindowAction,

@@ -284,6 +284,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	m_definitions.reserve(ActionsManager::OtherAction);
 
 	registerAction(RunMacroAction, QT_TRANSLATE_NOOP("actions", "Run Macro"), QT_TRANSLATE_NOOP("actions", "Run Arbitrary List of Actions"), QIcon(), ActionDefinition::ApplicationScope);
+	registerAction(SetOptionAction, QT_TRANSLATE_NOOP("actions", "Set Option"), QT_TRANSLATE_NOOP("actions", "Set, Reset or Toggle Option"), QIcon(), ActionDefinition::ApplicationScope, ActionDefinition::RequiresParameters);
 	registerAction(NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), ThemesManager::createIcon(QLatin1String("tab-new")), ActionDefinition::MainWindowScope);
 	registerAction(NewTabPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), ThemesManager::createIcon(QLatin1String("tab-new-private")), ActionDefinition::MainWindowScope);
 	registerAction(NewWindowAction, QT_TRANSLATE_NOOP("actions", "New Window"), QString(), ThemesManager::createIcon(QLatin1String("window-new")), ActionDefinition::ApplicationScope);

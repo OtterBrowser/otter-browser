@@ -545,6 +545,32 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			}
 
 			return;
+		case ActionsManager::SetOptionAction:
+			{
+				const QString mode(parameters.value(QLatin1String("mode"), QLatin1String("set")).toString());
+				const QUrl url(parameters.contains(QLatin1String("host")) ? QUrl::fromUserInput(parameters.value(QLatin1String("host")).toString()) : QUrl());
+				const int option(SettingsManager::getOptionIdentifier(parameters.value(QLatin1String("option")).toString()));
+
+				if (mode == QLatin1String("set"))
+				{
+					SettingsManager::setOption(option, parameters.value(QLatin1String("value")), url);
+				}
+				else if (mode == QLatin1String("reset"))
+				{
+					SettingsManager::setOption(option, {}, url);
+				}
+				else if (mode == QLatin1String("toggle"))
+				{
+					const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(option));
+
+					if (definition.type == SettingsManager::BooleanType)
+					{
+						SettingsManager::setOption(option, !SettingsManager::getOption(option, url).toBool(), url);
+					}
+				}
+			}
+
+			return;
 		case ActionsManager::NewWindowAction:
 			createWindow();
 
@@ -1383,6 +1409,60 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 
 	switch (identifier)
 	{
+		case ActionsManager::SetOptionAction:
+			if (!parameters.isEmpty())
+			{
+				const QString mode(parameters.value(QLatin1String("mode"), QLatin1String("set")).toString());
+				const QString host(parameters.value(QLatin1String("host")).toString());
+				const QString name(parameters.value(QLatin1String("option")).toString());
+
+				state.isEnabled = true;
+
+				if (mode == QLatin1String("set"))
+				{
+					if (host.isEmpty())
+					{
+						state.text = QCoreApplication::translate("actions", "Set %1").arg(name);
+					}
+					else
+					{
+						state.text = QCoreApplication::translate("actions", "Set %1 for %2").arg(name).arg(host);
+					}
+				}
+				else if (mode == QLatin1String("reset"))
+				{
+					if (host.isEmpty())
+					{
+						state.text = QCoreApplication::translate("actions", "Reset %1").arg(name);
+					}
+					else
+					{
+						state.text = QCoreApplication::translate("actions", "Reset %1 for %2").arg(name).arg(host);
+					}
+				}
+				else if (mode == QLatin1String("toggle"))
+				{
+					const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(name)));
+
+					if (definition.type == SettingsManager::BooleanType)
+					{
+						if (host.isEmpty())
+						{
+							state.text = QCoreApplication::translate("actions", "Toggle %1").arg(name);
+						}
+						else
+						{
+							state.text = QCoreApplication::translate("actions", "Toggle %1 for %2").arg(name).arg(host);
+						}
+					}
+					else
+					{
+						state.isEnabled = false;
+					}
+				}
+			}
+
+			break;
 		case ActionsManager::ReopenWindowAction:
 			if (!SessionsManager::getClosedWindows().isEmpty())
 			{
