@@ -1767,16 +1767,15 @@ QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *v
 
 QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 {
-	QStandardItemModel *updateListModel(m_ui->updateChannelsItemView->getSourceModel());
 	QStringList updateChannels;
 
-	for (int i = 0; i < updateListModel->rowCount(); ++i)
+	for (int i = 0; i < m_ui->updateChannelsItemView->getRowCount(); ++i)
 	{
-		QStandardItem *item(updateListModel->item(i));
+		const QModelIndex index(m_ui->updateChannelsItemView->getIndex(i, 0));
 
-		if (item->checkState() == Qt::Checked)
+		if (static_cast<Qt::CheckState>(index.data(Qt::CheckStateRole).toInt()) == Qt::Checked)
 		{
-			updateChannels.append(item->data(Qt::UserRole).toString());
+			updateChannels.append(index.data(Qt::UserRole).toString());
 		}
 	}
 

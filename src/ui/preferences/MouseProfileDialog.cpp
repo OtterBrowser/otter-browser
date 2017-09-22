@@ -290,29 +290,27 @@ MouseProfile MouseProfileDialog::getProfile() const
 
 	QHash<int, QVector<MouseProfile::Gesture> > definitions;
 
-	for (int i = 0; i < m_ui->gesturesViewWidget->getSourceModel()->rowCount(); ++i)
+	for (int i = 0; i < m_ui->gesturesViewWidget->getRowCount(); ++i)
 	{
-		QStandardItem *contextItem(m_ui->gesturesViewWidget->getSourceModel()->item(i, 0));
+		const QModelIndex contextIndex(m_ui->gesturesViewWidget->getIndex(i, 0));
+		const int gestureAmount(m_ui->gesturesViewWidget->getRowCount(contextIndex));
 
-		if (contextItem && contextItem->rowCount() > 0)
+		if (gestureAmount > 0)
 		{
 			QVector<MouseProfile::Gesture> gestures;
+			gestures.reserve(gestureAmount);
 
-			for (int j = 0; j < contextItem->rowCount(); ++j)
+			for (int j = 0; j < gestureAmount; ++j)
 			{
-				if (!contextItem->child(j, 0) || !contextItem->child(j, 1))
-				{
-					continue;
-				}
-
-				const QStringList steps(contextItem->child(j, 2)->data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts));
-				const int action(contextItem->child(j, 0)->data(IdentifierRole).toInt());
+				const QModelIndex actionIndex(contextIndex.child(j, 0));
+				const QStringList steps(actionIndex.sibling(actionIndex.row(), 2).data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts));
+				const int action(actionIndex.data(IdentifierRole).toInt());
 
 				if (!steps.isEmpty() && action >= 0)
 				{
 					MouseProfile::Gesture gesture;
 					gesture.action = action;
-					gesture.parameters = contextItem->child(j, 0)->data(ParametersRole).toMap();
+					gesture.parameters = actionIndex.data(ParametersRole).toMap();
 
 					for (int k = 0; k < steps.count(); ++k)
 					{
@@ -323,9 +321,11 @@ MouseProfile MouseProfileDialog::getProfile() const
 				}
 			}
 
+			gestures.squeeze();
+
 			if (gestures.count() > 0)
 			{
-				definitions[static_cast<GesturesManager::GesturesContext>(contextItem->data(Qt::UserRole).toInt())] = gestures;
+				definitions[static_cast<GesturesManager::GesturesContext>(contextIndex.data(Qt::UserRole).toInt())] = gestures;
 			}
 		}
 	}
