@@ -127,7 +127,7 @@ private:
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
-	Window *m_currentWindow;
+	QPointer<Window> m_currentWindow;
 	QString m_currentBookmark;
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
