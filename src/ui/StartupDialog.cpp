@@ -133,24 +133,25 @@ SessionInformation StartupDialog::getSession() const
 
 		for (int i = 0; i < m_windowsModel->rowCount(); ++i)
 		{
-			QStandardItem *windowItem(m_windowsModel->item(i, 0));
+			const QModelIndex windowIndex(m_windowsModel->index(i, 0));
 
-			if (!windowItem || (windowItem->flags().testFlag(Qt::ItemIsUserCheckable) && windowItem->data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
+			if (!windowIndex.isValid() || (windowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && windowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
 			{
 				continue;
 			}
 
 			const int index(session.windows.value(i, SessionMainWindow()).index - 1);
+			const int windowAmount(m_windowsModel->rowCount(windowIndex));
 			SessionMainWindow window;
 			window.index = (index + 1);
-			window.geometry = windowItem->data(Qt::UserRole).toByteArray();
-			window.windows.reserve(windowItem->rowCount());
+			window.geometry = windowIndex.data(Qt::UserRole).toByteArray();
+			window.windows.reserve(windowAmount);
 
-			for (int j = 0; j < windowItem->rowCount(); ++j)
+			for (int j = 0; j < windowAmount; ++j)
 			{
-				QStandardItem *tabItem(windowItem->child(j, 0));
+				const QModelIndex tabIndex(windowIndex.child(j, 0));
 
-				if (tabItem && tabItem->data(Qt::CheckStateRole).toInt() == Qt::Checked)
+				if (tabIndex.isValid() && tabIndex.data(Qt::CheckStateRole).toInt() == Qt::Checked)
 				{
 					window.windows.append(session.windows.value(i, SessionMainWindow()).windows.value(j, SessionWindow()));
 				}
