@@ -20,6 +20,7 @@
 #ifndef OTTER_SESSIONMODEL_H
 #define OTTER_SESSIONMODEL_H
 
+#include <QtCore/QPointer>
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
@@ -58,7 +59,7 @@ protected slots:
 	void notifyMainWindowModified();
 
 private:
-	MainWindow *m_mainWindow;
+	QPointer<MainWindow> m_mainWindow;
 
 friend class SessionModel;
 };
@@ -73,7 +74,7 @@ protected:
 	explicit WindowSessionItem(Window *window);
 
 private:
-	Window *m_window;
+	QPointer<Window> m_window;
 
 friend class MainWindowSessionItem;
 };
