@@ -1409,6 +1409,10 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 
 	switch (identifier)
 	{
+		case ActionsManager::RunMacroAction:
+			state.isEnabled = parameters.contains(QLatin1String("actions"));
+
+			break;
 		case ActionsManager::SetOptionAction:
 			if (!parameters.isEmpty())
 			{
