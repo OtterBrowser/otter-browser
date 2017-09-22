@@ -1287,7 +1287,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 {
 	Window *newWindow(nullptr);
-	SessionsManager::OpenHints hints(mainWindow ? SessionsManager::DefaultOpen : SessionsManager::NewWindowOpen);
+	SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
 
 	if (window->isPrivate())
 	{
@@ -1302,7 +1302,7 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 	}
 	else
 	{
-		newWindow = openWindow(window->getContentsWidget(), hints);
+		newWindow = openWindow(window->getContentsWidget(), (hints | SessionsManager::NewWindowOpen));
 	}
 
 	if (newWindow && window->isPinned())
@@ -2007,6 +2007,11 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 		window = new Window({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("size"), ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? m_workspace->size() : QSize(800, 600))}}, widget, this);
 
 		addWindow(window, hints, index);
+
+		if (!hints.testFlag(SessionsManager::BackgroundOpen))
+		{
+			m_workspace->setActiveWindow(window, true);
+		}
 	}
 
 	emit actionsStateChanged(QVector<int>({ActionsManager::CloseOtherTabsAction}));
