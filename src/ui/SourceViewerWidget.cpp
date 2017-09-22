@@ -345,9 +345,9 @@ SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent)
 	handleOptionChanged(SettingsManager::SourceViewer_ShowLineNumbersOption, SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption));
 	handleOptionChanged(SettingsManager::SourceViewer_WrapLinesOption, SettingsManager::getOption(SettingsManager::SourceViewer_WrapLinesOption));
 
-	connect(this, SIGNAL(textChanged()), this, SLOT(updateSelection()));
-	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(this, &SourceViewerWidget::textChanged, this, &SourceViewerWidget::updateSelection);
+	connect(this, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWidget::updateTextCursor);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SourceViewerWidget::handleOptionChanged);
 }
 
 void SourceViewerWidget::resizeEvent(QResizeEvent *event)

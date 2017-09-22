@@ -541,9 +541,9 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
-	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(updateStyle()));
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updatePreviewPosition()));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &TabBarWidget::handleOptionChanged);
+	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &TabBarWidget::updateStyle);
+	connect(this, &TabBarWidget::currentChanged, this, &TabBarWidget::updatePreviewPosition);
 }
 
 void TabBarWidget::changeEvent(QEvent *event)

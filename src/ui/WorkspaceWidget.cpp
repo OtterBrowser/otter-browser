@@ -222,7 +222,7 @@ WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 
 	if (!m_mdi)
 	{
-		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &WorkspaceWidget::handleOptionChanged);
 	}
 }
 
@@ -278,7 +278,7 @@ void WorkspaceWidget::createMdi()
 		return;
 	}
 
-	disconnect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	disconnect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &WorkspaceWidget::handleOptionChanged);
 
 	Window *activeWindow(m_activeWindow);
 
@@ -308,7 +308,7 @@ void WorkspaceWidget::createMdi()
 		markAsRestored();
 	}
 
-	connect(m_mdi, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_mdi, &MdiWidget::customContextMenuRequested, this, &WorkspaceWidget::showContextMenu);
 }
 
 void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters)

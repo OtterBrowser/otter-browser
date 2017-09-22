@@ -220,7 +220,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		m_ui->detailsWidget->hide();
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ConfigurationContentsWidget::handleOptionChanged);
 	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
@@ -419,7 +419,6 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 		m_ui->resetAllButton->setEnabled(false);
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 
 	updateActions();

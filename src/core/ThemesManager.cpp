@@ -49,7 +49,7 @@ ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 
 	handleOptionChanged(SettingsManager::Interface_IconThemePathOption, SettingsManager::getOption(SettingsManager::Interface_IconThemePathOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ThemesManager::handleOptionChanged);
 }
 
 void ThemesManager::createInstance()

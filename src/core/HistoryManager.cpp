@@ -44,7 +44,7 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	handleOptionChanged(SettingsManager::History_RememberBrowsingOption);
 	handleOptionChanged(SettingsManager::History_StoreFaviconsOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &HistoryManager::handleOptionChanged);
 }
 
 void HistoryManager::createInstance()

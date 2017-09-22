@@ -36,8 +36,8 @@ QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *pare
 {
 	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant,QUrl)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebEngineUrlRequestInterceptor::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, &QtWebEngineUrlRequestInterceptor::handleOptionChanged);
 }
 
 void QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation()
