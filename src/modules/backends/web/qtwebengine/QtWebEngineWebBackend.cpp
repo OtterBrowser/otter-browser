@@ -248,7 +248,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		handleOptionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebEngineWebBackend::handleOptionChanged);
-		connect(QWebEngineProfile::defaultProfile(), &QWebEngineProfile::optionChanged, this, &QtWebEngineWebBackend::downloadFile);
+		connect(QWebEngineProfile::defaultProfile(), &QWebEngineProfile::downloadRequested, this, &QtWebEngineWebBackend::downloadFile);
 	}
 
 	return new QtWebEngineWebWidget(parameters, this, parent);
