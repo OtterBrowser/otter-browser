@@ -569,11 +569,25 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::StartDragScrollAction:
-			setScrollMode(DragScroll);
+			if (m_scrollMode == DragScroll)
+			{
+				setScrollMode(NoScroll);
+			}
+			else
+			{
+				setScrollMode(DragScroll);
+			}
 
 			break;
 		case ActionsManager::StartMoveScrollAction:
-			setScrollMode(MoveScroll);
+			if (m_scrollMode == MoveScroll)
+			{
+				setScrollMode(NoScroll);
+			}
+			else
+			{
+				setScrollMode(MoveScroll);
+			}
 
 			break;
 		case ActionsManager::EndScrollAction:
