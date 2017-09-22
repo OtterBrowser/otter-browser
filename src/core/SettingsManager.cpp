@@ -278,7 +278,11 @@ void SettingsManager::registerOption(int identifier, SettingsManager::OptionType
 
 void SettingsManager::saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type)
 {
-	if (type == ColorType)
+	if (value.isNull())
+	{
+		QSettings(path, QSettings::IniFormat).remove(key);
+	}
+	else if (type == ColorType)
 	{
 		const QColor color(value.value<QColor>());
 
