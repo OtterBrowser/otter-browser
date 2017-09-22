@@ -369,34 +369,34 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		const QStandardItem *groupItem(m_model->item(i, 0));
+		const QModelIndex groupIndex(m_model->index(i, 0));
+		const int optionAmount(m_model->rowCount(groupIndex));
 
-		if (!groupItem)
+		if (optionAmount == 0)
 		{
 			continue;
 		}
 
-		for (int j = 0; j < groupItem->rowCount(); ++j)
+		for (int j = 0; j < optionAmount; ++j)
 		{
-			QStandardItem *optionItem(groupItem->child(j, 0));
-			const bool isModified(optionItem && optionItem->data(IsModifiedRole).toBool());
+			const QModelIndex optionIndex(groupIndex.child(j, 0));
+			const bool isModified(optionIndex.data(IsModifiedRole).toBool());
 
-			if (optionItem && (reset || isModified))
+			if (reset || isModified)
 			{
-				const QModelIndex valueIndex(m_model->index(j, 2, groupItem->index()));
+				const QModelIndex valueIndex(groupIndex.child(j, 2));
 				const int identifier(valueIndex.data(IdentifierRole).toInt());
 				const QVariant defaultValue(SettingsManager::getOptionDefinition(identifier).defaultValue);
 
 				if (reset && identifier != SettingsManager::Browser_MigrationsOption && valueIndex.data(Qt::EditRole) != defaultValue)
 				{
-					m_model->setData(valueIndex, defaultValue, Qt::EditRole);
-
 					SettingsManager::setOption(identifier, defaultValue);
 
-					QFont font(optionItem->font());
+					QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
 					font.setBold(false);
 
-					optionItem->setFont(font);
+					m_model->setData(optionIndex, font, Qt::FontRole);
+					m_model->setData(valueIndex, defaultValue, Qt::EditRole);
 				}
 				else if (!reset && isModified)
 				{
@@ -405,7 +405,7 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 				if (isModified)
 				{
-					m_model->setData(optionItem->index(), false, IsModifiedRole);
+					m_model->setData(optionIndex, false, IsModifiedRole);
 				}
 			}
 		}
@@ -427,35 +427,45 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	const QString name(SettingsManager::getOptionName(identifier));
+	const bool wasModified(m_ui->configurationViewWidget->isModified());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		const QStandardItem *groupItem(m_model->item(i, 0));
+		const QModelIndex groupIndex(m_model->index(i, 0));
+		const QString groupTitle(groupIndex.data(Qt::DisplayRole).toString());
 
-		if (!groupItem || !name.startsWith(groupItem->text()))
+		if (groupTitle.isEmpty() || !name.startsWith(groupTitle))
 		{
 			continue;
 		}
 
-		for (int j = 0; j < groupItem->rowCount(); ++j)
-		{
-			QStandardItem *optionItem(groupItem->child(j, 0));
+		const int optionAmount(m_model->rowCount(groupIndex));
 
-			if (optionItem && optionItem->index().sibling(j, 2).data(IdentifierRole).toInt() == identifier)
+		for (int j = 0; j < optionAmount; ++j)
+		{
+			const QModelIndex valueIndex(groupIndex.child(j, 2));
+
+			if (valueIndex.data(IdentifierRole).toInt() == identifier)
 			{
-				if (!optionItem->data(IsModifiedRole).toBool())
+				const QModelIndex optionIndex(groupIndex.child(j, 0));
+
+				if (!optionIndex.data(IsModifiedRole).toBool())
 				{
-					QFont font(optionItem->font());
+					QFont font(optionIndex.data(Qt::FontRole).isNull() ? m_ui->configurationViewWidget->font() : optionIndex.data(Qt::FontRole).value<QFont>());
 					font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
 
-					optionItem->setFont(font);
-
-					groupItem->child(j, 2)->setData(value, Qt::EditRole);
+					m_model->setData(optionIndex, font, Qt::FontRole);
+					m_model->setData(valueIndex, value, Qt::EditRole);
 				}
 
 				break;
 			}
 		}
+	}
+
+	if (!wasModified)
+	{
+		m_ui->configurationViewWidget->setModified(false);
 	}
 
 	updateActions();
