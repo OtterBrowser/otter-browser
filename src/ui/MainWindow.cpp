@@ -1331,8 +1331,9 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 		}
 
 		emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
-		emit windowRemoved(window->getIdentifier());
 	}
+
+	emit windowRemoved(window->getIdentifier());
 }
 
 void MainWindow::setActiveEditorExecutor(ActionExecutor::Object executor)
