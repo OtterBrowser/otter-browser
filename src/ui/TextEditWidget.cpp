@@ -44,12 +44,9 @@ TextEditWidget::TextEditWidget(QWidget *parent) : QPlainTextEdit(parent),
 
 void TextEditWidget::initialize()
 {
-	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, [&]()
-	{
-		emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
-	});
 	connect(this, &TextEditWidget::selectionChanged, this, &TextEditWidget::handleSelectionChanged);
 	connect(this, &TextEditWidget::textChanged, this, &TextEditWidget::handleTextChanged);
+	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &TextEditWidget::notifyPasteActionStateChanged);
 }
 
 void TextEditWidget::focusInEvent(QFocusEvent *event)
@@ -172,6 +169,11 @@ void TextEditWidget::handleTextChanged()
 
 		emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction}));
 	}
+}
+
+void TextEditWidget::notifyPasteActionStateChanged()
+{
+	emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
 }
 
 ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int identifier, const QVariantMap &parameters) const

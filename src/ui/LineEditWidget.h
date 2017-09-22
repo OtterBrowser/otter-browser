@@ -95,6 +95,7 @@ protected slots:
 	void clearSelectAllOnRelease();
 	void handleSelectionChanged();
 	void handleTextChanged(const QString &text);
+	void notifyPasteActionStateChanged();
 
 private:
 	PopupViewWidget *m_popupViewWidget;

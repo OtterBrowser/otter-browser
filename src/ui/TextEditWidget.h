@@ -48,6 +48,7 @@ protected:
 protected slots:
 	void handleSelectionChanged();
 	void handleTextChanged();
+	void notifyPasteActionStateChanged();
 
 private:
 	bool m_hadSelection;
