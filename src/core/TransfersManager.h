@@ -153,10 +153,10 @@ protected:
 
 protected slots:
 	void save();
-	void transferStarted();
-	void transferFinished();
-	void transferChanged();
-	void transferStopped();
+	void handleTransferStarted();
+	void handleTransferFinished();
+	void handleTransferChanged();
+	void handleTransferStopped();
 
 private:
 	int m_saveTimer;

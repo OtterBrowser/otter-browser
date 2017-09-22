@@ -952,10 +952,10 @@ void TransfersManager::addTransfer(Transfer *transfer)
 
 	transfer->setUpdateInterval(500);
 
-	connect(transfer, SIGNAL(started()), m_instance, SLOT(transferStarted()));
-	connect(transfer, SIGNAL(finished()), m_instance, SLOT(transferFinished()));
-	connect(transfer, SIGNAL(changed()), m_instance, SLOT(transferChanged()));
-	connect(transfer, SIGNAL(stopped()), m_instance, SLOT(transferStopped()));
+	connect(transfer, &Transfer::started, m_instance, &TransfersManager::handleTransferStarted);
+	connect(transfer, &Transfer::finished, m_instance, &TransfersManager::handleTransferFinished);
+	connect(transfer, &Transfer::changed, m_instance, &TransfersManager::handleTransferChanged);
+	connect(transfer, &Transfer::stopped, m_instance, &TransfersManager::handleTransferStopped);
 
 	if (transfer->getOptions().testFlag(Transfer::CanNotifyOption) && transfer->getState() != Transfer::CancelledState)
 	{
@@ -1006,7 +1006,18 @@ void TransfersManager::save()
 	history.sync();
 }
 
-void TransfersManager::transferStarted()
+void TransfersManager::clearTransfers(int period)
+{
+	for (int i = (m_transfers.count() - 1); i >= 0; --i)
+	{
+		if (m_transfers.at(i)->getState() == Transfer::FinishedState && (period == 0 || (m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().secsTo(QDateTime::currentDateTime()) > (period * 3600))))
+		{
+			TransfersManager::removeTransfer(m_transfers.at(i));
+		}
+	}
+}
+
+void TransfersManager::handleTransferStarted()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
@@ -1018,7 +1029,7 @@ void TransfersManager::transferStarted()
 	}
 }
 
-void TransfersManager::transferFinished()
+void TransfersManager::handleTransferFinished()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
@@ -1038,7 +1049,7 @@ void TransfersManager::transferFinished()
 	}
 }
 
-void TransfersManager::transferChanged()
+void TransfersManager::handleTransferChanged()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
@@ -1050,7 +1061,7 @@ void TransfersManager::transferChanged()
 	}
 }
 
-void TransfersManager::transferStopped()
+void TransfersManager::handleTransferStopped()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
@@ -1059,17 +1070,6 @@ void TransfersManager::transferStopped()
 		emit transferStopped(transfer);
 
 		scheduleSave();
-	}
-}
-
-void TransfersManager::clearTransfers(int period)
-{
-	for (int i = (m_transfers.count() - 1); i >= 0; --i)
-	{
-		if (m_transfers.at(i)->getState() == Transfer::FinishedState && (period == 0 || (m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().secsTo(QDateTime::currentDateTime()) > (period * 3600))))
-		{
-			TransfersManager::removeTransfer(m_transfers.at(i));
-		}
 	}
 }
 
