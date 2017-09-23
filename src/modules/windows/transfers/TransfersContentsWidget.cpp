@@ -79,6 +79,11 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Status"), tr("Filename"), tr("Size"), tr("Progress"), tr("Time"), tr("Speed"), tr("Started"), tr("Finished")}));
 	m_model->setHeaderData(0, Qt::Horizontal, QSize(28, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(1, Qt::Horizontal, QSize(500, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(2, Qt::Horizontal, QSize(150, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(3, Qt::Horizontal, QSize(250, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(4, Qt::Horizontal, QSize(150, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(5, Qt::Horizontal, QSize(150, 0), Qt::SizeHintRole);
 
 	m_ui->transfersViewWidget->setModel(m_model);
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
