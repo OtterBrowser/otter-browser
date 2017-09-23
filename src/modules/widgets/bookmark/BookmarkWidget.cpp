@@ -75,8 +75,8 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		return;
 	}
 
-	QString title(m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt()));
+	QString title(m_bookmark->getTitle().isEmpty() ? tr("(Untitled)") : m_bookmark->getTitle());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->getType()));
 
 	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
 	{
@@ -94,17 +94,18 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 	}
 	else
 	{
+		const QUrl url(m_bookmark->getUrl());
 		QStringList toolTip;
 		toolTip.append(tr("Title: %1").arg(title));
 
-		if (!m_bookmark->data(BookmarksModel::UrlRole).toString().isEmpty())
+		if (!url.isEmpty())
 		{
-			toolTip.append(tr("Address: %1").arg(m_bookmark->data(BookmarksModel::UrlRole).toString()));
+			toolTip.append(tr("Address: %1").arg(url.toDisplayString()));
 		}
 
 		if (m_bookmark->data(BookmarksModel::DescriptionRole).isValid())
 		{
-			toolTip.append(tr("Description: %1").arg(m_bookmark->data(BookmarksModel::DescriptionRole).toString()));
+			toolTip.append(tr("Description: %1").arg(m_bookmark->getDescription()));
 		}
 
 		if (!m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isNull())
@@ -122,8 +123,8 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 	}
 
 	setText(title.replace(QLatin1Char('&'), QLatin1String("&&")));
-	setStatusTip(m_bookmark->data(BookmarksModel::UrlRole).toString());
-	setIcon(m_bookmark->data(Qt::DecorationRole).value<QIcon>());
+	setStatusTip(m_bookmark->getUrl().toDisplayString());
+	setIcon(m_bookmark->getIcon());
 }
 
 }

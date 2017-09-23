@@ -110,7 +110,7 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 
 					if (bookmark)
 					{
-						insertPlainText(bookmark->data(BookmarksModel::DescriptionRole).toString());
+						insertPlainText(bookmark->getDescription());
 					}
 				}
 				else if (parameters.contains(QLatin1String("text")))

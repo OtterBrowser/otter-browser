@@ -508,7 +508,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 									{
 										QVariantMap mutableParameters(parameters);
 										mutableParameters.remove(QLatin1String("needsInterpretation"));
-										mutableParameters[QLatin1String("bookmark")] = result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong();
+										mutableParameters[QLatin1String("bookmark")] = result.bookmark->getIdentifier();
 
 										triggerAction(ActionsManager::OpenBookmarkAction, mutableParameters);
 									}
@@ -696,10 +696,10 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				QVariantMap mutableParameters(parameters);
 				mutableParameters.remove(QLatin1String("bookmark"));
 
-				switch (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
+				switch (static_cast<BookmarksModel::BookmarkType>(bookmark->getType()))
 				{
 					case BookmarksModel::UrlBookmark:
-						mutableParameters[QLatin1String("url")] = bookmark->data(BookmarksModel::UrlRole).toUrl();
+						mutableParameters[QLatin1String("url")] = bookmark->getUrl();
 
 						triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
 
@@ -2139,7 +2139,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				if (bookmark)
 				{
 					state.text = bookmark->data(Qt::DisplayRole).toString();
-					state.icon = bookmark->data(Qt::DecorationRole).value<QIcon>();
+					state.icon = bookmark->getIcon();
 					state.isEnabled = true;
 				}
 				else

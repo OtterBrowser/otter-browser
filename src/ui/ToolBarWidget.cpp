@@ -624,7 +624,7 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 		{
 			BookmarksItem *dropBookmark(BookmarksManager::getModel()->getBookmark(m_bookmark->index().child(dropIndex, 0)));
 
-			if (dropBookmark && static_cast<BookmarksModel::BookmarkType>(dropBookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::FolderBookmark)
+			if (dropBookmark && static_cast<BookmarksModel::BookmarkType>(dropBookmark->getType()) == BookmarksModel::FolderBookmark)
 			{
 				bool canNest(false);
 
@@ -830,7 +830,7 @@ void ToolBarWidget::loadBookmarks()
 
 		if (bookmark)
 		{
-			if (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::SeparatorBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(bookmark->getType()) == BookmarksModel::SeparatorBookmark)
 			{
 				addSeparator();
 			}

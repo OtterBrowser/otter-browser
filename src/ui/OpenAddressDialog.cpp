@@ -92,7 +92,7 @@ void OpenAddressDialog::handleUserInput()
 				case InputInterpreter::InterpreterResult::BookmarkType:
 					if (m_executor.isValid())
 					{
-						m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(hints)}});
+						m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(hints)}});
 					}
 					else
 					{

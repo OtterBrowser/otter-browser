@@ -210,7 +210,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				if (bookmark)
 				{
-					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->data(BookmarksModel::DescriptionRole).toString()}});
+					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}});
 				}
 			}
 			else if (parameters.contains(QLatin1String("text")))

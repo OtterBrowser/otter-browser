@@ -126,7 +126,7 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 {
 	const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
 
-	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid())
+	if (bookmark && bookmark->getUrl().isValid())
 	{
 		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}}, parentWidget());
 	}
@@ -315,7 +315,7 @@ BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)
 		return NotesManager::getModel()->getRootItem();
 	}
 
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->getType()));
 
 	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
 }

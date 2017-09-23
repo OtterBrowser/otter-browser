@@ -550,7 +550,7 @@ void StartPageWidget::removeTile()
 
 	if (bookmark)
 	{
-		const QString path(StartPageModel::getThumbnailPath(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
+		const QString path(StartPageModel::getThumbnailPath(bookmark->getIdentifier()));
 
 		if (QFile::exists(path))
 		{

@@ -111,7 +111,7 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 	if (action)
 	{
 		const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
-		const QString url(bookmark ? bookmark->data(BookmarksModel::UrlRole).toString() : QString());
+		const QString url(bookmark ? bookmark->getUrl().toDisplayString() : QString());
 
 		if (url.isEmpty())
 		{

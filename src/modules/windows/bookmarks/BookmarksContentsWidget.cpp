@@ -302,7 +302,7 @@ BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 		return BookmarksManager::getModel()->getRootItem();
 	}
 
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->getType()));
 
 	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
 }

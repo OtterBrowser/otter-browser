@@ -937,7 +937,7 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 				case InputInterpreter::InterpreterResult::BookmarkType:
 					if (executor.isValid())
 					{
-						executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(hints)}});
+						executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(hints)}});
 					}
 
 					break;

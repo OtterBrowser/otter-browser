@@ -406,8 +406,8 @@ void ToolBarDialog::editEntry()
 
 			if (bookmark)
 			{
-				iconEntry.widget->setDefaultValue(bookmark->data(Qt::DecorationRole).value<QIcon>());
-				textEntry.widget->setDefaultValue(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->data(BookmarksModel::TitleRole).toString() : tr("(Untitled)"));
+				iconEntry.widget->setDefaultValue(bookmark->getIcon());
+				textEntry.widget->setDefaultValue(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->getTitle() : tr("(Untitled)"));
 			}
 		}
 		else if (identifier.endsWith(QLatin1String("Action")))
@@ -630,9 +630,9 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 
 		if (bookmark)
 		{
-			const QIcon icon(bookmark->data(Qt::DecorationRole).value<QIcon>());
+			const QIcon icon(bookmark->getIcon());
 
-			item->setText(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->data(BookmarksModel::TitleRole).toString() : tr("(Untitled)"));
+			item->setText(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->getTitle() : tr("(Untitled)"));
 
 			if (!icon.isNull())
 			{
@@ -748,7 +748,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 	switch (definition.type)
 	{
 		case ToolBarsManager::BookmarksBarType:
-			definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
+			definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->getIdentifier());
 
 			break;
 		case ToolBarsManager::SideBarType:

@@ -114,8 +114,8 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			CompletionEntry completionEntry(bookmarks.at(i).bookmark->data(BookmarksModel::UrlRole).toUrl(), bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString(), bookmarks.at(i).match, bookmarks.at(i).bookmark->data(Qt::DecorationRole).value<QIcon>(), QDateTime(), BookmarkType);
-			completionEntry.keyword = bookmarks.at(i).bookmark->data(BookmarksModel::KeywordRole).toString();
+			CompletionEntry completionEntry(bookmarks.at(i).bookmark->getUrl(), bookmarks.at(i).bookmark->getTitle(), bookmarks.at(i).match, bookmarks.at(i).bookmark->getIcon(), QDateTime(), BookmarkType);
+			completionEntry.keyword = bookmarks.at(i).bookmark->getKeyword();
 
 			if (completionEntry.keyword.startsWith(m_filter))
 			{

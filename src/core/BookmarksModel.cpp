@@ -85,6 +85,31 @@ QStandardItem* BookmarksItem::clone() const
 	return item;
 }
 
+QString BookmarksItem::getTitle() const
+{
+	return data(BookmarksModel::TitleRole).toString();
+}
+
+QString BookmarksItem::getDescription() const
+{
+	return QStandardItem::data(BookmarksModel::DescriptionRole).toString();
+}
+
+QString BookmarksItem::getKeyword() const
+{
+	return QStandardItem::data(BookmarksModel::KeywordRole).toString();
+}
+
+QUrl BookmarksItem::getUrl() const
+{
+	return QStandardItem::data(BookmarksModel::UrlRole).toUrl();
+}
+
+QIcon BookmarksItem::getIcon() const
+{
+	return data(Qt::DecorationRole).value<QIcon>();
+}
+
 QVariant BookmarksItem::data(int role) const
 {
 	if (role == Qt::DisplayRole)
@@ -210,7 +235,7 @@ QVector<QUrl> BookmarksItem::getUrls() const
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()));
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
 
 		if (type == BookmarksModel::FolderBookmark)
 		{
@@ -222,11 +247,21 @@ QVector<QUrl> BookmarksItem::getUrls() const
 		}
 		else if (type == BookmarksModel::UrlBookmark)
 		{
-			urls.append(bookmark->data(BookmarksModel::UrlRole).toUrl());
+			urls.append(bookmark->getUrl());
 		}
 	}
 
 	return urls;
+}
+
+quint64 BookmarksItem::getIdentifier() const
+{
+	return QStandardItem::data(BookmarksModel::IdentifierRole).toULongLong();
+}
+
+int BookmarksItem::getType() const
+{
+	return QStandardItem::data(BookmarksModel::TypeRole).toInt();
 }
 
 bool BookmarksItem::isAncestorOf(BookmarksItem *child) const

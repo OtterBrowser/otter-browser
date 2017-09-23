@@ -601,7 +601,7 @@ void Menu::populateBookmarksMenu()
 	if (bookmark->rowCount() > 1 && m_role == BookmarksMenuRole)
 	{
 		Action *openAllAction(new Action(-1, {}, this));
-		openAllAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
+		openAllAction->setData(bookmark->getIdentifier());
 		openAllAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		openAllAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open All"));
 
@@ -613,7 +613,7 @@ void Menu::populateBookmarksMenu()
 	else if (m_role == BookmarkSelectorMenuRole)
 	{
 		Action *addFolderAction(new Action(-1, {}, this));
-		addFolderAction->setData(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
+		addFolderAction->setData(bookmark->getIdentifier());
 		addFolderAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
 		addFolderAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "This Folder"));
 

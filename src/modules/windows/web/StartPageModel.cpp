@@ -70,19 +70,19 @@ void StartPageModel::reloadModel()
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			const QStandardItem *bookmark(m_bookmark->child(i));
+			const BookmarksItem *bookmark(static_cast<BookmarksItem*>(m_bookmark->child(i)));
 
 			if (bookmark)
 			{
-				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()));
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
 
 				if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
 				{
 					continue;
 				}
 
-				const quint64 identifier(bookmark->data(BookmarksModel::IdentifierRole).toULongLong());
-				const QUrl url(bookmark->data(BookmarksModel::UrlRole).toUrl());
+				const quint64 identifier(bookmark->getIdentifier());
+				const QUrl url(bookmark->getUrl());
 				QStandardItem *item(bookmark->clone());
 				item->setData(identifier, BookmarksModel::IdentifierRole);
 				item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
@@ -253,7 +253,7 @@ void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem 
 	{
 		if (bookmark->parent() != m_bookmark)
 		{
-			const QString path(getThumbnailPath(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
+			const QString path(getThumbnailPath(bookmark->getIdentifier()));
 
 			if (QFile::exists(path))
 			{
@@ -272,7 +272,7 @@ void StartPageModel::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksIte
 {
 	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent)))
 	{
-		const QString path(getThumbnailPath(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
+		const QString path(getThumbnailPath(bookmark->getIdentifier()));
 
 		if (QFile::exists(path))
 		{

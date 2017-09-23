@@ -66,7 +66,7 @@ void OpenBookmarkDialog::openBookmark()
 
 	if (bookmark && m_executor.isValid())
 	{
-		m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
+		m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
 	}
 }
 
@@ -80,7 +80,7 @@ void OpenBookmarkDialog::setCompletion(const QString &text)
 
 		if (bookmark && m_executor.isValid())
 		{
-			m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole).toULongLong()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
+			m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen))}});
 		}
 
 		close();

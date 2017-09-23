@@ -36,9 +36,16 @@ public:
 	void setData(const QVariant &value, int role) override;
 	void setItemData(const QVariant &value, int role);
 	QStandardItem* clone() const override;
+	QString getTitle() const;
+	QString getDescription() const;
+	QString getKeyword() const;
+	QUrl getUrl() const;
+	QIcon getIcon() const;
 	QVariant data(int role) const override;
 	QVariant rawData(int role) const;
 	QVector<QUrl> getUrls() const;
+	quint64 getIdentifier() const;
+	int getType() const;
 	bool isAncestorOf(BookmarksItem *child) const;
 	bool operator<(const QStandardItem &other) const override;
 

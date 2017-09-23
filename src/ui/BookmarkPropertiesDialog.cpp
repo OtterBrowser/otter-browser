@@ -36,16 +36,16 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()));
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksItem*>(bookmark->parent()));
-	m_ui->titleLineEditWidget->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
-	m_ui->addressLineEditWidget->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
+	m_ui->titleLineEditWidget->setText(m_bookmark->getTitle());
+	m_ui->addressLineEditWidget->setText(m_bookmark->getUrl().toDisplayString());
 	m_ui->addressLineEditWidget->setVisible(type == BookmarksModel::UrlBookmark);
 	m_ui->addressLabel->setVisible(type == BookmarksModel::UrlBookmark);
-	m_ui->descriptionTextEditWidget->setPlainText(m_bookmark->data(BookmarksModel::DescriptionRole).toString());
-	m_ui->keywordLineEditWidget->setText(m_bookmark->data(BookmarksModel::KeywordRole).toString());
+	m_ui->descriptionTextEditWidget->setPlainText(m_bookmark->getDescription());
+	m_ui->keywordLineEditWidget->setText(m_bookmark->getKeyword());
 	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TitleRole).toDateTime()) : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime()) : tr("Unknown"));
 
@@ -146,7 +146,7 @@ void BookmarkPropertiesDialog::saveBookmark()
 
 		const QString keyword(m_ui->keywordLineEditWidget->text());
 
-		if (m_bookmark->data(BookmarksModel::KeywordRole).toString() != keyword && BookmarksManager::getBookmark(keyword))
+		if (m_bookmark->getKeyword() != keyword && BookmarksManager::getBookmark(keyword))
 		{
 			QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
 

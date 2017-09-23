@@ -357,7 +357,7 @@ void LineEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 
 					if (bookmark)
 					{
-						insert(bookmark->data(BookmarksModel::DescriptionRole).toString());
+						insert(bookmark->getDescription());
 					}
 				}
 				else if (parameters.contains(QLatin1String("text")))
