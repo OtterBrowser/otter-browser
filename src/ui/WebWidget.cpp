@@ -971,7 +971,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 				if (reloadTime < 0)
 				{
 					state.isChecked = (!m_options.contains(SettingsManager::Content_PageReloadTimeOption) || m_options[SettingsManager::Content_PageReloadTimeOption].toInt() < 0);
-					state.text = tr("Page Defaults");
+					state.text = tr("Page Default");
 				}
 				else
 				{
@@ -983,7 +983,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 					}
 					else
 					{
-						state.text = tr("Reload Every: %n seconds", "", reloadTime);
+						state.text = tr("Reload Every: %n second(s)", "", reloadTime);
 					}
 				}
 			}

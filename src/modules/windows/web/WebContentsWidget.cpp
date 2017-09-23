@@ -1158,7 +1158,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 
 			if (!webBackendName.isEmpty())
 			{
-				Console::addMessage(tr("Failed to create requested web backend: %1").arg(webBackendName), Console::OtherCategory, Console::WarningLevel, QString(), -1, (m_window ? m_window->getIdentifier() : 0));
+				Console::addMessage(tr("Failed to load requested web backend: %1").arg(webBackendName), Console::OtherCategory, Console::WarningLevel, QString(), -1, (m_window ? m_window->getIdentifier() : 0));
 			}
 		}
 
