@@ -435,7 +435,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
 
-				connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+				connect(&dialog, &OpenAddressDialog::requestedSearch, this, &MainWindow::search);
 
 				dialog.exec();
 			}
@@ -1275,11 +1275,11 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	{
 		QApplication::alert(this);
 	});
-	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle()));
-	connect(window, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(search(QString,QString,SessionsManager::OpenHints)));
+	connect(window, &Window::titleChanged, this, &MainWindow::updateWindowTitle);
+	connect(window, &Window::requestedSearch, this, &MainWindow::search);
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), this, SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
-	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(handleWindowClose(Window*)));
-	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(handleWindowIsPinnedChanged(bool)));
+	connect(window, &Window::requestedCloseWindow, this, &MainWindow::handleWindowClose);
+	connect(window, &Window::isPinnedChanged, this, &MainWindow::handleWindowIsPinnedChanged);
 
 	emit windowAdded(window->getIdentifier());
 }
@@ -1850,7 +1850,7 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 
 	if (window)
 	{
-		disconnect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
+		disconnect(window, &Window::statusMessageChanged, this, &MainWindow::setStatusMessage);
 	}
 
 	setStatusMessage(QString());
@@ -1870,7 +1870,7 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 
 		emit titleChanged(window->getTitle());
 
-		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
+		connect(window, &Window::statusMessageChanged, this, &MainWindow::setStatusMessage);
 	}
 
 	updateWindowTitle();
