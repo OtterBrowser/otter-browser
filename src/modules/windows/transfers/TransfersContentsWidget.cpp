@@ -89,7 +89,7 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersViewWidget->setSortRoleMapping({{0, StateRole}, {2, BytesTotalRole}, {3, ProgressRole}});
 	m_ui->transfersViewWidget->installEventFilter(this);
-	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-ongoing")));
+	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-reject")));
 	m_ui->redownloadButton->setIcon(ThemesManager::createIcon(QLatin1String("view-refresh")));
 	m_ui->downloadLineEditWidget->installEventFilter(this);
 
