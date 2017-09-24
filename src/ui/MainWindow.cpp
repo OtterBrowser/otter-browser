@@ -162,7 +162,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	QTimer::singleShot(0, [=]()
 	{
-		restore(session);
+		restoreSession(session);
 		updateWindowTitle();
 	});
 
@@ -619,7 +619,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ReopenTabAction:
-			restore(parameters.value(QLatin1String("index"), 0).toInt());
+			restoreClosedWindow(parameters.value(QLatin1String("index"), 0).toInt());
 
 			return;
 		case ActionsManager::StopAllAction:
@@ -1077,7 +1077,7 @@ void MainWindow::search(const QString &query, const QString &searchEngine, Sessi
 	}
 }
 
-void MainWindow::restore(const SessionMainWindow &session)
+void MainWindow::restoreSession(const SessionMainWindow &session)
 {
 	disconnect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
 
@@ -1133,7 +1133,7 @@ void MainWindow::restore(const SessionMainWindow &session)
 	m_workspace->markAsRestored();
 }
 
-void MainWindow::restore(int index)
+void MainWindow::restoreClosedWindow(int index)
 {
 	if (index < 0 || index >= m_closedWindows.count())
 	{

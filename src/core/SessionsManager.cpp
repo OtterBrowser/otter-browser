@@ -458,7 +458,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	{
 		if (window && i == 0)
 		{
-			window->restore(session.windows.first());
+			window->restoreSession(session.windows.first());
 		}
 		else
 		{

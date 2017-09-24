@@ -55,8 +55,8 @@ public:
 	explicit MainWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = nullptr);
 	~MainWindow();
 
-	void restore(const SessionMainWindow &session);
-	void restore(int index = 0);
+	void restoreSession(const SessionMainWindow &session);
+	void restoreClosedWindow(int index = 0);
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
 	void setActiveEditorExecutor(ActionExecutor::Object executor);
 	static MainWindow* findMainWindow(QObject *parent);
