@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,19 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 
 QVariant ProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-	return (orientation == Qt::Horizontal && role == Qt::DisplayRole && section >= 0 && section < m_mapping.count()) ? QCoreApplication::translate("views", m_mapping[section].first.toUtf8().constData()) : QIdentityProxyModel::headerData(section, orientation, role);
+	if (orientation == Qt::Horizontal && section >= 0 && section < m_mapping.count())
+	{
+		if (role == Qt::DisplayRole)
+		{
+			return QCoreApplication::translate("views", m_mapping[section].first.toUtf8().constData());
+		}
+		else if (m_headerData.contains(section) && m_headerData[section].contains(role))
+		{
+			return m_headerData[section][role];
+		}
+	}
+
+	return QIdentityProxyModel::headerData(section, orientation, role);
 }
 
 QModelIndex ProxyModel::index(int row, int column, const QModelIndex &parent) const
@@ -111,6 +123,25 @@ int ProxyModel::columnCount(const QModelIndex &parent) const
 int ProxyModel::rowCount(const QModelIndex &parent) const
 {
 	return (m_model ? m_model->rowCount(mapToSource(parent)) : 0);
+}
+
+bool ProxyModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+	if (orientation == Qt::Horizontal)
+	{
+		if (!m_headerData.contains(section))
+		{
+			m_headerData[section] = {};
+		}
+
+		m_headerData[section][role] = value;
+
+		emit headerDataChanged(orientation, section, section);
+
+		return true;
+	}
+
+	return false;
 }
 
 }
