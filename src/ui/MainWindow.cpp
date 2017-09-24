@@ -1140,7 +1140,7 @@ void MainWindow::restore(int index)
 		return;
 	}
 
-	const ClosedWindow closedWindow(m_closedWindows.at(index));
+	const ClosedWindow closedWindow(m_closedWindows.takeAt(index));
 	int windowIndex(-1);
 
 	if (closedWindow.previousWindow == 0)
@@ -1179,8 +1179,6 @@ void MainWindow::restore(int index)
 
 	Window *window(new Window(parameters, nullptr, this));
 	window->setSession(closedWindow.window, false);
-
-	m_closedWindows.removeAt(index);
 
 	if (m_closedWindows.isEmpty() && SessionsManager::getClosedWindows().isEmpty())
 	{
