@@ -398,6 +398,10 @@ void ItemViewWidget::ensureInitialized()
 
 	if (m_headerWidget)
 	{
+		int maximumSectionWidth(0);
+		int minimumTotalWidth(0);
+		QVector<int> widestSections;
+
 		for (int i = 0; i < m_headerWidget->count(); ++i)
 		{
 			const QSize size(model()->headerData(i, Qt::Horizontal, Qt::SizeHintRole).toSize());
@@ -405,6 +409,34 @@ void ItemViewWidget::ensureInitialized()
 			if (size.isValid())
 			{
 				m_headerWidget->resizeSection(i, size.width());
+
+				if (size.width() > maximumSectionWidth)
+				{
+					widestSections.clear();
+					widestSections.append(i);
+
+					maximumSectionWidth = size.width();
+				}
+				else if (size.width() == maximumSectionWidth)
+				{
+					widestSections.append(i);
+				}
+
+				minimumTotalWidth += size.width();
+			}
+			else
+			{
+				minimumTotalWidth += m_headerWidget->defaultSectionSize();
+			}
+		}
+
+		if (!widestSections.isEmpty() && minimumTotalWidth < m_headerWidget->width())
+		{
+			const int sectionWidth((m_headerWidget->width() - minimumTotalWidth) / widestSections.count());
+
+			for (int i = 0; i < widestSections.count(); ++i)
+			{
+				m_headerWidget->resizeSection(widestSections.at(i), (m_headerWidget->sectionSize(widestSections.at(i)) + sectionWidth));
 			}
 		}
 	}
