@@ -117,6 +117,7 @@ protected slots:
 	void handleBookmarkModified(BookmarksItem *bookmark);
 	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void handleFullScreenStateChanged(bool isFullScreen);
 	void updateVisibility();
 	void setToolBarLocked(bool locked);
 

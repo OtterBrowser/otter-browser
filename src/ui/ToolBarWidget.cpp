@@ -185,8 +185,8 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 			reload();
 
-			connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(resetGeometry()));
-			connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
+			connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &ToolBarWidget::resetGeometry);
+			connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
 		}
 		else
 		{
@@ -209,13 +209,18 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
+		connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarRemoved, this, &ToolBarWidget::handleToolBarRemoved);
+		connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarsLockedChanged, this, &ToolBarWidget::setToolBarLocked);
 	}
 
-	if (m_mainWindow && m_identifier != ToolBarsManager::AddressBar && m_identifier != ToolBarsManager::ProgressBar)
+	if (m_mainWindow)
 	{
-		connect(m_mainWindow, SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyWindowChanged(quint64)));
+		if (m_identifier != ToolBarsManager::AddressBar && m_identifier != ToolBarsManager::ProgressBar)
+		{
+			connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ToolBarWidget::notifyWindowChanged);
+		}
+
+		connect(m_mainWindow, &MainWindow::fullScreenStateChanged, this, &ToolBarWidget::handleFullScreenStateChanged);
 	}
 }
 
@@ -916,6 +921,11 @@ void ToolBarWidget::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem
 	}
 }
 
+void ToolBarWidget::handleFullScreenStateChanged(bool isFullScreen)
+{
+	setVisible(m_identifier == ToolBarsManager::ProgressBar || getDefinition().hasToggle || shouldBeVisible(isFullScreen));
+}
+
 void ToolBarWidget::updateToggleGeometry()
 {
 	if (!m_toggleButton)
@@ -1152,7 +1162,7 @@ void ToolBarWidget::setState(const ToolBarState &state)
 {
 	m_state = state;
 
-	reload();
+	setVisible(m_identifier == ToolBarsManager::ProgressBar || getDefinition().hasToggle || shouldBeVisible(m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false));
 }
 
 void ToolBarWidget::setToolBarLocked(bool locked)

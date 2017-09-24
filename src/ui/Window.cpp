@@ -91,8 +91,9 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 		setContentsWidget(widget);
 	}
 
-	connect(this, SIGNAL(titleChanged(QString)), this, SLOT(setWindowTitle(QString)));
-	connect(this, SIGNAL(iconChanged(QIcon)), this, SLOT(handleIconChanged(QIcon)));
+	connect(this, &Window::titleChanged, this, &Window::setWindowTitle);
+	connect(this, &Window::iconChanged, this, &Window::handleIconChanged);
+	connect(mainWindow, &MainWindow::toolBarStateChanged, this, &Window::handleToolBarStateChanged);
 }
 
 void Window::timerEvent(QTimerEvent *event)
@@ -248,11 +249,6 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::FullScreenAction:
-			if (m_addressBar)
-			{
-				m_addressBar->setVisible(m_addressBar->shouldBeVisible(m_mainWindow->isFullScreen()));
-			}
-
 			if (m_contentsWidget)
 			{
 				m_contentsWidget->triggerAction(identifier, parameters);
@@ -410,6 +406,14 @@ void Window::handleGeometryChangeRequest(const QRect &geometry)
 		subWindow->showNormal();
 		subWindow->resize(geometry.size() + (subWindow->geometry().size() - m_contentsWidget->size()));
 		subWindow->move(geometry.topLeft());
+	}
+}
+
+void Window::handleToolBarStateChanged(int identifier, const ToolBarState &state)
+{
+	if (m_addressBar && identifier == ToolBarsManager::AddressBar)
+	{
+		m_addressBar->setState(state);
 	}
 }
 
@@ -610,7 +614,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	if (!m_addressBar)
 	{
 		m_addressBar = new WindowToolBarWidget(ToolBarsManager::AddressBar, this);
-		m_addressBar->setVisible(m_addressBar->shouldBeVisible(m_mainWindow->isFullScreen()));
+		m_addressBar->setState(m_mainWindow->getToolBarState(ToolBarsManager::AddressBar));
 
 		layout()->addWidget(m_addressBar);
 	}

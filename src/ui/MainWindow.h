@@ -69,6 +69,7 @@ public:
 	QUrl getUrl() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	SessionMainWindow getSession() const;
+	ToolBarState getToolBarState(int identifier) const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
 	quint64 getIdentifier() const;
@@ -155,14 +156,15 @@ signals:
 	void activated(MainWindow *window);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
+	void toolBarStateChanged(int identifier, const ToolBarState &state);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);
 	void currentWindowChanged(quint64 identifier);
 	void closedWindowsAvailableChanged(bool available);
-	void areToolBarsVisibleChanged(bool areVisible);
 	void actionsStateChanged();
 	void actionsStateChanged(const QVector<int> &identifiers);
 	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
+	void fullScreenStateChanged(bool isFullScreen);
 
 friend class ToolBarDropZoneWidget;
 friend class ToolBarWidget;

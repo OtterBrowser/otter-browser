@@ -110,6 +110,7 @@ protected slots:
 	void handleIconChanged(const QIcon &icon);
 	void handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void handleGeometryChangeRequest(const QRect &geometry);
+	void handleToolBarStateChanged(int identifier, const ToolBarState &state);
 	void notifyRequestedCloseWindow();
 	void updateNavigationBar();
 

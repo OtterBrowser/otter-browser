@@ -81,6 +81,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	setUnifiedTitleAndToolBarOnMac(true);
 	updateShortcuts();
 
+	m_addressBarState.identifier = ToolBarsManager::AddressBar;
+
 	if (m_hasToolBars)
 	{
 		const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
@@ -854,6 +856,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 
 				emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
+				emit toolBarStateChanged(toolBarIdentifier, getToolBarState(toolBarIdentifier));
 			}
 
 			return;
@@ -2250,6 +2253,21 @@ SessionMainWindow MainWindow::getSession() const
 	return session;
 }
 
+ToolBarState MainWindow::getToolBarState(int identifier) const
+{
+	if (identifier == ToolBarsManager::AddressBar)
+	{
+		return m_addressBarState;
+	}
+
+	if (m_toolBars.contains(identifier))
+	{
+		return m_toolBars[identifier]->getState();
+	}
+
+	return ToolBarState();
+}
+
 QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area) const
 {
 	QVector<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly).toVector());
@@ -2403,12 +2421,13 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::WindowStateChange:
 			{
 				QWindowStateChangeEvent *stateChangeEvent(static_cast<QWindowStateChangeEvent*>(event));
+				const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
 
 				SessionsManager::markSessionAsModified();
 
 				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
-					if (isFullScreen())
+					if (isFullScreen)
 					{
 						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
 						{
@@ -2419,8 +2438,6 @@ bool MainWindow::event(QEvent *event)
 						{
 							m_statusBar->hide();
 						}
-
-						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
 					}
 					else
 					{
@@ -2433,8 +2450,6 @@ bool MainWindow::event(QEvent *event)
 						{
 							m_statusBar->show();
 						}
-
-						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
 					}
 
 					if (!windowState().testFlag(Qt::WindowFullScreen))
@@ -2449,7 +2464,6 @@ bool MainWindow::event(QEvent *event)
 					}
 
 					const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
-					const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
 
 					for (int i = 0; i < toolBars.count(); ++i)
 					{
@@ -2464,7 +2478,8 @@ bool MainWindow::event(QEvent *event)
 						}
 					}
 
-					emit areToolBarsVisibleChanged(!isFullScreen);
+					emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
+					emit fullScreenStateChanged(isFullScreen);
 				}
 
 				if (!windowState().testFlag(Qt::WindowMinimized))
