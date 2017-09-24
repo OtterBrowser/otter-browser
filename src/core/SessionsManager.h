@@ -30,6 +30,22 @@
 namespace Otter
 {
 
+struct ToolBarState
+{
+	enum ToolBarVisibility
+	{
+		UnspecifiedVisibilityToolBar = 0,
+		AlwaysVisibleToolBar,
+		AlwaysHiddenToolBar
+	};
+
+	Qt::ToolBarArea location = Qt::NoToolBarArea;
+	int identifier = -1;
+	int row = -1;
+	ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
+	ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
+};
+
 struct WindowState
 {
 	QRect geometry;
@@ -106,22 +122,6 @@ struct SessionWindow
 
 struct SessionMainWindow
 {
-	struct ToolBarState
-	{
-		enum ToolBarVisibility
-		{
-			UnspecifiedVisibilityToolBar = 0,
-			AlwaysVisibleToolBar,
-			AlwaysHiddenToolBar
-		};
-
-		Qt::ToolBarArea location = Qt::NoToolBarArea;
-		int identifier = -1;
-		int row = -1;
-		ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
-		ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
-	};
-
 	QVector<SessionWindow> windows;
 	QVector<ToolBarState> toolBars;
 	QByteArray geometry;

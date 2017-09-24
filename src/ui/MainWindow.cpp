@@ -110,6 +110,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 				}
 
 				addToolBar(area, toolBar);
+
+				m_toolBars[toolBarDefinitions.at(j).identifier] = toolBar;
 			}
 		}
 
@@ -139,7 +141,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(SessionsManager::getInstance(), &SessionsManager::requestedRemoveStoredUrl, this, &MainWindow::removeStoredUrl);
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &MainWindow::handleOptionChanged);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarAdded, this, &MainWindow::handleToolBarAdded);
-	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &MainWindow::handleToolBarModified);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarMoved, this, &MainWindow::handleToolBarMoved);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarRemoved, this, &MainWindow::handleToolBarRemoved);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &MainWindow::handleTransferStarted);
@@ -780,29 +781,88 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowToolBarAction:
 			if (parameters.contains(QLatin1String("toolBar")))
 			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt()));
-				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				const int toolBarIdentifier((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt());
 
-				ToolBarsManager::setToolBar(definition);
+				switch (toolBarIdentifier)
+				{
+					case ToolBarsManager::AddressBar:
+						if (isFullScreen())
+						{
+							if (m_addressBarState.fullScreenVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
+							{
+								m_addressBarState.fullScreenVisibility = ((ToolBarsManager::getToolBarDefinition(toolBarIdentifier).fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+							}
+							else
+							{
+								m_addressBarState.fullScreenVisibility = ((m_addressBarState.fullScreenVisibility == ToolBarState::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+							}
+						}
+						else
+						{
+							if (m_addressBarState.normalVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
+							{
+								m_addressBarState.normalVisibility = ((ToolBarsManager::getToolBarDefinition(toolBarIdentifier).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+							}
+							else
+							{
+								m_addressBarState.normalVisibility = ((m_addressBarState.normalVisibility == ToolBarState::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+							}
+						}
+
+						break;
+					case ToolBarsManager::MenuBar:
+						if (!m_menuBar || !m_menuBar->isVisible())
+						{
+							if (!m_menuBar)
+							{
+								m_menuBar = new MenuBarWidget(this);
+
+								setMenuBar(m_menuBar);
+							}
+
+							m_menuBar->show();
+						}
+						else
+						{
+							m_menuBar->hide();
+						}
+
+						break;
+					case ToolBarsManager::StatusBar:
+						if (m_statusBar)
+						{
+							m_statusBar->deleteLater();
+							m_statusBar = nullptr;
+
+							setStatusBar(nullptr);
+						}
+						else
+						{
+							m_statusBar = new StatusBarWidget(this);
+
+							setStatusBar(m_statusBar);
+						}
+
+						break;
+					default:
+						if (m_toolBars.contains(toolBarIdentifier))
+						{
+							m_toolBars[toolBarIdentifier]->setVisible(!m_toolBars[toolBarIdentifier]->isVisible());
+						}
+
+						break;
+				}
+
+				emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
 			}
 
 			return;
 		case ActionsManager::ShowMenuBarAction:
-			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
-				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
-
-				ToolBarsManager::setToolBar(definition);
-			}
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}});
 
 			return;
 		case ActionsManager::ShowTabBarAction:
-			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
-				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
-
-				ToolBarsManager::setToolBar(definition);
-			}
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::TabBar}});
 
 			return;
 		case ActionsManager::ShowSidebarAction:
@@ -838,12 +898,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ShowErrorConsoleAction:
-			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ErrorConsoleBar));
-				definition.normalVisibility = (parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
-
-				ToolBarsManager::setToolBar(definition);
-			}
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}});
 
 			return;
 		case ActionsManager::OpenPanelAction:
@@ -1639,61 +1694,10 @@ void MainWindow::handleToolBarAdded(int identifier)
 			toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
 		}
 	}
-}
 
-void MainWindow::handleToolBarModified(int identifier)
-{
-	switch (identifier)
-	{
-		case ToolBarsManager::MenuBar:
-			{
-				const bool showMenuBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+	m_toolBars[identifier] = toolBar;
 
-				if (showMenuBar)
-				{
-					if (!m_menuBar)
-					{
-						m_menuBar = new MenuBarWidget(this);
-
-						setMenuBar(m_menuBar);
-					}
-
-					m_menuBar->show();
-				}
-				else if (!showMenuBar && m_menuBar)
-				{
-					m_menuBar->hide();
-				}
-
-				emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction, ActionsManager::ShowMenuBarAction}));
-			}
-
-			break;
-		case ToolBarsManager::StatusBar:
-			{
-				const bool showStatusBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
-
-				if (m_statusBar && !showStatusBar)
-				{
-					m_statusBar->deleteLater();
-					m_statusBar = nullptr;
-
-					setStatusBar(nullptr);
-				}
-				else if (!m_statusBar && showStatusBar)
-				{
-					m_statusBar = new StatusBarWidget(this);
-
-					setStatusBar(m_statusBar);
-				}
-
-				emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
-			}
-
-			break;
-		default:
-			break;
-	}
+	emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
 }
 
 void MainWindow::handleToolBarMoved(int identifier)
@@ -1750,19 +1754,16 @@ void MainWindow::handleToolBarMoved(int identifier)
 
 void MainWindow::handleToolBarRemoved(int identifier)
 {
-	const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
-
-	for (int i = 0; i < toolBars.count(); ++i)
+	if (m_toolBars.contains(identifier))
 	{
-		if (toolBars.at(i)->getIdentifier() == identifier)
-		{
-			removeToolBarBreak(toolBars.at(i));
-			removeToolBar(toolBars.at(i));
+		ToolBarWidget *toolBar(m_toolBars.take(identifier));
 
-			toolBars.at(i)->deleteLater();
+		removeToolBarBreak(toolBar);
+		removeToolBar(toolBar);
 
-			break;
-		}
+		toolBar->deleteLater();
+
+		emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
 	}
 }
 
@@ -2154,11 +2155,52 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 		case ActionsManager::ShowToolBarAction:
 			if (parameters.contains(QLatin1String("toolBar")))
 			{
-				const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt()));
+				const int toolBarIdentifier((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt());
+				const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
 
 				state.text = definition.getTitle();
-				state.isChecked = (definition.normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
 				state.isEnabled = true;
+
+				switch (toolBarIdentifier)
+				{
+					case ToolBarsManager::AddressBar:
+						if (isFullScreen())
+						{
+							if (m_addressBarState.fullScreenVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
+							{
+								state.isChecked = (definition.fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+							}
+							else
+							{
+								state.isChecked = (m_addressBarState.fullScreenVisibility == ToolBarState::AlwaysVisibleToolBar);
+							}
+						}
+						else
+						{
+							if (m_addressBarState.normalVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
+							{
+								state.isChecked = (definition.normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+							}
+							else
+							{
+								state.isChecked = (m_addressBarState.normalVisibility == ToolBarState::AlwaysVisibleToolBar);
+							}
+						}
+
+						break;
+					case ToolBarsManager::MenuBar:
+						state.isChecked = (m_menuBar && m_menuBar->isVisible());
+
+						break;
+					case ToolBarsManager::StatusBar:
+						state.isChecked = (m_statusBar && m_statusBar->isVisible());
+
+						break;
+					default:
+						state.isChecked = (m_toolBars.contains(toolBarIdentifier) ? m_toolBars[toolBarIdentifier]->isVisible() : false);
+
+						break;
+				}
 			}
 
 			break;
@@ -2378,7 +2420,7 @@ bool MainWindow::event(QEvent *event)
 							m_statusBar->hide();
 						}
 
-						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction}));
+						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
 					}
 					else
 					{
@@ -2392,7 +2434,7 @@ bool MainWindow::event(QEvent *event)
 							m_statusBar->show();
 						}
 
-						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction}));
+						emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
 					}
 
 					if (!windowState().testFlag(Qt::WindowFullScreen))

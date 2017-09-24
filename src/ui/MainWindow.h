@@ -111,7 +111,6 @@ protected slots:
 	void handleWindowClose(Window *window);
 	void handleWindowIsPinnedChanged(bool isPinned);
 	void handleToolBarAdded(int identifier);
-	void handleToolBarModified(int identifier);
 	void handleToolBarMoved(int identifier);
 	void handleToolBarRemoved(int identifier);
 	void handleTransferStarted();
@@ -131,11 +130,13 @@ private:
 	QString m_currentBookmark;
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
+	ToolBarState m_addressBarState;
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;
 	QVector<quint64> m_tabSwitchingOrderList;
 	QHash<quint64, Window*> m_windows;
+	QMap<int, ToolBarWidget*> m_toolBars;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	quint64 m_identifier;
