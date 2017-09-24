@@ -164,7 +164,7 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), entries.at(i).entry->data(HistoryModel::TimeVisitedRole).toDateTime(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
+			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
 		}
 	}
 
@@ -179,7 +179,7 @@ void AddressCompletionModel::updateModel()
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), entries.at(i).entry->data(HistoryModel::TimeVisitedRole).toDateTime(), TypedInHistoryType));
+			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), TypedInHistoryType));
 		}
 	}
 

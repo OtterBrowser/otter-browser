@@ -33,6 +33,11 @@ class HistoryEntryItem : public QStandardItem
 public:
 	void setData(const QVariant &value, int role) override;
 	void setItemData(const QVariant &value, int role);
+	QString getTitle() const;
+	QUrl getUrl() const;
+	QDateTime getTimeVisited() const;
+	QIcon getIcon() const;
+	quint64 getIdentifier() const;
 
 protected:
 	explicit HistoryEntryItem();

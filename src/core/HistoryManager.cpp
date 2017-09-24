@@ -366,7 +366,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		getBrowsingHistoryModel();
 	}
 
-	const quint64 identifier(m_browsingHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime())->data(HistoryModel::IdentifierRole).toULongLong());
+	const quint64 identifier(m_browsingHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime())->getIdentifier());
 
 	if (isTypedIn)
 	{

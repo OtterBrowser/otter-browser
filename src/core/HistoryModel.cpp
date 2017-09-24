@@ -22,6 +22,7 @@
 #include "Console.h"
 #include "JsonSettings.h"
 #include "SessionsManager.h"
+#include "ThemesManager.h"
 #include "Utils.h"
 
 #include <QtCore/QFile>
@@ -50,6 +51,31 @@ void HistoryEntryItem::setData(const QVariant &value, int role)
 void HistoryEntryItem::setItemData(const QVariant &value, int role)
 {
 	QStandardItem::setData(value, role);
+}
+
+QString HistoryEntryItem::getTitle() const
+{
+	return (data(HistoryModel::TitleRole).isNull() ? QCoreApplication::translate("Otter::HistoryEntryItem", "(Untitled)") : data(HistoryModel::TitleRole).toString());
+}
+
+QUrl HistoryEntryItem::getUrl() const
+{
+	return data(HistoryModel::UrlRole).toUrl();
+}
+
+QDateTime HistoryEntryItem::getTimeVisited() const
+{
+	return data(HistoryModel::TimeVisitedRole).toDateTime();
+}
+
+QIcon HistoryEntryItem::getIcon() const
+{
+	return (data(Qt::DecorationRole).isNull() ? ThemesManager::createIcon(QLatin1String("text-html")) : data(Qt::DecorationRole).value<QIcon>());
+}
+
+quint64 HistoryEntryItem::getIdentifier() const
+{
+	return data(HistoryModel::IdentifierRole).toLongLong();
 }
 
 HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *parent) : QStandardItemModel(parent),
@@ -137,7 +163,7 @@ void HistoryModel::removeEntry(quint64 identifier)
 		return;
 	}
 
-	const QUrl url(Utils::normalizeUrl(entry->data(UrlRole).toUrl()));
+	const QUrl url(Utils::normalizeUrl(entry->getUrl()));
 
 	if (m_urls.contains(url))
 	{
@@ -173,7 +199,7 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 		{
 			for (int i = 0; i < m_urls[normalizedUrl].count(); ++i)
 			{
-				removeEntry(m_urls[normalizedUrl][i]->data(IdentifierRole).toULongLong());
+				removeEntry(m_urls[normalizedUrl][i]->getIdentifier());
 			}
 		}
 	}
