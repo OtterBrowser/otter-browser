@@ -44,6 +44,11 @@ struct ToolBarState
 	int row = -1;
 	ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
 	ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
+
+	bool isValid() const
+	{
+		return (identifier >= 0);
+	}
 };
 
 struct WindowState

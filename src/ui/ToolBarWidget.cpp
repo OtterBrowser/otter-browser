@@ -1148,6 +1148,13 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	}
 }
 
+void ToolBarWidget::setState(const ToolBarState &state)
+{
+	m_state = state;
+
+	reload();
+}
+
 void ToolBarWidget::setToolBarLocked(bool locked)
 {
 	setMovable(!locked && m_identifier != ToolBarsManager::MenuBar && m_identifier != ToolBarsManager::ProgressBar);
@@ -1198,6 +1205,11 @@ ToolBarsManager::ToolBarDefinition ToolBarWidget::getDefinition() const
 	return ToolBarsManager::getToolBarDefinition(m_identifier);
 }
 
+ToolBarState ToolBarWidget::getState() const
+{
+	return m_state;
+}
+
 Qt::ToolBarArea ToolBarWidget::getArea()
 {
 	return (m_mainWindow ? m_mainWindow->toolBarArea(this) : Qt::TopToolBarArea);
@@ -1238,6 +1250,19 @@ bool ToolBarWidget::canDrop(QDropEvent *event) const
 bool ToolBarWidget::shouldBeVisible(bool isFullScreen) const
 {
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+
+	if (m_state.isValid())
+	{
+		if (isFullScreen && m_state.fullScreenVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
+		{
+			return (m_state.fullScreenVisibility == ToolBarState::AlwaysVisibleToolBar);
+		}
+
+		if (!isFullScreen && m_state.normalVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
+		{
+			return (definition.hasToggle || m_state.normalVisibility == ToolBarState::AlwaysVisibleToolBar);
+		}
+	}
 
 	return ((!isFullScreen && definition.hasToggle) || ((isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility) == ToolBarsManager::AlwaysVisibleToolBar));
 }

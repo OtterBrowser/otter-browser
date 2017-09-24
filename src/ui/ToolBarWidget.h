@@ -26,6 +26,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
 
+#include "../core/SessionsManager.h"
 #include "../core/ToolBarsManager.h"
 
 namespace Otter
@@ -71,8 +72,10 @@ public:
 	static QMenu* createCustomizationMenu(int identifier, QVector<QAction*> actions = {}, QWidget *parent = nullptr);
 	void reload();
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
+	void setState(const ToolBarState &state);
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
+	ToolBarState getState() const;
 	Qt::ToolBarArea getArea();
 	Qt::ToolButtonStyle getButtonStyle() const;
 	int getIdentifier() const;
@@ -125,6 +128,7 @@ private:
 	BookmarksItem *m_dropBookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
+	ToolBarState m_state;
 	int m_reloadTimer;
 	int m_identifier;
 	int m_dropIndex;
