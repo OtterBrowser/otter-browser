@@ -75,7 +75,7 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		return;
 	}
 
-	QString title(m_bookmark->getTitle().isEmpty() ? tr("(Untitled)") : m_bookmark->getTitle());
+	QString title(m_bookmark->getTitle());
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->getType()));
 
 	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)

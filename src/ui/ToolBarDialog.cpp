@@ -407,7 +407,7 @@ void ToolBarDialog::editEntry()
 			if (bookmark)
 			{
 				iconEntry.widget->setDefaultValue(bookmark->getIcon());
-				textEntry.widget->setDefaultValue(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->getTitle() : tr("(Untitled)"));
+				textEntry.widget->setDefaultValue(bookmark->getTitle());
 			}
 		}
 		else if (identifier.endsWith(QLatin1String("Action")))
@@ -632,7 +632,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		{
 			const QIcon icon(bookmark->getIcon());
 
-			item->setText(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->getTitle() : tr("(Untitled)"));
+			item->setText(bookmark->getTitle());
 
 			if (!icon.isNull())
 			{
