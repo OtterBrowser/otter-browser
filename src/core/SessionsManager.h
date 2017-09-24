@@ -108,10 +108,18 @@ struct SessionMainWindow
 {
 	struct ToolBarState
 	{
+		enum ToolBarVisibility
+		{
+			UnspecifiedVisibilityToolBar = 0,
+			AlwaysVisibleToolBar,
+			AlwaysHiddenToolBar
+		};
+
 		Qt::ToolBarArea location = Qt::NoToolBarArea;
 		int identifier = -1;
 		int row = -1;
-		bool isVisible = false;
+		ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
+		ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
 	};
 
 	QVector<SessionWindow> windows;
