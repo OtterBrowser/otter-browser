@@ -75,7 +75,7 @@ QIcon HistoryEntryItem::getIcon() const
 
 quint64 HistoryEntryItem::getIdentifier() const
 {
-	return data(HistoryModel::IdentifierRole).toLongLong();
+	return data(HistoryModel::IdentifierRole).toULongLong();
 }
 
 HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *parent) : QStandardItemModel(parent),
