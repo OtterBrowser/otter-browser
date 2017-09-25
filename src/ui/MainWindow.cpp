@@ -855,26 +855,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ShowSidebarAction:
-			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
-
-				if (definition.isValid())
-				{
-					const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-					ToolBarsManager::ToolBarVisibility visibility(definition.getVisibility(mode));
-					const bool fallback(!parameters.value(QLatin1String("panel")).toString().isEmpty() || !(visibility == ToolBarsManager::AlwaysVisibleToolBar));
-					const bool isChecked(parameters.contains(QLatin1String("sidebar")) ? parameters.value(QLatin1String("isChecked"), fallback).toBool() : fallback);
-
-					definition.setVisibility(mode, (isChecked ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar));
-
-					if (parameters.contains(QLatin1String("panel")))
-					{
-						definition.currentPanel = parameters.value(QLatin1String("panel")).toString();
-					}
-
-					ToolBarsManager::setToolBar(definition);
-				}
-			}
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::SideBar}});
 
 			return;
 		case ActionsManager::ShowErrorConsoleAction:
@@ -883,13 +864,16 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::ShowPanelAction:
 			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+				const int toolBarIdentifier(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt());
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
 				definition.currentPanel = parameters.value(QLatin1String("panel")).toString();
 
 				if (definition.isValid())
 				{
 					ToolBarsManager::setToolBar(definition);
 				}
+
+				triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBarIdentifier}, {QLatin1String("isChecked"), true}});
 			}
 
 			return;
@@ -1766,7 +1750,7 @@ void MainWindow::handleTransferStarted()
 	}
 	else if (action == QLatin1String("openPanel"))
 	{
-		triggerAction(ActionsManager::ShowSidebarAction, {{QLatin1String("isChecked"), true}, {QLatin1String("sidebar"), ToolBarsManager::SideBar}, {QLatin1String("panel"), QLatin1String("transfers")}});
+		triggerAction(ActionsManager::ShowPanelAction, {{QLatin1String("sidebar"), ToolBarsManager::SideBar}, {QLatin1String("panel"), QLatin1String("transfers")}});
 	}
 }
 
