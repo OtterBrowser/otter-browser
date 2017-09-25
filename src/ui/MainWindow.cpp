@@ -244,11 +244,18 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 		restoreGeometry(session.geometry);
 	}
 
-	QTimer::singleShot(0, [=]()
+	if (parameters.value(QLatin1String("noTabs"), false).toBool())
 	{
-		restoreSession(session);
-		updateWindowTitle();
-	});
+		m_isRestored = true;
+	}
+	else
+	{
+		QTimer::singleShot(0, [=]()
+		{
+			restoreSession(session);
+			updateWindowTitle();
+		});
+	}
 
 	connect(m_workspace, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
 }
@@ -2062,7 +2069,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
-		QVariantMap mainWindowParameters({{QLatin1String("hints"), QVariant(hints)}});
+		QVariantMap mainWindowParameters({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}});
 
 		if (parameters.contains(QLatin1String("noToolBars")))
 		{
@@ -2072,8 +2079,6 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 		MainWindow *mainWindow(Application::createWindow(mainWindowParameters));
 
 		window = mainWindow->openWindow(widget);
-
-		mainWindow->triggerAction(ActionsManager::CloseOtherTabsAction);
 	}
 	else
 	{
