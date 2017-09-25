@@ -84,9 +84,19 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	updateShortcuts();
 
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
+	const bool areToolBarsEnabled(!parameters.value(QLatin1String("noToolBars"), false).toBool());
 
-	if (session.hasToolBarsState || parameters.value(QLatin1String("noToolBars"), false).toBool())
+	if (session.hasToolBarsState || !areToolBarsEnabled)
 	{
+		if (!areToolBarsEnabled)
+		{
+			m_menuBarState.normalVisibility = ToolBarState::AlwaysHiddenToolBar;
+			m_menuBarState.fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
+
+			m_statusBarState.normalVisibility = ToolBarState::AlwaysHiddenToolBar;
+			m_statusBarState.fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
+		}
+
 		if (!session.toolBars.isEmpty())
 		{
 			QMap<Qt::ToolBarArea, QVector<ToolBarState> > allToolBarDefinitions;
@@ -1383,7 +1393,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	emit windowAdded(window->getIdentifier());
 }
 
-void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
+void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, const QVariantMap &parameters)
 {
 	Window *newWindow(nullptr);
 	SessionsManager::OpenHints hints(SessionsManager::DefaultOpen);
@@ -1397,11 +1407,11 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, int index)
 
 	if (mainWindow)
 	{
-		newWindow = mainWindow->openWindow(window->getContentsWidget(), hints, index);
+		newWindow = mainWindow->openWindow(window->getContentsWidget(), hints, parameters);
 	}
 	else
 	{
-		newWindow = openWindow(window->getContentsWidget(), (hints | SessionsManager::NewWindowOpen));
+		newWindow = openWindow(window->getContentsWidget(), (hints | SessionsManager::NewWindowOpen), parameters);
 	}
 
 	if (newWindow && window->isPinned())
@@ -2036,7 +2046,7 @@ Window* MainWindow::getWindowByIdentifier(quint64 identifier) const
 	return (m_windows.contains(identifier) ? m_windows[identifier] : nullptr);
 }
 
-Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints, int index)
+Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters)
 {
 	if (!widget)
 	{
@@ -2052,7 +2062,14 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
-		MainWindow *mainWindow(Application::createWindow({{QLatin1String("hints"), QVariant(hints)}}));
+		QVariantMap mainWindowParameters({{QLatin1String("hints"), QVariant(hints)}});
+
+		if (parameters.contains(QLatin1String("noToolBars")))
+		{
+			mainWindowParameters[QLatin1String("noToolBars")] = parameters[QLatin1String("noToolBars")];
+		}
+
+		MainWindow *mainWindow(Application::createWindow(mainWindowParameters));
 
 		window = mainWindow->openWindow(widget);
 
@@ -2062,7 +2079,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 	{
 		window = new Window({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("size"), ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? m_workspace->size() : QSize(800, 600))}}, widget, this);
 
-		addWindow(window, hints, index);
+		addWindow(window, hints, parameters.value(QLatin1String("index"), -1).toInt());
 
 		if (!hints.testFlag(SessionsManager::BackgroundOpen))
 		{

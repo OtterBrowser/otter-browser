@@ -962,7 +962,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 
 						if (window)
 						{
-							mainWindows.at(i)->moveWindow(window, mainWindow, dropIndex);
+							mainWindows.at(i)->moveWindow(window, mainWindow, {{QLatin1String("index"), dropIndex}});
 
 							break;
 						}

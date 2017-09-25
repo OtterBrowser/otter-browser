@@ -57,7 +57,7 @@ public:
 
 	void restoreSession(const SessionMainWindow &session);
 	void restoreClosedWindow(int index = 0);
-	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
+	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, const QVariantMap &parameters = {});
 	void setActiveEditorExecutor(ActionExecutor::Object executor);
 	static MainWindow* findMainWindow(QObject *parent);
 	TabBarWidget* getTabBar() const;
@@ -119,7 +119,7 @@ protected slots:
 	void setStatusMessage(const QString &message);
 	void updateWindowTitle();
 	void updateShortcuts();
-	Window* openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1);
+	Window* openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, const QVariantMap &parameters = {});
 
 private:
 	TabSwitcherWidget *m_tabSwitcher;

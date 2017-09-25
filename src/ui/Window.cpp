@@ -161,7 +161,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::DetachTabAction:
 			if (m_mainWindow->getWindowCount() > 1)
 			{
-				m_mainWindow->moveWindow(this);
+				m_mainWindow->moveWindow(this, nullptr, parameters);
 			}
 
 			break;
