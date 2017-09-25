@@ -152,6 +152,7 @@ protected:
 	explicit ToolBarsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
+	static void ensureInitialized();
 	static QJsonValue encodeEntry(const ToolBarDefinition::Entry &definition);
 	static ToolBarDefinition::Entry decodeEntry(const QJsonValue &value);
 	static QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
@@ -168,6 +169,7 @@ private:
 	static QVector<ToolBarDefinition> m_definitions;
 	static int m_toolBarIdentifierEnumerator;
 	static bool m_areToolBarsLocked;
+	static bool m_isLoading;
 
 signals:
 	void toolBarAdded(int identifier);
