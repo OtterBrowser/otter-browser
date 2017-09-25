@@ -81,6 +81,7 @@ public:
 	int getIdentifier() const;
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
+	static bool calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const ToolBarState &state, ToolBarsManager::ToolBarsMode mode);
 	bool canDrop(QDropEvent *event) const;
 	bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
 	bool event(QEvent *event) override;

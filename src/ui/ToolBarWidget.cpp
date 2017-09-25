@@ -849,12 +849,12 @@ void ToolBarWidget::loadBookmarks()
 
 void ToolBarWidget::toggleVisibility()
 {
-
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-	ToolBarsManager::ToolBarDefinition definition(getDefinition());
-	definition.setVisibility(mode, ((definition.getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarsManager::AlwaysHiddenToolBar : ToolBarsManager::AlwaysVisibleToolBar));
+	ToolBarState state(m_state);
+	state.identifier = m_identifier;
+	state.setVisibility(mode, (calculateShouldBeVisible(getDefinition(), m_state, mode) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
 
-	ToolBarsManager::setToolBar(definition);
+	setState(state);
 }
 
 void ToolBarWidget::notifyWindowChanged(quint64 identifier)
@@ -914,7 +914,14 @@ void ToolBarWidget::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem
 
 void ToolBarWidget::handleFullScreenStateChanged(bool isFullScreen)
 {
-	setVisible(m_identifier == ToolBarsManager::ProgressBar || getDefinition().hasToggle || shouldBeVisible(isFullScreen ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+	if (getDefinition().hasToggle)
+	{
+		reload();
+	}
+	else
+	{
+		setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+	}
 }
 
 void ToolBarWidget::updateToggleGeometry()
@@ -984,7 +991,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 	const bool isHorizontal(definition.location != Qt::LeftToolBarArea && definition.location != Qt::RightToolBarArea);
 
-	m_isCollapsed = (definition.hasToggle && (definition.getVisibility(mode) != ToolBarsManager::AlwaysVisibleToolBar));
+	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
 	setVisible(m_identifier == ToolBarsManager::ProgressBar || definition.hasToggle || shouldBeVisible(mode));
 	setOrientation(isHorizontal ? Qt::Horizontal : Qt::Vertical);
@@ -1153,7 +1160,14 @@ void ToolBarWidget::setState(const ToolBarState &state)
 {
 	m_state = state;
 
-	setVisible(m_identifier == ToolBarsManager::ProgressBar || getDefinition().hasToggle || shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+	if (getDefinition().hasToggle)
+	{
+		reload();
+	}
+	else
+	{
+		setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+	}
 }
 
 void ToolBarWidget::setToolBarLocked(bool locked)
@@ -1243,6 +1257,18 @@ int ToolBarWidget::getMaximumButtonSize() const
 	return getDefinition().maximumButtonSize;
 }
 
+bool ToolBarWidget::calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const ToolBarState &state, ToolBarsManager::ToolBarsMode mode)
+{
+	const ToolBarState::ToolBarVisibility visibility(state.getVisibility(mode));
+
+	if (visibility != ToolBarState::UnspecifiedVisibilityToolBar)
+	{
+		return (visibility == ToolBarState::AlwaysVisibleToolBar);
+	}
+
+	return (definition.getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
+}
+
 bool ToolBarWidget::canDrop(QDropEvent *event) const
 {
 	return (m_bookmark && event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()));
@@ -1252,17 +1278,7 @@ bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 {
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
 
-	if (m_state.isValid())
-	{
-		const ToolBarState::ToolBarVisibility visibility(m_state.getVisibility(mode));
-
-		if (visibility != ToolBarState::UnspecifiedVisibilityToolBar)
-		{
-			return (visibility == ToolBarState::AlwaysVisibleToolBar);
-		}
-	}
-
-	return ((mode ==ToolBarsManager::NormalMode && definition.hasToggle) || (definition.getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar));
+	return ((mode == ToolBarsManager::NormalMode && definition.hasToggle) || calculateShouldBeVisible(definition, m_state, mode));
 }
 
 bool ToolBarWidget::event(QEvent *event)
