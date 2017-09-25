@@ -784,27 +784,16 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			if (parameters.contains(QLatin1String("toolBar")))
 			{
 				const int toolBarIdentifier((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt());
+				const bool isChecked(parameters.value(QLatin1String("isChecked"), !getActionState(toolBarIdentifier, parameters).isChecked).toBool());
 
 				switch (toolBarIdentifier)
 				{
 					case ToolBarsManager::AddressBar:
-						{
-							const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-							const ToolBarState::ToolBarVisibility visibility(m_addressBarState.getVisibility(mode));
-
-							if (visibility == ToolBarState::UnspecifiedVisibilityToolBar)
-							{
-								m_addressBarState.setVisibility(mode, ((ToolBarsManager::getToolBarDefinition(toolBarIdentifier).fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
-							}
-							else
-							{
-								m_addressBarState.setVisibility(mode, ((visibility == ToolBarState::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
-							}
-						}
+						m_addressBarState.setVisibility((windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode), (isChecked ? ToolBarState::AlwaysVisibleToolBar : ToolBarState::AlwaysVisibleToolBar));
 
 						break;
 					case ToolBarsManager::MenuBar:
-						if (!m_menuBar || !m_menuBar->isVisible())
+						if (isChecked && (!m_menuBar || !m_menuBar->isVisible()))
 						{
 							if (!m_menuBar)
 							{
@@ -815,32 +804,38 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 							m_menuBar->show();
 						}
-						else
+						else if (!isChecked && (m_menuBar && m_menuBar->isVisible()))
 						{
 							m_menuBar->hide();
 						}
 
 						break;
 					case ToolBarsManager::StatusBar:
-						if (m_statusBar)
+						if (isChecked && !m_statusBar)
+						{
+							m_statusBar = new StatusBarWidget(this);
+
+							setStatusBar(m_statusBar);
+						}
+						else if (!isChecked && m_statusBar)
 						{
 							m_statusBar->deleteLater();
 							m_statusBar = nullptr;
 
 							setStatusBar(nullptr);
 						}
-						else
-						{
-							m_statusBar = new StatusBarWidget(this);
-
-							setStatusBar(m_statusBar);
-						}
 
 						break;
 					default:
 						if (m_toolBars.contains(toolBarIdentifier))
 						{
-							m_toolBars[toolBarIdentifier]->setVisible(!m_toolBars[toolBarIdentifier]->isVisible());
+							ToolBarWidget *toolBar(m_toolBars[toolBarIdentifier]);
+							ToolBarState state(toolBar->getState());
+
+							state.identifier = toolBarIdentifier;
+							state.setVisibility((windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode), (isChecked ? ToolBarState::AlwaysVisibleToolBar : ToolBarState::AlwaysHiddenToolBar));
+
+							toolBar->setState(state);
 						}
 
 						break;
@@ -2149,19 +2144,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				switch (toolBarIdentifier)
 				{
 					case ToolBarsManager::AddressBar:
-						{
-							const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-							const ToolBarState::ToolBarVisibility visibility(m_addressBarState.getVisibility(mode));
-
-							if (visibility == ToolBarState::UnspecifiedVisibilityToolBar)
-							{
-								state.isChecked = (definition.getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
-							}
-							else
-							{
-								state.isChecked = (visibility == ToolBarState::AlwaysVisibleToolBar);
-							}
-						}
+						state.isChecked = ToolBarWidget::calculateShouldBeVisible(definition, m_addressBarState, (windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 
 						break;
 					case ToolBarsManager::MenuBar:
@@ -2173,7 +2156,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 						break;
 					default:
-						state.isChecked = (m_toolBars.contains(toolBarIdentifier) ? m_toolBars[toolBarIdentifier]->isVisible() : false);
+						state.isChecked = ToolBarWidget::calculateShouldBeVisible(definition, (m_toolBars.contains(toolBarIdentifier) ? m_toolBars[toolBarIdentifier]->getState() : ToolBarState()), (windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 
 						break;
 				}
