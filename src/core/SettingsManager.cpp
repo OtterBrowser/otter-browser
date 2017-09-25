@@ -133,6 +133,8 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(History_BrowsingLimitAmountWindowOption, IntegerType, 50);
 	registerOption(History_BrowsingLimitPeriodOption, IntegerType, 30);
 	registerOption(History_ClearOnCloseOption, ListType, QStringList());
+	registerOption(History_ClosedTabsLimitAmountOption, IntegerType, 50);
+	registerOption(History_ClosedWindowsLimitAmountOption, IntegerType, 10);
 	registerOption(History_DownloadsLimitPeriodOption, IntegerType, 7);
 	registerOption(History_ExpandBranchesOption, EnumerationType, QLatin1String("first"), QStringList({QLatin1String("first"), QLatin1String("all"), QLatin1String("none")}));
 	registerOption(History_ManualClearOptionsOption, ListType, QStringList({QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")}));

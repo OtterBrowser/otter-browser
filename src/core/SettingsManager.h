@@ -113,6 +113,8 @@ public:
 		History_BrowsingLimitAmountWindowOption,
 		History_BrowsingLimitPeriodOption,
 		History_ClearOnCloseOption,
+		History_ClosedTabsLimitAmountOption,
+		History_ClosedWindowsLimitAmountOption,
 		History_DownloadsLimitPeriodOption,
 		History_ExpandBranchesOption,
 		History_ManualClearOptionsOption,

@@ -1501,6 +1501,7 @@ void MainWindow::handleWindowClose(Window *window)
 		{
 			const Window *nextWindow(getWindowByIndex(index + 1));
 			const Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
+			const int limit(SettingsManager::getOption(SettingsManager::History_ClosedTabsLimitAmountOption).toInt());
 			ClosedWindow closedWindow;
 			closedWindow.window = window->getSession();
 			closedWindow.icon = window->getIcon();
@@ -1514,6 +1515,12 @@ void MainWindow::handleWindowClose(Window *window)
 			}
 
 			m_closedWindows.prepend(closedWindow);
+
+			if (m_closedWindows.count() > limit)
+			{
+				m_closedWindows.resize(limit);
+				m_closedWindows.squeeze();
+			}
 
 			emit closedWindowsAvailableChanged(true);
 		}
