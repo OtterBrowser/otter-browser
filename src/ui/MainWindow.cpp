@@ -788,26 +788,17 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				switch (toolBarIdentifier)
 				{
 					case ToolBarsManager::AddressBar:
-						if (isFullScreen())
 						{
-							if (m_addressBarState.fullScreenVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
+							const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
+							const ToolBarState::ToolBarVisibility visibility(m_addressBarState.getVisibility(mode));
+
+							if (visibility == ToolBarState::UnspecifiedVisibilityToolBar)
 							{
-								m_addressBarState.fullScreenVisibility = ((ToolBarsManager::getToolBarDefinition(toolBarIdentifier).fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+								m_addressBarState.setVisibility(mode, ((ToolBarsManager::getToolBarDefinition(toolBarIdentifier).fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
 							}
 							else
 							{
-								m_addressBarState.fullScreenVisibility = ((m_addressBarState.fullScreenVisibility == ToolBarState::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
-							}
-						}
-						else
-						{
-							if (m_addressBarState.normalVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
-							{
-								m_addressBarState.normalVisibility = ((ToolBarsManager::getToolBarDefinition(toolBarIdentifier).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
-							}
-							else
-							{
-								m_addressBarState.normalVisibility = ((m_addressBarState.normalVisibility == ToolBarState::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+								m_addressBarState.setVisibility(mode, ((visibility == ToolBarState::AlwaysVisibleToolBar) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
 							}
 						}
 
@@ -2158,26 +2149,17 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				switch (toolBarIdentifier)
 				{
 					case ToolBarsManager::AddressBar:
-						if (isFullScreen())
 						{
-							if (m_addressBarState.fullScreenVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
+							const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
+							const ToolBarState::ToolBarVisibility visibility(m_addressBarState.getVisibility(mode));
+
+							if (visibility == ToolBarState::UnspecifiedVisibilityToolBar)
 							{
-								state.isChecked = (definition.fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+								state.isChecked = (definition.getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
 							}
 							else
 							{
-								state.isChecked = (m_addressBarState.fullScreenVisibility == ToolBarState::AlwaysVisibleToolBar);
-							}
-						}
-						else
-						{
-							if (m_addressBarState.normalVisibility == ToolBarState::UnspecifiedVisibilityToolBar)
-							{
-								state.isChecked = (definition.normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
-							}
-							else
-							{
-								state.isChecked = (m_addressBarState.normalVisibility == ToolBarState::AlwaysVisibleToolBar);
+								state.isChecked = (visibility == ToolBarState::AlwaysVisibleToolBar);
 							}
 						}
 

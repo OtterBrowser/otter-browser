@@ -1254,14 +1254,11 @@ bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 
 	if (m_state.isValid())
 	{
-		if (mode == ToolBarsManager::FullScreenMode && m_state.fullScreenVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
-		{
-			return (m_state.fullScreenVisibility == ToolBarState::AlwaysVisibleToolBar);
-		}
+		const ToolBarState::ToolBarVisibility visibility(m_state.getVisibility(mode));
 
-		if (mode == ToolBarsManager::NormalMode && m_state.normalVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
+		if (visibility != ToolBarState::UnspecifiedVisibilityToolBar)
 		{
-			return (definition.hasToggle || m_state.normalVisibility == ToolBarState::AlwaysVisibleToolBar);
+			return (visibility == ToolBarState::AlwaysVisibleToolBar);
 		}
 	}
 
