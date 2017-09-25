@@ -20,9 +20,9 @@
 #ifndef OTTER_TOOLBARSMANAGER_H
 #define OTTER_TOOLBARSMANAGER_H
 
-#include "ActionsManager.h"
-
 #include <QtCore/QCoreApplication>
+#include <QtCore/QVariantMap>
+#include <QtCore/QVector>
 
 namespace Otter
 {
