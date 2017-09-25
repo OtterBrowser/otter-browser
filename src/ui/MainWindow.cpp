@@ -770,14 +770,21 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ShowTabSwitcherAction:
-			if (!m_tabSwitcher)
+			if (m_tabSwitcher && m_tabSwitcher->isVisible())
 			{
-				m_tabSwitcher = new TabSwitcherWidget(this);
+				m_tabSwitcher->hide();
 			}
+			else
+			{
+				if (!m_tabSwitcher)
+				{
+					m_tabSwitcher = new TabSwitcherWidget(this);
+				}
 
-			m_tabSwitcher->raise();
-			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show(TabSwitcherWidget::ActionReason);
+				m_tabSwitcher->raise();
+				m_tabSwitcher->resize(size());
+				m_tabSwitcher->show(TabSwitcherWidget::ActionReason);
+			}
 
 			return;
 		case ActionsManager::ShowToolBarAction:
