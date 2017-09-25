@@ -881,6 +881,18 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}});
 
 			return;
+		case ActionsManager::ShowPanelAction:
+			{
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+				definition.currentPanel = parameters.value(QLatin1String("panel")).toString();
+
+				if (definition.isValid())
+				{
+					ToolBarsManager::setToolBar(definition);
+				}
+			}
+
+			return;
 		case ActionsManager::OpenPanelAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
@@ -888,18 +900,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				if (definition.isValid() && !definition.currentPanel.isEmpty())
 				{
 					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}});
-				}
-			}
-
-			return;
-		case ActionsManager::ClosePanelAction:
-			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
-				definition.currentPanel = QString();
-
-				if (definition.isValid())
-				{
-					ToolBarsManager::setToolBar(definition);
 				}
 			}
 
@@ -2177,6 +2177,31 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::ShowErrorConsoleAction:
 			state = getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}});
+
+			break;
+		case ActionsManager::ShowPanelAction:
+			{
+				const QString panel(parameters.value(QLatin1String("panel")).toString());
+
+				if (panel.isEmpty())
+				{
+					state.icon = ThemesManager::createIcon(QLatin1String("window-close"));
+					state.text = QT_TRANSLATE_NOOP("actions", "Close Panel");
+				}
+				else
+				{
+					state.icon = SidebarWidget::getPanelIcon(panel);
+					state.text = SidebarWidget::getPanelTitle(panel);
+				}
+			}
+
+			break;
+		case ActionsManager::OpenPanelAction:
+			{
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+
+				state.isEnabled = (definition.isValid() && !definition.currentPanel.isEmpty());
+			}
 
 			break;
 		default:

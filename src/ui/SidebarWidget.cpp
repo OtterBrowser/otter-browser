@@ -59,7 +59,7 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	toolbar->addWidget(spacer);
-	toolbar->addWidget(new ActionWidget(ActionsManager::ClosePanelAction, nullptr, definition, this));
+	toolbar->addWidget(new ActionWidget(ActionsManager::ShowPanelAction, nullptr, definition, this));
 
 	m_ui->panelLayout->addWidget(toolbar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
