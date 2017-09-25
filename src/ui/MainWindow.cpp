@@ -874,21 +874,12 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (definition.isValid())
 				{
-					const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
-					ToolBarsManager::ToolBarVisibility visibility(isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility);
+					const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
+					ToolBarsManager::ToolBarVisibility visibility(definition.getVisibility(mode));
 					const bool fallback(!parameters.value(QLatin1String("panel")).toString().isEmpty() || !(visibility == ToolBarsManager::AlwaysVisibleToolBar));
 					const bool isChecked(parameters.contains(QLatin1String("sidebar")) ? parameters.value(QLatin1String("isChecked"), fallback).toBool() : fallback);
 
-					visibility = (isChecked ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
-
-					if (isFullScreen)
-					{
-						definition.fullScreenVisibility = visibility;
-					}
-					else
-					{
-						definition.normalVisibility = visibility;
-					}
+					definition.setVisibility(mode, (isChecked ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar));
 
 					if (parameters.contains(QLatin1String("panel")))
 					{
@@ -1683,7 +1674,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 			return (first->getDefinition().row > second->getDefinition().row);
 		});
 
-		const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
+		const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 
 		for (int i = 0; i < toolBars.count(); ++i)
 		{
@@ -1694,7 +1685,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 			addToolBar(definition.location, toolBars.at(i));
 
-			toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
+			toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(mode));
 		}
 	}
 
@@ -1740,7 +1731,7 @@ void MainWindow::handleToolBarMoved(int identifier)
 		return (first->getDefinition().row > second->getDefinition().row);
 	});
 
-	const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
+	const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
@@ -1751,7 +1742,7 @@ void MainWindow::handleToolBarMoved(int identifier)
 
 		addToolBar(definition.location, toolBars.at(i));
 
-		toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
+		toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(mode));
 	}
 }
 
@@ -2208,19 +2199,19 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::ShowMenuBarAction:
-			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+			state = getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}});
 
 			break;
 		case ActionsManager::ShowTabBarAction:
-			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+			state = getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::TabBar}});
 
 			break;
 		case ActionsManager::ShowSidebarAction:
-			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::SideBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+			state = getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::SideBar}});
 
 			break;
 		case ActionsManager::ShowErrorConsoleAction:
-			state.isChecked = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::ErrorConsoleBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+			state = getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}});
 
 			break;
 		default:
@@ -2421,35 +2412,21 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::WindowStateChange:
 			{
 				QWindowStateChangeEvent *stateChangeEvent(static_cast<QWindowStateChangeEvent*>(event));
-				const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
 
 				SessionsManager::markSessionAsModified();
 
 				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
-					if (isFullScreen)
-					{
-						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
-						{
-							m_menuBar->hide();
-						}
+					const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 
-						if (m_statusBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
-						{
-							m_statusBar->hide();
-						}
+					if (m_menuBar)
+					{
+						m_menuBar->setVisible(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
 					}
-					else
-					{
-						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
-						{
-							m_menuBar->show();
-						}
 
-						if (m_statusBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
-						{
-							m_statusBar->show();
-						}
+					if (m_statusBar)
+					{
+						m_statusBar->setVisible(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);
 					}
 
 					if (!windowState().testFlag(Qt::WindowFullScreen))
@@ -2467,7 +2444,7 @@ bool MainWindow::event(QEvent *event)
 
 					for (int i = 0; i < toolBars.count(); ++i)
 					{
-						if (toolBars.at(i)->shouldBeVisible(isFullScreen))
+						if (toolBars.at(i)->shouldBeVisible(mode))
 						{
 							toolBars.at(i)->removeEventFilter(this);
 							toolBars.at(i)->show();
@@ -2479,7 +2456,7 @@ bool MainWindow::event(QEvent *event)
 					}
 
 					emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
-					emit fullScreenStateChanged(isFullScreen);
+					emit fullScreenStateChanged(mode == ToolBarsManager::FullScreenMode);
 				}
 
 				if (!windowState().testFlag(Qt::WindowMinimized))

@@ -61,6 +61,12 @@ public:
 		AlwaysHiddenToolBar
 	};
 
+	enum ToolBarsMode
+	{
+		NormalMode = 0,
+		FullScreenMode
+	};
+
 	struct ToolBarDefinition
 	{
 		struct Entry
@@ -91,9 +97,31 @@ public:
 		bool isDefault = false;
 		bool wasRemoved = false;
 
+		void setVisibility(ToolBarsMode mode, ToolBarVisibility visibility)
+		{
+			switch (mode)
+			{
+				case NormalMode:
+					normalVisibility = visibility;
+
+					break;
+				case FullScreenMode:
+					fullScreenVisibility = visibility;
+
+					break;
+				default:
+					break;
+			}
+		}
+
 		QString getTitle() const
 		{
 			return (isDefault ? QCoreApplication::translate("actions", title.toUtf8()) : title);
+		}
+
+		ToolBarVisibility getVisibility(ToolBarsMode mode) const
+		{
+			return ((mode == FullScreenMode) ? fullScreenVisibility : normalVisibility);
 		}
 
 		bool isValid() const

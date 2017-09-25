@@ -82,7 +82,7 @@ public:
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
 	bool canDrop(QDropEvent *event) const;
-	bool shouldBeVisible(bool isFullScreen) const;
+	bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
 	bool event(QEvent *event) override;
 
 public slots:
