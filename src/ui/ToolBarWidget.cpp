@@ -163,6 +163,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_bookmark(nullptr),
 	m_dropBookmark(nullptr),
 	m_toggleButton(nullptr),
+	m_state(identifier, ToolBarsManager::getToolBarDefinition(identifier)),
 	m_reloadTimer(0),
 	m_identifier(identifier),
 	m_dropIndex(-1),
@@ -851,7 +852,6 @@ void ToolBarWidget::toggleVisibility()
 {
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 	ToolBarState state(m_state);
-	state.identifier = m_identifier;
 	state.setVisibility(mode, (calculateShouldBeVisible(getDefinition(), m_state, mode) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
 
 	setState(state);

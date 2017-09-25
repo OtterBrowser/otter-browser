@@ -132,6 +132,8 @@ private:
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
 	ToolBarState m_addressBarState;
+	ToolBarState m_menuBarState;
+	ToolBarState m_statusBarState;
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;
@@ -147,7 +149,6 @@ private:
 	bool m_isDraggingToolBar;
 	bool m_isPrivate;
 	bool m_isRestored;
-	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 
 	static quint64 m_identifierCounter;
