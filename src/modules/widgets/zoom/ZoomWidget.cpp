@@ -46,7 +46,7 @@ ZoomWidget::ZoomWidget(Window *window, QWidget *parent) : QSlider(parent),
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
-		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+		connect(toolBar, &ToolBarWidget::windowChanged, this, &ZoomWidget::setWindow);
 	}
 }
 

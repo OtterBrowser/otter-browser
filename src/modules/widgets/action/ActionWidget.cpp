@@ -61,7 +61,7 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
-		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+		connect(toolBar, &ToolBarWidget::windowChanged, this, &ActionWidget::setWindow);
 	}
 }
 

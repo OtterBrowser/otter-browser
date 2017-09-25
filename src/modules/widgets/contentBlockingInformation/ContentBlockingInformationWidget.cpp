@@ -56,14 +56,14 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
-		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+		connect(toolBar, &ToolBarWidget::windowChanged, this, &ContentBlockingInformationWidget::setWindow);
 	}
 
-	connect(m_elementsMenu, SIGNAL(aboutToShow()), this, SLOT(populateElementsMenu()));
-	connect(m_elementsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openElement(QAction*)));
-	connect(m_profilesMenu, SIGNAL(aboutToShow()), this, SLOT(populateProfilesMenu()));
-	connect(m_profilesMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleOption(QAction*)));
-	connect(defaultAction(), SIGNAL(triggered()), this, SLOT(toggleContentBlocking()));
+	connect(m_elementsMenu, &QMenu::aboutToShow, this, &ContentBlockingInformationWidget::populateElementsMenu);
+	connect(m_elementsMenu, &QMenu::triggered, this, &ContentBlockingInformationWidget::openElement);
+	connect(m_profilesMenu, &QMenu::aboutToShow, this, &ContentBlockingInformationWidget::populateProfilesMenu);
+	connect(m_profilesMenu, &QMenu::triggered, this, &ContentBlockingInformationWidget::toggleOption);
+	connect(defaultAction(), &QAction::triggered, this, &ContentBlockingInformationWidget::toggleContentBlocking);
 }
 
 void ContentBlockingInformationWidget::resizeEvent(QResizeEvent *event)

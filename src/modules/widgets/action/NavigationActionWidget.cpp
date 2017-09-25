@@ -47,11 +47,11 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
 	{
-		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+		connect(toolBar, &ToolBarWidget::windowChanged, this, &NavigationActionWidget::setWindow);
 	}
 
-	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
-	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
+	connect(menu(), &QMenu::aboutToShow, this, &NavigationActionWidget::updateMenu);
+	connect(menu(), &QMenu::triggered, this, &NavigationActionWidget::goToHistoryIndex);
 }
 
 void NavigationActionWidget::goToHistoryIndex(QAction *action)
