@@ -377,20 +377,15 @@ void SidebarWidget::updatePanels()
 		QToolButton *button(new QToolButton(this));
 		QAction *action(new QAction(button));
 		action->setData(panels.at(i));
+		action->setIcon(getPanelIcon(panels.at(i)));
 		action->setToolTip(getPanelTitle(panels.at(i)));
 
 		button->setDefaultAction(action);
 		button->setAutoRaise(true);
 		button->setCheckable(true);
 
-		if (specialPages.contains(panels.at(i)))
+		if (panels.at(i).startsWith(QLatin1String("web:")))
 		{
-			button->setIcon(AddonsManager::getSpecialPage(panels.at(i)).icon);
-		}
-		else if (panels.at(i).startsWith(QLatin1String("web:")))
-		{
-			button->setIcon(HistoryManager::getIcon(QUrl(panels.at(i).mid(4))));
-
 			QAction *action(menu->addAction(getPanelTitle(panels.at(i))));
 			action->setCheckable(true);
 			action->setChecked(true);
@@ -398,7 +393,7 @@ void SidebarWidget::updatePanels()
 
 			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
 		}
-		else
+		else if (!specialPages.contains(panels.at(i)))
 		{
 			button->deleteLater();
 
@@ -453,6 +448,21 @@ QUrl SidebarWidget::getPanelUrl(const QString &identifier)
 	}
 
 	return QUrl();
+}
+
+QIcon SidebarWidget::getPanelIcon(const QString &identifier)
+{
+	if (identifier.startsWith(QLatin1String("web:")))
+	{
+		return HistoryManager::getIcon(QUrl(identifier.mid(4)));
+	}
+
+	if (AddonsManager::getSpecialPages().contains(identifier))
+	{
+		return AddonsManager::getSpecialPage(identifier).icon;
+	}
+
+	return QIcon();
 }
 
 QSize SidebarWidget::sizeHint() const

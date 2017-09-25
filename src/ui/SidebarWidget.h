@@ -45,6 +45,7 @@ public:
 	void reload();
 	static QString getPanelTitle(const QString &identifier);
 	static QUrl getPanelUrl(const QString &identifier);
+	static QIcon getPanelIcon(const QString &identifier);
 	QSize sizeHint() const override;
 
 protected:
