@@ -532,6 +532,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 		{
 			const QVariantMap options(object.value(QLatin1String("options")).toVariant().toMap());
 			Menu *menu(new Menu(getMenuRoleIdentifier(object.value(QLatin1String("identifier")).toString()), this));
+			menu->setExecutor(m_executor);
 			menu->setActionParameters(parameters);
 			menu->setMenuOptions(options);
 
@@ -574,7 +575,10 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 			}
 			else
 			{
-				addMenu(new Menu(role, this));
+				Menu *menu(new Menu(role, this));
+				menu->setExecutor(m_executor);
+
+				addMenu(menu);
 			}
 		}
 	}
@@ -912,32 +916,35 @@ void Menu::populateDictionariesMenu()
 {
 	clear();
 
-	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (!mainWindow)
+	if (m_actionGroup)
 	{
-		return;
+		m_actionGroup->deleteLater();
 	}
 
-	Window *window(mainWindow->getActiveWindow());
+	m_actionGroup = new QActionGroup(this);
+	m_actionGroup->setExclusive(true);
 
-	if (!window || !window->getContentsWidget()->getWebWidget())
+	WebWidget *webWidget(nullptr);
+
+	if (m_executor.isValid())
 	{
-		return;
+		webWidget = qobject_cast<WebWidget*>(m_executor.getObject());
+
+		if (!webWidget)
+		{
+			webWidget = m_executor.getObject()->findChild<WebWidget*>();
+		}
 	}
 
-	ActionExecutor::Object executor(window, window);
-	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(window->getContentsWidget()->getWebWidget()->getDictionaries());
-	QActionGroup *actionGroup(new QActionGroup(this));
-	actionGroup->setExclusive(true);
+	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(webWidget ? webWidget->getDictionaries() : SpellCheckManager::getDictionaries());
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		Action *action(new Action(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).name}}, executor, this));
+		Action *action(new Action(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).name}}, m_executor, this));
 
 		addAction(action);
 
-		actionGroup->addAction(action);
+		m_actionGroup->addAction(action);
 	}
 }
 
