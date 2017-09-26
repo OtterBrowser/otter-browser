@@ -60,7 +60,6 @@ public:
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, const QVariantMap &parameters = {});
 	void setActiveEditorExecutor(ActionExecutor::Object executor);
 	static MainWindow* findMainWindow(QObject *parent);
-	TabBarWidget* getTabBar() const;
 	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
@@ -102,6 +101,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
+	TabBarWidget* getTabBar() const;
 	QVector<quint64> createOrderedWindowList(bool includeMinimized) const;
 	bool event(QEvent *event) override;
 
@@ -167,6 +167,7 @@ signals:
 	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
 	void fullScreenStateChanged(bool isFullScreen);
 
+friend class MainWindowSessionItem;
 friend class ToolBarDropZoneWidget;
 friend class ToolBarWidget;
 };
