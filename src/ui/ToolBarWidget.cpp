@@ -777,11 +777,9 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void ToolBarWidget::reload()
 {
-	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+	setDefinition(getDefinition());
 
-	setDefinition(definition);
-
-	emit areaChanged(definition.location);
+	emit areaChanged(getArea());
 }
 
 void ToolBarWidget::resetGeometry()
