@@ -160,7 +160,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 	else if (type == BookmarksModel::UnknownBookmark)
 	{
 		menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
-		menu.addAction(tr("Add Bookmark"), this, SLOT(addNote()));
+		menu.addAction(tr("Add Note"), this, SLOT(addNote()));
 		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 	}
 	else
