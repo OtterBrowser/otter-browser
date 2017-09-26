@@ -65,7 +65,7 @@ public:
 	static void handlePositionalArguments(QCommandLineParser *parser, bool forceOpen = false);
 	static void setHidden(bool isHidden);
 	static void setLocale(const QString &locale);
-	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &windows = SessionMainWindow());
+	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = {});
 	static Application* getInstance();
 	static MainWindow* getWindow();
 	static MainWindow* getActiveWindow();

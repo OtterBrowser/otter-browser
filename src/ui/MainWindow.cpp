@@ -652,7 +652,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (hints.testFlag(SessionsManager::NewWindowOpen))
 				{
-					Application::createWindow(mutableParameters);
+					SessionMainWindow session;
+					session.toolBars = getSession().toolBars;
+					session.hasToolBarsState = true;
+
+					Application::createWindow(mutableParameters, session);
 
 					return;
 				}
@@ -2021,14 +2025,20 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
+		SessionMainWindow session;
 		QVariantMap mainWindowParameters({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}});
 
 		if (parameters.contains(QLatin1String("noToolBars")))
 		{
 			mainWindowParameters[QLatin1String("noToolBars")] = parameters[QLatin1String("noToolBars")];
 		}
+		else
+		{
+			session.toolBars = getSession().toolBars;
+			session.hasToolBarsState = true;
+		}
 
-		MainWindow *mainWindow(Application::createWindow(mainWindowParameters));
+		MainWindow *mainWindow(Application::createWindow(mainWindowParameters, session));
 
 		window = mainWindow->openWindow(widget);
 	}

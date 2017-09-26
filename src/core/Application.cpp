@@ -1150,9 +1150,9 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(Utils::createLocale(identifier));
 }
 
-MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &windows)
+MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &session)
 {
-	MainWindow *window(new MainWindow(parameters, windows));
+	MainWindow *window(new MainWindow(parameters, session));
 
 	m_windows.prepend(window);
 
