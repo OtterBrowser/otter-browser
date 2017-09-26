@@ -928,6 +928,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 						break;
 					default:
+						if (!m_toolBars.contains(toolBarIdentifier) && ToolBarsManager::getToolBarDefinition(toolBarIdentifier).isValid())
+						{
+							handleToolBarAdded(toolBarIdentifier);
+						}
+
 						if (m_toolBars.contains(toolBarIdentifier))
 						{
 							ToolBarWidget *toolBar(m_toolBars[toolBarIdentifier]);
