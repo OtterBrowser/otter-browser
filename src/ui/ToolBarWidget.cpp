@@ -985,7 +985,7 @@ void ToolBarWidget::updateVisibility()
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar) ? findChild<TabBarWidget*>() : nullptr);
+	QWidget *tabBar(nullptr);
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 	const Qt::ToolBarArea area(getArea());
 	const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
@@ -997,13 +997,22 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	if (m_identifier == ToolBarsManager::TabBar)
 	{
+		tabBar = findChild<TabBarWidget*>();
+
+		if (!tabBar && m_mainWindow)
+		{
+			tabBar = m_mainWindow->getTabBar();
+		}
+
+		if (tabBar)
+		{
+			tabBar->setParent(this);
+			tabBar->setVisible(!m_isCollapsed);
+		}
+
 		for (int i = (actions().count() - 1); i >= 0; --i)
 		{
-			if (widgetForAction(actions().at(i)) == tabBar)
-			{
-				tabBar->setVisible(!m_isCollapsed);
-			}
-			else
+			if (tabBar && widgetForAction(actions().at(i)) != tabBar)
 			{
 				removeAction(actions().at(i));
 			}
