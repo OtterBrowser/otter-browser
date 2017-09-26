@@ -53,6 +53,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->notesViewWidget->setModel(NotesManager::getModel());
 	m_ui->notesViewWidget->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
 	m_ui->notesViewWidget->setFilterRoles(QSet<int>({BookmarksModel::UrlRole, BookmarksModel::TitleRole, BookmarksModel::DescriptionRole, BookmarksModel::KeywordRole}));
+	m_ui->notesViewWidget->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEditWidget->installEventFilter(this);
@@ -130,7 +131,7 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 
 	if (bookmark && bookmark->getUrl().isValid())
 	{
-		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}}, parentWidget());
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, parentWidget());
 	}
 }
 
@@ -375,7 +376,29 @@ ActionsManager::ActionDefinition::State NotesContentsWidget::getActionState(int 
 
 bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
+	if (object == m_ui->notesViewWidget && event->type() == QEvent::KeyPress)
+	{
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+
+		if (keyEvent)
+		{
+			switch (keyEvent->key())
+			{
+				case Qt::Key_Enter:
+				case Qt::Key_Return:
+					openUrl();
+
+					return true;
+				case Qt::Key_Delete:
+					removeNote();
+
+					return true;
+				default:
+					break;
+			}
+		}
+	}
+	else if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
@@ -385,7 +408,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (bookmark)
 			{
-				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}}, parentWidget());
+				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}}, parentWidget());
 
 				return true;
 			}
@@ -412,7 +435,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent->key() == Qt::Key_Escape)
+		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
 		{
 			m_ui->filterLineEditWidget->clear();
 		}
