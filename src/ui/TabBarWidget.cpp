@@ -70,14 +70,14 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	setAcceptDrops(true);
 	setMouseTracking(true);
 
-	connect(window, SIGNAL(activated()), this, SLOT(markAsActive()));
-	connect(window, SIGNAL(needsAttention()), this, SLOT(markAsNeedingAttention()));
-	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(update()));
-	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(update()));
-	connect(window, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChanged(WebWidget::LoadingState)));
-	connect(parent, SIGNAL(currentChanged(int)), this, SLOT(updateGeometries()));
-	connect(parent, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateGeometries()));
-	connect(parent, SIGNAL(needsGeometriesUpdate()), this, SLOT(updateGeometries()));
+	connect(window, &Window::activated, this, &TabHandleWidget::markAsActive);
+	connect(window, &Window::needsAttention, this, &TabHandleWidget::markAsNeedingAttention);
+	connect(window, &Window::titleChanged, this, &TabHandleWidget::handleAppearanceChanged);
+	connect(window, &Window::iconChanged, this, &TabHandleWidget::handleAppearanceChanged);
+	connect(window, &Window::loadingStateChanged, this, &TabHandleWidget::handleLoadingStateChanged);
+	connect(parent, &TabBarWidget::currentChanged, this, &TabHandleWidget::updateGeometries);
+	connect(parent, &TabBarWidget::tabsAmountChanged, this, &TabHandleWidget::updateGeometries);
+	connect(parent, &TabBarWidget::needsGeometriesUpdate, this, &TabHandleWidget::updateGeometries);
 }
 
 void TabHandleWidget::timerEvent(QTimerEvent *event)
@@ -300,6 +300,11 @@ void TabHandleWidget::markAsNeedingAttention()
 	}
 }
 
+void TabHandleWidget::handleAppearanceChanged()
+{
+	update();
+}
+
 void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 {
 	if (state == WebWidget::OngoingLoadingState)
@@ -310,7 +315,7 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 			m_loadingAnimation->start();
 		}
 
-		connect(m_loadingAnimation, SIGNAL(frameChanged()), this, SLOT(update()));
+		connect(m_loadingAnimation, &Animation::frameChanged, this, &TabHandleWidget::handleAppearanceChanged);
 	}
 	else if (m_loadingAnimation)
 	{
@@ -538,7 +543,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	{
 		setArea(toolBar->getArea());
 
-		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
+		connect(toolBar, &ToolBarWidget::areaChanged, this, &TabBarWidget::setArea);
 	}
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &TabBarWidget::handleOptionChanged);
@@ -1116,7 +1121,7 @@ void TabBarWidget::addTab(int index, Window *window)
 	setTabButton(index, QTabBar::LeftSide, new TabHandleWidget(window, this));
 	setTabButton(index, QTabBar::RightSide, nullptr);
 
-	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(updatePinnedTabsAmount()));
+	connect(window, &Window::isPinnedChanged, this, &TabBarWidget::updatePinnedTabsAmount);
 
 	if (window->isPinned())
 	{
