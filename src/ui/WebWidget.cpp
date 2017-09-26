@@ -1029,8 +1029,33 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::CheckSpellingAction:
-			state.isChecked = (m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled));
-			state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !getDictionaries().isEmpty());
+			{
+				const QVector<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
+
+				state.isEnabled = (getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !dictionaries.isEmpty());
+
+				if (parameters.contains(QLatin1String("dictionary")))
+				{
+					const QString dictionary(parameters[QLatin1String("dictionary")].toString());
+
+					state.text = dictionary;
+					state.isChecked = (dictionary == (getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
+
+					for (int i = 0; i < dictionaries.count(); ++i)
+					{
+						if (dictionaries.at(i).name == dictionary)
+						{
+							state.text = dictionaries.at(i).title;
+
+							break;
+						}
+					}
+				}
+				else
+				{
+					state.isChecked = (m_hitResult.flags.testFlag(HitTestResult::IsSpellCheckEnabled));
+				}
+			}
 
 			break;
 		case ActionsManager::SearchAction:

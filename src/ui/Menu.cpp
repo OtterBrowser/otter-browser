@@ -117,7 +117,6 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			setTitle(QT_TRANSLATE_NOOP("actions", "Dictionaries"));
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateDictionariesMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectDictionary(QAction*)));
 
 			break;
 		case ImportExportMenuRole:
@@ -927,23 +926,16 @@ void Menu::populateDictionariesMenu()
 		return;
 	}
 
-	QString dictionary(window->getContentsWidget()->getWebWidget()->getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString());
-
-	if (dictionary.isEmpty())
-	{
-		dictionary = SpellCheckManager::getDefaultDictionary();
-	}
-
+	ActionExecutor::Object executor(window, window);
 	const QVector<SpellCheckManager::DictionaryInformation> dictionaries(window->getContentsWidget()->getWebWidget()->getDictionaries());
 	QActionGroup *actionGroup(new QActionGroup(this));
 	actionGroup->setExclusive(true);
 
 	for (int i = 0; i < dictionaries.count(); ++i)
 	{
-		QAction *action(addAction(dictionaries.at(i).title));
-		action->setCheckable(true);
-		action->setChecked(dictionaries.at(i).name == dictionary);
-		action->setData(dictionaries.at(i).name);
+		Action *action(new Action(ActionsManager::CheckSpellingAction, {{QLatin1String("dictionary"), dictionaries.at(i).name}}, executor, this));
+
+		addAction(action);
 
 		actionGroup->addAction(action);
 	}
@@ -1458,23 +1450,6 @@ void Menu::openSession(QAction *action)
 	if (!action->data().isNull())
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getOption(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? Application::getActiveWindow() : nullptr));
-	}
-}
-
-void Menu::selectDictionary(QAction *action)
-{
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (!mainWindow)
-	{
-		return;
-	}
-
-	Window *window(mainWindow->getActiveWindow());
-
-	if (window && window->getContentsWidget()->getWebWidget() && action)
-	{
-		window->getContentsWidget()->getWebWidget()->setOption(SettingsManager::Browser_SpellCheckDictionaryOption, action->data().toString());
 	}
 }
 

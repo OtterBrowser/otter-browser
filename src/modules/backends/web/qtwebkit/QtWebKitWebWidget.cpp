@@ -1474,7 +1474,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
 				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? QLatin1String("true") : QLatin1String("false")));
 
-				resetSpellCheck(element);
+				if (parameters.contains(QLatin1String("dictionary")))
+				{
+					setOption(SettingsManager::Browser_SpellCheckDictionaryOption, parameters.value(QLatin1String("dictionary")));
+				}
+				else
+				{
+					resetSpellCheck(element);
+				}
+
+				emit actionsStateChanged(QVector<int>({ActionsManager::CheckSpellingAction}));
 			}
 
 			return;
