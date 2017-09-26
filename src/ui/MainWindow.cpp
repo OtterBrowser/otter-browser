@@ -224,7 +224,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(SessionsManager::getInstance(), &SessionsManager::requestedRemoveStoredUrl, this, &MainWindow::removeStoredUrl);
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &MainWindow::handleOptionChanged);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarAdded, this, &MainWindow::handleToolBarAdded);
-	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarMoved, this, &MainWindow::handleToolBarMoved);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarRemoved, this, &MainWindow::handleToolBarRemoved);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &MainWindow::handleTransferStarted);
 
@@ -1775,58 +1774,6 @@ void MainWindow::handleToolBarAdded(int identifier)
 	SessionsManager::markSessionAsModified();
 
 	emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
-}
-
-void MainWindow::handleToolBarMoved(int identifier)
-{
-	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
-	ToolBarWidget *toolBar(getToolBars(definition.location).value(definition.row));
-
-	if (toolBar && toolBar->getIdentifier() == identifier)
-	{
-		return;
-	}
-
-	QVector<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly).toVector());
-
-	for (int i = 0; i < toolBars.count(); ++i)
-	{
-		if (toolBars.at(i)->getIdentifier() == identifier)
-		{
-			toolBar = toolBars.at(i);
-
-			removeToolBar(toolBar);
-			removeToolBarBreak(toolBar);
-		}
-	}
-
-	toolBars = getToolBars(definition.location);
-
-	for (int i = 0; i < toolBars.count(); ++i)
-	{
-		removeToolBar(toolBars.at(i));
-	}
-
-	toolBars.append(toolBar);
-
-	std::sort(toolBars.begin(), toolBars.end(), [&](ToolBarWidget *first, ToolBarWidget *second)
-	{
-		return (first->getDefinition().row > second->getDefinition().row);
-	});
-
-	const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-
-	for (int i = 0; i < toolBars.count(); ++i)
-	{
-		if (i > 0)
-		{
-			addToolBarBreak(definition.location);
-		}
-
-		addToolBar(definition.location, toolBars.at(i));
-
-		toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(mode));
-	}
 }
 
 void MainWindow::handleToolBarRemoved(int identifier)

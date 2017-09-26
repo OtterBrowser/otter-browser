@@ -112,7 +112,6 @@ protected slots:
 	void handleWindowClose(Window *window);
 	void handleWindowIsPinnedChanged(bool isPinned);
 	void handleToolBarAdded(int identifier);
-	void handleToolBarMoved(int identifier);
 	void handleToolBarRemoved(int identifier);
 	void handleTransferStarted();
 	void setCurrentWindow(Window *window);
