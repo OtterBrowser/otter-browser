@@ -63,10 +63,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 		m_ui->actionsWidget->hide();
 	}
 
-	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, [&]()
-	{
-		emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
-	});
+	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &NotesContentsWidget::notifyPasteActionStateChanged);
 	connect(NotesManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeNote()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addNote()));
@@ -90,6 +87,11 @@ void NotesContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
+}
+
+void NotesContentsWidget::print(QPrinter *printer)
+{
+	m_ui->notesViewWidget->render(printer);
 }
 
 void NotesContentsWidget::addNote()
@@ -130,6 +132,11 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 	{
 		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}}, parentWidget());
 	}
+}
+
+void NotesContentsWidget::notifyPasteActionStateChanged()
+{
+	emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
 }
 
 void NotesContentsWidget::showContextMenu(const QPoint &position)
@@ -228,7 +235,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 		case ActionsManager::PasteAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, QGuiApplication::clipboard()->text()}}, findFolder(m_ui->notesViewWidget->currentIndex())));
+				NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, QGuiApplication::clipboard()->text()}}, findFolder(m_ui->notesViewWidget->currentIndex()));
 			}
 
 			break;
@@ -299,11 +306,6 @@ void NotesContentsWidget::updateText()
 	}
 
 	connect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
-}
-
-void NotesContentsWidget::print(QPrinter *printer)
-{
-	m_ui->notesViewWidget->render(printer);
 }
 
 BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)
