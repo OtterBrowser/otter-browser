@@ -75,9 +75,15 @@ void TextEditWidget::focusInEvent(QFocusEvent *event)
 
 void TextEditWidget::contextMenuEvent(QContextMenuEvent *event)
 {
+	ActionExecutor::Object executor(this, this);
 	QMenu *menu(createStandardContextMenu());
 	menu->addSeparator();
-	menu->addAction(new Action(ActionsManager::CheckSpellingAction, {}, ActionExecutor::Object(this, this), menu));
+	menu->addAction(new Action(ActionsManager::CheckSpellingAction, {}, executor, menu));
+
+	Menu *dictionariesMenu(new Menu(Menu::DictionariesMenuRole, menu));
+	dictionariesMenu->setExecutor(executor);
+
+	menu->addMenu(dictionariesMenu);
 	menu->exec(event->globalPos());
 	menu->deleteLater();
 }
@@ -169,7 +175,20 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 			break;
 		case ActionsManager::CheckSpellingAction:
 #ifdef OTTER_ENABLE_SPELLCHECK
-			m_highlighter->setActive(parameters.value(QLatin1String("isChecked"), !m_highlighter->isActive()).toBool());
+			if (parameters.contains(QLatin1String("dictionary")))
+			{
+				const QString dictionary(parameters[QLatin1String("dictionary")].toString());
+
+				SettingsManager::setOption(SettingsManager::Browser_SpellCheckDictionaryOption, dictionary);
+
+				m_highlighter->setCurrentLanguage(dictionary);
+				m_highlighter->setActive(true);
+				m_highlighter->slotRehighlight();
+			}
+			else
+			{
+				m_highlighter->setActive(parameters.value(QLatin1String("isChecked"), !m_highlighter->isActive()).toBool());
+			}
 #endif
 			break;
 		default:
@@ -254,8 +273,32 @@ ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int ident
 				break;
 			case ActionsManager::CheckSpellingAction:
 #ifdef OTTER_ENABLE_SPELLCHECK
-				state.isChecked = m_highlighter->isActive();
-				state.isEnabled = true;
+				{
+					state.isEnabled = true;
+
+					if (parameters.contains(QLatin1String("dictionary")))
+					{
+						const QString dictionary(parameters[QLatin1String("dictionary")].toString());
+						const QVector<SpellCheckManager::DictionaryInformation> dictionaries(SpellCheckManager::getDictionaries());
+
+						state.text = dictionary;
+						state.isChecked = (dictionary == (SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).isNull() ? SpellCheckManager::getDefaultDictionary() : SettingsManager::getOption(SettingsManager::Browser_SpellCheckDictionaryOption).toString()));
+
+						for (int i = 0; i < dictionaries.count(); ++i)
+						{
+							if (dictionaries.at(i).name == dictionary)
+							{
+								state.text = dictionaries.at(i).title;
+
+								break;
+							}
+						}
+					}
+					else
+					{
+						state.isChecked = m_highlighter->isActive();
+					}
+				}
 #else
 				state.isEnabled = false;
 #endif
