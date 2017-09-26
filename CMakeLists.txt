@@ -432,6 +432,8 @@ if (HUNSPELL_FOUND)
 		3rdparty/sonnet/src/core/spellerplugin.cpp
 		3rdparty/sonnet/src/core/settings.cpp
 		3rdparty/sonnet/src/core/textbreaks.cpp
+		3rdparty/sonnet/src/core/tokenizer.cpp
+		3rdparty/sonnet/src/ui/highlighter.cpp
 		3rdparty/sonnet/src/plugins/hunspell/hunspellclient.cpp
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldebug.cpp
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
