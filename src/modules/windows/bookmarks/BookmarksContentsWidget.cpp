@@ -140,7 +140,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	{
 		const QAction *action(qobject_cast<QAction*>(sender()));
 
-		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
 	}
 }
 
@@ -359,18 +359,22 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		if (keyEvent)
 		{
-			openBookmark();
+			switch (keyEvent->key())
+			{
+				case Qt::Key_Enter:
+				case Qt::Key_Return:
+					openBookmark();
 
-			return true;
-		}
+					return true;
+				case Qt::Key_Delete:
+					removeBookmark();
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
-		{
-			removeBookmark();
-
-			return true;
+					return true;
+				default:
+					break;
+			}
 		}
 	}
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
@@ -383,7 +387,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (bookmark)
 			{
-				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}}, parentWidget());
+				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()))}}, parentWidget());
 
 				return true;
 			}
