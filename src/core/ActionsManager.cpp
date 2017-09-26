@@ -383,7 +383,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), {}, ThemesManager::createIcon(QLatin1String("edit-select-all")), ActionDefinition::EditorScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(UnselectAction, QT_TRANSLATE_NOOP("actions", "Deselect"), {}, {}, ActionDefinition::EditorScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
 	registerAction(ClearAllAction, QT_TRANSLATE_NOOP("actions", "Clear All"), {}, {}, ActionDefinition::EditorScope, ActionDefinition::IsEnabledFlag, ActionDefinition::EditingCategory);
-	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), {}, {}, ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag), ActionDefinition::EditingCategory);
+	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), {}, {}, ActionDefinition::EditorScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag), ActionDefinition::EditingCategory);
 	registerAction(FindAction, QT_TRANSLATE_NOOP("actions", "Find…"), {}, ThemesManager::createIcon(QLatin1String("edit-find")), ActionDefinition::WindowScope);
 	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"), {}, ThemesManager::createIcon(QLatin1String("go-down")), ActionDefinition::WindowScope);
 	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"), {}, ThemesManager::createIcon(QLatin1String("go-up")), ActionDefinition::WindowScope);

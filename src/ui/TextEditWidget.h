@@ -24,6 +24,11 @@
 
 #include <QtWidgets/QPlainTextEdit>
 
+namespace Sonnet
+{
+	class Highlighter;
+}
+
 namespace Otter
 {
 
@@ -43,6 +48,7 @@ public slots:
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 	void initialize();
 
 protected slots:
@@ -51,6 +57,7 @@ protected slots:
 	void notifyPasteActionStateChanged();
 
 private:
+	Sonnet::Highlighter *m_highlighter;
 	bool m_hadSelection;
 	bool m_wasEmpty;
 

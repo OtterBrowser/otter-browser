@@ -18,7 +18,9 @@
 **************************************************************************/
 
 #include "TextEditWidget.h"
+#include "Action.h"
 #include "MainWindow.h"
+#include "Menu.h"
 #include "../core/NotesManager.h"
 #include "../core/SpellCheckManager.h"
 #ifdef OTTER_ENABLE_SPELLCHECK
@@ -32,6 +34,7 @@ namespace Otter
 {
 
 TextEditWidget::TextEditWidget(const QString &text, QWidget *parent) : QPlainTextEdit(text, parent), ActionExecutor(),
+	m_highlighter(nullptr),
 	m_hadSelection(false),
 	m_wasEmpty(text.isEmpty())
 {
@@ -39,6 +42,7 @@ TextEditWidget::TextEditWidget(const QString &text, QWidget *parent) : QPlainTex
 }
 
 TextEditWidget::TextEditWidget(QWidget *parent) : QPlainTextEdit(parent),
+	m_highlighter(nullptr),
 	m_hadSelection(false),
 	m_wasEmpty(true)
 {
@@ -47,8 +51,10 @@ TextEditWidget::TextEditWidget(QWidget *parent) : QPlainTextEdit(parent),
 
 void TextEditWidget::initialize()
 {
-	Sonnet::Highlighter *highlighter(new Sonnet::Highlighter(this));
-	highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
+#ifdef OTTER_ENABLE_SPELLCHECK
+	m_highlighter = new Sonnet::Highlighter(this);
+	m_highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
+#endif
 
 	connect(this, &TextEditWidget::selectionChanged, this, &TextEditWidget::handleSelectionChanged);
 	connect(this, &TextEditWidget::textChanged, this, &TextEditWidget::handleTextChanged);
@@ -65,6 +71,15 @@ void TextEditWidget::focusInEvent(QFocusEvent *event)
 	}
 
 	QPlainTextEdit::focusInEvent(event);
+}
+
+void TextEditWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu *menu(createStandardContextMenu());
+	menu->addSeparator();
+	menu->addAction(new Action(ActionsManager::CheckSpellingAction, {}, ActionExecutor::Object(this, this), menu));
+	menu->exec(event->globalPos());
+	menu->deleteLater();
 }
 
 void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -152,6 +167,11 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 			}
 
 			break;
+		case ActionsManager::CheckSpellingAction:
+#ifdef OTTER_ENABLE_SPELLCHECK
+			m_highlighter->setActive(parameters.value(QLatin1String("isChecked"), !m_highlighter->isActive()).toBool());
+#endif
+			break;
 		default:
 			break;
 	}
@@ -231,6 +251,14 @@ ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int ident
 			case ActionsManager::ClearAllAction:
 				state.isEnabled = (!isReadOnly() && document() && !document()->isEmpty());
 
+				break;
+			case ActionsManager::CheckSpellingAction:
+#ifdef OTTER_ENABLE_SPELLCHECK
+				state.isChecked = m_highlighter->isActive();
+				state.isEnabled = true;
+#else
+				state.isEnabled = false;
+#endif
 				break;
 			default:
 				break;
