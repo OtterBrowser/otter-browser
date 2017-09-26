@@ -105,15 +105,6 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 
 	QTextStream stream(&file);
 
-	if (!stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus"), Qt::CaseInsensitive))
-	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to load content blocking profile file: invalid header"), Console::OtherCategory, Console::ErrorLevel, file.fileName());
-
-		file.close();
-
-		return;
-	}
-
 	while (!stream.atEnd())
 	{
 		QString line(stream.readLine().trimmed());
@@ -606,7 +597,7 @@ void ContentBlockingProfile::replyFinished()
 	const QByteArray downloadedDataChecksum(m_networkReply->readLine());
 	const QByteArray downloadedData(m_networkReply->readAll());
 
-	if (m_networkReply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus")))
+	if (m_networkReply->error() != QNetworkReply::NoError)
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(m_networkReply->errorString()), Console::OtherCategory, Console::ErrorLevel, getPath());
 
