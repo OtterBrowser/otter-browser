@@ -20,6 +20,10 @@
 #include "TextEditWidget.h"
 #include "MainWindow.h"
 #include "../core/NotesManager.h"
+#include "../core/SpellCheckManager.h"
+#ifdef OTTER_ENABLE_SPELLCHECK
+#include "../../3rdparty/sonnet/src/ui/highlighter.h"
+#endif
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QClipboard>
@@ -30,7 +34,6 @@ namespace Otter
 TextEditWidget::TextEditWidget(const QString &text, QWidget *parent) : QPlainTextEdit(text, parent), ActionExecutor(),
 	m_hadSelection(false),
 	m_wasEmpty(text.isEmpty())
-
 {
 	initialize();
 }
@@ -44,6 +47,9 @@ TextEditWidget::TextEditWidget(QWidget *parent) : QPlainTextEdit(parent),
 
 void TextEditWidget::initialize()
 {
+	Sonnet::Highlighter *highlighter(new Sonnet::Highlighter(this));
+	highlighter->setCurrentLanguage(SpellCheckManager::getDefaultDictionary());
+
 	connect(this, &TextEditWidget::selectionChanged, this, &TextEditWidget::handleSelectionChanged);
 	connect(this, &TextEditWidget::textChanged, this, &TextEditWidget::handleTextChanged);
 	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &TextEditWidget::notifyPasteActionStateChanged);
