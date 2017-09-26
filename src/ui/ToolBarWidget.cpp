@@ -920,7 +920,7 @@ void ToolBarWidget::handleFullScreenStateChanged(bool isFullScreen)
 	}
 	else
 	{
-		setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+		setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible(isFullScreen ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 	}
 }
 
