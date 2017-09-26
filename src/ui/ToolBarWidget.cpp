@@ -987,7 +987,8 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 {
 	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar) ? findChild<TabBarWidget*>() : nullptr);
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-	const bool isHorizontal(definition.location != Qt::LeftToolBarArea && definition.location != Qt::RightToolBarArea);
+	const Qt::ToolBarArea area(getArea());
+	const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
 
 	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
@@ -1130,7 +1131,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	if (tabBar)
 	{
-		switch (definition.location)
+		switch (area)
 		{
 			case Qt::BottomToolBarArea:
 				layout()->setAlignment(tabBar, Qt::AlignTop);
