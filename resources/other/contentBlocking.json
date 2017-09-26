@@ -3,7 +3,7 @@
 	{
 		"category": "advertisements",
 		"title": "AakList (Anti-Adblock Killer)",
-		"updateUrl": "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
+		"updateUrl": "https://xuhaiyang1234.gitlab.io/AAK-Cont/dist/aak-cont-list-notubo.txt"
 	},
 	"advertisements.antiadblockfilters":
 	{
@@ -11,17 +11,23 @@
 		"title": "Adblock Warning Removal List",
 		"updateUrl": "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
 	},
+	"advertisements.adguard-generic":
+	{
+		"category": "advertisements",
+		"title": "Adguard Generic Filters",
+		"updateUrl": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt"
+	},
 	"advertisements.easylist":
 	{
 		"category": "advertisements",
 		"title": "EasyList",
 		"updateUrl": "https://easylist-downloads.adblockplus.org/easylist.txt"
 	},
-	"advertisements.easylistnoelemhide":
+	"annoyance.adgurd-annoyance":
 	{
-		"category": "advertisements",
-		"title": "EasyList without element hiding rules",
-		"updateUrl": "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt"
+		"category": "annoyance",
+		"title": "Adguard's Annoyances filter",
+		"updateUrl": "https://filters.adtidy.org/extension/ublock/filters/14.txt"
 	},
 	"annoyance.fanboy-annoyance":
 	{
@@ -29,11 +35,11 @@
 		"title": "Fanboy's Annoyance List",
 		"updateUrl": "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
 	},
-	"annoyance.obtrusive":
+	"annoyance.fanboy-cookiemonster":
 	{
 		"category": "annoyance",
-		"title": "Prebake - Filter Obtrusive Cookie Notices",
-		"updateUrl": "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt"
+		"title": "Fanboy's Cookiemonster List",
+		"updateUrl": "https://fanboy.co.nz/fanboy-cookiemonster.txt"
 	},
 	"other.fanboy-ultimate":
 	{
