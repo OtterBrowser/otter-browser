@@ -131,7 +131,7 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 
 	if (bookmark && bookmark->getUrl().isValid())
 	{
-		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, parentWidget());
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), bookmark->getUrl()}}, parentWidget());
 	}
 }
 
