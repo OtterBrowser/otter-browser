@@ -76,16 +76,27 @@ void TextEditWidget::focusInEvent(QFocusEvent *event)
 void TextEditWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	ActionExecutor::Object executor(this, this);
-	QMenu *menu(createStandardContextMenu());
-	menu->addSeparator();
-	menu->addAction(new Action(ActionsManager::CheckSpellingAction, {}, executor, menu));
+	QMenu menu(this);
+	menu.addAction(new Action(ActionsManager::UndoAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::RedoAction, {}, executor, &menu));
+	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::CutAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::CopyAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::PasteAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
+	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::CopyToNoteAction, {}, executor, &menu));
+	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::ClearAllAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::SelectAllAction, {}, executor, &menu));
+	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::CheckSpellingAction, {}, executor, &menu));
 
-	Menu *dictionariesMenu(new Menu(Menu::DictionariesMenuRole, menu));
+	Menu *dictionariesMenu(new Menu(Menu::DictionariesMenuRole, &menu));
 	dictionariesMenu->setExecutor(executor);
 
-	menu->addMenu(dictionariesMenu);
-	menu->exec(event->globalPos());
-	menu->deleteLater();
+	menu.addMenu(dictionariesMenu);
+	menu.exec(event->globalPos());
 }
 
 void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters)
