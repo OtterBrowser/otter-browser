@@ -103,7 +103,6 @@ protected:
 protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
-	void linkHovered(const QString &link);
 #if QT_VERSION < 0x050700
 	void handleIconReplyFinished();
 #endif

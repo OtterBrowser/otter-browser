@@ -83,7 +83,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::loadProgress, this, &QtWebEngineWebWidget::notifyDocumentLoadingProgress);
 	connect(m_page, &QtWebEnginePage::loadStarted, this, &QtWebEngineWebWidget::pageLoadStarted);
 	connect(m_page, &QtWebEnginePage::loadFinished, this, &QtWebEngineWebWidget::pageLoadFinished);
-	connect(m_page, &QtWebEnginePage::linkHovered, this, &QtWebEngineWebWidget::linkHovered);
+	connect(m_page, &QtWebEnginePage::linkHovered, this, &QtWebEngineWebWidget::setStatusMessageOverride);
 #if QT_VERSION < 0x050700
 	connect(m_page, &QtWebEnginePage::iconUrlChanged, this, &QtWebEngineWebWidget::handleIconChange);
 #else
@@ -263,7 +263,7 @@ void QtWebEngineWebWidget::pageLoadStarted()
 	}
 
 	setStatusMessage(QString());
-	setStatusMessage(QString(), true);
+	setStatusMessageOverride(QString());
 
 	emit geometryChanged();
 	emit loadingStateChanged(OngoingLoadingState);
@@ -279,11 +279,6 @@ void QtWebEngineWebWidget::pageLoadFinished()
 
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
-}
-
-void QtWebEngineWebWidget::linkHovered(const QString &link)
-{
-	setStatusMessage(link, true);
 }
 
 void QtWebEngineWebWidget::clearOptions()
