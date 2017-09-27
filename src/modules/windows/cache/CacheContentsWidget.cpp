@@ -112,6 +112,8 @@ void CacheContentsWidget::populateCache()
 {
 	m_model->clear();
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Type"), tr("Size"), tr("Last Modified"), tr("Expires")}));
+	m_model->setHeaderData(0, Qt::Horizontal, QSize(500, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(2, Qt::Horizontal, QSize(150, 0), Qt::SizeHintRole);
 	m_model->setSortRole(Qt::DisplayRole);
 
 	const NetworkCache *cache(NetworkManagerFactory::getCache());
