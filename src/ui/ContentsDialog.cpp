@@ -274,8 +274,12 @@ void ContentsDialog::handleButtonClick(QAbstractButton *button)
 
 void ContentsDialog::updateSize()
 {
+	m_headerWidget->setMaximumWidth(0);
+
 	adjustSize();
 	resize(sizeHint());
+
+	m_headerWidget->setMaximumWidth(QWIDGETSIZE_MAX);
 
 	if (parentWidget())
 	{
@@ -303,7 +307,11 @@ void ContentsDialog::setCheckBox(const QString &text, bool state)
 	m_checkBox->setText(text);
 	m_checkBox->setChecked(state);
 
+	m_headerWidget->setMaximumWidth(0);
+
 	adjustSize();
+
+	m_headerWidget->setMaximumWidth(QWIDGETSIZE_MAX);
 }
 
 bool ContentsDialog::getCheckBoxState() const
