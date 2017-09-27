@@ -93,12 +93,12 @@ protected:
 	void start(QNetworkReply *reply, const QString &target);
 
 protected slots:
-	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	void downloadData();
-	void downloadFinished();
-	void downloadError(QNetworkReply::NetworkError error);
-	void markStarted();
-	void markFinished();
+	void markAsStarted();
+	void markAsFinished();
+	void handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+	void handleDataAvailable();
+	void handleDownloadFinished();
+	void handleDownloadError(QNetworkReply::NetworkError error);
 
 private:
 	QPointer<QNetworkReply> m_reply;
