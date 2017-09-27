@@ -241,7 +241,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	if (isRunning)
 	{
-		connect(m_reply, SIGNAL(handleDownloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
+		connect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
 		connect(m_reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
 		connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleDownloadError(QNetworkReply::NetworkError)));
 	}
@@ -503,7 +503,7 @@ void Transfer::handleDownloadFinished()
 		m_device->write(m_reply->readAll());
 	}
 
-	disconnect(m_reply, SIGNAL(handleDownloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
+	disconnect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
 	disconnect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
 	disconnect(m_reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
 
