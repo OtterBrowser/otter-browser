@@ -495,9 +495,9 @@ void Transfer::markStarted()
 	m_timeStarted = QDateTime::currentDateTime();
 }
 
-void Transfer::markFinished(bool reset)
+void Transfer::markFinished()
 {
-	m_timeFinished = (reset ? QDateTime() : QDateTime::currentDateTime());
+	m_timeFinished = QDateTime::currentDateTime();
 }
 
 void Transfer::openTarget() const

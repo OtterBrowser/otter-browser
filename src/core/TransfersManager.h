@@ -98,7 +98,7 @@ protected slots:
 	void downloadFinished();
 	void downloadError(QNetworkReply::NetworkError error);
 	void markStarted();
-	void markFinished(bool reset = false);
+	void markFinished();
 
 private:
 	QPointer<QNetworkReply> m_reply;
