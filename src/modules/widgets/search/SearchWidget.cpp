@@ -23,7 +23,6 @@
 #include "../../../core/SearchSuggester.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/PreferencesDialog.h"
 #include "../../../ui/ToolBarWidget.h"
@@ -249,34 +248,6 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 	}
 
 	LineEditWidget::keyPressEvent(event);
-}
-
-void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
-{
-	ActionExecutor::Object executor(this, this);
-	QMenu menu(this);
-	menu.addAction(new Action(ActionsManager::UndoAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::RedoAction, {}, executor, &menu));
-	menu.addSeparator();
-	menu.addAction(new Action(ActionsManager::CutAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::CopyAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::PasteAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
-	menu.addSeparator();
-	menu.addAction(new Action(ActionsManager::CopyToNoteAction, {}, executor, &menu));
-	menu.addSeparator();
-	menu.addAction(new Action(ActionsManager::ClearAllAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::SelectAllAction, {}, executor, &menu));
-
-	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
-
-	if (toolBar)
-	{
-		menu.addSeparator();
-		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QVector<QAction*>(), &menu));
-	}
-
-	menu.exec(event->globalPos());
 }
 
 void SearchWidget::mouseMoveEvent(QMouseEvent *event)

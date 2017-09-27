@@ -86,6 +86,7 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
