@@ -303,7 +303,8 @@ protected slots:
 	void notifyRedoActionStateChanged();
 	void notifyUndoActionStateChanged();
 	void notifyPageActionsChanged();
-	void setStatusMessage(const QString &message, bool override = false);
+	void setStatusMessage(const QString &message);
+	void setStatusMessageOverride(const QString &message);
 
 private:
 	ContentsWidget *m_parent;

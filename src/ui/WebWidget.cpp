@@ -253,7 +253,7 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 		}
 	}
 
-	setStatusMessage((link.isEmpty() ? hitResult.title : link), true);
+	setStatusMessageOverride(link.isEmpty() ? hitResult.title : link);
 
 	if (!text.isEmpty())
 	{
@@ -458,18 +458,25 @@ void WebWidget::setClickPosition(const QPoint &position)
 	m_clickPosition = position;
 }
 
-void WebWidget::setStatusMessage(const QString &message, bool override)
+void WebWidget::setStatusMessage(const QString &message)
 {
 	const QString previousMessage(getStatusMessage());
 
-	if (override)
+	m_javaScriptStatusMessage = message;
+
+	const QString currentMessage(getStatusMessage());
+
+	if (currentMessage != previousMessage)
 	{
-		m_overridingStatusMessage = message;
+		emit statusMessageChanged(currentMessage);
 	}
-	else
-	{
-		m_javaScriptStatusMessage = message;
-	}
+}
+
+void WebWidget::setStatusMessageOverride(const QString &message)
+{
+	const QString previousMessage(getStatusMessage());
+
+	m_overridingStatusMessage = message;
 
 	const QString currentMessage(getStatusMessage());
 
