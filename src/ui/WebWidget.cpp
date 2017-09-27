@@ -818,7 +818,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 			{
-				state.text = QT_TRANSLATE_NOOP("actions", "Purge Tab History");
+				state.text = QCoreApplication::translate("actions", "Purge Tab History");
 			}
 
 			break;
@@ -843,7 +843,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::BookmarkLinkAction:
-			state.text = (BookmarksManager::hasBookmark(m_hitResult.linkUrl) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
+			state.text = (BookmarksManager::hasBookmark(m_hitResult.linkUrl) ? QCoreApplication::translate("actions", "Edit Link Bookmark…") : QCoreApplication::translate("actions", "Bookmark Link…"));
 			state.isEnabled = m_hitResult.linkUrl.isValid();
 
 			break;
@@ -891,12 +891,12 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::SaveMediaToDiskAction:
-			state.text = ((m_hitResult.tagName == QLatin1String("video")) ? QT_TRANSLATE_NOOP("actions", "Save Video…") : QT_TRANSLATE_NOOP("actions", "Save Audio…"));
+			state.text = ((m_hitResult.tagName == QLatin1String("video")) ? QCoreApplication::translate("actions", "Save Video…") : QCoreApplication::translate("actions", "Save Audio…"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
 		case ActionsManager::CopyMediaUrlToClipboardAction:
-			state.text = ((m_hitResult.tagName == QLatin1String("video")) ? QT_TRANSLATE_NOOP("actions", "Copy Video Link to Clipboard") : QT_TRANSLATE_NOOP("actions", "Copy Audio Link to Clipboard"));
+			state.text = ((m_hitResult.tagName == QLatin1String("video")) ? QCoreApplication::translate("actions", "Copy Video Link to Clipboard") : QCoreApplication::translate("actions", "Copy Audio Link to Clipboard"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
@@ -911,13 +911,13 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::MediaPlayPauseAction:
-			state.text = (m_hitResult.flags.testFlag(HitTestResult::MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
+			state.text = (m_hitResult.flags.testFlag(HitTestResult::MediaIsPausedTest) ? QCoreApplication::translate("actions", "Play") : QCoreApplication::translate("actions", "Pause"));
 			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(HitTestResult::MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
 			break;
 		case ActionsManager::MediaMuteAction:
-			state.text = (m_hitResult.flags.testFlag(HitTestResult::MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
+			state.text = (m_hitResult.flags.testFlag(HitTestResult::MediaIsMutedTest) ? QCoreApplication::translate("actions", "Unmute") : QCoreApplication::translate("actions", "Mute"));
 			state.icon = ThemesManager::createIcon(m_hitResult.flags.testFlag(HitTestResult::MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted"));
 			state.isEnabled = m_hitResult.mediaUrl.isValid();
 
@@ -938,7 +938,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::MuteTabMediaAction:
 			state.icon = ThemesManager::createIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium"));
-			state.text = (isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
+			state.text = (isAudioMuted() ? QCoreApplication::translate("actions", "Unmute Tab Media") : QCoreApplication::translate("actions", "Mute Tab Media"));
 
 			break;
 		case ActionsManager::GoBackAction:
@@ -1069,7 +1069,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			{
 				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(parameters.contains(QLatin1String("searchEngine")) ? parameters[QLatin1String("searchEngine")].toString() : getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
 
-				state.text = (searchEngine.isValid() ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
+				state.text = (searchEngine.isValid() ? searchEngine.title : QCoreApplication::translate("actions", "Search"));
 				state.icon = (searchEngine.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : searchEngine.icon);
 				state.isEnabled = searchEngine.isValid();
 			}
@@ -1080,7 +1080,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::BookmarkPageAction:
-			state.text = (BookmarksManager::hasBookmark(getUrl()) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
+			state.text = (BookmarksManager::hasBookmark(getUrl()) ? QCoreApplication::translate("actions", "Edit Bookmark…") : QCoreApplication::translate("actions", "Add Bookmark…"));
 
 			break;
 		case ActionsManager::LoadPluginsAction:

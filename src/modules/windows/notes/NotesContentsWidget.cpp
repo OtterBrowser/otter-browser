@@ -350,7 +350,7 @@ ActionsManager::ActionDefinition::State NotesContentsWidget::getActionState(int 
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
-			state.text = QT_TRANSLATE_NOOP("actions", "Copy address of source page");
+			state.text = QCoreApplication::translate("actions", "Copy address of source page");
 			state.isEnabled = (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && !m_ui->notesViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString().isEmpty());
 
 			return state;

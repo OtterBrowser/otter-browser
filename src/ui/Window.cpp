@@ -792,7 +792,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::PinTabAction:
-			state.text = (m_isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
+			state.text = (m_isPinned ? QCoreApplication::translate("actions", "Unpin Tab") : QCoreApplication::translate("actions", "Pin Tab"));
 
 			break;
 		case ActionsManager::CloseTabAction:

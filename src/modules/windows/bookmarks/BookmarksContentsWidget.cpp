@@ -342,7 +342,7 @@ ActionsManager::ActionDefinition::State BookmarksContentsWidget::getActionState(
 
 			return state;
 		case ActionsManager::DeleteAction:
-			state.text = QT_TRANSLATE_NOOP("actions", "Remove Bookmark");
+			state.text = QCoreApplication::translate("actions", "Remove Bookmark");
 			state.isEnabled = m_ui->deleteButton->isEnabled();
 
 			return state;

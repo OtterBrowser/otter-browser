@@ -467,7 +467,7 @@ ActionsManager::ActionDefinition::State CookiesContentsWidget::getActionState(in
 	switch (identifier)
 	{
 		case ActionsManager::DeleteAction:
-			state.text = QT_TRANSLATE_NOOP("actions", "Remove Cookie");
+			state.text = QCoreApplication::translate("actions", "Remove Cookie");
 			state.isEnabled = m_ui->deleteButton->isEnabled();
 
 			return state;

@@ -2250,7 +2250,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				if (panel.isEmpty())
 				{
 					state.icon = ThemesManager::createIcon(QLatin1String("window-close"));
-					state.text = QT_TRANSLATE_NOOP("actions", "Close Panel");
+					state.text = QCoreApplication::translate("actions", "Close Panel");
 				}
 				else
 				{
