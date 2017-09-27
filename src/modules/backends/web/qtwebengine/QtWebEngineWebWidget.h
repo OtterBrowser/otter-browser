@@ -105,9 +105,9 @@ protected slots:
 	void pageLoadFinished();
 	void linkHovered(const QString &link);
 #if QT_VERSION < 0x050700
-	void iconReplyFinished();
+	void handleIconReplyFinished();
 #endif
-	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
+	void handleViewSourceReplyFinished();
 #if QT_VERSION < 0x050700
 	void handleIconChange(const QUrl &url);
 #endif

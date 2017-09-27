@@ -57,7 +57,7 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	m_engineVersion = engineExpression.match(userAgent).captured(1);
 }
 
-void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
+void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item)
 {
 #if QT_VERSION >= 0x050700
 	if (item->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
@@ -248,7 +248,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		handleOptionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebEngineWebBackend::handleOptionChanged);
-		connect(QWebEngineProfile::defaultProfile(), &QWebEngineProfile::downloadRequested, this, &QtWebEngineWebBackend::downloadFile);
+		connect(QWebEngineProfile::defaultProfile(), &QWebEngineProfile::downloadRequested, this, &QtWebEngineWebBackend::handleDownloadRequested);
 	}
 
 	return new QtWebEngineWebWidget(parameters, this, parent);

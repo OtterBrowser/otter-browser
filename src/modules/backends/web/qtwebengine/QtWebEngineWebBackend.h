@@ -52,7 +52,7 @@ public:
 	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 
 protected slots:
-	void downloadFile(QWebEngineDownloadItem *item);
+	void handleDownloadRequested(QWebEngineDownloadItem *item);
 	void handleOptionChanged(int identifier);
 
 private:

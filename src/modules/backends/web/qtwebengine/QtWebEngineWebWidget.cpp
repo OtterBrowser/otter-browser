@@ -80,32 +80,32 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 {
 	setFocusPolicy(Qt::StrongFocus);
 
-	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(notifyDocumentLoadingProgress(int)));
-	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
-	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
-	connect(m_page, SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
+	connect(m_page, &QtWebEnginePage::loadProgress, this, &QtWebEngineWebWidget::notifyDocumentLoadingProgress);
+	connect(m_page, &QtWebEnginePage::loadStarted, this, &QtWebEngineWebWidget::pageLoadStarted);
+	connect(m_page, &QtWebEnginePage::loadFinished, this, &QtWebEngineWebWidget::pageLoadFinished);
+	connect(m_page, &QtWebEnginePage::linkHovered, this, &QtWebEngineWebWidget::linkHovered);
 #if QT_VERSION < 0x050700
-	connect(m_page, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(handleIconChange(QUrl)));
+	connect(m_page, &QtWebEnginePage::iconUrlChanged, this, &QtWebEngineWebWidget::handleIconChange);
 #else
-	connect(m_page, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
+	connect(m_page, &QtWebEnginePage::iconChanged, this, &QtWebEngineWebWidget::iconChanged);
 #endif
-	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
-	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebEnginePage::NavigationType)), this, SIGNAL(aboutToNavigate()));
-	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)));
-	connect(m_page, SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
-	connect(m_page, SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
-	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
-	connect(m_page, SIGNAL(fullScreenRequested(QWebEngineFullScreenRequest)), this, SLOT(handleFullScreenRequest(QWebEngineFullScreenRequest)));
-	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
-	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
+	connect(m_page, &QtWebEnginePage::requestedPopupWindow, this, &QtWebEngineWebWidget::requestedPopupWindow);
+	connect(m_page, &QtWebEnginePage::aboutToNavigate, this, &QtWebEngineWebWidget::aboutToNavigate);
+	connect(m_page, &QtWebEnginePage::requestedNewWindow, this, &QtWebEngineWebWidget::requestedNewWindow);
+	connect(m_page, &QtWebEnginePage::authenticationRequired, this, &QtWebEngineWebWidget::handleAuthenticationRequired);
+	connect(m_page, &QtWebEnginePage::proxyAuthenticationRequired, this, &QtWebEngineWebWidget::handleProxyAuthenticationRequired);
+	connect(m_page, &QtWebEnginePage::windowCloseRequested, this, &QtWebEngineWebWidget::handleWindowCloseRequest);
+	connect(m_page, &QtWebEnginePage::fullScreenRequested, this, &QtWebEngineWebWidget::handleFullScreenRequest);
+	connect(m_page, &QtWebEnginePage::featurePermissionRequested, this, &QtWebEngineWebWidget::handlePermissionRequest);
+	connect(m_page, &QtWebEnginePage::featurePermissionRequestCanceled, this, &QtWebEngineWebWidget::handlePermissionCancel);
 #if QT_VERSION >= 0x050700
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SIGNAL(isAudibleChanged(bool)));
+	connect(m_page, &QtWebEnginePage::recentlyAudibleChanged, this, &QtWebEngineWebWidget::isAudibleChanged);
 #endif
-	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(notifyNavigationActionsChanged()));
-	connect(m_page, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
-	connect(m_page, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
+	connect(m_page, &QtWebEnginePage::viewingMediaChanged, this, &QtWebEngineWebWidget::notifyNavigationActionsChanged);
+	connect(m_page, &QtWebEnginePage::titleChanged, this, &QtWebEngineWebWidget::notifyTitleChanged);
+	connect(m_page, &QtWebEnginePage::urlChanged, this, &QtWebEngineWebWidget::notifyUrlChanged);
 #if QT_VERSION < 0x050700
-	connect(m_page, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(notifyIconChanged()));
+	connect(m_page, &QtWebEnginePage::iconUrlChanged, this, &QtWebEngineWebWidget::notifyIconChanged);
 #endif
 	connect(m_page->action(QWebEnginePage::Redo), &QAction::changed, this, &QtWebEngineWebWidget::notifyRedoActionStateChanged);
 	connect(m_page->action(QWebEnginePage::Undo), &QAction::changed, this, &QtWebEngineWebWidget::notifyUndoActionStateChanged);
@@ -192,7 +192,7 @@ void QtWebEngineWebWidget::ensureInitialized()
 
 		setLayout(layout);
 
-		connect(m_webView, SIGNAL(renderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus)));
+		connect(m_webView, &QWebEngineView::renderProcessTerminated, this, &QtWebEngineWebWidget::notifyRenderProcessTerminated);
 	}
 }
 
@@ -512,8 +512,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
-				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
-				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+				connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
 
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
@@ -598,8 +597,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
 
-				connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
-				connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+				connect(this, &QtWebEngineWebWidget::aboutToReload, dialog, &ContentsDialog::close);
+				connect(imagePropertiesDialog, &ImagePropertiesDialog::finished, dialog, &ContentsDialog::close);
 
 				showDialog(dialog, false);
 			}
@@ -620,7 +619,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
-					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+					connect(this, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 					showDialog(&dialog);
 				});
@@ -916,8 +915,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
-				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
-				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+				connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
 
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
@@ -966,7 +964,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 }
 
 #if QT_VERSION < 0x050700
-void QtWebEngineWebWidget::iconReplyFinished()
+void QtWebEngineWebWidget::handleIconReplyFinished()
 {
 	if (!m_iconReply)
 	{
@@ -982,18 +980,21 @@ void QtWebEngineWebWidget::iconReplyFinished()
 }
 #endif
 
-void QtWebEngineWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
+void QtWebEngineWebWidget::handleViewSourceReplyFinished()
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
-	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+	if (reply)
 	{
-		m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
+		if (reply->error() == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+		{
+			m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
+		}
+
+		m_viewSourceReplies.remove(reply);
+
+		reply->deleteLater();
 	}
-
-	m_viewSourceReplies.remove(reply);
-
-	reply->deleteLater();
 }
 
 #if QT_VERSION < 0x050700
@@ -1015,7 +1016,7 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 	m_iconReply = NetworkManagerFactory::getNetworkManager()->get(request);
 	m_iconReply->setParent(this);
 
-	connect(m_iconReply, SIGNAL(finished()), this, SLOT(iconReplyFinished()));
+	connect(m_iconReply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleIconReplyFinished()));
 }
 #endif
 
@@ -1026,8 +1027,8 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
-	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
-	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 	showDialog(&dialog);
 }
@@ -1041,8 +1042,8 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
-	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
-	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 	showDialog(&dialog);
 }
@@ -1224,11 +1225,11 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 
 	m_page->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
 
-	disconnect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+	disconnect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
 
 	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
 	{
-		connect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+		connect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
 	}
 }
 
@@ -1610,8 +1611,8 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 	file.close();
 
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
 
 	eventLoop.exec();
 
@@ -1669,8 +1670,8 @@ int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 		eventLoop.quit();
 	});
 
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
 
 	eventLoop.exec();
 
@@ -1704,8 +1705,8 @@ bool QtWebEngineWebWidget::canFastForward() const
 		eventLoop.quit();
 	});
 
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
 
 	eventLoop.exec();
 
@@ -1846,7 +1847,10 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 					{
 						setClickPosition(mouseEvent->pos());
 
-						QTimer::singleShot(250, this, SLOT(showContextMenu()));
+						QTimer::singleShot(250, this, [&]()
+						{
+							showContextMenu();
+						});
 					}
 				}
 			}
@@ -1871,8 +1875,8 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 					eventLoop.quit();
 				});
 
-				connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-				connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+				connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+				connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
 
 				eventLoop.exec();
 
