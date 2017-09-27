@@ -45,7 +45,7 @@ QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(
 	m_closeButton->raise();
 	m_closeButton->move(QPoint((width() - 19), 3));
 
-	connect(m_closeButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
+	connect(m_closeButton, &QToolButton::clicked, this, &QtWebKitInspector::hideInspector);
 #endif
 }
 

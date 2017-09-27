@@ -97,11 +97,11 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 
 	setCookieJar(m_cookieJarProxy);
 
-	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(handleRequestFinished(QNetworkReply*)));
-	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
-	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
-	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
-	connect(NetworkManagerFactory::getInstance(), SIGNAL(onlineStateChanged(bool)), this, SLOT(handleOnlineStateChanged(bool)));
+	connect(this, &QtWebKitNetworkManager::finished, this, &QtWebKitNetworkManager::handleRequestFinished);
+	connect(this, &QtWebKitNetworkManager::authenticationRequired, this, &QtWebKitNetworkManager::handleAuthenticationRequired);
+	connect(this, &QtWebKitNetworkManager::proxyAuthenticationRequired, this, &QtWebKitNetworkManager::handleProxyAuthenticationRequired);
+	connect(this, &QtWebKitNetworkManager::sslErrors, this, &QtWebKitNetworkManager::handleSslErrors);
+	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::onlineStateChanged, this, &QtWebKitNetworkManager::handleOnlineStateChanged);
 }
 
 void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
@@ -162,11 +162,11 @@ void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
 
 		setParent(nullptr);
 
-		connect(reply, SIGNAL(finished()), this, SLOT(handleTransferFinished()));
+		connect(reply, &QNetworkReply::finished, this, &QtWebKitNetworkManager::handleTransferFinished);
 	}
 }
 
-void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
@@ -247,7 +247,7 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 		setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
 	}
 
-	disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+	disconnect(reply, &QNetworkReply::downloadProgress, this, &QtWebKitNetworkManager::handleDownloadProgress);
 }
 
 void QtWebKitNetworkManager::handleTransferFinished()
@@ -288,9 +288,9 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
-	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-	connect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), authenticationDialog, SLOT(authenticated(QAuthenticator*,bool)));
+	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
+	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
+	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::authenticated, authenticationDialog, &AuthenticationDialog::authenticated);
 
 	m_widget->showDialog(&dialog);
 
@@ -318,9 +318,9 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
-	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-	connect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), authenticationDialog, SLOT(authenticated(QAuthenticator*,bool)));
+	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
+	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
+	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::authenticated, authenticationDialog, &AuthenticationDialog::authenticated);
 
 	m_widget->showDialog(&dialog);
 
@@ -756,13 +756,15 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
-		reply = new LocalListingNetworkReply(request, this);
+		LocalListingNetworkReply *localListingReply(new LocalListingNetworkReply(request, this));
+
+		reply = localListingReply;
 
 		if (m_widget)
 		{
 			if (reply->error() == QNetworkReply::NoError)
 			{
-				connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
+				connect(localListingReply, &LocalListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsErrorPage);
 			}
 			else
 			{
@@ -772,13 +774,15 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	}
 	else if (operation == GetOperation && request.url().scheme() == QLatin1String("ftp"))
 	{
-		reply = new QtWebKitFtpListingNetworkReply(request, this);
+		QtWebKitFtpListingNetworkReply *ftpListingReply(new QtWebKitFtpListingNetworkReply(request, this));
+
+		reply = ftpListingReply;
 
 		if (m_widget)
 		{
 			if (reply->error() == QNetworkReply::NoError)
 			{
-				connect(reply, SIGNAL(listingError()), m_widget->getPage(), SLOT(markAsErrorPage()));
+				connect(ftpListingReply, &QtWebKitFtpListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsErrorPage);
 			}
 			else
 			{
@@ -819,7 +823,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	m_replies[reply] = {0, false};
 
-	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+	connect(reply, &QNetworkReply::downloadProgress, this, &QtWebKitNetworkManager::handleDownloadProgress);
 
 	if (m_loadingSpeedTimer == 0)
 	{

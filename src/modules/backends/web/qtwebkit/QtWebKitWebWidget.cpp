@@ -131,42 +131,42 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	setZoom(SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitWebWidget::handleOptionChanged);
-	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,SessionsManager::OpenHints)));
-	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
-	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
-	connect(m_page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
-	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
-	connect(m_page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
-	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(handleLinkHovered(QString)));
-	connect(m_page, &QWebPage::microFocusChanged, [&]()
+	connect(m_page, &QtWebKitPage::requestedNewWindow, this, &QtWebKitWebWidget::requestedNewWindow);
+	connect(m_page, &QtWebKitPage::requestedPopupWindow, this, &QtWebKitWebWidget::requestedPopupWindow);
+	connect(m_page, &QtWebKitPage::saveFrameStateRequested, this, &QtWebKitWebWidget::saveState);
+	connect(m_page, &QtWebKitPage::restoreFrameStateRequested, this, &QtWebKitWebWidget::restoreState);
+	connect(m_page, &QtWebKitPage::downloadRequested, this, &QtWebKitWebWidget::handleDownloadRequested);
+	connect(m_page, &QtWebKitPage::unsupportedContent, this, &QtWebKitWebWidget::handleUnsupportedContent);
+	connect(m_page, &QtWebKitPage::linkHovered, this, &QtWebKitWebWidget::setStatusMessageOverride);
+	connect(m_page, &QtWebKitPage::microFocusChanged, [&]()
 	{
 		emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 	});
-	connect(m_page, SIGNAL(printRequested(QWebFrame*)), this, SLOT(handlePrintRequest(QWebFrame*)));
-	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
+	connect(m_page, &QtWebKitPage::printRequested, this, &QtWebKitWebWidget::handlePrintRequest);
+	connect(m_page, &QtWebKitPage::windowCloseRequested, this, &QtWebKitWebWidget::handleWindowCloseRequest);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	connect(m_page, SIGNAL(fullScreenRequested(QWebFullScreenRequest)), this, SLOT(handleFullScreenRequest(QWebFullScreenRequest)));
+	connect(m_page, &QtWebKitPage::fullScreenRequested, this, &QtWebKitWebWidget::handleFullScreenRequest);
 #endif
-	connect(m_page, SIGNAL(featurePermissionRequested(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionRequest(QWebFrame*,QWebPage::Feature)));
-	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
-	connect(m_page, SIGNAL(loadStarted()), this, SLOT(handleLoadStarted()));
-	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(handleLoadProgress(int)));
-	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished(bool)));
+	connect(m_page, &QtWebKitPage::featurePermissionRequested, this, &QtWebKitWebWidget::handlePermissionRequest);
+	connect(m_page, &QtWebKitPage::featurePermissionRequestCanceled, this, &QtWebKitWebWidget::handlePermissionCancel);
+	connect(m_page, &QtWebKitPage::loadStarted, this, &QtWebKitWebWidget::handleLoadStarted);
+	connect(m_page, &QtWebKitPage::loadProgress, this, &QtWebKitWebWidget::handleLoadProgress);
+	connect(m_page, &QtWebKitPage::loadFinished, this, &QtWebKitWebWidget::handleLoadFinished);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SIGNAL(isAudibleChanged(bool)));
+	connect(m_page, &QtWebKitPage::recentlyAudibleChanged, this, &QtWebKitWebWidget::isAudibleChanged);
 #endif
-	connect(m_page->mainFrame(), SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
-	connect(m_page->mainFrame(), SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
-	connect(m_page->mainFrame(), SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
-	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(geometryChanged()));
-	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(geometryChanged()));
-	connect(m_page->undoStack(), SIGNAL(canRedoChanged(bool)), this, SLOT(notifyRedoActionStateChanged()));
-	connect(m_page->undoStack(), SIGNAL(redoTextChanged(QString)), this, SLOT(notifyRedoActionStateChanged()));
-	connect(m_page->undoStack(), SIGNAL(canUndoChanged(bool)), this, SLOT(notifyUndoActionStateChanged()));
-	connect(m_page->undoStack(), SIGNAL(undoTextChanged(QString)), this, SLOT(notifyUndoActionStateChanged()));
-	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
-	connect(m_networkManager, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
-	connect(m_networkManager, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SLOT(notifyContentStateChanged()));
+	connect(m_page->mainFrame(), &QWebFrame::titleChanged, this, &QtWebKitWebWidget::notifyTitleChanged);
+	connect(m_page->mainFrame(), &QWebFrame::urlChanged, this, &QtWebKitWebWidget::notifyUrlChanged);
+	connect(m_page->mainFrame(), &QWebFrame::iconChanged, this, &QtWebKitWebWidget::notifyIconChanged);
+	connect(m_page->mainFrame(), &QWebFrame::contentsSizeChanged, this, &QtWebKitWebWidget::geometryChanged);
+	connect(m_page->mainFrame(), &QWebFrame::initialLayoutCompleted, this, &QtWebKitWebWidget::geometryChanged);
+	connect(m_page->undoStack(), &QUndoStack::canRedoChanged, this, &QtWebKitWebWidget::notifyRedoActionStateChanged);
+	connect(m_page->undoStack(), &QUndoStack::redoTextChanged, this, &QtWebKitWebWidget::notifyRedoActionStateChanged);
+	connect(m_page->undoStack(), &QUndoStack::canUndoChanged, this, &QtWebKitWebWidget::notifyUndoActionStateChanged);
+	connect(m_page->undoStack(), &QUndoStack::undoTextChanged, this, &QtWebKitWebWidget::notifyUndoActionStateChanged);
+	connect(m_networkManager, &QtWebKitNetworkManager::pageInformationChanged, this, &QtWebKitWebWidget::pageInformationChanged);
+	connect(m_networkManager, &QtWebKitNetworkManager::requestBlocked, this, &QtWebKitWebWidget::requestBlocked);
+	connect(m_networkManager, &QtWebKitNetworkManager::contentStateChanged, this, &QtWebKitWebWidget::notifyContentStateChanged);
 	connect(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), &QShortcut::activated, [&]()
 	{
 		triggerAction(ActionsManager::SelectAllAction);
@@ -248,86 +248,6 @@ void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine
 void QtWebKitWebWidget::print(QPrinter *printer)
 {
 	m_webView->print(printer);
-}
-
-void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
-{
-	if ((!getCurrentHitTestResult().imageUrl.isEmpty() && request.url() == getCurrentHitTestResult().imageUrl) || (!getCurrentHitTestResult().mediaUrl.isEmpty() && request.url() == getCurrentHitTestResult().mediaUrl))
-	{
-		NetworkCache *cache(NetworkManagerFactory::getCache());
-
-		if (cache && cache->metaData(request.url()).isValid())
-		{
-			QIODevice *device(cache->data(request.url()));
-
-			if (device && device->size() > 0)
-			{
-				const QString path(Utils::getSavePath(request.url().fileName()).path);
-
-				if (path.isEmpty())
-				{
-					device->deleteLater();
-
-					return;
-				}
-
-				QFile file(path);
-
-				if (!file.open(QIODevice::WriteOnly))
-				{
-					QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
-				}
-
-				file.write(device->readAll());
-				file.close();
-
-				device->deleteLater();
-
-				return;
-			}
-
-			if (device)
-			{
-				device->deleteLater();
-			}
-		}
-		else if (!getCurrentHitTestResult().imageUrl.isEmpty() && getCurrentHitTestResult().imageUrl.url().contains(QLatin1String(";base64,")))
-		{
-			const QString imageUrl(getCurrentHitTestResult().imageUrl.url());
-			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
-			const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
-
-			if (path.isEmpty())
-			{
-				return;
-			}
-
-			QImageWriter writer(path);
-
-			if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
-			{
-				Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), Console::OtherCategory, Console::ErrorLevel, path, -1, getWindowIdentifier());
-			}
-
-			return;
-		}
-
-		QNetworkRequest mutableRequest(request);
-		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
-
-		new Transfer(m_networkManager->get(mutableRequest), QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
-	}
-	else
-	{
-		startDelayedTransfer(new Transfer(request, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
-	}
-}
-
-void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
-{
-	m_networkManager->registerTransfer(reply);
-
-	startDelayedTransfer(new Transfer(reply, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
@@ -450,6 +370,86 @@ void QtWebKitWebWidget::openRequest(const QNetworkRequest &request, QNetworkAcce
 	});
 }
 
+void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
+{
+	if ((!getCurrentHitTestResult().imageUrl.isEmpty() && request.url() == getCurrentHitTestResult().imageUrl) || (!getCurrentHitTestResult().mediaUrl.isEmpty() && request.url() == getCurrentHitTestResult().mediaUrl))
+	{
+		NetworkCache *cache(NetworkManagerFactory::getCache());
+
+		if (cache && cache->metaData(request.url()).isValid())
+		{
+			QIODevice *device(cache->data(request.url()));
+
+			if (device && device->size() > 0)
+			{
+				const QString path(Utils::getSavePath(request.url().fileName()).path);
+
+				if (path.isEmpty())
+				{
+					device->deleteLater();
+
+					return;
+				}
+
+				QFile file(path);
+
+				if (!file.open(QIODevice::WriteOnly))
+				{
+					QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
+				}
+
+				file.write(device->readAll());
+				file.close();
+
+				device->deleteLater();
+
+				return;
+			}
+
+			if (device)
+			{
+				device->deleteLater();
+			}
+		}
+		else if (!getCurrentHitTestResult().imageUrl.isEmpty() && getCurrentHitTestResult().imageUrl.url().contains(QLatin1String(";base64,")))
+		{
+			const QString imageUrl(getCurrentHitTestResult().imageUrl.url());
+			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
+			const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
+
+			if (path.isEmpty())
+			{
+				return;
+			}
+
+			QImageWriter writer(path);
+
+			if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
+			{
+				Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), Console::OtherCategory, Console::ErrorLevel, path, -1, getWindowIdentifier());
+			}
+
+			return;
+		}
+
+		QNetworkRequest mutableRequest(request);
+		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+		new Transfer(m_networkManager->get(mutableRequest), QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+	}
+	else
+	{
+		startDelayedTransfer(new Transfer(request, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+	}
+}
+
+void QtWebKitWebWidget::handleUnsupportedContent(QNetworkReply *reply)
+{
+	m_networkManager->registerTransfer(reply);
+
+	startDelayedTransfer(new Transfer(reply, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+}
+
 void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
@@ -468,11 +468,11 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 
 			break;
 		case SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption:
-			disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+			disconnect(m_page, &QtWebKitPage::statusBarMessage, this, &QtWebKitWebWidget::setStatusMessage);
 
 			if (value.toBool() || SettingsManager::getOption(identifier, getUrl()).toBool())
 			{
-				connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+				connect(m_page, &QtWebKitPage::statusBarMessage, this, &QtWebKitWebWidget::setStatusMessage);
 			}
 			else
 			{
@@ -498,7 +498,7 @@ void QtWebKitWebWidget::handleLoadStarted()
 	m_loadingState = OngoingLoadingState;
 
 	setStatusMessage(QString());
-	setStatusMessage(QString(), true);
+	setStatusMessageOverride(QString());
 
 	emit geometryChanged();
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
@@ -538,23 +538,21 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	emit loadingStateChanged(FinishedLoadingState);
 }
 
-void QtWebKitWebWidget::handleLinkHovered(const QString &link)
-{
-	setStatusMessage(link, true);
-}
-
-void QtWebKitWebWidget::handleViewSourceReplyFinished(QNetworkReply::NetworkError error)
+void QtWebKitWebWidget::handleViewSourceReplyFinished()
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
-	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+	if (reply)
 	{
-		m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
+		if (reply->error() == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+		{
+			m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
+		}
+
+		m_viewSourceReplies.remove(reply);
+
+		reply->deleteLater();
 	}
-
-	m_viewSourceReplies.remove(reply);
-
-	reply->deleteLater();
 }
 
 void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
@@ -809,17 +807,17 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::WebSecurityEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableWebSecurityOption), url).toBool());
 #endif
 
-	disconnect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
-	disconnect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+	disconnect(m_page, &QtWebKitPage::geometryChangeRequested, this, &QtWebKitWebWidget::requestedGeometryChange);
+	disconnect(m_page, &QtWebKitPage::statusBarMessage, this, &QtWebKitWebWidget::setStatusMessage);
 
 	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
 	{
-		connect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+		connect(m_page, &QtWebKitPage::geometryChangeRequested, this, &QtWebKitWebWidget::requestedGeometryChange);
 	}
 
 	if (getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, url).toBool())
 	{
-		connect(m_page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+		connect(m_page, &QtWebKitPage::statusBarMessage, this, &QtWebKitWebWidget::setStatusMessage);
 	}
 	else
 	{
@@ -1059,7 +1057,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::SaveLinkToDiskAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				downloadFile(QNetworkRequest(getCurrentHitTestResult().linkUrl));
+				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().linkUrl));
 			}
 			else
 			{
@@ -1133,8 +1131,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
-				connect(reply, SIGNAL(finished()), this, SLOT(handleViewSourceReplyFinished()));
-				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleViewSourceReplyFinished(QNetworkReply::NetworkError)));
+				connect(reply, &QNetworkReply::finished, this, &QtWebKitWebWidget::handleViewSourceReplyFinished);
 
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
@@ -1157,7 +1154,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::SaveImageToDiskAction:
 			if (getCurrentHitTestResult().imageUrl.isValid())
 			{
-				downloadFile(QNetworkRequest(getCurrentHitTestResult().imageUrl));
+				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().imageUrl));
 			}
 
 			return;
@@ -1232,8 +1229,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
 
-				connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
-				connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+				connect(this, &QtWebKitWebWidget::aboutToReload, dialog, &ContentsDialog::close);
+				connect(imagePropertiesDialog, &ImagePropertiesDialog::finished, dialog, &ContentsDialog::close);
 
 				showDialog(dialog, false);
 			}
@@ -1242,7 +1239,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::SaveMediaToDiskAction:
 			if (getCurrentHitTestResult().mediaUrl.isValid())
 			{
-				downloadFile(QNetworkRequest(getCurrentHitTestResult().mediaUrl));
+				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().mediaUrl));
 			}
 
 			return;
@@ -1679,8 +1676,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
-				connect(reply, SIGNAL(finished()), this, SLOT(handleViewSourceReplyFinished()));
-				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleViewSourceReplyFinished(QNetworkReply::NetworkError)));
+				connect(reply, &QNetworkReply::finished, this, &QtWebKitWebWidget::handleViewSourceReplyFinished);
 
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
@@ -2799,7 +2795,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						{
 							setClickPosition(mouseEvent->pos());
 
-							QTimer::singleShot(250, this, SLOT(showContextMenu()));
+							QTimer::singleShot(250, this, [&]()
+							{
+								showContextMenu();
+							});
 						}
 					}
 				}

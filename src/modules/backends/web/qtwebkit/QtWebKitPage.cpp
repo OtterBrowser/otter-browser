@@ -51,8 +51,8 @@ QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObj
 	m_widget(parent),
 	m_isErrorPage(false)
 {
-	connect(frame, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
-	connect(frame, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
+	connect(frame, &QWebFrame::destroyed, this, &QtWebKitFrame::deleteLater);
+	connect(frame, &QWebFrame::loadFinished, this, &QtWebKitFrame::handleLoadFinished);
 }
 
 void QtWebKitFrame::runUserScripts(const QUrl &url) const
@@ -198,12 +198,15 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	handleFrameCreation(mainFrame());
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitPage::handleOptionChanged);
-	connect(this, SIGNAL(frameCreated(QWebFrame*)), this, SLOT(handleFrameCreation(QWebFrame*)));
+	connect(this, &QtWebKitPage::frameCreated, this, &QtWebKitPage::handleFrameCreation);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
+	connect(this, &QtWebKitPage::consoleMessageReceived, this, &QtWebKitPage::handleConsoleMessage);
 #endif
-	connect(mainFrame(), SIGNAL(loadStarted()), this, SLOT(updateStyleSheets()));
-	connect(mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
+	connect(mainFrame(), &QWebFrame::loadStarted, this, [&]()
+	{
+		updateStyleSheets();
+	});
+	connect(mainFrame(), &QWebFrame::loadFinished, this, &QtWebKitPage::handleLoadFinished);
 }
 
 QtWebKitPage::QtWebKitPage() : QWebPage(),
@@ -316,7 +319,7 @@ void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 		m_mainFrame = frameWrapper;
 	}
 
-	connect(this, SIGNAL(errorPageChanged(QWebFrame*,bool)), frameWrapper, SLOT(handleErrorPageChanged(QWebFrame*,bool)));
+	connect(this, &QtWebKitPage::errorPageChanged, frameWrapper, &QtWebKitFrame::handleErrorPageChanged);
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -447,7 +450,7 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 	m_widget->showDialog(&dialog);
 
@@ -495,7 +498,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 				QtWebKitPage *page(new QtWebKitPage());
 				page->markAsPopup();
 
-				connect(page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(validatePopup(QUrl)));
+				connect(page, &QtWebKitPage::aboutToNavigate, this, &QtWebKitPage::validatePopup);
 
 				return page;
 			}
@@ -642,7 +645,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 			ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), nullptr, m_widget);
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 
-			connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+			connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 			m_widget->showDialog(&dialog);
 
@@ -699,7 +702,7 @@ bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 	m_widget->showDialog(&dialog);
 
@@ -739,7 +742,7 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 	m_widget->showDialog(&dialog);
 
@@ -977,7 +980,7 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 	{
 		ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), nullptr, m_widget);
 
-		connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+		connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
 		m_widget->showDialog(&dialog);
 

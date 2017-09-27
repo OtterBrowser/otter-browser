@@ -178,7 +178,7 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 
 	QtWebKitWebWidget *widget(new QtWebKitWebWidget(parameters, this, nullptr, parent));
 
-	connect(widget, SIGNAL(widgetActivated(WebWidget*)), this, SLOT(setActiveWidget(WebWidget*)));
+	connect(widget, &QtWebKitWebWidget::widgetActivated, this, &QtWebKitWebBackend::setActiveWidget);
 
 	return widget;
 }
@@ -292,7 +292,7 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 
 bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 {
-	connect(new QtWebKitThumbnailFetchJob(url, size, this), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)));
+	connect(new QtWebKitThumbnailFetchJob(url, size, this), &QtWebKitThumbnailFetchJob::thumbnailAvailable, this, &QtWebKitWebBackend::thumbnailAvailable);
 
 	return true;
 }
@@ -304,7 +304,7 @@ QtWebKitThumbnailFetchJob::QtWebKitThumbnailFetchJob(const QUrl &url, const QSiz
 {
 	m_page->setParent(this);
 
-	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handlePageLoadFinished(bool)));
+	connect(m_page, &QtWebKitPage::loadFinished, this, &QtWebKitThumbnailFetchJob::handlePageLoadFinished);
 }
 
 void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)

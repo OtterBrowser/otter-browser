@@ -44,11 +44,13 @@ public:
 	void runUserScripts(const QUrl &url) const;
 	bool isErrorPage() const;
 
+public slots:
+	void handleErrorPageChanged(QWebFrame *frame, bool isErrorPage);
+
 protected:
 	void applyContentBlockingRules(const QStringList &rules, bool remove);
 
 protected slots:
-	void handleErrorPageChanged(QWebFrame *frame, bool isErrorPage);
 	void handleLoadFinished();
 
 private:

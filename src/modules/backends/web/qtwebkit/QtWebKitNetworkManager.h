@@ -69,7 +69,7 @@ protected:
 	QVariant getOption(int identifier, const QUrl &url) const;
 
 protected slots:
-	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+	void handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void handleRequestFinished(QNetworkReply *reply);
 	void handleTransferFinished();
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);

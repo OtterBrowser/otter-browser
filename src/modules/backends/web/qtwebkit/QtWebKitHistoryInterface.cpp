@@ -25,7 +25,7 @@ namespace Otter
 
 QtWebKitHistoryInterface::QtWebKitHistoryInterface(QObject *parent) : QWebHistoryInterface(parent)
 {
-	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(cleared()), this, SLOT(clear()));
+	connect(HistoryManager::getBrowsingHistoryModel(), &HistoryModel::cleared, this, &QtWebKitHistoryInterface::clear);
 }
 
 void QtWebKitHistoryInterface::clear()

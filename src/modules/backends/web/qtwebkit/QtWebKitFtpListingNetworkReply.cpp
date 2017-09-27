@@ -39,10 +39,10 @@ QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkReq
 {
 	setRequest(request);
 
-	connect(m_ftp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(addEntry(QUrlInfo)));
-	connect(m_ftp, SIGNAL(readyRead()), this, SLOT(processData()));
-	connect(m_ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(processCommand(int, bool)));
-	connect(m_ftp, SIGNAL(dataTransferProgress(qint64,qint64)), this, SIGNAL(downloadProgress(qint64,qint64)));
+	connect(m_ftp, &QFtp::listInfo, this, &QtWebKitFtpListingNetworkReply::addEntry);
+	connect(m_ftp, &QFtp::readyRead, this, &QtWebKitFtpListingNetworkReply::processData);
+	connect(m_ftp, &QFtp::commandFinished, this, &QtWebKitFtpListingNetworkReply::processCommand);
+	connect(m_ftp, &QFtp::dataTransferProgress, this, &QtWebKitFtpListingNetworkReply::downloadProgress);
 
 	m_ftp->connectToHost(request.url().host());
 }

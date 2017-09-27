@@ -33,7 +33,7 @@ QtWebKitSpellChecker::QtWebKitSpellChecker() : QWebSpellChecker()
 {
 	setDictionary(QtWebKitWebBackend::getActiveDictionary());
 
-	connect(QtWebKitWebBackend::getInstance(), SIGNAL(activeDictionaryChanged(QString)), this, SLOT(setDictionary(QString)));
+	connect(QtWebKitWebBackend::getInstance(), &QtWebKitWebBackend::activeDictionaryChanged, this, &QtWebKitSpellChecker::setDictionary);
 }
 
 void QtWebKitSpellChecker::toggleContinousSpellChecking()
