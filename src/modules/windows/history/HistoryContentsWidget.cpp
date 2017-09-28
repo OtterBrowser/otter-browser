@@ -49,6 +49,8 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	}
 
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Title"), tr("Date")}));
+	m_model->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
+	m_model->setHeaderData(1, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 	m_model->setSortRole(Qt::DisplayRole);
 
 	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);

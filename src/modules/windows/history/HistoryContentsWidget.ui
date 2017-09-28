@@ -42,10 +42,7 @@
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <attribute name="headerDefaultSectionSize">
-      <number>250</number>
-     </attribute>
-     <attribute name="headerStretchLastSection">
-      <bool>false</bool>
+      <number>200</number>
      </attribute>
     </widget>
    </item>
