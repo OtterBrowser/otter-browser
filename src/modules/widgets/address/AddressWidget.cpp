@@ -76,7 +76,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 		if (index.row() != 0)
 		{
-			QPen pen(Qt::lightGray);
+			QPen pen(option.palette.color(QPalette::Disabled, QPalette::Text).lighter());
 			pen.setWidth(1);
 			pen.setStyle(Qt::SolidLine);
 
