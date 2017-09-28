@@ -114,7 +114,7 @@ void CookiesContentsWidget::addCookie()
 void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 {
 	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
-	QStandardItem *domainItem(findDomain(domain));
+	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (domainItem)
 	{
@@ -157,7 +157,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 {
 	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
-	QStandardItem *domainItem(findDomain(domain));
+	QStandardItem *domainItem(findDomainItem(domain));
 
 	if (domainItem)
 	{
@@ -259,7 +259,7 @@ void CookiesContentsWidget::removeDomainCookies()
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		const QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomain(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
+		const QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomainItem(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
 
 		if (domainItem)
 		{
@@ -420,13 +420,15 @@ void CookiesContentsWidget::updateActions()
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
-QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
+QStandardItem* CookiesContentsWidget::findDomainItem(const QString &domain)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (domain == m_model->item(i, 0)->toolTip())
+		QStandardItem *item(m_model->item(i, 0));
+
+		if (item && domain == item->toolTip())
 		{
-			return m_model->item(i, 0);
+			return item;
 		}
 	}
 
