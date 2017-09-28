@@ -88,7 +88,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 		const QString title(index.data(AddressCompletionModel::TitleRole).toString());
 
-		titleRectangle = titleRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+		titleRectangle = titleRectangle.marginsRemoved(QMargins(0, 2, 0, 2));
 
 		if (isRightToLeft)
 		{
@@ -129,17 +129,15 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	if (isRightToLeft)
 	{
-		const int width(option.rect.width() - 33);
+		decorationRectangle.setLeft(option.rect.width() - option.rect.height() - 5);
 
-		decorationRectangle.setLeft(width);
-
-		titleRectangle.setRight(width);
+		titleRectangle.setRight(option.rect.width() - option.rect.height() - 10);
 	}
 	else
 	{
-		decorationRectangle.setRight(33);
+		decorationRectangle.setRight(option.rect.height());
 
-		titleRectangle.setLeft(33);
+		titleRectangle.setLeft(option.rect.height());
 	}
 
 	decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
