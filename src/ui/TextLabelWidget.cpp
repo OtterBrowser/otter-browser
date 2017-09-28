@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TextLabelWidget.h"
+#include "../core/ThemesManager.h"
 
 #include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
@@ -65,7 +66,7 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QMenu menu(this);
-	menu.addAction(tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
 
 	if (m_url.isValid())
 	{
@@ -73,7 +74,7 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	menu.addSeparator();
-	menu.addAction(tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
 	menu.exec(event->globalPos());
 }
 
