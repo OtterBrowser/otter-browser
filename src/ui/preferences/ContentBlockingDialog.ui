@@ -65,9 +65,6 @@
              <property name="autoExpandDelay">
               <number>-1</number>
              </property>
-             <attribute name="headerStretchLastSection">
-              <bool>false</bool>
-             </attribute>
             </widget>
            </item>
            <item>
