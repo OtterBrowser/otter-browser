@@ -429,7 +429,7 @@ WebWidget::LoadingState HistoryContentsWidget::getLoadingState() const
 
 quint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 {
-	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toULongLong() : -1);
+	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toULongLong() : 0);
 }
 
 bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
