@@ -72,11 +72,11 @@ void AddonsContentsWidget::changeEvent(QEvent *event)
 
 		for (int i = 0; i < m_model->rowCount(); ++i)
 		{
-			QStandardItem *item(m_model->item(i));
+			const QModelIndex index(m_model->index(i, 0));
 
-			if (item && static_cast<Addon::AddonType>(item->data(TypeRole).toInt()) == Addon::UserScriptType)
+			if (static_cast<Addon::AddonType>(index.data(TypeRole).toInt()) == Addon::UserScriptType)
 			{
-				item->setText(tr("User Scripts"));
+				m_model->setData(index, tr("User Scripts"), Qt::DisplayRole);
 			}
 		}
 	}
