@@ -40,9 +40,29 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		QStyleOptionFrame frameOption;
 		frameOption.palette = option.palette;
-		frameOption.rect = option.rect;
-		frameOption.state = option.state;
+		frameOption.palette.setCurrentColorGroup(QPalette::Disabled);
+		frameOption.state = QStyle::State_None;
 		frameOption.frameShape = QFrame::HLine;
+
+		switch (option.viewItemPosition)
+		{
+			case QStyleOptionViewItem::Beginning:
+				frameOption.rect = option.rect.marginsRemoved(QMargins(3, 0, 0, 0));
+
+				break;
+			case QStyleOptionViewItem::End:
+				frameOption.rect = option.rect.marginsRemoved(QMargins(0, 0, 3, 0));
+
+				break;
+			case QStyleOptionViewItem::OnlyOne:
+				frameOption.rect = option.rect.marginsRemoved(QMargins(3, 0, 3, 0));
+
+				break;
+			default:
+				frameOption.rect = option.rect;
+
+				break;
+		}
 
 		QApplication::style()->drawControl(QStyle::CE_ShapedFrame, &frameOption, painter);
 

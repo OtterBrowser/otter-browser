@@ -48,8 +48,9 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	{
 		QStyleOptionFrame frameOption;
 		frameOption.palette = option.palette;
-		frameOption.rect = option.rect;
-		frameOption.state = option.state;
+		frameOption.palette.setCurrentColorGroup(QPalette::Disabled);
+		frameOption.rect = option.rect.marginsRemoved(QMargins(3, 0, 3, 0));
+		frameOption.state = QStyle::State_None;
 		frameOption.frameShape = QFrame::HLine;
 
 		QApplication::style()->drawControl(QStyle::CE_ShapedFrame, &frameOption, painter);
