@@ -53,7 +53,7 @@ namespace Otter
 {
 
 QIcon TabHandleWidget::m_lockedIcon;
-Animation* TabHandleWidget::m_loadingAnimation(nullptr);
+Animation* TabHandleWidget::m_spinnerAnimation(nullptr);
 bool TabBarWidget::m_areThumbnailsEnabled(true);
 bool TabBarWidget::m_isLayoutReversed(false);
 bool TabBarWidget::m_isCloseButtonEnabled(true);
@@ -145,9 +145,9 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_urlIconRectangle.isValid())
 	{
-		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingAnimation)
+		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 		{
-			painter.drawPixmap(m_urlIconRectangle, m_loadingAnimation->getCurrentPixmap());
+			painter.drawPixmap(m_urlIconRectangle, m_spinnerAnimation->getCurrentPixmap());
 		}
 		else
 		{
@@ -165,9 +165,9 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 			if (m_thumbnailRectangle.height() >= 16 && m_thumbnailRectangle.width() >= 16)
 			{
-				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_loadingAnimation)
+				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 				{
-					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_loadingAnimation->getCurrentPixmap());
+					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_spinnerAnimation->getCurrentPixmap());
 				}
 				else
 				{
@@ -309,15 +309,25 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 {
 	if (state == WebWidget::OngoingLoadingState)
 	{
-		if (!m_loadingAnimation)
+		if (!m_spinnerAnimation)
 		{
-			m_loadingAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), QCoreApplication::instance());
-			m_loadingAnimation->start();
+			const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
+
+			if (path.isEmpty())
+			{
+				m_spinnerAnimation = new SpinnerAnimation(this);
+			}
+			else
+			{
+				m_spinnerAnimation = new GenericAnimation(path, this);
+			}
+
+			m_spinnerAnimation->start();
 		}
 
-		connect(m_loadingAnimation, &Animation::frameChanged, this, &TabHandleWidget::handleAppearanceChanged);
+		connect(m_spinnerAnimation, &Animation::frameChanged, this, &TabHandleWidget::handleAppearanceChanged);
 	}
-	else if (m_loadingAnimation)
+	else if (m_spinnerAnimation)
 	{
 		for (int i = 0; i < m_tabBarWidget->count(); ++i)
 		{
@@ -329,8 +339,8 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 			}
 		}
 
-		m_loadingAnimation->deleteLater();
-		m_loadingAnimation = nullptr;
+		m_spinnerAnimation->deleteLater();
+		m_spinnerAnimation = nullptr;
 
 		update();
 	}

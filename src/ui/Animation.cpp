@@ -26,7 +26,11 @@
 namespace Otter
 {
 
-Animation::Animation(const QString &path, QObject *parent) : QObject(parent),
+Animation::Animation(QObject *parent) : QObject(parent)
+{
+}
+
+GenericAnimation::GenericAnimation(const QString &path, QObject *parent) : Animation(parent),
 	m_gifMovie(nullptr),
 	m_svgRenderer(nullptr),
 	m_path(path),
@@ -55,7 +59,7 @@ Animation::Animation(const QString &path, QObject *parent) : QObject(parent),
 	}
 }
 
-void Animation::createSvgRenderer()
+void GenericAnimation::createSvgRenderer()
 {
 	if (m_format == GifFormat || m_format == InvalidFormat || m_path.isEmpty())
 	{
@@ -96,7 +100,7 @@ void Animation::createSvgRenderer()
 	{
 		m_format = SvgFormat;
 
-		connect(m_svgRenderer, &QSvgRenderer::repaintNeeded, this, &Animation::frameChanged);
+		connect(m_svgRenderer, &QSvgRenderer::repaintNeeded, this, &GenericAnimation::frameChanged);
 	}
 	else
 	{
@@ -107,7 +111,7 @@ void Animation::createSvgRenderer()
 	}
 }
 
-void Animation::start()
+void GenericAnimation::start()
 {
 	if (!isRunning() && !m_path.isEmpty() && m_format != InvalidFormat)
 	{
@@ -124,7 +128,7 @@ void Animation::start()
 	}
 }
 
-void Animation::stop()
+void GenericAnimation::stop()
 {
 	if (m_gifMovie)
 	{
@@ -137,7 +141,7 @@ void Animation::stop()
 	}
 }
 
-void Animation::setColor(const QColor &color)
+void GenericAnimation::setColor(const QColor &color)
 {
 	if (color != m_color && m_svgRenderer)
 	{
@@ -145,7 +149,7 @@ void Animation::setColor(const QColor &color)
 	}
 }
 
-void Animation::setScaledSize(const QSize &size)
+void GenericAnimation::setScaledSize(const QSize &size)
 {
 	if (size != m_scaledSize)
 	{
@@ -158,7 +162,7 @@ void Animation::setScaledSize(const QSize &size)
 	}
 }
 
-QPixmap Animation::getCurrentPixmap() const
+QPixmap GenericAnimation::getCurrentPixmap() const
 {
 	if (m_gifMovie)
 	{
@@ -181,9 +185,87 @@ QPixmap Animation::getCurrentPixmap() const
 	return QPixmap();
 }
 
-bool Animation::isRunning() const
+bool GenericAnimation::isRunning() const
 {
 	return (m_gifMovie ? (m_gifMovie->state() == QMovie::Running) : (m_svgRenderer != nullptr));
+}
+
+SpinnerAnimation::SpinnerAnimation(QObject *parent) : Animation(parent),
+	m_color(Qt::black),
+	m_scaledSize(16, 16),
+	m_step(0),
+	m_updateTimer(0)
+{
+}
+
+void SpinnerAnimation::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_updateTimer)
+	{
+		m_step -= 6;
+
+		if (m_step == -360)
+		{
+			m_step = 0;
+		}
+
+		emit frameChanged();
+	}
+}
+
+void SpinnerAnimation::start()
+{
+	if (m_updateTimer == 0)
+	{
+		m_updateTimer = startTimer(15);
+	}
+
+	m_step = 0;
+}
+
+void SpinnerAnimation::stop()
+{
+	if (m_updateTimer != 0)
+	{
+		killTimer(m_updateTimer);
+
+		m_updateTimer = 0;
+	}
+}
+
+QPixmap SpinnerAnimation::getCurrentPixmap() const
+{
+	QPixmap pixmap(m_scaledSize);
+	pixmap.setDevicePixelRatio(Application::getInstance()->devicePixelRatio());
+	pixmap.fill(Qt::transparent);
+
+	const int offset(m_scaledSize.width() / 8);
+	const QRect rectangle(offset, offset, (m_scaledSize.width() - (offset * 2)), (m_scaledSize.height() - (offset * 2)));
+	QConicalGradient gradient(rectangle.center(), m_step);
+	gradient.setColorAt(0, m_color);
+	gradient.setColorAt(1, Qt::transparent);
+
+	QPainter painter(&pixmap);
+	painter.setRenderHint(QPainter::HighQualityAntialiasing);
+	painter.setPen(QPen(gradient, (m_scaledSize.width() / 4)));
+	painter.drawArc(rectangle, 0, 5760);
+
+	return pixmap;
+}
+
+bool SpinnerAnimation::isRunning() const
+{
+	return (m_updateTimer != 0);
+}
+
+void SpinnerAnimation::setColor(const QColor &color)
+{
+	m_color = color;
+}
+
+void SpinnerAnimation::setScaledSize(const QSize &size)
+{
+	m_scaledSize = size;
 }
 
 }

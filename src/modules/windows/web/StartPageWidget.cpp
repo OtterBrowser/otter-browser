@@ -50,7 +50,7 @@ namespace Otter
 {
 
 StartPageModel* StartPageWidget::m_model(nullptr);
-Animation* StartPageWidget::m_loadingAnimation(nullptr);
+Animation* StartPageWidget::m_spinnerAnimation(nullptr);
 QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullptr);
 
 TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
@@ -546,12 +546,22 @@ void StartPageWidget::editTile()
 
 void StartPageWidget::reloadTile()
 {
-	if (!m_loadingAnimation)
+	if (!m_spinnerAnimation)
 	{
-		m_loadingAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), this);
-		m_loadingAnimation->start();
+		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
 
-		connect(m_loadingAnimation, SIGNAL(frameChanged()), m_listView, SLOT(update()));
+		if (path.isEmpty())
+		{
+			m_spinnerAnimation = new SpinnerAnimation(this);
+		}
+		else
+		{
+			m_spinnerAnimation = new GenericAnimation(path, this);
+		}
+
+		m_spinnerAnimation->start();
+
+		connect(m_spinnerAnimation, SIGNAL(frameChanged()), m_listView, SLOT(update()));
 	}
 
 	m_model->reloadTile(m_currentIndex);
@@ -699,10 +709,10 @@ void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 
 	m_thumbnail = QPixmap();
 
-	if (m_loadingAnimation && m_model->match(m_model->index(0, 0), StartPageModel::IsReloadingRole, true, 1, Qt::MatchExactly).isEmpty())
+	if (m_spinnerAnimation && m_model->match(m_model->index(0, 0), StartPageModel::IsReloadingRole, true, 1, Qt::MatchExactly).isEmpty())
 	{
-		m_loadingAnimation->deleteLater();
-		m_loadingAnimation = nullptr;
+		m_spinnerAnimation->deleteLater();
+		m_spinnerAnimation = nullptr;
 	}
 }
 
@@ -760,7 +770,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 Animation* StartPageWidget::getLoadingAnimation()
 {
-	return m_loadingAnimation;
+	return m_spinnerAnimation;
 }
 
 QPixmap StartPageWidget::createThumbnail()

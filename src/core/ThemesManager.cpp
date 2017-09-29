@@ -139,7 +139,14 @@ QString ThemesManager::getAnimationPath(const QString &name)
 		return svgPath;
 	}
 
-	return iconPath + QLatin1String(".gif");
+	const QString gifPath(iconPath + QLatin1String(".gif"));
+
+	if (QFile::exists(gifPath))
+	{
+		return gifPath;
+	}
+
+	return {};
 }
 
 QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)

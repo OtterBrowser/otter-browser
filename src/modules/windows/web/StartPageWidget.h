@@ -116,7 +116,7 @@ private:
 	bool m_ignoreEnter;
 
 	static StartPageModel *m_model;
-	static Animation *m_loadingAnimation;
+	static Animation *m_spinnerAnimation;
 	static QPointer<StartPagePreferencesDialog> m_preferencesDialog;
 };
 

@@ -71,7 +71,7 @@ private:
 	bool m_isCloseButtonUnderMouse;
 	bool m_wasCloseButtonPressed;
 
-	static Animation *m_loadingAnimation;
+	static Animation *m_spinnerAnimation;
 	static QIcon m_lockedIcon;
 };
 

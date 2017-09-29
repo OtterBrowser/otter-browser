@@ -38,7 +38,7 @@ TabSwitcherWidget::TabSwitcherWidget(MainWindow *parent) : QWidget(parent),
 	m_model(new QStandardItemModel(this)),
 	m_tabsView(new ItemViewWidget(this)),
 	m_previewLabel(new QLabel(this)),
-	m_loadingAnimation(nullptr),
+	m_spinnerAnimation(nullptr),
 	m_reason(KeyboardReason),
 	m_isIgnoringMinimizedTabs(SettingsManager::getOption(SettingsManager::TabSwitcher_IgnoreMinimizedTabsOption).toBool())
 {
@@ -172,25 +172,34 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 
 	if (window->getLoadingState() == WebWidget::DeferredLoadingState || window->getLoadingState() == WebWidget::OngoingLoadingState)
 	{
-		if (!m_loadingAnimation)
+		if (!m_spinnerAnimation)
 		{
-			m_loadingAnimation = new Animation(ThemesManager::getAnimationPath(QLatin1String("loading")), m_previewLabel);
+			const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
 
-			connect(m_loadingAnimation, &Animation::frameChanged, [&]()
+			if (path.isEmpty())
 			{
-				m_previewLabel->setPixmap(m_loadingAnimation->getCurrentPixmap());
+				m_spinnerAnimation = new SpinnerAnimation(this);
+			}
+			else
+			{
+				m_spinnerAnimation = new GenericAnimation(path, this);
+			}
+
+			connect(m_spinnerAnimation, &Animation::frameChanged, [&]()
+			{
+				m_previewLabel->setPixmap(m_spinnerAnimation->getCurrentPixmap());
 			});
 		}
 
-		m_loadingAnimation->start();
+		m_spinnerAnimation->start();
 
-		m_previewLabel->setPixmap(m_loadingAnimation->getCurrentPixmap());
+		m_previewLabel->setPixmap(m_spinnerAnimation->getCurrentPixmap());
 	}
 	else
 	{
-		if (m_loadingAnimation && m_loadingAnimation->isRunning())
+		if (m_spinnerAnimation && m_spinnerAnimation->isRunning())
 		{
-			m_loadingAnimation->stop();
+			m_spinnerAnimation->stop();
 		}
 
 		m_previewLabel->setPixmap((window->getLoadingState() == WebWidget::CrashedLoadingState) ? ThemesManager::createIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->createThumbnail());
