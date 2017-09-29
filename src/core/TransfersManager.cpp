@@ -192,7 +192,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 	else if (temporaryFileName.contains(QLatin1Char('.')))
 	{
-		const QString suffix(mimeDatabase.suffixForFileName(temporaryFileName));
+		const QString suffix(mimeDatabase.suffixForFileName(temporaryFileName.simplified().remove(QLatin1Char(' '))));
 		int position(temporaryFileName.lastIndexOf(QLatin1Char('.')));
 
 		if (!suffix.isEmpty() && temporaryFileName.endsWith(suffix, Qt::CaseInsensitive))
