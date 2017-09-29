@@ -901,6 +901,11 @@ void AddressWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 
 void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHints hints)
 {
+	if (m_isUsingSimpleMode)
+	{
+		return;
+	}
+
 	if (hints == SessionsManager::DefaultOpen)
 	{
 		hints = SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen);
