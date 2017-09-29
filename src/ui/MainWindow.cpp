@@ -525,9 +525,10 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
 
-				connect(&dialog, &OpenAddressDialog::requestedSearch, this, &MainWindow::search);
-
-				dialog.exec();
+				if (dialog.exec() == QDialog::Accepted && dialog.getResult().type == InputInterpreter::InterpreterResult::SearchType)
+				{
+					search(dialog.getResult().searchQuery, dialog.getResult().searchEngine, SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen));
+				}
 			}
 
 			return;

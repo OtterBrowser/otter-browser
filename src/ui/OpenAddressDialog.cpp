@@ -20,7 +20,6 @@
 
 #include "OpenAddressDialog.h"
 #include "../core/BookmarksModel.h"
-#include "../core/InputInterpreter.h"
 #include "../modules/widgets/address/AddressWidget.h"
 
 #include "ui_OpenAddressDialog.h"
@@ -65,7 +64,7 @@ void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
 	{
-		handleUserInput();
+		accept();
 
 		event->accept();
 	}
@@ -81,38 +80,18 @@ void OpenAddressDialog::handleUserInput()
 
 	if (!text.isEmpty())
 	{
-		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
+		m_result = InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag);
 
-		if (result.isValid())
+		if (m_result.isValid() && m_executor.isValid())
 		{
-			const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen));
-
-			switch (result.type)
+			switch (m_result.type)
 			{
 				case InputInterpreter::InterpreterResult::BookmarkType:
-					if (m_executor.isValid())
-					{
-						m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(hints)}});
-					}
-					else
-					{
-						emit requestedOpenBookmark(result.bookmark);
-					}
+					m_executor.triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_result.bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen))}});
 
 					break;
 				case InputInterpreter::InterpreterResult::UrlType:
-					if (m_executor.isValid())
-					{
-						m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
-					}
-					else
-					{
-						emit requestedOpenUrl(result.url);
-					}
-
-					break;
-				case InputInterpreter::InterpreterResult::SearchType:
-					emit requestedSearch(result.searchQuery, result.searchEngine, hints);
+					m_executor.triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), m_result.url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen))}});
 
 					break;
 				default:
@@ -128,6 +107,11 @@ void OpenAddressDialog::setText(const QString &text)
 {
 	m_addressWidget->setText(text);
 	m_addressWidget->activate(Qt::OtherFocusReason);
+}
+
+InputInterpreter::InterpreterResult OpenAddressDialog::getResult() const
+{
+	return m_result;
 }
 
 }

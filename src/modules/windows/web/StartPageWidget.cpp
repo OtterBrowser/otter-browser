@@ -465,11 +465,24 @@ void StartPageWidget::addTile()
 	OpenAddressDialog dialog(ActionExecutor::Object(), this);
 	dialog.setWindowTitle(tr("Add Tile"));
 
-	connect(&dialog, &OpenAddressDialog::requestedOpenUrl, m_model, &StartPageModel::addTile);
-
 	m_ignoreEnter = true;
 
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted && dialog.getResult().isValid())
+	{
+		switch (dialog.getResult().type)
+		{
+			case InputInterpreter::InterpreterResult::BookmarkType:
+				m_model->addTile(dialog.getResult().bookmark->getUrl());
+
+				break;
+			case InputInterpreter::InterpreterResult::UrlType:
+				m_model->addTile(dialog.getResult().url);
+
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void StartPageWidget::openTile()

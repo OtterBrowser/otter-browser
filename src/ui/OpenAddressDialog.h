@@ -23,7 +23,7 @@
 
 #include "Dialog.h"
 #include "../core/ActionsManager.h"
-#include "../core/SessionsManager.h"
+#include "../core/InputInterpreter.h"
 
 namespace Otter
 {
@@ -45,6 +45,7 @@ public:
 	~OpenAddressDialog();
 
 	void setText(const QString &text);
+	InputInterpreter::InterpreterResult getResult() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -56,12 +57,8 @@ protected slots:
 private:
 	AddressWidget *m_addressWidget;
 	ActionExecutor::Object m_executor;
+	InputInterpreter::InterpreterResult m_result;
 	Ui::OpenAddressDialog *m_ui;
-
-signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark);
-	void requestedOpenUrl(const QUrl &url);
-	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints);
 };
 
 }

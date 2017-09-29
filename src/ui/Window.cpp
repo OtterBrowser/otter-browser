@@ -241,9 +241,10 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 						dialog.setText(QLatin1String("? "));
 					}
 
-					connect(&dialog, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,SessionsManager::OpenHints)));
-
-					dialog.exec();
+					if (dialog.exec() == QDialog::Accepted && dialog.getResult().type == InputInterpreter::InterpreterResult::SearchType)
+					{
+						handleSearchRequest(dialog.getResult().searchQuery, dialog.getResult().searchEngine, SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen));
+					}
 				}
 			}
 
