@@ -37,7 +37,7 @@ namespace Otter
 {
 
 AddressCompletionModel::AddressCompletionModel(QObject *parent) : QAbstractListModel(parent),
-	m_types(UnknownCompletionType),
+	m_types(HistoryCompletionType),
 	m_updateTimer(0),
 	m_showCompletionCategories(true)
 {
@@ -213,50 +213,8 @@ void AddressCompletionModel::updateModel()
 	endResetModel();
 }
 
-void AddressCompletionModel::setFilter(const QString &filter, CompletionTypes types)
+void AddressCompletionModel::setFilter(const QString &filter)
 {
-	if (types.testFlag(TypedHistoryCompletionType))
-	{
-		m_types = types;
-		m_filter.clear();
-
-		updateModel();
-
-		return;
-	}
-
-	if (m_filter.isEmpty() && !filter.isEmpty())
-	{
-		m_types = types;
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
-		{
-			m_types |= BookmarksCompletionType;
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool())
-		{
-			m_types |= HistoryCompletionType;
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
-		{
-			m_types |= SearchSuggestionsCompletionType;
-
-			m_defaultSearchEngine = SearchEnginesManager::getSearchEngine();
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
-		{
-			m_types |= SpecialPagesCompletionType;
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
-		{
-			m_types |= LocalPathSuggestionsCompletionType;
-		}
-	}
-
 	m_filter = filter;
 	m_showCompletionCategories = SettingsManager::getOption(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool();
 
@@ -281,6 +239,23 @@ void AddressCompletionModel::setFilter(const QString &filter, CompletionTypes ty
 	{
 		m_updateTimer = startTimer(50);
 	}
+}
+
+void AddressCompletionModel::setTypes(CompletionTypes types)
+{
+	m_types = types;
+
+	if (types.testFlag(TypedHistoryCompletionType))
+	{
+		m_filter.clear();
+	}
+
+	if (m_types.testFlag(SearchSuggestionsCompletionType))
+	{
+		m_defaultSearchEngine = SearchEnginesManager::getSearchEngine();
+	}
+
+	updateModel();
 }
 
 QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const

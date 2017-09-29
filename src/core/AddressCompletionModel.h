@@ -93,6 +93,7 @@ public:
 
 	explicit AddressCompletionModel(QObject *parent = nullptr);
 
+	void setTypes(CompletionTypes types);
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -100,7 +101,7 @@ public:
 	bool event(QEvent *event) override;
 
 public slots:
-	void setFilter(const QString &filter = {}, CompletionTypes types = UnknownCompletionType);
+	void setFilter(const QString &filter = {});
 
 protected:
 	void timerEvent(QTimerEvent *event) override;

@@ -446,8 +446,6 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 		case Qt::Key_Down:
 			if (!isPopupVisible() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
 			{
-				m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
-
 				showCompletion(true);
 			}
 
@@ -667,8 +665,6 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 			case HistoryDropdownEntry:
 				if (!isPopupVisible() && HistoryManager::getTypedHistoryModel()->rowCount() > 0)
 				{
-					m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
-
 					showCompletion(true);
 				}
 
@@ -780,6 +776,42 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 	PopupViewWidget *popupWidget(getPopup());
 	popupWidget->setModel(m_completionModel);
 	popupWidget->setItemDelegate(new AddressDelegate((isTypedHistory ? QString() : text()), (isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode), popupWidget));
+
+	if (isTypedHistory)
+	{
+		m_completionModel->setTypes(AddressCompletionModel::TypedHistoryCompletionType);
+	}
+	else
+	{
+		AddressCompletionModel::CompletionTypes types(AddressCompletionModel::UnknownCompletionType);
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
+		{
+			types |= AddressCompletionModel::BookmarksCompletionType;
+		}
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool())
+		{
+			types |= AddressCompletionModel::HistoryCompletionType;
+		}
+
+		if (!m_isUsingSimpleMode && SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
+		{
+			types |= AddressCompletionModel::SearchSuggestionsCompletionType;
+		}
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
+		{
+			types |= AddressCompletionModel::SpecialPagesCompletionType;
+		}
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
+		{
+			types |= AddressCompletionModel::LocalPathSuggestionsCompletionType;
+		}
+
+		m_completionModel->setTypes(types);
+	}
 
 	if (!isPopupVisible())
 	{
