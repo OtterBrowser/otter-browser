@@ -64,50 +64,35 @@ AddressDelegate::AddressDelegate(const QString &highlight, ViewMode mode, QObjec
 
 void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QAbstractTextDocumentLayout::PaintContext paintContext;
 	QRect titleRectangle(option.rect);
 	const bool isRightToLeft(option.direction == Qt::RightToLeft);
-	QTextDocument document;
-	document.setDefaultFont(option.font);
 
 	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
 	{
-		const int headerTopPosition((index.row() != 0) ? titleRectangle.top() : (titleRectangle.top() - (titleRectangle.height() - painter->clipBoundingRect().united(document.documentLayout()->blockBoundingRect(document.firstBlock())).height())));
+		QStyleOptionViewItem headerOption(option);
+		headerOption.rect = titleRectangle.marginsRemoved(QMargins(0, 2, (isRightToLeft ? 3 : 0), 2));
+		headerOption.text = index.data(AddressCompletionModel::TitleRole).toString();
 
-		if (index.row() != 0)
+		if (index.row() > 0)
 		{
 			QPen pen(option.palette.color(QPalette::Disabled, QPalette::Text).lighter());
 			pen.setWidth(1);
 			pen.setStyle(Qt::SolidLine);
 
+			painter->save();
 			painter->setPen(pen);
 			painter->drawLine((option.rect.left() + 5), (option.rect.top() + 3), (option.rect.right() - 5), (option.rect.top() + 3));
+			painter->restore();
 		}
 
-		painter->save();
-
-		const QString title(index.data(AddressCompletionModel::TitleRole).toString());
-
-		titleRectangle = titleRectangle.marginsRemoved(QMargins(0, 2, 0, 2));
-
-		if (isRightToLeft)
-		{
-			painter->translate((titleRectangle.right() - (option.fontMetrics.width(title) + 10)), headerTopPosition);
-		}
-		else
-		{
-			painter->translate(titleRectangle.left(), headerTopPosition);
-		}
-
-		paintContext.palette.setCurrentColorGroup(QPalette::Disabled);
-
-		document.setPlainText(title);
-		document.documentLayout()->draw(painter, paintContext);
-
-		painter->restore();
+		QStyledItemDelegate::paint(painter, headerOption, index);
 
 		return;
 	}
+
+	QAbstractTextDocumentLayout::PaintContext paintContext;
+	QTextDocument document;
+	document.setDefaultFont(option.font);
 
 	QString url(index.data(Qt::DisplayRole).toString());
 	QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
