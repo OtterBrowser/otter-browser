@@ -23,7 +23,7 @@
 		"title": "EasyList",
 		"updateUrl": "https://easylist-downloads.adblockplus.org/easylist.txt"
 	},
-	"annoyance.adgurd-annoyance":
+	"annoyance.adguard-annoyance":
 	{
 		"category": "annoyance",
 		"title": "Adguard's Annoyances filter",
@@ -41,17 +41,17 @@
 		"title": "Fanboy's Cookiemonster List",
 		"updateUrl": "https://fanboy.co.nz/fanboy-cookiemonster.txt"
 	},
-	"other.fanboy-ultimate":
-	{
-		"category": "other",
-		"title": "Fanboy+Easylist-Merged Ultimate List‎",
-		"updateUrl": "https://www.fanboy.co.nz/r/fanboy-ultimate.txt"
-	},
 	"privacy.easyprivacy":
 	{
 		"category": "privacy",
 		"title": "EasyPrivacy",
 		"updateUrl": "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+	},
+	"privacy.adguard-spyware":
+	{
+		"category": "privacy",
+		"title": "Adguard Spyware Filters",
+		"updateUrl": "https://filters.adtidy.org/extension/ublock/filters/3.txt"
 	},
 	"privacy.enhancedstats":
 	{
