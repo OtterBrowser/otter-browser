@@ -109,6 +109,30 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void ContentsWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::MiddleButton)
+	{
+		event->accept();
+	}
+	else
+	{
+		QWidget::mousePressEvent(event);
+	}
+}
+
+void ContentsWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::MiddleButton)
+	{
+		event->accept();
+	}
+	else
+	{
+		QWidget::mouseReleaseEvent(event);
+	}
+}
+
 void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	Q_UNUSED(parameters)

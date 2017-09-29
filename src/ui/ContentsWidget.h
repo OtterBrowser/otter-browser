@@ -79,6 +79,8 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected slots:
 	void handleAboutToClose();
