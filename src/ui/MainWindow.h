@@ -130,15 +130,13 @@ private:
 	QString m_currentBookmark;
 	QString m_windowTitle;
 	ActionExecutor::Object m_editorExecutor;
-	ToolBarState m_addressBarState;
-	ToolBarState m_menuBarState;
-	ToolBarState m_statusBarState;
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
 	QVector<ClosedWindow> m_closedWindows;
 	QVector<quint64> m_tabSwitchingOrderList;
 	QHash<quint64, Window*> m_windows;
 	QMap<int, ToolBarWidget*> m_toolBars;
+	QMap<int, ToolBarState> m_toolBarStates;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	quint64 m_identifier;
