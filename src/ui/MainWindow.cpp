@@ -955,19 +955,19 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ShowMenuBarAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
 
 			return;
 		case ActionsManager::ShowTabBarAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::TabBar}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::TabBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
 
 			return;
 		case ActionsManager::ShowSidebarAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::SideBar}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::SideBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
 
 			return;
 		case ActionsManager::ShowErrorConsoleAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
 
 			return;
 		case ActionsManager::ShowPanelAction:
