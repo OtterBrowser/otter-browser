@@ -53,6 +53,13 @@ ProgressBarWidget::ProgressBarWidget(Window *window, WebWidget *parent) : QFrame
 	updateLoadingState(window->getLoadingState());
 	setAutoFillBackground(true);
 
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow)
+	{
+		connect(mainWindow, SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+	}
+
 	connect(window, &Window::loadingStateChanged, this, &ProgressBarWidget::updateLoadingState);
 }
 
@@ -64,11 +71,19 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		m_geometryUpdateTimer = 0;
 
-		if (!m_window || !m_webWidget)
-		{
-			return;
-		}
+		handleActionsStateChanged({ActionsManager::ShowToolBarAction});
+	}
+}
 
+void ProgressBarWidget::handleActionsStateChanged(const QVector<int> &identifiers)
+{
+	if (!m_window || !m_webWidget)
+	{
+		return;
+	}
+
+	if (identifiers.contains(ActionsManager::ShowToolBarAction))
+	{
 		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && mainWindow && mainWindow->getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ProgressBar}}).isChecked)
