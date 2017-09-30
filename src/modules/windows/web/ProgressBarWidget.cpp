@@ -19,6 +19,7 @@
 
 #include "ProgressBarWidget.h"
 #include "WebContentsWidget.h"
+#include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/WebWidget.h"
 #include "../../../ui/Window.h"
@@ -68,9 +69,9 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 			return;
 		}
 
-		const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
+		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WebWidget::OngoingLoadingState))
+		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && mainWindow && mainWindow->getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ProgressBar}}).isChecked)
 		{
 			QRect geometry(m_webWidget->getGeometry(true));
 
@@ -102,9 +103,9 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 void ProgressBarWidget::updateLoadingState(WebWidget::LoadingState state)
 {
-	const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && state == WebWidget::OngoingLoadingState))
+	if (state == WebWidget::OngoingLoadingState && mainWindow && mainWindow->getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ProgressBar}}).isChecked)
 	{
 		scheduleGeometryUpdate();
 	}
