@@ -80,7 +80,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	setUnifiedTitleAndToolBarOnMac(true);
 	updateShortcuts();
 
-	const QVector<int> extraToolBars({ToolBarsManager::AddressBar, ToolBarsManager::MenuBar, ToolBarsManager::StatusBar});
+	const QVector<int> extraToolBars({ToolBarsManager::AddressBar, ToolBarsManager::MenuBar, ToolBarsManager::ProgressBar, ToolBarsManager::StatusBar});
 
 	for (int i = 0; i < extraToolBars.count(); ++i)
 	{
@@ -880,7 +880,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				switch (toolBarIdentifier)
 				{
 					case ToolBarsManager::MenuBar:
-						m_toolBarStates[identifier].setVisibility(mode, visibility);
+						m_toolBarStates[toolBarIdentifier].setVisibility(mode, visibility);
 
 						if (isChecked && (!m_menuBar || !m_menuBar->isVisible()))
 						{
@@ -900,11 +900,12 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 						break;
 					case ToolBarsManager::AddressBar:
-						m_toolBarStates[identifier].setVisibility(mode, visibility);
+					case ToolBarsManager::ProgressBar:
+						m_toolBarStates[toolBarIdentifier].setVisibility(mode, visibility);
 
 						break;
 					case ToolBarsManager::StatusBar:
-						m_toolBarStates[identifier].setVisibility(mode, visibility);
+						m_toolBarStates[toolBarIdentifier].setVisibility(mode, visibility);
 
 						if (isChecked && !m_statusBar)
 						{
