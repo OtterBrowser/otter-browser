@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,9 @@
 #include "MenuButtonWidget.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/ToolBarWidget.h"
-
-#include <QtCore/QFile>
-#include <QtCore/QJsonDocument>
 
 namespace Otter
 {
@@ -38,24 +36,31 @@ MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);
 	setButtonStyle(Qt::ToolButtonTextBesideIcon);
-	toolBarModified(ToolBarsManager::MenuBar);
+	handleActionsStateChanged({ActionsManager::ShowToolBarAction});
 
+	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+
+	if (mainWindow)
+	{
+		connect(mainWindow, SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+	}
 
 	if (toolBar)
 	{
-		disconnect(toolBar, SIGNAL(buttonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setButtonStyle(Qt::ToolButtonStyle)));
+		disconnect(toolBar, &ToolBarWidget::buttonStyleChanged, this, &MenuButtonWidget::setButtonStyle);
 	}
 
-	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
-	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
+	connect(m_menu, &Menu::aboutToShow, this, &MenuButtonWidget::updateMenu);
 }
 
-void MenuButtonWidget::toolBarModified(int identifier)
+void MenuButtonWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 {
-	if (identifier == ToolBarsManager::MenuBar)
+	if (identifiers.contains(ActionsManager::ShowToolBarAction))
 	{
-		m_isHidden = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
+		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		m_isHidden = (mainWindow && mainWindow->getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}}).isChecked);
 
 		updateGeometry();
 	}
@@ -63,11 +68,11 @@ void MenuButtonWidget::toolBarModified(int identifier)
 
 void MenuButtonWidget::updateMenu()
 {
-	disconnect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
+	disconnect(m_menu, &Menu::aboutToShow, this, &MenuButtonWidget::updateMenu);
 
 	m_menu->load(QLatin1String("menu/menuButton.json"));
 
-	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
+	connect(m_menu, &Menu::aboutToShow, this, &MenuButtonWidget::updateMenu);
 }
 
 QSize MenuButtonWidget::minimumSizeHint() const
