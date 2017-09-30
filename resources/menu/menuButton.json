@@ -162,7 +162,15 @@
 				"AboutQt"
 			]
 		},
-		"ShowMenuBar",
+		{
+			"identifier": "ShowToolBar",
+			"type": "action",
+			"title": "Show Menubar",
+			"parameters":
+			{
+				"toolBar": "MenuBar"
+			}
+		},
 		"separator",
 		"Exit"
 	]
