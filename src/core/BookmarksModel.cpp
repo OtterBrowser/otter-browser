@@ -358,12 +358,12 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 		}
 	}
 
-	connect(this, SIGNAL(itemChanged(QStandardItem*)), this, SIGNAL(modelModified()));
-	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(modelModified()));
-	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(notifyBookmarkModified(QModelIndex)));
-	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(modelModified()));
-	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(notifyBookmarkModified(QModelIndex)));
-	connect(this, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(modelModified()));
+	connect(this, &BookmarksModel::itemChanged, this, &BookmarksModel::modelModified);
+	connect(this, &BookmarksModel::rowsInserted, this, &BookmarksModel::modelModified);
+	connect(this, &BookmarksModel::rowsInserted, this, &BookmarksModel::notifyBookmarkModified);
+	connect(this, &BookmarksModel::rowsRemoved, this, &BookmarksModel::modelModified);
+	connect(this, &BookmarksModel::rowsRemoved, this, &BookmarksModel::notifyBookmarkModified);
+	connect(this, &BookmarksModel::rowsMoved, this, &BookmarksModel::modelModified);
 }
 
 void BookmarksModel::beginImport(BookmarksItem *target, int estimatedUrlsAmount, int estimatedKeywordsAmount)
