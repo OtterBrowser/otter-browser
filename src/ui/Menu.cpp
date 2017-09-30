@@ -464,6 +464,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 		}
 
 		const QString type(object.value(QLatin1String("type")).toString());
+		const QVariantMap options(object.value(QLatin1String("options")).toVariant().toMap());
 		const QVariantMap parameters(object.value(QLatin1String("parameters")).toVariant().toMap());
 
 		if (type == QLatin1String("action"))
@@ -498,9 +499,9 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				}
 			}
 
-			if (object.contains(QLatin1String("icon")))
+			if (object.contains(QLatin1String("icon")) || options.contains(QLatin1String("icon")))
 			{
-				const QString data(object.value(QLatin1String("icon")).toString());
+				const QString data(object.value(QLatin1String("icon")).toString(options.value(QLatin1String("icon")).toString()));
 
 				if (data.startsWith(QLatin1String("data:image/")))
 				{
@@ -512,9 +513,9 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				}
 			}
 
-			if (object.contains(QLatin1String("title")))
+			if (object.contains(QLatin1String("title")) || options.contains(QLatin1String("text")))
 			{
-				action->setOverrideText(object.value(QLatin1String("title")).toString());
+				action->setOverrideText(object.value(QLatin1String("title")).toString(options.value(QLatin1String("text")).toString()));
 			}
 
 			addAction(action);
@@ -530,7 +531,6 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 		}
 		else if (type == QLatin1String("menu"))
 		{
-			const QVariantMap options(object.value(QLatin1String("options")).toVariant().toMap());
 			Menu *menu(new Menu(getMenuRoleIdentifier(object.value(QLatin1String("identifier")).toString()), this));
 			menu->setExecutor(m_executor);
 			menu->setActionParameters(parameters);
