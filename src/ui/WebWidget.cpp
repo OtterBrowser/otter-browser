@@ -795,6 +795,13 @@ QUrl WebWidget::getRequestedUrl() const
 	return ((getUrl().isEmpty() || getLoadingState() == OngoingLoadingState) ? m_requestedUrl : getUrl());
 }
 
+QPixmap WebWidget::createThumbnail(const QSize &size)
+{
+	Q_UNUSED(size)
+
+	return {};
+}
+
 QPoint WebWidget::getClickPosition() const
 {
 	return m_clickPosition;

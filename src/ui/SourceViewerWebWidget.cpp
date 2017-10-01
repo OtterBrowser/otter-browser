@@ -445,11 +445,6 @@ QIcon SourceViewerWebWidget::getIcon() const
 	return HistoryManager::getIcon(getRequestedUrl());
 }
 
-QPixmap SourceViewerWebWidget::createThumbnail()
-{
-	return QPixmap();
-}
-
 QPoint SourceViewerWebWidget::getScrollPosition() const
 {
 	return QPoint();

@@ -47,7 +47,6 @@ public:
 	QVariant getPageInformation(PageInformation key) const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	QPixmap createThumbnail() override;
 	QPoint getScrollPosition() const override;
 	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	WindowHistoryInformation getHistory() const override;

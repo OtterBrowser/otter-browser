@@ -58,7 +58,7 @@ public:
 	QStringList getBlockedElements() const;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	QPixmap createThumbnail() override;
+	QPixmap createThumbnail(const QSize &size = {}) override;
 	QPoint getScrollPosition() const override;
 	QRect getGeometry(bool excludeScrollBars = false) const override;
 	LinkUrl getActiveFrame() const override;

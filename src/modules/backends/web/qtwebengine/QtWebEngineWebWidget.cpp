@@ -1540,11 +1540,6 @@ QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
 	return m_lastUrlClickTime;
 }
 
-QPixmap QtWebEngineWebWidget::createThumbnail()
-{
-	return QPixmap();
-}
-
 QPoint QtWebEngineWebWidget::getScrollPosition() const
 {
 #if QT_VERSION < 0x050700

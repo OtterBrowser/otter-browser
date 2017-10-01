@@ -2150,14 +2150,14 @@ QIcon QtWebKitWebWidget::getIcon() const
 	return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : icon);
 }
 
-QPixmap QtWebKitWebWidget::createThumbnail()
+QPixmap QtWebKitWebWidget::createThumbnail(const QSize &size)
 {
-	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == OngoingLoadingState)
+	if ((size.isNull() || size == m_thumbnail.size()) && ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == OngoingLoadingState))
 	{
 		return m_thumbnail;
 	}
 
-	const QSize thumbnailSize(QSize(260, 170));
+	const QSize thumbnailSize(size.isValid() ? size : QSize(260, 170));
 	const QSize oldViewportSize(m_page->viewportSize());
 	const QPoint position(m_page->mainFrame()->scrollPosition());
 	const qreal zoom(m_page->mainFrame()->zoomFactor());
@@ -2196,7 +2196,10 @@ QPixmap QtWebKitWebWidget::createThumbnail()
 
 	newView->deleteLater();
 
-	m_thumbnail = pixmap;
+	if (size.isNull())
+	{
+		m_thumbnail = pixmap;
+	}
 
 	return pixmap;
 }
