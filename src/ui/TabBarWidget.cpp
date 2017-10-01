@@ -315,11 +315,11 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 
 			if (path.isEmpty())
 			{
-				m_spinnerAnimation = new SpinnerAnimation(this);
+				m_spinnerAnimation = new SpinnerAnimation(QCoreApplication::instance());
 			}
 			else
 			{
-				m_spinnerAnimation = new GenericAnimation(path, this);
+				m_spinnerAnimation = new GenericAnimation(path, QCoreApplication::instance());
 			}
 
 			m_spinnerAnimation->start();
