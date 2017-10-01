@@ -88,11 +88,11 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	}
 
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
-	const bool areToolBarsEnabled(!parameters.value(QLatin1String("noToolBars"), false).toBool());
+	const bool useMinimalInterface(parameters.value(QLatin1String("minimalInterface"), false).toBool());
 
-	if (session.hasToolBarsState || !areToolBarsEnabled)
+	if (session.hasToolBarsState || useMinimalInterface)
 	{
-		if (!areToolBarsEnabled)
+		if (useMinimalInterface)
 		{
 			m_toolBarStates[ToolBarsManager::MenuBar].normalVisibility = ToolBarState::AlwaysHiddenToolBar;
 			m_toolBarStates[ToolBarsManager::MenuBar].fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
@@ -2020,9 +2020,9 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 		SessionMainWindow session;
 		QVariantMap mainWindowParameters({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}});
 
-		if (parameters.contains(QLatin1String("noToolBars")))
+		if (parameters.contains(QLatin1String("minimalInterface")))
 		{
-			mainWindowParameters[QLatin1String("noToolBars")] = parameters[QLatin1String("noToolBars")];
+			mainWindowParameters[QLatin1String("minimalInterface")] = parameters[QLatin1String("minimalInterface")];
 		}
 		else
 		{
