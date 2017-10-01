@@ -286,7 +286,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="177"/>
         <source>Typed history</source>
-        <translation>Historia wpisywań</translation>
+        <translation>Historia wpisanych adresów</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="199"/>
@@ -9452,7 +9452,7 @@ ID aplikacji: %2</translation>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="122"/>
         <source>Mask as {name}</source>
-        <translation>Maskuj się jako {nazwa}</translation>
+        <translation>Maskuj się jako {name}</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="126"/>

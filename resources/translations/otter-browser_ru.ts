@@ -2868,7 +2868,7 @@ Do you want to save them?</source>
         <source>Configuration of the components listed below needs to be updated to new version.
 Do you want to migrate it?</source>
         <translation>Конфигурация компонентов в списке ниже должна быть обновлена до новой версии.
-Вы хотите перенести её?</translation>
+Вы хотите перенести ее?</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="567"/>
@@ -3483,7 +3483,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="72"/>
         <source>Open All</source>
-        <translation>Открыть всё</translation>
+        <translation>Открыть все</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="103"/>
@@ -3874,7 +3874,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="151"/>
         <source>Cached images</source>
-        <translation>Сохранённые копии изображений</translation>
+        <translation>Сохраненные копии изображений</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="152"/>
@@ -4108,17 +4108,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="119"/>
         <source>Block all</source>
-        <translation>Заблокировать всё</translation>
+        <translation>Заблокировать все</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="120"/>
         <source>Open all</source>
-        <translation>Открыть всё</translation>
+        <translation>Открыть все</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="121"/>
         <source>Open all in background</source>
-        <translation>Открыть всё в фоне</translation>
+        <translation>Открыть все в фоне</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="133"/>
@@ -4270,7 +4270,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="99"/>
         <source>Do not load the tab contents until selected</source>
-        <translation>Не загружать содержимое вкладки до её выбора</translation>
+        <translation>Не загружать содержимое вкладки до ее выбора</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
@@ -4989,7 +4989,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="34"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="43"/>
         <source>Click to load content (%1) handled by plugin from: %2</source>
-        <translation>Щёлкните, чтобы загрузить содержимое (%1), поддерживаемое плагином из: %2</translation>
+        <translation>Щелкните, чтобы загрузить содержимое (%1), поддерживаемое плагином из: %2</translation>
     </message>
 </context>
 <context>
@@ -5368,7 +5368,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation>Выберите набор учётных данных:</translation>
+        <translation>Выберите набор учетных данных:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
@@ -5398,7 +5398,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="84"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation>Вы действительно хотите удалить этот набор учётных данных?</translation>
+        <translation>Вы действительно хотите удалить этот набор учетных данных?</translation>
     </message>
 </context>
 <context>
@@ -5589,7 +5589,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="114"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation>Документ был изменён.
+        <translation>Документ был изменен.
 Вы хотите сохранить изменения или отменить их?</translation>
     </message>
     <message>
@@ -5800,7 +5800,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="742"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation>Переключать вкладки колёсиком мыши</translation>
+        <translation>Переключать вкладки колесиком мыши</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="746"/>
@@ -5864,7 +5864,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="76"/>
         <source>Select All</source>
-        <translation>Выделить всё</translation>
+        <translation>Выделить все</translation>
     </message>
 </context>
 <context>
@@ -6249,7 +6249,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="731"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation>Переключать вкладки колёсиком мыши</translation>
+        <translation>Переключать вкладки колесиком мыши</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="735"/>
@@ -6529,7 +6529,7 @@ Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
         <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Источник: %1
-Сохранён в: %2
+Сохранен в: %2
 Размер: %3
 Загружено: %4
 Прогресс: %5&lt;/div&gt;</translation>
@@ -6751,7 +6751,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="985"/>
         <source>Do you want to try to reload it?</source>
-        <translation>Хотите ли вы перезагрузить её?</translation>
+        <translation>Хотите попробовать перезагрузить ее?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="986"/>
@@ -7327,17 +7327,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
         <source>Block all</source>
-        <translation>Заблокировать всё</translation>
+        <translation>Заблокировать все</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Open all</source>
-        <translation>Открыть всё</translation>
+        <translation>Открыть все</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all in background</source>
-        <translation>Открыть всё в фоне</translation>
+        <translation>Открыть все в фоне</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
@@ -7347,7 +7347,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
         <source>Cached images</source>
-        <translation>Сохранённые копии изображений</translation>
+        <translation>Сохраненные копии изображений</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
@@ -8122,7 +8122,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Go Forward</source>
-        <translation>Вперёд</translation>
+        <translation>Вперед</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
@@ -8981,7 +8981,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="765"/>
         <source>Block All</source>
-        <translation>Заблокировать всё</translation>
+        <translation>Заблокировать все</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="769"/>
@@ -9500,7 +9500,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
         <source>Check to see if the file was moved, renamed or deleted.</source>
-        <translation>Проверьте, чтобы увидеть был ли файл перемещён, переименован или удалён.</translation>
+        <translation>Проверьте, чтобы увидеть был ли файл перемещен, переименован или удален.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>

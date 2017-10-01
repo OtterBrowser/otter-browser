@@ -39,17 +39,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>A/z %1 weboldal új sütit szeretne tárolni.</translation>
+        <translation>%1 weboldal egy új süti hozzáadását kéri.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>A/z %1 weboldal frissíteni szeretne egy sütit.</translation>
+        <translation>%1 weboldal egy létező süti frissítését kéri.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation>A/z %1 weboldal sütit szeretne eltávolítani.</translation>
+        <translation>%1 weboldal egy létező süti eltávolítását kéri.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="68"/>
         <source>Accept For This Session Only</source>
-        <translation>Csak most fogadja el</translation>
+        <translation>Elfogadás csak erre a munkamenetre</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="71"/>
@@ -97,12 +97,12 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>A weboldalak nyelve legyen</translation>
+        <translation>Előnyben részesített weboldal nyelv</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Nyelv hozzáadásához kérem válasszon ki egyet a listából vagy adja meg annak kódját.</translation>
+        <translation>Nyelv hozzáadásához, kérem válasszon ki egyet a listából vagy adja meg annak kódját.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -430,7 +430,7 @@ Ez hibás működéshez, vagy adatvesztéshez vezethet.</translation>
         <location filename="../../src/core/Application.cpp" line="1441"/>
         <location filename="../../src/core/Application.cpp" line="1490"/>
         <source>Do you want to continue?</source>
-        <translation>Biztosan folytatja?</translation>
+        <translation>Biztosan folytatni akarja?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="348"/>
@@ -447,7 +447,7 @@ Ez hibás működéshez, vagy adatvesztéshez vezethet.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="351"/>
         <source>Ignore</source>
-        <translation>Mellőz</translation>
+        <translation>Mellőzés</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="352"/>
@@ -1729,7 +1729,7 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
         <source>Unknown</source>
-        <translation>Névtelen</translation>
+        <translation>Ismeretlen</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="239"/>
@@ -4894,7 +4894,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="397"/>
         <source>Loading finished</source>
-        <translation>A betöltés befejeződött</translation>
+        <translation>A betöltés befejezve</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="753"/>
