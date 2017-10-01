@@ -2,6 +2,7 @@
 - reworked toolbars:
 -- added support for visibility toggle button (collapsing contents);
 -- fixed unified toolbar and titlebar style under macOS;
+-- toolbar visibility and location is now stored per main window;
 - improved sidebar(s):
 -- added ability to add new sidebars;
 -- allow to change their location by drag and drop;
@@ -17,7 +18,6 @@
 - added new default icon theme by Kamil Nęcek;
 - item views can now allocate extra space to predefined column other than last one;
 - added action to set, reset or toggle an option;
-- toolbar visibility and location is now stored per main window;
 - global editing actions now apply to focused single and multi line text edit widgets too;
 - added ability to drop URLs onto bookmark bars;
 - spell checking is now available in other multi line text edit widgets;
