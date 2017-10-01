@@ -1,4 +1,4 @@
-0.9.?? (2017-??-??):
+0.9.91 (2017-10-01):
 - reworked toolbars:
 -- added support for visibility toggle button (collapsing contents);
 -- fixed unified toolbar and titlebar style under macOS;
@@ -12,14 +12,20 @@
 - added support for managing multiple proxy configurations and setting them per page or host;
 - reworked internal actions handling system allows to specify parameters for actions trigerred by keyboard shortcuts and mouse gestures;
 - vastly decreased import time for large bookmark files;
+- added module for listing opened windows and tabs;
 - improved styling under Windows, Unity and macOS;
 - added new default icon theme by Kamil Nęcek;
-- added module for listing opened windows and tabs;
+- item views can now allocate extra space to predefined column other than last one;
+- added action to set, reset or toggle an option;
+- toolbar visibility and location is now stored per main window;
+- global editing actions now apply to focused single and multi line text edit widgets too;
 - added ability to drop URLs onto bookmark bars;
+- spell checking is now available in other multi line text edit widgets;
 - added action to control multimedia playback rate;
+- keyboard shortcuts are now validated while editing;
 - added support for customizing F12 menu;
 - implemented "Validate Using" menu;
-- added support for configurable Fast Forward;
+- added support for configurable Fast Forward rules;
 - lots of various fixes.
 
 0.9.12 (2017-01-01):
