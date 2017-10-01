@@ -535,14 +535,14 @@ void LineEditWidget::setCompletion(const QString &completion)
 		return;
 	}
 
-	QString currentText(text().mid(selectionStart()));
+//	QString currentText(text().mid(selectionStart()));
 
-	if (m_completion != currentText)
-	{
-		setText(m_completion);
-		setCursorPosition(currentText.length());
-		setSelection(currentText.length(), (m_completion.length() - currentText.length()));
-	}
+//	if (m_completion != currentText)
+//	{
+//		setText(m_completion);
+//		setCursorPosition(currentText.length());
+//		setSelection(currentText.length(), (m_completion.length() - currentText.length()));
+//	}
 }
 
 void LineEditWidget::setDropMode(LineEditWidget::DropMode mode)
