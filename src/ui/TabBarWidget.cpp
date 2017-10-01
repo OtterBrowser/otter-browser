@@ -147,7 +147,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 	{
 		if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 		{
-			painter.drawPixmap(m_urlIconRectangle, m_spinnerAnimation->getCurrentPixmap());
+			m_spinnerAnimation->paint(&painter, m_urlIconRectangle);
 		}
 		else
 		{
@@ -167,7 +167,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 			{
 				if (m_window->getLoadingState() == WebWidget::OngoingLoadingState && m_spinnerAnimation)
 				{
-					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_spinnerAnimation->getCurrentPixmap());
+					m_spinnerAnimation->paint(&painter, QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16));
 				}
 				else
 				{

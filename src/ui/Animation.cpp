@@ -111,6 +111,22 @@ void GenericAnimation::createSvgRenderer()
 	}
 }
 
+void GenericAnimation::paint(QPainter *painter, const QRect &rectangle) const
+{
+	if (m_gifMovie)
+	{
+		const QSize size(m_scaledSize.isValid() ? m_scaledSize : m_gifMovie->frameRect().size());
+
+		painter->drawPixmap((rectangle.isValid() ? rectangle : QRect(0, 0, size.width(), size.height())), m_gifMovie->currentPixmap());
+	}
+	else if (m_svgRenderer)
+	{
+		const QSize size(m_scaledSize.isValid() ? m_scaledSize : m_svgRenderer->defaultSize());
+
+		m_svgRenderer->render(painter, (rectangle.isValid() ? rectangle : QRect(0, 0, size.width(), size.height())));
+	}
+}
+
 void GenericAnimation::start()
 {
 	if (!isRunning() && !m_path.isEmpty() && m_format != InvalidFormat)
@@ -177,12 +193,12 @@ QPixmap GenericAnimation::getCurrentPixmap() const
 
 		QPainter painter(&pixmap);
 
-		m_svgRenderer->render(&painter, QRectF(0, 0, pixmap.width(), pixmap.height()));
+		m_svgRenderer->render(&painter, QRect(0, 0, pixmap.width(), pixmap.height()));
 
 		return pixmap;
 	}
 
-	return QPixmap();
+	return {};
 }
 
 bool GenericAnimation::isRunning() const
@@ -213,6 +229,22 @@ void SpinnerAnimation::timerEvent(QTimerEvent *event)
 	}
 }
 
+void SpinnerAnimation::paint(QPainter *painter, const QRect &rectangle) const
+{
+	const QSize size(rectangle.isValid() ? rectangle.size() : m_scaledSize);
+	const int offset(size.width() / 8);
+	const QRect targetRectangle((rectangle.x() + offset), (rectangle.y() + offset), (size.width() - (offset * 2)), (size.height() - (offset * 2)));
+	QConicalGradient gradient(targetRectangle.center(), m_step);
+	gradient.setColorAt(0, m_color);
+	gradient.setColorAt(1, Qt::transparent);
+
+	painter->save();
+	painter->setRenderHint(QPainter::HighQualityAntialiasing);
+	painter->setPen(QPen(gradient, (offset * 2)));
+	painter->drawArc(targetRectangle, 0, 5760);
+	painter->restore();
+}
+
 void SpinnerAnimation::start()
 {
 	if (m_updateTimer == 0)
@@ -239,16 +271,9 @@ QPixmap SpinnerAnimation::getCurrentPixmap() const
 	pixmap.setDevicePixelRatio(Application::getInstance()->devicePixelRatio());
 	pixmap.fill(Qt::transparent);
 
-	const int offset(m_scaledSize.width() / 8);
-	const QRect rectangle(offset, offset, (m_scaledSize.width() - (offset * 2)), (m_scaledSize.height() - (offset * 2)));
-	QConicalGradient gradient(rectangle.center(), m_step);
-	gradient.setColorAt(0, m_color);
-	gradient.setColorAt(1, Qt::transparent);
-
 	QPainter painter(&pixmap);
-	painter.setRenderHint(QPainter::HighQualityAntialiasing);
-	painter.setPen(QPen(gradient, (m_scaledSize.width() / 4)));
-	painter.drawArc(rectangle, 0, 5760);
+
+	paint(&painter, pixmap.rect());
 
 	return pixmap;
 }

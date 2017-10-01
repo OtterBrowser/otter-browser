@@ -34,6 +34,7 @@ class Animation : public QObject
 public:
 	explicit Animation(QObject *parent = nullptr);
 
+	virtual void paint(QPainter *painter, const QRect &rectangle = {}) const = 0;
 	virtual QPixmap getCurrentPixmap() const = 0;
 	virtual bool isRunning() const = 0;
 	virtual void setColor(const QColor &color) = 0;
@@ -62,6 +63,7 @@ public:
 
 	explicit GenericAnimation(const QString &path, QObject *parent = nullptr);
 
+	void paint(QPainter *painter, const QRect &rectangle = {}) const override;
 	QPixmap getCurrentPixmap() const override;
 	bool isRunning() const override;
 	void setColor(const QColor &color) override;
@@ -90,6 +92,7 @@ class SpinnerAnimation final : public Animation
 public:
 	explicit SpinnerAnimation(QObject *parent = nullptr);
 
+	void paint(QPainter *painter, const QRect &rectangle = {}) const override;
 	QPixmap getCurrentPixmap() const override;
 	bool isRunning() const override;
 	void setColor(const QColor &color) override;
