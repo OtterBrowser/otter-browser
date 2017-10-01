@@ -1,6 +1,6 @@
 #define MyAppName "Otter Browser"
 #define MyAppVersion "0.9.92-dev"
-#define MyAppURL "http://otter-browser.org/"
+#define MyAppURL "https://otter-browser.org/"
 #define MyAppExeName "otter-browser.exe"
 #define MyAppIdentifier "OtterBrowser"
 
