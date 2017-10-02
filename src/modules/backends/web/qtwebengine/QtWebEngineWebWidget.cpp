@@ -1011,7 +1011,7 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 	m_iconReply = NetworkManagerFactory::getNetworkManager()->get(request);
 	m_iconReply->setParent(this);
 
-	connect(m_iconReply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleIconReplyFinished()));
+	connect(m_iconReply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleIconReplyFinished);
 }
 #endif
 
