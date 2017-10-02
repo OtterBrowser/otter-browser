@@ -1549,25 +1549,6 @@ void MainWindow::endToolBarDragging()
 	m_isDraggingToolBar = false;
 }
 
-void MainWindow::saveToolBarPositions()
-{
-	const QList<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
-
-	for (int i = 0; i < 4; ++i)
-	{
-		const QVector<ToolBarWidget*> toolBars(getToolBars(areas.at(i)));
-
-		for (int j = 0; j < toolBars.count(); ++j)
-		{
-			ToolBarsManager::ToolBarDefinition definition(toolBars.at(j)->getDefinition());
-			definition.location = areas.at(i);
-			definition.row = j;
-
-			ToolBarsManager::setToolBar(definition);
-		}
-	}
-}
-
 void MainWindow::handleOptionChanged(int identifier)
 {
 	if (identifier == SettingsManager::Browser_HomePageOption)

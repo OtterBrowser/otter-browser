@@ -132,8 +132,6 @@ void ToolBarDropZoneWidget::dropEvent(QDropEvent *event)
 			m_mainWindow->insertToolBar(this, toolBars.at(i));
 			m_mainWindow->insertToolBarBreak(this);
 
-			QTimer::singleShot(100, m_mainWindow, SLOT(saveToolBarPositions()));
-
 			break;
 		}
 	}

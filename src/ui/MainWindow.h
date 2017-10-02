@@ -106,7 +106,6 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void saveToolBarPositions();
 	void removeStoredUrl(const QString &url);
 	void handleOptionChanged(int identifier);
 	void handleWindowClose(Window *window);
