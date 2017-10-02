@@ -779,7 +779,7 @@ void GesturesManager::releaseObject()
 	{
 		m_trackedObject->removeEventFilter(m_instance);
 
-		disconnect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+		disconnect(m_trackedObject, &QObject::destroyed, m_instance, &GesturesManager::endGesture);
 	}
 
 	m_trackedObject = nullptr;
@@ -1001,7 +1001,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, QVector<Gestu
 	{
 		m_trackedObject->installEventFilter(m_instance);
 
-		connect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+		connect(m_trackedObject, &QObject::destroyed, m_instance, &GesturesManager::endGesture);
 	}
 
 	return (m_trackedObject && m_instance->eventFilter(m_trackedObject, event));
@@ -1026,7 +1026,7 @@ bool GesturesManager::continueGesture(QObject *object)
 	m_trackedObject = object;
 	m_trackedObject->installEventFilter(m_instance);
 
-	connect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+	connect(m_trackedObject, &QObject::destroyed, m_instance, &GesturesManager::endGesture);
 
 	return true;
 }
