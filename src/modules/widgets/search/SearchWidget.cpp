@@ -68,8 +68,9 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	}
 
 	QRect decorationRectangle(option.rect);
+	const bool isRightToLeft(option.direction == Qt::RightToLeft);
 
-	if (option.direction == Qt::RightToLeft)
+	if (isRightToLeft)
 	{
 		decorationRectangle.setLeft(option.rect.width() - option.rect.height());
 	}
@@ -82,7 +83,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 	index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
 
-	if (option.direction == Qt::RightToLeft)
+	if (isRightToLeft)
 	{
 		titleRectangle.setRight(option.rect.width() - option.rect.height());
 	}
@@ -104,7 +105,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	{
 		QRect shortcutReactangle(option.rect);
 
-		if (option.direction == Qt::RightToLeft)
+		if (isRightToLeft)
 		{
 			shortcutReactangle.setRight(shortcutWidth);
 
