@@ -295,7 +295,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	m_localServer = new QLocalServer(this);
 
-	connect(m_localServer, SIGNAL(newConnection()), this, SLOT(handleNewConnection()));
+	connect(m_localServer, &QLocalServer::newConnection, this, &Application::handleNewConnection);
 
 	m_localServer->setSocketOptions(QLocalServer::UserAccessOption);
 
@@ -462,7 +462,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 	{
 		UpdateChecker *updateChecker(new UpdateChecker(this));
 
-		connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(handleUpdateCheckResult(QVector<UpdateChecker::UpdateInformation>)));
+		connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
@@ -811,7 +811,7 @@ void Application::periodicUpdateCheck()
 {
 	UpdateChecker *updateChecker(new UpdateChecker(this));
 
-	connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(handleUpdateCheckResult(QVector<UpdateChecker::UpdateInformation>)));
+	connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
 	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
@@ -1078,7 +1078,7 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel)));
 		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
 
-		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
+		connect(notification, &Notification::clicked, this, &Application::showUpdateDetails);
 	}
 }
 
