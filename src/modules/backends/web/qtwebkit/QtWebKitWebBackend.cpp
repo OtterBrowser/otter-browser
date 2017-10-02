@@ -273,7 +273,9 @@ WebBackend::BackendCapabilities QtWebKitWebBackend::getCapabilities() const
 
 int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier identifier)
 {
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+	Q_UNUSED(identifier)
+#else
 	switch (identifier)
 	{
 		case QtWebKitBackend_EnableMediaOption:
