@@ -52,8 +52,8 @@ struct ToolBarState
 
 	explicit ToolBarState(int identifierValue, const ToolBarsManager::ToolBarDefinition &definition) : identifier(identifierValue)
 	{
-		normalVisibility = ((definition.normalVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
-		fullScreenVisibility = ((definition.fullScreenVisibility == ToolBarsManager::AlwaysVisibleToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+		normalVisibility = ((definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+		fullScreenVisibility = ((definition.fullScreenVisibility != ToolBarsManager::AlwaysHiddenToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
 	}
 
 	void setVisibility(ToolBarsManager::ToolBarsMode mode, ToolBarVisibility visibility)
