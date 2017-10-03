@@ -72,7 +72,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_isAboutToClose(false),
 	m_isDraggingToolBar(false),
 	m_isPrivate((SessionsManager::isPrivate() || SettingsManager::getOption(SettingsManager::Browser_PrivateModeOption).toBool() || SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen))),
-	m_isRestored(false),
+	m_isSessionRestored(false),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -235,7 +235,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	if (parameters.value(QLatin1String("noTabs"), false).toBool())
 	{
-		m_isRestored = true;
+		m_isSessionRestored = true;
 	}
 	else
 	{
@@ -1208,7 +1208,7 @@ void MainWindow::restoreSession(const SessionMainWindow &session)
 
 	if (session.windows.isEmpty())
 	{
-		m_isRestored = true;
+		m_isSessionRestored = true;
 
 		if (SettingsManager::getOption(SettingsManager::Interface_LastTabClosingActionOption).toString() != QLatin1String("doNothing"))
 		{
@@ -1242,13 +1242,15 @@ void MainWindow::restoreSession(const SessionMainWindow &session)
 		}
 	}
 
-	m_isRestored = true;
+	m_isSessionRestored = true;
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
 
 	setActiveWindowByIndex(index);
 
 	m_workspace->markAsRestored();
+
+	emit sessionRestored();
 }
 
 void MainWindow::restoreClosedWindow(int index)
@@ -1337,7 +1339,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		index = ((!hints.testFlag(SessionsManager::EndOpen) && SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool()) ? (getCurrentWindowIndex() + 1) : (m_windows.count() - 1));
 	}
 
-	if (m_isRestored && SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool() && !window->isPinned())
+	if (m_isSessionRestored && SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool() && !window->isPinned())
 	{
 		for (int i = 0; i < m_windows.count(); ++i)
 		{
@@ -1367,13 +1369,13 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	{
 		m_tabBar->setCurrentIndex(index);
 
-		if (m_isRestored)
+		if (m_isSessionRestored)
 		{
 			setActiveWindowByIndex(index);
 		}
 	}
 
-	if (m_isRestored)
+	if (m_isSessionRestored)
 	{
 		const QString newTabOpeningAction(SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString());
 
@@ -1659,7 +1661,7 @@ void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
 {
 	const Window *modifiedWindow(qobject_cast<Window*>(sender()));
 
-	if (!modifiedWindow || !m_isRestored || !SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool())
+	if (!modifiedWindow || !m_isSessionRestored || !SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool())
 	{
 		return;
 	}
@@ -1836,7 +1838,7 @@ void MainWindow::setOption(int identifier, const QVariant &value)
 
 void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 {
-	if (!m_isRestored || index >= m_windows.count())
+	if (!m_isSessionRestored || index >= m_windows.count())
 	{
 		return;
 	}
@@ -2407,6 +2409,11 @@ bool MainWindow::isAboutToClose() const
 bool MainWindow::isPrivate() const
 {
 	return m_isPrivate;
+}
+
+bool MainWindow::isSessionRestored() const
+{
+	return m_isSessionRestored;
 }
 
 bool MainWindow::event(QEvent *event)

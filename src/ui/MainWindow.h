@@ -78,6 +78,7 @@ public:
 	bool hasUrl(const QUrl &url, bool activate = false);
 	bool isAboutToClose() const;
 	bool isPrivate() const;
+	bool isSessionRestored() const;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
@@ -144,7 +145,7 @@ private:
 	bool m_isAboutToClose;
 	bool m_isDraggingToolBar;
 	bool m_isPrivate;
-	bool m_isRestored;
+	bool m_isSessionRestored;
 	Ui::MainWindow *m_ui;
 
 	static quint64 m_identifierCounter;
@@ -158,6 +159,7 @@ signals:
 	void windowRemoved(quint64 identifier);
 	void currentWindowChanged(quint64 identifier);
 	void closedWindowsAvailableChanged(bool available);
+	void sessionRestored();
 	void actionsStateChanged();
 	void actionsStateChanged(const QVector<int> &identifiers);
 	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
