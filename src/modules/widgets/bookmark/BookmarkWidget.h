@@ -33,7 +33,6 @@ class BookmarkWidget final : public ToolButtonWidget
 
 public:
 	explicit BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
-	explicit BookmarkWidget(const QString &path, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;

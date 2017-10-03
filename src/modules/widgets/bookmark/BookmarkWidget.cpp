@@ -35,17 +35,8 @@ BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::T
 {
 	updateBookmark(m_bookmark);
 
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*,BookmarksItem*)), this, SLOT(removeBookmark(BookmarksItem*)));
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(updateBookmark(BookmarksItem*)));
-}
-
-BookmarkWidget::BookmarkWidget(const QString &path, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_bookmark(BookmarksManager::getModel()->getItem(path))
-{
-	updateBookmark(m_bookmark);
-
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*,BookmarksItem*)), this, SLOT(removeBookmark(BookmarksItem*)));
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(updateBookmark(BookmarksItem*)));
+	connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkRemoved, this, &BookmarkWidget::removeBookmark);
+	connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &BookmarkWidget::updateBookmark);
 }
 
 void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
