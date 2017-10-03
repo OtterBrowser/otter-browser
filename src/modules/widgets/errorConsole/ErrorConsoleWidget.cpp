@@ -83,15 +83,15 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 
 	m_ui->scopeButton->setMenu(menu);
 
-	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(filterCategories()));
-	connect(m_ui->networkButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
-	connect(m_ui->securityButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
-	connect(m_ui->cssButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
-	connect(m_ui->javaScriptButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
-	connect(m_ui->otherButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
-	connect(m_ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), this, SLOT(filterMessages(QString)));
-	connect(m_ui->consoleView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(menu, &QMenu::triggered, this, &ErrorConsoleWidget::filterCategories);
+	connect(m_ui->networkButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
+	connect(m_ui->securityButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
+	connect(m_ui->cssButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
+	connect(m_ui->javaScriptButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
+	connect(m_ui->otherButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
+	connect(m_ui->clearButton, &QToolButton::clicked, this, &ErrorConsoleWidget::clear);
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &ErrorConsoleWidget::filterMessages);
+	connect(m_ui->consoleView, &QTreeView::customContextMenuRequested, this, &ErrorConsoleWidget::showContextMenu);
 }
 
 ErrorConsoleWidget::~ErrorConsoleWidget()
@@ -107,7 +107,7 @@ void ErrorConsoleWidget::showEvent(QShowEvent *event)
 
 		if (mainWindow)
 		{
-			connect(mainWindow, SIGNAL(currentWindowChanged(quint64)), this, SLOT(filterCategories()));
+			connect(mainWindow, &MainWindow::currentWindowChanged, this, &ErrorConsoleWidget::filterCategories);
 		}
 
 		m_model = new QStandardItemModel(this);
@@ -122,7 +122,7 @@ void ErrorConsoleWidget::showEvent(QShowEvent *event)
 
 		m_ui->consoleView->setModel(m_model);
 
-		connect(Console::getInstance(), SIGNAL(messageAdded(Console::Message)), this, SLOT(addMessage(Console::Message)));
+		connect(Console::getInstance(), &Console::messageAdded, this, &ErrorConsoleWidget::addMessage);
 	}
 
 	QWidget::showEvent(event);
