@@ -564,7 +564,7 @@ void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
 		printPreviewDialog.resize(QApplication::activeWindow()->size());
 	}
 
-	connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), frame, SLOT(print(QPrinter*)));
+	connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, frame, &QWebFrame::print);
 
 	printPreviewDialog.exec();
 }
