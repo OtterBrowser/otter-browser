@@ -447,7 +447,7 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 
 	emit m_widget->needsAttention();
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, nullptr, m_widget);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, {}, QDialogButtonBox::Ok, nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -560,7 +560,7 @@ QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
 
 QString QtWebKitPage::getDefaultUserAgent() const
 {
-	return QWebPage::userAgentForUrl(QUrl());
+	return QWebPage::userAgentForUrl({});
 }
 
 QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
@@ -699,7 +699,7 @@ bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 
 	emit m_widget->needsAttention();
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, m_widget);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, {}, (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -739,7 +739,7 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), {}, {}, (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -786,7 +786,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption(static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option));
 		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output));
 
-		filesOutput->fileNames = Utils::getOpenPaths(filesOption->suggestedFileNames, QStringList(), true);
+		filesOutput->fileNames = Utils::getOpenPaths(filesOption->suggestedFileNames, {}, true);
 
 		return true;
 	}

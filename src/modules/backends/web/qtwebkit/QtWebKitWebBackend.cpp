@@ -263,7 +263,7 @@ QString QtWebKitWebBackend::getActiveDictionary()
 		return (dictionary.isEmpty() ? SpellCheckManager::getDefaultDictionary() : dictionary);
 	}
 
-	return QString();
+	return {};
 }
 
 WebBackend::BackendCapabilities QtWebKitWebBackend::getCapabilities() const
@@ -315,7 +315,7 @@ void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
 	{
 		deleteLater();
 
-		emit thumbnailAvailable(m_url, QPixmap(), QString());
+		emit thumbnailAvailable(m_url, {}, {});
 
 		return;
 	}

@@ -258,7 +258,7 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 
 		if (data.isEmpty() || data.count() < 3)
 		{
-			data = QVariantList({0, getZoom(), m_page->mainFrame()->scrollPosition()});
+			data = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
 		}
 		else
 		{
@@ -435,11 +435,11 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 		QNetworkRequest mutableRequest(request);
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-		new Transfer(m_networkManager->get(mutableRequest), QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+		new Transfer(m_networkManager->get(mutableRequest), {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 	}
 	else
 	{
-		startDelayedTransfer(new Transfer(request, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+		startDelayedTransfer(new Transfer(request, {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 	}
 }
 
@@ -447,7 +447,7 @@ void QtWebKitWebWidget::handleUnsupportedContent(QNetworkReply *reply)
 {
 	m_networkManager->registerTransfer(reply);
 
-	startDelayedTransfer(new Transfer(reply, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+	startDelayedTransfer(new Transfer(reply, {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &value)
@@ -476,7 +476,7 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 			}
 			else
 			{
-				setStatusMessage(QString());
+				setStatusMessage({});
 			}
 
 			break;
@@ -492,13 +492,13 @@ void QtWebKitWebWidget::handleLoadStarted()
 		return;
 	}
 
-	m_thumbnail = QPixmap();
+	m_thumbnail = {};
 	m_messageToken = QUuid::createUuid().toString();
 	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
 	m_loadingState = OngoingLoadingState;
 
-	setStatusMessage(QString());
-	setStatusMessageOverride(QString());
+	setStatusMessage({});
+	setStatusMessageOverride({});
 
 	emit geometryChanged();
 	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
@@ -526,7 +526,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 
 	m_networkManager->handleLoadFinished(result);
 
-	m_thumbnail = QPixmap();
+	m_thumbnail = {};
 	m_loadingState = FinishedLoadingState;
 
 	updateAmountOfDeferredPlugins();
@@ -821,7 +821,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	}
 	else
 	{
-		setStatusMessage(QString());
+		setStatusMessage({});
 	}
 
 	m_page->updateStyleSheets(url);
@@ -1066,7 +1066,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::addTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			return;
 		case ActionsManager::OpenFrameInCurrentTabAction:
@@ -1107,7 +1107,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					m_networkManager->addContentBlockingException(url, NetworkManager::SubFrameType);
 
-					hitResult.frame()->setUrl(QUrl());
+					hitResult.frame()->setUrl({});
 					hitResult.frame()->setUrl(url);
 				}
 			}
@@ -1198,7 +1198,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					const QString src(hitResult.element().attribute(QLatin1String("src")));
 					NetworkCache *cache(NetworkManagerFactory::getCache());
 
-					hitResult.element().setAttribute(QLatin1String("src"), QString());
+					hitResult.element().setAttribute(QLatin1String("src"), {});
 
 					if (cache)
 					{
@@ -1227,7 +1227,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : nullptr), this));
 				imagePropertiesDialog->setButtonsVisible(false);
 
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), {}, {}, QDialogButtonBox::Close, imagePropertiesDialog, this));
 
 				connect(this, &QtWebKitWebWidget::aboutToReload, dialog, &ContentsDialog::close);
 				connect(imagePropertiesDialog, &ImagePropertiesDialog::finished, dialog, &ContentsDialog::close);
@@ -1763,7 +1763,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	{
 		m_page->history()->clear();
 
-		updateOptions(QUrl());
+		updateOptions({});
 
 		if (m_page->getMainFrame())
 		{
@@ -1786,7 +1786,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		stream << QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded()) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
+		stream << QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded()) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << {} << false << ++itemSequence << {} << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << {} << false;
 	}
 
 	stream.device()->reset();
@@ -2090,7 +2090,7 @@ QString QtWebKitWebWidget::getActiveStyleSheet() const
 {
 	if (m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("var isDefault = true; for (var i = 0; i < document.styleSheets.length; ++i) { if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0) { isDefault = false; break; } } isDefault")).toBool())
 	{
-		return QString();
+		return {};
 	}
 
 	return m_page->mainFrame()->findFirstElement(QLatin1String("link[rel=\"alternate stylesheet\"]:not([disabled])")).attribute(QLatin1String("title"));
@@ -2586,7 +2586,7 @@ int QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 
 	if (flags.testFlag(HighlightAllFind) || text.isEmpty())
 	{
-		m_page->findText(QString(), QWebPage::HighlightAllOccurrences);
+		m_page->findText({}, QWebPage::HighlightAllOccurrences);
 		m_page->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
 	}
 
