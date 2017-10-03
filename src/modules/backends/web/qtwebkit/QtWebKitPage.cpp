@@ -20,6 +20,7 @@
 
 #include "QtWebKitPage.h"
 #include "QtWebKitNetworkManager.h"
+#include "QtWebKitPluginFactory.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/Console.h"
@@ -194,6 +195,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	m_isViewingMedia(false)
 {
 	setNetworkAccessManager(m_networkManager);
+	setPluginFactory(new QtWebKitPluginFactory(parent));
 	setForwardUnsupportedContent(true);
 	handleFrameCreation(mainFrame());
 

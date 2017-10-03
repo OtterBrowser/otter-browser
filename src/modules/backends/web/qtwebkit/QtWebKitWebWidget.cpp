@@ -22,7 +22,6 @@
 #include "QtWebKitInspector.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitPage.h"
-#include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
 #include "QtWebKitWebBackend.h"
 #include "../../../../core/Application.h"
@@ -112,7 +111,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	m_page = new QtWebKitPage(m_networkManager, this);
 	m_page->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_page->setParent(m_webView);
-	m_page->setPluginFactory(new QtWebKitPluginFactory(this));
 	m_page->setVisibilityState(isVisible() ? QWebPage::VisibilityStateVisible : QWebPage::VisibilityStateHidden);
 
 	m_webView->setPage(m_page);
