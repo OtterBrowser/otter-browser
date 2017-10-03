@@ -60,9 +60,9 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	setFocusPolicy(Qt::StrongFocus);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	connect(m_lineEditWidget, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
-	connect(m_lineEditWidget, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged(QString)));
-	connect(m_browseButton, SIGNAL(clicked()), this, SLOT(selectPath()));
+	connect(m_lineEditWidget, &LineEditWidget::textEdited, this, &FilePathWidget::updateCompleter);
+	connect(m_lineEditWidget, &LineEditWidget::textChanged, this, &FilePathWidget::pathChanged);
+	connect(m_browseButton, &QPushButton::clicked, this, &FilePathWidget::selectPath);
 }
 
 void FilePathWidget::changeEvent(QEvent *event)
@@ -108,7 +108,7 @@ void FilePathWidget::updateCompleter()
 
 		m_completer->complete();
 
-		disconnect(m_lineEditWidget, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
+		disconnect(m_lineEditWidget, &LineEditWidget::textEdited, this, &FilePathWidget::updateCompleter);
 	}
 }
 
