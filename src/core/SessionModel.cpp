@@ -99,10 +99,10 @@ MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionIt
 		}
 	}
 
-	connect(mainWindow, SIGNAL(titleChanged(QString)), this, SLOT(notifyMainWindowModified()));
-	connect(mainWindow, SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyMainWindowModified()));
-	connect(mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(handleWindowAdded(quint64)));
-	connect(mainWindow, SIGNAL(windowRemoved(quint64)), this, SLOT(handleWindowRemoved(quint64)));
+	connect(mainWindow, &MainWindow::titleChanged, this, &MainWindowSessionItem::notifyMainWindowModified);
+	connect(mainWindow, &MainWindow::currentWindowChanged, this, &MainWindowSessionItem::notifyMainWindowModified);
+	connect(mainWindow, &MainWindow::windowAdded, this, &MainWindowSessionItem::handleWindowAdded);
+	connect(mainWindow, &MainWindow::windowRemoved, this, &MainWindowSessionItem::handleWindowRemoved);
 }
 
 void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
@@ -251,8 +251,8 @@ SessionModel::SessionModel(QObject *parent) : QStandardItemModel(parent),
 		handleMainWindowAdded(mainWindows.at(i));
 	}
 
-	connect(Application::getInstance(), SIGNAL(windowAdded(MainWindow*)), this, SLOT(handleMainWindowAdded(MainWindow*)));
-	connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(handleMainWindowRemoved(MainWindow*)));
+	connect(Application::getInstance(), &Application::windowAdded, this, &SessionModel::handleMainWindowAdded);
+	connect(Application::getInstance(), &Application::windowRemoved, this, &SessionModel::handleMainWindowRemoved);
 }
 
 void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
