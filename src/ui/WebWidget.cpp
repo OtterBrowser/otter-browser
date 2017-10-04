@@ -57,9 +57,9 @@ WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, Content
 {
 	Q_UNUSED(parameters)
 
-	connect(this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SLOT(handleLoadingStateChange(WebWidget::LoadingState)));
-	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(notifyPageActionsChanged()));
-	connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(notifyFillPasswordActionStateChanged()));
+	connect(this, &WebWidget::loadingStateChanged, this, &WebWidget::handleLoadingStateChange);
+	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &WebWidget::notifyPageActionsChanged);
+	connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, this, &WebWidget::notifyFillPasswordActionStateChanged);
 }
 
 void WebWidget::timerEvent(QTimerEvent *event)
@@ -133,7 +133,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 				TransferDialog *transferDialog(new TransferDialog(transfer, this));
 				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
 
-				connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+				connect(transferDialog, &TransferDialog::finished, dialog, &ContentsDialog::close);
 
 				showDialog(dialog, false);
 			}
@@ -287,7 +287,7 @@ void WebWidget::handleWindowCloseRequest()
 	ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this));
 	dialog->setCheckBox(tr("Do not show this message again"), false);
 
-	connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
+	connect(this, &WebWidget::aboutToReload, dialog, &ContentsDialog::close);
 	connect(dialog, &ContentsDialog::finished, [&](int result, bool isChecked)
 	{
 		const bool isAccepted(result == QDialog::Accepted);
