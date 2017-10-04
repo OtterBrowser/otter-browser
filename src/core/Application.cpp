@@ -215,7 +215,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		QStringList rawReportOptions(m_commandLineParser.positionalArguments());
 		ReportOptions reportOptions(BasicReport);
 
-		if (rawReportOptions.isEmpty() || rawReportOptions.contains(QLatin1String("full")))
+		if (rawReportOptions.isEmpty() || rawReportOptions.contains(QLatin1String("standard")))
+		{
+			reportOptions = StandardReport;
+		}
+		else if (rawReportOptions.contains(QLatin1String("full")))
 		{
 			reportOptions = FullReport;
 		}
@@ -664,7 +668,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			return;
 		case ActionsManager::DiagnosticReportAction:
 			{
-				ReportDialog *dialog(new ReportDialog(Application::FullReport, m_activeWindow));
+				ReportDialog *dialog(new ReportDialog(Application::StandardReport, m_activeWindow));
 				dialog->setAttribute(Qt::WA_DeleteOnClose, true);
 				dialog->show();
 			}

@@ -51,6 +51,7 @@ public:
 		KeyboardShortcutsReport = 2,
 		PathsReport = 4,
 		SettingsReport = 8,
+		StandardReport = (EnvironmentReport | PathsReport | SettingsReport),
 		FullReport = (EnvironmentReport | KeyboardShortcutsReport | PathsReport | SettingsReport)
 	};
 
@@ -74,7 +75,7 @@ public:
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
 	static QCommandLineParser* getCommandLineParser();
-	static QString createReport(ReportOptions options = FullReport);
+	static QString createReport(ReportOptions options = StandardReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;

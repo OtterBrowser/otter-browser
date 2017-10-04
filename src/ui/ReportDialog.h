@@ -36,7 +36,7 @@ class ReportDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ReportDialog(Application::ReportOptions options = Application::FullReport, QWidget *parent = nullptr);
+	explicit ReportDialog(Application::ReportOptions options = Application::StandardReport, QWidget *parent = nullptr);
 	~ReportDialog();
 
 protected:
