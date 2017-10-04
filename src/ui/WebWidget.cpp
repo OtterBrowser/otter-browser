@@ -659,7 +659,7 @@ WebBackend* WebWidget::getBackend() const
 
 QString WebWidget::getDescription() const
 {
-	return QString();
+	return {};
 }
 
 QString WebWidget::suggestSaveFileName(SaveFormat format) const
@@ -714,7 +714,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 
 		if (!file.open(QIODevice::ReadOnly))
 		{
-			return QString();
+			return {};
 		}
 
 		QString script(file.readAll());
@@ -752,17 +752,17 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 
 QString WebWidget::getActiveStyleSheet() const
 {
-	return QString();
+	return {};
 }
 
 QString WebWidget::getCharacterEncoding() const
 {
-	return QString();
+	return {};
 }
 
 QString WebWidget::getSelectedText() const
 {
-	return QString();
+	return {};
 }
 
 QString WebWidget::getStatusMessage() const
@@ -787,7 +787,7 @@ QVariant WebWidget::getPageInformation(PageInformation key) const
 		return m_loadingTime;
 	}
 
-	return QVariant();
+	return {};
 }
 
 QUrl WebWidget::getRequestedUrl() const
@@ -1132,27 +1132,27 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 WebWidget::LinkUrl WebWidget::getActiveFrame() const
 {
-	return LinkUrl();
+	return {};
 }
 
 WebWidget::LinkUrl WebWidget::getActiveImage() const
 {
-	return LinkUrl();
+	return {};
 }
 
 WebWidget::LinkUrl WebWidget::getActiveLink() const
 {
-	return LinkUrl();
+	return {};
 }
 
 WebWidget::SslInformation WebWidget::getSslInformation() const
 {
-	return SslInformation();
+	return {};
 }
 
 QStringList WebWidget::getStyleSheets() const
 {
-	return QStringList();
+	return {};
 }
 
 QVector<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() const
@@ -1162,17 +1162,17 @@ QVector<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() c
 
 QVector<WebWidget::LinkUrl> WebWidget::getFeeds() const
 {
-	return QVector<LinkUrl>();
+	return {};
 }
 
 QVector<WebWidget::LinkUrl> WebWidget::getSearchEngines() const
 {
-	return QVector<LinkUrl>();
+	return {};
 }
 
 QVector<NetworkManager::ResourceInformation> WebWidget::getBlockedRequests() const
 {
-	return QVector<NetworkManager::ResourceInformation>();
+	return {};
 }
 
 QHash<int, QVariant> WebWidget::getOptions() const
@@ -1182,7 +1182,7 @@ QHash<int, QVariant> WebWidget::getOptions() const
 
 QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
 {
-	return QHash<QByteArray, QByteArray>();
+	return {};
 }
 
 WebWidget::HitTestResult WebWidget::getCurrentHitTestResult() const
@@ -1194,7 +1194,7 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 {
 	Q_UNUSED(position)
 
-	return HitTestResult();
+	return {};
 }
 
 WebWidget::ContentStates WebWidget::getContentState() const
