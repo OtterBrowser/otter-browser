@@ -35,7 +35,7 @@ UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QVector<UpdateCh
 	m_ui->setupUi(this);
 	m_ui->progressBar->setAlignment(Qt::AlignCenter);
 
-	connect(this, SIGNAL(finished(int)), this, SLOT(deleteLater()));
+	connect(this, &UpdateCheckerDialog::finished, this, &UpdateCheckerDialog::deleteLater);
 
 	if (Updater::isReadyToInstall())
 	{
@@ -43,19 +43,17 @@ UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QVector<UpdateCh
 		m_ui->progressBar->setValue(100);
 		m_ui->progressBar->setFormat(QString::number(100) + QLatin1Char('%'));
 
-		readyToInstall();
+		handleReadyToInstall();
 	}
 	else if (availableUpdates.isEmpty())
 	{
 		m_ui->label->setText(tr("Checking for updates…"));
 
-		UpdateChecker *updateChecker(new UpdateChecker(this, false));
-
-		connect(updateChecker, SIGNAL(finished(QVector<UpdateChecker::UpdateInformation>)), this, SLOT(updateCheckFinished(QVector<UpdateChecker::UpdateInformation>)));
+		connect(new UpdateChecker(this, false), &UpdateChecker::finished, this, &UpdateCheckerDialog::handleUpdateCheckFinished);
 	}
 	else
 	{
-		updateCheckFinished(availableUpdates);
+		handleUpdateCheckFinished(availableUpdates);
 	}
 }
 
@@ -74,7 +72,7 @@ void UpdateCheckerDialog::changeEvent(QEvent *event)
 	}
 }
 
-void UpdateCheckerDialog::buttonClicked(QAbstractButton *button)
+void UpdateCheckerDialog::handleButtonClicked(QAbstractButton *button)
 {
 	if (m_ui->buttonBox->buttonRole(button) == QDialogButtonBox::AcceptRole)
 	{
@@ -84,7 +82,7 @@ void UpdateCheckerDialog::buttonClicked(QAbstractButton *button)
 	close();
 }
 
-void UpdateCheckerDialog::updateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
+void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
 {
 	m_ui->progressBar->hide();
 
@@ -120,8 +118,8 @@ void UpdateCheckerDialog::updateCheckFinished(const QVector<UpdateChecker::Updat
 			m_ui->gridLayout->addWidget(detailsButton, i, 1);
 			m_ui->gridLayout->addWidget(updateButton, i, 2);
 
-			connect(detailsButton, SIGNAL(clicked(bool)), this, SLOT(showDetails()));
-			connect(updateButton, SIGNAL(clicked(bool)), this, SLOT(downloadUpdate()));
+			connect(detailsButton, &QPushButton::clicked, this, &UpdateCheckerDialog::showDetails);
+			connect(updateButton, &QPushButton::clicked, this, &UpdateCheckerDialog::downloadUpdate);
 		}
 
 		if (isPackageMissing)
@@ -130,23 +128,6 @@ void UpdateCheckerDialog::updateCheckFinished(const QVector<UpdateChecker::Updat
 			packageWarning->setWordWrap(true);
 
 			m_ui->gridLayout->addWidget(packageWarning, m_ui->gridLayout->rowCount(), 0, m_ui->gridLayout->columnCount(), 0);
-		}
-	}
-}
-
-void UpdateCheckerDialog::showDetails()
-{
-	QPushButton *button(qobject_cast<QPushButton*>(sender()));
-
-	if (button)
-	{
-		const QUrl url(button->property("detailsUrl").toUrl());
-
-		if (url.isValid() && !SessionsManager::hasUrl(url, true))
-		{
-			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
-
-			close();
 		}
 	}
 }
@@ -174,13 +155,13 @@ void UpdateCheckerDialog::downloadUpdate()
 
 			Updater *updater(new Updater(updateInfo.value<UpdateChecker::UpdateInformation>(), this));
 
-			connect(updater, SIGNAL(progress(int)), this, SLOT(updateProgress(int)));
-			connect(updater, SIGNAL(finished(bool)), this, SLOT(transferFinished(bool)));
+			connect(updater, &Updater::progress, this, &UpdateCheckerDialog::handleUpdateProgress);
+			connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
 		}
 	}
 }
 
-void UpdateCheckerDialog::readyToInstall()
+void UpdateCheckerDialog::handleReadyToInstall()
 {
 	m_ui->label->setText(tr("Download finished!"));
 	m_ui->buttonBox->addButton(tr("Install"), QDialogButtonBox::AcceptRole);
@@ -190,20 +171,20 @@ void UpdateCheckerDialog::readyToInstall()
 
 	m_ui->gridLayout->addWidget(informationLabel);
 
-	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &UpdateCheckerDialog::handleButtonClicked);
 }
 
-void UpdateCheckerDialog::updateProgress(const int progress)
+void UpdateCheckerDialog::handleUpdateProgress(int progress)
 {
 	m_ui->progressBar->setValue(progress);
 	m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
 }
 
-void UpdateCheckerDialog::transferFinished(const bool success)
+void UpdateCheckerDialog::handleTransferFinished(bool success)
 {
 	if (success)
 	{
-		readyToInstall();
+		handleReadyToInstall();
 	}
 	else
 	{
@@ -216,6 +197,23 @@ void UpdateCheckerDialog::transferFinished(const bool success)
 	}
 
 	m_ui->buttonBox->setEnabled(true);
+}
+
+void UpdateCheckerDialog::showDetails()
+{
+	QPushButton *button(qobject_cast<QPushButton*>(sender()));
+
+	if (button)
+	{
+		const QUrl url(button->property("detailsUrl").toUrl());
+
+		if (url.isValid() && !SessionsManager::hasUrl(url, true))
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
+
+			close();
+		}
+	}
 }
 
 }
