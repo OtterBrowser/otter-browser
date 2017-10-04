@@ -113,11 +113,11 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 	QTimer::singleShot(250, this, SLOT(createApplicationsCacheThread()));
 
-	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 }
 
 FreeDesktopOrgPlatformIntegration::~FreeDesktopOrgPlatformIntegration()
@@ -242,7 +242,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 
 	m_notificationWatchers[watcher] = notification;
 
-	connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(handleNotificationCallFinished(QDBusPendingCallWatcher*)));
+	connect(watcher, &QDBusPendingCallWatcher::finished, this, &FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished);
 }
 
 void FreeDesktopOrgPlatformIntegration::updateTransfersProgress(bool clear)
