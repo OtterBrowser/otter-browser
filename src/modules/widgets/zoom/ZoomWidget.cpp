@@ -91,9 +91,9 @@ void ZoomWidget::setWindow(Window *window)
 {
 	if (m_window)
 	{
-		disconnect(m_window, SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
-		disconnect(m_window, SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
-		disconnect(this, SIGNAL(valueChanged(int)), m_window, SLOT(setZoom(int)));
+		disconnect(m_window, &Window::canZoomChanged, this, &ZoomWidget::setEnabled);
+		disconnect(m_window, &Window::zoomChanged, this, &ZoomWidget::setZoom);
+		disconnect(this, &ZoomWidget::valueChanged, m_window, &Window::setZoom);
 	}
 
 	m_window = window;
@@ -104,9 +104,9 @@ void ZoomWidget::setWindow(Window *window)
 	{
 		setZoom(window->getZoom());
 
-		connect(window, SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
-		connect(window, SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
-		connect(this, SIGNAL(valueChanged(int)), window, SLOT(setZoom(int)));
+		connect(window, &Window::canZoomChanged, this, &ZoomWidget::setEnabled);
+		connect(window, &Window::zoomChanged, this, &ZoomWidget::setZoom);
+		connect(this, &ZoomWidget::valueChanged, window, &Window::setZoom);
 	}
 	else
 	{
