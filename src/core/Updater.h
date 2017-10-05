@@ -42,10 +42,10 @@ public:
 	static bool isReadyToInstall(QString path = {});
 
 protected:
-	Transfer* downloadFile(const QUrl url, const QString path);
+	Transfer* downloadFile(const QUrl &url, const QString &path);
 
 protected slots:
-	void transferFinished();
+	void handleTransferFinished();
 	void updateProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
@@ -55,7 +55,7 @@ private:
 
 signals:
 	void progress(int percentage);
-	void finished(bool success);
+	void finished(bool isSuccess);
 };
 
 }

@@ -53,7 +53,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 
 	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-	connect(m_networkReply, SIGNAL(finished()), this, SLOT(runUpdateCheck()));
+	connect(m_networkReply, &QNetworkReply::finished, this, &UpdateChecker::runUpdateCheck);
 }
 
 void UpdateChecker::runUpdateCheck()

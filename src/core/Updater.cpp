@@ -62,10 +62,10 @@ Updater::Updater(const UpdateChecker::UpdateInformation &information, QObject *p
 	m_transfer = downloadFile(information.fileUrl, path);
 	m_transfer->setUpdateInterval(500);
 
-	connect(m_transfer, SIGNAL(progressChanged(qint64,qint64)), this, SLOT(updateProgress(qint64,qint64)));
+	connect(m_transfer, &Transfer::progressChanged, this, &Updater::updateProgress);
 }
 
-void Updater::transferFinished()
+void Updater::handleTransferFinished()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
@@ -138,6 +138,16 @@ void Updater::clearUpdate()
 	QFile::remove(SessionsManager::getWritableDataPath(QLatin1String("update.txt")));
 }
 
+Transfer* Updater::downloadFile(const QUrl &url, const QString &path)
+{
+	const QString urlString(url.path());
+	Transfer *transfer(new Transfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption), this));
+
+	connect(transfer, &Transfer::finished, this, &Updater::handleTransferFinished);
+
+	return transfer;
+}
+
 QString Updater::getScriptPath()
 {
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("update.txt")));
@@ -175,16 +185,6 @@ bool Updater::isReadyToInstall(QString path)
 	}
 
 	return QFileInfo::exists(path);
-}
-
-Transfer* Updater::downloadFile(const QUrl url, const QString path)
-{
-	const QString urlString(url.path());
-	Transfer *transfer(new Transfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption), this));
-
-	connect(transfer, SIGNAL(finished()), this, SLOT(transferFinished()));
-
-	return transfer;
 }
 
 }
