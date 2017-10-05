@@ -41,7 +41,7 @@ protected:
 	int getSideBarIdentifier() const;
 
 protected slots:
-	void menuAboutToShow();
+	void updateMenu();
 	void selectPanel(QAction *action);
 	void handleToolBarModified(int identifier);
 };

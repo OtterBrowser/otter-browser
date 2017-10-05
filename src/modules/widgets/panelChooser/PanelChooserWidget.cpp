@@ -33,9 +33,9 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	updateText();
 
-	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
-	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()));
-	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(selectPanel(QAction*)));
+	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &PanelChooserWidget::handleToolBarModified);
+	connect(menu(), &QMenu::aboutToShow, this, &PanelChooserWidget::updateMenu);
+	connect(menu(), &QMenu::triggered, this, &PanelChooserWidget::selectPanel);
 }
 
 void PanelChooserWidget::changeEvent(QEvent *event)
@@ -45,23 +45,6 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		updateText();
-	}
-}
-
-void PanelChooserWidget::menuAboutToShow()
-{
-	menu()->clear();
-
-	const int identifier(getSideBarIdentifier());
-
-	if (identifier >= 0)
-	{
-		const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
-
-		for (int i = 0; i < panels.count(); ++i)
-		{
-			menu()->addAction(SidebarWidget::getPanelTitle(panels[i]))->setData(panels[i]);
-		}
 	}
 }
 
@@ -83,6 +66,23 @@ void PanelChooserWidget::handleToolBarModified(int identifier)
 	if (identifier == getSideBarIdentifier())
 	{
 		updateText();
+	}
+}
+
+void PanelChooserWidget::updateMenu()
+{
+	menu()->clear();
+
+	const int identifier(getSideBarIdentifier());
+
+	if (identifier >= 0)
+	{
+		const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
+
+		for (int i = 0; i < panels.count(); ++i)
+		{
+			menu()->addAction(SidebarWidget::getPanelTitle(panels[i]))->setData(panels[i]);
+		}
 	}
 }
 
