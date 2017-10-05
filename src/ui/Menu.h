@@ -76,7 +76,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor);
-	ActionExecutor::Object getExecutor();
+	ActionExecutor::Object getExecutor() const;
 	bool canInclude(const QJsonObject &definition, const QStringList &includeSections);
 
 protected slots:

@@ -1516,14 +1516,14 @@ void Menu::setMenuOptions(const QVariantMap &options)
 	m_menuOptions = options;
 }
 
-ActionExecutor::Object Menu::getExecutor()
+ActionExecutor::Object Menu::getExecutor() const
 {
 	if (m_executor.isValid())
 	{
 		return m_executor;
 	}
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
 
 	if (mainWindow)
 	{
