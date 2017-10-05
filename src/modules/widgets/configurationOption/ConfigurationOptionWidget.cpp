@@ -117,7 +117,7 @@ void ConfigurationOptionWidget::setWindow(Window *window)
 {
 	if (m_window && !m_window->isAboutToClose())
 	{
-		disconnect(m_window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+		disconnect(m_window, &Window::optionChanged, this, &ConfigurationOptionWidget::handleOptionChanged);
 	}
 
 	m_window = window;
@@ -127,7 +127,7 @@ void ConfigurationOptionWidget::setWindow(Window *window)
 
 	if (window)
 	{
-		connect(m_window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+		connect(window, &Window::optionChanged, this, &ConfigurationOptionWidget::handleOptionChanged);
 	}
 }
 
