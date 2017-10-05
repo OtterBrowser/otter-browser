@@ -35,7 +35,7 @@ ApplicationComboBoxWidget::ApplicationComboBoxWidget(QWidget *parent) : QComboBo
 	insertSeparator(1);
 	addItem(tr("Other…"));
 
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
 }
 
 void ApplicationComboBoxWidget::changeEvent(QEvent *event)
@@ -49,11 +49,11 @@ void ApplicationComboBoxWidget::changeEvent(QEvent *event)
 	}
 }
 
-void ApplicationComboBoxWidget::indexChanged(int index)
+void ApplicationComboBoxWidget::handleIndexChanged(int index)
 {
 	if (index == (count() - 1))
 	{
-		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
 
 		setCurrentIndex(m_previousIndex);
 
@@ -72,7 +72,7 @@ void ApplicationComboBoxWidget::indexChanged(int index)
 			setCurrentIndex(m_previousIndex);
 		}
 
-		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
 	}
 	else
 	{
@@ -111,7 +111,7 @@ void ApplicationComboBoxWidget::setCurrentCommand(const QString &command)
 
 void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 {
-	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
 
 	clear();
 
@@ -138,7 +138,7 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 
 	addItem(tr("Other…"));
 
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
 }
 
 void ApplicationComboBoxWidget::setAlwaysShowDefaultApplication(bool show)
