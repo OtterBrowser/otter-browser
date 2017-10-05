@@ -113,8 +113,20 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
+#if QT_VERSION >= 0x050900
+	// Enable automatic High-DPI scaling support. This could be done with earlier Qt
+	// versions as well (down to 5.6), but it was rather buggy before 5.9, so we
+	// restrict to 5.9 and higher.
+	// Users can force-enable this on olde Qt versions by setting the environment
+	// variable `QT_AUTO_SCREEN_SCALE_FACTOR=1`.
+	// Note that this attribute must be enabled before the QApplication is
+	// constructed, hence the use of the static version of setAttribute().
+	Application::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+#endif
+	// Use static version for this attribute too, for consistency with the above.
+	Application::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+
 	Application application(argc, argv);
-	application.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
 	if (Application::isAboutToQuit() || Application::isRunning() || Application::isUpdating() || Application::getCommandLineParser()->isSet(QLatin1String("report")))
 	{
