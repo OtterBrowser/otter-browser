@@ -45,8 +45,8 @@ PopupViewWidget::PopupViewWidget(LineEditWidget *parent) : ItemViewWidget(nullpt
 	viewport()->setMouseTracking(true);
 	viewport()->installEventFilter(this);
 
-	connect(this, SIGNAL(needsActionsUpdate()), this, SLOT(updateHeight()));
-	connect(this, SIGNAL(entered(QModelIndex)), this, SLOT(handleIndexEntered(QModelIndex)));
+	connect(this, &PopupViewWidget::needsActionsUpdate, this, &PopupViewWidget::updateHeight);
+	connect(this, &PopupViewWidget::entered, this, &PopupViewWidget::handleIndexEntered);
 }
 
 void PopupViewWidget::keyPressEvent(QKeyEvent *event)
@@ -292,7 +292,7 @@ void LineEditWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_shouldSelectAllOnRelease)
 	{
-		disconnect(this, SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+		disconnect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::clearSelectAllOnRelease);
 
 		selectAll();
 
@@ -433,7 +433,7 @@ void LineEditWidget::clearSelectAllOnRelease()
 {
 	if (m_shouldSelectAllOnRelease && hasSelectedText())
 	{
-		disconnect(this, SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+		disconnect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::clearSelectAllOnRelease);
 
 		m_shouldSelectAllOnRelease = false;
 	}
@@ -454,7 +454,7 @@ void LineEditWidget::activate(Qt::FocusReason reason)
 		{
 			m_shouldSelectAllOnRelease = true;
 
-			connect(this, SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+			connect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::clearSelectAllOnRelease);
 
 			return;
 		}
@@ -554,11 +554,11 @@ void LineEditWidget::setSelectAllOnFocus(bool select)
 {
 	if (m_shouldSelectAllOnFocus && !select)
 	{
-		disconnect(this, SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+		disconnect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::clearSelectAllOnRelease);
 	}
 	else if (!m_shouldSelectAllOnFocus && select)
 	{
-		connect(this, SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+		connect(this, &LineEditWidget::selectionChanged, this, &LineEditWidget::clearSelectAllOnRelease);
 	}
 
 	m_shouldSelectAllOnFocus = select;
