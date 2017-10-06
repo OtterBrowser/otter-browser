@@ -50,7 +50,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_comboBox->addItem(tr("Yes"), QLatin1String("true"));
 			m_comboBox->setCurrentIndex(value.toBool() ? 1 : 0);
 
-			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markAsModified()));
+			connect(m_comboBox, &QComboBox::currentTextChanged, this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::ColorType:
@@ -58,7 +58,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 
 			m_colorWidget->setColor(value.value<QColor>());
 
-			connect(m_colorWidget, SIGNAL(colorChanged(QColor)), this, SLOT(markAsModified()));
+			connect(m_colorWidget, &ColorWidget::colorChanged, this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::EnumerationType:
@@ -66,7 +66,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_comboBox->addItem(value.toString(), value);
 			m_comboBox->setCurrentIndex(0);
 
-			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markAsModified()));
+			connect(m_comboBox, &QComboBox::currentTextChanged, this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::FontType:
@@ -75,7 +75,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_fontComboBox->setCurrentFont(QFont(value.toString()));
 			m_fontComboBox->lineEdit()->selectAll();
 
-			connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markAsModified()));
+			connect(m_fontComboBox, &QFontComboBox::currentFontChanged, this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::IconType:
@@ -90,7 +90,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 				m_iconWidget->setIcon(value.value<QIcon>());
 			}
 
-			connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markAsModified()));
+			connect(m_iconWidget, &IconWidget::iconChanged, this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::IntegerType:
@@ -101,7 +101,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_spinBox->setValue(value.toInt());
 			m_spinBox->selectAll();
 
-			connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markAsModified()));
+			connect(m_spinBox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &OptionWidget::markAsModified);
 
 			break;
 		case SettingsManager::PathType:
@@ -110,7 +110,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 			m_filePathWidget->setPath(value.toString());
 			m_filePathWidget->setSelectFile(false);
 
-			connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markAsModified()));
+			connect(m_filePathWidget, &FilePathWidget::pathChanged, this, &OptionWidget::markAsModified);
 
 			break;
 		default:
@@ -124,7 +124,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 				m_lineEditWidget->setEchoMode(QLineEdit::PasswordEchoOnEdit);
 			}
 
-			connect(m_lineEditWidget, SIGNAL(textChanged(QString)), this, SLOT(markAsModified()));
+			connect(m_lineEditWidget, &LineEditWidget::textChanged, this, &OptionWidget::markAsModified);
 
 			break;
 	}
@@ -195,7 +195,7 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 
 		layout()->addWidget(m_resetButton);
 
-		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
+		connect(m_resetButton, &QPushButton::clicked, this, &OptionWidget::reset);
 	}
 }
 
