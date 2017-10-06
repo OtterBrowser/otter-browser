@@ -1147,7 +1147,7 @@ WebWidget::LinkUrl WebWidget::getActiveLink() const
 
 WebWidget::SslInformation WebWidget::getSslInformation() const
 {
-	return {};
+	return SslInformation();
 }
 
 QStringList WebWidget::getStyleSheets() const
