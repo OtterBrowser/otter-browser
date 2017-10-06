@@ -273,7 +273,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 		if (m_addButtonRectangle.contains(event->pos()))
 		{
 			QMenu menu(this);
-			const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getContentsWidget()->getWebWidget()) ? m_window->getContentsWidget()->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
+			const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 
 			for (int i = 0; i < searchEngines.count(); ++i)
 			{
@@ -506,7 +506,7 @@ void SearchWidget::updateGeometries()
 	panel.rect = rect();
 	panel.lineWidth = 1;
 
-	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getContentsWidget()->getWebWidget()) ? m_window->getContentsWidget()->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
+	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
 	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 

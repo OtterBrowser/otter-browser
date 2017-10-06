@@ -124,12 +124,12 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 {
 	m_elementsMenu->clear();
 
-	if (!m_window || !m_window->getContentsWidget()->getWebWidget())
+	if (!m_window || !m_window->getWebWidget())
 	{
 		return;
 	}
 
-	const QVector<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getWebWidget()->getBlockedRequests().mid(m_amount - 50));
+	const QVector<NetworkManager::ResourceInformation> requests(m_window->getWebWidget()->getBlockedRequests().mid(m_amount - 50));
 
 	for (int i = 0; i < requests.count(); ++i)
 	{
@@ -192,7 +192,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 {
 	m_profilesMenu->clear();
 
-	if (!m_window || !m_window->getContentsWidget()->getWebWidget())
+	if (!m_window || !m_window->getWebWidget())
 	{
 		return;
 	}
@@ -203,7 +203,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 
 	m_profilesMenu->addSeparator();
 
-	const QVector<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getWebWidget()->getBlockedRequests());
+	const QVector<NetworkManager::ResourceInformation> requests(m_window->getWebWidget()->getBlockedRequests());
 	QHash<QString, int> amounts;
 
 	for (int i = 0; i < requests.count(); ++i)
@@ -308,9 +308,9 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 	m_window = window;
 	m_amount = 0;
 
-	if (window && window->getContentsWidget()->getWebWidget())
+	if (window && window->getWebWidget())
 	{
-		m_amount = window->getContentsWidget()->getWebWidget()->getBlockedRequests().count();
+		m_amount = window->getWebWidget()->getBlockedRequests().count();
 		m_isContentBlockingEnabled = (m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 		connect(m_window, SIGNAL(aboutToNavigate()), this, SLOT(clear()));

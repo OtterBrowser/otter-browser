@@ -596,7 +596,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 				return;
 			case ListFeedsEntry:
 				{
-					const QVector<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WebWidget::FinishedLoadingState && m_window->getContentsWidget()->getWebWidget()) ? m_window->getContentsWidget()->getWebWidget()->getFeeds() : QVector<WebWidget::LinkUrl>());
+					const QVector<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WebWidget::FinishedLoadingState && m_window->getWebWidget()) ? m_window->getWebWidget()->getFeeds() : QVector<WebWidget::LinkUrl>());
 
 					if (feeds.count() == 1 && m_window)
 					{
@@ -1061,7 +1061,7 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case ListFeedsEntry:
-				if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState || !m_window->getContentsWidget()->getWebWidget() || m_window->getContentsWidget()->getWebWidget()->getFeeds().isEmpty())
+				if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WebWidget::FinishedLoadingState || !m_window->getWebWidget() || m_window->getWebWidget()->getFeeds().isEmpty())
 				{
 					continue;
 				}

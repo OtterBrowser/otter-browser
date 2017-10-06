@@ -1198,15 +1198,15 @@ void Menu::populateStyleSheetsMenu()
 
 	Window *window(mainWindow->getActiveWindow());
 
-	if (!window || !window->getContentsWidget()->getWebWidget())
+	if (!window || !window->getWebWidget())
 	{
 		return;
 	}
 
 	addSeparator();
 
-	const QString activeStyleSheet(window->getContentsWidget()->getWebWidget()->getActiveStyleSheet());
-	const QStringList styleSheets(window->getContentsWidget()->getWebWidget()->getStyleSheets());
+	const QString activeStyleSheet(window->getWebWidget()->getActiveStyleSheet());
+	const QStringList styleSheets(window->getWebWidget()->getStyleSheets());
 	QActionGroup *actionGroup(new QActionGroup(this));
 	actionGroup->setExclusive(true);
 	actionGroup->addAction(defaultAction);
@@ -1481,9 +1481,9 @@ void Menu::selectStyleSheet(QAction *action)
 
 	Window *window(mainWindow->getActiveWindow());
 
-	if (window && window->getContentsWidget()->getWebWidget() && action)
+	if (window && window->getWebWidget() && action)
 	{
-		window->getContentsWidget()->getWebWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
+		window->getWebWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
 	}
 }
 
