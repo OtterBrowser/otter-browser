@@ -146,7 +146,7 @@ protected:
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 
 protected slots:
-	void replyFinished();
+	void handleReplyFinished();
 
 private:
 	Node *m_root;

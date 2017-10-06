@@ -158,7 +158,7 @@ void ContentBlockingManager::addProfile(ContentBlockingProfile *profile)
 
 		getInstance()->scheduleSave();
 
-		connect(profile, SIGNAL(profileModified(QString)), m_instance, SLOT(scheduleSave()));
+		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentBlockingManager::scheduleSave);
 	}
 }
 
@@ -531,8 +531,8 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 
 			m_profiles.append(profile);
 
-			connect(profile, SIGNAL(profileModified(QString)), m_instance, SIGNAL(profileModified(QString)));
-			connect(profile, SIGNAL(profileModified(QString)), m_instance, SLOT(scheduleSave()));
+			connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentBlockingManager::profileModified);
+			connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentBlockingManager::scheduleSave);
 		}
 
 		m_profiles.squeeze();

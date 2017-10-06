@@ -582,7 +582,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 	return ContentBlockingManager::CheckResult();
 }
 
-void ContentBlockingProfile::replyFinished()
+void ContentBlockingProfile::handleReplyFinished()
 {
 	m_isUpdating = false;
 
@@ -831,7 +831,7 @@ bool ContentBlockingProfile::downloadRules()
 
 	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-	connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
+	connect(m_networkReply, &QNetworkReply::finished, this, &ContentBlockingProfile::handleReplyFinished);
 
 	m_isUpdating = true;
 
