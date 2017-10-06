@@ -214,7 +214,7 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 
 	}
 
-	connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SIGNAL(onlineStateChanged(bool)));
+	connect(networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, this, &NetworkManagerFactory::onlineStateChanged);
 }
 
 void NetworkManagerFactory::createInstance()
@@ -258,7 +258,7 @@ void NetworkManagerFactory::initialize()
 	m_instance->handleOptionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getOption(SettingsManager::Network_WorkOfflineOption));
 	m_instance->handleOptionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getOption(SettingsManager::Security_CiphersOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, m_instance, &NetworkManagerFactory::handleOptionChanged);
 }
 
 void NetworkManagerFactory::clearCookies(int period)

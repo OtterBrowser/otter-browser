@@ -74,7 +74,7 @@ protected:
 	bool setup(const QString &script);
 
 protected slots:
-	void setup();
+	void handleReplyFinished();
 
 private:
 	QNetworkReply *m_reply;

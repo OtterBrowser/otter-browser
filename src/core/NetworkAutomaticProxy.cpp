@@ -311,6 +311,20 @@ NetworkAutomaticProxy::NetworkAutomaticProxy(const QString &path, QObject *paren
 	setPath(path);
 }
 
+void NetworkAutomaticProxy::handleReplyFinished()
+{
+	if (m_reply->error() == QNetworkReply::NoError && setup(m_reply->readAll()))
+	{
+		m_isValid = true;
+	}
+	else
+	{
+		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_reply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_reply->url().url());
+	}
+
+	m_reply->deleteLater();
+}
+
 void NetworkAutomaticProxy::setPath(const QString &path)
 {
 	if (QFile::exists(path))
@@ -339,27 +353,13 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 
 			m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-			connect(m_reply, SIGNAL(finished()), this, SLOT(setup()));
+			connect(m_reply, &QNetworkReply::finished, this, &NetworkAutomaticProxy::handleReplyFinished);
 		}
 		else
 		{
 			Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
 		}
 	}
-}
-
-void NetworkAutomaticProxy::setup()
-{
-	if (m_reply->error() == QNetworkReply::NoError && setup(m_reply->readAll()))
-	{
-		m_isValid = true;
-	}
-	else
-	{
-		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_reply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_reply->url().url());
-	}
-
-	m_reply->deleteLater();
 }
 
 QString NetworkAutomaticProxy::getPath() const
