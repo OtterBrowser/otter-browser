@@ -22,7 +22,7 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 #include "../core/SessionsManager.h"
 
 #include <QtWidgets/QMainWindow>

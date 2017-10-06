@@ -21,7 +21,7 @@
 #define OTTER_OPENBOOKMARKDIALOG_H
 
 #include "Dialog.h"
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 
 #include <QtWidgets/QCompleter>
 

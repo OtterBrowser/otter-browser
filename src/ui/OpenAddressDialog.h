@@ -22,7 +22,7 @@
 #define OTTER_OPENADDRESSDIALOG_H
 
 #include "Dialog.h"
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 #include "../core/InputInterpreter.h"
 
 namespace Otter

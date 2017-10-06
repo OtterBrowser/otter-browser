@@ -20,7 +20,7 @@
 #ifndef OTTER_ACTION_H
 #define OTTER_ACTION_H
 
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 
 #include <QtWidgets/QAction>
 

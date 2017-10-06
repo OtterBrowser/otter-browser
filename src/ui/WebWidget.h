@@ -23,7 +23,7 @@
 #ifndef OTTER_WEBWIDGET_H
 #define OTTER_WEBWIDGET_H
 
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 #include "../core/NetworkManager.h"
 #include "../core/PasswordsManager.h"
 #include "../core/SessionsManager.h"

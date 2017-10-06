@@ -20,7 +20,7 @@
 #ifndef OTTER_TEXTEDITWIDGET_H
 #define OTTER_TEXTEDITWIDGET_H
 
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 
 #include <QtWidgets/QPlainTextEdit>
 

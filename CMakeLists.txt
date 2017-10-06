@@ -94,6 +94,7 @@ set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DES
 
 set(otter_src
 	src/main.cpp
+	src/core/ActionExecutor.cpp
 	src/core/ActionsManager.cpp
 	src/core/AddonsManager.cpp
 	src/core/AddressCompletionModel.cpp

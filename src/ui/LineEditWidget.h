@@ -22,7 +22,7 @@
 #define OTTER_LINEEDITWIDGET_H
 
 #include "ItemViewWidget.h"
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 
 #include <QtWidgets/QLineEdit>
 

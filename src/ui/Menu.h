@@ -20,7 +20,7 @@
 #ifndef OTTER_MENU_H
 #define OTTER_MENU_H
 
-#include "../core/ActionsManager.h"
+#include "../core/ActionExecutor.h"
 
 #include <QtCore/QJsonObject>
 #include <QtWidgets/QMenu>

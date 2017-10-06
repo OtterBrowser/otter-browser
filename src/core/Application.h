@@ -21,7 +21,7 @@
 #ifndef OTTER_APPLICATION_H
 #define OTTER_APPLICATION_H
 
-#include "ActionsManager.h"
+#include "ActionExecutor.h"
 #include "UpdateChecker.h"
 #include "SessionsManager.h"
 

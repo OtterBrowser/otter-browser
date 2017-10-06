@@ -382,34 +382,6 @@ private:
 	static int m_actionIdentifierEnumerator;
 };
 
-class ActionExecutor
-{
-public:
-	class Object final
-	{
-	public:
-		explicit Object();
-		explicit Object(QObject *object, ActionExecutor *executor);
-		Object(const Object &other);
-
-		void triggerAction(int identifier, const QVariantMap &parameters = {});
-		QObject* getObject() const;
-		Object& operator=(const Object &other);
-		ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
-		bool isValid() const;
-
-	private:
-		QPointer<QObject> m_object;
-		ActionExecutor *m_executor;
-	};
-
-	ActionExecutor();
-	virtual ~ActionExecutor();
-
-	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const = 0;
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) = 0;
-};
-
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionCategories)
