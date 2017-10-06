@@ -60,7 +60,7 @@ void SearchEnginesManager::ensureInitialized()
 
 		loadSearchEngines();
 
-		connect(SettingsManager::getInstance(), SIGNAL(optionChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int)));
+		connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, m_instance, &SearchEnginesManager::handleOptionChanged);
 	}
 }
 

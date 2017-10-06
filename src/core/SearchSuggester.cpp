@@ -138,7 +138,7 @@ void SearchSuggester::setQuery(const QString &query)
 			m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 		}
 
-		connect(m_networkReply, SIGNAL(finished()), this, SLOT(handleReplyFinished()));
+		connect(m_networkReply, &QNetworkReply::finished, this, &SearchSuggester::handleReplyFinished);
 	}
 }
 

@@ -75,7 +75,7 @@ BookmarksModel* NotesManager::getModel()
 	{
 		m_model = new BookmarksModel(SessionsManager::getWritableDataPath(QLatin1String("notes.xbel")), BookmarksModel::NotesMode, m_instance);
 
-		connect(m_model, SIGNAL(modelModified()), m_instance, SLOT(scheduleSave()));
+		connect(m_model, &BookmarksModel::modelModified, m_instance, &NotesManager::scheduleSave);
 	}
 
 	return m_model;

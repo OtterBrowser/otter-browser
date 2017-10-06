@@ -38,7 +38,7 @@ void PasswordsManager::createInstance()
 		m_instance = new PasswordsManager(QCoreApplication::instance());
 		m_backend = new FilePasswordsStorageBackend(m_instance);
 
-		connect(m_backend, SIGNAL(passwordsModified()), m_instance, SIGNAL(passwordsModified()));
+		connect(m_backend, &PasswordsStorageBackend::passwordsModified, m_instance, &PasswordsManager::passwordsModified);
 	}
 }
 
