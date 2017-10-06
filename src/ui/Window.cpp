@@ -618,6 +618,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		m_addressBar->setState(m_mainWindow->getToolBarState(ToolBarsManager::AddressBar));
 
 		layout()->addWidget(m_addressBar);
+		layout()->setAlignment(m_addressBar, Qt::AlignTop);
 	}
 
 	layout()->addWidget(m_contentsWidget);
