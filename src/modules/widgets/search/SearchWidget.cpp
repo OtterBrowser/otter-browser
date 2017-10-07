@@ -398,12 +398,6 @@ void SearchWidget::sendRequest(const QString &query)
 	}
 }
 
-void SearchWidget::pasteAndGo()
-{
-	paste();
-	sendRequest();
-}
-
 void SearchWidget::addSearchEngine(QAction *action)
 {
 	if (action)

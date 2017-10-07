@@ -71,7 +71,6 @@ protected:
 protected slots:
 	void sendRequest(const QString &query = {});
 	void showCompletion(bool showSearchModel = false);
-	void pasteAndGo();
 	void addSearchEngine(QAction *action);
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
