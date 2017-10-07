@@ -38,7 +38,7 @@ ContentsWidget::ContentsWidget(const QVariantMap &parameters, Window *window) : 
 {
 	if (window)
 	{
-		connect(window, SIGNAL(aboutToClose()), this, SLOT(handleAboutToClose()));
+		connect(window, &Window::aboutToClose, this, &ContentsWidget::handleAboutToClose);
 	}
 }
 
@@ -170,7 +170,7 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 					printPreviewDialog.resize(QApplication::activeWindow()->size());
 				}
 
-				connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
+				connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, this, &ContentsWidget::print);
 
 				printPreviewDialog.exec();
 			}
@@ -272,7 +272,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		m_layer->raise();
 	}
 
-	connect(dialog, SIGNAL(finished(int,bool)), this, SLOT(handleDialogFinished()));
+	connect(dialog, &ContentsDialog::finished, this, &ContentsWidget::handleDialogFinished);
 
 	dialog->setParent(m_layer);
 	dialog->show();
@@ -295,8 +295,8 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 	{
 		QEventLoop eventLoop;
 
-		connect(dialog, SIGNAL(finished(int,bool)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+		connect(dialog, &ContentsDialog::finished, &eventLoop, &QEventLoop::quit);
+		connect(this, &ContentsWidget::destroyed, &eventLoop, &QEventLoop::quit);
 
 		eventLoop.exec();
 	}
@@ -339,14 +339,14 @@ void ContentsWidget::setParent(Window *window)
 {
 	if (m_window)
 	{
-		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(handleAboutToClose()));
+		disconnect(m_window, &Window::aboutToClose, this, &ContentsWidget::handleAboutToClose);
 	}
 
 	m_window = window;
 
 	if (window)
 	{
-		connect(window, SIGNAL(aboutToClose()), this, SLOT(handleAboutToClose()));
+		connect(window, &Window::aboutToClose, this, &ContentsWidget::handleAboutToClose);
 	}
 
 	QWidget::setParent(window);

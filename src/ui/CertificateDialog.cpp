@@ -81,9 +81,9 @@ CertificateDialog::CertificateDialog(QVector<QSslCertificate> certificates, QWid
 
 	updateCertificate();
 
-	connect(m_ui->chainItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateCertificate()));
-	connect(m_ui->detailsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateValue()));
-	connect(m_ui->buttonBox->button(QDialogButtonBox::Save), SIGNAL(clicked(bool)), this, SLOT(exportCertificate()));
+	connect(m_ui->chainItemView, &ItemViewWidget::needsActionsUpdate, this, &CertificateDialog::updateCertificate);
+	connect(m_ui->detailsItemView, &ItemViewWidget::needsActionsUpdate, this, &CertificateDialog::updateValue);
+	connect(m_ui->buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, this, &CertificateDialog::exportCertificate);
 }
 
 CertificateDialog::~CertificateDialog()

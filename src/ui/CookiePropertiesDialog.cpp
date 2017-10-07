@@ -49,7 +49,7 @@ CookiePropertiesDialog::CookiePropertiesDialog(const QNetworkCookie &cookie, QWi
 	m_ui->isSecureCheckBox->setChecked(cookie.isSecure());
 	m_ui->isHttpOnlyCheckBox->setChecked(cookie.isHttpOnly());
 
-	connect(m_ui->isSessionOnlyCheckBox, SIGNAL(clicked(bool)), m_ui->expiresDateTimeEdit, SLOT(setDisabled(bool)));
+	connect(m_ui->isSessionOnlyCheckBox, &QCheckBox::clicked, m_ui->expiresDateTimeEdit, &CookiePropertiesDialog::setDisabled);
 }
 
 CookiePropertiesDialog::~CookiePropertiesDialog()
