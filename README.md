@@ -17,7 +17,7 @@ You can either compile Otter Browser from source or use pre-compiled binaries.
 
 ### From source
 
-To build Otter Browser, you will need the following dependencies: **Qt 5.4.0** (or newer), **OpenSSL 1.0** (or newer, but not 1.1), **GStreamer 1.0** (or newer) and codecs, and **CMake 3.1.0** (or newer). At the root of the directory were the source code is stored, execute these commands:
+To build Otter Browser, you will need the following dependencies: **Qt 5.4.0** (or newer), **OpenSSL 1.0** (or newer, but not 1.1), **GStreamer 1.0** (or newer) and codecs, and **CMake 3.1.0** (or newer). At the root of the directory where the source code is stored, execute these commands:
 
     mkdir build
     cd build
