@@ -46,8 +46,8 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 	m_ui->formAddressLineEditWidget->setText(searchEngine.formUrl.toString());
 	m_ui->updateAddressLineEditWidget->setText(searchEngine.selfUrl.toString());
 
-	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
-	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
+	connect(m_ui->resultsPostMethodCheckBox, &QCheckBox::toggled, m_ui->resultsPostWidget, &QWidget::setEnabled);
+	connect(m_ui->suggestionsPostMethodCheckBox, &QCheckBox::toggled, m_ui->suggestionsPostWidget, &QWidget::setEnabled);
 
 	m_ui->resultsAddressLineEditWidget->setText(searchEngine.resultsUrl.url);
 	m_ui->resultsAddressLineEditWidget->installEventFilter(this);
@@ -128,7 +128,7 @@ bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			placeholdersMenu->addAction(tr("Search Terms"))->setData(QLatin1String("searchTerms"));
 			placeholdersMenu->addAction(tr("Language"))->setData(QLatin1String("language"));
 
-			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
+			connect(placeholdersMenu, &QMenu::triggered, this, &SearchEnginePropertiesDialog::insertPlaceholder);
 
 			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
 			contextMenu->deleteLater();

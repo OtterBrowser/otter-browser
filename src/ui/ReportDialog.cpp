@@ -36,8 +36,8 @@ ReportDialog::ReportDialog(Application::ReportOptions options, QWidget *parent) 
 	m_ui->reportLabel->setText(QLatin1String("<div style=\"white-space:pre;\">") + Application::createReport(options).trimmed() + QLatin1String("</div>"));
 	m_ui->reportLabel->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
 
-	connect(this, SIGNAL(finished(int)), this, SLOT(deleteLater()));
-	connect(m_ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole), SIGNAL(clicked()), this, SLOT(copyReport()));
+	connect(this, &ReportDialog::finished, this, &ReportDialog::deleteLater);
+	connect(m_ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole), &QPushButton::clicked, this, &ReportDialog::copyReport);
 }
 
 ReportDialog::~ReportDialog()

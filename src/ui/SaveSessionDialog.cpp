@@ -37,8 +37,8 @@ SaveSessionDialog::SaveSessionDialog(QWidget *parent) : Dialog(parent),
 	m_ui->identifierLineEditWidget->setText(SessionsManager::getCurrentSession());
 	m_ui->identifierLineEditWidget->setValidator(new QRegularExpressionValidator(QRegularExpression(QLatin1String("[a-z0-9\\-_]+")), this));
 
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveSession()));
-	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &SaveSessionDialog::saveSession);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &SaveSessionDialog::close);
 }
 
 SaveSessionDialog::~SaveSessionDialog()
