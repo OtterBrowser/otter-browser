@@ -301,8 +301,8 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 {
 	if (m_window && !m_window->isAboutToClose())
 	{
-		disconnect(m_window, SIGNAL(aboutToNavigate()), this, SLOT(clear()));
-		disconnect(m_window, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));
+		disconnect(m_window, &Window::aboutToNavigate, this, &ContentBlockingInformationWidget::clear);
+		disconnect(m_window, &Window::requestBlocked, this, &ContentBlockingInformationWidget::handleRequest);
 	}
 
 	m_window = window;
@@ -313,8 +313,8 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 		m_amount = window->getWebWidget()->getBlockedRequests().count();
 		m_isContentBlockingEnabled = (m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
-		connect(m_window, SIGNAL(aboutToNavigate()), this, SLOT(clear()));
-		connect(m_window, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));
+		connect(m_window, &Window::aboutToNavigate, this, &ContentBlockingInformationWidget::clear);
+		connect(m_window, &Window::requestBlocked, this, &ContentBlockingInformationWidget::handleRequest);
 	}
 	else
 	{

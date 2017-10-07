@@ -35,7 +35,7 @@ StatusMessageWidget::StatusMessageWidget(QWidget *parent) : QLabel(parent)
 
 	if (window)
 	{
-		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setMessage(QString)));
+		connect(window, &MainWindow::statusMessageChanged, this, &StatusMessageWidget::setMessage);
 	}
 }
 
@@ -69,4 +69,3 @@ void StatusMessageWidget::setMessage(const QString &message)
 }
 
 }
-

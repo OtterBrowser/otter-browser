@@ -203,7 +203,7 @@ void ProgressInformationWidget::setWindow(Window *window)
 
 	if (m_window && !m_window->isAboutToClose())
 	{
-		disconnect(m_window, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
+		disconnect(m_window, &Window::pageInformationChanged, this, &ProgressInformationWidget::updateStatus);
 
 		updateStatus(type);
 	}
@@ -214,7 +214,7 @@ void ProgressInformationWidget::setWindow(Window *window)
 	{
 		updateStatus(type, window->getWebWidget()->getPageInformation(type));
 
-		connect(m_window, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
+		connect(m_window, &Window::pageInformationChanged, this, &ProgressInformationWidget::updateStatus);
 	}
 }
 
