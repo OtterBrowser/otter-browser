@@ -39,6 +39,16 @@ StatusMessageWidget::StatusMessageWidget(QWidget *parent) : QLabel(parent)
 	}
 }
 
+void StatusMessageWidget::changeEvent(QEvent *event)
+{
+	QLabel::changeEvent(event);
+
+	if (event->type() == QEvent::LayoutDirectionChange && !m_message.isEmpty())
+	{
+		setMessage(m_message);
+	}
+}
+
 void StatusMessageWidget::resizeEvent(QResizeEvent *event)
 {
 	QLabel::resizeEvent(event);

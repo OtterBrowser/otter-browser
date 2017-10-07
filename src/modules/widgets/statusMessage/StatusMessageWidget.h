@@ -33,6 +33,7 @@ public:
 	explicit StatusMessageWidget(QWidget *parent = nullptr);
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 
 protected slots:
