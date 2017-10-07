@@ -123,8 +123,8 @@ void StartPageModel::addTile(const QUrl &url)
 {
 	if (!m_bookmark)
 	{
-		disconnect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
-		disconnect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
+		disconnect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
 
 		const QStringList directories(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString().split(QLatin1Char('/'), QString::SkipEmptyParts));
 
@@ -152,8 +152,8 @@ void StartPageModel::addTile(const QUrl &url)
 			}
 		}
 
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(handleBookmarkModified(BookmarksItem*)));
+		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &StartPageModel::handleBookmarkModified);
+		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
 	}
 
 	const BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}}, m_bookmark));
@@ -216,7 +216,7 @@ void StartPageModel::handleOptionChanged(int identifier)
 	switch (identifier)
 	{
 		case SettingsManager::Backends_WebOption:
-			connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(handleThumbnailCreated(QUrl,QPixmap,QString)));
+			connect(AddonsManager::getWebBackend(), &WebBackend::thumbnailAvailable, this, &StartPageModel::handleThumbnailCreated);
 
 			break;
 		case SettingsManager::StartPage_BookmarksFolderOption:
@@ -339,7 +339,7 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	mimeData->setText(texts.join(QLatin1String(", ")));
 	mimeData->setUrls(urls);
 
-	connect(mimeData, SIGNAL(destroyed()), this, SLOT(dragEnded()));
+	connect(mimeData, &QMimeData::destroyed, this, &StartPageModel::dragEnded);
 
 	return mimeData;
 }
