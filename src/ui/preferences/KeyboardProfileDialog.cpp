@@ -60,7 +60,7 @@ KeyboardActionDelegate::KeyboardActionDelegate(QObject *parent) : ItemDelegate(p
 
 void KeyboardActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));
+	const ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));
 
 	if (widget && widget->getActionIdentifier() >= 0)
 	{
@@ -104,7 +104,7 @@ void KeyboardShortcutDelegate::initStyleOption(QStyleOptionViewItem *option, con
 
 void KeyboardShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	ShortcutWidget *widget(qobject_cast<ShortcutWidget*>(editor));
+	const ShortcutWidget *widget(qobject_cast<ShortcutWidget*>(editor));
 
 	if (widget)
 	{
