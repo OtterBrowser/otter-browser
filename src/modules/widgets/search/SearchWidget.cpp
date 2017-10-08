@@ -235,18 +235,30 @@ void SearchWidget::focusInEvent(QFocusEvent *event)
 
 void SearchWidget::keyPressEvent(QKeyEvent *event)
 {
-	if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && !isPopupVisible())
+	switch (event->key())
 	{
-		sendRequest(text().trimmed());
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+			if (!isPopupVisible())
+			{
+				sendRequest(text().trimmed());
 
-		event->accept();
+				event->accept();
 
-		return;
-	}
+				return;
+			}
 
-	if ((event->key() == Qt::Key_Down || event->key() == Qt::Key_Up) && !m_isSearchEngineLocked && !isPopupVisible())
-	{
-		showCompletion(true);
+			break;
+		case Qt::Key_Down:
+		case Qt::Key_Up:
+			if (!m_isSearchEngineLocked && !isPopupVisible())
+			{
+				showCompletion(true);
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	LineEditWidget::keyPressEvent(event);
