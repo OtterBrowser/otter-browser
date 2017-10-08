@@ -43,7 +43,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void currentIndexChanged(int index);
+	void handleCurrentIndexChanged(int index);
 	void save();
 
 private:

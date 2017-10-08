@@ -70,7 +70,7 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::
 
 	m_ui->buttonBox->addButton(tr("Discard"), QDialogButtonBox::RejectRole);
 
-	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &AcceptCookieDialog::handleButtonClicked);
 }
 
 AcceptCookieDialog::~AcceptCookieDialog()
@@ -88,7 +88,7 @@ void AcceptCookieDialog::changeEvent(QEvent *event)
 	}
 }
 
-void AcceptCookieDialog::buttonClicked(QAbstractButton *button)
+void AcceptCookieDialog::handleButtonClicked(QAbstractButton *button)
 {
 	const QDialogButtonBox::ButtonRole role(m_ui->buttonBox->buttonRole(button));
 	const AcceptCookieResult result((role == QDialogButtonBox::AcceptRole) ? ((button->objectName() == QLatin1String("sessionOnly")) ? AcceptAsSessionCookie : AcceptCookie) : IgnoreCookie);

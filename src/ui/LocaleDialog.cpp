@@ -77,8 +77,8 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 		m_ui->customFilePathWidget->setPath(currentLocale);
 	}
 
-	connect(this, SIGNAL(accepted()), this, SLOT(save()));
-	connect(m_ui->languageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
+	connect(this, &LocaleDialog::accepted, this, &LocaleDialog::save);
+	connect(m_ui->languageComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &LocaleDialog::handleCurrentIndexChanged);
 }
 
 LocaleDialog::~LocaleDialog()
@@ -96,7 +96,7 @@ void LocaleDialog::changeEvent(QEvent *event)
 	}
 }
 
-void LocaleDialog::currentIndexChanged(int index)
+void LocaleDialog::handleCurrentIndexChanged(int index)
 {
 	m_ui->customFilePathWidget->setEnabled(index == 1);
 }

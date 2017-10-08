@@ -37,7 +37,7 @@ IconWidget::IconWidget(QWidget *parent) : QToolButton(parent)
 	setMinimumSize(16, 16);
 	setMaximumSize(64, 64);
 
-	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
+	connect(menu(), &QMenu::aboutToShow, this, &IconWidget::updateMenu);
 }
 
 void IconWidget::resizeEvent(QResizeEvent *event)

@@ -52,7 +52,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void buttonClicked(QAbstractButton *button);
+	void handleButtonClicked(QAbstractButton *button);
 
 private:
 	CookieJar *m_cookieJar;
