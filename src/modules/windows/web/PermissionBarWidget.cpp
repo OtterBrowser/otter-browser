@@ -85,8 +85,8 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 			break;
 	}
 
-	connect(m_ui->okButton, SIGNAL(clicked()), this, SLOT(accepted()));
-	connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(rejected()));
+	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::accepted);
+	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::rejected);
 }
 
 PermissionBarWidget::~PermissionBarWidget()

@@ -53,9 +53,9 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 	m_ui->showSearchFieldCheckBox->setChecked(SettingsManager::getOption(SettingsManager::StartPage_ShowSearchFieldOption).toBool());
 	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getOption(SettingsManager::StartPage_ShowAddTileOption).toBool());
 
-	connect(this, SIGNAL(accepted()), this, SLOT(save()));
-	connect(m_ui->customBackgroundCheckBox, SIGNAL(toggled(bool)), m_ui->backgroundWidget, SLOT(setEnabled(bool)));
-	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
+	connect(this, &StartPagePreferencesDialog::accepted, this, &StartPagePreferencesDialog::save);
+	connect(m_ui->customBackgroundCheckBox, &QCheckBox::toggled, m_ui->backgroundWidget, &QWidget::setEnabled);
+	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &StartPagePreferencesDialog::save);
 }
 
 StartPagePreferencesDialog::~StartPagePreferencesDialog()

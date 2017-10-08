@@ -75,9 +75,9 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget 
 	handleOptionChanged(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &PopupsBarWidget::handleOptionChanged);
-	connect(m_popupsGroup, SIGNAL(triggered(QAction*)), this, SLOT(setPolicy(QAction*)));
-	connect(m_popupsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openUrl(QAction*)));
-	connect(m_ui->closeButton, SIGNAL(clicked()), this, SIGNAL(requestedClose()));
+	connect(m_popupsGroup, &QActionGroup::triggered, this, &PopupsBarWidget::setPolicy);
+	connect(m_popupsMenu, &QMenu::triggered, this, &PopupsBarWidget::openUrl);
+	connect(m_ui->closeButton, &QToolButton::clicked, this, &PopupsBarWidget::requestedClose);
 }
 
 PopupsBarWidget::~PopupsBarWidget()

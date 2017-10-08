@@ -36,13 +36,13 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent),
 	m_ui->highlightButton->setChecked(SettingsManager::getOption(SettingsManager::Search_EnableFindInPageHighlightAllOption).toBool());
 	m_ui->closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
 
-	connect(m_ui->queryLineEditWidget, SIGNAL(textEdited(QString)), this, SIGNAL(queryChanged()));
-	connect(m_ui->queryLineEditWidget, SIGNAL(returnPressed()), this, SLOT(notifyRequestedSearch()));
-	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(notifyFlagsChanged()));
-	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(notifyFlagsChanged()));
-	connect(m_ui->nextButton, SIGNAL(clicked()), this, SLOT(notifyRequestedSearch()));
-	connect(m_ui->previousButton, SIGNAL(clicked()), this, SLOT(notifyRequestedSearch()));
-	connect(m_ui->closeButton, SIGNAL(clicked()), this, SLOT(hide()));
+	connect(m_ui->queryLineEditWidget, &LineEditWidget::textEdited, this, &SearchBarWidget::queryChanged);
+	connect(m_ui->queryLineEditWidget, &LineEditWidget::returnPressed, this, &SearchBarWidget::notifyRequestedSearch);
+	connect(m_ui->caseSensitiveButton, &QPushButton::clicked, this, &SearchBarWidget::notifyFlagsChanged);
+	connect(m_ui->highlightButton, &QPushButton::clicked, this, &SearchBarWidget::notifyFlagsChanged);
+	connect(m_ui->nextButton, &QPushButton::clicked, this, &SearchBarWidget::notifyRequestedSearch);
+	connect(m_ui->previousButton, &QPushButton::clicked, this, &SearchBarWidget::notifyRequestedSearch);
+	connect(m_ui->closeButton, &QPushButton::clicked, this, &SearchBarWidget::hide);
 }
 
 SearchBarWidget::~SearchBarWidget()

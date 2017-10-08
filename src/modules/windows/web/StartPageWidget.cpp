@@ -455,7 +455,7 @@ void StartPageWidget::configure()
 
 	ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("configure")), m_preferencesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_preferencesDialog, this));
 
-	connect(m_preferencesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+	connect(m_preferencesDialog, &StartPagePreferencesDialog::finished, dialog, &ContentsDialog::close);
 
 	m_window->getContentsWidget()->showDialog(dialog, false);
 }
@@ -561,7 +561,7 @@ void StartPageWidget::reloadTile()
 
 		m_spinnerAnimation->start();
 
-		connect(m_spinnerAnimation, SIGNAL(frameChanged()), m_listView, SLOT(update()));
+		connect(m_spinnerAnimation, &Animation::frameChanged, m_listView, static_cast<void(QListView::*)()>(&QListView::update));
 	}
 
 	m_model->reloadTile(m_currentIndex);

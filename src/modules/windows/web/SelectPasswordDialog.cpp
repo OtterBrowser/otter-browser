@@ -58,8 +58,8 @@ SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Passw
 	m_ui->passwordsViewWidget->selectionModel()->select(m_ui->passwordsViewWidget->getIndex(0, 0), (QItemSelectionModel::Select | QItemSelectionModel::Rows));
 	m_ui->passwordsViewWidget->expandAll();
 
-	connect(m_ui->removeButton, SIGNAL(clicked()), this, SLOT(removePassword()));
-	connect(m_ui->passwordsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->removeButton, &QPushButton::clicked, this, &SelectPasswordDialog::removePassword);
+	connect(m_ui->passwordsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &SelectPasswordDialog::updateActions);
 }
 
 SelectPasswordDialog::~SelectPasswordDialog()
