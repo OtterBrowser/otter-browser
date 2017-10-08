@@ -75,18 +75,17 @@ class AddonsManager final : public QObject
 	Q_OBJECT
 
 public:
-	struct SpecialPageInformation
+	struct AddonInformation
 	{
 		QString title;
 		QString description;
-		QUrl url;
 		QIcon icon;
 
-		explicit SpecialPageInformation(const QString &valueTitle, const QString &valueDescription, const QUrl &valueUrl, const QIcon &valueIcon) : title(valueTitle), description(valueDescription), url(valueUrl), icon(valueIcon)
+		explicit AddonInformation(const QString &titleValue, const QString &descriptionValue, const QIcon &iconValue) : title(titleValue), description(descriptionValue), icon(iconValue)
 		{
 		}
 
-		SpecialPageInformation()
+		AddonInformation()
 		{
 		}
 
@@ -98,6 +97,19 @@ public:
 		QString getDescription() const
 		{
 			return QCoreApplication::translate("addons", description.toUtf8().constData());
+		}
+	};
+
+	struct SpecialPageInformation final : public AddonInformation
+	{
+		QUrl url;
+
+		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue)
+		{
+		}
+
+		SpecialPageInformation()
+		{
 		}
 	};
 
