@@ -244,7 +244,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="360"/>
         <source>Open Addon File</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити файл додатку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="361"/>
@@ -361,12 +361,12 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="653"/>
         <source>Add to Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Додати до закладок</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="654"/>
         <source>Add to Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Додати до стартової сторінки</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1030"/>
@@ -467,22 +467,22 @@ Some websites may work incorrectly or do not work at all.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="648"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Веб-браузер контролюється користувачем, а не навпаки&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="654"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>Браузерний двигун: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="658"/>
         <source>SSL library not available.</source>
-        <translation type="unfinished"/>
+        <translation>Бібліотека SSL недоступна.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="662"/>
         <source>SSL library version: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Версія бібліотеки SSL: %1.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="914"/>
@@ -908,7 +908,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="100"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без імені)</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="110"/>
@@ -1448,27 +1448,27 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="69"/>
         <source>Option Name:</source>
-        <translation type="unfinished"/>
+        <translation>Назва параметру:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="76"/>
         <source>Current Value:</source>
-        <translation type="unfinished"/>
+        <translation>Поточне значення:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="83"/>
         <source>Default Value:</source>
-        <translation type="unfinished"/>
+        <translation>Значення за умовчанням:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="106"/>
         <source>Save All</source>
-        <translation type="unfinished"/>
+        <translation>Зберегти все</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="116"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Відновити умовчання</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="207"/>
@@ -1489,18 +1489,19 @@ Exponent: %2</source>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="282"/>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="365"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Питання</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="282"/>
         <source>The settings have been changed.
 Do you want to save them?</source>
-        <translation type="unfinished"/>
+        <translation>Параметри було змінено.
+Бажаєте їх зберегти?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="365"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation type="unfinished"/>
+        <translation>Бажаєте відновити значення за умовчанням усіх параметрів?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="472"/>
@@ -1515,7 +1516,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="475"/>
         <source>Save Value</source>
-        <translation type="unfinished"/>
+        <translation>Зберегти значення</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="476"/>
@@ -1525,12 +1526,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="480"/>
         <source>Expand All</source>
-        <translation type="unfinished"/>
+        <translation>Розгорнути всі</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="481"/>
         <source>Collapse All</source>
-        <translation type="unfinished"/>
+        <translation>Згорнути всі</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="506"/>
@@ -1650,7 +1651,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="149"/>
         <source>pop-up</source>
-        <translation type="unfinished"/>
+        <translation>спливаюче вікно</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="153"/>
@@ -1727,12 +1728,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо видалити файл профілю заблокованого вмісту: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Невідомо</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="239"/>
@@ -1806,12 +1807,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ContentsWidget.cpp" line="125"/>
         <source>Print Page</source>
-        <translation type="unfinished"/>
+        <translation>Друк сторінки</translation>
     </message>
     <message>
         <location filename="../../src/ui/ContentsWidget.cpp" line="142"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Попередній перегляд друку</translation>
     </message>
 </context>
 <context>
@@ -2010,81 +2011,81 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>Масштаб</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="60"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="160"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Мережа</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="76"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="164"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Безпека</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="92"/>
         <source>CSS</source>
-        <translation type="unfinished"/>
+        <translation>CSS</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="108"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="168"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="124"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="172"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Інше</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="156"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Очистити</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="185"/>
         <source>Filter…</source>
-        <translation type="unfinished"/>
+        <translation>Фільтр…</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="195"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Закрити</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="63"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Всі вкладки</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="68"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Лише поточна вкладка</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="74"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Інші джерела</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="281"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="283"/>
         <source>Expand All</source>
-        <translation type="unfinished"/>
+        <translation>Розгорнути всі</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="284"/>
         <source>Collapse All</source>
-        <translation type="unfinished"/>
+        <translation>Згорнути всі</translation>
     </message>
 </context>
 <context>
@@ -2192,7 +2193,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="111"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без імені)</translation>
     </message>
 </context>
 <context>
@@ -2461,7 +2462,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="42"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="54"/>
@@ -2471,17 +2472,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="98"/>
         <source>Results</source>
-        <translation type="unfinished"/>
+        <translation>Результати</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="123"/>
         <source>Initializing…</source>
-        <translation type="unfinished"/>
+        <translation>Ініціалізація...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="135"/>
         <source>%p% (%v/%m)</source>
-        <translation type="unfinished"/>
+        <translation>%p% (%v/%m)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="118"/>
@@ -2496,22 +2497,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="151"/>
         <source>Processing…</source>
-        <translation type="unfinished"/>
+        <translation>Обробка...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="179"/>
         <source>Failed to import data.</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо імпортувати дані.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="183"/>
         <source>Import cancelled by the user.</source>
-        <translation type="unfinished"/>
+        <translation>Імпорт скасовано користувачем.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="187"/>
         <source>Import finished successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Імпорт успішно завершений.</translation>
     </message>
 </context>
 <context>
@@ -2581,7 +2582,7 @@ Do you want to save them?</source>
         <location filename="../../src/core/ActionsManager.cpp" line="198"/>
         <location filename="../../src/core/ActionsManager.cpp" line="232"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без імені)</translation>
     </message>
 </context>
 <context>
@@ -2639,7 +2640,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="209"/>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="209"/>
@@ -2649,7 +2650,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="209"/>
         <source>Parameters</source>
-        <translation type="unfinished"/>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="209"/>
@@ -2659,12 +2660,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="361"/>
         <source>Shortcut already used by %1</source>
-        <translation type="unfinished"/>
+        <translation>Ярлик вже використовується %1 </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="361"/>
         <source>unknown action</source>
-        <translation type="unfinished"/>
+        <translation>невідома дія</translation>
     </message>
 </context>
 <context>
@@ -2753,27 +2754,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="709"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Питання</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ви збираєтеся відкрити %n вкладок.</numerusform><numerusform>Ви збираєтеся відкрити %n вкладки.</numerusform><numerusform>Ви збираєтеся відкрити %n вкладку.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="711"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Бажаєте продовжити?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="715"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Не показувати надалі це повідомлення</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="2003"/>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Пусто</translation>
     </message>
 </context>
 <context>
@@ -2830,7 +2831,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/Menu.cpp" line="477"/>
         <location filename="../../src/ui/Menu.cpp" line="573"/>
         <source>Failed to create menu action: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо створити дію меню: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="875"/>
@@ -2862,13 +2863,14 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="548"/>
         <source>Settings Migration</source>
-        <translation type="unfinished"/>
+        <translation>Переміщення параметрів</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="551"/>
         <source>Configuration of the components listed below needs to be updated to new version.
 Do you want to migrate it?</source>
-        <translation type="unfinished"/>
+        <translation>Конфігурація перелічених нижче компонентів має бути оновлена до нової версії.
+Бажаєте перенести її?</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="567"/>
@@ -2882,7 +2884,7 @@ Do you want to migrate it?</source>
         <location filename="../../src/core/GesturesManager.cpp" line="505"/>
         <location filename="../../src/core/GesturesManager.cpp" line="544"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без імені)</translation>
     </message>
 </context>
 <context>
@@ -2977,17 +2979,17 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="133"/>
         <source>Context and Action</source>
-        <translation type="unfinished"/>
+        <translation>Контекст і дія</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="133"/>
         <source>Parameters</source>
-        <translation type="unfinished"/>
+        <translation>Параметри</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="133"/>
         <source>Steps</source>
-        <translation type="unfinished"/>
+        <translation>Кроки</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="137"/>
@@ -3593,7 +3595,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
         <source>Interface style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Таблиця стилів інтерфейсу:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="343"/>
@@ -4260,7 +4262,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="83"/>
         <source>Use Bookmark</source>
-        <translation>Використати закладку</translation>
+        <translation>Задіяти закладку</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="90"/>
@@ -4270,7 +4272,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="99"/>
         <source>Do not load the tab contents until selected</source>
-        <translation type="unfinished"/>
+        <translation>Не завантажувати вміст вкладки до її вибору</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
@@ -4295,7 +4297,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Open new windows in new tabs instead</source>
-        <translation type="unfinished"/>
+        <translation>Відкривати у вкладках замість окремих вікон</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
@@ -4355,7 +4357,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
         <source>Show windows and tabs from the last time</source>
-        <translation type="unfinished"/>
+        <translation>Показувати вікна і вкладки з останнього разу</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
@@ -4670,7 +4672,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="58"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Невідомо</translation>
     </message>
 </context>
 <context>
@@ -4954,12 +4956,13 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="889"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Запит заблокований правилом з профілю %1:&lt;br&gt;
+%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="889"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Невідомо)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="907"/>
@@ -5258,7 +5261,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="191"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Невідомо</translation>
     </message>
 </context>
 <context>
@@ -5405,12 +5408,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionModel.cpp" line="235"/>
         <source>Session</source>
-        <translation type="unfinished"/>
+        <translation>Сеанс</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionModel.cpp" line="238"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Кошик</translation>
     </message>
 </context>
 <context>
@@ -5518,17 +5521,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="350"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Так</translation>
     </message>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="350"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Ні</translation>
     </message>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="355"/>
         <source>Invalid</source>
-        <translation type="unfinished"/>
+        <translation>Недійсний</translation>
     </message>
 </context>
 <context>
@@ -5536,7 +5539,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Очистити</translation>
     </message>
 </context>
 <context>
@@ -5848,7 +5851,7 @@ Address: %2</source>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="127"/>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="156"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="68"/>
@@ -6143,7 +6146,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="553"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Консоль помилок</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="557"/>
@@ -6163,7 +6166,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="569"/>
         <source>Private Window Indicator</source>
-        <translation type="unfinished"/>
+        <translation>Індикатор приватного вікна</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="574"/>
@@ -6208,7 +6211,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="613"/>
         <source>Window Resize Handle</source>
-        <translation type="unfinished"/>
+        <translation>Засіб зміни розміру вікна</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="617"/>
@@ -6471,7 +6474,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="81"/>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="81"/>
@@ -6732,7 +6735,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="108"/>
         <source>Application Version</source>
-        <translation type="unfinished"/>
+        <translation>Версія програми</translation>
     </message>
 </context>
 <context>
@@ -6760,7 +6763,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1147"/>
         <source>Failed to create requested web backend: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо створити запитаний веб-бекенд: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1230"/>
@@ -6818,22 +6821,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="922"/>
         <source>Playback Rate: %1x</source>
-        <translation type="unfinished"/>
+        <translation>Швидкість відтворення: %1x</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="974"/>
         <source>Page Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Задано сторінкою</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="982"/>
         <source>Never Reload</source>
-        <translation type="unfinished"/>
+        <translation>Ніколи не оновлювати</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="986"/>
         <source>Reload Every: %n seconds</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Оновлювати кожні: %n секунд</numerusform><numerusform>Оновлювати кожні: %n секунди</numerusform><numerusform>Оновлювати кожну: %n секунду</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7209,7 +7212,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="323"/>
         <source>Cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Куки:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="350"/>
@@ -7304,7 +7307,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="725"/>
         <source>Profiles:</source>
-        <translation type="unfinished"/>
+        <translation>Профілі:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="755"/>
@@ -7632,7 +7635,7 @@ Click Install button to restart browser and install the update or close this dia
     <name>actions</name>
     <message>
         <source>Playback Rate</source>
-        <translation type="unfinished"/>
+        <translation>Швидкість відтворення</translation>
     </message>
     <message>
         <source>Reload Every</source>
@@ -7640,35 +7643,35 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 хвилина</translation>
     </message>
     <message>
         <source>30 Minutes</source>
-        <translation type="unfinished"/>
+        <translation>30 хвилин</translation>
     </message>
     <message>
         <source>1 Hour</source>
-        <translation type="unfinished"/>
+        <translation>1 година</translation>
     </message>
     <message>
         <source>2 Hours</source>
-        <translation type="unfinished"/>
+        <translation>2 години</translation>
     </message>
     <message>
         <source>6 Hours</source>
-        <translation type="unfinished"/>
+        <translation>6 годин</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Ніколи</translation>
     </message>
     <message>
         <source>Custom…</source>
-        <translation type="unfinished"/>
+        <translation>Інший...</translation>
     </message>
     <message>
         <source>Page Default</source>
-        <translation type="unfinished"/>
+        <translation>Задано сторінкою</translation>
     </message>
     <message>
         <source>Frame</source>
@@ -7677,12 +7680,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Run Macro</source>
-        <translation type="unfinished"/>
+        <translation>Запустити макрос</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Run Arbitrary List of Actions</source>
-        <translation type="unfinished"/>
+        <translation>Запустити довільний список дій</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
@@ -7861,7 +7864,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Reopen Previously Closed Window</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити раніше закрите вікно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="324"/>
@@ -8047,7 +8050,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Show Media Controls</source>
-        <translation type="unfinished"/>
+        <translation>Показати керування медіа</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
@@ -8057,7 +8060,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Playback Looping</source>
-        <translation type="unfinished"/>
+        <translation>Повторювати відтворення</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
@@ -8068,7 +8071,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Play Media</source>
-        <translation type="unfinished"/>
+        <translation>Відтворити медіа</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
@@ -8079,12 +8082,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Mute Media</source>
-        <translation type="unfinished"/>
+        <translation>Вимкнути звук медіа</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Playback Rate</source>
-        <translation type="unfinished"/>
+        <translation>Швидкість відтворення</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
@@ -8099,7 +8102,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Go to URL</source>
-        <translation type="unfinished"/>
+        <translation>Перейти до адреси</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="364"/>
@@ -8109,7 +8112,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Go Back</source>
-        <translation type="unfinished"/>
+        <translation>Повернутися</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="365"/>
@@ -8119,7 +8122,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Go Forward</source>
-        <translation type="unfinished"/>
+        <translation>Вперед</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
@@ -8144,7 +8147,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Rewind History</source>
-        <translation type="unfinished"/>
+        <translation>Історія перемотування</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
@@ -8184,7 +8187,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Schedule Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>Заплановане перезавантаження сторінки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
@@ -8405,7 +8408,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Activate Window</source>
-        <translation type="unfinished"/>
+        <translation>Активувати вікно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="423"/>
@@ -8440,7 +8443,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Load All Plugins on the Page</source>
-        <translation type="unfinished"/>
+        <translation>Завантажити усі плагіни на сторінці</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -8486,7 +8489,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Показати панель інструментів</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
@@ -8638,7 +8641,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Bookmarks Bar</source>
-        <translation type="unfinished"/>
+        <translation>Панель закладок</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
@@ -8648,7 +8651,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Address Bar</source>
-        <translation type="unfinished"/>
+        <translation>Адресний рядок</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="50"/>
@@ -8673,7 +8676,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="54"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Консоль помилок</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="341"/>
@@ -8800,7 +8803,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="176"/>
         <source>Open with</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити за допомогою</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="182"/>
@@ -8835,7 +8838,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="226"/>
         <source>Validate Using</source>
-        <translation type="unfinished"/>
+        <translation>Перевірити використання</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="232"/>
@@ -8948,7 +8951,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="737"/>
         <source>Current Session is Closed</source>
-        <translation type="unfinished"/>
+        <translation>До закриття поточного сеансу</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="741"/>
@@ -9013,12 +9016,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1028"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Програма за умовчанням</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1040"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Невідомо</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1190"/>
@@ -9161,7 +9164,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="122"/>
         <source>Windows</source>
-        <translation type="unfinished"/>
+        <translation>Вікна</translation>
     </message>
 </context>
 <context>
@@ -9244,7 +9247,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="110"/>
         <source>Failed to load content blocking profile file: invalid header</source>
-        <translation>Неможливо відкрити файл профілю заблокованого вмісту: некоректний заголовок</translation>
+        <translation>Неможливо завантажити файл профілю заблокованого вмісту: некоректний заголовок</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="611"/>
@@ -9255,17 +9258,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="623"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation>Неможливо відкрити файл профілю заблокованого вмісту: некоректна контрольна сума</translation>
+        <translation>Неможливо оновити профіль заблокованого вмісту: не співпадає контрольна сума</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="828"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation>Неможливо оновити профіль блокування вмісту, введена порожня адреса</translation>
+        <translation>Неможливо оновити профіль заблокованого вмісту, введено порожню адресу</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="832"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation>Неможливо оновити профіль блокування вмісту, введена адреса (%1) недійсна</translation>
+        <translation>Неможливо оновити профіль заблокованого вмісту, введена адреса (%1) недійсна</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="417"/>
@@ -9343,12 +9346,14 @@ Error: %2</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="266"/>
         <source>Request blocked by rule from profile %1:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Запит заблокований правилом з профілю %1:
+%2
+</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="705"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Невідомо)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="499"/>
@@ -9383,7 +9388,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="193"/>
         <source>Keyboard and Mouse Configuration Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Профілі конфігурації клавіатури та миші</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="327"/>
@@ -9450,7 +9455,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="122"/>
         <source>Mask as {name}</source>
-        <translation type="unfinished"/>
+        <translation>Маскувати як {name}</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="126"/>
@@ -9470,7 +9475,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="185"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which was blocked by content blocker.</source>
-        <translation type="unfinished"/>
+        <translation>Ви намагалися отримати доступ до адреси &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, яка заблокована блокувальником вмісту.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="189"/>
@@ -9480,7 +9485,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="193"/>
         <source>This web page at &lt;strong&gt;%1&lt;/strong&gt; has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation type="unfinished"/>
+        <translation>Ця веб-сторінка &lt;strong&gt;%1&lt;/strong&gt;відома як шахрайська. Для захисту вашої інформації від крадіжки з&apos;єднання з цим сайтом було перервано.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="197"/>
@@ -9520,7 +9525,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>
         <source>Address blocked</source>
-        <translation type="unfinished"/>
+        <translation>Адреса заблокована</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="220"/>
@@ -9540,7 +9545,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="232"/>
         <source>Fraud attempt</source>
-        <translation type="unfinished"/>
+        <translation>Спроба шахрайства</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="236"/>
@@ -9550,7 +9555,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="240"/>
         <source>Unsupported address type</source>
-        <translation type="unfinished"/>
+        <translation>Непідтримуваний тип адреси</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="244"/>
@@ -9570,17 +9575,17 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="415"/>
         <source>Today at %1</source>
-        <translation type="unfinished"/>
+        <translation>Сьогодні о %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="420"/>
         <source>Yesterday at %1</source>
-        <translation type="unfinished"/>
+        <translation>Вчора о %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="426"/>
         <source>%1 at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 о %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="466"/>
@@ -9637,7 +9642,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="925"/>
         <source>Load Blocked Page</source>
-        <translation type="unfinished"/>
+        <translation>Завантажити заблоковану сторінку</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="941"/>

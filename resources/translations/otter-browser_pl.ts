@@ -5627,7 +5627,7 @@ Czy chcesz zapisać swoje zmiany czy je porzucić?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation>Użyj własny obraz tła</translation>
+        <translation>Użyj własnego obrazu tła</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
@@ -9517,7 +9517,7 @@ ID aplikacji: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation>Naciśnij klawisz F12 na swojej klawiaturze i wyłącz opcję używania serwerów proxy, chyba że wiesz, że używanie proxy jest niezbędne do łączenia się z Internetem, a następnie odśwież stronę.</translation>
+        <translation>Naciśnij klawisz F12 na klawiaturze i wyłącz opcję używania serwerów proxy, chyba że wiesz, że korzystanie z proxy jest niezbędne do łączenia się z Internetem, a następnie odśwież stronę.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>

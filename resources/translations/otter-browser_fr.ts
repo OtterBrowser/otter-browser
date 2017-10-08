@@ -59,7 +59,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Secure connections only</source>
-        <translation>Uniquement pour les connexions sécurisées</translation>
+        <translation>Uniquement les connexions sécurisées</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="71"/>
         <source>Discard</source>
-        <translation>Supprimer</translation>
+        <translation>Enlever</translation>
     </message>
 </context>
 <context>
@@ -942,7 +942,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="299"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation>Erreur lors de l&apos;ouverture du fichier des signets : %1</translation>
+        <translation>Impossible de charger le fichier des signets : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="301"/>
@@ -952,12 +952,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="301"/>
         <source>Failed to load notes file.</source>
-        <translation>Erreur lors de l&apos;ouverture de fichier de notes.</translation>
+        <translation>Echec du chargement du fichier Notes.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="301"/>
         <source>Failed to load bookmarks file.</source>
-        <translation>Erreur lors de l&apos;ouverture du fichier des signets.</translation>
+        <translation>Impossible de charger le fichier des signets.</translation>
     </message>
 </context>
 <context>
@@ -1149,7 +1149,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
         <source>Failed to open file for writing.</source>
-        <translation>Erreur lors de l&apos;ouverture du fichier en écriture.</translation>
+        <translation>Impossible d&apos;ouvrir le fichier pour l&apos;écriture.</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
@@ -1491,13 +1491,13 @@ Exponentiel : %2</translation>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="282"/>
         <source>The settings have been changed.
 Do you want to save them?</source>
-        <translation>Les préférences ont été modifiées.
+        <translation>Les paramètres ont été modifiées.
 Voulez-vous les enregistrer ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="365"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation>Êtes-vous sûr de vouloir rétablir les valeurs par défaut pour toutes les options ?</translation>
+        <translation>Êtes-vous sûr de vouloir réinitialiser les paramètres par défaut de toutes les options ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="472"/>
@@ -4368,12 +4368,12 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="47"/>
         <source>Show start page</source>
-        <translation>Afficher la page de démarrage</translation>
+        <translation>Afficher la page démarrage</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="48"/>
         <source>Show empty page</source>
-        <translation>Afficher la page vide</translation>
+        <translation>Afficher la Speed dial</translation>
     </message>
 </context>
 <context>
