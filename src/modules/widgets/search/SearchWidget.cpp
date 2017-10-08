@@ -239,16 +239,20 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 	{
 		case Qt::Key_Enter:
 		case Qt::Key_Return:
-			if (!isPopupVisible())
+			if (isPopupVisible() && getPopup()->getCurrentIndex().isValid())
+			{
+				sendRequest(getPopup()->getCurrentIndex().data(Qt::DisplayRole).toString());
+			}
+			else
 			{
 				sendRequest(text().trimmed());
-
-				event->accept();
-
-				return;
 			}
 
-			break;
+			hidePopup();
+
+			event->accept();
+
+			return;
 		case Qt::Key_Down:
 		case Qt::Key_Up:
 			if (!m_isSearchEngineLocked && !isPopupVisible())
