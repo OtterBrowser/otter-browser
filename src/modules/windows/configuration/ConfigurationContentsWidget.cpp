@@ -140,7 +140,7 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 		widget->setChoices(definition.choices);
 	}
 
-	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+	connect(widget, &OptionWidget::commitData, this, &ConfigurationOptionDelegate::commitData);
 
 	return widget;
 }
@@ -221,15 +221,15 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	}
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ConfigurationContentsWidget::handleOptionChanged);
-	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &ConfigurationContentsWidget::showContextMenu);
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ConfigurationContentsWidget::updateActions);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
 	{
 		m_ui->resetAllButton->setEnabled(true);
 		m_ui->saveAllButton->setEnabled(true);
 	});
-	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->configurationViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &ConfigurationContentsWidget::handleCurrentIndexChanged);
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->configurationViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->resetAllButton, &QPushButton::clicked, [&]()
 	{
 		saveAll(true);
@@ -300,16 +300,6 @@ void ConfigurationContentsWidget::closeEvent(QCloseEvent *event)
 void ConfigurationContentsWidget::print(QPrinter *printer)
 {
 	m_ui->configurationViewWidget->render(printer);
-}
-
-void ConfigurationContentsWidget::currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
-{
-	m_ui->configurationViewWidget->closePersistentEditor(previousIndex.parent().child(previousIndex.row(), 2));
-
-	if (currentIndex.parent().isValid())
-	{
-		m_ui->configurationViewWidget->openPersistentEditor(currentIndex.parent().child(currentIndex.row(), 2));
-	}
 }
 
 void ConfigurationContentsWidget::copyOptionName()
@@ -419,7 +409,7 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 		m_ui->resetAllButton->setEnabled(false);
 	}
 
-	connect(m_ui->configurationViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ConfigurationContentsWidget::updateActions);
 
 	updateActions();
 }
@@ -469,6 +459,16 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 	}
 
 	updateActions();
+}
+
+void ConfigurationContentsWidget::handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+{
+	m_ui->configurationViewWidget->closePersistentEditor(previousIndex.parent().child(previousIndex.row(), 2));
+
+	if (currentIndex.parent().isValid())
+	{
+		m_ui->configurationViewWidget->openPersistentEditor(currentIndex.parent().child(currentIndex.row(), 2));
+	}
 }
 
 void ConfigurationContentsWidget::showContextMenu(const QPoint &position)

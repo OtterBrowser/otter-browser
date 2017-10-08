@@ -79,12 +79,12 @@ protected:
 	void saveAll(bool reset);
 
 protected slots:
-	void currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void copyOptionName();
 	void copyOptionValue();
 	void resetOption();
 	void saveOption();
 	void handleOptionChanged(int identifier, const QVariant &value);
+	void handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 
