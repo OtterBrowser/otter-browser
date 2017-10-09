@@ -76,6 +76,7 @@ protected:
 	explicit ContentBlockingManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
+	static void ensureInitialized();
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
