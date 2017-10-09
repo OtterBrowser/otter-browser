@@ -290,7 +290,6 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 
 	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
 	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
-	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::authenticated, authenticationDialog, &AuthenticationDialog::authenticated);
 
 	m_widget->showDialog(&dialog);
 
@@ -320,7 +319,6 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
 	connect(m_widget, &QtWebKitWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
-	connect(NetworkManagerFactory::getInstance(), &NetworkManagerFactory::authenticated, authenticationDialog, &AuthenticationDialog::authenticated);
 
 	m_widget->showDialog(&dialog);
 
