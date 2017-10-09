@@ -225,7 +225,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 
 	if (line.endsWith(QLatin1Char('|')))
 	{
-		ruleMatch = (ruleMatch == StartMatch ? ExactMatch : EndMatch);
+		ruleMatch = ((ruleMatch == StartMatch) ? ExactMatch : EndMatch);
 
 		line = line.left(line.length() - 1);
 	}
@@ -377,7 +377,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(co
 
 				for (int k = 0; k < wildcardSubString.length(); ++k)
 				{
-					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), currentRule + wildcardSubString.left(k), resourceType);
+					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), (currentRule + wildcardSubString.left(k)), resourceType);
 
 					if (currentResult.isBlocked)
 					{
