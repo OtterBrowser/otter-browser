@@ -144,7 +144,7 @@ bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 
 			getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
 
-			connect(m_filterLineEditWidget, SIGNAL(textChanged(QString)), getView(), SLOT(setFilterString(QString)));
+			connect(m_filterLineEditWidget, &LineEditWidget::textChanged, getView(), &ItemViewWidget::setFilterString);
 		}
 
 		if (event->type() == QEvent::Show)

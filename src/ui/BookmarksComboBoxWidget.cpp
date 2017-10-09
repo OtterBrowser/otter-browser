@@ -35,7 +35,7 @@ BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : ComboBoxWidg
 	setModel(m_model);
 	updateBranch();
 
-	connect(m_model, SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	connect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
 }
 
 void BookmarksComboBoxWidget::createFolder()
@@ -58,6 +58,11 @@ void BookmarksComboBoxWidget::createFolder()
 				break;
 		}
 	}
+}
+
+void BookmarksComboBoxWidget::handleLayoutChanged()
+{
+	updateBranch();
 }
 
 void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
@@ -97,14 +102,14 @@ void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
 
 void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 {
-	disconnect(m_model, SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	disconnect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
 
 	m_model = ((mode == BookmarksModel::NotesMode) ? NotesManager::getModel() : BookmarksManager::getModel());
 
 	setModel(m_model);
 	updateBranch();
 
-	connect(m_model, SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	connect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
 }
 
 BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder() const

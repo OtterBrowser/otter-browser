@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ ApplicationComboBoxWidget::ApplicationComboBoxWidget(QWidget *parent) : QComboBo
 	insertSeparator(1);
 	addItem(tr("Other…"));
 
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
+	connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 }
 
 void ApplicationComboBoxWidget::changeEvent(QEvent *event)
@@ -53,7 +53,7 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 {
 	if (index == (count() - 1))
 	{
-		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
+		disconnect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 
 		setCurrentIndex(m_previousIndex);
 
@@ -72,7 +72,7 @@ void ApplicationComboBoxWidget::handleIndexChanged(int index)
 			setCurrentIndex(m_previousIndex);
 		}
 
-		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
+		connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 	}
 	else
 	{
@@ -111,7 +111,7 @@ void ApplicationComboBoxWidget::setCurrentCommand(const QString &command)
 
 void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 {
-	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
+	disconnect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 
 	clear();
 
@@ -138,7 +138,7 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 
 	addItem(tr("Other…"));
 
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(handleIndexChanged(int)));
+	connect(this, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &ApplicationComboBoxWidget::handleIndexChanged);
 }
 
 void ApplicationComboBoxWidget::setAlwaysShowDefaultApplication(bool show)
