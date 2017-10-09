@@ -36,20 +36,20 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+	const bool isUrlBookmark(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()) == BookmarksModel::UrlBookmark);
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksItem*>(bookmark->parent()));
 	m_ui->titleLineEditWidget->setText(m_bookmark->getTitle());
 	m_ui->addressLineEditWidget->setText(m_bookmark->getUrl().toDisplayString());
-	m_ui->addressLineEditWidget->setVisible(type == BookmarksModel::UrlBookmark);
-	m_ui->addressLabel->setVisible(type == BookmarksModel::UrlBookmark);
+	m_ui->addressLineEditWidget->setVisible(isUrlBookmark);
+	m_ui->addressLabel->setVisible(isUrlBookmark);
 	m_ui->descriptionTextEditWidget->setPlainText(m_bookmark->getDescription());
 	m_ui->keywordLineEditWidget->setText(m_bookmark->getKeyword());
 	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TitleRole).toDateTime()) : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime()) : tr("Unknown"));
 
-	if (type == BookmarksModel::UrlBookmark)
+	if (isUrlBookmark)
 	{
 		m_ui->lastVisitLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeVisitedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeVisitedRole).toString() : tr("Unknown"));
 		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->data(BookmarksModel::VisitsRole).toInt()));
@@ -79,9 +79,9 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 		setWindowTitle(tr("Edit Bookmark"));
 	}
 
-	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
-	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->newFolderButton, &QPushButton::clicked, m_ui->folderComboBox, &BookmarksComboBoxWidget::createFolder);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &BookmarkPropertiesDialog::saveBookmark);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &BookmarkPropertiesDialog::close);
 }
 
 BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description, BookmarksItem *folder, int index, bool isUrl, QWidget *parent) : Dialog(parent),
@@ -107,9 +107,9 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QStrin
 
 	setWindowTitle(tr("Add Bookmark"));
 
-	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
-	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->newFolderButton, &QPushButton::clicked, m_ui->folderComboBox, &BookmarksComboBoxWidget::createFolder);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &BookmarkPropertiesDialog::saveBookmark);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &BookmarkPropertiesDialog::close);
 }
 
 BookmarkPropertiesDialog::~BookmarkPropertiesDialog()
