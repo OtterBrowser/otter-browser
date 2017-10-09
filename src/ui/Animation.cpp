@@ -207,7 +207,7 @@ bool GenericAnimation::isRunning() const
 }
 
 SpinnerAnimation::SpinnerAnimation(QObject *parent) : Animation(parent),
-	m_color(Qt::black),
+	m_color(0, 0, 0, 200),
 	m_scaledSize(16, 16),
 	m_step(0),
 	m_updateTimer(0)
@@ -232,15 +232,15 @@ void SpinnerAnimation::timerEvent(QTimerEvent *event)
 void SpinnerAnimation::paint(QPainter *painter, const QRect &rectangle) const
 {
 	const QSize size(rectangle.isValid() ? rectangle.size() : m_scaledSize);
-	const int offset(size.width() / 8);
-	const QRect targetRectangle((rectangle.x() + offset), (rectangle.y() + offset), (size.width() - (offset * 2)), (size.height() - (offset * 2)));
+	const qreal offset(size.width() / 8.0);
+	const QRectF targetRectangle((rectangle.x() + offset), (rectangle.y() + offset), (size.width() - (offset * 2)), (size.height() - (offset * 2)));
 	QConicalGradient gradient(targetRectangle.center(), m_step);
 	gradient.setColorAt(0, m_color);
 	gradient.setColorAt(1, Qt::transparent);
 
 	painter->save();
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
-	painter->setPen(QPen(gradient, (offset * 2)));
+	painter->setPen(QPen(gradient, (offset * 1.5)));
 	painter->drawArc(targetRectangle, 0, 5760);
 	painter->restore();
 }
