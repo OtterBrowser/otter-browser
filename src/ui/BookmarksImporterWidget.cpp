@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,12 +34,12 @@ BookmarksImporterWidget::BookmarksImporterWidget(QWidget *parent) : QWidget(pare
 {
 	m_ui->setupUi(this);
 
-	removeStateChanged(m_ui->removeCheckBox->checkState());
-	toSubfolderChanged(m_ui->toSubfolderCheckBox->checkState());
+	handleRemoveExistingChanged(m_ui->removeExistingCheckBox->checkState());
+	handleImportToSubfolderChanged(m_ui->importToSubfolderCheckBox->checkState());
 
-	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
-	connect(m_ui->removeCheckBox, SIGNAL(toggled(bool)), this, SLOT(removeStateChanged(bool)));
-	connect(m_ui->toSubfolderCheckBox, SIGNAL(toggled(bool)), this, SLOT(toSubfolderChanged(bool)));
+	connect(m_ui->newFolderButton, &QPushButton::clicked, m_ui->folderComboBox, &BookmarksComboBoxWidget::createFolder);
+	connect(m_ui->removeExistingCheckBox, &QCheckBox::toggled, this, &BookmarksImporterWidget::handleRemoveExistingChanged);
+	connect(m_ui->importToSubfolderCheckBox, &QCheckBox::toggled, this, &BookmarksImporterWidget::handleImportToSubfolderChanged);
 }
 
 BookmarksImporterWidget::~BookmarksImporterWidget()
@@ -47,7 +47,7 @@ BookmarksImporterWidget::~BookmarksImporterWidget()
 	delete m_ui;
 }
 
-void BookmarksImporterWidget::removeStateChanged(bool isChecked)
+void BookmarksImporterWidget::handleRemoveExistingChanged(bool isChecked)
 {
 	if (isChecked)
 	{
@@ -59,7 +59,7 @@ void BookmarksImporterWidget::removeStateChanged(bool isChecked)
 	}
 }
 
-void BookmarksImporterWidget::toSubfolderChanged(bool isChecked)
+void BookmarksImporterWidget::handleImportToSubfolderChanged(bool isChecked)
 {
 	m_ui->subfolderNameLineEditWidget->setEnabled(isChecked);
 }
@@ -76,17 +76,17 @@ QString BookmarksImporterWidget::getSubfolderName() const
 
 bool BookmarksImporterWidget::hasToRemoveExisting() const
 {
-	return m_ui->removeCheckBox->isChecked();
+	return m_ui->removeExistingCheckBox->isChecked();
 }
 
-bool BookmarksImporterWidget::allowDuplicates() const
+bool BookmarksImporterWidget::areDuplicatesAllowed() const
 {
 	return m_ui->allowDuplicatesCheckBox->isChecked();
 }
 
 bool BookmarksImporterWidget::isImportingIntoSubfolder() const
 {
-	return m_ui->toSubfolderCheckBox->isChecked();
+	return m_ui->importToSubfolderCheckBox->isChecked();
 }
 
 }

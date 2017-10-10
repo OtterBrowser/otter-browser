@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,13 +43,13 @@ public:
 
 	BookmarksItem *getTargetFolder() const;
 	QString getSubfolderName() const;
-	bool allowDuplicates() const;
+	bool areDuplicatesAllowed() const;
 	bool isImportingIntoSubfolder() const;
 	bool hasToRemoveExisting() const;
 
 protected slots:
-	void removeStateChanged(bool isChecked);
-	void toSubfolderChanged(bool isChecked);
+	void handleRemoveExistingChanged(bool isChecked);
+	void handleImportToSubfolderChanged(bool isChecked);
 
 private:
 	Ui::BookmarksImporterWidget *m_ui;

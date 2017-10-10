@@ -143,7 +143,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 		else
 		{
-			setAllowDuplicates(m_optionsWidget->allowDuplicates());
+			setAllowDuplicates(m_optionsWidget->areDuplicatesAllowed());
 			setImportFolder(m_optionsWidget->getTargetFolder());
 		}
 	}

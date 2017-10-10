@@ -12,7 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="removeCheckBox">
+    <widget class="QCheckBox" name="removeExistingCheckBox">
      <property name="text">
       <string>Remove existing bookmarks</string>
      </property>
@@ -102,7 +102,7 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QCheckBox" name="toSubfolderCheckBox">
+        <widget class="QCheckBox" name="importToSubfolderCheckBox">
          <property name="text">
           <string>Import into subfolder</string>
          </property>
