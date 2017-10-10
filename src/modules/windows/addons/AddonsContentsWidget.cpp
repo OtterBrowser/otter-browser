@@ -50,11 +50,11 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	m_ui->addonsViewWidget->installEventFilter(this);
 	m_ui->filterLineEditWidget->installEventFilter(this);
 
-	QTimer::singleShot(100, this, SLOT(populateAddons()));
+	QTimer::singleShot(100, this, &AddonsContentsWidget::populateAddons);
 
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->addonsViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->addonsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->addonsViewWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(save()));
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->addonsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->addonsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &AddonsContentsWidget::showContextMenu);
+	connect(m_ui->addonsViewWidget, &ItemViewWidget::clicked, this, &AddonsContentsWidget::save);
 }
 
 AddonsContentsWidget::~AddonsContentsWidget()

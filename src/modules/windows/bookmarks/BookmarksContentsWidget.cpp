@@ -73,14 +73,14 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 		m_ui->detailsWidget->hide();
 	}
 
-	connect(BookmarksManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
-	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
-	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeBookmark()));
-	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->bookmarksViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->bookmarksViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
-	connect(m_ui->bookmarksViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->bookmarksViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(BookmarksManager::getModel(), &BookmarksModel::modelReset, this, &BookmarksContentsWidget::updateActions);
+	connect(m_ui->propertiesButton, &QPushButton::clicked, this, &BookmarksContentsWidget::bookmarkProperties);
+	connect(m_ui->deleteButton, &QPushButton::clicked, this, &BookmarksContentsWidget::removeBookmark);
+	connect(m_ui->addButton, &QPushButton::clicked, this, &BookmarksContentsWidget::addBookmark);
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->bookmarksViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->bookmarksViewWidget, &ItemViewWidget::doubleClicked, this, &BookmarksContentsWidget::openBookmark);
+	connect(m_ui->bookmarksViewWidget, &ItemViewWidget::customContextMenuRequested, this, &BookmarksContentsWidget::showContextMenu);
+	connect(m_ui->bookmarksViewWidget, &ItemViewWidget::needsActionsUpdate, this, &BookmarksContentsWidget::updateActions);
 }
 
 BookmarksContentsWidget::~BookmarksContentsWidget()

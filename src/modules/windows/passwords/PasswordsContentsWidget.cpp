@@ -49,8 +49,8 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 
 	QTimer::singleShot(100, this, SLOT(populatePasswords()));
 
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), this, SLOT(filterPasswords(QString)));
-	connect(m_ui->passwordsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &PasswordsContentsWidget::filterPasswords);
+	connect(m_ui->passwordsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PasswordsContentsWidget::showContextMenu);
 }
 
 PasswordsContentsWidget::~PasswordsContentsWidget()
@@ -114,7 +114,7 @@ void PasswordsContentsWidget::populatePasswords()
 
 		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
-		connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(populatePasswords()));
+		connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, this, &PasswordsContentsWidget::populatePasswords);
 		connect(m_ui->passwordsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&](const QItemSelection &selected, const QItemSelection &deselected)
 		{
 			Q_UNUSED(selected)
