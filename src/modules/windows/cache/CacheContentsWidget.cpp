@@ -58,10 +58,10 @@ CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *
 
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->cacheViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->cacheViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
-	connect(m_ui->cacheViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeDomainEntriesOrEntry()));
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->cacheViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->cacheViewWidget, &ItemViewWidget::doubleClicked, this, &CacheContentsWidget::openEntry);
+	connect(m_ui->cacheViewWidget, &ItemViewWidget::customContextMenuRequested, this, &CacheContentsWidget::showContextMenu);
+	connect(m_ui->deleteButton, &QPushButton::clicked, this, &CacheContentsWidget::removeDomainEntriesOrEntry);
 }
 
 CacheContentsWidget::~CacheContentsWidget()
@@ -121,7 +121,7 @@ void CacheContentsWidget::populateCache()
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		addEntry(entries.at(i));
+		handleEntryAdded(entries.at(i));
 	}
 
 	m_model->sort(0);
@@ -136,15 +136,90 @@ void CacheContentsWidget::populateCache()
 
 		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
-		connect(cache, SIGNAL(cleared()), this, SLOT(populateCache()));
-		connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
-		connect(cache, SIGNAL(entryRemoved(QUrl)), this, SLOT(removeEntry(QUrl)));
-		connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
-		connect(m_ui->cacheViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+		connect(cache, &NetworkCache::cleared, this, &CacheContentsWidget::populateCache);
+		connect(cache, &NetworkCache::entryAdded, this, &CacheContentsWidget::handleEntryAdded);
+		connect(cache, &NetworkCache::entryRemoved, this, &CacheContentsWidget::handleEntryRemoved);
+		connect(m_model, &QStandardItemModel::modelReset, this, &CacheContentsWidget::updateActions);
+		connect(m_ui->cacheViewWidget, &ItemViewWidget::needsActionsUpdate, this, &CacheContentsWidget::updateActions);
 	}
 }
 
-void CacheContentsWidget::addEntry(const QUrl &entry)
+void CacheContentsWidget::removeEntry()
+{
+	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
+
+	if (entry.isValid())
+	{
+		NetworkManagerFactory::getCache()->remove(entry);
+	}
+}
+
+void CacheContentsWidget::removeDomainEntries()
+{
+	const QModelIndex index(m_ui->cacheViewWidget->currentIndex());
+	const QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
+
+	if (!domainItem)
+	{
+		return;
+	}
+
+	NetworkCache *cache(NetworkManagerFactory::getCache());
+
+	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
+	{
+		cache->remove(domainItem->index().child(i, 0).data(Qt::UserRole).toUrl());
+	}
+}
+
+void CacheContentsWidget::removeDomainEntriesOrEntry()
+{
+	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
+
+	if (entry.isValid())
+	{
+		NetworkManagerFactory::getCache()->remove(entry);
+	}
+	else
+	{
+		removeDomainEntries();
+	}
+}
+
+void CacheContentsWidget::openEntry(const QModelIndex &index)
+{
+	const QModelIndex entryIndex(index.isValid() ? index : m_ui->cacheViewWidget->currentIndex());
+
+	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
+	{
+		return;
+	}
+
+	const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl());
+
+	if (url.isValid())
+	{
+		const QAction *action(qobject_cast<QAction*>(sender()));
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen)}});
+		}
+	}
+}
+
+void CacheContentsWidget::copyEntryLink()
+{
+	const QStandardItem *entryItem(findEntry(getEntry(m_ui->cacheViewWidget->currentIndex())));
+
+	if (entryItem)
+	{
+		QApplication::clipboard()->setText(entryItem->data(Qt::UserRole).toString());
+	}
+}
+
+void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 {
 	const QString domain(entry.host());
 	QStandardItem *domainItem(findDomain(domain));
@@ -221,7 +296,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	}
 }
 
-void CacheContentsWidget::removeEntry(const QUrl &entry)
+void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 {
 	QStandardItem *entryItem(findEntry(entry));
 
@@ -252,81 +327,6 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 				domainItem->setText(QStringLiteral("%1 (%2)").arg(entry.host()).arg(domainItem->rowCount()));
 			}
 		}
-	}
-}
-
-void CacheContentsWidget::removeEntry()
-{
-	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
-
-	if (entry.isValid())
-	{
-		NetworkManagerFactory::getCache()->remove(entry);
-	}
-}
-
-void CacheContentsWidget::removeDomainEntries()
-{
-	const QModelIndex index(m_ui->cacheViewWidget->currentIndex());
-	const QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
-
-	if (!domainItem)
-	{
-		return;
-	}
-
-	NetworkCache *cache(NetworkManagerFactory::getCache());
-
-	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
-	{
-		cache->remove(domainItem->index().child(i, 0).data(Qt::UserRole).toUrl());
-	}
-}
-
-void CacheContentsWidget::removeDomainEntriesOrEntry()
-{
-	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
-
-	if (entry.isValid())
-	{
-		NetworkManagerFactory::getCache()->remove(entry);
-	}
-	else
-	{
-		removeDomainEntries();
-	}
-}
-
-void CacheContentsWidget::openEntry(const QModelIndex &index)
-{
-	const QModelIndex entryIndex(index.isValid() ? index : m_ui->cacheViewWidget->currentIndex());
-
-	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
-	{
-		return;
-	}
-
-	const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl());
-
-	if (url.isValid())
-	{
-		const QAction *action(qobject_cast<QAction*>(sender()));
-		MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-		if (mainWindow)
-		{
-			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen)}});
-		}
-	}
-}
-
-void CacheContentsWidget::copyEntryLink()
-{
-	const QStandardItem *entryItem(findEntry(getEntry(m_ui->cacheViewWidget->currentIndex())));
-
-	if (entryItem)
-	{
-		QApplication::clipboard()->setText(entryItem->data(Qt::UserRole).toString());
 	}
 }
 
