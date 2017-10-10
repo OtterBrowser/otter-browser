@@ -63,12 +63,12 @@ protected:
 protected slots:
 	void populateCookies();
 	void addCookie();
-	void addCookie(const QNetworkCookie &cookie);
-	void removeCookie(const QNetworkCookie &cookie);
 	void removeCookies();
 	void removeDomainCookies();
 	void removeAllCookies();
 	void cookieProperties();
+	void handleCookieAdded(const QNetworkCookie &cookie);
+	void handleCookieRemoved(const QNetworkCookie &cookie);
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 
