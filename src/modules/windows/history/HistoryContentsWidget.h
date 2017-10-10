@@ -61,14 +61,14 @@ protected:
 
 protected slots:
 	void populateEntries();
-	void addEntry(HistoryEntryItem *entry);
-	void modifyEntry(HistoryEntryItem *entry);
-	void removeEntry(HistoryEntryItem *entry);
 	void removeEntry();
 	void removeDomainEntries();
 	void openEntry(const QModelIndex &index = {});
 	void bookmarkEntry();
 	void copyEntryLink();
+	void handleEntryAdded(HistoryEntryItem *entry);
+	void handleEntryModified(HistoryEntryItem *entry);
+	void handleEntryRemoved(HistoryEntryItem *entry);
 	void showContextMenu(const QPoint &position);
 
 private:

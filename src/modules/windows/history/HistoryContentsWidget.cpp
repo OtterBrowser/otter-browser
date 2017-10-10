@@ -64,16 +64,16 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 		m_ui->historyViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
 	}
 
-	QTimer::singleShot(100, this, SLOT(populateEntries()));
+	QTimer::singleShot(100, this, &HistoryContentsWidget::populateEntries);
 
-	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(cleared()), this, SLOT(populateEntries()));
-	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryAdded(HistoryEntryItem*)), this, SLOT(addEntry(HistoryEntryItem*)));
-	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryModified(HistoryEntryItem*)), this, SLOT(modifyEntry(HistoryEntryItem*)));
-	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryRemoved(HistoryEntryItem*)), this, SLOT(removeEntry(HistoryEntryItem*)));
-	connect(HistoryManager::getInstance(), SIGNAL(dayChanged()), this, SLOT(populateEntries()));
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->historyViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->historyViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
-	connect(m_ui->historyViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(HistoryManager::getBrowsingHistoryModel(), &HistoryModel::cleared, this, &HistoryContentsWidget::populateEntries);
+	connect(HistoryManager::getBrowsingHistoryModel(), &HistoryModel::entryAdded, this, &HistoryContentsWidget::handleEntryAdded);
+	connect(HistoryManager::getBrowsingHistoryModel(), &HistoryModel::entryModified, this, &HistoryContentsWidget::handleEntryModified);
+	connect(HistoryManager::getBrowsingHistoryModel(), &HistoryModel::entryRemoved, this, &HistoryContentsWidget::handleEntryRemoved);
+	connect(HistoryManager::getInstance(), &HistoryManager::dayChanged, this, &HistoryContentsWidget::populateEntries);
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->historyViewWidget, &ItemViewWidget::doubleClicked, this, &HistoryContentsWidget::openEntry);
+	connect(m_ui->historyViewWidget, &ItemViewWidget::customContextMenuRequested, this, &HistoryContentsWidget::showContextMenu);
 }
 
 HistoryContentsWidget::~HistoryContentsWidget()
@@ -136,7 +136,7 @@ void HistoryContentsWidget::populateEntries()
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		addEntry(static_cast<HistoryEntryItem*>(model->item(i, 0)));
+		handleEntryAdded(static_cast<HistoryEntryItem*>(model->item(i, 0)));
 	}
 
 	const QString expandBranches(SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString());
@@ -163,105 +163,6 @@ void HistoryContentsWidget::populateEntries()
 	m_isLoading = false;
 
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
-}
-
-void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
-{
-	if (!entry || entry->getIdentifier() == 0 || findEntry(entry->getIdentifier()))
-	{
-		return;
-	}
-
-	QStandardItem *groupItem(nullptr);
-
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		groupItem = m_model->item(i, 0);
-
-		if (groupItem && (entry->getTimeVisited().date() >= groupItem->data(Qt::UserRole).toDate() || !groupItem->data(Qt::UserRole).toDate().isValid()))
-		{
-			break;
-		}
-
-		groupItem = nullptr;
-	}
-
-	if (!groupItem)
-	{
-		return;
-	}
-
-	QList<QStandardItem*> entryItems({new QStandardItem(entry->getIcon(), entry->getUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))), new QStandardItem(entry->getTitle()), new QStandardItem(Utils::formatDateTime(entry->getTimeVisited()))});
-	entryItems[0]->setData(entry->getIdentifier(), Qt::UserRole);
-	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
-	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
-	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
-
-	groupItem->appendRow(entryItems);
-
-	m_ui->historyViewWidget->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
-
-	if (sender() && groupItem->rowCount() == 1 && SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString() == QLatin1String("first"))
-	{
-		for (int i = 0; i < m_model->rowCount(); ++i)
-		{
-			const QModelIndex index(m_model->index(i, 0));
-
-			if (m_model->rowCount(index) > 0)
-			{
-				m_ui->historyViewWidget->expand(m_ui->historyViewWidget->getProxyModel()->mapFromSource(index));
-
-				break;
-			}
-		}
-	}
-}
-
-void HistoryContentsWidget::modifyEntry(HistoryEntryItem *entry)
-{
-	if (!entry || entry->getIdentifier() == 0)
-	{
-		return;
-	}
-
-	QStandardItem *entryItem(findEntry(entry->getIdentifier()));
-
-	if (!entryItem)
-	{
-		addEntry(entry);
-
-		return;
-	}
-
-	entryItem->setIcon(entry->getIcon());
-	entryItem->setText(entry->getUrl().toDisplayString());
-	entryItem->parent()->child(entryItem->row(), 1)->setText(entry->getTitle());
-	entryItem->parent()->child(entryItem->row(), 2)->setText(Utils::formatDateTime(entry->getTimeVisited()));
-}
-
-void HistoryContentsWidget::removeEntry(HistoryEntryItem *entry)
-{
-	if (!entry || entry->getIdentifier() == 0)
-	{
-		return;
-	}
-
-	QStandardItem *entryItem(findEntry(entry->getIdentifier()));
-
-	if (entryItem)
-	{
-		QStandardItem *groupItem(entryItem->parent());
-
-		if (groupItem)
-		{
-			m_model->removeRow(entryItem->row(), groupItem->index());
-
-			if (groupItem->rowCount() == 0)
-			{
-				m_ui->historyViewWidget->setRowHidden(groupItem->row(), m_model->invisibleRootItem()->index(), true);
-			}
-		}
-	}
 }
 
 void HistoryContentsWidget::removeEntry()
@@ -349,6 +250,105 @@ void HistoryContentsWidget::copyEntryLink()
 	if (entryItem)
 	{
 		QApplication::clipboard()->setText(entryItem->text());
+	}
+}
+
+void HistoryContentsWidget::handleEntryAdded(HistoryEntryItem *entry)
+{
+	if (!entry || entry->getIdentifier() == 0 || findEntry(entry->getIdentifier()))
+	{
+		return;
+	}
+
+	QStandardItem *groupItem(nullptr);
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		groupItem = m_model->item(i, 0);
+
+		if (groupItem && (entry->getTimeVisited().date() >= groupItem->data(Qt::UserRole).toDate() || !groupItem->data(Qt::UserRole).toDate().isValid()))
+		{
+			break;
+		}
+
+		groupItem = nullptr;
+	}
+
+	if (!groupItem)
+	{
+		return;
+	}
+
+	QList<QStandardItem*> entryItems({new QStandardItem(entry->getIcon(), entry->getUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))), new QStandardItem(entry->getTitle()), new QStandardItem(Utils::formatDateTime(entry->getTimeVisited()))});
+	entryItems[0]->setData(entry->getIdentifier(), Qt::UserRole);
+	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
+
+	groupItem->appendRow(entryItems);
+
+	m_ui->historyViewWidget->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
+
+	if (sender() && groupItem->rowCount() == 1 && SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString() == QLatin1String("first"))
+	{
+		for (int i = 0; i < m_model->rowCount(); ++i)
+		{
+			const QModelIndex index(m_model->index(i, 0));
+
+			if (m_model->rowCount(index) > 0)
+			{
+				m_ui->historyViewWidget->expand(m_ui->historyViewWidget->getProxyModel()->mapFromSource(index));
+
+				break;
+			}
+		}
+	}
+}
+
+void HistoryContentsWidget::handleEntryModified(HistoryEntryItem *entry)
+{
+	if (!entry || entry->getIdentifier() == 0)
+	{
+		return;
+	}
+
+	QStandardItem *entryItem(findEntry(entry->getIdentifier()));
+
+	if (!entryItem)
+	{
+		handleEntryAdded(entry);
+
+		return;
+	}
+
+	entryItem->setIcon(entry->getIcon());
+	entryItem->setText(entry->getUrl().toDisplayString());
+	entryItem->parent()->child(entryItem->row(), 1)->setText(entry->getTitle());
+	entryItem->parent()->child(entryItem->row(), 2)->setText(Utils::formatDateTime(entry->getTimeVisited()));
+}
+
+void HistoryContentsWidget::handleEntryRemoved(HistoryEntryItem *entry)
+{
+	if (!entry || entry->getIdentifier() == 0)
+	{
+		return;
+	}
+
+	QStandardItem *entryItem(findEntry(entry->getIdentifier()));
+
+	if (entryItem)
+	{
+		QStandardItem *groupItem(entryItem->parent());
+
+		if (groupItem)
+		{
+			m_model->removeRow(entryItem->row(), groupItem->index());
+
+			if (groupItem->rowCount() == 0)
+			{
+				m_ui->historyViewWidget->setRowHidden(groupItem->row(), m_model->invisibleRootItem()->index(), true);
+			}
+		}
 	}
 }
 
