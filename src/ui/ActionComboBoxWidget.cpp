@@ -134,32 +134,42 @@ int ActionComboBoxWidget::getActionIdentifier() const
 
 bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::Show || event->type() == QEvent::Move || event->type() == QEvent::Resize)
+	switch (event->type())
 	{
-		if (!m_filterLineEditWidget)
-		{
-			m_filterLineEditWidget = new LineEditWidget(getView()->viewport()->parentWidget());
-			m_filterLineEditWidget->setClearButtonEnabled(true);
-			m_filterLineEditWidget->setPlaceholderText(tr("Search…"));
+		case QEvent::Hide:
+			if (m_filterLineEditWidget)
+			{
+				m_filterLineEditWidget->clear();
+			}
 
-			getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
+			break;
+		case QEvent::Move:
+		case QEvent::Resize:
+		case QEvent::Show:
+			if (!m_filterLineEditWidget)
+			{
+				m_filterLineEditWidget = new LineEditWidget(getView()->viewport()->parentWidget());
+				m_filterLineEditWidget->setClearButtonEnabled(true);
+				m_filterLineEditWidget->setPlaceholderText(tr("Search…"));
 
-			connect(m_filterLineEditWidget, &LineEditWidget::textChanged, getView(), &ItemViewWidget::setFilterString);
-		}
+				getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
 
-		if (event->type() == QEvent::Show)
-		{
-			QTimer::singleShot(0, m_filterLineEditWidget, SLOT(setFocus()));
-		}
-		else
-		{
-			m_filterLineEditWidget->resize(getView()->width(), m_filterLineEditWidget->height());
-			m_filterLineEditWidget->move(0, (getView()->height() - m_filterLineEditWidget->height()));
-		}
-	}
-	else if (event->type() == QEvent::Hide && m_filterLineEditWidget)
-	{
-		m_filterLineEditWidget->clear();
+				connect(m_filterLineEditWidget, &LineEditWidget::textChanged, getView(), &ItemViewWidget::setFilterString);
+			}
+
+			if (event->type() == QEvent::Show)
+			{
+				QTimer::singleShot(0, m_filterLineEditWidget, static_cast<void(LineEditWidget::*)()>(&LineEditWidget::setFocus));
+			}
+			else
+			{
+				m_filterLineEditWidget->resize(getView()->width(), m_filterLineEditWidget->height());
+				m_filterLineEditWidget->move(0, (getView()->height() - m_filterLineEditWidget->height()));
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	return QObject::eventFilter(object, event);
