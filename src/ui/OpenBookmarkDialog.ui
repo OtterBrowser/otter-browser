@@ -20,12 +20,12 @@
       <string>Enter the keyword of bookmark:</string>
      </property>
      <property name="buddy">
-      <cstring>lineEdit</cstring>
+      <cstring>lineEditWidget</cstring>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="Otter::LineEditWidget" name="lineEditWidget"/>
    </item>
    <item>
     <spacer name="verticalSpacer">
@@ -52,6 +52,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

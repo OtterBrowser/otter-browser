@@ -36,13 +36,13 @@ OpenBookmarkDialog::OpenBookmarkDialog(ActionExecutor::Object executor, QWidget 
 {
 	m_ui->setupUi(this);
 
-	m_completer = new QCompleter(new QStringListModel(BookmarksManager::getKeywords()), m_ui->lineEdit);
+	m_completer = new QCompleter(new QStringListModel(BookmarksManager::getKeywords()), m_ui->lineEditWidget);
 	m_completer->setCaseSensitivity(Qt::CaseSensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
-	connect(this, SIGNAL(accepted()), this, SLOT(openBookmark()));
-	connect(m_ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(setCompletion(QString)));
+	connect(this, &OpenBookmarkDialog::accepted, this, &OpenBookmarkDialog::openBookmark);
+	connect(m_ui->lineEditWidget, &LineEditWidget::textEdited, this, &OpenBookmarkDialog::setCompletion);
 }
 
 OpenBookmarkDialog::~OpenBookmarkDialog()
@@ -62,7 +62,7 @@ void OpenBookmarkDialog::changeEvent(QEvent *event)
 
 void OpenBookmarkDialog::openBookmark()
 {
-	const BookmarksItem *bookmark(BookmarksManager::getBookmark(m_ui->lineEdit->text()));
+	const BookmarksItem *bookmark(BookmarksManager::getBookmark(m_ui->lineEditWidget->text()));
 
 	if (bookmark && m_executor.isValid())
 	{
