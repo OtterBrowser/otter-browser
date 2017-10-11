@@ -47,7 +47,7 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->passwordsViewWidget->setModel(m_model);
 
-	QTimer::singleShot(100, this, SLOT(populatePasswords()));
+	QTimer::singleShot(100, this, &PasswordsContentsWidget::populatePasswords);
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &PasswordsContentsWidget::filterPasswords);
 	connect(m_ui->passwordsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PasswordsContentsWidget::showContextMenu);

@@ -461,7 +461,7 @@ void LineEditWidget::activate(Qt::FocusReason reason)
 
 		if (m_shouldSelectAllOnFocus && (reason == Qt::ShortcutFocusReason || reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason))
 		{
-			QTimer::singleShot(0, this, SLOT(selectAll()));
+			QTimer::singleShot(0, this, &LineEditWidget::selectAll);
 		}
 		else if (reason != Qt::PopupFocusReason)
 		{

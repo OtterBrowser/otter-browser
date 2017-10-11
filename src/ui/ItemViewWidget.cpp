@@ -371,7 +371,7 @@ void ItemViewWidget::dropEvent(QDropEvent *event)
 
 	markAsModified();
 
-	QTimer::singleShot(50, this, SLOT(updateDropSelection()));
+	QTimer::singleShot(50, this, &ItemViewWidget::updateDropSelection);
 }
 
 void ItemViewWidget::startDrag(Qt::DropActions supportedActions)

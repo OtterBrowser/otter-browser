@@ -72,9 +72,12 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
 
-		QTimer::singleShot(0, this, SIGNAL(listingError()));
-		QTimer::singleShot(0, this, SIGNAL(readyRead()));
-		QTimer::singleShot(0, this, SIGNAL(finished()));
+		QTimer::singleShot(0, this, [&]()
+		{
+			emit listingError();
+			emit readyRead();
+			emit finished();
+		});
 
 		return;
 	}
@@ -179,8 +182,11 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 	setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 	setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
 
-	QTimer::singleShot(0, this, SIGNAL(readyRead()));
-	QTimer::singleShot(0, this, SIGNAL(finished()));
+	QTimer::singleShot(0, this, [&]()
+	{
+		emit readyRead();
+		emit finished();
+	});
 }
 
 void LocalListingNetworkReply::abort()

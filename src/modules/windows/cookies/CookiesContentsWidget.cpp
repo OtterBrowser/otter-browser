@@ -51,7 +51,7 @@ CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Wind
 		m_ui->detailsWidget->hide();
 	}
 
-	QTimer::singleShot(100, this, SLOT(populateCookies()));
+	QTimer::singleShot(100, this, &CookiesContentsWidget::populateCookies);
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->cookiesViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->cookiesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &CookiesContentsWidget::showContextMenu);

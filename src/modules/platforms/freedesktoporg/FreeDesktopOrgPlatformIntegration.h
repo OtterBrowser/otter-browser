@@ -53,7 +53,6 @@ public slots:
 
 protected slots:
 	void createApplicationsCache();
-	void createApplicationsCacheThread();
 	void handleNotificationCallFinished(QDBusPendingCallWatcher *watcher);
 	void handleNotificationIgnored(quint32 identifier, quint32 reason);
 	void handleNotificationClicked(quint32 identifier, const QString &action);

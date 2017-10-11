@@ -675,7 +675,7 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 						subWindow->raise();
 					}
 
-					QTimer::singleShot(0, subWindow, SLOT(setFocus()));
+					QTimer::singleShot(0, subWindow, static_cast<void(MdiWindow::*)()>(&MdiWindow::setFocus));
 				}
 			}
 

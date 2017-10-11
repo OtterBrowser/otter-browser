@@ -56,7 +56,7 @@ CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *
 		m_ui->detailsWidget->hide();
 	}
 
-	QTimer::singleShot(100, this, SLOT(populateCache()));
+	QTimer::singleShot(100, this, &CacheContentsWidget::populateCache);
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->cacheViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->cacheViewWidget, &ItemViewWidget::doubleClicked, this, &CacheContentsWidget::openEntry);

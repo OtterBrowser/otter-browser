@@ -117,7 +117,7 @@ Notification* NotificationsManager::createNotification(int event, const QString 
 		}
 		else
 		{
-			QTimer::singleShot(10000, effect, SLOT(deleteLater()));
+			QTimer::singleShot(10000, effect, &QSoundEffect::deleteLater);
 
 			effect->play();
 		}

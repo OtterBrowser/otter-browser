@@ -465,7 +465,7 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 	}
 	else
 	{
-		QTimer::singleShot(10000, effect, SLOT(deleteLater()));
+		QTimer::singleShot(10000, effect, &QSoundEffect::deleteLater);
 
 		effect->play();
 	}

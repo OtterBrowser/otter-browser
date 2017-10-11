@@ -77,7 +77,7 @@ void MenuBarWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange)
 	{
-		QTimer::singleShot(100, this, SLOT(updateGeometries()));
+		QTimer::singleShot(100, this, &MenuBarWidget::updateGeometries);
 	}
 }
 
@@ -202,7 +202,7 @@ void MenuBarWidget::reload()
 		setFixedHeight(menuBarHeight);
 	}
 
-	QTimer::singleShot(100, this, SLOT(updateGeometries()));
+	QTimer::singleShot(100, this, &MenuBarWidget::updateGeometries);
 }
 
 void MenuBarWidget::updateGeometries()

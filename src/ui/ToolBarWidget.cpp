@@ -430,7 +430,7 @@ void ToolBarWidget::resizeEvent(QResizeEvent *event)
 
 		if (tabBar)
 		{
-			QTimer::singleShot(200, tabBar, SLOT(updateSize()));
+			QTimer::singleShot(200, tabBar, &TabBarWidget::updateSize);
 		}
 	}
 
@@ -983,7 +983,7 @@ void ToolBarWidget::updateVisibility()
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	QWidget *tabBar(nullptr);
+	TabBarWidget *tabBar(nullptr);
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 	const Qt::ToolBarArea area(getArea());
 	const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
@@ -1121,11 +1121,14 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 					if (isTabBar)
 					{
-						tabBar = widget;
+						tabBar = qobject_cast<TabBarWidget*>(widget);
 
-						connect(widget, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
+						if (tabBar)
+						{
+							connect(tabBar, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
 
-						updateVisibility();
+							updateVisibility();
+						}
 					}
 					else
 					{
@@ -1158,7 +1161,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 				break;
 		}
 
-		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
+		QTimer::singleShot(200, tabBar, &TabBarWidget::updateSize);
 	}
 }
 

@@ -365,7 +365,7 @@ void Transfer::cancel()
 	{
 		m_reply->abort();
 
-		QTimer::singleShot(250, m_reply, SLOT(deleteLater()));
+		QTimer::singleShot(250, m_reply, &QNetworkReply::deleteLater);
 	}
 
 	if (m_device)
@@ -394,7 +394,7 @@ void Transfer::stop()
 	{
 		m_reply->abort();
 
-		QTimer::singleShot(250, m_reply, SLOT(deleteLater()));
+		QTimer::singleShot(250, m_reply, &QNetworkReply::deleteLater);
 	}
 
 	if (m_device && !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
@@ -537,7 +537,7 @@ void Transfer::handleDownloadFinished()
 
 		if (m_reply)
 		{
-			QTimer::singleShot(250, m_reply, SLOT(deleteLater()));
+			QTimer::singleShot(250, m_reply, &QNetworkReply::deleteLater);
 		}
 	}
 

@@ -111,7 +111,10 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 	updateTransfersProgress();
 
-	QTimer::singleShot(250, this, SLOT(createApplicationsCacheThread()));
+	QTimer::singleShot(250, this, [&]()
+	{
+		QtConcurrent::run(this, &FreeDesktopOrgPlatformIntegration::createApplicationsCache);
+	});
 
 	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
@@ -155,11 +158,6 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 void FreeDesktopOrgPlatformIntegration::createApplicationsCache()
 {
 	getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html")));
-}
-
-void FreeDesktopOrgPlatformIntegration::createApplicationsCacheThread()
-{
-	QtConcurrent::run(this, &FreeDesktopOrgPlatformIntegration::createApplicationsCache);
 }
 
 void FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished(QDBusPendingCallWatcher *watcher)

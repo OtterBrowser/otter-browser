@@ -319,7 +319,7 @@ void Window::requestClose()
 
 		emit aboutToClose();
 
-		QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
+		QTimer::singleShot(50, this, &Window::notifyRequestedCloseWindow);
 	}
 }
 
@@ -645,11 +645,11 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		}
 		else
 		{
-			AddressWidget *addressWidget(findAddressWidget());
+			const AddressWidget *addressWidget(findAddressWidget());
 
 			if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
 			{
-				QTimer::singleShot(100, addressWidget, SLOT(setFocus()));
+				QTimer::singleShot(100, addressWidget, static_cast<void(AddressWidget::*)()>(&AddressWidget::setFocus));
 			}
 		}
 	}
