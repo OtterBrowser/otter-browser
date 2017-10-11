@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,19 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 	if (visibilityDuration > 0)
 	{
-		QTimer::singleShot((visibilityDuration * 1000), this, SLOT(aboutToClose()));
+		QTimer::singleShot((visibilityDuration * 1000), this, [&]()
+		{
+			m_animation->setStartValue(1.0);
+			m_animation->setEndValue(0.0);
+			m_animation->start();
+
+			connect(m_animation, &QPropertyAnimation::finished, this, [&]()
+			{
+				m_notification->markIgnored();
+
+				close();
+			});
+		});
 	}
 }
 
@@ -127,22 +139,6 @@ void NotificationDialog::resizeEvent(QResizeEvent *event)
 	geometry.setBottom(geometry.bottom() - 20);
 
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, (Qt::AlignBottom | Qt::AlignRight), size(), geometry));
-}
-
-void NotificationDialog::aboutToClose()
-{
-	m_animation->setStartValue(1.0);
-	m_animation->setEndValue(0.0);
-	m_animation->start();
-
-	connect(m_animation, SIGNAL(finished()), this, SLOT(clean()));
-}
-
-void NotificationDialog::clean()
-{
-	m_notification->markIgnored();
-
-	close();
 }
 
 bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
