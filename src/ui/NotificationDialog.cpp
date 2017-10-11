@@ -93,8 +93,9 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	setWindowOpacity(0);
 	setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Tool | Qt::FramelessWindowHint);
 	setFocusPolicy(Qt::NoFocus);
-	setAttribute(Qt::WA_ShowWithoutActivating);
-	setAttribute(Qt::WA_TranslucentBackground);
+	setAttribute(Qt::WA_DeleteOnClose, true);
+	setAttribute(Qt::WA_ShowWithoutActivating, true);
+	setAttribute(Qt::WA_TranslucentBackground, true);
 	adjustSize();
 
 	m_animation = new QPropertyAnimation(this, QStringLiteral("windowOpacity").toLatin1());
@@ -121,13 +122,6 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 			});
 		});
 	}
-}
-
-void NotificationDialog::closeEvent(QCloseEvent *event)
-{
-	deleteLater();
-
-	event->accept();
 }
 
 void NotificationDialog::resizeEvent(QResizeEvent *event)

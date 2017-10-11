@@ -40,7 +40,6 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void closeEvent(QCloseEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 
 private:
