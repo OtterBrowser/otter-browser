@@ -66,7 +66,7 @@ protected:
 	int findRow(quint64 identifier) const;
 
 protected slots:
-	void selectTab(const QModelIndex &index);
+	void handleIndexClicked(const QModelIndex &index);
 	void handleCurrentTabChanged(const QModelIndex &index);
 	void handleWindowAdded(quint64 identifier);
 	void handleWindowRemoved(quint64 identifier);

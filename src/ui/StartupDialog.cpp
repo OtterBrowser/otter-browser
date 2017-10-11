@@ -56,8 +56,11 @@ StartupDialog::StartupDialog(const QString &session, QWidget *parent) : Dialog(p
 
 	setSession(index);
 
-	connect(m_ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(modeChanged()));
-	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
+	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, [&]()
+	{
+		m_ui->continueSessionWidget->setEnabled(m_ui->continueSessionButton->isChecked());
+	});
+	connect(m_ui->sessionComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &StartupDialog::setSession);
 }
 
 StartupDialog::~StartupDialog()
@@ -73,11 +76,6 @@ void StartupDialog::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
-}
-
-void StartupDialog::modeChanged()
-{
-	m_ui->continueSessionWidget->setEnabled(m_ui->continueSessionButton->isChecked());
 }
 
 void StartupDialog::setSession(int index)

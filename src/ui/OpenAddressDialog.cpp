@@ -42,7 +42,7 @@ OpenAddressDialog::OpenAddressDialog(ActionExecutor::Object executor, QWidget *p
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
 	m_ui->label->setBuddy(m_addressWidget);
 
-	connect(this, SIGNAL(accepted()), this, SLOT(handleUserInput()));
+	connect(this, &OpenAddressDialog::accepted, this, &OpenAddressDialog::handleUserInput);
 }
 
 OpenAddressDialog::~OpenAddressDialog()

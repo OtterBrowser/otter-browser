@@ -62,8 +62,8 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(par
 	setProgress(m_transfer->getBytesReceived(), m_transfer->getBytesTotal());
 	setWindowTitle(tr("Opening %1").arg(fileName));
 
-	connect(transfer, SIGNAL(progressChanged(qint64,qint64)), this, SLOT(setProgress(qint64,qint64)));
-	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+	connect(transfer, &Transfer::progressChanged, this, &TransferDialog::setProgress);
+	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &TransferDialog::handleButtonClicked);
 }
 
 TransferDialog::~TransferDialog()
@@ -81,7 +81,7 @@ void TransferDialog::changeEvent(QEvent *event)
 	}
 }
 
-void TransferDialog::buttonClicked(QAbstractButton *button)
+void TransferDialog::handleButtonClicked(QAbstractButton *button)
 {
 	const QDialogButtonBox::StandardButton standardButton(m_ui->buttonBox->standardButton(button));
 

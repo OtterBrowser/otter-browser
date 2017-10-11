@@ -47,7 +47,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void buttonClicked(QAbstractButton *button);
+	void handleButtonClicked(QAbstractButton *button);
 	void setProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
