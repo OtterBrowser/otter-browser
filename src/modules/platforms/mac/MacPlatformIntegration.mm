@@ -226,7 +226,6 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTransfersProgress()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTransfersProgress()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
 }
 
 void MacPlatformIntegration::timerEvent(QTimerEvent *event)
@@ -267,17 +266,6 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 
 			m_notificationsWatcherTimer = 0;
 		}
-	}
-}
-
-void MacPlatformIntegration::triggerAction(QAction *action)
-{
-	MainWindow *window(Application::getActiveWindow());
-	Action *actionObject(qobject_cast<Action*>(action));
-
-	if (window && actionObject)
-	{
-		window->triggerAction(actionObject->getIdentifier());
 	}
 }
 
