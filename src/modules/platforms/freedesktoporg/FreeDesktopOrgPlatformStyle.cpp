@@ -34,7 +34,7 @@ FreeDesktopOrgPlatformStyle::FreeDesktopOrgPlatformStyle(const QString &name) : 
 {
 	checkForAmbianceTheme();
 
-	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForAmbianceTheme()));
+	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &FreeDesktopOrgPlatformStyle::checkForAmbianceTheme);
 }
 
 void FreeDesktopOrgPlatformStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const

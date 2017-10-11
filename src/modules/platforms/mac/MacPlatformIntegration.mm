@@ -221,11 +221,11 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 
 	menu->setAsDockMenu();
 
-	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTransfersProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &MacPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &MacPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &MacPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &MacPlatformIntegration::updateTransfersProgress);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &MacPlatformIntegration::updateTransfersProgress);
 }
 
 void MacPlatformIntegration::timerEvent(QTimerEvent *event)

@@ -37,8 +37,8 @@ WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 {
 	checkForModernStyle();
 
-	connect(QApplication::instance(), SIGNAL(paletteChanged(QPalette)), this, SLOT(checkForModernStyle()));
-	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForModernStyle()));
+	connect(QApplication::instance(), &QApplication::paletteChanged, this, &WindowsPlatformStyle::checkForModernStyle);
+	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &WindowsPlatformStyle::checkForModernStyle);
 }
 
 void WindowsPlatformStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const

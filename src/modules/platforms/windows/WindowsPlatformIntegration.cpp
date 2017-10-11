@@ -58,12 +58,12 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 {
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
 	{
-		connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(removeWindow(MainWindow*)));
-		connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTaskbarButtons()));
+		connect(Application::getInstance(), &Application::windowRemoved, this, &WindowsPlatformIntegration::removeWindow);
+		connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &WindowsPlatformIntegration::updateTaskbarButtons);
+		connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &WindowsPlatformIntegration::updateTaskbarButtons);
+		connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &WindowsPlatformIntegration::updateTaskbarButtons);
+		connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &WindowsPlatformIntegration::updateTaskbarButtons);
+		connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &WindowsPlatformIntegration::updateTaskbarButtons);
 	}
 
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
