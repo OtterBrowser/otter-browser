@@ -51,7 +51,7 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 
 	setWindowTitle(userAgent.isValid() ? tr ("Edit User Agent") : tr("Add User Agent"));
 
-	connect(m_ui->previewButton, SIGNAL(clicked(bool)), this, SLOT(showPreview()));
+	connect(m_ui->previewButton, &QToolButton::clicked, this, &UserAgentPropertiesDialog::showPreview);
 }
 
 UserAgentPropertiesDialog::~UserAgentPropertiesDialog()
@@ -107,7 +107,7 @@ bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			placeholdersMenu->addAction(tr("Engine Version"))->setData(QLatin1String("engineVersion"));
 			placeholdersMenu->addAction(tr("Application Version"))->setData(QLatin1String("applicationVersion"));
 
-			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
+			connect(placeholdersMenu, &QMenu::triggered, this, &UserAgentPropertiesDialog::insertPlaceholder);
 
 			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
 			contextMenu->deleteLater();

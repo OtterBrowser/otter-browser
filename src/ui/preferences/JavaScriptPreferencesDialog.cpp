@@ -49,8 +49,8 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QHash<int, QVaria
 
 	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
 
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &JavaScriptPreferencesDialog::accept);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &JavaScriptPreferencesDialog::reject);
 }
 
 JavaScriptPreferencesDialog::~JavaScriptPreferencesDialog()

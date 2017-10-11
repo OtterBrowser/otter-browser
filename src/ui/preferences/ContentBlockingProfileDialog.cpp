@@ -52,8 +52,8 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(QWidget *parent, Cont
 		m_ui->updateIntervalSpinBox->setValue(profile->getUpdateInterval());
 	}
 
-	connect(m_ui->confirmButtonBox, SIGNAL(accepted()), this, SLOT(save()));
-	connect(m_ui->confirmButtonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->confirmButtonBox, &QDialogButtonBox::accepted, this, &ContentBlockingProfileDialog::save);
+	connect(m_ui->confirmButtonBox, &QDialogButtonBox::rejected, this, &ContentBlockingProfileDialog::close);
 }
 
 ContentBlockingProfileDialog::~ContentBlockingProfileDialog()

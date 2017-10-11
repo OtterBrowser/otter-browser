@@ -49,7 +49,7 @@ protected:
 	void addLanguage(const QString &language);
 
 protected slots:
-	void addLanguage();
+	void addNewLanguage();
 	void updateActions();
 
 private:

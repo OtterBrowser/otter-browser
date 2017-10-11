@@ -86,13 +86,13 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	m_ui->moveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 	m_ui->languagesComboBox->installEventFilter(this);
 
-	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(removeRow()));
-	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addLanguage()));
-	connect(m_ui->languagesViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
-	connect(m_ui->languagesViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->languagesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->moveDownButton, &QToolButton::clicked, m_ui->languagesViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->moveUpButton, &QToolButton::clicked, m_ui->languagesViewWidget, &ItemViewWidget::moveUpRow);
+	connect(m_ui->removeButton, &QToolButton::clicked, m_ui->languagesViewWidget, &ItemViewWidget::removeRow);
+	connect(m_ui->addButton, &QToolButton::clicked, this, &AcceptLanguageDialog::addNewLanguage);
+	connect(m_ui->languagesViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownButton, &QToolButton::setEnabled);
+	connect(m_ui->languagesViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpButton, &QToolButton::setEnabled);
+	connect(m_ui->languagesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &AcceptLanguageDialog::updateActions);
 }
 
 AcceptLanguageDialog::~AcceptLanguageDialog()
@@ -110,7 +110,7 @@ void AcceptLanguageDialog::changeEvent(QEvent *event)
 	}
 }
 
-void AcceptLanguageDialog::addLanguage()
+void AcceptLanguageDialog::addNewLanguage()
 {
 	const int index(m_ui->languagesComboBox->currentIndex());
 
@@ -210,7 +210,7 @@ bool AcceptLanguageDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->languagesComboBox && event->type() == QEvent::KeyPress && (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Enter || static_cast<QKeyEvent*>(event)->key() == Qt::Key_Return))
 	{
-		addLanguage();
+		addNewLanguage();
 
 		return true;
 	}

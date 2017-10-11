@@ -92,12 +92,12 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 	updateProxyType();
 	setWindowTitle(proxy.isValid() ? tr ("Edit Proxy") : tr("Add Proxy"));
 
-	connect(m_ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(updateProxyType()));
-	connect(m_ui->allCheckBox, SIGNAL(clicked(bool)), this, SLOT(updateProxyType()));
-	connect(m_ui->exceptionsItemViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateExceptionsActions()));
-	connect(m_ui->addExceptionButton, SIGNAL(clicked()), this, SLOT(addException()));
-	connect(m_ui->editExceptionButton, SIGNAL(clicked()), this, SLOT(editException()));
-	connect(m_ui->removeExceptionButton, SIGNAL(clicked()), this, SLOT(removeException()));
+	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &ProxyPropertiesDialog::updateProxyType);
+	connect(m_ui->allCheckBox, &QCheckBox::clicked, this, &ProxyPropertiesDialog::updateProxyType);
+	connect(m_ui->exceptionsItemViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ProxyPropertiesDialog::updateExceptionsActions);
+	connect(m_ui->addExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::addException);
+	connect(m_ui->editExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::editException);
+	connect(m_ui->removeExceptionButton, &QPushButton::clicked, this, &ProxyPropertiesDialog::removeException);
 }
 
 ProxyPropertiesDialog::~ProxyPropertiesDialog()
