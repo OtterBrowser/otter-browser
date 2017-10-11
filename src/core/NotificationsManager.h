@@ -41,8 +41,8 @@ public:
 		ErrorLevel
 	};
 
-	void markClicked();
-	void markIgnored();
+	void markAsClicked();
+	void markAsIgnored();
 	void setData(const QVariant &data);
 	QString getMessage() const;
 	QDateTime getCreationTime() const;

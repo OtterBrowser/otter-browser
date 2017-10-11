@@ -184,7 +184,7 @@ void FreeDesktopOrgPlatformIntegration::handleNotificationIgnored(quint32 identi
 
 	if (notification)
 	{
-		notification->markIgnored();
+		notification->markAsIgnored();
 
 		m_notifications.remove(identifier);
 	}
@@ -198,7 +198,7 @@ void FreeDesktopOrgPlatformIntegration::handleNotificationClicked(quint32 identi
 
 	if (notification)
 	{
-		notification->markClicked();
+		notification->markAsClicked();
 
 		m_notifications.remove(identifier);
 	}

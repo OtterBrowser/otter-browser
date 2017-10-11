@@ -116,7 +116,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 			connect(m_animation, &QPropertyAnimation::finished, this, [&]()
 			{
-				m_notification->markIgnored();
+				m_notification->markAsIgnored();
 
 				close();
 			});
@@ -145,7 +145,7 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 		{
 			if (object == m_closeLabel)
 			{
-				m_notification->markIgnored();
+				m_notification->markAsIgnored();
 
 				m_animation->stop();
 
@@ -154,7 +154,7 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 				return true;
 			}
 
-			m_notification->markClicked();
+			m_notification->markAsClicked();
 
 			m_animation->stop();
 

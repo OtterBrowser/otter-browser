@@ -247,7 +247,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 		{
 			if (!existingNotifications.contains(allNotifications.at(i)))
 			{
-				m_notifications[allNotifications.at(i)]->markIgnored();
+				m_notifications[allNotifications.at(i)]->markAsIgnored();
 
 				m_notifications.remove(allNotifications.at(i));
 			}
@@ -255,7 +255,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 			{
 				[[NSUserNotificationCenter defaultUserNotificationCenter] removeDeliveredNotification:existingNotifications[allNotifications.at(i)]];
 
-				m_notifications[allNotifications.at(i)]->markIgnored();
+				m_notifications[allNotifications.at(i)]->markAsIgnored();
 
 				m_notifications.remove(allNotifications.at(i));
 			}
@@ -285,7 +285,7 @@ void MacPlatformIntegration::markNotificationClicked(quint64 identifier)
 {
 	if (m_notifications.contains(identifier))
 	{
-		m_notifications[identifier]->markClicked();
+		m_notifications[identifier]->markAsClicked();
 
 		m_notifications.remove(identifier);
 	}

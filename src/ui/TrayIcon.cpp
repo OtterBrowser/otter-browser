@@ -152,14 +152,14 @@ void TrayIcon::messageClicked()
 		m_autoHideTimer = 0;
 	}
 
-	m_notification->markClicked();
+	m_notification->markAsClicked();
 }
 
 void TrayIcon::messageIgnored()
 {
 	disconnect(m_trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
 
-	m_notification->markIgnored();
+	m_notification->markAsIgnored();
 }
 
 }

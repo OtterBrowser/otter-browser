@@ -45,14 +45,14 @@ Notification::Notification(const QString &message, NotificationLevel level, int 
 {
 }
 
-void Notification::markClicked()
+void Notification::markAsClicked()
 {
 	emit clicked();
 
 	deleteLater();
 }
 
-void Notification::markIgnored()
+void Notification::markAsIgnored()
 {
 	emit ignored();
 
