@@ -37,7 +37,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	const QVector<int> actions({-1, ActionsManager::NewTabAction, ActionsManager::NewTabPrivateAction, -1, ActionsManager::BookmarksAction, ActionsManager::TransfersAction, ActionsManager::HistoryAction, ActionsManager::NotesAction, -1, ActionsManager::ExitAction});
 	ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 	Menu *menu(new Menu());
-	menu->addAction(tr("Show Windows"), this, SLOT(handleActivated()));
+	QAction *showWindowsAction(menu->addAction(tr("Show Windows")));
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
@@ -82,11 +82,12 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 
 	setParent(nullptr);
 
-	connect(Application::getInstance(), SIGNAL(aboutToQuit()), this, SLOT(hide()));
-	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
-	connect(parent, SIGNAL(destroyed()), this, SLOT(deleteLater()));
-	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
-	connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(handleActivated(QSystemTrayIcon::ActivationReason)));
+	connect(Application::getInstance(), &Application::aboutToQuit, this, &TrayIcon::hide);
+	connect(this, &TrayIcon::destroyed, menu, &Menu::deleteLater);
+	connect(parent, &TrayIcon::destroyed, this, &TrayIcon::deleteLater);
+	connect(showWindowsAction, &QAction::triggered, this, &TrayIcon::toggleWindowsVisibility);
+	connect(menu, &Menu::aboutToShow, this, &TrayIcon::updateMenu);
+	connect(m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIcon::handleTrayIconActivated);
 }
 
 void TrayIcon::timerEvent(QTimerEvent *event)
@@ -97,16 +98,7 @@ void TrayIcon::timerEvent(QTimerEvent *event)
 
 		m_autoHideTimer = 0;
 
-		messageIgnored();
-	}
-}
-
-void TrayIcon::handleActivated(QSystemTrayIcon::ActivationReason reason)
-{
-	if (reason == QSystemTrayIcon::Trigger)
-	{
-		Application *application(Application::getInstance());
-		application->setHidden(!application->isHidden());
+		handleMessageIgnored();
 	}
 }
 
@@ -115,6 +107,41 @@ void TrayIcon::hide()
 	m_trayIcon->hide();
 
 	Application::getInstance()->processEvents();
+}
+
+void TrayIcon::toggleWindowsVisibility()
+{
+	Application *application(Application::getInstance());
+	application->setHidden(!application->isHidden());
+}
+
+void TrayIcon::handleTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+	if (reason == QSystemTrayIcon::Trigger)
+	{
+		toggleWindowsVisibility();
+	}
+}
+
+void TrayIcon::handleMessageClicked()
+{
+	disconnect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
+
+	if (m_autoHideTimer != 0)
+	{
+		killTimer(m_autoHideTimer);
+
+		m_autoHideTimer = 0;
+	}
+
+	m_notification->markAsClicked();
+}
+
+void TrayIcon::handleMessageIgnored()
+{
+	disconnect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
+
+	m_notification->markAsIgnored();
 }
 
 void TrayIcon::updateMenu()
@@ -129,7 +156,7 @@ void TrayIcon::showMessage(Notification *notification)
 {
 	m_notification = notification;
 
-	connect(m_trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
+	connect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
 
 	m_trayIcon->showMessage(tr("Otter Browser"), notification->getMessage(), QSystemTrayIcon::MessageIcon(m_notification->getLevel() + 1));
 
@@ -139,27 +166,6 @@ void TrayIcon::showMessage(Notification *notification)
 	{
 		m_autoHideTimer = startTimer(visibilityDuration * 1000);
 	}
-}
-
-void TrayIcon::messageClicked()
-{
-	disconnect(m_trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
-
-	if (m_autoHideTimer != 0)
-	{
-		killTimer(m_autoHideTimer);
-
-		m_autoHideTimer = 0;
-	}
-
-	m_notification->markAsClicked();
-}
-
-void TrayIcon::messageIgnored()
-{
-	disconnect(m_trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
-
-	m_notification->markAsIgnored();
 }
 
 }

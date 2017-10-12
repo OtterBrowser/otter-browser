@@ -44,10 +44,11 @@ public slots:
 
 protected slots:
 	void timerEvent(QTimerEvent *event) override;
-	void handleActivated(QSystemTrayIcon::ActivationReason reason = QSystemTrayIcon::Trigger);
+	void toggleWindowsVisibility();
+	void handleTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+	void handleMessageClicked();
+	void handleMessageIgnored();
 	void updateMenu();
-	void messageClicked();
-	void messageIgnored();
 
 private:
 	QSystemTrayIcon *m_trayIcon;
