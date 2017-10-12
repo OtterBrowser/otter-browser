@@ -55,7 +55,9 @@ public:
 		BytesReceivedRole = Qt::UserRole,
 		BytesTotalRole,
 		ProgressRole,
-		StateRole
+		StateRole,
+		TimeFinishedRole,
+		TimeStartedRole
 	};
 
 	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window);

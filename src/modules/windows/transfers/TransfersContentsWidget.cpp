@@ -87,7 +87,7 @@ TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, 
 
 	m_ui->transfersViewWidget->setModel(m_model);
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
-	m_ui->transfersViewWidget->setSortRoleMapping({{0, StateRole}, {2, BytesTotalRole}, {3, ProgressRole}});
+	m_ui->transfersViewWidget->setSortRoleMapping({{0, StateRole}, {2, BytesTotalRole}, {3, ProgressRole}, {6, TimeStartedRole}, {7, TimeFinishedRole}});
 	m_ui->transfersViewWidget->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(ThemesManager::createIcon(QLatin1String("task-reject")));
 	m_ui->redownloadButton->setIcon(ThemesManager::createIcon(QLatin1String("view-refresh")));
@@ -354,10 +354,12 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 				break;
 			case 6:
 				m_model->setData(index, Utils::formatDateTime(transfer->getTimeStarted()), Qt::DisplayRole);
+				m_model->setData(index, transfer->getTimeStarted(), TimeStartedRole);
 
 				break;
 			case 7:
 				m_model->setData(index, Utils::formatDateTime(transfer->getTimeFinished()), Qt::DisplayRole);
+				m_model->setData(index, transfer->getTimeFinished(), TimeFinishedRole);
 
 				break;
 			default:
