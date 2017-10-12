@@ -556,13 +556,21 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 
 		for (int i = 0; i < urls.count(); ++i)
 		{
+			const QString title(event->mimeData()->property("x-url-title").toString());
+			QMap<int, QVariant> metaData({{BookmarksModel::UrlRole, urls.at(i)}});
+
+			if (!title.isEmpty())
+			{
+				metaData[BookmarksModel::TitleRole] = title;
+			}
+
 			if (m_dropBookmark)
 			{
-				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, urls.at(i)}}, m_dropBookmark);
+				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, metaData, m_dropBookmark);
 			}
 			else
 			{
-				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, urls.at(i)}}, m_bookmark, (m_dropIndex + i));
+				BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, metaData, m_bookmark, (m_dropIndex + i));
 			}
 		}
 	}
