@@ -58,6 +58,9 @@ public:
 	explicit PreferencesAdvancedPageWidget(QWidget *parent = nullptr);
 	~PreferencesAdvancedPageWidget();
 
+public slots:
+	void save();
+
 protected:
 	void changeEvent(QEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
@@ -101,7 +104,6 @@ protected slots:
 	void updateMouseProfileActions();
 	void updateJavaScriptOptions();
 	void changeCurrentPage();
-	void save();
 	void updatePageSwitcher();
 
 private:

@@ -38,13 +38,15 @@ public:
 	explicit PreferencesPrivacyPageWidget(QWidget *parent = nullptr);
 	~PreferencesPrivacyPageWidget();
 
+public slots:
+	void save();
+
 protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void setupThirdPartyCookiesExceptions();
 	void setupClearHistory();
-	void save();
 
 private:
 	QStringList m_thirdPartyCookiesAcceptedHosts;

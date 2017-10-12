@@ -68,11 +68,11 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->tabWidget->setCurrentIndex(tab);
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
-	connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
-	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
-	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
-	connect(m_ui->allSettingsButton, SIGNAL(clicked()), this, SLOT(openConfigurationManager()));
+	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesDialog::currentTabChanged);
+	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &PreferencesDialog::save);
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::save);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::close);
+	connect(m_ui->allSettingsButton, &QPushButton::clicked, this, &PreferencesDialog::openConfigurationManager);
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -107,8 +107,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				m_ui->generalLayout->addWidget(pageWidget);
 
-				connect(this, SIGNAL(requestedSave()), pageWidget, SLOT(save()));
-				connect(pageWidget, SIGNAL(settingsModified()), this, SLOT(markModified()));
+				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesGeneralPageWidget::save);
+				connect(pageWidget, &PreferencesGeneralPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
@@ -118,8 +118,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				m_ui->contentLayout->addWidget(pageWidget);
 
-				connect(this, SIGNAL(requestedSave()), pageWidget, SLOT(save()));
-				connect(pageWidget, SIGNAL(settingsModified()), this, SLOT(markModified()));
+				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesContentPageWidget::save);
+				connect(pageWidget, &PreferencesContentPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
@@ -129,8 +129,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				m_ui->privacyLayout->addWidget(pageWidget);
 
-				connect(this, SIGNAL(requestedSave()), pageWidget, SLOT(save()));
-				connect(pageWidget, SIGNAL(settingsModified()), this, SLOT(markModified()));
+				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesPrivacyPageWidget::save);
+				connect(pageWidget, &PreferencesPrivacyPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
@@ -140,8 +140,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				m_ui->searchLayout->addWidget(pageWidget);
 
-				connect(this, SIGNAL(requestedSave()), pageWidget, SLOT(save()));
-				connect(pageWidget, SIGNAL(settingsModified()), this, SLOT(markModified()));
+				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesSearchPageWidget::save);
+				connect(pageWidget, &PreferencesSearchPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
@@ -151,8 +151,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				m_ui->advancedLayout->addWidget(pageWidget);
 
-				connect(this, SIGNAL(requestedSave()), pageWidget, SLOT(save()));
-				connect(pageWidget, SIGNAL(settingsModified()), this, SLOT(markModified()));
+				connect(this, &PreferencesDialog::requestedSave, pageWidget, &PreferencesAdvancedPageWidget::save);
+				connect(pageWidget, &PreferencesAdvancedPageWidget::settingsModified, this, &PreferencesDialog::markAsModified);
 			}
 
 			break;
@@ -163,39 +163,39 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 	for (int i = 0; i < buttons.count(); ++i)
 	{
-		connect(buttons.at(i), SIGNAL(toggled(bool)), this, SLOT(markModified()));
+		connect(buttons.at(i), &QAbstractButton::toggled, this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QComboBox*> comboBoxes(widget->findChildren<QComboBox*>());
 
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{
-		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(markModified()));
+		connect(comboBoxes.at(i), static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
 
 	for (int i = 0; i < lineEdits.count(); ++i)
 	{
-		connect(lineEdits.at(i), SIGNAL(textChanged(QString)), this, SLOT(markModified()));
+		connect(lineEdits.at(i), &QLineEdit::textChanged, this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<QSpinBox*> spinBoxes(widget->findChildren<QSpinBox*>());
 
 	for (int i = 0; i < spinBoxes.count(); ++i)
 	{
-		connect(spinBoxes.at(i), SIGNAL(valueChanged(int)), this, SLOT(markModified()));
+		connect(spinBoxes.at(i), static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::markAsModified);
 	}
 
 	const QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
 
 	for (int i = 0; i < viewWidgets.count(); ++i)
 	{
-		connect(viewWidgets.at(i), SIGNAL(modified()), this, SLOT(markModified()));
+		connect(viewWidgets.at(i), &ItemViewWidget::modified, this, &PreferencesDialog::markAsModified);
 	}
 }
 
-void PreferencesDialog::markModified()
+void PreferencesDialog::markAsModified()
 {
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }

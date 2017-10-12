@@ -45,7 +45,7 @@ protected:
 protected slots:
 	void currentTabChanged(int tab);
 	void openConfigurationManager();
-	void markModified();
+	void markAsModified();
 	void save();
 
 private:

@@ -65,13 +65,15 @@ public:
 	explicit PreferencesContentPageWidget(QWidget *parent = nullptr);
 	~PreferencesContentPageWidget();
 
+public slots:
+	void save();
+
 protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void currentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
-	void save();
 
 private:
 	Ui::PreferencesContentPageWidget *m_ui;

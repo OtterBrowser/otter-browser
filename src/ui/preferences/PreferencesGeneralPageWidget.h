@@ -40,6 +40,9 @@ public:
 	explicit PreferencesGeneralPageWidget(QWidget *parent = nullptr);
 	~PreferencesGeneralPageWidget();
 
+public slots:
+	void save();
+
 protected:
 	void changeEvent(QEvent *event) override;
 
@@ -48,7 +51,6 @@ protected slots:
 	void useBookmarkAsHomePage(QAction *action);
 	void restoreHomePage();
 	void setupAcceptLanguage();
-	void save();
 
 private:
 	QString m_acceptLanguage;
