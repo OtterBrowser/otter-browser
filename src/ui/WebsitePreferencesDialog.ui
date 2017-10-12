@@ -463,11 +463,31 @@
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QCheckBox" name="canReceiveRightClicksCheckBox">
-         <property name="text">
-          <string>Allow to receive right mouse button clicks</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="canReceiveRightClicksLayout">
+         <item>
+          <spacer name="canReceiveRightClicksSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="canReceiveRightClicksCheckBox">
+           <property name="text">
+            <string>Allow to receive right mouse button clicks</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="5" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="canAccessClipboardOverrideCheckBox">
@@ -477,11 +497,31 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QCheckBox" name="canShowStatusMessagesCheckBox">
-         <property name="text">
-          <string>Allow changing of status field</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="canShowStatusMessagesLayout">
+         <item>
+          <spacer name="canShowStatusMessagesSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="canShowStatusMessagesCheckBox">
+           <property name="text">
+            <string>Allow changing of status field</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="9" column="1">
         <spacer name="scriptingHorizontalSpacer">
@@ -504,31 +544,91 @@
         </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QLabel" name="canCloseWindowsLabel">
-         <property name="text">
-          <string>Allow to close windows:</string>
-         </property>
-         <property name="buddy">
-          <cstring>canCloseWindowsComboBox</cstring>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="canCloseWindowsLayout">
+         <item>
+          <spacer name="canCloseWindowsSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="canCloseWindowsLabel">
+           <property name="text">
+            <string>Allow to close windows:</string>
+           </property>
+           <property name="buddy">
+            <cstring>canCloseWindowsComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="4" column="1">
-        <widget class="QCheckBox" name="canHideAddressBarCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Allow script to hide address bar</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="canHideAddressBarLayout">
+         <item>
+          <spacer name="canHideAddressBarSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="canHideAddressBarCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Allow script to hide address bar</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="2" column="1">
-        <widget class="QCheckBox" name="canChangeWindowGeometryCheckBox">
-         <property name="text">
-          <string>Allow moving and resizing of windows</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="canChangeWindowGeometryLayout">
+         <item>
+          <spacer name="canChangeWindowGeometrySpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="canChangeWindowGeometryCheckBox">
+           <property name="text">
+            <string>Allow moving and resizing of windows</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="canHideAddressBarOverrideCheckBox">
@@ -575,11 +675,31 @@
         <widget class="QComboBox" name="enableFullScreenComboBox"/>
        </item>
        <item row="5" column="1">
-        <widget class="QCheckBox" name="canAccessClipboardCheckBox">
-         <property name="text">
-          <string>Allow access to clipboard</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="canAccessClipboardLayout">
+         <item>
+          <spacer name="canAccessClipboardSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="canAccessClipboardCheckBox">
+           <property name="text">
+            <string>Allow access to clipboard</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="10" column="1">
         <spacer name="scriptingSpacer">
@@ -602,14 +722,34 @@
         </widget>
        </item>
        <item row="8" column="1">
-        <widget class="QLabel" name="enableFullScreenLabel">
-         <property name="text">
-          <string>Allow to enter full screen mode:</string>
-         </property>
-         <property name="buddy">
-          <cstring>enableFullScreenComboBox</cstring>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="enableFullScreenLayout">
+         <item>
+          <spacer name="enableFullScreenSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="enableFullScreenLabel">
+           <property name="text">
+            <string>Allow to enter full screen mode:</string>
+           </property>
+           <property name="buddy">
+            <cstring>enableFullScreenComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

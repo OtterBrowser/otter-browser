@@ -44,6 +44,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 {
 	m_ui->setupUi(this);
 	m_ui->enableCookiesCheckBox->setChecked(true);
+	m_ui->enableJavaScriptCheckBox->setChecked(true);
 
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesPolicyOverrideCheckBox, &QCheckBox::setEnabled);
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesPolicyLabel, &QLabel::setEnabled);
@@ -54,6 +55,15 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->thirdPartyCookiesPolicyOverrideCheckBox, &QCheckBox::setEnabled);
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->thirdPartyCookiesPolicyLabel, &QLabel::setEnabled);
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->thirdPartyCookiesPolicyComboBox, &QComboBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canChangeWindowGeometryCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canShowStatusMessagesCheckBox, &QCheckBox::setEnabled);
+//	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canHideAddressBarCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canAccessClipboardCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canReceiveRightClicksCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canCloseWindowsLabel, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->canCloseWindowsComboBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->enableFullScreenLabel, &QCheckBox::setEnabled);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->enableFullScreenComboBox, &QCheckBox::setEnabled);
 
 	m_ui->websiteLineEditWidget->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
