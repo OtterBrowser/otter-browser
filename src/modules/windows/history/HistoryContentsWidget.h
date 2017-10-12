@@ -40,6 +40,12 @@ class HistoryContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		TimeVisitedRole
+	};
+
 	explicit HistoryContentsWidget(const QVariantMap &parameters, Window *window);
 	~HistoryContentsWidget();
 

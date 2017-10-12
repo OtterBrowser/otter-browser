@@ -55,6 +55,7 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 
 	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->historyViewWidget->setModel(m_model, true);
+	m_ui->historyViewWidget->setSortRoleMapping({{2, TimeVisitedRole}});
 	m_ui->historyViewWidget->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->filterLineEditWidget->installEventFilter(this);
@@ -202,7 +203,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 			if (entryItem && host == QUrl(entryItem->text()).host())
 			{
-				entries.append(entryItem->data(Qt::UserRole).toULongLong());
+				entries.append(entryItem->data(IdentifierRole).toULongLong());
 			}
 		}
 	}
@@ -280,10 +281,12 @@ void HistoryContentsWidget::handleEntryAdded(HistoryEntryItem *entry)
 	}
 
 	QList<QStandardItem*> entryItems({new QStandardItem(entry->getIcon(), entry->getUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))), new QStandardItem(entry->getTitle()), new QStandardItem(Utils::formatDateTime(entry->getTimeVisited()))});
-	entryItems[0]->setData(entry->getIdentifier(), Qt::UserRole);
+	entryItems[0]->setData(entry->getIdentifier(), IdentifierRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[2]->setData(entry->getTimeVisited(), TimeVisitedRole);
 	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[2]->setToolTip(Utils::formatDateTime(entry->getTimeVisited(), {}, false));
 
 	groupItem->appendRow(entryItems);
 
@@ -391,7 +394,7 @@ QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 			{
 				QStandardItem *entryItem(groupItem->child(j, 0));
 
-				if (entryItem && entryItem->data(Qt::UserRole).toULongLong() == identifier)
+				if (entryItem && entryItem->data(IdentifierRole).toULongLong() == identifier)
 				{
 					return entryItem;
 				}
@@ -429,7 +432,7 @@ WebWidget::LoadingState HistoryContentsWidget::getLoadingState() const
 
 quint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 {
-	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toULongLong() : 0);
+	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(IdentifierRole).toULongLong() : 0);
 }
 
 bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
