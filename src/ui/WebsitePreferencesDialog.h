@@ -50,15 +50,15 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void buttonClicked(QAbstractButton *button);
-	void addCookie();
 	void addCookie(const QNetworkCookie &cookie);
+	void addNewCookie();
 	void removeCookie();
 	void cookieProperties();
+	void handleButtonClicked(QAbstractButton *button);
+	void handleValueChanged();
 	void updateCookiesActions();
 	void updateContentBlockingProfile(const QString &name);
 	void updateValues(bool isChecked = false);
-	void valueChanged();
 
 private:
 	QVector<QNetworkCookie> m_cookiesToDelete;

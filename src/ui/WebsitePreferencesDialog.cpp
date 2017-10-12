@@ -45,15 +45,15 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	m_ui->setupUi(this);
 	m_ui->enableCookiesCheckBox->setChecked(true);
 
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesPolicyOverrideCheckBox, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesPolicyLabel, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesPolicyComboBox, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->keepCookiesModeOverrideCheckBox, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->keepCookiesModeLabel, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->keepCookiesModeComboBox, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyOverrideCheckBox, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyLabel, SLOT(setEnabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyComboBox, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesPolicyOverrideCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesPolicyLabel, &QLabel::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesPolicyComboBox, &QComboBox::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->keepCookiesModeOverrideCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->keepCookiesModeLabel, &QLabel::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->keepCookiesModeComboBox, &QComboBox::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->thirdPartyCookiesPolicyOverrideCheckBox, &QCheckBox::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->thirdPartyCookiesPolicyLabel, &QLabel::setEnabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->thirdPartyCookiesPolicyComboBox, &QComboBox::setEnabled);
 
 	m_ui->websiteLineEditWidget->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
@@ -153,11 +153,11 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	{
 		if (checkBoxes.at(i)->text().isEmpty())
 		{
-			connect(checkBoxes.at(i), SIGNAL(toggled(bool)), this, SLOT(updateValues(bool)));
+			connect(checkBoxes.at(i), &QCheckBox::toggled, this, &WebsitePreferencesDialog::updateValues);
 		}
 		else
 		{
-			connect(checkBoxes.at(i), SIGNAL(toggled(bool)), this, SLOT(valueChanged()));
+			connect(checkBoxes.at(i), &QCheckBox::toggled, this, &WebsitePreferencesDialog::handleValueChanged);
 		}
 	}
 
@@ -165,18 +165,18 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{
-		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(valueChanged()));
+		connect(comboBoxes.at(i), static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &WebsitePreferencesDialog::handleValueChanged);
 	}
 
-	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateContentBlockingProfile(QString)));
-	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(valueChanged()));
-	connect(m_ui->cookiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCookiesActions()));
-	connect(m_ui->cookiesAddButton, SIGNAL(clicked(bool)), this, SLOT(addCookie()));
-	connect(m_ui->cookiesDeleteButton, SIGNAL(clicked(bool)), this, SLOT(removeCookie()));
-	connect(m_ui->cookiesPropertiesButton, SIGNAL(clicked(bool)), this, SLOT(cookieProperties()));
-	connect(m_ui->contentBlockingProfilesViewWidget, SIGNAL(modified()), this, SLOT(valueChanged()));
-	connect(m_ui->enableCustomRulesCheckBox, SIGNAL(toggled(bool)), this, SLOT(valueChanged()));
-	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+	connect(ContentBlockingManager::getInstance(), &ContentBlockingManager::profileModified, this, &WebsitePreferencesDialog::updateContentBlockingProfile);
+	connect(m_ui->userStyleSheetFilePathWidget, &FilePathWidget::pathChanged, this, &WebsitePreferencesDialog::handleValueChanged);
+	connect(m_ui->cookiesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &WebsitePreferencesDialog::updateCookiesActions);
+	connect(m_ui->cookiesAddButton, &QPushButton::clicked, this, &WebsitePreferencesDialog::addNewCookie);
+	connect(m_ui->cookiesDeleteButton, &QPushButton::clicked, this, &WebsitePreferencesDialog::removeCookie);
+	connect(m_ui->cookiesPropertiesButton, &QPushButton::clicked, this, &WebsitePreferencesDialog::cookieProperties);
+	connect(m_ui->contentBlockingProfilesViewWidget, &ItemViewWidget::modified, this, &WebsitePreferencesDialog::handleValueChanged);
+	connect(m_ui->enableCustomRulesCheckBox, &QCheckBox::toggled, this, &WebsitePreferencesDialog::handleValueChanged);
+	connect(m_ui->buttonBox, &QDialogButtonBox::clicked, this, &WebsitePreferencesDialog::handleButtonClicked);
 }
 
 WebsitePreferencesDialog::~WebsitePreferencesDialog()
@@ -194,7 +194,63 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
+void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
+{
+	QList<QStandardItem*> items({new QStandardItem(cookie.domain()), new QStandardItem(QString(cookie.name())), new QStandardItem(cookie.path()), new QStandardItem(QString(cookie.value())), new QStandardItem(cookie.isSessionCookie() ? tr("this session only") : Utils::formatDateTime(cookie.expirationDate()))});
+	items[0]->setData(cookie.toRawForm(), Qt::UserRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+	m_ui->cookiesViewWidget->getSourceModel()->appendRow(items);
+}
+
+void WebsitePreferencesDialog::addNewCookie()
+{
+	const QString domain(m_ui->websiteLineEditWidget->text());
+	QNetworkCookie cookie;
+	cookie.setDomain(domain.startsWith(QLatin1String("*.")) ? domain.mid(1) : domain);
+
+	CookiePropertiesDialog dialog(cookie, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		m_cookiesToInsert.append(dialog.getModifiedCookie());
+
+		addCookie(dialog.getModifiedCookie());
+	}
+}
+
+void WebsitePreferencesDialog::removeCookie()
+{
+	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()).value(0));
+
+	m_ui->cookiesViewWidget->removeRow();
+}
+
+void WebsitePreferencesDialog::cookieProperties()
+{
+	const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()));
+
+	if (cookies.isEmpty())
+	{
+		return;
+	}
+
+	CookiePropertiesDialog dialog(cookies.first(), this);
+
+	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
+	{
+		removeCookie();
+		addCookie(dialog.getModifiedCookie());
+
+		m_cookiesToInsert.append(dialog.getModifiedCookie());
+	}
+}
+
+void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 {
 	QStringList contentBlockingProfiles;
 	QUrl url;
@@ -266,60 +322,63 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	}
 }
 
-void WebsitePreferencesDialog::addCookie()
+void WebsitePreferencesDialog::handleValueChanged()
 {
-	const QString domain(m_ui->websiteLineEditWidget->text());
-	QNetworkCookie cookie;
-	cookie.setDomain(domain.startsWith(QLatin1String("*.")) ? domain.mid(1) : domain);
+	QWidget *widget(qobject_cast<QWidget*>(sender()));
 
-	CookiePropertiesDialog dialog(cookie, this);
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		m_cookiesToInsert.append(dialog.getModifiedCookie());
-
-		addCookie(dialog.getModifiedCookie());
-	}
-}
-
-void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
-{
-	QList<QStandardItem*> items({new QStandardItem(cookie.domain()), new QStandardItem(QString(cookie.name())), new QStandardItem(cookie.path()), new QStandardItem(QString(cookie.value())), new QStandardItem(cookie.isSessionCookie() ? tr("this session only") : Utils::formatDateTime(cookie.expirationDate()))});
-	items[0]->setData(cookie.toRawForm(), Qt::UserRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-	m_ui->cookiesViewWidget->getSourceModel()->appendRow(items);
-}
-
-void WebsitePreferencesDialog::removeCookie()
-{
-	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()).value(0));
-
-	m_ui->cookiesViewWidget->removeRow();
-}
-
-void WebsitePreferencesDialog::cookieProperties()
-{
-	const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()));
-
-	if (cookies.isEmpty())
+	if (!widget || !m_updateOverride)
 	{
 		return;
 	}
 
-	CookiePropertiesDialog dialog(cookies.first(), this);
-
-	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
+	if (widget == m_ui->contentBlockingProfilesViewWidget || widget == m_ui->enableCustomRulesCheckBox)
 	{
-		removeCookie();
-		addCookie(dialog.getModifiedCookie());
+		m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(true);
 
-		m_cookiesToInsert.append(dialog.getModifiedCookie());
+		return;
 	}
+
+	const QWidget *tab(qobject_cast<QWidget*>(widget->parent()));
+
+	if (!tab)
+	{
+		return;
+	}
+
+	const QGridLayout *layout(qobject_cast<QGridLayout*>(tab->layout()));
+
+	if (!layout)
+	{
+		return;
+	}
+
+	const int index(layout->indexOf(widget));
+
+	if (index < 0)
+	{
+		return;
+	}
+
+	int row(0);
+	int dummy(0);
+
+	layout->getItemPosition(index, &row, &dummy, &dummy, &dummy);
+
+	QLayoutItem *item(layout->itemAtPosition(row, 0));
+
+	if (!item)
+	{
+		return;
+	}
+
+	QCheckBox *overrideCheckBox(qobject_cast<QCheckBox*>(item->widget()));
+
+	if (!overrideCheckBox)
+	{
+		return;
+	}
+
+	overrideCheckBox->setChecked(true);
 }
 
 void WebsitePreferencesDialog::updateCookiesActions()
@@ -431,65 +490,6 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingProfiles.contains("custom"));
 
 	m_updateOverride = true;
-}
-
-void WebsitePreferencesDialog::valueChanged()
-{
-	QWidget *widget(qobject_cast<QWidget*>(sender()));
-
-	if (!widget || !m_updateOverride)
-	{
-		return;
-	}
-
-	if (widget == m_ui->contentBlockingProfilesViewWidget || widget == m_ui->enableCustomRulesCheckBox)
-	{
-		m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(true);
-
-		return;
-	}
-
-	const QWidget *tab(qobject_cast<QWidget*>(widget->parent()));
-
-	if (!tab)
-	{
-		return;
-	}
-
-	const QGridLayout *layout(qobject_cast<QGridLayout*>(tab->layout()));
-
-	if (!layout)
-	{
-		return;
-	}
-
-	const int index(layout->indexOf(widget));
-
-	if (index < 0)
-	{
-		return;
-	}
-
-	int row(0);
-	int dummy(0);
-
-	layout->getItemPosition(index, &row, &dummy, &dummy, &dummy);
-
-	QLayoutItem *item(layout->itemAtPosition(row, 0));
-
-	if (!item)
-	{
-		return;
-	}
-
-	QCheckBox *overrideCheckBox(qobject_cast<QCheckBox*>(item->widget()));
-
-	if (!overrideCheckBox)
-	{
-		return;
-	}
-
-	overrideCheckBox->setChecked(true);
 }
 
 QVector<QNetworkCookie> WebsitePreferencesDialog::getCookiesToDelete() const
