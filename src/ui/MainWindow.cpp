@@ -1717,6 +1717,11 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 	if (toolBars.isEmpty() || definition.row < 0)
 	{
+		if (!toolBars.isEmpty())
+		{
+			addToolBarBreak(definition.location);
+		}
+
 		addToolBar(definition.location, toolBar);
 	}
 	else
