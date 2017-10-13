@@ -56,7 +56,6 @@ protected:
 protected slots:
 	void markAsActive();
 	void markAsNeedingAttention();
-	void handleAppearanceChanged();
 	void handleLoadingStateChanged(WebWidget::LoadingState state);
 	void updateGeometries();
 

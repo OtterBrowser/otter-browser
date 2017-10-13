@@ -72,8 +72,8 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 
 	connect(window, &Window::activated, this, &TabHandleWidget::markAsActive);
 	connect(window, &Window::needsAttention, this, &TabHandleWidget::markAsNeedingAttention);
-	connect(window, &Window::titleChanged, this, &TabHandleWidget::handleAppearanceChanged);
-	connect(window, &Window::iconChanged, this, &TabHandleWidget::handleAppearanceChanged);
+	connect(window, &Window::titleChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
+	connect(window, &Window::iconChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
 	connect(window, &Window::loadingStateChanged, this, &TabHandleWidget::handleLoadingStateChanged);
 	connect(parent, &TabBarWidget::currentChanged, this, &TabHandleWidget::updateGeometries);
 	connect(parent, &TabBarWidget::tabsAmountChanged, this, &TabHandleWidget::updateGeometries);
@@ -300,11 +300,6 @@ void TabHandleWidget::markAsNeedingAttention()
 	}
 }
 
-void TabHandleWidget::handleAppearanceChanged()
-{
-	update();
-}
-
 void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 {
 	if (state == WebWidget::OngoingLoadingState)
@@ -325,7 +320,7 @@ void TabHandleWidget::handleLoadingStateChanged(WebWidget::LoadingState state)
 			m_spinnerAnimation->start();
 		}
 
-		connect(m_spinnerAnimation, &Animation::frameChanged, this, &TabHandleWidget::handleAppearanceChanged);
+		connect(m_spinnerAnimation, &Animation::frameChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
 	}
 	else if (m_spinnerAnimation)
 	{
