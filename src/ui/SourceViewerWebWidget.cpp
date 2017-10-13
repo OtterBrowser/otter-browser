@@ -53,13 +53,13 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
-	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SLOT(handleZoomChange()));
-	connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), this, SLOT(notifyRedoActionStateChanged()));
-	connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), this, SLOT(notifyUndoActionStateChanged()));
-	connect(m_sourceViewer, SIGNAL(copyAvailable(bool)), this, SLOT(notifyEditingActionsStateChanged()));
-	connect(m_sourceViewer, SIGNAL(cursorPositionChanged()), this, SLOT(notifyEditingActionsStateChanged()));
+	connect(this, &SourceViewerWebWidget::customContextMenuRequested, this, &SourceViewerWebWidget::showContextMenu);
+	connect(m_sourceViewer, &SourceViewerWidget::zoomChanged, this, &SourceViewerWebWidget::zoomChanged);
+	connect(m_sourceViewer, &SourceViewerWidget::zoomChanged, this, &SourceViewerWebWidget::handleZoomChanged);
+	connect(m_sourceViewer, &SourceViewerWidget::redoAvailable, this, &SourceViewerWebWidget::notifyRedoActionStateChanged);
+	connect(m_sourceViewer, &SourceViewerWidget::undoAvailable, this, &SourceViewerWebWidget::notifyUndoActionStateChanged);
+	connect(m_sourceViewer, &SourceViewerWidget::copyAvailable, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
+	connect(m_sourceViewer, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
 }
 
 void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -94,7 +94,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 		case ActionsManager::StopAction:
 			if (m_viewSourceReply)
 			{
-				disconnect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				disconnect(m_viewSourceReply, &QNetworkReply::finished, this, &SourceViewerWebWidget::handleViewSourceReplyFinished);
 
 				m_viewSourceReply->abort();
 				m_viewSourceReply->deleteLater();
@@ -136,7 +136,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_viewSourceReply = m_networkManager->get(request);
 
-				connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				connect(m_viewSourceReply, &QNetworkReply::finished, this, &SourceViewerWebWidget::handleViewSourceReplyFinished);
 
 				m_isLoading = true;
 
@@ -165,7 +165,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-				connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				connect(m_viewSourceReply, &QNetworkReply::finished, this, &SourceViewerWebWidget::handleViewSourceReplyFinished);
 
 				m_isLoading = true;
 
@@ -252,7 +252,7 @@ void SourceViewerWebWidget::print(QPrinter *printer)
 	m_sourceViewer->print(printer);
 }
 
-void SourceViewerWebWidget::viewSourceReplyFinished()
+void SourceViewerWebWidget::handleViewSourceReplyFinished()
 {
 	if (m_viewSourceReply)
 	{
@@ -276,7 +276,7 @@ void SourceViewerWebWidget::removeHistoryIndex(int index, bool purge)
 	Q_UNUSED(purge)
 }
 
-void SourceViewerWebWidget::handleZoomChange()
+void SourceViewerWebWidget::handleZoomChanged()
 {
 	SessionsManager::markSessionAsModified();
 }
@@ -297,12 +297,12 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
 	{
-		QMenu menu;
+		QMenu menu(this);
 		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers")));
 		showLineNumbersAction->setCheckable(true);
 		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
 
-		connect(showLineNumbersAction, SIGNAL(triggered(bool)), this, SLOT(setShowLineNumbers(bool)));
+		connect(showLineNumbersAction, &QAction::triggered, this, &SourceViewerWebWidget::setShowLineNumbers);
 
 		menu.exec(menuPosition);
 	}

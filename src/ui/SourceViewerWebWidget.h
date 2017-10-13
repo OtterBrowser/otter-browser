@@ -68,8 +68,8 @@ protected:
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 
 protected slots:
-	void viewSourceReplyFinished();
-	void handleZoomChange();
+	void handleViewSourceReplyFinished();
+	void handleZoomChanged();
 	void notifyEditingActionsStateChanged();
 	void showContextMenu(const QPoint &position = QPoint(-1, -1)) override;
 	void setShowLineNumbers(bool show);
