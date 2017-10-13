@@ -76,11 +76,11 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 
 	m_ui->rememberPasswordsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_RememberPasswordsOption).toBool());
 
-	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
-	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
-	connect(m_ui->thirdPartyCookiesExceptionsButton, SIGNAL(clicked(bool)), this, SLOT(setupThirdPartyCookiesExceptions()));
-	connect(m_ui->clearHistoryCheckBox, SIGNAL(toggled(bool)), m_ui->clearHistoryButton, SLOT(setEnabled(bool)));
-	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
+	connect(m_ui->privateModeCheckBox, &QCheckBox::toggled, m_ui->historyWidget, &QWidget::setDisabled);
+	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesWidget, &QWidget::setEnabled);
+	connect(m_ui->thirdPartyCookiesExceptionsButton, &QPushButton::clicked, this, &PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions);
+	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, m_ui->clearHistoryButton, &QPushButton::setEnabled);
+	connect(m_ui->clearHistoryButton, &QPushButton::clicked, this, &PreferencesPrivacyPageWidget::setupClearHistory);
 	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
 	{
 		Application::triggerAction(ActionsManager::PasswordsAction, {}, this);

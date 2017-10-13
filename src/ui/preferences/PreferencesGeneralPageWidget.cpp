@@ -64,21 +64,21 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getOption(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
 
-	PlatformIntegration *integration(Application::getPlatformIntegration());
+	PlatformIntegration *platformIntegration(Application::getPlatformIntegration());
 
-	if (integration == nullptr || !integration->canSetAsDefaultBrowser())
+	if (!platformIntegration || !platformIntegration->canSetAsDefaultBrowser())
 	{
 		m_ui->setDefaultButton->setEnabled(false);
 	}
 	else
 	{
-		connect(m_ui->setDefaultButton, SIGNAL(clicked()), integration, SLOT(setAsDefaultBrowser()));
+		connect(m_ui->setDefaultButton, &QPushButton::clicked, platformIntegration, &PlatformIntegration::setAsDefaultBrowser);
 	}
 
-	connect(bookmarksMenu, SIGNAL(triggered(QAction*)), this, SLOT(useBookmarkAsHomePage(QAction*)));
-	connect(m_ui->useCurrentAsHomePageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsHomePage()));
-	connect(m_ui->restoreHomePageButton, SIGNAL(clicked()), this, SLOT(restoreHomePage()));
-	connect(m_ui->acceptLanguageButton, SIGNAL(clicked()), this, SLOT(setupAcceptLanguage()));
+	connect(bookmarksMenu, &Menu::triggered, this, &PreferencesGeneralPageWidget::useBookmarkAsHomePage);
+	connect(m_ui->useCurrentAsHomePageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::useCurrentAsHomePage);
+	connect(m_ui->restoreHomePageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::restoreHomePage);
+	connect(m_ui->acceptLanguageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::setupAcceptLanguage);
 }
 
 PreferencesGeneralPageWidget::~PreferencesGeneralPageWidget()
