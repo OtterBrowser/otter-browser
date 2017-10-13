@@ -209,12 +209,12 @@ MarginWidget::MarginWidget(SourceViewerWidget *parent) : QWidget(parent),
 	m_sourceViewer(parent),
 	m_lastClickedLine(-1)
 {
-	setAmount(m_sourceViewer->blockCount());
+	updateWidth();
 	setContextMenuPolicy(Qt::NoContextMenu);
 
-	connect(m_sourceViewer, SIGNAL(blockCountChanged(int)), this, SLOT(setAmount(int)));
-	connect(m_sourceViewer, SIGNAL(textChanged()), this, SLOT(setAmount()));
-	connect(m_sourceViewer, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateNumbers(QRect,int)));
+	connect(m_sourceViewer, &SourceViewerWidget::updateRequest, this, &MarginWidget::updateNumbers);
+	connect(m_sourceViewer, &SourceViewerWidget::blockCountChanged, this, &MarginWidget::updateWidth);
+	connect(m_sourceViewer, &SourceViewerWidget::textChanged, this, &MarginWidget::updateWidth);
 }
 
 void MarginWidget::paintEvent(QPaintEvent *event)
@@ -298,19 +298,14 @@ void MarginWidget::updateNumbers(const QRect &rectangle, int offset)
 	}
 }
 
-void MarginWidget::setAmount(int amount)
+void MarginWidget::updateWidth()
 {
-	if (amount < 0 && m_sourceViewer)
-	{
-		amount = m_sourceViewer->blockCount();
-	}
-
 	int digits(1);
-	int max(qMax(1, amount));
+	int maximum(qMax(1, m_sourceViewer->blockCount()));
 
-	while (max >= 10)
+	while (maximum >= 10)
 	{
-		max /= 10;
+		maximum /= 10;
 
 		++digits;
 	}
@@ -326,7 +321,7 @@ bool MarginWidget::event(QEvent *event)
 
 	if (event->type() == QEvent::FontChange)
 	{
-		setAmount();
+		updateWidth();
 	}
 
 	return result;
@@ -545,7 +540,7 @@ int SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags
 		{
 			const QTextCursor currentTextCursor(textCursor());
 
-			disconnect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
+			disconnect(this, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWidget::updateTextCursor);
 
 			setTextCursor(m_findTextAnchor);
 			ensureCursorVisible();
@@ -557,7 +552,7 @@ int SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags
 			horizontalScrollBar()->setValue(position.x());
 			verticalScrollBar()->setValue(position.y());
 
-			connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
+			connect(this, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWidget::updateTextCursor);
 		}
 	}
 
