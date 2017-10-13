@@ -56,14 +56,14 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 	updateAcceptedHostsActions();
 	updateRejectedHostsActions();
 
-	connect(m_ui->acceptedHostsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateAcceptedHostsActions()));
-	connect(m_ui->addAcceptedHostsButton, SIGNAL(clicked()), this, SLOT(addAcceptedHost()));
-	connect(m_ui->editAcceptedHostsButton, SIGNAL(clicked()), this, SLOT(editAcceptedHost()));
-	connect(m_ui->removeAcceptedHostsButton, SIGNAL(clicked()), this, SLOT(removeAcceptedHost()));
-	connect(m_ui->rejectedHostsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateRejectedHostsActions()));
-	connect(m_ui->addRejectedHostsButton, SIGNAL(clicked()), this, SLOT(addRejectedHost()));
-	connect(m_ui->editRejectedHostsButton, SIGNAL(clicked()), this, SLOT(editRejectedHost()));
-	connect(m_ui->removeRejectedHostsButton, SIGNAL(clicked()), this, SLOT(removeRejectedHost()));
+	connect(m_ui->acceptedHostsItemView, &ItemViewWidget::needsActionsUpdate, this, &CookiesExceptionsDialog::updateAcceptedHostsActions);
+	connect(m_ui->addAcceptedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::addAcceptedHost);
+	connect(m_ui->editAcceptedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::editAcceptedHost);
+	connect(m_ui->removeAcceptedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::removeAcceptedHost);
+	connect(m_ui->rejectedHostsItemView, &ItemViewWidget::needsActionsUpdate, this, &CookiesExceptionsDialog::updateRejectedHostsActions);
+	connect(m_ui->addRejectedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::addRejectedHost);
+	connect(m_ui->editRejectedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::editRejectedHost);
+	connect(m_ui->removeRejectedHostsButton, &QPushButton::clicked, this, &CookiesExceptionsDialog::removeRejectedHost);
 }
 
 CookiesExceptionsDialog::~CookiesExceptionsDialog()

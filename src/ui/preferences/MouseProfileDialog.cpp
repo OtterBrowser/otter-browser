@@ -150,13 +150,13 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	connect(m_ui->descriptionLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
 	connect(m_ui->versionLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
 	connect(m_ui->authorLineEditWidget, &QLineEdit::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::markAsModified);
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->gesturesViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->gesturesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateGesturesActions()));
-	connect(m_ui->addGestureButton, SIGNAL(clicked()), this, SLOT(addGesture()));
-	connect(m_ui->removeGestureButton, SIGNAL(clicked()), this, SLOT(removeGesture()));
-	connect(m_ui->stepsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateStepsActions()));
-	connect(m_ui->addStepButton, SIGNAL(clicked()), this, SLOT(addStep()));
-	connect(m_ui->removeStepButton, SIGNAL(clicked()), this, SLOT(removeStep()));
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->gesturesViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->gesturesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateGesturesActions);
+	connect(m_ui->addGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::addGesture);
+	connect(m_ui->removeGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::removeGesture);
+	connect(m_ui->stepsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateStepsActions);
+	connect(m_ui->addStepButton, &QPushButton::clicked, this, &MouseProfileDialog::addStep);
+	connect(m_ui->removeStepButton, &QPushButton::clicked, this, &MouseProfileDialog::removeStep);
 }
 
 MouseProfileDialog::~MouseProfileDialog()
@@ -241,7 +241,7 @@ void MouseProfileDialog::removeStep()
 
 void MouseProfileDialog::updateGesturesActions()
 {
-	disconnect(m_ui->stepsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
+	disconnect(m_ui->stepsViewWidget->getSourceModel(), &QStandardItemModel::dataChanged, this, &MouseProfileDialog::saveGesture);
 
 	const QModelIndex index(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 	const bool isGesture(index.flags().testFlag(Qt::ItemNeverHasChildren));
@@ -266,7 +266,7 @@ void MouseProfileDialog::updateGesturesActions()
 
 	updateStepsActions();
 
-	connect(m_ui->stepsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
+	connect(m_ui->stepsViewWidget->getSourceModel(), &QStandardItemModel::dataChanged, this, &MouseProfileDialog::saveGesture);
 }
 
 void MouseProfileDialog::updateStepsActions()

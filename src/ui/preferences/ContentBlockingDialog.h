@@ -61,7 +61,7 @@ protected slots:
 	void editRule();
 	void removeRule();
 	void updateRulesActions();
-	void updateProfile(const QString &name);
+	void handleProfileModified(const QString &name);
 	void save();
 
 private:
