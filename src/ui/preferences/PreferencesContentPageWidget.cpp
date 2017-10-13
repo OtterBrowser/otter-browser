@@ -70,7 +70,7 @@ QWidget* ColorItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), SettingsManager::ColorType, parent));
 	widget->setFocus();
 
-	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+	connect(widget, &OptionWidget::commitData, this, &ColorItemDelegate::commitData);
 
 	return widget;
 }
@@ -105,7 +105,7 @@ QWidget* FontItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 	OptionWidget *widget(new OptionWidget(index.data(Qt::EditRole), SettingsManager::FontType, parent));
 	widget->setFocus();
 
-	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+	connect(widget, &OptionWidget::commitData, this, &FontItemDelegate::commitData);
 
 	return widget;
 }
@@ -159,10 +159,10 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
-		const QString color(SettingsManager::getOption(SettingsManager::getOptionIdentifier(QLatin1String("Content/") + colors.at(i))).toString());
-		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(color)});
+		const QString optionName(QLatin1String("Content/") + colors.at(i));
+		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(SettingsManager::getOption(SettingsManager::getOptionIdentifier(optionName)).toString())});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items[1]->setData(QLatin1String("Content/") + colors.at(i), Qt::UserRole);
+		items[1]->setData(optionName, Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		colorsModel->appendRow(items);
@@ -171,8 +171,8 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->colorsViewWidget->setModel(colorsModel);
 	m_ui->colorsViewWidget->setItemDelegateForColumn(1, new ColorItemDelegate(this));
 
-	connect(m_ui->fontsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentFontChanged(QModelIndex,QModelIndex)));
-	connect(m_ui->colorsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentColorChanged(QModelIndex,QModelIndex)));
+	connect(m_ui->fontsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &PreferencesContentPageWidget::handleCurrentFontChanged);
+	connect(m_ui->colorsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &PreferencesContentPageWidget::handleCurrentColorChanged);
 }
 
 PreferencesContentPageWidget::~PreferencesContentPageWidget()
@@ -190,7 +190,7 @@ void PreferencesContentPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesContentPageWidget::currentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+void PreferencesContentPageWidget::handleCurrentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 {
 	m_ui->fontsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
 
@@ -200,7 +200,7 @@ void PreferencesContentPageWidget::currentFontChanged(const QModelIndex &current
 	}
 }
 
-void PreferencesContentPageWidget::currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+void PreferencesContentPageWidget::handleCurrentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 {
 	m_ui->colorsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
 
