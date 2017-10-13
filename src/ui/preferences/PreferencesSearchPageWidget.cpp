@@ -131,17 +131,17 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 	updateReaddSearchEngineMenu();
 
-	connect(m_ui->searchFilterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->searchViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->searchViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownSearchButton, SLOT(setEnabled(bool)));
-	connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
-	connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchEngineActions()));
-	connect(m_ui->searchViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
-	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdSearchEngine(QAction*)));
-	connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearchEngine()));
-	connect(m_ui->updateSearchButton, SIGNAL(clicked()), this, SLOT(updateSearchEngine()));
-	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearchEngine()));
-	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->searchFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->searchViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownSearchButton, &QToolButton::setEnabled);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpSearchButton, &QToolButton::setEnabled);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesSearchPageWidget::updateSearchEngineActions);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::modified, this, &PreferencesSearchPageWidget::settingsModified);
+	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), &QMenu::triggered, this, &PreferencesSearchPageWidget::readdSearchEngine);
+	connect(m_ui->editSearchButton, &QPushButton::clicked, this, &PreferencesSearchPageWidget::editSearchEngine);
+	connect(m_ui->updateSearchButton, &QPushButton::clicked, this, &PreferencesSearchPageWidget::updateSearchEngine);
+	connect(m_ui->removeSearchButton, &QPushButton::clicked, this, &PreferencesSearchPageWidget::removeSearchEngine);
+	connect(m_ui->moveDownSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->moveUpSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveUpRow);
 }
 
 PreferencesSearchPageWidget::~PreferencesSearchPageWidget()
@@ -272,7 +272,7 @@ void PreferencesSearchPageWidget::updateSearchEngine()
 
 			m_updateAnimation->start();
 
-			connect(m_updateAnimation, SIGNAL(frameChanged()), m_ui->searchViewWidget, SLOT(update()));
+			connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget, static_cast<void(ItemViewWidget::*)()>(&ItemViewWidget::update));
 		}
 
 		m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
@@ -282,7 +282,7 @@ void PreferencesSearchPageWidget::updateSearchEngine()
 
 		m_updateJobs[identifier] = job;
 
-		connect(job, SIGNAL(jobFinished(bool)), this, SLOT(handleSearchEngineUpdate(bool)));
+		connect(job, &SearchEngineFetchJob::jobFinished, this, &PreferencesSearchPageWidget::handleSearchEngineUpdate);
 	}
 }
 
