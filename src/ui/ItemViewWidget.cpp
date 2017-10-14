@@ -38,7 +38,7 @@ HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent)
 	setTextElideMode(Qt::ElideRight);
 	setSectionsMovable(true);
 
-	connect(this, SIGNAL(sectionClicked(int)), this, SLOT(toggleSort(int)));
+	connect(this, &HeaderViewWidget::sectionClicked, this, &HeaderViewWidget::handleSectionClicked);
 }
 
 void HeaderViewWidget::showEvent(QShowEvent *event)
@@ -136,8 +136,8 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 		showAllColumnsAction->setEnabled(!areAllColumnsVisible);
 	}
 
-	connect(sortMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleSort(QAction*)));
-	connect(visibilityMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
+	connect(sortMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleSort);
+	connect(visibilityMenu, &QMenu::triggered, this, &HeaderViewWidget::toggleColumnVisibility);
 
 	menu.exec(event->globalPos());
 }
@@ -182,12 +182,12 @@ void HeaderViewWidget::toggleSort(QAction *action)
 		}
 		else
 		{
-			toggleSort(value);
+			handleSectionClicked(value);
 		}
 	}
 }
 
-void HeaderViewWidget::toggleSort(int column)
+void HeaderViewWidget::handleSectionClicked(int column)
 {
 	const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
@@ -267,7 +267,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ItemViewWidget::handleOptionChanged);
 	connect(m_headerWidget, &HeaderViewWidget::sortChanged, this, &ItemViewWidget::setSort);
 	connect(m_headerWidget, &HeaderViewWidget::columnVisibilityChanged, this, &ItemViewWidget::setColumnVisibility);
-	connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+	connect(m_headerWidget, &HeaderViewWidget::sectionMoved, this, &ItemViewWidget::saveState);
 }
 
 void ItemViewWidget::showEvent(QShowEvent *event)
@@ -456,7 +456,7 @@ void ItemViewWidget::ensureInitialized()
 			setColumnHidden(i, true);
 		}
 
-		disconnect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+		disconnect(m_headerWidget, &HeaderViewWidget::sectionMoved, this, &ItemViewWidget::saveState);
 
 		for (int i = 0; i < columns.count(); ++i)
 		{
@@ -473,7 +473,7 @@ void ItemViewWidget::ensureInitialized()
 			}
 		}
 
-		connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+		connect(m_headerWidget, &HeaderViewWidget::sectionMoved, this, &ItemViewWidget::saveState);
 	}
 
 	if (shouldStretchLastSection)
@@ -753,9 +753,9 @@ void ItemViewWidget::setFilterString(const QString filter)
 
 	if (m_filterString.isEmpty())
 	{
-		connect(model(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
-		connect(model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
-		connect(model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+		connect(model(), &QAbstractItemModel::rowsInserted, this, &ItemViewWidget::updateFilter);
+		connect(model(), &QAbstractItemModel::rowsMoved, this, &ItemViewWidget::updateFilter);
+		connect(model(), &QAbstractItemModel::rowsRemoved, this, &ItemViewWidget::updateFilter);
 	}
 
 	m_canGatherExpanded = m_filterString.isEmpty();
@@ -767,9 +767,9 @@ void ItemViewWidget::setFilterString(const QString filter)
 	{
 		m_expandedBranches.clear();
 
-		disconnect(model(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
-		disconnect(model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
-		disconnect(model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+		disconnect(model(), &QAbstractItemModel::rowsInserted, this, &ItemViewWidget::updateFilter);
+		disconnect(model(), &QAbstractItemModel::rowsMoved, this, &ItemViewWidget::updateFilter);
+		disconnect(model(), &QAbstractItemModel::rowsRemoved, this, &ItemViewWidget::updateFilter);
 	}
 }
 
@@ -832,16 +832,16 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 
 	if (m_sourceModel)
 	{
-		connect(m_sourceModel, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(notifySelectionChanged()));
+		connect(m_sourceModel, &QStandardItemModel::itemChanged, this, &ItemViewWidget::notifySelectionChanged);
 	}
 
 	emit needsActionsUpdate();
 
-	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));
-	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(markAsModified()));
-	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(markAsModified()));
-	connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(markAsModified()));
-	connect(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(markAsModified()));
+	connect(selectionModel(), &QItemSelectionModel::selectionChanged, this, &ItemViewWidget::notifySelectionChanged);
+	connect(model, &QAbstractItemModel::dataChanged, this, &ItemViewWidget::markAsModified);
+	connect(model, &QAbstractItemModel::rowsInserted, this, &ItemViewWidget::markAsModified);
+	connect(model, &QAbstractItemModel::rowsRemoved, this, &ItemViewWidget::markAsModified);
+	connect(model, &QAbstractItemModel::rowsMoved, this, &ItemViewWidget::markAsModified);
 }
 
 void ItemViewWidget::setSortRoleMapping(const QMap<int, int> &mapping)

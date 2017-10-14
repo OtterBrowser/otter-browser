@@ -56,7 +56,7 @@ protected:
 protected slots:
 	void toggleColumnVisibility(QAction *action);
 	void toggleSort(QAction *action);
-	void toggleSort(int column);
+	void handleSectionClicked(int column);
 
 signals:
 	void sortChanged(int column, Qt::SortOrder order);
