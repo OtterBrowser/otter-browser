@@ -339,7 +339,44 @@ void ToolBarDialog::editEntry()
 
 		entries = {searchEngineEntry, showSearchButtonEntry};
 	}
-	else if (identifier == QLatin1String("ConfigurationOptionWidget") || identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
+	else if (identifier == QLatin1String("ConfigurationOptionWidget"))
+	{
+		const QStringList choices(SettingsManager::getOptions());
+		OptionEntry textEntry;
+		textEntry.widget = new OptionWidget(QVariant(), SettingsManager::StringType, this);
+		textEntry.widget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
+		textEntry.widget->setValue(options.value(QLatin1String("text"), textEntry.widget->getDefaultValue()));
+		textEntry.name = QLatin1String("text");
+		textEntry.label = tr("Text:");
+
+		OptionEntry optionNameEntry;
+		optionNameEntry.widget = new OptionWidget(options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this);
+		optionNameEntry.widget->setChoices(choices);
+		optionNameEntry.name = QLatin1String("optionName");
+		optionNameEntry.label = tr("Option:");
+
+		OptionEntry scopeEntry;
+		scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, this);
+		scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
+		scopeEntry.widget->setDefaultValue(QLatin1String("window"));
+		scopeEntry.name = QLatin1String("scope");
+		scopeEntry.label = tr("Scope:");
+
+		connect(optionNameEntry.widget, &OptionWidget::commitData, [&]()
+		{
+			const bool needsReset(textEntry.widget->getDefaultValue() == textEntry.widget->getValue());
+
+			textEntry.widget->setDefaultValue(optionNameEntry.widget->getValue().toString().section(QLatin1Char('/'), -1));
+
+			if (needsReset)
+			{
+				textEntry.widget->setValue(textEntry.widget->getDefaultValue());
+			}
+		});
+
+		entries = {textEntry, optionNameEntry, scopeEntry};
+	}
+	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
 		OptionEntry iconEntry;
 		iconEntry.widget = new OptionWidget(QVariant(), SettingsManager::IconType, this);
@@ -356,39 +393,6 @@ void ToolBarDialog::editEntry()
 		if (identifier == QLatin1String("ClosedWindowsMenu"))
 		{
 			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
-		}
-		else if (identifier == QLatin1String("ConfigurationOptionWidget"))
-		{
-			const QStringList choices(SettingsManager::getOptions());
-			OptionEntry optionNameEntry;
-			optionNameEntry.widget = new OptionWidget(options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this);
-			optionNameEntry.widget->setChoices(choices);
-			optionNameEntry.name = QLatin1String("optionName");
-			optionNameEntry.label = tr("Option:");
-
-			OptionEntry scopeEntry;
-			scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, this);
-			scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
-			scopeEntry.widget->setDefaultValue(QLatin1String("window"));
-			scopeEntry.name = QLatin1String("scope");
-			scopeEntry.label = tr("Scope:");
-
-			entries.append(optionNameEntry);
-			entries.append(scopeEntry);
-
-			textEntry.widget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
-
-			connect(optionNameEntry.widget, &OptionWidget::commitData, [&]()
-			{
-				const bool needsReset(textEntry.widget->getDefaultValue() == textEntry.widget->getValue());
-
-				textEntry.widget->setDefaultValue(optionNameEntry.widget->getValue().toString().section(QLatin1Char('/'), -1));
-
-				if (needsReset)
-				{
-					textEntry.widget->setValue(textEntry.widget->getDefaultValue());
-				}
-			});
 		}
 		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 		{
