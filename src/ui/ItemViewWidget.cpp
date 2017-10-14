@@ -152,33 +152,33 @@ void HeaderViewWidget::toggleColumnVisibility(QAction *action)
 
 void HeaderViewWidget::toggleSort(QAction *action)
 {
-	if (action)
+	const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
+
+	if (action && view)
 	{
 		const int value(action->data().toInt());
+		int column(view->getSortColumn());
 
-		if (value == AscendingOrder || value == DescendingOrder)
+		if (column < 0)
 		{
-			const ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
-
-			if (view)
+			for (int i = 0; i < count(); ++i)
 			{
-				int column(view->getSortColumn());
+				column = logicalIndex(i);
 
-				if (column < 0)
+				if (!isSectionHidden(column))
 				{
-					for (int i = 0; i < count(); ++i)
-					{
-						column = logicalIndex(i);
-
-						if (!isSectionHidden(column))
-						{
-							break;
-						}
-					}
+					break;
 				}
-
-				setSort(column, ((value == AscendingOrder) ? Qt::AscendingOrder : Qt::DescendingOrder));
 			}
+		}
+
+		if (value == AscendingOrder)
+		{
+			setSort(column, Qt::AscendingOrder);
+		}
+		else if (value == DescendingOrder)
+		{
+			setSort(column, Qt::DescendingOrder);
 		}
 		else
 		{
