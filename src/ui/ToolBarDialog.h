@@ -68,7 +68,7 @@ protected:
 	ToolBarsManager::ToolBarDefinition::Entry getEntry(QStandardItem *item) const;
 
 protected slots:
-	void addEntry();
+	void addNewEntry();
 	void editEntry();
 	void addBookmark(QAction *action);
 	void restoreDefaults();
