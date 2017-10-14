@@ -92,6 +92,7 @@ public slots:
 	void setActiveWindowByIndex(int index, bool updateLastActivity = true);
 	void setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity = true);
 	void setOption(int identifier, const QVariant &value);
+	Window* openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, const QVariantMap &parameters = {});
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -118,7 +119,6 @@ protected slots:
 	void setStatusMessage(const QString &message);
 	void updateWindowTitle();
 	void updateShortcuts();
-	Window* openWindow(ContentsWidget *widget, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, const QVariantMap &parameters = {});
 
 private:
 	TabSwitcherWidget *m_tabSwitcher;
