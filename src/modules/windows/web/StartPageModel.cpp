@@ -51,11 +51,13 @@ void StartPageModel::dragEnded()
 {
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		if (item(i) && item(i)->data(IsDraggedRole).toBool())
-		{
-			item(i)->setData(QVariant(), IsDraggedRole);
+		const QModelIndex index(this->index(i, 0));
 
-			emit isReloadingTileChanged(item(i)->index());
+		if (index.data(IsDraggedRole).toBool())
+		{
+			setData(index, {}, IsDraggedRole);
+
+			emit isReloadingTileChanged(index);
 		}
 	}
 }
