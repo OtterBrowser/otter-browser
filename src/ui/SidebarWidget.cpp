@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "SidebarWidget.h"
+#include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "ResizerWidget.h"
 #include "ToolBarWidget.h"
@@ -76,9 +77,9 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	updateLayout();
 	updatePanels();
 
-	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updateLayout()));
-	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updatePanels()));
-	connect(m_resizerWidget, SIGNAL(finished()), this, SLOT(saveSize()));
+	connect(parent, &ToolBarWidget::toolBarModified, this, &SidebarWidget::updateLayout);
+	connect(parent, &ToolBarWidget::toolBarModified, this, &SidebarWidget::updatePanels);
+	connect(m_resizerWidget, &ResizerWidget::finished, this, &SidebarWidget::saveSize);
 }
 
 SidebarWidget::~SidebarWidget()
@@ -163,7 +164,7 @@ void SidebarWidget::addWebPanel()
 
 void SidebarWidget::choosePanel(bool isChecked)
 {
-	QAction *action(qobject_cast<QAction*>(sender()));
+	const QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (!action)
 	{
@@ -184,16 +185,6 @@ void SidebarWidget::choosePanel(bool isChecked)
 	ToolBarsManager::setToolBar(definition);
 }
 
-void SidebarWidget::selectPanel()
-{
-	QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action)
-	{
-		selectPanel((action->data().toString() == m_currentPanel) ? QString() : action->data().toString());
-	}
-}
-
 void SidebarWidget::selectPanel(const QString &identifier)
 {
 	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
@@ -208,8 +199,16 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (widget && mainWindow)
 	{
-		connect(widget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), mainWindow, SLOT(search(QString,QString,SessionsManager::OpenHints)));
-		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), mainWindow, SLOT(openWindow(ContentsWidget*,SessionsManager::OpenHints)));
+		const ContentsWidget *contentsWidget(qobject_cast<ContentsWidget*>(widget));
+
+		if (contentsWidget)
+		{
+			connect(contentsWidget, &ContentsWidget::requestedSearch, mainWindow, &MainWindow::search);
+			connect(contentsWidget, &ContentsWidget::requestedNewWindow, [=](ContentsWidget *widget, SessionsManager::OpenHints hints)
+			{
+				mainWindow->openWindow(widget, hints);
+			});
+		}
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])
@@ -367,7 +366,7 @@ void SidebarWidget::updatePanels()
 		action->setChecked(panels.contains(specialPages.at(i)));
 		action->setData(specialPages.at(i));
 
-		connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+		connect(action, &QAction::toggled, this, &SidebarWidget::choosePanel);
 	}
 
 	menu->addSeparator();
@@ -391,7 +390,7 @@ void SidebarWidget::updatePanels()
 			action->setChecked(true);
 			action->setData(panels.at(i));
 
-			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+			connect(action, &QAction::toggled, this, &SidebarWidget::choosePanel);
 		}
 		else if (!specialPages.contains(panels.at(i)))
 		{
@@ -404,7 +403,15 @@ void SidebarWidget::updatePanels()
 
 		m_buttons[panels.at(i)] = button;
 
-		connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
+		connect(button->defaultAction(), &QAction::triggered, this, [&]()
+		{
+			const QAction *action(qobject_cast<QAction*>(sender()));
+
+			if (action)
+			{
+				selectPanel((action->data().toString() == m_currentPanel) ? QString() : action->data().toString());
+			}
+		});
 	}
 
 	menu->addSeparator();
