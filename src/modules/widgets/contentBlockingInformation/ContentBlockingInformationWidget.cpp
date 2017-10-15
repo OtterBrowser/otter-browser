@@ -280,7 +280,7 @@ void ContentBlockingInformationWidget::updateState()
 
 	font.setPixelSize(fontSize * 0.8);
 
-	QRectF rectangle((iconSize - labelWidth), (iconSize - fontSize), labelWidth, fontSize);
+	const QRectF rectangle((iconSize - labelWidth), (iconSize - fontSize), labelWidth, fontSize);
 	QPixmap pixmap(m_icon.pixmap(iconSize, iconSize, (m_isContentBlockingEnabled ? QIcon::Normal : QIcon::Disabled)));
 	QPainter iconPainter(&pixmap);
 	iconPainter.fillRect(rectangle, (m_isContentBlockingEnabled ? Qt::darkRed : Qt::darkGray));
@@ -327,17 +327,19 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 
 QString ContentBlockingInformationWidget::getText() const
 {
+	QString text(tr("Blocked Elements: {amount}"));
+
 	if (isCustomized())
 	{
 		const QVariantMap options(getOptions());
 
 		if (options.contains(QLatin1String("text")))
 		{
-			return options[QLatin1String("text")].toString().arg(m_amount);
+			text = options[QLatin1String("text")].toString();
 		}
 	}
 
-	return tr("Blocked Elements: {amount}").replace(QLatin1String("{amount}"), QString::number(m_amount));
+	return text.replace(QLatin1String("{amount}"), QString::number(m_amount));
 }
 
 QIcon ContentBlockingInformationWidget::getIcon() const
