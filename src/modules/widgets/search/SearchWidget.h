@@ -53,7 +53,7 @@ public:
 	bool event(QEvent *event) override;
 
 public slots:
-	void setWindow(Window *window = nullptr);
+	void setWindow(Window *window);
 	void setOptions(const QVariantMap &options);
 	void setQuery(const QString &query);
 
@@ -70,7 +70,8 @@ protected:
 
 protected slots:
 	void sendRequest(const QString &query = {});
-	void showCompletion(bool showSearchModel = false);
+	void showPopup(bool useSearchModel);
+	void showSearchSuggestions();
 	void addSearchEngine(QAction *action);
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
