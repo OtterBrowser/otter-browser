@@ -40,6 +40,9 @@ public:
 	QString getDescription() const;
 	QString getKeyword() const;
 	QUrl getUrl() const;
+	QDateTime getTimeAdded() const;
+	QDateTime getTimeModified() const;
+	QDateTime getTimeVisited() const;
 	QIcon getIcon() const;
 	QVariant data(int role) const override;
 	QVariant rawData(int role) const;

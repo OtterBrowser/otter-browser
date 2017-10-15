@@ -85,28 +85,27 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 	}
 	else
 	{
-		const QUrl url(m_bookmark->getUrl());
 		QStringList toolTip;
 		toolTip.append(tr("Title: %1").arg(title));
 
-		if (!url.isEmpty())
+		if (!m_bookmark->getUrl().isEmpty())
 		{
-			toolTip.append(tr("Address: %1").arg(url.toDisplayString()));
+			toolTip.append(tr("Address: %1").arg(m_bookmark->getUrl().toDisplayString()));
 		}
 
-		if (m_bookmark->data(BookmarksModel::DescriptionRole).isValid())
+		if (!m_bookmark->getDescription().isEmpty())
 		{
 			toolTip.append(tr("Description: %1").arg(m_bookmark->getDescription()));
 		}
 
-		if (!m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isNull())
+		if (m_bookmark->getTimeAdded().isValid())
 		{
-			toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime())));
+			toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
 		}
 
-		if (!m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().isNull())
+		if (m_bookmark->getTimeVisited().isValid())
 		{
-			toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime())));
+			toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
 		}
 
 		setToolTip(QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>"));

@@ -105,6 +105,21 @@ QUrl BookmarksItem::getUrl() const
 	return QStandardItem::data(BookmarksModel::UrlRole).toUrl();
 }
 
+QDateTime BookmarksItem::getTimeAdded() const
+{
+	return QStandardItem::data(BookmarksModel::TimeAddedRole).toDateTime();
+}
+
+QDateTime BookmarksItem::getTimeModified() const
+{
+	return QStandardItem::data(BookmarksModel::TimeModifiedRole).toDateTime();
+}
+
+QDateTime BookmarksItem::getTimeVisited() const
+{
+	return QStandardItem::data(BookmarksModel::TimeVisitedRole).toDateTime();
+}
+
 QIcon BookmarksItem::getIcon() const
 {
 	return data(Qt::DecorationRole).value<QIcon>();
