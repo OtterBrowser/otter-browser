@@ -375,57 +375,54 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateReaddMouseProfileMenu();
 
-	connect(m_ui->advancedViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(changeCurrentPage()));
-	connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
-	connect(m_ui->notificationsPlaySoundButton, SIGNAL(clicked()), this, SLOT(playNotificationSound()));
-	connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
-	connect(m_ui->javaScriptOptionsButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
-	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
-	connect(m_ui->downloadsAddMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(addDownloadsMimeType()));
-	connect(m_ui->downloadsRemoveMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(removeDownloadsMimeType()));
-	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
-	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsMode()));
-	connect(m_ui->userAgentsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateUserAgentsActions()));
-	connect(m_ui->userAgentsAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addUserAgent(QAction*)));
-	connect(m_ui->userAgentsEditButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
-	connect(m_ui->userAgentsRemoveButton, SIGNAL(clicked()), m_ui->userAgentsViewWidget, SLOT(removeRow()));
-	connect(m_ui->proxiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxiesActions()));
-	connect(m_ui->proxiesAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addProxy(QAction*)));
-	connect(m_ui->proxiesEditButton, SIGNAL(clicked()), this, SLOT(editProxy()));
-	connect(m_ui->proxiesRemoveButton, SIGNAL(clicked()), m_ui->proxiesViewWidget, SLOT(removeRow()));
-	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
-	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
-	connect(m_ui->ciphersViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
-	connect(m_ui->ciphersAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addCipher(QAction*)));
-	connect(m_ui->ciphersRemoveButton, SIGNAL(clicked()), this, SLOT(removeCipher()));
-	connect(m_ui->ciphersMoveDownButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->updateChannelsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateUpdateChannelsActions()));
-	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->keyboardMoveDownButton, SLOT(setEnabled(bool)));
-	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->keyboardMoveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->keyboardViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfileActions()));
-	connect(m_ui->keyboardViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editKeyboardProfile()));
-	connect(m_ui->keyboardViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
-	connect(m_ui->keyboardAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addKeyboardProfile()));
-	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdKeyboardProfile(QAction*)));
-	connect(m_ui->keyboardEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
-	connect(m_ui->keyboardCloneButton, SIGNAL(clicked()), this, SLOT(cloneKeyboardProfile()));
-	connect(m_ui->keyboardRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
-	connect(m_ui->keyboardMoveDownButton, SIGNAL(clicked()), m_ui->keyboardViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->keyboardMoveUpButton, SIGNAL(clicked()), m_ui->keyboardViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->mouseViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->mouseMoveDownButton, SLOT(setEnabled(bool)));
-	connect(m_ui->mouseViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->mouseMoveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->mouseViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMouseProfileActions()));
-	connect(m_ui->mouseViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editMouseProfile()));
-	connect(m_ui->mouseViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
-	connect(m_ui->mouseAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addMouseProfile()));
-	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdMouseProfile(QAction*)));
-	connect(m_ui->mouseEditButton, SIGNAL(clicked()), this, SLOT(editMouseProfile()));
-	connect(m_ui->mouseCloneButton, SIGNAL(clicked()), this, SLOT(cloneMouseProfile()));
-	connect(m_ui->mouseRemoveButton, SIGNAL(clicked()), this, SLOT(removeMouseProfile()));
-	connect(m_ui->mouseMoveDownButton, SIGNAL(clicked()), m_ui->mouseViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->mouseMoveUpButton, SIGNAL(clicked()), m_ui->mouseViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::changeCurrentPage);
+	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
+	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &PreferencesAdvancedPageWidget::playNotificationSound);
+	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->javaScriptOptionsButton, &QPushButton::setEnabled);
+	connect(m_ui->javaScriptOptionsButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::updateJavaScriptOptions);
+	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
+	connect(m_ui->downloadsAddMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addDownloadsMimeType);
+	connect(m_ui->downloadsRemoveMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeDownloadsMimeType);
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsMode);
+	connect(m_ui->userAgentsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateUserAgentsActions);
+	connect(m_ui->userAgentsAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addUserAgent);
+	connect(m_ui->userAgentsEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editUserAgent);
+	connect(m_ui->userAgentsRemoveButton, &QPushButton::clicked, m_ui->userAgentsViewWidget, &ItemViewWidget::removeRow);
+	connect(m_ui->proxiesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateProxiesActions);
+	connect(m_ui->proxiesAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addProxy);
+	connect(m_ui->proxiesEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editProxy);
+	connect(m_ui->proxiesRemoveButton, &QPushButton::clicked, m_ui->proxiesViewWidget, &ItemViewWidget::removeRow);
+	connect(m_ui->ciphersViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->ciphersMoveDownButton, &QToolButton::setEnabled);
+	connect(m_ui->ciphersViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->ciphersMoveUpButton, &QToolButton::setEnabled);
+	connect(m_ui->ciphersViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateCiphersActions);
+	connect(m_ui->ciphersAddButton->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::addCipher);
+	connect(m_ui->ciphersRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeCipher);
+	connect(m_ui->ciphersMoveDownButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->ciphersMoveUpButton, &QToolButton::clicked, m_ui->ciphersViewWidget, &ItemViewWidget::moveUpRow);
+	connect(m_ui->updateChannelsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateUpdateChannelsActions);
+	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->keyboardMoveDownButton, &QToolButton::setEnabled);
+	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->keyboardMoveUpButton, &QToolButton::setEnabled);
+	connect(m_ui->keyboardViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateKeyboardProfileActions);
+	connect(m_ui->keyboardViewWidget, &ItemViewWidget::doubleClicked, this, &PreferencesAdvancedPageWidget::editKeyboardProfile);
+	connect(m_ui->keyboardAddButton->menu()->actions().at(0), &QAction::triggered, this, &PreferencesAdvancedPageWidget::addKeyboardProfile);
+	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::readdKeyboardProfile);
+	connect(m_ui->keyboardEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editKeyboardProfile);
+	connect(m_ui->keyboardCloneButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::cloneKeyboardProfile);
+	connect(m_ui->keyboardRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeKeyboardProfile);
+	connect(m_ui->keyboardMoveDownButton, &QToolButton::clicked, m_ui->keyboardViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->keyboardMoveUpButton, &QToolButton::clicked, m_ui->keyboardViewWidget, &ItemViewWidget::moveUpRow);
+	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->mouseMoveDownButton, &QToolButton::setEnabled);
+	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->mouseMoveUpButton, &QToolButton::setEnabled);
+	connect(m_ui->mouseViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateMouseProfileActions);
+	connect(m_ui->mouseViewWidget, &ItemViewWidget::doubleClicked, this, &PreferencesAdvancedPageWidget::editMouseProfile);
+	connect(m_ui->mouseAddButton->menu()->actions().at(0), &QAction::triggered, this, &PreferencesAdvancedPageWidget::addMouseProfile);
+	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::readdMouseProfile);
+	connect(m_ui->mouseEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editMouseProfile);
+	connect(m_ui->mouseCloneButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::cloneMouseProfile);
+	connect(m_ui->mouseRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeMouseProfile);
+	connect(m_ui->mouseMoveDownButton, &QToolButton::clicked, m_ui->mouseViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->mouseMoveUpButton, &QToolButton::clicked, m_ui->mouseViewWidget, &ItemViewWidget::moveUpRow);
 }
 
 PreferencesAdvancedPageWidget::~PreferencesAdvancedPageWidget()
@@ -473,9 +470,9 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 
 void PreferencesAdvancedPageWidget::updateNotificationsActions()
 {
-	disconnect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateNotificationsOptions()));
-	disconnect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
-	disconnect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
+	disconnect(m_ui->notificationsPlaySoundFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
+	disconnect(m_ui->notificationsShowAlertCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
+	disconnect(m_ui->notificationsShowNotificationCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
 
 	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
 	const QString path(index.data(SoundPathRole).toString());
@@ -486,9 +483,9 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(ShouldShowAlertRole).toBool());
 	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(ShouldShowNotificationRole).toBool());
 
-	connect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateNotificationsOptions()));
-	connect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
-	connect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
+	connect(m_ui->notificationsPlaySoundFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
+	connect(m_ui->notificationsShowAlertCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
+	connect(m_ui->notificationsShowNotificationCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
 }
 
 void PreferencesAdvancedPageWidget::updateNotificationsOptions()
@@ -497,7 +494,7 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 
 	if (index.isValid())
 	{
-		disconnect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
+		disconnect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
 
 		const QString path(m_ui->notificationsPlaySoundFilePathWidget->getPath());
 
@@ -506,7 +503,7 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), ShouldShowAlertRole);
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), ShouldShowNotificationRole);
 
-		connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
+		connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
 	}
 }
 
@@ -549,11 +546,11 @@ void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
 
 void PreferencesAdvancedPageWidget::updateDownloadsActions()
 {
-	disconnect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
-	disconnect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
-	disconnect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateDownloadsOptions()));
-	disconnect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
-	disconnect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
+	disconnect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	disconnect(m_ui->downloadsSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	disconnect(m_ui->downloadsFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	disconnect(m_ui->downloadsPassUrlCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	disconnect(m_ui->downloadsApplicationComboBoxWidget, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 
 	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
 	const QString mode(index.data(TransferModeRole).toString());
@@ -578,19 +575,19 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
 	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(OpenCommandRole).toString());
 
-	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
-	connect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
-	connect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateDownloadsOptions()));
-	connect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
-	connect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsPassUrlCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	connect(m_ui->downloadsApplicationComboBoxWidget, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 }
 
 void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 {
-	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
+	disconnect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
+	disconnect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 
-	disconnect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
-	disconnect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
+	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
 
 	if (index.isValid())
 	{
@@ -614,8 +611,8 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("open")) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), OpenCommandRole);
 	}
 
-	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
-	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
+	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
 }
 
 void PreferencesAdvancedPageWidget::updateDownloadsMode()
