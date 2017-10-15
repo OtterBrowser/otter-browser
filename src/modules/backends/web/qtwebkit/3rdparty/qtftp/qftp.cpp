@@ -141,6 +141,8 @@ private:
     bool is_ba;
 
     QByteArray bytesFromSocket;
+
+    friend class QFtp;
 };
 
 /**********************************************************************
@@ -289,7 +291,7 @@ QFtpDTP::QFtpDTP(QFtpPI *p, QObject *parent) :
 {
     clearData();
     listener.setObjectName(QLatin1String("QFtpDTP active state server"));
-    connect(&listener, SIGNAL(newConnection()), SLOT(setupSocket()));
+    connect(&listener, &QTcpServer::newConnection, this, &QFtpDTP::setupSocket);
 }
 
 void QFtpDTP::setData(QByteArray *ba)
@@ -325,11 +327,11 @@ void QFtpDTP::connectToHost(const QString & host, quint16 port)
     socket->setProperty("_q_networksession", property("_q_networksession"));
 #endif
     socket->setObjectName(QLatin1String("QFtpDTP Passive state socket"));
-    connect(socket, SIGNAL(connected()), SLOT(socketConnected()));
-    connect(socket, SIGNAL(readyRead()), SLOT(socketReadyRead()));
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(socketError(QAbstractSocket::SocketError)));
-    connect(socket, SIGNAL(disconnected()), SLOT(socketConnectionClosed()));
-    connect(socket, SIGNAL(bytesWritten(qint64)), SLOT(socketBytesWritten(qint64)));
+    connect(socket, &QTcpSocket::connected, this, &QFtpDTP::socketConnected);
+    connect(socket, &QTcpSocket::readyRead, this, &QFtpDTP::socketReadyRead);
+    connect(socket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &QFtpDTP::socketError);
+    connect(socket, &QTcpSocket::disconnected, this, &QFtpDTP::socketConnectionClosed);
+    connect(socket, &QTcpSocket::bytesWritten, this, &QFtpDTP::socketBytesWritten);
 
     socket->connectToHost(host, port);
 }
@@ -770,11 +772,11 @@ void QFtpDTP::setupSocket()
 {
     socket = listener.nextPendingConnection();
     socket->setObjectName(QLatin1String("QFtpDTP Active state socket"));
-    connect(socket, SIGNAL(connected()), SLOT(socketConnected()));
-    connect(socket, SIGNAL(readyRead()), SLOT(socketReadyRead()));
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(socketError(QAbstractSocket::SocketError)));
-    connect(socket, SIGNAL(disconnected()), SLOT(socketConnectionClosed()));
-    connect(socket, SIGNAL(bytesWritten(qint64)), SLOT(socketBytesWritten(qint64)));
+    connect(socket, &QTcpSocket::connected, this, &QFtpDTP::socketConnected);
+    connect(socket, &QTcpSocket::readyRead, this, &QFtpDTP::socketReadyRead);
+    connect(socket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &QFtpDTP::socketError);
+    connect(socket, &QTcpSocket::disconnected, this, &QFtpDTP::socketConnectionClosed);
+    connect(socket, &QTcpSocket::bytesWritten, this, &QFtpDTP::socketBytesWritten);
 
     listener.close();
 }
@@ -802,19 +804,12 @@ QFtpPI::QFtpPI(QObject *parent) :
     waitForDtpToClose(false)
 {
     commandSocket.setObjectName(QLatin1String("QFtpPI_socket"));
-    connect(&commandSocket, SIGNAL(hostFound()),
-            SLOT(hostFound()));
-    connect(&commandSocket, SIGNAL(connected()),
-            SLOT(connected()));
-    connect(&commandSocket, SIGNAL(disconnected()),
-            SLOT(connectionClosed()));
-    connect(&commandSocket, SIGNAL(readyRead()),
-            SLOT(readyRead()));
-    connect(&commandSocket, SIGNAL(error(QAbstractSocket::SocketError)),
-            SLOT(error(QAbstractSocket::SocketError)));
-
-    connect(&dtp, SIGNAL(connectState(int)),
-             SLOT(dtpConnectState(int)));
+    connect(&commandSocket, &QTcpSocket::hostFound, this, &QFtpPI::hostFound);
+    connect(&commandSocket, &QTcpSocket::connected, this, &QFtpPI::connected);
+    connect(&commandSocket, &QTcpSocket::disconnected, this, &QFtpPI::connectionClosed);
+    connect(&commandSocket, &QTcpSocket::readyRead, this, &QFtpPI::readyRead);
+    connect(&commandSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, static_cast<void(QFtpPI::*)(QAbstractSocket::SocketError)>(&QFtpPI::error));
+    connect(&dtp, &QFtpDTP::connectState, this, &QFtpPI::dtpConnectState);
 }
 
 void QFtpPI::connectToHost(const QString &host, quint16 port)
@@ -1268,14 +1263,6 @@ public:
 
     ~QFtpPrivate() { while (!pending.isEmpty()) delete pending.takeFirst(); }
 
-    // private slots
-    void _q_startNextCommand();
-    void _q_piFinished(const QString&);
-    void _q_piServerReplyCode(int);
-    void _q_piError(int, const QString&);
-    void _q_piConnectState(int);
-    void _q_piFtpReply(int, const QString&);
-
     int addCommand(QFtpCommand *cmd);
 
     QFtpPI pi;
@@ -1421,23 +1408,14 @@ QFtp::QFtp(QObject *parent)
 {
     d->errorString = tr("Unknown error");
 
-    connect(&d->pi, SIGNAL(connectState(int)),
-            SLOT(_q_piConnectState(int)));
-    connect(&d->pi, SIGNAL(finished(QString)),
-            SLOT(_q_piFinished(QString)));
-    connect(&d->pi, SIGNAL(serverReplyCode(int)),
-            SLOT(_q_piServerReplyCode(int)));
-    connect(&d->pi, SIGNAL(error(int,QString)),
-            SLOT(_q_piError(int,QString)));
-    connect(&d->pi, SIGNAL(rawFtpReply(int,QString)),
-            SLOT(_q_piFtpReply(int,QString)));
-
-    connect(&d->pi.dtp, SIGNAL(readyRead()),
-            SIGNAL(readyRead()));
-    connect(&d->pi.dtp, SIGNAL(dataTransferProgress(qint64,qint64)),
-            SIGNAL(dataTransferProgress(qint64,qint64)));
-    connect(&d->pi.dtp, SIGNAL(listInfo(QUrlInfo)),
-            SIGNAL(listInfo(QUrlInfo)));
+    connect(&d->pi, &QFtpPI::connectState, this, &QFtp::_q_piConnectState);
+    connect(&d->pi, &QFtpPI::finished, this, &QFtp::_q_piFinished);
+    connect(&d->pi, &QFtpPI::serverReplyCode, this, &QFtp::_q_piServerReplyCode);
+    connect(&d->pi, static_cast<void(QFtpPI::*)(int, const QString&)>(&QFtpPI::error), this, &QFtp::_q_piError);
+    connect(&d->pi, &QFtpPI::rawFtpReply, this, &QFtp::_q_piFtpReply);
+    connect(&d->pi.dtp, &QFtpDTP::readyRead, this, &QFtp::readyRead);
+    connect(&d->pi.dtp, &QFtpDTP::dataTransferProgress, this, &QFtp::dataTransferProgress);
+    connect(&d->pi.dtp, &QFtpDTP::listInfo, this, &QFtp::listInfo);
 }
 
 /*!
@@ -2204,27 +2182,26 @@ QString QFtp::errorString() const
 
 /*! \internal
 */
-void QFtpPrivate::_q_startNextCommand()
+void QFtp::_q_startNextCommand()
 {
-    Q_Q(QFtp);
-    if (pending.isEmpty())
+    if (d->pending.isEmpty())
         return;
-    QFtpCommand *c = pending.first();
+    QFtpCommand *c = d->pending.first();
 
-    error = QFtp::NoError;
-    errorString = QT_TRANSLATE_NOOP(QFtp, QLatin1String("Unknown error"));
+    d->error = QFtp::NoError;
+    d->errorString = QT_TRANSLATE_NOOP(QFtp, QLatin1String("Unknown error"));
 
-    if (q->bytesAvailable())
-        q->readAll(); // clear the data
-    emit q->commandStarted(c->id);
+    if (bytesAvailable())
+        readAll(); // clear the data
+    emit commandStarted(c->id);
 
     // Proxy support, replace the Login argument in place, then fall
     // through.
-    if (c->command == QFtp::Login && !proxyHost.isEmpty()) {
+    if (c->command == QFtp::Login && !d->proxyHost.isEmpty()) {
         QString loginString = c->rawCmds.first().trimmed();
-        loginString += QLatin1Char('@') + host;
-        if (port && port != 21)
-            loginString += QLatin1Char(':') + QString::number(port);
+        loginString += QLatin1Char('@') + d->host;
+        if (d->port && d->port != 21)
+            loginString += QLatin1Char(':') + QString::number(d->port);
         loginString += QLatin1String("\r\n");
         c->rawCmds[0] = loginString;
     }
@@ -2232,179 +2209,177 @@ void QFtpPrivate::_q_startNextCommand()
     if (c->command == QFtp::SetTransferMode) {
         _q_piFinished(QLatin1String("Transfer mode set"));
     } else if (c->command == QFtp::SetProxy) {
-        proxyHost = c->rawCmds[0];
-        proxyPort = c->rawCmds[1].toUInt();
+        d->proxyHost = c->rawCmds[0];
+        d->proxyPort = c->rawCmds[1].toUInt();
         c->rawCmds.clear();
-        _q_piFinished(QLatin1String("Proxy set to ") + proxyHost + QLatin1Char(':') + QString::number(proxyPort));
+        _q_piFinished(QLatin1String("Proxy set to ") + d->proxyHost + QLatin1Char(':') + QString::number(d->proxyPort));
     } else if (c->command == QFtp::ConnectToHost) {
 #ifndef QT_NO_BEARERMANAGEMENT
         //copy network session down to the PI
-        pi.setProperty("_q_networksession", q->property("_q_networksession"));
+        d->pi.setProperty("_q_networksession", property("_q_networksession"));
 #endif
-        if (!proxyHost.isEmpty()) {
-            host = c->rawCmds[0];
-            port = c->rawCmds[1].toUInt();
-            pi.connectToHost(proxyHost, proxyPort);
+        if (!d->proxyHost.isEmpty()) {
+            d->host = c->rawCmds[0];
+            d->port = c->rawCmds[1].toUInt();
+            d->pi.connectToHost(d->proxyHost, d->proxyPort);
         } else {
-            pi.connectToHost(c->rawCmds[0], c->rawCmds[1].toUInt());
+            d->pi.connectToHost(c->rawCmds[0], c->rawCmds[1].toUInt());
         }
     } else {
         if (c->command == QFtp::Put) {
             if (c->is_ba) {
-                pi.dtp.setData(c->data.ba);
-                pi.dtp.setBytesTotal(c->data.ba->size());
+                d->pi.dtp.setData(c->data.ba);
+                d->pi.dtp.setBytesTotal(c->data.ba->size());
             } else if (c->data.dev && (c->data.dev->isOpen() || c->data.dev->open(QIODevice::ReadOnly))) {
-                pi.dtp.setDevice(c->data.dev);
+                d->pi.dtp.setDevice(c->data.dev);
                 if (c->data.dev->isSequential()) {
-                    pi.dtp.setBytesTotal(0);
-                    pi.dtp.connect(c->data.dev, SIGNAL(readyRead()), SLOT(dataReadyRead()));
-                    pi.dtp.connect(c->data.dev, SIGNAL(readChannelFinished()), SLOT(dataReadyRead()));
+                    d->pi.dtp.setBytesTotal(0);
+                    QObject::connect(c->data.dev, &QIODevice::readyRead, &d->pi.dtp, &QFtpDTP::dataReadyRead);
+                    QObject::connect(c->data.dev, &QIODevice::readChannelFinished, &d->pi.dtp, &QFtpDTP::dataReadyRead);
                 } else {
-                    pi.dtp.setBytesTotal(c->data.dev->size());
+                    d->pi.dtp.setBytesTotal(c->data.dev->size());
                 }
             }
         } else if (c->command == QFtp::Get) {
             if (!c->is_ba && c->data.dev) {
-                pi.dtp.setDevice(c->data.dev);
+                d->pi.dtp.setDevice(c->data.dev);
             }
         } else if (c->command == QFtp::Close) {
-            state = QFtp::Closing;
-            emit q->stateChanged(state);
+            d->state = QFtp::Closing;
+            emit stateChanged(d->state);
         }
-        pi.sendCommands(c->rawCmds);
+        d->pi.sendCommands(c->rawCmds);
     }
 }
 
 /*! \internal
 */
-void QFtpPrivate::_q_piFinished(const QString&)
+void QFtp::_q_piFinished(const QString&)
 {
-    if (pending.isEmpty())
+    if (d->pending.isEmpty())
         return;
-    QFtpCommand *c = pending.first();
+    QFtpCommand *c = d->pending.first();
 
     if (c->command == QFtp::Close) {
         // The order of in which the slots are called is arbitrary, so
         // disconnect the SIGNAL-SIGNAL temporary to make sure that we
         // don't get the commandFinished() signal before the stateChanged()
         // signal.
-        if (state != QFtp::Unconnected) {
-            close_waitForStateChange = true;
+        if (d->state != QFtp::Unconnected) {
+            d->close_waitForStateChange = true;
             return;
         }
     }
-    emit q_func()->commandFinished(c->id, false);
-    pending.removeFirst();
+    emit commandFinished(c->id, false);
+    d->pending.removeFirst();
 
     delete c;
 
-    if (pending.isEmpty()) {
-        emit q_func()->done(false);
+    if (d->pending.isEmpty()) {
+        emit done(false);
     } else {
         _q_startNextCommand();
     }
 }
 
-void QFtpPrivate::_q_piServerReplyCode(int serverReplyCode)
+void QFtp::_q_piServerReplyCode(int serverReplyCode)
 {
-    replyCode = serverReplyCode;
+    d->replyCode = serverReplyCode;
 }
 
 /*! \internal
 */
-void QFtpPrivate::_q_piError(int errorCode, const QString &text)
+void QFtp::_q_piError(int errorCode, const QString &text)
 {
-    Q_Q(QFtp);
-
-    if (pending.isEmpty()) {
-        qWarning("QFtpPrivate::_q_piError was called without pending command!");
+    if (d->pending.isEmpty()) {
+        qWarning("QFtp::_q_piError was called without pending command!");
         return;
     }
 
-    QFtpCommand *c = pending.first();
+    QFtpCommand *c = d->pending.first();
 
     // non-fatal errors
-    if (c->command == QFtp::Get && pi.currentCommand().startsWith(QLatin1String("SIZE "))) {
-        pi.dtp.setBytesTotal(0);
+    if (c->command == QFtp::Get && d->pi.currentCommand().startsWith(QLatin1String("SIZE "))) {
+        d->pi.dtp.setBytesTotal(0);
         return;
-    } else if (c->command==QFtp::Put && pi.currentCommand().startsWith(QLatin1String("ALLO "))) {
+    } else if (c->command==QFtp::Put && d->pi.currentCommand().startsWith(QLatin1String("ALLO "))) {
         return;
     }
 
-    error = QFtp::Error(errorCode);
-    switch (q->currentCommand()) {
+    d->error = QFtp::Error(errorCode);
+    switch (currentCommand()) {
         case QFtp::ConnectToHost:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Connecting to host failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Connecting to host failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Login:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Login failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Login failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::List:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Listing directory failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Listing directory failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Cd:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Changing directory failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Changing directory failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Get:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Downloading file failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Downloading file failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Put:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Uploading file failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Uploading file failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Remove:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Removing file failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Removing file failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Mkdir:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Creating directory failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Creating directory failed:\n%1"))
                           .arg(text);
             break;
         case QFtp::Rmdir:
-            errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Removing directory failed:\n%1"))
+            d->errorString = QString::fromLatin1(QT_TRANSLATE_NOOP("QFtp", "Removing directory failed:\n%1"))
                           .arg(text);
             break;
         default:
-            errorString = text;
+            d->errorString = text;
             break;
     }
 
-    pi.clearPendingCommands();
-    q->clearPendingCommands();
-    emit q->commandFinished(c->id, true);
+    d->pi.clearPendingCommands();
+    clearPendingCommands();
+    emit commandFinished(c->id, true);
 
-    pending.removeFirst();
+    d->pending.removeFirst();
     delete c;
-    if (pending.isEmpty())
-        emit q->done(true);
+    if (d->pending.isEmpty())
+        emit done(true);
     else
         _q_startNextCommand();
 }
 
 /*! \internal
 */
-void QFtpPrivate::_q_piConnectState(int connectState)
+void QFtp::_q_piConnectState(int connectState)
 {
-    state = QFtp::State(connectState);
-    emit q_func()->stateChanged(state);
-    if (close_waitForStateChange) {
-        close_waitForStateChange = false;
+    d->state = QFtp::State(connectState);
+    emit stateChanged(d->state);
+    if (d->close_waitForStateChange) {
+        d->close_waitForStateChange = false;
         _q_piFinished(QLatin1String(QT_TRANSLATE_NOOP("QFtp", "Connection closed")));
     }
 }
 
 /*! \internal
 */
-void QFtpPrivate::_q_piFtpReply(int code, const QString &text)
+void QFtp::_q_piFtpReply(int code, const QString &text)
 {
-    if (q_func()->currentCommand() == QFtp::RawCommand) {
-        pi.rawCommand = true;
-        emit q_func()->rawCommandReply(code, text);
+    if (currentCommand() == QFtp::RawCommand) {
+        d->pi.rawCommand = true;
+        emit rawCommandReply(code, text);
     }
 }
 
