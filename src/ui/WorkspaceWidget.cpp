@@ -59,7 +59,7 @@ MdiWindow::MdiWindow(Window *window, MdiWidget *parent) : QMdiSubWindow(parent, 
 
 	parent->addSubWindow(this);
 
-	connect(window, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+	connect(window, &Window::destroyed, this, &MdiWindow::deleteLater);
 }
 
 void MdiWindow::storeState()
@@ -234,7 +234,7 @@ void WorkspaceWidget::timerEvent(QTimerEvent *event)
 
 		m_restoreTimer = 0;
 
-		connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+		connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 	}
 }
 
@@ -404,7 +404,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::MaximizeAllAction:
 			{
-				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+				disconnect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
@@ -420,7 +420,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 				setActiveWindow(m_activeWindow, true);
 			}
@@ -428,7 +428,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::MinimizeAllAction:
 			{
-				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+				disconnect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
@@ -444,7 +444,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 				m_mainWindow->setActiveWindowByIndex(-1);
 			}
@@ -452,7 +452,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::RestoreAllAction:
 			{
-				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+				disconnect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
@@ -468,7 +468,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 				setActiveWindow(m_activeWindow, true);
 			}
@@ -517,7 +517,7 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 
 	if (m_mdi)
 	{
-		disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+		disconnect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
 		ActionExecutor::Object mainWindowExecutor(m_mainWindow, m_mainWindow);
 		ActionExecutor::Object windowExecutor(window, window);
@@ -582,12 +582,12 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 
 		if (m_isRestored)
 		{
-			connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
+			connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 		}
 
-		connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
-		connect(mdiWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(notifyActionsStateChanged()));
-		connect(window, SIGNAL(destroyed()), this, SLOT(notifyActionsStateChanged()));
+		connect(closeAction, &Action::triggered, window, &Window::close);
+		connect(mdiWindow, &MdiWindow::windowStateChanged, this, &WorkspaceWidget::notifyActionsStateChanged);
+		connect(window, &Window::destroyed, this, &WorkspaceWidget::notifyActionsStateChanged);
 	}
 	else
 	{
