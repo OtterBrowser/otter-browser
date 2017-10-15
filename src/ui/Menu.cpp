@@ -78,10 +78,10 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
-					connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
+					connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearBookmarksMenu);
 				}
 
-				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
+				connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
 			}
 
 			break;
@@ -90,8 +90,8 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 			m_option = SettingsManager::Content_DefaultCharacterEncodingOption;
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateCharacterEncodingMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateCharacterEncodingMenu);
+			connect(this, &Menu::triggered, this, &Menu::selectOption);
 
 			break;
 		case ClosedWindowsMenuRole:
@@ -105,18 +105,18 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 				{
 					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !mainWindow->getClosedWindows().isEmpty());
 
-					connect(mainWindow, SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
+					connect(mainWindow, &MainWindow::closedWindowsAvailableChanged, this, &Menu::updateClosedWindowsMenu);
 				}
 
-				connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindowsMenu()));
-				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateClosedWindowsMenu()));
+				connect(SessionsManager::getInstance(), &SessionsManager::closedWindowsChanged, this, &Menu::updateClosedWindowsMenu);
+				connect(this, &Menu::aboutToShow, this, &Menu::populateClosedWindowsMenu);
 			}
 
 			break;
 		case DictionariesMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Dictionaries"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateDictionariesMenu()));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateDictionariesMenu);
 
 			break;
 		case ImportExportMenuRole:
@@ -152,7 +152,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 				addSeparator();
 				addAction(importOperaSessionAction);
 
-				connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
+				connect(this, &Menu::triggered, this, &Menu::openImporter);
 			}
 
 			break;
@@ -164,17 +164,17 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
-					connect(NotesManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
+					connect(NotesManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearBookmarksMenu);
 				}
 
-				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateNotesMenu()));
+				connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
 			}
 
 			break;
 		case OpenInApplicationMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Open with"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateOpenInApplicationMenu()));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateOpenInApplicationMenu);
 
 			break;
 		case ProxyMenuRole:
@@ -182,34 +182,34 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 			m_option = SettingsManager::Network_ProxyOption;
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateProxiesMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateProxiesMenu);
+			connect(this, &Menu::triggered, this, &Menu::selectOption);
 
 			break;
 		case SearchMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Search Using"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSearchMenu()));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchMenu);
 
 			break;
 		case SessionsMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Sessions"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSessionsMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateSessionsMenu);
+			connect(this, &Menu::triggered, this, &Menu::openSession);
 
 			break;
 		case StyleSheetsMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Style"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateStyleSheetsMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectStyleSheet(QAction*)));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateStyleSheetsMenu);
+			connect(this, &Menu::triggered, this, &Menu::selectStyleSheet);
 
 			break;
 		case ToolBarsMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Toolbars"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateToolBarsMenu()));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateToolBarsMenu);
 
 			break;
 		case UserAgentMenuRole:
@@ -217,20 +217,20 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 			m_option = SettingsManager::Network_UserAgentOption;
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateUserAgentMenu);
+			connect(this, &Menu::triggered, this, &Menu::selectOption);
 
 			break;
 		case ValidateMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Validate Using"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSearchMenu()));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchMenu);
 
 			break;
 		case WindowsMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
+			connect(this, &Menu::aboutToShow, this, &Menu::populateWindowsMenu);
 
 			break;
 		default:
@@ -314,10 +314,10 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 			QMenu contextMenu(this);
 			contextMenu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 			contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
-			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()));
 			contextMenu.addSeparator();
 			contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(SessionsManager::NewWindowOpen);
-			contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+			contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()));
 			contextMenu.exec(event->globalPos());
 
 			return;
@@ -448,8 +448,8 @@ void Menu::load(int option)
 			break;
 	}
 
-	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateOptionMenu()));
-	connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+	connect(this, &Menu::aboutToShow, this, &Menu::populateOptionMenu);
+	connect(this, &Menu::triggered, this, &Menu::selectOption);
 }
 
 void Menu::appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor)
@@ -611,7 +611,7 @@ void Menu::populateBookmarksMenu()
 		menu->addAction(openAllAction);
 		menu->addSeparator();
 
-		connect(openAllAction, SIGNAL(triggered()), this, SLOT(openBookmark()));
+		connect(openAllAction, &QAction::triggered, this, &Menu::openBookmark);
 	}
 	else if (m_role == BookmarkSelectorMenuRole)
 	{
@@ -654,7 +654,7 @@ void Menu::populateBookmarksMenu()
 
 			if (type == BookmarksModel::UrlBookmark && m_role == BookmarksMenuRole)
 			{
-				connect(action, SIGNAL(triggered()), this, SLOT(openBookmark()));
+				connect(action, &QAction::triggered, this, &Menu::openBookmark);
 			}
 			else if (type == BookmarksModel::FolderBookmark)
 			{
@@ -909,7 +909,7 @@ void Menu::populateClosedWindowsMenu()
 		}
 	}
 
-	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearClosedWindows()));
+	connect(clearAction, &QAction::triggered, this, &Menu::clearClosedWindows);
 }
 
 void Menu::populateDictionariesMenu()
@@ -1048,7 +1048,7 @@ void Menu::populateOpenInApplicationMenu()
 		}
 	}
 
-	disconnect(this, SIGNAL(aboutToShow()), this, SLOT(populateOpenInApplicationMenu()));
+	disconnect(this, &Menu::aboutToShow, this, &Menu::populateOpenInApplicationMenu);
 }
 
 void Menu::populateProxiesMenu()
@@ -1261,9 +1261,9 @@ void Menu::populateToolBarsMenu()
 	addSeparator();
 	addAction(new Action(ActionsManager::ResetToolBarsAction, {}, executor, this));
 
-	connect(addToolBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addToolBar()));
-	connect(addBookmarksBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
-	connect(addSideBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addSideBar()));
+	connect(addToolBarAction, &QAction::triggered, ToolBarsManager::getInstance(), &ToolBarsManager::addToolBar);
+	connect(addBookmarksBarAction, &QAction::triggered, ToolBarsManager::getInstance(), &ToolBarsManager::addBookmarksBar);
+	connect(addSideBarAction, &QAction::triggered, ToolBarsManager::getInstance(), &ToolBarsManager::addSideBar);
 }
 
 void Menu::populateUserAgentMenu()
@@ -1342,12 +1342,12 @@ void Menu::populateWindowsMenu()
 
 		if (mainWindow)
 		{
-			connect(mainWindow, SIGNAL(titleChanged(QString)), this, SLOT(populateWindowsMenu()));
-			connect(mainWindow, SIGNAL(windowAdded(quint64)), this, SLOT(populateWindowsMenu()));
-			connect(mainWindow, SIGNAL(windowRemoved(quint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow, &MainWindow::titleChanged, this, &Menu::populateWindowsMenu);
+			connect(mainWindow, &MainWindow::windowAdded, this, &Menu::populateWindowsMenu);
+			connect(mainWindow, &MainWindow::windowRemoved, this, &Menu::populateWindowsMenu);
 		}
 
-		disconnect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
+		disconnect(this, &Menu::aboutToShow, this, &Menu::populateWindowsMenu);
 	}
 
 	clear();
@@ -1386,7 +1386,7 @@ void Menu::clearBookmarksMenu()
 		removeAction(actions().at(i));
 	}
 
-	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
+	connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
 }
 
 void Menu::clearClosedWindows()
@@ -1412,7 +1412,7 @@ void Menu::clearNotesMenu()
 		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
 	}
 
-	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateNotesMenu()));
+	connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
 }
 
 void Menu::openBookmark()
