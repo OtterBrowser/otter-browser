@@ -97,7 +97,8 @@ void NotesContentsWidget::print(QPrinter *printer)
 
 void NotesContentsWidget::addNote()
 {
-	NotesManager::addNote(BookmarksModel::UrlBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()));
+	m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::UrlBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()))->index());
+	m_ui->textEditWidget->setFocus();
 }
 
 void NotesContentsWidget::addFolder()
@@ -106,13 +107,13 @@ void NotesContentsWidget::addFolder()
 
 	if (!title.isEmpty())
 	{
-		NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, findFolder(m_ui->notesViewWidget->currentIndex()));
+		m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, title}}, findFolder(m_ui->notesViewWidget->currentIndex()))->index());
 	}
 }
 
 void NotesContentsWidget::addSeparator()
 {
-	NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()));
+	m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, findFolder(m_ui->notesViewWidget->currentIndex()))->index());
 }
 
 void NotesContentsWidget::removeNote()
