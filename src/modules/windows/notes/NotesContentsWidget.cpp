@@ -263,6 +263,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 void NotesContentsWidget::updateActions()
 {
 	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
+	const QString text(index.data(BookmarksModel::DescriptionRole).toString());
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 	const bool isUrlBookmark(type == BookmarksModel::UrlBookmark);
 
@@ -270,9 +271,13 @@ void NotesContentsWidget::updateActions()
 	m_ui->addressLabelWidget->setUrl(isUrlBookmark ? index.data(BookmarksModel::UrlRole).toUrl() : QUrl());
 	m_ui->dateLabelWidget->setText(isUrlBookmark ? Utils::formatDateTime(index.data(BookmarksModel::TimeAddedRole).toDateTime()) : QString());
 	m_ui->deleteButton->setEnabled(!m_ui->notesViewWidget->selectionModel()->selectedIndexes().isEmpty() && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
-	m_ui->textEditWidget->blockSignals(true);
-	m_ui->textEditWidget->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
-	m_ui->textEditWidget->blockSignals(false);
+
+	if (!m_ui->textEditWidget->hasFocus() || m_ui->textEditWidget->toPlainText() != text)
+	{
+		m_ui->textEditWidget->blockSignals(true);
+		m_ui->textEditWidget->setPlainText(text);
+		m_ui->textEditWidget->blockSignals(false);
+	}
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
