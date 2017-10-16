@@ -296,14 +296,14 @@ void NotesContentsWidget::updateText()
 	}
 	else
 	{
-		const BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, m_ui->textEditWidget->toPlainText()}}, findFolder(index)));
+		const QString text(m_ui->textEditWidget->toPlainText());
 
-		if (bookmark)
+		if (!text.isEmpty())
 		{
-			m_ui->notesViewWidget->setCurrentIndex(bookmark->index());
-		}
+			m_ui->notesViewWidget->setCurrentIndex(NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::DescriptionRole, text}}, findFolder(index))->index());
 
-		updateActions();
+			updateActions();
+		}
 	}
 
 	connect(m_ui->notesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &NotesContentsWidget::updateActions);
