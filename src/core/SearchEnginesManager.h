@@ -121,13 +121,12 @@ public slots:
 	void cancel();
 
 protected slots:
-	void handleRequestFailed();
-	void handleRequestFinished();
+	void handleDefinitionRequestFinished();
+	void handleIconRequestFinished();
 
 private:
 	QNetworkReply *m_reply;
 	SearchEnginesManager::SearchEngineDefinition m_searchEngine;
-	bool m_isFetchingIcon;
 	bool m_needsToSaveSearchEngine;
 
 signals:
