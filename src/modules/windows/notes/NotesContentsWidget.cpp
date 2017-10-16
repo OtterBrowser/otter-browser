@@ -65,14 +65,14 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	}
 
 	connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &NotesContentsWidget::notifyPasteActionStateChanged);
-	connect(NotesManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
-	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeNote()));
-	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addNote()));
-	connect(m_ui->textEditWidget, SIGNAL(textChanged()), this, SLOT(updateText()));
-	connect(m_ui->filterLineEditWidget, SIGNAL(textChanged(QString)), m_ui->notesViewWidget, SLOT(setFilterString(QString)));
-	connect(m_ui->notesViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
-	connect(m_ui->notesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(NotesManager::getModel(), &BookmarksModel::modelReset, this, &NotesContentsWidget::updateActions);
+	connect(m_ui->deleteButton, &QPushButton::clicked, this, &NotesContentsWidget::removeNote);
+	connect(m_ui->addButton, &QPushButton::clicked, this, &NotesContentsWidget::addNote);
+	connect(m_ui->textEditWidget, &TextEditWidget::textChanged, this, &NotesContentsWidget::updateText);
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->notesViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->notesViewWidget, &ItemViewWidget::doubleClicked, this, &NotesContentsWidget::openUrl);
+	connect(m_ui->notesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &NotesContentsWidget::showContextMenu);
+	connect(m_ui->notesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &NotesContentsWidget::updateActions);
 }
 
 NotesContentsWidget::~NotesContentsWidget()
@@ -260,7 +260,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 	}
 }
 
-void NotesContentsWidget::updateActions(bool updateText)
+void NotesContentsWidget::updateActions()
 {
 	const bool hasSelecion(!m_ui->notesViewWidget->selectionModel()->selectedIndexes().isEmpty());
 	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
@@ -270,24 +270,18 @@ void NotesContentsWidget::updateActions(bool updateText)
 	m_ui->addressLabelWidget->setUrl((type == BookmarksModel::UrlBookmark) ? index.data(BookmarksModel::UrlRole).toUrl() : QUrl());
 	m_ui->dateLabelWidget->setText((type == BookmarksModel::UrlBookmark) ? Utils::formatDateTime(index.data(BookmarksModel::TimeAddedRole).toDateTime()) : QString());
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
-
-	if (updateText)
-	{
-		disconnect(m_ui->textEditWidget, SIGNAL(textChanged()), this, SLOT(updateText()));
-
-		m_ui->textEditWidget->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
-
-		connect(m_ui->textEditWidget, SIGNAL(textChanged()), this, SLOT(updateText()));
-	}
+	m_ui->textEditWidget->blockSignals(true);
+	m_ui->textEditWidget->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
+	m_ui->textEditWidget->blockSignals(false);
 
 	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
 }
 
 void NotesContentsWidget::updateText()
 {
-	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
+	disconnect(m_ui->notesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &NotesContentsWidget::updateActions);
 
-	disconnect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
 
 	if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 	{
@@ -303,10 +297,10 @@ void NotesContentsWidget::updateText()
 			m_ui->notesViewWidget->setCurrentIndex(bookmark->index());
 		}
 
-		updateActions(false);
+		updateActions();
 	}
 
-	connect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->notesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &NotesContentsWidget::updateActions);
 }
 
 BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)

@@ -67,7 +67,7 @@ protected slots:
 	void openUrl(const QModelIndex &index = {});
 	void notifyPasteActionStateChanged();
 	void showContextMenu(const QPoint &position);
-	void updateActions(bool updateText = true);
+	void updateActions();
 	void updateText();
 
 private:
