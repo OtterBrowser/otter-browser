@@ -244,9 +244,9 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	if (isRunning)
 	{
-		connect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
-		connect(m_reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
-		connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleDownloadError(QNetworkReply::NetworkError)));
+		connect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
+		connect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
+		connect(m_reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Transfer::handleDownloadError);
 	}
 	else
 	{
@@ -268,7 +268,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	if (isRunning)
 	{
-		connect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
+		connect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
 	}
 
 	QString finalTarget;
@@ -515,9 +515,9 @@ void Transfer::handleDownloadFinished()
 		m_device->write(m_reply->readAll());
 	}
 
-	disconnect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
-	disconnect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
-	disconnect(m_reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
+	disconnect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
+	disconnect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
+	disconnect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
 
 	m_bytesReceived = (m_device ? m_device->size() : -1);
 
@@ -770,10 +770,10 @@ bool Transfer::resume()
 
 	handleDataAvailable();
 
-	connect(m_reply, SIGNAL(handleDownloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
-	connect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
-	connect(m_reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
-	connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleDownloadError(QNetworkReply::NetworkError)));
+	connect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
+	connect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
+	connect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
+	connect(m_reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Transfer::handleDownloadError);
 
 	if (m_updateTimer == 0 && m_updateInterval > 0)
 	{
@@ -811,10 +811,10 @@ bool Transfer::restart()
 
 	handleDataAvailable();
 
-	connect(m_reply, SIGNAL(handleDownloadProgress(qint64,qint64)), this, SLOT(handleDownloadProgress(qint64,qint64)));
-	connect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
-	connect(m_reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
-	connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleDownloadError(QNetworkReply::NetworkError)));
+	connect(m_reply, &QNetworkReply::downloadProgress, this, &Transfer::handleDownloadProgress);
+	connect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
+	connect(m_reply, &QNetworkReply::finished, this, &Transfer::handleDownloadFinished);
+	connect(m_reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &Transfer::handleDownloadError);
 
 	if (m_updateTimer == 0 && m_updateInterval > 0)
 	{
@@ -898,7 +898,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 	{
 		if (m_reply && m_state == RunningState)
 		{
-			disconnect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
+			disconnect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
 		}
 
 		m_device->reset();
@@ -919,7 +919,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 	}
 	else
 	{
-		connect(m_reply, SIGNAL(readyRead()), this, SLOT(handleDataAvailable()));
+		connect(m_reply, &QNetworkReply::readyRead, this, &Transfer::handleDataAvailable);
 	}
 
 	return false;
@@ -1049,7 +1049,7 @@ void TransfersManager::handleTransferFinished()
 	{
 		if (transfer->getState() == Transfer::FinishedState)
 		{
-			connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Transfer completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationLevel, this), SIGNAL(clicked()), transfer, SLOT(openTarget()));
+			connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Transfer completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationLevel, this), &Notification::clicked, transfer, &Transfer::openTarget);
 		}
 
 		emit transferFinished(transfer);
@@ -1161,7 +1161,7 @@ QVector<Transfer*> TransfersManager::getTransfers()
 
 		m_isInitilized = true;
 
-		connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), m_instance, SLOT(save()));
+		connect(QCoreApplication::instance(), &Application::aboutToQuit, m_instance, &TransfersManager::save);
 	}
 
 	return m_transfers;
