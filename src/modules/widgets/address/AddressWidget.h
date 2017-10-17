@@ -116,7 +116,7 @@ public:
 
 public slots:
 	void handleUserInput(const QString &text, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
-	void setWindow(Window *window = nullptr);
+	void setWindow(Window *window);
 	void setUrl(const QUrl &url, bool force = false);
 
 protected:
@@ -135,17 +135,13 @@ protected:
 	bool startDrag(QMouseEvent *event);
 
 protected slots:
-	void addBookmark(QAction *action);
-	void openFeed(QAction *action);
 	void openUrl(const QString &url);
-	void openUrl(const QModelIndex &index);
 	void removeEntry();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void updateGeometries();
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
-	void setTextFromIndex(const QModelIndex &index);
 
 private:
 	QPointer<Window> m_window;
