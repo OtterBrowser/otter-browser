@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitFtpListingNetworkReply.h"
+#include "../../../../core/Application.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/Utils.h"
@@ -27,7 +28,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
-#include <QtGui/QGuiApplication>
+#include <QtCore/QtMath>
 #include <QtWidgets/QFileIconProvider>
 
 namespace Otter
@@ -164,6 +165,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				variables[QLatin1String("headerSize")] = tr("Size");
 				variables[QLatin1String("headerDate")] = tr("Date");
 
+				const int iconSize(16 * qCeil(Application::getInstance()->devicePixelRatio()));
 				const QFileIconProvider iconProvider;
 				const QVector<QUrlInfo> entries(m_directories + m_files);
 
@@ -183,13 +185,13 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 							icon = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
 						}
 
-						icon.pixmap(16, 16).save(&buffer, "PNG");
+						icon.pixmap(iconSize, iconSize).save(&buffer, "PNG");
 
 						icons[mimeType.name()] = QString(byteArray.toBase64());
 					}
 
 					QHash<QString, QString> entryVariables;
-					entryVariables[QLatin1String("url")] = Utils::normalizeUrl(request().url()).url() + QLatin1String("/") + entries.at(i).name();
+					entryVariables[QLatin1String("url")] = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + entries.at(i).name();
 					entryVariables[QLatin1String("icon")] = QStringLiteral("data:image/png;base64,%1").arg(icons[mimeType.name()]);
 					entryVariables[QLatin1String("mimeType")] = mimeType.name();
 					entryVariables[QLatin1String("name")] = entries.at(i).name();
