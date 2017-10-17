@@ -657,31 +657,34 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	m_session = SessionWindow();
 
 	emit titleChanged(m_contentsWidget->getTitle());
-	emit urlChanged(m_contentsWidget->getUrl());
+	emit urlChanged(m_contentsWidget->getUrl(), false);
 	emit iconChanged(m_contentsWidget->getIcon());
 	emit actionsStateChanged();
 	emit loadingStateChanged(m_contentsWidget->getLoadingState());
 	emit canZoomChanged(m_contentsWidget->canZoom());
 
-	connect(m_contentsWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
-	connect(m_contentsWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));
-	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,SessionsManager::OpenHints)));
-	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,SessionsManager::OpenHints)));
-	connect(m_contentsWidget, SIGNAL(requestedGeometryChange(QRect)), this, SLOT(handleGeometryChangeRequest(QRect)));
-	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
-	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
-	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
-	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
-	connect(m_contentsWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
+	connect(m_contentsWidget, &ContentsWidget::aboutToNavigate, this, &Window::aboutToNavigate);
+	connect(m_contentsWidget, &ContentsWidget::needsAttention, this, &Window::needsAttention);
+	connect(m_contentsWidget, &ContentsWidget::requestedNewWindow, this, &Window::requestedNewWindow);
+	connect(m_contentsWidget, &ContentsWidget::requestedSearch, this, &Window::requestedSearch);
+	connect(m_contentsWidget, &ContentsWidget::requestedGeometryChange, this, &Window::handleGeometryChangeRequest);
+	connect(m_contentsWidget, &ContentsWidget::statusMessageChanged, this, &Window::statusMessageChanged);
+	connect(m_contentsWidget, &ContentsWidget::titleChanged, this, &Window::titleChanged);
+	connect(m_contentsWidget, &ContentsWidget::urlChanged, this, [&](const QUrl &url)
+	{
+		emit urlChanged(url, false);
+	});
+	connect(m_contentsWidget, &ContentsWidget::iconChanged, this, &Window::iconChanged);
+	connect(m_contentsWidget, &ContentsWidget::requestBlocked, this, &Window::requestBlocked);
 	connect(m_contentsWidget, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
 	connect(m_contentsWidget, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
 	connect(m_contentsWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
-	connect(m_contentsWidget, SIGNAL(loadingStateChanged(WebWidget::LoadingState)), this, SIGNAL(loadingStateChanged(WebWidget::LoadingState)));
-	connect(m_contentsWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
-	connect(m_contentsWidget, SIGNAL(optionChanged(int,QVariant)), this, SIGNAL(optionChanged(int,QVariant)));
-	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
-	connect(m_contentsWidget, SIGNAL(webWidgetChanged()), this, SLOT(updateNavigationBar()));
+	connect(m_contentsWidget, &ContentsWidget::loadingStateChanged, this, &Window::loadingStateChanged);
+	connect(m_contentsWidget, &ContentsWidget::pageInformationChanged, this, &Window::pageInformationChanged);
+	connect(m_contentsWidget, &ContentsWidget::optionChanged, this, &Window::optionChanged);
+	connect(m_contentsWidget, &ContentsWidget::zoomChanged, this, &Window::zoomChanged);
+	connect(m_contentsWidget, &ContentsWidget::canZoomChanged, this, &Window::canZoomChanged);
+	connect(m_contentsWidget, &ContentsWidget::webWidgetChanged, this, &Window::updateNavigationBar);
 }
 
 AddressWidget* Window::findAddressWidget() const

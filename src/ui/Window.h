@@ -140,7 +140,7 @@ signals:
 	void requestedCloseWindow(Window *window);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
-	void urlChanged(const QUrl &url, bool force = false);
+	void urlChanged(const QUrl &url, bool force);
 	void iconChanged(const QIcon &icon);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void actionsStateChanged();
