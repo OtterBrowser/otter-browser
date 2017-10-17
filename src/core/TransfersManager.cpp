@@ -484,9 +484,18 @@ void Transfer::handleDownloadFinished()
 
 	if (!m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute).isNull())
 	{
-		m_source = m_source.resolved(m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl());
+		const QUrl url(m_source.resolved(m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl()));
 
-		restart();
+		if (!url.isValid() || (m_source.scheme() == QLatin1String("https") && url.scheme() == QLatin1String("http")))
+		{
+			handleDownloadError(QNetworkReply::UnknownContentError);
+		}
+		else
+		{
+			m_source = url;
+
+			restart();
+		}
 
 		return;
 	}
