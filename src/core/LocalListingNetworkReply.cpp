@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "LocalListingNetworkReply.h"
+#include "Application.h"
 #include "SessionsManager.h"
 #include "ThemesManager.h"
 #include "Utils.h"
@@ -29,7 +30,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
-#include <QtGui/QGuiApplication>
+#include <QtCore/QtMath>
 #include <QtGui/QIcon>
 #include <QtWidgets/QFileIconProvider>
 
@@ -113,6 +114,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 	variables[QLatin1String("headerSize")] = tr("Size");
 	variables[QLatin1String("headerDate")] = tr("Date");
 
+	const int iconSize(16 * qCeil(Application::getInstance()->devicePixelRatio()));
 	const QFileIconProvider iconProvider;
 
 	for (int i = 0; i < entries.count(); ++i)
@@ -131,7 +133,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 				icon = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
 			}
 
-			icon.pixmap(16, 16).save(&buffer, "PNG");
+			icon.pixmap(iconSize, iconSize).save(&buffer, "PNG");
 
 			icons[mimeType.name()] = QString(byteArray.toBase64());
 		}
