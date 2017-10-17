@@ -130,7 +130,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 		case ElementsType:
 			if (key == WebWidget::RequestsFinishedInformation)
 			{
-				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
+				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg((m_window && !m_window->isAboutToClose() && m_window->getWebWidget()) ? m_window->getWebWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
 			}
 
 			break;
