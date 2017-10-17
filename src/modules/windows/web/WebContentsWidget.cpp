@@ -488,12 +488,12 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_layout->insertWidget(0, m_searchBarWidget);
 
-				connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
-				connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
+				connect(m_searchBarWidget, &SearchBarWidget::requestedSearch, this, &WebContentsWidget::findInPage);
+				connect(m_searchBarWidget, &SearchBarWidget::flagsChanged, this, &WebContentsWidget::updateFindHighlight);
 
 				if (SettingsManager::getOption(SettingsManager::Search_EnableFindInPageAsYouTypeOption).toBool())
 				{
-					connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
+					connect(m_searchBarWidget, &SearchBarWidget::queryChanged, this, &WebContentsWidget::handleFindInPageQueryChanged);
 				}
 			}
 
@@ -644,7 +644,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
 
-					connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+					connect(m_websiteInformationDialog, &WebsiteInformationDialog::finished, dialog, &ContentsDialog::close);
 
 					showDialog(dialog, false);
 				}
@@ -697,11 +697,6 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 		killTimer(m_quickFindTimer);
 
 		m_quickFindTimer = startTimer(2000);
-	}
-
-	if (flags == WebWidget::NoFlagsFind)
-	{
-		flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::HighlightAllFind);
 	}
 
 	m_quickFindQuery = (m_searchBarWidget ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
@@ -760,11 +755,11 @@ void WebContentsWidget::handleOptionChanged(int identifier, const QVariant &valu
 			{
 				if (value.toBool())
 				{
-					connect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
+					connect(m_searchBarWidget, &SearchBarWidget::queryChanged, this, &WebContentsWidget::handleFindInPageQueryChanged);
 				}
 				else
 				{
-					disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
+					disconnect(m_searchBarWidget, &SearchBarWidget::queryChanged, this, &WebContentsWidget::handleFindInPageQueryChanged);
 				}
 			}
 
@@ -890,7 +885,7 @@ void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Passwo
 		{
 			m_passwordBarWidget = new PasswordBarWidget(password, isUpdate, this);
 
-			connect(m_passwordBarWidget, SIGNAL(requestedClose()), this, SLOT(closePasswordBar()));
+			connect(m_passwordBarWidget, &PasswordBarWidget::requestedClose, this, &WebContentsWidget::closePasswordBar);
 
 			m_layout->insertWidget(0, m_passwordBarWidget);
 
@@ -905,7 +900,7 @@ void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QU
 	{
 		m_popupsBarWidget = new PopupsBarWidget(parentUrl, isPrivate(), this);
 
-		connect(m_popupsBarWidget, SIGNAL(requestedClose()), this, SLOT(closePopupsBar()));
+		connect(m_popupsBarWidget, &PopupsBarWidget::requestedClose, this, &WebContentsWidget::closePopupsBar);
 
 		m_layout->insertWidget(0, m_popupsBarWidget);
 
@@ -958,7 +953,7 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 
 		emit needsAttention();
 
-		connect(widget, SIGNAL(permissionChanged(WebWidget::PermissionPolicies)), this, SLOT(notifyPermissionChanged(WebWidget::PermissionPolicies)));
+		connect(widget, &PermissionBarWidget::permissionChanged, this, &WebContentsWidget::notifyPermissionChanged);
 	}
 }
 
@@ -1022,6 +1017,11 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_window, m_webWidget);
 	}
+}
+
+void WebContentsWidget::handleFindInPageQueryChanged()
+{
+	findInPage(m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::HighlightAllFind);
 }
 
 void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies policies)
@@ -1134,7 +1134,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 {
 	if (m_webWidget)
 	{
-		disconnect(m_webWidget, SIGNAL(requestedCloseWindow()));
+		disconnect(m_webWidget, &WebWidget::requestedCloseWindow, m_window, &Window::requestClose);
 
 		m_webWidget->hide();
 		m_webWidget->close();
@@ -1169,7 +1169,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 			m_createStartPageTimer = startTimer(50);
 		}
 
-		connect(m_splitter, SIGNAL(splitterMoved(int,int)), widget, SIGNAL(geometryChanged()));
+		connect(m_splitter, &QSplitter::splitterMoved, widget, &WebWidget::geometryChanged);
 	}
 
 	bool isHidden(m_isStartPageEnabled && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
@@ -1193,7 +1193,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	{
 		widget->setWindowIdentifier(m_window->getIdentifier());
 
-		connect(m_webWidget, SIGNAL(requestedCloseWindow()), m_window, SLOT(requestClose()));
+		connect(m_webWidget, &WebWidget::requestedCloseWindow, m_window, &Window::requestClose);
 	}
 
 	handleLoadingStateChange(m_webWidget->getLoadingState());
@@ -1319,7 +1319,7 @@ void WebContentsWidget::setParent(Window *window)
 
 		m_webWidget->setWindowIdentifier(window->getIdentifier());
 
-		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(requestClose()));
+		connect(m_webWidget, &WebWidget::requestedCloseWindow, window, &Window::requestClose);
 	}
 }
 

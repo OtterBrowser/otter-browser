@@ -112,7 +112,7 @@ protected:
 	void setWidget(WebWidget *widget, const QVariantMap &parameters, const QHash<int, QVariant> &options);
 
 protected slots:
-	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void findInPage(WebWidget::FindFlags flags);
 	void closePasswordBar();
 	void closePopupsBar();
 	void handleOptionChanged(int identifier, const QVariant &value);
@@ -122,6 +122,7 @@ protected slots:
 	void handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
 	void handleInspectorVisibilityChangeRequest(bool isVisible);
 	void handleLoadingStateChange(WebWidget::LoadingState state);
+	void handleFindInPageQueryChanged();
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void updateFindHighlight(WebWidget::FindFlags flags);
