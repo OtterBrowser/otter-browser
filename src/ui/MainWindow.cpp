@@ -1456,16 +1456,20 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, const QVaria
 
 void MainWindow::setActiveEditorExecutor(ActionExecutor::Object executor)
 {
+	const QMetaMethod actionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("actionsStateChanged()")));
+	const QMetaMethod arbitraryActionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("arbitraryActionsStateChanged(QVector<int>)")));
+	const QMetaMethod categorizedActionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("categorizedActionsStateChanged(QVector<int>)")));
+
 	if (m_editorExecutor.isValid())
 	{
-		disconnect(m_editorExecutor.getObject(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
+		m_editorExecutor.disconnectSignals(this, &actionsStateChangedMethod, &arbitraryActionsStateChangedMethod, &categorizedActionsStateChangedMethod);
 	}
 
 	m_editorExecutor = executor;
 
 	if (executor.isValid())
 	{
-		connect(executor.getObject(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
+		m_editorExecutor.connectSignals(this, &actionsStateChangedMethod, &arbitraryActionsStateChangedMethod, &categorizedActionsStateChangedMethod);
 	}
 
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});

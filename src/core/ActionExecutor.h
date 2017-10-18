@@ -22,6 +22,7 @@
 
 #include "ActionsManager.h"
 
+#include <QtCore/QMetaMethod>
 #include <QtCore/QPointer>
 
 namespace Otter
@@ -37,6 +38,8 @@ public:
 		explicit Object(QObject *object, ActionExecutor *executor);
 		Object(const Object &other);
 
+		void connectSignals(const QObject *receiver, const QMetaMethod *actionsStateChangedMethod, const QMetaMethod *arbitraryActionsStateChangedMethod, const QMetaMethod *categorizedActionsStateChangedMethod);
+		void disconnectSignals(const QObject *receiver, const QMetaMethod *actionsStateChangedMethod, const QMetaMethod *arbitraryActionsStateChangedMethod, const QMetaMethod *categorizedActionsStateChangedMethod);
 		void triggerAction(int identifier, const QVariantMap &parameters = {});
 		QObject* getObject() const;
 		Object& operator=(const Object &other);

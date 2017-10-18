@@ -191,24 +191,7 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 	if (m_executor.isValid())
 	{
-		const QMetaMethod actionsStateChangedMethod(m_executor.getObject()->metaObject()->method(m_executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged()")));
-		const QMetaMethod arbitraryActionsStateChangedMethod(m_executor.getObject()->metaObject()->method(m_executor.getObject()->metaObject()->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
-		const QMetaMethod categorizedActionsStateChangedMethod(m_executor.getObject()->metaObject()->method(m_executor.getObject()->metaObject()->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
-
-		if (actionsStateChangedMethod.isValid())
-		{
-			disconnect(m_executor.getObject(), actionsStateChangedMethod, this, updateStateMethod);
-		}
-
-		if (arbitraryActionsStateChangedMethod.isValid())
-		{
-			disconnect(m_executor.getObject(), arbitraryActionsStateChangedMethod, this, updateStateMethod);
-		}
-
-		if (categorizedActionsStateChangedMethod.isValid())
-		{
-			disconnect(m_executor.getObject(), categorizedActionsStateChangedMethod, this, updateStateMethod);
-		}
+		m_executor.disconnectSignals(this, &updateStateMethod, &updateStateMethod, &updateStateMethod);
 	}
 
 	if (executor.isValid())
@@ -249,24 +232,7 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 	if (executor.isValid())
 	{
-		const QMetaMethod actionsStateChangedMethod(executor.getObject()->metaObject()->method(executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged()")));
-		const QMetaMethod arbitraryActionsStateChangedMethod(executor.getObject()->metaObject()->method(executor.getObject()->metaObject()->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
-		const QMetaMethod categorizedActionsStateChangedMethod(executor.getObject()->metaObject()->method(executor.getObject()->metaObject()->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
-
-		if (actionsStateChangedMethod.isValid())
-		{
-			connect(executor.getObject(), actionsStateChangedMethod, this, updateStateMethod);
-		}
-
-		if (arbitraryActionsStateChangedMethod.isValid())
-		{
-			connect(executor.getObject(), arbitraryActionsStateChangedMethod, this, updateStateMethod);
-		}
-
-		if (categorizedActionsStateChangedMethod.isValid())
-		{
-			connect(executor.getObject(), categorizedActionsStateChangedMethod, this, updateStateMethod);
-		}
+		m_executor.connectSignals(this, &updateStateMethod, &updateStateMethod, &updateStateMethod);
 	}
 }
 
