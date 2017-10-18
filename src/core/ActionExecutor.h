@@ -22,6 +22,8 @@
 
 #include "ActionsManager.h"
 
+#include <QtCore/QPointer>
+
 namespace Otter
 {
 

@@ -246,7 +246,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 		});
 	}
 
-	connect(m_workspace, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+	connect(m_workspace, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
 }
 
 MainWindow::~MainWindow()
@@ -559,7 +559,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				m_privateWindows[i]->requestClose();
 			}
 
-			emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::ClosePrivateTabsAction});
 
 			return;
 		case ActionsManager::OpenUrlAction:
@@ -940,7 +940,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 						break;
 				}
 
-				emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
+				emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
 				emit toolBarStateChanged(toolBarIdentifier, getToolBarState(toolBarIdentifier));
 			}
 
@@ -1331,7 +1331,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	{
 		m_privateWindows.append(window);
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::ClosePrivateTabsAction});
 	}
 
 	if (index < 0)
@@ -1448,7 +1448,7 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, const QVaria
 			m_tabSwitchingOrderList.removeAll(window->getIdentifier());
 		}
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::ClosePrivateTabsAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::ClosePrivateTabsAction});
 	}
 
 	emit windowRemoved(window->getIdentifier());
@@ -1458,17 +1458,17 @@ void MainWindow::setActiveEditorExecutor(ActionExecutor::Object executor)
 {
 	if (m_editorExecutor.isValid())
 	{
-		disconnect(m_editorExecutor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+		disconnect(m_editorExecutor.getObject(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
 	}
 
 	m_editorExecutor = executor;
 
 	if (executor.isValid())
 	{
-		connect(executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
+		connect(executor.getObject(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
 	}
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
 void MainWindow::storeWindowState()
@@ -1555,7 +1555,7 @@ void MainWindow::handleOptionChanged(int identifier)
 {
 	if (identifier == SettingsManager::Browser_HomePageOption)
 	{
-		emit actionsStateChanged(QVector<int>({ActionsManager::GoToHomePageAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::GoToHomePageAction});
 	}
 }
 
@@ -1654,7 +1654,7 @@ void MainWindow::handleWindowClose(Window *window)
 		triggerAction(ActionsManager::NewTabAction);
 	}
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::CloseOtherTabsAction, ActionsManager::ClosePrivateTabsAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::CloseOtherTabsAction, ActionsManager::ClosePrivateTabsAction});
 }
 
 void MainWindow::handleWindowIsPinnedChanged(bool isPinned)
@@ -1757,7 +1757,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 
 	SessionsManager::markSessionAsModified();
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
 }
 
 void MainWindow::handleToolBarRemoved(int identifier)
@@ -1773,7 +1773,7 @@ void MainWindow::handleToolBarRemoved(int identifier)
 
 		SessionsManager::markSessionAsModified();
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::ShowToolBarAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::ShowToolBarAction});
 	}
 }
 
@@ -1911,14 +1911,14 @@ void MainWindow::setCurrentWindow(Window *window)
 
 	if (previousWindow)
 	{
-		disconnect(previousWindow, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
-		disconnect(previousWindow, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+		disconnect(previousWindow, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
+		disconnect(previousWindow, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
 	}
 
 	if (window)
 	{
-		connect(window, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
-		connect(window, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+		connect(window, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
+		connect(window, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
 	}
 }
 
@@ -2034,7 +2034,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 		}
 	}
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::CloseOtherTabsAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::CloseOtherTabsAction});
 
 	return window;
 }
@@ -2501,7 +2501,7 @@ bool MainWindow::event(QEvent *event)
 						}
 					}
 
-					emit actionsStateChanged(QVector<int>({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction}));
+					emit arbitraryActionsStateChanged({ActionsManager::FullScreenAction, ActionsManager::ShowToolBarAction});
 					emit fullScreenStateChanged(mode == ToolBarsManager::FullScreenMode);
 				}
 

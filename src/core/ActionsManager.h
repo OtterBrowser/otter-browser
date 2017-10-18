@@ -24,7 +24,6 @@
 
 #include "AddonsManager.h"
 
-#include <QtCore/QPointer>
 #include <QtCore/QVariantMap>
 #include <QtGui/QIcon>
 
@@ -290,8 +289,6 @@ public:
 			UserCategory
 		};
 
-		Q_DECLARE_FLAGS(ActionCategories, ActionCategory)
-
 		enum ActionFlag
 		{
 			NoFlags = 0,
@@ -384,7 +381,6 @@ private:
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionCategories)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionDefinition::ActionFlags)
 
 #endif

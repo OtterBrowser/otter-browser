@@ -213,7 +213,7 @@ void TextEditWidget::handleSelectionChanged()
 	{
 		m_hadSelection = hasSelection();
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction});
 	}
 }
 
@@ -223,13 +223,13 @@ void TextEditWidget::handleTextChanged()
 	{
 		m_wasEmpty = document()->isEmpty();
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction});
 	}
 }
 
 void TextEditWidget::notifyPasteActionStateChanged()
 {
-	emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
 ActionsManager::ActionDefinition::State TextEditWidget::getActionState(int identifier, const QVariantMap &parameters) const

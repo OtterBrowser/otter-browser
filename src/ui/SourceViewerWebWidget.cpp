@@ -103,7 +103,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			m_isLoading = false;
 
-			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+			emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 			emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 			return;
@@ -140,7 +140,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_isLoading = true;
 
-				emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+				emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 				emit loadingStateChanged(WebWidget::OngoingLoadingState);
 			}
 
@@ -169,7 +169,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_isLoading = true;
 
-				emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+				emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 				emit loadingStateChanged(WebWidget::OngoingLoadingState);
 			}
 
@@ -261,7 +261,7 @@ void SourceViewerWebWidget::handleViewSourceReplyFinished()
 		m_viewSourceReply->deleteLater();
 		m_viewSourceReply = nullptr;
 
-		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 	}
 }
 
@@ -283,14 +283,14 @@ void SourceViewerWebWidget::handleZoomChanged()
 
 void SourceViewerWebWidget::notifyEditingActionsStateChanged()
 {
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
 void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 {
 	updateHitTestResult(position);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 
 	const QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
 	const QPoint menuPosition(position.isNull() ? QCursor::pos() : mapToGlobal(position));

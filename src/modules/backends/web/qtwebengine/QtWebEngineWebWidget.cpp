@@ -139,7 +139,7 @@ void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 
 		m_updateNavigationActionsTimer = 0;
 
-		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 	}
 	else
 	{
@@ -349,7 +349,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
-			emit actionsStateChanged(QVector<int>({ActionsManager::MuteTabMediaAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::MuteTabMediaAction});
 
 			return;
 #endif
@@ -1108,7 +1108,7 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 
 	emit iconChanged(getIcon());
 	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);
-	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
 
 	SessionsManager::markSessionAsModified();
 }
@@ -1264,7 +1264,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 		notifyNavigationActionsChanged();
 
-		emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
 
 		return;
 	}
@@ -1292,7 +1292,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	notifyNavigationActionsChanged();
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
 }
 
 void QtWebEngineWebWidget::setHistory(QDataStream &stream)

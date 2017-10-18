@@ -161,8 +161,8 @@ signals:
 	void closedWindowsAvailableChanged(bool available);
 	void sessionRestored();
 	void actionsStateChanged();
-	void actionsStateChanged(const QVector<int> &identifiers);
-	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
+	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
+	void categorizedActionsStateChanged(const QVector<int> &categories);
 	void fullScreenStateChanged(bool isFullScreen);
 
 friend class MainWindowSessionItem;

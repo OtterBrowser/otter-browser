@@ -486,7 +486,7 @@ void CacheContentsWidget::updateActions()
 		}
 	}
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
 QStandardItem* CacheContentsWidget::findDomain(const QString &domain)

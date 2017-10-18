@@ -138,7 +138,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	connect(m_page, &QtWebKitPage::linkHovered, this, &QtWebKitWebWidget::setStatusMessageOverride);
 	connect(m_page, &QtWebKitPage::microFocusChanged, [&]()
 	{
-		emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 	});
 	connect(m_page, &QtWebKitPage::printRequested, this, &QtWebKitWebWidget::handlePrintRequest);
 	connect(m_page, &QtWebKitPage::windowCloseRequested, this, &QtWebKitWebWidget::handleWindowCloseRequest);
@@ -302,7 +302,7 @@ void QtWebKitWebWidget::clearPluginToken()
 		frames.append(frame->childFrames());
 	}
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
 
 	m_pluginToken = QString();
 }
@@ -499,7 +499,7 @@ void QtWebKitWebWidget::handleLoadStarted()
 	setStatusMessageOverride({});
 
 	emit geometryChanged();
-	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 	emit loadingStateChanged(OngoingLoadingState);
 }
 
@@ -531,7 +531,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	handleHistory();
 	startReloadTimer();
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
 }
@@ -704,8 +704,8 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	updateOptions(url);
 
 	emit urlChanged(url);
-	emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction, ActionsManager::InspectElementAction}));
-	emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+	emit arbitraryActionsStateChanged({ActionsManager::InspectPageAction, ActionsManager::InspectElementAction});
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory, ActionsManager::ActionDefinition::PageCategory});
 
 	SessionsManager::markSessionAsModified();
 }
@@ -777,7 +777,7 @@ void QtWebKitWebWidget::updateAmountOfDeferredPlugins()
 	{
 		m_amountOfDeferredPlugins = amountOfDeferredPlugins;
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
 	}
 }
 
@@ -942,7 +942,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			m_page->history()->clear();
 
-			emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+			emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 
 			return;
 		case ActionsManager::PurgeTabHistoryAction:
@@ -955,7 +955,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			muteAudio(m_page->mainFrame(), m_isAudioMuted);
 
-			emit actionsStateChanged(QVector<int>({ActionsManager::MuteTabMediaAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::MuteTabMediaAction});
 
 			return;
 #endif
@@ -1478,7 +1478,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					resetSpellCheck(element);
 				}
 
-				emit actionsStateChanged(QVector<int>({ActionsManager::CheckSpellingAction}));
+				emit arbitraryActionsStateChanged({ActionsManager::CheckSpellingAction});
 			}
 
 			return;
@@ -1652,7 +1652,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					frames.append(frame->childFrames());
 				}
 
-				emit actionsStateChanged(QVector<int>({ActionsManager::LoadPluginsAction}));
+				emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
 			}
 
 			return;
@@ -1686,7 +1686,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				getInspector();
 			}
 
-			emit actionsStateChanged(QVector<int>({ActionsManager::InspectPageAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::InspectPageAction});
 			emit requestedInspectorVisibilityChange(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
 			return;
@@ -1768,7 +1768,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 			m_page->getMainFrame()->runUserScripts(QUrl(QLatin1String("about:blank")));
 		}
 
-		emit actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory | ActionsManager::ActionDefinition::PageCategory);
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory, ActionsManager::ActionDefinition::PageCategory});
 
 		return;
 	}
@@ -1825,7 +1825,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	m_page->triggerAction(QWebPage::Reload);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
 }
 
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -1841,7 +1841,7 @@ void QtWebKitWebWidget::setHistory(QDataStream &stream)
 
 	m_page->triggerAction(QWebPage::Reload);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
 }
 #else
 void QtWebKitWebWidget::setHistory(const QVariantMap &history)
@@ -1855,7 +1855,7 @@ void QtWebKitWebWidget::setHistory(const QVariantMap &history)
 
 	m_page->triggerAction(QWebPage::Reload);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::PageCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
 }
 #endif
 

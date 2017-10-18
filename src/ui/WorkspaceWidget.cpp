@@ -625,7 +625,7 @@ void WorkspaceWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 void WorkspaceWidget::notifyActionsStateChanged()
 {
-	emit actionsStateChanged(QVector<int>({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction});
 }
 
 void WorkspaceWidget::showContextMenu(const QPoint &position)

@@ -289,7 +289,7 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)));
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory | ActionsManager::ActionDefinition::LinkCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory, ActionsManager::ActionDefinition::LinkCategory});
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)

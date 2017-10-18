@@ -43,7 +43,7 @@ MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 
 	if (mainWindow)
 	{
-		connect(mainWindow, SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		connect(mainWindow, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
 	}
 
 	if (toolBar)

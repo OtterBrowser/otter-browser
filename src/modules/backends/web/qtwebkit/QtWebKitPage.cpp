@@ -405,7 +405,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 
 		if (m_widget)
 		{
-			emit m_widget->actionsStateChanged(ActionsManager::ActionDefinition::NavigationCategory);
+			emit m_widget->categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 		}
 
 		emit viewingMediaChanged(m_isViewingMedia);

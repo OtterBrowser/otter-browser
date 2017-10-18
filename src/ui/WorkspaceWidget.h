@@ -101,7 +101,7 @@ private:
 	bool m_isRestored;
 
 signals:
-	void actionsStateChanged(const QVector<int> &identifiers);
+	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 };
 
 }

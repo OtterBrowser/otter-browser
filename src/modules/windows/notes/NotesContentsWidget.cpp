@@ -138,7 +138,7 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 
 void NotesContentsWidget::notifyPasteActionStateChanged()
 {
-	emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
 void NotesContentsWidget::showContextMenu(const QPoint &position)
@@ -280,7 +280,7 @@ void NotesContentsWidget::updateActions()
 		m_ui->textEditWidget->blockSignals(false);
 	}
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
 void NotesContentsWidget::updateText()

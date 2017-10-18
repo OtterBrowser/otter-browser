@@ -417,7 +417,7 @@ void CookiesContentsWidget::updateActions()
 		}
 	}
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
 QStandardItem* CookiesContentsWidget::findDomainItem(const QString &domain)

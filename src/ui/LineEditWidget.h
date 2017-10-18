@@ -110,7 +110,7 @@ private:
 	bool m_wasEmpty;
 
 signals:
-	void actionsStateChanged(const QVector<int> &identifiers);
+	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 	void textDropped(const QString &text);
 };
 

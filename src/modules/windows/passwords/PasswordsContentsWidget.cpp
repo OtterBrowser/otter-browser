@@ -120,7 +120,7 @@ void PasswordsContentsWidget::populatePasswords()
 			Q_UNUSED(selected)
 			Q_UNUSED(deselected)
 
-			emit actionsStateChanged(QVector<int>({ActionsManager::DeleteAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 		});
 	}
 }

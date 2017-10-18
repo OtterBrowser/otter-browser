@@ -191,7 +191,7 @@ void WebWidget::clearOptions()
 		emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), url));
 	}
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::ResetQuickPreferencesAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
 }
 
 void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
@@ -308,22 +308,22 @@ void WebWidget::handleWindowCloseRequest()
 
 void WebWidget::notifyFillPasswordActionStateChanged()
 {
-	emit actionsStateChanged(QVector<int>(ActionsManager::FillPasswordAction));
+	emit arbitraryActionsStateChanged({ActionsManager::FillPasswordAction});
 }
 
 void WebWidget::notifyRedoActionStateChanged()
 {
-	emit actionsStateChanged(QVector<int>({ActionsManager::RedoAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::RedoAction});
 }
 
 void WebWidget::notifyUndoActionStateChanged()
 {
-	emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::UndoAction});
 }
 
 void WebWidget::notifyPageActionsChanged()
 {
-	emit actionsStateChanged(ActionsManager::ActionDefinition::BookmarkCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::BookmarkCategory});
 }
 
 void WebWidget::updateHitTestResult(const QPoint &position)
@@ -357,7 +357,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 
 	updateHitTestResult(hitPosition);
 
-	emit actionsStateChanged(ActionsManager::ActionDefinition::EditingCategory);
+	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 
 	QStringList includeSections;
 
@@ -559,7 +559,7 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 			{
 				const int reloadTime(value.toInt());
 
-				emit actionsStateChanged(QVector<int>({ActionsManager::ResetQuickPreferencesAction}));
+				emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
 				emit optionChanged(identifier, (value.isNull() ? getOption(identifier) : value));
 
 				if (m_reloadTimer != 0)
@@ -582,11 +582,11 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 
 			break;
 		case SettingsManager::Network_EnableReferrerOption:
-			emit actionsStateChanged(QVector<int>({ActionsManager::EnableReferrerAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::EnableReferrerAction});
 
 			break;
 		case SettingsManager::Permissions_EnableJavaScriptOption:
-			emit actionsStateChanged(QVector<int>({ActionsManager::EnableJavaScriptAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::EnableJavaScriptAction});
 
 			break;
 		default:
@@ -624,7 +624,7 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 		}
 	}
 
-	emit actionsStateChanged(QVector<int>({ActionsManager::ResetQuickPreferencesAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
 }
 
 void WebWidget::setRequestedUrl(const QUrl &url, bool isTyped, bool onlyUpdate)

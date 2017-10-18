@@ -842,11 +842,11 @@ void Application::handleOptionChanged(int identifier, const QVariant &value)
 
 			break;
 		case SettingsManager::Interface_LockToolBarsOption:
-			emit actionsStateChanged(QVector<int>({ActionsManager::LockToolBarsAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::LockToolBarsAction});
 
 			break;
 		case SettingsManager::Network_WorkOfflineOption:
-			emit actionsStateChanged(QVector<int>({ActionsManager::WorkOfflineAction}));
+			emit arbitraryActionsStateChanged({ActionsManager::WorkOfflineAction});
 
 			break;
 	}

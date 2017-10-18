@@ -104,7 +104,7 @@ void Action::triggerAction(bool isChecked)
 	}
 }
 
-void Action::handleActionsStateChanged(const QVector<int> &identifiers)
+void Action::handleArbitraryActionsStateChanged(const QVector<int> &identifiers)
 {
 	if (identifiers.contains(m_identifier))
 	{
@@ -112,11 +112,9 @@ void Action::handleActionsStateChanged(const QVector<int> &identifiers)
 	}
 }
 
-void Action::handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories)
+void Action::handleCategoriesActionsStateChanged(const QVector<int> &categories)
 {
-	const ActionsManager::ActionDefinition::ActionCategory category(getDefinition().category);
-
-	if (category != ActionsManager::ActionDefinition::OtherCategory && categories.testFlag(category))
+	if (categories.contains(getDefinition().category))
 	{
 		updateState();
 	}
@@ -195,14 +193,14 @@ void Action::setExecutor(ActionExecutor::Object executor)
 			disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged()), this, SLOT(updateState()));
 		}
 
-		if (m_executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(QVector<int>)") >= 0)
+		if (m_executor.getObject()->metaObject()->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)") >= 0)
 		{
-			disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+			disconnect(m_executor.getObject(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SLOT(handleCategoriesActionsStateChanged(QVector<int>)));
 		}
 
-		if (definition.category != ActionsManager::ActionDefinition::OtherCategory && m_executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)") >= 0)
+		if (definition.category != ActionsManager::ActionDefinition::OtherCategory && m_executor.getObject()->metaObject()->indexOfSignal("categorizedActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)") >= 0)
 		{
-			disconnect(m_executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+			disconnect(m_executor.getObject(), SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SLOT(handleArbitraryActionsStateChanged(QVector<int>)));
 		}
 	}
 
@@ -249,14 +247,14 @@ void Action::setExecutor(ActionExecutor::Object executor)
 			connect(executor.getObject(), SIGNAL(actionsStateChanged()), this, SLOT(updateState()));
 		}
 
-		if (executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(QVector<int>)") >= 0)
+		if (executor.getObject()->metaObject()->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)") >= 0)
 		{
-			connect(executor.getObject(), SIGNAL(actionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+			connect(executor.getObject(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SLOT(handleCategoriesActionsStateChanged(QVector<int>)));
 		}
 
-		if (definition.category != ActionsManager::ActionDefinition::OtherCategory && executor.getObject()->metaObject()->indexOfSignal("actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)") >= 0)
+		if (definition.category != ActionsManager::ActionDefinition::OtherCategory && executor.getObject()->metaObject()->indexOfSignal("categorizedActionsStateChanged(QVector<int>)") >= 0)
 		{
-			connect(executor.getObject(), SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SLOT(handleActionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+			connect(executor.getObject(), SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SLOT(handleCategoriesActionsStateChanged(QVector<int>)));
 		}
 	}
 }

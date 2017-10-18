@@ -505,7 +505,7 @@ void LineEditWidget::handleSelectionChanged()
 	{
 		m_hadSelection = hasSelectedText();
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::CutAction, ActionsManager::CopyAction, ActionsManager::CopyToNoteAction, ActionsManager::PasteAction, ActionsManager::DeleteAction, ActionsManager::UnselectAction});
 	}
 }
 
@@ -515,13 +515,13 @@ void LineEditWidget::handleTextChanged(const QString &text)
 	{
 		m_wasEmpty = text.isEmpty();
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::UndoAction, ActionsManager::RedoAction, ActionsManager::SelectAllAction, ActionsManager::ClearAllAction});
 	}
 }
 
 void LineEditWidget::notifyPasteActionStateChanged()
 {
-	emit actionsStateChanged(QVector<int>({ActionsManager::PasteAction}));
+	emit arbitraryActionsStateChanged({ActionsManager::PasteAction});
 }
 
 void LineEditWidget::setCompletion(const QString &completion)

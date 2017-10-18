@@ -579,7 +579,7 @@ void Window::setPinned(bool isPinned)
 	{
 		m_isPinned = isPinned;
 
-		emit actionsStateChanged(QVector<int>({ActionsManager::PinTabAction, ActionsManager::CloseTabAction}));
+		emit arbitraryActionsStateChanged({ActionsManager::PinTabAction, ActionsManager::CloseTabAction});
 		emit isPinnedChanged(isPinned);
 	}
 }
@@ -676,8 +676,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	});
 	connect(m_contentsWidget, &ContentsWidget::iconChanged, this, &Window::iconChanged);
 	connect(m_contentsWidget, &ContentsWidget::requestBlocked, this, &Window::requestBlocked);
-	connect(m_contentsWidget, SIGNAL(actionsStateChanged(QVector<int>)), this, SIGNAL(actionsStateChanged(QVector<int>)));
-	connect(m_contentsWidget, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)), this, SIGNAL(actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories)));
+	connect(m_contentsWidget, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
+	connect(m_contentsWidget, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
 	connect(m_contentsWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
 	connect(m_contentsWidget, &ContentsWidget::loadingStateChanged, this, &Window::loadingStateChanged);
 	connect(m_contentsWidget, &ContentsWidget::pageInformationChanged, this, &Window::pageInformationChanged);
@@ -982,7 +982,7 @@ bool Window::event(QEvent *event)
 				Q_UNUSED(oldState)
 				Q_UNUSED(newState)
 
-				emit actionsStateChanged(QVector<int>({ActionsManager::MaximizeTabAction, ActionsManager::MinimizeTabAction, ActionsManager::RestoreTabAction}));
+				emit arbitraryActionsStateChanged({ActionsManager::MaximizeTabAction, ActionsManager::MinimizeTabAction, ActionsManager::RestoreTabAction});
 			});
 		}
 	}

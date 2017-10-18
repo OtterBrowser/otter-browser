@@ -144,8 +144,8 @@ signals:
 	void iconChanged(const QIcon &icon);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void actionsStateChanged();
-	void actionsStateChanged(const QVector<int> &identifiers);
-	void actionsStateChanged(ActionsManager::ActionDefinition::ActionCategories categories);
+	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
+	void categorizedActionsStateChanged(const QVector<int> &categories);
 	void contentStateChanged(WebWidget::ContentStates state);
 	void loadingStateChanged(WebWidget::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
