@@ -61,7 +61,7 @@ protected:
 protected slots:
 	void triggerAction(bool isChecked = false);
 	void handleArbitraryActionsStateChanged(const QVector<int> &identifiers);
-	void handleCategoriesActionsStateChanged(const QVector<int> &categories);
+	void handleCategorizedActionsStateChanged(const QVector<int> &categories);
 	void updateShortcut();
 	void updateState();
 
