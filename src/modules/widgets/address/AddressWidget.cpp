@@ -1282,7 +1282,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(this, &AddressWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::urlChanged, this, &AddressWidget::setUrl);
 		disconnect(m_window.data(), &Window::iconChanged, this, &AddressWidget::setIcon);
-		disconnect(m_window.data(), SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		disconnect(m_window.data(), &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
 	}
@@ -1301,7 +1301,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, &AddressWidget::requestedSearch, window, &Window::requestedSearch);
 		connect(window, &Window::urlChanged, this, &AddressWidget::setUrl);
 		connect(window, &Window::iconChanged, this, &AddressWidget::setIcon);
-		connect(window, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		connect(window, &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		connect(window, &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
 		connect(window, &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
 		connect(window, &Window::destroyed, this, [&](QObject *object)

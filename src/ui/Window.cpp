@@ -676,9 +676,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	});
 	connect(m_contentsWidget, &ContentsWidget::iconChanged, this, &Window::iconChanged);
 	connect(m_contentsWidget, &ContentsWidget::requestBlocked, this, &Window::requestBlocked);
-	connect(m_contentsWidget, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
-	connect(m_contentsWidget, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
-	connect(m_contentsWidget, SIGNAL(contentStateChanged(WebWidget::ContentStates)), this, SIGNAL(contentStateChanged(WebWidget::ContentStates)));
+	connect(m_contentsWidget, &ContentsWidget::arbitraryActionsStateChanged, this, &Window::arbitraryActionsStateChanged);
+	connect(m_contentsWidget, &ContentsWidget::categorizedActionsStateChanged, this, &Window::categorizedActionsStateChanged);
+	connect(m_contentsWidget, &ContentsWidget::contentStateChanged, this, &Window::contentStateChanged);
 	connect(m_contentsWidget, &ContentsWidget::loadingStateChanged, this, &Window::loadingStateChanged);
 	connect(m_contentsWidget, &ContentsWidget::pageInformationChanged, this, &Window::pageInformationChanged);
 	connect(m_contentsWidget, &ContentsWidget::optionChanged, this, &Window::optionChanged);

@@ -57,7 +57,7 @@ ProgressBarWidget::ProgressBarWidget(Window *window, WebWidget *parent) : QFrame
 
 	if (mainWindow)
 	{
-		connect(mainWindow, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SLOT(handleActionsStateChanged(QVector<int>)));
+		connect(mainWindow, &MainWindow::arbitraryActionsStateChanged, this, &ProgressBarWidget::handleActionsStateChanged);
 	}
 
 	connect(window, &Window::loadingStateChanged, this, &ProgressBarWidget::updateLoadingState);

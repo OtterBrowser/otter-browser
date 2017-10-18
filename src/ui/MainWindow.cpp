@@ -246,7 +246,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 		});
 	}
 
-	connect(m_workspace, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
+	connect(m_workspace, &WorkspaceWidget::arbitraryActionsStateChanged, this, &MainWindow::arbitraryActionsStateChanged);
 }
 
 MainWindow::~MainWindow()
@@ -1911,14 +1911,14 @@ void MainWindow::setCurrentWindow(Window *window)
 
 	if (previousWindow)
 	{
-		disconnect(previousWindow, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
-		disconnect(previousWindow, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
+		disconnect(previousWindow, &Window::arbitraryActionsStateChanged, this, &MainWindow::arbitraryActionsStateChanged);
+		disconnect(previousWindow, &Window::categorizedActionsStateChanged, this, &MainWindow::categorizedActionsStateChanged);
 	}
 
 	if (window)
 	{
-		connect(window, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
-		connect(window, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
+		connect(window, &Window::arbitraryActionsStateChanged, this, &MainWindow::arbitraryActionsStateChanged);
+		connect(window, &Window::categorizedActionsStateChanged, this, &MainWindow::categorizedActionsStateChanged);
 	}
 }
 

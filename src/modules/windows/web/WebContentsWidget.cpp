@@ -1215,8 +1215,8 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, &WebWidget::urlChanged, this, &WebContentsWidget::handleUrlChange);
 	connect(m_webWidget, &WebWidget::iconChanged, this, &WebContentsWidget::iconChanged);
 	connect(m_webWidget, &WebWidget::requestBlocked, this, &WebContentsWidget::requestBlocked);
-	connect(m_webWidget, SIGNAL(arbitraryActionsStateChanged(QVector<int>)), this, SIGNAL(arbitraryActionsStateChanged(QVector<int>)));
-	connect(m_webWidget, SIGNAL(categorizedActionsStateChanged(QVector<int>)), this, SIGNAL(categorizedActionsStateChanged(QVector<int>)));
+	connect(m_webWidget, &WebWidget::arbitraryActionsStateChanged, this, &WebContentsWidget::arbitraryActionsStateChanged);
+	connect(m_webWidget, &WebWidget::categorizedActionsStateChanged, this, &WebContentsWidget::categorizedActionsStateChanged);
 	connect(m_webWidget, &WebWidget::contentStateChanged, this, &WebContentsWidget::contentStateChanged);
 	connect(m_webWidget, &WebWidget::loadingStateChanged, this, &WebContentsWidget::loadingStateChanged);
 	connect(m_webWidget, &WebWidget::loadingStateChanged, this, &WebContentsWidget::handleLoadingStateChange);
