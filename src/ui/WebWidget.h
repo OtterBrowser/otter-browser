@@ -328,7 +328,6 @@ signals:
 	void needsAttention();
 	void requestedCloseWindow();
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
-	void requestedSearch(const QString &query, const QString &search, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);

@@ -1203,7 +1203,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 	connect(m_webWidget, &WebWidget::aboutToNavigate, this, &WebContentsWidget::closePopupsBar);
 	connect(m_webWidget, &WebWidget::needsAttention, this, &WebContentsWidget::needsAttention);
 	connect(m_webWidget, &WebWidget::requestedNewWindow, this, &WebContentsWidget::notifyRequestedNewWindow);
-	connect(m_webWidget, &WebWidget::requestedSearch, this, &WebContentsWidget::requestedSearch);
 	connect(m_webWidget, &WebWidget::requestedPopupWindow, this, &WebContentsWidget::handlePopupWindowRequest);
 	connect(m_webWidget, &WebWidget::requestedPermission, this, &WebContentsWidget::handlePermissionRequest);
 	connect(m_webWidget, &WebWidget::requestedSavePassword, this, &WebContentsWidget::handleSavePasswordRequest);
