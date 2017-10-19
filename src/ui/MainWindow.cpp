@@ -185,6 +185,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarAdded, this, &MainWindow::handleToolBarAdded);
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarRemoved, this, &MainWindow::handleToolBarRemoved);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &MainWindow::handleTransferStarted);
+	connect(m_workspace, &WorkspaceWidget::arbitraryActionsStateChanged, this, &MainWindow::arbitraryActionsStateChanged);
 
 	if (session.geometry.isEmpty())
 	{
@@ -214,8 +215,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 			updateWindowTitle();
 		});
 	}
-
-	connect(m_workspace, &WorkspaceWidget::arbitraryActionsStateChanged, this, &MainWindow::arbitraryActionsStateChanged);
 }
 
 MainWindow::~MainWindow()
