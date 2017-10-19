@@ -80,107 +80,87 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	setUnifiedTitleAndToolBarOnMac(true);
 	updateShortcuts();
 
-	const QVector<int> extraToolBars({ToolBarsManager::AddressBar, ToolBarsManager::MenuBar, ToolBarsManager::ProgressBar, ToolBarsManager::StatusBar});
-	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
+	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea, Qt::NoToolBarArea});
+	QMap<Qt::ToolBarArea, QVector<ToolBarState> > toolBarStates;
 
-	if (session.hasToolBarsState)
+	if (!session.hasToolBarsState)
 	{
-		if (!session.toolBars.isEmpty())
+		for (int i = 0; i < 5; ++i)
 		{
-			QMap<Qt::ToolBarArea, QVector<ToolBarState> > allToolBarDefinitions;
+			const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions(areas.at(i)));
 
-			for (int i = 0; i < session.toolBars.count(); ++i)
+			if (!definitions.isEmpty())
 			{
-				if (extraToolBars.contains(session.toolBars.at(i).identifier))
-				{
-					m_toolBarStates[session.toolBars.at(i).identifier] = session.toolBars.at(i);
-				}
-				else if (session.toolBars.at(i).location != Qt::NoToolBarArea)
-				{
-					if (!allToolBarDefinitions.contains(session.toolBars.at(i).location))
-					{
-						allToolBarDefinitions[session.toolBars.at(i).location] = QVector<ToolBarState>();
-					}
+				QVector<ToolBarState> states;
+				states.reserve(definitions.length());
 
-					allToolBarDefinitions[session.toolBars.at(i).location].append(session.toolBars.at(i));
+				for (int j = 0; j < definitions.count(); ++j)
+				{
+					states.append(ToolBarState(definitions.at(j).identifier, ToolBarsManager::getToolBarDefinition(definitions.at(j).identifier)));
 				}
+
+				toolBarStates[areas.at(i)] = states;
 			}
-
-			for (int i = 0; i < 4; ++i)
-			{
-				const Qt::ToolBarArea area(areas.at(i));
-				QVector<ToolBarState> toolBarDefinitions(allToolBarDefinitions.value(area));
-
-				std::sort(toolBarDefinitions.begin(), toolBarDefinitions.end(), [&](const ToolBarState &first, const ToolBarState &second)
-				{
-					return (first.row > second.row);
-				});
-
-				for (int j = 0; j < toolBarDefinitions.count(); ++j)
-				{
-					ToolBarWidget *toolBar(new ToolBarWidget(toolBarDefinitions.at(j).identifier, nullptr, this));
-					toolBar->setState(toolBarDefinitions.at(j));
-
-					if (toolBarDefinitions.at(j).identifier == ToolBarsManager::TabBar)
-					{
-						m_tabBar = toolBar->findChild<TabBarWidget*>();
-					}
-
-					if (j > 0)
-					{
-						addToolBarBreak(area);
-					}
-
-					addToolBar(area, toolBar);
-
-					m_toolBars[toolBarDefinitions.at(j).identifier] = toolBar;
-				}
-			}
-		}
-
-		if (!m_tabBar)
-		{
-			m_tabBar = new TabBarWidget(this);
-			m_tabBar->hide();
 		}
 	}
-	else
+	else if (!session.toolBars.isEmpty())
 	{
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < session.toolBars.count(); ++i)
 		{
-			const Qt::ToolBarArea area(areas.at(i));
-			QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions(ToolBarsManager::getToolBarDefinitions(area));
-
-			std::sort(toolBarDefinitions.begin(), toolBarDefinitions.end(), [&](const ToolBarsManager::ToolBarDefinition &first, const ToolBarsManager::ToolBarDefinition &second)
+			if (!toolBarStates.contains(session.toolBars.at(i).location))
 			{
-				return (first.row > second.row);
-			});
-
-			for (int j = 0; j < toolBarDefinitions.count(); ++j)
-			{
-				ToolBarWidget *toolBar(new ToolBarWidget(toolBarDefinitions.at(j).identifier, nullptr, this));
-				toolBar->setState(ToolBarState(toolBarDefinitions.at(j).identifier, toolBar->getDefinition()));
-
-				if (toolBarDefinitions.at(j).identifier == ToolBarsManager::TabBar)
-				{
-					m_tabBar = toolBar->findChild<TabBarWidget*>();
-				}
-
-				if (j > 0)
-				{
-					addToolBarBreak(area);
-				}
-
-				addToolBar(area, toolBar);
-
-				m_toolBars[toolBarDefinitions.at(j).identifier] = toolBar;
+				toolBarStates[session.toolBars.at(i).location] = {};
 			}
-		}
 
-		for (int i = 0; i < extraToolBars.count(); ++i)
-		{
-			m_toolBarStates[extraToolBars.at(i)] = ToolBarState(extraToolBars.at(i), ToolBarsManager::getToolBarDefinition(extraToolBars.at(i)));
+			toolBarStates[session.toolBars.at(i).location].append(session.toolBars.at(i));
 		}
+	}
+
+	if (toolBarStates.contains(Qt::NoToolBarArea))
+	{
+		const QVector<ToolBarState> states(toolBarStates[Qt::NoToolBarArea]);
+
+		for (int i = 0; i < states.count(); ++i)
+		{
+			m_toolBarStates[states.at(i).identifier] = states.at(i);
+		}
+	}
+
+	for (int i = 0; i < 4; ++i)
+	{
+		const Qt::ToolBarArea area(areas.at(i));
+		QVector<ToolBarState> states(toolBarStates.value(area));
+
+		std::sort(states.begin(), states.end(), [&](const ToolBarState &first, const ToolBarState &second)
+		{
+			return (first.row > second.row);
+		});
+
+		for (int j = 0; j < states.count(); ++j)
+		{
+			ToolBarWidget *toolBar(new ToolBarWidget(states.at(j).identifier, nullptr, this));
+			toolBar->setState(states.at(j));
+
+			if (states.at(j).identifier == ToolBarsManager::TabBar)
+			{
+				m_tabBar = toolBar->findChild<TabBarWidget*>();
+			}
+
+			if (j > 0)
+			{
+				addToolBarBreak(area);
+			}
+
+			addToolBar(area, toolBar);
+
+			m_toolBars[states.at(j).identifier] = toolBar;
+		}
+	}
+
+	if (!m_tabBar)
+	{
+		m_tabBar = new TabBarWidget(this);
+		m_tabBar->hide();
 	}
 
 	if (getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}}).isChecked)
