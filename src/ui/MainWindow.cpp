@@ -1347,7 +1347,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		}
 	}
 
-	connect(window, &Window::needsAttention, [&]()
+	connect(window, &Window::needsAttention, this, [&]()
 	{
 		QApplication::alert(this);
 	});

@@ -216,7 +216,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 				m_spinnerAnimation = new GenericAnimation(path, this);
 			}
 
-			connect(m_spinnerAnimation, &Animation::frameChanged, [&]()
+			connect(m_spinnerAnimation, &Animation::frameChanged, m_previewLabel, [&]()
 			{
 				m_previewLabel->setPixmap(m_spinnerAnimation->getCurrentPixmap());
 			});

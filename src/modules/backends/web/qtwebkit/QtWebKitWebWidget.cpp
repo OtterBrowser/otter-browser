@@ -359,7 +359,7 @@ void QtWebKitWebWidget::openRequest(const QNetworkRequest &request, QNetworkAcce
 	setRequestedUrl(m_formRequest.url(), false, true);
 	updateOptions(m_formRequest.url());
 
-	QTimer::singleShot(50, [&]()
+	QTimer::singleShot(50, this, [&]()
 	{
 		m_page->mainFrame()->load(m_formRequest, m_formRequestOperation, m_formRequestBody);
 
