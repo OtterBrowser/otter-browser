@@ -81,26 +81,10 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	updateShortcuts();
 
 	const QVector<int> extraToolBars({ToolBarsManager::AddressBar, ToolBarsManager::MenuBar, ToolBarsManager::ProgressBar, ToolBarsManager::StatusBar});
-
-	for (int i = 0; i < extraToolBars.count(); ++i)
-	{
-		m_toolBarStates[extraToolBars.at(i)] = ToolBarState(extraToolBars.at(i), ToolBarsManager::getToolBarDefinition(extraToolBars.at(i)));
-	}
-
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
-	const bool useMinimalInterface(parameters.value(QLatin1String("minimalInterface"), false).toBool());
 
-	if (session.hasToolBarsState || useMinimalInterface)
+	if (session.hasToolBarsState)
 	{
-		if (useMinimalInterface)
-		{
-			m_toolBarStates[ToolBarsManager::MenuBar].normalVisibility = ToolBarState::AlwaysHiddenToolBar;
-			m_toolBarStates[ToolBarsManager::MenuBar].fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
-
-			m_toolBarStates[ToolBarsManager::StatusBar].normalVisibility = ToolBarState::AlwaysHiddenToolBar;
-			m_toolBarStates[ToolBarsManager::StatusBar].fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
-		}
-
 		if (!session.toolBars.isEmpty())
 		{
 			QMap<Qt::ToolBarArea, QVector<ToolBarState> > allToolBarDefinitions;
@@ -154,6 +138,19 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 			}
 		}
 
+		for (int i = 0; i < extraToolBars.count(); ++i)
+		{
+			if (!m_toolBarStates.contains(extraToolBars.at(i)))
+			{
+				ToolBarState state;
+				state.identifier = extraToolBars.at(i);
+				state.normalVisibility = ToolBarState::AlwaysHiddenToolBar;
+				state.fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
+
+				m_toolBarStates[extraToolBars.at(i)] = state;
+			}
+		}
+
 		if (!m_tabBar)
 		{
 			m_tabBar = new TabBarWidget(this);
@@ -191,6 +188,11 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 				m_toolBars[toolBarDefinitions.at(j).identifier] = toolBar;
 			}
+		}
+
+		for (int i = 0; i < extraToolBars.count(); ++i)
+		{
+			m_toolBarStates[extraToolBars.at(i)] = ToolBarState(extraToolBars.at(i), ToolBarsManager::getToolBarDefinition(extraToolBars.at(i)));
 		}
 	}
 
@@ -2009,19 +2011,18 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
 		SessionMainWindow session;
-		QVariantMap mainWindowParameters({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}});
+		session.hasToolBarsState = true;
 
 		if (parameters.contains(QLatin1String("minimalInterface")))
 		{
-			mainWindowParameters[QLatin1String("minimalInterface")] = parameters[QLatin1String("minimalInterface")];
+			session.toolBars = {getToolBarState(ToolBarsManager::AddressBar), getToolBarState(ToolBarsManager::ProgressBar)};
 		}
 		else
 		{
 			session.toolBars = getSession().toolBars;
-			session.hasToolBarsState = true;
 		}
 
-		MainWindow *mainWindow(Application::createWindow(mainWindowParameters, session));
+		MainWindow *mainWindow(Application::createWindow({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}}, session));
 
 		window = mainWindow->openWindow(widget);
 	}
