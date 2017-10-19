@@ -1197,8 +1197,6 @@ void MainWindow::search(const QString &query, const QString &searchEngine, Sessi
 
 void MainWindow::restoreSession(const SessionMainWindow &session)
 {
-	disconnect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
-
 	int index(session.index);
 
 	if (index >= session.windows.count())
@@ -1243,8 +1241,6 @@ void MainWindow::restoreSession(const SessionMainWindow &session)
 	}
 
 	m_isSessionRestored = true;
-
-	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
 
 	setActiveWindowByIndex(index);
 

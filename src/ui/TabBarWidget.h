@@ -123,7 +123,7 @@ protected:
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
-	void updatePreviewPosition();
+	void handleCurrentChanged(int index);
 	void updatePinnedTabsAmount();
 	void updateStyle();
 	void setArea(Qt::ToolBarArea area);

@@ -553,7 +553,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &TabBarWidget::handleOptionChanged);
 	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &TabBarWidget::updateStyle);
-	connect(this, &TabBarWidget::currentChanged, this, &TabBarWidget::updatePreviewPosition);
+	connect(this, &TabBarWidget::currentChanged, this, &TabBarWidget::handleCurrentChanged);
 }
 
 void TabBarWidget::changeEvent(QEvent *event)
@@ -1397,8 +1397,15 @@ void TabBarWidget::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
-void TabBarWidget::updatePreviewPosition()
+void TabBarWidget::handleCurrentChanged(int index)
 {
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow)
+	{
+		mainWindow->setActiveWindowByIndex(index);
+	}
+
 	if (m_previewWidget && m_previewWidget->isVisible())
 	{
 		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
