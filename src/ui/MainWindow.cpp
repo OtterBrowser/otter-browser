@@ -878,12 +878,14 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				const int toolBarIdentifier((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt());
 				const bool isChecked(parameters.value(QLatin1String("isChecked"), !getActionState(toolBarIdentifier, parameters).isChecked).toBool());
 				const ToolBarState::ToolBarVisibility visibility(isChecked ? ToolBarState::AlwaysVisibleToolBar : ToolBarState::AlwaysHiddenToolBar);
+				ToolBarState state(getToolBarState(toolBarIdentifier));
+				state.setVisibility(mode, visibility);
+
+				m_toolBarStates[toolBarIdentifier] = state;
 
 				switch (toolBarIdentifier)
 				{
 					case ToolBarsManager::MenuBar:
-						m_toolBarStates[toolBarIdentifier].setVisibility(mode, visibility);
-
 						if (isChecked && (!m_menuBar || !m_menuBar->isVisible()))
 						{
 							if (!m_menuBar)
@@ -903,12 +905,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 						break;
 					case ToolBarsManager::AddressBar:
 					case ToolBarsManager::ProgressBar:
-						m_toolBarStates[toolBarIdentifier].setVisibility(mode, visibility);
-
 						break;
 					case ToolBarsManager::StatusBar:
-						m_toolBarStates[toolBarIdentifier].setVisibility(mode, visibility);
-
 						if (isChecked && !m_statusBar)
 						{
 							m_statusBar = new StatusBarWidget(this);
@@ -932,11 +930,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 						if (m_toolBars.contains(toolBarIdentifier))
 						{
-							ToolBarWidget *toolBar(m_toolBars[toolBarIdentifier]);
-							ToolBarState state(toolBar->getState());
-							state.setVisibility(mode, visibility);
-
-							toolBar->setState(state);
+							m_toolBars[toolBarIdentifier]->setState(state);
 						}
 
 						break;
