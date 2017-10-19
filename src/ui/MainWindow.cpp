@@ -138,19 +138,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 			}
 		}
 
-		for (int i = 0; i < extraToolBars.count(); ++i)
-		{
-			if (!m_toolBarStates.contains(extraToolBars.at(i)))
-			{
-				ToolBarState state;
-				state.identifier = extraToolBars.at(i);
-				state.normalVisibility = ToolBarState::AlwaysHiddenToolBar;
-				state.fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
-
-				m_toolBarStates[extraToolBars.at(i)] = state;
-			}
-		}
-
 		if (!m_tabBar)
 		{
 			m_tabBar = new TabBarWidget(this);
