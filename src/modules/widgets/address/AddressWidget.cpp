@@ -321,7 +321,8 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	m_completionModes(NoCompletionMode),
 	m_hints(SessionsManager::DefaultOpen),
 	m_isNavigatingCompletion(false),
-	m_isUsingSimpleMode(false)
+	m_isUsingSimpleMode(false),
+	m_wasEdited(false)
 {
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -350,6 +351,10 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 		}
 	}
 
+	connect(this, &AddressWidget::textEdited, this, [&](const QString &text)
+	{
+		m_wasEdited = true;
+	});
 	connect(this, &AddressWidget::textDropped, this, [&](const QString &text)
 	{
 		handleUserInput(text);
@@ -1334,18 +1339,20 @@ void AddressWidget::setWindow(Window *window)
 
 void AddressWidget::setUrl(const QUrl &url, bool force)
 {
+	const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
+
 	if (!m_isUsingSimpleMode)
 	{
 		updateGeometries();
 	}
 
-	if (!m_window || ((force || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
+	if (m_isUsingSimpleMode || ((force || !m_wasEdited || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
 	{
-		const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
-
 		setToolTip(text);
 		setText(text);
 		setCursorPosition(0);
+
+		m_wasEdited = false;
 	}
 }
 
