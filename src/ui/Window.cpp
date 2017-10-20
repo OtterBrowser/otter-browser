@@ -744,12 +744,12 @@ WebWidget* Window::getWebWidget()
 
 QString Window::getTitle() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getTitle() : m_session.getTitle());
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getTitle() : m_session.getTitle());
 }
 
 QLatin1String Window::getType() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getType() : QLatin1String("unknown"));
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getType() : QLatin1String("unknown"));
 }
 
 QVariant Window::getOption(int identifier) const
@@ -764,17 +764,17 @@ QVariant Window::getOption(int identifier) const
 
 QUrl Window::getUrl() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getUrl() : m_session.getUrl());
 }
 
 QIcon Window::getIcon() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getIcon() : HistoryManager::getIcon(m_session.getUrl()));
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getIcon() : HistoryManager::getIcon(m_session.getUrl()));
 }
 
 QPixmap Window::createThumbnail() const
 {
-	return (m_contentsWidget ? m_contentsWidget->createThumbnail() : QPixmap());
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->createThumbnail() : QPixmap());
 }
 
 QDateTime Window::getLastActivity() const
@@ -921,12 +921,12 @@ QSize Window::sizeHint() const
 
 WebWidget::LoadingState Window::getLoadingState() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getLoadingState() : WebWidget::DeferredLoadingState);
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getLoadingState() : WebWidget::DeferredLoadingState);
 }
 
 WebWidget::ContentStates Window::getContentState() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getContentState() : WebWidget::UnknownContentState);
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getContentState() : WebWidget::UnknownContentState);
 }
 
 quint64 Window::getIdentifier() const
@@ -936,17 +936,17 @@ quint64 Window::getIdentifier() const
 
 int Window::getZoom() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getZoom() : m_session.getZoom());
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getZoom() : m_session.getZoom());
 }
 
 bool Window::canClone() const
 {
-	return (m_contentsWidget ? m_contentsWidget->canClone() : false);
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->canClone() : false);
 }
 
 bool Window::canZoom() const
 {
-	return (m_contentsWidget ? m_contentsWidget->canZoom() : false);
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->canZoom() : false);
 }
 
 bool Window::isAboutToClose() const
@@ -966,7 +966,7 @@ bool Window::isPinned() const
 
 bool Window::isPrivate() const
 {
-	return (m_contentsWidget ? m_contentsWidget->isPrivate() : SessionsManager::calculateOpenHints(m_parameters).testFlag(SessionsManager::PrivateOpen));
+	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->isPrivate() : SessionsManager::calculateOpenHints(m_parameters).testFlag(SessionsManager::PrivateOpen));
 }
 
 bool Window::event(QEvent *event)
