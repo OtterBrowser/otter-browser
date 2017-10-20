@@ -840,14 +840,34 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowToolBarAction:
 			if (parameters.contains(QLatin1String("toolBar")))
 			{
-				const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 				const int toolBarIdentifier((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt());
-				const bool isChecked(parameters.value(QLatin1String("isChecked"), !getActionState(toolBarIdentifier, parameters).isChecked).toBool());
-				const ToolBarState::ToolBarVisibility visibility(isChecked ? ToolBarState::AlwaysVisibleToolBar : ToolBarState::AlwaysHiddenToolBar);
-				ToolBarState state(getToolBarState(toolBarIdentifier));
-				state.setVisibility(mode, visibility);
+				const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
 
-				m_toolBarStates[toolBarIdentifier] = state;
+				if (!definition.isValid())
+				{
+					return;
+				}
+
+				const bool isChecked(parameters.value(QLatin1String("isChecked"), !getActionState(toolBarIdentifier, parameters).isChecked).toBool());
+				ToolBarState state(getToolBarState(toolBarIdentifier));
+				state.setVisibility((windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode), (isChecked ? ToolBarState::AlwaysVisibleToolBar : ToolBarState::AlwaysHiddenToolBar));
+
+				if (definition.location == Qt::NoToolBarArea)
+				{
+					m_toolBarStates[toolBarIdentifier] = state;
+				}
+				else
+				{
+					if (!m_toolBars.contains(toolBarIdentifier))
+					{
+						handleToolBarAdded(toolBarIdentifier);
+					}
+
+					if (m_toolBars.contains(toolBarIdentifier))
+					{
+						m_toolBars[toolBarIdentifier]->setState(state);
+					}
+				}
 
 				switch (toolBarIdentifier)
 				{
@@ -869,9 +889,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 						}
 
 						break;
-					case ToolBarsManager::AddressBar:
-					case ToolBarsManager::ProgressBar:
-						break;
 					case ToolBarsManager::StatusBar:
 						if (isChecked && !m_statusBar)
 						{
@@ -889,16 +906,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 						break;
 					default:
-						if (!m_toolBars.contains(toolBarIdentifier) && ToolBarsManager::getToolBarDefinition(toolBarIdentifier).isValid())
-						{
-							handleToolBarAdded(toolBarIdentifier);
-						}
-
-						if (m_toolBars.contains(toolBarIdentifier))
-						{
-							m_toolBars[toolBarIdentifier]->setState(state);
-						}
-
 						break;
 				}
 
@@ -2207,7 +2214,7 @@ SessionMainWindow MainWindow::getSession() const
 	session.geometry = saveGeometry();
 	session.index = getCurrentWindowIndex();
 	session.hasToolBarsState = true;
-	session.toolBars.reserve(m_toolBars.count() + 3);
+	session.toolBars.reserve(m_toolBarStates.count() + m_toolBars.count());
 	session.toolBars = m_toolBarStates.values().toVector();
 
 	for (int i = 0; i < 4; ++i)
