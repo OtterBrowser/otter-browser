@@ -1685,6 +1685,11 @@ bool QtWebEngineWebWidget::canFastForward() const
 		return true;
 	}
 
+	if (Utils::isUrlEmpty(getUrl()))
+	{
+		return false;
+	}
+
 	QEventLoop eventLoop;
 	bool canFastFoward(false);
 

@@ -2616,6 +2616,11 @@ bool QtWebKitWebWidget::canFastForward() const
 		return true;
 	}
 
+	if (Utils::isUrlEmpty(getUrl()))
+	{
+		return false;
+	}
+
 	return m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(false)).toBool();
 }
 
