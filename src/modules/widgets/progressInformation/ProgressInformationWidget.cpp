@@ -216,6 +216,10 @@ void ProgressInformationWidget::setWindow(Window *window)
 
 		connect(m_window, &Window::pageInformationChanged, this, &ProgressInformationWidget::updateStatus);
 	}
+	else
+	{
+		updateStatus(type, {});
+	}
 }
 
 QSize ProgressInformationWidget::sizeHint() const
