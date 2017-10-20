@@ -576,11 +576,33 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::NewWindowAction:
-			createWindow();
-
-			return;
 		case ActionsManager::NewWindowPrivateAction:
-			createWindow({{QLatin1String("hints"), SessionsManager::PrivateOpen}});
+			{
+				SessionMainWindow session;
+
+				if (m_activeWindow)
+				{
+					session.hasToolBarsState = true;
+
+					if (parameters.contains(QLatin1String("minimalInterface")))
+					{
+						session.toolBars = {m_activeWindow->getToolBarState(ToolBarsManager::AddressBar), m_activeWindow->getToolBarState(ToolBarsManager::ProgressBar)};
+					}
+					else
+					{
+						session.toolBars = m_activeWindow->getSession().toolBars;
+					}
+				}
+
+				QVariantMap mutableParameters(parameters);
+
+				if (identifier == ActionsManager::NewWindowPrivateAction)
+				{
+					mutableParameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
+				}
+
+				createWindow(mutableParameters, session);
+			}
 
 			return;
 		case ActionsManager::ClosePrivateTabsPanicAction:
