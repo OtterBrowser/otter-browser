@@ -62,7 +62,7 @@ quint64 MainWindow::m_identifierCounter(0);
 MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent), ActionExecutor(),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
-	m_tabBar(nullptr),
+	m_tabBar(new TabBarWidget(this)),
 	m_menuBar(nullptr),
 	m_statusBar(nullptr),
 	m_currentWindow(nullptr),
@@ -79,6 +79,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 	setUnifiedTitleAndToolBarOnMac(true);
 	updateShortcuts();
+
+	m_tabBar->hide();
 
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea, Qt::NoToolBarArea});
 	QMap<Qt::ToolBarArea, QVector<ToolBarState> > toolBarStates;
@@ -141,11 +143,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 			ToolBarWidget *toolBar(new ToolBarWidget(states.at(j).identifier, nullptr, this));
 			toolBar->setState(states.at(j));
 
-			if (states.at(j).identifier == ToolBarsManager::TabBar)
-			{
-				m_tabBar = toolBar->findChild<TabBarWidget*>();
-			}
-
 			if (j > 0)
 			{
 				addToolBarBreak(area);
@@ -155,12 +152,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 			m_toolBars[states.at(j).identifier] = toolBar;
 		}
-	}
-
-	if (!m_tabBar)
-	{
-		m_tabBar = new TabBarWidget(this);
-		m_tabBar->hide();
 	}
 
 	if (getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}}).isChecked)
