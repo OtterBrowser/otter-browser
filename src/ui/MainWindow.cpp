@@ -1971,7 +1971,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 		SessionMainWindow session;
 		session.hasToolBarsState = true;
 
-		if (parameters.contains(QLatin1String("minimalInterface")))
+		if (parameters.value(QLatin1String("minimalInterface")).toBool())
 		{
 			session.toolBars = {getToolBarState(ToolBarsManager::AddressBar), getToolBarState(ToolBarsManager::ProgressBar)};
 		}

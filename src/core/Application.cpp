@@ -584,7 +584,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 				{
 					session.hasToolBarsState = true;
 
-					if (parameters.contains(QLatin1String("minimalInterface")))
+					if (parameters.value(QLatin1String("minimalInterface")).toBool())
 					{
 						session.toolBars = {m_activeWindow->getToolBarState(ToolBarsManager::AddressBar), m_activeWindow->getToolBarState(ToolBarsManager::ProgressBar)};
 					}
