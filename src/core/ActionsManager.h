@@ -106,6 +106,7 @@ public:
 		OpenAction,
 		SaveAction,
 		CloneTabAction,
+		PeekTabAction,
 		PinTabAction,
 		DetachTabAction,
 		MaximizeTabAction,
