@@ -159,7 +159,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::DetachTabAction:
-			if (m_mainWindow->getWindowCount() > 1)
+			if (m_mainWindow->getWindowCount() > 1 || parameters.value(QLatin1String("minimalInterface")).toBool())
 			{
 				m_mainWindow->moveWindow(this, nullptr, parameters);
 			}
@@ -793,7 +793,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::DetachTabAction:
-			state.isEnabled = (m_mainWindow->getWindowCount() > 1);
+			state.isEnabled = (m_mainWindow->getWindowCount() > 1 || parameters.value(QLatin1String("minimalInterface")).toBool());
 
 			break;
 		case ActionsManager::PinTabAction:
