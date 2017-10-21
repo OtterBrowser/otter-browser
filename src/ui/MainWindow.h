@@ -110,7 +110,7 @@ protected:
 protected slots:
 	void removeStoredUrl(const QString &url);
 	void handleOptionChanged(int identifier);
-	void handleWindowClose(Window *window);
+	void handleRequestedCloseWindow(Window *window);
 	void handleWindowIsPinnedChanged(bool isPinned);
 	void handleToolBarAdded(int identifier);
 	void handleToolBarRemoved(int identifier);

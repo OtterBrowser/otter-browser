@@ -1351,7 +1351,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	});
 	connect(window, &Window::titleChanged, this, &MainWindow::updateWindowTitle);
 	connect(window, &Window::requestedSearch, this, &MainWindow::search);
-	connect(window, &Window::requestedCloseWindow, this, &MainWindow::handleWindowClose);
+	connect(window, &Window::requestedCloseWindow, this, &MainWindow::handleRequestedCloseWindow);
 	connect(window, &Window::isPinnedChanged, this, &MainWindow::handleWindowIsPinnedChanged);
 	connect(window, &Window::requestedNewWindow, this, [&](ContentsWidget *widget, SessionsManager::OpenHints hints)
 	{
@@ -1522,7 +1522,7 @@ void MainWindow::handleOptionChanged(int identifier)
 	}
 }
 
-void MainWindow::handleWindowClose(Window *window)
+void MainWindow::handleRequestedCloseWindow(Window *window)
 {
 	const int index(window ? getWindowIndex(window->getIdentifier()) : -1);
 
