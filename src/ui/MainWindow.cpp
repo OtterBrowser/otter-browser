@@ -1396,7 +1396,7 @@ void MainWindow::moveWindow(Window *window, MainWindow *mainWindow, const QVaria
 		m_privateWindows.removeAll(window);
 	}
 
-	if (mainWindow && m_windows.isEmpty())
+	if (m_windows.isEmpty())
 	{
 		close();
 	}
