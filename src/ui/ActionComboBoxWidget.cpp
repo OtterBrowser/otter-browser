@@ -48,10 +48,12 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(par
 			continue;
 		}
 
+		const QString name(ActionsManager::getActionName(definitions.at(i).identifier));
 		QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(definitions.at(i).identifier, Qt::UserRole);
-		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
+		item->setData(definitions.at(i).identifier, IdentifierRole);
+		item->setData(name, NameRole);
+		item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		if (!definitions.at(i).defaultState.icon.isNull())
@@ -129,7 +131,7 @@ void ActionComboBoxWidget::setActionIdentifier(int action)
 
 int ActionComboBoxWidget::getActionIdentifier() const
 {
-	return ((currentIndex() >= 0) ? currentData(Qt::UserRole).toInt() : -1);
+	return ((currentIndex() >= 0) ? currentData(IdentifierRole).toInt() : -1);
 }
 
 bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
@@ -152,6 +154,7 @@ bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 				m_filterLineEditWidget->setClearButtonEnabled(true);
 				m_filterLineEditWidget->setPlaceholderText(tr("Search…"));
 
+				getView()->setFilterRoles({Qt::DisplayRole, NameRole});
 				getView()->setStyleSheet(QStringLiteral("QAbstractItemView {padding:0 0 %1px 0;}").arg(m_filterLineEditWidget->height()));
 
 				connect(m_filterLineEditWidget, &LineEditWidget::textChanged, getView(), &ItemViewWidget::setFilterString);

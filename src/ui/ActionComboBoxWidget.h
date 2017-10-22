@@ -35,6 +35,12 @@ class ActionComboBoxWidget final : public ComboBoxWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		NameRole
+	};
+
 	explicit ActionComboBoxWidget(QWidget *parent = nullptr);
 
 	void setActionIdentifier(int action);
