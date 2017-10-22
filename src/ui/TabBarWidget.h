@@ -40,6 +40,7 @@ class TabHandleWidget final : public QWidget
 public:
 	explicit TabHandleWidget(Window *window, TabBarWidget *parent);
 
+	void setIsActiveWindow(bool isActive);
 	Window* getWindow() const;
 
 protected:
@@ -54,7 +55,6 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *event) override;
 
 protected slots:
-	void markAsActive();
 	void markAsNeedingAttention();
 	void handleLoadingStateChanged(WebWidget::LoadingState state);
 	void updateGeometries();
@@ -67,6 +67,7 @@ private:
 	QRect m_thumbnailRectangle;
 	QRect m_titleRectangle;
 	int m_dragTimer;
+	bool m_isActiveWindow;
 	bool m_isCloseButtonUnderMouse;
 	bool m_wasCloseButtonPressed;
 
@@ -130,6 +131,7 @@ protected slots:
 
 private:
 	PreviewWidget *m_previewWidget;
+	QPointer<TabHandleWidget> m_activeTabHandleWidget;
 	QPointer<QWidget> m_movableTabWidget;
 	QPoint m_dragMovePosition;
 	QPoint m_dragStartPosition;

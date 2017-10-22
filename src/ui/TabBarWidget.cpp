@@ -63,6 +63,7 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	m_window(window),
 	m_tabBarWidget(parent),
 	m_dragTimer(0),
+	m_isActiveWindow(false),
 	m_isCloseButtonUnderMouse(false),
 	m_wasCloseButtonPressed(false)
 {
@@ -70,7 +71,6 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	setAcceptDrops(true);
 	setMouseTracking(true);
 
-	connect(window, &Window::activated, this, &TabHandleWidget::markAsActive);
 	connect(window, &Window::needsAttention, this, &TabHandleWidget::markAsNeedingAttention);
 	connect(window, &Window::titleChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
 	connect(window, &Window::iconChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
@@ -186,15 +186,26 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_titleRectangle.isValid())
 	{
-		QColor color(palette().color(QPalette::Text));
+		QStyleOptionTab option;
+		option.initFrom(this);
+		option.rect = m_titleRectangle;
+		option.text = m_window->getTitle();
+
+		if (m_isActiveWindow)
+		{
+			option.state |= QStyle::State_Selected;
+		}
+
+		painter.save();
 
 		if (m_window->getLoadingState() == WebWidget::DeferredLoadingState)
 		{
-			color.setAlpha(150);
+			painter.setOpacity(0.75);
 		}
 
-		painter.setPen(color);
-		painter.drawText(m_titleRectangle, ((isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter), fontMetrics().elidedText(m_window->getTitle(), Qt::ElideRight, m_titleRectangle.width()));
+		style()->drawControl(QStyle::CE_TabBarTabLabel, &option, &painter);
+
+		painter.restore();
 	}
 }
 
@@ -284,14 +295,9 @@ void TabHandleWidget::dragEnterEvent(QDragEnterEvent *event)
 	}
 }
 
-void TabHandleWidget::markAsActive()
-{
-	setFont(parentWidget()->font());
-}
-
 void TabHandleWidget::markAsNeedingAttention()
 {
-	if (m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
+	if (!m_isActiveWindow)
 	{
 		QFont font(parentWidget()->font());
 		font.setBold(true);
@@ -504,6 +510,21 @@ void TabHandleWidget::updateGeometries()
 	update();
 }
 
+void TabHandleWidget::setIsActiveWindow(bool isActive)
+{
+	if (isActive != m_isActiveWindow)
+	{
+		m_isActiveWindow = isActive;
+
+		if (isActive)
+		{
+			setFont(parentWidget()->font());
+		}
+
+		update();
+	}
+}
+
 Window* TabHandleWidget::getWindow() const
 {
 	return m_window;
@@ -511,6 +532,7 @@ Window* TabHandleWidget::getWindow() const
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(nullptr),
+	m_activeTabHandleWidget(nullptr),
 	m_movableTabWidget(nullptr),
 	m_tabWidth(0),
 	m_clickedTab(-1),
@@ -1132,6 +1154,11 @@ void TabBarWidget::addTab(int index, Window *window)
 	{
 		updatePinnedTabsAmount();
 	}
+
+	if (count() == 1)
+	{
+		handleCurrentChanged(0);
+	}
 }
 
 void TabBarWidget::removeTab(int index)
@@ -1410,6 +1437,20 @@ void TabBarWidget::handleCurrentChanged(int index)
 	{
 		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
 	}
+
+	TabHandleWidget *tabHandleWidget(qobject_cast<TabHandleWidget*>(tabButton(index, QTabBar::LeftSide)));
+
+	if (tabHandleWidget)
+	{
+		tabHandleWidget->setIsActiveWindow(true);
+	}
+
+	if (m_activeTabHandleWidget && tabHandleWidget != m_activeTabHandleWidget)
+	{
+		m_activeTabHandleWidget->setIsActiveWindow(false);
+	}
+
+	m_activeTabHandleWidget = tabHandleWidget;
 }
 
 void TabBarWidget::updatePinnedTabsAmount()
