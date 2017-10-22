@@ -41,9 +41,12 @@ void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 	if (widget && widget->getActionIdentifier() >= 0)
 	{
 		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
+		const QString name(widget->getActionIdentifier());
 
 		model->setData(index, definition.getText(true), Qt::DisplayRole);
-		model->setData(index, widget->getActionIdentifier(), Qt::UserRole);
+		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true)).arg(name), Qt::ToolTipRole);
+		model->setData(index, widget->getActionIdentifier(), MouseProfileDialog::IdentifierRole);
+		model->setData(index, name, MouseProfileDialog::NameRole);
 
 		if (definition.defaultState.icon.isNull())
 		{
@@ -91,6 +94,8 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			for (int i = 0; i < gestures.count(); ++i)
 			{
 				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures[i].action));
+				const QString name(ActionsManager::getActionName(gestures.at(i).action));
+				const QString parameters(gestures.at(i).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(gestures.at(i).parameters)).toJson(QJsonDocument::Compact));
 				QString steps;
 
 				for (int j = 0; j < gestures[i].steps.count(); ++j)
@@ -103,13 +108,13 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 					steps += gestures[i].steps.at(j).toString();
 				}
 
-				const QString parameters(gestures.at(i).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(gestures.at(i).parameters)).toJson(QJsonDocument::Compact));
 				QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(steps)});
 				items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 				items[0]->setData(action.identifier, IdentifierRole);
+				items[0]->setData(name, NameRole);
 				items[0]->setData(gestures[i].parameters, ParametersRole);
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
-				items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(ActionsManager::getActionName(gestures.at(i).action)));
+				items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(name));
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items[2]->setToolTip(parameters);
@@ -139,6 +144,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->gesturesViewWidget->setModel(gesturesModel);
 	m_ui->gesturesViewWidget->setItemDelegateForColumn(0, new GestureActionDelegate(this));
+	m_ui->gesturesViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->gesturesViewWidget->setModified(m_profile.isModified());
 	m_ui->stepsViewWidget->setModel(stepsModel);
 	m_ui->titleLineEditWidget->setText(m_profile.getTitle());
