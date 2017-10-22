@@ -65,9 +65,10 @@ void KeyboardActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *m
 	if (widget && widget->getActionIdentifier() >= 0)
 	{
 		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
+		const QString name(ActionsManager::getActionName(widget->getActionIdentifier()));
 
 		model->setData(index, definition.getText(true), Qt::DisplayRole);
-		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true)).arg(ActionsManager::getActionName(widget->getActionIdentifier())), Qt::ToolTipRole);
+		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true)).arg(name), Qt::ToolTipRole);
 		model->setData(index, widget->getActionIdentifier(), KeyboardProfileDialog::IdentifierRole);
 
 		if (definition.defaultState.icon.isNull())
@@ -174,6 +175,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	for (int i = 0; i < definitions.count(); ++i)
 	{
 		const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(definitions.at(i).action));
+		const QString name(ActionsManager::getActionName(definitions.at(i).action));
 		const QString parameters(definitions.at(i).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(definitions.at(i).parameters)).toJson(QJsonDocument::Compact));
 
 		for (int j = 0; j < definitions.at(i).shortcuts.count(); ++j)
@@ -184,9 +186,10 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 			items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 			items[1]->setData(definitions.at(i).action, IdentifierRole);
+			items[1]->setData(name, NameRole);
 			items[1]->setData(definitions.at(i).parameters, ParametersRole);
 			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-			items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(ActionsManager::getActionName(definitions.at(i).action)));
+			items[1]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(name));
 			items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 			items[2]->setToolTip(parameters);
 			items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
@@ -216,6 +219,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->actionsViewWidget->setItemDelegateForColumn(1, new KeyboardActionDelegate(this));
 	m_ui->actionsViewWidget->setItemDelegateForColumn(3, new KeyboardShortcutDelegate(this));
+	m_ui->actionsViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->actionsViewWidget->setSortRoleMapping({{0, StatusRole}});
 	m_ui->actionsViewWidget->setModified(m_profile.isModified());
 	m_ui->titleLineEditWidget->setText(m_profile.getTitle());
