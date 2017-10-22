@@ -978,14 +978,9 @@ void ToolBarWidget::updateToggleGeometry()
 
 void ToolBarWidget::updateVisibility()
 {
-	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
+	if (m_identifier == ToolBarsManager::TabBar)
 	{
-		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
-
-		if (tabBar)
-		{
-			setVisible(tabBar->count() > 1);
-		}
+		setVisible(shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 	}
 }
 
@@ -1008,6 +1003,13 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		if (!tabBar && m_mainWindow)
 		{
 			tabBar = m_mainWindow->getTabBar();
+
+			if (tabBar)
+			{
+				connect(tabBar, &TabBarWidget::tabsAmountChanged, this, &ToolBarWidget::updateVisibility);
+
+				updateVisibility();
+			}
 		}
 
 		if (tabBar)
@@ -1294,6 +1296,13 @@ bool ToolBarWidget::canDrop(QDropEvent *event) const
 bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 {
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+
+	if (m_identifier == ToolBarsManager::TabBar && definition.getVisibility(mode) == ToolBarsManager::AutoVisibilityToolBar)
+	{
+		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
+
+		return (tabBar && tabBar->count() > 1);
+	}
 
 	return ((mode == ToolBarsManager::NormalMode && definition.hasToggle) || calculateShouldBeVisible(definition, m_state, mode));
 }
