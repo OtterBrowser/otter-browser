@@ -34,17 +34,16 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QList<QFileInfo> locales(QDir(Application::getLocalePath()).entryInfoList(QStringList(QLatin1String("*.qm")), QDir::Files, QDir::Name));
+	const QList<QFileInfo> locales(QDir(Application::getLocalePath()).entryInfoList(QStringList(QLatin1String("otter-browser_*.qm")), QDir::Files, QDir::Name));
 	QVector<QPair<QString, QString> > entries;
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QLocale locale(Utils::createLocale(locales.at(i).baseName().remove(QLatin1String("otter-browser_"))));
+		const QString name(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
+		const QLocale locale(Utils::createLocale(name));
 
 		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 		{
-			const QString name(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
-
 			entries.append({tr("Unknown [%1]").arg(name), name});
 		}
 		else
