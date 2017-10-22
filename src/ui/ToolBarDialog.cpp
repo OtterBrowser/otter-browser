@@ -180,11 +180,12 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 			continue;
 		}
 
+		const QString name(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"));
 		QStandardItem *item(new QStandardItem(actions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), IdentifierRole);
+		item->setData(name, IdentifierRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
-		item->setToolTip(item->text());
+		item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
 
 		if (!actions.at(i).defaultState.icon.isNull())
 		{
@@ -195,8 +196,10 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	}
 
 	m_ui->availableEntriesItemView->setModel(availableEntriesModel);
+	m_ui->availableEntriesItemView->setFilterRoles({Qt::DisplayRole, IdentifierRole});
 	m_ui->availableEntriesItemView->viewport()->installEventFilter(this);
 	m_ui->currentEntriesItemView->setModel(new QStandardItemModel(this));
+	m_ui->currentEntriesItemView->setFilterRoles({Qt::DisplayRole, IdentifierRole});
 	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->currentEntriesItemView->setRootIsDecorated(false);
 
@@ -707,7 +710,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		}
 	}
 
-	item->setToolTip(item->text());
+	item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(identifier));
 
 	return item;
 }
