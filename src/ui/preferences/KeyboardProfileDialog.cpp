@@ -70,6 +70,7 @@ void KeyboardActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *m
 		model->setData(index, definition.getText(true), Qt::DisplayRole);
 		model->setData(index, QStringLiteral("%1 (%2)").arg(definition.getText(true)).arg(name), Qt::ToolTipRole);
 		model->setData(index, widget->getActionIdentifier(), KeyboardProfileDialog::IdentifierRole);
+		model->setData(index, name, KeyboardProfileDialog::NameRole);
 
 		if (definition.defaultState.icon.isNull())
 		{
