@@ -184,7 +184,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 		}
 	}
 
-	if (m_titleRectangle.isValid())
+	if (!m_title.isEmpty())
 	{
 		QStyleOptionTab option;
 		option.initFrom(this);
@@ -361,10 +361,11 @@ void TabHandleWidget::updateGeometries()
 
 	QRect controlsRectangle(style()->subElementRect(QStyle::SE_TabBarTabLeftButton, &option, m_tabBarWidget));
 
-	m_closeButtonRectangle = QRect();
-	m_urlIconRectangle = QRect();
-	m_thumbnailRectangle = QRect();
-	m_titleRectangle = QRect();
+	m_closeButtonRectangle = {};
+	m_urlIconRectangle = {};
+	m_thumbnailRectangle = {};
+	m_labelRectangle = {};
+	m_titleRectangle = {};
 
 	if (TabBarWidget::areThumbnailsEnabled())
 	{
@@ -444,7 +445,7 @@ void TabHandleWidget::updateGeometries()
 	}
 	else
 	{
-		m_titleRectangle = controlsRectangle;
+		m_labelRectangle = controlsRectangle;
 
 		if (isUrlIconEnabled)
 		{
@@ -454,19 +455,19 @@ void TabHandleWidget::updateGeometries()
 			{
 				m_urlIconRectangle.setLeft(controlsRectangle.right() - 16);
 
-				m_titleRectangle.setRight(controlsRectangle.right() - 20);
+				m_labelRectangle.setRight(controlsRectangle.right() - 20);
 			}
 			else
 			{
 				m_urlIconRectangle.setWidth(16);
 
-				m_titleRectangle.setLeft(m_urlIconRectangle.right() + 4);
+				m_labelRectangle.setLeft(m_urlIconRectangle.right() + 4);
 			}
 		}
 
 		if (isCloseButtonEnabled && (isActive || controlsWidth >= 70))
 		{
-			m_closeButtonRectangle = m_titleRectangle;
+			m_closeButtonRectangle = m_labelRectangle;
 
 			if (TabBarWidget::isLayoutReversed())
 			{
@@ -474,22 +475,22 @@ void TabHandleWidget::updateGeometries()
 			}
 			else
 			{
-				m_closeButtonRectangle.setLeft(m_titleRectangle.right() - 16);
+				m_closeButtonRectangle.setLeft(m_labelRectangle.right() - 16);
 			}
 
 			if (controlsWidth <= 40)
 			{
-				m_titleRectangle = QRect();
+				m_labelRectangle = {};
 			}
 			else
 			{
 				if (TabBarWidget::isLayoutReversed())
 				{
-					m_titleRectangle.setLeft(m_titleRectangle.left() + 20);
+					m_labelRectangle.setLeft(m_labelRectangle.left() + 20);
 				}
 				else
 				{
-					m_titleRectangle.setRight(m_closeButtonRectangle.left() - 4);
+					m_labelRectangle.setRight(m_closeButtonRectangle.left() - 4);
 				}
 			}
 		}
@@ -516,13 +517,33 @@ void TabHandleWidget::updateTitle()
 {
 	QString title(m_window->getTitle());
 
-	if (!m_titleRectangle.isValid() || m_titleRectangle.width() < 5)
+	if (!m_labelRectangle.isValid() || m_labelRectangle.width() < 5)
 	{
 		title.clear();
 	}
-	else if (fontMetrics().width(title) > m_titleRectangle.width())
+	else
 	{
-		title = fontMetrics().elidedText(title, Qt::ElideRight, m_titleRectangle.width());
+		int length(fontMetrics().width(title));
+
+		if (length > m_labelRectangle.width())
+		{
+			title = fontMetrics().elidedText(title, Qt::ElideRight, m_labelRectangle.width());
+			length = fontMetrics().width(title);
+		}
+
+		m_titleRectangle = m_labelRectangle;
+
+		if (length < m_labelRectangle.width() && Application::getStyle()->getExtraStyleHint(Style::CanAlignTabBarLabelHint) > 0)
+		{
+			if (isLeftToRight())
+			{
+				m_titleRectangle.setWidth(length);
+			}
+			else
+			{
+				m_titleRectangle.setLeft(m_titleRectangle.right() - length);
+			}
+		}
 	}
 
 	if (title != m_title)

@@ -67,6 +67,7 @@ private:
 	QRect m_closeButtonRectangle;
 	QRect m_urlIconRectangle;
 	QRect m_thumbnailRectangle;
+	QRect m_labelRectangle;
 	QRect m_titleRectangle;
 	int m_dragTimer;
 	bool m_isActiveWindow;
