@@ -33,11 +33,13 @@ public:
 	explicit FreeDesktopOrgPlatformStyle(const QString &name);
 
 	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+	int getExtraStyleHint(ExtraStyleHint hint) const override;
 
 protected slots:
 	void checkForAmbianceTheme();
 
 private:
+	bool m_isGtkStyle;
 	bool m_isGtkAmbianceTheme;
 };
 

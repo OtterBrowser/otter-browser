@@ -219,4 +219,14 @@ int WindowsPlatformStyle::pixelMetric(PixelMetric metric, const QStyleOption *op
 	return Style::pixelMetric(metric, option, widget);
 }
 
+int WindowsPlatformStyle::getExtraStyleHint(Style::ExtraStyleHint hint) const
+{
+	if (hint == CanAlignTabBarLabelHint)
+	{
+		return true;
+	}
+
+	return Style::getExtraStyleHint(hint);
+}
+
 }
