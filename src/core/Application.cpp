@@ -1263,7 +1263,14 @@ QObject* Application::getFocusObject(bool ignoreMenus)
 
 Style* Application::getStyle()
 {
-	return qobject_cast<Style*>(QApplication::style());
+	Style *style(qobject_cast<Style*>(QApplication::style()));
+
+	if (style)
+	{
+		return style;
+	}
+
+	return QApplication::style()->findChild<Style*>();
 }
 
 PlatformIntegration* Application::getPlatformIntegration()
