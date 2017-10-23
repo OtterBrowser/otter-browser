@@ -30,9 +30,16 @@ class Style : public QProxyStyle
 	Q_OBJECT
 
 public:
-	enum StyleElement
+	enum ExtraStyleHint
 	{
-		TabAudioAudibleElement = 0,
+		InvalidHint = 0,
+		CanAlignTabBarLabelHint
+	};
+
+	enum ExtraStyleElement
+	{
+		InvalidElement = 0,
+		TabAudioAudibleElement,
 		TabAudioMutedElement,
 		ItemCloseElement
 	};
@@ -48,12 +55,14 @@ public:
 	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const override;
 	int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const override;
 	int styleHint(StyleHint hint, const QStyleOption *option = nullptr, const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override;
+	virtual int getExtraStyleHint(ExtraStyleHint hint) const;
 
 protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	bool m_areToolTipsEnabled;
+	bool m_canAlignTabBarLabel;
 };
 }
 

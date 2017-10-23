@@ -31,8 +31,16 @@ namespace Otter
 {
 
 Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyleFactory::create(name)),
-	m_areToolTipsEnabled(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled"))
+	m_areToolTipsEnabled(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled")),
+	m_canAlignTabBarLabel(false)
 {
+	const QString styleName(getName());
+
+	if (styleName == QLatin1String("fusion") || styleName == QLatin1String("breeze") || styleName == QLatin1String("oxygen"))
+	{
+		m_canAlignTabBarLabel = true;
+	}
+
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &Style::handleOptionChanged);
 }
 
@@ -318,6 +326,16 @@ int Style::styleHint(StyleHint hint, const QStyleOption *option, const QWidget *
 	}
 
 	return QProxyStyle::styleHint(hint, option, widget, returnData);
+}
+
+int Style::getExtraStyleHint(Style::ExtraStyleHint hint) const
+{
+	if (hint == CanAlignTabBarLabelHint)
+	{
+		return (m_canAlignTabBarLabel ? 1 : 0);
+	}
+
+	return 0;
 }
 
 }
