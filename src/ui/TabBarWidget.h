@@ -58,10 +58,12 @@ protected slots:
 	void markAsNeedingAttention();
 	void handleLoadingStateChanged(WebWidget::LoadingState state);
 	void updateGeometries();
+	void updateTitle();
 
 private:
 	Window *m_window;
 	TabBarWidget *m_tabBarWidget;
+	QString m_title;
 	QRect m_closeButtonRectangle;
 	QRect m_urlIconRectangle;
 	QRect m_thumbnailRectangle;

@@ -72,7 +72,7 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	setMouseTracking(true);
 
 	connect(window, &Window::needsAttention, this, &TabHandleWidget::markAsNeedingAttention);
-	connect(window, &Window::titleChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
+	connect(window, &Window::titleChanged, this, &TabHandleWidget::updateTitle);
 	connect(window, &Window::iconChanged, this, static_cast<void(TabHandleWidget::*)()>(&TabHandleWidget::update));
 	connect(window, &Window::loadingStateChanged, this, &TabHandleWidget::handleLoadingStateChanged);
 	connect(parent, &TabBarWidget::currentChanged, this, &TabHandleWidget::updateGeometries);
@@ -188,8 +188,9 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 	{
 		QStyleOptionTab option;
 		option.initFrom(this);
+		option.documentMode = true;
 		option.rect = m_titleRectangle;
-		option.text = m_window->getTitle();
+		option.text = m_title;
 
 		if (m_isActiveWindow)
 		{
@@ -303,6 +304,7 @@ void TabHandleWidget::markAsNeedingAttention()
 		font.setBold(true);
 
 		setFont(font);
+		updateTitle();
 	}
 }
 
@@ -507,7 +509,28 @@ void TabHandleWidget::updateGeometries()
 
 	m_isCloseButtonUnderMouse = (underMouse() && m_closeButtonRectangle.contains(mapFromGlobal(QCursor::pos())));
 
-	update();
+	updateTitle();
+}
+
+void TabHandleWidget::updateTitle()
+{
+	QString title(m_window->getTitle());
+
+	if (!m_titleRectangle.isValid() || m_titleRectangle.width() < 5)
+	{
+		title.clear();
+	}
+	else if (fontMetrics().width(title) > m_titleRectangle.width())
+	{
+		title = fontMetrics().elidedText(title, Qt::ElideRight, m_titleRectangle.width());
+	}
+
+	if (title != m_title)
+	{
+		m_title = title;
+
+		update();
+	}
 }
 
 void TabHandleWidget::setIsActiveWindow(bool isActive)
@@ -519,9 +542,12 @@ void TabHandleWidget::setIsActiveWindow(bool isActive)
 		if (isActive)
 		{
 			setFont(parentWidget()->font());
+			updateTitle();
 		}
-
-		update();
+		else
+		{
+			update();
+		}
 	}
 }
 
@@ -1664,6 +1690,10 @@ bool TabBarWidget::event(QEvent *event)
 {
 	switch (event->type())
 	{
+		case QEvent::LayoutDirectionChange:
+			emit needsGeometriesUpdate();
+
+			break;
 		case QEvent::MouseButtonPress:
 		case QEvent::MouseButtonDblClick:
 		case QEvent::Wheel:
