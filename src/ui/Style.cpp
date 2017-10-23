@@ -221,6 +221,17 @@ QRect Style::subElementRect(SubElement element, const QStyleOption *option, cons
 
 				return rectangle;
 			}
+		case SE_TabBarTabText:
+			{
+				const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
+
+				if (tabOption && tabOption->documentMode)
+				{
+					return option->rect;
+				}
+			}
+
+			break;
 		case SE_ToolBarHandle:
 			if (widget)
 			{
@@ -243,6 +254,8 @@ QRect Style::subElementRect(SubElement element, const QStyleOption *option, cons
 					return rectangle;
 				}
 			}
+
+			break;
 		default:
 			break;
 	}
