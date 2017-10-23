@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "WindowsPlatformStyle.h"
+#include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
@@ -37,7 +38,7 @@ WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 {
 	checkForModernStyle();
 
-	connect(QApplication::instance(), &QApplication::paletteChanged, this, &WindowsPlatformStyle::checkForModernStyle);
+	connect(Application::getInstance(), &Application::paletteChanged, this, &WindowsPlatformStyle::checkForModernStyle);
 	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &WindowsPlatformStyle::checkForModernStyle);
 }
 
