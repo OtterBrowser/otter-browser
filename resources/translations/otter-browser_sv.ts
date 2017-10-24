@@ -8627,7 +8627,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="465"/>
         <source>Exit</source>
-        <translation>Redigera</translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>

@@ -6114,7 +6114,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="520"/>
         <source>Arbitrary List of Actions</source>
-        <translation>Dowolna lista akcji</translation>
+        <translation>Dana lista akcji</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="527"/>
@@ -7683,7 +7683,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Run Arbitrary List of Actions</source>
-        <translation>Uruchom dowolną listę akcji</translation>
+        <translation>Uruchom daną listę akcji</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
@@ -8185,7 +8185,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Schedule Page Reload</source>
-        <translation>Planowane odświeżanie strony</translation>
+        <translation>Planowe odświeżanie strony</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>

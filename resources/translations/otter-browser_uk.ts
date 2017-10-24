@@ -229,11 +229,9 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="210"/>
         <source>Failed to import following User Script file(s):
 %1</source>
-        <translation><numerusform>Неможливо імпортувати скрипти користувача:
-%1</numerusform><numerusform>Неможливо імпортувати скрипт користувача:
-%1
-Неможливо імпортувати скрипти користувача:
-%1</numerusform><numerusform>Неможливо імпортувати скрипти користувача:
+        <translation><numerusform>Неможливо імпортувати скрипт користувача:
+%1</numerusform><numerusform>Неможливо імпортувати скрипта користувача:
+%1</numerusform><numerusform>Неможливо імпортувати скриптів користувача:
 %1</numerusform></translation>
     </message>
     <message>
@@ -2759,7 +2757,7 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Ви збираєтеся відкрити %n вкладок.</numerusform><numerusform>Ви збираєтеся відкрити %n вкладки.</numerusform><numerusform>Ви збираєтеся відкрити %n вкладку.</numerusform></translation>
+        <translation><numerusform>Ви збираєтеся відкрити %n вкладку.</numerusform><numerusform>Ви збираєтеся відкрити %n вкладки.</numerusform><numerusform>Ви збираєтеся відкрити %n вкладок.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="711"/>
@@ -7829,7 +7827,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation>Відкрити закриту вкладку</translation>
+        <translation>Відкрити раніше закриту вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
@@ -9347,8 +9345,7 @@ Error: %2</source>
         <source>Request blocked by rule from profile %1:
 %2</source>
         <translation>Запит заблокований правилом з профілю %1:
-%2
-</translation>
+%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="705"/>
@@ -9520,7 +9517,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation>Спробуйте натиснути на кнопку F12 на вашій клавіатурі і вимкніть проксі-сервери, якщо не знаєте точно, що вони необхідні для вашої роботи в Інтернеті, а потім перезавантажте сторінку.</translation>
+        <translation>Спробуйте натиснути клавішу F12 на клавіатурі і вимкніть проксі-сервери, якщо не знаєте точно, що вони необхідні для вашої роботи в Інтернеті, а потім перезавантажте сторінку.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>

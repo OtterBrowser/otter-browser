@@ -241,7 +241,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="360"/>
         <source>Open Addon File</source>
-        <translation type="unfinished"/>
+        <translation>Abrir ficheiro</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="361"/>
@@ -464,12 +464,12 @@ Alguns sites poderão não funcionar corretamente.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="648"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation>&lt;b&gt;O Navegador %1&lt;/b&gt;&lt;br&gt;Otter é controlado pelo utilizador, e não vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
+        <translation>&lt;b&gt;O Otter %1&lt;/b&gt;&lt;br&gt;é um navegador web é controlado pelo utilizador e não vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="654"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>Infraestrutura Web: %1 %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="658"/>
@@ -1449,12 +1449,12 @@ Expoente: %2</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="76"/>
         <source>Current Value:</source>
-        <translation>Valor actual:</translation>
+        <translation>Valor atual:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="83"/>
         <source>Default Value:</source>
-        <translation>Valor pré-definido:</translation>
+        <translation>Valor padrão:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="106"/>
@@ -1464,7 +1464,7 @@ Expoente: %2</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="116"/>
         <source>Restore Defaults</source>
-        <translation>Restabelecer às pré-definições</translation>
+        <translation>Repor predefinições</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="207"/>
@@ -1497,7 +1497,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="365"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation>Restabelecer realmente os valores pré-definidos de todas as opções?</translation>
+        <translation>Tem a certeza de que deseja repor as predefinições de todas as opções?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="472"/>
@@ -1522,12 +1522,12 @@ Guardar?</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="480"/>
         <source>Expand All</source>
-        <translation>Expandir todos</translation>
+        <translation>Expandir tudo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="481"/>
         <source>Collapse All</source>
-        <translation>Colapsar todos</translation>
+        <translation>Recolher tudo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="506"/>
@@ -1647,7 +1647,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="149"/>
         <source>pop-up</source>
-        <translation type="unfinished"/>
+        <translation>pop-up</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="153"/>
@@ -1724,7 +1724,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation>Falha ao remover o conteúdo que bloqueia o ficheiro de perfil: %1</translation>
+        <translation>Falha ao remover o ficheiro de bloqueio de conteúdo: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
@@ -1808,7 +1808,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/ContentsWidget.cpp" line="142"/>
         <source>Print Preview</source>
-        <translation>Pré-vizualizar impressão</translation>
+        <translation>Pré-visualizar impressão</translation>
     </message>
 </context>
 <context>
@@ -2030,7 +2030,7 @@ Guardar?</translation>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="108"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="168"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="124"/>
@@ -2061,7 +2061,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="68"/>
         <source>Current Tab Only</source>
-        <translation>Apenas o separador activo</translation>
+        <translation>Apenas o separador ativo</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="74"/>
@@ -2076,12 +2076,12 @@ Guardar?</translation>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="283"/>
         <source>Expand All</source>
-        <translation>Expandir todos</translation>
+        <translation>Expandir tudo</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="284"/>
         <source>Collapse All</source>
-        <translation>Colapsar todos</translation>
+        <translation>Recolher tudo</translation>
     </message>
 </context>
 <context>
@@ -2189,7 +2189,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="111"/>
         <source>(Untitled)</source>
-        <translation>(Sem título)</translation>
+        <translation>(Sem nome)</translation>
     </message>
 </context>
 <context>
@@ -2503,12 +2503,12 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="183"/>
         <source>Import cancelled by the user.</source>
-        <translation>Importar cancelado pelo utilizador.</translation>
+        <translation>Importação cancelada pelo utilizador.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="187"/>
         <source>Import finished successfully.</source>
-        <translation>Importar concluído com êxito.</translation>
+        <translation>Importação concluída com sucesso.</translation>
     </message>
 </context>
 <context>
@@ -2578,7 +2578,7 @@ Guardar?</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="198"/>
         <location filename="../../src/core/ActionsManager.cpp" line="232"/>
         <source>(Untitled)</source>
-        <translation>(Sem título)</translation>
+        <translation>(Sem nome)</translation>
     </message>
 </context>
 <context>
@@ -2661,7 +2661,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="361"/>
         <source>unknown action</source>
-        <translation>acção desconhecida</translation>
+        <translation>ação desconhecida</translation>
     </message>
 </context>
 <context>
@@ -2755,7 +2755,7 @@ Guardar?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Há %n separador(es) prestes a serem abertos.</numerusform><numerusform>%n marcador(es) prestes a serem abertos.</numerusform></translation>
+        <translation><numerusform>Está prestes a abrir %n separador.</numerusform><numerusform>Está prestes a abrir %n separadores.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="711"/>
@@ -2765,7 +2765,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="715"/>
         <source>Do not show this message again</source>
-        <translation>Não voltar a mostrar esta mensagem</translation>
+        <translation>Não mostrar novamente a mensagem</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="2003"/>
@@ -2827,7 +2827,7 @@ Guardar?</translation>
         <location filename="../../src/ui/Menu.cpp" line="477"/>
         <location filename="../../src/ui/Menu.cpp" line="573"/>
         <source>Failed to create menu action: %1</source>
-        <translation>Falha ao criar a acção de menu: %1</translation>
+        <translation>Falha ao criar a ação de menu: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="875"/>
@@ -2859,13 +2859,13 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="548"/>
         <source>Settings Migration</source>
-        <translation>Migração das Definições</translation>
+        <translation>Migração de Definições</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="551"/>
         <source>Configuration of the components listed below needs to be updated to new version.
 Do you want to migrate it?</source>
-        <translation>A configuração dos componentes listados abaixo deve ser atualizada para nova versão.
+        <translation>A configuração dos componentes listados abaixo deve ser atualizada para uma nova versão.
 Migrar?</translation>
     </message>
     <message>
@@ -2880,7 +2880,7 @@ Migrar?</translation>
         <location filename="../../src/core/GesturesManager.cpp" line="505"/>
         <location filename="../../src/core/GesturesManager.cpp" line="544"/>
         <source>(Untitled)</source>
-        <translation>(Sem título)</translation>
+        <translation>(Sem nome)</translation>
     </message>
 </context>
 <context>
@@ -2975,7 +2975,7 @@ Migrar?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="133"/>
         <source>Context and Action</source>
-        <translation>Contexto e Acção</translation>
+        <translation>Contexto e ação</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="133"/>
@@ -2985,7 +2985,7 @@ Migrar?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="133"/>
         <source>Steps</source>
-        <translation type="unfinished"/>
+        <translation>Etapas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="137"/>
@@ -3591,7 +3591,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
         <source>Interface style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Folha de estilo da interface:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="343"/>
@@ -4268,7 +4268,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="99"/>
         <source>Do not load the tab contents until selected</source>
-        <translation type="unfinished"/>
+        <translation>Não carregar conteúdo do separador antes de o selecionar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
@@ -4353,7 +4353,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
         <source>Show windows and tabs from the last time</source>
-        <translation>Mostrar janelas e separadores da última sessão do navegador</translation>
+        <translation>Mostrar janelas e separadores da última sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
@@ -4952,7 +4952,7 @@ Deseja continuar?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="889"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
-        <translation>Solicitação bloqueada por regra do perfil %1:&lt;br&gt;
+        <translation>Pedido bloqueado por uma regra do perfil %1:&lt;br&gt;
 %2</translation>
     </message>
     <message>
@@ -6142,7 +6142,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="553"/>
         <source>Error Console</source>
-        <translation>Consola de Erros</translation>
+        <translation>Consola de erros</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="557"/>
@@ -6207,7 +6207,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="613"/>
         <source>Window Resize Handle</source>
-        <translation>Pega de redimensinamento de janela</translation>
+        <translation>Guia de redimensionamento de janela</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="617"/>
@@ -6759,7 +6759,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1147"/>
         <source>Failed to create requested web backend: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao criar a infraestrutura web solicitada: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1230"/>
@@ -6817,12 +6817,12 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="922"/>
         <source>Playback Rate: %1x</source>
-        <translation type="unfinished"/>
+        <translation>Taxa de reprodução: %1x</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="974"/>
         <source>Page Defaults</source>
-        <translation>Pré-definições de página</translation>
+        <translation>Predefinições de página</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="982"/>
@@ -6832,7 +6832,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="986"/>
         <source>Reload Every: %n seconds</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Recarregar a cada: %n segundo</numerusform><numerusform>Recarregar a cada: %n segundos</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7464,7 +7464,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="74"/>
         <source>New tab</source>
-        <translation>NovosSeparador</translation>
+        <translation>Novo separador</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="75"/>
@@ -7631,7 +7631,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <name>actions</name>
     <message>
         <source>Playback Rate</source>
-        <translation type="unfinished"/>
+        <translation>Taxa de reprodução</translation>
     </message>
     <message>
         <source>Reload Every</source>
@@ -7663,15 +7663,15 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     </message>
     <message>
         <source>Custom…</source>
-        <translation type="unfinished"/>
+        <translation>Personalizada...</translation>
     </message>
     <message>
         <source>Page Default</source>
-        <translation>Pré-definição de página</translation>
+        <translation>Predefinição da página</translation>
     </message>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Moldura</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
@@ -7681,7 +7681,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Run Arbitrary List of Actions</source>
-        <translation>Executar a Lista de Acções Arbitrária</translation>
+        <translation>Executar lista de ações arbitrária</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
@@ -7784,7 +7784,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
         <source>Remove Local and Global Tab History</source>
-        <translation>Remover histórico de separadores e ficheiros locais</translation>
+        <translation>Remover histórico de separadores e de ficheiros locais</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
@@ -7959,17 +7959,17 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Open Frame in This Tab</source>
-        <translation>Abrir frame neste separador</translation>
+        <translation>Abrir moldura neste separador</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Open Frame in New Tab</source>
-        <translation>Abrir frame em novo separador</translation>
+        <translation>Abrir moldura em novo separador</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Open Frame in New Background Tab</source>
-        <translation>Abrir frame em novo separador secundário</translation>
+        <translation>Abrir moldura em novo separador secundário</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="345"/>
@@ -7986,12 +7986,12 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Reload Frame</source>
-        <translation>Recarregar frame</translation>
+        <translation>Recarregar moldura</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>View Frame Source</source>
-        <translation>Ver código fonte da frame</translation>
+        <translation>Ver código fonte da moldura</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="348"/>
@@ -8046,7 +8046,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Show Media Controls</source>
-        <translation>Mostrar controlos</translation>
+        <translation>Mostrar controlos multimédia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
@@ -8056,7 +8056,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Playback Looping</source>
-        <translation type="unfinished"/>
+        <translation>Reprodução em ciclo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
@@ -8078,12 +8078,12 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Mute Media</source>
-        <translation>Emudecer</translation>
+        <translation>Sem som</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Playback Rate</source>
-        <translation type="unfinished"/>
+        <translation>Taxa de reprodução</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
@@ -8098,7 +8098,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Go to URL</source>
-        <translation>Ir para a URL</translation>
+        <translation>Ir para URL</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="364"/>
@@ -8143,7 +8143,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Rewind History</source>
-        <translation>Retroceder no histórico</translation>
+        <translation>Recuar no histórico</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
@@ -8248,7 +8248,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Deselect</source>
-        <translation>Desselecionar tudo</translation>
+        <translation>Desmarcar tudo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
@@ -8439,7 +8439,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Load All Plugins on the Page</source>
-        <translation>Carregar todos os suplementos (plugins) da página</translation>
+        <translation>Carregar todos os plugins da página</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -8672,7 +8672,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="54"/>
         <source>Error Console</source>
-        <translation>Consola de Erros</translation>
+        <translation>Consola de erros</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="341"/>
@@ -8738,7 +8738,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/Menu.cpp" line="67"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Moldura</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="74"/>
@@ -8922,7 +8922,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
         <location filename="../../src/ui/Menu.cpp" line="989"/>
         <location filename="../../src/ui/Menu.cpp" line="1370"/>
         <source>(Untitled)</source>
-        <translation>(Sem título)</translation>
+        <translation>(Sem nome)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="721"/>
@@ -8947,7 +8947,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/Menu.cpp" line="737"/>
         <source>Current Session is Closed</source>
-        <translation>A presente sessão está fechada</translation>
+        <translation>A sessão atual está fechada</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="741"/>
@@ -9012,7 +9012,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1028"/>
         <source>Default Application</source>
-        <translation>Aplicação pré-definida</translation>
+        <translation>Aplicação padrão</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1040"/>
@@ -9087,7 +9087,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="934"/>
         <source>Unmute Tab Media</source>
-        <translation>Restaurar som do separador</translation>
+        <translation>Repor som do separador</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1051"/>
@@ -9160,7 +9160,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="122"/>
         <source>Windows</source>
-        <translation type="unfinished"/>
+        <translation>Janelas</translation>
     </message>
 </context>
 <context>
@@ -9254,7 +9254,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="623"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation>Falha ao atualizar o ficheiro de bloqueio de conteúdos: disparidade de &apos;checksum&apos;</translation>
+        <translation>Falha ao atualizar o ficheiro de bloqueio de conteúdos: erro de &apos;checksum&apos;</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="828"/>
@@ -9342,7 +9342,7 @@ Erro: %2</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="266"/>
         <source>Request blocked by rule from profile %1:
 %2</source>
-        <translation>Solicitação bloqueada por regra do perfil %1:&lt;br&gt;
+        <translation>Pedido bloqueado por uma regra do perfil %1:&lt;br&gt;
 %2</translation>
     </message>
     <message>
@@ -9383,7 +9383,7 @@ ID da aplicação: %2</translation>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="193"/>
         <source>Keyboard and Mouse Configuration Profiles</source>
-        <translation>Teclado e Rato</translation>
+        <translation>Perfis de configuração de teclado e de rato</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="327"/>
@@ -9475,17 +9475,17 @@ ID da aplicação: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="189"/>
         <source>The owner of &lt;strong&gt;%1&lt;/strong&gt; has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation>os donos de &lt;strong&gt;%1&lt;/strong&gt; configuraram a página de forma errónea. Para manter a privacidade dos seus dados, a ligação ao site foi cancelada.</translation>
+        <translation>Os donos de &lt;strong&gt;%1&lt;/strong&gt; configuraram a página de forma errónea. Para manter a privacidade dos seus dados, a ligação ao site foi cancelada.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="193"/>
         <source>This web page at &lt;strong&gt;%1&lt;/strong&gt; has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation>Esta página em &lt;strong&gt;%1&lt;/strong&gt; foi indicada como sendo um falsificação. Para proteger a informação da possibilidade de ser roubada, a ligação a este sítio web foi abortada.</translation>
+        <translation>Esta página em &lt;strong&gt;%1&lt;/strong&gt; foi indicada como sendo um fraude. Para proteger a informação da possibilidade de ser roubada, a ligação a este site web foi abortada.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="197"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation>tentou aceder a &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; que, neste momente, está inacessível. Certifique-se de que escreveu o endereço web (URL) corretamente e tente recarregar a página.</translation>
+        <translation>Tentou aceder a &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; que, neste momento, está inacessível. Certifique-se de que escreveu o endereço web (URL) corretamente e tente recarregar a página.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
@@ -9540,7 +9540,7 @@ ID da aplicação: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="232"/>
         <source>Fraud attempt</source>
-        <translation type="unfinished"/>
+        <translation>Tentativa de fraude</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="236"/>
@@ -9580,7 +9580,7 @@ ID da aplicação: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="426"/>
         <source>%1 at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 em %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="466"/>
