@@ -45,7 +45,7 @@ public:
 	QDateTime getTimeVisited() const;
 	QIcon getIcon() const;
 	QVariant data(int role) const override;
-	QVariant rawData(int role) const;
+	QVariant getRawData(int role) const;
 	QVector<QUrl> getUrls() const;
 	quint64 getIdentifier() const;
 	int getType() const;
