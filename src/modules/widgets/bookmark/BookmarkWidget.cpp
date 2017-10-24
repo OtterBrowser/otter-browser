@@ -39,6 +39,16 @@ BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::T
 	connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &BookmarkWidget::updateBookmark);
 }
 
+void BookmarkWidget::changeEvent(QEvent *event)
+{
+	ToolButtonWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && m_bookmark && m_bookmark->getRawData(BookmarksModel::TitleRole).isNull())
+	{
+		updateBookmark(m_bookmark);
+	}
+}
+
 void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	QToolButton::mouseReleaseEvent(event);

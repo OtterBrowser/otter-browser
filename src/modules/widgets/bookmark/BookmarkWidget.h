@@ -35,6 +35,7 @@ public:
 	explicit BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected slots:
