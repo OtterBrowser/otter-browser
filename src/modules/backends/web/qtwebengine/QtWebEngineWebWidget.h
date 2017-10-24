@@ -20,6 +20,7 @@
 #ifndef OTTER_QTWEBENGINEWEBWIDGET_H
 #define OTTER_QTWEBENGINEWEBWIDGET_H
 
+#include "../../../../core/Utils.h"
 #include "../../../../ui/WebWidget.h"
 
 #include <QtNetwork/QNetworkReply>
@@ -139,6 +140,7 @@ private:
 #endif
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	LoadingState m_loadingState;
+	TrileanValue m_canGoForwardValue;
 	int m_documentLoadingProgress;
 	int m_focusProxyTimer;
 #if QT_VERSION < 0x050700

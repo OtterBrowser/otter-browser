@@ -30,7 +30,6 @@
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/UserScript.h"
-#include "../../../../core/Utils.h"
 #include "../../../../core/WebBackend.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
@@ -68,6 +67,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 #endif
 	m_loadingTime(nullptr),
 	m_loadingState(FinishedLoadingState),
+	m_canGoForwardValue(UnknownValue),
 	m_documentLoadingProgress(0),
 	m_focusProxyTimer(0),
 #if QT_VERSION < 0x050700
@@ -273,9 +273,17 @@ void QtWebEngineWebWidget::pageLoadStarted()
 void QtWebEngineWebWidget::pageLoadFinished()
 {
 	m_loadingState = FinishedLoadingState;
+	m_canGoForwardValue = UnknownValue;
 
 	notifyNavigationActionsChanged();
 	startReloadTimer();
+
+	m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
+	{
+		m_canGoForwardValue = (result.toBool() ? TrueValue : FalseValue);
+
+		emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
+	});
 
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
@@ -1680,32 +1688,12 @@ bool QtWebEngineWebWidget::canGoForward() const
 
 bool QtWebEngineWebWidget::canFastForward() const
 {
-	if (canGoForward())
+	if (m_canGoForwardValue == TrueValue || canGoForward())
 	{
 		return true;
 	}
 
-	if (Utils::isUrlEmpty(getUrl()))
-	{
-		return false;
-	}
-
-	QEventLoop eventLoop;
-	bool canFastFoward(false);
-
-	m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
-	{
-		canFastFoward = result.toBool();
-
-		eventLoop.quit();
-	});
-
-	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-	eventLoop.exec();
-
-	return canFastFoward;
+	return false;
 }
 
 bool QtWebEngineWebWidget::canRedo() const
