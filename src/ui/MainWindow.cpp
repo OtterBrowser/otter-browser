@@ -1313,8 +1313,8 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		}
 	}
 
-	m_tabBar->addTab(index, window);
 	m_workspace->addWindow(window, state, isAlwaysOnTop);
+	m_tabBar->addTab(index, window);
 
 	if (m_tabSwitchingOrderIndex >= 0)
 	{
