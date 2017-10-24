@@ -1191,20 +1191,24 @@ void TabBarWidget::tabHovered(int index)
 
 void TabBarWidget::addTab(int index, Window *window)
 {
-	insertTab(index, QString());
+	const int selectedIndex(currentIndex());
+
+	blockSignals(true);
+	insertTab(index, {});
+	blockSignals(false);
 	setTabButton(index, QTabBar::LeftSide, new TabHandleWidget(window, this));
 	setTabButton(index, QTabBar::RightSide, nullptr);
+
+	if (selectedIndex != currentIndex() || count() == 1)
+	{
+		emit currentChanged(currentIndex());
+	}
 
 	connect(window, &Window::isPinnedChanged, this, &TabBarWidget::updatePinnedTabsAmount);
 
 	if (window->isPinned())
 	{
 		updatePinnedTabsAmount();
-	}
-
-	if (count() == 1)
-	{
-		handleCurrentChanged(0);
 	}
 }
 
