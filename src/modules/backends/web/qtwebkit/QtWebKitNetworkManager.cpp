@@ -635,7 +635,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	}
 
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	if (!m_isMixedContentAllowed && m_securityState == SecureState && request.url().scheme() == QLatin1String("http"))
+	if (!m_isMixedContentAllowed && m_isSecureValue == TrueValue && request.url().scheme() == QLatin1String("http"))
 	{
 		Console::addMessage(QStringLiteral("[blocked] The page at %1 was not allowed to display insecure content from %2").arg(m_widget ? m_widget->getUrl().toString() : QLatin1String("unknown")).arg(request.url().toString()), Console::SecurityCategory, Console::WarningLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
