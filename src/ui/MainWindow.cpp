@@ -1818,17 +1818,20 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 		return;
 	}
 
-	Window *window(m_workspace->getActiveWindow());
+	const Window *activeWindow(m_workspace->getActiveWindow());
+	Window *window(getWindowByIndex(index));
 
-	if (window)
+	if (activeWindow == window)
 	{
-		disconnect(window, &Window::statusMessageChanged, this, &MainWindow::setStatusMessage);
+		return;
 	}
 
-	setStatusMessage(QString());
+	if (activeWindow)
+	{
+		disconnect(activeWindow, &Window::statusMessageChanged, this, &MainWindow::setStatusMessage);
+	}
 
-	window = getWindowByIndex(index);
-
+	setStatusMessage({});
 	setCurrentWindow(window);
 
 	if (window)
