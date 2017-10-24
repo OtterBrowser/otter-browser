@@ -59,7 +59,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_baseReply(nullptr),
 	m_contentState(WebWidget::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
-	m_securityState(UnknownState),
+	m_isSecureValue(UnknownValue),
 	m_bytesReceivedDifference(0),
 	m_loadingSpeedTimer(0),
 	m_areImagesEnabled(true),
@@ -141,7 +141,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
 	m_baseReply = nullptr;
 	m_contentState = WebWidget::UnknownContentState;
-	m_securityState = UnknownState;
+	m_isSecureValue = UnknownValue;
 	m_bytesReceivedDifference = 0;
 
 	updateLoadingSpeed();
@@ -370,7 +370,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 
 	if (reply == m_baseReply)
 	{
-		m_securityState = InsecureState;
+		m_isSecureValue = FalseValue;
 
 		if (m_contentState.testFlag(WebWidget::SecureContentState))
 		{
@@ -398,7 +398,7 @@ void QtWebKitNetworkManager::handleLoadFinished(bool result)
 
 	m_loadingSpeedTimer = 0;
 
-	if (result && (m_securityState == SecureState || (m_securityState == UnknownState && m_contentState.testFlag(WebWidget::SecureContentState))) && m_sslInformation.errors.isEmpty())
+	if (result && (m_isSecureValue == TrueValue || (m_isSecureValue == UnknownValue && m_contentState.testFlag(WebWidget::SecureContentState))) && m_sslInformation.errors.isEmpty())
 	{
 		m_contentState = WebWidget::SecureContentState;
 	}
@@ -536,7 +536,7 @@ void QtWebKitNetworkManager::setMainRequest(const QUrl &url)
 	m_mainRequestUrl = url;
 	m_baseReply = nullptr;
 	m_contentState = WebWidget::UnknownContentState;
-	m_securityState = UnknownState;
+	m_isSecureValue = UnknownValue;
 }
 
 void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
@@ -798,17 +798,17 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		m_baseReply = reply;
 	}
 
-	if (m_baseReply && m_securityState != InsecureState)
+	if (m_baseReply && m_isSecureValue != FalseValue)
 	{
 		const QString scheme(reply->url().scheme());
 
 		if (scheme == QLatin1String("https"))
 		{
-			m_securityState = SecureState;
+			m_isSecureValue = TrueValue;
 		}
 		else if (scheme == QLatin1String("http"))
 		{
-			m_securityState = InsecureState;
+			m_isSecureValue = FalseValue;
 
 			if (m_contentState.testFlag(WebWidget::SecureContentState))
 			{

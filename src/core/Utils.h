@@ -31,6 +31,13 @@
 namespace Otter
 {
 
+enum TrileanValue
+{
+	UnknownValue = 0,
+	FalseValue,
+	TrueValue
+};
+
 struct ApplicationInformation
 {
 	QString command;

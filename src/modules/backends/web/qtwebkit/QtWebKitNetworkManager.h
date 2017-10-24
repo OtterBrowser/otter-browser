@@ -26,6 +26,7 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
+#include "../../../../core/Utils.h"
 
 #include <QtNetwork/QNetworkRequest>
 
@@ -79,13 +80,6 @@ protected slots:
 	void handleLoadFinished(bool result);
 
 private:
-	enum SecurityState
-	{
-		UnknownState = 0,
-		InsecureState,
-		SecureState
-	};
-
 	QtWebKitWebWidget *m_widget;
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
@@ -106,7 +100,7 @@ private:
 	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
 	WebWidget::ContentStates m_contentState;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
-	SecurityState m_securityState;
+	TrileanValue m_isSecureValue;
 	qint64 m_bytesReceivedDifference;
 	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
