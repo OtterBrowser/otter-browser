@@ -64,7 +64,7 @@ QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOption
 	Q_UNUSED(option)
 
 	ActionComboBoxWidget *widget(new ActionComboBoxWidget(parent));
-	widget->setActionIdentifier(index.data(Qt::UserRole).toInt());
+	widget->setActionIdentifier(index.data(MouseProfileDialog::IdentifierRole).toInt());
 	widget->setFocus();
 
 	return widget;
@@ -82,7 +82,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	for (int i = 0; i < contexts.count(); ++i)
 	{
 		QStandardItem *item(new QStandardItem(contexts.at(i).second));
-		item->setData(contexts.at(i).first, Qt::UserRole);
+		item->setData(contexts.at(i).first, ContextRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		const QHash<int, QVector<MouseProfile::Gesture> > definitions(m_profile.getDefinitions());
@@ -331,7 +331,7 @@ MouseProfile MouseProfileDialog::getProfile() const
 
 			if (gestures.count() > 0)
 			{
-				definitions[static_cast<GesturesManager::GesturesContext>(contextIndex.data(Qt::UserRole).toInt())] = gestures;
+				definitions[static_cast<GesturesManager::GesturesContext>(contextIndex.data(ContextRole).toInt())] = gestures;
 			}
 		}
 	}
