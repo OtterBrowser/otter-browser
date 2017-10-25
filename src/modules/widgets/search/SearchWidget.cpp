@@ -435,7 +435,7 @@ void SearchWidget::addSearchEngine(QAction *action)
 {
 	if (action)
 	{
-		SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), QString(), true, this));
+		SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), {}, true, this));
 
 		connect(job, &SearchEngineFetchJob::jobFinished, [&](bool isSuccess)
 		{
@@ -460,7 +460,7 @@ void SearchWidget::restoreCurrentSearchEngine()
 	{
 		setSearchEngine(m_searchEngine);
 
-		m_searchEngine = QString();
+		m_searchEngine.clear();
 	}
 
 	updateGeometries();
@@ -537,9 +537,9 @@ void SearchWidget::updateGeometries()
 	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
 	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
-	m_searchButtonRectangle = QRect();
-	m_addButtonRectangle = QRect();
-	m_dropdownArrowRectangle = QRect();
+	m_searchButtonRectangle = {};
+	m_addButtonRectangle = {};
+	m_dropdownArrowRectangle = {};
 
 	if (isRightToLeft)
 	{
@@ -631,12 +631,12 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 
 	if (searchEngines.isEmpty())
 	{
-		m_searchEngine = QString();
+		m_searchEngine.clear();
 
 		hidePopup();
 		setEnabled(false);
-		setToolTip(QString());
-		setPlaceholderText(QString());
+		setToolTip({});
+		setPlaceholderText({});
 
 		return;
 	}
@@ -671,7 +671,7 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 		if (m_suggester)
 		{
 			m_suggester->setSearchEngine(m_searchEngine);
-			m_suggester->setQuery(QString());
+			m_suggester->setQuery({});
 		}
 
 		if (canSendRequest && !m_query.isEmpty())
