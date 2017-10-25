@@ -151,7 +151,7 @@ private:
 	bool m_isIgnoringMouseRelease;
 
 	static QString m_sharedQuickFindQuery;
-	static QMap<int, QPixmap> m_scrollCursors;
+	static QMap<ScrollDirections, QPixmap> m_scrollCursors;
 };
 
 }
