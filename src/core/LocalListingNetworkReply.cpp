@@ -204,7 +204,7 @@ qint64 LocalListingNetworkReply::readData(char *data, qint64 maxSize)
 {
 	if (m_offset < m_content.size())
 	{
-		qint64 number(qMin(maxSize, m_content.size() - m_offset));
+		qint64 number(qMin(maxSize, (m_content.size() - m_offset)));
 
 		memcpy(data, (m_content.constData() + m_offset), number);
 
