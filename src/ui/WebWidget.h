@@ -34,7 +34,7 @@
 #include <QtNetwork/QSslCipher>
 #include <QtNetwork/QSslError>
 #include <QtPrintSupport/QPrinter>
-#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {

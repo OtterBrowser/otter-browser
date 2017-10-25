@@ -23,6 +23,8 @@
 
 #include "../../../ui/WebWidget.h"
 
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
