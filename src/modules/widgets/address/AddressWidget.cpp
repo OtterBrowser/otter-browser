@@ -351,7 +351,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 		}
 	}
 
-	connect(this, &AddressWidget::textEdited, this, [&](const QString &text)
+	connect(this, &AddressWidget::textEdited, this, [&]()
 	{
 		m_wasEdited = true;
 	});
