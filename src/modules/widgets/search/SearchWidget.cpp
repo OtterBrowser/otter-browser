@@ -163,6 +163,19 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(par
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &SearchWidget::handleOptionChanged);
 	connect(this, &SearchWidget::textChanged, this, &SearchWidget::setQuery);
 	connect(this, &SearchWidget::textDropped, this, &SearchWidget::sendRequest);
+	connect(this, &SearchWidget::popupClicked, this, [&](const QModelIndex &index)
+	{
+		if (m_suggester && getPopup()->model() == m_suggester->getModel())
+		{
+			setText(index.data(Qt::DisplayRole).toString());
+			sendRequest();
+			hidePopup();
+		}
+		else
+		{
+			setSearchEngine(index);
+		}
+	});
 
 	setWindow(window);
 }
@@ -257,7 +270,7 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 		case Qt::Key_Up:
 			if (!m_isSearchEngineLocked && !isPopupVisible())
 			{
-				showPopup(true);
+				showSearchEngines();
 			}
 
 			break;
@@ -309,7 +322,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 		else if (!m_isSearchEngineLocked && !isPopupVisible() && m_dropdownArrowRectangle.united(m_iconRectangle).contains(event->pos()))
 		{
-			showPopup(true);
+			showSearchEngines();
 		}
 	}
 
@@ -364,44 +377,25 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 	}
 }
 
-void SearchWidget::showPopup(bool useSearchModel)
+void SearchWidget::showSearchEngines()
 {
-	QStandardItemModel *model(useSearchModel ? SearchEnginesManager::getSearchEnginesModel() : m_suggester->getModel());
-
-	if (model->rowCount() == 0)
-	{
-		return;
-	}
-
 	PopupViewWidget *popupWidget(getPopup());
-	popupWidget->setModel(model);
+	popupWidget->setModel(SearchEnginesManager::getSearchEnginesModel());
 	popupWidget->setItemDelegate(new SearchDelegate(this));
 
-	if (!isPopupVisible())
-	{
-		connect(popupWidget, &PopupViewWidget::clicked, this, [&](const QModelIndex &index)
-		{
-			if (m_suggester && getPopup()->model() == m_suggester->getModel())
-			{
-				setText(index.data(Qt::DisplayRole).toString());
-				sendRequest();
-				hidePopup();
-			}
-			else
-			{
-				setSearchEngine(index);
-			}
-		});
-
-		LineEditWidget::showPopup();
-	}
+	showPopup();
 
 	popupWidget->setCurrentIndex(getCurrentIndex());
 }
 
 void SearchWidget::showSearchSuggestions()
 {
-	showPopup(false);
+	if (m_suggester->getModel()->rowCount() > 0)
+	{
+		getPopup()->setModel(m_suggester->getModel());
+
+		showPopup();
+	}
 }
 
 void SearchWidget::sendRequest(const QString &query)

@@ -70,7 +70,7 @@ protected:
 
 protected slots:
 	void sendRequest(const QString &query = {});
-	void showPopup(bool useSearchModel);
+	void showSearchEngines();
 	void showSearchSuggestions();
 	void addSearchEngine(QAction *action);
 	void storeCurrentSearchEngine();
