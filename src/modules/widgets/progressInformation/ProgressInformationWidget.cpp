@@ -123,7 +123,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 		case TotalSizeType:
 			if (key == WebWidget::BytesReceivedInformation)
 			{
-				m_label->setText(tr("Total: %1").arg(Utils::formatUnit(value.toULongLong(), false, 1)));
+				m_label->setText(tr("Total: %1").arg(Utils::formatUnit(value.toLongLong(), false, 1)));
 			}
 
 			break;
@@ -137,7 +137,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 		case SpeedType:
 			if (key == WebWidget::LoadingSpeedInformation)
 			{
-				m_label->setText(tr("Speed: %1").arg(Utils::formatUnit(value.toULongLong(), true, 1)));
+				m_label->setText(tr("Speed: %1").arg(Utils::formatUnit(value.toLongLong(), true, 1)));
 			}
 
 			break;
