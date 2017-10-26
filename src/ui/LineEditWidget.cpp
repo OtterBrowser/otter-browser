@@ -474,7 +474,7 @@ void LineEditWidget::showPopup()
 {
 	if (!m_popupViewWidget)
 	{
-		m_popupViewWidget = new PopupViewWidget(this);
+		getPopup();
 	}
 
 	m_popupViewWidget->updateHeight();
@@ -569,6 +569,8 @@ PopupViewWidget* LineEditWidget::getPopup()
 	if (!m_popupViewWidget)
 	{
 		m_popupViewWidget = new PopupViewWidget(this);
+
+		connect(m_popupViewWidget, &PopupViewWidget::clicked, this, &LineEditWidget::popupClicked);
 	}
 
 	return m_popupViewWidget;
