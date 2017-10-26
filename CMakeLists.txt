@@ -357,6 +357,8 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		add_definitions(-DOTTER_ENABLE_QTWEBKIT_LEGACY)
 
 		list(APPEND OTTER_BACKENDS_WEB "QtWebKit (legacy)")
+
+		message(WARNING "Detected QtWebKit version is outdated and insecure, please update to version 5.212 or newer.")
 	endif (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
 
 	set(otter_src
