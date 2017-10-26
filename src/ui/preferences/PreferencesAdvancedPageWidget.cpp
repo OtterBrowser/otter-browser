@@ -61,7 +61,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->setupUi(this);
 
 	QStandardItemModel *navigationModel(new QStandardItemModel(this));
-	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), QString(), tr("Downloads"), tr("Programs"), QString(), tr("History"), tr("Network"), tr("Security"), tr("Updates"), QString(), tr("Keyboard"), tr("Mouse")});
+	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
 	int navigationIndex(0);
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
@@ -110,10 +110,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
 
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::createIcon(QLatin1String("media-playback-start")));
-	m_ui->notificationsPlaySoundFilePathWidget->setFilters(QStringList(tr("WAV files (*.wav)")));
+	m_ui->notificationsPlaySoundFilePathWidget->setFilters({tr("WAV files (*.wav)")});
 
 	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
-	notificationsModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Description")}));
+	notificationsModel->setHorizontalHeaderLabels({tr("Name"), tr("Description")});
 
 	const QVector<NotificationsManager::EventDefinition> events(NotificationsManager::getEventDefinitions());
 
@@ -144,7 +144,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString(), Qt::DisplayRole)));
 	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Interface_StyleSheetOption).toString());
-	m_ui->appearranceStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
+	m_ui->appearranceStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableTrayIconOption).toBool());
 
 	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
@@ -164,10 +164,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Content_UserStyleSheetOption).toString());
-	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
+	m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
-	downloadsModel->setHorizontalHeaderLabels(QStringList(tr("Name")));
+	downloadsModel->setHorizontalHeaderLabels({tr("Name")});
 
 	IniSettings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());
@@ -650,12 +650,12 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 		case TreeModel::FolderType:
 			{
 				bool result(false);
-				const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, QString(), &result));
+				const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, {}, &result));
 
 				if (result)
 				{
 					QList<QStandardItem*> items({new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title), new QStandardItem()});
-					items[0]->setData(Utils::createIdentifier(QString(), QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList()), UserAgentsModel::IdentifierRole);
+					items[0]->setData(Utils::createIdentifier({}, QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList()), UserAgentsModel::IdentifierRole);
 
 					model->insertRow(items, parent, row, TreeModel::FolderType);
 
@@ -675,7 +675,7 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					userAgent = dialog.getUserAgent();
-					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList());
+					userAgent.identifier = Utils::createIdentifier({}, QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList());
 
 					QList<QStandardItem*> items({new QStandardItem(userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), new QStandardItem(userAgent.value)});
 					items[0]->setCheckable(true);
@@ -812,12 +812,12 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 		case TreeModel::FolderType:
 			{
 				bool result(false);
-				const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, QString(), &result));
+				const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, {}, &result));
 
 				if (result)
 				{
 					QStandardItem *item(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
-					item->setData(Utils::createIdentifier(QString(), QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList()), ProxiesModel::IdentifierRole);
+					item->setData(Utils::createIdentifier({}, QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList()), ProxiesModel::IdentifierRole);
 
 					model->insertRow(item, parent, row, TreeModel::FolderType);
 
@@ -836,7 +836,7 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					proxy = dialog.getProxy();
-					proxy.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList());
+					proxy.identifier = Utils::createIdentifier({}, QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList());
 
 					m_proxies[proxy.identifier] = proxy;
 
@@ -1546,7 +1546,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	if (m_ui->appearranceStyleSheetFilePathWidget->getPath().isEmpty())
 	{
-		Application::getInstance()->setStyleSheet(QString());
+		Application::getInstance()->setStyleSheet({});
 	}
 	else
 	{
@@ -1560,7 +1560,7 @@ void PreferencesAdvancedPageWidget::save()
 		}
 		else
 		{
-			Application::getInstance()->setStyleSheet(QString());
+			Application::getInstance()->setStyleSheet({});
 		}
 	}
 
