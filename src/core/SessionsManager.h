@@ -222,7 +222,8 @@ public:
 	static SessionInformation getSession(const QString &path);
 	static QStringList getClosedWindows();
 	static QStringList getSessions();
-	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
+	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints, Qt::MouseButton button, Qt::KeyboardModifiers modifiers);
+	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton);
 	static SessionsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	static bool restoreClosedWindow(int index = 0);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = nullptr, bool isPrivate = false);

@@ -395,22 +395,21 @@ QStringList SessionsManager::getSessions()
 	return entries;
 }
 
-SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, int modifiers)
+SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, Qt::KeyboardModifiers modifiers)
 {
 	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
-	const Qt::KeyboardModifiers keyboardModifiers((modifiers == -1) ? QGuiApplication::keyboardModifiers() : static_cast<Qt::KeyboardModifiers>(modifiers));
 
-	if (button == Qt::MiddleButton && keyboardModifiers.testFlag(Qt::AltModifier))
+	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
 	{
 		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen | EndOpen);
 	}
 
-	if (keyboardModifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
+	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
 	{
 		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen);
 	}
 
-	if (keyboardModifiers.testFlag(Qt::ShiftModifier))
+	if (modifiers.testFlag(Qt::ShiftModifier))
 	{
 		return (useNewTab ? NewTabOpen : NewWindowOpen);
 	}
@@ -426,6 +425,11 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, 
 	}
 
 	return hints;
+}
+
+SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button)
+{
+	return calculateOpenHints(hints, button, QGuiApplication::keyboardModifiers());
 }
 
 SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap &parameters)
