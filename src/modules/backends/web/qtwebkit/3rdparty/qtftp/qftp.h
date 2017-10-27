@@ -157,6 +157,8 @@ private Q_SLOTS:
     void _q_piError(int, const QString&);
     void _q_piConnectState(int);
     void _q_piFtpReply(int, const QString&);
+
+friend class QFtpPrivate;
 };
 
 QT_END_NAMESPACE

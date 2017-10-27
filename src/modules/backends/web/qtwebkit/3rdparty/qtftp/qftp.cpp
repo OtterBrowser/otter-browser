@@ -1287,7 +1287,7 @@ int QFtpPrivate::addCommand(QFtpCommand *cmd)
 
     if (pending.count() == 1) {
         // don't emit the commandStarted() signal before the ID is returned
-        QTimer::singleShot(0, q_func(), SLOT(_q_startNextCommand()));
+        QTimer::singleShot(0, q_func(), &QFtp::_q_startNextCommand);
     }
     return cmd->id;
 }
