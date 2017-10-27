@@ -356,8 +356,20 @@ void SidebarWidget::updatePanels()
 		}
 	}
 
-	QMenu *menu(new QMenu(m_ui->panelsButton));
 	const QStringList specialPages(AddonsManager::getSpecialPages());
+	QMenu *menu(nullptr);
+
+	if (m_ui->panelsButton->menu())
+	{
+		menu = m_ui->panelsButton->menu();
+		menu->clear();
+	}
+	else
+	{
+		menu = new QMenu(m_ui->panelsButton);
+
+		m_ui->panelsButton->setMenu(menu);
+	}
 
 	for (int i = 0; i < specialPages.count(); ++i)
 	{
@@ -416,14 +428,7 @@ void SidebarWidget::updatePanels()
 
 	menu->addSeparator();
 
-	QAction *addWebPanelAction(menu->addAction(tr("Add Web Panel…")));
-
-	if (m_ui->panelsButton->menu())
-	{
-		m_ui->panelsButton->menu()->deleteLater();
-	}
-
-	m_ui->panelsButton->setMenu(menu);
+	const QAction *addWebPanelAction(menu->addAction(tr("Add Web Panel…")));
 
 	selectPanel(definition.currentPanel);
 
