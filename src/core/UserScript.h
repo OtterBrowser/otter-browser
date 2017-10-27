@@ -58,6 +58,7 @@ public:
 	AddonType getType() const override;
 	bool isEnabledForUrl(const QUrl &url);
 	bool shouldRunOnSubFrames() const;
+	bool remove();
 
 public slots:
 	void reload();

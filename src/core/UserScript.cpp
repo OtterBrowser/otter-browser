@@ -22,6 +22,7 @@
 #include "Console.h"
 #include "ThemesManager.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
@@ -391,6 +392,25 @@ bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 bool UserScript::shouldRunOnSubFrames() const
 {
 	return m_shouldRunOnSubFrames;
+}
+
+bool UserScript::remove()
+{
+	const QFileInfo fileInformation(m_path);
+
+	if (m_path.isEmpty() || !fileInformation.exists())
+	{
+		return false;
+	}
+
+	const QString basename(fileInformation.baseName());
+
+	if (basename.isEmpty() || fileInformation.dir().dirName() != basename)
+	{
+		return false;
+	}
+
+	return fileInformation.dir().removeRecursively();
 }
 
 }
