@@ -20,6 +20,7 @@
 
 #include "UserScript.h"
 #include "Console.h"
+#include "SessionsManager.h"
 #include "ThemesManager.h"
 
 #include <QtCore/QDir>
@@ -405,7 +406,7 @@ bool UserScript::remove()
 
 	const QString basename(fileInformation.baseName());
 
-	if (basename.isEmpty() || fileInformation.dir().dirName() != basename)
+	if (basename.isEmpty() || fileInformation.dir().dirName() != basename || !fileInformation.canonicalFilePath().startsWith(QFileInfo(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).canonicalPath()))
 	{
 		return false;
 	}
