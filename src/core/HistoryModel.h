@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class HistoryEntryItem : public QStandardItem
+class HistoryEntryItem final : public QStandardItem
 {
 public:
 	void setData(const QVariant &value, int role) override;

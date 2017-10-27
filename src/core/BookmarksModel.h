@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class BookmarksItem : public QStandardItem
+class BookmarksItem final : public QStandardItem
 {
 public:
 	void remove();
