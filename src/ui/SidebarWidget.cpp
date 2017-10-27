@@ -415,7 +415,8 @@ void SidebarWidget::updatePanels()
 	}
 
 	menu->addSeparator();
-	menu->addAction(tr("Add Web Panel…"), this, SLOT(addWebPanel()));
+
+	QAction *addWebPanelAction(menu->addAction(tr("Add Web Panel…")));
 
 	if (m_ui->panelsButton->menu())
 	{
@@ -425,6 +426,8 @@ void SidebarWidget::updatePanels()
 	m_ui->panelsButton->setMenu(menu);
 
 	selectPanel(definition.currentPanel);
+
+	connect(addWebPanelAction, &QAction::triggered, this, &SidebarWidget::addWebPanel);
 }
 
 QString SidebarWidget::getPanelTitle(const QString &identifier)
