@@ -415,7 +415,7 @@ void SidebarWidget::updatePanels()
 
 		m_buttons[panels.at(i)] = button;
 
-		connect(button->defaultAction(), &QAction::triggered, this, [&]()
+		connect(action, &QAction::triggered, this, [&]()
 		{
 			const QAction *action(qobject_cast<QAction*>(sender()));
 
