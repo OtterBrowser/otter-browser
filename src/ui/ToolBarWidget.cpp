@@ -161,7 +161,6 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_bookmark(nullptr),
 	m_dropBookmark(nullptr),
 	m_toggleButton(nullptr),
-	m_state(identifier, ToolBarsManager::getToolBarDefinition(identifier)),
 	m_area(Qt::TopToolBarArea),
 	m_reloadTimer(0),
 	m_identifier(identifier),
@@ -173,7 +172,11 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	setAllowedAreas(Qt::NoToolBarArea);
 	setFloatable(false);
 
-	if (identifier >= 0 && identifier != ToolBarsManager::MenuBar)
+	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+
+	m_state = ToolBarState(identifier, definition);
+
+	if (definition.isValid() && identifier != ToolBarsManager::MenuBar)
 	{
 		if (identifier == ToolBarsManager::TabBar)
 		{
@@ -183,22 +186,20 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 			layout()->setMargin(0);
 
-			reload();
+			setDefinition(definition);
 
 			connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &ToolBarWidget::resetGeometry);
 			connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
 		}
 		else
 		{
-			const ToolBarsManager::ToolBarDefinition definition(getDefinition());
-
 			for (int i = 0; i < definition.entries.count(); ++i)
 			{
 				if (definition.entries.at(i).action == QLatin1String("AddressWidget") || definition.entries.at(i).action == QLatin1String("SearchWidget"))
 				{
 					m_isInitialized = true;
 
-					reload();
+					setDefinition(definition);
 
 					connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
 
