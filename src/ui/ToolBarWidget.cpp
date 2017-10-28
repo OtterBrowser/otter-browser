@@ -162,6 +162,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_dropBookmark(nullptr),
 	m_toggleButton(nullptr),
 	m_state(identifier, ToolBarsManager::getToolBarDefinition(identifier)),
+	m_area(Qt::TopToolBarArea),
 	m_reloadTimer(0),
 	m_identifier(identifier),
 	m_dropIndex(-1),
@@ -273,13 +274,12 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	if (getDefinition().type == ToolBarsManager::BookmarksBarType && m_dropIndex >= 0)
 	{
 		const QWidget *widget(widgetForAction(actions().value(m_dropIndex)));
-		const Qt::ToolBarArea area(getArea());
 		const int spacing(style()->pixelMetric(QStyle::PM_ToolBarItemSpacing));
 		int position(-1);
 
 		if (widget)
 		{
-			switch (area)
+			switch (m_area)
 			{
 				case Qt::LeftToolBarArea:
 				case Qt::RightToolBarArea:
@@ -301,7 +301,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		}
 		else if (m_dropIndex > 0)
 		{
-			switch (area)
+			switch (m_area)
 			{
 				case Qt::LeftToolBarArea:
 				case Qt::RightToolBarArea:
@@ -319,7 +319,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		{
 			QPainter painter(this);
 
-			switch (area)
+			switch (m_area)
 			{
 				case Qt::LeftToolBarArea:
 				case Qt::RightToolBarArea:
@@ -339,10 +339,9 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	const Qt::ToolBarArea area(getArea());
 	QStyleOptionTab tabOption;
 
-	switch (area)
+	switch (m_area)
 	{
 		case Qt::BottomToolBarArea:
 			tabOption.shape = QTabBar::RoundedSouth;
@@ -382,7 +381,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	{
 		const QSize size(contentsRect().size());
 
-		switch (area)
+		switch (m_area)
 		{
 			case Qt::BottomToolBarArea:
 				tabBarBaseOption.rect.setRect(0, 0, size.width(), overlap);
@@ -596,8 +595,7 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 	if (!position.isNull())
 	{
 		QAction *action(actionAt(position));
-		const Qt::ToolBarArea area(getArea());
-		const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
+		const bool isHorizontal(m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea);
 
 		if (!action)
 		{
@@ -784,8 +782,6 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 void ToolBarWidget::reload()
 {
 	setDefinition(getDefinition());
-
-	emit areaChanged(getArea());
 }
 
 void ToolBarWidget::resetGeometry()
@@ -955,7 +951,7 @@ void ToolBarWidget::updateToggleGeometry()
 		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 	}
 
-	switch (getArea())
+	switch (m_area)
 	{
 		case Qt::BottomToolBarArea:
 			m_toggleButton->move(0, (height() - 6));
@@ -984,12 +980,21 @@ void ToolBarWidget::updateVisibility()
 	}
 }
 
+void ToolBarWidget::setArea(Qt::ToolBarArea area)
+{
+	if (area != m_area)
+	{
+		m_area = area;
+
+		emit areaChanged(m_area);
+	}
+}
+
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
 	TabBarWidget *tabBar(nullptr);
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-	const Qt::ToolBarArea area(getArea());
-	const bool isHorizontal(area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea);
+	const bool isHorizontal(m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea);
 
 	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
@@ -1151,7 +1156,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	if (tabBar)
 	{
-		switch (area)
+		switch (m_area)
 		{
 			case Qt::BottomToolBarArea:
 				layout()->setAlignment(tabBar, Qt::AlignTop);
@@ -1244,9 +1249,9 @@ ToolBarState ToolBarWidget::getState() const
 	return m_state;
 }
 
-Qt::ToolBarArea ToolBarWidget::getArea()
+Qt::ToolBarArea ToolBarWidget::getArea() const
 {
-	return (m_mainWindow ? m_mainWindow->toolBarArea(this) : Qt::TopToolBarArea);
+	return m_area;
 }
 
 Qt::ToolButtonStyle ToolBarWidget::getButtonStyle() const

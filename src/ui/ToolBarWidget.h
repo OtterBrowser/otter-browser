@@ -76,7 +76,7 @@ public:
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
 	ToolBarState getState() const;
-	Qt::ToolBarArea getArea();
+	Qt::ToolBarArea getArea() const;
 	Qt::ToolButtonStyle getButtonStyle() const;
 	int getIdentifier() const;
 	int getIconSize() const;
@@ -88,6 +88,7 @@ public:
 
 public slots:
 	void resetGeometry();
+	void setArea(Qt::ToolBarArea area);
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
@@ -131,6 +132,7 @@ private:
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
 	ToolBarState m_state;
+	Qt::ToolBarArea m_area;
 	int m_reloadTimer;
 	int m_identifier;
 	int m_dropIndex;
