@@ -197,7 +197,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 		return;
 	}
 
-	QAction *enableContentBlockingAction(m_profilesMenu->addAction(tr("Enable Content Blocking"), this, SLOT(toggleContentBlocking())));
+	QAction *enableContentBlockingAction(m_profilesMenu->addAction(tr("Enable Content Blocking")));
 	enableContentBlockingAction->setCheckable(true);
 	enableContentBlockingAction->setChecked(m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
@@ -235,6 +235,8 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 			profileAction->setChecked(enabledProfiles.contains(profiles.at(i)->getName()));
 		}
 	}
+
+	connect(enableContentBlockingAction, &QAction::triggered, this, &ContentBlockingInformationWidget::toggleContentBlocking);
 }
 
 void ContentBlockingInformationWidget::handleRequest(const NetworkManager::ResourceInformation &request)
