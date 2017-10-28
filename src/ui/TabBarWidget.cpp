@@ -611,7 +611,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	handleOptionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getOption(SettingsManager::TabBar_MaximumTabWidthOption));
 	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getOption(SettingsManager::TabBar_MinimumTabWidthOption));
 
-	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar)
 	{
@@ -1779,6 +1779,19 @@ bool TabBarWidget::event(QEvent *event)
 				contexts.append(GesturesManager::GenericContext);
 
 				GesturesManager::startGesture(this, event, contexts, parameters);
+			}
+
+			break;
+		case QEvent::ParentChange:
+			{
+				const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent()));
+
+				if (toolBar)
+				{
+					setArea(toolBar->getArea());
+
+					connect(toolBar, &ToolBarWidget::areaChanged, this, &TabBarWidget::setArea);
+				}
 			}
 
 			break;
