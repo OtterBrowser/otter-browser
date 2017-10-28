@@ -32,7 +32,7 @@ namespace Sonnet
 namespace Otter
 {
 
-class TextEditWidget : public QPlainTextEdit, public ActionExecutor
+class TextEditWidget final : public QPlainTextEdit, public ActionExecutor
 {
 	Q_OBJECT
 
