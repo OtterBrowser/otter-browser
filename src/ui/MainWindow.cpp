@@ -141,6 +141,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 		for (int j = 0; j < states.count(); ++j)
 		{
 			ToolBarWidget *toolBar(new ToolBarWidget(states.at(j).identifier, nullptr, this));
+			toolBar->setArea(area);
 			toolBar->setState(states.at(j));
 
 			if (j > 0)

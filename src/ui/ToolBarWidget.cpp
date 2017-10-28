@@ -132,6 +132,8 @@ void ToolBarDropZoneWidget::dropEvent(QDropEvent *event)
 			m_mainWindow->insertToolBar(this, toolBars.at(i));
 			m_mainWindow->insertToolBarBreak(this);
 
+			toolBars.at(i)->setArea(m_mainWindow->toolBarArea(this));
+
 			break;
 		}
 	}
@@ -175,6 +177,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
 
 	m_state = ToolBarState(identifier, definition);
+	m_area = definition.location;
 
 	if (definition.isValid() && identifier != ToolBarsManager::MenuBar)
 	{
