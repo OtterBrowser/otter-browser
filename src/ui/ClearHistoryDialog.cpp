@@ -86,7 +86,7 @@ void ClearHistoryDialog::clearHistory()
 {
 	if (m_ui->clearBrowsingHistoryCheckBox->isChecked())
 	{
-		HistoryManager::clearHistory(m_ui->periodSpinBox->value());
+		HistoryManager::clearHistory(static_cast<uint>(m_ui->periodSpinBox->value()));
 	}
 
 	if (m_ui->clearCookiesCheckBox->isChecked())

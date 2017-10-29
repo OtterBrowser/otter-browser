@@ -125,7 +125,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 	QStyleOptionTitleBar option;
 	option.initFrom(this);
 	option.titleBarFlags = windowFlags();
-	option.titleBarState = windowState();
+	option.titleBarState = static_cast<int>(windowState());
 	option.subControls = QStyle::SC_All;
 	option.activeSubControls = QStyle::SC_None;
 
@@ -191,7 +191,7 @@ void MdiWindow::mouseDoubleClickEvent(QMouseEvent *event)
 	QStyleOptionTitleBar option;
 	option.initFrom(this);
 	option.titleBarFlags = windowFlags();
-	option.titleBarState = windowState();
+	option.titleBarState = static_cast<int>(windowState());
 	option.subControls = QStyle::SC_All;
 	option.activeSubControls = QStyle::SC_None;
 
