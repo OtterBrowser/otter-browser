@@ -272,7 +272,7 @@ void LineEditWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (toolBar)
 	{
 		menu.addSeparator();
-		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QVector<QAction*>(), &menu));
+		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), {}, &menu));
 	}
 
 	menu.exec(event->globalPos());

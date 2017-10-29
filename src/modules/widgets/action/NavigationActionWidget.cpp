@@ -134,7 +134,7 @@ bool NavigationActionWidget::event(QEvent *event)
 					if (toolBar)
 					{
 						menu.addSeparator();
-						menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QVector<QAction*>(), &menu)->actions());
+						menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), {}, &menu)->actions());
 					}
 
 					menu.exec(contextMenuEvent->globalPos());
