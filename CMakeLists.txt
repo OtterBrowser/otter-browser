@@ -195,6 +195,7 @@ set(otter_src
 	src/ui/TextEditWidget.cpp
 	src/ui/TextLabelWidget.cpp
 	src/ui/ToolBarDialog.cpp
+	src/ui/ToolBarDropZoneWidget.cpp
 	src/ui/ToolBarWidget.cpp
 	src/ui/ToolButtonWidget.cpp
 	src/ui/TransferDialog.cpp

@@ -37,31 +37,6 @@ class MainWindow;
 class SidebarWidget;
 class Window;
 
-class ToolBarDropZoneWidget final : public QToolBar
-{
-	Q_OBJECT
-
-public:
-	explicit ToolBarDropZoneWidget(MainWindow *parent);
-
-	QSize sizeHint() const override;
-
-protected:
-	void paintEvent(QPaintEvent *event) override;
-	void dragEnterEvent(QDragEnterEvent *event) override;
-	void dragMoveEvent(QDragMoveEvent *event) override;
-	void dragLeaveEvent(QDragLeaveEvent *event) override;
-	void dropEvent(QDropEvent *event) override;
-	bool canDrop(QDropEvent *event);
-
-private:
-	MainWindow *m_mainWindow;
-	bool m_isDropTarget;
-
-signals:
-	void toolBarDraggedChanged(bool isDragging);
-};
-
 class ToolBarWidget : public QToolBar
 {
 	Q_OBJECT

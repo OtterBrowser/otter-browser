@@ -32,6 +32,7 @@
 #include "StatusBarWidget.h"
 #include "TabBarWidget.h"
 #include "TabSwitcherWidget.h"
+#include "ToolBarDropZoneWidget.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
