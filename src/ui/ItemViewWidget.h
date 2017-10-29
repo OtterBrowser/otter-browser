@@ -71,7 +71,7 @@ public:
 	enum ViewMode
 	{
 		ListViewMode = 0,
-		TreeViewMode = 1
+		TreeViewMode
 	};
 
 	explicit ItemViewWidget(QWidget *parent = nullptr);
