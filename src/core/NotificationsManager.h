@@ -29,7 +29,7 @@ namespace Otter
 
 class NotificationsManager;
 
-class Notification : public QObject
+class Notification final : public QObject
 {
 	Q_OBJECT
 

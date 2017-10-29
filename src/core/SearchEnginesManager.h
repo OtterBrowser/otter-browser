@@ -107,7 +107,7 @@ signals:
 	void searchEnginesModelModified();
 };
 
-class SearchEngineFetchJob : public QObject
+class SearchEngineFetchJob final : public QObject
 {
 	Q_OBJECT
 

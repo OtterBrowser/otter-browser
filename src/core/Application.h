@@ -39,7 +39,7 @@ class PlatformIntegration;
 class Style;
 class TrayIcon;
 
-class Application : public QApplication, public ActionExecutor
+class Application final : public QApplication, public ActionExecutor
 {
 	Q_OBJECT
 

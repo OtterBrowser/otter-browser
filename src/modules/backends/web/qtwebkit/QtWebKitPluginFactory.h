@@ -28,7 +28,7 @@ namespace Otter
 
 class QtWebKitWebWidget;
 
-class QtWebKitPluginFactory : public QWebPluginFactory
+class QtWebKitPluginFactory final : public QWebPluginFactory
 {
 	Q_OBJECT
 

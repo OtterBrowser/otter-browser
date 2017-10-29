@@ -40,7 +40,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 };
 
-class MdiWindow : public QMdiSubWindow
+class MdiWindow final : public QMdiSubWindow
 {
 	Q_OBJECT
 

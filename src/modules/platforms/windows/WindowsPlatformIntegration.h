@@ -85,7 +85,7 @@ enum RegistrationType
 
 class MainWindow;
 
-class WindowsPlatformIntegration : public PlatformIntegration
+class WindowsPlatformIntegration final : public PlatformIntegration
 {
 	Q_OBJECT
 

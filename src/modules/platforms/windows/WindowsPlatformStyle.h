@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class WindowsPlatformStyle : public Style
+class WindowsPlatformStyle final : public Style
 {
 	Q_OBJECT
 

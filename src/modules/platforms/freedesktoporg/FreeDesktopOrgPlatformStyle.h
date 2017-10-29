@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-class FreeDesktopOrgPlatformStyle : public Style
+class FreeDesktopOrgPlatformStyle final : public Style
 {
 	Q_OBJECT
 

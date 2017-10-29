@@ -34,7 +34,7 @@ class QtWebKitPage;
 class QtWebKitWebWidget;
 class WebWidget;
 
-class QtWebKitFrame : public QObject
+class QtWebKitFrame final : public QObject
 {
 	Q_OBJECT
 

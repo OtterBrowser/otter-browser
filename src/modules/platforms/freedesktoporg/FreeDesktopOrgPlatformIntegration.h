@@ -35,7 +35,7 @@ const QDBusArgument& operator>>(const QDBusArgument &argument, QImage &image);
 namespace Otter
 {
 
-class FreeDesktopOrgPlatformIntegration : public PlatformIntegration
+class FreeDesktopOrgPlatformIntegration final : public PlatformIntegration
 {
 	Q_OBJECT
 

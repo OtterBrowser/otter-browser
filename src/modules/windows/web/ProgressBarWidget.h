@@ -30,7 +30,7 @@ namespace Otter
 class WebWidget;
 class Window;
 
-class ProgressBarWidget : public QFrame
+class ProgressBarWidget final : public QFrame
 {
 	Q_OBJECT
 

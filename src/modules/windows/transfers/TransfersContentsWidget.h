@@ -36,7 +36,7 @@ namespace Ui
 
 class Window;
 
-class ProgressBarDelegate : public ItemDelegate
+class ProgressBarDelegate final : public ItemDelegate
 {
 public:
 	explicit ProgressBarDelegate(QObject *parent);

@@ -30,7 +30,7 @@ namespace Otter
 
 class Notification;
 
-class NotificationDialog : public QDialog
+class NotificationDialog final : public QDialog
 {
 	Q_OBJECT
 
