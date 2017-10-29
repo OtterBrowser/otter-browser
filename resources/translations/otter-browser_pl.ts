@@ -2957,12 +2957,12 @@ Czy chcesz dokonać jej migracji?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="77"/>
         <source>Tab Handle</source>
-        <translation>Obsługa kart</translation>
+        <translation>Uchwyt karty</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="77"/>
         <source>Tab Handle of Active Tab</source>
-        <translation>Obsługa kart dla aktywnej karty</translation>
+        <translation>Uchwyt aktywnej karty</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="77"/>
