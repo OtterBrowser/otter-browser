@@ -166,6 +166,7 @@ signals:
 	void fullScreenStateChanged(bool isFullScreen);
 
 friend class MainWindowSessionItem;
+friend class TabBarToolBarWidget;
 friend class ToolBarDropZoneWidget;
 friend class ToolBarWidget;
 };

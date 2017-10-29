@@ -72,15 +72,6 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 		if (identifier == ToolBarsManager::TabBar)
 		{
 			m_isInitialized = true;
-
-			setContentsMargins(0, 0, 0, 0);
-
-			layout()->setMargin(0);
-
-			setDefinition(definition);
-
-			connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &ToolBarWidget::resetGeometry);
-			connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
 		}
 		else
 		{
@@ -225,76 +216,6 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 			}
 		}
 	}
-
-	if (m_identifier != ToolBarsManager::TabBar)
-	{
-		return;
-	}
-
-	QStyleOptionTab tabOption;
-
-	switch (m_area)
-	{
-		case Qt::BottomToolBarArea:
-			tabOption.shape = QTabBar::RoundedSouth;
-
-			break;
-		case Qt::LeftToolBarArea:
-			tabOption.shape = QTabBar::RoundedWest;
-
-			break;
-		case Qt::RightToolBarArea:
-			tabOption.shape = QTabBar::RoundedEast;
-
-			break;
-		default:
-			tabOption.shape = QTabBar::RoundedNorth;
-
-			break;
-	}
-
-	const int overlap(style()->pixelMetric(QStyle::PM_TabBarBaseOverlap, &tabOption));
-	QPainter painter(this);
-	const QTabBar *tabBar(findChild<TabBarWidget*>());
-	QStyleOptionTabBarBase tabBarBaseOption;
-	tabBarBaseOption.initFrom(this);
-	tabBarBaseOption.documentMode = true;
-	tabBarBaseOption.rect = contentsRect();
-	tabBarBaseOption.shape = tabOption.shape;
-	tabBarBaseOption.tabBarRect = contentsRect();
-
-	if (tabBar)
-	{
-		tabBarBaseOption.selectedTabRect = tabBar->tabRect(tabBar->currentIndex()).translated(tabBar->pos());
-		tabBarBaseOption.tabBarRect = tabBar->geometry();
-	}
-
-	if (overlap > 0)
-	{
-		const QSize size(contentsRect().size());
-
-		switch (m_area)
-		{
-			case Qt::BottomToolBarArea:
-				tabBarBaseOption.rect.setRect(0, 0, size.width(), overlap);
-
-				break;
-			case Qt::LeftToolBarArea:
-				tabBarBaseOption.rect.setRect((size.width() - overlap), 0, overlap, size.height());
-
-				break;
-			case Qt::RightToolBarArea:
-				tabBarBaseOption.rect.setRect(0, 0, overlap, size.height());
-
-				break;
-			default:
-				tabBarBaseOption.rect.setRect(0, (size.height() - overlap), size.width(), overlap);
-
-				break;
-		}
-	}
-
-	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter, this);
 }
 
 void ToolBarWidget::showEvent(QShowEvent *event)
@@ -314,16 +235,6 @@ void ToolBarWidget::showEvent(QShowEvent *event)
 void ToolBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QToolBar::resizeEvent(event);
-
-	if (m_identifier == ToolBarsManager::TabBar)
-	{
-		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
-
-		if (tabBar)
-		{
-			QTimer::singleShot(200, tabBar, &TabBarWidget::updateSize);
-		}
-	}
 
 	if (m_toggleButton && m_toggleButton->isVisible())
 	{
@@ -471,6 +382,76 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 	}
 
 	updateDropIndex(QPoint());
+}
+
+void ToolBarWidget::clearEntries()
+{
+	if (getDefinition().type == ToolBarsManager::SideBarType && m_sidebarWidget)
+	{
+		m_sidebarWidget->reload();
+	}
+	else
+	{
+		clear();
+	}
+}
+
+void ToolBarWidget::populateEntries()
+{
+	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+	const bool isHorizontal(m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea);
+
+	switch (definition.type)
+	{
+		case ToolBarsManager::BookmarksBarType:
+			m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
+
+			loadBookmarks();
+
+			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &ToolBarWidget::handleBookmarkModified);
+			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &ToolBarWidget::handleBookmarkModified);
+			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkRestored, this, &ToolBarWidget::handleBookmarkModified);
+			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkMoved, this, &ToolBarWidget::handleBookmarkMoved);
+			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkTrashed, this, &ToolBarWidget::handleBookmarkMoved);
+			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkRemoved, this, &ToolBarWidget::handleBookmarkRemoved);
+
+			break;
+		case ToolBarsManager::SideBarType:
+			if (!m_sidebarWidget)
+			{
+				m_sidebarWidget = new SidebarWidget(this);
+
+				addWidget(m_sidebarWidget);
+			}
+
+			if (m_toggleButton)
+			{
+				updateToggleGeometry();
+			}
+
+			break;
+		default:
+			for (int i = 0; i < definition.entries.count(); ++i)
+			{
+				if (definition.entries.at(i).action == QLatin1String("separator"))
+				{
+					addSeparator();
+				}
+				else if (definition.entries.at(i).action != QLatin1String("TabBarWidget"))
+				{
+					QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), this, m_window));
+
+					if (widget)
+					{
+						addWidget(widget);
+
+						layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
+					}
+				}
+			}
+
+			break;
+	}
 }
 
 void ToolBarWidget::updateDropIndex(const QPoint &position)
@@ -621,54 +602,9 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		return;
 	}
 
-	if (m_identifier != ToolBarsManager::TabBar)
-	{
-		QMenu *menu(createCustomizationMenu(m_identifier));
-		menu->exec(event->globalPos());
-		menu->deleteLater();
-
-		return;
-	}
-
-	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
-	cycleAction->setCheckable(true);
-	cycleAction->setChecked(!SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
-
-	QAction *thumbnailsAction(new QAction(tr("Show Thumbnails in Tabs"), this));
-	thumbnailsAction->setCheckable(true);
-	thumbnailsAction->setChecked(SettingsManager::getOption(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
-
-	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
-	{
-		SettingsManager::setOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
-	});
-	connect(thumbnailsAction, &QAction::toggled, [&](bool areEnabled)
-	{
-		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
-	});
-
-	ActionExecutor::Object executor(m_mainWindow, m_mainWindow);
-	QMenu menu(this);
-	menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
-	menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
-	menu.addSeparator();
-
-	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
-	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, arrangeMenu));
-	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addSeparator();
-	arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, executor, arrangeMenu));
-	arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, executor, arrangeMenu));
-
-	menu.addMenu(createCustomizationMenu(m_identifier, {cycleAction, thumbnailsAction}, &menu));
-	menu.exec(event->globalPos());
-
-	cycleAction->deleteLater();
-
-	thumbnailsAction->deleteLater();
+	QMenu *menu(createCustomizationMenu(m_identifier));
+	menu->exec(event->globalPos());
+	menu->deleteLater();
 }
 
 void ToolBarWidget::reload()
@@ -864,14 +800,6 @@ void ToolBarWidget::updateToggleGeometry()
 	}
 }
 
-void ToolBarWidget::updateVisibility()
-{
-	if (m_identifier == ToolBarsManager::TabBar)
-	{
-		setVisible(shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
-	}
-}
-
 void ToolBarWidget::setArea(Qt::ToolBarArea area)
 {
 	if (area != m_area)
@@ -884,55 +812,13 @@ void ToolBarWidget::setArea(Qt::ToolBarArea area)
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	TabBarWidget *tabBar(nullptr);
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-	const bool isHorizontal(m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea);
 
 	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
 	setVisible(m_identifier == ToolBarsManager::ProgressBar || definition.hasToggle || shouldBeVisible(mode));
-	setOrientation(isHorizontal ? Qt::Horizontal : Qt::Vertical);
-
-	if (m_identifier == ToolBarsManager::TabBar)
-	{
-		tabBar = findChild<TabBarWidget*>();
-
-		if (!tabBar && m_mainWindow)
-		{
-			tabBar = m_mainWindow->getTabBar();
-
-			if (tabBar)
-			{
-				connect(tabBar, &TabBarWidget::tabsAmountChanged, this, &ToolBarWidget::updateVisibility);
-
-				updateVisibility();
-			}
-		}
-
-		if (tabBar)
-		{
-			tabBar->setParent(this);
-			tabBar->setVisible(!m_isCollapsed);
-		}
-
-		for (int i = (actions().count() - 1); i >= 0; --i)
-		{
-			if (tabBar && widgetForAction(actions().at(i)) != tabBar)
-			{
-				removeAction(actions().at(i));
-			}
-		}
-
-		resetGeometry();
-	}
-	else if (definition.type == ToolBarsManager::SideBarType && m_sidebarWidget)
-	{
-		m_sidebarWidget->reload();
-	}
-	else
-	{
-		clear();
-	}
+	setOrientation((m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea) ? Qt::Horizontal : Qt::Vertical);
+	clearEntries();
 
 	if (definition.hasToggle)
 	{
@@ -966,110 +852,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	emit buttonStyleChanged(definition.buttonStyle);
 	emit iconSizeChanged(iconSize);
 
-	switch (definition.type)
-	{
-		case ToolBarsManager::BookmarksBarType:
-			m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
-
-			loadBookmarks();
-
-			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkAdded, this, &ToolBarWidget::handleBookmarkModified);
-			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &ToolBarWidget::handleBookmarkModified);
-			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkRestored, this, &ToolBarWidget::handleBookmarkModified);
-			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkMoved, this, &ToolBarWidget::handleBookmarkMoved);
-			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkTrashed, this, &ToolBarWidget::handleBookmarkMoved);
-			connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkRemoved, this, &ToolBarWidget::handleBookmarkRemoved);
-
-			return;
-		case ToolBarsManager::SideBarType:
-			if (!m_sidebarWidget)
-			{
-				m_sidebarWidget = new SidebarWidget(this);
-
-				addWidget(m_sidebarWidget);
-			}
-
-			if (m_toggleButton)
-			{
-				updateToggleGeometry();
-			}
-
-			return;
-		default:
-			break;
-	}
-
-	for (int i = 0; i < definition.entries.count(); ++i)
-	{
-		if (definition.entries.at(i).action == QLatin1String("separator"))
-		{
-			addSeparator();
-		}
-		else
-		{
-			if (m_identifier == ToolBarsManager::TabBar && tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
-			{
-				addWidget(tabBar);
-			}
-			else
-			{
-				const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
-
-				if (isTabBar && (m_identifier != ToolBarsManager::TabBar || findChild<TabBarWidget*>()))
-				{
-					continue;
-				}
-
-				QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), this, m_window));
-
-				if (widget)
-				{
-					addWidget(widget);
-
-					if (isTabBar)
-					{
-						tabBar = qobject_cast<TabBarWidget*>(widget);
-
-						if (tabBar)
-						{
-							connect(tabBar, &TabBarWidget::tabsAmountChanged, this, &ToolBarWidget::updateVisibility);
-
-							updateVisibility();
-						}
-					}
-					else
-					{
-						layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
-					}
-				}
-			}
-		}
-	}
-
-	if (tabBar)
-	{
-		switch (m_area)
-		{
-			case Qt::BottomToolBarArea:
-				layout()->setAlignment(tabBar, Qt::AlignTop);
-
-				break;
-			case Qt::LeftToolBarArea:
-				layout()->setAlignment(tabBar, Qt::AlignRight);
-
-				break;
-			case Qt::RightToolBarArea:
-				layout()->setAlignment(tabBar, Qt::AlignLeft);
-
-				break;
-			default:
-				layout()->setAlignment(tabBar, Qt::AlignBottom);
-
-				break;
-		}
-
-		QTimer::singleShot(200, tabBar, &TabBarWidget::updateSize);
-	}
+	populateEntries();
 }
 
 void ToolBarWidget::setState(const ToolBarState &state)
@@ -1089,6 +872,16 @@ void ToolBarWidget::setState(const ToolBarState &state)
 void ToolBarWidget::setToolBarLocked(bool locked)
 {
 	setMovable(!locked && m_identifier != ToolBarsManager::MenuBar && m_identifier != ToolBarsManager::ProgressBar);
+}
+
+MainWindow* ToolBarWidget::getMainWindow() const
+{
+	return m_mainWindow;
+}
+
+Window* ToolBarWidget::getWindow() const
+{
+	return m_window;
 }
 
 QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> actions, QWidget *parent)
@@ -1190,16 +983,14 @@ bool ToolBarWidget::canDrop(QDropEvent *event) const
 	return (m_bookmark && event->mimeData()->hasUrls() && (event->keyboardModifiers().testFlag(Qt::ShiftModifier) || !ToolBarsManager::areToolBarsLocked()));
 }
 
+bool ToolBarWidget::isCollapsed() const
+{
+	return m_isCollapsed;
+}
+
 bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
 {
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
-
-	if (m_identifier == ToolBarsManager::TabBar && definition.getVisibility(mode) == ToolBarsManager::AutoVisibilityToolBar)
-	{
-		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
-
-		return (tabBar && tabBar->count() > 1);
-	}
 
 	return ((mode == ToolBarsManager::NormalMode && definition.hasToggle) || calculateShouldBeVisible(definition, m_state, mode));
 }
@@ -1238,6 +1029,287 @@ bool ToolBarWidget::event(QEvent *event)
 	}
 
 	return QToolBar::event(event);
+}
+
+TabBarToolBarWidget::TabBarToolBarWidget(int identifier, Window *window, QWidget *parent) : ToolBarWidget(identifier, window, parent),
+	m_tabBar(nullptr)
+{
+	setContentsMargins(0, 0, 0, 0);
+
+	layout()->setMargin(0);
+
+	setDefinition(getDefinition());
+
+	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, this, &TabBarToolBarWidget::resetGeometry);
+	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &TabBarToolBarWidget::handleToolBarModified);
+}
+
+void TabBarToolBarWidget::paintEvent(QPaintEvent *event)
+{
+	ToolBarWidget::paintEvent(event);
+
+	QStyleOptionTab tabOption;
+
+	switch (getArea())
+	{
+		case Qt::BottomToolBarArea:
+			tabOption.shape = QTabBar::RoundedSouth;
+
+			break;
+		case Qt::LeftToolBarArea:
+			tabOption.shape = QTabBar::RoundedWest;
+
+			break;
+		case Qt::RightToolBarArea:
+			tabOption.shape = QTabBar::RoundedEast;
+
+			break;
+		default:
+			tabOption.shape = QTabBar::RoundedNorth;
+
+			break;
+	}
+
+	const int overlap(style()->pixelMetric(QStyle::PM_TabBarBaseOverlap, &tabOption));
+	QPainter painter(this);
+	QStyleOptionTabBarBase tabBarBaseOption;
+	tabBarBaseOption.initFrom(this);
+	tabBarBaseOption.documentMode = true;
+	tabBarBaseOption.rect = contentsRect();
+	tabBarBaseOption.shape = tabOption.shape;
+	tabBarBaseOption.tabBarRect = contentsRect();
+
+	if (m_tabBar)
+	{
+		tabBarBaseOption.selectedTabRect = m_tabBar->tabRect(m_tabBar->currentIndex()).translated(m_tabBar->pos());
+		tabBarBaseOption.tabBarRect = m_tabBar->geometry();
+	}
+
+	if (overlap > 0)
+	{
+		const QSize size(contentsRect().size());
+
+		switch (getArea())
+		{
+			case Qt::BottomToolBarArea:
+				tabBarBaseOption.rect.setRect(0, 0, size.width(), overlap);
+
+				break;
+			case Qt::LeftToolBarArea:
+				tabBarBaseOption.rect.setRect((size.width() - overlap), 0, overlap, size.height());
+
+				break;
+			case Qt::RightToolBarArea:
+				tabBarBaseOption.rect.setRect(0, 0, overlap, size.height());
+
+				break;
+			default:
+				tabBarBaseOption.rect.setRect(0, (size.height() - overlap), size.width(), overlap);
+
+				break;
+		}
+	}
+
+	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter, this);
+}
+
+void TabBarToolBarWidget::resizeEvent(QResizeEvent *event)
+{
+	ToolBarWidget::resizeEvent(event);
+
+	if (m_tabBar)
+	{
+		QTimer::singleShot(200, m_tabBar, &TabBarWidget::updateSize);
+	}
+}
+
+void TabBarToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	if (event->reason() == QContextMenuEvent::Mouse)
+	{
+		event->accept();
+
+		return;
+	}
+
+	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
+	cycleAction->setCheckable(true);
+	cycleAction->setChecked(!SettingsManager::getOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
+
+	QAction *thumbnailsAction(new QAction(tr("Show Thumbnails in Tabs"), this));
+	thumbnailsAction->setCheckable(true);
+	thumbnailsAction->setChecked(SettingsManager::getOption(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
+
+	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
+	{
+		SettingsManager::setOption(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
+	});
+	connect(thumbnailsAction, &QAction::toggled, [&](bool areEnabled)
+	{
+		SettingsManager::setOption(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
+	});
+
+	ActionExecutor::Object executor(getMainWindow(), getMainWindow());
+	QMenu menu(this);
+	menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
+	menu.addSeparator();
+
+	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreTabAction, {}, executor, arrangeMenu));
+	arrangeMenu->addSeparator();
+	arrangeMenu->addAction(new Action(ActionsManager::RestoreAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MaximizeAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::MinimizeAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addSeparator();
+	arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, executor, arrangeMenu));
+	arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, executor, arrangeMenu));
+
+	menu.addMenu(createCustomizationMenu(getIdentifier(), {cycleAction, thumbnailsAction}, &menu));
+	menu.exec(event->globalPos());
+
+	cycleAction->deleteLater();
+
+	thumbnailsAction->deleteLater();
+}
+
+void TabBarToolBarWidget::findTabBar()
+{
+	TabBarWidget *tabBar(m_tabBar ? m_tabBar : findChild<TabBarWidget*>());
+
+	if (!tabBar && getMainWindow())
+	{
+		tabBar = getMainWindow()->getTabBar();
+
+		if (tabBar)
+		{
+			connect(tabBar, &TabBarWidget::tabsAmountChanged, this, &TabBarToolBarWidget::updateVisibility);
+
+			updateVisibility();
+		}
+	}
+
+	if (tabBar && !m_tabBar)
+	{
+		tabBar->setParent(this);
+		tabBar->setVisible(!isCollapsed());
+
+		m_tabBar = tabBar;
+	}
+}
+
+void TabBarToolBarWidget::clearEntries()
+{
+	findTabBar();
+
+	for (int i = (actions().count() - 1); i >= 0; --i)
+	{
+		if (m_tabBar && widgetForAction(actions().at(i)) != m_tabBar)
+		{
+			removeAction(actions().at(i));
+		}
+	}
+
+	resetGeometry();
+}
+
+void TabBarToolBarWidget::populateEntries()
+{
+	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+	const bool isHorizontal(getArea() != Qt::LeftToolBarArea && getArea() != Qt::RightToolBarArea);
+
+	findTabBar();
+
+	for (int i = 0; i < definition.entries.count(); ++i)
+	{
+		if (definition.entries.at(i).action == QLatin1String("separator"))
+		{
+			addSeparator();
+		}
+		else
+		{
+			if (m_tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
+			{
+				addWidget(m_tabBar);
+			}
+			else
+			{
+				const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
+
+				if (isTabBar && (getIdentifier() != ToolBarsManager::TabBar || findChild<TabBarWidget*>()))
+				{
+					continue;
+				}
+
+				QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), this, getWindow()));
+
+				if (widget)
+				{
+					addWidget(widget);
+
+					if (isTabBar)
+					{
+						m_tabBar = qobject_cast<TabBarWidget*>(widget);
+
+						if (m_tabBar)
+						{
+							connect(m_tabBar, &TabBarWidget::tabsAmountChanged, this, &TabBarToolBarWidget::updateVisibility);
+
+							updateVisibility();
+						}
+					}
+					else
+					{
+						layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
+					}
+				}
+			}
+		}
+	}
+
+	if (m_tabBar)
+	{
+		switch (getArea())
+		{
+			case Qt::BottomToolBarArea:
+				layout()->setAlignment(m_tabBar, Qt::AlignTop);
+
+				break;
+			case Qt::LeftToolBarArea:
+				layout()->setAlignment(m_tabBar, Qt::AlignRight);
+
+				break;
+			case Qt::RightToolBarArea:
+				layout()->setAlignment(m_tabBar, Qt::AlignLeft);
+
+				break;
+			default:
+				layout()->setAlignment(m_tabBar, Qt::AlignBottom);
+
+				break;
+		}
+
+		QTimer::singleShot(200, m_tabBar, &TabBarWidget::updateSize);
+	}
+}
+
+void TabBarToolBarWidget::updateVisibility()
+{
+	setVisible(shouldBeVisible((getMainWindow() ? getMainWindow()->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+}
+
+bool TabBarToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
+{
+	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+
+	if (definition.getVisibility(mode) == ToolBarsManager::AutoVisibilityToolBar)
+	{
+		const TabBarWidget *tabBar(findChild<TabBarWidget*>());
+
+		return (tabBar && tabBar->count() > 1);
+	}
+
+	return ((mode == ToolBarsManager::NormalMode && definition.hasToggle) || calculateShouldBeVisible(definition, getState(), mode));
 }
 
 }

@@ -35,6 +35,7 @@ namespace Otter
 class BookmarksItem;
 class MainWindow;
 class SidebarWidget;
+class TabBarWidget;
 class Window;
 
 class ToolBarWidget : public QToolBar
@@ -58,7 +59,8 @@ public:
 	int getMaximumButtonSize() const;
 	static bool calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const ToolBarState &state, ToolBarsManager::ToolBarsMode mode);
 	bool canDrop(QDropEvent *event) const;
-	bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
+	bool isCollapsed() const;
+	virtual bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
 	bool event(QEvent *event) override;
 
 public slots:
@@ -81,8 +83,12 @@ protected:
 	void dragMoveEvent(QDragMoveEvent *event) override;
 	void dragLeaveEvent(QDragLeaveEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
+	virtual void clearEntries();
+	virtual void populateEntries();
 	void updateDropIndex(const QPoint &position);
 	void updateToggleGeometry();
+	MainWindow* getMainWindow() const;
+	Window* getWindow() const;
 
 protected slots:
 	void scheduleBookmarksReload();
@@ -95,7 +101,6 @@ protected slots:
 	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void handleFullScreenStateChanged(bool isFullScreen);
-	void updateVisibility();
 	void setToolBarLocked(bool locked);
 
 private:
@@ -121,6 +126,30 @@ signals:
 	void iconSizeChanged(int size);
 	void maximumButtonSizeChanged(int size);
 	void toolBarModified();
+};
+
+class TabBarToolBarWidget final : public ToolBarWidget
+{
+	Q_OBJECT
+
+public:
+	explicit TabBarToolBarWidget(int identifier, Window *window, QWidget *parent);
+
+	bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const override;
+
+protected:
+	void paintEvent(QPaintEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void findTabBar();
+	void clearEntries() override;
+	void populateEntries() override;
+
+protected slots:
+	void updateVisibility();
+
+private:
+	TabBarWidget *m_tabBar;
 };
 
 }
