@@ -34,6 +34,7 @@
 #include "TabSwitcherWidget.h"
 #include "ToolBarDropZoneWidget.h"
 #include "ToolBarWidget.h"
+#include "WidgetFactory.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "../core/ActionsManager.h"
@@ -141,7 +142,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 
 		for (int j = 0; j < states.count(); ++j)
 		{
-			ToolBarWidget *toolBar((states.at(j).identifier == ToolBarsManager::TabBar) ? new TabBarToolBarWidget(states.at(j).identifier, nullptr, this) : new ToolBarWidget(states.at(j).identifier, nullptr, this));
+			ToolBarWidget *toolBar(WidgetFactory::createToolBar(states.at(j).identifier, nullptr, this));
 			toolBar->setArea(area);
 			toolBar->setState(states.at(j));
 
@@ -1680,7 +1681,7 @@ void MainWindow::handleToolBarAdded(int identifier)
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
 	QVector<ToolBarWidget*> toolBars(getToolBars(definition.location));
-	ToolBarWidget *toolBar((identifier == ToolBarsManager::TabBar) ? new TabBarToolBarWidget(identifier, nullptr, this) : new ToolBarWidget(identifier, nullptr, this));
+	ToolBarWidget *toolBar(WidgetFactory::createToolBar(identifier, nullptr, this));
 
 	if (toolBars.isEmpty() || definition.row < 0)
 	{

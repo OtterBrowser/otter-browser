@@ -28,11 +28,13 @@ namespace Otter
 {
 
 class MainWindow;
+class ToolBarWidget;
 class Window;
 
 namespace WidgetFactory
 {
 
+ToolBarWidget* createToolBar(int identifier, Window *window, QWidget *parent);
 QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent, Window *window = nullptr);
 QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow = nullptr, int sidebar = -1);
 

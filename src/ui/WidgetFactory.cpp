@@ -18,8 +18,9 @@
 **************************************************************************/
 
 #include "WidgetFactory.h"
-#include "TabBarWidget.h"
 #include "MainWindow.h"
+#include "TabBarWidget.h"
+#include "ToolBarWidget.h"
 #include "Window.h"
 #include "../modules/widgets/action/ActionWidget.h"
 #include "../modules/widgets/action/NavigationActionWidget.h"
@@ -55,6 +56,16 @@ namespace Otter
 
 namespace WidgetFactory
 {
+
+ToolBarWidget* createToolBar(int identifier, Window *window, QWidget *parent)
+{
+	if (identifier == ToolBarsManager::TabBar)
+	{
+		return new TabBarToolBarWidget(identifier, window, parent);
+	}
+
+	return new ToolBarWidget(identifier, window, parent);
+}
 
 QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent, Window *window)
 {
