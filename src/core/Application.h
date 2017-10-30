@@ -33,13 +33,14 @@
 namespace Otter
 {
 
+class LongTermTimer;
 class MainWindow;
 class Notification;
 class PlatformIntegration;
 class Style;
 class TrayIcon;
 
-class Application : public QApplication, public ActionExecutor
+class Application final : public QApplication, public ActionExecutor
 {
 	Q_OBJECT
 
@@ -101,6 +102,8 @@ protected slots:
 	void showUpdateDetails();
 
 private:
+	LongTermTimer *m_updateCheckTimer;
+
 	static Application *m_instance;
 	static PlatformIntegration *m_platformIntegration;
 	static TrayIcon *m_trayIcon;

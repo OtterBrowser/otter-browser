@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,65 +27,69 @@
 namespace Otter
 {
 
-LongTermTimer::LongTermTimer(quint64 seconds, QObject *receiver, const char *member) : QObject(receiver),
-	m_secondsLeft(0),
+LongTermTimer::LongTermTimer(QObject *parent) : QObject(parent),
+	m_interval(0),
+	m_remainingTime(0),
 	m_timer(0)
 {
-	connect(this, SIGNAL(timeout()), receiver, member);
+}
 
-	updateTimer(seconds);
+void LongTermTimer::start(quint64 interval)
+{
+	m_interval = interval;
+
+	updateTimer(interval);
+}
+
+void LongTermTimer::stop()
+{
+	if (m_timer > 0)
+	{
+		killTimer(m_timer);
+
+		m_timer = 0;
+		m_interval = 0;
+		m_remainingTime = 0;
+	}
 }
 
 void LongTermTimer::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_timer)
 	{
-		killTimer(m_timer);
-
-		m_timer = 0;
-
-		if (m_secondsLeft == 0)
+		if (m_remainingTime == 0)
 		{
-			emit timeout();
+			updateTimer(m_interval);
 
-			deleteLater();
+			emit timeout();
 		}
 		else
 		{
-			updateTimer(m_secondsLeft, true);
+			updateTimer(m_remainingTime, true);
 		}
 	}
 }
 
-void LongTermTimer::runTimer(quint64 seconds, QObject *receiver, const char *member)
+void LongTermTimer::updateTimer(const quint64 remainingTime, const bool updateCounter)
 {
-	if (receiver && member)
-	{
-		new LongTermTimer(seconds, receiver, member);
-	}
-}
+	quint64 timerValue(std::numeric_limits<int>::max());
 
-void LongTermTimer::updateTimer(const quint64 secondsLeft, const bool updateCounter)
-{
-	int timerValue(std::numeric_limits<int>::max());
-	const quint64 milisecondsLeft(secondsLeft * 1000);
-
-	if (milisecondsLeft <= static_cast<quint64>(timerValue))
+	if (remainingTime <= timerValue)
 	{
-		timerValue = milisecondsLeft;
+		timerValue = remainingTime;
 
 		if (updateCounter)
 		{
-			m_secondsLeft = 0;
+			m_remainingTime = 0;
 		}
 	}
 	else if (updateCounter)
 	{
-		m_secondsLeft -= (timerValue / 1000);
+		m_remainingTime -= timerValue;
 	}
 	else
 	{
-		m_secondsLeft = (secondsLeft - (timerValue / 1000));
+		m_remainingTime = (remainingTime - timerValue);
 	}
 
 	m_timer = startTimer(timerValue);

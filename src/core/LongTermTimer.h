@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,16 +31,18 @@ class LongTermTimer final : public QObject
 	Q_OBJECT
 
 public:
-	explicit LongTermTimer(quint64 seconds, QObject *receiver, const char *member);
+	explicit LongTermTimer(QObject *parent = nullptr);
 
-	static void runTimer(quint64 seconds, QObject *receiver, const char *member);
+	void start(quint64 interval);
+	void stop();
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
-	void updateTimer(const quint64 secondsLeft, const bool updateCounter = false);
+	void updateTimer(const quint64 remainingTime, const bool updateCounter = false);
 
 private:
-	quint64 m_secondsLeft;
+	quint64 m_interval;
+	quint64 m_remainingTime;
 	int m_timer;
 
 signals:

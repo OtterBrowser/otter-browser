@@ -93,7 +93,8 @@ bool Application::m_isAboutToQuit(false);
 bool Application::m_isHidden(false);
 bool Application::m_isUpdating(false);
 
-Application::Application(int &argc, char **argv) : QApplication(argc, argv), ActionExecutor()
+Application::Application(int &argc, char **argv) : QApplication(argc, argv), ActionExecutor(),
+	m_updateCheckTimer(nullptr)
 {
 	setApplicationName(QLatin1String("Otter"));
 	setApplicationDisplayName(QLatin1String("Otter Browser"));
@@ -468,7 +469,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 		connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
-		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
+		if (!m_updateCheckTimer)
+		{
+			m_updateCheckTimer = new LongTermTimer(this);
+			m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
+
+			connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
+		}
 	}
 
 	Style *style(ThemesManager::createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
@@ -841,9 +848,12 @@ void Application::periodicUpdateCheck()
 
 	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+	if (!m_updateCheckTimer && interval > 0 && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
-		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
+		m_updateCheckTimer = new LongTermTimer(this);
+		m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
+
+		connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
 	}
 }
 
