@@ -328,14 +328,35 @@ void AddonsContentsWidget::reloadAddon()
 
 void AddonsContentsWidget::removeAddons()
 {
-	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
+	const QVector<Addon*> addons(getSelectedAddons());
 
-	if (indexes.isEmpty())
+	if (addons.isEmpty())
 	{
 		return;
 	}
 
-//TODO
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("You are about to irreversibly remove %n addon(s).", "", addons.count()));
+	messageBox.setInformativeText(tr("Do you want to continue?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Yes);
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		for (int i = 0; i < addons.count(); ++i)
+		{
+			if (addons.at(i)->canRemove())
+			{
+				addons.at(i)->remove();
+			}
+		}
+	}
+
+	AddonsManager::loadUserScripts();
+
+	save();
 }
 
 void AddonsContentsWidget::save()
@@ -352,24 +373,38 @@ void AddonsContentsWidget::save()
 		return;
 	}
 
+	QModelIndexList indexesToRemove;
 	QJsonObject settingsObject;
 
 	for (int i = 0; i < userScriptsItem->rowCount(); ++i)
 	{
-		const QStandardItem *item(userScriptsItem->child(i));
+		const QModelIndex index(userScriptsItem->child(i)->index());
+		const QString name(index.data(NameRole).toString());
 
-		if (item && !item->data(NameRole).toString().isEmpty())
+		if (index.isValid())
 		{
-			QJsonObject scriptObject;
-			scriptObject.insert(QLatin1String("isEnabled"), QJsonValue(item->checkState() == Qt::Checked));
+			if (!name.isEmpty() && AddonsManager::getUserScript(name))
+			{
+				QJsonObject scriptObject;
+				scriptObject.insert(QLatin1String("isEnabled"), QJsonValue(index.data(Qt::CheckStateRole).toInt() == Qt::Checked));
 
-			settingsObject.insert(item->data(NameRole).toString(), scriptObject);
+				settingsObject.insert(name, scriptObject);
+			}
+			else
+			{
+				indexesToRemove.append(index);
+			}
 		}
 	}
 
 	JsonSettings settings;
 	settings.setObject(settingsObject);
 	settings.save(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
+
+	for (int i = (indexesToRemove.count() - 1); i >= 0; --i)
+	{
+		m_ui->addonsViewWidget->model()->removeRow(indexesToRemove.at(i).row(), indexesToRemove.at(i).parent());
+	}
 }
 
 void AddonsContentsWidget::showContextMenu(const QPoint &position)
