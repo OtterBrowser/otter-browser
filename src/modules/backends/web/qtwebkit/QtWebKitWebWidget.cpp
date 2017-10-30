@@ -2153,7 +2153,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 
 QPixmap QtWebKitWebWidget::createThumbnail(const QSize &size)
 {
-	if ((size.isNull() || size == m_thumbnail.size()) && ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == OngoingLoadingState))
+	if ((size.isNull() || size == m_thumbnail.size()) && ((!m_thumbnail.isNull() && qFuzzyCompare(m_thumbnail.devicePixelRatio(), devicePixelRatio())) || m_loadingState == OngoingLoadingState))
 	{
 		return m_thumbnail;
 	}
