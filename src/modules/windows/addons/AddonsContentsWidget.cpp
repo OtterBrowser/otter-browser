@@ -350,17 +350,40 @@ void AddonsContentsWidget::save()
 
 void AddonsContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->addonsViewWidget->indexAt(position));
+	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
+	QVector<Addon*> selectedAddons;
+	selectedAddons.reserve(indexes.count());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
+		{
+			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
+
+			if (type == Addon::UserScriptType)
+			{
+				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+
+				if (script)
+				{
+					selectedAddons.append(script);
+				}
+			}
+		}
+	}
+
+	selectedAddons.squeeze();
+
 	QMenu menu(this);
 	menu.addAction(tr("Add Addon…"), this, SLOT(addAddon()));
 
-	if (index.isValid() && index.parent() != m_model->invisibleRootItem()->index())
+	if (!selectedAddons.isEmpty())
 	{
 		menu.addSeparator();
 		menu.addAction(tr("Open Addon File"), this, SLOT(openAddon()));
 		menu.addAction(tr("Reload Addon"), this, SLOT(reloadAddon()));
 		menu.addSeparator();
-		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()))->setEnabled(false);
+		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()));
 	}
 
 	menu.exec(m_ui->addonsViewWidget->mapToGlobal(position));
