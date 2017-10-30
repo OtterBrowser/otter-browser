@@ -175,6 +175,7 @@ QtWebKitWebWidget::~QtWebKitWebWidget()
 {
 	m_networkManager->blockSignals(true);
 
+	m_page->undoStack()->blockSignals(true);
 	m_page->blockSignals(true);
 	m_page->triggerAction(QWebPage::Stop);
 	m_page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
