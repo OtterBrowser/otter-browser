@@ -82,6 +82,35 @@ void AddonsContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
+QVector<Addon*> AddonsContentsWidget::getSelectedAddons() const
+{
+	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
+	QVector<Addon*> addons;
+	addons.reserve(indexes.count());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
+		{
+			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
+
+			if (type == Addon::UserScriptType)
+			{
+				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+
+				if (script)
+				{
+					addons.append(script);
+				}
+			}
+		}
+	}
+
+	addons.squeeze();
+
+	return addons;
+}
+
 void AddonsContentsWidget::populateAddons()
 {
 	m_types.clear();
@@ -255,22 +284,17 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 
 void AddonsContentsWidget::openAddon()
 {
-	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
+	const QVector<Addon*> addons(getSelectedAddons());
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (int i = 0; i < addons.count(); ++i)
 	{
-		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
+		if (addons.at(i)->getType() == Addon::UserScriptType)
 		{
-			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
+			const UserScript *script(static_cast<UserScript*>(addons.at(i)));
 
-			if (type == Addon::UserScriptType)
+			if (script)
 			{
-				const UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
-
-				if (script)
-				{
-					Utils::runApplication(QString(), QUrl(script->getPath()));
-				}
+				Utils::runApplication({}, QUrl(script->getPath()));
 			}
 		}
 	}
@@ -350,34 +374,11 @@ void AddonsContentsWidget::save()
 
 void AddonsContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
-	QVector<Addon*> selectedAddons;
-	selectedAddons.reserve(indexes.count());
-
-	for (int i = 0; i < indexes.count(); ++i)
-	{
-		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
-		{
-			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
-
-			if (type == Addon::UserScriptType)
-			{
-				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
-
-				if (script)
-				{
-					selectedAddons.append(script);
-				}
-			}
-		}
-	}
-
-	selectedAddons.squeeze();
-
+	const QVector<Addon*> addons(getSelectedAddons());
 	QMenu menu(this);
 	menu.addAction(tr("Add Addon…"), this, SLOT(addAddon()));
 
-	if (!selectedAddons.isEmpty())
+	if (!addons.isEmpty())
 	{
 		menu.addSeparator();
 		menu.addAction(tr("Open Addon File"), this, SLOT(openAddon()));

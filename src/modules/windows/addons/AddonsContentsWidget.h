@@ -71,6 +71,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	QVector<Addon*> getSelectedAddons() const;
 
 protected slots:
 	void populateAddons();
