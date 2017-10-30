@@ -57,8 +57,9 @@ public:
 	InjectionTime getInjectionTime() const;
 	AddonType getType() const override;
 	bool isEnabledForUrl(const QUrl &url);
+	bool canRemove() const override;
 	bool shouldRunOnSubFrames() const;
-	bool remove();
+	bool remove() override;
 
 public slots:
 	void reload();

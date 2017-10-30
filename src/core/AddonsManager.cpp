@@ -82,6 +82,16 @@ bool Addon::isEnabled() const
 	return m_isEnabled;
 }
 
+bool Addon::canRemove() const
+{
+	return false;
+}
+
+bool Addon::remove()
+{
+	return false;
+}
+
 AddonsManager* AddonsManager::m_instance(nullptr);
 QMap<QString, UserScript*> AddonsManager::m_userScripts;
 QMap<QString, WebBackend*> AddonsManager::m_webBackends;

@@ -60,6 +60,8 @@ public:
 	virtual QIcon getIcon() const;
 	virtual AddonType getType() const;
 	virtual bool isEnabled() const;
+	virtual bool canRemove() const;
+	virtual bool remove();
 
 protected:
 	void setEnabled(bool isEnabled);

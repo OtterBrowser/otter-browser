@@ -355,6 +355,11 @@ bool UserScript::isEnabledForUrl(const QUrl &url)
 	return isEnabled;
 }
 
+bool UserScript::canRemove() const
+{
+	return true;
+}
+
 bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 {
 	for (int i = 0; i < rules.length(); ++i)
