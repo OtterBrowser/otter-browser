@@ -78,8 +78,9 @@ void UpdateChecker::runUpdateCheck()
 	const QString platform(integration ? integration->getPlatformName() : QString());
 	const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
 	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
+	int latestVersion(0);
+	int latestVersionIndex(0);
 	QVector<UpdateInformation> availableUpdates;
-	QPair<int,int> latestVersion({0, 0});
 
 	for (int i = 0; i < channels.count(); ++i)
 	{
@@ -117,10 +118,10 @@ void UpdateChecker::runUpdateCheck()
 						information.version.append(QLatin1Char('#') + object[QLatin1String("subVersion")].toString());
 					}
 
-					if (mainVersion < channelMainVersion && latestVersion.first < channelMainVersion)
+					if (mainVersion < channelMainVersion && latestVersion < channelMainVersion)
 					{
-						latestVersion.first = channelMainVersion;
-						latestVersion.second = availableUpdates.count();
+						latestVersion = channelMainVersion;
+						latestVersionIndex = availableUpdates.count();
 					}
 
 					availableUpdates.append(information);
@@ -131,7 +132,7 @@ void UpdateChecker::runUpdateCheck()
 
 	SettingsManager::setOption(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
 
-	emit finished(availableUpdates, latestVersion.second);
+	emit finished(availableUpdates, latestVersionIndex);
 
 	deleteLater();
 }
