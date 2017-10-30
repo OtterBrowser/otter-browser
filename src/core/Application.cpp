@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1106,22 +1106,20 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 	}
 }
 
-void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates)
+void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex)
 {
 	if (availableUpdates.isEmpty())
 	{
 		return;
 	}
 
-	const int latestVersion(availableUpdates.count() - 1);
-
 	if (SettingsManager::getOption(SettingsManager::Updates_AutomaticInstallOption).toBool())
 	{
-		new Updater(availableUpdates.at(latestVersion), this);
+		new Updater(availableUpdates.at(latestVersionIndex), this);
 	}
 	else
 	{
-		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel)));
+		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version).arg(availableUpdates.at(latestVersionIndex).channel)));
 		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
 
 		connect(notification, &Notification::clicked, this, &Application::showUpdateDetails);

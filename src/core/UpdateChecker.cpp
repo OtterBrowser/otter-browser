@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -79,6 +79,7 @@ void UpdateChecker::runUpdateCheck()
 	const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
 	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
 	QVector<UpdateInformation> availableUpdates;
+	QPair<int,int> latestVersion({0, 0});
 
 	for (int i = 0; i < channels.count(); ++i)
 	{
@@ -116,6 +117,12 @@ void UpdateChecker::runUpdateCheck()
 						information.version.append(QLatin1Char('#') + object[QLatin1String("subVersion")].toString());
 					}
 
+					if (mainVersion < channelMainVersion && latestVersion.first < channelMainVersion)
+					{
+						latestVersion.first = channelMainVersion;
+						latestVersion.second = availableUpdates.count();
+					}
+
 					availableUpdates.append(information);
 				}
 			}
@@ -124,7 +131,7 @@ void UpdateChecker::runUpdateCheck()
 
 	SettingsManager::setOption(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
 
-	emit finished(availableUpdates);
+	emit finished(availableUpdates, latestVersion.second);
 
 	deleteLater();
 }
