@@ -620,9 +620,11 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		return false;
 	}
 
+	const bool isAnchorNavigation((type == QWebPage::NavigationTypeLinkClicked || type == QWebPage::NavigationTypeOther) && frame->url().matches(request.url(), QUrl::RemoveFragment));
+
 	if (mainFrame() == frame)
 	{
-		if (m_widget)
+		if (m_widget && !isAnchorNavigation)
 		{
 			m_widget->handleNavigationRequest(request.url(), type);
 		}
@@ -680,7 +682,10 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		emit errorPageChanged(frame, false);
 	}
 
-	emit aboutToNavigate(request.url(), frame, type);
+	if (!isAnchorNavigation)
+	{
+		emit aboutToNavigate(request.url(), frame, type);
+	}
 
 	return true;
 }
