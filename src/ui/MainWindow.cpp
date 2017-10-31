@@ -457,6 +457,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			return;
+		case ActionsManager::PeekTabAction:
 		case ActionsManager::MaximizeTabAction:
 		case ActionsManager::MinimizeTabAction:
 		case ActionsManager::RestoreTabAction:

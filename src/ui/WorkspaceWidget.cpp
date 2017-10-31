@@ -207,10 +207,16 @@ void MdiWindow::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
+Window* MdiWindow::getWindow() const
+{
+	return m_window;
+}
+
 WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 	m_mainWindow(parent),
 	m_mdi(nullptr),
 	m_activeWindow(nullptr),
+	m_peekedWindow(nullptr),
 	m_restoreTimer(0),
 	m_isRestored(false)
 {
@@ -313,6 +319,27 @@ void WorkspaceWidget::createMdi()
 
 void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
+	const bool hasSpecifiedWindow(parameters.contains(QLatin1String("tab")));
+	Window *window(hasSpecifiedWindow ? m_mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong()) : nullptr);
+
+	if (identifier == ActionsManager::PeekTabAction)
+	{
+		if (m_peekedWindow == window)
+		{
+			m_peekedWindow = nullptr;
+
+			setActiveWindow(m_activeWindow, true);
+		}
+		else
+		{
+			m_peekedWindow = window;
+
+			setActiveWindow((window ? window : m_activeWindow.data()), true);
+		}
+
+		return;
+	}
+
 	if (!m_mdi)
 	{
 		createMdi();
@@ -320,18 +347,18 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 	MdiWindow *subWindow(nullptr);
 
-	if (parameters.contains(QLatin1String("tab")))
-	{
-		Window *window(m_mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong()));
-
-		if (window)
-		{
-			subWindow = qobject_cast<MdiWindow*>(window->parentWidget());
-		}
-	}
-	else
+	if (!hasSpecifiedWindow)
 	{
 		subWindow = qobject_cast<MdiWindow*>(m_mdi->currentSubWindow());
+
+		if (subWindow)
+		{
+			window = subWindow->getWindow();
+		}
+	}
+	else if (window)
+	{
+		subWindow = qobject_cast<MdiWindow*>(window->parentWidget());
 	}
 
 	switch (identifier)
@@ -695,7 +722,10 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 			}
 		}
 
-		m_activeWindow = window;
+		if (window != m_peekedWindow)
+		{
+			m_activeWindow = window;
+		}
 	}
 }
 

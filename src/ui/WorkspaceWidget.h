@@ -49,6 +49,7 @@ public:
 
 	void storeState();
 	void restoreState();
+	Window* getWindow() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -97,6 +98,7 @@ private:
 	MainWindow *m_mainWindow;
 	MdiWidget *m_mdi;
 	QPointer<Window> m_activeWindow;
+	QPointer<Window> m_peekedWindow;
 	int m_restoreTimer;
 	bool m_isRestored;
 
