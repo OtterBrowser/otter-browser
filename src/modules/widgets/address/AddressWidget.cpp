@@ -957,7 +957,7 @@ void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHi
 
 	if (!text.isEmpty())
 	{
-		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text, InputInterpreter::NoBookmarkKeywordsFlag));
+		const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(text));
 
 		if (result.isValid())
 		{
