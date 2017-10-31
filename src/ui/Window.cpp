@@ -267,7 +267,7 @@ void Window::clear()
 {
 	if (!m_contentsWidget || m_contentsWidget->close())
 	{
-		setContentsWidget(new WebContentsWidget(m_parameters, QHash<int, QVariant>(), nullptr, this));
+		setContentsWidget(new WebContentsWidget(m_parameters, {}, nullptr, this));
 
 		m_isAboutToClose = false;
 
@@ -341,7 +341,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		widget = new WebContentsWidget(parameters, QHash<int, QVariant>(), nullptr, this);
+		widget = new WebContentsWidget(parameters, {}, nullptr, this);
 
 		setContentsWidget(widget);
 	}
@@ -485,43 +485,43 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 		if (url.path() == QLatin1String("addons"))
 		{
-			newWidget = new AddonsContentsWidget(QVariantMap(), this);
+			newWidget = new AddonsContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("bookmarks"))
 		{
-			newWidget = new BookmarksContentsWidget(QVariantMap(), this);
+			newWidget = new BookmarksContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("cache"))
 		{
-			newWidget = new CacheContentsWidget(QVariantMap(), this);
+			newWidget = new CacheContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("config"))
 		{
-			newWidget = new ConfigurationContentsWidget(QVariantMap(), this);
+			newWidget = new ConfigurationContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("cookies"))
 		{
-			newWidget = new CookiesContentsWidget(QVariantMap(), this);
+			newWidget = new CookiesContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("history"))
 		{
-			newWidget = new HistoryContentsWidget(QVariantMap(), this);
+			newWidget = new HistoryContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("notes"))
 		{
-			newWidget = new NotesContentsWidget(QVariantMap(), this);
+			newWidget = new NotesContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("passwords"))
 		{
-			newWidget = new PasswordsContentsWidget(QVariantMap(), this);
+			newWidget = new PasswordsContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("transfers"))
 		{
-			newWidget = new TransfersContentsWidget(QVariantMap(), this);
+			newWidget = new TransfersContentsWidget({}, this);
 		}
 		else if (url.path() == QLatin1String("windows"))
 		{
-			newWidget = new WindowsContentsWidget(QVariantMap(), this);
+			newWidget = new WindowsContentsWidget({}, this);
 		}
 
 		if (newWidget && !newWidget->canClone())
