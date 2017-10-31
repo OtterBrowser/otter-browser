@@ -25,6 +25,7 @@
 #include "../core/NotesManager.h"
 
 #include <QtCore/QMimeData>
+#include <QtCore/QStringListModel>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
@@ -175,6 +176,7 @@ bool PopupViewWidget::event(QEvent *event)
 
 LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit(text, parent), ActionExecutor(),
 	m_popupViewWidget(nullptr),
+	m_completer(nullptr),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
 	m_shouldIgnoreCompletion(false),
@@ -189,6 +191,7 @@ LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit
 
 LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_popupViewWidget(nullptr),
+	m_completer(nullptr),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
 	m_shouldIgnoreCompletion(false),
@@ -526,23 +529,28 @@ void LineEditWidget::notifyPasteActionStateChanged()
 
 void LineEditWidget::setCompletion(const QString &completion)
 {
-	m_completion = completion;
-
-	if (m_shouldIgnoreCompletion)
+	if (completion != m_completion)
 	{
-		m_shouldIgnoreCompletion = false;
+		m_completion = completion;
 
-		return;
+		if (m_shouldIgnoreCompletion)
+		{
+			m_shouldIgnoreCompletion = false;
+
+			return;
+		}
+
+		if (!m_completer)
+		{
+			m_completer = new QCompleter(this);
+			m_completer->setCompletionMode(QCompleter::InlineCompletion);
+
+			setCompleter(m_completer);
+		}
+
+		m_completer->setModel(new QStringListModel({completion}, m_completer));
+		m_completer->complete();
 	}
-
-//	QString currentText(text().mid(selectionStart()));
-
-//	if (m_completion != currentText)
-//	{
-//		setText(m_completion);
-//		setCursorPosition(currentText.length());
-//		setSelection(currentText.length(), (m_completion.length() - currentText.length()));
-//	}
 }
 
 void LineEditWidget::setDropMode(LineEditWidget::DropMode mode)

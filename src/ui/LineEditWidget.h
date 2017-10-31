@@ -24,6 +24,7 @@
 #include "ItemViewWidget.h"
 #include "../core/ActionExecutor.h"
 
+#include <QtWidgets/QCompleter>
 #include <QtWidgets/QLineEdit>
 
 namespace Otter
@@ -100,6 +101,7 @@ protected slots:
 
 private:
 	PopupViewWidget *m_popupViewWidget;
+	QCompleter *m_completer;
 	QString m_completion;
 	DropMode m_dropMode;
 	int m_selectionStart;
