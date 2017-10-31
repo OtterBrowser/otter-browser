@@ -104,7 +104,6 @@ protected:
 protected slots:
 	void validatePopup(const QUrl &url);
 	void handleOptionChanged(int identifier);
-	void handleLoadFinished();
 	void handleFrameCreation(QWebFrame *frame);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source);

@@ -208,7 +208,12 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	{
 		updateStyleSheets();
 	});
-	connect(mainFrame(), &QWebFrame::loadFinished, this, &QtWebKitPage::handleLoadFinished);
+	connect(mainFrame(), &QWebFrame::loadFinished, this, [&]()
+	{
+		m_isIgnoringJavaScriptPopups = false;
+
+		updateStyleSheets();
+	});
 }
 
 QtWebKitPage::QtWebKitPage() : QWebPage(),
@@ -303,13 +308,6 @@ void QtWebKitPage::handleOptionChanged(int identifier)
 	{
 		updateStyleSheets();
 	}
-}
-
-void QtWebKitPage::handleLoadFinished()
-{
-	m_isIgnoringJavaScriptPopups = false;
-
-	updateStyleSheets();
 }
 
 void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
