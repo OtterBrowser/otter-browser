@@ -84,7 +84,7 @@ public:
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;
-	bool isAboutToClose() const;
+	bool isAboutToClose() const override;
 	bool isActive() const;
 	bool isPinned() const;
 	bool isPrivate() const;

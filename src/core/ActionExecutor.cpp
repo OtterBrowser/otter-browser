@@ -123,7 +123,7 @@ ActionsManager::ActionDefinition::State ActionExecutor::Object::getActionState(i
 
 bool ActionExecutor::Object::isValid() const
 {
-	return !m_object.isNull();
+	return (!m_object.isNull() && !m_executor->isAboutToClose());
 }
 
 ActionExecutor::ActionExecutor()
@@ -132,6 +132,11 @@ ActionExecutor::ActionExecutor()
 
 ActionExecutor::~ActionExecutor()
 {
+}
+
+bool ActionExecutor::isAboutToClose() const
+{
+	return false;
 }
 
 }

@@ -76,7 +76,7 @@ public:
 	int getWindowCount() const;
 	int getWindowIndex(quint64 identifier) const;
 	bool hasUrl(const QUrl &url, bool activate = false);
-	bool isAboutToClose() const;
+	bool isAboutToClose() const override;
 	bool isPrivate() const;
 	bool isSessionRestored() const;
 	bool eventFilter(QObject *object, QEvent *event) override;

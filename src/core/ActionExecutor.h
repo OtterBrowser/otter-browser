@@ -56,6 +56,7 @@ public:
 
 	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const = 0;
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) = 0;
+	virtual bool isAboutToClose() const;
 };
 
 }
