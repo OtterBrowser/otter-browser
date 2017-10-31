@@ -467,7 +467,11 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 
 			break;
 		case Qt::Key_Escape:
-			if (m_window)
+			if (isPopupVisible())
+			{
+				hidePopup();
+			}
+			else if (m_window)
 			{
 				const QUrl url(m_window->getUrl());
 				const QString text(this->text().trimmed());
