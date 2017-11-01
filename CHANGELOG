@@ -1,3 +1,10 @@
+0.9.92 (2017-11-01):
+- improved support for styling tab bar text;
+- added support for deleting User Scripts in Addons Manager;
+- restored inline URLs completion;
+- added action for peeking tab contents;
+- multiple bug fixes and stability improvements.
+
 0.9.91 (2017-10-01):
 - reworked toolbars:
 -- added support for visibility toggle button (collapsing contents);
