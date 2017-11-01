@@ -29,46 +29,115 @@ Job::Job(QObject *parent) : QObject(parent)
 {
 }
 
-SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
-{
-	return m_searchEngine;
-}
-
-IconFetchJob::IconFetchJob(const QUrl &url, QObject *parent) : Job(parent),
-	m_reply(nullptr)
+FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
+	m_sizeLimit(-1),
+	m_timeoutTimer(0),
+	m_isFinished(false),
+	m_isSuccess(true)
 {
 	QNetworkRequest request(url);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
 	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-	connect(m_reply, &QNetworkReply::finished, this, &IconFetchJob::handleIconRequestFinished);
+	connect(m_reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		Q_UNUSED(bytesReceived)
+
+		if (bytesTotal > 0 && m_sizeLimit >= 0 && bytesTotal > m_sizeLimit)
+		{
+			cancel();
+		}
+	});
+	connect(m_reply, &QNetworkReply::finished, this, [&]()
+	{
+		const bool isSuccess(m_reply->error() == QNetworkReply::NoError);
+
+		if (isSuccess && (m_sizeLimit < 0 || m_reply->size() <= m_sizeLimit))
+		{
+			handleSuccessfulReply(m_reply);
+		}
+
+		if (!isSuccess || m_isFinished)
+		{
+			deleteLater();
+
+			emit jobFinished(isSuccess && m_isSuccess);
+		}
+	});
 }
 
-IconFetchJob::~IconFetchJob()
+FetchJob::~FetchJob()
 {
 	m_reply->deleteLater();
 }
 
-void IconFetchJob::cancel()
+void FetchJob::cancel()
 {
 	m_reply->abort();
+
+	deleteLater();
 
 	emit jobFinished(false);
 }
 
-void IconFetchJob::handleIconRequestFinished()
+void FetchJob::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_timeoutTimer)
+	{
+		cancel();
+		killTimer(m_timeoutTimer);
+
+		m_timeoutTimer = 0;
+	}
+}
+
+void FetchJob::markAsFailure()
+{
+	m_isSuccess = false;
+}
+
+void FetchJob::markAsFinished()
+{
+	m_isFinished = true;
+}
+
+void FetchJob::setTimeout(int seconds)
+{
+	if (m_timeoutTimer != 0)
+	{
+		killTimer(m_timeoutTimer);
+	}
+
+	m_timeoutTimer = startTimer(seconds * 1000);
+}
+
+void FetchJob::setSizeLimit(qint64 limit)
+{
+	m_sizeLimit = limit;
+}
+
+IconFetchJob::IconFetchJob(const QUrl &url, QObject *parent) : FetchJob(url, parent)
+{
+	setSizeLimit(20480);
+	setTimeout(5);
+}
+
+void IconFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 {
 	QPixmap pixmap;
 
-	if (m_reply->error() == QNetworkReply::NoError && pixmap.loadFromData(m_reply->readAll()))
+	if (pixmap.loadFromData(reply->readAll()))
 	{
 		m_icon = QIcon(pixmap);
 	}
 
-	deleteLater();
+	if (m_icon.isNull())
+	{
+		markAsFailure();
+	}
 
-	emit jobFinished(!m_icon.isNull());
+	markAsFinished();
 }
 
 QIcon IconFetchJob::getIcon() const
@@ -76,57 +145,31 @@ QIcon IconFetchJob::getIcon() const
 	return m_icon;
 }
 
-SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : Job(parent),
-	m_reply(nullptr),
+SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : FetchJob(url, parent),
 	m_needsToSaveSearchEngine(saveSearchEngine)
 {
 	m_searchEngine.identifier = (identifier.isEmpty() ? Utils::createIdentifier({}, SearchEnginesManager::getSearchEngines()) : identifier);
-
-	QNetworkRequest request(url);
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
-
-	connect(m_reply, &QNetworkReply::finished, this, &SearchEngineFetchJob::handleDefinitionRequestFinished);
 }
 
-SearchEngineFetchJob::~SearchEngineFetchJob()
+SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
 {
-	m_reply->deleteLater();
+	return m_searchEngine;
 }
 
-void SearchEngineFetchJob::cancel()
+void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 {
-	m_reply->abort();
-
-	emit jobFinished(false);
-}
-
-void SearchEngineFetchJob::handleDefinitionRequestFinished()
-{
-	if (m_reply->error() != QNetworkReply::NoError)
-	{
-		deleteLater();
-
-		emit jobFinished(false);
-
-		return;
-	}
-
-	m_searchEngine = SearchEnginesManager::loadSearchEngine(m_reply, m_searchEngine.identifier);
+	m_searchEngine = SearchEnginesManager::loadSearchEngine(reply, m_searchEngine.identifier);
 
 	if (!m_searchEngine.isValid())
 	{
-		deleteLater();
-
-		emit jobFinished(false);
+		markAsFailure();
 
 		return;
 	}
 
 	if (m_searchEngine.selfUrl.isEmpty())
 	{
-		m_searchEngine.selfUrl = m_reply->request().url();
+		m_searchEngine.selfUrl = reply->request().url();
 	}
 
 	if (m_needsToSaveSearchEngine)
@@ -154,9 +197,7 @@ void SearchEngineFetchJob::handleDefinitionRequestFinished()
 	}
 	else
 	{
-		deleteLater();
-
-		emit jobFinished(true);
+		markAsFinished();
 	}
 }
 

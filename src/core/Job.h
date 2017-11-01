@@ -41,45 +41,63 @@ signals:
 	void jobFinished(bool isSuccess);
 };
 
-class IconFetchJob final : public Job
+class FetchJob : public Job
+{
+	Q_OBJECT
+
+public:
+	explicit FetchJob(const QUrl &url, QObject *parent = nullptr);
+	~FetchJob();
+
+	void setTimeout(int seconds);
+	void setSizeLimit(qint64 limit);
+
+public slots:
+	void cancel() override;
+
+protected:
+	void timerEvent(QTimerEvent *event) override;
+	void markAsFailure();
+	void markAsFinished();
+	virtual void handleSuccessfulReply(QNetworkReply *reply) = 0;
+
+private:
+	QNetworkReply *m_reply;
+	qint64 m_sizeLimit;
+	int m_timeoutTimer;
+	bool m_isFinished;
+	bool m_isSuccess;
+};
+
+class IconFetchJob final : public FetchJob
 {
 	Q_OBJECT
 
 public:
 	explicit IconFetchJob(const QUrl &url, QObject *parent = nullptr);
-	~IconFetchJob();
 
 	QIcon getIcon() const;
 
-public slots:
-	void cancel() override;
-
-protected slots:
-	void handleIconRequestFinished();
+protected:
+	void handleSuccessfulReply(QNetworkReply *reply) override;
 
 private:
-	QNetworkReply *m_reply;
 	QIcon m_icon;
 };
 
-class SearchEngineFetchJob final : public Job
+class SearchEngineFetchJob final : public FetchJob
 {
 	Q_OBJECT
 
 public:
 	explicit SearchEngineFetchJob(const QUrl &url, const QString &identifier = {}, bool saveSearchEngine = true, QObject *parent = nullptr);
-	~SearchEngineFetchJob();
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
 
-public slots:
-	void cancel() override;
-
-protected slots:
-	void handleDefinitionRequestFinished();
+protected:
+	void handleSuccessfulReply(QNetworkReply *reply) override;
 
 private:
-	QNetworkReply *m_reply;
 	SearchEnginesManager::SearchEngineDefinition m_searchEngine;
 	bool m_needsToSaveSearchEngine;
 };
