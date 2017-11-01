@@ -35,6 +35,7 @@ namespace Ui
 }
 
 class Animation;
+class SearchEngineFetchJob;
 
 class SearchEngineTitleDelegate final : public ItemDelegate
 {

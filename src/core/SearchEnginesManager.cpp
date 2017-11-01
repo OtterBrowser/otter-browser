@@ -18,8 +18,6 @@
 **************************************************************************/
 
 #include "SearchEnginesManager.h"
-#include "NetworkManager.h"
-#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
@@ -28,7 +26,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
-#include <QtNetwork/QNetworkRequest>
 
 namespace Otter
 {
@@ -630,107 +627,6 @@ bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString 
 	}
 
 	return false;
-}
-
-SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : QObject(parent),
-	m_reply(nullptr),
-	m_needsToSaveSearchEngine(saveSearchEngine)
-{
-	m_searchEngine.identifier = (identifier.isEmpty() ? Utils::createIdentifier({}, SearchEnginesManager::getSearchEngines()) : identifier);
-
-	QNetworkRequest request(url);
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
-
-	connect(m_reply, &QNetworkReply::finished, this, &SearchEngineFetchJob::handleDefinitionRequestFinished);
-}
-
-SearchEngineFetchJob::~SearchEngineFetchJob()
-{
-	m_reply->deleteLater();
-}
-
-void SearchEngineFetchJob::cancel()
-{
-	m_reply->abort();
-
-	emit jobFinished(false);
-}
-
-void SearchEngineFetchJob::handleDefinitionRequestFinished()
-{
-	if (m_reply->error() != QNetworkReply::NoError)
-	{
-		deleteLater();
-
-		emit jobFinished(false);
-
-		return;
-	}
-
-	m_searchEngine = SearchEnginesManager::loadSearchEngine(m_reply, m_searchEngine.identifier);
-
-	if (!m_searchEngine.isValid())
-	{
-		deleteLater();
-
-		emit jobFinished(false);
-
-		return;
-	}
-
-	if (m_searchEngine.selfUrl.isEmpty())
-	{
-		m_searchEngine.selfUrl = m_reply->request().url();
-	}
-
-	if (m_needsToSaveSearchEngine)
-	{
-		SearchEnginesManager::addSearchEngine(m_searchEngine);
-	}
-
-	if (m_searchEngine.iconUrl.isValid())
-	{
-		m_reply->deleteLater();
-
-		QNetworkRequest request(m_searchEngine.iconUrl);
-		request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-		m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
-
-		connect(m_reply, &QNetworkReply::finished, this, &SearchEngineFetchJob::handleIconRequestFinished);
-	}
-	else
-	{
-		deleteLater();
-
-		emit jobFinished(true);
-	}
-}
-
-void SearchEngineFetchJob::handleIconRequestFinished()
-{
-	QPixmap pixmap;
-
-	if (m_reply->error() == QNetworkReply::NoError && pixmap.loadFromData(m_reply->readAll()))
-	{
-		m_searchEngine.icon = QIcon(pixmap);
-
-		if (m_needsToSaveSearchEngine)
-		{
-			SearchEnginesManager::addSearchEngine(m_searchEngine);
-		}
-	}
-
-	deleteLater();
-
-	emit jobFinished(true);
-}
-
-SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
-{
-	return m_searchEngine;
 }
 
 }

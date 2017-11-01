@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
+#include "../../../core/Job.h"
 #include "../../../core/SearchEnginesManager.h"
 #include "../../../core/SearchSuggester.h"
 #include "../../../core/SettingsManager.h"

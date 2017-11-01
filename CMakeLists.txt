@@ -113,6 +113,7 @@ set(otter_src
 	src/core/Importer.cpp
 	src/core/IniSettings.cpp
 	src/core/InputInterpreter.cpp
+	src/core/Job.cpp
 	src/core/JsonSettings.cpp
 	src/core/LocalListingNetworkReply.cpp
 	src/core/LongTermTimer.cpp
