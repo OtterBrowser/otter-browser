@@ -26,6 +26,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
+#include <QtNetwork/QNetworkRequest>
 
 namespace Otter
 {
