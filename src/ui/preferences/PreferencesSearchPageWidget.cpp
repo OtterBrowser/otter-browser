@@ -273,7 +273,7 @@ void PreferencesSearchPageWidget::updateSearchEngine()
 
 			m_updateAnimation->start();
 
-			connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget, static_cast<void(ItemViewWidget::*)()>(&ItemViewWidget::update));
+			connect(m_updateAnimation, &Animation::frameChanged, m_ui->searchViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
 		}
 
 		m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
