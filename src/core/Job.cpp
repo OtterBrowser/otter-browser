@@ -29,6 +29,53 @@ Job::Job(QObject *parent) : QObject(parent)
 {
 }
 
+SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
+{
+	return m_searchEngine;
+}
+
+IconFetchJob::IconFetchJob(const QUrl &url, QObject *parent) : Job(parent),
+	m_reply(nullptr)
+{
+	QNetworkRequest request(url);
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
+	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+	connect(m_reply, &QNetworkReply::finished, this, &IconFetchJob::handleIconRequestFinished);
+}
+
+IconFetchJob::~IconFetchJob()
+{
+	m_reply->deleteLater();
+}
+
+void IconFetchJob::cancel()
+{
+	m_reply->abort();
+
+	emit jobFinished(false);
+}
+
+void IconFetchJob::handleIconRequestFinished()
+{
+	QPixmap pixmap;
+
+	if (m_reply->error() == QNetworkReply::NoError && pixmap.loadFromData(m_reply->readAll()))
+	{
+		m_icon = QIcon(pixmap);
+	}
+
+	deleteLater();
+
+	emit jobFinished(!m_icon.isNull());
+}
+
+QIcon IconFetchJob::getIcon() const
+{
+	return m_icon;
+}
+
 SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : Job(parent),
 	m_reply(nullptr),
 	m_needsToSaveSearchEngine(saveSearchEngine)
@@ -89,14 +136,21 @@ void SearchEngineFetchJob::handleDefinitionRequestFinished()
 
 	if (m_searchEngine.iconUrl.isValid())
 	{
-		m_reply->deleteLater();
+		const IconFetchJob *job(new IconFetchJob(m_searchEngine.iconUrl, this));
 
-		QNetworkRequest request(m_searchEngine.iconUrl);
-		request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+		connect(job, &IconFetchJob::jobFinished, this, [=]()
+		{
+			m_searchEngine.icon = QIcon(job->getIcon());
 
-		m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+			if (m_needsToSaveSearchEngine)
+			{
+				SearchEnginesManager::addSearchEngine(m_searchEngine);
+			}
 
-		connect(m_reply, &QNetworkReply::finished, this, &SearchEngineFetchJob::handleIconRequestFinished);
+			deleteLater();
+
+			emit jobFinished(true);
+		});
 	}
 	else
 	{
@@ -104,30 +158,6 @@ void SearchEngineFetchJob::handleDefinitionRequestFinished()
 
 		emit jobFinished(true);
 	}
-}
-
-void SearchEngineFetchJob::handleIconRequestFinished()
-{
-	QPixmap pixmap;
-
-	if (m_reply->error() == QNetworkReply::NoError && pixmap.loadFromData(m_reply->readAll()))
-	{
-		m_searchEngine.icon = QIcon(pixmap);
-
-		if (m_needsToSaveSearchEngine)
-		{
-			SearchEnginesManager::addSearchEngine(m_searchEngine);
-		}
-	}
-
-	deleteLater();
-
-	emit jobFinished(true);
-}
-
-SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
-{
-	return m_searchEngine;
 }
 
 }

@@ -41,6 +41,27 @@ signals:
 	void jobFinished(bool isSuccess);
 };
 
+class IconFetchJob final : public Job
+{
+	Q_OBJECT
+
+public:
+	explicit IconFetchJob(const QUrl &url, QObject *parent = nullptr);
+	~IconFetchJob();
+
+	QIcon getIcon() const;
+
+public slots:
+	void cancel() override;
+
+protected slots:
+	void handleIconRequestFinished();
+
+private:
+	QNetworkReply *m_reply;
+	QIcon m_icon;
+};
+
 class SearchEngineFetchJob final : public Job
 {
 	Q_OBJECT
@@ -56,7 +77,6 @@ public slots:
 
 protected slots:
 	void handleDefinitionRequestFinished();
-	void handleIconRequestFinished();
 
 private:
 	QNetworkReply *m_reply;
