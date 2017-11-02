@@ -80,6 +80,7 @@ protected:
 	bool canInclude(const QJsonObject &definition, const QStringList &includeSections);
 
 protected slots:
+	void hideMenu();
 	void populateBookmarksMenu();
 	void populateOptionMenu();
 	void populateCharacterEncodingMenu();

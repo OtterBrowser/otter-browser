@@ -312,12 +312,20 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toULongLong());
 
 			QMenu contextMenu(this);
-			contextMenu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-			contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
-			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()));
+			contextMenu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"));
+			contextMenu.addAction(tr("Open in New Tab"))->setData(SessionsManager::NewTabOpen);
+			contextMenu.addAction(tr("Open in New Background Tab"))->setData(QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			contextMenu.addSeparator();
-			contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(SessionsManager::NewWindowOpen);
-			contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()));
+			contextMenu.addAction(tr("Open in New Window"))->setData(SessionsManager::NewWindowOpen);
+			contextMenu.addAction(tr("Open in New Background Window"))->setData(QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+
+			connect(&contextMenu, &QMenu::triggered, this, [&](QAction *action)
+			{
+				hideMenu();
+
+				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), action->data()}}, parentWidget());
+			});
+
 			contextMenu.exec(event->globalPos());
 
 			return;
@@ -580,6 +588,22 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 				addMenu(menu);
 			}
+		}
+	}
+}
+
+void Menu::hideMenu()
+{
+	QWidget *menu(this);
+
+	while (menu)
+	{
+		menu->close();
+		menu = menu->parentWidget();
+
+		if (!menu || !menu->inherits(QLatin1String("QMenu").data()))
+		{
+			break;
 		}
 	}
 }
@@ -1417,31 +1441,14 @@ void Menu::clearNotesMenu()
 
 void Menu::openBookmark()
 {
-	QWidget *menu(this);
-
-	while (menu)
-	{
-		menu->close();
-		menu = menu->parentWidget();
-
-		if (!menu || !menu->inherits(QLatin1String("QMenu").data()))
-		{
-			break;
-		}
-	}
+	hideMenu();
 
 	const QAction *action(qobject_cast<QAction*>(sender()));
 
-	if (action && action->data().type() == QVariant::ULongLong)
+	if (action)
 	{
-		m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toULongLong());
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), action->data().toULongLong()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints())}}, parentWidget());
 	}
-
-	const SessionsManager::OpenHints hints((action && action->data().type() != QVariant::ULongLong) ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen);
-
-	Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant((hints == SessionsManager::DefaultOpen) ? SessionsManager::calculateOpenHints() : hints)}}, parentWidget());
-
-	m_bookmark = nullptr;
 }
 
 void Menu::openImporter(QAction *action)
