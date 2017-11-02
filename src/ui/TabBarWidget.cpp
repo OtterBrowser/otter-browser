@@ -972,7 +972,7 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 
 void TabBarWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasUrls() || (event->source() && !event->mimeData()->property("x-window-identifier").isNull()))
+	if (event->mimeData()->hasText() || event->mimeData()->hasUrls() || (event->source() && !event->mimeData()->property("x-window-identifier").isNull()))
 	{
 		event->accept();
 
@@ -993,7 +993,7 @@ void TabBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
 {
 	Q_UNUSED(event)
 
-	m_dragMovePosition = QPoint();
+	m_dragMovePosition = {};
 
 	update();
 }
@@ -1054,7 +1054,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 			moveTab(previousIndex, (dropIndex - ((dropIndex > previousIndex) ? 1 : 0)));
 		}
 	}
-	else if (event->mimeData()->hasUrls())
+	else if (event->mimeData()->hasText() || event->mimeData()->hasUrls())
 	{
 		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 		bool canOpen(mainWindow != nullptr);
@@ -1063,30 +1063,37 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 		{
 			const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
 
-			if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption).toBool())
+			if (urls.isEmpty())
 			{
-				QMessageBox messageBox;
-				messageBox.setWindowTitle(tr("Question"));
-				messageBox.setText(tr("You are about to open %n URL(s).", "", urls.count()));
-				messageBox.setInformativeText(tr("Do you want to continue?"));
-				messageBox.setIcon(QMessageBox::Question);
-				messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-				messageBox.setDefaultButton(QMessageBox::Yes);
-				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
-
-				if (messageBox.exec() == QMessageBox::Cancel)
+				mainWindow->search(event->mimeData()->text(), {}, SessionsManager::NewTabOpen);
+			}
+			else
+			{
+				if (urls.count() > 1 && SettingsManager::getOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption).toBool())
 				{
-					canOpen = false;
+					QMessageBox messageBox;
+					messageBox.setWindowTitle(tr("Question"));
+					messageBox.setText(tr("You are about to open %n URL(s).", "", urls.count()));
+					messageBox.setInformativeText(tr("Do you want to continue?"));
+					messageBox.setIcon(QMessageBox::Question);
+					messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+					messageBox.setDefaultButton(QMessageBox::Yes);
+					messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+					if (messageBox.exec() == QMessageBox::Cancel)
+					{
+						canOpen = false;
+					}
+
+					SettingsManager::setOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption, !messageBox.checkBox()->isChecked());
 				}
 
-				SettingsManager::setOption(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption, !messageBox.checkBox()->isChecked());
-			}
-
-			if (canOpen)
-			{
-				for (int i = 0; i < urls.count(); ++i)
+				if (canOpen)
 				{
-					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("hints"), SessionsManager::DefaultOpen}, {QLatin1String("index"), (dropIndex + i)}});
+					for (int i = 0; i < urls.count(); ++i)
+					{
+						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("hints"), SessionsManager::DefaultOpen}, {QLatin1String("index"), (dropIndex + i)}});
+					}
 				}
 			}
 		}
@@ -1106,7 +1113,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 		event->ignore();
 	}
 
-	m_dragMovePosition = QPoint();
+	m_dragMovePosition = {};
 
 	update();
 }
