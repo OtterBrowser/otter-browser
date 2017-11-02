@@ -117,6 +117,11 @@ void FetchJob::setSizeLimit(qint64 limit)
 	m_sizeLimit = limit;
 }
 
+QUrl FetchJob::getUrl() const
+{
+	return m_reply->request().url();
+}
+
 IconFetchJob::IconFetchJob(const QUrl &url, QObject *parent) : FetchJob(url, parent)
 {
 	setSizeLimit(20480);

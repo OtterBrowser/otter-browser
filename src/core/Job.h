@@ -51,6 +51,7 @@ public:
 
 	void setTimeout(int seconds);
 	void setSizeLimit(qint64 limit);
+	QUrl getUrl() const;
 
 public slots:
 	void cancel() override;
