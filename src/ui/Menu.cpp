@@ -51,7 +51,6 @@ int Menu::m_menuRoleIdentifierEnumerator(-1);
 Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 	m_actionGroup(nullptr),
 	m_clickedAction(nullptr),
-	m_bookmark(nullptr),
 	m_role(role),
 	m_option(-1)
 {
@@ -309,8 +308,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 
 		if (action && action->isEnabled() && action->data().type() == QVariant::ULongLong)
 		{
-			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toULongLong());
-
+			const quint64 identifier(action->data().toULongLong());
 			QMenu contextMenu(this);
 			contextMenu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"));
 			contextMenu.addAction(tr("Open in New Tab"))->setData(SessionsManager::NewTabOpen);
@@ -319,11 +317,11 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 			contextMenu.addAction(tr("Open in New Window"))->setData(SessionsManager::NewWindowOpen);
 			contextMenu.addAction(tr("Open in New Background Window"))->setData(QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
-			connect(&contextMenu, &QMenu::triggered, this, [&](QAction *action)
+			connect(&contextMenu, &QMenu::triggered, this, [=](QAction *action)
 			{
 				hideMenu();
 
-				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), action->data()}}, parentWidget());
+				Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), action->data()}}, parentWidget());
 			});
 
 			contextMenu.exec(event->globalPos());

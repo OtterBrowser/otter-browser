@@ -108,7 +108,6 @@ protected slots:
 private:
 	QActionGroup *m_actionGroup;
 	QAction *m_clickedAction;
-	BookmarksItem *m_bookmark;
 	QString m_title;
 	ActionExecutor::Object m_executor;
 	QHash<QString, QActionGroup*> m_actionGroups;
