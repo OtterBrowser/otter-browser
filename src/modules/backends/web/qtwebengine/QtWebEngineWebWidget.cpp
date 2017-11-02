@@ -23,6 +23,9 @@
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
+#if QT_VERSION < 0x050700
+#include "../../../../core/Job.h"
+#endif
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
@@ -64,7 +67,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	m_webView(nullptr),
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
 #if QT_VERSION < 0x050700
-	m_iconReply(nullptr),
+	m_iconFetchJob(nullptr),
 #endif
 	m_loadingTime(nullptr),
 	m_loadingState(FinishedLoadingState),
@@ -967,23 +970,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	}
 }
 
-#if QT_VERSION < 0x050700
-void QtWebEngineWebWidget::handleIconReplyFinished()
-{
-	if (!m_iconReply)
-	{
-		return;
-	}
-
-	m_icon = QIcon(QPixmap::fromImage(QImage::fromData(m_iconReply->readAll())));
-
-	emit iconChanged(getIcon());
-
-	m_iconReply->deleteLater();
-	m_iconReply = nullptr;
-}
-#endif
-
 void QtWebEngineWebWidget::handleViewSourceReplyFinished()
 {
 	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
@@ -1004,23 +990,27 @@ void QtWebEngineWebWidget::handleViewSourceReplyFinished()
 #if QT_VERSION < 0x050700
 void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 {
-	if (m_iconReply && m_iconReply->url() != url)
+	if (m_iconFetchJob && m_iconFetchJob->getUrl() != url)
 	{
-		m_iconReply->abort();
-		m_iconReply->deleteLater();
+		m_iconFetchJob->cancel();
 	}
 
 	m_icon = QIcon();
 
+	m_iconFetchJob = new IconFetchJob(url, this);
+
+	connect(m_iconFetchJob, &IconFetchJob::destroyed, this, [&]()
+	{
+		m_iconFetchJob = nullptr;
+	});
+	connect(m_iconFetchJob, &IconFetchJob::jobFinished, this, [&]()
+	{
+		m_icon = m_iconFetchJob->getIcon();
+
+		emit iconChanged(getIcon());
+	});
+
 	emit iconChanged(getIcon());
-
-	QNetworkRequest request(url);
-	request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
-
-	m_iconReply = NetworkManagerFactory::getNetworkManager()->get(request);
-	m_iconReply->setParent(this);
-
-	connect(m_iconReply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleIconReplyFinished);
 }
 #endif
 

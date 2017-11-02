@@ -31,6 +31,9 @@ namespace Otter
 {
 
 class ContentsDialog;
+#if QT_VERSION < 0x050700
+class IconFetchJob;
+#endif
 class QtWebEnginePage;
 class SourceViewerWebWidget;
 
@@ -103,9 +106,6 @@ protected:
 protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
-#if QT_VERSION < 0x050700
-	void handleIconReplyFinished();
-#endif
 	void handleViewSourceReplyFinished();
 #if QT_VERSION < 0x050700
 	void handleIconChange(const QUrl &url);
@@ -127,7 +127,7 @@ private:
 	QWebEngineView *m_webView;
 	QtWebEnginePage *m_page;
 #if QT_VERSION < 0x050700
-	QNetworkReply *m_iconReply;
+	IconFetchJob *m_iconFetchJob;
 #endif
 	QTime *m_loadingTime;
 #if QT_VERSION < 0x050700
