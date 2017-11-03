@@ -263,7 +263,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 		return;
 	}
 
-	QStandardItem *item(new QStandardItem(addon->getIcon(), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle()).arg(addon->getVersion()))));
+	QStandardItem *item(new QStandardItem(getAddonIcon(addon), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle()).arg(addon->getVersion()))));
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 	item->setCheckable(true);
 	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
@@ -318,7 +318,7 @@ void AddonsContentsWidget::reloadAddon()
 				{
 					script->reload();
 
-					m_ui->addonsViewWidget->setData(indexes.at(i), script->getIcon(), Qt::DecorationRole);
+					m_ui->addonsViewWidget->setData(indexes.at(i), getAddonIcon(script), Qt::DecorationRole);
 					m_ui->addonsViewWidget->setData(indexes.at(i), (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle()).arg(script->getVersion())), Qt::DisplayRole);
 				}
 			}
@@ -476,6 +476,11 @@ QUrl AddonsContentsWidget::getUrl() const
 QIcon AddonsContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
+}
+
+QIcon AddonsContentsWidget::getAddonIcon(Addon *addon) const
+{
+	return ((!addon || addon->getIcon().isNull()) ? ThemesManager::createIcon(QLatin1String("addon-user-script"), false) : addon->getIcon());
 }
 
 ActionsManager::ActionDefinition::State AddonsContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

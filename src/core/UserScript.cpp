@@ -21,7 +21,6 @@
 #include "UserScript.h"
 #include "Console.h"
 #include "SessionsManager.h"
-#include "ThemesManager.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -35,7 +34,6 @@ namespace Otter
 UserScript::UserScript(const QString &path, const QUrl &url, QObject *parent) : QObject(parent), Addon(),
 	m_path(path),
 	m_downloadUrl(url),
-	m_icon(ThemesManager::createIcon(QLatin1String("addon-user-script"), false)),
 	m_injectionTime(DocumentReadyTime),
 	m_shouldRunOnSubFrames(true)
 {
@@ -51,7 +49,7 @@ void UserScript::reload()
 	m_homePage.clear();
 	m_iconUrl.clear();
 	m_updateUrl.clear();
-	m_icon = ThemesManager::createIcon(QLatin1String("addon-user-script"), false);
+	m_icon = {};
 	m_excludeRules.clear();
 	m_includeRules.clear();
 	m_matchRules.clear();
