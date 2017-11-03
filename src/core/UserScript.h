@@ -76,6 +76,7 @@ private:
 	QString m_version;
 	QUrl m_homePage;
 	QUrl m_downloadUrl;
+	QUrl m_iconUrl;
 	QUrl m_updateUrl;
 	QIcon m_icon;
 	QStringList m_excludeRules;

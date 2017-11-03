@@ -49,6 +49,7 @@ void UserScript::reload()
 	m_description.clear();
 	m_version.clear();
 	m_homePage.clear();
+	m_iconUrl.clear();
 	m_updateUrl.clear();
 	m_icon = ThemesManager::createIcon(QLatin1String("addon-user-script"), false);
 	m_excludeRules.clear();
@@ -111,6 +112,15 @@ void UserScript::reload()
 		else if (keyword == QLatin1String("homepage"))
 		{
 			m_homePage = QUrl(line.section(QLatin1Char(' '), 1, -1));
+		}
+		else if (keyword == QLatin1String("icon"))
+		{
+			m_iconUrl = line.section(QLatin1Char(' '), 1, -1);
+
+			if (m_iconUrl.isRelative())
+			{
+				m_iconUrl = m_downloadUrl.resolved(m_iconUrl);
+			}
 		}
 		else if (keyword == QLatin1String("include"))
 		{
