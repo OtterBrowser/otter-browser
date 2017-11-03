@@ -210,11 +210,14 @@ void UserScript::reload()
 		{
 			m_iconFetchJob = nullptr;
 		});
-		connect(m_iconFetchJob, &IconFetchJob::jobFinished, this, [&]()
+		connect(m_iconFetchJob, &IconFetchJob::jobFinished, this, [&](bool isSuccess)
 		{
-			m_icon = m_iconFetchJob->getIcon();
+			if (isSuccess)
+			{
+				m_icon = m_iconFetchJob->getIcon();
 
-			emit metaDataChanged();
+				emit metaDataChanged();
+			}
 		});
 	}
 
