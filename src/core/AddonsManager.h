@@ -119,6 +119,7 @@ public:
 	static void registerWebBackend(WebBackend *backend, const QString &name);
 	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
 	static void loadUserScripts();
+	static AddonsManager* getInstance();
 	static UserScript* getUserScript(const QString &name);
 	static WebBackend* getWebBackend(const QString &name = {});
 	static SpecialPageInformation getSpecialPage(const QString &name);
@@ -135,6 +136,9 @@ private:
 	static QMap<QString, WebBackend*> m_webBackends;
 	static QMap<QString, SpecialPageInformation> m_specialPages;
 	static bool m_areUserScripsInitialized;
+
+signals:
+	void userScriptModified(const QString &name);
 };
 
 }

@@ -185,6 +185,11 @@ void AddonsManager::loadUserScripts()
 			script->setEnabled(scriptObject.value(QLatin1String("isEnabled")).toBool(false));
 
 			m_userScripts[scripts.at(i).fileName()] = script;
+
+			connect(script, &UserScript::metaDataChanged, m_instance, [=]()
+			{
+				emit m_instance->userScriptModified(script->getName());
+			});
 		}
 		else
 		{
@@ -193,6 +198,11 @@ void AddonsManager::loadUserScripts()
 	}
 
 	m_areUserScripsInitialized = true;
+}
+
+AddonsManager* AddonsManager::getInstance()
+{
+	return m_instance;
 }
 
 UserScript* AddonsManager::getUserScript(const QString &name)

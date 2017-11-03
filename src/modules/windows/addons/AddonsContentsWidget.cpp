@@ -135,6 +135,7 @@ void AddonsContentsWidget::populateAddons()
 
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
+	connect(AddonsManager::getInstance(), &AddonsManager::userScriptModified, this, &AddonsContentsWidget::updateAddon);
 	connect(m_ui->addonsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&](const QItemSelection &selected, const QItemSelection &deselected)
 	{
 		Q_UNUSED(selected)
@@ -282,6 +283,34 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 	typeItem->appendRow(item);
 }
 
+void AddonsContentsWidget::updateAddon(const QString &name)
+{
+	const QStandardItem *userScriptsItem(m_model->item(m_types.value(Addon::UserScriptType)));
+
+	if (!userScriptsItem)
+	{
+		return;
+	}
+
+	for (int i = 0; i < userScriptsItem->rowCount(); ++i)
+	{
+		const QModelIndex index(userScriptsItem->child(i)->index());
+
+		if (index.isValid() && index.data(NameRole).toString() == name)
+		{
+			UserScript *script(AddonsManager::getUserScript(name));
+
+			if (script)
+			{
+				m_ui->addonsViewWidget->setData(index, getAddonIcon(script), Qt::DecorationRole);
+				m_ui->addonsViewWidget->setData(index, (script->getVersion().isEmpty() ? script->getTitle() : QStringLiteral("%1 %2").arg(script->getTitle()).arg(script->getVersion())), Qt::DisplayRole);
+			}
+
+			break;
+		}
+	}
+}
+
 void AddonsContentsWidget::openAddon()
 {
 	const QVector<Addon*> addons(getSelectedAddons());
@@ -361,12 +390,7 @@ void AddonsContentsWidget::removeAddons()
 
 void AddonsContentsWidget::save()
 {
-	QStandardItem *userScriptsItem(nullptr);
-
-	if (m_types.contains(Addon::UserScriptType))
-	{
-		userScriptsItem = m_model->item(m_types[Addon::UserScriptType]);
-	}
+	const QStandardItem *userScriptsItem(m_model->item(m_types.value(Addon::UserScriptType)));
 
 	if (!userScriptsItem)
 	{
