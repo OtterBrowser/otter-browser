@@ -39,7 +39,7 @@ public:
 		DeferredTime
 	};
 
-	explicit UserScript(const QString &path, QObject *parent = nullptr);
+	explicit UserScript(const QString &path, const QUrl &url = {}, QObject *parent = nullptr);
 
 	QString getName() const override;
 	QString getTitle() const override;
@@ -75,6 +75,7 @@ private:
 	QString m_description;
 	QString m_version;
 	QUrl m_homePage;
+	QUrl m_downloadUrl;
 	QUrl m_updateUrl;
 	QIcon m_icon;
 	QStringList m_excludeRules;

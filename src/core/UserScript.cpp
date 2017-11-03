@@ -32,8 +32,9 @@
 namespace Otter
 {
 
-UserScript::UserScript(const QString &path, QObject *parent) : QObject(parent), Addon(),
+UserScript::UserScript(const QString &path, const QUrl &url, QObject *parent) : QObject(parent), Addon(),
 	m_path(path),
+	m_downloadUrl(url),
 	m_icon(ThemesManager::createIcon(QLatin1String("addon-user-script"), false)),
 	m_injectionTime(DocumentReadyTime),
 	m_shouldRunOnSubFrames(true)
@@ -43,16 +44,16 @@ UserScript::UserScript(const QString &path, QObject *parent) : QObject(parent), 
 
 void UserScript::reload()
 {
-	m_source = QString();
-	m_title = QString();
-	m_description = QString();
-	m_version = QString();
-	m_homePage = QUrl();
-	m_updateUrl = QUrl();
+	m_source.clear();
+	m_title.clear();
+	m_description.clear();
+	m_version.clear();
+	m_homePage.clear();
+	m_updateUrl.clear();
 	m_icon = ThemesManager::createIcon(QLatin1String("addon-user-script"), false);
-	m_excludeRules = QStringList();
-	m_includeRules = QStringList();
-	m_matchRules = QStringList();
+	m_excludeRules.clear();
+	m_includeRules.clear();
+	m_matchRules.clear();
 	m_injectionTime = DocumentReadyTime;
 	m_shouldRunOnSubFrames = true;
 
@@ -98,6 +99,10 @@ void UserScript::reload()
 		if (keyword == QLatin1String("description"))
 		{
 			m_description = line.section(QLatin1Char(' '), 1, -1);
+		}
+		else if (keyword == QLatin1String("downloadURL") && m_downloadUrl.isEmpty())
+		{
+			m_downloadUrl = QUrl(line.section(QLatin1Char(' '), 1, -1));
 		}
 		else if (keyword == QLatin1String("exclude"))
 		{
@@ -163,6 +168,11 @@ void UserScript::reload()
 		else if (keyword == QLatin1String("updateURL"))
 		{
 			m_updateUrl = QUrl(line.section(QLatin1Char(' '), 1, -1));
+
+			if (m_updateUrl.isRelative())
+			{
+				m_updateUrl = m_downloadUrl.resolved(m_updateUrl);
+			}
 		}
 		else if (keyword == QLatin1String("version"))
 		{
@@ -254,7 +264,7 @@ QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSub
 		}
 		else if (character != rule[position])
 		{
-			return QString();
+			return {};
 		}
 
 		++position;
@@ -267,7 +277,7 @@ QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSub
 		}
 	}
 
-	return QString();
+	return {};
 }
 
 QUrl UserScript::getHomePage() const
@@ -384,7 +394,7 @@ bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 			rule = rule.left(rule.length() - 1);
 		}
 
-		const QString result(checkUrlSubString(rule, url.url(), QString()));
+		const QString result(checkUrlSubString(rule, url.url(), {}));
 
 		if (!result.isEmpty() && ((useExactMatch && url.url() == result) || (!useExactMatch && url.url().startsWith(result))))
 		{

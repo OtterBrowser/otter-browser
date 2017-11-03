@@ -156,7 +156,7 @@ void AddonsManager::loadUserScripts()
 
 	m_userScripts.clear();
 
-	QHash<QString, bool> enabledScripts;
+	QHash<QString, QJsonObject> metaData;
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
 
 	if (file.open(QIODevice::ReadOnly))
@@ -166,7 +166,7 @@ void AddonsManager::loadUserScripts()
 
 		for (iterator = settings.constBegin(); iterator != settings.constEnd(); ++iterator)
 		{
-			enabledScripts[iterator.key()] = iterator.value().toObject().value(QLatin1String("isEnabled")).toBool(false);
+			metaData[iterator.key()] = iterator.value().toObject();
 		}
 
 		file.close();
@@ -180,8 +180,9 @@ void AddonsManager::loadUserScripts()
 
 		if (QFile::exists(path))
 		{
-			UserScript *script(new UserScript(path, m_instance));
-			script->setEnabled(enabledScripts.value(scripts.at(i).fileName(), false));
+			const QJsonObject scriptObject(metaData.value(scripts.at(i).fileName()));
+			UserScript *script(new UserScript(path, QUrl(scriptObject.value(QLatin1String("downloadUrl")).toString()), m_instance));
+			script->setEnabled(scriptObject.value(QLatin1String("isEnabled")).toBool(false));
 
 			m_userScripts[scripts.at(i).fileName()] = script;
 		}
