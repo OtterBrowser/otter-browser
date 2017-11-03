@@ -26,6 +26,8 @@
 namespace Otter
 {
 
+class IconFetchJob;
+
 class UserScript final : public QObject, public Addon
 {
 	Q_OBJECT
@@ -69,6 +71,7 @@ protected:
 	bool checkUrl(const QUrl &url, const QStringList &rules) const;
 
 private:
+	IconFetchJob *m_iconFetchJob;
 	QString m_path;
 	QString m_source;
 	QString m_title;

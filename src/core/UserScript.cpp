@@ -20,6 +20,7 @@
 
 #include "UserScript.h"
 #include "Console.h"
+#include "Job.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QDir>
@@ -32,6 +33,7 @@ namespace Otter
 {
 
 UserScript::UserScript(const QString &path, const QUrl &url, QObject *parent) : QObject(parent), Addon(),
+	m_iconFetchJob(nullptr),
 	m_path(path),
 	m_downloadUrl(url),
 	m_injectionTime(DocumentReadyTime),
@@ -193,6 +195,27 @@ void UserScript::reload()
 	if (m_title.isEmpty())
 	{
 		m_title = QFileInfo(file).completeBaseName();
+	}
+
+	if (m_iconUrl.isValid())
+	{
+		if (m_iconFetchJob && m_iconFetchJob->getUrl() != m_iconUrl)
+		{
+			m_iconFetchJob->cancel();
+		}
+
+		m_iconFetchJob = new IconFetchJob(m_iconUrl, this);
+
+		connect(m_iconFetchJob, &IconFetchJob::destroyed, this, [&]()
+		{
+			m_iconFetchJob = nullptr;
+		});
+		connect(m_iconFetchJob, &IconFetchJob::jobFinished, this, [&]()
+		{
+			m_icon = m_iconFetchJob->getIcon();
+
+			emit metaDataChanged();
+		});
 	}
 
 	if (!hasHeader)
