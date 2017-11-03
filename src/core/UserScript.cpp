@@ -199,6 +199,8 @@ void UserScript::reload()
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Failed to locate header of User Script file"), Console::OtherCategory, Console::WarningLevel, m_path);
 	}
+
+	emit metaDataChanged();
 }
 
 QString UserScript::getName() const

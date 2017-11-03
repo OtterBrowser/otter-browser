@@ -84,6 +84,9 @@ private:
 	QStringList m_matchRules;
 	InjectionTime m_injectionTime;
 	bool m_shouldRunOnSubFrames;
+
+signals:
+	void metaDataChanged();
 };
 
 }
