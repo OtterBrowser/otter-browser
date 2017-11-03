@@ -74,6 +74,7 @@ FetchJob::~FetchJob()
 
 void FetchJob::cancel()
 {
+	m_reply->blockSignals(true);
 	m_reply->abort();
 
 	deleteLater();
