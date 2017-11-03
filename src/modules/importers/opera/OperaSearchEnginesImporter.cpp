@@ -66,10 +66,18 @@ QString OperaSearchEnginesImporter::getVersion() const
 
 QString OperaSearchEnginesImporter::getSuggestedPath(const QString &path) const
 {
-	if (!path.isEmpty() && QFileInfo(path).isDir())
+	if (!path.isEmpty())
 	{
-		return QDir(path).filePath(QLatin1String("search.ini"));
+		if (QFileInfo(path).isDir())
+		{
+			return QDir(path).filePath(QLatin1String("search.ini"));
+		}
+		else
+		{
+			return path;
+		}
 	}
+
 #if !defined(Q_OS_MAC) && defined(Q_OS_UNIX)
 	const QString homePath(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0));
 
