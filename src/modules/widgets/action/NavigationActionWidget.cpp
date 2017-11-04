@@ -123,11 +123,8 @@ bool NavigationActionWidget::event(QEvent *event)
 
 					ActionExecutor::Object executor(m_window, m_window);
 					QMenu menu(this);
-					Action *purgeTabHistoryAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, executor, &menu));
-					purgeTabHistoryAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Purge Tab History"));
-
 					menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {}, executor, &menu));
-					menu.addAction(purgeTabHistoryAction);
+					menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Purge Tab History")}}, executor, &menu));
 
 					const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
