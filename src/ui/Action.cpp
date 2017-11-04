@@ -54,7 +54,25 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 
 	if (options.contains(QLatin1String("icon")))
 	{
-		setOverrideIcon(options[QLatin1String("icon")].value<QIcon>());
+		const QVariant data(parameters[QLatin1String("icon")]);
+
+		if (data.type() == QVariant::Icon)
+		{
+			setOverrideIcon(data.value<QIcon>());
+		}
+		else
+		{
+			const QString string(data.toString());
+
+			if (string.startsWith(QLatin1String("data:image/")))
+			{
+				setOverrideIcon(QIcon(Utils::loadPixmapFromDataUri(string)));
+			}
+			else
+			{
+				setOverrideIcon(ThemesManager::createIcon(string));
+			}
+		}
 	}
 
 	if (options.contains(QLatin1String("text")))

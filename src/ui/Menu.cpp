@@ -485,7 +485,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				return;
 			}
 
-			Action *action(new Action(identifier, parameters, executor, this));
+			Action *action(new Action(identifier, parameters, options, executor, this));
 
 			if (object.contains(QLatin1String("group")))
 			{
@@ -505,9 +505,9 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				}
 			}
 
-			if (object.contains(QLatin1String("icon")) || options.contains(QLatin1String("icon")))
+			if (object.contains(QLatin1String("icon")))
 			{
-				const QString data(object.value(QLatin1String("icon")).toString(options.value(QLatin1String("icon")).toString()));
+				const QString data(object.value(QLatin1String("icon")).toString());
 
 				if (data.startsWith(QLatin1String("data:image/")))
 				{
@@ -519,9 +519,9 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				}
 			}
 
-			if (object.contains(QLatin1String("title")) || options.contains(QLatin1String("text")))
+			if (object.contains(QLatin1String("title")))
 			{
-				action->setOverrideText(object.value(QLatin1String("title")).toString(options.value(QLatin1String("text")).toString()));
+				action->setOverrideText(object.value(QLatin1String("title")).toString());
 			}
 
 			addAction(action);
