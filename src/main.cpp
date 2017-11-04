@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 	// variable `QT_AUTO_SCREEN_SCALE_FACTOR=1`.
 	// Note that this attribute must be enabled before the QApplication is
 	// constructed, hence the use of the static version of setAttribute().
-	Application::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+//	Application::setAttribute(Qt::AA_EnableHighDpiScaling, true);
 #endif
 	// Use static version for this attribute too, for consistency with the above.
 	Application::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
