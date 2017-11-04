@@ -52,7 +52,7 @@ public:
 	void createBackup() const override
 	{
 		const QString keyboardBackupPath(createBackupPath(QLatin1String("keyboard")));
-		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QString("keyboard"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
 
 		for (int i = 0; i < keyboardEntries.count(); ++i)
 		{
@@ -60,7 +60,7 @@ public:
 		}
 
 		const QString mouseBackupPath(createBackupPath(QLatin1String("mouse")));
-		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QString("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
 
 		for (int i = 0; i < mouseEntries.count(); ++i)
 		{
@@ -209,7 +209,7 @@ public:
 	void createBackup() const override
 	{
 		const QString backupPath(createBackupPath(QLatin1String("other")));
-		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QString())).entryInfoList(QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")})));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath({})).entryInfoList(QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")})));
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
@@ -370,7 +370,7 @@ public:
 
 			SessionInformation session;
 			session.path = entries.at(i).absolutePath() + QDir::separator() + entries.at(i).baseName() + QLatin1String(".json");
-			session.title = sessionData.value(QLatin1String("Session/title"), QString()).toString();
+			session.title = sessionData.value(QLatin1String("Session/title"), {}).toString();
 			session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
 			session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
 
@@ -381,15 +381,15 @@ public:
 			{
 				const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(j), 0).toInt());
 				SessionMainWindow sessionEntry;
-				sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(j), QString()).toString().toLatin1());
+				sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(j), {}).toString().toLatin1());
 				sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(j), 1).toInt() - 1);
 
 				for (int k = 1; k <= tabs; ++k)
 				{
-					const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(j).arg(k), QString()).toString());
-					const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(j).arg(k), QString()).toString());
-					const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(j).arg(k), QString()).toString());
-					const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), QString()).toString().split(QLatin1Char(',')));
+					const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(j).arg(k), {}).toString());
+					const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(j).arg(k), {}).toString());
+					const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(j).arg(k), {}).toString());
+					const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), {}).toString().split(QLatin1Char(',')));
 					const int historyAmount(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(j).arg(k), 0).toInt());
 					const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(j).arg(k), -1).toInt());
 					WindowState windowState;
@@ -422,8 +422,8 @@ public:
 					{
 						const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(j).arg(k).arg(l), 1).toStringList());
 						WindowHistoryEntry historyEntry;
-						historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), QString()).toString();
-						historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), QString()).toString();
+						historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), {}).toString();
+						historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), {}).toString();
 						historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
 						historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(j).arg(k).arg(l), defaultZoom).toInt();
 
@@ -503,12 +503,12 @@ QString Migration::createBackupPath(const QString &sourcePath)
 
 QString Migration::getName() const
 {
-	return QString();
+	return {};
 }
 
 QString Migration::getTitle() const
 {
-	return QString();
+	return {};
 }
 
 bool Migration::needsMigration() const
