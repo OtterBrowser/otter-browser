@@ -44,6 +44,25 @@ Action::Action(int identifier, const QVariantMap &parameters, ActionExecutor::Ob
 	setExecutor(executor);
 }
 
+Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, ActionExecutor::Object executor, QObject *parent) : QAction(parent),
+	m_parameters(parameters),
+	m_flags(NoFlags),
+	m_identifier(identifier)
+{
+	initialize();
+	setExecutor(executor);
+
+	if (options.contains(QLatin1String("icon")))
+	{
+		setOverrideIcon(options[QLatin1String("icon")].value<QIcon>());
+	}
+
+	if (options.contains(QLatin1String("text")))
+	{
+		setOverrideText(options[QLatin1String("text")].toString());
+	}
+}
+
 void Action::initialize()
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
