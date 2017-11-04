@@ -49,16 +49,6 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 	setIconSize(QSize(iconSize, iconSize));
 }
 
-QIcon IconWidget::createIcon(const QString &data) const
-{
-	if (data.startsWith(QLatin1String("data:image/")))
-	{
-		return QIcon(Utils::loadPixmapFromDataUri(data));
-	}
-
-	return ThemesManager::createIcon(data);
-}
-
 void IconWidget::clear()
 {
 	m_icon = QString();
@@ -129,7 +119,7 @@ void IconWidget::setIcon(const QString &data)
 		return;
 	}
 
-	const QIcon icon(createIcon(data));
+	const QIcon icon(ThemesManager::createIcon(data));
 
 	QToolButton::setIcon(icon);
 

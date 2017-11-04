@@ -682,23 +682,13 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 
 		if (options.contains(QLatin1String("icon")))
 		{
-			const QString data(options[QLatin1String("icon")].toString());
-			QIcon icon;
+			const QIcon icon(ThemesManager::createIcon(options[QLatin1String("icon")].toString()));
 
-			if (data.startsWith(QLatin1String("data:image/")))
-			{
-				icon = QIcon(Utils::loadPixmapFromDataUri(data));
-			}
-			else
-			{
-				icon = ThemesManager::createIcon(data);
-			}
-
-			if (data.isEmpty())
+			if (icon.isNull())
 			{
 				item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 			}
-			else if (!icon.isNull())
+			else
 			{
 				item->setIcon(icon);
 			}

@@ -227,14 +227,7 @@ QIcon ToolButtonWidget::getIcon() const
 {
 	if (m_isCustomized && m_options.contains(QLatin1String("icon")))
 	{
-		const QString data(m_options[QLatin1String("icon")].toString());
-
-		if (data.startsWith(QLatin1String("data:image/")))
-		{
-			return QIcon(Utils::loadPixmapFromDataUri(data));
-		}
-
-		return ThemesManager::createIcon(data);
+		return ThemesManager::createIcon(m_options[QLatin1String("icon")].toString());
 	}
 
 	return (defaultAction() ? defaultAction()->icon() : icon());

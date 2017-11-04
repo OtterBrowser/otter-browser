@@ -62,16 +62,7 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 		}
 		else
 		{
-			const QString string(data.toString());
-
-			if (string.startsWith(QLatin1String("data:image/")))
-			{
-				setOverrideIcon(QIcon(Utils::loadPixmapFromDataUri(string)));
-			}
-			else
-			{
-				setOverrideIcon(ThemesManager::createIcon(string));
-			}
+			setOverrideIcon(ThemesManager::createIcon(data.toString()));
 		}
 	}
 

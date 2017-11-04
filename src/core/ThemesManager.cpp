@@ -151,6 +151,16 @@ QString ThemesManager::getAnimationPath(const QString &name)
 
 QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
 {
+	if (name.isEmpty())
+	{
+		return {};
+	}
+
+	if (name.startsWith(QLatin1String("data:image/")))
+	{
+		return QIcon(Utils::loadPixmapFromDataUri(name));
+	}
+
 	if (m_useSystemIconTheme && fromTheme && QIcon::hasThemeIcon(name))
 	{
 		return QIcon::fromTheme(name);

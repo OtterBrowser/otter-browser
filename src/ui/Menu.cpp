@@ -507,16 +507,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 			if (object.contains(QLatin1String("icon")))
 			{
-				const QString data(object.value(QLatin1String("icon")).toString());
-
-				if (data.startsWith(QLatin1String("data:image/")))
-				{
-					action->setOverrideIcon(QIcon(Utils::loadPixmapFromDataUri(data)));
-				}
-				else
-				{
-					action->setOverrideIcon(ThemesManager::createIcon(data));
-				}
+				action->setOverrideIcon(ThemesManager::createIcon(object.value(QLatin1String("icon")).toString()));
 			}
 
 			if (object.contains(QLatin1String("title")))
