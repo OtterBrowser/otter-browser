@@ -551,12 +551,7 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
 		QMenu *menu(new QMenu(mdiWindow));
-		Action *closeAction(new Action(ActionsManager::CloseTabAction, {}, menu));
-		closeAction->setEnabled(true);
-		closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
-		closeAction->setOverrideIcon(QIcon());
-
-		menu->addAction(closeAction);
+		menu->addAction(new Action(ActionsManager::CloseTabAction, {}, {{QLatin1String("icon"), QIcon()}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Close")}}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::RestoreTabAction, {}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, windowExecutor, menu));
@@ -612,7 +607,6 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 			connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 		}
 
-		connect(closeAction, &Action::triggered, window, &Window::close);
 		connect(mdiWindow, &MdiWindow::windowStateChanged, this, &WorkspaceWidget::notifyActionsStateChanged);
 		connect(window, &Window::destroyed, this, &WorkspaceWidget::notifyActionsStateChanged);
 	}
