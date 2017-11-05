@@ -82,6 +82,7 @@ protected:
 protected slots:
 	void hideMenu();
 	void populateBookmarksMenu();
+	void populateBookmarkSelectorMenu();
 	void populateOptionMenu();
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
@@ -98,7 +99,6 @@ protected slots:
 	void clearBookmarksMenu();
 	void clearClosedWindows();
 	void clearNotesMenu();
-	void openBookmark();
 	void openImporter(QAction *action);
 	void openSession(QAction *action);
 	void selectOption(QAction *action);

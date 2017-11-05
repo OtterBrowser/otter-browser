@@ -80,7 +80,14 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 					connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearBookmarksMenu);
 				}
 
-				connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
+				if (role == BookmarksMenuRole)
+				{
+					connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
+				}
+				else
+				{
+					connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarkSelectorMenu);
+				}
 			}
 
 			break;
@@ -304,20 +311,20 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (m_role == BookmarksMenuRole)
 	{
-		const QAction *action(actionAt(event->pos()));
+		const Action *action(qobject_cast<Action*>(actionAt(event->pos())));
 
-		if (action && action->isEnabled() && action->data().type() == QVariant::ULongLong)
+		if (action && action->isEnabled() && action->getIdentifier() == ActionsManager::OpenBookmarkAction)
 		{
-			const quint64 identifier(action->data().toULongLong());
+			const quint64 identifier(action->getParameters().value(QLatin1String("bookmark")).toULongLong());
 			MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 			ActionExecutor::Object executor(mainWindow, mainWindow);
 			QMenu menu(this);
 			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}}, {{QLatin1String("icon"), QLatin1String("document-open")}, {QLatin1String("text"), tr("Open")}}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen)}}, {{QLatin1String("text"), tr("Open in New Tab")}}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("text"), tr("Open in New Background Tab")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen)}}, {{QLatin1String("icon"), QVariant()}, {QLatin1String("text"), tr("Open in New Tab")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("icon"), QVariant()}, {QLatin1String("text"), tr("Open in New Background Tab")}}, executor, &menu));
 			menu.addSeparator();
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen)}}, {{QLatin1String("text"), tr("Open in New Window")}}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("text"), tr("Open in New Background Window")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen)}}, {{QLatin1String("icon"), QVariant()}, {QLatin1String("text"), tr("Open in New Window")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("icon"), QVariant()}, {QLatin1String("text"), tr("Open in New Background Window")}}, executor, &menu));
 
 			connect(&menu, &QMenu::triggered, this, &Menu::hideMenu);
 
@@ -596,81 +603,47 @@ void Menu::hideMenu()
 
 void Menu::populateBookmarksMenu()
 {
-	Menu *menu(qobject_cast<Menu*>(sender()));
+	const BookmarksItem *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
-	if (!menu || !menu->menuAction() || ((!menu->actions().isEmpty() && !(m_role == BookmarksMenuRole && menuAction()->data().toULongLong() == 0 && menu->actions().count() == 3))))
+	if (!actions().isEmpty() && !(folderBookmark->getType() == BookmarksModel::RootBookmark && actions().count() == 3))
 	{
 		return;
 	}
 
-	const BookmarksModel *model(BookmarksManager::getModel());
-	BookmarksItem *bookmark(model->getBookmark(menu->menuAction()->data().toULongLong()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	ActionExecutor::Object executor(mainWindow, mainWindow);;
 
-	if (!bookmark)
+	if (folderBookmark->rowCount() > 1)
 	{
-		bookmark = model->getRootItem();
+		addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), folderBookmark->getIdentifier()}}, {{QLatin1String("icon"), QLatin1String("document-open-folder")}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Open All")}}, executor, this));
+		addSeparator();
 	}
 
-	if (bookmark->rowCount() > 1 && m_role == BookmarksMenuRole)
+	for (int i = 0; i < folderBookmark->rowCount(); ++i)
 	{
-		Action *openAllAction(new Action(-1, {}, this));
-		openAllAction->setData(bookmark->getIdentifier());
-		openAllAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
-		openAllAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open All"));
+		const BookmarksItem *bookmark(folderBookmark->getChild(i));
 
-		menu->addAction(openAllAction);
-		menu->addSeparator();
-
-		connect(openAllAction, &QAction::triggered, this, &Menu::openBookmark);
-	}
-	else if (m_role == BookmarkSelectorMenuRole)
-	{
-		Action *addFolderAction(new Action(-1, {}, this));
-		addFolderAction->setData(bookmark->getIdentifier());
-		addFolderAction->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
-		addFolderAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "This Folder"));
-
-		menu->addAction(addFolderAction);
-		menu->addSeparator();
-	}
-
-	for (int i = 0; i < bookmark->rowCount(); ++i)
-	{
-		const QModelIndex index(bookmark->index().child(i, 0));
-
-		if (!index.isValid())
+		if (!bookmark)
 		{
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
 
-		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
+		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
-			Action *action(new Action(-1, {}, this));
-			action->setData(index.data(BookmarksModel::IdentifierRole));
-			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
-			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
-			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
+			Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, executor, this));
+			action->setToolTip(bookmark->getDescription());
+			action->setStatusTip(bookmark->getUrl().toString());
 
-			if (index.data(BookmarksModel::TitleRole).toString().isEmpty())
+			if (type != BookmarksModel::UrlBookmark)
 			{
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
-			}
-			else
-			{
-				action->setOverrideText(Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
-			}
-
-			if (type == BookmarksModel::UrlBookmark && m_role == BookmarksMenuRole)
-			{
-				connect(action, &QAction::triggered, this, &Menu::openBookmark);
-			}
-			else if (type == BookmarksModel::FolderBookmark)
-			{
-				if (model->rowCount(index) > 0)
+				if (bookmark->rowCount() > 0)
 				{
-					action->setMenu(new Menu(m_role, this));
+					Menu *menu(new Menu(BookmarksMenuRole, this));
+					menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+
+					action->setMenu(menu);
 				}
 				else
 				{
@@ -678,11 +651,59 @@ void Menu::populateBookmarksMenu()
 				}
 			}
 
-			menu->addAction(action);
+			addAction(action);
 		}
 		else
 		{
-			menu->addSeparator();
+			addSeparator();
+		}
+	}
+}
+
+void Menu::populateBookmarkSelectorMenu()
+{
+	if (!actions().isEmpty())
+	{
+		return;
+	}
+
+	const BookmarksItem *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+	Action *addFolderAction(new Action(-1, {}, {{QLatin1String("icon"), QLatin1String("document-open-folder")}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "This Folder")}}, ActionExecutor::Object(), this));
+	addFolderAction->setData(folderBookmark->getIdentifier());
+
+	addAction(addFolderAction);
+	addSeparator();
+
+	for (int i = 0; i < folderBookmark->rowCount(); ++i)
+	{
+		const BookmarksItem *bookmark(folderBookmark->getChild(i));
+
+		if (!bookmark)
+		{
+			continue;
+		}
+
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+
+		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
+		{
+			QAction *action(new QAction(bookmark->getIcon(), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this), this));
+			action->setStatusTip(bookmark->getUrl().toString());
+			action->setData(bookmark->getIdentifier());
+
+			if (type != BookmarksModel::UrlBookmark)
+			{
+				Menu *menu(new Menu(BookmarkSelectorMenuRole, this));
+				menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+
+				action->setMenu(menu);
+			}
+
+			addAction(action);
+		}
+		else
+		{
+			addSeparator();
 		}
 	}
 }
@@ -1423,18 +1444,6 @@ void Menu::clearNotesMenu()
 	}
 
 	connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
-}
-
-void Menu::openBookmark()
-{
-	hideMenu();
-
-	const QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action)
-	{
-		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), action->data().toULongLong()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints())}}, parentWidget());
-	}
 }
 
 void Menu::openImporter(QAction *action)
