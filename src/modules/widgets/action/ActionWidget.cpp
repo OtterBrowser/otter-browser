@@ -92,7 +92,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void ActionWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (m_action->getIdentifier() == ActionsManager::NewTabAction || m_action->getIdentifier() == ActionsManager::NewTabPrivateAction))
+	if (event->mimeData()->hasUrls())
 	{
 		event->accept();
 	}
@@ -104,7 +104,7 @@ void ActionWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void ActionWidget::dropEvent(QDropEvent *event)
 {
-	if (event->mimeData()->hasUrls() && (m_action->getIdentifier() == ActionsManager::NewTabAction || m_action->getIdentifier() == ActionsManager::NewTabPrivateAction))
+	if (event->mimeData()->hasUrls())
 	{
 		QVariantMap parameters(getParameters());
 		QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
