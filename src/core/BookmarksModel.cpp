@@ -1003,7 +1003,7 @@ BookmarksItem* BookmarksModel::getBookmark(const QString &keyword) const
 
 BookmarksItem* BookmarksModel::getBookmark(const QModelIndex &index) const
 {
-	return getBookmark(index.data(IdentifierRole).toULongLong());
+	return static_cast<BookmarksItem*>(itemFromIndex(index));
 }
 
 BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
@@ -1362,7 +1362,7 @@ bool BookmarksModel::save(const QString &path) const
 
 bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	BookmarksItem *bookmark(static_cast<BookmarksItem*>(itemFromIndex(index)));
+	BookmarksItem *bookmark(getBookmark(index));
 
 	if (!bookmark)
 	{
