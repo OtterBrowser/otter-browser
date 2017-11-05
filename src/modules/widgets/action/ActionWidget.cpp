@@ -32,25 +32,10 @@ namespace Otter
 {
 
 ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_action(new Action(identifier, definition.parameters, this))
+	m_action(new Action(identifier, definition.parameters, definition.options, ActionExecutor::Object(window, window), this))
 {
 	setDefaultAction(m_action);
 	setWindow(window);
-
-	if (isCustomized())
-	{
-		const QVariantMap options(getOptions());
-
-		if (options.contains(QLatin1String("icon")))
-		{
-			m_action->setOverrideIcon(getIcon());
-		}
-
-		if (options.contains(QLatin1String("text")))
-		{
-			m_action->setOverrideText(getText());
-		}
-	}
 
 	if (identifier == ActionsManager::NewTabAction || identifier == ActionsManager::NewTabPrivateAction)
 	{
