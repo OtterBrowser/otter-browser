@@ -85,6 +85,18 @@ QStandardItem* BookmarksItem::clone() const
 	return item;
 }
 
+BookmarksItem* BookmarksItem::getChild(int index) const
+{
+	BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
+
+	if (model)
+	{
+		return model->getBookmark(model->index(index, 0, this->index()));
+	}
+
+	return nullptr;
+}
+
 QString BookmarksItem::getTitle() const
 {
 	return data(BookmarksModel::TitleRole).toString();
