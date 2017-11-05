@@ -54,7 +54,7 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 
 	if (options.contains(QLatin1String("icon")))
 	{
-		const QVariant data(parameters[QLatin1String("icon")]);
+		const QVariant data(options[QLatin1String("icon")]);
 
 		if (data.type() == QVariant::Icon)
 		{
