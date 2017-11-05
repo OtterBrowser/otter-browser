@@ -2129,7 +2129,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 				if (bookmark)
 				{
-					state.text = bookmark->data(Qt::DisplayRole).toString();
+					state.text = bookmark->getTitle();
 					state.icon = bookmark->getIcon();
 					state.isEnabled = true;
 				}
