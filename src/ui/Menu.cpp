@@ -991,42 +991,38 @@ void Menu::populateDictionariesMenu()
 
 void Menu::populateNotesMenu()
 {
-	if (!menuAction() || !actions().isEmpty())
+	if (!actions().isEmpty())
 	{
 		return;
 	}
 
-	const BookmarksModel *model(NotesManager::getModel());
-	BookmarksItem *bookmark(model->getBookmark(menuAction()->data().toULongLong()));
+	const BookmarksItem *folderBookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
-	if (!bookmark)
+	for (int i = 0; i < folderBookmark->rowCount(); ++i)
 	{
-		bookmark = model->getRootItem();
-	}
+		const BookmarksItem *bookmark(folderBookmark->getChild(i));
 
-	for (int i = 0; i < bookmark->rowCount(); ++i)
-	{
-		const QModelIndex index(bookmark->index().child(i, 0));
-
-		if (!index.isValid())
+		if (!bookmark)
 		{
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
 
-		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
+		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
-			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, {{QLatin1String("icon"), index.data(Qt::DecorationRole)}, {QLatin1String("text"), Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, getExecutor(), this));
-			action->setData(index.data(BookmarksModel::IdentifierRole));
-			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
-			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
+			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("icon"), bookmark->getIcon()}, {QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, getExecutor(), this));
+			action->setToolTip(bookmark->getDescription());
+			action->setStatusTip(bookmark->getUrl().toString());
 
 			if (type == BookmarksModel::FolderBookmark)
 			{
-				if (model->rowCount(index) > 0)
+				if (bookmark->rowCount() > 0)
 				{
-					action->setMenu(new Menu(m_role, this));
+					Menu *menu(new Menu(NotesMenuRole, this));
+					menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+
+					action->setMenu(menu);
 				}
 				else
 				{
