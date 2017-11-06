@@ -185,14 +185,33 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			setTitle(QT_TRANSLATE_NOOP("actions", "Sessions"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateSessionsMenu);
-			connect(this, &Menu::triggered, this, &Menu::openSession);
+			connect(this, &Menu::triggered, this, [&](QAction *action)
+			{
+				if (!action->data().isNull())
+				{
+					SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getOption(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? Application::getActiveWindow() : nullptr));
+				}
+			});
 
 			break;
 		case StyleSheetsMenuRole:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Style"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateStyleSheetsMenu);
-			connect(this, &Menu::triggered, this, &Menu::selectStyleSheet);
+			connect(this, &Menu::triggered, this, [&](QAction *action)
+			{
+				const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
+
+				if (mainWindow && action)
+				{
+					Window *window(mainWindow->getActiveWindow());
+
+					if (window && window->getWebWidget())
+					{
+						window->getWebWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
+					}
+				}
+			});
 
 			break;
 		case ToolBarsMenuRole:
@@ -1417,14 +1436,6 @@ void Menu::clearNotesMenu()
 	connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
 }
 
-void Menu::openSession(QAction *action)
-{
-	if (!action->data().isNull())
-	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getOption(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? Application::getActiveWindow() : nullptr));
-	}
-}
-
 void Menu::selectOption(QAction *action)
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
@@ -1432,23 +1443,6 @@ void Menu::selectOption(QAction *action)
 	if (mainWindow)
 	{
 		mainWindow->setOption(m_option, action->data().toString());
-	}
-}
-
-void Menu::selectStyleSheet(QAction *action)
-{
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (!mainWindow)
-	{
-		return;
-	}
-
-	Window *window(mainWindow->getActiveWindow());
-
-	if (window && window->getWebWidget() && action)
-	{
-		window->getWebWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
 	}
 }
 
