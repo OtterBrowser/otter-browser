@@ -910,10 +910,14 @@ void Menu::populateClosedWindowsMenu()
 
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			Action *action((i == 0) ? new Action(ActionsManager::ReopenWindowAction, {}, executor, this) : new Action(ActionsManager::ReopenWindowAction, {{QLatin1String("index"), i}}, executor, this));
-			action->setOverrideText(Utils::elideText(tr("Window - %1").arg(windows.at(i)), this));
+			QVariantMap parameters;
 
-			addAction(action);
+			if (i > 0)
+			{
+				parameters[QLatin1String("index")] = i;
+			}
+
+			addAction(new Action(ActionsManager::ReopenWindowAction, parameters, {{QLatin1String("text"), Utils::elideText(tr("Window - %1").arg(windows.at(i)), this)}}, executor, this));
 		}
 
 		addSeparator();
