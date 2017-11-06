@@ -58,12 +58,14 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 
 		if (data.type() == QVariant::Icon)
 		{
-			setOverrideIcon(data.value<QIcon>());
+			setIcon(data.value<QIcon>());
 		}
 		else
 		{
-			setOverrideIcon(ThemesManager::createIcon(data.toString()));
+			setIcon(ThemesManager::createIcon(data.toString()));
 		}
+
+		m_flags |= IsOverridingIconFlag;
 	}
 
 	if (options.contains(QLatin1String("text")))
@@ -271,13 +273,6 @@ void Action::setOverrideText(const QString &text)
 	m_flags |= IsOverridingTextFlag;
 
 	setState(getState());
-}
-
-void Action::setOverrideIcon(const QIcon &icon)
-{
-	m_flags |= IsOverridingIconFlag;
-
-	setIcon(icon);
 }
 
 void Action::setState(const ActionsManager::ActionDefinition::State &state)

@@ -489,7 +489,19 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 				return;
 			}
 
-			Action *action(new Action(identifier, parameters, options, executor, this));
+			QVariantMap mutableOptions(options);
+
+			if (object.contains(QLatin1String("icon")))
+			{
+				mutableOptions[QLatin1String("icon")] = object.value(QLatin1String("icon")).toString();
+			}
+
+			if (object.contains(QLatin1String("title")))
+			{
+				mutableOptions[QLatin1String("text")] = object.value(QLatin1String("title")).toString();
+			}
+
+			Action *action(new Action(identifier, parameters, mutableOptions, executor, this));
 
 			if (object.contains(QLatin1String("group")))
 			{
@@ -507,16 +519,6 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 					m_actionGroups[group] = actionGroup;
 				}
-			}
-
-			if (object.contains(QLatin1String("icon")))
-			{
-				action->setOverrideIcon(ThemesManager::createIcon(object.value(QLatin1String("icon")).toString()));
-			}
-
-			if (object.contains(QLatin1String("title")))
-			{
-				action->setOverrideText(object.value(QLatin1String("title")).toString());
 			}
 
 			addAction(action);
@@ -928,9 +930,14 @@ void Menu::populateClosedWindowsMenu()
 
 			for (int i = 0; i < tabs.count(); ++i)
 			{
-				Action *action((i == 0) ? new Action(ActionsManager::ReopenTabAction, {}, executor, this) : new Action(ActionsManager::ReopenTabAction, {{QLatin1String("index"), i}}, executor, this));
-				action->setOverrideIcon(tabs.at(i).isPrivate ? ThemesManager::createIcon(QLatin1String("tab-private")) : tabs.at(i).icon);
-				action->setOverrideText(Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this));
+				QVariantMap parameters;
+
+				if (i > 0)
+				{
+					parameters = {{QLatin1String("index"), i}};
+				}
+
+				Action *action(new Action(ActionsManager::ReopenTabAction, parameters, {{QLatin1String("icon"), (tabs.at(i).isPrivate ? QVariant(QLatin1String("tab-private")) : tabs.at(i).icon)}, {QLatin1String("text"), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, executor, this));
 				action->setStatusTip(tabs.at(i).window.getUrl());
 
 				addAction(action);
@@ -1009,20 +1016,10 @@ void Menu::populateNotesMenu()
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
-			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, getExecutor(), this));
+			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), index.data(BookmarksModel::IdentifierRole)}}, {{QLatin1String("icon"), index.data(Qt::DecorationRole)}, {QLatin1String("text"), Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, getExecutor(), this));
 			action->setData(index.data(BookmarksModel::IdentifierRole));
-			action->setOverrideIcon(index.data(Qt::DecorationRole).value<QIcon>());
 			action->setToolTip(index.data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(index.data(BookmarksModel::UrlRole).toString());
-
-			if (index.data(BookmarksModel::TitleRole).toString().isEmpty())
-			{
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
-			}
-			else
-			{
-				action->setOverrideText(Utils::elideText(QString(index.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu));
-			}
 
 			if (type == BookmarksModel::FolderBookmark)
 			{
@@ -1066,11 +1063,7 @@ void Menu::populateOpenInApplicationMenu()
 		{
 			parameters[QLatin1String("application")] = applications.at(i).command;
 
-			Action *action(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
-			action->setOverrideIcon(applications.at(i).icon);
-			action->setOverrideText(((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name));
-
-			addAction(action);
+			addAction(new Action(ActionsManager::OpenUrlAction, parameters, {{QLatin1String("icon"), applications.at(i).icon}, {QLatin1String("text"), ((applications.at(i).name.isEmpty()) ? QT_TRANSLATE_NOOP("actions", "Unknown") : applications.at(i).name)}}, executor, this));
 
 			if (i == 0)
 			{
@@ -1150,9 +1143,7 @@ void Menu::populateSearchMenu()
 
 		if (searchEngine.isValid())
 		{
-			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenuRole) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, executor, this));
-			action->setOverrideIcon(searchEngine.icon);
-			action->setOverrideText(searchEngine.title);
+			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenuRole) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, {{QLatin1String("icon"), searchEngine.icon}, {QLatin1String("text"), searchEngine.title}}, executor, this));
 			action->setToolTip(searchEngine.description);
 
 			addAction(action);
@@ -1396,11 +1387,9 @@ void Menu::populateWindowsMenu()
 
 			if (windowItem)
 			{
-				Action *action(new Action(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), windowItem->getActiveWindow()->getIdentifier()}}, executor, this));
-				action->setOverrideIcon(windowItem->getActiveWindow()->getIcon());
-				action->setOverrideText(Utils::elideText((windowItem->getActiveWindow()->getTitle().isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : windowItem->getActiveWindow()->getTitle()), this));
+				const Window *window(windowItem->getActiveWindow());
 
-				addAction(action);
+				addAction(new Action(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), window->getIdentifier()}}, {{QLatin1String("icon"), window->getIcon()}, {QLatin1String("text"), Utils::elideText((window->getTitle().isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : window->getTitle()), this)}}, executor, this));
 			}
 		}
 	}
