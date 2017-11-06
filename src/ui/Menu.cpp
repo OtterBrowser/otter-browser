@@ -126,40 +126,23 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case ImportExportMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
+			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
+			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("HtmlBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
+			addSeparator();
+			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaNotes")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Notes…")}}, ActionExecutor::Object(), this));
+			addSeparator();
+			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaSearchEngines")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
+			addSeparator();
+			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaSession")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
+
+			connect(this, &Menu::triggered, this, [&](QAction *action)
 			{
-				setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
-
-				Action *importOperaBookmarksAction(new Action(-1, {}, this));
-				importOperaBookmarksAction->setData(QLatin1String("OperaBookmarks"));
-				importOperaBookmarksAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…"));
-
-				Action *importHtmlBookmarksAction(new Action(-1, {}, this));
-				importHtmlBookmarksAction->setData(QLatin1String("HtmlBookmarks"));
-				importHtmlBookmarksAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…"));
-
-				Action *importOperaNotesAction(new Action(-1, {}, this));
-				importOperaNotesAction->setData(QLatin1String("OperaNotes"));
-				importOperaNotesAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Notes…"));
-
-				Action *importOperaSearchEnginesAction(new Action(-1, {}, this));
-				importOperaSearchEnginesAction->setData(QLatin1String("OperaSearchEngines"));
-				importOperaSearchEnginesAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…"));
-
-				Action *importOperaSessionAction(new Action(-1, {}, this));
-				importOperaSessionAction->setData(QLatin1String("OperaSession"));
-				importOperaSessionAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Session…"));
-
-				addAction(importOperaBookmarksAction);
-				addAction(importHtmlBookmarksAction);
-				addSeparator();
-				addAction(importOperaNotesAction);
-				addSeparator();
-				addAction(importOperaSearchEnginesAction);
-				addSeparator();
-				addAction(importOperaSessionAction);
-
-				connect(this, &Menu::triggered, this, &Menu::openImporter);
-			}
+				if (action)
+				{
+					ImportDialog::createDialog(qobject_cast<Action*>(action)->getParameters().value(QLatin1String("importer")).toString(), MainWindow::findMainWindow(this));
+				}
+			});
 
 			break;
 		case NotesMenuRole:
@@ -1432,14 +1415,6 @@ void Menu::clearNotesMenu()
 	}
 
 	connect(this, &Menu::aboutToShow, this, &Menu::populateNotesMenu);
-}
-
-void Menu::openImporter(QAction *action)
-{
-	if (action)
-	{
-		ImportDialog::createDialog(action->data().toString(), MainWindow::findMainWindow(this));
-	}
 }
 
 void Menu::openSession(QAction *action)

@@ -99,7 +99,6 @@ protected slots:
 	void clearBookmarksMenu();
 	void clearClosedWindows();
 	void clearNotesMenu();
-	void openImporter(QAction *action);
 	void openSession(QAction *action);
 	void selectOption(QAction *action);
 	void selectStyleSheet(QAction *action);
