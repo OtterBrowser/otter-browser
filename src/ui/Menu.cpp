@@ -988,15 +988,13 @@ void Menu::populateDictionariesMenu()
 
 void Menu::populateNotesMenu()
 {
-	Menu *menu(qobject_cast<Menu*>(sender()));
-
-	if (!menu || !menu->menuAction() || !menu->actions().isEmpty())
+	if (!menuAction() || !actions().isEmpty())
 	{
 		return;
 	}
 
 	const BookmarksModel *model(NotesManager::getModel());
-	BookmarksItem *bookmark(model->getBookmark(menu->menuAction()->data().toULongLong()));
+	BookmarksItem *bookmark(model->getBookmark(menuAction()->data().toULongLong()));
 
 	if (!bookmark)
 	{
@@ -1037,7 +1035,7 @@ void Menu::populateNotesMenu()
 		}
 		else
 		{
-			menu->addSeparator();
+			addSeparator();
 		}
 	}
 }
