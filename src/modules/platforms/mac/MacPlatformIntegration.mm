@@ -191,31 +191,29 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 		}
 		else
 		{
-			Action *action(new Action(actions.at(i), {}, executor, menu));
-
 			switch (actions.at(i))
 			{
 				case ActionsManager::BookmarksAction:
-					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Bookmarks")}}, executor, menu));
 
 					break;
 				case ActionsManager::TransfersAction:
-					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
+					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Transfers")}}, executor, menu));
 
 					break;
 				case ActionsManager::HistoryAction:
-					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "History")}}, executor, menu));
 
 					break;
 				case ActionsManager::NotesAction:
-					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+					menu->addAction(new Action(actions.at(i), {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Notes")}}, executor, menu));
 
 					break;
 				default:
+					menu->addAction(new Action(actions.at(i), {}, executor, menu));
+
 					break;
 			}
-
-			menu->addAction(action);
 		}
 	}
 
