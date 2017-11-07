@@ -91,12 +91,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories)
 		{
-			completions.append(CompletionEntry(QUrl(), tr("Search with %1").arg(title), QString(), QIcon(), QDateTime(), HeaderType));
+			completions.append(CompletionEntry(QUrl(), tr("Search with %1").arg(title), {}, {}, {}, HeaderType));
 
-			title = QString();
+			title.clear();
 		}
 
-		CompletionEntry completionEntry(QUrl(), title, QString(), icon, QDateTime(), SearchSuggestionType);
+		CompletionEntry completionEntry(QUrl(), title, {}, icon, {}, SearchSuggestionType);
 		completionEntry.text = text;
 		completionEntry.keyword = keyword;
 
@@ -109,12 +109,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !bookmarks.isEmpty())
 		{
-			completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), QString(), QIcon(), QDateTime(), HeaderType));
+			completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), {}, {}, {}, HeaderType));
 		}
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			CompletionEntry completionEntry(bookmarks.at(i).bookmark->getUrl(), bookmarks.at(i).bookmark->getTitle(), bookmarks.at(i).match, bookmarks.at(i).bookmark->getIcon(), QDateTime(), BookmarkType);
+			CompletionEntry completionEntry(bookmarks.at(i).bookmark->getUrl(), bookmarks.at(i).bookmark->getTitle(), bookmarks.at(i).match, bookmarks.at(i).bookmark->getIcon(), {}, BookmarkType);
 			completionEntry.keyword = bookmarks.at(i).bookmark->getKeyword();
 
 			if (completionEntry.keyword.startsWith(m_filter))
@@ -143,12 +143,12 @@ void AddressCompletionModel::updateModel()
 
 				if (!wasAdded)
 				{
-					completions.append(CompletionEntry(QUrl(), tr("Local files"), QString(), QIcon(), QDateTime(), HeaderType));
+					completions.append(CompletionEntry(QUrl(), tr("Local files"), {}, {}, {}, HeaderType));
 
 					wasAdded = true;
 				}
 
-				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), QDateTime(), LocalPathType));
+				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), {}, LocalPathType));
 			}
 		}
 	}
@@ -159,7 +159,7 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
-			completions.append(CompletionEntry(QUrl(), tr("History"), QString(), QIcon(), QDateTime(), HeaderType));
+			completions.append(CompletionEntry(QUrl(), tr("History"), {}, {}, {}, HeaderType));
 		}
 
 		for (int i = 0; i < entries.count(); ++i)
@@ -170,11 +170,11 @@ void AddressCompletionModel::updateModel()
 
 	if (m_types.testFlag(TypedHistoryCompletionType))
 	{
-		const QVector<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(QString(), true));
+		const QVector<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries({}, true));
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
-			completions.append(CompletionEntry(QUrl(), tr("Typed history"), QString(), QIcon(), QDateTime(), HeaderType));
+			completions.append(CompletionEntry(QUrl(), tr("Typed history"), {}, {}, {}, HeaderType));
 		}
 
 		for (int i = 0; i < entries.count(); ++i)
@@ -196,12 +196,12 @@ void AddressCompletionModel::updateModel()
 			{
 				if (!wasAdded)
 				{
-					completions.append(CompletionEntry(QUrl(), tr("Special pages"), QString(), QIcon(), QDateTime(), HeaderType));
+					completions.append(CompletionEntry(QUrl(), tr("Special pages"), {}, {}, {}, HeaderType));
 
 					wasAdded = true;
 				}
 
-				completions.append(CompletionEntry(information.url, information.getTitle(), QString(), information.icon, QDateTime(), SpecialPageType));
+				completions.append(CompletionEntry(information.url, information.getTitle(), {}, information.icon, {}, SpecialPageType));
 			}
 		}
 	}
@@ -233,7 +233,7 @@ void AddressCompletionModel::setFilter(const QString &filter)
 
 		endResetModel();
 
-		emit completionReady(QString());
+		emit completionReady({});
 	}
 	else if (m_updateTimer == 0)
 	{
@@ -283,7 +283,7 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 		}
 	}
 
-	return QVariant();
+	return {};
 }
 
 QVariant AddressCompletionModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -292,7 +292,7 @@ QVariant AddressCompletionModel::headerData(int section, Qt::Orientation orienta
 	Q_UNUSED(orientation)
 	Q_UNUSED(role)
 
-	return QVariant();
+	return {};
 }
 
 Qt::ItemFlags AddressCompletionModel::flags(const QModelIndex &index) const
