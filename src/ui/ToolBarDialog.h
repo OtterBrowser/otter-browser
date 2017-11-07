@@ -48,7 +48,7 @@ public:
 		ParametersRole
 	};
 
-	explicit ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition = ToolBarsManager::ToolBarDefinition(), QWidget *parent = nullptr);
+	explicit ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition = {}, QWidget *parent = nullptr);
 	~ToolBarDialog();
 
 	ToolBarsManager::ToolBarDefinition getDefinition() const;

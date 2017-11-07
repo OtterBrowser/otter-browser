@@ -49,7 +49,7 @@ public:
 		bool operator ==(const Action &other) const;
 	};
 
-	explicit KeyboardProfile(const QString &identifier = QString(), LoadMode mode = StandardMode);
+	explicit KeyboardProfile(const QString &identifier = {}, LoadMode mode = StandardMode);
 
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);

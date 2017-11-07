@@ -66,7 +66,7 @@ public:
 		bool operator ==(const Gesture &other) const;
 	};
 
-	explicit MouseProfile(const QString &identifier = QString(), LoadMode mode = StandardMode);
+	explicit MouseProfile(const QString &identifier = {}, LoadMode mode = StandardMode);
 
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);
@@ -120,7 +120,7 @@ public:
 	static QObject* getTrackedObject();
 	static QString getContextName(int identifier);
 	static int getContextIdentifier(const QString &name);
-	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = QVector<GesturesContext>({GenericContext}), const QVariantMap &parameters = {});
+	static bool startGesture(QObject *object, QEvent *event, QVector<GesturesContext> contexts = {GenericContext}, const QVariantMap &parameters = {});
 	static bool continueGesture(QObject *object);
 	static bool isTracking();
 

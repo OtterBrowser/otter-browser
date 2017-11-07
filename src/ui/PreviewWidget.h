@@ -36,7 +36,7 @@ public:
 
 public slots:
 	void setPosition(const QPoint &position);
-	void setPreview(const QString &text, const QPixmap &pixmap = QPixmap(), bool showFullText = false);
+	void setPreview(const QString &text, const QPixmap &pixmap = {}, bool showFullText = false);
 
 private:
 	QLabel *m_textLabel;
