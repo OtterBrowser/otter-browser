@@ -6122,27 +6122,27 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="553"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Конзола за грешки</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="557"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Меню</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="561"/>
         <source>Menu Button</source>
-        <translation type="unfinished"/>
+        <translation>Меню бутон</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="565"/>
         <source>Sidebar Panel Chooser</source>
-        <translation type="unfinished"/>
+        <translation>Страничен панел</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="569"/>
         <source>Private Window Indicator</source>
-        <translation type="unfinished"/>
+        <translation>Индикатор за частен прозорец</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="574"/>

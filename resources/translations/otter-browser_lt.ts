@@ -44,7 +44,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>Svetainė %1 atnaujinti esamą slapuką.</translation>
+        <translation>Svetainė %1 paprašė atnaujinti esamą slapuką.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
@@ -470,7 +470,7 @@ Kai kurios svetainės gali veikti neteisingai arba visai neveikti.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="654"/>
         <source>Web backend: %1 %2.</source>
-        <translation>Saityno vidinė pusė: %1 %2.</translation>
+        <translation>Atvaizdavimo varikliukas: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="658"/>
@@ -1725,7 +1725,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation>Nepavyko pašalinti turinio blokavimo profilio failą: %1</translation>
+        <translation>Nepavyko pašalinti turinio blokavimo profilio failo: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="206"/>
@@ -1838,7 +1838,7 @@ Ar norite juos įrašyti?</translation>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="71"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation>yyyy.MM.dd HH:mm</translation>
+        <translation>yyyy-MM-dd HH:mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="81"/>
@@ -4117,7 +4117,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="121"/>
         <source>Open all in background</source>
-        <translation>Atverti visus fone</translation>
+        <translation>Visus atverti fone</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="133"/>
@@ -4369,7 +4369,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="47"/>
         <source>Show start page</source>
-        <translation>Rodyti pradinį puslapį</translation>
+        <translation>Rodyti pradžios puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="48"/>
@@ -4452,7 +4452,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
         <source>Clear history when application closes</source>
-        <translation>Išvalyti žurnalą uždarant progamą</translation>
+        <translation>Išvalyti žurnalą uždarant programą</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
@@ -4477,7 +4477,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="362"/>
         <source>Use a master password</source>
-        <translation>Naudoti papildoma pagrindinį slaptažodį</translation>
+        <translation>Naudoti papildomą pagrindinį slaptažodį</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="385"/>
@@ -5447,7 +5447,7 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
-        <translation>Atverti seansq aktyviame lange</translation>
+        <translation>Atverti seansą aktyviame lange</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="46"/>
@@ -5758,7 +5758,7 @@ Norite įrašyti pakeitimus ar juos atmesti?</translation>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation>Atverti pradinį puslapį</translation>
+        <translation>Atverti pradžios puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -5799,7 +5799,7 @@ Adresas: %2</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="742"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation>Perjungti korteles, naudojant pelės ratuką</translation>
+        <translation>Perjungti korteles naudojant pelės ratuką</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="746"/>
@@ -6355,7 +6355,7 @@ Do you want to overwrite it?
 
 %1</source>
         <translation>Failas tokiu pačiu pavadinimu jau yra.
-Ar norite jį pakeisti?
+Ar norite jį perrašyti?
 
 %1</translation>
     </message>
@@ -6775,7 +6775,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1383"/>
         <source>Start Page</source>
-        <translation>Pradinis puslapis</translation>
+        <translation>Pradžios puslapis</translation>
     </message>
 </context>
 <context>
