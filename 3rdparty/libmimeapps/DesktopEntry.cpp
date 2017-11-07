@@ -123,6 +123,7 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 			{
 			case 'u':
 				allowRemote_ = true;
+				//@fallthrough@
 			case 'f':
 				if (urls.size() > 0)
 				{
@@ -133,6 +134,7 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 
 			case 'U':
 				allowRemote_ = true;
+				//@fallthrough@
 			case 'F':
 				allowMultiple_ = true;
 

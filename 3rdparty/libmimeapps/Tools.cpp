@@ -62,13 +62,13 @@ bool endsWith(std::string const &str, std::string const &suffix)
 	return std::equal(suffix.rbegin(), suffix.rend(), str.rbegin());
 }
 
-std::vector<std::string> split(const std::string &str, char delim)
+std::vector<std::string> split(const std::string &str, char delimiter)
 {
 	std::vector<std::string> chunks;
 	std::stringstream stream(str);
 	std::string item;
 
-	while (std::getline(stream, item, delim))
+	while (std::getline(stream, item, delimiter))
 	{
 		chunks.push_back(item);
 	}

@@ -161,11 +161,11 @@ void Index::processMimeApps(const std::string &path)
 	{
 		std::vector<std::string> identifiers = split(config.value("Added Associations", types.at(i)), ';');
 
-		for (int j = identifiers.size()-1; j >= 0; --j)
+		for (std::vector<std::string>::reverse_iterator it = identifiers.rbegin(); it != identifiers.rend(); ++it)
 		{
-			if (knownApplications_.find(identifiers[j]) != knownApplications_.end())
+			if (knownApplications_.find(*it) != knownApplications_.end())
 			{
-				addToType(types[i], knownApplications_.at(identifiers[j]));
+				addToType(types[i], knownApplications_.at(*it));
 			}
 		}
 	}
