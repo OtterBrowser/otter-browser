@@ -29,6 +29,7 @@
 #include "Window.h"
 #include "../core/Application.h"
 #include "../core/GesturesManager.h"
+#include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 
@@ -1065,7 +1066,24 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 
 			if (urls.isEmpty())
 			{
-				mainWindow->search(event->mimeData()->text(), {}, SessionsManager::NewTabOpen);
+				const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(event->mimeData()->text(), (InputInterpreter::NoBookmarkKeywordsFlag | InputInterpreter::NoSearchKeywordsFlag)));
+
+				if (result.isValid())
+				{
+					switch (result.type)
+					{
+						case InputInterpreter::InterpreterResult::UrlType:
+							mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("index"), dropIndex}});
+
+							break;
+						case InputInterpreter::InterpreterResult::SearchType:
+							mainWindow->search(result.searchQuery, result.searchEngine, SessionsManager::NewTabOpen);
+
+							break;
+						default:
+							break;
+					}
+				}
 			}
 			else
 			{
