@@ -837,10 +837,9 @@ void Menu::populateCharacterEncodingMenu()
 		m_actionGroup = new QActionGroup(this);
 		m_actionGroup->setExclusive(true);
 
-		Action *defaultAction(new Action(-1, {}, this));
+		Action *defaultAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Auto Detect")}}, ActionExecutor::Object(), this));
 		defaultAction->setData(QLatin1String("auto"));
 		defaultAction->setCheckable(true);
-		defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Auto Detect"));
 
 		m_actionGroup->addAction(defaultAction);
 
@@ -894,10 +893,9 @@ void Menu::populateClosedWindowsMenu()
 {
 	clear();
 
-	Action *clearAction(new Action(-1, {}, this));
+	Action *clearAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Clear")}}, ActionExecutor::Object(), this));
 	clearAction->setEnabled(false);
 	clearAction->setIcon(ThemesManager::createIcon(QLatin1String("edit-clear")));
-	clearAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Clear"));
 
 	addAction(clearAction);
 	addSeparator();
@@ -1053,10 +1051,7 @@ void Menu::populateOpenInApplicationMenu()
 	{
 		parameters[QLatin1String("application")] = QString();
 
-		Action *action(new Action(ActionsManager::OpenUrlAction, parameters, executor, this));
-		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Application"));
-
-		addAction(action);
+		addAction(new Action(ActionsManager::OpenUrlAction, parameters, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Default Application")}}, executor, this));
 	}
 	else
 	{
@@ -1206,11 +1201,10 @@ void Menu::populateStyleSheetsMenu()
 	clear();
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	Action *defaultAction(new Action(-1, {}, this));
+	Action *defaultAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Default Style")}}, ActionExecutor::Object(), this));
 	defaultAction->setData(-1);
 	defaultAction->setCheckable(true);
 	defaultAction->setChecked(true);
-	defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default Style"));
 
 	addAction(defaultAction);
 
@@ -1261,18 +1255,12 @@ void Menu::populateToolBarsMenu()
 	addSeparator();
 
 	Menu *addNewMenu(new Menu(NoMenuRole, this));
-	Action *addNewAction(new Action(-1, {}, this));
+	Action *addNewAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Add New")}}, ActionExecutor::Object(), this));
 	addNewAction->setMenu(addNewMenu);
-	addNewAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add New"));
 
-	Action *addToolBarAction(new Action(-1, {}, addNewMenu));
-	addToolBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Toolbar…"));
-
-	Action *addBookmarksBarAction(new Action(-1, {}, addNewMenu));
-	addBookmarksBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Bookmarks Bar…"));
-
-	Action *addSideBarAction(new Action(-1, {}, addNewMenu));
-	addSideBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Sidebar…"));
+	Action *addToolBarAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Add Toolbar…")}}, ActionExecutor::Object(), addNewMenu));
+	Action *addBookmarksBarAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Add Bookmarks Bar…")}}, ActionExecutor::Object(), addNewMenu));
+	Action *addSideBarAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Add Sidebar…")}}, ActionExecutor::Object(), addNewMenu));
 
 	addNewMenu->addAction(addToolBarAction);
 	addNewMenu->addAction(addBookmarksBarAction);
@@ -1345,11 +1333,10 @@ void Menu::populateUserAgentMenu()
 	{
 		addSeparator();
 
-		Action *customAction(new Action(-1, {}, this));
+		Action *customAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Custom User Agent…")}}, ActionExecutor::Object(), this));
 		customAction->setData(QLatin1String("custom"));
 		customAction->setCheckable(true);
 		customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
-		customAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Custom User Agent…"));
 
 		m_actionGroup->addAction(customAction);
 

@@ -70,7 +70,11 @@ Action::Action(int identifier, const QVariantMap &parameters, const QVariantMap 
 
 	if (options.contains(QLatin1String("text")))
 	{
-		setOverrideText(options[QLatin1String("text")].toString());
+		m_overrideText = options[QLatin1String("text")].toString();
+
+		m_flags |= IsOverridingTextFlag;
+
+		setState(getState());
 	}
 }
 
@@ -264,15 +268,6 @@ void Action::setExecutor(ActionExecutor::Object executor)
 	{
 		m_executor.connectSignals(this, &updateStateMethod, &updateStateMethod, &updateStateMethod);
 	}
-}
-
-void Action::setOverrideText(const QString &text)
-{
-	m_overrideText = text;
-
-	m_flags |= IsOverridingTextFlag;
-
-	setState(getState());
 }
 
 void Action::setState(const ActionsManager::ActionDefinition::State &state)

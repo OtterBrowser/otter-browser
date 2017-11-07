@@ -46,7 +46,6 @@ public:
 	explicit Action(int identifier, const QVariantMap &parameters, const QVariantMap &options, ActionExecutor::Object executor, QObject *parent);
 
 	void setExecutor(ActionExecutor::Object executor);
-	void setOverrideText(const QString &text);
 	ActionsManager::ActionDefinition getDefinition() const;
 	QVariantMap getParameters() const;
 	int getIdentifier() const;
