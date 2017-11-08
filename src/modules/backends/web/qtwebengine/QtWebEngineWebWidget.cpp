@@ -833,7 +833,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				{
 					if (result.isNull())
 					{
-						break;
+						return;
 					}
 
 					const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
@@ -855,7 +855,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					if (dialog.exec() == QDialog::Rejected)
 					{
-						break;
+						return;
 					}
 
 					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine());
