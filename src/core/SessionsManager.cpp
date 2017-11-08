@@ -92,15 +92,15 @@ void SessionsManager::clearClosedWindows()
 	emit m_instance->closedWindowsChanged();
 }
 
-void SessionsManager::storeClosedWindow(MainWindow *window)
+void SessionsManager::storeClosedWindow(MainWindow *mainWindow)
 {
-	if (!window || window->isPrivate())
+	if (!mainWindow || mainWindow->isPrivate())
 	{
 		return;
 	}
 
-	SessionMainWindow session(window->getSession());
-	session.geometry = window->saveGeometry();
+	SessionMainWindow session(mainWindow->getSession());
+	session.geometry = mainWindow->saveGeometry();
 
 	if (!session.windows.isEmpty())
 	{
@@ -497,7 +497,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 	return true;
 }
 
-bool SessionsManager::restoreSession(const SessionInformation &session, MainWindow *window, bool isPrivate)
+bool SessionsManager::restoreSession(const SessionInformation &session, MainWindow *mainWindow, bool isPrivate)
 {
 	if (session.windows.isEmpty())
 	{
@@ -524,9 +524,9 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		if (window && i == 0)
+		if (mainWindow && i == 0)
 		{
-			window->restoreSession(session.windows.first());
+			mainWindow->restoreSession(session.windows.first());
 		}
 		else
 		{
@@ -537,7 +537,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	return true;
 }
 
-bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window, bool isClean)
+bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *mainWindow, bool isClean)
 {
 	if (m_isPrivate && path.isEmpty())
 	{
@@ -551,9 +551,9 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	QVector<MainWindow*> windows;
 
-	if (window)
+	if (mainWindow)
 	{
-		windows.append(window);
+		windows.append(mainWindow);
 	}
 	else
 	{

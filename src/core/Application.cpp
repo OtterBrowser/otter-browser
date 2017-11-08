@@ -826,13 +826,13 @@ void Application::openUrl(const QUrl &url)
 	}
 }
 
-void Application::removeWindow(MainWindow *window)
+void Application::removeWindow(MainWindow *mainWindow)
 {
-	m_windows.removeAll(window);
+	m_windows.removeAll(mainWindow);
 
-	window->deleteLater();
+	mainWindow->deleteLater();
 
-	emit m_instance->windowRemoved(window);
+	emit m_instance->windowRemoved(mainWindow);
 
 	if (m_windows.isEmpty())
 	{
@@ -957,9 +957,9 @@ void Application::handleNewConnection()
 
 	if (session.isEmpty())
 	{
-		const MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
+		const MainWindow *mainWindow(getWindows().isEmpty() ? nullptr : getWindow());
 
-		if (!window || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->isPrivate()))
+		if (!mainWindow || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !mainWindow->isPrivate()))
 		{
 			QVariantMap parameters;
 
@@ -1032,7 +1032,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 		return;
 	}
 
-	MainWindow *window(nullptr);
+	MainWindow *mainWindow(nullptr);
 
 	if (openHints.testFlag(SessionsManager::NewWindowOpen))
 	{
@@ -1045,54 +1045,54 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 
 		if (urls.isEmpty())
 		{
-			window = createWindow(parameters);
+			mainWindow = createWindow(parameters);
 		}
 		else
 		{
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				window = createWindow(parameters);
+				mainWindow = createWindow(parameters);
 
 				if (!urls.at(i).isEmpty())
 				{
-					window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}});
+					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}});
 				}
 			}
 		}
 	}
 	else
 	{
-		window = getWindow();
+		mainWindow = getWindow();
 
-		if (window)
+		if (mainWindow)
 		{
-			if (window->isSessionRestored())
+			if (mainWindow->isSessionRestored())
 			{
 				if (urls.isEmpty())
 				{
-					window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
+					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
 				}
 				else
 				{
 					for (int i = 0; i < urls.count(); ++i)
 					{
-						window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
 					}
 				}
 			}
 			else
 			{
-				connect(window, &MainWindow::sessionRestored, [=]()
+				connect(mainWindow, &MainWindow::sessionRestored, [=]()
 				{
 					if (urls.isEmpty())
 					{
-						window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
+						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
 					}
 					else
 					{
 						for (int i = 0; i < urls.count(); ++i)
 						{
-							window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+							mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
 						}
 					}
 				});
@@ -1100,10 +1100,10 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 		}
 	}
 
-	if (window)
+	if (mainWindow)
 	{
-		window->raise();
-		window->activateWindow();
+		mainWindow->raise();
+		mainWindow->activateWindow();
 
 		if (m_isHidden)
 		{
@@ -1111,7 +1111,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 		}
 		else
 		{
-			window->raiseWindow();
+			mainWindow->raiseWindow();
 		}
 	}
 }
@@ -1206,42 +1206,42 @@ void Application::setLocale(const QString &locale)
 
 MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &session)
 {
-	MainWindow *window(new MainWindow(parameters, session));
+	MainWindow *mainWindow(new MainWindow(parameters, session));
 
-	m_windows.prepend(window);
+	m_windows.prepend(mainWindow);
 
 	const bool inBackground(parameters.contains(QLatin1String("hints")) ? SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::BackgroundOpen) : false);
 
 	if (inBackground)
 	{
-		window->setAttribute(Qt::WA_ShowWithoutActivating, true);
+		mainWindow->setAttribute(Qt::WA_ShowWithoutActivating, true);
 	}
 	else
 	{
-		m_activeWindow = window;
+		m_activeWindow = mainWindow;
 	}
 
-	window->show();
+	mainWindow->show();
 
 	if (inBackground)
 	{
-		window->lower();
-		window->setAttribute(Qt::WA_ShowWithoutActivating, false);
+		mainWindow->lower();
+		mainWindow->setAttribute(Qt::WA_ShowWithoutActivating, false);
 	}
 
 	if (parameters.contains(QLatin1String("url")))
 	{
-		window->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), parameters[QLatin1String("url")].toString()}, {QLatin1String("needsInterpretation"), true}});
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), parameters[QLatin1String("url")].toString()}, {QLatin1String("needsInterpretation"), true}});
 	}
 
-	emit m_instance->windowAdded(window);
+	emit m_instance->windowAdded(mainWindow);
 
-	connect(window, &MainWindow::activated, [&](MainWindow *window)
+	connect(mainWindow, &MainWindow::activated, [&](MainWindow *mainWindow)
 	{
-		m_activeWindow = window;
+		m_activeWindow = mainWindow;
 	});
 
-	return window;
+	return mainWindow;
 }
 
 Application* Application::getInstance()

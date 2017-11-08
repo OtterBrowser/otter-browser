@@ -208,7 +208,7 @@ public:
 
 	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false);
 	static void clearClosedWindows();
-	static void storeClosedWindow(MainWindow *window);
+	static void storeClosedWindow(MainWindow *mainWindow);
 	static void markSessionAsModified();
 	static void removeStoredUrl(const QString &url);
 	static SessionsManager* getInstance();
@@ -226,8 +226,8 @@ public:
 	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton);
 	static SessionsManager::OpenHints calculateOpenHints(const QVariantMap &parameters);
 	static bool restoreClosedWindow(int index = 0);
-	static bool restoreSession(const SessionInformation &session, MainWindow *window = nullptr, bool isPrivate = false);
-	static bool saveSession(const QString &path = {}, const QString &title = {}, MainWindow *window = nullptr, bool isClean = true);
+	static bool restoreSession(const SessionInformation &session, MainWindow *mainWindow = nullptr, bool isPrivate = false);
+	static bool saveSession(const QString &path = {}, const QString &title = {}, MainWindow *mainWindow = nullptr, bool isClean = true);
 	static bool saveSession(const SessionInformation &session);
 	static bool deleteSession(const QString &path = {});
 	static bool isPrivate();

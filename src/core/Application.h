@@ -62,7 +62,7 @@ public:
 	~Application();
 
 	static void triggerAction(int identifier, const QVariantMap &parameters, QObject *target);
-	static void removeWindow(MainWindow* window);
+	static void removeWindow(MainWindow *mainWindow);
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser, bool forceOpen = false);
 	static void setHidden(bool isHidden);
@@ -120,8 +120,8 @@ private:
 	static bool m_isUpdating;
 
 signals:
-	void windowAdded(MainWindow *window);
-	void windowRemoved(MainWindow *window);
+	void windowAdded(MainWindow *mainWindow);
+	void windowRemoved(MainWindow *mainWindow);
 	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 };
 
