@@ -35,9 +35,9 @@ PrivateWindowIndicatorWidget::PrivateWindowIndicatorWidget(const ToolBarsManager
 	setCheckable(true);
 	setChecked(true);
 
-	MainWindow *window(MainWindow::findMainWindow(parent));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent));
 
-	m_isHidden = (window && !window->isPrivate());
+	m_isHidden = (mainWindow && !mainWindow->isPrivate());
 }
 
 void PrivateWindowIndicatorWidget::mousePressEvent(QMouseEvent *event)

@@ -90,11 +90,11 @@ void WindowsPlatformIntegration::timerEvent(QTimerEvent *event)
 	}
 }
 
-void WindowsPlatformIntegration::removeWindow(MainWindow *window)
+void WindowsPlatformIntegration::removeWindow(MainWindow *mainWindow)
 {
-	if (m_taskbarButtons.contains(window))
+	if (m_taskbarButtons.contains(mainWindow))
 	{
-		m_taskbarButtons.remove(window);
+		m_taskbarButtons.remove(mainWindow);
 	}
 }
 
@@ -115,29 +115,29 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 		}
 	}
 
-	const QVector<MainWindow*> windows(Application::getWindows());
+	const QVector<MainWindow*> mainWindows(Application::getWindows());
 
-	for (int i = 0; i < windows.count(); ++i)
+	for (int i = 0; i < mainWindows.count(); ++i)
 	{
-		MainWindow *window(windows.at(i));
+		MainWindow *mainWindow(mainWindows.at(i));
 
 		if (hasActiveTransfers)
 		{
-			if (!m_taskbarButtons.contains(window))
+			if (!m_taskbarButtons.contains(mainWindow))
 			{
-				m_taskbarButtons[window] = new QWinTaskbarButton(window);
-				m_taskbarButtons[window]->setWindow(window->windowHandle());
-				m_taskbarButtons[window]->progress()->show();
+				m_taskbarButtons[mainWindow] = new QWinTaskbarButton(mainWindow);
+				m_taskbarButtons[mainWindow]->setWindow(mainWindow->windowHandle());
+				m_taskbarButtons[mainWindow]->progress()->show();
 			}
 
-			m_taskbarButtons[window]->progress()->setValue((bytesReceived > 0) ? qFloor((static_cast<qreal>(bytesReceived) / bytesTotal) * 100) : 0);
+			m_taskbarButtons[mainWindow]->progress()->setValue((bytesReceived > 0) ? qFloor((static_cast<qreal>(bytesReceived) / bytesTotal) * 100) : 0);
 		}
-		else if (m_taskbarButtons.contains(window))
+		else if (m_taskbarButtons.contains(mainWindow))
 		{
-			m_taskbarButtons[window]->progress()->reset();
-			m_taskbarButtons[window]->progress()->hide();
-			m_taskbarButtons[window]->deleteLater();
-			m_taskbarButtons.remove(window);
+			m_taskbarButtons[mainWindow]->progress()->reset();
+			m_taskbarButtons[mainWindow]->progress()->hide();
+			m_taskbarButtons[mainWindow]->deleteLater();
+			m_taskbarButtons.remove(mainWindow);
 		}
 	}
 }

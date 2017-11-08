@@ -1877,7 +1877,7 @@ void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLast
 
 void MainWindow::setCurrentWindow(Window *window)
 {
-	Window *previousWindow((m_currentWindow && m_currentWindow->isAboutToClose()) ? nullptr : m_currentWindow);
+	const Window *previousWindow((m_currentWindow && m_currentWindow->isAboutToClose()) ? nullptr : m_currentWindow);
 
 	m_currentWindow = window;
 
@@ -1913,7 +1913,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 		return qobject_cast<MainWindow*>(parent);
 	}
 
-	MainWindow *window(nullptr);
+	MainWindow *mainWindow(nullptr);
 	const QWidget *widget(qobject_cast<QWidget*>(parent));
 
 	if (widget && widget->window())
@@ -1925,7 +1925,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	{
 		if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
 		{
-			window = qobject_cast<MainWindow*>(parent);
+			mainWindow = qobject_cast<MainWindow*>(parent);
 
 			break;
 		}
@@ -1933,12 +1933,12 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 		parent = parent->parent();
 	}
 
-	if (!window)
+	if (!mainWindow)
 	{
-		window = Application::getActiveWindow();
+		mainWindow = Application::getActiveWindow();
 	}
 
-	return window;
+	return mainWindow;
 }
 
 TabBarWidget* MainWindow::getTabBar() const

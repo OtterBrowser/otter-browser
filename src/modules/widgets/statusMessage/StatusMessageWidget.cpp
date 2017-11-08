@@ -31,11 +31,11 @@ StatusMessageWidget::StatusMessageWidget(QWidget *parent) : QLabel(parent)
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setIndent(style()->pixelMetric(QStyle::PM_ButtonMargin));
 
-	const MainWindow *window(MainWindow::findMainWindow(parent));
+	const MainWindow *mainWindow(MainWindow::findMainWindow(parent));
 
-	if (window)
+	if (mainWindow)
 	{
-		connect(window, &MainWindow::statusMessageChanged, this, &StatusMessageWidget::setMessage);
+		connect(mainWindow, &MainWindow::statusMessageChanged, this, &StatusMessageWidget::setMessage);
 	}
 }
 

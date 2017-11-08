@@ -113,7 +113,7 @@ protected:
 	bool isBrowserRegistered() const;
 
 protected slots:
-	void removeWindow(MainWindow *window);
+	void removeWindow(MainWindow *mainWindow);
 	void updateTaskbarButtons();
 
 private:
