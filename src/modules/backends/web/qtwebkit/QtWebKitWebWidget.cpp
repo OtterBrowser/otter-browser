@@ -927,7 +927,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::ClearTabHistoryAction:
 			if (parameters.value(QLatin1String("clearGlobalHistory")).toBool())
 			{
@@ -948,7 +948,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 
-			return;
+			break;
 		case ActionsManager::PurgeTabHistoryAction:
 			triggerAction(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}});
 
@@ -961,7 +961,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			emit arbitraryActionsStateChanged({ActionsManager::MuteTabMediaAction});
 
-			return;
+			break;
 #endif
 		case ActionsManager::OpenLinkAction:
 			{
@@ -975,77 +975,77 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				setClickPosition(QPoint());
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, SessionsManager::CurrentTabOpen);
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateTabAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyLinkToClipboardAction:
 			if (!getCurrentHitTestResult().linkUrl.isEmpty())
 			{
 				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::BookmarkLinkAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
@@ -1055,7 +1055,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}}, parentWidget());
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveLinkToDiskAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
@@ -1066,39 +1066,39 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_page->triggerAction(QWebPage::DownloadLinkToDisk);
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
 			TransfersManager::addTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
-			return;
+			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
 				setUrl(getCurrentHitTestResult().frameUrl, false);
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().frameUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
 				openUrl(getCurrentHitTestResult().frameUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
 				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::ReloadFrameAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
@@ -1114,7 +1114,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::ViewFrameSourceAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
@@ -1138,28 +1138,28 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
 				openUrl(getCurrentHitTestResult().imageUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
 				openUrl(getCurrentHitTestResult().imageUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveImageToDiskAction:
 			if (getCurrentHitTestResult().imageUrl.isValid())
 			{
 				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().imageUrl));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyImageToClipboardAction:
 			{
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
@@ -1174,14 +1174,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
 				QApplication::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::ReloadImageAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
@@ -1213,7 +1213,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::ImagePropertiesAction:
 			{
 				QVariantMap properties({{QLatin1String("alternativeText"), getCurrentHitTestResult().alternateText}, {QLatin1String("longDescription"), getCurrentHitTestResult().longDescription}});
@@ -1237,53 +1237,53 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				showDialog(dialog, false);
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveMediaToDiskAction:
 			if (getCurrentHitTestResult().mediaUrl.isValid())
 			{
 				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().mediaUrl));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyMediaUrlToClipboardAction:
 			if (!getCurrentHitTestResult().mediaUrl.isEmpty())
 			{
 				QApplication::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::MediaControlsAction:
 			m_page->triggerAction(QWebPage::ToggleMediaControls, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-			return;
+			break;
 		case ActionsManager::MediaLoopAction:
 			m_page->triggerAction(QWebPage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-			return;
+			break;
 		case ActionsManager::MediaPlayPauseAction:
 			m_page->triggerAction(QWebPage::ToggleMediaPlayPause);
 
-			return;
+			break;
 		case ActionsManager::MediaMuteAction:
 			m_page->triggerAction(QWebPage::ToggleMediaMute);
 
-			return;
+			break;
 		case ActionsManager::MediaPlaybackRateAction:
 			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element().evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
-			return;
+			break;
 		case ActionsManager::GoBackAction:
 			m_page->triggerAction(QWebPage::Back);
 
-			return;
+			break;
 		case ActionsManager::GoForwardAction:
 			m_page->triggerAction(QWebPage::Forward);
 
-			return;
+			break;
 		case ActionsManager::RewindAction:
 			m_page->history()->goToItem(m_page->history()->itemAt(0));
 
-			return;
+			break;
 		case ActionsManager::FastForwardAction:
 			{
 				const QUrl url(m_page->mainFrame()->evaluateJavaScript(getFastForwardScript(true)).toUrl());
@@ -1298,22 +1298,22 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::StopAction:
 			m_page->triggerAction(QWebPage::Stop);
 
-			return;
+			break;
 		case ActionsManager::StopScheduledReloadAction:
 			m_page->triggerAction(QWebPage::StopScheduledPageRefresh);
 
-			return;
+			break;
 		case ActionsManager::ReloadAction:
 			emit aboutToReload();
 
 			m_page->triggerAction(QWebPage::Stop);
 			m_page->triggerAction(QWebPage::Reload);
 
-			return;
+			break;
 		case ActionsManager::ReloadOrStopAction:
 			if (m_loadingState == OngoingLoadingState)
 			{
@@ -1324,11 +1324,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				triggerAction(ActionsManager::ReloadAction);
 			}
 
-			return;
+			break;
 		case ActionsManager::ReloadAndBypassCacheAction:
 			m_page->triggerAction(QWebPage::ReloadAndBypassCache);
 
-			return;
+			break;
 		case ActionsManager::ContextMenuAction:
 			{
 				if (parameters.contains(QLatin1String("context")) && parameters[QLatin1String("context")].toInt() == QContextMenuEvent::Keyboard)
@@ -1362,19 +1362,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				showContextMenu(getClickPosition());
 			}
 
-			return;
+			break;
 		case ActionsManager::UndoAction:
 			m_page->triggerAction(QWebPage::Undo);
 
-			return;
+			break;
 		case ActionsManager::RedoAction:
 			m_page->triggerAction(QWebPage::Redo);
 
-			return;
+			break;
 		case ActionsManager::CutAction:
 			m_page->triggerAction(QWebPage::Cut);
 
-			return;
+			break;
 		case ActionsManager::CopyAction:
 			if (parameters.value(QLatin1String("mode")) == QLatin1String("plainText"))
 			{
@@ -1390,19 +1390,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_page->triggerAction(QWebPage::Copy);
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyPlainTextAction:
 			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}});
 
-			return;
+			break;
 		case ActionsManager::CopyAddressAction:
 			QApplication::clipboard()->setText(getUrl().toString());
 
-			return;
+			break;
 		case ActionsManager::CopyToNoteAction:
 			NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl()}, {BookmarksModel::DescriptionRole, getSelectedText()}});
 
-			return;
+			break;
 		case ActionsManager::PasteAction:
 			if (parameters.contains(QLatin1String("note")))
 			{
@@ -1434,15 +1434,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_page->triggerAction(QWebPage::Paste);
 			}
 
-			return;
+			break;
 		case ActionsManager::DeleteAction:
 			m_page->triggerAction(QWebPage::DeleteEndOfWord);
 
-			return;
+			break;
 		case ActionsManager::SelectAllAction:
 			m_page->triggerAction(QWebPage::SelectAll);
 
-			return;
+			break;
 		case ActionsManager::UnselectAction:
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 			{
@@ -1467,7 +1467,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			triggerAction(ActionsManager::SelectAllAction);
 			triggerAction(ActionsManager::DeleteAction);
 
-			return;
+			break;
 		case ActionsManager::CheckSpellingAction:
 			{
 				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
@@ -1485,7 +1485,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				emit arbitraryActionsStateChanged({ActionsManager::CheckSpellingAction});
 			}
 
-			return;
+			break;
 		case ActionsManager::CreateSearchAction:
 			{
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
@@ -1500,7 +1500,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (!parentElement.hasAttribute(QLatin1String("action")) || inputElements.count() == 0)
 				{
-					return;
+					break;
 				}
 
 				QWebElement searchTermsElement;
@@ -1597,31 +1597,31 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::ScrollToStartAction:
 			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), 0));
 
-			return;
+			break;
 		case ActionsManager::ScrollToEndAction:
 			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), m_page->mainFrame()->scrollBarMaximum(Qt::Vertical)));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageUpAction:
 			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), qMax(0, (m_page->mainFrame()->scrollPosition().y() - m_webView->height()))));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageDownAction:
 			m_page->mainFrame()->setScrollPosition(QPoint(m_page->mainFrame()->scrollPosition().x(), qMin(m_page->mainFrame()->scrollBarMaximum(Qt::Vertical), (m_page->mainFrame()->scrollPosition().y() + m_webView->height()))));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageLeftAction:
 			m_page->mainFrame()->setScrollPosition(QPoint(qMax(0, (m_page->mainFrame()->scrollPosition().x() - m_webView->width())), m_page->mainFrame()->scrollPosition().y()));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageRightAction:
 			m_page->mainFrame()->setScrollPosition(QPoint(qMin(m_page->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_page->mainFrame()->scrollPosition().x() + m_webView->width())), m_page->mainFrame()->scrollPosition().y()));
 
-			return;
+			break;
 		case ActionsManager::ActivateContentAction:
 			{
 				m_webView->setFocus();
@@ -1636,7 +1636,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::LoadPluginsAction:
 			{
 				m_canLoadPlugins = true;
@@ -1659,7 +1659,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
 			}
 
-			return;
+			break;
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
@@ -1683,7 +1683,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
 
-			return;
+			break;
 		case ActionsManager::InspectPageAction:
 			if (!m_inspector)
 			{
@@ -1693,13 +1693,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			emit arbitraryActionsStateChanged({ActionsManager::InspectPageAction});
 			emit requestedInspectorVisibilityChange(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-			return;
+			break;
 		case ActionsManager::InspectElementAction:
 			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}});
 
 			m_page->triggerAction(QWebPage::InspectElement);
 
-			return;
+			break;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		case ActionsManager::FullScreenAction:
 			{
@@ -1711,7 +1711,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 #endif
 		case ActionsManager::WebsitePreferencesAction:
 			{
@@ -1738,7 +1738,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			return;
+			break;
 		default:
 			break;
 	}

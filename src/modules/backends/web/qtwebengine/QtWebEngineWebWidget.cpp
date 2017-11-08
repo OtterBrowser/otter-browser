@@ -348,7 +348,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 #endif
 
-			return;
+			break;
 		case ActionsManager::ClearTabHistoryAction:
 			setUrl(QUrl(QLatin1String("about:blank")));
 
@@ -356,14 +356,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			notifyNavigationActionsChanged();
 
-			return;
+			break;
 #if QT_VERSION >= 0x050700
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
 			emit arbitraryActionsStateChanged({ActionsManager::MuteTabMediaAction});
 
-			return;
+			break;
 #endif
 		case ActionsManager::OpenLinkAction:
 			{
@@ -378,120 +378,120 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				setClickPosition(QPoint());
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, SessionsManager::CurrentTabOpen);
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyLinkToClipboardAction:
 			if (!m_hitResult.linkUrl.isEmpty())
 			{
 				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::BookmarkLinkAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
 				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}}, parentWidget());
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveLinkToDiskAction:
 			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
-			return;
+			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
 			TransfersManager::addTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
-			return;
+			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
 				setUrl(m_hitResult.frameUrl, false);
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
 				openUrl(m_hitResult.frameUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
 				openUrl(m_hitResult.frameUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
 				QGuiApplication::clipboard()->setText(m_hitResult.frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::ReloadFrameAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
@@ -499,7 +499,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				m_page->runJavaScript(QStringLiteral("var frames = document.querySelectorAll('iframe[src=\"%1\"], frame[src=\"%1\"]'); for (var i = 0; i < frames.length; ++i) { frames[i].src = ''; frames[i].src = \'%1\'; }").arg(m_hitResult.frameUrl.toString()));
 			}
 
-			return;
+			break;
 		case ActionsManager::ViewFrameSourceAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
@@ -524,21 +524,21 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
 				openUrl(m_hitResult.imageUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
 				openUrl(m_hitResult.imageUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveImageToDiskAction:
 			if (m_hitResult.imageUrl.isValid())
 			{
@@ -550,7 +550,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					if (path.isEmpty())
 					{
-						return;
+						break;
 					}
 
 					QImageWriter writer(path);
@@ -569,18 +569,18 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyImageToClipboardAction:
 			m_page->triggerAction(QWebEnginePage::CopyImageToClipboard);
 
-			return;
+			break;
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
 				QApplication::clipboard()->setText(m_hitResult.imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::ReloadImageAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
@@ -595,7 +595,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::ImagePropertiesAction:
 			if (m_hitResult.imageUrl.scheme() == QLatin1String("data"))
 			{
@@ -632,7 +632,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				});
 			}
 
-			return;
+			break;
 		case ActionsManager::SaveMediaToDiskAction:
 			if (m_hitResult.mediaUrl.isValid())
 			{
@@ -642,46 +642,46 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				new Transfer(request, QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyMediaUrlToClipboardAction:
 			if (!m_hitResult.mediaUrl.isEmpty())
 			{
 				QApplication::clipboard()->setText(m_hitResult.mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
-			return;
+			break;
 		case ActionsManager::MediaControlsAction:
 			m_page->triggerAction(QWebEnginePage::ToggleMediaControls, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-			return;
+			break;
 		case ActionsManager::MediaLoopAction:
 			m_page->triggerAction(QWebEnginePage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-			return;
+			break;
 		case ActionsManager::MediaPlayPauseAction:
 			m_page->triggerAction(QWebEnginePage::ToggleMediaPlayPause);
 
-			return;
+			break;
 		case ActionsManager::MediaMuteAction:
 			m_page->triggerAction(QWebEnginePage::ToggleMediaMute);
 
-			return;
+			break;
 		case ActionsManager::MediaPlaybackRateAction:
 			m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.playbackRate = %3; }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()).arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
-			return;
+			break;
 		case ActionsManager::GoBackAction:
 			m_page->triggerAction(QWebEnginePage::Back);
 
-			return;
+			break;
 		case ActionsManager::GoForwardAction:
 			m_page->triggerAction(QWebEnginePage::Forward);
 
-			return;
+			break;
 		case ActionsManager::RewindAction:
 			m_page->history()->goToItem(m_page->history()->itemAt(0));
 
-			return;
+			break;
 		case ActionsManager::FastForwardAction:
 			m_page->runJavaScript(getFastForwardScript(true), [&](const QVariant &result)
 			{
@@ -697,18 +697,18 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				}
 			});
 
-			return;
+			break;
 		case ActionsManager::StopAction:
 			m_page->triggerAction(QWebEnginePage::Stop);
 
-			return;
+			break;
 		case ActionsManager::ReloadAction:
 			emit aboutToReload();
 
 			m_page->triggerAction(QWebEnginePage::Stop);
 			m_page->triggerAction(QWebEnginePage::Reload);
 
-			return;
+			break;
 		case ActionsManager::ReloadOrStopAction:
 			if (m_loadingState == OngoingLoadingState)
 			{
@@ -719,27 +719,27 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				triggerAction(ActionsManager::ReloadAction);
 			}
 
-			return;
+			break;
 		case ActionsManager::ReloadAndBypassCacheAction:
 			m_page->triggerAction(QWebEnginePage::ReloadAndBypassCache);
 
-			return;
+			break;
 		case ActionsManager::ContextMenuAction:
 			showContextMenu(getClickPosition());
 
-			return;
+			break;
 		case ActionsManager::UndoAction:
 			m_page->triggerAction(QWebEnginePage::Undo);
 
-			return;
+			break;
 		case ActionsManager::RedoAction:
 			m_page->triggerAction(QWebEnginePage::Redo);
 
-			return;
+			break;
 		case ActionsManager::CutAction:
 			m_page->triggerAction(QWebEnginePage::Cut);
 
-			return;
+			break;
 		case ActionsManager::CopyAction:
 			if (parameters.value(QLatin1String("mode")) == QLatin1String("plainText"))
 			{
@@ -755,19 +755,19 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				m_page->triggerAction(QWebEnginePage::Copy);
 			}
 
-			return;
+			break;
 		case ActionsManager::CopyPlainTextAction:
 			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}});
 
-			return;
+			break;
 		case ActionsManager::CopyAddressAction:
 			QApplication::clipboard()->setText(getUrl().toString());
 
-			return;
+			break;
 		case ActionsManager::CopyToNoteAction:
 			NotesManager::addNote(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl()}, {BookmarksModel::DescriptionRole, getSelectedText()}});
 
-			return;
+			break;
 		case ActionsManager::PasteAction:
 			if (parameters.contains(QLatin1String("note")))
 			{
@@ -799,41 +799,41 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				m_page->triggerAction(QWebEnginePage::Paste);
 			}
 
-			return;
+			break;
 		case ActionsManager::DeleteAction:
 			m_page->runJavaScript(QLatin1String("window.getSelection().deleteFromDocument()"));
 
-			return;
+			break;
 		case ActionsManager::SelectAllAction:
 			m_page->triggerAction(QWebEnginePage::SelectAll);
 
-			return;
+			break;
 		case ActionsManager::UnselectAction:
 #if QT_VERSION >= 0x050700
 			m_page->triggerAction(QWebEnginePage::Unselect);
 #else
 			m_page->runJavaScript(QLatin1String("window.getSelection().empty()"));
 #endif
-			return;
+			break;
 		case ActionsManager::ClearAllAction:
 			triggerAction(ActionsManager::SelectAllAction);
 			triggerAction(ActionsManager::DeleteAction);
 
-			return;
+			break;
 		case ActionsManager::CreateSearchAction:
 			{
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/createSearch.js"));
 
 				if (!file.open(QIODevice::ReadOnly))
 				{
-					return;
+					break;
 				}
 
 				m_page->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()), [&](const QVariant &result)
 				{
 					if (result.isNull())
 					{
-						return;
+						break;
 					}
 
 					const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
@@ -855,7 +855,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					if (dialog.exec() == QDialog::Rejected)
 					{
-						return;
+						break;
 					}
 
 					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine());
@@ -864,35 +864,35 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				file.close();
 			}
 
-			return;
+			break;
 		case ActionsManager::ScrollToStartAction:
 			m_page->runJavaScript(QLatin1String("window.scrollTo(0, 0)"));
 
-			return;
+			break;
 		case ActionsManager::ScrollToEndAction:
 			m_page->runJavaScript(QLatin1String("window.scrollTo(0, document.body.scrollHeigh)"));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageUpAction:
 			m_page->runJavaScript(QLatin1String("window.scrollByPages(1)"));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageDownAction:
 			m_page->runJavaScript(QLatin1String("window.scrollByPages(-1)"));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageLeftAction:
 			ensureInitialized();
 
 			m_page->runJavaScript(QStringLiteral("window.scrollBy(-%1, 0)").arg(m_webView->width()));
 
-			return;
+			break;
 		case ActionsManager::ScrollPageRightAction:
 			ensureInitialized();
 
 			m_page->runJavaScript(QStringLiteral("window.scrollBy(%1, 0)").arg(m_webView->width()));
 
-			return;
+			break;
 		case ActionsManager::ActivateContentAction:
 			{
 				ensureInitialized();
@@ -902,7 +902,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				m_page->runJavaScript(QLatin1String("var element = document.activeElement; if (element && element.tagName && (element.tagName.toLowerCase() == 'input' || element.tagName.toLowerCase() == 'textarea'))) { document.activeElement.blur(); }"));
 			}
 
-			return;
+			break;
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
@@ -927,7 +927,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
 			}
 
-			return;
+			break;
 		case ActionsManager::FullScreenAction:
 			{
 				MainWindow *mainWindow(MainWindow::findMainWindow(this));
@@ -938,7 +938,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				}
 			}
 
-			return;
+			break;
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
@@ -964,7 +964,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				}
 			}
 
-			return;
+			break;
 		default:
 			break;
 	}
