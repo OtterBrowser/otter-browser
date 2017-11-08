@@ -61,10 +61,10 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QString &ty
 		settings.beginGroup(QLatin1String("*"));
 	}
 
-	const QString downloadsPath(settings.getValue(QLatin1String("downloadsPath"), QString()).toString());
-	const QString transferMode(settings.getValue(QLatin1String("transferMode"), QString()).toString());
+	const QString downloadsPath(settings.getValue(QLatin1String("downloadsPath"), {}).toString());
+	const QString transferMode(settings.getValue(QLatin1String("transferMode"), {}).toString());
 
-	definition.openCommand = settings.getValue(QLatin1String("openCommand"), QString()).toString();
+	definition.openCommand = settings.getValue(QLatin1String("openCommand"), {}).toString();
 	definition.downloadsPath = (downloadsPath.isEmpty() ? SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString() : downloadsPath);
 
 	if (transferMode == QLatin1String("ignore"))

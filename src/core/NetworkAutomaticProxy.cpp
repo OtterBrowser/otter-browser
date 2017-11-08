@@ -53,7 +53,7 @@ QString PacUtils::dnsResolve(const QString &host) const
 		return hostInformation.addresses().first().toString();
 	}
 
-	return QString();
+	return {};
 }
 
 QString PacUtils::myIpAddress() const
@@ -68,7 +68,7 @@ QString PacUtils::myIpAddress() const
 		}
 	}
 
-	return QString();
+	return {};
 }
 
 int PacUtils::dnsDomainLevels(const QString &host) const
