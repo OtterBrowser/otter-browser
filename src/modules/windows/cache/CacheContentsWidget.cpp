@@ -240,7 +240,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 		domainItem->setToolTip(domain);
 
 		m_model->appendRow(domainItem);
-		m_model->setItem(domainItem->row(), 2, new QStandardItem(QString()));
+		m_model->setItem(domainItem->row(), 2, new QStandardItem());
 
 		if (sender())
 		{
@@ -367,7 +367,7 @@ void CacheContentsWidget::updateActions()
 	const QUrl url(getEntry(index));
 	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : url.host());
 
-	m_ui->locationLabelWidget->setText(QString());
+	m_ui->locationLabelWidget->setText({});
 	m_ui->locationLabelWidget->setUrl(QUrl());
 	m_ui->previewLabel->hide();
 	m_ui->previewLabel->setPixmap(QPixmap());
@@ -474,11 +474,11 @@ void CacheContentsWidget::updateActions()
 	}
 	else
 	{
-		m_ui->addressLabelWidget->setText(QString());
-		m_ui->typeLabelWidget->setText(QString());
-		m_ui->sizeLabelWidget->setText(QString());
-		m_ui->lastModifiedLabelWidget->setText(QString());
-		m_ui->expiresLabelWidget->setText(QString());
+		m_ui->addressLabelWidget->setText({});
+		m_ui->typeLabelWidget->setText({});
+		m_ui->sizeLabelWidget->setText({});
+		m_ui->lastModifiedLabelWidget->setText({});
+		m_ui->expiresLabelWidget->setText({});
 
 		if (!domain.isEmpty())
 		{
