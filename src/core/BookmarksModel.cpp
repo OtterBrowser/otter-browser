@@ -1003,7 +1003,14 @@ BookmarksItem* BookmarksModel::getBookmark(const QString &keyword) const
 
 BookmarksItem* BookmarksModel::getBookmark(const QModelIndex &index) const
 {
-	return static_cast<BookmarksItem*>(itemFromIndex(index));
+	BookmarksItem *bookmark(static_cast<BookmarksItem*>(itemFromIndex(index)));
+
+	if (bookmark)
+	{
+		return bookmark;
+	}
+
+	return getBookmark(index.data(IdentifierRole).toULongLong());
 }
 
 BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
