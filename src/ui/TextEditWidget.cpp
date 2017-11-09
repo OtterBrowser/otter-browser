@@ -165,7 +165,7 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::DeleteAction:
 			if (!isReadOnly())
 			{
-				insertPlainText({});
+				textCursor().removeSelectedText();
 			}
 
 			break;
@@ -174,7 +174,7 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::UnselectAction:
-			textCursor().setPosition(textCursor().position(), QTextCursor::MoveAnchor);
+			textCursor().clearSelection();
 
 			break;
 		case ActionsManager::ClearAllAction:
