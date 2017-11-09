@@ -195,20 +195,15 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	QWidget *widget((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier, mainWindow, m_toolBarWidget->getIdentifier()));
+	ContentsWidget *contentsWidget((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier, mainWindow, m_toolBarWidget->getIdentifier()));
 
-	if (widget && mainWindow)
+	if (contentsWidget && mainWindow)
 	{
-		const ContentsWidget *contentsWidget(qobject_cast<ContentsWidget*>(widget));
-
-		if (contentsWidget)
+		connect(contentsWidget, &ContentsWidget::requestedSearch, mainWindow, &MainWindow::search);
+		connect(contentsWidget, &ContentsWidget::requestedNewWindow, [=](ContentsWidget *widget, SessionsManager::OpenHints hints)
 		{
-			connect(contentsWidget, &ContentsWidget::requestedSearch, mainWindow, &MainWindow::search);
-			connect(contentsWidget, &ContentsWidget::requestedNewWindow, [=](ContentsWidget *widget, SessionsManager::OpenHints hints)
-			{
-				mainWindow->openWindow(widget, hints);
-			});
-		}
+			mainWindow->openWindow(widget, hints);
+		});
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])
@@ -223,13 +218,13 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		m_buttons[m_currentPanel]->setChecked(false);
 	}
 
-	if (widget)
+	if (contentsWidget)
 	{
-		m_ui->panelLayout->addWidget(widget);
+		m_ui->panelLayout->addWidget(contentsWidget);
 
-		widget->show();
+		contentsWidget->show();
 
-		m_panels[identifier] = widget;
+		m_panels[identifier] = contentsWidget;
 
 		if (m_buttons.contains(identifier) && m_buttons[identifier])
 		{
@@ -237,9 +232,9 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		}
 	}
 
-	m_ui->containerWidget->setVisible(widget != nullptr);
+	m_ui->containerWidget->setVisible(contentsWidget != nullptr);
 
-	m_resizerWidget->setVisible(widget != nullptr);
+	m_resizerWidget->setVisible(contentsWidget != nullptr);
 
 	m_currentPanel = identifier;
 
@@ -328,7 +323,7 @@ void SidebarWidget::updatePanels()
 
 	m_buttons.clear();
 
-	QHash<QString, QWidget*>::iterator iterator(m_panels.begin());
+	QHash<QString, ContentsWidget*>::iterator iterator(m_panels.begin());
 
 	while (iterator != m_panels.end())
 	{

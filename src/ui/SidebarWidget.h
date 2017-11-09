@@ -31,6 +31,7 @@ namespace Ui
 	class SidebarWidget;
 }
 
+class ContentsWidget;
 class ResizerWidget;
 class ToolBarWidget;
 
@@ -64,7 +65,7 @@ private:
 	ResizerWidget *m_resizerWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
-	QHash<QString, QWidget*> m_panels;
+	QHash<QString, ContentsWidget*> m_panels;
 	Ui::SidebarWidget *m_ui;
 };
 

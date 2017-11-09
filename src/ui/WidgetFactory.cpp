@@ -192,7 +192,7 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 
 }
 
-QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int sidebar)
+ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int sidebar)
 {
 	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
 
