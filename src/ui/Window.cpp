@@ -22,23 +22,14 @@
 #include "Window.h"
 #include "MainWindow.h"
 #include "OpenAddressDialog.h"
+#include "WidgetFactory.h"
 #include "../core/Application.h"
 #include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 #include "../modules/widgets/address/AddressWidget.h"
 #include "../modules/widgets/search/SearchWidget.h"
-#include "../modules/windows/addons/AddonsContentsWidget.h"
-#include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
-#include "../modules/windows/cache/CacheContentsWidget.h"
-#include "../modules/windows/cookies/CookiesContentsWidget.h"
-#include "../modules/windows/configuration/ConfigurationContentsWidget.h"
-#include "../modules/windows/history/HistoryContentsWidget.h"
-#include "../modules/windows/notes/NotesContentsWidget.h"
-#include "../modules/windows/passwords/PasswordsContentsWidget.h"
-#include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
-#include "../modules/windows/windows/WindowsContentsWidget.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
@@ -483,46 +474,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 			return;
 		}
 
-		if (url.path() == QLatin1String("addons"))
-		{
-			newWidget = new AddonsContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("bookmarks"))
-		{
-			newWidget = new BookmarksContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("cache"))
-		{
-			newWidget = new CacheContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("config"))
-		{
-			newWidget = new ConfigurationContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("cookies"))
-		{
-			newWidget = new CookiesContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("history"))
-		{
-			newWidget = new HistoryContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("notes"))
-		{
-			newWidget = new NotesContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("passwords"))
-		{
-			newWidget = new PasswordsContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("transfers"))
-		{
-			newWidget = new TransfersContentsWidget({}, this);
-		}
-		else if (url.path() == QLatin1String("windows"))
-		{
-			newWidget = new WindowsContentsWidget({}, this);
-		}
+		newWidget = WidgetFactory::createContentsWidget(url.path(), {}, this);
 
 		if (newWidget && !newWidget->canClone())
 		{
