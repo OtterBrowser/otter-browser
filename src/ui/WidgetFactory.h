@@ -37,6 +37,7 @@ namespace WidgetFactory
 
 ToolBarWidget* createToolBar(int identifier, Window *window, QWidget *parent);
 QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent, Window *window = nullptr);
+ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window = nullptr);
 ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow = nullptr, int sidebar = -1);
 
 }

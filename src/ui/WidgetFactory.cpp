@@ -192,59 +192,64 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 
 }
 
+ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window)
+{
+	if (identifier == QLatin1String("addons"))
+	{
+		return new AddonsContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("bookmarks"))
+	{
+		return new BookmarksContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("cache"))
+	{
+		return new CacheContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("config"))
+	{
+		return new ConfigurationContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("cookies"))
+	{
+		return new CookiesContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("history"))
+	{
+		return new HistoryContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("notes"))
+	{
+		return new NotesContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("passwords"))
+	{
+		return new PasswordsContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("transfers"))
+	{
+		return new TransfersContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("windows"))
+	{
+		return new WindowsContentsWidget(parameters, window);
+	}
+
+	return nullptr;
+}
+
 ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int sidebar)
 {
 	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
-
-	if (panel == QLatin1String("addons"))
-	{
-		return new AddonsContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("bookmarks"))
-	{
-		return new BookmarksContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("cache"))
-	{
-		return new CacheContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("config"))
-	{
-		return new ConfigurationContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("cookies"))
-	{
-		return new CookiesContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("history"))
-	{
-		return new HistoryContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("notes"))
-	{
-		return new NotesContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("passwords"))
-	{
-		return new PasswordsContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("transfers"))
-	{
-		return new TransfersContentsWidget(parameters, nullptr);
-	}
-
-	if (panel == QLatin1String("windows"))
-	{
-		return new WindowsContentsWidget(parameters, nullptr);
-	}
 
 	if (panel.startsWith(QLatin1String("web:")))
 	{
@@ -259,7 +264,7 @@ ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow,
 		return webWidget;
 	}
 
-	return nullptr;
+	return createContentsWidget(panel, parameters);
 }
 
 }
