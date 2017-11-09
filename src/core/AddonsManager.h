@@ -104,9 +104,20 @@ public:
 
 	struct SpecialPageInformation final : public AddonInformation
 	{
-		QUrl url;
+		enum PageType
+		{
+			UnknownType = 0,
+			StandaloneType = 1,
+			SidebarPanelType = 2,
+			UniversalType = (StandaloneType | SidebarPanelType)
+		};
 
-		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue)
+		Q_DECLARE_FLAGS(PageTypes, PageType)
+
+		QUrl url;
+		PageTypes types;
+
+		explicit SpecialPageInformation(const QString &titleValue, const QString &descriptionValue, const QUrl &urlValue, const QIcon &iconValue, PageTypes typesValue) : AddonInformation(titleValue, descriptionValue, iconValue), url(urlValue), types(typesValue)
 		{
 		}
 
@@ -142,5 +153,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::AddonsManager::SpecialPageInformation::PageTypes)
 
 #endif
