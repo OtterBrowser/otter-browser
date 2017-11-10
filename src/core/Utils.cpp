@@ -120,7 +120,7 @@ QString matchUrl(const QUrl &url, const QString &prefix)
 		}
 	}
 
-	return QString();
+	return {};
 }
 
 QString createIdentifier(const QString &source, const QStringList &exclude, bool toLowerCase)
@@ -497,7 +497,7 @@ QUrl normalizeUrl(QUrl url)
 
 	if (url.path() == QLatin1String("/"))
 	{
-		url.setPath(QString());
+		url.setPath({});
 	}
 
 	return url;
@@ -618,9 +618,9 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 
 		const bool isExisting(QFile::exists(path));
 
-		if (TransfersManager::isDownloading(QString(), path))
+		if (TransfersManager::isDownloading({}, path))
 		{
-			path = QString();
+			path.clear();
 
 			if (QMessageBox::warning(Application::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "This path is already used by different download, pick another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
 			{
@@ -629,7 +629,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 		}
 		else if ((isExisting && !QFileInfo(path).isWritable()) || (!isExisting && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
 		{
-			path = QString();
+			path.clear();
 
 			if (QMessageBox::warning(Application::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
 			{
