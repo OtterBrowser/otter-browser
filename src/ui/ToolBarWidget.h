@@ -89,6 +89,7 @@ protected:
 	void updateToggleGeometry();
 	MainWindow* getMainWindow() const;
 	Window* getWindow() const;
+	bool isDragHandle(const QPoint &position) const;
 
 protected slots:
 	void scheduleBookmarksReload();

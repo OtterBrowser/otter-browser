@@ -266,19 +266,13 @@ void ToolBarWidget::mousePressEvent(QMouseEvent *event)
 {
 	QWidget::mousePressEvent(event);
 
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && isDragHandle(event->pos()))
 	{
-		QStyleOptionToolBar option;
-		initStyleOption(&option);
-
-		if (style()->subElementRect(QStyle::SE_ToolBarHandle, &option, this).contains(event->pos()))
-		{
-			m_dragStartPosition = event->pos();
-		}
-		else
-		{
-			m_dragStartPosition = QPoint();
-		}
+		m_dragStartPosition = event->pos();
+	}
+	else
+	{
+		m_dragStartPosition = {};
 	}
 }
 
@@ -289,7 +283,7 @@ void ToolBarWidget::mouseMoveEvent(QMouseEvent *event)
 		return;
 	}
 
-	m_dragStartPosition = QPoint();
+	m_dragStartPosition = {};
 
 	m_mainWindow->beginToolBarDragging(getDefinition().type == ToolBarsManager::SideBarType);
 
@@ -345,7 +339,7 @@ void ToolBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
 {
 	QWidget::dragLeaveEvent(event);
 
-	updateDropIndex(QPoint());
+	updateDropIndex({});
 }
 
 void ToolBarWidget::dropEvent(QDropEvent *event)
@@ -381,7 +375,7 @@ void ToolBarWidget::dropEvent(QDropEvent *event)
 		event->ignore();
 	}
 
-	updateDropIndex(QPoint());
+	updateDropIndex({});
 }
 
 void ToolBarWidget::clearEntries()
@@ -986,6 +980,19 @@ bool ToolBarWidget::canDrop(QDropEvent *event) const
 bool ToolBarWidget::isCollapsed() const
 {
 	return m_isCollapsed;
+}
+
+bool ToolBarWidget::isDragHandle(const QPoint &position) const
+{
+	if (!isMovable())
+	{
+		return false;
+	}
+
+	QStyleOptionToolBar option;
+	initStyleOption(&option);
+
+	return (style()->subElementRect(QStyle::SE_ToolBarHandle, &option, this).contains(position));
 }
 
 bool ToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const
