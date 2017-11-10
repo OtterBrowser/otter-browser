@@ -101,7 +101,7 @@ void Updater::handleTransferFinished()
 		}
 		else
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Unable to download update: %1\nError: %2").arg(transfer->getSource().url()).arg(transfer->getState()), Console::OtherCategory, Console::ErrorLevel);
+			Console::addMessage(QCoreApplication::translate("main", "Unable to download update: %1").arg(transfer->getSource().url()), Console::OtherCategory, Console::ErrorLevel);
 
 			m_transfersSuccessful = false;
 		}
