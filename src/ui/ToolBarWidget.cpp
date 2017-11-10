@@ -1006,17 +1006,41 @@ bool ToolBarWidget::event(QEvent *event)
 {
 	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
 	{
-		QVector<GesturesManager::GesturesContext> contexts;
+		QPoint position;
 
-		if (m_identifier == ToolBarsManager::TabBar)
+		if (event->type() == QEvent::Wheel)
 		{
-			contexts.append(GesturesManager::NoTabHandleContext);
+			QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
+
+			if (wheelEvent)
+			{
+				position = wheelEvent->pos();
+			}
+		}
+		else
+		{
+			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+
+			if (mouseEvent)
+			{
+				position = mouseEvent->pos();
+			}
 		}
 
-		contexts.append(GesturesManager::ToolBarContext);
-		contexts.append(GesturesManager::GenericContext);
+		if (position.isNull() || !isDragHandle(position))
+		{
+			QVector<GesturesManager::GesturesContext> contexts;
 
-		GesturesManager::startGesture(this, event, contexts);
+			if (m_identifier == ToolBarsManager::TabBar)
+			{
+				contexts.append(GesturesManager::NoTabHandleContext);
+			}
+
+			contexts.append(GesturesManager::ToolBarContext);
+			contexts.append(GesturesManager::GenericContext);
+
+			GesturesManager::startGesture(this, event, contexts);
+		}
 	}
 
 	if (event->type() == QEvent::MouseButtonPress)
