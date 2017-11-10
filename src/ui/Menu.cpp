@@ -1493,7 +1493,7 @@ int Menu::getMenuRoleIdentifier(const QString &name)
 
 	if (!name.endsWith(QLatin1String("Role")))
 	{
-		return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Role")).toLatin1());
+		return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue((name + QLatin1String("Role")).toLatin1());
 	}
 
 	return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(name.toLatin1());

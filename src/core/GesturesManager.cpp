@@ -885,7 +885,7 @@ int GesturesManager::getContextIdentifier(const QString &name)
 {
 	if (!name.endsWith(QLatin1String("Context")))
 	{
-		return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue(QString(name + QLatin1String("Context")).toLatin1());
+		return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue((name + QLatin1String("Context")).toLatin1());
 	}
 
 	return GesturesManager::staticMetaObject.enumerator(m_gesturesContextEnumerator).keyToValue(name.toLatin1());

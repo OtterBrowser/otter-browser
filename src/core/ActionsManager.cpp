@@ -727,7 +727,7 @@ int ActionsManager::getActionIdentifier(const QString &name)
 {
 	if (!name.endsWith(QLatin1String("Action")))
 	{
-		return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Action")).toLatin1());
+		return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue((name + QLatin1String("Action")).toLatin1());
 	}
 
 	return ActionsManager::staticMetaObject.enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
