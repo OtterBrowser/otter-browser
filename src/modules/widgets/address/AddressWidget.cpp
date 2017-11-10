@@ -601,7 +601,10 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 		switch (m_clickedEntry)
 		{
 			case WebsiteInformationEntry:
-				m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+				if (m_window)
+				{
+					m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+				}
 
 				event->accept();
 
