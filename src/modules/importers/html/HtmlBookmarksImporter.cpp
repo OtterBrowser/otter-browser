@@ -174,12 +174,12 @@ QWidget* HtmlBookmarksImporter::createOptionsWidget(QWidget *parent)
 
 QString HtmlBookmarksImporter::getTitle() const
 {
-	return QString(tr("HTML Bookmarks"));
+	return tr("HTML Bookmarks");
 }
 
 QString HtmlBookmarksImporter::getDescription() const
 {
-	return QString(tr("Imports bookmarks from HTML file (Netscape format)."));
+	return tr("Imports bookmarks from HTML file (Netscape format).");
 }
 
 QString HtmlBookmarksImporter::getVersion() const

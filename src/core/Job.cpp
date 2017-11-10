@@ -189,7 +189,7 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 
 		connect(job, &IconFetchJob::jobFinished, this, [=]()
 		{
-			m_searchEngine.icon = QIcon(job->getIcon());
+			m_searchEngine.icon = job->getIcon();
 
 			if (m_needsToSaveSearchEngine)
 			{

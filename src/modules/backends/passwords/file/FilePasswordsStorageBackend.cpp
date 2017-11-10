@@ -326,12 +326,12 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 
 QString FilePasswordsStorageBackend::getTitle() const
 {
-	return QString(tr("Encrypted File"));
+	return tr("Encrypted File");
 }
 
 QString FilePasswordsStorageBackend::getDescription() const
 {
-	return QString(tr("Stores passwords in AES encrypted file."));
+	return tr("Stores passwords in AES encrypted file.");
 }
 
 QString FilePasswordsStorageBackend::getVersion() const

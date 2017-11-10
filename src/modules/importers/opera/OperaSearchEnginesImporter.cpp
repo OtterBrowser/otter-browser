@@ -51,12 +51,12 @@ QWidget* OperaSearchEnginesImporter::createOptionsWidget(QWidget *parent)
 
 QString OperaSearchEnginesImporter::getTitle() const
 {
-	return QString(tr("Opera search engines"));
+	return tr("Opera search engines");
 }
 
 QString OperaSearchEnginesImporter::getDescription() const
 {
-	return QString(tr("Imports search engines from Opera Browser version 12 or earlier"));
+	return tr("Imports search engines from Opera Browser version 12 or earlier");
 }
 
 QString OperaSearchEnginesImporter::getVersion() const

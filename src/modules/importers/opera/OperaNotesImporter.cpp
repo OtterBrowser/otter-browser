@@ -62,12 +62,12 @@ QWidget* OperaNotesImporter::createOptionsWidget(QWidget *parent)
 
 QString OperaNotesImporter::getTitle() const
 {
-	return QString(tr("Opera Notes"));
+	return tr("Opera Notes");
 }
 
 QString OperaNotesImporter::getDescription() const
 {
-	return QString(tr("Imports notes from Opera Browser version 12 or earlier"));
+	return tr("Imports notes from Opera Browser version 12 or earlier");
 }
 
 QString OperaNotesImporter::getVersion() const

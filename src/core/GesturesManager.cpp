@@ -576,7 +576,7 @@ bool MouseProfile::save()
 			gesturesArray.append(gestureObject);
 		}
 
-		contextsArray.append(QJsonObject({{QLatin1String("context"), QString(GesturesManager::getContextName(contextsIterator.key()))}, {QLatin1String("gestures"), gesturesArray}}));
+		contextsArray.append(QJsonObject({{QLatin1String("context"), GesturesManager::getContextName(contextsIterator.key())}, {QLatin1String("gestures"), gesturesArray}}));
 	}
 
 	settings.setArray(contextsArray);

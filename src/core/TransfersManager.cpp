@@ -805,7 +805,7 @@ bool Transfer::restart()
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-	request.setUrl(QUrl(m_source));
+	request.setUrl(m_source);
 
 	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
 

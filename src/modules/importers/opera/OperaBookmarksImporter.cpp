@@ -48,12 +48,12 @@ QWidget* OperaBookmarksImporter::createOptionsWidget(QWidget *parent)
 
 QString OperaBookmarksImporter::getTitle() const
 {
-	return QString(tr("Opera Bookmarks"));
+	return tr("Opera Bookmarks");
 }
 
 QString OperaBookmarksImporter::getDescription() const
 {
-	return QString(tr("Imports bookmarks from Opera Browser version 12 or earlier"));
+	return tr("Imports bookmarks from Opera Browser version 12 or earlier");
 }
 
 QString OperaBookmarksImporter::getVersion() const
