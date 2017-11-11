@@ -49,8 +49,8 @@ public:
 			MouseGestures::MouseAction direction = MouseGestures::UnknownMouseAction;
 
 			Step();
-			Step(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-			Step(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+			Step(QEvent::Type typeValue, MouseGestures::MouseAction directionValue, Qt::KeyboardModifiers modifiersValue = Qt::NoModifier);
+			Step(QEvent::Type typeValue, Qt::MouseButton buttonValue, Qt::KeyboardModifiers modifiersValue = Qt::NoModifier);
 			explicit Step(const QInputEvent *event);
 
 			QString toString() const;

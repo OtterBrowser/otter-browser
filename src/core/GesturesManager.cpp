@@ -44,15 +44,15 @@ MouseProfile::Gesture::Step::Step()
 {
 }
 
-MouseProfile::Gesture::Step::Step(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifiers) : type(type),
-	modifiers(modifiers),
-	direction(direction)
+MouseProfile::Gesture::Step::Step(QEvent::Type typeValue, MouseGestures::MouseAction directionValue, Qt::KeyboardModifiers modifiersValue) : type(typeValue),
+	modifiers(modifiersValue),
+	direction(directionValue)
 {
 }
 
-MouseProfile::Gesture::Step::Step(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers) : type(type),
-	button(button),
-	modifiers(modifiers)
+MouseProfile::Gesture::Step::Step(QEvent::Type typeValue, Qt::MouseButton buttonValue, Qt::KeyboardModifiers modifiersValue) : type(typeValue),
+	button(buttonValue),
+	modifiers(modifiersValue)
 {
 }
 
