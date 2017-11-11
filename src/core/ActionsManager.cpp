@@ -624,9 +624,9 @@ QString ActionsManager::createReport()
 				stream << QLatin1Char(' ') + QJsonDocument(QJsonObject::fromVariantMap(definitions[j].first)).toJson(QJsonDocument::Compact);
 				stream.setFieldWidth(20);
 
-				for (int j = 0; j < shortcuts.count(); ++j)
+				for (int k = 0; k < shortcuts.count(); ++k)
 				{
-					stream << shortcuts.at(j).toString(QKeySequence::PortableText);
+					stream << shortcuts.at(k).toString(QKeySequence::PortableText);
 				}
 
 				stream.setFieldWidth(0);

@@ -1409,6 +1409,8 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 			emit modelModified();
 
 			break;
+		default:
+			break;
 	}
 
 	return true;

@@ -881,6 +881,8 @@ void Application::handleOptionChanged(int identifier, const QVariant &value)
 			emit arbitraryActionsStateChanged({ActionsManager::WorkOfflineAction});
 
 			break;
+		default:
+			break;
 	}
 }
 

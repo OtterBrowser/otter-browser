@@ -280,6 +280,8 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 				return m_completions.at(index.row()).timeVisited;
 			case TypeRole:
 				return static_cast<int>(m_completions.at(index.row()).type);
+			default:
+				return {};
 		}
 	}
 

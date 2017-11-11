@@ -79,10 +79,10 @@ public:
 			IniSettings settings(keyboardEntries.at(i).absoluteFilePath());
 			const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
 
-			for (int i = 0; i < comments.count(); ++i)
+			for (int j = 0; j < comments.count(); ++j)
 			{
-				const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
-				const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
+				const QString key(comments.at(j).section(QLatin1Char(':'), 0, 0).trimmed());
+				const QString value(comments.at(j).section(QLatin1Char(':'), 1).trimmed());
 
 				if (key == QLatin1String("Title"))
 				{
@@ -120,9 +120,9 @@ public:
 				definition.shortcuts.reserve(shortcuts.count());
 				definition.action = action;
 
-				for (int j = 0; j < shortcuts.count(); ++j)
+				for (int k = 0; k < shortcuts.count(); ++k)
 				{
-					const QKeySequence shortcut(QKeySequence(shortcuts.at(j)));
+					const QKeySequence shortcut(QKeySequence(shortcuts.at(k)));
 
 					if (!shortcut.isEmpty())
 					{
@@ -155,18 +155,18 @@ public:
 			const QStringList contexts(settings.getGroups());
 			QJsonArray contextsArray;
 
-			for (int i = 0; i < contexts.count(); ++i)
+			for (int j = 0; j < contexts.count(); ++j)
 			{
-				QJsonObject contextObject{{QLatin1String("context"), contexts.at(i)}};
+				QJsonObject contextObject{{QLatin1String("context"), contexts.at(j)}};
 				QJsonArray gesturesArray;
 
-				settings.beginGroup(contexts.at(i));
+				settings.beginGroup(contexts.at(j));
 
 				const QStringList gestures(settings.getKeys());
 
-				for (int j = 0; j < gestures.count(); ++j)
+				for (int k = 0; k < gestures.count(); ++k)
 				{
-					gesturesArray.append(QJsonObject{{QLatin1String("action"), settings.getValue(gestures.at(j)).toString()},{QLatin1String("steps"), QJsonArray::fromStringList(gestures.at(j).split(','))}});
+					gesturesArray.append(QJsonObject{{QLatin1String("action"), settings.getValue(gestures.at(k)).toString()},{QLatin1String("steps"), QJsonArray::fromStringList(gestures.at(k).split(','))}});
 				}
 
 				contextObject.insert(QLatin1String("gestures"), gesturesArray);
