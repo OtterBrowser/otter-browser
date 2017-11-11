@@ -1256,7 +1256,7 @@ void TabBarToolBarWidget::populateEntries()
 			{
 				const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
 
-				if (isTabBar && (getIdentifier() != ToolBarsManager::TabBar || findChild<TabBarWidget*>()))
+				if (isTabBar && m_tabBar)
 				{
 					continue;
 				}
