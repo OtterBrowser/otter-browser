@@ -137,6 +137,7 @@ public:
 	explicit TabBarToolBarWidget(int identifier, Window *window, QWidget *parent);
 
 	bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const override;
+	bool event(QEvent *event) override;
 
 protected:
 	void paintEvent(QPaintEvent *event) override;

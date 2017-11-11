@@ -1010,7 +1010,7 @@ bool ToolBarWidget::event(QEvent *event)
 
 		if (event->type() == QEvent::Wheel)
 		{
-			QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
+			const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 			if (wheelEvent)
 			{
@@ -1019,7 +1019,7 @@ bool ToolBarWidget::event(QEvent *event)
 		}
 		else
 		{
-			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			if (mouseEvent)
 			{
@@ -1046,17 +1046,6 @@ bool ToolBarWidget::event(QEvent *event)
 	if (event->type() == QEvent::MouseButtonPress)
 	{
 		return QWidget::event(event);
-	}
-
-	if (event->type() == QEvent::LayoutRequest && m_identifier == ToolBarsManager::TabBar)
-	{
-		const bool result(QToolBar::event(event));
-
-		setContentsMargins(0, 0, 0, 0);
-
-		layout()->setMargin(0);
-
-		return result;
 	}
 
 	return QToolBar::event(event);
@@ -1341,6 +1330,22 @@ bool TabBarToolBarWidget::shouldBeVisible(ToolBarsManager::ToolBarsMode mode) co
 	}
 
 	return ((mode == ToolBarsManager::NormalMode && definition.hasToggle) || calculateShouldBeVisible(definition, getState(), mode));
+}
+
+bool TabBarToolBarWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::LayoutRequest)
+	{
+		const bool result(QToolBar::event(event));
+
+		setContentsMargins(0, 0, 0, 0);
+
+		layout()->setMargin(0);
+
+		return result;
+	}
+
+	return ToolBarWidget::event(event);
 }
 
 }
