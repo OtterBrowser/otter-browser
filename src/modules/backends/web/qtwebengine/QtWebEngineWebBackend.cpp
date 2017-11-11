@@ -155,6 +155,8 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 			}
 
 			break;
+		default:
+			break;
 	}
 }
 

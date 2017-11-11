@@ -236,6 +236,8 @@ void Speller::setAttribute(Attribute attr, bool b)
     case AutoDetectLanguage:
         d->settings->setAutodetectLanguage(b);
         break;
+        default:
+            break;
     }
     d->settings->save();
 }
@@ -250,6 +252,8 @@ bool Speller::testAttribute(Attribute attr) const
         return d->settings->skipRunTogether();
     case AutoDetectLanguage:
         return d->settings->autodetectLanguage();
+        default:
+            break;
     }
     return false;
 }

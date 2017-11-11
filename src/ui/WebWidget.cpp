@@ -176,6 +176,8 @@ void WebWidget::startTransfer(Transfer *transfer)
 			}
 
 			break;
+		default:
+			break;
 	}
 }
 

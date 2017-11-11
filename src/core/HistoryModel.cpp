@@ -361,6 +361,8 @@ bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int 
 			emit modelModified();
 
 			break;
+		default:
+			break;
 	}
 
 	return true;

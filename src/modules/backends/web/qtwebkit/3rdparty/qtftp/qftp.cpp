@@ -1143,6 +1143,8 @@ bool QFtpPI::processReply()
                 startNextCmd();
             }
             break;
+        default:
+            break;
     }
 #if defined(QFTPPI_DEBUG)
 //    qDebug("QFtpPI state: %d [processReply() end]", state);

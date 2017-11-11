@@ -244,6 +244,8 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			m_sourceViewer->setFocus();
 
 			return;
+		default:
+			break;
 	}
 }
 
