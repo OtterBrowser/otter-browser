@@ -116,7 +116,7 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 
 	emit m_widget->needsAttention();
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, nullptr, m_widget);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, {}, QDialogButtonBox::Ok, nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -296,7 +296,7 @@ QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 {
 	if (rules.isEmpty())
 	{
-		return QString();
+		return {};
 	}
 
 	for (int i = 0; i < rules.count(); ++i)
@@ -429,7 +429,7 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 
 	emit m_widget->needsAttention();
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, m_widget);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, {}, (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -469,7 +469,7 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), tr("JavaScript"), {}, {}, (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);

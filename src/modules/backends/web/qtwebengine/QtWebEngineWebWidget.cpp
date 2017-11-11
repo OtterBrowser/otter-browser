@@ -266,8 +266,8 @@ void QtWebEngineWebWidget::pageLoadStarted()
 		m_loadingTime->start();
 	}
 
-	setStatusMessage(QString());
-	setStatusMessageOverride(QString());
+	setStatusMessage({});
+	setStatusMessageOverride({});
 
 	emit geometryChanged();
 	emit loadingStateChanged(OngoingLoadingState);
@@ -457,11 +457,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::SaveLinkToDiskAction:
-			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::addTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(new Transfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:
@@ -565,7 +565,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					QNetworkRequest request(m_hitResult.imageUrl);
 					request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
 
-					new Transfer(request, QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+					new Transfer(request, {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 				}
 			}
 
@@ -602,7 +602,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, {{QLatin1String("alternativeText"), m_hitResult.alternateText}, {QLatin1String("longDescription"), m_hitResult.longDescription}}, nullptr, this));
 				imagePropertiesDialog->setButtonsVisible(false);
 
-				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), {}, {}, QDialogButtonBox::Close, imagePropertiesDialog, this));
 
 				connect(this, &QtWebEngineWebWidget::aboutToReload, dialog, &ContentsDialog::close);
 				connect(imagePropertiesDialog, &ImagePropertiesDialog::finished, dialog, &ContentsDialog::close);
@@ -624,7 +624,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
 					imagePropertiesDialog->setButtonsVisible(false);
 
-					ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), {}, {}, QDialogButtonBox::Close, imagePropertiesDialog, this);
 
 					connect(this, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
 
@@ -639,7 +639,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QNetworkRequest request(m_hitResult.mediaUrl);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
 
-				new Transfer(request, QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+				new Transfer(request, {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 			}
 
 			break;
@@ -1019,7 +1019,7 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(url, authenticator, AuthenticationDialog::HttpAuthentication, this));
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), {}, {}, (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
 	connect(this, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -1034,7 +1034,7 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy, authenticator, AuthenticationDialog::ProxyAuthentication, this));
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+	ContentsDialog dialog(ThemesManager::createIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), {}, {}, (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, &ContentsDialog::accepted, authenticationDialog, &AuthenticationDialog::accept);
 	connect(this, &QtWebEngineWebWidget::aboutToReload, &dialog, &ContentsDialog::close);
@@ -1251,7 +1251,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 	{
 		m_page->history()->clear();
 
-		updateOptions(QUrl());
+		updateOptions({});
 
 		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
 
