@@ -258,10 +258,15 @@ ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow,
 			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		WebContentsWidget *webWidget(new WebContentsWidget(parameters, QHash<int, QVariant>(), nullptr, nullptr));
+		WebContentsWidget *webWidget(new WebContentsWidget(parameters, {}, nullptr, nullptr));
 		webWidget->setUrl(panel.section(QLatin1Char(':'), 1, -1), false);
 
 		return webWidget;
+	}
+
+	if (!AddonsManager::getSpecialPage(panel).types.testFlag(AddonsManager::SpecialPageInformation::SidebarPanelType))
+	{
+		return nullptr;
 	}
 
 	return createContentsWidget(panel, parameters);
