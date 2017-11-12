@@ -85,6 +85,7 @@ protected slots:
 	void saveOption();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
+	void handleIndexClicked(const QModelIndex &index);
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 

@@ -212,6 +212,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, NameRole}));
+	m_ui->configurationViewWidget->installEventFilter(this);
 	m_ui->filterLineEditWidget->installEventFilter(this);
 	m_ui->resetAllButton->setEnabled(canResetAll);
 
@@ -223,6 +224,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ConfigurationContentsWidget::handleOptionChanged);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &ConfigurationContentsWidget::showContextMenu);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ConfigurationContentsWidget::updateActions);
+	connect(m_ui->configurationViewWidget, &ItemViewWidget::clicked, this, &ConfigurationContentsWidget::handleIndexClicked);
 	connect(m_ui->configurationViewWidget, &ItemViewWidget::modified, [&]()
 	{
 		m_ui->resetAllButton->setEnabled(true);
@@ -463,11 +465,22 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 void ConfigurationContentsWidget::handleCurrentIndexChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 {
-	m_ui->configurationViewWidget->closePersistentEditor(previousIndex.parent().child(previousIndex.row(), 2));
-
-	if (currentIndex.parent().isValid())
+	if (previousIndex.parent().isValid() && previousIndex.column() == 2)
 	{
-		m_ui->configurationViewWidget->openPersistentEditor(currentIndex.parent().child(currentIndex.row(), 2));
+		m_ui->configurationViewWidget->closePersistentEditor(previousIndex);
+	}
+
+	if (currentIndex.parent().isValid() && currentIndex.column() == 2)
+	{
+		m_ui->configurationViewWidget->openPersistentEditor(currentIndex);
+	}
+}
+
+void ConfigurationContentsWidget::handleIndexClicked(const QModelIndex &index)
+{
+	if (index.parent().isValid() && index.column() != 2)
+	{
+		m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 2));
 	}
 }
 
@@ -532,11 +545,21 @@ QIcon ConfigurationContentsWidget::getIcon() const
 
 bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
+	if (object == m_ui->configurationViewWidget && event->type() == QEvent::KeyPress)
+	{
+		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		const QModelIndex index(m_ui->configurationViewWidget->currentIndex());
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Right && index.parent().isValid())
+		{
+			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 2));
+		}
+	}
+	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent->key() == Qt::Key_Escape)
+		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
 		{
 			m_ui->filterLineEditWidget->clear();
 		}
