@@ -351,7 +351,7 @@ void SidebarWidget::updatePanels()
 		}
 	}
 
-	const QStringList specialPages(AddonsManager::getSpecialPages());
+	const QStringList specialPages(AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType));
 	QMenu *menu(nullptr);
 
 	if (m_ui->panelsButton->menu())
@@ -437,7 +437,7 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 		return identifier.mid(4);
 	}
 
-	if (AddonsManager::getSpecialPages().contains(identifier))
+	if (AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType).contains(identifier))
 	{
 		return AddonsManager::getSpecialPage(identifier).getTitle();
 	}
@@ -452,7 +452,7 @@ QUrl SidebarWidget::getPanelUrl(const QString &identifier)
 		return QUrl(identifier.mid(4));
 	}
 
-	if (AddonsManager::getSpecialPages().contains(identifier))
+	if (AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType).contains(identifier))
 	{
 		return AddonsManager::getSpecialPage(identifier).url;
 	}
@@ -467,7 +467,7 @@ QIcon SidebarWidget::getPanelIcon(const QString &identifier)
 		return HistoryManager::getIcon(QUrl(identifier.mid(4)));
 	}
 
-	if (AddonsManager::getSpecialPages().contains(identifier))
+	if (AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType).contains(identifier))
 	{
 		return AddonsManager::getSpecialPage(identifier).icon;
 	}

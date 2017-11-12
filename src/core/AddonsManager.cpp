@@ -267,9 +267,26 @@ QStringList AddonsManager::getWebBackends()
 	return m_webBackends.keys();
 }
 
-QStringList AddonsManager::getSpecialPages()
+QStringList AddonsManager::getSpecialPages(SpecialPageInformation::PageTypes types)
 {
-	return m_specialPages.keys();
+	if (types == SpecialPageInformation::UniversalType)
+	{
+		return m_specialPages.keys();
+	}
+
+	QMap<QString, SpecialPageInformation>::const_iterator iterator;
+	QStringList pages;
+	pages.reserve(m_specialPages.count());
+
+	for (iterator = m_specialPages.constBegin(); iterator != m_specialPages.constEnd(); ++iterator)
+	{
+		if (iterator.value().types & types)
+		{
+			pages.append(iterator.key());
+		}
+	}
+
+	return pages;
 }
 
 }

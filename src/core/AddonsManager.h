@@ -136,7 +136,7 @@ public:
 	static SpecialPageInformation getSpecialPage(const QString &name);
 	static QStringList getUserScripts();
 	static QStringList getWebBackends();
-	static QStringList getSpecialPages();
+	static QStringList getSpecialPages(SpecialPageInformation::PageTypes types = SpecialPageInformation::StandaloneType);
 
 protected:
 	explicit AddonsManager(QObject *parent);
