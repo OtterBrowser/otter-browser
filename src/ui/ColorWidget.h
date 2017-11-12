@@ -50,6 +50,7 @@ protected slots:
 	void clear();
 	void copyColor();
 	void selectColor();
+	void updateColor(const QString &text);
 
 private:
 	LineEditWidget *m_lineEditWidget;
