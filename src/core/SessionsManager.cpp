@@ -60,7 +60,7 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 
 		if (!m_isPrivate)
 		{
-			saveSession(QString(), QString(), nullptr, false);
+			saveSession({}, {}, nullptr, false);
 		}
 	}
 }

@@ -126,7 +126,7 @@ struct SessionWindow
 			return history.at(historyIndex).url;
 		}
 
-		return QString();
+		return {};
 	}
 
 	QString getTitle() const

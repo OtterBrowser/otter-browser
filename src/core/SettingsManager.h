@@ -278,7 +278,7 @@ public:
 
 			for (int i = 0; i < choicesValue.count(); ++i)
 			{
-				choices.append({QString(), choicesValue.at(i), QIcon()});
+				choices.append({{}, choicesValue.at(i), {}});
 			}
 		}
 
