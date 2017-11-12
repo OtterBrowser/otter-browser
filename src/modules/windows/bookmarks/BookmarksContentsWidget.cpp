@@ -62,7 +62,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	m_ui->bookmarksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->bookmarksViewWidget->setModel(model);
 	m_ui->bookmarksViewWidget->setExpanded(m_ui->bookmarksViewWidget->model()->index(0, 0), true);
-	m_ui->bookmarksViewWidget->setFilterRoles(QSet<int>({BookmarksModel::UrlRole, BookmarksModel::TitleRole, BookmarksModel::DescriptionRole, BookmarksModel::KeywordRole}));
+	m_ui->bookmarksViewWidget->setFilterRoles({BookmarksModel::UrlRole, BookmarksModel::TitleRole, BookmarksModel::DescriptionRole, BookmarksModel::KeywordRole});
 	m_ui->bookmarksViewWidget->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->setMouseTracking(true);

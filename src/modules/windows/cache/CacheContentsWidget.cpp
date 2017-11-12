@@ -130,7 +130,7 @@ void CacheContentsWidget::populateCache()
 	{
 		m_ui->cacheViewWidget->setModel(m_model);
 		m_ui->cacheViewWidget->setLayoutDirection(Qt::LeftToRight);
-		m_ui->cacheViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
+		m_ui->cacheViewWidget->setFilterRoles({Qt::DisplayRole, Qt::UserRole});
 
 		m_isLoading = false;
 

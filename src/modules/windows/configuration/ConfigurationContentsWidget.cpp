@@ -211,7 +211,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
-	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, NameRole}));
+	m_ui->configurationViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->configurationViewWidget->installEventFilter(this);
 	m_ui->filterLineEditWidget->installEventFilter(this);
 	m_ui->resetAllButton->setEnabled(canResetAll);
