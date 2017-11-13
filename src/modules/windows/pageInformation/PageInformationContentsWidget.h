@@ -57,6 +57,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void updateSections();
 
 private:
 	Ui::PageInformationContentsWidget *m_ui;

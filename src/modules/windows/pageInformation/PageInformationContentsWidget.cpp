@@ -30,8 +30,23 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	m_ui(new Ui::PageInformationContentsWidget)
 {
 	m_ui->setupUi(this);
+
+	const QVector<SectionName> sections({GeneralSection, SecuritySection, PermissionsSection, MetaSection, HeadersSection});
+	QStandardItemModel *model(new QStandardItemModel(this));
+
+	for (int i = 0; i < sections.count(); ++i)
+	{
+		QStandardItem *item(new QStandardItem());
+		item->setData(sections.at(i), Qt::UserRole);
+
+		model->appendRow(item);
+	}
+
 	m_ui->informationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->informationViewWidget->setModel(model);
 	m_ui->informationViewWidget->expandAll();
+
+	updateSections();
 }
 
 PageInformationContentsWidget::~PageInformationContentsWidget()
@@ -46,6 +61,42 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		updateSections();
+	}
+}
+
+void PageInformationContentsWidget::updateSections()
+{
+	for (int i = 0; i < m_ui->informationViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index(m_ui->informationViewWidget->getIndex(i));
+
+		switch (static_cast<SectionName>(index.data(Qt::UserRole).toInt()))
+		{
+			case GeneralSection:
+				m_ui->informationViewWidget->setData(index, tr("General"), Qt::DisplayRole);
+
+				break;
+			case HeadersSection:
+				m_ui->informationViewWidget->setData(index, tr("Headers"), Qt::DisplayRole);
+
+				break;
+			case MetaSection:
+				m_ui->informationViewWidget->setData(index, tr("Meta"), Qt::DisplayRole);
+
+				break;
+			case PermissionsSection:
+				m_ui->informationViewWidget->setData(index, tr("Permissions"), Qt::DisplayRole);
+
+				break;
+			case SecuritySection:
+				m_ui->informationViewWidget->setData(index, tr("Security"), Qt::DisplayRole);
+
+				break;
+			default:
+				break;
+		}
 	}
 }
 
