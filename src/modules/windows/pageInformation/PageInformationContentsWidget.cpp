@@ -87,6 +87,8 @@ void PageInformationContentsWidget::updateSections()
 	for (int i = 0; i < m_ui->informationViewWidget->getRowCount(); ++i)
 	{
 		const QModelIndex index(m_ui->informationViewWidget->getIndex(i));
+		QStandardItemModel *model(m_ui->informationViewWidget->getSourceModel());
+		model->removeRows(0, model->rowCount(index), index);
 
 		switch (static_cast<SectionName>(index.data(Qt::UserRole).toInt()))
 		{
@@ -113,6 +115,8 @@ void PageInformationContentsWidget::updateSections()
 			default:
 				break;
 		}
+
+		m_ui->informationViewWidget->setRowHidden(i, model->invisibleRootItem()->index(), (model->rowCount(index) == 0));
 	}
 }
 
