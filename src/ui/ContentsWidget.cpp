@@ -205,6 +205,11 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 	}
 }
 
+void ContentsWidget::print(QPrinter *printer)
+{
+	Q_UNUSED(printer)
+}
+
 void ContentsWidget::handleAboutToClose()
 {
 	for (int i = 0; i < m_dialogs.count(); ++i)
