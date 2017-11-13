@@ -246,9 +246,9 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 		}
 		else if (!m_quickFindQuery.isEmpty())
 		{
-			m_quickFindQuery = QString();
+			m_quickFindQuery.clear();
 
-			m_webWidget->findInPage(QString());
+			m_webWidget->findInPage({});
 
 			event->accept();
 		}
@@ -642,7 +642,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
 
-					ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
+					ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), {}, {}, QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
 
 					connect(m_websiteInformationDialog, &WebsiteInformationDialog::finished, dialog, &ContentsDialog::close);
 
@@ -1054,7 +1054,7 @@ void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
 {
 	if (m_searchBarWidget)
 	{
-		m_webWidget->findInPage(QString(), (flags | WebWidget::HighlightAllFind));
+		m_webWidget->findInPage({}, (flags | WebWidget::HighlightAllFind));
 		m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags);
 	}
 }
@@ -1109,8 +1109,8 @@ void WebContentsWidget::setScrollMode(ScrollMode mode)
 
 	if (mode == NoScroll)
 	{
-		m_beginCursorPosition = QPoint();
-		m_lastCursorPosition = QPoint();
+		m_beginCursorPosition = {};
+		m_lastCursorPosition = {};
 
 		if (m_scrollTimer > 0)
 		{
@@ -1158,7 +1158,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 
 			if (!webBackendName.isEmpty())
 			{
-				Console::addMessage(tr("Failed to load requested web backend: %1").arg(webBackendName), Console::OtherCategory, Console::WarningLevel, QString(), -1, (m_window ? m_window->getIdentifier() : 0));
+				Console::addMessage(tr("Failed to load requested web backend: %1").arg(webBackendName), Console::OtherCategory, Console::WarningLevel, {}, -1, (m_window ? m_window->getIdentifier() : 0));
 			}
 		}
 
