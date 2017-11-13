@@ -433,7 +433,7 @@ void ToolBarWidget::populateEntries()
 				}
 				else if (definition.entries.at(i).action != QLatin1String("TabBarWidget"))
 				{
-					QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), this, m_window));
+					QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), m_window, this));
 
 					if (widget)
 					{
@@ -1261,7 +1261,7 @@ void TabBarToolBarWidget::populateEntries()
 					continue;
 				}
 
-				QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), this, getWindow()));
+				QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), getWindow(), this));
 
 				if (widget)
 				{

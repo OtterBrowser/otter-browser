@@ -68,7 +68,7 @@ ToolBarWidget* createToolBar(int identifier, Window *window, QWidget *parent)
 	return new ToolBarWidget(identifier, window, parent);
 }
 
-QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent, Window *window)
+QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, Window *window, QWidget *parent)
 {
 	if (definition.action == QLatin1String("spacer"))
 	{
