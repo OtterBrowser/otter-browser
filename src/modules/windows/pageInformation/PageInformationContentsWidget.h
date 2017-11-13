@@ -37,6 +37,16 @@ class PageInformationContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum SectionName
+	{
+		UnknownSection = 0,
+		GeneralSection,
+		HeadersSection,
+		MetaSection,
+		PermissionsSection,
+		SecuritySection
+	};
+
 	explicit PageInformationContentsWidget(const QVariantMap &parameters, Window *window);
 	~PageInformationContentsWidget();
 
