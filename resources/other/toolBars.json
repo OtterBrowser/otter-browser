@@ -70,7 +70,8 @@
 			"history",
 			"notes",
 			"passwords",
-			"transfers"
+			"transfers",
+			"pageInformation"
 		]
 	},
 	{

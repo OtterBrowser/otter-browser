@@ -44,6 +44,7 @@
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
 #include "../modules/windows/notes/NotesContentsWidget.h"
+#include "../modules/windows/pageInformation/PageInformationContentsWidget.h"
 #include "../modules/windows/passwords/PasswordsContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
@@ -227,6 +228,11 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 	if (identifier == QLatin1String("notes"))
 	{
 		return new NotesContentsWidget(parameters, window);
+	}
+
+	if (identifier == QLatin1String("pageInformation"))
+	{
+		return new PageInformationContentsWidget(parameters, window);
 	}
 
 	if (identifier == QLatin1String("passwords"))
