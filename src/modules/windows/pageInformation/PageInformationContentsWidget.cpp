@@ -41,7 +41,7 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 		QStandardItem *item(new QStandardItem());
 		item->setData(sections.at(i), Qt::UserRole);
 
-		model->appendRow(item);
+		model->appendRow({item, new QStandardItem()});
 	}
 
 	m_ui->informationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
@@ -87,6 +87,7 @@ void PageInformationContentsWidget::updateSections()
 	for (int i = 0; i < m_ui->informationViewWidget->getRowCount(); ++i)
 	{
 		const QModelIndex index(m_ui->informationViewWidget->getIndex(i));
+		QStandardItem *sectionItem(m_ui->informationViewWidget->getItem(index));
 		QStandardItemModel *model(m_ui->informationViewWidget->getSourceModel());
 		model->removeRows(0, model->rowCount(index), index);
 
@@ -94,6 +95,15 @@ void PageInformationContentsWidget::updateSections()
 		{
 			case GeneralSection:
 				m_ui->informationViewWidget->setData(index, tr("General"), Qt::DisplayRole);
+
+				if (sectionItem)
+				{
+					QList<QStandardItem*> items({new QStandardItem(tr("Title:")), new QStandardItem(m_window ? m_window->getTitle() : tr("<empty>"))});
+					items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+					items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+
+					sectionItem->appendRow(items);
+				}
 
 				break;
 			case HeadersSection:
