@@ -37,7 +37,7 @@
 namespace Otter
 {
 
-CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::CookiesContentsWidget)

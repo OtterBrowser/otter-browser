@@ -36,7 +36,7 @@ class ContentsWidget : public QWidget, public ActionExecutor
 	Q_OBJECT
 
 public:
-	explicit ContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit ContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 
 	virtual void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true) const;

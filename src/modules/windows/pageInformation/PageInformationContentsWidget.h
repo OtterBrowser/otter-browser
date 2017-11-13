@@ -47,7 +47,7 @@ public:
 		SecuritySection
 	};
 
-	explicit PageInformationContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent);
 	~PageInformationContentsWidget();
 
 	QString getTitle() const override;

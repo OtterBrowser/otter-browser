@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
 	m_ui(new Ui::PageInformationContentsWidget)
 {
 	m_ui->setupUi(this);

@@ -145,7 +145,7 @@ QWidget* ConfigurationOptionDelegate::createEditor(QWidget *parent, const QStyle
 	return widget;
 }
 
-ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::ConfigurationContentsWidget)
 {

@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_ui(new Ui::WindowsContentsWidget)
 {
 	m_ui->setupUi(this);

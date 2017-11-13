@@ -40,7 +40,7 @@ class NotesContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit NotesContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit NotesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~NotesContentsWidget();
 
 	void print(QPrinter *printer) override;

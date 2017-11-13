@@ -195,7 +195,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	ContentsWidget *contentsWidget((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier, mainWindow, m_toolBarWidget->getIdentifier()));
+	ContentsWidget *contentsWidget((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier, m_toolBarWidget->getIdentifier(), mainWindow, this));
 
 	if (contentsWidget && mainWindow)
 	{

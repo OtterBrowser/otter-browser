@@ -70,7 +70,7 @@ QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 	return editor;
 }
 
-TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+TransfersContentsWidget::TransfersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(false),
 	m_ui(new Ui::TransfersContentsWidget)

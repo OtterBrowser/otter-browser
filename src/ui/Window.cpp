@@ -258,7 +258,7 @@ void Window::clear()
 {
 	if (!m_contentsWidget || m_contentsWidget->close())
 	{
-		setContentsWidget(new WebContentsWidget(m_parameters, {}, nullptr, this));
+		setContentsWidget(new WebContentsWidget(m_parameters, {}, nullptr, this, this));
 
 		m_isAboutToClose = false;
 
@@ -332,7 +332,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		widget = new WebContentsWidget(parameters, {}, nullptr, this);
+		widget = new WebContentsWidget(parameters, {}, nullptr, this, this);
 
 		setContentsWidget(widget);
 	}
@@ -474,7 +474,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 			return;
 		}
 
-		newWidget = WidgetFactory::createContentsWidget(url.path(), {}, this);
+		newWidget = WidgetFactory::createContentsWidget(url.path(), {}, this, this);
 
 		if (newWidget && !newWidget->canClone())
 		{
@@ -486,7 +486,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
-		newWidget = new WebContentsWidget(m_parameters, m_session.options, nullptr, this);
+		newWidget = new WebContentsWidget(m_parameters, m_session.options, nullptr, this, this);
 	}
 
 	if (newWidget)

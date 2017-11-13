@@ -193,67 +193,67 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 
 }
 
-ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window)
+ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window, QWidget *parent)
 {
 	if (identifier == QLatin1String("addons"))
 	{
-		return new AddonsContentsWidget(parameters, window);
+		return new AddonsContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("bookmarks"))
 	{
-		return new BookmarksContentsWidget(parameters, window);
+		return new BookmarksContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("cache"))
 	{
-		return new CacheContentsWidget(parameters, window);
+		return new CacheContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("config"))
 	{
-		return new ConfigurationContentsWidget(parameters, window);
+		return new ConfigurationContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("cookies"))
 	{
-		return new CookiesContentsWidget(parameters, window);
+		return new CookiesContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("history"))
 	{
-		return new HistoryContentsWidget(parameters, window);
+		return new HistoryContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("notes"))
 	{
-		return new NotesContentsWidget(parameters, window);
+		return new NotesContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("pageInformation"))
 	{
-		return new PageInformationContentsWidget(parameters, window);
+		return new PageInformationContentsWidget(parameters, parent);
 	}
 
 	if (identifier == QLatin1String("passwords"))
 	{
-		return new PasswordsContentsWidget(parameters, window);
+		return new PasswordsContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("transfers"))
 	{
-		return new TransfersContentsWidget(parameters, window);
+		return new TransfersContentsWidget(parameters, window, parent);
 	}
 
 	if (identifier == QLatin1String("windows"))
 	{
-		return new WindowsContentsWidget(parameters, window);
+		return new WindowsContentsWidget(parameters, window, parent);
 	}
 
 	return nullptr;
 }
 
-ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow, int sidebar)
+ContentsWidget* createSidebarPanel(const QString &panel, int sidebar, MainWindow *mainWindow, QWidget *parent)
 {
 	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
 
@@ -264,7 +264,7 @@ ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow,
 			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		WebContentsWidget *webWidget(new WebContentsWidget(parameters, {}, nullptr, nullptr));
+		WebContentsWidget *webWidget(new WebContentsWidget(parameters, {}, nullptr, nullptr, nullptr));
 		webWidget->setUrl(panel.section(QLatin1Char(':'), 1, -1), false);
 
 		return webWidget;
@@ -275,7 +275,7 @@ ContentsWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow,
 		return nullptr;
 	}
 
-	return createContentsWidget(panel, parameters);
+	return createContentsWidget(panel, parameters, nullptr, parent);
 }
 
 }

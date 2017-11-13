@@ -42,7 +42,7 @@
 namespace Otter
 {
 
-BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);

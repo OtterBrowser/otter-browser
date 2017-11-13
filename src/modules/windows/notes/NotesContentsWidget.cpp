@@ -38,7 +38,7 @@
 namespace Otter
 {
 
-NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_ui(new Ui::NotesContentsWidget)
 {
 	m_ui->setupUi(this);

@@ -46,7 +46,7 @@ public:
 		TimeVisitedRole
 	};
 
-	explicit HistoryContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit HistoryContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~HistoryContentsWidget();
 
 	void print(QPrinter *printer) override;

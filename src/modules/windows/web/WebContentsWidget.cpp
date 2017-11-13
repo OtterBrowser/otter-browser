@@ -59,7 +59,7 @@ namespace Otter
 QString WebContentsWidget::m_sharedQuickFindQuery = nullptr;
 QMap<WebContentsWidget::ScrollDirections, QPixmap> WebContentsWidget::m_scrollCursors;
 
-WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window) : ContentsWidget(parameters, window),
+WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_websiteInformationDialog(nullptr),
 	m_layout(new QVBoxLayout(this)),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
@@ -1047,7 +1047,7 @@ void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, SessionsMana
 		hints |= SessionsManager::PrivateOpen;
 	}
 
-	emit requestedNewWindow(new WebContentsWidget({{QLatin1String("hints"), QVariant(hints)}}, widget->getOptions(), widget, nullptr), hints);
+	emit requestedNewWindow(new WebContentsWidget({{QLatin1String("hints"), QVariant(hints)}}, widget->getOptions(), widget, nullptr, nullptr), hints);
 }
 
 void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
@@ -1331,7 +1331,7 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory) const
 		parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 	}
 
-	WebContentsWidget *webWidget(new WebContentsWidget(parameters, m_webWidget->getOptions(), m_webWidget->clone(cloneHistory), nullptr));
+	WebContentsWidget *webWidget(new WebContentsWidget(parameters, m_webWidget->getOptions(), m_webWidget->clone(cloneHistory), nullptr, nullptr));
 	webWidget->m_webWidget->setRequestedUrl(m_webWidget->getUrl(), false, true);
 
 	return webWidget;

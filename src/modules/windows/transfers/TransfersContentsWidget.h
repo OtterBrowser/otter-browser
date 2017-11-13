@@ -60,7 +60,7 @@ public:
 		TimeStartedRole
 	};
 
-	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit TransfersContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~TransfersContentsWidget();
 
 	void print(QPrinter *printer) override;

@@ -62,7 +62,7 @@ public:
 
 	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
 
-	explicit WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window);
+	explicit WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window, QWidget *parent);
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer) override;

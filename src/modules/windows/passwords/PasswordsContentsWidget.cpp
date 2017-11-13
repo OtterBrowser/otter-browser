@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window) : ContentsWidget(parameters, window),
+PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
 	m_ui(new Ui::PasswordsContentsWidget)

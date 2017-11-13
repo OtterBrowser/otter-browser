@@ -37,7 +37,7 @@ class WindowsContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit WindowsContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit WindowsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~WindowsContentsWidget();
 
 	void print(QPrinter *printer) override;

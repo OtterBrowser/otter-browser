@@ -47,7 +47,7 @@ public:
 		FieldTypeRole
 	};
 
-	explicit PasswordsContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~PasswordsContentsWidget();
 
 	void print(QPrinter *printer) override;

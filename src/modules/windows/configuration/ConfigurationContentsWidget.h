@@ -60,7 +60,7 @@ public:
 		IsModifiedRole
 	};
 
-	explicit ConfigurationContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit ConfigurationContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~ConfigurationContentsWidget();
 
 	void print(QPrinter *printer) override;

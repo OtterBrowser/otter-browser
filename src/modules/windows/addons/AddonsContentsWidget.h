@@ -54,7 +54,7 @@ public:
 		IgnoreAllMode
 	};
 
-	explicit AddonsContentsWidget(const QVariantMap &parameters, Window *window);
+	explicit AddonsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~AddonsContentsWidget();
 
 	void print(QPrinter *printer) override;
