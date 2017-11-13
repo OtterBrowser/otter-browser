@@ -19,6 +19,7 @@
 
 #include "PageInformationContentsWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 
 #include "ui_PageInformationContentsWidget.h"
@@ -27,6 +28,7 @@ namespace Otter
 {
 
 PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
+	m_window(nullptr),
 	m_ui(new Ui::PageInformationContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -45,6 +47,20 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	m_ui->informationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->informationViewWidget->setModel(model);
 	m_ui->informationViewWidget->expandAll();
+
+	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
+
+	if (mainWindow)
+	{
+		m_window = mainWindow->getActiveWindow();
+
+		connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
+		{
+			m_window = mainWindow->getActiveWindow();
+
+			updateSections();
+		});
+	}
 
 	updateSections();
 }

@@ -60,6 +60,7 @@ protected:
 	void updateSections();
 
 private:
+	Window *m_window;
 	Ui::PageInformationContentsWidget *m_ui;
 };
 
