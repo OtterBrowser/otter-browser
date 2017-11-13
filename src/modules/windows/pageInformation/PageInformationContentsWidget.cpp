@@ -49,11 +49,6 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PageInformationContentsWidget::print(QPrinter *printer)
-{
-	Q_UNUSED(printer)
-}
-
 QString PageInformationContentsWidget::getTitle() const
 {
 	return tr("Page Information");
@@ -72,11 +67,6 @@ QUrl PageInformationContentsWidget::getUrl() const
 QIcon PageInformationContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("dialog-information"), false);
-}
-
-WebWidget::LoadingState PageInformationContentsWidget::getLoadingState() const
-{
-	return WebWidget::FinishedLoadingState;
 }
 
 }

@@ -184,9 +184,4 @@ QIcon WindowsContentsWidget::getIcon() const
 	return ThemesManager::createIcon(QLatin1String("tab"), false);
 }
 
-WebWidget::LoadingState WindowsContentsWidget::getLoadingState() const
-{
-	return WebWidget::FinishedLoadingState;
-}
-
 }

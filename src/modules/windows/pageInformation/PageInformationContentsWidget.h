@@ -40,12 +40,10 @@ public:
 	explicit PageInformationContentsWidget(const QVariantMap &parameters, Window *window);
 	~PageInformationContentsWidget();
 
-	void print(QPrinter *printer) override;
 	QString getTitle() const override;
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
-	WebWidget::LoadingState getLoadingState() const override;
 
 protected:
 	void changeEvent(QEvent *event) override;
