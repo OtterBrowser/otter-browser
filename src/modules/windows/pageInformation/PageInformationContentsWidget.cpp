@@ -109,6 +109,21 @@ void PageInformationContentsWidget::updateSections()
 			case HeadersSection:
 				m_ui->informationViewWidget->setData(index, tr("Headers"), Qt::DisplayRole);
 
+				if (sectionItem && m_window && m_window->getWebWidget())
+				{
+					const QHash<QByteArray, QByteArray> headers(m_window->getWebWidget()->getHeaders());
+					QHash<QByteArray, QByteArray>::const_iterator iterator;
+
+					for (iterator = headers.constBegin(); iterator != headers.constEnd(); ++iterator)
+					{
+						QList<QStandardItem*> items({new QStandardItem(QString(iterator.key())), new QStandardItem(QString(iterator.value()))});
+						items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+						items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+
+						sectionItem->appendRow(items);
+					}
+				}
+
 				break;
 			case MetaSection:
 				m_ui->informationViewWidget->setData(index, tr("Meta"), Qt::DisplayRole);
