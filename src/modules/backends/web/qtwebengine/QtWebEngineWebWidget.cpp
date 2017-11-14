@@ -1616,9 +1616,9 @@ QVector<SpellCheckManager::DictionaryInformation> QtWebEngineWebWidget::getDicti
 	return QVector<SpellCheckManager::DictionaryInformation>();
 }
 
-QHash<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const
+QMap<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const
 {
-	return QHash<QByteArray, QByteArray>();
+	return QMap<QByteArray, QByteArray>();
 }
 
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const

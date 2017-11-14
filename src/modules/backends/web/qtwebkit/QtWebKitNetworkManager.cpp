@@ -879,7 +879,7 @@ QVector<NetworkManager::ResourceInformation> QtWebKitNetworkManager::getBlockedR
 	return m_blockedRequests;
 }
 
-QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
+QMap<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 {
 	return m_headers;
 }

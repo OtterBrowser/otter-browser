@@ -1182,7 +1182,7 @@ QHash<int, QVariant> WebWidget::getOptions() const
 	return m_options;
 }
 
-QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
+QMap<QByteArray, QByteArray> WebWidget::getHeaders() const
 {
 	return {};
 }

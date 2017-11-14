@@ -111,8 +111,8 @@ void PageInformationContentsWidget::updateSections()
 
 				if (sectionItem && m_window && m_window->getWebWidget())
 				{
-					const QHash<QByteArray, QByteArray> headers(m_window->getWebWidget()->getHeaders());
-					QHash<QByteArray, QByteArray>::const_iterator iterator;
+					const QMap<QByteArray, QByteArray> headers(m_window->getWebWidget()->getHeaders());
+					QMap<QByteArray, QByteArray>::const_iterator iterator;
 
 					for (iterator = headers.constBegin(); iterator != headers.constEnd(); ++iterator)
 					{

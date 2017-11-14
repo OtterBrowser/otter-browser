@@ -71,7 +71,7 @@ public:
 	QVector<LinkUrl> getFeeds() const override;
 	QVector<LinkUrl> getSearchEngines() const override;
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
-	QHash<QByteArray, QByteArray> getHeaders() const override;
+	QMap<QByteArray, QByteArray> getHeaders() const override;
 	ContentStates getContentState() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;

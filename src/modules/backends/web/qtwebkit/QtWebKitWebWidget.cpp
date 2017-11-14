@@ -2535,7 +2535,7 @@ QVector<NetworkManager::ResourceInformation> QtWebKitWebWidget::getBlockedReques
 	return m_networkManager->getBlockedRequests();
 }
 
-QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
+QMap<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
 {
 	return m_networkManager->getHeaders();
 }

@@ -50,7 +50,7 @@ public:
 	WebWidget::SslInformation getSslInformation() const;
 	QStringList getBlockedElements() const;
 	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
-	QHash<QByteArray, QByteArray> getHeaders() const;
+	QMap<QByteArray, QByteArray> getHeaders() const;
 	WebWidget::ContentStates getContentState() const;
 
 protected:
@@ -97,7 +97,7 @@ private:
 	QVector<int> m_contentBlockingProfiles;
 	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
-	QHash<QByteArray, QByteArray> m_headers;
+	QMap<QByteArray, QByteArray> m_headers;
 	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
 	WebWidget::ContentStates m_contentState;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
