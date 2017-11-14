@@ -52,10 +52,8 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPoint getScrollPosition() const override;
-	QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
-	QMap<QByteArray, QByteArray> getHeaders() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;

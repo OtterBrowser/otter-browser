@@ -1611,16 +1611,6 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 	return m_hitResult;
 }
 
-QVector<SpellCheckManager::DictionaryInformation> QtWebEngineWebWidget::getDictionaries() const
-{
-	return {};
-}
-
-QMap<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const
-{
-	return {};
-}
-
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const
 {
 	return m_loadingState;
