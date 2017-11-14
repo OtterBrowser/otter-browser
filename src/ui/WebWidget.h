@@ -240,6 +240,7 @@ public:
 	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<int, QVariant> getOptions() const;
 	virtual QMap<QByteArray, QByteArray> getHeaders() const;
+	virtual QMultiMap<QString, QString> getMetaData() const;
 	virtual WebWidget::ContentStates getContentState() const;
 	virtual WebWidget::LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;

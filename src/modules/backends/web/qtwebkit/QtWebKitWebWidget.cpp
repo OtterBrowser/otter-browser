@@ -2540,6 +2540,11 @@ QMap<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
 	return m_networkManager->getHeaders();
 }
 
+QMultiMap<QString, QString> QtWebKitWebWidget::getMetaData() const
+{
+	return m_page->mainFrame()->metaData();
+}
+
 WebWidget::ContentStates QtWebKitWebWidget::getContentState() const
 {
 	const QUrl url(getUrl());

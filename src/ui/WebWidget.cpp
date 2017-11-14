@@ -1187,6 +1187,11 @@ QMap<QByteArray, QByteArray> WebWidget::getHeaders() const
 	return {};
 }
 
+QMultiMap<QString, QString> WebWidget::getMetaData() const
+{
+	return {};
+}
+
 WebWidget::HitTestResult WebWidget::getCurrentHitTestResult() const
 {
 	return m_hitResult;
