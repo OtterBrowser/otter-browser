@@ -134,6 +134,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_contentBlockingExceptions.clear();
 	m_blockedRequests.clear();
 	m_replies.clear();
+	m_headers.clear();
 	m_pageInformation.clear();
 	m_pageInformation[WebWidget::BytesReceivedInformation] = quint64(0);
 	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
@@ -239,6 +240,13 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 		{
 			m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain().toVector();
 			m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
+		}
+
+		const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_baseReply->rawHeaderPairs());
+
+		for (int i = 0; i < rawHeaders.count(); ++i)
+		{
+			m_headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
 		}
 	}
 
@@ -873,19 +881,7 @@ QVector<NetworkManager::ResourceInformation> QtWebKitNetworkManager::getBlockedR
 
 QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 {
-	QHash<QByteArray, QByteArray> headers;
-
-	if (m_baseReply)
-	{
-		const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_baseReply->rawHeaderPairs());
-
-		for (int i = 0; i < rawHeaders.count(); ++i)
-		{
-			headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
-		}
-	}
-
-	return headers;
+	return m_headers;
 }
 
 WebWidget::ContentStates QtWebKitNetworkManager::getContentState() const

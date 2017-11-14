@@ -97,6 +97,7 @@ private:
 	QVector<int> m_contentBlockingProfiles;
 	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
+	QHash<QByteArray, QByteArray> m_headers;
 	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
 	WebWidget::ContentStates m_contentState;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
