@@ -91,7 +91,7 @@ QUrl OperaSessionImporter::getHomePage() const
 
 QStringList OperaSessionImporter::getFileFilters() const
 {
-	return QStringList(tr("Opera session files (*.win)"));
+	return {tr("Opera session files (*.win)")};
 }
 
 Importer::ImportType OperaSessionImporter::getImportType() const

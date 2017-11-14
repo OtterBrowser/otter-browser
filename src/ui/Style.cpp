@@ -192,7 +192,7 @@ QString Style::getName() const
 
 QString Style::getStyleSheet() const
 {
-	return QString();
+	return {};
 }
 
 QRect Style::subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const

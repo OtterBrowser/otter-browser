@@ -828,7 +828,7 @@ QString GesturesManager::getContextName(int identifier)
 		return name;
 	}
 
-	return QString();
+	return {};
 }
 
 MouseProfile::Gesture GesturesManager::matchGesture()

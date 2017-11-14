@@ -112,7 +112,7 @@ QUrl OperaNotesImporter::getHomePage() const
 
 QStringList OperaNotesImporter::getFileFilters() const
 {
-	return QStringList(tr("Opera notes files (notes.adr)"));
+	return {tr("Opera notes files (notes.adr)")};
 }
 
 Importer::ImportType OperaNotesImporter::getImportType() const

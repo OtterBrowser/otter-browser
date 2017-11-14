@@ -1613,12 +1613,12 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 QVector<SpellCheckManager::DictionaryInformation> QtWebEngineWebWidget::getDictionaries() const
 {
-	return QVector<SpellCheckManager::DictionaryInformation>();
+	return {};
 }
 
 QMap<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const
 {
-	return QMap<QByteArray, QByteArray>();
+	return {};
 }
 
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const

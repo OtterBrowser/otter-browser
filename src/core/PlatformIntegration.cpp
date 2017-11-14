@@ -73,7 +73,7 @@ QVector<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(
 {
 	Q_UNUSED(mimeType)
 
-	return QVector<ApplicationInformation>();
+	return {};
 }
 
 QString PlatformIntegration::getPreferredPasswordsBackend() const
@@ -88,7 +88,7 @@ QString PlatformIntegration::getUpdaterBinary() const
 
 QString PlatformIntegration::getPlatformName() const
 {
-	return QString();
+	return {};
 }
 
 bool PlatformIntegration::canShowNotifications() const

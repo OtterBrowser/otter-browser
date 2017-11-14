@@ -162,7 +162,7 @@ QString Updater::getScriptPath()
 		}
 	}
 
-	return QString();
+	return {};
 }
 
 bool Updater::installUpdate()

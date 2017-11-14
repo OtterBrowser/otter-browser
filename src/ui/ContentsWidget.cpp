@@ -381,7 +381,7 @@ QString ContentsWidget::parseQuery(const QString &query) const
 
 QString ContentsWidget::getDescription() const
 {
-	return QString();
+	return {};
 }
 
 QString ContentsWidget::getVersion() const
@@ -391,7 +391,7 @@ QString ContentsWidget::getVersion() const
 
 QString ContentsWidget::getStatusMessage() const
 {
-	return QString();
+	return {};
 }
 
 QVariant ContentsWidget::getOption(int identifier) const

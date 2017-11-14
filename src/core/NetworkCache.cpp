@@ -117,7 +117,7 @@ QString NetworkCache::getPathForUrl(const QUrl &url)
 {
 	if (!url.isValid() || !metaData(url).isValid())
 	{
-		return QString();
+		return {};
 	}
 
 	const QDir cacheMainDirectory(cacheDirectory());
@@ -146,7 +146,7 @@ QString NetworkCache::getPathForUrl(const QUrl &url)
 		}
 	}
 
-	return QString();
+	return {};
 }
 
 QVector<QUrl> NetworkCache::getEntries() const

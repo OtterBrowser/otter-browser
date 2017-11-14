@@ -460,7 +460,7 @@ QUrlInfo &QUrlInfo::operator=(const QUrlInfo &ui)
 QString QUrlInfo::name() const
 {
     if (!d)
-        return QString();
+        return {};
     return d->name;
 }
 
@@ -487,7 +487,7 @@ int QUrlInfo::permissions() const
 QString QUrlInfo::owner() const
 {
     if (!d)
-        return QString();
+        return {};
     return d->owner;
 }
 
@@ -500,7 +500,7 @@ QString QUrlInfo::owner() const
 QString QUrlInfo::group() const
 {
     if (!d)
-        return QString();
+        return {};
     return d->group;
 }
 

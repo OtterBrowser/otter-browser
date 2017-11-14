@@ -1111,7 +1111,7 @@ QDateTime BookmarksModel::readDateTime(QXmlStreamReader *reader, const QString &
 
 QStringList BookmarksModel::mimeTypes() const
 {
-	return QStringList(QLatin1String("text/uri-list"));
+	return {QLatin1String("text/uri-list")};
 }
 
 QStringList BookmarksModel::getKeywords() const
@@ -1229,7 +1229,7 @@ QVector<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
 		return m_urls[adjustedUrl];
 	}
 
-	return QVector<BookmarksItem*>();
+	return {};
 }
 
 BookmarksModel::FormatMode BookmarksModel::getFormatMode() const

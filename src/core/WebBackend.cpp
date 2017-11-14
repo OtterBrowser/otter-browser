@@ -28,7 +28,7 @@ WebBackend::WebBackend(QObject *parent) : QObject(parent), Addon()
 
 QVector<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const
 {
-	return QVector<SpellCheckManager::DictionaryInformation>();
+	return {};
 }
 
 Addon::AddonType WebBackend::getType() const

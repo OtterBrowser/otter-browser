@@ -48,7 +48,7 @@ void PasswordsStorageBackend::removePassword(const PasswordsManager::PasswordInf
 
 QStringList PasswordsStorageBackend::getHosts()
 {
-	return QStringList();
+	return {};
 }
 
 QVector<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
@@ -56,7 +56,7 @@ QVector<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPassw
 	Q_UNUSED(url)
 	Q_UNUSED(types)
 
-	return QVector<PasswordsManager::PasswordInformation>();
+	return {};
 }
 
 Addon::AddonType PasswordsStorageBackend::getType() const

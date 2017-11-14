@@ -224,7 +224,7 @@ QDateTime HtmlBookmarksImporter::getDateTime(const QWebElement &element, const Q
 
 QStringList HtmlBookmarksImporter::getFileFilters() const
 {
-	return QStringList(tr("HTML files (*.htm *.html)"));
+	return {tr("HTML files (*.htm *.html)")};
 }
 
 bool HtmlBookmarksImporter::import(const QString &path)

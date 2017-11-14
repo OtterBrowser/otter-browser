@@ -179,7 +179,7 @@ QStringList IniSettings::getKeys() const
 			return m_data[m_group].keys();
 		}
 
-		return QStringList();
+		return {};
 	}
 
 	QStringList keys;

@@ -61,7 +61,7 @@ QString ContentBlockingIntervalDelegate::displayText(const QVariant &value, cons
 
 	if (value.isNull())
 	{
-		return QString();
+		return {};
 	}
 
 	const int updateInterval(value.toInt());

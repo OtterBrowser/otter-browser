@@ -152,7 +152,7 @@ QString NotificationsManager::getEventName(int identifier)
 		return name;
 	}
 
-	return QString();
+	return {};
 }
 
 NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(int identifier)

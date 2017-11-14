@@ -98,7 +98,7 @@ QUrl OperaBookmarksImporter::getHomePage() const
 
 QStringList OperaBookmarksImporter::getFileFilters() const
 {
-	return QStringList(tr("Opera bookmarks files (bookmarks.adr)"));
+	return {tr("Opera bookmarks files (bookmarks.adr)")};
 }
 
 bool OperaBookmarksImporter::import(const QString &path)

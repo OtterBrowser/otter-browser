@@ -363,7 +363,7 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 
 QStringList StartPageModel::mimeTypes() const
 {
-	return QStringList(QLatin1String("text/uri-list"));
+	return {QLatin1String("text/uri-list")};
 }
 
 bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)

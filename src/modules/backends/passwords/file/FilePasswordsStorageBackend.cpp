@@ -384,7 +384,7 @@ QVector<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getP
 		return matchingPasswords;
 	}
 
-	return QVector<PasswordsManager::PasswordInformation>();
+	return {};
 }
 
 PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const PasswordsManager::PasswordInformation &password)

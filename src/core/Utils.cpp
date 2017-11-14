@@ -555,7 +555,7 @@ QVector<QUrl> extractUrls(const QMimeData *mimeData)
 		return mimeData->urls().toVector();
 	}
 
-	return QVector<QUrl>({QUrl(mimeData->property("x-url-string").toString())});
+	return {QUrl(mimeData->property("x-url-string").toString())};
 }
 
 QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
@@ -567,7 +567,7 @@ QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mime
 		return integration->getApplicationsForMimeType(mimeType);
 	}
 
-	return QVector<ApplicationInformation>();
+	return {};
 }
 
 SaveInformation getSavePath(const QString &fileName, QString path, QStringList filters, bool forceAsk)
