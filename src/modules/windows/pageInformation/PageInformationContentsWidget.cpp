@@ -35,6 +35,7 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 
 	const QVector<SectionName> sections({GeneralSection, SecuritySection, PermissionsSection, MetaSection, HeadersSection});
 	QStandardItemModel *model(new QStandardItemModel(this));
+	model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Value")}));
 
 	for (int i = 0; i < sections.count(); ++i)
 	{

@@ -34,9 +34,6 @@
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
-     <attribute name="headerVisible">
-      <bool>false</bool>
-     </attribute>
      <attribute name="headerDefaultSectionSize">
       <number>200</number>
      </attribute>
