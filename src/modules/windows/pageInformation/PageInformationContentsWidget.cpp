@@ -128,6 +128,24 @@ void PageInformationContentsWidget::updateSections()
 			case MetaSection:
 				m_ui->informationViewWidget->setData(index, tr("Meta"), Qt::DisplayRole);
 
+				if (sectionItem && m_window && m_window->getWebWidget())
+				{
+					const QMultiMap<QString, QString> metaData(m_window->getWebWidget()->getMetaData());
+					QMultiMap<QString, QString>::const_iterator iterator;
+
+					for (iterator = metaData.constBegin(); iterator != metaData.constEnd(); ++iterator)
+					{
+						if (!iterator.key().isEmpty())
+						{
+							QList<QStandardItem*> items({new QStandardItem(iterator.key()), new QStandardItem(iterator.value())});
+							items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+							items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+
+							sectionItem->appendRow(items);
+						}
+					}
+				}
+
 				break;
 			case PermissionsSection:
 				m_ui->informationViewWidget->setData(index, tr("Permissions"), Qt::DisplayRole);
