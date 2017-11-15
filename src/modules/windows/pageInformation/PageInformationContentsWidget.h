@@ -22,6 +22,8 @@
 
 #include "../../../ui/ContentsWidget.h"
 
+#include <QtGui/QStandardItem>
+
 namespace Otter
 {
 
@@ -57,6 +59,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void addEntry(QStandardItem *parent, const QString &key, const QString &value);
 	void updateSections();
 
 private:

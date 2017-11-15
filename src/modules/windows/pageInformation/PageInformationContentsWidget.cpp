@@ -98,6 +98,15 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
+void PageInformationContentsWidget::addEntry(QStandardItem *parent, const QString &key, const QString &value)
+{
+	QList<QStandardItem*> items({new QStandardItem(key), new QStandardItem(value.isEmpty() ? tr("<empty>") : value)});
+	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+	items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+
+	parent->appendRow(items);
+}
+
 void PageInformationContentsWidget::updateSections()
 {
 	for (int i = 0; i < m_ui->informationViewWidget->getRowCount(); ++i)
@@ -114,11 +123,7 @@ void PageInformationContentsWidget::updateSections()
 
 				if (sectionItem)
 				{
-					QList<QStandardItem*> items({new QStandardItem(tr("Title:")), new QStandardItem(m_window ? m_window->getTitle() : tr("<empty>"))});
-					items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-					items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
-
-					sectionItem->appendRow(items);
+					addEntry(sectionItem, tr("Title"), (m_window ? m_window->getTitle() : QString()));
 				}
 
 				break;
@@ -132,11 +137,7 @@ void PageInformationContentsWidget::updateSections()
 
 					for (iterator = headers.constBegin(); iterator != headers.constEnd(); ++iterator)
 					{
-						QList<QStandardItem*> items({new QStandardItem(QString(iterator.key())), new QStandardItem(QString(iterator.value()))});
-						items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-						items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
-
-						sectionItem->appendRow(items);
+						addEntry(sectionItem, QString(iterator.key()), QString(iterator.value()));
 					}
 				}
 
@@ -153,11 +154,7 @@ void PageInformationContentsWidget::updateSections()
 					{
 						if (!iterator.key().isEmpty())
 						{
-							QList<QStandardItem*> items({new QStandardItem(iterator.key()), new QStandardItem(iterator.value())});
-							items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-							items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
-
-							sectionItem->appendRow(items);
+							addEntry(sectionItem, iterator.key(), iterator.value());
 						}
 					}
 				}
