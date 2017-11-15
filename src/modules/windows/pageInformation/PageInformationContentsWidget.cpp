@@ -100,8 +100,11 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 
 void PageInformationContentsWidget::addEntry(QStandardItem *parent, const QString &key, const QString &value)
 {
+	const QString toolTip(key + QLatin1String(": ") + (value.isEmpty() ? tr("<empty>") : value));
 	QList<QStandardItem*> items({new QStandardItem(key), new QStandardItem(value.isEmpty() ? tr("<empty>") : value)});
+	items[0]->setToolTip(toolTip);
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+	items[1]->setToolTip(toolTip);
 	items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 
 	parent->appendRow(items);
