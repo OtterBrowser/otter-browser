@@ -1589,7 +1589,7 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		return HitTestResult();
+		return {};
 	}
 
 	QEventLoop eventLoop;

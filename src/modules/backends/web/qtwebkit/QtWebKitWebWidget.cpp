@@ -2348,7 +2348,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 
 	if (!frame)
 	{
-		return HitTestResult();
+		return {};
 	}
 
 	const QWebHitTestResult nativeResult(m_page->mainFrame()->hitTestContent(position));
