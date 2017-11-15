@@ -163,14 +163,14 @@ public:
 		HitTestFlags flags = NoFlagsTest;
 	};
 
-	struct LinkUrl
+	struct LinkUrl final
 	{
 		QString title;
 		QString mimeType;
 		QUrl url;
 	};
 
-	struct SslInformation
+	struct SslInformation final
 	{
 		QSslCipher cipher;
 		QVector<QSslCertificate> certificates;
