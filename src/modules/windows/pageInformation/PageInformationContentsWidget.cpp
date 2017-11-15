@@ -56,7 +56,22 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 
 		connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
 		{
-			m_window = mainWindow->getActiveWindow();
+			Window *window(mainWindow->getActiveWindow());
+
+			if (window != m_window)
+			{
+				if (m_window)
+				{
+					disconnect(m_window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
+				}
+
+				m_window = window;
+
+				if (window)
+				{
+					connect(window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
+				}
+			}
 
 			updateSections();
 		});
