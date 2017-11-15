@@ -161,30 +161,6 @@ public:
 		QRect geometry;
 		qreal playbackRate = 1;
 		HitTestFlags flags = NoFlagsTest;
-
-		explicit HitTestResult(const QVariant &result)
-		{
-			const QVariantMap map(result.toMap());
-			const QVariantMap geometryMap(map.value(QLatin1String("geometry")).toMap());
-
-			title = map.value(QLatin1String("title")).toString();
-			tagName = map.value(QLatin1String("tagName")).toString();
-			alternateText = map.value(QLatin1String("alternateText")).toString();
-			longDescription = map.value(QLatin1String("longDescription")).toString();
-			formUrl = QUrl(map.value(QLatin1String("formUrl")).toString());
-			frameUrl = QUrl(map.value(QLatin1String("frameUrl")).toString());
-			imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
-			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
-			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
-			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
-			position = map.value(QLatin1String("position")).toPoint();
-			playbackRate = map.value(QLatin1String("playbackRate")).toReal();
-			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
-		}
-
-		HitTestResult()
-		{
-		}
 	};
 
 	struct LinkUrl

@@ -1596,7 +1596,7 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 	m_page->runJavaScript(QString(file.readAll()).arg(position.x() / m_page->zoomFactor()).arg(position.y() / m_page->zoomFactor()), [&](const QVariant &result)
 	{
-		m_hitResult = HitTestResult(result);
+		m_hitResult = QtWebEngineHitTestResult(result);
 
 		eventLoop.quit();
 	});
