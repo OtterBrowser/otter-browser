@@ -36,6 +36,12 @@ class ContentBlockingManager final : public QObject
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		NameRole = Qt::UserRole,
+		UpdateUrlRole
+	};
+
 	enum CosmeticFiltersMode
 	{
 		NoFiltersMode = 0,

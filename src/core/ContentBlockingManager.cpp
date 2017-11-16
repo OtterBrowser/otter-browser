@@ -372,8 +372,8 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 		}
 
 		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(m_profiles.at(i)->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(m_profiles.at(i)->getLastUpdate()))});
-		profileItems[0]->setData(name, Qt::UserRole);
-		profileItems[0]->setData(m_profiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
+		profileItems[0]->setData(name, NameRole);
+		profileItems[0]->setData(m_profiles.at(i)->getUpdateUrl(), UpdateUrlRole);
 		profileItems[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		profileItems[0]->setCheckable(true);
 		profileItems[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
