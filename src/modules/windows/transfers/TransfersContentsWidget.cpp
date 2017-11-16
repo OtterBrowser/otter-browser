@@ -167,7 +167,7 @@ void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 
 	if (transfer)
 	{
-		Utils::runApplication(QString(), QUrl::fromLocalFile(QFileInfo(transfer->getTarget()).dir().canonicalPath()));
+		Utils::runApplication({}, QUrl::fromLocalFile(QFileInfo(transfer->getTarget()).dir().canonicalPath()));
 	}
 }
 
@@ -212,7 +212,7 @@ void TransfersContentsWidget::redownloadTransfer()
 
 void TransfersContentsWidget::startQuickTransfer()
 {
-	TransfersManager::startTransfer(m_ui->downloadLineEditWidget->text(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
+	TransfersManager::startTransfer(m_ui->downloadLineEditWidget->text(), {}, (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
 
 	m_ui->downloadLineEditWidget->clear();
 }

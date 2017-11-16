@@ -102,7 +102,7 @@ void BookmarksContentsWidget::addBookmark()
 {
 	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
 	BookmarksItem *folder(findFolder(index));
-	BookmarkPropertiesDialog dialog(QUrl(), QString(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), true, this);
+	BookmarkPropertiesDialog dialog({}, {}, {}, folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), true, this);
 	dialog.exec();
 }
 
@@ -110,7 +110,7 @@ void BookmarksContentsWidget::addFolder()
 {
 	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
 	BookmarksItem *folder(findFolder(index));
-	BookmarkPropertiesDialog dialog(QUrl(), QString(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), false, this);
+	BookmarkPropertiesDialog dialog({}, {}, {}, folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), false, this);
 	dialog.exec();
 }
 
