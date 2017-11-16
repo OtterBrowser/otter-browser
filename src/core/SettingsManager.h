@@ -249,7 +249,7 @@ public:
 
 	struct OptionDefinition final
 	{
-		struct ChoiceDefinition final
+		struct Choice final
 		{
 			QString title;
 			QString value;
@@ -267,7 +267,7 @@ public:
 		};
 
 		QVariant defaultValue;
-		QVector<ChoiceDefinition> choices;
+		QVector<Choice> choices;
 		OptionType type = UnknownType;
 		OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag);
 		int identifier = -1;

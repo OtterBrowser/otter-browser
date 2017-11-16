@@ -320,7 +320,7 @@ void ToolBarDialog::editEntry()
 	if (identifier == QLatin1String("SearchWidget"))
 	{
 		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-		QVector<SettingsManager::OptionDefinition::ChoiceDefinition> searchEngineChoices{{tr("All"), QString(), QIcon()}, SettingsManager::OptionDefinition::ChoiceDefinition()};
+		QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices{{tr("All"), QString(), QIcon()}, SettingsManager::OptionDefinition::Choice()};
 		OptionEntry searchEngineEntry;
 		searchEngineEntry.widget = new OptionWidget(options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this);
 		searchEngineEntry.name = QLatin1String("searchEngine");
@@ -360,7 +360,7 @@ void ToolBarDialog::editEntry()
 
 		OptionEntry scopeEntry;
 		scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, this);
-		scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::ChoiceDefinition>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
+		scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::Choice>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
 		scopeEntry.widget->setDefaultValue(QLatin1String("window"));
 		scopeEntry.name = QLatin1String("scope");
 		scopeEntry.label = tr("Scope:");

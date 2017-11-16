@@ -179,7 +179,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 void SearchEnginesManager::updateSearchEnginesOptions()
 {
 	const QStringList searchEngines(m_searchEngines.keys());
-	QVector<SettingsManager::OptionDefinition::ChoiceDefinition> searchEngineChoices;
+	QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices;
 	searchEngineChoices.reserve(searchEngines.count());
 
 	for (int i = 0; i < searchEngines.count(); ++i)

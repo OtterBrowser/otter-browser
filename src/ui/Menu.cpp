@@ -737,7 +737,7 @@ void Menu::populateOptionMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> choices(SettingsManager::getOptionDefinition(m_option).choices);
+	const QVector<SettingsManager::OptionDefinition::Choice> choices(SettingsManager::getOptionDefinition(m_option).choices);
 
 	if (choices.isEmpty())
 	{

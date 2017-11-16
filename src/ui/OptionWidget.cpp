@@ -264,7 +264,7 @@ void OptionWidget::setChoices(const QStringList &choices)
 	setValue(value);
 }
 
-void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::ChoiceDefinition> &choices)
+void OptionWidget::setChoices(const QVector<SettingsManager::OptionDefinition::Choice> &choices)
 {
 	if (!m_comboBox)
 	{
