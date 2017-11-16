@@ -622,7 +622,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				for (int i = 0; i < fieldsArray.count(); ++i)
 				{
 					const QJsonObject fieldObject(fieldsArray.at(i).toObject());
-					PasswordsManager::FieldInformation field;
+					PasswordsManager::PasswordInformation::Field field;
 					field.name = fieldObject.value(QLatin1String("name")).toString();
 					field.value = fieldObject.value(QLatin1String("value")).toString();
 					field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);

@@ -408,7 +408,7 @@ PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const
 	for (int i = 0; i < m_model->rowCount(index); ++i)
 	{
 		const QModelIndex nameIndex(index.child(i, 0));
-		PasswordsManager::FieldInformation field;
+		PasswordsManager::PasswordInformation::Field field;
 		field.name = nameIndex.data(Qt::DisplayRole).toString();
 		field.value = ((nameIndex.data(FieldTypeRole).toInt() == PasswordsManager::PasswordField) ? QString() : index.child(i, 1).data(Qt::DisplayRole).toString());
 		field.type = static_cast<PasswordsManager::FieldType>(nameIndex.data(FieldTypeRole).toInt());

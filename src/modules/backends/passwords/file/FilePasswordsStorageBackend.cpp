@@ -81,7 +81,7 @@ void FilePasswordsStorageBackend::initialize()
 			for (int j = 0; j < fieldsArray.count(); ++j)
 			{
 				const QJsonObject fieldObject(fieldsArray.at(j).toObject());
-				PasswordsManager::FieldInformation field;
+				PasswordsManager::PasswordInformation::Field field;
 				field.name = fieldObject.value(fieldObject.contains(QLatin1String("name")) ? QLatin1String("name") : QLatin1String("key")).toString();
 				field.value = fieldObject.value(QLatin1String("value")).toString();
 				field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);

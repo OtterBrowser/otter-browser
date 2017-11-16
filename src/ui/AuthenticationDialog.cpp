@@ -74,11 +74,11 @@ void AuthenticationDialog::setup()
 
 	if (m_ui->rememberPasswordCheckBox->isChecked() && !m_authenticator->user().isEmpty() && !m_authenticator->password().isEmpty())
 	{
-		PasswordsManager::FieldInformation userField;
+		PasswordsManager::PasswordInformation::Field userField;
 		userField.value = m_authenticator->user();
 		userField.type = PasswordsManager::TextField;
 
-		PasswordsManager::FieldInformation passwordField;
+		PasswordsManager::PasswordInformation::Field passwordField;
 		passwordField.value = m_authenticator->password();
 		passwordField.type = PasswordsManager::PasswordField;
 
