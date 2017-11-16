@@ -111,7 +111,7 @@ protected:
 		ExactMatch
 	};
 
-	struct ContentBlockingRule
+	struct ContentBlockingRule final
 	{
 		QString rule;
 		QStringList blockedDomains;
@@ -126,7 +126,7 @@ protected:
 		}
 	};
 
-	struct Node
+	struct Node final
 	{
 		QChar value = 0;
 		QVarLengthArray<Node*, 1> children;

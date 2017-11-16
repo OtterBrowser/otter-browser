@@ -43,7 +43,7 @@ public:
 		AllFiltersMode
 	};
 
-	struct CheckResult
+	struct CheckResult final
 	{
 		QString rule;
 		CosmeticFiltersMode comesticFiltersMode = AllFiltersMode;

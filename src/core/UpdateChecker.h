@@ -33,7 +33,7 @@ class UpdateChecker final : public QObject
 	Q_OBJECT
 
 public:
-	struct UpdateInformation
+	struct UpdateInformation final
 	{
 		QString channel;
 		QString version;

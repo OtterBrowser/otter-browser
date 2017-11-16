@@ -33,7 +33,7 @@ class SearchSuggester final : public QObject
 	Q_OBJECT
 
 public:
-	struct SearchSuggestion
+	struct SearchSuggestion final
 	{
 		QString completion;
 		QString description;

@@ -44,7 +44,7 @@ public:
 
 	Q_DECLARE_FLAGS(InterpreterFlags, InterpreterFlag)
 
-	struct InterpreterResult
+	struct InterpreterResult final
 	{
 		enum ResultType
 		{

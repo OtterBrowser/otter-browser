@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-struct ToolBarState
+struct ToolBarState final
 {
 	enum ToolBarVisibility
 	{
@@ -84,13 +84,13 @@ struct ToolBarState
 	}
 };
 
-struct WindowState
+struct WindowState final
 {
 	QRect geometry;
 	Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
 };
 
-struct WindowHistoryEntry
+struct WindowHistoryEntry final
 {
 	QString url;
 	QString title;
@@ -98,7 +98,7 @@ struct WindowHistoryEntry
 	int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
 };
 
-struct WindowHistoryInformation
+struct WindowHistoryInformation final
 {
 	QVector<WindowHistoryEntry> entries;
 	int index = -1;
@@ -109,7 +109,7 @@ struct WindowHistoryInformation
 	}
 };
 
-struct SessionWindow
+struct SessionWindow final
 {
 	WindowState state;
 	QHash<int, QVariant> options;
@@ -158,7 +158,7 @@ struct SessionWindow
 	}
 };
 
-struct SessionMainWindow
+struct SessionMainWindow final
 {
 	QVector<SessionWindow> windows;
 	QVector<ToolBarState> toolBars;
@@ -167,7 +167,7 @@ struct SessionMainWindow
 	bool hasToolBarsState = false;
 };
 
-struct SessionInformation
+struct SessionInformation final
 {
 	QString path;
 	QString title;
@@ -176,7 +176,7 @@ struct SessionInformation
 	bool isClean = true;
 };
 
-struct ClosedWindow
+struct ClosedWindow final
 {
 	SessionWindow window;
 	QIcon icon;

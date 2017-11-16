@@ -56,7 +56,7 @@ public:
 		WebSocketType
 	};
 
-	struct ResourceInformation
+	struct ResourceInformation final
 	{
 		QUrl url;
 		QMap<ResourceMetaData, QVariant> metaData;

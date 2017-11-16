@@ -96,7 +96,7 @@ public:
 		NotesMode
 	};
 
-	struct BookmarkMatch
+	struct BookmarkMatch final
 	{
 		BookmarksItem *bookmark = nullptr;
 		QString match;

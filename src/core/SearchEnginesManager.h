@@ -41,7 +41,7 @@ public:
 		KeywordRole
 	};
 
-	struct SearchUrl
+	struct SearchUrl final
 	{
 		QString url;
 		QString enctype;
@@ -49,7 +49,7 @@ public:
 		QUrlQuery parameters;
 	};
 
-	struct SearchEngineDefinition
+	struct SearchEngineDefinition final
 	{
 		QString identifier;
 		QString title;

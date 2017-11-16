@@ -71,7 +71,7 @@ public:
 		TimeVisitedRole
 	};
 
-	struct CompletionEntry
+	struct CompletionEntry final
 	{
 		QString text;
 		QString title;

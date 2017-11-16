@@ -40,7 +40,7 @@ public:
 		FullMode
 	};
 
-	struct Action
+	struct Action final
 	{
 		QVariantMap parameters;
 		QVector<QKeySequence> shortcuts;
@@ -274,7 +274,7 @@ public:
 		OtherAction
 	};
 
-	struct ActionDefinition
+	struct ActionDefinition final
 	{
 		enum ActionCategory
 		{
@@ -311,7 +311,7 @@ public:
 			ApplicationScope
 		};
 
-		struct State
+		struct State final
 		{
 			QString text;
 			QIcon icon;

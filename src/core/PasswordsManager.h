@@ -60,14 +60,14 @@ public:
 
 	Q_DECLARE_FLAGS(PasswordTypes, PasswordType)
 
-	struct FieldInformation
+	struct FieldInformation final
 	{
 		QString name;
 		QString value;
 		FieldType type = UnknownField;
 	};
 
-	struct PasswordInformation
+	struct PasswordInformation final
 	{
 		QUrl url;
 		QDateTime timeAdded;

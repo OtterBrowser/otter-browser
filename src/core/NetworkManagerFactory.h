@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-struct ProxyDefinition
+struct ProxyDefinition final
 {
 	enum ProxyType
 	{
@@ -49,7 +49,7 @@ struct ProxyDefinition
 		SocksProtocol
 	};
 
-	struct ProxyServer
+	struct ProxyServer final
 	{
 		QString hostName;
 		int port = 8080;
@@ -99,7 +99,7 @@ struct ProxyDefinition
 	}
 };
 
-struct UserAgentDefinition
+struct UserAgentDefinition final
 {
 	QString identifier;
 	QString name;

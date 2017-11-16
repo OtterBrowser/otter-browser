@@ -67,9 +67,9 @@ public:
 		FullScreenMode
 	};
 
-	struct ToolBarDefinition
+	struct ToolBarDefinition final
 	{
-		struct Entry
+		struct Entry final
 		{
 			QString action;
 			QVariantMap options;

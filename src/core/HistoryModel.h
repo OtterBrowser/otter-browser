@@ -64,7 +64,7 @@ public:
 		TypedHistory
 	};
 
-	struct HistoryEntryMatch
+	struct HistoryEntryMatch final
 	{
 		HistoryEntryItem *entry = nullptr;
 		QString match;

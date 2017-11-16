@@ -247,9 +247,9 @@ public:
 
 	Q_DECLARE_FLAGS(OptionFlags, OptionFlag)
 
-	struct OptionDefinition
+	struct OptionDefinition final
 	{
-		struct ChoiceDefinition
+		struct ChoiceDefinition final
 		{
 			QString title;
 			QString value;

@@ -30,7 +30,7 @@ class SpellCheckManager final : public QObject
 	Q_OBJECT
 
 public:
-	struct DictionaryInformation
+	struct DictionaryInformation final
 	{
 		QString name;
 		QString title;

@@ -39,9 +39,9 @@ public:
 		FullMode
 	};
 
-	struct Gesture
+	struct Gesture final
 	{
-		struct Step
+		struct Step final
 		{
 			QEvent::Type type = QEvent::None;
 			Qt::MouseButton button = Qt::NoButton;

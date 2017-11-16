@@ -38,14 +38,14 @@ enum TrileanValue
 	TrueValue
 };
 
-struct ApplicationInformation
+struct ApplicationInformation final
 {
 	QString command;
 	QString name;
 	QIcon icon;
 };
 
-struct ErrorPageInformation
+struct ErrorPageInformation final
 {
 	enum ActionType
 	{
@@ -66,7 +66,7 @@ struct ErrorPageInformation
 		UnsupportedAddressTypeError
 	};
 
-	struct PageAction
+	struct PageAction final
 	{
 		QString name;
 		QString title;
@@ -80,7 +80,7 @@ struct ErrorPageInformation
 	ErrorType type = OtherError;
 };
 
-struct SaveInformation
+struct SaveInformation final
 {
 	QString path;
 	QString filter;

@@ -51,7 +51,7 @@ public:
 		ErrorLevel
 	};
 
-	struct Message
+	struct Message final
 	{
 		QDateTime time;
 		QString note;

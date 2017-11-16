@@ -30,7 +30,7 @@ class HandlersManager final : public QObject
 	Q_OBJECT
 
 public:
-	struct HandlerDefinition
+	struct HandlerDefinition final
 	{
 		enum TransferMode
 		{

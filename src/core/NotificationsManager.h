@@ -78,7 +78,7 @@ public:
 		UpdateAvailableEvent = 1
 	};
 
-	struct EventDefinition
+	struct EventDefinition final
 	{
 		QString title;
 		QString description;
