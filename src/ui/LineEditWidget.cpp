@@ -133,6 +133,7 @@ void PopupViewWidget::updateHeight()
 	}
 
 	setFixedHeight(completionHeight);
+
 	viewport()->setFixedHeight(completionHeight - 3);
 }
 
@@ -184,7 +185,6 @@ LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit
 	m_shouldSelectAllOnRelease(false),
 	m_hadSelection(false),
 	m_wasEmpty(text.isEmpty())
-
 {
 	initialize();
 }
