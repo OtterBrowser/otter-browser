@@ -55,7 +55,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	struct OptionEntry
+	struct OptionEntry final
 	{
 		OptionWidget *widget = nullptr;
 		QString name;

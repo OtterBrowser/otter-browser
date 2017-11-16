@@ -53,7 +53,7 @@ public:
 		CommentState
 	};
 
-	struct BlockData : public QTextBlockUserData
+	struct BlockData final : public QTextBlockUserData
 	{
 		QString context;
 		HighlightingSyntax currentSyntax = HtmlSyntax;

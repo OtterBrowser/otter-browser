@@ -100,7 +100,7 @@ public:
 		HistoryDropdownEntry
 	};
 
-	struct EntryDefinition
+	struct EntryDefinition final
 	{
 		QString title;
 		QIcon icon;

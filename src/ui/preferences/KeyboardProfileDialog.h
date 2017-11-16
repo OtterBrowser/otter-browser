@@ -92,7 +92,7 @@ public:
 		NormalStatus
 	};
 
-	struct ValidationResult
+	struct ValidationResult final
 	{
 		QString text;
 		QIcon icon;
