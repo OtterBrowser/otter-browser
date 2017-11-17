@@ -26,7 +26,6 @@
 #include <QtCore/QFile>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
-#include <QtCore/QTimer>
 #include <QtMultimedia/QSoundEffect>
 
 namespace Otter
@@ -117,7 +116,13 @@ Notification* NotificationsManager::createNotification(int event, const QString 
 		}
 		else
 		{
-			QTimer::singleShot(10000, effect, &QSoundEffect::deleteLater);
+			connect(effect, &QSoundEffect::playingChanged, m_instance, [=]()
+			{
+				if (!effect->isPlaying())
+				{
+					effect->deleteLater();
+				}
+			});
 
 			effect->play();
 		}

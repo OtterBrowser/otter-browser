@@ -43,7 +43,6 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
-#include <QtCore/QTimer>
 #include <QtMultimedia/QSoundEffect>
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QSslCipher>
@@ -462,7 +461,13 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 	}
 	else
 	{
-		QTimer::singleShot(10000, effect, &QSoundEffect::deleteLater);
+		connect(effect, &QSoundEffect::playingChanged, this, [=]()
+		{
+			if (!effect->isPlaying())
+			{
+				effect->deleteLater();
+			}
+		});
 
 		effect->play();
 	}
