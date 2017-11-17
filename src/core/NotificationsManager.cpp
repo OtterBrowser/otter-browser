@@ -159,13 +159,13 @@ NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(i
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		return EventDefinition();
+		return {};
 	}
 
 	const QSettings notificationsSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	const QString eventName(getEventName(identifier));
 
-	m_definitions[identifier].playSound = notificationsSettings.value(eventName + QLatin1String("/playSound"), QString()).toString();
+	m_definitions[identifier].playSound = notificationsSettings.value(eventName + QLatin1String("/playSound"), {}).toString();
 	m_definitions[identifier].showAlert = notificationsSettings.value(eventName + QLatin1String("/showAlert"), false).toBool();
 	m_definitions[identifier].showNotification = notificationsSettings.value(eventName + QLatin1String("/showNotification"), false).toBool();
 

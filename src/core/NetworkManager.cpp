@@ -79,7 +79,7 @@ void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &prox
 {
 	if (NetworkManagerFactory::usesSystemProxyAuthentication())
 	{
-		authenticator->setUser(QString());
+		authenticator->setUser({});
 
 		return;
 	}
