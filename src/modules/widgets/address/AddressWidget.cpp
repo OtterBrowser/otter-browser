@@ -917,11 +917,11 @@ void AddressWidget::handleOptionChanged(int identifier, const QVariant &value)
 					QString name(rawLayout.at(i) + QLatin1String("Entry"));
 					name[0] = name.at(0).toUpper();
 
-					const EntryIdentifier identifier(static_cast<EntryIdentifier>(metaObject()->enumerator(m_entryIdentifierEnumerator).keyToValue(name.toLatin1())));
+					const EntryIdentifier entryIdentifier(static_cast<EntryIdentifier>(metaObject()->enumerator(m_entryIdentifierEnumerator).keyToValue(name.toLatin1())));
 
-					if (identifier > UnknownEntry && !layout.contains(identifier))
+					if (entryIdentifier > UnknownEntry && !layout.contains(entryIdentifier))
 					{
-						layout.append(identifier);
+						layout.append(entryIdentifier);
 					}
 				}
 
