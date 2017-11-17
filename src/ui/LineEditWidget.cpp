@@ -327,8 +327,7 @@ void LineEditWidget::dropEvent(QDropEvent *event)
 	}
 	else if (m_dropMode == ReplaceDropMode || m_dropMode == ReplaceAndNotifyDropMode)
 	{
-		selectAll();
-		del();
+		clear();
 		insert(event->mimeData()->text());
 
 		if (m_dropMode == ReplaceAndNotifyDropMode)
