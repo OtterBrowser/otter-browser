@@ -164,30 +164,25 @@ NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(i
 
 	const QSettings notificationsSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	const QString eventName(getEventName(identifier));
+	EventDefinition definition(m_definitions.at(identifier));
+	definition.playSound = notificationsSettings.value(eventName + QLatin1String("/playSound"), {}).toString();
+	definition.showAlert = notificationsSettings.value(eventName + QLatin1String("/showAlert"), false).toBool();
+	definition.showNotification = notificationsSettings.value(eventName + QLatin1String("/showNotification"), false).toBool();
 
-	m_definitions[identifier].playSound = notificationsSettings.value(eventName + QLatin1String("/playSound"), {}).toString();
-	m_definitions[identifier].showAlert = notificationsSettings.value(eventName + QLatin1String("/showAlert"), false).toBool();
-	m_definitions[identifier].showNotification = notificationsSettings.value(eventName + QLatin1String("/showNotification"), false).toBool();
-
-	return m_definitions[identifier];
+	return definition;
 }
 
 QVector<NotificationsManager::EventDefinition> NotificationsManager::getEventDefinitions()
 {
-	QSettings notificationsSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
+	QVector<EventDefinition> definitions;
+	definitions.reserve(m_definitions.count());
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		notificationsSettings.beginGroup(getEventName(i));
-
-		m_definitions[i].playSound = notificationsSettings.value(QLatin1String("playSound")).toString();
-		m_definitions[i].showAlert = notificationsSettings.value(QLatin1String("showAlert")).toBool();
-		m_definitions[i].showNotification = notificationsSettings.value(QLatin1String("showNotification")).toBool();
-
-		notificationsSettings.endGroup();
+		definitions.append(getEventDefinition(i));
 	}
 
-	return m_definitions;
+	return definitions;
 }
 
 int NotificationsManager::registerEvent(const QString &title, const QString &description)
