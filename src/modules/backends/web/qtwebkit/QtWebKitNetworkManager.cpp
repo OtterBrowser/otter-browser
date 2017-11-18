@@ -136,6 +136,8 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_replies.clear();
 	m_headers.clear();
 	m_pageInformation.clear();
+	m_pageInformation[WebWidget::DocumentBytesReceivedInformation] = quint64(0);
+	m_pageInformation[WebWidget::DocumentBytesTotalInformation] = quint64(0);
 	m_pageInformation[WebWidget::TotalBytesReceivedInformation] = quint64(0);
 	m_pageInformation[WebWidget::TotalBytesTotalInformation] = quint64(0);
 	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
@@ -179,6 +181,8 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 		}
 		else
 		{
+			setPageInformation(WebWidget::DocumentBytesReceivedInformation, bytesReceived);
+			setPageInformation(WebWidget::DocumentBytesTotalInformation, bytesTotal);
 			setPageInformation(WebWidget::DocumentLoadingProgressInformation, ((bytesTotal > 0) ? (((bytesReceived * 1.0) / bytesTotal) * 100) : -1));
 		}
 	}

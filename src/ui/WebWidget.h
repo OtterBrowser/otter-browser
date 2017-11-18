@@ -117,10 +117,12 @@ public:
 	enum PageInformation
 	{
 		UnknownInformation = 0,
+		DocumentBytesReceivedInformation,
+		DocumentBytesTotalInformation,
 		DocumentLoadingProgressInformation,
-		TotalLoadingProgressInformation,
 		TotalBytesReceivedInformation,
 		TotalBytesTotalInformation,
+		TotalLoadingProgressInformation,
 		RequestsBlockedInformation,
 		RequestsFinishedInformation,
 		RequestsStartedInformation,
