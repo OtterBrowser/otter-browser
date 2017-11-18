@@ -367,15 +367,36 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 #endif
 		case ActionsManager::OpenLinkAction:
 			{
-				ensureInitialized();
+                               ensureInitialized();
 
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+                               QWidget *eventReceiver;
+                               QPointF clickPos = getClickPosition();
 
-				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
-				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
+                               foreach(QObject* childWidget, m_webView->children())
+                               {
+                                   QWidget* receiver = qobject_cast<QWidget*>(childWidget);
+                                   if(receiver)
+                                   {
+                                       eventReceiver = receiver;
+                                       break;
+                                   }
+                               }
 
-				setClickPosition(QPoint());
+                               QMouseEvent *mousePressEvent = new QMouseEvent(QEvent::MouseButtonPress,
+                                                                              QPointF(getClickPosition()),
+                                                                              Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+                               QApplication::postEvent(eventReceiver, mousePressEvent);
+
+                               QTimer::singleShot(100, [clickPos, eventReceiver]() {
+                                   QMouseEvent *mouseReleaseEvent= new QMouseEvent(QEvent::MouseButtonRelease,
+                                                                                   clickPos,
+                                                                                   Qt::LeftButton,
+                                                                                   Qt::NoButton,
+                                                                                   Qt::NoModifier);
+                                   QCoreApplication::postEvent(eventReceiver, mouseReleaseEvent);
+                               });
+
+                               setClickPosition(QPoint());
 			}
 
 			break;
