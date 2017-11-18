@@ -246,7 +246,7 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 
 	const UserAgentDefinition userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getOption(SettingsManager::Network_UserAgentOption).toString()));
 
-	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
+	return (userAgent.value.isEmpty() ? QString() : getUserAgent(userAgent.value));
 }
 
 QUrl QtWebKitWebBackend::getHomePage() const

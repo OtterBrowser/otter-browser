@@ -308,7 +308,7 @@ void QtWebKitWebWidget::clearPluginToken()
 
 	emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
 
-	m_pluginToken = QString();
+	m_pluginToken.clear();
 }
 
 void QtWebKitWebWidget::resetSpellCheck(QWebElement element)
