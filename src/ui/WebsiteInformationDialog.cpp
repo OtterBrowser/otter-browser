@@ -83,7 +83,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->addressLabelWidget->setText(widget->getUrl().toString());
 	m_ui->titleLabelWidget->setText(widget->getTitle());
 	m_ui->encodingLabelWidget->setText(characterEncoding.isEmpty() ? tr("unknown") : characterEncoding);
-	m_ui->sizeLabelWidget->setText(Utils::formatUnit(widget->getPageInformation(WebWidget::BytesTotalInformation).toLongLong(), false, 1, true));
+	m_ui->sizeLabelWidget->setText(Utils::formatUnit(widget->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true));
 	m_ui->elementsLabelWidget->setText((widget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0) ? tr("%1 (%n blocked)", "", widget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(widget->getPageInformation(WebWidget::RequestsStartedInformation).toInt()) : QString::number(widget->getPageInformation(WebWidget::RequestsStartedInformation).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(widget->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime()));
 

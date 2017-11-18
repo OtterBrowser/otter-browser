@@ -121,7 +121,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 
 			break;
 		case TotalSizeType:
-			if (key == WebWidget::BytesReceivedInformation)
+			if (key == WebWidget::TotalBytesReceivedInformation)
 			{
 				m_label->setText(tr("Total: %1").arg(Utils::formatUnit(value.toLongLong(), false, 1)));
 			}
@@ -178,7 +178,7 @@ void ProgressInformationWidget::setWindow(Window *window)
 
 			break;
 		case TotalSizeType:
-			type = WebWidget::BytesReceivedInformation;
+			type = WebWidget::TotalBytesReceivedInformation;
 
 			break;
 		case ElementsType:

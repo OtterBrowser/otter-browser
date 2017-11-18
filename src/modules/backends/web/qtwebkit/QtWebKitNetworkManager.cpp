@@ -136,8 +136,8 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_replies.clear();
 	m_headers.clear();
 	m_pageInformation.clear();
-	m_pageInformation[WebWidget::BytesReceivedInformation] = quint64(0);
-	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
+	m_pageInformation[WebWidget::TotalBytesReceivedInformation] = quint64(0);
+	m_pageInformation[WebWidget::TotalBytesTotalInformation] = quint64(0);
 	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
 	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
 	m_baseReply = nullptr;
@@ -203,7 +203,7 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 	{
 		m_replies[reply].second = true;
 
-		m_pageInformation[WebWidget::BytesTotalInformation] = (m_pageInformation[WebWidget::BytesTotalInformation].toLongLong() + bytesTotal);
+		m_pageInformation[WebWidget::TotalBytesTotalInformation] = (m_pageInformation[WebWidget::TotalBytesTotalInformation].toLongLong() + bytesTotal);
 	}
 
 	if (difference <= 0)
@@ -213,7 +213,7 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 
 	m_bytesReceivedDifference += difference;
 
-	setPageInformation(WebWidget::BytesReceivedInformation, (m_pageInformation[WebWidget::BytesReceivedInformation].toLongLong() + difference));
+	setPageInformation(WebWidget::TotalBytesReceivedInformation, (m_pageInformation[WebWidget::TotalBytesReceivedInformation].toLongLong() + difference));
 }
 
 void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
