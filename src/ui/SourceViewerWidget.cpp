@@ -425,12 +425,12 @@ void SourceViewerWidget::updateSelection()
 
 	if (!m_findText.isEmpty())
 	{
-		QTextEdit::ExtraSelection selection;
-		selection.format.setBackground(QColor(255, 150, 50));
-		selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-		selection.cursor = m_findTextSelection;
+		QTextEdit::ExtraSelection currentResultSelection;
+		currentResultSelection.format.setBackground(QColor(255, 150, 50));
+		currentResultSelection.format.setProperty(QTextFormat::FullWidthSelection, true);
+		currentResultSelection.cursor = m_findTextSelection;
 
-		extraSelections.append(selection);
+		extraSelections.append(currentResultSelection);
 
 		QTextCursor textCursor(this->textCursor());
 		textCursor.setPosition(0);
@@ -452,11 +452,11 @@ void SourceViewerWidget::updateSelection()
 				{
 					if (textCursor != m_findTextSelection)
 					{
-						QTextEdit::ExtraSelection selection;
-						selection.format.setBackground(QColor(255, 255, 0));
-						selection.cursor = textCursor;
+						QTextEdit::ExtraSelection extraResultSelection;
+						extraResultSelection.format.setBackground(QColor(255, 255, 0));
+						extraResultSelection.cursor = textCursor;
 
-						extraSelections.append(selection);
+						extraSelections.append(extraResultSelection);
 					}
 
 					++findTextResultsAmount;
