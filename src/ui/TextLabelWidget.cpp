@@ -87,7 +87,7 @@ void TextLabelWidget::clear()
 {
 	QLineEdit::setText(tr("<empty>"));
 
-	m_url = QUrl();
+	m_url.clear();
 	m_isEmpty = true;
 
 	updateStyle();

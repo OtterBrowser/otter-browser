@@ -457,7 +457,7 @@ QUrl SidebarWidget::getPanelUrl(const QString &identifier)
 		return AddonsManager::getSpecialPage(identifier).url;
 	}
 
-	return QUrl();
+	return {};
 }
 
 QIcon SidebarWidget::getPanelIcon(const QString &identifier)

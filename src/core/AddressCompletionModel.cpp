@@ -91,12 +91,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories)
 		{
-			completions.append(CompletionEntry(QUrl(), tr("Search with %1").arg(title), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("Search with %1").arg(title), {}, {}, {}, HeaderType));
 
 			title.clear();
 		}
 
-		CompletionEntry completionEntry(QUrl(), title, {}, icon, {}, SearchSuggestionType);
+		CompletionEntry completionEntry({}, title, {}, icon, {}, SearchSuggestionType);
 		completionEntry.text = text;
 		completionEntry.keyword = keyword;
 
@@ -109,7 +109,7 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !bookmarks.isEmpty())
 		{
-			completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("Bookmarks"), {}, {}, {}, HeaderType));
 		}
 
 		for (int i = 0; i < bookmarks.count(); ++i)
@@ -143,7 +143,7 @@ void AddressCompletionModel::updateModel()
 
 				if (!wasAdded)
 				{
-					completions.append(CompletionEntry(QUrl(), tr("Local files"), {}, {}, {}, HeaderType));
+					completions.append(CompletionEntry({}, tr("Local files"), {}, {}, {}, HeaderType));
 
 					wasAdded = true;
 				}
@@ -159,7 +159,7 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
-			completions.append(CompletionEntry(QUrl(), tr("History"), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("History"), {}, {}, {}, HeaderType));
 		}
 
 		for (int i = 0; i < entries.count(); ++i)
@@ -174,7 +174,7 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
-			completions.append(CompletionEntry(QUrl(), tr("Typed history"), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("Typed history"), {}, {}, {}, HeaderType));
 		}
 
 		for (int i = 0; i < entries.count(); ++i)
@@ -196,7 +196,7 @@ void AddressCompletionModel::updateModel()
 			{
 				if (!wasAdded)
 				{
-					completions.append(CompletionEntry(QUrl(), tr("Special pages"), {}, {}, {}, HeaderType));
+					completions.append(CompletionEntry({}, tr("Special pages"), {}, {}, {}, HeaderType));
 
 					wasAdded = true;
 				}
