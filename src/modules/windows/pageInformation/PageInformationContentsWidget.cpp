@@ -126,9 +126,11 @@ void PageInformationContentsWidget::updateSections()
 
 				if (sectionItem)
 				{
+					const bool canGetPageInformation(m_window && m_window->getWebWidget() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
+
 					addEntry(sectionItem, tr("Title"), (m_window ? m_window->getTitle() : QString()));
-					addEntry(sectionItem, tr("Document size"), ((m_window && m_window->getWebWidget() && m_window->getLoadingState() == WebWidget::FinishedLoadingState) ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
-					addEntry(sectionItem, tr("Downloaded"), ((m_window && m_window->getWebWidget() && m_window->getLoadingState() == WebWidget::FinishedLoadingState) ? Utils::formatDateTime(m_window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
+					addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
+					addEntry(sectionItem, tr("Downloaded"), (canGetPageInformation ? Utils::formatDateTime(m_window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
 				}
 
 				break;
