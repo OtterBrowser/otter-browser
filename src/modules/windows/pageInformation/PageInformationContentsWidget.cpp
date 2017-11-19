@@ -84,6 +84,10 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	updateSections();
 
 	connect(m_ui->informationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PageInformationContentsWidget::showContextMenu);
+	connect(m_ui->informationViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::CopyAction});
+	});
 }
 
 PageInformationContentsWidget::~PageInformationContentsWidget()
