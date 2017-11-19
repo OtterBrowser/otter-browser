@@ -19,6 +19,7 @@
 
 #include "PageInformationContentsWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 
@@ -81,6 +82,8 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	}
 
 	updateSections();
+
+	connect(m_ui->informationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PageInformationContentsWidget::showContextMenu);
 }
 
 PageInformationContentsWidget::~PageInformationContentsWidget()
@@ -200,6 +203,18 @@ void PageInformationContentsWidget::updateSections()
 		}
 
 		m_ui->informationViewWidget->setRowHidden(i, model->invisibleRootItem()->index(), (model->rowCount(index) == 0));
+	}
+}
+
+void PageInformationContentsWidget::showContextMenu(const QPoint &position)
+{
+	const QModelIndex index(m_ui->informationViewWidget->indexAt(position));
+
+	if (index.isValid())
+	{
+		QMenu menu(this);
+		menu.addAction(new Action(ActionsManager::CopyAction, {}, ActionExecutor::Object(this, this), &menu));
+		menu.exec(m_ui->informationViewWidget->mapToGlobal(position));
 	}
 }
 

@@ -66,6 +66,9 @@ protected:
 	void addEntry(QStandardItem *parent, const QString &key, const QString &value);
 	void updateSections();
 
+protected slots:
+	void showContextMenu(const QPoint &position);
+
 private:
 	Window *m_window;
 	Ui::PageInformationContentsWidget *m_ui;
