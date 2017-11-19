@@ -56,6 +56,10 @@ public:
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
+
+public slots:
+	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 
 protected:
 	void changeEvent(QEvent *event) override;

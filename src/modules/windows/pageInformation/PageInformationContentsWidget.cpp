@@ -24,6 +24,8 @@
 
 #include "ui_PageInformationContentsWidget.h"
 
+#include <QtGui/QClipboard>
+
 namespace Otter
 {
 
@@ -95,6 +97,23 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 
 		updateSections();
+	}
+}
+
+void PageInformationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	if (identifier == ActionsManager::CopyAction)
+	{
+		const QModelIndex index(m_ui->informationViewWidget->getCurrentIndex());
+
+		if (index.isValid() && index.parent().isValid())
+		{
+			QGuiApplication::clipboard()->setText(index.data(Qt::ToolTipRole).toString());
+		}
+	}
+	else
+	{
+		ContentsWidget::triggerAction(identifier, parameters);
 	}
 }
 
@@ -202,6 +221,20 @@ QUrl PageInformationContentsWidget::getUrl() const
 QIcon PageInformationContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("dialog-information"), false);
+}
+
+ActionsManager::ActionDefinition::State PageInformationContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (identifier == ActionsManager::CopyAction)
+	{
+		const QModelIndex index(m_ui->informationViewWidget->getCurrentIndex());
+		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(ActionsManager::CopyAction).getDefaultState());
+		state.isEnabled = (index.isValid() && index.parent().isValid());
+
+		return state;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
 }
 
 }
