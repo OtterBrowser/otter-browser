@@ -368,9 +368,9 @@ void CacheContentsWidget::updateActions()
 	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : url.host());
 
 	m_ui->locationLabelWidget->setText({});
-	m_ui->locationLabelWidget->setUrl(QUrl());
+	m_ui->locationLabelWidget->setUrl({});
 	m_ui->previewLabel->hide();
-	m_ui->previewLabel->setPixmap(QPixmap());
+	m_ui->previewLabel->setPixmap({});
 	m_ui->deleteButton->setEnabled(!domain.isEmpty());
 
 	if (url.isValid())
