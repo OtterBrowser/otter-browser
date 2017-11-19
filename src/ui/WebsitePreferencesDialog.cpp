@@ -376,19 +376,15 @@ void WebsitePreferencesDialog::handleValueChanged()
 
 	QLayoutItem *item(layout->itemAtPosition(row, 0));
 
-	if (!item)
+	if (item)
 	{
-		return;
+		QCheckBox *overrideCheckBox(qobject_cast<QCheckBox*>(item->widget()));
+
+		if (overrideCheckBox)
+		{
+			overrideCheckBox->setChecked(true);
+		}
 	}
-
-	QCheckBox *overrideCheckBox(qobject_cast<QCheckBox*>(item->widget()));
-
-	if (!overrideCheckBox)
-	{
-		return;
-	}
-
-	overrideCheckBox->setChecked(true);
 }
 
 void WebsitePreferencesDialog::updateCookiesActions()
