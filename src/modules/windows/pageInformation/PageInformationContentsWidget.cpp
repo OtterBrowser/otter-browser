@@ -38,7 +38,7 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 
 	const QVector<SectionName> sections({GeneralSection, SecuritySection, PermissionsSection, MetaSection, HeadersSection});
 	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Value")}));
+	model->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
 
 	for (int i = 0; i < sections.count(); ++i)
 	{
@@ -102,6 +102,12 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		if (m_ui->informationViewWidget->getSourceModel())
+		{
+			m_ui->informationViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
+
+		}
 
 		updateSections();
 	}
