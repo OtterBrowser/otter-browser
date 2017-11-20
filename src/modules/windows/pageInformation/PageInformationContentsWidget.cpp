@@ -155,10 +155,14 @@ void PageInformationContentsWidget::updateSections()
 					const bool canGetPageInformation(m_window && m_window->getWebWidget() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
 
 					addEntry(sectionItem, tr("Title"), (m_window ? m_window->getTitle() : QString()));
-					addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
-					addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
-					addEntry(sectionItem, tr("Number of requests"), (canGetPageInformation ? QString::number(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()) : QString()));
-					addEntry(sectionItem, tr("Downloaded"), (canGetPageInformation ? Utils::formatDateTime(m_window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
+
+					if (!m_window || m_window->getUrl().scheme() != QLatin1String("about"))
+					{
+						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
+						addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
+						addEntry(sectionItem, tr("Number of requests"), (canGetPageInformation ? QString::number(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()) : QString()));
+						addEntry(sectionItem, tr("Downloaded"), (canGetPageInformation ? Utils::formatDateTime(m_window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
+					}
 				}
 
 				break;
