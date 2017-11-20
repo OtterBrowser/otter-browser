@@ -267,7 +267,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	QTextCursor textCursor(m_sourceViewer->cursorForPosition(QPoint(1, event->y())));
-	int currentLine(textCursor.blockNumber());
+	const int currentLine(textCursor.blockNumber());
 
 	if (currentLine == m_lastClickedLine)
 	{
