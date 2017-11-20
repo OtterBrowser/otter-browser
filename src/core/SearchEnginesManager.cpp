@@ -149,7 +149,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 		if (search.isValid())
 		{
-			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : search.icon), QString()));
+			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : search.icon), {}));
 			item->setData(search.title, TitleRole);
 			item->setData(search.identifier, IdentifierRole);
 			item->setData(search.keyword, KeywordRole);
@@ -399,7 +399,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 	}
 	else
 	{
-		searchEngine.identifier = QString();
+		searchEngine.identifier.clear();
 	}
 
 	return searchEngine;

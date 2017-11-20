@@ -96,7 +96,7 @@ void SearchSuggester::setSearchEngine(const QString &searchEngine)
 	const QString query(m_query);
 
 	m_searchEngine = searchEngine;
-	m_query = QString();
+	m_query.clear();
 
 	setQuery(query);
 }
