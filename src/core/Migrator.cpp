@@ -209,7 +209,7 @@ public:
 	void createBackup() const override
 	{
 		const QString backupPath(createBackupPath(QLatin1String("other")));
-		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath({})).entryInfoList(QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")})));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath({})).entryInfoList({QLatin1String("otter.conf"), QLatin1String("override.ini")}));
 
 		for (int i = 0; i < entries.count(); ++i)
 		{

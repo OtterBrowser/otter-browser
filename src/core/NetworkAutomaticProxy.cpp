@@ -32,8 +32,8 @@
 namespace Otter
 {
 
-QStringList PacUtils::m_months = QStringList({QLatin1String("jan"), QLatin1String("feb"), QLatin1String("mar"), QLatin1String("apr"), QLatin1String("may"), QLatin1String("jun"), QLatin1String("jul"), QLatin1String("aug"), QLatin1String("sep"), QLatin1String("oct"), QLatin1String("nov"), QLatin1String("dec")});
-QStringList PacUtils::m_days = QStringList({QLatin1String("mon"), QLatin1String("tue"), QLatin1String("wed"), QLatin1String("thu"), QLatin1String("fri"), QLatin1String("sat"), QLatin1String("sun")});
+QStringList PacUtils::m_months = {QLatin1String("jan"), QLatin1String("feb"), QLatin1String("mar"), QLatin1String("apr"), QLatin1String("may"), QLatin1String("jun"), QLatin1String("jul"), QLatin1String("aug"), QLatin1String("sep"), QLatin1String("oct"), QLatin1String("nov"), QLatin1String("dec")};
+QStringList PacUtils::m_days = {QLatin1String("mon"), QLatin1String("tue"), QLatin1String("wed"), QLatin1String("thu"), QLatin1String("fri"), QLatin1String("sat"), QLatin1String("sun")};
 
 PacUtils::PacUtils(QObject *parent) : QObject(parent)
 {

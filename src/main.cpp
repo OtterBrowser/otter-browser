@@ -72,7 +72,7 @@ bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIden
 
 		const MainWindow *mainWindow(Application::getActiveWindow());
 
-		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), QStringList({dumpPath, (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())}));
+		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), {dumpPath, (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())});
 	}
 
 	return succeeded;
@@ -88,7 +88,7 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 
 		const MainWindow *mainWindow(Application::getActiveWindow());
 
-		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), QStringList({descriptor.path(), (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())}));
+		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), {descriptor.path(), (mainWindow ? mainWindow->getUrl().toDisplayString() : QString())});
 	}
 
 	return succeeded;
