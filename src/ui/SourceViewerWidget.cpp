@@ -174,7 +174,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 		{
 			currentState = currentData.state;
 			currentStateBegin = position;
-			currentData.context = QString();
+			currentData.context.clear();
 			currentData.state = NoState;
 		}
 
@@ -187,7 +187,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[HtmlSyntax][currentState]);
 			}
 
-			buffer = QString();
+			buffer.clear();
 			previousState = currentState;
 			previousStateBegin = currentStateBegin;
 		}
