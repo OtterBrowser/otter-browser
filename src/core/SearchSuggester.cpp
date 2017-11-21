@@ -69,6 +69,7 @@ void SearchSuggester::handleReplyFinished()
 		const QJsonArray descriptionsArray(document.array().at(2).toArray());
 		const QJsonArray urlsArray(document.array().at(3).toArray());
 		QVector<SearchSuggestion> suggestions;
+		suggestions.reserve(completionsArray.count());
 
 		for (int i = 0; i < completionsArray.count(); ++i)
 		{
