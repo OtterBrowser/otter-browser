@@ -269,14 +269,12 @@ void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 	QTextCursor textCursor(m_sourceViewer->cursorForPosition(QPoint(1, event->y())));
 	const int currentLine(textCursor.blockNumber());
 
-	if (currentLine == m_lastClickedLine)
+	if (currentLine != m_lastClickedLine)
 	{
-		return;
+		textCursor.movePosition(((currentLine > m_lastClickedLine) ? QTextCursor::Up : QTextCursor::Down), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine));
+
+		m_sourceViewer->setTextCursor(textCursor);
 	}
-
-	textCursor.movePosition(((currentLine > m_lastClickedLine) ? QTextCursor::Up : QTextCursor::Down), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine));
-
-	m_sourceViewer->setTextCursor(textCursor);
 }
 
 void MarginWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -421,46 +419,52 @@ void SourceViewerWidget::updateTextCursor()
 void SourceViewerWidget::updateSelection()
 {
 	QList<QTextEdit::ExtraSelection> extraSelections;
-	int findTextResultsAmount(0);
 
-	if (!m_findText.isEmpty())
+	if (m_findText.isEmpty())
 	{
-		QTextEdit::ExtraSelection currentResultSelection;
-		currentResultSelection.format.setBackground(QColor(255, 150, 50));
-		currentResultSelection.format.setProperty(QTextFormat::FullWidthSelection, true);
-		currentResultSelection.cursor = m_findTextSelection;
+		m_findTextResultsAmount = 0;
 
-		extraSelections.append(currentResultSelection);
+		setExtraSelections(extraSelections);
 
-		QTextCursor textCursor(this->textCursor());
-		textCursor.setPosition(0);
+		return;
+	}
 
-		if (m_findFlags.testFlag(WebWidget::HighlightAllFind))
+	int findTextResultsAmount(0);
+	QTextEdit::ExtraSelection currentResultSelection;
+	currentResultSelection.format.setBackground(QColor(255, 150, 50));
+	currentResultSelection.format.setProperty(QTextFormat::FullWidthSelection, true);
+	currentResultSelection.cursor = m_findTextSelection;
+
+	extraSelections.append(currentResultSelection);
+
+	QTextCursor textCursor(this->textCursor());
+	textCursor.setPosition(0);
+
+	if (m_findFlags.testFlag(WebWidget::HighlightAllFind))
+	{
+		QTextDocument::FindFlags nativeFlags;
+
+		if (m_findFlags.testFlag(WebWidget::CaseSensitiveFind))
 		{
-			QTextDocument::FindFlags nativeFlags;
+			nativeFlags |= QTextDocument::FindCaseSensitively;
+		}
 
-			if (m_findFlags.testFlag(WebWidget::CaseSensitiveFind))
+		while (!textCursor.isNull())
+		{
+			textCursor = document()->find(m_findText, textCursor, nativeFlags);
+
+			if (!textCursor.isNull())
 			{
-				nativeFlags |= QTextDocument::FindCaseSensitively;
-			}
-
-			while (!textCursor.isNull())
-			{
-				textCursor = document()->find(m_findText, textCursor, nativeFlags);
-
-				if (!textCursor.isNull())
+				if (textCursor != m_findTextSelection)
 				{
-					if (textCursor != m_findTextSelection)
-					{
-						QTextEdit::ExtraSelection extraResultSelection;
-						extraResultSelection.format.setBackground(QColor(255, 255, 0));
-						extraResultSelection.cursor = textCursor;
+					QTextEdit::ExtraSelection extraResultSelection;
+					extraResultSelection.format.setBackground(QColor(255, 255, 0));
+					extraResultSelection.cursor = textCursor;
 
-						extraSelections.append(extraResultSelection);
-					}
-
-					++findTextResultsAmount;
+					extraSelections.append(extraResultSelection);
 				}
+
+				++findTextResultsAmount;
 			}
 		}
 	}
