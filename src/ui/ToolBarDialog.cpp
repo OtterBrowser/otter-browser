@@ -320,7 +320,9 @@ void ToolBarDialog::editEntry()
 	if (identifier == QLatin1String("SearchWidget"))
 	{
 		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-		QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices{{tr("All"), {}, {}}, SettingsManager::OptionDefinition::Choice()};
+		QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices{{tr("All"), {}, {}}, {}};
+		searchEngineChoices.reserve(searchEngines.count() + 2);
+
 		OptionEntry searchEngineEntry;
 		searchEngineEntry.widget = new OptionWidget(options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this);
 		searchEngineEntry.name = QLatin1String("searchEngine");
