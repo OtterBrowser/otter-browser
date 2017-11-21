@@ -290,7 +290,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 			{
-				path = QString();
+				path.clear();
 			}
 		}
 
