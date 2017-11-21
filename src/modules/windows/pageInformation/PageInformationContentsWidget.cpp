@@ -166,7 +166,18 @@ void PageInformationContentsWidget::updateSections()
 					{
 						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
 						addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
-						addEntry(sectionItem, tr("Number of requests"), (canGetPageInformation ? QString::number(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()) : QString()));
+
+						if (canGetPageInformation && m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0)
+						{
+							const int amountOfBlockedRequests(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt());
+
+							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%2 blocked)", "", amountOfBlockedRequests).arg(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()).arg(amountOfBlockedRequests));
+						}
+						else
+						{
+							addEntry(sectionItem, tr("Number of requests"), (canGetPageInformation ? QString::number(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()) : QString()));
+						}
+
 						addEntry(sectionItem, tr("Downloaded"), (canGetPageInformation ? Utils::formatDateTime(m_window->getWebWidget()->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime(), {}, false) : QString()));
 					}
 				}
