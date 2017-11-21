@@ -135,7 +135,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 		gesturesModel->appendRow(items);
 	}
 
-	gesturesModel->setHorizontalHeaderLabels(QStringList({tr("Context and Action"), tr("Parameters"), tr("Steps")}));
+	gesturesModel->setHorizontalHeaderLabels({tr("Context and Action"), tr("Parameters"), tr("Steps")});
 	gesturesModel->sort(0);
 
 	QStandardItemModel *stepsModel(new QStandardItemModel(this));

@@ -35,7 +35,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	m_ui->setupUi(this);
 
 	m_model = new QStandardItemModel(this);
-	m_model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Code")}));
+	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Code")});
 
 	m_ui->languagesViewWidget->setModel(m_model);
 

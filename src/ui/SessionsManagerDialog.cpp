@@ -47,7 +47,7 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 	}
 
 	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Identifier"), tr("Windows")}));
+	model->setHorizontalHeaderLabels({tr("Title"), tr("Identifier"), tr("Windows")});
 
 	const QList<SessionInformation> sorted(information.values());
 	const QString currentSession(SessionsManager::getCurrentSession());

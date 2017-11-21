@@ -204,7 +204,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		groupItem->appendRow(optionItems);
 	}
 
-	m_model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Type"), tr("Value")}));
+	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Value")});
 	m_model->sort(0);
 
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);

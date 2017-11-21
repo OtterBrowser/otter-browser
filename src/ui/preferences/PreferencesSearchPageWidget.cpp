@@ -95,7 +95,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->setupUi(this);
 
 	TreeModel *searchEnginesModel(new TreeModel(this));
-	searchEnginesModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Keyword")}));
+	searchEnginesModel->setHorizontalHeaderLabels({tr("Name"), tr("Keyword")});
 	searchEnginesModel->setExclusive(true);
 
 	const QString defaultSearchEngine(SettingsManager::getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());

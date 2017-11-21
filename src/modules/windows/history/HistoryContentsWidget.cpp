@@ -48,7 +48,7 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 		m_model->appendRow(new QStandardItem(ThemesManager::createIcon(QLatin1String("inode-directory")), groups.at(i)));
 	}
 
-	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Title"), tr("Date")}));
+	m_model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 	m_model->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 	m_model->setHeaderData(1, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 	m_model->setSortRole(Qt::DisplayRole);

@@ -35,7 +35,7 @@ SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Passw
 	m_ui->setupUi(this);
 
 	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Value")}));
+	model->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{

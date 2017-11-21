@@ -121,7 +121,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
 	QStandardItemModel *cookiesModel(new QStandardItemModel(this));
-	cookiesModel->setHorizontalHeaderLabels(QStringList({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration date")}));
+	cookiesModel->setHorizontalHeaderLabels({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration date")});
 
 	m_ui->cookiesViewWidget->setModel(cookiesModel);
 

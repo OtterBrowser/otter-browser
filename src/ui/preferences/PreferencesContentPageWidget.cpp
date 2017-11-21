@@ -130,7 +130,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
 	QStandardItemModel *fontsModel(new QStandardItemModel(this));
-	fontsModel->setHorizontalHeaderLabels(QStringList({tr("Style"), tr("Font"), tr("Preview")}));
+	fontsModel->setHorizontalHeaderLabels({tr("Style"), tr("Font"), tr("Preview")});
 	fontsModel->setHeaderData(2, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 
 	const QVector<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
@@ -153,7 +153,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->fontsViewWidget->setItemDelegateForColumn(1, new FontItemDelegate(this));
 
 	QStandardItemModel *colorsModel(new QStandardItemModel(this));
-	colorsModel->setHorizontalHeaderLabels(QStringList({tr("Type"), tr("Preview")}));
+	colorsModel->setHorizontalHeaderLabels({tr("Type"), tr("Preview")});
 	colorsModel->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 
 	const QVector<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});

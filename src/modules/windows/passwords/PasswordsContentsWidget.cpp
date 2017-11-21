@@ -71,7 +71,7 @@ void PasswordsContentsWidget::changeEvent(QEvent *event)
 void PasswordsContentsWidget::populatePasswords()
 {
 	m_model->clear();
-	m_model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Value")}));
+	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
 
 	const QStringList hosts(PasswordsManager::getHosts());
 
