@@ -348,7 +348,7 @@ void ToolBarDialog::editEntry()
 	{
 		const QStringList choices(SettingsManager::getOptions());
 		OptionEntry textEntry;
-		textEntry.widget = new OptionWidget(QVariant(), SettingsManager::StringType, this);
+		textEntry.widget = new OptionWidget({}, SettingsManager::StringType, this);
 		textEntry.widget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
 		textEntry.widget->setValue(options.value(QLatin1String("text"), textEntry.widget->getDefaultValue()));
 		textEntry.name = QLatin1String("text");
@@ -362,7 +362,7 @@ void ToolBarDialog::editEntry()
 
 		OptionEntry scopeEntry;
 		scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, this);
-		scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::Choice>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
+		scopeEntry.widget->setChoices(QVector<SettingsManager::OptionDefinition::Choice>{{tr("Global"), QLatin1String("global"), {}}, {tr("Tab"), QLatin1String("window"), {}}});
 		scopeEntry.widget->setDefaultValue(QLatin1String("window"));
 		scopeEntry.name = QLatin1String("scope");
 		scopeEntry.label = tr("Scope:");
@@ -384,12 +384,12 @@ void ToolBarDialog::editEntry()
 	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
 		OptionEntry iconEntry;
-		iconEntry.widget = new OptionWidget(QVariant(), SettingsManager::IconType, this);
+		iconEntry.widget = new OptionWidget({}, SettingsManager::IconType, this);
 		iconEntry.name = QLatin1String("icon");
 		iconEntry.label = tr("Icon:");
 
 		OptionEntry textEntry;
-		textEntry.widget = new OptionWidget(QVariant(), SettingsManager::StringType, this);
+		textEntry.widget = new OptionWidget({}, SettingsManager::StringType, this);
 		textEntry.name = QLatin1String("text");
 		textEntry.label = tr("Text:");
 
