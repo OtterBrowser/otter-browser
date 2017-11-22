@@ -353,9 +353,9 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 
 	switch (definition.type)
 	{
-		case SettingsManager::BooleanType:
+		case BooleanType:
 			return (value.toBool() ? tr("Yes") : tr("No"));
-		case SettingsManager::ColorType:
+		case ColorType:
 			{
 				const QColor color(value.value<QColor>());
 
@@ -363,7 +363,7 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 			}
 
 			break;
-		case SettingsManager::EnumerationType:
+		case EnumerationType:
 			{
 				const QString key(value.toString());
 
@@ -377,9 +377,9 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 			}
 
 			break;
-		case SettingsManager::ListType:
+		case ListType:
 			return value.toStringList().join(QLatin1String(", "));
-		case SettingsManager::PasswordType:
+		case PasswordType:
 			if (!value.toString().isEmpty())
 			{
 				return QString(5, QChar(0x2022));
