@@ -1034,9 +1034,9 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index)
 
 			for (iterator = m_filterRoles.begin(); iterator != m_filterRoles.end(); ++iterator)
 			{
-				const QVariant data(childIndex.data(*iterator));
+				const QVariant roleData(childIndex.data(*iterator));
 
-				if (!data.isNull() && data.toString().contains(m_filterString, Qt::CaseInsensitive))
+				if (!roleData.isNull() && roleData.toString().contains(m_filterString, Qt::CaseInsensitive))
 				{
 					hasFound = true;
 
