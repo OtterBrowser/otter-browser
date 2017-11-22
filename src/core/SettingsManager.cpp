@@ -552,7 +552,7 @@ SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int ident
 	return OptionDefinition();
 }
 
-int SettingsManager::registerOption(const QString &name, OptionType type, const QVariant &defaultValue, const QStringList &choices)
+int SettingsManager::registerOption(const QString &name, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionFlags flags)
 {
 	if (name.isEmpty() || getOptionIdentifier(name) >= 0)
 	{
@@ -567,6 +567,7 @@ int SettingsManager::registerOption(const QString &name, OptionType type, const 
 	definition.defaultValue = defaultValue;
 	definition.setChoices(choices);
 	definition.type = type;
+	definition.flags = flags;
 	definition.identifier = identifier;
 
 	m_customOptions[name] = identifier;

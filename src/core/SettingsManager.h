@@ -309,7 +309,7 @@ public:
 	static QVariant getOption(int identifier, const QUrl &url = {});
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
-	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {});
+	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag));
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, int identifier = -1);
 
