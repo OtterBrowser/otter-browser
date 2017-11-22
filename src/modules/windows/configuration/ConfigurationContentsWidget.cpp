@@ -165,7 +165,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		const QVariant value(SettingsManager::getOption(identifier));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
-		if (!definition.flags.testFlag(SettingsManager::IsEnabledFlag) || !definition.flags.testFlag(SettingsManager::IsVisibleFlag))
+		if (!definition.flags.testFlag(SettingsManager::OptionDefinition::IsEnabledFlag) || !definition.flags.testFlag(SettingsManager::OptionDefinition::IsVisibleFlag))
 		{
 			continue;
 		}

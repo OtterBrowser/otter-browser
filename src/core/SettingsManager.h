@@ -237,17 +237,6 @@ public:
 		StringType
 	};
 
-	enum OptionFlag
-	{
-		NoFlags = 0,
-		IsEnabledFlag = 1,
-		IsVisibleFlag = 2,
-		IsBuiltInFlag = 4,
-		RequiresRestartFlag = 8
-	};
-
-	Q_DECLARE_FLAGS(OptionFlags, OptionFlag)
-
 	struct OptionDefinition final
 	{
 		struct Choice final
@@ -266,6 +255,17 @@ public:
 				return (!title.isEmpty() || !value.isEmpty());
 			}
 		};
+
+		enum OptionFlag
+		{
+			NoFlags = 0,
+			IsEnabledFlag = 1,
+			IsVisibleFlag = 2,
+			IsBuiltInFlag = 4,
+			RequiresRestartFlag = 8
+		};
+
+		Q_DECLARE_FLAGS(OptionFlags, OptionFlag)
 
 		QVariant defaultValue;
 		QVector<Choice> choices;
@@ -310,7 +310,7 @@ public:
 	static QVariant getOption(int identifier, const QUrl &url = {});
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
-	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag));
+	static int registerOption(const QString &name, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag | OptionDefinition::IsVisibleFlag));
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, int identifier = -1);
 
@@ -318,7 +318,7 @@ protected:
 	explicit SettingsManager(QObject *parent);
 
 	static QString getHost(const QUrl &url);
-	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag | IsBuiltInFlag));
+	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag |OptionDefinition:: IsVisibleFlag | OptionDefinition::IsBuiltInFlag));
 	static void saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type);
 
 private:
@@ -338,6 +338,6 @@ signals:
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::SettingsManager::OptionFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::SettingsManager::OptionDefinition::OptionFlags)
 
 #endif

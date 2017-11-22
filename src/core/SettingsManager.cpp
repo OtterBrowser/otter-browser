@@ -73,7 +73,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(AddressField_SuggestSearchOption, BooleanType, true);
 	registerOption(AddressField_SuggestSpecialPagesOption, BooleanType, true);
 	registerOption(Backends_PasswordsOption, EnumerationType, QLatin1String("file"), QStringList(QLatin1String("file")));
-	registerOption(Backends_WebOption, EnumerationType, QLatin1String("qtwebkit"), QStringList(QLatin1String("qtwebkit")), (IsEnabledFlag | IsVisibleFlag | RequiresRestartFlag));
+	registerOption(Backends_WebOption, EnumerationType, QLatin1String("qtwebkit"), QStringList(QLatin1String("qtwebkit")), (OptionDefinition::IsEnabledFlag | OptionDefinition::IsVisibleFlag | OptionDefinition::RequiresRestartFlag));
 	registerOption(Browser_AlwaysAskWhereToSaveDownloadOption, BooleanType, true);
 	registerOption(Browser_EnableMouseGesturesOption, BooleanType, true);
 	registerOption(Browser_EnableSingleKeyShortcutsOption, BooleanType, true);
@@ -266,7 +266,7 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	}
 }
 
-void SettingsManager::registerOption(int identifier, SettingsManager::OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionFlags flags)
+void SettingsManager::registerOption(int identifier, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionDefinition::OptionFlags flags)
 {
 	OptionDefinition definition;
 	definition.defaultValue = defaultValue;
@@ -552,7 +552,7 @@ SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int ident
 	return OptionDefinition();
 }
 
-int SettingsManager::registerOption(const QString &name, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionFlags flags)
+int SettingsManager::registerOption(const QString &name, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionDefinition::OptionFlags flags)
 {
 	if (name.isEmpty() || getOptionIdentifier(name) >= 0)
 	{
