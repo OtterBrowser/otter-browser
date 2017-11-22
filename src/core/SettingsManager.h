@@ -242,7 +242,8 @@ public:
 		NoFlags = 0,
 		IsEnabledFlag = 1,
 		IsVisibleFlag = 2,
-		IsBuiltInFlag = 4
+		IsBuiltInFlag = 4,
+		RequiresRestartFlag = 8
 	};
 
 	Q_DECLARE_FLAGS(OptionFlags, OptionFlag)
@@ -317,7 +318,7 @@ protected:
 	explicit SettingsManager(QObject *parent);
 
 	static QString getHost(const QUrl &url);
-	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {});
+	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag | IsBuiltInFlag));
 	static void saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type);
 
 private:
