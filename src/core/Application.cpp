@@ -1509,9 +1509,7 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 				}
 				else if (mode == QLatin1String("toggle"))
 				{
-					const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(name)));
-
-					if (definition.type == SettingsManager::BooleanType)
+					if (SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(name)).type == SettingsManager::BooleanType)
 					{
 						if (host.isEmpty())
 						{
