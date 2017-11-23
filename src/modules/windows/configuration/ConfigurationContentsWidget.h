@@ -57,7 +57,8 @@ public:
 	{
 		IdentifierRole = Qt::UserRole,
 		NameRole,
-		IsModifiedRole
+		IsModifiedRole,
+		RequiresRestartRole
 	};
 
 	explicit ConfigurationContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);

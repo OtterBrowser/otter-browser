@@ -188,6 +188,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 		optionItems[2]->setData(options.at(i), NameRole);
 		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
 
+		if (definition.flags.testFlag(SettingsManager::OptionDefinition::RequiresRestartFlag))
+		{
+			optionItems[2]->setData(true, RequiresRestartRole);
+		}
+
 		if (value != definition.defaultValue)
 		{
 			QFont font(optionItems[0]->font());
