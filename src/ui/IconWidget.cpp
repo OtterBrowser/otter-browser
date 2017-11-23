@@ -53,9 +53,9 @@ void IconWidget::clear()
 {
 	m_icon = QString();
 
-	QToolButton::setIcon(QIcon());
+	QToolButton::setIcon({});
 
-	emit iconChanged(QIcon());
+	emit iconChanged({});
 }
 
 void IconWidget::reset()

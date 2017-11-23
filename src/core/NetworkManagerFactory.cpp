@@ -563,7 +563,7 @@ void NetworkManagerFactory::updateProxiesOption()
 	{
 		if (!iterator.value().isFolder && !iterator.value().identifier.isEmpty())
 		{
-			proxiesOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, QIcon()});
+			proxiesOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, {}});
 		}
 	}
 
@@ -575,7 +575,7 @@ void NetworkManagerFactory::updateUserAgentsOption()
 	SettingsManager::OptionDefinition userAgentsOption(SettingsManager::getOptionDefinition(SettingsManager::Network_UserAgentOption));
 	userAgentsOption.choices.clear();
 	userAgentsOption.choices.reserve(m_userAgents.count() * 0.75);
-	userAgentsOption.choices.append({QCoreApplication::translate("userAgents", "Default User Agent"), QLatin1String("default"), QIcon()});
+	userAgentsOption.choices.append({QCoreApplication::translate("userAgents", "Default User Agent"), QLatin1String("default"), {}});
 
 	QMap<QString, UserAgentDefinition>::iterator iterator;
 
@@ -583,7 +583,7 @@ void NetworkManagerFactory::updateUserAgentsOption()
 	{
 		if (!iterator.value().isFolder && !iterator.value().identifier.isEmpty() && iterator.value().identifier != QLatin1String("default"))
 		{
-			userAgentsOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, QIcon()});
+			userAgentsOption.choices.append({iterator.value().getTitle(), iterator.value().identifier, {}});
 		}
 	}
 

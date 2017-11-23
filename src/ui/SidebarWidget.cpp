@@ -472,7 +472,7 @@ QIcon SidebarWidget::getPanelIcon(const QString &identifier)
 		return AddonsManager::getSpecialPage(identifier).icon;
 	}
 
-	return QIcon();
+	return {};
 }
 
 QSize SidebarWidget::sizeHint() const

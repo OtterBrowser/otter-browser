@@ -98,7 +98,7 @@ HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *paren
 	{
 		const QJsonObject entryObject(historyArray.at(i).toObject());
 
-		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
+		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), {}, QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
 	}
 
 	setSortRole(TimeVisitedRole);

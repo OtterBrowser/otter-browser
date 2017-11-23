@@ -551,7 +551,7 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 		QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 		MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
 		QMenu *menu(new QMenu(mdiWindow));
-		menu->addAction(new Action(ActionsManager::CloseTabAction, {}, {{QLatin1String("icon"), QIcon()}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Close")}}, windowExecutor, menu));
+		menu->addAction(new Action(ActionsManager::CloseTabAction, {}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Close")}}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::RestoreTabAction, {}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::MinimizeTabAction, {}, windowExecutor, menu));
 		menu->addAction(new Action(ActionsManager::MaximizeTabAction, {}, windowExecutor, menu));

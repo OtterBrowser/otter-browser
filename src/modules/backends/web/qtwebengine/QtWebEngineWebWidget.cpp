@@ -995,7 +995,7 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 		m_iconFetchJob->cancel();
 	}
 
-	m_icon = QIcon();
+	m_icon = {};
 
 	m_iconFetchJob = new IconFetchJob(url, this);
 
@@ -1102,7 +1102,7 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 	updateOptions(url);
 
 #if QT_VERSION < 0x050700
-	m_icon = QIcon();
+	m_icon = {};
 #endif
 
 	emit iconChanged(getIcon());
