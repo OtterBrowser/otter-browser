@@ -48,18 +48,6 @@ public:
 
 	Q_DECLARE_FLAGS(CompletionTypes, CompletionType)
 
-	enum EntryType
-	{
-		UnknownType = 0,
-		HeaderType,
-		BookmarkType,
-		HistoryType,
-		TypedInHistoryType,
-		SearchSuggestionType,
-		SpecialPageType,
-		LocalPathType
-	};
-
 	enum EntryRole
 	{
 		TextRole = Qt::DisplayRole,
@@ -73,6 +61,18 @@ public:
 
 	struct CompletionEntry final
 	{
+		enum EntryType
+		{
+			UnknownType = 0,
+			HeaderType,
+			BookmarkType,
+			HistoryType,
+			TypedInHistoryType,
+			SearchSuggestionType,
+			SpecialPageType,
+			LocalPathType
+		};
+
 		QString text;
 		QString title;
 		QString match;

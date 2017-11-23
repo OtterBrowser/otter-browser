@@ -91,12 +91,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories)
 		{
-			completions.append(CompletionEntry({}, tr("Search with %1").arg(title), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("Search with %1").arg(title), {}, {}, {}, CompletionEntry::HeaderType));
 
 			title.clear();
 		}
 
-		CompletionEntry completionEntry({}, title, {}, icon, {}, SearchSuggestionType);
+		CompletionEntry completionEntry({}, title, {}, icon, {}, CompletionEntry::SearchSuggestionType);
 		completionEntry.text = text;
 		completionEntry.keyword = keyword;
 
@@ -109,12 +109,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !bookmarks.isEmpty())
 		{
-			completions.append(CompletionEntry({}, tr("Bookmarks"), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("Bookmarks"), {}, {}, {}, CompletionEntry::HeaderType));
 		}
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			CompletionEntry completionEntry(bookmarks.at(i).bookmark->getUrl(), bookmarks.at(i).bookmark->getTitle(), bookmarks.at(i).match, bookmarks.at(i).bookmark->getIcon(), {}, BookmarkType);
+			CompletionEntry completionEntry(bookmarks.at(i).bookmark->getUrl(), bookmarks.at(i).bookmark->getTitle(), bookmarks.at(i).match, bookmarks.at(i).bookmark->getIcon(), {}, CompletionEntry::BookmarkType);
 			completionEntry.keyword = bookmarks.at(i).bookmark->getKeyword();
 
 			if (completionEntry.keyword.startsWith(m_filter))
@@ -143,12 +143,12 @@ void AddressCompletionModel::updateModel()
 
 				if (!wasAdded)
 				{
-					completions.append(CompletionEntry({}, tr("Local files"), {}, {}, {}, HeaderType));
+					completions.append(CompletionEntry({}, tr("Local files"), {}, {}, {}, CompletionEntry::HeaderType));
 
 					wasAdded = true;
 				}
 
-				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), {}, LocalPathType));
+				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), {}, CompletionEntry::LocalPathType));
 			}
 		}
 	}
@@ -159,12 +159,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
-			completions.append(CompletionEntry({}, tr("History"), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("History"), {}, {}, {}, CompletionEntry::HeaderType));
 		}
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
+			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), (entries.at(i).isTypedIn ? CompletionEntry::TypedInHistoryType : CompletionEntry::HistoryType)));
 		}
 	}
 
@@ -174,12 +174,12 @@ void AddressCompletionModel::updateModel()
 
 		if (m_showCompletionCategories && !entries.isEmpty())
 		{
-			completions.append(CompletionEntry({}, tr("Typed history"), {}, {}, {}, HeaderType));
+			completions.append(CompletionEntry({}, tr("Typed history"), {}, {}, {}, CompletionEntry::HeaderType));
 		}
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
-			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), TypedInHistoryType));
+			completions.append(CompletionEntry(entries.at(i).entry->getUrl(), entries.at(i).entry->getTitle(), entries.at(i).match, entries.at(i).entry->getIcon(), entries.at(i).entry->getTimeVisited(), CompletionEntry::TypedInHistoryType));
 		}
 	}
 
@@ -196,12 +196,12 @@ void AddressCompletionModel::updateModel()
 			{
 				if (!wasAdded)
 				{
-					completions.append(CompletionEntry({}, tr("Special pages"), {}, {}, {}, HeaderType));
+					completions.append(CompletionEntry({}, tr("Special pages"), {}, {}, {}, CompletionEntry::HeaderType));
 
 					wasAdded = true;
 				}
 
-				completions.append(CompletionEntry(information.url, information.getTitle(), {}, information.icon, {}, SpecialPageType));
+				completions.append(CompletionEntry(information.url, information.getTitle(), {}, information.icon, {}, CompletionEntry::SpecialPageType));
 			}
 		}
 	}
@@ -299,7 +299,7 @@ QVariant AddressCompletionModel::headerData(int section, Qt::Orientation orienta
 
 Qt::ItemFlags AddressCompletionModel::flags(const QModelIndex &index) const
 {
-	if (!index.isValid() || m_completions.at(index.row()).type == AddressCompletionModel::HeaderType)
+	if (!index.isValid() || m_completions.at(index.row()).type == AddressCompletionModel::CompletionEntry::HeaderType)
 	{
 		return Qt::ItemNeverHasChildren;
 	}

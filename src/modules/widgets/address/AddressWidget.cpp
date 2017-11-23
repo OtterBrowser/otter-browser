@@ -67,7 +67,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	QRect titleRectangle(option.rect);
 	const bool isRightToLeft(option.direction == Qt::RightToLeft);
 
-	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
+	if (static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::HeaderType)
 	{
 		QStyleOptionViewItem headerOption(option);
 		headerOption.rect = titleRectangle.marginsRemoved(QMargins(0, 2, (isRightToLeft ? 3 : 0), 2));
@@ -97,7 +97,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	QString url(index.data(Qt::DisplayRole).toString());
 	QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
 	const int topPosition(titleRectangle.top() - ((titleRectangle.height() - painter->clipBoundingRect().united(document.documentLayout()->blockBoundingRect(document.firstBlock())).height()) / 2));
-	const bool isSearchSuggestion(static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType);
+	const bool isSearchSuggestion(static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::SearchSuggestionType);
 
 	if (option.state.testFlag(QStyle::State_Selected))
 	{
@@ -301,7 +301,7 @@ QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 {
 	QSize size(index.data(Qt::SizeHintRole).toSize());
 
-	if (index.row() != 0 && static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
+	if (index.row() != 0 && static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::HeaderType)
 	{
 		size.setHeight(option.fontMetrics.lineSpacing() * 1.75);
 	}
@@ -813,7 +813,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 
 			if (index.isValid())
 			{
-				if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType)
+				if (static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::SearchSuggestionType)
 				{
 					emit requestedSearch(index.data(AddressCompletionModel::TextRole).toString(), SearchEnginesManager::getSearchEngine(index.data(AddressCompletionModel::KeywordRole).toString(), true).identifier, SessionsManager::CurrentTabOpen);
 				}
