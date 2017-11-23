@@ -223,8 +223,8 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	painter.fillRect(event->rect(), Qt::transparent);
 
 	QTextBlock block(m_sourceViewer->firstVisibleBlock());
-	int top(m_sourceViewer->blockBoundingGeometry(block).translated(m_sourceViewer->contentOffset()).top());
-	int bottom(top + m_sourceViewer->blockBoundingRect(block).height());
+	int top(m_sourceViewer->blockBoundingGeometry(block).translated(m_sourceViewer->contentOffset()).toRect().top());
+	int bottom(top + m_sourceViewer->blockBoundingRect(block).toRect().height());
 	const int right(width() - 5);
 	const int selectionStart(m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionStart()).blockNumber());
 	const int selectionEnd(m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionEnd()).blockNumber());
@@ -242,7 +242,7 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 
 		block = block.next();
 		top = bottom;
-		bottom = (top + m_sourceViewer->blockBoundingRect(block).height());
+		bottom = (top + m_sourceViewer->blockBoundingRect(block).toRect().height());
 	}
 }
 
