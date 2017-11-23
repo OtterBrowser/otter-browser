@@ -398,12 +398,12 @@ QVariant ContentsWidget::getOption(int identifier) const
 {
 	Q_UNUSED(identifier)
 
-	return QVariant();
+	return {};
 }
 
 QPixmap ContentsWidget::createThumbnail()
 {
-	return QPixmap();
+	return {};
 }
 
 ActionsManager::ActionDefinition::State ContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const

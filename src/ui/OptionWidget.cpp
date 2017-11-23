@@ -356,7 +356,7 @@ QVariant OptionWidget::getValue() const
 	{
 		if (m_lineEditWidget->text().isEmpty())
 		{
-			return QVariant();
+			return {};
 		}
 
 		if (m_type == SettingsManager::ListType)
@@ -372,7 +372,7 @@ QVariant OptionWidget::getValue() const
 		return m_spinBox->value();
 	}
 
-	return QVariant();
+	return {};
 }
 
 }

@@ -496,7 +496,7 @@ QVariant SettingsManager::getOption(int identifier, const QUrl &url)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		return QVariant();
+		return {};
 	}
 
 	const QString name(getOptionName(identifier));

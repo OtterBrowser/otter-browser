@@ -581,7 +581,7 @@ QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
 		return result;
 	}
 
-	return QVariant();
+	return {};
 }
 
 QVariant QtWebKitPage::getOption(int identifier) const

@@ -204,7 +204,7 @@ QVariant BookmarksItem::data(int role) const
 				break;
 		}
 
-		return QVariant();
+		return {};
 	}
 
 	if (role == Qt::AccessibleDescriptionRole && static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::SeparatorBookmark)

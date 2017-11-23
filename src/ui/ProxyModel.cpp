@@ -67,7 +67,7 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 
 	if (role == Qt::DecorationRole && index.column() > 0)
 	{
-		return QVariant();
+		return {};
 	}
 
 	return QIdentityProxyModel::data(index.sibling(index.row(), 0), role);
