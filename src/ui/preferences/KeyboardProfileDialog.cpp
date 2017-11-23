@@ -135,8 +135,7 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 {
 	Q_UNUSED(option)
 
-	const QKeySequence shortcut(index.data(Qt::DisplayRole).toString());
-	ShortcutWidget *widget(new ShortcutWidget(shortcut, parent));
+	ShortcutWidget *widget(new ShortcutWidget(QKeySequence(index.data(Qt::DisplayRole).toString()), parent));
 	widget->setFocus();
 
 	connect(widget, &ShortcutWidget::commitData, this, &KeyboardShortcutDelegate::commitData);
