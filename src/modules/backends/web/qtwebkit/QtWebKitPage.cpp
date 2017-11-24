@@ -933,7 +933,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 					addExceptionAction.title = QCoreApplication::translate("utils", "Load Blocked Page");
 					addExceptionAction.type = ErrorPageInformation::AdvancedAction;
 
-					information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
+					information.actions = {goBackAction, addExceptionAction};
 				}
 
 				break;
@@ -949,7 +949,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 					addExceptionAction.title = QCoreApplication::translate("utils", "Load Insecure Page");
 					addExceptionAction.type = ErrorPageInformation::AdvancedAction;
 
-					information.actions = QVector<ErrorPageInformation::PageAction>({goBackAction, addExceptionAction});
+					information.actions = {goBackAction, addExceptionAction};
 				}
 
 				break;
@@ -960,7 +960,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 					reloadAction.title = QCoreApplication::translate("utils", "Try Again");
 					reloadAction.type = ErrorPageInformation::MainAction;
 
-					information.actions = QVector<ErrorPageInformation::PageAction>({reloadAction});
+					information.actions = {reloadAction};
 				}
 
 				break;
