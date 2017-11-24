@@ -47,9 +47,9 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 
 	if (url.scheme() == QLatin1String("data") && !device)
 	{
-		const QString data(url.path());
+		const QString imageData(url.path());
 
-		array = QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8());
+		array = QByteArray::fromBase64(imageData.mid(imageData.indexOf(QLatin1String("base64,")) + 7).toUtf8());
 
 		device = new QBuffer(&array, this);
 	}
