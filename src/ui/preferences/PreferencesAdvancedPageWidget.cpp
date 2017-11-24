@@ -714,18 +714,18 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 	if (type == TreeModel::FolderType)
 	{
 		bool result(false);
-		const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, index.data(Qt::DisplayRole).toString(), &result));
+		const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, index.data(UserAgentsModel::TitleRole).toString(), &result));
 
 		if (result)
 		{
-			m_ui->userAgentsViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
+			m_ui->userAgentsViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), UserAgentsModel::TitleRole);
 		}
 	}
 	else if (type == TreeModel::EntryType)
 	{
 		UserAgentDefinition userAgent;
 		userAgent.identifier = index.data(UserAgentsModel::IdentifierRole).toString();
-		userAgent.title = index.data(Qt::DisplayRole).toString();
+		userAgent.title = index.data(UserAgentsModel::TitleRole).toString();
 		userAgent.value = index.sibling(index.row(), 1).data(Qt::DisplayRole).toString();
 
 		UserAgentPropertiesDialog dialog(userAgent, this);
@@ -734,7 +734,7 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 		{
 			userAgent = dialog.getUserAgent();
 
-			m_ui->userAgentsViewWidget->setData(index, (userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), Qt::DisplayRole);
+			m_ui->userAgentsViewWidget->setData(index, (userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), UserAgentsModel::TitleRole);
 			m_ui->userAgentsViewWidget->setData(index.sibling(index.row(), 1), userAgent.value, Qt::DisplayRole);
 		}
 	}
@@ -763,7 +763,7 @@ void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QSta
 			{
 				QJsonObject userAgentObject;
 				userAgentObject.insert(QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString());
-				userAgentObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+				userAgentObject.insert(QLatin1String("title"), item->data(UserAgentsModel::TitleRole).toString());
 
 				if (type == TreeModel::FolderType)
 				{
@@ -877,11 +877,11 @@ void PreferencesAdvancedPageWidget::editProxy()
 	if (type == TreeModel::FolderType)
 	{
 		bool result(false);
-		const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, index.data(Qt::DisplayRole).toString(), &result));
+		const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, index.data(ProxiesModel::TitleRole).toString(), &result));
 
 		if (result)
 		{
-			m_ui->proxiesViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
+			m_ui->proxiesViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), ProxiesModel::TitleRole);
 		}
 	}
 	else if (type == TreeModel::EntryType)
@@ -896,7 +896,7 @@ void PreferencesAdvancedPageWidget::editProxy()
 			m_proxies[identifier] = proxy;
 
 			m_ui->proxiesViewWidget->markAsModified();
-			m_ui->proxiesViewWidget->setData(index, (proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title), Qt::DisplayRole);
+			m_ui->proxiesViewWidget->setData(index, (proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title), ProxiesModel::TitleRole);
 		}
 	}
 }
@@ -930,7 +930,7 @@ void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, QStandardIt
 
 				QJsonObject proxyObject;
 				proxyObject.insert(QLatin1String("identifier"), item->data(ProxiesModel::IdentifierRole).toString());
-				proxyObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+				proxyObject.insert(QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString());
 				proxyObject.insert(QLatin1String("children"), proxiesArray);
 
 				proxies->append(proxyObject);
@@ -941,7 +941,7 @@ void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, QStandardIt
 				const ProxyDefinition proxy(m_proxies.value(identifier, NetworkManagerFactory::getProxy(identifier)));
 				QJsonObject proxyObject;
 				proxyObject.insert(QLatin1String("identifier"), identifier);
-				proxyObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+				proxyObject.insert(QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString());
 
 				switch (proxy.type)
 				{
