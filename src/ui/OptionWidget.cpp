@@ -23,6 +23,7 @@
 #include "IconWidget.h"
 #include "LineEditWidget.h"
 #include "FilePathWidget.h"
+#include "../core/ThemesManager.h"
 
 #include <QtWidgets/QHBoxLayout>
 
@@ -83,7 +84,7 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 
 			if (value.type() == QVariant::String)
 			{
-				m_iconWidget->setIcon(value.toString());
+				m_iconWidget->setIcon(ThemesManager::createIcon(value.toString()));
 			}
 			else
 			{
@@ -221,7 +222,7 @@ void OptionWidget::setValue(const QVariant &value)
 	{
 		if (value.type() == QVariant::String)
 		{
-			m_iconWidget->setIcon(value.toString());
+			m_iconWidget->setIcon(ThemesManager::createIcon(value.toString()));
 		}
 		else
 		{

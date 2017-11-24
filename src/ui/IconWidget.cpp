@@ -60,7 +60,7 @@ void IconWidget::clear()
 
 void IconWidget::reset()
 {
-	setIcon(m_defaultIcon);
+	setIcon(ThemesManager::createIcon(m_defaultIcon));
 }
 
 void IconWidget::selectFromFile()
@@ -88,7 +88,7 @@ void IconWidget::selectFromTheme()
 
 	if (!name.isEmpty())
 	{
-		setIcon(name);
+		setIcon(ThemesManager::createIcon(name));
 	}
 }
 
@@ -106,24 +106,6 @@ void IconWidget::updateMenu()
 
 	menu()->addSeparator();
 	menu()->addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(!icon().isNull());
-}
-
-void IconWidget::setIcon(const QString &data)
-{
-	m_icon = data;
-
-	if (data.isEmpty())
-	{
-		clear();
-
-		return;
-	}
-
-	const QIcon icon(ThemesManager::createIcon(data));
-
-	QToolButton::setIcon(icon);
-
-	emit iconChanged(icon);
 }
 
 void IconWidget::setIcon(const QIcon &icon)
@@ -148,7 +130,7 @@ void IconWidget::setDefaultIcon(const QString &data)
 
 	if (m_icon.isEmpty())
 	{
-		setIcon(m_defaultIcon);
+		setIcon(ThemesManager::createIcon(m_defaultIcon));
 	}
 }
 
