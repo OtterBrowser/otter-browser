@@ -34,7 +34,6 @@ public:
 	explicit IconWidget(QWidget *parent = nullptr);
 
 	void setIcon(const QIcon &icon);
-	void setDefaultIcon(const QString &data);
 	void setDefaultIcon(const QIcon &icon);
 	QString getIcon() const;
 	int heightForWidth(int width) const override;
@@ -52,7 +51,7 @@ protected slots:
 
 private:
 	QString m_icon;
-	QString m_defaultIcon;
+	QIcon m_defaultIcon;
 
 signals:
 	void iconChanged(const QIcon &icon);

@@ -185,7 +185,7 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 		}
 		else
 		{
-			m_iconWidget->setDefaultIcon(value.toString());
+			m_iconWidget->setDefaultIcon(ThemesManager::createIcon(value.toString()));
 		}
 	}
 
