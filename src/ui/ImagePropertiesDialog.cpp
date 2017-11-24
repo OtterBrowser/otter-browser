@@ -41,18 +41,16 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 	m_ui->alternativeTextLabelWidget->setText(properties.value(QLatin1String("alternativeText")).toString());
 	m_ui->longDescriptionLabelWidget->setText(properties.value(QLatin1String("longDescription")).toString());
 
-	QByteArray array;
-	QImage image;
-	int frames(1);
-
 	if (url.scheme() == QLatin1String("data") && !device)
 	{
 		const QString imageData(url.path());
-
-		array = QByteArray::fromBase64(imageData.mid(imageData.indexOf(QLatin1String("base64,")) + 7).toUtf8());
+		QByteArray array(QByteArray::fromBase64(imageData.mid(imageData.indexOf(QLatin1String("base64,")) + 7).toUtf8()));
 
 		device = new QBuffer(&array, this);
 	}
+
+	QImage image;
+	int frames(1);
 
 	if (device)
 	{
