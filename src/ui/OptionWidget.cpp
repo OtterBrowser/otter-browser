@@ -350,7 +350,7 @@ QVariant OptionWidget::getValue() const
 
 	if (m_iconWidget)
 	{
-		return m_iconWidget->getIcon();
+		return m_iconWidget->icon();
 	}
 
 	if (m_lineEditWidget)

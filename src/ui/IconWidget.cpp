@@ -51,8 +51,6 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 
 void IconWidget::clear()
 {
-	m_icon = QString();
-
 	QToolButton::setIcon({});
 
 	emit iconChanged({});
@@ -75,8 +73,6 @@ void IconWidget::selectFromFile()
 	const QPixmap pixmap(path);
 	const QIcon icon(pixmap);
 
-	m_icon = Utils::savePixmapAsDataUri(pixmap);
-
 	QToolButton::setIcon(icon);
 
 	emit iconChanged(icon);
@@ -84,7 +80,7 @@ void IconWidget::selectFromFile()
 
 void IconWidget::selectFromTheme()
 {
-	const QString name(QInputDialog::getText(this, tr("Select Icon"), tr("Icon Name:"), QLineEdit::Normal, (m_icon.startsWith(QLatin1String("data:")) ? QString() : m_icon)));
+	const QString name(QInputDialog::getText(this, tr("Select Icon"), tr("Icon Name:")));
 
 	if (!name.isEmpty())
 	{
@@ -117,8 +113,6 @@ void IconWidget::setIcon(const QIcon &icon)
 		return;
 	}
 
-	m_icon = Utils::savePixmapAsDataUri(icon.pixmap(16, 16));
-
 	QToolButton::setIcon(icon);
 
 	emit iconChanged(icon);
@@ -128,15 +122,10 @@ void IconWidget::setDefaultIcon(const QIcon &icon)
 {
 	m_defaultIcon = icon;
 
-	if (m_icon.isEmpty())
+	if (icon.isNull())
 	{
 		setIcon(icon);
 	}
-}
-
-QString IconWidget::getIcon() const
-{
-	return m_icon;
 }
 
 int IconWidget::heightForWidth(int width) const

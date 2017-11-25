@@ -35,7 +35,6 @@ public:
 
 	void setIcon(const QIcon &icon);
 	void setDefaultIcon(const QIcon &icon);
-	QString getIcon() const;
 	int heightForWidth(int width) const override;
 	bool hasHeightForWidth() const override;
 
@@ -50,7 +49,6 @@ protected slots:
 	void updateMenu();
 
 private:
-	QString m_icon;
 	QIcon m_defaultIcon;
 
 signals:
