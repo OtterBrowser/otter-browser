@@ -49,7 +49,7 @@ QObject* QtWebKitPluginFactory::create(const QString &mimeType, const QUrl &url,
 
 QList<QWebPluginFactory::Plugin> QtWebKitPluginFactory::plugins() const
 {
-	return QList<QWebPluginFactory::Plugin>();
+	return {};
 }
 
 }

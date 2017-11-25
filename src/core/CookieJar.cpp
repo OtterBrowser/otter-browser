@@ -204,7 +204,7 @@ QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
 {
 	if (m_generalCookiesPolicy == IgnoreCookies)
 	{
-		return QList<QNetworkCookie>();
+		return {};
 	}
 
 	return QNetworkCookieJar::cookiesForUrl(url);

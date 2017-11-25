@@ -77,7 +77,7 @@ QList<QNetworkCookie> QtWebKitCookieJar::cookiesForUrl(const QUrl &url) const
 {
 	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies)
 	{
-		return QList<QNetworkCookie>();
+		return {};
 	}
 
 	return m_cookieJar->getCookiesForUrl(url);
