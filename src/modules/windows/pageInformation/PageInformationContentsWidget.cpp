@@ -164,6 +164,7 @@ void PageInformationContentsWidget::updateSections()
 
 					if (!m_window || m_window->getUrl().scheme() != QLatin1String("about"))
 					{
+						addEntry(sectionItem, tr("MIME type"), (canGetPageInformation ? m_window->getWebWidget()->getPageInformation(WebWidget::DocumentMimeTypeInformation).toString() : QString()));
 						addEntry(sectionItem, tr("Document size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::DocumentBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
 						addEntry(sectionItem, tr("Total size"), (canGetPageInformation ? Utils::formatUnit(m_window->getWebWidget()->getPageInformation(WebWidget::TotalBytesTotalInformation).toLongLong(), false, 1, true) : QString()));
 
