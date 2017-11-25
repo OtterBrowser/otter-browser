@@ -2148,11 +2148,11 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			if (parameters.contains(QLatin1String("toolBar")))
 			{
 				const int toolBarIdentifier((parameters[QLatin1String("toolBar")].type() == QVariant::String) ? ToolBarsManager::getToolBarIdentifier(parameters[QLatin1String("toolBar")].toString()) : parameters[QLatin1String("toolBar")].toInt());
-				const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
+				const ToolBarsManager::ToolBarDefinition toolBarDefinition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
 				const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 
-				state.text = definition.getTitle();
-				state.isChecked = ToolBarWidget::calculateShouldBeVisible(definition, getToolBarState(toolBarIdentifier), mode);
+				state.text = toolBarDefinition.getTitle();
+				state.isChecked = ToolBarWidget::calculateShouldBeVisible(toolBarDefinition, getToolBarState(toolBarIdentifier), mode);
 				state.isEnabled = true;
 
 				SessionsManager::markSessionAsModified();
@@ -2194,9 +2194,9 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::OpenPanelAction:
 			{
-				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+				ToolBarsManager::ToolBarDefinition toolBarDefinition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 
-				state.isEnabled = (definition.isValid() && !definition.currentPanel.isEmpty());
+				state.isEnabled = (toolBarDefinition.isValid() && !toolBarDefinition.currentPanel.isEmpty());
 			}
 
 			break;
