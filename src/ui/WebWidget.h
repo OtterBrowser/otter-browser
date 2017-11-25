@@ -120,6 +120,7 @@ public:
 		DocumentBytesReceivedInformation,
 		DocumentBytesTotalInformation,
 		DocumentLoadingProgressInformation,
+		DocumentMimeTypeInformation,
 		TotalBytesReceivedInformation,
 		TotalBytesTotalInformation,
 		TotalLoadingProgressInformation,
