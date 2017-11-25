@@ -51,9 +51,7 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 
 void IconWidget::clear()
 {
-	QToolButton::setIcon({});
-
-	emit iconChanged({});
+	setIcon({});
 }
 
 void IconWidget::reset()
@@ -65,17 +63,10 @@ void IconWidget::selectFromFile()
 {
 	const QString path(QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), Utils::formatFileTypes(QStringList(tr("Images (*.png *.jpg *.bmp *.gif *.ico)")))));
 
-	if (path.isEmpty())
+	if (!path.isEmpty())
 	{
-		return;
+		setIcon(QIcon(QPixmap(path)));
 	}
-
-	const QPixmap pixmap(path);
-	const QIcon icon(pixmap);
-
-	QToolButton::setIcon(icon);
-
-	emit iconChanged(icon);
 }
 
 void IconWidget::selectFromTheme()
@@ -106,13 +97,6 @@ void IconWidget::updateMenu()
 
 void IconWidget::setIcon(const QIcon &icon)
 {
-	if (icon.isNull())
-	{
-		clear();
-
-		return;
-	}
-
 	QToolButton::setIcon(icon);
 
 	emit iconChanged(icon);
