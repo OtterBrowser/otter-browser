@@ -43,6 +43,7 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QMimeDatabase>
 #include <QtNetwork/QNetworkProxy>
 #include <QtNetwork/QNetworkReply>
 
@@ -251,6 +252,18 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 		for (int i = 0; i < rawHeaders.count(); ++i)
 		{
 			m_headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
+		}
+
+		const QVariant mimeTypeHeader(reply->header(QNetworkRequest::ContentTypeHeader));
+
+		if (!mimeTypeHeader.isNull())
+		{
+			const QMimeType mimeType(QMimeDatabase().mimeTypeForName(mimeTypeHeader.toString().split(QLatin1Char(';')).first().trimmed()));
+
+			if (mimeType.isValid())
+			{
+				setPageInformation(WebWidget::DocumentMimeTypeInformation, mimeType.name());
+			}
 		}
 	}
 
