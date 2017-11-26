@@ -224,6 +224,19 @@ void PageInformationContentsWidget::updateSections()
 			case SecuritySection:
 				m_ui->informationViewWidget->setData(index, tr("Security"), Qt::DisplayRole);
 
+				if (sectionItem && m_window && m_window->getWebWidget())
+				{
+					const QSslCipher cipher(m_window->getWebWidget()->getSslInformation().cipher);
+
+					if (!cipher.isNull())
+					{
+						addEntry(sectionItem, tr("Cipher protocol"), cipher.protocolString());
+						addEntry(sectionItem, tr("Cipher authentication method"), cipher.authenticationMethod());
+						addEntry(sectionItem, tr("Cipher encryption method"), cipher.encryptionMethod());
+						addEntry(sectionItem, tr("Cipher key exchange method"), cipher.keyExchangeMethod());
+					}
+				}
+
 				break;
 			default:
 				break;
