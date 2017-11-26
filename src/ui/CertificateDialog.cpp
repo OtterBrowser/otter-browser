@@ -398,7 +398,7 @@ void CertificateDialog::updateValue()
 	m_ui->valueTextEditWidget->setTextCursor(cursor);
 }
 
-QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateField field, QStandardItem *parent, const QMap<int, QVariant> &data)
+QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateField field, QStandardItem *parent, const QMap<int, QVariant> &metaData)
 {
 	QString title;
 
@@ -453,7 +453,7 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 
 			break;
 		case ExtensionField:
-			title = data.value(Qt::DisplayRole, tr("Unknown")).toString();
+			title = metaData.value(Qt::DisplayRole, tr("Unknown")).toString();
 
 			break;
 		case DigestField:
@@ -477,7 +477,7 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 
 	QMap<int, QVariant>::const_iterator iterator;
 
-	for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
+	for (iterator = metaData.constBegin(); iterator != metaData.constEnd(); ++iterator)
 	{
 		item->setData(iterator.value(), iterator.key());
 	}

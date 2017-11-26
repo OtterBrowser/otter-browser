@@ -72,7 +72,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	QStandardItem* createField(CertificateField field, QStandardItem *parent = nullptr, const QMap<int, QVariant> &data = {});
+	QStandardItem* createField(CertificateField field, QStandardItem *parent = nullptr, const QMap<int, QVariant> &metaData = {});
 	static QString formatHex(const QString &source, const QChar &separator = QLatin1Char(' '));
 
 protected slots:
