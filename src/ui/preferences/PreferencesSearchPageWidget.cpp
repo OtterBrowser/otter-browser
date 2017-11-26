@@ -230,7 +230,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 
 	if (keywords.contains(searchEngine.keyword))
 	{
-		searchEngine.keyword = QString();
+		searchEngine.keyword.clear();
 	}
 
 	m_searchEngines[identifier] = {true, searchEngine};
@@ -371,7 +371,7 @@ void PreferencesSearchPageWidget::addSearchEngine(const QString &path, const QSt
 			return;
 		}
 
-		searchEngine.keyword = QString();
+		searchEngine.keyword.clear();
 	}
 
 	m_searchEngines[identifier] = {false, searchEngine};

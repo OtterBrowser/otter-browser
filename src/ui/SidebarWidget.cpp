@@ -333,7 +333,7 @@ void SidebarWidget::updatePanels()
 
 			if (iterator.key() == m_currentPanel)
 			{
-				m_currentPanel = QString();
+				m_currentPanel.clear();
 
 				m_ui->panelLayout->removeWidget(iterator.value());
 				m_ui->containerWidget->hide();
