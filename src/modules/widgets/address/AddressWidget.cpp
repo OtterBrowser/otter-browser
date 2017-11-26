@@ -567,7 +567,7 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 	}
 	else
 	{
-		m_dragStartPosition = QPoint();
+		m_dragStartPosition = {};
 	}
 
 	LineEditWidget::mousePressEvent(event);

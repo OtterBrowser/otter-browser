@@ -162,7 +162,7 @@ void ResizerWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_isMoving && event->button() == Qt::LeftButton)
 	{
-		m_dragStartPosition = QPoint();
+		m_dragStartPosition = {};
 		m_isMoving = false;
 	}
 

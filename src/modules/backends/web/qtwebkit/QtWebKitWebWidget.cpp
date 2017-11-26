@@ -972,7 +972,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_page->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toString() != QLatin1String("blockAll")));
 
-				setClickPosition(QPoint());
+				setClickPosition({});
 			}
 
 			break;

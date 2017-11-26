@@ -375,7 +375,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
 				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
 
-				setClickPosition(QPoint());
+				setClickPosition({});
 			}
 
 			break;

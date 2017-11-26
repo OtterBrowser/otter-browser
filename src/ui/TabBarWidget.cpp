@@ -956,7 +956,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 			m_isDetachingTab = false;
 		}
 
-		m_dragStartPosition = QPoint();
+		m_dragStartPosition = {};
 		m_isDraggingTab = false;
 	}
 }
