@@ -55,7 +55,7 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && m_bookmark)
 	{
-		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->data(BookmarksModel::IdentifierRole)}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
+		Application::triggerAction(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), m_bookmark->getIdentifier()}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints(SessionsManager::DefaultOpen, event->button(), event->modifiers()))}}, parentWidget());
 	}
 }
 
@@ -84,7 +84,7 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		if (!menu())
 		{
 			Menu *menu(new Menu(Menu::BookmarksMenuRole, this));
-			menu->menuAction()->setData(m_bookmark->data(BookmarksModel::IdentifierRole));
+			menu->menuAction()->setData(m_bookmark->getIdentifier());
 
 			setMenu(menu);
 		}
