@@ -460,28 +460,28 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 		case StartMatch:
 			if (!m_requestUrl.startsWith(currentRule))
 			{
-				return ContentBlockingManager::CheckResult();
+				return {};
 			}
 
 			break;
 		case EndMatch:
 			if (!m_requestUrl.endsWith(currentRule))
 			{
-				return ContentBlockingManager::CheckResult();
+				return {};
 			}
 
 			break;
 		case ExactMatch:
 			if (m_requestUrl != currentRule)
 			{
-				return ContentBlockingManager::CheckResult();
+				return {};
 			}
 
 			break;
 		default:
 			if (!m_requestUrl.contains(currentRule))
 			{
-				return ContentBlockingManager::CheckResult();
+				return {};
 			}
 
 			break;
@@ -491,7 +491,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 
 	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
 	{
-		return ContentBlockingManager::CheckResult();
+		return {};
 	}
 
 	const bool hasBlockedDomains(!rule->blockedDomains.isEmpty());
@@ -504,7 +504,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 
 		if (!isBlocked)
 		{
-			return ContentBlockingManager::CheckResult();
+			return {};
 		}
 	}
 
@@ -579,7 +579,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 		return result;
 	}
 
-	return ContentBlockingManager::CheckResult();
+	return {};
 }
 
 void ContentBlockingProfile::handleReplyFinished()

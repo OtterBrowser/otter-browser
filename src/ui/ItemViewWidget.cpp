@@ -892,7 +892,7 @@ QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
 {
 	if (!m_isExclusive || !m_sourceModel)
 	{
-		return QModelIndex();
+		return {};
 	}
 
 	for (int i = 0; i < m_sourceModel->rowCount(parent); ++i)
@@ -912,14 +912,14 @@ QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
 		}
 	}
 
-	return QModelIndex();
+	return {};
 }
 
 QModelIndex ItemViewWidget::getCurrentIndex(int column) const
 {
 	if (!selectionModel() || !selectionModel()->hasSelection())
 	{
-		return QModelIndex();
+		return {};
 	}
 
 	if (column >= 0)
