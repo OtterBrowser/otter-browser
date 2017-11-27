@@ -366,17 +366,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 #endif
 		case ActionsManager::OpenLinkAction:
-			{
-				ensureInitialized();
-
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-
-				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
-				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
-
-				setClickPosition({});
-			}
+			m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); element.dispatchEvent(event); }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()));
 
 			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
