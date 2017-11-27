@@ -481,7 +481,7 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool isChecked)
 
 QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 {
-	if (type == QWebPage::WebBrowserWindow)
+	if (type != QWebPage::WebModalDialog)
 	{
 		QtWebKitWebWidget *widget(nullptr);
 		const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
