@@ -1598,7 +1598,7 @@ void MainWindow::handleRequestedCloseWindow(Window *window)
 
 			m_workspace->setActiveWindow(nullptr);
 
-			emit titleChanged(QString());
+			emit titleChanged({});
 		}
 	}
 

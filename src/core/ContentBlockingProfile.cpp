@@ -55,7 +55,7 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QStrin
 {
 	if (languages.isEmpty())
 	{
-		m_languages = QVector<QLocale::Language>({QLocale::AnyLanguage});
+		m_languages = {QLocale::AnyLanguage};
 	}
 	else
 	{

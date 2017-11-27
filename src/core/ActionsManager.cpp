@@ -749,7 +749,7 @@ bool ActionsManager::isShortcutAllowed(const QKeySequence &shortcut, ShortcutChe
 	{
 		if (m_disallowedShortcuts.isEmpty())
 		{
-			m_disallowedShortcuts = QVector<QKeySequence>({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
+			m_disallowedShortcuts = {QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)};
 		}
 
 		if (m_disallowedShortcuts.contains(shortcut))

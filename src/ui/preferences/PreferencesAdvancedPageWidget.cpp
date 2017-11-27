@@ -692,7 +692,7 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 
 			break;
 		case TreeModel::SeparatorType:
-			model->insertRow(QList<QStandardItem*>({new QStandardItem(), new QStandardItem()}), parent, row, TreeModel::SeparatorType);
+			model->insertRow({new QStandardItem(), new QStandardItem()}, parent, row, TreeModel::SeparatorType);
 
 			break;
 		default:
