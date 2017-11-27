@@ -113,6 +113,7 @@ protected:
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QWebEnginePage* getPage() const;
+	QString parsePosition(const QString &script, const QPoint &position) const;
 	QDateTime getLastUrlClickTime() const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;

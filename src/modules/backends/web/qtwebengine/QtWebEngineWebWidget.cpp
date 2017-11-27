@@ -366,7 +366,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 #endif
 		case ActionsManager::OpenLinkAction:
-			m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); element.dispatchEvent(event); }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()));
+			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); element.dispatchEvent(event); }"), getClickPosition()));
 
 			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
@@ -601,7 +601,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 			else
 			{
-				m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()), [&](const QVariant &result)
+				m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }"), getClickPosition()), [&](const QVariant &result)
 				{
 					QVariantMap properties({{QLatin1String("alternativeText"), m_hitResult.alternateText}, {QLatin1String("longDescription"), m_hitResult.longDescription}});
 
@@ -657,7 +657,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::MediaPlaybackRateAction:
-			m_page->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.playbackRate = %3; }").arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()).arg(parameters.value(QLatin1String("rate"), 1).toReal()));
+			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.playbackRate = %3; }"), getClickPosition()).arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
 			break;
 		case ActionsManager::GoBackAction:
@@ -819,7 +819,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					break;
 				}
 
-				m_page->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_page->zoomFactor()).arg(getClickPosition().y() / m_page->zoomFactor()), [&](const QVariant &result)
+				m_page->runJavaScript(parsePosition(QString(file.readAll()), getClickPosition()), [&](const QVariant &result)
 				{
 					if (result.isNull())
 					{
@@ -1460,6 +1460,11 @@ QWebEnginePage* QtWebEngineWebWidget::getPage() const
 	return m_page;
 }
 
+QString QtWebEngineWebWidget::parsePosition(const QString &script, const QPoint &position) const
+{
+	return script.arg(position.x() / m_page->zoomFactor()).arg(position.y() / m_page->zoomFactor());
+}
+
 QString QtWebEngineWebWidget::getTitle() const
 {
 	const QString title(m_page->title());
@@ -1584,7 +1589,7 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 	QEventLoop eventLoop;
 
-	m_page->runJavaScript(QString(file.readAll()).arg(position.x() / m_page->zoomFactor()).arg(position.y() / m_page->zoomFactor()), [&](const QVariant &result)
+	m_page->runJavaScript(parsePosition(QString(file.readAll()), position), [&](const QVariant &result)
 	{
 		m_hitResult = QtWebEngineHitTestResult(result);
 
