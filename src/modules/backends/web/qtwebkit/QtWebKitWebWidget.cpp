@@ -964,16 +964,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 #endif
 		case ActionsManager::OpenLinkAction:
-			{
-				m_page->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, true);
+			m_page->triggerAction(QWebPage::OpenLink);
 
-				const QWebHitTestResult nativeResult(m_page->mainFrame()->hitTestContent(getClickPosition()));
-				nativeResult.element().evaluateJavaScript(QLatin1String("var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); this.dispatchEvent(event)"));
-
-				m_page->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toString() != QLatin1String("blockAll")));
-
-				setClickPosition({});
-			}
+			setClickPosition({});
 
 			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
