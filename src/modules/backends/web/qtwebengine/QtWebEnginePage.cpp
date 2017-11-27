@@ -237,7 +237,7 @@ void QtWebEnginePage::handleLoadFinished()
 
 QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type)
 {
-	if (type == QWebEnginePage::WebDialog)
+	if (type != QWebEnginePage::WebDialog)
 	{
 		QtWebEngineWebWidget *widget(nullptr);
 		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
