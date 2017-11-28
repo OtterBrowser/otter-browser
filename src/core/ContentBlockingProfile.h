@@ -135,7 +135,7 @@ protected:
 
 	QString getPath() const;
 	void loadHeader(const QString &path);
-	void parseRuleLine(QString line);
+	void parseRuleLine(const QString &rule);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const;
 	void addRule(ContentBlockingRule *rule, const QString &ruleString) const;
 	void deleteNode(Node *node) const;

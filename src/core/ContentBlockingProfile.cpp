@@ -132,44 +132,44 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 	}
 }
 
-void ContentBlockingProfile::parseRuleLine(QString line)
+void ContentBlockingProfile::parseRuleLine(const QString &rule)
 {
-	if (line.indexOf(QLatin1Char('!')) == 0 || line.isEmpty())
+	if (rule.indexOf(QLatin1Char('!')) == 0 || rule.isEmpty())
 	{
 		return;
 	}
 
-	if (line.startsWith(QLatin1String("##")))
+	if (rule.startsWith(QLatin1String("##")))
 	{
 		if (ContentBlockingManager::getCosmeticFiltersMode() == ContentBlockingManager::AllFiltersMode)
 		{
-			m_styleSheet.append(line.mid(2));
+			m_styleSheet.append(rule.mid(2));
 		}
 
 		return;
 	}
 
-	if (line.contains(QLatin1String("##")))
+	if (rule.contains(QLatin1String("##")))
 	{
 		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 		{
-			parseStyleSheetRule(line.split(QLatin1String("##")), m_styleSheetBlackList);
+			parseStyleSheetRule(rule.split(QLatin1String("##")), m_styleSheetBlackList);
 		}
 
 		return;
 	}
 
-	if (line.contains(QLatin1String("#@#")))
+	if (rule.contains(QLatin1String("#@#")))
 	{
 		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 		{
-			parseStyleSheetRule(line.split(QLatin1String("#@#")), m_styleSheetWhiteList);
+			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_styleSheetWhiteList);
 		}
 
 		return;
 	}
 
-	const QString rule(line);
+	QString line(rule);
 	QStringList options;
 	const int optionSeparator(line.indexOf(QLatin1Char('$')));
 
