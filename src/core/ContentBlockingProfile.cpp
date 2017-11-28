@@ -199,21 +199,18 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 	QStringList blockedDomains;
 	RuleOptions ruleOptions;
 	RuleMatch ruleMatch(ContainsMatch);
-	bool isException(false);
-	bool needsDomainCheck(false);
+	const bool isException(line.startsWith(QLatin1String("@@")));
 
-	if (line.startsWith(QLatin1String("@@")))
+	if (isException)
 	{
 		line = line.mid(2);
-
-		isException = true;
 	}
 
-	if (line.startsWith(QLatin1String("||")))
+	const bool needsDomainCheck(line.startsWith(QLatin1String("||")));
+
+	if (needsDomainCheck)
 	{
 		line = line.mid(2);
-
-		needsDomainCheck = true;
 	}
 
 	if (line.startsWith(QLatin1Char('|')))
