@@ -664,16 +664,14 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 							{
 								if (action && m_window)
 								{
-									const QUrl url(getUrl().adjusted(QUrl::RemovePassword));
-
 									if (action->data().isNull())
 									{
-										BookmarkPropertiesDialog dialog(url, m_window->getTitle(), QString(), nullptr, -1, true, this);
+										BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), nullptr, -1, true, this);
 										dialog.exec();
 									}
 									else
 									{
-										BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}, {BookmarksModel::TitleRole, m_window->getTitle()}}, BookmarksManager::getModel()->getItem(action->data().toString()));
+										BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl().adjusted(QUrl::RemovePassword)}, {BookmarksModel::TitleRole, m_window->getTitle()}}, BookmarksManager::getModel()->getItem(action->data().toString()));
 									}
 								}
 							});
