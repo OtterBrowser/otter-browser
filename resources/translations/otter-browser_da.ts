@@ -238,7 +238,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="360"/>
         <source>Open Addon File</source>
-        <translation type="unfinished"/>
+        <translation>Åbn tilføjelsesfil</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="361"/>
@@ -524,7 +524,7 @@ Er du sikker på, at du vil gendanne denne session alligevel?</translation>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="139"/>
         <source>Other…</source>
-        <translation type="unfinished"/>
+        <translation>Andre…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
@@ -916,7 +916,7 @@ Er du sikker på, at du vil gendanne denne session alligevel?</translation>
         <location filename="../../src/core/BookmarksModel.cpp" line="116"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="258"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Papirkurv</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="275"/>
@@ -1677,7 +1677,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="181"/>
         <source>other</source>
-        <translation type="unfinished"/>
+        <translation>andre</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="200"/>
@@ -1764,7 +1764,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="288"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Andre</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="485"/>
@@ -2026,7 +2026,7 @@ Do you want to save them?</source>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="124"/>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="172"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Andre</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.ui" line="156"/>
@@ -2056,7 +2056,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="74"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Andre kilder</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="281"/>
@@ -2367,7 +2367,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation type="unfinished"/>
+        <translation>Billedegenskaber</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="22"/>
@@ -2435,12 +2435,12 @@ Do you want to save them?</source>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="107"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pixels @ %3 bit pr. pixel</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="111"/>
         <source>%1 x %2 pixels</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pixels</translation>
     </message>
 </context>
 <context>
@@ -2750,7 +2750,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="711"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vil du fortsætte?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="715"/>
@@ -3581,7 +3581,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="343"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Andre</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="352"/>
@@ -4049,7 +4049,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="109"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>Skrifttyper</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
@@ -4061,7 +4061,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="179"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="208"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
@@ -4081,12 +4081,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
         <source>Colors</source>
-        <translation type="unfinished"/>
+        <translation>Farver</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="118"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Spørg</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="119"/>
@@ -4101,17 +4101,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="121"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>Åbn alle i baggrunden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="133"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="133"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>Skrifttype</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="133"/>
@@ -4167,12 +4167,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="158"/>
         <source>Text Color</source>
-        <translation type="unfinished"/>
+        <translation>Tekstfarve</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="158"/>
         <source>Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Linkfarve</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="158"/>
@@ -4190,17 +4190,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Generelt</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="33"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>Indhold</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="39"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Privatliv</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="45"/>
@@ -4210,7 +4210,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Avanceret</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
@@ -4263,7 +4263,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="126"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>Gem filer til:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="141"/>
@@ -4366,7 +4366,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="23"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>Sporing</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="32"/>
@@ -4431,7 +4431,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
         <source>Exceptions…</source>
-        <translation type="unfinished"/>
+        <translation>Undtagelser…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
@@ -4487,7 +4487,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="53"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="67"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Altid</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="54"/>
@@ -4513,12 +4513,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="62"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Spørg altid</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="69"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Aldrig</translation>
     </message>
 </context>
 <context>
@@ -4551,7 +4551,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="121"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Flyt op</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="147"/>
@@ -4566,12 +4566,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="96"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="96"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Nøgleord</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="123"/>
@@ -4581,7 +4581,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="124"/>
         <source>File…</source>
-        <translation type="unfinished"/>
+        <translation>Fil…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="125"/>
@@ -4596,7 +4596,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="193"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Vælg fil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="193"/>
@@ -4653,7 +4653,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="58"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ukendt</translation>
     </message>
 </context>
 <context>
@@ -4661,12 +4661,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="110"/>
         <source>Document: %p%</source>
-        <translation type="unfinished"/>
+        <translation>Dokument: %p%</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="110"/>
         <source>Document: ?</source>
-        <translation type="unfinished"/>
+        <translation>Dokument: ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="118"/>
@@ -4691,7 +4691,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="140"/>
         <source>Speed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Hastighed: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="150"/>
@@ -4709,7 +4709,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="38"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Generelt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="44"/>
@@ -4719,37 +4719,37 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="144"/>
         <source>Port</source>
-        <translation type="unfinished"/>
+        <translation>Port</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="151"/>
         <source>Protocol</source>
-        <translation type="unfinished"/>
+        <translation>Protokol</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="158"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Servere</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="165"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="172"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="179"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="193"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="207"/>
@@ -4759,12 +4759,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="229"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automatisk</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="273"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>Sti til PAC-fil:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="286"/>
@@ -4774,7 +4774,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="301"/>
         <source>Exceptions</source>
-        <translation type="unfinished"/>
+        <translation>Undtagelser</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="307"/>
@@ -4832,7 +4832,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="162"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="163"/>
@@ -4931,7 +4931,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="817"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 fejl #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="889"/>
@@ -5007,7 +5007,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>fil</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="309"/>
@@ -5040,12 +5040,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="29"/>
         <source>minutes</source>
-        <translation type="unfinished"/>
+        <translation>minutter</translation>
     </message>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>sekunder</translation>
     </message>
 </context>
 <context>
@@ -5066,7 +5066,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="14"/>
         <source>Save Session</source>
-        <translation type="unfinished"/>
+        <translation>Gem session</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
@@ -5158,17 +5158,17 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Beskrivelse:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Nøgleord:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Kodning:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
@@ -5201,7 +5201,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="169"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="277"/>
         <source>POST method</source>
-        <translation type="unfinished"/>
+        <translation>POST-metode</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="210"/>
@@ -5217,7 +5217,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="127"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Pladsholdere</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="128"/>
@@ -5240,7 +5240,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="191"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ukendt</translation>
     </message>
 </context>
 <context>
@@ -5359,7 +5359,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
@@ -5387,12 +5387,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionModel.cpp" line="235"/>
         <source>Session</source>
-        <translation type="unfinished"/>
+        <translation>Session</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionModel.cpp" line="238"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Papirkurv</translation>
     </message>
 </context>
 <context>
@@ -5476,7 +5476,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>Bekræft</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
@@ -5499,17 +5499,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="350"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Ja</translation>
     </message>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="350"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Nej</translation>
     </message>
     <message>
         <location filename="../../src/core/SettingsManager.cpp" line="355"/>
         <source>Invalid</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig</translation>
     </message>
 </context>
 <context>
@@ -5517,7 +5517,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Ryd</translation>
     </message>
 </context>
 <context>
@@ -5525,7 +5525,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.ui" line="69"/>
         <source>Panels</source>
-        <translation type="unfinished"/>
+        <translation>Paneler</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="153"/>
@@ -5616,7 +5616,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>Billedsti:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="89"/>
@@ -5709,7 +5709,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="740"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurer…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="742"/>
@@ -5789,7 +5789,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="765"/>
         <source>Customize</source>
-        <translation type="unfinished"/>
+        <translation>Tilpas</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="990"/>
@@ -5828,7 +5828,7 @@ Adresse: %2</translation>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="127"/>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="156"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="68"/>
@@ -5902,7 +5902,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="335"/>
         <source>Visibility:</source>
-        <translation type="unfinished"/>
+        <translation>Synlighed:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="348"/>
@@ -6253,12 +6253,12 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1163"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurer…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1165"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Nulstil til standarder…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1182"/>
@@ -6271,7 +6271,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="282"/>
         <source>Reset Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Nulstil værktøjslinje</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="282"/>
@@ -6281,7 +6281,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="297"/>
         <source>Remove Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Fjern værktøjslinje</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="297"/>
@@ -6291,7 +6291,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="311"/>
         <source>Reset Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Nulstil værktøjslinjer</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="311"/>
@@ -6304,7 +6304,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolButtonWidget.cpp" line="131"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
 </context>
 <context>
@@ -6325,7 +6325,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/core/TransfersManager.cpp" line="622"/>
         <location filename="../../src/core/TransfersManager.cpp" line="655"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>fil</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="826"/>
@@ -6346,7 +6346,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Navn:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
@@ -6361,12 +6361,12 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Fra:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>Åbn med:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="104"/>
@@ -6381,7 +6381,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>Åbner %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="169"/>
@@ -6637,7 +6637,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="186"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>Installer</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="188"/>
@@ -6687,7 +6687,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="105"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Pladsholdere</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="106"/>
@@ -6758,7 +6758,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="243"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresse: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="287"/>
@@ -6798,7 +6798,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="982"/>
         <source>Never Reload</source>
-        <translation type="unfinished"/>
+        <translation>Genindlæs aldrig</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="986"/>
@@ -6836,7 +6836,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="97"/>
         <source>Elements:</source>
-        <translation type="unfinished"/>
+        <translation>Elementer:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="104"/>
@@ -6862,7 +6862,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>Detaljer…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
@@ -6877,7 +6877,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation type="unfinished"/>
+        <translation>Vis notifikationer:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
@@ -6892,7 +6892,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation type="unfinished"/>
+        <translation>Indlæs billeder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
@@ -6912,12 +6912,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Sikkerhed</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="285"/>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Certifikat</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="316"/>
@@ -6947,7 +6947,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="357"/>
         <source>Protocol:</source>
-        <translation type="unfinished"/>
+        <translation>Protokol:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="364"/>
@@ -7767,7 +7767,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Luk andre faneblade</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="314"/>

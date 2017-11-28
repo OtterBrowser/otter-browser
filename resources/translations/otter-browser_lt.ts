@@ -2233,7 +2233,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Older</source>
-        <translation>Anstesnis</translation>
+        <translation>Ankstesnis</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
@@ -2340,7 +2340,7 @@ Ar norite juos įrašyti?</translation>
         <location filename="../../src/ui/IconWidget.cpp" line="78"/>
         <location filename="../../src/ui/IconWidget.cpp" line="97"/>
         <source>Select Icon</source>
-        <translation>Pasirinkite Piktogramą</translation>
+        <translation>Pasirinkite piktogramą</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="78"/>
@@ -2866,7 +2866,7 @@ Ar norite juos įrašyti?</translation>
         <location filename="../../src/core/Migrator.cpp" line="551"/>
         <source>Configuration of the components listed below needs to be updated to new version.
 Do you want to migrate it?</source>
-        <translation>Žemiau išvardytų komponentų konfigūracija turi būti atnaujinta į naują versiją.
+        <translation>Žemiau išvardintų komponentų konfigūracija turi būti atnaujinta į naują versiją.
 Ar norite perkelti konfigūraciją?</translation>
     </message>
     <message>
@@ -3462,7 +3462,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="51"/>
         <source>Open Pop-Ups from This Website in Background</source>
-        <translation>Atverti iškylančiuosius šios svetainės langus fone</translation>
+        <translation>Atverti iškylančiuosius svetainės langus fone</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="55"/>
@@ -3487,7 +3487,7 @@ Ar norite tęsti?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="103"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation><numerusform>%1 nari atverti %n iškylantįjį langą</numerusform><numerusform>%1 nari atverti %n iškylančiuosius langus</numerusform><numerusform>%1 nari atverti %n iškylančiųjų langų</numerusform></translation>
+        <translation><numerusform>%1 nari atverti %n iškylantįjį langą</numerusform><numerusform>%1 nari atverti %n iškylančiuosius langus</numerusform><numerusform>%1 nori atverti %n iškylančiųjų langų</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3527,7 +3527,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="108"/>
         <source>Suggest search results</source>
-        <translation>Siūlyti pieškos rezultatus</translation>
+        <translation>Siūlyti paieškos rezultatus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="115"/>
@@ -3677,7 +3677,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="670"/>
         <source>Pass web address directly to application</source>
-        <translation>Perduoti saityno adresą tiesiogiai į programai</translation>
+        <translation>Perduoti saityno adresą tiesiogiai programai</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="720"/>
@@ -7336,7 +7336,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all in background</source>
-        <translation>Atverti visus fone</translation>
+        <translation>Visus atverti fone</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
@@ -7485,12 +7485,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="173"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation>Nepavyko vykdyti komandos &quot;%1&quot;, failas nėra vykdomasis</translation>
+        <translation>Nepavyko paleisti komandos &quot;%1&quot;, failas nėra vykdomasis</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="200"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation>Nepavyko įvykdyti komandos &quot;%1&quot; (argumentai: &quot;%2&quot;)</translation>
+        <translation>Nepavyko paleisti komandos &quot;%1&quot; (argumentai: &quot;%2&quot;)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="287"/>
@@ -7733,12 +7733,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
         <source>Maximize</source>
-        <translation>Išskleisti</translation>
+        <translation>Išdidinti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
         <source>Maximize Tab</source>
-        <translation>Išskleisti kortelę</translation>
+        <translation>Išdidinti kortelę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="305"/>
@@ -7831,7 +7831,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Maximize All</source>
-        <translation>Išskleisti visas</translation>
+        <translation>Išdidinti visas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="318"/>
@@ -8295,17 +8295,17 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Zoom In</source>
-        <translation>Didinti</translation>
+        <translation>Artinti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Zoom Out</source>
-        <translation>Mažinti</translation>
+        <translation>Patolinti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Zoom Original</source>
-        <translation>Numatytasis mastelis</translation>
+        <translation>Normalus mastelis</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="403"/>
