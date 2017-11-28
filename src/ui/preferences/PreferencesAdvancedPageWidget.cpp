@@ -761,9 +761,7 @@ void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, cons
 
 			if (type == TreeModel::FolderType || type == TreeModel::EntryType)
 			{
-				QJsonObject userAgentObject;
-				userAgentObject.insert(QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString());
-				userAgentObject.insert(QLatin1String("title"), item->data(UserAgentsModel::TitleRole).toString());
+				QJsonObject userAgentObject({{QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString()}, {QLatin1String("title"), item->data(UserAgentsModel::TitleRole).toString()}});
 
 				if (type == TreeModel::FolderType)
 				{
@@ -928,20 +926,13 @@ void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, const QStan
 
 				saveProxies(&proxiesArray, item);
 
-				QJsonObject proxyObject;
-				proxyObject.insert(QLatin1String("identifier"), item->data(ProxiesModel::IdentifierRole).toString());
-				proxyObject.insert(QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString());
-				proxyObject.insert(QLatin1String("children"), proxiesArray);
-
-				proxies->append(proxyObject);
+				proxies->append(QJsonObject({{QLatin1String("identifier"), item->data(ProxiesModel::IdentifierRole).toString()}, {QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString()}, {QLatin1String("children"), proxiesArray}}));
 			}
 			else if (type == TreeModel::EntryType)
 			{
 				const QString identifier(item->data(ProxiesModel::IdentifierRole).toString());
 				const ProxyDefinition proxy(m_proxies.value(identifier, NetworkManagerFactory::getProxy(identifier)));
-				QJsonObject proxyObject;
-				proxyObject.insert(QLatin1String("identifier"), identifier);
-				proxyObject.insert(QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString());
+				QJsonObject proxyObject({{QLatin1String("identifier"), identifier}, {QLatin1String("title"), item->data(ProxiesModel::TitleRole).toString()}});
 
 				switch (proxy.type)
 				{
@@ -980,12 +971,7 @@ void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, const QStan
 										break;
 								}
 
-								QJsonObject serverObject;
-								serverObject.insert(QLatin1String("protocol"), protocol);
-								serverObject.insert(QLatin1String("hostName"), iterator.value().hostName);
-								serverObject.insert(QLatin1String("port"), iterator.value().port);
-
-								serversArray.append(serverObject);
+								serversArray.append(QJsonObject({{QLatin1String("protocol"), protocol}, {QLatin1String("hostName"), iterator.value().hostName}, {QLatin1String("port"), iterator.value().port}}));
 							}
 
 							proxyObject.insert(QLatin1String("type"), QLatin1String("manualProxy"));
