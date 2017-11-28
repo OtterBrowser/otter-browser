@@ -155,11 +155,11 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	const QString geolocationPolicy(widget->getOption(SettingsManager::Permissions_EnableGeolocationOption).toString());
 
-	if (geolocationPolicy == QLatin1String("enabled"))
+	if (geolocationPolicy == QLatin1String("allow"))
 	{
 		m_ui->geolocationValueLabel->setText(tr("Always"));
 	}
-	else if (geolocationPolicy == QLatin1String("disabled"))
+	else if (geolocationPolicy == QLatin1String("disallow"))
 	{
 		m_ui->geolocationValueLabel->setText(tr("Never"));
 	}
@@ -170,11 +170,11 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	const QString fullScreenPolicy(widget->getOption(SettingsManager::Permissions_EnableFullScreenOption).toString());
 
-	if (fullScreenPolicy == QLatin1String("enabled"))
+	if (fullScreenPolicy == QLatin1String("allow"))
 	{
 		m_ui->fullScreenValueLabel->setText(tr("Always"));
 	}
-	else if (fullScreenPolicy == QLatin1String("disabled"))
+	else if (fullScreenPolicy == QLatin1String("disallow"))
 	{
 		m_ui->fullScreenValueLabel->setText(tr("Never"));
 	}
@@ -185,11 +185,11 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	const QString notificationsPolicy(widget->getOption(SettingsManager::Permissions_EnableNotificationsOption).toString());
 
-	if (notificationsPolicy == QLatin1String("enabled"))
+	if (notificationsPolicy == QLatin1String("allow"))
 	{
 		m_ui->notificationsValueLabel->setText(tr("Always"));
 	}
-	else if (notificationsPolicy == QLatin1String("disabled"))
+	else if (notificationsPolicy == QLatin1String("disallow"))
 	{
 		m_ui->notificationsValueLabel->setText(tr("Never"));
 	}
