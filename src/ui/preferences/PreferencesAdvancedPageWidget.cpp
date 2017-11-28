@@ -749,11 +749,11 @@ void PreferencesAdvancedPageWidget::updateUserAgentsActions()
 	m_ui->userAgentsRemoveButton->setEnabled(index.isValid() && index.data(UserAgentsModel::IdentifierRole).toString() != QLatin1String("default"));
 }
 
-void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent)
+void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, const QStandardItem *parent)
 {
 	for (int i = 0; i < parent->rowCount(); ++i)
 	{
-		QStandardItem *item(parent->child(i, 0));
+		const QStandardItem *item(parent->child(i, 0));
 
 		if (item)
 		{
@@ -912,11 +912,11 @@ void PreferencesAdvancedPageWidget::updateProxiesActions()
 	m_ui->proxiesRemoveButton->setEnabled(index.isValid() && !isReadOnly);
 }
 
-void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, QStandardItem *parent)
+void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, const QStandardItem *parent)
 {
 	for (int i = 0; i < parent->rowCount(); ++i)
 	{
-		QStandardItem *item(parent->child(i, 0));
+		const QStandardItem *item(parent->child(i, 0));
 
 		if (item)
 		{
