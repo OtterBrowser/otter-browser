@@ -169,15 +169,13 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 		return;
 	}
 
+	const int optionsSeparator(rule.indexOf(QLatin1Char('$')));
+	const QStringList options((optionsSeparator >= 0) ? rule.mid(optionsSeparator + 1).split(QLatin1Char(','), QString::SkipEmptyParts) : QStringList());
 	QString line(rule);
-	QStringList options;
-	const int optionSeparator(line.indexOf(QLatin1Char('$')));
 
-	if (optionSeparator >= 0)
+	if (optionsSeparator >= 0)
 	{
-		options = line.mid(optionSeparator + 1).split(QLatin1Char(','), QString::SkipEmptyParts);
-
-		line = line.left(optionSeparator);
+		line = line.left(optionsSeparator);
 	}
 
 	if (line.endsWith(QLatin1Char('*')))
