@@ -63,7 +63,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	void addEntry(QStandardItem *parent, const QString &key, const QString &value);
+	void addEntry(QStandardItem *parent, const QString &label, const QString &value);
 	void updateSections();
 
 protected slots:

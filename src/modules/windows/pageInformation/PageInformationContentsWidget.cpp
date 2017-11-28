@@ -130,10 +130,10 @@ void PageInformationContentsWidget::triggerAction(int identifier, const QVariant
 	}
 }
 
-void PageInformationContentsWidget::addEntry(QStandardItem *parent, const QString &key, const QString &value)
+void PageInformationContentsWidget::addEntry(QStandardItem *parent, const QString &label, const QString &value)
 {
-	const QString toolTip(key + QLatin1String(": ") + (value.isEmpty() ? tr("<empty>") : value));
-	QList<QStandardItem*> items({new QStandardItem(key), new QStandardItem(value.isEmpty() ? tr("<empty>") : value)});
+	const QString toolTip(label + QLatin1String(": ") + (value.isEmpty() ? tr("<empty>") : value));
+	QList<QStandardItem*> items({new QStandardItem(label), new QStandardItem(value.isEmpty() ? tr("<empty>") : value)});
 	items[0]->setToolTip(toolTip);
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 	items[1]->setToolTip(toolTip);
