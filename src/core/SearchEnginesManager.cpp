@@ -207,20 +207,12 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 	}
 
 	QString urlString(searchUrl.url);
-	QHash<QString, QString> values;
-	values[QLatin1String("searchTerms")] = query;
-	values[QLatin1String("count")] = QString();
-	values[QLatin1String("startIndex")] = QString();
-	values[QLatin1String("startPage")] = QString();
-	values[QLatin1String("language")] = QLocale::system().name();
-	values[QLatin1String("inputEncoding")] = QLatin1String("UTF-8");
-	values[QLatin1String("outputEncoding")] = QLatin1String("UTF-8");
+	const QHash<QString, QString> values({{QLatin1String("searchTerms"), query}, {QLatin1String("count"), QString()}, {QLatin1String("startIndex"), QString()}, {QLatin1String("startPage"), QString()}, {QLatin1String("language"), QLocale::system().name()}, {QLatin1String("inputEncoding"), QLatin1String("UTF-8")}, {QLatin1String("outputEncoding"), QLatin1String("UTF-8")}});
+	QHash<QString, QString>::const_iterator iterator;
 
-	QHash<QString, QString>::iterator valuesIterator;
-
-	for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
+	for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
 	{
-		urlString = urlString.replace(QStringLiteral("{%1}").arg(valuesIterator.key()), QUrl::toPercentEncoding(valuesIterator.value()));
+		urlString = urlString.replace(QStringLiteral("{%1}").arg(iterator.key()), QUrl::toPercentEncoding(iterator.value()));
 	}
 
 	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
@@ -234,9 +226,9 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 	{
 		QString value(parameters.at(i).second);
 
-		for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
+		for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
 		{
-			value = value.replace(QStringLiteral("{%1}").arg(valuesIterator.key()), valuesIterator.value());
+			value = value.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
 		}
 
 		if (*method == QNetworkAccessManager::GetOperation)
