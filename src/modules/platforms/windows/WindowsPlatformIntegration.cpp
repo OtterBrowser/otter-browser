@@ -308,14 +308,14 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 	// Vista+ applications
 	const QSettings defaultAssociation(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix, QSettings::NativeFormat);
-	QString defaultApplication(defaultAssociation.value(QLatin1String("."), QString()).toString());
+	QString defaultApplication(defaultAssociation.value(QLatin1String("."), {}).toString());
 	QStringList associations;
 
 	if (defaultApplication.isEmpty())
 	{
 		const QSettings defaultAssociation(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\.") + suffix, QSettings::NativeFormat);
 
-		defaultApplication = defaultAssociation.value(QLatin1String("."), QString()).toString();
+		defaultApplication = defaultAssociation.value(QLatin1String("."), {}).toString();
 	}
 
 	if (!defaultApplication.isEmpty())
@@ -341,7 +341,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 		ApplicationInformation information;
 		const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
 
-		information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+		information.command = applicationPath.value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
 		if (information.command.contains(QLatin1String("explorer.exe"), Qt::CaseInsensitive))
 		{
@@ -363,7 +363,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 	// Win XP applications
 	const QSettings legacyAssociations(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix + QLatin1String("\\OpenWithList"), QSettings::NativeFormat);
-	const QString order(legacyAssociations.value(QLatin1String("MRUList"), QString()).toString());
+	const QString order(legacyAssociations.value(QLatin1String("MRUList"), {}).toString());
 	const QString applicationFileName(QFileInfo(QCoreApplication::applicationFilePath()).fileName());
 
 	associations = legacyAssociations.childKeys();
@@ -381,19 +381,19 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 
 		const QSettings applicationPath(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
 
-		information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+		information.command = applicationPath.value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
 		if (information.command.isEmpty())
 		{
 			const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
 
-			information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+			information.command = applicationPath.value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
 			if (information.command.isEmpty())
 			{
 				const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + value, QSettings::NativeFormat);
 
-				information.command = applicationPath.value(QLatin1String("."), QString()).toString();
+				information.command = applicationPath.value(QLatin1String("."), {}).toString();
 
 				if (!information.command.isEmpty())
 				{
@@ -535,7 +535,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 	m_propertiesRegistration.setValue(QLatin1String("FriendlyTypeName"), QLatin1String("Otter Browser Document"));
 	m_propertiesRegistration.setValue(QLatin1String("DefaultIcon/."), m_applicationFilePath + QLatin1String(",1"));
 	m_propertiesRegistration.setValue(QLatin1String("EditFlags"), 2);
-	m_propertiesRegistration.setValue(QLatin1String("shell/open/ddeexec/."), QString());
+	m_propertiesRegistration.setValue(QLatin1String("shell/open/ddeexec/."), {});
 	m_propertiesRegistration.setValue(QLatin1String("shell/open/command/."), QLatin1String("\"") + m_applicationFilePath + QLatin1String("\" \"%1\""));
 	m_propertiesRegistration.sync();
 
@@ -580,7 +580,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 
 bool WindowsPlatformIntegration::isBrowserRegistered() const
 {
-	if (m_applicationRegistration.value(m_registrationIdentifier).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), QString()).toString().contains(m_applicationFilePath))
+	if (m_applicationRegistration.value(m_registrationIdentifier).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), {}).toString().contains(m_applicationFilePath))
 	{
 		return false;
 	}
@@ -608,11 +608,11 @@ bool WindowsPlatformIntegration::isDefaultBrowser() const
 	{
 		if (m_registrationPairs.at(i).second == ProtocolType)
 		{
-			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/shell/open/command/."), QString()).toString().contains(m_applicationFilePath));
+			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/shell/open/command/."), {}).toString().contains(m_applicationFilePath));
 		}
 		else
 		{
-			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), QString()).toString() == m_registrationIdentifier);
+			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), {}).toString() == m_registrationIdentifier);
 
 			if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 			{
@@ -621,7 +621,7 @@ bool WindowsPlatformIntegration::isDefaultBrowser() const
 		}
 	}
 
-	isDefault &= (registry.value(QLatin1String("Clients/StartmenuInternet/."), QString()).toString() == m_registrationIdentifier);
+	isDefault &= (registry.value(QLatin1String("Clients/StartmenuInternet/."), {}).toString() == m_registrationIdentifier);
 
 	return isDefault;
 }
