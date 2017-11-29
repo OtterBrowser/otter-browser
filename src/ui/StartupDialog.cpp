@@ -26,31 +26,31 @@
 namespace Otter
 {
 
-StartupDialog::StartupDialog(const QString &session, QWidget *parent) : Dialog(parent),
+StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dialog(parent),
 	m_windowsModel(new QStandardItemModel(this)),
 	m_ui(new Ui::StartupDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->windowsTreeView->setModel(m_windowsModel);
 
-	const QStringList sessions(SessionsManager::getSessions());
+	const QStringList sessionNames(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
 
-	for (int i = 0; i < sessions.count(); ++i)
+	for (int i = 0; i < sessionNames.count(); ++i)
 	{
-		const SessionInformation session(SessionsManager::getSession(sessions.at(i)));
+		const SessionInformation session(SessionsManager::getSession(sessionNames.at(i)));
 
 		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
 	}
 
-	const QList<SessionInformation> sorted(information.values());
+	const QList<SessionInformation> sessions(information.values());
 
-	for (int i = 0; i < sorted.count(); ++i)
+	for (int i = 0; i < sessions.count(); ++i)
 	{
-		m_ui->sessionComboBox->addItem((sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), sorted.at(i).path);
+		m_ui->sessionComboBox->addItem((sessions.at(i).title.isEmpty() ? tr("(Untitled)") : sessions.at(i).title), sessions.at(i).path);
 	}
 
-	const int index(qMax(0, m_ui->sessionComboBox->findData(session)));
+	const int index(qMax(0, m_ui->sessionComboBox->findData(sessionName)));
 
 	m_ui->sessionComboBox->setCurrentIndex(index);
 

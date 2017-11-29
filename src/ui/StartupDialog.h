@@ -39,7 +39,7 @@ class StartupDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit StartupDialog(const QString &session, QWidget *parent = nullptr);
+	explicit StartupDialog(const QString &sessionName, QWidget *parent = nullptr);
 	~StartupDialog();
 
 	SessionInformation getSession() const;
