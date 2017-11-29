@@ -544,35 +544,33 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					{
 						const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(parameters[QLatin1String("url")].toString(), InputInterpreter::NoBookmarkKeywordsFlag));
 
-						if (result.isValid())
-						{
-							switch (result.type)
-							{
-								case InputInterpreter::InterpreterResult::BookmarkType:
-									{
-										QVariantMap mutableParameters(parameters);
-										mutableParameters.remove(QLatin1String("needsInterpretation"));
-										mutableParameters[QLatin1String("bookmark")] = result.bookmark->getIdentifier();
-
-										triggerAction(ActionsManager::OpenBookmarkAction, mutableParameters);
-									}
-
-									return;
-								case InputInterpreter::InterpreterResult::UrlType:
-									url = result.url;
-
-									break;
-								case InputInterpreter::InterpreterResult::SearchType:
-									search(result.searchQuery, result.searchEngine, SessionsManager::calculateOpenHints(parameters));
-
-									return;
-								default:
-									return;
-							}
-						}
-						else
+						if (!result.isValid())
 						{
 							return;
+						}
+
+						switch (result.type)
+						{
+							case InputInterpreter::InterpreterResult::BookmarkType:
+								{
+									QVariantMap mutableParameters(parameters);
+									mutableParameters.remove(QLatin1String("needsInterpretation"));
+									mutableParameters[QLatin1String("bookmark")] = result.bookmark->getIdentifier();
+
+									triggerAction(ActionsManager::OpenBookmarkAction, mutableParameters);
+								}
+
+								return;
+							case InputInterpreter::InterpreterResult::UrlType:
+								url = result.url;
+
+								break;
+							case InputInterpreter::InterpreterResult::SearchType:
+								search(result.searchQuery, result.searchEngine, SessionsManager::calculateOpenHints(parameters));
+
+								return;
+							default:
+								return;
 						}
 					}
 					else
