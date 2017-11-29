@@ -640,27 +640,22 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					hints = SessionsManager::CurrentTabOpen;
 				}
 
-				const bool isReplacing(hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow);
-				const WindowState windowState(isReplacing ? activeWindow->getWindowState() : WindowState());
-				const bool isAlwaysOnTop(isReplacing ? activeWindow->getSession().isAlwaysOnTop : false);
+				Window *window(nullptr);
 
-				mutableParameters[QLatin1String("hints")] = QVariant(hints);
-
-				if (isReplacing)
+				if (hints.testFlag(SessionsManager::CurrentTabOpen) && activeWindow)
 				{
-					if (activeWindow->getType() == QLatin1String("web") && activeWindow->getWebWidget() && !parameters.contains(QLatin1String("webBackend")))
-					{
-						mutableParameters[QLatin1String("webBackend")] = activeWindow->getWebWidget()->getBackend()->getName();
-					}
+					window = activeWindow;
+				}
+				else
+				{
+					mutableParameters[QLatin1String("hints")] = QVariant(hints);
 
-					activeWindow->requestClose();
+					window = new Window(mutableParameters, nullptr, this);
+
+					addWindow(window, hints, index);
 				}
 
-				Window *window(new Window(mutableParameters, nullptr, this));
-
-				addWindow(window, hints, index, windowState, isAlwaysOnTop);
-
-				window->setUrl(((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
+				window->setUrl((url.isEmpty() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url);
 			}
 
 			return;
