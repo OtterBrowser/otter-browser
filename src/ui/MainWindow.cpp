@@ -627,15 +627,15 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				Window *activeWindow(m_workspace->getActiveWindow());
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
-				if (hints == SessionsManager::NewTabOpen && !url.isEmpty() && isUrlEmpty)
+				if (hints == SessionsManager::NewTabOpen && isUrlEmpty && !url.isEmpty())
 				{
 					hints = SessionsManager::CurrentTabOpen;
 				}
-				else if (hints == SessionsManager::DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!activeWindow || !Utils::isUrlEmpty(activeWindow->getUrl())))
+				else if (hints == SessionsManager::DefaultOpen && !isUrlEmpty && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start"))
 				{
 					hints = SessionsManager::NewTabOpen;
 				}
-				else if (hints == SessionsManager::DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+				else if (hints == SessionsManager::DefaultOpen && (isUrlEmpty || SettingsManager::getOption(SettingsManager::Browser_ReuseCurrentTabOption).toBool()) && url.scheme() != QLatin1String("javascript"))
 				{
 					hints = SessionsManager::CurrentTabOpen;
 				}
