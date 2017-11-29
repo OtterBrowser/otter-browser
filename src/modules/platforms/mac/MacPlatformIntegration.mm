@@ -402,11 +402,9 @@ Style* MacPlatformIntegration::createStyle(const QString &name) const
 
 QVector<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
-	QVector<ApplicationInformation> applications;
-
 	if (mimeType.preferredSuffix().isEmpty())
 	{
-		return applications;
+		return {};
 	}
 
 	NSRect iconRectangle(NSMakeRect(0, 0, 64, 64));
@@ -417,8 +415,14 @@ QVector<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeTy
 	url.setScheme(QLatin1String("file"));
 
 	const CFArrayRef urls(LSCopyApplicationURLsForURL(url.toCFURL(), kLSRolesAll));
-	const int count(CFArrayGetCount(urls));
 
+	if (!urls)
+	{
+		return {};
+	}
+
+	const int count(CFArrayGetCount(urls));
+	QVector<ApplicationInformation> applications;
 	applications.reserve(count);
 
 	for (int i = 0; i < count; ++i)
