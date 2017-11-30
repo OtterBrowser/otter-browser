@@ -121,12 +121,13 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchViewWidget->setExclusive(true);
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
-	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
-	addSearchMenu->addAction(tr("New…"), this, SLOT(createSearchEngine()));
-	addSearchMenu->addAction(tr("File…"), this, SLOT(importSearchEngine()));
-	addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
+	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
+	const QAction *createSearchEngineAction(addSearchEngineMenu->addAction(tr("New…")));
+	const QAction *importSearchEngineAction(addSearchEngineMenu->addAction(tr("File…")));
 
-	m_ui->addSearchButton->setMenu(addSearchMenu);
+	addSearchEngineMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
+
+	m_ui->addSearchButton->setMenu(addSearchEngineMenu);
 	m_ui->moveDownSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpSearchButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 
@@ -143,6 +144,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	connect(m_ui->removeSearchButton, &QPushButton::clicked, this, &PreferencesSearchPageWidget::removeSearchEngine);
 	connect(m_ui->moveDownSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->moveUpSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveUpRow);
+	connect(createSearchEngineAction, &QAction::triggered, this, &PreferencesSearchPageWidget::createSearchEngine);
+	connect(importSearchEngineAction, &QAction::triggered, this, &PreferencesSearchPageWidget::importSearchEngine);
 }
 
 PreferencesSearchPageWidget::~PreferencesSearchPageWidget()
