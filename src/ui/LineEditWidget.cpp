@@ -180,6 +180,7 @@ LineEditWidget::LineEditWidget(const QString &text, QWidget *parent) : QLineEdit
 	m_completer(nullptr),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
+	m_shouldClearOnEscape(false),
 	m_shouldIgnoreCompletion(false),
 	m_shouldSelectAllOnFocus(false),
 	m_shouldSelectAllOnRelease(false),
@@ -194,6 +195,7 @@ LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_completer(nullptr),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
+	m_shouldClearOnEscape(false),
 	m_shouldIgnoreCompletion(false),
 	m_shouldSelectAllOnFocus(false),
 	m_shouldSelectAllOnRelease(false),
@@ -245,9 +247,25 @@ void LineEditWidget::focusInEvent(QFocusEvent *event)
 
 void LineEditWidget::keyPressEvent(QKeyEvent *event)
 {
-	if ((event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) && !m_completion.isEmpty())
+	switch (event->key())
 	{
-		m_shouldIgnoreCompletion = true;
+		case Qt::Key_Backspace:
+		case Qt::Key_Delete:
+			if (!m_completion.isEmpty())
+			{
+				m_shouldIgnoreCompletion = true;
+			}
+
+			break;
+		case Qt::Key_Escape:
+			if (m_shouldClearOnEscape)
+			{
+				clear();
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	QLineEdit::keyPressEvent(event);
@@ -555,6 +573,11 @@ void LineEditWidget::setCompletion(const QString &completion)
 void LineEditWidget::setDropMode(LineEditWidget::DropMode mode)
 {
 	m_dropMode = mode;
+}
+
+void LineEditWidget::setClearOnEscape(bool clear)
+{
+	m_shouldClearOnEscape = clear;
 }
 
 void LineEditWidget::setSelectAllOnFocus(bool select)

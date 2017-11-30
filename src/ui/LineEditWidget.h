@@ -74,6 +74,7 @@ public:
 	virtual void showPopup();
 	virtual void hidePopup();
 	void setDropMode(DropMode mode);
+	void setClearOnEscape(bool clear);
 	void setSelectAllOnFocus(bool select);
 	PopupViewWidget* getPopup();
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters) const override;
@@ -105,6 +106,7 @@ private:
 	QString m_completion;
 	DropMode m_dropMode;
 	int m_selectionStart;
+	bool m_shouldClearOnEscape;
 	bool m_shouldIgnoreCompletion;
 	bool m_shouldSelectAllOnFocus;
 	bool m_shouldSelectAllOnRelease;
