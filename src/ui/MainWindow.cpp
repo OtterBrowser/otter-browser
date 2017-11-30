@@ -669,7 +669,10 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					iterator.value()->triggerAction(ActionsManager::StopAction);
+					if (iterator.value()->getLoadingState() != WebWidget::DeferredLoadingState)
+					{
+						iterator.value()->triggerAction(ActionsManager::StopAction);
+					}
 				}
 			}
 
@@ -680,7 +683,10 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					iterator.value()->triggerAction(ActionsManager::ReloadAction);
+					if (iterator.value()->getLoadingState() != WebWidget::DeferredLoadingState)
+					{
+						iterator.value()->triggerAction(ActionsManager::ReloadAction);
+					}
 				}
 			}
 
