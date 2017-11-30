@@ -103,27 +103,27 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 		visibilityMenu->addSeparator();
 	}
 
-	QActionGroup columnsActionGroup(sortMenu);
-	columnsActionGroup.setExclusive(true);
+	QActionGroup sortActionGroup(sortMenu);
+	sortActionGroup.setExclusive(true);
 
 	for (int i = 0; i < model()->columnCount(); ++i)
 	{
 		const QString title(model()->headerData(i, orientation()).toString().isEmpty() ? tr("(Untitled)") : model()->headerData(i, orientation()).toString());
-		QAction *action(sortMenu->addAction(title));
-		action->setData(i);
-		action->setCheckable(true);
-		action->setChecked(i == sortColumn);
+		QAction *sortAction(sortMenu->addAction(title));
+		sortAction->setData(i);
+		sortAction->setCheckable(true);
+		sortAction->setChecked(i == sortColumn);
 
-		columnsActionGroup.addAction(action);
+		sortActionGroup.addAction(sortAction);
 
 		if (visibilityMenu->isEnabled())
 		{
-			QAction *action(visibilityMenu->addAction(title));
-			action->setData(i);
-			action->setCheckable(true);
-			action->setChecked(!view->isColumnHidden(i));
+			QAction *visibilityAction(visibilityMenu->addAction(title));
+			visibilityAction->setData(i);
+			visibilityAction->setCheckable(true);
+			visibilityAction->setChecked(!view->isColumnHidden(i));
 
-			if (!action->isChecked())
+			if (!visibilityAction->isChecked())
 			{
 				areAllColumnsVisible = false;
 			}
