@@ -366,7 +366,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 #endif
 		case ActionsManager::OpenLinkAction:
-			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); element.dispatchEvent(event); }"), getClickPosition()));
+			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
 
 			setClickPosition({});
 
