@@ -35,6 +35,7 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 	m_ui(new Ui::PageInformationContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	const QVector<SectionName> sections({GeneralSection, SecuritySection, PermissionsSection, MetaSection, HeadersSection});
 	QStandardItemModel *model(new QStandardItemModel(this));
@@ -83,6 +84,7 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 
 	updateSections();
 
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->informationViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->informationViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PageInformationContentsWidget::showContextMenu);
 	connect(m_ui->informationViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
