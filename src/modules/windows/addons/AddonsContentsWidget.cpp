@@ -46,9 +46,9 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 	m_ui(new Ui::AddonsContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->addonsViewWidget->installEventFilter(this);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	QTimer::singleShot(100, this, &AddonsContentsWidget::populateAddons);
 
@@ -544,15 +544,6 @@ bool AddonsContentsWidget::eventFilter(QObject *object, QEvent *event)
 			removeAddons();
 
 			return true;
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

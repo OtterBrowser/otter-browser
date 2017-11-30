@@ -42,6 +42,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui(new Ui::NotesContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
 	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
@@ -56,7 +57,6 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->notesViewWidget->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 	m_ui->textEditWidget->setPlaceholderText(tr("Add note…"));
 
 	if (isSidebarPanel())
@@ -429,15 +429,6 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

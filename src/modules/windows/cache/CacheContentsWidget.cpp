@@ -45,11 +45,11 @@ CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *
 	m_ui(new Ui::CacheContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->previewLabel->hide();
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->cacheViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->cacheViewWidget->installEventFilter(this);
 	m_ui->cacheViewWidget->viewport()->installEventFilter(this);
-	m_ui->filterLineEditWidget->installEventFilter(this);
+	m_ui->previewLabel->hide();
 
 	if (isSidebarPanel())
 	{
@@ -609,15 +609,6 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

@@ -40,6 +40,7 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	m_ui(new Ui::HistoryContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	const QStringList groups({tr("Today"), tr("Yesterday"), tr("Earlier This Week"), tr("Previous Week"), tr("Earlier This Month"), tr("Earlier This Year"), tr("Older")});
 
@@ -58,7 +59,6 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->historyViewWidget->setSortRoleMapping({{2, TimeVisitedRole}});
 	m_ui->historyViewWidget->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -477,15 +477,6 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

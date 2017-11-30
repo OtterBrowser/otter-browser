@@ -46,6 +46,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
 	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
@@ -66,7 +67,6 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	m_ui->bookmarksViewWidget->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->setMouseTracking(true);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	if (isSidebarPanel())
 	{
@@ -408,15 +408,6 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

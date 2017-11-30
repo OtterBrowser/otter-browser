@@ -150,6 +150,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui(new Ui::ConfigurationContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	NetworkManagerFactory::initialize();
 
@@ -218,7 +219,6 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));
 	m_ui->configurationViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->configurationViewWidget->installEventFilter(this);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 	m_ui->resetAllButton->setEnabled(canResetAll);
 
 	if (isSidebarPanel())
@@ -558,15 +558,6 @@ bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 		if (keyEvent && keyEvent->key() == Qt::Key_Right && index.parent().isValid())
 		{
 			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 2));
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

@@ -43,8 +43,8 @@ CookiesContentsWidget::CookiesContentsWidget(const QVariantMap &parameters, Wind
 	m_ui(new Ui::CookiesContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->cookiesViewWidget->installEventFilter(this);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	if (isSidebarPanel())
 	{
@@ -500,15 +500,6 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			removeCookies();
 
 			return true;
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 

@@ -41,8 +41,8 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 	m_ui(new Ui::PasswordsContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->passwordsViewWidget->installEventFilter(this);
-	m_ui->filterLineEditWidget->installEventFilter(this);
 
 	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->passwordsViewWidget->setModel(m_model);
@@ -435,15 +435,6 @@ bool PasswordsContentsWidget::eventFilter(QObject *object, QEvent *event)
 			removePasswords();
 
 			return true;
-		}
-	}
-	else if (object == m_ui->filterLineEditWidget && event->type() == QEvent::KeyPress)
-	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->filterLineEditWidget->clear();
 		}
 	}
 
