@@ -873,6 +873,10 @@ void Application::handleOptionChanged(int identifier, const QVariant &value)
 			}
 
 			break;
+		case SettingsManager::Browser_LocaleOption:
+			setLocale(value.toString());
+
+			break;
 		case SettingsManager::Interface_LockToolBarsOption:
 			emit arbitraryActionsStateChanged({ActionsManager::LockToolBarsAction});
 

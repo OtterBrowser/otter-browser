@@ -66,7 +66,6 @@ public:
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser, bool forceOpen = false);
 	static void setHidden(bool isHidden);
-	static void setLocale(const QString &locale);
 	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = {});
 	static Application* getInstance();
 	static MainWindow* getWindow();
@@ -90,6 +89,9 @@ public:
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void close();
+
+protected:
+	static void setLocale(const QString &locale);
 
 protected slots:
 	void openUrl(const QUrl &url);

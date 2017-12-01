@@ -118,8 +118,6 @@ void LocaleDialog::save()
 	}
 
 	SettingsManager::setOption(SettingsManager::Browser_LocaleOption, locale);
-
-	Application::setLocale(locale);
 }
 
 }
