@@ -381,23 +381,23 @@ void SidebarWidget::updatePanels()
 	for (int i = 0; i < panels.count(); ++i)
 	{
 		QToolButton *button(new QToolButton(this));
-		QAction *action(new QAction(button));
-		action->setData(panels.at(i));
-		action->setIcon(getPanelIcon(panels.at(i)));
-		action->setToolTip(getPanelTitle(panels.at(i)));
+		QAction *selectPanelButtonAction(new QAction(button));
+		selectPanelButtonAction->setData(panels.at(i));
+		selectPanelButtonAction->setIcon(getPanelIcon(panels.at(i)));
+		selectPanelButtonAction->setToolTip(getPanelTitle(panels.at(i)));
 
-		button->setDefaultAction(action);
+		button->setDefaultAction(selectPanelButtonAction);
 		button->setAutoRaise(true);
 		button->setCheckable(true);
 
 		if (panels.at(i).startsWith(QLatin1String("web:")))
 		{
-			QAction *action(menu->addAction(getPanelTitle(panels.at(i))));
-			action->setCheckable(true);
-			action->setChecked(true);
-			action->setData(panels.at(i));
+			QAction *selectPanelMenuAction(menu->addAction(getPanelTitle(panels.at(i))));
+			selectPanelMenuAction->setCheckable(true);
+			selectPanelMenuAction->setChecked(true);
+			selectPanelMenuAction->setData(panels.at(i));
 
-			connect(action, &QAction::toggled, this, &SidebarWidget::choosePanel);
+			connect(selectPanelMenuAction, &QAction::toggled, this, &SidebarWidget::choosePanel);
 		}
 		else if (!specialPages.contains(panels.at(i)))
 		{
@@ -410,7 +410,7 @@ void SidebarWidget::updatePanels()
 
 		m_buttons[panels.at(i)] = button;
 
-		connect(action, &QAction::triggered, this, [&]()
+		connect(selectPanelButtonAction, &QAction::triggered, this, [&]()
 		{
 			const QAction *action(qobject_cast<QAction*>(sender()));
 
