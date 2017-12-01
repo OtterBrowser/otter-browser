@@ -380,11 +380,12 @@ void SidebarWidget::updatePanels()
 
 	for (int i = 0; i < panels.count(); ++i)
 	{
+		const QString title(getPanelTitle(panels.at(i)));
 		QToolButton *button(new QToolButton(this));
 		QAction *selectPanelButtonAction(new QAction(button));
 		selectPanelButtonAction->setData(panels.at(i));
 		selectPanelButtonAction->setIcon(getPanelIcon(panels.at(i)));
-		selectPanelButtonAction->setToolTip(getPanelTitle(panels.at(i)));
+		selectPanelButtonAction->setToolTip(title);
 
 		button->setDefaultAction(selectPanelButtonAction);
 		button->setAutoRaise(true);
@@ -392,7 +393,7 @@ void SidebarWidget::updatePanels()
 
 		if (panels.at(i).startsWith(QLatin1String("web:")))
 		{
-			QAction *selectPanelMenuAction(menu->addAction(getPanelTitle(panels.at(i))));
+			QAction *selectPanelMenuAction(menu->addAction(title));
 			selectPanelMenuAction->setCheckable(true);
 			selectPanelMenuAction->setChecked(true);
 			selectPanelMenuAction->setData(panels.at(i));
