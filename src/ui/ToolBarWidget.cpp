@@ -907,7 +907,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 
 	QAction *removeAction(toolBarMenu->addAction(ThemesManager::createIcon(QLatin1String("list-remove")), tr("Remove…")));
 	removeAction->setData(identifier);
-	removeAction->setEnabled(definition.identifier >= ToolBarsManager::OtherToolBar);
+	removeAction->setEnabled(!definition.canReset);
 
 	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu));
 
