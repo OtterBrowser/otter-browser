@@ -92,9 +92,9 @@ void SelectPasswordDialog::removePassword()
 
 	for (int i = 0; i < m_ui->passwordsViewWidget->getRowCount(); ++i)
 	{
-		const QVariant data(m_ui->passwordsViewWidget->getIndex(i, 0).data(Qt::UserRole));
+		const QModelIndex index(m_ui->passwordsViewWidget->getIndex(i, 0));
 
-		if (data.isValid() && data.toInt() == currentSet)
+		if (index.data(Qt::UserRole).isValid() && index.data(Qt::UserRole).toInt() == currentSet)
 		{
 			m_ui->passwordsViewWidget->getSourceModel()->removeRow(i);
 
