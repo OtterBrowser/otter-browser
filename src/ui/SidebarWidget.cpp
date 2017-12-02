@@ -380,6 +380,13 @@ void SidebarWidget::updatePanels()
 
 	for (int i = 0; i < panels.count(); ++i)
 	{
+		const bool isWebPanel(panels.at(i).startsWith(QLatin1String("web:")));
+
+		if (!isWebPanel && !specialPages.contains(panels.at(i)))
+		{
+			continue;
+		}
+
 		const QString title(getPanelTitle(panels.at(i)));
 		QToolButton *button(new QToolButton(this));
 		QAction *selectPanelButtonAction(new QAction(button));
@@ -391,7 +398,7 @@ void SidebarWidget::updatePanels()
 		button->setAutoRaise(true);
 		button->setCheckable(true);
 
-		if (panels.at(i).startsWith(QLatin1String("web:")))
+		if (isWebPanel)
 		{
 			QAction *selectPanelMenuAction(menu->addAction(title));
 			selectPanelMenuAction->setCheckable(true);
@@ -399,12 +406,6 @@ void SidebarWidget::updatePanels()
 			selectPanelMenuAction->setData(panels.at(i));
 
 			connect(selectPanelMenuAction, &QAction::toggled, this, &SidebarWidget::choosePanel);
-		}
-		else if (!specialPages.contains(panels.at(i)))
-		{
-			button->deleteLater();
-
-			continue;
 		}
 
 		m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
