@@ -28,7 +28,6 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QVector>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -361,13 +360,6 @@ void ToolBarsManager::addSideBar()
 
 void ToolBarsManager::configureToolBar(int identifier)
 {
-	const QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action && identifier < 0)
-	{
-		identifier = action->data().toInt();
-	}
-
 	if (identifier >= 0 && identifier < m_definitions.count())
 	{
 		ToolBarDialog dialog(getToolBarDefinition(identifier));
@@ -381,13 +373,6 @@ void ToolBarsManager::configureToolBar(int identifier)
 
 void ToolBarsManager::resetToolBar(int identifier)
 {
-	const QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action && identifier < 0)
-	{
-		identifier = action->data().toInt();
-	}
-
 	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(nullptr, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
 		setToolBar(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true).value(getToolBarName(identifier)));
@@ -396,13 +381,6 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 void ToolBarsManager::removeToolBar(int identifier)
 {
-	const QAction *action(qobject_cast<QAction*>(sender()));
-
-	if (action && identifier < 0)
-	{
-		identifier = action->data().toInt();
-	}
-
 	if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(nullptr, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
 		m_definitions[identifier].wasRemoved = true;
