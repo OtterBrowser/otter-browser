@@ -88,7 +88,7 @@ void SelectPasswordDialog::removePassword()
 
 	PasswordsManager::removePassword(m_passwords.value(currentSet));
 
-	m_passwords.replace(currentSet, PasswordsManager::PasswordInformation());
+	m_passwords.replace(currentSet, {});
 
 	for (int i = 0; i < m_ui->passwordsViewWidget->getRowCount(); ++i)
 	{
@@ -117,7 +117,7 @@ void SelectPasswordDialog::updateActions()
 
 PasswordsManager::PasswordInformation SelectPasswordDialog::getPassword() const
 {
-	return m_passwords.value(getCurrentSet(), PasswordsManager::PasswordInformation());
+	return m_passwords.value(getCurrentSet());
 }
 
 int SelectPasswordDialog::getCurrentSet() const
@@ -126,11 +126,14 @@ int SelectPasswordDialog::getCurrentSet() const
 
 	if (index.isValid() && m_ui->passwordsViewWidget->selectionModel()->hasSelection())
 	{
-		if (index.parent().isValid() && index.parent().data(Qt::UserRole).isValid())
+		const QModelIndex parentIndex(index.parent());
+
+		if (parentIndex.isValid() && parentIndex.data(Qt::UserRole).isValid())
 		{
-			return index.parent().data(Qt::UserRole).toInt();
+			return parentIndex.data(Qt::UserRole).toInt();
 		}
-		else if (index.isValid() && index.data(Qt::UserRole).isValid())
+
+		if (index.data(Qt::UserRole).isValid())
 		{
 			return index.data(Qt::UserRole).toInt();
 		}
