@@ -493,7 +493,7 @@ void ToolBarDialog::addBookmark(QAction *action)
 
 void ToolBarDialog::restoreDefaults()
 {
-	ToolBarsManager::getInstance()->resetToolBar(m_definition.identifier);
+	ToolBarsManager::resetToolBar(m_definition.identifier);
 
 	reject();
 }

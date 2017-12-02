@@ -913,15 +913,15 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 
 	connect(configureAction, &QAction::triggered, configureAction, [=]()
 	{
-		ToolBarsManager::getInstance()->configureToolBar(identifier);
+		ToolBarsManager::configureToolBar(identifier);
 	});
 	connect(resetAction, &QAction::triggered, resetAction, [=]()
 	{
-		ToolBarsManager::getInstance()->resetToolBar(identifier);
+		ToolBarsManager::resetToolBar(identifier);
 	});
 	connect(removeAction, &QAction::triggered, removeAction, [=]()
 	{
-		ToolBarsManager::getInstance()->removeToolBar(identifier);
+		ToolBarsManager::removeToolBar(identifier);
 	});
 
 	return menu;
