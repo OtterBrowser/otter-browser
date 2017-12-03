@@ -151,7 +151,7 @@ private:
 	static quint64 m_identifierCounter;
 
 signals:
-	void activated(MainWindow *mainWindow);
+	void activated();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void toolBarStateChanged(int identifier, const ToolBarState &state);

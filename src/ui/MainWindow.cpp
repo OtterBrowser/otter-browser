@@ -2492,7 +2492,7 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::WindowActivate:
 			SessionsManager::markSessionAsModified();
 
-			emit activated(this);
+			emit activated();
 
 			break;
 		default:
