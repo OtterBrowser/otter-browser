@@ -44,14 +44,11 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 
 	if (toolBar)
 	{
-		connect(m_ui->closeButton, &QToolButton::clicked, [&]()
-		{
-			const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+		const int identifier(toolBar->getIdentifier());
 
-			if (toolBar)
-			{
-				Application::getInstance()->triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBar->getIdentifier()}, {QLatin1String("isChecked"), false}});
-			}
+		connect(m_ui->closeButton, &QToolButton::clicked, [=]()
+		{
+			Application::getInstance()->triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), identifier}, {QLatin1String("isChecked"), false}});
 		});
 	}
 	else
