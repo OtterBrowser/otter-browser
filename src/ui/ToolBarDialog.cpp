@@ -40,26 +40,39 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_definition(definition),
 	m_ui(new Ui::ToolBarDialog)
 {
-	if (definition.title.isEmpty())
+	m_ui->setupUi(this);
+
+	switch (definition.type)
 	{
-		switch (definition.type)
-		{
-			case ToolBarsManager::BookmarksBarType:
+		case ToolBarsManager::BookmarksBarType:
+			setWindowTitle(tr("Edit Bookmarks Bar"));
+
+			if (definition.title.isEmpty())
+			{
 				m_definition.title = tr("Bookmarks Bar");
+			}
 
-				break;
-			case ToolBarsManager::SideBarType:
+			break;
+		case ToolBarsManager::SideBarType:
+			setWindowTitle(tr("Edit Sidebar"));
+
+			if (definition.title.isEmpty())
+			{
 				m_definition.title = tr("Sidebar");
+			}
 
-				break;
-			default:
+			break;
+		default:
+			setWindowTitle(tr("Edit Toolbar"));
+
+			if (definition.title.isEmpty())
+			{
 				m_definition.title = tr("Toolbar");
+			}
 
-				break;
-		}
+			break;
 	}
 
-	m_ui->setupUi(this);
 	m_ui->stackedWidget->setCurrentIndex(definition.type);
 	m_ui->titleLineEditWidget->setText(m_definition.getTitle());
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
