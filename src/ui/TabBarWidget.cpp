@@ -917,7 +917,6 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 				mimeData->setProperty("x-window-identifier", window->getIdentifier());
 
 				const QPixmap thumbnail(window->createThumbnail());
-
 				QDrag *drag(new QDrag(this));
 				drag->setMimeData(mimeData);
 				drag->setPixmap(thumbnail.isNull() ? window->getIcon().pixmap(16, 16) : thumbnail);
@@ -935,12 +934,10 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 		return;
 	}
 
-	if (m_isIgnoringTabDrag || m_isDetachingTab)
+	if (!m_isIgnoringTabDrag && !m_isDetachingTab)
 	{
-		return;
+		QTabBar::mouseMoveEvent(event);
 	}
-
-	QTabBar::mouseMoveEvent(event);
 }
 
 void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
