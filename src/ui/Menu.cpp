@@ -1272,9 +1272,18 @@ void Menu::populateToolBarsMenu()
 	addSeparator();
 	addAction(new Action(ActionsManager::ResetToolBarsAction, {}, executor, this));
 
-	connect(addToolBarAction, &QAction::triggered, ToolBarsManager::getInstance(), &ToolBarsManager::addToolBar);
-	connect(addBookmarksBarAction, &QAction::triggered, ToolBarsManager::getInstance(), &ToolBarsManager::addBookmarksBar);
-	connect(addSideBarAction, &QAction::triggered, ToolBarsManager::getInstance(), &ToolBarsManager::addSideBar);
+	connect(addToolBarAction, &QAction::triggered, addToolBarAction, [&]()
+	{
+		ToolBarsManager::addToolBar(ToolBarsManager::ActionsBarType);
+	});
+	connect(addBookmarksBarAction, &QAction::triggered, addBookmarksBarAction, [&]()
+	{
+		ToolBarsManager::addToolBar(ToolBarsManager::BookmarksBarType);
+	});
+	connect(addSideBarAction, &QAction::triggered, addSideBarAction, [&]()
+	{
+		ToolBarsManager::addToolBar(ToolBarsManager::SideBarType);
+	});
 }
 
 void Menu::populateUserAgentMenu()

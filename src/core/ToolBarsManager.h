@@ -131,6 +131,7 @@ public:
 	};
 
 	static void createInstance();
+	static void addToolBar(ToolBarType type);
 	static void configureToolBar(int identifier);
 	static void resetToolBar(int identifier);
 	static void removeToolBar(int identifier);
@@ -142,11 +143,6 @@ public:
 	static ToolBarsManager::ToolBarDefinition getToolBarDefinition(int identifier);
 	static int getToolBarIdentifier(const QString &name);
 	static bool areToolBarsLocked();
-
-public slots:
-	void addToolBar();
-	void addBookmarksBar();
-	void addSideBar();
 
 protected:
 	explicit ToolBarsManager(QObject *parent);

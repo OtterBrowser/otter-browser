@@ -319,36 +319,25 @@ void ToolBarsManager::ensureInitialized()
 	m_isLoading = false;
 }
 
-void ToolBarsManager::addToolBar()
-{
-	ToolBarDialog dialog;
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		setToolBar(dialog.getDefinition());
-	}
-}
-
-void ToolBarsManager::addBookmarksBar()
+void ToolBarsManager::addToolBar(ToolBarsManager::ToolBarType type)
 {
 	ToolBarDefinition definition;
-	definition.bookmarksPath = QLatin1String("/");
-	definition.type = BookmarksBarType;
+	definition.type = type;
 
-	ToolBarDialog dialog(definition);
-
-	if (dialog.exec() == QDialog::Accepted)
+	switch (type)
 	{
-		setToolBar(dialog.getDefinition());
-	}
-}
+		case BookmarksBarType:
+			definition.bookmarksPath = QLatin1String("/");
 
-void ToolBarsManager::addSideBar()
-{
-	ToolBarDefinition definition;
-	definition.panels = QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("passwords"), QLatin1String("transfers")});
-	definition.location = Qt::LeftToolBarArea;
-	definition.type = SideBarType;
+			break;
+		case SideBarType:
+			definition.panels = QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("passwords"), QLatin1String("transfers")});
+			definition.location = Qt::LeftToolBarArea;
+
+			break;
+		default:
+			break;
+	}
 
 	ToolBarDialog dialog(definition);
 
