@@ -43,7 +43,7 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 	m_definition = NetworkManagerFactory::getProxy(identifier);
 
 	m_proxies.clear();
-	m_proxies[-1] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
+	m_proxies[-1] = {QNetworkProxy(QNetworkProxy::NoProxy)};
 
 	switch (m_definition.type)
 	{
@@ -59,12 +59,12 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 
 						for (int i = 0; i < protocols.count(); ++i)
 						{
-							m_proxies[iterator.key()] = QList<QNetworkProxy>({QNetworkProxy(getProxyType(protocols.at(i)), iterator.value().hostName, iterator.value().port)});
+							m_proxies[iterator.key()] = {QNetworkProxy(getProxyType(protocols.at(i)), iterator.value().hostName, iterator.value().port)};
 						}
 					}
 					else
 					{
-						m_proxies[iterator.key()] = QList<QNetworkProxy>({QNetworkProxy(getProxyType(iterator.key()), iterator.value().hostName, iterator.value().port)});
+						m_proxies[iterator.key()] = {QNetworkProxy(getProxyType(iterator.key()), iterator.value().hostName, iterator.value().port)};
 					}
 				}
 			}

@@ -912,7 +912,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 			{
 				QMimeData *mimeData(new QMimeData());
 				mimeData->setText(window->getUrl().toString());
-				mimeData->setUrls(QList<QUrl>({window->getUrl()}));
+				mimeData->setUrls({window->getUrl()});
 				mimeData->setProperty("x-url-title", window->getTitle());
 				mimeData->setProperty("x-window-identifier", window->getIdentifier());
 

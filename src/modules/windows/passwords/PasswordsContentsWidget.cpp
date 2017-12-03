@@ -98,7 +98,7 @@ void PasswordsContentsWidget::populatePasswords()
 				setItem->appendRow(fieldItems);
 			}
 
-			hostItem->appendRow(QList<QStandardItem*>({setItem, new QStandardItem()}));
+			hostItem->appendRow({setItem, new QStandardItem()});
 		}
 
 		hostItem->setText(QStringLiteral("%1 (%2)").arg(hosts.at(i)).arg(hostItem->rowCount()));
