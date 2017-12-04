@@ -45,9 +45,9 @@ ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : 
 		layout->addWidget(button);
 
 		connect(button, &QToolButton::clicked, this, &ShortcutWidget::clear);
-		connect(this, &ShortcutWidget::keySequenceChanged, [=](const QKeySequence &shortcut)
+		connect(this, &ShortcutWidget::keySequenceChanged, [=]()
 		{
-			button->setEnabled(!shortcut.isEmpty());
+			button->setEnabled(!keySequence().isEmpty());
 
 			emit commitData(this);
 		});
