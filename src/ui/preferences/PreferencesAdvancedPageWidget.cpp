@@ -1053,7 +1053,7 @@ void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
 {
-	const QString identifier(createProfileIdentifier(m_ui->keyboardViewWidget));
+	const QString identifier(createProfileIdentifier(m_ui->keyboardViewWidget->getSourceModel()));
 
 	if (identifier.isEmpty())
 	{
@@ -1136,7 +1136,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 		return;
 	}
 
-	const QString newIdentifier(createProfileIdentifier(m_ui->mouseViewWidget, identifier));
+	const QString newIdentifier(createProfileIdentifier(m_ui->mouseViewWidget->getSourceModel(), identifier));
 
 	if (newIdentifier.isEmpty())
 	{
@@ -1248,7 +1248,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 void PreferencesAdvancedPageWidget::addMouseProfile()
 {
-	const QString identifier(createProfileIdentifier(m_ui->mouseViewWidget));
+	const QString identifier(createProfileIdentifier(m_ui->mouseViewWidget->getSourceModel()));
 
 	if (identifier.isEmpty())
 	{
@@ -1331,7 +1331,7 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 		return;
 	}
 
-	const QString newIdentifier(createProfileIdentifier(m_ui->mouseViewWidget, identifier));
+	const QString newIdentifier(createProfileIdentifier(m_ui->mouseViewWidget->getSourceModel(), identifier));
 
 	if (newIdentifier.isEmpty())
 	{
@@ -1736,13 +1736,13 @@ void PreferencesAdvancedPageWidget::updatePageSwitcher()
 	m_ui->advancedViewWidget->setMinimumWidth(qMin(200, maximumWidth));
 }
 
-QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *view, const QString &base) const
+QString PreferencesAdvancedPageWidget::createProfileIdentifier(QStandardItemModel *model, const QString &base) const
 {
 	QStringList identifiers;
 
-	for (int i = 0; i < view->getRowCount(); ++i)
+	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		const QString identifier(view->getIndex(i, 0).data(Qt::UserRole).toString());
+		const QString identifier(model->index(i, 0).data(Qt::UserRole).toString());
 
 		if (!identifier.isEmpty())
 		{

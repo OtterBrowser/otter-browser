@@ -35,7 +35,6 @@ namespace Ui
 	class PreferencesAdvancedPageWidget;
 }
 
-class ItemViewWidget;
 class KeyboardProfile;
 class MouseProfile;
 
@@ -66,7 +65,7 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void updateReaddKeyboardProfileMenu();
 	void updateReaddMouseProfileMenu();
-	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = {}) const;
+	QString createProfileIdentifier(QStandardItemModel *model, const QString &base = {}) const;
 	QStringList getSelectedUpdateChannels() const;
 
 protected slots:
