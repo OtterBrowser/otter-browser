@@ -172,9 +172,7 @@ void PageInformationContentsWidget::updateSections()
 
 						if (canGetPageInformation && m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0)
 						{
-							const int amountOfBlockedRequests(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt());
-
-							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%2 blocked)", "", amountOfBlockedRequests).arg(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()).arg(amountOfBlockedRequests));
+							addEntry(sectionItem, tr("Number of requests"), tr("%1 (%n blocked)", "", m_window->getWebWidget()->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt()));
 						}
 						else
 						{
