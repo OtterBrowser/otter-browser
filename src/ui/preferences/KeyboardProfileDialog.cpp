@@ -47,7 +47,15 @@ ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : 
 		connect(button, &QToolButton::clicked, this, &ShortcutWidget::clear);
 		connect(this, &ShortcutWidget::keySequenceChanged, [=]()
 		{
-			button->setEnabled(!keySequence().isEmpty());
+			const bool isEmpty(keySequence().isEmpty());
+
+			button->setEnabled(!isEmpty);
+
+			if (isEmpty)
+			{
+				setStyleSheet({});
+				setToolTip({});
+			}
 
 			emit commitData(this);
 		});
@@ -150,7 +158,7 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 				widget->setStyleSheet(QLatin1String("QLineEdit {background:#F1E7E4;}"));
 				widget->setToolTip(result.text);
 
-				QTimer::singleShot(1000, widget, [=]()
+				QTimer::singleShot(5000, widget, [=]()
 				{
 					widget->setStyleSheet({});
 					widget->setToolTip({});
