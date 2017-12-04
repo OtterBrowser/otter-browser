@@ -851,8 +851,6 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	menu.exec(event->globalPos());
 
-	cycleAction->deleteLater();
-
 	m_clickedTab = -1;
 
 	if (underMouse())

@@ -1201,10 +1201,6 @@ void TabBarToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	menu.addMenu(createCustomizationMenu(getIdentifier(), {cycleAction, thumbnailsAction}, &menu));
 	menu.exec(event->globalPos());
-
-	cycleAction->deleteLater();
-
-	thumbnailsAction->deleteLater();
 }
 
 void TabBarToolBarWidget::findTabBar()
