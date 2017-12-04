@@ -152,8 +152,8 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 
 				QTimer::singleShot(1000, widget, [=]()
 				{
-					widget->setStyleSheet(QString());
-					widget->setToolTip(QString());
+					widget->setStyleSheet({});
+					widget->setToolTip({});
 				});
 			}
 		}
