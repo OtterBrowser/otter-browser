@@ -318,7 +318,7 @@ void ToolBarDialog::addNewEntry()
 		}
 		else
 		{
-			m_ui->currentEntriesItemView->insertRow(newItem);
+			m_ui->currentEntriesItemView->insertRow({newItem});
 		}
 	}
 }
@@ -500,7 +500,7 @@ void ToolBarDialog::addBookmark(QAction *action)
 {
 	if (action && action->data().type() == QVariant::ULongLong)
 	{
-		m_ui->currentEntriesItemView->insertRow(createEntry(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong())));
+		m_ui->currentEntriesItemView->insertRow({createEntry(QLatin1String("bookmarks:") + QString::number(action->data().toULongLong()))});
 	}
 }
 

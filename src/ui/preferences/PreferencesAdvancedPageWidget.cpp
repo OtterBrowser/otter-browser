@@ -529,7 +529,7 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 			QStandardItem *item(new QStandardItem(mimeType));
 			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
-			m_ui->downloadsItemView->insertRow(item);
+			m_ui->downloadsItemView->insertRow({item});
 			m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
 		}
 		else
@@ -1020,7 +1020,7 @@ void PreferencesAdvancedPageWidget::addCipher(QAction *action)
 	QStandardItem *item(new QStandardItem(action->text()));
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->ciphersViewWidget->insertRow(item);
+	m_ui->ciphersViewWidget->insertRow({item});
 	m_ui->ciphersAddButton->menu()->removeAction(action);
 	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 }
@@ -1066,7 +1066,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->keyboardViewWidget->insertRow(item);
+	m_ui->keyboardViewWidget->insertRow({item});
 }
 
 void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
@@ -1091,7 +1091,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	item->setData(profile.getName(), Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->keyboardViewWidget->insertRow(item);
+	m_ui->keyboardViewWidget->insertRow({item});
 
 	updateReaddKeyboardProfileMenu();
 }
@@ -1158,7 +1158,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 	item->setData(newIdentifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->keyboardViewWidget->insertRow(item);
+	m_ui->keyboardViewWidget->insertRow({item});
 }
 
 void PreferencesAdvancedPageWidget::removeKeyboardProfile()
@@ -1261,7 +1261,7 @@ void PreferencesAdvancedPageWidget::addMouseProfile()
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->mouseViewWidget->insertRow(item);
+	m_ui->mouseViewWidget->insertRow({item});
 }
 
 void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
@@ -1286,7 +1286,7 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 	item->setData(profile.getName(), Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->mouseViewWidget->insertRow(item);
+	m_ui->mouseViewWidget->insertRow({item});
 
 	updateReaddMouseProfileMenu();
 }
@@ -1353,7 +1353,7 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 	item->setData(newIdentifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	m_ui->mouseViewWidget->insertRow(item);
+	m_ui->mouseViewWidget->insertRow({item});
 }
 
 void PreferencesAdvancedPageWidget::removeMouseProfile()

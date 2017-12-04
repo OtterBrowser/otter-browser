@@ -563,11 +563,6 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 	markAsModified();
 }
 
-void ItemViewWidget::insertRow(QStandardItem *item)
-{
-	insertRow({item});
-}
-
 void ItemViewWidget::removeRow()
 {
 	if (!m_sourceModel)

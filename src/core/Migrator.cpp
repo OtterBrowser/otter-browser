@@ -561,7 +561,7 @@ bool Migrator::run()
 		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations[i]->getTitle().toUtf8().constData())));
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsSelectable);
 
-		migrationsViewWidget->insertRow(item);
+		migrationsViewWidget->insertRow({item});
 	}
 
 	QCheckBox *createBackupCheckBox(new QCheckBox(QCoreApplication::translate("Otter::Migrator", "Create backup")));
