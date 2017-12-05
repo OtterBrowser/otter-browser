@@ -520,7 +520,6 @@ void ItemViewWidget::moveRow(bool up)
 
 		setCurrentIndex(getIndex(destinationRow, 0));
 		notifySelectionChanged();
-
 		markAsModified();
 	}
 }
