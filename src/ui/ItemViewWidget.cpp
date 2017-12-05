@@ -371,7 +371,12 @@ void ItemViewWidget::dropEvent(QDropEvent *event)
 
 	markAsModified();
 
-	QTimer::singleShot(50, this, &ItemViewWidget::updateDropSelection);
+	QTimer::singleShot(50, this, [&]()
+	{
+		setCurrentIndex(getIndex(qBound(0, m_dropRow, getRowCount()), 0));
+
+		m_dropRow = -1;
+	});
 }
 
 void ItemViewWidget::startDrag(Qt::DropActions supportedActions)
@@ -658,13 +663,6 @@ void ItemViewWidget::notifySelectionChanged()
 	}
 
 	emit needsActionsUpdate();
-}
-
-void ItemViewWidget::updateDropSelection()
-{
-	setCurrentIndex(getIndex(qBound(0, m_dropRow, getRowCount()), 0));
-
-	m_dropRow = -1;
 }
 
 void ItemViewWidget::updateFilter()

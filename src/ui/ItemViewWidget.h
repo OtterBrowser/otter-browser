@@ -127,7 +127,6 @@ protected slots:
 	void saveState();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void notifySelectionChanged();
-	void updateDropSelection();
 	void updateFilter();
 
 private:
