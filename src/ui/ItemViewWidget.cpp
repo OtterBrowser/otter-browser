@@ -248,7 +248,6 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_sortOrder(Qt::AscendingOrder),
 	m_sortColumn(-1),
 	m_dragRow(-1),
-	m_dropRow(-1),
 	m_canGatherExpanded(false),
 	m_isExclusive(false),
 	m_isModified(false),
@@ -357,25 +356,23 @@ void ItemViewWidget::dropEvent(QDropEvent *event)
 
 	event->accept();
 
-	m_dropRow = indexAt(event->pos()).row();
+	int dropRow(indexAt(event->pos()).row());
 
-	if (m_dragRow <= m_dropRow)
+	if (dropRow > m_dragRow)
 	{
-		--m_dropRow;
+		--dropRow;
 	}
 
 	if (dropIndicatorPosition() == QAbstractItemView::BelowItem)
 	{
-		++m_dropRow;
+		++dropRow;
 	}
 
 	markAsModified();
 
-	QTimer::singleShot(50, this, [&]()
+	QTimer::singleShot(0, this, [=]()
 	{
-		setCurrentIndex(getIndex(qBound(0, m_dropRow, getRowCount()), 0));
-
-		m_dropRow = -1;
+		setCurrentIndex(getIndex(qBound(0, dropRow, getRowCount()), 0));
 	});
 }
 

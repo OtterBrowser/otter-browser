@@ -141,7 +141,6 @@ private:
 	Qt::SortOrder m_sortOrder;
 	int m_sortColumn;
 	int m_dragRow;
-	int m_dropRow;
 	bool m_canGatherExpanded;
 	bool m_isExclusive;
 	bool m_isModified;
