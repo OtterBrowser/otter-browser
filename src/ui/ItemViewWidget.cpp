@@ -462,11 +462,13 @@ void ItemViewWidget::ensureInitialized()
 
 		for (int i = 0; i < columns.count(); ++i)
 		{
-			setColumnHidden(columns[i].toInt(), false);
+			const int column(columns[i].toInt());
+
+			setColumnHidden(column, false);
 
 			if (m_headerWidget)
 			{
-				m_headerWidget->moveSection(m_headerWidget->visualIndex(columns[i].toInt()), i);
+				m_headerWidget->moveSection(m_headerWidget->visualIndex(column), i);
 
 				if (m_headerWidget->sectionResizeMode(i) == QHeaderView::Stretch)
 				{
