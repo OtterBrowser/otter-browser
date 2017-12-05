@@ -316,7 +316,7 @@ void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 
 		if (newIndex.isValid())
 		{
-			QItemSelectionModel::SelectionFlags command(selectionCommand(newIndex, event));
+			const QItemSelectionModel::SelectionFlags command(selectionCommand(newIndex, event));
 
 			if (command != QItemSelectionModel::NoUpdate || style()->styleHint(QStyle::SH_ItemView_MovementWithoutUpdatingSelection, nullptr, this))
 			{
