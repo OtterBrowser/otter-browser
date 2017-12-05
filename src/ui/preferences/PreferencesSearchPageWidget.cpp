@@ -160,6 +160,7 @@ void PreferencesSearchPageWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->searchViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Keyword")});
 	}
 }
 
