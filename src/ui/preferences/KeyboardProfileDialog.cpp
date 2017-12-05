@@ -26,30 +26,30 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QTimer>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
-ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : QKeySequenceEdit(shortcut, parent)
+ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : QKeySequenceEdit(shortcut, parent),
+	m_clearButton(nullptr)
 {
 	QVBoxLayout *layout(findChild<QVBoxLayout*>());
 
 	if (layout)
 	{
-		QToolButton *button(new QToolButton(this));
-		button->setText(tr("Clear"));
-		button->setEnabled(!shortcut.isEmpty());
+		m_clearButton = new QToolButton(this);
+		m_clearButton->setText(tr("Clear"));
+		m_clearButton->setEnabled(!shortcut.isEmpty());
 
 		layout->setDirection(QBoxLayout::LeftToRight);
-		layout->addWidget(button);
+		layout->addWidget(m_clearButton);
 
-		connect(button, &QToolButton::clicked, this, &ShortcutWidget::clear);
-		connect(this, &ShortcutWidget::keySequenceChanged, [=]()
+		connect(m_clearButton, &QToolButton::clicked, this, &ShortcutWidget::clear);
+		connect(this, &ShortcutWidget::keySequenceChanged, [&]()
 		{
 			const bool isEmpty(keySequence().isEmpty());
 
-			button->setEnabled(!isEmpty);
+			m_clearButton->setEnabled(!isEmpty);
 
 			if (isEmpty)
 			{
@@ -59,6 +59,16 @@ ShortcutWidget::ShortcutWidget(const QKeySequence &shortcut, QWidget *parent) : 
 
 			emit commitData(this);
 		});
+	}
+}
+
+void ShortcutWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && m_clearButton)
+	{
+		m_clearButton->setText(tr("Clear"));
 	}
 }
 

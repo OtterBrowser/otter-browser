@@ -26,6 +26,7 @@
 
 #include <QtCore/QModelIndex>
 #include <QtWidgets/QKeySequenceEdit>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -43,6 +44,12 @@ class ShortcutWidget final : public QKeySequenceEdit
 
 public:
 	explicit ShortcutWidget(const QKeySequence &shortcut, QWidget *parent = nullptr);
+
+protected:
+	void changeEvent(QEvent *event) override;
+
+private:
+	QToolButton *m_clearButton;
 
 signals:
 	void commitData(QWidget *editor);
