@@ -871,7 +871,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						m_ignoreEnter = true;
 
 						Menu menu(Menu::BookmarksMenuRole, this);
-						menu.menuAction()->setData(bookmark->getIdentifier());
+						menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 						menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
 					}
 				}
@@ -945,7 +945,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						m_ignoreEnter = true;
 
 						Menu menu(Menu::BookmarksMenuRole, this);
-						menu.menuAction()->setData(bookmark->getIdentifier());
+						menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 						menu.exec(mouseEvent->globalPos());
 					}
 
