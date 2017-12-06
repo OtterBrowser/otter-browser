@@ -734,15 +734,15 @@ void Menu::populateOptionMenu()
 		return;
 	}
 
-	m_actionGroup = new QActionGroup(this);
-	m_actionGroup->setExclusive(true);
-
 	const QVector<SettingsManager::OptionDefinition::Choice> choices(SettingsManager::getOptionDefinition(m_option).choices);
 
 	if (choices.isEmpty())
 	{
 		return;
 	}
+
+	m_actionGroup = new QActionGroup(this);
+	m_actionGroup->setExclusive(true);
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
