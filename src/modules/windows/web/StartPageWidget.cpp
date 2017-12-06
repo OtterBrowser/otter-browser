@@ -707,7 +707,7 @@ void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 {
 	m_listView->update(index);
 
-	m_thumbnail = QPixmap();
+	m_thumbnail = {};
 
 	if (m_spinnerAnimation && m_model->match(m_model->index(0, 0), StartPageModel::IsReloadingRole, true, 1, Qt::MatchExactly).isEmpty())
 	{
@@ -729,7 +729,7 @@ void StartPageWidget::updateSize()
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
 
-	m_thumbnail = QPixmap();
+	m_thumbnail = {};
 }
 
 void StartPageWidget::showContextMenu(const QPoint &position)

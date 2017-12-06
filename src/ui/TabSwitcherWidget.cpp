@@ -194,7 +194,7 @@ void TabSwitcherWidget::handleCurrentTabChanged(const QModelIndex &index)
 	const Window *window(m_mainWindow->getWindowByIdentifier(index.data(IdentifierRole).toULongLong()));
 
 	m_previewLabel->setMovie(nullptr);
-	m_previewLabel->setPixmap(QPixmap());
+	m_previewLabel->setPixmap({});
 
 	if (!window)
 	{

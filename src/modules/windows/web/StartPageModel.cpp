@@ -190,7 +190,7 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 			if (SessionsManager::isReadOnly())
 			{
-				handleThumbnailCreated(url, QPixmap(), information.getTitle());
+				handleThumbnailCreated(url, {}, information.getTitle());
 			}
 			else
 			{
