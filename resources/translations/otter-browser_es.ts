@@ -4,7 +4,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation>Aceptar &quot;cookie&quot;</translation>
+        <translation>Aceptar cookie</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
@@ -39,17 +39,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>La página web %1 ha solicitado añadir una nueva &quot;cookie&quot;.</translation>
+        <translation>El sitio web %1 ha solicitado añadir una nueva cookie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>La página web %1 ha solicitado actualizar una &quot;cookie&quot; existente.</translation>
+        <translation>El sitio web %1 ha solicitado actualizar una cookie existente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation>La página web %1 ha solicitado quitar una &quot;cookie&quot; existente.</translation>
+        <translation>El sitio web %1 ha solicitado eliminar una cookie existente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
@@ -97,12 +97,12 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>Idioma preferido para las páginas web</translation>
+        <translation>Idioma preferido para páginas web</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Para añadir un idioma, por favor elígelo de la lista o teclea su código.</translation>
+        <translation>Para añadir un idioma, por favor, elíja uno de la lista o escriba su código.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -186,7 +186,7 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="119"/>
         <source>User Scripts</source>
-        <translation>&quot;Scripts&quot; de usuario</translation>
+        <translation>Scripts de usuario</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="150"/>
@@ -237,17 +237,17 @@
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="369"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Está a punto de eliminar irreversiblemente %n complemento.</numerusform><numerusform>Está a punto de eliminar irreversiblemente %n complementos.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="370"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>¿Desea continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="438"/>
         <source>Add Addon…</source>
-        <translation>Añadir &quot;Addon&quot;...</translation>
+        <translation>Añadir complemento...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="443"/>
@@ -257,12 +257,12 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="444"/>
         <source>Reload Addon</source>
-        <translation>Volver a cargar el complemento</translation>
+        <translation>Volver a cargar complemento</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="446"/>
         <source>Remove Addon…</source>
-        <translation>Eliminar &quot;Addon&quot;...</translation>
+        <translation>Eliminar complemento..</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="487"/>
@@ -285,7 +285,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="146"/>
         <source>Local files</source>
-        <translation>Archivos locales</translation>
+        <translation>Ficheros locales</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="162"/>
@@ -324,7 +324,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="660"/>
         <source>Add to Bookmarks</source>
-        <translation>Añadir a Marcadores</translation>
+        <translation>Añadir a marcadores</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="661"/>
@@ -354,7 +354,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1119"/>
         <source>Load all plugins on the page</source>
-        <translation>Cargar todos los complementos en la página</translation>
+        <translation>Cargar todos los complementos de la página</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1132"/>
@@ -370,25 +370,25 @@
         <location filename="../../src/core/Application.cpp" line="437"/>
         <location filename="../../src/core/Application.cpp" line="980"/>
         <source>Warning</source>
-        <translation>Aviso</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="319"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation>El directorio del perfil (%1) no se puede escribir, la aplicación se ejecutará en modo de sólo lectura.</translation>
+        <translation>El directorio del perfil (%1) no es escribible, la aplicación se ejecutará en modo sólo lectura.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="342"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation>La unidad donde está el directorio de tu perfil (%1) no tiene espacio.
+        <translation>La unidad donde está el directorio de su perfil (%1) ha agotado el espacio.
 Esto puede causar mal funcionamiento o incluso pérdida de datos.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="346"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation>La unidad donde está el directorio de tu perfil (%1) tiene poco espacio disponible (%2 restantes).
+        <translation>La unidad donde está el directorio de su perfil (%1) tiene poco espacio disponible (%2 restantes).
 Esto puede causar mal funcionamiento o incluso pérdida de datos.</translation>
     </message>
     <message>
@@ -396,7 +396,7 @@ Esto puede causar mal funcionamiento o incluso pérdida de datos.</translation>
         <location filename="../../src/core/Application.cpp" line="1602"/>
         <location filename="../../src/core/Application.cpp" line="1651"/>
         <source>Do you want to continue?</source>
-        <translation>¿Quieres continuar? </translation>
+        <translation>¿Quiere continuar? </translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="354"/>
@@ -408,7 +408,7 @@ Esto puede causar mal funcionamiento o incluso pérdida de datos.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="355"/>
         <source>Continue in Read-only Mode</source>
-        <translation>Continuar en modo de sólo lectura</translation>
+        <translation>Continuar en modo sólo lectura</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="357"/>
@@ -424,19 +424,19 @@ Esto puede causar mal funcionamiento o incluso pérdida de datos.</translation>
         <location filename="../../src/core/Application.cpp" line="437"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation>El soporte SSL no está disponible o es incompleto.
-Algunos sitios web pueden funcionar incorrectamente o no funcionar en absoluto.
+        <translation>El soporte para SSL no está disponible o es incompleto.
+Algunos sitios web pueden funcionar incorrectamente o no hacerlo en absoluto.
 </translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="709"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Navegador web controlado por el usuario, no a la inversa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Un navegador web controlado por el usuario, no a la inversa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="715"/>
         <source>Web backend: %1 %2.</source>
-        <translation>Motor de la web: %1 %2.</translation>
+        <translation>Motor web: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="719"/>
@@ -469,7 +469,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1601"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Estás a punto de cerrar mientras %n archivo se está descargando.</numerusform><numerusform>Estás a punto de cerrar mientras %n archivos se están descargando.</numerusform></translation>
+        <translation><numerusform>Está a punto de cerrar mientras %n archivo se está descargando.</numerusform><numerusform>Está a punto de cerrar mientras %n archivos se están descargando.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1608"/>
@@ -480,7 +480,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="1650"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation>Estás a punto de salir de la sesión actual de Otter Browser.</translation>
+        <translation>Está a punto de salir de la sesión actual de Otter Browser.</translation>
     </message>
 </context>
 <context>
@@ -515,7 +515,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
         <source>Authentication Required</source>
-        <translation>Se necesita autenticación</translation>
+        <translation>Requiere autentificación</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="22"/>
@@ -666,7 +666,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="43"/>
         <source>Select name of new folder:</source>
-        <translation>Selecciona nombre de la nueva carpeta:</translation>
+        <translation>Seleccione nombre de la nueva carpeta:</translation>
     </message>
 </context>
 <context>
@@ -1335,7 +1335,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation>Limpiar &quot;cookies&quot;</translation>
+        <translation>Limpiar cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
@@ -1502,7 +1502,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation type="unfinished"/>
+        <translation>Escoja opción</translation>
     </message>
 </context>
 <context>
@@ -1765,84 +1765,84 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="14"/>
         <source>Profile Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuración del perfil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="20"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Título:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="30"/>
         <source>Update URL:</source>
-        <translation type="unfinished"/>
+        <translation>URL de actualización:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="40"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Intervalo de actualización:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="50"/>
         <source>Last update:</source>
-        <translation type="unfinished"/>
+        <translation>Última actualización:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="74"/>
         <source>Category:</source>
-        <translation type="unfinished"/>
+        <translation>Categoría:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="39"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Publicidad</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Molestia</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Privacidad</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="42"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Social</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="43"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Regional</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="44"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Otro</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="115"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
         <source>Valid update URL is required.</source>
-        <translation type="unfinished"/>
+        <translation>Se requiere URL de actualización válida.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
         <source>Profile with name %1.txt already exists.</source>
-        <translation type="unfinished"/>
+        <translation>El perfil con nombre %1.txt ya existe.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="115"/>
         <source>Failed to create profile file: %1.</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo crear fichero de perfil: %1.</translation>
     </message>
 </context>
 <context>
@@ -1982,7 +1982,7 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="202"/>
         <source>You are about to delete %n cookie(s).</source>
-        <translation><numerusform>Estás a punto de borrar %n &quot;cookie&quot;.</numerusform><numerusform>Estás a punto de borrar %n &quot;cookie(s)&quot;.</numerusform></translation>
+        <translation><numerusform>Está a punto de borrar %n cookie.</numerusform><numerusform>Está a punto de borrar %n cookies.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="203"/>
@@ -1993,7 +1993,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="223"/>
         <source>You are about to delete all cookies.</source>
-        <translation>Estás a punto de borrar todas las &quot;cookies&quot;.</translation>
+        <translation>Está a punto de borrar todas las cookies.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="334"/>
@@ -2003,12 +2003,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="344"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation>Quitar todas las &quot;cookies&quot; de este dominio…</translation>
+        <translation>Quitar todas las cookies de este dominio…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="347"/>
         <source>Remove All Cookies…</source>
-        <translation>Quitar todas las &quot;cookies&quot;…</translation>
+        <translation>Quitar todas las cookies…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="416"/>
@@ -2026,12 +2026,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation>Excepciones para &quot;cookies&quot; de terceros</translation>
+        <translation>Excepciones para cookies de terceros</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation>Aceptar siempre &quot;cookies&quot; de terceros de:</translation>
+        <translation>Aceptar siempre cookies de terceros de:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
@@ -2054,7 +2054,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation>Rechazar siempre &quot;cookies&quot; de terceros de:</translation>
+        <translation>Rechazar siempre cookies de terceros de:</translation>
     </message>
 </context>
 <context>
@@ -2360,7 +2360,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="58"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Sin título)</translation>
     </message>
 </context>
 <context>
@@ -2476,7 +2476,7 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation><numerusform>%1 x %2 píxeles @ %3 bits por píxel en % fotograma(s)</numerusform><numerusform>%1 x %2 píxeles @ %3 bits por píxel en % fotograma(s)</numerusform></translation>
+        <translation><numerusform>%1 x %2 píxeles @ %3 bits por píxel en % fotograma</numerusform><numerusform>%1 x %2 píxeles @ %3 bits por píxel en % fotogramas</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
@@ -2693,7 +2693,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="371"/>
         <source>This shortcut already used by %1</source>
-        <translation type="unfinished"/>
+        <translation>Este atajo de teclado ya está en uso por %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="371"/>
@@ -2703,12 +2703,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="382"/>
         <source>This shortcut cannot be used because it would be overriden by a native hotkey used by an editing action</source>
-        <translation type="unfinished"/>
+        <translation>Este atajo de teclado no se puede usar porque sería superado por un atajo nativo usado por una acción de edición.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="390"/>
         <source>Single key shortcuts are currently disabled</source>
-        <translation type="unfinished"/>
+        <translation>Los atajos de teclado de tecla única actualmente están deshabilitados</translation>
     </message>
 </context>
 <context>
@@ -2797,17 +2797,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="363"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="367"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="371"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>Información</translation>
     </message>
 </context>
 <context>
@@ -2820,7 +2820,7 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="764"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Está a punto de abrir %n marcador.</numerusform><numerusform>Está a punto de abrir %n marcador(es).</numerusform></translation>
+        <translation><numerusform>Está a punto de abrir %n marcador.</numerusform><numerusform>Está a punto de abrir %n marcadores.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="765"/>
@@ -2908,7 +2908,7 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="1190"/>
         <source>%1 (%n tab(s))</source>
-        <translation><numerusform>%1 (%n pestaña(s))</numerusform><numerusform>%1 (%n pestaña(s))</numerusform></translation>
+        <translation><numerusform>%1 (%n pestaña)</numerusform><numerusform>%1 (%n pestañas)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3294,22 +3294,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="45"/>
         <source>Remove existing search engines</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar motores de búsqueda existentes</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="54"/>
         <source>Opera search engines</source>
-        <translation type="unfinished"/>
+        <translation>Motores de búsqueda de Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="59"/>
         <source>Imports search engines from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importa motores de búsqueda desde el Navegador Opera versión 12 o anterior</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
         <source>Opera search engines files (search.ini)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros de motores de búsqueda de Opera (search.ini)</translation>
     </message>
 </context>
 <context>
@@ -3353,111 +3353,111 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Buscar...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="137"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="138"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="159"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>General</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="165"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="169"/>
         <source>MIME type</source>
-        <translation type="unfinished"/>
+        <translation>Tipo MIME</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="170"/>
         <source>Document size</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño del documento</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="171"/>
         <source>Total size</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño total</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
         <source>Number of requests</source>
-        <translation type="unfinished"/>
+        <translation>Número de peticiones</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <source>%1 (%2 blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%2 bloqueado)</numerusform><numerusform>%1 (%2 bloqueados)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="184"/>
         <source>Downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Descargado</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="190"/>
         <source>Headers</source>
-        <translation type="unfinished"/>
+        <translation>Cabeceras</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="205"/>
         <source>Meta</source>
-        <translation type="unfinished"/>
+        <translation>Meta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="223"/>
         <source>Permissions</source>
-        <translation type="unfinished"/>
+        <translation>Permisos</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="227"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Seguridad</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="235"/>
         <source>Cipher protocol</source>
-        <translation type="unfinished"/>
+        <translation>Protocolo cipher</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="236"/>
         <source>Cipher authentication method</source>
-        <translation type="unfinished"/>
+        <translation>Método de autentificación de cipher</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="237"/>
         <source>Cipher encryption method</source>
-        <translation type="unfinished"/>
+        <translation>Método de cifrado de cipher</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="238"/>
         <source>Cipher key exchange method</source>
-        <translation type="unfinished"/>
+        <translation>Método de intercambio de claves de cipher</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="265"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>Información de página</translation>
     </message>
 </context>
 <context>
@@ -3516,7 +3516,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="179"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="235"/>
         <source>You are about to delete %n password(s).</source>
-        <translation><numerusform>Está a punto de borrar %n contraseña(s).</numerusform><numerusform>Está a punto de borrar %n contraseña(s).</numerusform></translation>
+        <translation><numerusform>Está a punto de borrar %n contraseña.</numerusform><numerusform>Está a punto de borrar %n contraseñas.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="180"/>
@@ -3682,7 +3682,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="103"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation><numerusform>%1 quiere abrir %n ventana(s) emergente(s).</numerusform><numerusform>%1 quiere abrir %n ventana(s) emergente(s).</numerusform></translation>
+        <translation><numerusform>%1 quiere abrir %n ventana emergente.</numerusform><numerusform>%1 quiere abrir %n ventanas emergentes.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4421,7 +4421,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>Avanzadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
@@ -4544,7 +4544,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="287"/>
         <source>Set as a default browser</source>
-        <translation>Poner como navegador por defecto</translation>
+        <translation>Establecer como navegador predeterminado</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
@@ -4597,22 +4597,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="107"/>
         <source>Remember browsing history</source>
-        <translation>Recordar el historial de navegación</translation>
+        <translation>Recordar historial de navegación</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="114"/>
         <source>Remember downloads history</source>
-        <translation>Recordar el historial de descargas</translation>
+        <translation>Recordar historial de descargas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="124"/>
         <source>Remember search history</source>
-        <translation>Recordar el historial de búsqueda</translation>
+        <translation>Recordar historial de búsqueda</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
         <source>Remember form history</source>
-        <translation>Recordar el historial de formularios</translation>
+        <translation>Recordar historial de formularios</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>
@@ -4622,12 +4622,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="170"/>
         <source>Enable cookies</source>
-        <translation>Activar &quot;cookies&quot;</translation>
+        <translation>Activar cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="215"/>
         <source>Accept cookies:</source>
-        <translation>Aceptar &quot;cookies&quot;:</translation>
+        <translation>Aceptar cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="228"/>
@@ -4637,7 +4637,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
         <source>Accept third-party cookies:</source>
-        <translation>Aceptar &quot;cookies&quot; de terceros:</translation>
+        <translation>Aceptar cookies de terceros:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
@@ -4864,7 +4864,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.cpp" line="33"/>
         <source>Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Ventana privada</translation>
     </message>
 </context>
 <context>
@@ -5038,38 +5038,38 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="432"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="472"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="120"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="433"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="473"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>Deshabilitar cuadros emergentes de JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="360"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pregunta</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="361"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>¿Está seguro de que quiere enviar de nuevo los datos del formulario?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="362"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>¿Quiere reenviar los datos?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="348"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="366"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>No mostrar este mensaje de nuevo</translation>
     </message>
 </context>
 <context>
@@ -5077,32 +5077,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>Fichero HTML (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>Fichero HTML con todos los recursos (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>Web archive (*.mht)</source>
-        <translation type="unfinished"/>
+        <translation>Archivo web (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="266"/>
         <source>Blink Backend (experimental)</source>
-        <translation type="unfinished"/>
+        <translation>Blink (experimental)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="271"/>
         <source>Backend utilizing QtWebEngine module</source>
-        <translation type="unfinished"/>
+        <translation>Utilizando el módulo QtWebEngine</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="286"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>desconocido</translation>
     </message>
 </context>
 <context>
@@ -5110,22 +5110,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="541"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>fichero</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="552"/>
         <source>Failed to save image: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo guardar la imagen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1480"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>Página en blanco</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1493"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Sin título)</translation>
     </message>
 </context>
 <context>
@@ -5296,17 +5296,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="199"/>
         <source>WebKit Backend (legacy)</source>
-        <translation>Motor WebKit (antiguo)</translation>
+        <translation>WebKit (antiguo)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="201"/>
         <source>WebKit Backend</source>
-        <translation>Motor WebKit</translation>
+        <translation>WebKit</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="207"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation>Motor que utiliza el módulo QtWebKit</translation>
+        <translation>Utilizando el módulo QtWebKit</translation>
     </message>
 </context>
 <context>
@@ -5723,12 +5723,12 @@ Do you want to overwrite it?</source>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="70"/>
         <source>%n window(s) (%1)</source>
-        <translation><numerusform>%n ventana(s) (%1)</numerusform><numerusform>%n ventana(s) (%1)</numerusform></translation>
+        <translation><numerusform>%n ventana (%1)</numerusform><numerusform>%n ventanas (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="70"/>
         <source>%n tab(s)</source>
-        <translation><numerusform>%n pestaña(s)</numerusform><numerusform>%n pestaña(s)</numerusform></translation>
+        <translation><numerusform>%n pestaña</numerusform><numerusform>%n pestañas</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="106"/>
@@ -6044,17 +6044,17 @@ Dirección: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1155"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>Alternar pestañas usando la rueda del ratón</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1159"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar miniaturas en las pestañas</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1178"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Organizar</translation>
     </message>
 </context>
 <context>
@@ -6087,7 +6087,7 @@ Dirección: %2</translation>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1094"/>
         <source>You are about to open %n URL(s).</source>
-        <translation><numerusform>Está a punto de abrir %n URL(s).</numerusform><numerusform>Está a punto de abrir %n URL(s).</numerusform></translation>
+        <translation><numerusform>Está a punto de abrir %n URL.</numerusform><numerusform>Está a punto de abrir %n URLs.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1095"/>
@@ -6847,7 +6847,7 @@ Progreso: %5&lt;/div&gt;</translation>
         <location filename="../../src/ui/TrayIcon.cpp" line="78"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="159"/>
         <source>Otter Browser</source>
-        <translation>Navegador Otter</translation>
+        <translation>Otter Browser</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="149"/>
@@ -7008,7 +7008,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1161"/>
         <source>Failed to load requested web backend: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo cargar el motor web solicitado: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1243"/>
@@ -7071,7 +7071,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="990"/>
         <source>Page Default</source>
-        <translation type="unfinished"/>
+        <translation>Predeterminado de la página</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="998"/>
@@ -7081,7 +7081,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1002"/>
         <source>Reload Every: %n second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Recargar cada: %n segundo</numerusform><numerusform>Recargar cada: %n segundos</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7145,12 +7145,12 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation>Configurar &quot;cookies&quot;:</translation>
+        <translation>Configurar cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation>Configurar &quot;cookies&quot; de terceros:</translation>
+        <translation>Configurar cookies de terceros:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
@@ -7437,17 +7437,17 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="248"/>
         <source>Remember browsing history</source>
-        <translation>Recordar el historial de navegación</translation>
+        <translation>Recordar historial de navegación</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="269"/>
         <source>Enable cookies</source>
-        <translation>Activar &quot;cookies&quot;</translation>
+        <translation>Activar cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="294"/>
         <source>Accept cookies:</source>
-        <translation>Aceptar &quot;cookies&quot;:</translation>
+        <translation>Aceptar cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="303"/>
@@ -7477,7 +7477,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="412"/>
         <source>Accept third-party cookies:</source>
-        <translation>Aceptar &quot;cookies&quot; de terceros:</translation>
+        <translation>Aceptar cookies de terceros:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="448"/>
@@ -7713,7 +7713,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="169"/>
         <source>Windows</source>
-        <translation type="unfinished"/>
+        <translation>Windows</translation>
     </message>
 </context>
 <context>
@@ -7829,12 +7829,12 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set Option</source>
-        <translation type="unfinished"/>
+        <translation>Establecer opción</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set, Reset or Toggle Option</source>
-        <translation type="unfinished"/>
+        <translation>Opción para Establecer, Reinicializar o Accionar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -7874,7 +7874,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Peek Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ojear pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>
@@ -8593,7 +8593,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Cookies</source>
-        <translation>&quot;Cookies&quot;</translation>
+        <translation>Cookies</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="423"/>
@@ -8684,12 +8684,12 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Show Panel</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar panel</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Show Specified Panel in Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar panel especificado en la barra lateral</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
@@ -8699,7 +8699,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Open Curent Sidebar Panel as Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir panel de barra lateral actual como pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="441"/>
@@ -8719,7 +8719,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Addons</source>
-        <translation>&quot;Addons&quot;</translation>
+        <translation>Complementos</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="445"/>
@@ -8788,12 +8788,12 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>About Otter…</source>
-        <translation>Sobre Otter…</translation>
+        <translation>Acerca de Otter…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>About Qt…</source>
-        <translation>Sobre Qt…</translation>
+        <translation>Acerca de Qt…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="459"/>
@@ -8803,32 +8803,32 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/Application.cpp" line="1492"/>
         <source>Set %1</source>
-        <translation type="unfinished"/>
+        <translation>Establecer %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1496"/>
         <source>Set %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>Establecer %1 para %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1503"/>
         <source>Reset %1</source>
-        <translation type="unfinished"/>
+        <translation>Reinicializar %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1507"/>
         <source>Reset %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>Reinicializar %1 para %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1516"/>
         <source>Toggle %1</source>
-        <translation type="unfinished"/>
+        <translation>Acciónar %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1520"/>
         <source>Toggle %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>Accionar %1 para %2</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
@@ -9248,7 +9248,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1336"/>
         <source>Custom User Agent…</source>
-        <translation>Agente del usuario personalizado...</translation>
+        <translation>Agente-del-usuario personalizado...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1380"/>
@@ -9356,7 +9356,7 @@ Pulsa el botón Instalar para reiniciar el navegador e instalar la actualizació
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>Información de página</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="131"/>
@@ -9519,7 +9519,7 @@ Script: %2</translation>
     <message>
         <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo descargar la actualización: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="65"/>
@@ -9652,7 +9652,7 @@ Identificador de la aplicación: %2</translation>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="704"/>
         <location filename="../../src/core/NetworkManagerFactory.h" line="117"/>
         <source>Default User Agent</source>
-        <translation>Agente del usuario predeterminado</translation>
+        <translation>Agente-del-usuario predeterminado</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="122"/>
@@ -9692,7 +9692,7 @@ Identificador de la aplicación: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="197"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation>Has intentado acceder a la dirección &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, que actualmente no está disponible. Por favor, asegúrate de que la dirección web (URL) está correctamente escrita y puntuada, y a continuación prueba a cargar la página de nuevo.</translation>
+        <translation>Ha intentado acceder a la dirección &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, que actualmente no está disponible. Por favor, asegúrese de que la dirección web (URL) está correctamente escrita y puntuada, y a continuación trate de cargar de nuevo la página.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
