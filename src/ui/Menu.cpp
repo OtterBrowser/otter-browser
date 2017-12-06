@@ -877,7 +877,7 @@ void Menu::populateCharacterEncodingMenu()
 	{
 		QAction *action(actions().at(i));
 
-		if (action && action->text().toLower() == encoding)
+		if (action && action->data().toString() == encoding)
 		{
 			action->setChecked(true);
 
