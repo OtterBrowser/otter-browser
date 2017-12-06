@@ -863,6 +863,13 @@ void Menu::populateCharacterEncodingMenu()
 		}
 	}
 
+	if (actions().isEmpty())
+	{
+		return;
+	}
+
+	actions().first()->setChecked(true);
+
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QString encoding(mainWindow ? mainWindow->getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString().toLower() : QString());
 
@@ -870,22 +877,12 @@ void Menu::populateCharacterEncodingMenu()
 	{
 		QAction *action(actions().at(i));
 
-		if (!action)
-		{
-			continue;
-		}
-
-		if (encoding == action->text().toLower())
+		if (action && action->text().toLower() == encoding)
 		{
 			action->setChecked(true);
 
 			break;
 		}
-	}
-
-	if (!m_actionGroup->checkedAction() && !actions().isEmpty())
-	{
-		actions().first()->setChecked(true);
 	}
 }
 
