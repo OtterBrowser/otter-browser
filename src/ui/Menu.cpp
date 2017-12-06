@@ -875,10 +875,10 @@ void Menu::populateCharacterEncodingMenu()
 			continue;
 		}
 
-		action->setChecked(encoding == action->text().toLower());
-
-		if (action->isChecked())
+		if (encoding == action->text().toLower())
 		{
+			action->setChecked(true);
+
 			break;
 		}
 	}
