@@ -143,11 +143,11 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
+			m_animation->stop();
+
 			if (object == m_closeLabel)
 			{
 				m_notification->markAsIgnored();
-
-				m_animation->stop();
 
 				close();
 
@@ -155,8 +155,6 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 			}
 
 			m_notification->markAsClicked();
-
-			m_animation->stop();
 
 			close();
 		}
