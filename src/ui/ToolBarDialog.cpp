@@ -124,24 +124,25 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 				TreeModel *panelsModel(new TreeModel(this));
 				const QStringList specialPages(AddonsManager::getSpecialPages());
 
-				for (int i = 0; i < definition.panels.count(); ++i)
+				for (int i = 0; i < specialPages.count(); ++i)
 				{
-					QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(definition.panels.at(i))));
+					QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
 					item->setCheckable(true);
-					item->setCheckState(Qt::Checked);
-					item->setData(definition.panels.at(i), TreeModel::UserRole);
+					item->setCheckState(definition.panels.contains(specialPages.at(i)) ? Qt::Checked : Qt::Unchecked);
+					item->setData(specialPages.at(i), TreeModel::UserRole);
 					item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 					panelsModel->insertRow(item);
 				}
 
-				for (int i = 0; i < specialPages.count(); ++i)
+				for (int i = 0; i < definition.panels.count(); ++i)
 				{
-					if (!definition.panels.contains(specialPages.at(i)))
+					if (!specialPages.contains(definition.panels.at(i)))
 					{
-						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
+						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(definition.panels.at(i))));
 						item->setCheckable(true);
-						item->setData(specialPages.at(i), TreeModel::UserRole);
+						item->setCheckState(Qt::Checked);
+						item->setData(definition.panels.at(i), TreeModel::UserRole);
 						item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 						panelsModel->insertRow(item);
