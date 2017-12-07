@@ -288,7 +288,25 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="Otter::BookmarksComboBoxWidget" name="folderComboBox"/>
+            <layout class="QHBoxLayout" name="folderLayout">
+             <item>
+              <widget class="Otter::BookmarksComboBoxWidget" name="folderComboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="newFolderButton">
+               <property name="text">
+                <string>New…</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -487,8 +505,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>257</x>
-     <y>490</y>
+     <x>266</x>
+     <y>390</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -503,8 +521,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>490</y>
+     <x>334</x>
+     <y>390</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

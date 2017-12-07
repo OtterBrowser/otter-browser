@@ -116,6 +116,8 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 		case ToolBarsManager::BookmarksBarType:
 			m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
+			connect(m_ui->newFolderButton, &QPushButton::clicked, m_ui->folderComboBox, &BookmarksComboBoxWidget::createFolder);
+
 			return;
 		case ToolBarsManager::SideBarType:
 			{
