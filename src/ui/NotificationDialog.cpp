@@ -29,14 +29,15 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDesktopWidget>
-#include <QtWidgets/QStyleOptionFrame>
+#include <QtWidgets/QStyleOption>
 
 namespace Otter
 {
 
 NotificationDialog::NotificationDialog(Notification *notification, QWidget *parent) : QDialog(parent),
 	m_notification(notification),
-	m_closeLabel(nullptr)
+	m_closeLabel(nullptr),
+	m_closeTimer(0)
 {
 	QFrame *notificationFrame(new QFrame(this));
 	notificationFrame->setObjectName(QLatin1String("notificationFrame"));
@@ -108,18 +109,27 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 	if (visibilityDuration > 0)
 	{
-		QTimer::singleShot((visibilityDuration * 1000), this, [&]()
+		m_closeTimer = startTimer(visibilityDuration * 1000);
+	}
+}
+
+void NotificationDialog::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_closeTimer)
+	{
+		killTimer(m_closeTimer);
+
+		m_closeTimer = 0;
+
+		m_animation->setStartValue(1.0);
+		m_animation->setEndValue(0.0);
+		m_animation->start();
+
+		connect(m_animation, &QPropertyAnimation::finished, this, [&]()
 		{
-			m_animation->setStartValue(1.0);
-			m_animation->setEndValue(0.0);
-			m_animation->start();
+			m_notification->markAsIgnored();
 
-			connect(m_animation, &QPropertyAnimation::finished, this, [&]()
-			{
-				m_notification->markAsIgnored();
-
-				close();
-			});
+			close();
 		});
 	}
 }

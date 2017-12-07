@@ -40,12 +40,14 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
+	void timerEvent(QTimerEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 
 private:
 	Notification *m_notification;
 	QLabel *m_closeLabel;
 	QPropertyAnimation *m_animation;
+	int m_closeTimer;
 };
 
 }
