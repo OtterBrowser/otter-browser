@@ -19,7 +19,6 @@
 
 #include "NotificationsManager.h"
 #include "Application.h"
-#include "PlatformIntegration.h"
 #include "SessionsManager.h"
 #include "../ui/MainWindow.h"
 
