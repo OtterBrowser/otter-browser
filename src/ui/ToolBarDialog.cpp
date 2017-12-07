@@ -122,7 +122,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 		case ToolBarsManager::SideBarType:
 			{
 				TreeModel *panelsModel(new TreeModel(this));
-				const QStringList specialPages(AddonsManager::getSpecialPages());
+				const QStringList specialPages(AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType));
 
 				for (int i = 0; i < specialPages.count(); ++i)
 				{
