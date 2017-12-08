@@ -513,12 +513,13 @@ void ToolBarDialog::restoreDefaults()
 
 void ToolBarDialog::updateActions()
 {
+	const QModelIndex targetIndex(m_ui->currentEntriesItemView->currentIndex());
 	const QString sourceIdentifier(m_ui->availableEntriesItemView->currentIndex().data(IdentifierRole).toString());
-	const QString targetIdentifier(m_ui->currentEntriesItemView->currentIndex().data(IdentifierRole).toString());
+	const QString targetIdentifier(targetIndex.data(IdentifierRole).toString());
 
-	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(IdentifierRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(IdentifierRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
-	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
-	m_ui->editEntryButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().data(HasOptionsRole).toBool());
+	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(targetIndex.data(IdentifierRole).toString() == QLatin1String("CustomMenu") || targetIndex.parent().data(IdentifierRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
+	m_ui->removeButton->setEnabled(targetIndex.isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
+	m_ui->editEntryButton->setEnabled(targetIndex.data(HasOptionsRole).toBool());
 }
 
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options, const QVariantMap &parameters) const
