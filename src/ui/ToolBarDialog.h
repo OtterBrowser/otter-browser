@@ -45,7 +45,8 @@ public:
 	{
 		IdentifierRole = Qt::UserRole,
 		OptionsRole,
-		ParametersRole
+		ParametersRole,
+		HasOptionsRole
 	};
 
 	explicit ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition = {}, QWidget *parent = nullptr);

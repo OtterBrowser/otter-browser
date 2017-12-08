@@ -518,7 +518,7 @@ void ToolBarDialog::updateActions()
 
 	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(IdentifierRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(IdentifierRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
 	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
-	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("ConfigurationOptionWidget") || targetIdentifier == QLatin1String("ContentBlockingInformationWidget") || targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
+	m_ui->editEntryButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().data(HasOptionsRole).toBool());
 }
 
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options, const QVariantMap &parameters) const
@@ -546,6 +546,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("ClosedWindowsMenu"))
 	{
+		item->setData(true, HasOptionsRole);
 		item->setText(tr("List of Closed Tabs and Windows"));
 		item->setIcon(ThemesManager::createIcon(QLatin1String("user-trash")));
 	}
@@ -556,6 +557,8 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("ConfigurationOptionWidget"))
 	{
+		item->setData(true, HasOptionsRole);
+
 		if (options.contains(QLatin1String("optionName")) && !options.value("optionName").toString().isEmpty())
 		{
 			item->setText(tr("Configuration Widget (%1)").arg(options.value("optionName").toString()));
@@ -567,6 +570,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 	{
+		item->setData(true, HasOptionsRole);
 		item->setText(tr("Content Blocking Details"));
 		item->setIcon(ThemesManager::createIcon(QLatin1String("content-blocking")));
 	}
@@ -580,6 +584,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("MenuButtonWidget"))
 	{
+		item->setData(true, HasOptionsRole);
 		item->setText(tr("Menu Button"));
 	}
 	else if (identifier == QLatin1String("PanelChooserWidget"))
@@ -617,6 +622,8 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("SearchWidget"))
 	{
+		item->setData(true, HasOptionsRole);
+
 		if (options.contains(QLatin1String("searchEngine")))
 		{
 			const SearchEnginesManager::SearchEngineDefinition definition(SearchEnginesManager::getSearchEngine(options[QLatin1String("searchEngine")].toString()));
@@ -654,6 +661,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		{
 			const QIcon icon(bookmark->getIcon());
 
+			item->setData(true, HasOptionsRole);
 			item->setText(bookmark->getTitle());
 
 			if (!icon.isNull())
@@ -678,6 +686,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		{
 			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
+			item->setData(true, HasOptionsRole);
 			item->setText(definition.getText(true));
 
 			if (!definition.defaultState.icon.isNull())
