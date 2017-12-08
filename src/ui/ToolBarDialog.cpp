@@ -25,11 +25,9 @@
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/TreeModel.h"
-#include "../core/Utils.h"
 
 #include "ui_ToolBarDialog.h"
 
