@@ -334,127 +334,6 @@ void ToolBarDialog::editEntry()
 
 	const QString identifier(index.data(IdentifierRole).toString());
 	QVariantMap options(index.data(OptionsRole).toMap());
-	QVector<OptionEntry> entries;
-
-	if (identifier == QLatin1String("SearchWidget"))
-	{
-		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
-		QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices{{tr("All"), {}, {}}, {}};
-		searchEngineChoices.reserve(searchEngines.count() + 2);
-
-		OptionEntry searchEngineEntry;
-		searchEngineEntry.widget = new OptionWidget(options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this);
-		searchEngineEntry.name = QLatin1String("searchEngine");
-		searchEngineEntry.label = tr("Show search engine:");
-
-		for (int i = 0; i < searchEngines.count(); ++i)
-		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
-
-			searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
-		}
-
-		searchEngineEntry.widget->setChoices(searchEngineChoices);
-
-		OptionEntry showSearchButtonEntry;
-		showSearchButtonEntry.widget = new OptionWidget(options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this);
-		showSearchButtonEntry.name = QLatin1String("showSearchButton");
-		showSearchButtonEntry.label = tr("Show search button:");
-
-		entries = {searchEngineEntry, showSearchButtonEntry};
-	}
-	else if (identifier == QLatin1String("ConfigurationOptionWidget"))
-	{
-		const QStringList choices(SettingsManager::getOptions());
-		OptionEntry textEntry;
-		textEntry.widget = new OptionWidget({}, SettingsManager::StringType, this);
-		textEntry.widget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
-		textEntry.widget->setValue(options.value(QLatin1String("text"), textEntry.widget->getDefaultValue()));
-		textEntry.name = QLatin1String("text");
-		textEntry.label = tr("Text:");
-
-		OptionEntry optionNameEntry;
-		optionNameEntry.widget = new OptionWidget(options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this);
-		optionNameEntry.widget->setChoices(choices);
-		optionNameEntry.name = QLatin1String("optionName");
-		optionNameEntry.label = tr("Option:");
-
-		OptionEntry scopeEntry;
-		scopeEntry.widget = new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, this);
-		scopeEntry.widget->setChoices({{tr("Global"), QLatin1String("global"), {}}, {tr("Tab"), QLatin1String("window"), {}}});
-		scopeEntry.widget->setDefaultValue(QLatin1String("window"));
-		scopeEntry.name = QLatin1String("scope");
-		scopeEntry.label = tr("Scope:");
-
-		connect(optionNameEntry.widget, &OptionWidget::commitData, [&]()
-		{
-			const bool needsReset(textEntry.widget->getDefaultValue() == textEntry.widget->getValue());
-
-			textEntry.widget->setDefaultValue(optionNameEntry.widget->getValue().toString().section(QLatin1Char('/'), -1));
-
-			if (needsReset)
-			{
-				textEntry.widget->setValue(textEntry.widget->getDefaultValue());
-			}
-		});
-
-		entries = {textEntry, optionNameEntry, scopeEntry};
-	}
-	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
-	{
-		OptionEntry iconEntry;
-		iconEntry.widget = new OptionWidget({}, SettingsManager::IconType, this);
-		iconEntry.name = QLatin1String("icon");
-		iconEntry.label = tr("Icon:");
-
-		OptionEntry textEntry;
-		textEntry.widget = new OptionWidget({}, SettingsManager::StringType, this);
-		textEntry.name = QLatin1String("text");
-		textEntry.label = tr("Text:");
-
-		entries = {iconEntry, textEntry};
-
-		if (identifier == QLatin1String("ClosedWindowsMenu"))
-		{
-			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
-		}
-		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
-		{
-			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("content-blocking")));
-			textEntry.widget->setDefaultValue(tr("Blocked Elements: {amount}"));
-		}
-		else if (identifier == QLatin1String("MenuButtonWidget"))
-		{
-			iconEntry.widget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
-			textEntry.widget->setDefaultValue(tr("Menu"));
-		}
-		else if (identifier.startsWith(QLatin1String("bookmarks:")))
-		{
-			const BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
-
-			if (bookmark)
-			{
-				iconEntry.widget->setDefaultValue(bookmark->getIcon());
-				textEntry.widget->setDefaultValue(bookmark->getTitle());
-			}
-		}
-		else if (identifier.endsWith(QLatin1String("Action")))
-		{
-			const int actionIdentifier(ActionsManager::getActionIdentifier(identifier.left(identifier.length() - 6)));
-
-			if (actionIdentifier >= 0)
-			{
-				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
-
-				iconEntry.widget->setDefaultValue(definition.defaultState.icon);
-				textEntry.widget->setDefaultValue(definition.getText(true));
-			}
-		}
-
-		iconEntry.widget->setValue(options.value(QLatin1String("icon"), iconEntry.widget->getDefaultValue()));
-		textEntry.widget->setValue(options.value(QLatin1String("text"), textEntry.widget->getDefaultValue()));
-	}
-
 	QDialog dialog(this);
 	dialog.setWindowTitle(tr("Edit Entry"));
 
@@ -467,24 +346,135 @@ void ToolBarDialog::editEntry()
 	mainLayout->addLayout(formLayout);
 	mainLayout->addWidget(buttonBox);
 
-	for (int i = 0; i < entries.count(); ++i)
-	{
-		formLayout->addRow(entries.at(i).label, entries.at(i).widget);
-
-		entries.at(i).widget->setParent(&dialog);
-	}
-
 	connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
 	connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+	if (identifier == QLatin1String("SearchWidget"))
+	{
+		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
+		QVector<SettingsManager::OptionDefinition::Choice> searchEngineChoices{{tr("All"), {}, {}}, {}};
+		searchEngineChoices.reserve(searchEngines.count() + 2);
+
+		for (int i = 0; i < searchEngines.count(); ++i)
+		{
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
+
+			searchEngineChoices.append({(searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title), searchEngines.at(i), searchEngine.icon});
+		}
+
+		OptionWidget *searchEngineWidget(new OptionWidget(options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, &dialog));
+		searchEngineWidget->setChoices(searchEngineChoices);
+		searchEngineWidget->setObjectName(QLatin1String("searchEngine"));
+
+		OptionWidget *showSearchButtonWidget(new OptionWidget(options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, &dialog));
+		showSearchButtonWidget->setObjectName(QLatin1String("showSearchButton"));
+
+		formLayout->addRow(tr("Show search engine:"), searchEngineWidget);
+		formLayout->addRow(tr("Show search button:"), showSearchButtonWidget);
+	}
+	else if (identifier == QLatin1String("ConfigurationOptionWidget"))
+	{
+		const QStringList choices(SettingsManager::getOptions());
+		OptionWidget *textWidget(new OptionWidget({}, SettingsManager::StringType, &dialog));
+		textWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
+		textWidget->setValue(options.value(QLatin1String("text"), textWidget->getDefaultValue()));
+		textWidget->setObjectName(QLatin1String("text"));
+
+		OptionWidget *optionNameWidget(new OptionWidget(options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, &dialog));
+		optionNameWidget->setChoices(choices);
+		optionNameWidget->setObjectName(QLatin1String("optionName"));
+
+		OptionWidget *scopeWidget(new OptionWidget(options.value(QLatin1String("scope")), SettingsManager::EnumerationType, &dialog));
+		scopeWidget->setChoices({{tr("Global"), QLatin1String("global"), {}}, {tr("Tab"), QLatin1String("window"), {}}});
+		scopeWidget->setDefaultValue(QLatin1String("window"));
+		scopeWidget->setObjectName(QLatin1String("scope"));
+
+		formLayout->addRow(tr("Text:"), textWidget);
+		formLayout->addRow(tr("Option:"), optionNameWidget);
+		formLayout->addRow(tr("Scope:"), scopeWidget);
+
+		connect(optionNameWidget, &OptionWidget::commitData, [&]()
+		{
+			const bool needsReset(textWidget->getDefaultValue() == textWidget->getValue());
+
+			textWidget->setDefaultValue(optionNameWidget->getValue().toString().section(QLatin1Char('/'), -1));
+
+			if (needsReset)
+			{
+				textWidget->setValue(textWidget->getDefaultValue());
+			}
+		});
+	}
+	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
+	{
+		OptionWidget *iconWidget(new OptionWidget({}, SettingsManager::IconType, &dialog));
+		iconWidget->setObjectName(QLatin1String("icon"));
+
+		OptionWidget *textWidget(new OptionWidget({}, SettingsManager::StringType, &dialog));
+		textWidget->setObjectName(QLatin1String("text"));
+
+		if (identifier == QLatin1String("ClosedWindowsMenu"))
+		{
+			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
+		}
+		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
+		{
+			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("content-blocking")));
+			textWidget->setDefaultValue(tr("Blocked Elements: {amount}"));
+		}
+		else if (identifier == QLatin1String("MenuButtonWidget"))
+		{
+			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
+			textWidget->setDefaultValue(tr("Menu"));
+		}
+		else if (identifier.startsWith(QLatin1String("bookmarks:")))
+		{
+			const BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+
+			if (bookmark)
+			{
+				iconWidget->setDefaultValue(bookmark->getIcon());
+				textWidget->setDefaultValue(bookmark->getTitle());
+			}
+		}
+		else if (identifier.endsWith(QLatin1String("Action")))
+		{
+			const int actionIdentifier(ActionsManager::getActionIdentifier(identifier.left(identifier.length() - 6)));
+
+			if (actionIdentifier >= 0)
+			{
+				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
+
+				iconWidget->setDefaultValue(definition.defaultState.icon);
+				textWidget->setDefaultValue(definition.getText(true));
+			}
+		}
+
+		iconWidget->setValue(options.value(QLatin1String("icon"), iconWidget->getDefaultValue()));
+		textWidget->setValue(options.value(QLatin1String("text"), textWidget->getDefaultValue()));
+
+		formLayout->addRow(tr("Icon:"), iconWidget);
+		formLayout->addRow(tr("Text:"), textWidget);
+	}
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (int i = 0; i < formLayout->rowCount(); ++i)
 	{
-		options[entries.at(i).name] = entries.at(i).widget->getValue();
+		QLayoutItem *item(formLayout->itemAt(i, QFormLayout::FieldRole));
+
+		if (item)
+		{
+			const OptionWidget *widget(qobject_cast<OptionWidget*>(item->widget()));
+
+			if (widget)
+			{
+				options[widget->objectName()] = widget->getValue();
+			}
+		}
 	}
 
 	QStandardItem *item(createEntry(identifier, options));

@@ -56,13 +56,6 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	struct OptionEntry final
-	{
-		OptionWidget *widget = nullptr;
-		QString name;
-		QString label;
-	};
-
 	void changeEvent(QEvent *event) override;
 	void addEntry(const ToolBarsManager::ToolBarDefinition::Entry &entry, QStandardItem *parent = nullptr);
 	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = {}, const QVariantMap &parameters = {}) const;
