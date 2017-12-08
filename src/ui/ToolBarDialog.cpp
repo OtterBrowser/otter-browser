@@ -285,41 +285,43 @@ void ToolBarDialog::addNewEntry()
 {
 	const QStandardItem *sourceItem(m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow()));
 
-	if (sourceItem)
+	if (!sourceItem)
 	{
-		QStandardItem *newItem(sourceItem->clone());
-		QStandardItem *targetItem(m_ui->currentEntriesItemView->getItem(m_ui->currentEntriesItemView->currentIndex()));
+		return;
+	}
 
-		if (targetItem && targetItem->data(IdentifierRole).toString() != QLatin1String("CustomMenu"))
+	QStandardItem *newItem(sourceItem->clone());
+	QStandardItem *targetItem(m_ui->currentEntriesItemView->getItem(m_ui->currentEntriesItemView->currentIndex()));
+
+	if (targetItem && targetItem->data(IdentifierRole).toString() != QLatin1String("CustomMenu"))
+	{
+		targetItem = targetItem->parent();
+	}
+
+	if (targetItem && targetItem->data(IdentifierRole).toString() == QLatin1String("CustomMenu"))
+	{
+		int row(-1);
+
+		if (targetItem->index() != m_ui->currentEntriesItemView->currentIndex())
 		{
-			targetItem = targetItem->parent();
+			row = m_ui->currentEntriesItemView->currentIndex().row();
 		}
 
-		if (targetItem && targetItem->data(IdentifierRole).toString() == QLatin1String("CustomMenu"))
+		if (row >= 0)
 		{
-			int row(-1);
-
-			if (targetItem->index() != m_ui->currentEntriesItemView->currentIndex())
-			{
-				row = m_ui->currentEntriesItemView->currentIndex().row();
-			}
-
-			if (row >= 0)
-			{
-				targetItem->insertRow((row + 1), newItem);
-			}
-			else
-			{
-				targetItem->appendRow(newItem);
-			}
-
-			m_ui->currentEntriesItemView->setCurrentIndex(newItem->index());
-			m_ui->currentEntriesItemView->expand(targetItem->index());
+			targetItem->insertRow((row + 1), newItem);
 		}
 		else
 		{
-			m_ui->currentEntriesItemView->insertRow({newItem});
+			targetItem->appendRow(newItem);
 		}
+
+		m_ui->currentEntriesItemView->setCurrentIndex(newItem->index());
+		m_ui->currentEntriesItemView->expand(targetItem->index());
+	}
+	else
+	{
+		m_ui->currentEntriesItemView->insertRow({newItem});
 	}
 }
 
