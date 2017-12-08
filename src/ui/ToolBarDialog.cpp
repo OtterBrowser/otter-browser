@@ -326,6 +326,12 @@ void ToolBarDialog::addNewEntry()
 void ToolBarDialog::editEntry()
 {
 	const QModelIndex index(m_ui->currentEntriesItemView->currentIndex());
+
+	if (!index.data(HasOptionsRole).toBool())
+	{
+		return;
+	}
+
 	const QString identifier(index.data(IdentifierRole).toString());
 	QVariantMap options(index.data(OptionsRole).toMap());
 	QVector<OptionEntry> entries;
@@ -447,11 +453,6 @@ void ToolBarDialog::editEntry()
 
 		iconEntry.widget->setValue(options.value(QLatin1String("icon"), iconEntry.widget->getDefaultValue()));
 		textEntry.widget->setValue(options.value(QLatin1String("text"), textEntry.widget->getDefaultValue()));
-	}
-
-	if (entries.isEmpty())
-	{
-		return;
 	}
 
 	QDialog dialog(this);
