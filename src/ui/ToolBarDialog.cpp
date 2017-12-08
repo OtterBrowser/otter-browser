@@ -179,10 +179,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 			for (int j = 0; j < searchEngines.count(); ++j)
 			{
-				QVariantMap options;
-				options[QLatin1String("searchEngine")] = searchEngines.at(j);
-
-				availableEntriesModel->appendRow(createEntry(widgets.at(i), options));
+				availableEntriesModel->appendRow(createEntry(widgets.at(i), {{QLatin1String("searchEngine"), searchEngines.at(j)}}));
 			}
 		}
 	}
