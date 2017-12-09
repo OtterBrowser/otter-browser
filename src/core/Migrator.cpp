@@ -341,6 +341,38 @@ public:
 	}
 };
 
+class SearchEnginesStorageMigration final : public Migration
+{
+public:
+	SearchEnginesStorageMigration() : Migration()
+	{
+	}
+
+	void createBackup() const override
+	{
+	}
+
+	void migrate() const override
+	{
+		QDir().rename(SessionsManager::getWritableDataPath(QLatin1String("searches")), SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
+	}
+
+	QString getName() const override
+	{
+		return QLatin1String("searchEnginesStorage");
+	}
+
+	QString getTitle() const override
+	{
+		return QT_TRANSLATE_NOOP("migrations", "Search Engines");
+	}
+
+	bool needsMigration() const override
+	{
+		return QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("searches")));
+	}
+};
+
 class SessionsIniToJsonMigration final : public Migration
 {
 public:
@@ -518,7 +550,7 @@ bool Migration::needsMigration() const
 
 bool Migrator::run()
 {
-	const QVector<Migration*> availableMigrations({new KeyboardAndMouseProfilesIniToJsonMigration(), new OptionsRenameMigration(), new SessionsIniToJsonMigration()});
+	const QVector<Migration*> availableMigrations({new KeyboardAndMouseProfilesIniToJsonMigration(), new OptionsRenameMigration(), new SearchEnginesStorageMigration(), new SessionsIniToJsonMigration()});
 	QVector<Migration*> possibleMigrations;
 	QStringList processedMigrations(SettingsManager::getOption(SettingsManager::Browser_MigrationsOption).toStringList());
 
