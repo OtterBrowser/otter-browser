@@ -52,7 +52,7 @@ public:
 	void createBackup() const override
 	{
 		const QString keyboardBackupPath(createBackupPath(QLatin1String("keyboard")));
-		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryInfoList({QLatin1String("*.ini")}));
 
 		for (int i = 0; i < keyboardEntries.count(); ++i)
 		{
@@ -60,7 +60,7 @@ public:
 		}
 
 		const QString mouseBackupPath(createBackupPath(QLatin1String("mouse")));
-		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList({QLatin1String("*.ini")}));
 
 		for (int i = 0; i < mouseEntries.count(); ++i)
 		{
@@ -70,7 +70,7 @@ public:
 
 	void migrate() const override
 	{
-		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+		const QList<QFileInfo> keyboardEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryInfoList({QLatin1String("*.ini")}, QDir::Files));
 
 		for (int i = 0; i < keyboardEntries.count(); ++i)
 		{
@@ -144,7 +144,7 @@ public:
 			QFile::remove(keyboardEntries.at(i).absoluteFilePath());
 		}
 
-		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+		const QList<QFileInfo> mouseEntries(QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryInfoList({QLatin1String("*.ini")}, QDir::Files));
 
 		for (int i = 0; i < mouseEntries.count(); ++i)
 		{
@@ -195,7 +195,7 @@ public:
 
 	bool needsMigration() const override
 	{
-		return (!QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty() || !QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty());
+		return (!QDir(SessionsManager::getWritableDataPath(QLatin1String("keyboard"))).entryList({QLatin1String("*.ini")}, QDir::Files).isEmpty() || !QDir(SessionsManager::getWritableDataPath(QLatin1String("mouse"))).entryList({QLatin1String("*.ini")}, QDir::Files).isEmpty());
 	}
 };
 
@@ -383,7 +383,7 @@ public:
 	void createBackup() const override
 	{
 		const QString backupPath(createBackupPath(QLatin1String("sessions")));
-		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList(QStringList(QLatin1String("*.ini"))));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList({QLatin1String("*.ini")}));
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
@@ -393,7 +393,7 @@ public:
 
 	void migrate() const override
 	{
-		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+		const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList({QLatin1String("*.ini")}, QDir::Files));
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
@@ -487,7 +487,7 @@ public:
 
 	bool needsMigration() const override
 	{
-		return !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty();
+		return !QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList({QLatin1String("*.ini")}, QDir::Files).isEmpty();
 	}
 };
 
