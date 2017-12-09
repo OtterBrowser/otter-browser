@@ -279,10 +279,8 @@ protected:
 protected slots:
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleWindowCloseRequest();
-	void notifyFillPasswordActionStateChanged();
 	void notifyRedoActionStateChanged();
 	void notifyUndoActionStateChanged();
-	void notifyPageActionsChanged();
 	void setStatusMessage(const QString &message);
 	void setStatusMessageOverride(const QString &message);
 

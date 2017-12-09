@@ -58,8 +58,14 @@ WebWidget::WebWidget(const QVariantMap &parameters, WebBackend *backend, Content
 	Q_UNUSED(parameters)
 
 	connect(this, &WebWidget::loadingStateChanged, this, &WebWidget::handleLoadingStateChange);
-	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &WebWidget::notifyPageActionsChanged);
-	connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, this, &WebWidget::notifyFillPasswordActionStateChanged);
+	connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, [&]()
+	{
+		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::BookmarkCategory});
+	});
+	connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, this, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::FillPasswordAction});
+	});
 }
 
 void WebWidget::timerEvent(QTimerEvent *event)
@@ -308,11 +314,6 @@ void WebWidget::handleWindowCloseRequest()
 	showDialog(dialog, false);
 }
 
-void WebWidget::notifyFillPasswordActionStateChanged()
-{
-	emit arbitraryActionsStateChanged({ActionsManager::FillPasswordAction});
-}
-
 void WebWidget::notifyRedoActionStateChanged()
 {
 	emit arbitraryActionsStateChanged({ActionsManager::RedoAction});
@@ -321,11 +322,6 @@ void WebWidget::notifyRedoActionStateChanged()
 void WebWidget::notifyUndoActionStateChanged()
 {
 	emit arbitraryActionsStateChanged({ActionsManager::UndoAction});
-}
-
-void WebWidget::notifyPageActionsChanged()
-{
-	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::BookmarkCategory});
 }
 
 void WebWidget::updateHitTestResult(const QPoint &position)
