@@ -35,6 +35,7 @@ public:
 	virtual void migrate() const;
 	virtual QString getName() const;
 	virtual QString getTitle() const;
+	virtual bool needsBackup() const;
 	virtual bool needsMigration() const;
 
 protected:

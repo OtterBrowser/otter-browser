@@ -348,10 +348,6 @@ public:
 	{
 	}
 
-	void createBackup() const override
-	{
-	}
-
 	void migrate() const override
 	{
 		QDir().rename(SessionsManager::getWritableDataPath(QLatin1String("searches")), SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
@@ -365,6 +361,11 @@ public:
 	QString getTitle() const override
 	{
 		return QT_TRANSLATE_NOOP("migrations", "Search Engines");
+	}
+
+	bool needsBackup() const override
+	{
+		return false;
 	}
 
 	bool needsMigration() const override
@@ -543,6 +544,11 @@ QString Migration::getTitle() const
 	return {};
 }
 
+bool Migration::needsBackup() const
+{
+	return true;
+}
+
 bool Migration::needsMigration() const
 {
 	return false;
@@ -588,16 +594,24 @@ bool Migrator::run()
 	migrationsViewWidget->setHeaderHidden(true);
 	migrationsViewWidget->header()->setStretchLastSection(true);
 
+	bool needsBackup(false);
+
 	for (int i = 0; i < possibleMigrations.count(); ++i)
 	{
 		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations[i]->getTitle().toUtf8().constData())));
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsSelectable);
+
+		if (possibleMigrations[i]->needsBackup())
+		{
+			needsBackup = true;
+		}
 
 		migrationsViewWidget->insertRow({item});
 	}
 
 	QCheckBox *createBackupCheckBox(new QCheckBox(QCoreApplication::translate("Otter::Migrator", "Create backup")));
 	createBackupCheckBox->setChecked(true);
+	createBackupCheckBox->setEnabled(needsBackup);
 
 	QDialogButtonBox *buttonBox(new QDialogButtonBox(&dialog));
 	buttonBox->addButton(QDialogButtonBox::Yes);
@@ -620,15 +634,14 @@ bool Migrator::run()
 	dialog.exec();
 
 	const bool canProceed(clickedButton == QDialogButtonBox::Yes);
-	const bool needsBackup(createBackupCheckBox->isChecked());
 
-	if (canProceed || needsBackup)
+	if (canProceed || createBackupCheckBox->isChecked())
 	{
 		for (int i = 0; i < possibleMigrations.count(); ++i)
 		{
 			processedMigrations.append(possibleMigrations[i]->getName());
 
-			if (needsBackup)
+			if (createBackupCheckBox->isChecked())
 			{
 				possibleMigrations[i]->createBackup();
 			}
