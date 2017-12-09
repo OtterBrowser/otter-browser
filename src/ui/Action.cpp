@@ -20,6 +20,7 @@
 #include "Action.h"
 #include "MainWindow.h"
 #include "../core/Application.h"
+#include "../core/Console.h"
 #include "../core/ThemesManager.h"
 
 #include <QtCore/QMetaMethod>
@@ -111,6 +112,11 @@ void Action::initialize()
 		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsCheckableFlag))
 		{
 			setCheckable(true);
+		}
+
+		if (definition.flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag))
+		{
+			Console::addMessage(tr("Creating instance of deprecated action: %1").arg(ActionsManager::getActionName(m_identifier)), Console::OtherCategory, Console::WarningLevel);
 		}
 
 		connect(this, &Action::triggered, this, &Action::triggerAction);
