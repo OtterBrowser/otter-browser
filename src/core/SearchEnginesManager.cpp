@@ -73,7 +73,7 @@ void SearchEnginesManager::loadSearchEngines()
 
 	for (int i = 0; i < searchEnginesOrder.count(); ++i)
 	{
-		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml")));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + searchEnginesOrder.at(i) + QLatin1String(".xml")));
 
 		if (!file.open(QIODevice::ReadOnly))
 		{
@@ -445,7 +445,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 
 	if (!m_searchEngines.contains(identifier))
 	{
-		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")));
 
 		if (file.open(QIODevice::ReadOnly))
 		{
@@ -506,9 +506,9 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 		return false;
 	}
 
-	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searches")));
+	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searches/") + searchEngine.identifier + QLatin1String(".xml")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searchEngines/") + searchEngine.identifier + QLatin1String(".xml")));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{

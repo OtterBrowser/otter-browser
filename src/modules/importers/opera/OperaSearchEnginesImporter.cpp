@@ -135,7 +135,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 	settings.beginGroup(QLatin1String("Options"));
 
 	const QVariant defaultEngine(settings.getValue(QLatin1String("Default Search")));
-	const QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList());
+	const QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searchEngines"))).entryInfoList());
 
 	for (int i = 0; i < allSearchEngines.count(); ++i)
 	{

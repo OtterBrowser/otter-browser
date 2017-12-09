@@ -208,7 +208,7 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 {
 	if (action && !action->data().isNull())
 	{
-		addSearchEngine(SessionsManager::getReadableDataPath(QLatin1String("searches/") + action->data().toString() + QLatin1String(".xml")), action->data().toString(), true);
+		addSearchEngine(SessionsManager::getReadableDataPath(QLatin1String("searchEngines/") + action->data().toString() + QLatin1String(".xml")), action->data().toString(), true);
 	}
 }
 
@@ -307,7 +307,7 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	const QString path(SessionsManager::getWritableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")));
 
 	if (QFile::exists(path))
 	{
@@ -481,7 +481,7 @@ void PreferencesSearchPageWidget::updateReaddSearchEngineMenu()
 
 	QStringList availableIdentifiers;
 	QVector<SearchEnginesManager::SearchEngineDefinition> availableSearchEngines;
-	const QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("searches/"), true)).entryInfoList(QDir::Files));
+	const QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searchEngines"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("searchEngines"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allSearchEngines.count(); ++i)
 	{

@@ -143,14 +143,14 @@
         <file>other/toolBars.json</file>
         <file>other/userAgents.json</file>
         <file>schemas/update.xsd</file>
-        <file>searches/bing.xml</file>
-        <file>searches/duckduckgo.xml</file>
-        <file>searches/google.xml</file>
-        <file>searches/startpage.xml</file>
-        <file>searches/w3c-css.xml</file>
-        <file>searches/w3c-markup.xml</file>
-        <file>searches/wikipedia.xml</file>
-        <file>searches/yahoo.xml</file>
-        <file>searches/youtube.xml</file>
+        <file>searchEngines/bing.xml</file>
+        <file>searchEngines/duckduckgo.xml</file>
+        <file>searchEngines/google.xml</file>
+        <file>searchEngines/startpage.xml</file>
+        <file>searchEngines/w3c-css.xml</file>
+        <file>searchEngines/w3c-markup.xml</file>
+        <file>searchEngines/wikipedia.xml</file>
+        <file>searchEngines/yahoo.xml</file>
+        <file>searchEngines/youtube.xml</file>
     </qresource>
 </RCC>
