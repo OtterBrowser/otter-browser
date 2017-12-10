@@ -2053,7 +2053,7 @@ QString QtWebKitWebWidget::getTitle() const
 	{
 		const QUrl url(getUrl());
 
-		if (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start")))
+		if (Utils::isUrlEmpty(url))
 		{
 			return tr("Blank Page");
 		}
