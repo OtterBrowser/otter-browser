@@ -1262,8 +1262,8 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 		return;
 	}
 
-	QByteArray data;
-	QDataStream stream(&data, QIODevice::ReadWrite);
+	QByteArray byteArray;
+	QDataStream stream(&byteArray, QIODevice::ReadWrite);
 	stream << int(3) << history.entries.count() << history.index;
 
 	for (int i = 0; i < history.entries.count(); ++i)
@@ -1439,8 +1439,8 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const 
 
 	if (cloneHistory)
 	{
-		QByteArray data;
-		QDataStream stream(&data, QIODevice::ReadWrite);
+		QByteArray byteArray;
+		QDataStream stream(&byteArray, QIODevice::ReadWrite);
 		stream << *(m_page->history());
 
 		widget->setHistory(stream);
