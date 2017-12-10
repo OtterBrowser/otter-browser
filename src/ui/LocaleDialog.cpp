@@ -34,7 +34,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QList<QFileInfo> locales(QDir(Application::getLocalePath()).entryInfoList(QStringList(QLatin1String("otter-browser_*.qm")), QDir::Files, QDir::Name));
+	const QList<QFileInfo> locales(QDir(Application::getLocalePath()).entryInfoList({QLatin1String("otter-browser_*.qm")}, QDir::Files, QDir::Name));
 	QVector<QPair<QString, QString> > entries;
 
 	for (int i = 0; i < locales.count(); ++i)

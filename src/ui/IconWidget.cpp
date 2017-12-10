@@ -61,7 +61,7 @@ void IconWidget::reset()
 
 void IconWidget::selectFromFile()
 {
-	const QString path(QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), Utils::formatFileTypes(QStringList(tr("Images (*.png *.jpg *.bmp *.gif *.ico)")))));
+	const QString path(QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), Utils::formatFileTypes({tr("Images (*.png *.jpg *.bmp *.gif *.ico)")})));
 
 	if (!path.isEmpty())
 	{

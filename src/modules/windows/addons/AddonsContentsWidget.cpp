@@ -147,7 +147,7 @@ void AddonsContentsWidget::populateAddons()
 
 void AddonsContentsWidget::addAddon()
 {
-	const QStringList sourcePaths(QFileDialog::getOpenFileNames(this, tr("Select Files"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes(QStringList(tr("User Script files (*.js)")))));
+	const QStringList sourcePaths(QFileDialog::getOpenFileNames(this, tr("Select Files"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("User Script files (*.js)")})));
 
 	if (sourcePaths.isEmpty())
 	{

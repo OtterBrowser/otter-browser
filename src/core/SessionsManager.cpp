@@ -373,7 +373,7 @@ QStringList SessionsManager::getClosedWindows()
 
 QStringList SessionsManager::getSessions()
 {
-	QStringList entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.json")), QDir::Files));
+	QStringList entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryList({QLatin1String("*.json")}, QDir::Files));
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
