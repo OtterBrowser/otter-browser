@@ -519,6 +519,8 @@ void PreferencesSearchPageWidget::save()
 	m_filesToRemove.clear();
 
 	QStringList searchEnginesOrder;
+	searchEnginesOrder.reserve(m_ui->searchViewWidget->getRowCount());
+
 	QString defaultSearchEngine;
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
