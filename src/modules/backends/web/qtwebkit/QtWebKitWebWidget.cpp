@@ -1775,8 +1775,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	qint64 documentSequence(0);
 	qint64 itemSequence(0);
-	QByteArray data;
-	QDataStream stream(&data, QIODevice::ReadWrite);
+	QByteArray byteArray;
+	QDataStream stream(&byteArray, QIODevice::ReadWrite);
 	stream << int(2) << history.entries.count() << index;
 
 	for (int i = 0; i < history.entries.count(); ++i)
@@ -2007,8 +2007,8 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QSt
 	if (cloneHistory)
 	{
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-		QByteArray data;
-		QDataStream stream(&data, QIODevice::ReadWrite);
+		QByteArray byteArray;
+		QDataStream stream(&byteArray, QIODevice::ReadWrite);
 		stream << *(m_page->history());
 
 		widget->setHistory(stream);
