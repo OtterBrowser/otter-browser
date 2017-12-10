@@ -26,7 +26,6 @@
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/ContentBlockingProfile.h"
-#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"

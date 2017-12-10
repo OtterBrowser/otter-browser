@@ -56,7 +56,6 @@
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
@@ -569,7 +568,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(m_hitResult.imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(m_hitResult.imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -638,7 +637,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CopyMediaUrlToClipboardAction:
 			if (!m_hitResult.mediaUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(m_hitResult.mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(m_hitResult.mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -739,7 +738,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (!text.isEmpty())
 				{
-					QApplication::clipboard()->setText(text);
+					Application::clipboard()->setText(text);
 				}
 			}
 			else
@@ -753,7 +752,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::CopyAddressAction:
-			QApplication::clipboard()->setText(getUrl().toString());
+			Application::clipboard()->setText(getUrl().toString());
 
 			break;
 		case ActionsManager::CopyToNoteAction:

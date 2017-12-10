@@ -67,7 +67,6 @@
 #include <QtWebKit/QWebElement>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QShortcut>
@@ -563,9 +562,9 @@ void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
 	printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 	printPreviewDialog.setWindowTitle(tr("Print Preview"));
 
-	if (QApplication::activeWindow())
+	if (Application::activeWindow())
 	{
-		printPreviewDialog.resize(QApplication::activeWindow()->size());
+		printPreviewDialog.resize(Application::activeWindow()->size());
 	}
 
 	connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, frame, &QWebFrame::print);
@@ -1159,7 +1158,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (!hitResult.pixmap().isNull())
 				{
-					QApplication::clipboard()->setPixmap(hitResult.pixmap());
+					Application::clipboard()->setPixmap(hitResult.pixmap());
 				}
 				else
 				{
@@ -1171,7 +1170,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -1241,7 +1240,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyMediaUrlToClipboardAction:
 			if (!getCurrentHitTestResult().mediaUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -1375,7 +1374,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (!text.isEmpty())
 				{
-					QApplication::clipboard()->setText(text);
+					Application::clipboard()->setText(text);
 				}
 			}
 			else
@@ -1389,7 +1388,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::CopyAddressAction:
-			QApplication::clipboard()->setText(getUrl().toString());
+			Application::clipboard()->setText(getUrl().toString());
 
 			break;
 		case ActionsManager::CopyToNoteAction:
