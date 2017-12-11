@@ -135,7 +135,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 			break;
 		case HandlersManager::HandlerDefinition::SaveAsTransfer:
 			{
-				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, QStringList(), true).path);
+			const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
 
 				if (path.isEmpty())
 				{

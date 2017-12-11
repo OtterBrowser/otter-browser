@@ -311,7 +311,7 @@ QStringList QtWebEnginePage::chooseFiles(QWebEnginePage::FileSelectionMode mode,
 {
 	Q_UNUSED(acceptedMimeTypes)
 
-	return Utils::getOpenPaths(oldFiles, QStringList(), (mode == QWebEnginePage::FileSelectOpenMultiple));
+	return Utils::getOpenPaths(oldFiles, {}, (mode == QWebEnginePage::FileSelectOpenMultiple));
 }
 
 bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame)

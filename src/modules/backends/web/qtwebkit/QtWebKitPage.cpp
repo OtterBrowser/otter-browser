@@ -544,7 +544,7 @@ QString QtWebKitPage::chooseFile(QWebFrame *frame, const QString &suggestedFile)
 {
 	Q_UNUSED(frame)
 
-	return Utils::getOpenPaths(QStringList(suggestedFile)).value(0);
+	return Utils::getOpenPaths({suggestedFile}).value(0);
 }
 
 QString QtWebKitPage::userAgentForUrl(const QUrl &url) const

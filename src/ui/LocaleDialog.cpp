@@ -69,7 +69,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 	m_ui->languageComboBox->setCurrentIndex((currentLocale.endsWith(QLatin1String(".qm"))) ? 1 : qMax(0, m_ui->languageComboBox->findData(currentLocale)));
 	m_ui->customFilePathWidget->setEnabled(m_ui->languageComboBox->currentIndex() == 1);
-	m_ui->customFilePathWidget->setFilters(QStringList(tr("Translation files (*.qm)")));
+	m_ui->customFilePathWidget->setFilters({tr("Translation files (*.qm)")});
 
 	if (m_ui->languageComboBox->currentIndex() == 1)
 	{

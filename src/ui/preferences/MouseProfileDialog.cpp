@@ -139,7 +139,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	gesturesModel->sort(0);
 
 	QStandardItemModel *stepsModel(new QStandardItemModel(this));
-	stepsModel->setHorizontalHeaderLabels(QStringList(tr("Step")));
+	stepsModel->setHorizontalHeaderLabels({tr("Step")});
 
 	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->gesturesViewWidget->setModel(gesturesModel);
