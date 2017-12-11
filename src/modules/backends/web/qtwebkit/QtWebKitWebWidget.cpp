@@ -584,17 +584,12 @@ void QtWebKitWebWidget::handleHistory()
 
 	if (identifier == 0)
 	{
-		QVariantList state;
-		state.append(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped));
-		state.append(getZoom());
-		state.append(QPoint(0, 0));
+		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0)}));
 
 		if (m_isTyped)
 		{
 			m_isTyped = false;
 		}
-
-		m_page->history()->currentItem().setUserData(state);
 
 		SessionsManager::markSessionAsModified();
 		BookmarksManager::updateVisits(url.toString());
@@ -1804,12 +1799,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		QVariantList state;
-		state.append(-1);
-		state.append(history.entries.at(i).zoom);
-		state.append(history.entries.at(i).position);
-
-		m_page->history()->itemAt(i).setUserData(state);
+		m_page->history()->itemAt(i).setUserData(QVariantList({-1, history.entries.at(i).zoom, history.entries.at(i).position}));
 	}
 
 	m_page->history()->goToItem(m_page->history()->itemAt(index));
