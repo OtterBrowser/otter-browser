@@ -927,11 +927,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				for (int i = 0; i < m_page->history()->count(); ++i)
 				{
-					const quint64 identifier(m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toULongLong());
+					const quint64 historyIdentifier(m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toULongLong());
 
-					if (identifier > 0)
+					if (historyIdentifier > 0)
 					{
-						HistoryManager::removeEntry(identifier);
+						HistoryManager::removeEntry(historyIdentifier);
 					}
 				}
 			}
