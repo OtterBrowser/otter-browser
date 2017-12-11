@@ -2370,21 +2370,16 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 		}
 	}
 
-	if (result.tagName == QLatin1String("textarea") || result.tagName == QLatin1String("input"))
+	if (result.tagName == QLatin1String("textarea") || (result.tagName == QLatin1String("input") && (type.isEmpty() || type == QLatin1String("text") || type == QLatin1String("password") || type == QLatin1String("search"))))
 	{
-		const QString type(nativeResult.element().attribute(QLatin1String("type")).toLower());
-
-		if (type.isEmpty() || result.tagName == QLatin1String("textarea") || type == QLatin1String("text") || type == QLatin1String("password") || type == QLatin1String("search"))
+		if (!nativeResult.element().hasAttribute(QLatin1String("disabled")) && !nativeResult.element().hasAttribute(QLatin1String("readonly")))
 		{
-			if (!nativeResult.element().hasAttribute(QLatin1String("disabled")) && !nativeResult.element().hasAttribute(QLatin1String("readonly")))
-			{
-				result.flags |= HitTestResult::IsContentEditableTest;
-			}
+			result.flags |= HitTestResult::IsContentEditableTest;
+		}
 
-			if (nativeResult.element().evaluateJavaScript(QLatin1String("this.value")).toString().isEmpty())
-			{
-				result.flags |= HitTestResult::IsEmptyTest;
-			}
+		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.value")).toString().isEmpty())
+		{
+			result.flags |= HitTestResult::IsEmptyTest;
 		}
 	}
 	else if (nativeResult.isContentEditable())
