@@ -255,19 +255,19 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 {
 	if (frame == m_page->mainFrame())
 	{
-		QVariantList data(m_page->history()->currentItem().userData().toList());
+		QVariantList state(m_page->history()->currentItem().userData().toList());
 
-		if (data.isEmpty() || data.count() < 3)
+		if (state.isEmpty() || state.count() < 3)
 		{
-			data = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
+			state = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
 		}
 		else
 		{
-			data[ZoomEntryData] = getZoom();
-			data[PositionEntryData] = m_page->mainFrame()->scrollPosition();
+			state[ZoomEntryData] = getZoom();
+			state[PositionEntryData] = m_page->mainFrame()->scrollPosition();
 		}
 
-		item->setUserData(data);
+		item->setUserData(state);
 	}
 }
 
@@ -275,13 +275,13 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 {
 	if (frame == m_page->mainFrame())
 	{
-		const QVariantList data(m_page->history()->currentItem().userData().toList());
+		const QVariantList state(m_page->history()->currentItem().userData().toList());
 
-		setZoom(data.value(ZoomEntryData, getZoom()).toInt());
+		setZoom(state.value(ZoomEntryData, getZoom()).toInt());
 
 		if (m_page->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
-			m_page->mainFrame()->setScrollPosition(data.value(PositionEntryData).toPoint());
+			m_page->mainFrame()->setScrollPosition(state.value(PositionEntryData).toPoint());
 		}
 	}
 }
@@ -584,17 +584,17 @@ void QtWebKitWebWidget::handleHistory()
 
 	if (identifier == 0)
 	{
-		QVariantList data;
-		data.append(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped));
-		data.append(getZoom());
-		data.append(QPoint(0, 0));
+		QVariantList state;
+		state.append(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped));
+		state.append(getZoom());
+		state.append(QPoint(0, 0));
 
 		if (m_isTyped)
 		{
 			m_isTyped = false;
 		}
 
-		m_page->history()->currentItem().setUserData(data);
+		m_page->history()->currentItem().setUserData(state);
 
 		SessionsManager::markSessionAsModified();
 		BookmarksManager::updateVisits(url.toString());
@@ -1804,12 +1804,12 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		QVariantList data;
-		data.append(-1);
-		data.append(history.entries.at(i).zoom);
-		data.append(history.entries.at(i).position);
+		QVariantList state;
+		state.append(-1);
+		state.append(history.entries.at(i).zoom);
+		state.append(history.entries.at(i).position);
 
-		m_page->history()->itemAt(i).setUserData(data);
+		m_page->history()->itemAt(i).setUserData(state);
 	}
 
 	m_page->history()->goToItem(m_page->history()->itemAt(index));
@@ -2283,19 +2283,19 @@ WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
 
 WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
-	QVariantList data(m_page->history()->currentItem().userData().toList());
+	QVariantList state(m_page->history()->currentItem().userData().toList());
 
-	if (data.isEmpty() || data.count() < 3)
+	if (state.isEmpty() || state.count() < 3)
 	{
-		data = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
+		state = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
 	}
 	else
 	{
-		data[ZoomEntryData] = getZoom();
-		data[PositionEntryData] = m_page->mainFrame()->scrollPosition();
+		state[ZoomEntryData] = getZoom();
+		state[PositionEntryData] = m_page->mainFrame()->scrollPosition();
 	}
 
-	m_page->history()->currentItem().setUserData(data);
+	m_page->history()->currentItem().setUserData(state);
 
 	const QWebHistory *history(m_page->history());
 	WindowHistoryInformation information;
@@ -2321,8 +2321,8 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		WindowHistoryEntry entry;
 		entry.url = requestedUrl;
 		entry.title = getTitle();
-		entry.position = data.value(PositionEntryData, QPoint(0, 0)).toPoint();
-		entry.zoom = data.value(ZoomEntryData).toInt();
+		entry.position = state.value(PositionEntryData, QPoint(0, 0)).toPoint();
+		entry.zoom = state.value(ZoomEntryData).toInt();
 
 		information.index = historyCount;
 		information.entries.append(entry);
