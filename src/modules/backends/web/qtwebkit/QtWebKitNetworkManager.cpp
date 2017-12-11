@@ -647,7 +647,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 					password.fields.append(field);
 				}
 
-				PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
+				const PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
 
 				if (match != PasswordsManager::FullMatch)
 				{
