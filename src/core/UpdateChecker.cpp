@@ -73,8 +73,7 @@ void UpdateChecker::runUpdateCheck()
 	activeChannels.removeAll(QString());
 
 	const PlatformIntegration *integration(Application::getPlatformIntegration());
-	const QJsonObject updateData(QJsonDocument::fromJson(m_networkReply->readAll()).object());
-	const QJsonArray channels(updateData.value(QLatin1String("channels")).toArray());
+	const QJsonArray channels(QJsonDocument::fromJson(m_networkReply->readAll()).object().value(QLatin1String("channels")).toArray());
 	const QString platform(integration ? integration->getPlatformName() : QString());
 	const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
 	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
