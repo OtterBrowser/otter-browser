@@ -92,7 +92,7 @@ void LongTermTimer::updateTimer(const quint64 remainingTime, const bool updateCo
 		m_remainingTime = (remainingTime - timerValue);
 	}
 
-	m_timer = startTimer(timerValue);
+	m_timer = startTimer(static_cast<int>(timerValue));
 }
 
 }
