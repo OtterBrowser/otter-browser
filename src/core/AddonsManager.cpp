@@ -162,10 +162,10 @@ void AddonsManager::loadUserScripts()
 
 	if (file.open(QIODevice::ReadOnly))
 	{
-		const QJsonObject settings(QJsonDocument::fromJson(file.readAll()).object());
+		const QJsonObject settingsObject(QJsonDocument::fromJson(file.readAll()).object());
 		QJsonObject::const_iterator iterator;
 
-		for (iterator = settings.constBegin(); iterator != settings.constEnd(); ++iterator)
+		for (iterator = settingsObject.constBegin(); iterator != settingsObject.constEnd(); ++iterator)
 		{
 			metaData[iterator.key()] = iterator.value().toObject();
 		}

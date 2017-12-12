@@ -40,7 +40,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 		QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
 		file.open(QIODevice::ReadOnly);
 
-		const QJsonObject syntaxes(QJsonDocument::fromJson(file.readAll()).object());
+		const QJsonObject syntaxesObject(QJsonDocument::fromJson(file.readAll()).object());
 		const QMetaEnum highlightingSyntaxEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data())));
 		const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
 
@@ -50,17 +50,17 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 			QString syntax(highlightingSyntaxEnum.valueToKey(i));
 			syntax.chop(6);
 
-			const QJsonObject definitions(syntaxes.value(syntax).toObject());
+			const QJsonObject definitionsObject(syntaxesObject.value(syntax).toObject());
 
 			for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
 			{
 				QString state(highlightingStateEnum.valueToKey(j));
 				state.chop(5);
 
-				const QJsonObject definition(definitions.value(state).toObject());
-				const QString foreground(definition.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
-				const QString fontStyle(definition.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
-				const QString fontWeight(definition.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
+				const QJsonObject definitionObject(definitionsObject.value(state).toObject());
+				const QString foreground(definitionObject.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
+				const QString fontStyle(definitionObject.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
+				const QString fontWeight(definitionObject.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
 				QTextCharFormat format;
 
 				if (foreground != QLatin1String("auto"))
@@ -78,7 +78,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 					format.setFontWeight((fontWeight == QLatin1String("bold")) ? QFont::Bold : QFont::Normal);
 				}
 
-				if (definition.value(QLatin1String("isUnderlined")).toBool(false))
+				if (definitionObject.value(QLatin1String("isUnderlined")).toBool(false))
 				{
 					format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
 				}
