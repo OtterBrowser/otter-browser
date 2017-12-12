@@ -394,7 +394,7 @@ void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *
 					const QString protocol(serverObject.value(QLatin1String("protocol")).toString());
 					ProxyDefinition::ProxyServer server;
 					server.hostName = serverObject.value(QLatin1String("hostName")).toString();
-					server.port = serverObject.value(QLatin1String("port")).toInt();
+					server.port = serverObject.value(QLatin1String("port")).toUShort();
 
 					if (protocol == QLatin1String("http"))
 					{
