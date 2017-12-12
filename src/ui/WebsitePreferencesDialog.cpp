@@ -449,7 +449,7 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Content_UserStyleSheetOption, (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
-	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
+	m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_EnableJavaScriptOption, (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
