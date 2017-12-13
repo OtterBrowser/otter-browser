@@ -2158,7 +2158,7 @@ QPixmap QtWebKitWebWidget::createThumbnail(const QSize &size)
 		contentsSize.setWidth(2000);
 	}
 
-	contentsSize.setHeight(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width()));
+	contentsSize.setHeight(qRound(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width())));
 
 	m_page->setViewportSize(contentsSize);
 
@@ -2543,7 +2543,7 @@ WebWidget::LoadingState QtWebKitWebWidget::getLoadingState() const
 
 int QtWebKitWebWidget::getZoom() const
 {
-	return (m_page->mainFrame()->zoomFactor() * 100);
+	return static_cast<int>(m_page->mainFrame()->zoomFactor() * 100);
 }
 
 int QtWebKitWebWidget::getAmountOfDeferredPlugins() const
