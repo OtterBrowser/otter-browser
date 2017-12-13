@@ -370,7 +370,7 @@ void TabHandleWidget::updateGeometries()
 
 	if (TabBarWidget::areThumbnailsEnabled())
 	{
-		const int controlsHeight(qMax(16.0, (QFontMetrics(font()).height() * 1.5)));
+		const int controlsHeight(qRound(qMax(16.0, QFontMetrics(font()).height() * 1.5)));
 
 		if (controlsRectangle.height() > (controlsHeight * 2))
 		{
@@ -1444,7 +1444,7 @@ void TabBarWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 				if (m_minimumTabSize.height() < 0)
 				{
-					m_minimumTabSize.setHeight((QFontMetrics(font()).lineSpacing() * 1.25) + style()->pixelMetric(QStyle::PM_TabBarTabVSpace));
+					m_minimumTabSize.setHeight(qRound(QFontMetrics(font()).lineSpacing() * 1.25) + style()->pixelMetric(QStyle::PM_TabBarTabVSpace));
 				}
 
 				if (m_minimumTabSize.height() != oldValue)
