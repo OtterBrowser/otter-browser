@@ -42,10 +42,10 @@ public:
 	explicit QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent);
 
 	void runUserScripts(const QUrl &url) const;
-	bool isErrorPage() const;
+	bool isDisplayingErrorPage() const;
 
 public slots:
-	void handleErrorPageChanged(QWebFrame *frame, bool isErrorPage);
+	void handleIsDisplayingErrorPageChanged(QWebFrame *frame, bool isDisplayingErrorPage);
 
 protected:
 	void applyContentBlockingRules(const QStringList &rules, bool remove);
@@ -56,7 +56,7 @@ protected slots:
 private:
 	QWebFrame *m_frame;
 	QtWebKitWebWidget *m_widget;
-	bool m_isErrorPage;
+	bool m_isDisplayingErrorPage;
 };
 
 class QtWebKitPage final : public QWebPage
@@ -74,12 +74,12 @@ public:
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;
 	bool shouldInterruptJavaScript() override;
 	bool supportsExtension(Extension extension) const override;
-	bool isErrorPage() const;
+	bool isDisplayingErrorPage() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
 
 public slots:
-	void markAsErrorPage();
+	void markAsDisplayingErrorPage();
 	void updateStyleSheets(const QUrl &url = {});
 
 protected:
@@ -122,7 +122,7 @@ signals:
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
-	void errorPageChanged(QWebFrame *frame, bool isVisible);
+	void isDisplayingErrorPageChanged(QWebFrame *frame, bool isVisible);
 	void viewingMediaChanged(bool viewingMedia);
 
 friend class QtWebKitThumbnailFetchJob;

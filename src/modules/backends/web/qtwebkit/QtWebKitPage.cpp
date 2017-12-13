@@ -49,7 +49,7 @@ namespace Otter
 QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObject(parent),
 	m_frame(frame),
 	m_widget(parent),
-	m_isErrorPage(false)
+	m_isDisplayingErrorPage(false)
 {
 	connect(frame, &QWebFrame::destroyed, this, &QtWebKitFrame::deleteLater);
 	connect(frame, &QWebFrame::loadFinished, this, &QtWebKitFrame::handleLoadFinished);
@@ -86,11 +86,11 @@ void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool rem
 	}
 }
 
-void QtWebKitFrame::handleErrorPageChanged(QWebFrame *frame, bool isErrorPage)
+void QtWebKitFrame::handleIsDisplayingErrorPageChanged(QWebFrame *frame, bool isDisplayingErrorPage)
 {
 	if (frame == m_frame)
 	{
-		m_isErrorPage = isErrorPage;
+		m_isDisplayingErrorPage = isDisplayingErrorPage;
 	}
 }
 
@@ -101,7 +101,7 @@ void QtWebKitFrame::handleLoadFinished()
 		return;
 	}
 
-	if (m_isErrorPage)
+	if (m_isDisplayingErrorPage)
 	{
 		const QVector<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/errorPage.js"));
@@ -181,9 +181,9 @@ void QtWebKitFrame::handleLoadFinished()
 	}
 }
 
-bool QtWebKitFrame::isErrorPage() const
+bool QtWebKitFrame::isDisplayingErrorPage() const
 {
-	return m_isErrorPage;
+	return m_isDisplayingErrorPage;
 }
 
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
@@ -291,9 +291,9 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 	}
 }
 
-void QtWebKitPage::markAsErrorPage()
+void QtWebKitPage::markAsDisplayingErrorPage()
 {
-	emit errorPageChanged(mainFrame(), false);
+	emit isDisplayingErrorPageChanged(mainFrame(), false);
 }
 
 void QtWebKitPage::markAsPopup()
@@ -318,7 +318,7 @@ void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 		m_mainFrame = frameWrapper;
 	}
 
-	connect(this, &QtWebKitPage::errorPageChanged, frameWrapper, &QtWebKitFrame::handleErrorPageChanged);
+	connect(this, &QtWebKitPage::isDisplayingErrorPageChanged, frameWrapper, &QtWebKitFrame::handleIsDisplayingErrorPageChanged);
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -678,7 +678,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 	if (type != QWebPage::NavigationTypeOther)
 	{
-		emit errorPageChanged(frame, false);
+		emit isDisplayingErrorPageChanged(frame, false);
 	}
 
 	if (!isAnchorNavigation)
@@ -835,7 +835,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 
 		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 
-		emit errorPageChanged(errorOption->frame, true);
+		emit isDisplayingErrorPageChanged(errorOption->frame, true);
 
 		if (errorOption->domain == QWebPage::QtNetwork && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
 		{
@@ -999,9 +999,9 @@ bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
 }
 
-bool QtWebKitPage::isErrorPage() const
+bool QtWebKitPage::isDisplayingErrorPage() const
 {
-	return m_mainFrame->isErrorPage();
+	return m_mainFrame->isDisplayingErrorPage();
 }
 
 bool QtWebKitPage::isPopup() const

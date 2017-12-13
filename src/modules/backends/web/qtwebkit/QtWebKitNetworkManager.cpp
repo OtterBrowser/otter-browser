@@ -787,11 +787,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		{
 			if (reply->error() == QNetworkReply::NoError)
 			{
-				connect(localListingReply, &LocalListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsErrorPage);
+				connect(localListingReply, &LocalListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsDisplayingErrorPage);
 			}
 			else
 			{
-				m_widget->getPage()->markAsErrorPage();
+				m_widget->getPage()->markAsDisplayingErrorPage();
 			}
 		}
 	}
@@ -805,11 +805,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		{
 			if (reply->error() == QNetworkReply::NoError)
 			{
-				connect(ftpListingReply, &QtWebKitFtpListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsErrorPage);
+				connect(ftpListingReply, &QtWebKitFtpListingNetworkReply::listingError, m_widget->getPage(), &QtWebKitPage::markAsDisplayingErrorPage);
 			}
 			else
 			{
-				m_widget->getPage()->markAsErrorPage();
+				m_widget->getPage()->markAsDisplayingErrorPage();
 			}
 		}
 	}
