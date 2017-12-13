@@ -307,7 +307,7 @@ signals:
 	void requestedCloseWindow();
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
-	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
+	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool isCancellation);
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void requestedGeometryChange(const QRect &geometry);
 	void requestedInspectorVisibilityChange(bool isVisible);

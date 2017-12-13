@@ -910,14 +910,14 @@ void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QU
 	m_popupsBarWidget->addPopup(popupUrl);
 }
 
-void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel)
+void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool isCancellation)
 {
 	if (!url.isValid())
 	{
 		return;
 	}
 
-	if (cancel)
+	if (isCancellation)
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 		{

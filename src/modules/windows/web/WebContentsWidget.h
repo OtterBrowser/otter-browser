@@ -119,7 +119,7 @@ protected slots:
 	void handleUrlChange(const QUrl &url);
 	void handleSavePasswordRequest(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);
-	void handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
+	void handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool isCancellation);
 	void handleInspectorVisibilityChangeRequest(bool isVisible);
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleFindInPageQueryChanged();
