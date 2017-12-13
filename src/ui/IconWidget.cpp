@@ -22,6 +22,7 @@
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QtMath>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
@@ -44,7 +45,7 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 {
 	QToolButton::resizeEvent(event);
 
-	const int iconSize(qMin(height(), width()) * 0.9);
+	const int iconSize(qCeil(qMin(height(), width()) * 0.9));
 
 	setIconSize(QSize(iconSize, iconSize));
 }
