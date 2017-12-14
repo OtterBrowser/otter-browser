@@ -1003,6 +1003,7 @@ void AddressWidget::updateGeometries()
 	const int offset(qMax(((height() - 16) / 2), 2));
 	QMargins margins(offset, 0, offset, 0);
 	int availableWidth(width() - margins.left() - margins.right());
+	const bool hasValidWindow(m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
 	bool isLeading(true);
 	bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
@@ -1077,7 +1078,7 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case ListFeedsEntry:
-				if (m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty())
+				if (hasValidWindow && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty())
 				{
 					definition.title = QT_TR_NOOP("Show feed list");
 					definition.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"), false);
@@ -1109,7 +1110,7 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case LoadPluginsEntry:
-				if (m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState && m_window->getActionState(ActionsManager::LoadPluginsAction).isEnabled)
+				if (hasValidWindow && m_window->getActionState(ActionsManager::LoadPluginsAction).isEnabled)
 				{
 					definition.title = QT_TR_NOOP("Load all plugins on the page");
 					definition.icon = ThemesManager::createIcon(QLatin1String("preferences-plugin"), false);
@@ -1120,7 +1121,7 @@ void AddressWidget::updateGeometries()
 				{
 					const QUrl url(getUrl());
 
-					if (m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about") && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
+					if (hasValidWindow && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about") && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
 					{
 						definition.title = QT_TR_NOOP("Log in");
 						definition.icon = ThemesManager::createIcon(QLatin1String("fill-password"), false);
