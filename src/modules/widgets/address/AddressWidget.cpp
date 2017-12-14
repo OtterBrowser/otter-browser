@@ -263,7 +263,7 @@ void AddressDelegate::handleOptionChanged(int identifier, const QVariant &value)
 	}
 }
 
-QString AddressDelegate::highlightText(const QString &text, QString html) const
+QString AddressDelegate::highlightText(const QString &text, const QString &html) const
 {
 	const int index(text.indexOf(m_highlight, 0, Qt::CaseInsensitive));
 
@@ -272,10 +272,7 @@ QString AddressDelegate::highlightText(const QString &text, QString html) const
 		return (html + text);
 	}
 
-	html += text.left(index);
-	html += QStringLiteral("<b>%1</b>").arg(text.mid(index, m_highlight.length()));
-
-	return highlightText(text.mid(index + m_highlight.length()), html);
+	return highlightText(text.mid(index + m_highlight.length()), html + text.left(index) + QStringLiteral("<b>%1</b>").arg(text.mid(index, m_highlight.length())));
 }
 
 int AddressDelegate::calculateLength(const QStyleOptionViewItem &option, const QString &text, int length) const

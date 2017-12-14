@@ -60,7 +60,7 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:
-	QString highlightText(const QString &text, QString html = {}) const;
+	QString highlightText(const QString &text, const QString &html = {}) const;
 	int calculateLength(const QStyleOptionViewItem &option, const QString &text, int length = 0) const;
 
 protected slots:
