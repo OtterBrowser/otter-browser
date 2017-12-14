@@ -3352,7 +3352,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Pesquisar...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
@@ -5101,7 +5101,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="286"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>desconhecida</translation>
     </message>
 </context>
 <context>
@@ -7873,7 +7873,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Peek Tab</source>
-        <translation type="unfinished"/>
+        <translation>Pré-visualizar separador</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>

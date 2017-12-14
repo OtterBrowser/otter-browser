@@ -237,12 +237,12 @@
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="369"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Véglegesen el fog távolítani %n darab kiegészítőt.</numerusform><numerusform>Véglegesen el fog távolítani %n darab kiegészítőt.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="370"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Biztosan folytatja?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="438"/>
@@ -1501,7 +1501,7 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation type="unfinished"/>
+        <translation>Opció választása</translation>
     </message>
 </context>
 <context>
@@ -1764,84 +1764,84 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="14"/>
         <source>Profile Settings</source>
-        <translation type="unfinished"/>
+        <translation>Profil beállítások </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="20"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Név:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="30"/>
         <source>Update URL:</source>
-        <translation type="unfinished"/>
+        <translation>Frissítési URL:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="40"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Frissítés gyakorisága:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="50"/>
         <source>Last update:</source>
-        <translation type="unfinished"/>
+        <translation>Utolsó frissítés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="74"/>
         <source>Category:</source>
-        <translation type="unfinished"/>
+        <translation>Kategória:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="39"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Reklámok</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Zavaró tartalmak</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Adatvédelem</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="42"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Közösségi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="43"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Területi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="44"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Egyéb</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="115"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
         <source>Valid update URL is required.</source>
-        <translation type="unfinished"/>
+        <translation>Érvényes frissítési URL szükséges.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
         <source>Profile with name %1.txt already exists.</source>
-        <translation type="unfinished"/>
+        <translation>%1.txt nevű profil már létezik.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="115"/>
         <source>Failed to create profile file: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült létrehozni a profil fájlt: %1.</translation>
     </message>
 </context>
 <context>
@@ -2359,7 +2359,7 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="58"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Névtelen)</translation>
     </message>
 </context>
 <context>
@@ -2692,7 +2692,7 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="371"/>
         <source>This shortcut already used by %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 már használja ezt a gyorsbillentyűt</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="371"/>
@@ -2702,12 +2702,12 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="382"/>
         <source>This shortcut cannot be used because it would be overriden by a native hotkey used by an editing action</source>
-        <translation type="unfinished"/>
+        <translation>Ez a gyorsbillentyű nem használható, mert felülírja a szerkesztési művelet natív gyorsbillentyűje</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="390"/>
         <source>Single key shortcuts are currently disabled</source>
-        <translation type="unfinished"/>
+        <translation>Az egykulcsos gyorsbillentyűk jelenleg le vannak tiltva</translation>
     </message>
 </context>
 <context>
@@ -2796,17 +2796,17 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="363"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="367"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="371"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>Információ</translation>
     </message>
 </context>
 <context>
@@ -3293,22 +3293,22 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="45"/>
         <source>Remove existing search engines</source>
-        <translation type="unfinished"/>
+        <translation>Létező keresőmotorok eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="54"/>
         <source>Opera search engines</source>
-        <translation type="unfinished"/>
+        <translation>Opera keresőmotorok</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="59"/>
         <source>Imports search engines from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Opera 12 vagy korábbi verziójú keresőmotorok importálása</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
         <source>Opera search engines files (search.ini)</source>
-        <translation type="unfinished"/>
+        <translation>Opera keresőmotor fájlok (search.ini)</translation>
     </message>
 </context>
 <context>
@@ -3352,111 +3352,111 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Keresés...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="137"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="138"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="159"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Általános</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="165"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Cím</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="169"/>
         <source>MIME type</source>
-        <translation type="unfinished"/>
+        <translation>MIME-típus</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="170"/>
         <source>Document size</source>
-        <translation type="unfinished"/>
+        <translation>Dokumentum méret</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="171"/>
         <source>Total size</source>
-        <translation type="unfinished"/>
+        <translation>Teljes méret</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
         <source>Number of requests</source>
-        <translation type="unfinished"/>
+        <translation>Kérések száma</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <source>%1 (%2 blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%2 tiltva)</numerusform><numerusform>%1 (%2 tiltva)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="184"/>
         <source>Downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Letöltve</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="190"/>
         <source>Headers</source>
-        <translation type="unfinished"/>
+        <translation>Fejlécek</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="205"/>
         <source>Meta</source>
-        <translation type="unfinished"/>
+        <translation>Meta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="223"/>
         <source>Permissions</source>
-        <translation type="unfinished"/>
+        <translation>Jogosultságok</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="227"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Biztonság</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="235"/>
         <source>Cipher protocol</source>
-        <translation type="unfinished"/>
+        <translation>Titkosítási protokoll</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="236"/>
         <source>Cipher authentication method</source>
-        <translation type="unfinished"/>
+        <translation>Titkosítás hitelesítési mód</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="237"/>
         <source>Cipher encryption method</source>
-        <translation type="unfinished"/>
+        <translation>Rejtjel titkosítási módja</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="238"/>
         <source>Cipher key exchange method</source>
-        <translation type="unfinished"/>
+        <translation>Titkosítási kulcscsere mód</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="265"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>Oldal információ</translation>
     </message>
 </context>
 <context>
@@ -4863,7 +4863,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.cpp" line="33"/>
         <source>Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Privát ablak</translation>
     </message>
 </context>
 <context>
@@ -5037,38 +5037,38 @@ Biztosan folytatja?</translation>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="432"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="472"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="120"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="433"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="473"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>Javascriptes felbukkanók kikapcsolása</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="360"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="361"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>Biztosan el akarja küldeni újra az űrlap adatokat?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="362"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>Biztosan el akarja küldeni újra az adatokat?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="348"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="366"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Ezt az üzenetet többet ne mutassa</translation>
     </message>
 </context>
 <context>
@@ -5076,32 +5076,32 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML fájl (*.htm, *.html)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML fájl az összes forrással (*.htm, *.html)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>Web archive (*.mht)</source>
-        <translation type="unfinished"/>
+        <translation>Web archívum (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="266"/>
         <source>Blink Backend (experimental)</source>
-        <translation type="unfinished"/>
+        <translation>Blink háttér (kísérleti)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="271"/>
         <source>Backend utilizing QtWebEngine module</source>
-        <translation type="unfinished"/>
+        <translation>A háttér a QtWebEngine modult használja</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="286"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>ismeretlen</translation>
     </message>
 </context>
 <context>
@@ -5109,22 +5109,22 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="541"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>fájl</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="552"/>
         <source>Failed to save image: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült elmenteni ezt a képet: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1480"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>Üres oldal</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1493"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Névtelen)</translation>
     </message>
 </context>
 <context>
@@ -6043,17 +6043,17 @@ Cím: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1155"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>Fül váltása az egérgörgő használatával</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1159"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Miniatűrök mutatása a füleken</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1178"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Rendezés</translation>
     </message>
 </context>
 <context>
@@ -7007,7 +7007,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1161"/>
         <source>Failed to load requested web backend: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült betölteni a kért web hátteret: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1243"/>
@@ -7070,7 +7070,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="990"/>
         <source>Page Default</source>
-        <translation type="unfinished"/>
+        <translation>Oldal szerinti</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="998"/>
@@ -7080,7 +7080,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1002"/>
         <source>Reload Every: %n second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Újratöltés minden: %n másodpercben</numerusform><numerusform>Újratöltés minden: %n másodpercben</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7712,7 +7712,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="169"/>
         <source>Windows</source>
-        <translation type="unfinished"/>
+        <translation>Ablakok</translation>
     </message>
 </context>
 <context>
@@ -7829,12 +7829,12 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set Option</source>
-        <translation type="unfinished"/>
+        <translation>Opció beállítása</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set, Reset or Toggle Option</source>
-        <translation type="unfinished"/>
+        <translation>Opciók beállítása, helyreállítása, váltása</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -7874,7 +7874,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Peek Tab</source>
-        <translation type="unfinished"/>
+        <translation>Fül előnézet</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>
@@ -8683,12 +8683,12 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Show Panel</source>
-        <translation type="unfinished"/>
+        <translation>Panel mutatása</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Show Specified Panel in Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Kiválasztott panel megjelenése az oldalsávon</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
@@ -8698,7 +8698,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Open Curent Sidebar Panel as Tab</source>
-        <translation type="unfinished"/>
+        <translation>Aktuális oldalsáv panel megnyitása fülként</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="441"/>
@@ -8802,32 +8802,32 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/Application.cpp" line="1492"/>
         <source>Set %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 beállítása</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1496"/>
         <source>Set %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 beállítása erre: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1503"/>
         <source>Reset %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 visszaállítása</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1507"/>
         <source>Reset %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 visszaállítása erre: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1516"/>
         <source>Toggle %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 váltása</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1520"/>
         <source>Toggle %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 váltása erre: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
@@ -9355,7 +9355,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>Oldal információ</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="131"/>
@@ -9518,7 +9518,7 @@ Szkript: %2</translation>
     <message>
         <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem lehet letölteni a frissítést: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="65"/>

@@ -239,7 +239,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="370"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vil du fortsætte?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="438"/>
@@ -1816,7 +1816,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="115"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
@@ -8417,7 +8417,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Create Search…</source>
-        <translation type="unfinished"/>
+        <translation>Opret søgning…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="394"/>
@@ -8437,12 +8437,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Go to Start of the Page</source>
-        <translation type="unfinished"/>
+        <translation>Gå til sidens begyndelse</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Go to the End of the Page</source>
-        <translation type="unfinished"/>
+        <translation>Gå til sidens slutning</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
@@ -8522,12 +8522,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Go to Tab on Left</source>
-        <translation type="unfinished"/>
+        <translation>Gå til venstre faneblad</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Go to Tab on Right</source>
-        <translation type="unfinished"/>
+        <translation>Gå til højre faneblad</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="416"/>
@@ -8597,7 +8597,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Arbejd offline</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -8613,12 +8613,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Vis værktøjslinje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Vis menulinje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
@@ -8638,7 +8638,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Lock Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Lås værktøjslinjer</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8653,7 +8653,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Show Panel</source>
-        <translation type="unfinished"/>
+        <translation>Vis panel</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
@@ -8678,12 +8678,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="442"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Vis historik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Clear History…</source>
-        <translation type="unfinished"/>
+        <translation>Ryd historik…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
@@ -8782,7 +8782,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/Application.cpp" line="1503"/>
         <source>Reset %1</source>
-        <translation type="unfinished"/>
+        <translation>Nulstil %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1507"/>
@@ -8849,7 +8849,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
         <location filename="../../src/ui/Menu.cpp" line="73"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="53"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bogmærker</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="205"/>
@@ -8881,7 +8881,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="57"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="58"/>
@@ -8906,7 +8906,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="63"/>
         <source>Page</source>
-        <translation type="unfinished"/>
+        <translation>Side</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="64"/>
@@ -8926,7 +8926,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="95"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Tegnkodning</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
@@ -8936,22 +8936,22 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="123"/>
         <source>Dictionaries</source>
-        <translation type="unfinished"/>
+        <translation>Ordbøger</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="129"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Import og eksport</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="130"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importér Opera-bogmærker…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="131"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importér HTML-bogmærker…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
@@ -8966,7 +8966,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="137"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Importér Opera-session…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="150"/>
@@ -8991,12 +8991,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="185"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Sessioner</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="198"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="218"/>
@@ -9041,7 +9041,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="422"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>Billeder</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="426"/>
@@ -9122,7 +9122,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="773"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Altid</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="777"/>
@@ -9137,7 +9137,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="785"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Ignorer</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="793"/>
@@ -9187,7 +9187,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1062"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ukendt</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1204"/>
@@ -9252,7 +9252,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="923"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Pause</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="929"/>
@@ -9340,7 +9340,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Windows</source>
-        <translation type="unfinished"/>
+        <translation>Vinduer</translation>
     </message>
 </context>
 <context>
@@ -9353,7 +9353,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/Application.cpp" line="124"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>URL som skal åbnes</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="125"/>
@@ -9388,22 +9388,22 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/core/Application.cpp" line="131"/>
         <source>Loads URL in new tab</source>
-        <translation type="unfinished"/>
+        <translation>Indlæser URL i nyt faneblad</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="132"/>
         <source>Loads URL in new private tab</source>
-        <translation type="unfinished"/>
+        <translation>Indlæser URL i nyt privat faneblad</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="133"/>
         <source>Loads URL in new window</source>
-        <translation type="unfinished"/>
+        <translation>Indlæser URL i nyt vindue</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="134"/>
         <source>Loads URL in new private window</source>
-        <translation type="unfinished"/>
+        <translation>Indlæser URL i nyt privat vindue</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="135"/>
@@ -9521,7 +9521,7 @@ Script: %2</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="151"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="728"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(ukendt)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="499"/>
@@ -9565,7 +9565,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="453"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Sessioner</translation>
     </message>
 </context>
 <context>
@@ -9602,7 +9602,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="84"/>
         <source>No Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Ingen proxy</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="93"/>
@@ -9637,7 +9637,7 @@ Application ID: %2</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="960"/>
         <source>Try Again</source>
-        <translation type="unfinished"/>
+        <translation>Prøv igen</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="185"/>
@@ -9707,7 +9707,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="228"/>
         <source>File not found</source>
-        <translation type="unfinished"/>
+        <translation>Fil findes ikke</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="232"/>
@@ -9727,7 +9727,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="244"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Netværksfejl</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="258"/>
@@ -9737,7 +9737,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="285"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Avanceret</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="415"/>
@@ -9760,17 +9760,17 @@ Application ID: %2</source>
         <location filename="../../src/core/Utils.cpp" line="527"/>
         <location filename="../../src/core/Utils.cpp" line="597"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Alle filer (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="531"/>
         <source>Open Files</source>
-        <translation type="unfinished"/>
+        <translation>Åbn filer</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="535"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Åbn fil</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="593"/>
