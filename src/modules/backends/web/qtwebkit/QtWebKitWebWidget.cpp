@@ -1643,6 +1643,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					frames.append(frame->childFrames());
 				}
 
+				m_amountOfDeferredPlugins = 0;
+
 				emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
 			}
 
