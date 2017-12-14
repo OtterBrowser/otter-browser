@@ -151,6 +151,7 @@
         <file>searchEngines/w3c-markup.xml</file>
         <file>searchEngines/wikipedia.xml</file>
         <file>searchEngines/yahoo.xml</file>
+        <file>searchEngines/yandex.xml</file>
         <file>searchEngines/youtube.xml</file>
     </qresource>
 </RCC>

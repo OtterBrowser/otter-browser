@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<Shortcut>ya</Shortcut>
+	<ShortName>Yandex</ShortName>
+	<Description>Search with Yandex</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAEnRFWHRfcV9pY29PcmlnRGVwdGgAMzLV4rjsAAAB9ElEQVQ4jY2Sz2sTQRTHP9lsAwn+OGgxASm5hCB4qehNAoIHD57Ug5hTLJQcxIMFD/0P6iWQg0IkF6EgtKUhEAh6FTbpTVpEg0ZWLaWKNmtYNpPdmfUgE7ZVaL7wgeF9mMebx8SAWeAMkOD4/AR2jxYveJ73JZwirVbrEXDuaINLSqlwGsbj8X6hUCgASX05BlyRUm5N2vmC2PpTYtsW/P4FqZOoJ5sT3e/3N3K53BJgAxhAXCmFhrXnsPUGeesB6noRBi5Rn81mb1er1RtARje9KoQINepOIfSbL0MhROi3N8Pw5uUw6oUQ4WAw+JpOp68BCQMwpZRoYu8/o2ZSSClRriDcc4h6KSWJROJ8o9G4D8wZgOn7Php5Kg3tV3/Prgffh0S9Jp/P3wXmTMB0HGeyJPFwibMLC8jtd8RGI8KBS9TrKKUATAOIe56H5mB+nr3lZeh0GCnFCIh6jWVZa8A3Uz9Bx3AcZioV9hcXkZkMp3d2iHoA13V3y+XyBvDJAMwgCNDEV1YYJpM4xSJCKYZA1AdBQL1ef+Y4zltAHJrA6Hbxm03cSgUJqCBAwaEJer3e61qt1gY+6p94z7Ks1X+29J94nndQKpUe27a9DgwATMAbDoc/UqnU7HENGo3GC9u2u/qynuAikAdOTDHEB6ATLfwB5hyd+SwLsg8AAAAASUVORK5CYII=</Image>
+	<Url rel="results" type="text/html" method="GET" enctype="application/x-www-form-urlencoded" template="https://yandex.fr/search/?text={searchTerms}&amp;sourceid=otter"/>
+	<Url rel="suggestions" type="application/x-suggestions+json" method="GET" enctype="application/x-www-form-urlencoded" template="https://yandex.fr/search/?text={searchTerms}"/>
+</OpenSearchDescription>
