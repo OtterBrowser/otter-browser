@@ -303,11 +303,11 @@ QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 
 	if (index.row() != 0 && static_cast<AddressCompletionModel::CompletionEntry::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::CompletionEntry::HeaderType)
 	{
-		size.setHeight(option.fontMetrics.lineSpacing() * 1.75);
+		size.setHeight(qRound(option.fontMetrics.lineSpacing() * 1.75));
 	}
 	else
 	{
-		size.setHeight(option.fontMetrics.lineSpacing() * 1.25);
+		size.setHeight(qRound(option.fontMetrics.lineSpacing() * 1.25));
 	}
 
 	return size;
