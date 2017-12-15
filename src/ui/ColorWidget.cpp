@@ -101,10 +101,17 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 	if (event->button() == Qt::LeftButton && m_buttonRectangle.contains(event->pos()))
 	{
 		QMenu menu(this);
-		menu.addAction(tr("Select Color…"), this, SLOT(selectColor()));
-		menu.addAction(tr("Copy Color"), this, SLOT(copyColor()));
+		const QAction *selectColorAction(menu.addAction(tr("Select Color…")));
+		const QAction *copyColorAction(menu.addAction(tr("Copy Color")));
+
 		menu.addSeparator();
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
+
+		const QAction *clearAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear")));
+
+		connect(selectColorAction, &QAction::triggered, this, &ColorWidget::selectColor);
+		connect(copyColorAction, &QAction::triggered, this, &ColorWidget::copyColor);
+		connect(clearAction, &QAction::triggered, this, &ColorWidget::clear);
+
 		menu.exec(mapToGlobal(isRightToLeft() ? m_buttonRectangle.bottomRight() : m_buttonRectangle.bottomLeft()));
 	}
 }
