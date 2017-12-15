@@ -47,8 +47,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected slots:
-	void clear();
-	void copyColor();
 	void selectColor();
 	void updateColor(const QString &text);
 

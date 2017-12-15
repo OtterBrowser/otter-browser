@@ -109,21 +109,17 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 		const QAction *clearAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear")));
 
 		connect(selectColorAction, &QAction::triggered, this, &ColorWidget::selectColor);
-		connect(copyColorAction, &QAction::triggered, this, &ColorWidget::copyColor);
-		connect(clearAction, &QAction::triggered, this, &ColorWidget::clear);
+		connect(copyColorAction, &QAction::triggered, this, [&]()
+		{
+			QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
+		});
+		connect(clearAction, &QAction::triggered, this, [&]()
+		{
+			setColor(QColor());
+		});
 
 		menu.exec(mapToGlobal(isRightToLeft() ? m_buttonRectangle.bottomRight() : m_buttonRectangle.bottomLeft()));
 	}
-}
-
-void ColorWidget::clear()
-{
-	setColor(QColor());
-}
-
-void ColorWidget::copyColor()
-{
-	QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
 }
 
 void ColorWidget::selectColor()
