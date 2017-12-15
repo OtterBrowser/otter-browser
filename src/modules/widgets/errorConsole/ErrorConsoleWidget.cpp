@@ -86,7 +86,13 @@ ErrorConsoleWidget::ErrorConsoleWidget(QWidget *parent) : QWidget(parent),
 	connect(m_ui->cssButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
 	connect(m_ui->javaScriptButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
 	connect(m_ui->otherButton, &QToolButton::clicked, this, &ErrorConsoleWidget::filterCategories);
-	connect(m_ui->clearButton, &QToolButton::clicked, this, &ErrorConsoleWidget::clear);
+	connect(m_ui->clearButton, &QToolButton::clicked, this, [&]()
+	{
+		if (m_model)
+		{
+			m_model->clear();
+		}
+	});
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &ErrorConsoleWidget::filterMessages);
 	connect(m_ui->consoleView, &QTreeView::customContextMenuRequested, this, &ErrorConsoleWidget::showContextMenu);
 }
@@ -199,19 +205,6 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	applyFilters(messageItem->index(), m_ui->filterLineEditWidget->text(), getCategories(), getCurrentWindow());
 }
 
-void ErrorConsoleWidget::clear()
-{
-	if (m_model)
-	{
-		m_model->clear();
-	}
-}
-
-void ErrorConsoleWidget::copyText()
-{
-	QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
-}
-
 void ErrorConsoleWidget::filterCategories()
 {
 	QMenu *menu(qobject_cast<QMenu*>(sender()));
@@ -282,7 +275,10 @@ void ErrorConsoleWidget::showContextMenu(const QPoint position)
 	const QAction *expandAllAction(menu.addAction(tr("Expand All")));
 	const QAction *collapseAllAction(menu.addAction(tr("Collapse All")));
 
-	connect(copyTextAction, &QAction::triggered, this, &ErrorConsoleWidget::copyText);
+	connect(copyTextAction, &QAction::triggered, this, [&]()
+	{
+		QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
+	});
 	connect(expandAllAction, &QAction::triggered, m_ui->consoleView, &QTreeView::expandAll);
 	connect(collapseAllAction, &QAction::triggered, m_ui->consoleView, &QTreeView::collapseAll);
 

@@ -67,8 +67,6 @@ protected:
 
 protected slots:
 	void addMessage(const Console::Message &message);
-	void clear();
-	void copyText();
 	void filterCategories();
 	void filterMessages(const QString &filter);
 	void showContextMenu(const QPoint position);
