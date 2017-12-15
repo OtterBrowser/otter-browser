@@ -101,11 +101,11 @@ QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
-		size.setHeight(height * 0.75);
+		size.setHeight(qRound(height * 0.75));
 	}
 	else
 	{
-		size.setHeight(height * 1.25);
+		size.setHeight(qRound(height * 1.25));
 	}
 
 	return size;
