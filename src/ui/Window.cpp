@@ -820,7 +820,7 @@ SessionWindow Window::getSession() const
 
 		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{
-			WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
+			const WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 			if (webWidget)
 			{
