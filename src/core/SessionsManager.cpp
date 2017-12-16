@@ -490,7 +490,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 		return false;
 	}
 
-	Application::createWindow(QVariantMap(), m_closedWindows.takeAt(index));
+	Application::createWindow({}, m_closedWindows.takeAt(index));
 
 	emit m_instance->closedWindowsChanged();
 
