@@ -280,7 +280,7 @@ void ContentBlockingInformationWidget::updateState()
 
 	const qreal labelWidth(QFontMetricsF(font).width(label));
 
-	font.setPixelSize(fontSize * 0.8);
+	font.setPixelSize(qRound(fontSize * 0.8));
 
 	const QRectF rectangle((iconSize - labelWidth), (iconSize - fontSize), labelWidth, fontSize);
 	QPixmap pixmap(m_icon.pixmap(iconSize, iconSize, (m_isContentBlockingEnabled ? QIcon::Normal : QIcon::Disabled)));
