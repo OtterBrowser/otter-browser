@@ -925,7 +925,7 @@ bool Window::event(QEvent *event)
 {
 	if (event->type() == QEvent::ParentChange)
 	{
-		QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+		const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
 		if (subWindow)
 		{
