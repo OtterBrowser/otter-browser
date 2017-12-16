@@ -353,12 +353,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					if (result.isValid())
 					{
-						SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints());
-
-						if (parameters.contains(QLatin1String("hints")))
-						{
-							hints = SessionsManager::calculateOpenHints(parameters);
-						}
+						const SessionsManager::OpenHints hints(parameters.contains(QLatin1String("hints")) ? SessionsManager::calculateOpenHints(parameters) : SessionsManager::calculateOpenHints());
 
 						switch (result.type)
 						{
