@@ -705,6 +705,8 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 
 QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 {
+	QString script(m_fastForwardScript);
+
 	if (m_fastForwardScript.isEmpty())
 	{
 		IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("fastforward.ini")));
@@ -715,7 +717,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 			return {};
 		}
 
-		QString script(file.readAll());
+		script = file.readAll();
 
 		file.close();
 
@@ -745,7 +747,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 		m_fastForwardScript = script;
 	}
 
-	return QString(m_fastForwardScript).replace(QLatin1String("{isSelectingTheBestLink}"), (isSelectingTheBestLink ? QLatin1String("true") : QLatin1String("false")));
+	return script.replace(QLatin1String("{isSelectingTheBestLink}"), (isSelectingTheBestLink ? QLatin1String("true") : QLatin1String("false")));
 }
 
 QString WebWidget::getActiveStyleSheet() const
