@@ -100,13 +100,16 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		handleUrlChange(m_webWidget->getRequestedUrl());
 	}
-	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
+	else if (event->timerId() == m_quickFindTimer)
 	{
 		killTimer(m_quickFindTimer);
 
 		m_quickFindTimer = 0;
 
-		m_searchBarWidget->hide();
+		if (m_searchBarWidget)
+		{
+			m_searchBarWidget->hide();
+		}
 	}
 	else if (event->timerId() == m_scrollTimer)
 	{
