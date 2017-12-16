@@ -136,42 +136,35 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		if (!m_scrollCursors.contains(directions))
 		{
-			if (directions == (BottomDirection | LeftDirection))
+			QStringList mappedDirections;
+			mappedDirections.reserve(2);
+
+			if (directions == NoDirection)
 			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-left.png"));
+				mappedDirections.append(QLatin1String("vertical"));
 			}
-			else if (directions == (BottomDirection | RightDirection))
+			else
 			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-right.png"));
+				if (directions.testFlag(BottomDirection))
+				{
+					mappedDirections.append(QLatin1String("bottom"));
+				}
+				else if (directions.testFlag(TopDirection))
+				{
+					mappedDirections.append(QLatin1String("top"));
+				}
+
+				if (directions.testFlag(LeftDirection))
+				{
+					mappedDirections.append(QLatin1String("left"));
+				}
+				else if (directions.testFlag(RightDirection))
+				{
+					mappedDirections.append(QLatin1String("right"));
+				}
 			}
-			else if (directions == BottomDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom.png"));
-			}
-			else if (directions == LeftDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-left.png"));
-			}
-			else if (directions == RightDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-right.png"));
-			}
-			else if (directions == (TopDirection | LeftDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-left.png"));
-			}
-			else if (directions == (TopDirection | RightDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-right.png"));
-			}
-			else if (directions == TopDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top.png"));
-			}
-			else if (directions == NoDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
-			}
+
+			m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-") + mappedDirections.join(QLatin1Char('-')) + QLatin1String(".png"));
 		}
 
 		scrollContents(scrollDelta);
