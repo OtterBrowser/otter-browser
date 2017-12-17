@@ -76,6 +76,8 @@ void CacheContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		m_model->setHorizontalHeaderLabels({tr("Address"), tr("Type"), tr("Size"), tr("Last Modified"), tr("Expires")});
 	}
 }
 
