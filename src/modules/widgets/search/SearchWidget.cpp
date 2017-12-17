@@ -131,11 +131,11 @@ QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
-		size.setHeight(option.fontMetrics.lineSpacing() * 0.75);
+		size.setHeight(qRound(option.fontMetrics.lineSpacing() * 0.75));
 	}
 	else
 	{
-		size.setHeight(option.fontMetrics.lineSpacing() * 1.25);
+		size.setHeight(qRound(option.fontMetrics.lineSpacing() * 1.25));
 	}
 
 	return size;
