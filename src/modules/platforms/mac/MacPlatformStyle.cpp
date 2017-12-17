@@ -161,7 +161,7 @@ QString MacPlatformStyle::getStyleSheet() const
 	return QLatin1String("QToolBar QLineEdit {border:1px solid #AFAFAF;border-radius:4px;}");
 }
 
-int Otter::MacPlatformStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+int MacPlatformStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
 {
 	if (metric == PM_ToolBarIconSize)
 	{

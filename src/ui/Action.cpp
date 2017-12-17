@@ -288,7 +288,7 @@ void Action::setState(const ActionsManager::ActionDefinition::State &state)
 	}
 }
 
-Otter::ActionsManager::ActionDefinition Action::getDefinition() const
+ActionsManager::ActionDefinition Action::getDefinition() const
 {
 	return ActionsManager::getActionDefinition(m_identifier);
 }
