@@ -108,7 +108,6 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 		if (m_ui->informationViewWidget->getSourceModel())
 		{
 			m_ui->informationViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Name"), tr("Value")});
-
 		}
 
 		updateSections();
