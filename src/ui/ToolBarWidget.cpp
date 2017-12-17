@@ -98,7 +98,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	if (m_mainWindow)
 	{
-		if (m_identifier != ToolBarsManager::AddressBar && m_identifier != ToolBarsManager::ProgressBar)
+		if (definition.isGlobal())
 		{
 			connect(m_mainWindow, &MainWindow::currentWindowChanged, this, &ToolBarWidget::notifyWindowChanged);
 		}

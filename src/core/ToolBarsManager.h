@@ -124,6 +124,11 @@ public:
 			return ((mode == FullScreenMode) ? fullScreenVisibility : normalVisibility);
 		}
 
+		bool isGlobal() const
+		{
+			return (identifier != AddressBar && identifier != ProgressBar);
+		}
+
 		bool isValid() const
 		{
 			return (identifier >= 0);

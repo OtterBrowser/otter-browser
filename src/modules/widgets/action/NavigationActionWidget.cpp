@@ -45,7 +45,7 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
-	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
+	if (toolBar && toolBar->getDefinition().isGlobal())
 	{
 		connect(toolBar, &ToolBarWidget::windowChanged, this, &NavigationActionWidget::setWindow);
 	}

@@ -92,7 +92,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const ToolB
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
-	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::AddressBar)
+	if (toolBar && toolBar->getDefinition().isGlobal())
 	{
 		connect(toolBar, &ToolBarWidget::windowChanged, this, &ProgressInformationWidget::setWindow);
 	}
