@@ -481,7 +481,7 @@ void SourceViewerWidget::setZoom(int zoom)
 		m_zoom = zoom;
 
 		QFont font(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-		font.setPointSize(font.pointSize() * (qreal(zoom) / 100));
+		font.setPointSize(qRound(font.pointSize() * (static_cast<qreal>(zoom) / 100)));
 
 		setFont(font);
 
