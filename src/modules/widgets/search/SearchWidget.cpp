@@ -717,7 +717,7 @@ void SearchWidget::setQuery(const QString &query)
 {
 	m_query = query;
 
-	if (getPopup()->model() == SearchEnginesManager::getSearchEnginesModel() || m_query.isEmpty())
+	if (m_query.isEmpty() || getPopup()->model() == SearchEnginesManager::getSearchEnginesModel())
 	{
 		hidePopup();
 	}
