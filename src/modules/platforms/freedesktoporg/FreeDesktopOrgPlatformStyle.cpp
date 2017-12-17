@@ -44,14 +44,14 @@ void FreeDesktopOrgPlatformStyle::drawControl(ControlElement element, const QSty
 	{
 		const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
 		const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
-		const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::AddressBar);
+		const bool isAddressBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::AddressBar);
 
-		if (!toolBarOption || !toolBar || (toolBarOption->toolBarArea != Qt::TopToolBarArea && !isNavigationBar))
+		if (!toolBarOption || !toolBar || (toolBarOption->toolBarArea != Qt::TopToolBarArea && !isAddressBar))
 		{
 			return;
 		}
 
-		bool shouldFillBackground(!isNavigationBar && (toolBarOption->positionOfLine == QStyleOptionToolBar::Beginning || toolBarOption->positionOfLine == QStyleOptionToolBar::OnlyOne));
+		bool shouldFillBackground(!isAddressBar && (toolBarOption->positionOfLine == QStyleOptionToolBar::Beginning || toolBarOption->positionOfLine == QStyleOptionToolBar::OnlyOne));
 		bool hasVisibleTabBar(false);
 
 		if (!shouldFillBackground)
@@ -81,7 +81,7 @@ void FreeDesktopOrgPlatformStyle::drawControl(ControlElement element, const QSty
 						{
 							shouldFillBackground = true;
 
-							if (!isNavigationBar && !hasVisibleTabBar)
+							if (!isAddressBar && !hasVisibleTabBar)
 							{
 								break;
 							}
@@ -91,7 +91,7 @@ void FreeDesktopOrgPlatformStyle::drawControl(ControlElement element, const QSty
 			}
 		}
 
-		if (!hasVisibleTabBar && isNavigationBar)
+		if (!hasVisibleTabBar && isAddressBar)
 		{
 			shouldFillBackground = true;
 		}
