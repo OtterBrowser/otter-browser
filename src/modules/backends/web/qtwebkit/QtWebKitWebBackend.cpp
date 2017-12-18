@@ -338,7 +338,7 @@ void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
 			contentsSize.setWidth(2000);
 		}
 
-		contentsSize.setHeight(m_size.height() * (qreal(contentsSize.width()) / m_size.width()));
+		contentsSize.setHeight(qRound(m_size.height() * (static_cast<qreal>(contentsSize.width()) / m_size.width())));
 
 		m_page->setViewportSize(contentsSize);
 
