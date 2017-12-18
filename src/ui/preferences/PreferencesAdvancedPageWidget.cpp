@@ -435,7 +435,17 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange)
 	{
+		const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), {}, tr("Downloads"), tr("Programs"), {}, tr("History"), tr("Network"), tr("Security"), tr("Updates"), {}, tr("Keyboard"), tr("Mouse")});
+
 		m_ui->retranslateUi(this);
+
+		for (int i = 0; i < navigationTitles.count(); ++i)
+		{
+			if (!navigationTitles.at(i).isEmpty())
+			{
+				m_ui->advancedViewWidget->setData(m_ui->advancedViewWidget->getIndex(i), navigationTitles.at(i), Qt::DisplayRole);
+			}
+		}
 
 		updatePageSwitcher();
 	}
