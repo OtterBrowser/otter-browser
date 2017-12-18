@@ -59,7 +59,7 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
 
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const int textHeight(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5);
+	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 	const QString tileBackgroundMode(SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption).toString());
 	QRect rectangle(option.rect);
@@ -176,7 +176,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
 
-	return QSize(((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom), ((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
+	return QSize(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom), qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
 }
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
@@ -719,11 +719,11 @@ void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 void StartPageWidget::updateSize()
 {
 	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
-	const int tileHeight((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom);
-	const int tileWidth((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom);
+	const int tileHeight(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
+	const int tileWidth(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom));
 	const int tilesPerRow(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
 	const int amount(m_model->rowCount());
-	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, int((width() - 50) / tileWidth)));
+	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, ((width() - 50) / tileWidth)));
 	const int rows(qCeil(amount / qreal(columns)));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
