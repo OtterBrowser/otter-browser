@@ -37,9 +37,9 @@ class QtWebKitInspector final : public QWebInspector
 public:
 	explicit QtWebKitInspector(QtWebKitWebWidget *parent);
 
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 protected:
 	void childEvent(QChildEvent *event) override;
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 

@@ -49,7 +49,6 @@ QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(
 #endif
 }
 
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitInspector::childEvent(QChildEvent *event)
 {
 	QWebInspector::childEvent(event);
@@ -60,11 +59,16 @@ void QtWebKitInspector::childEvent(QChildEvent *event)
 
 		if (webView)
 		{
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 			webView->setContextMenuPolicy(Qt::NoContextMenu);
+#endif
+
+			webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 		}
 	}
 }
 
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitInspector::showEvent(QShowEvent *event)
 {
 	QWebInspector::showEvent(event);
