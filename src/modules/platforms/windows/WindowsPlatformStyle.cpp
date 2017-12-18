@@ -60,13 +60,13 @@ void WindowsPlatformStyle::drawControl(ControlElement element, const QStyleOptio
 				{
 					const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
 					const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
-					const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::AddressBar);
+					const bool isAddressBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::AddressBar);
 
 					if (toolBarOption && toolBar && !(toolBar->getIdentifier() == ToolBarsManager::TabBar && toolBar->getDefinition().location == Qt::TopToolBarArea))
 					{
 						const ToolBarsManager::ToolBarDefinition tabBarDefinition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
 
-						if ((isNavigationBar || toolBarOption->toolBarArea == Qt::TopToolBarArea) && tabBarDefinition.location == Qt::TopToolBarArea)
+						if ((isAddressBar || toolBarOption->toolBarArea == Qt::TopToolBarArea) && tabBarDefinition.location == Qt::TopToolBarArea)
 						{
 							MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
 
@@ -92,13 +92,13 @@ void WindowsPlatformStyle::drawControl(ControlElement element, const QStyleOptio
 									}
 								}
 
-								if (isNavigationBar && hasVisibleTabBar)
+								if (isAddressBar && hasVisibleTabBar)
 								{
 									shouldUseWindowBackground = false;
 								}
 							}
 						}
-						else if (!isNavigationBar && toolBarOption->toolBarArea != Qt::TopToolBarArea)
+						else if (!isAddressBar && toolBarOption->toolBarArea != Qt::TopToolBarArea)
 						{
 							shouldUseWindowBackground = false;
 						}
