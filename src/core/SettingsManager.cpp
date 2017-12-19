@@ -549,7 +549,7 @@ SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int ident
 		return m_definitions.at(identifier);
 	}
 
-	return OptionDefinition();
+	return {};
 }
 
 int SettingsManager::registerOption(const QString &name, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionDefinition::OptionFlags flags)
