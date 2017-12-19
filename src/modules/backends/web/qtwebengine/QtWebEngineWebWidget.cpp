@@ -1513,7 +1513,7 @@ QUrl QtWebEngineWebWidget::getUrl() const
 {
 	const QUrl url(m_page->url());
 
-	return ((url.isEmpty() || url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);
+	return (Utils::isUrlEmpty(url) ? m_page->requestedUrl() : url);
 }
 
 QIcon QtWebEngineWebWidget::getIcon() const

@@ -2121,7 +2121,7 @@ QUrl QtWebKitWebWidget::getUrl() const
 {
 	const QUrl url(m_page->mainFrame()->url());
 
-	return (url.isEmpty() ? m_page->mainFrame()->requestedUrl() : url);
+	return (Utils::isUrlEmpty(url) ? m_page->mainFrame()->requestedUrl() : url);
 }
 
 QIcon QtWebKitWebWidget::getIcon() const
