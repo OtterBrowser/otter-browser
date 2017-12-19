@@ -148,7 +148,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 	}
 
-	const int estimatedAmount((file.size() > 0) ? (file.size() / 250) : 0);
+	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
 	int totalAmount(0);
 
 	BookmarksManager::getModel()->beginImport(getImportFolder(), estimatedAmount, qMin(estimatedAmount, 100));

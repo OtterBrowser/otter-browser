@@ -153,7 +153,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	int totalAmount(0);
 
-	NotesManager::getModel()->beginImport(m_importFolder, ((file.size() > 0) ? (file.size() / 250) : 0));
+	NotesManager::getModel()->beginImport(m_importFolder, ((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0));
 
 	BookmarksItem *note(nullptr);
 	OperaNoteEntry type(NoEntry);
