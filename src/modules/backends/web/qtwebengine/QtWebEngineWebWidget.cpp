@@ -1613,7 +1613,7 @@ WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const
 
 int QtWebEngineWebWidget::getZoom() const
 {
-	return (m_page->zoomFactor() * 100);
+	return static_cast<int>(m_page->zoomFactor() * 100);
 }
 
 int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
