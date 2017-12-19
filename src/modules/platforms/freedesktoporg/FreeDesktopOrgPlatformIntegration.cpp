@@ -299,7 +299,7 @@ QVector<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicatio
 	const LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
 	const std::vector<LibMimeApps::DesktopEntry> applications(index.appsForMime(mimeType.name().toStdString()));
 	QVector<ApplicationInformation> result;
-	result.reserve(applications.size());
+	result.reserve(static_cast<int>(applications.size()));
 
 	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < applications.size(); ++i)
 	{
