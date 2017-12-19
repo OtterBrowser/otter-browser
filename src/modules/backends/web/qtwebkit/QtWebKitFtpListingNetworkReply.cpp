@@ -280,7 +280,7 @@ qint64 QtWebKitFtpListingNetworkReply::readData(char *data, qint64 maxSize)
 {
 	if (m_offset < m_content.size())
 	{
-		const qint64 number(qMin(maxSize, m_content.size() - m_offset));
+		const qint64 number(qMin(maxSize, (m_content.size() - m_offset)));
 
 		memcpy(data, (m_content.constData() + m_offset), number);
 
