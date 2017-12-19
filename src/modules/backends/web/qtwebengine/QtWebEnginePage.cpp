@@ -239,7 +239,6 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 {
 	if (type != QWebEnginePage::WebDialog)
 	{
-		QtWebEngineWebWidget *widget(nullptr);
 		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
 
 		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
@@ -260,9 +259,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 			}
 		}
 
-		widget = createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
-
-		return widget->getPage();
+		return createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen))->getPage();
 	}
 
 	return QWebEnginePage::createWindow(type);

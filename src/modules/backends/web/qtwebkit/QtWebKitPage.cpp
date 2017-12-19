@@ -482,7 +482,6 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type != QWebPage::WebModalDialog)
 	{
-		QtWebKitWebWidget *widget(nullptr);
 		const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
 
 		if (!m_widget || currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty())
@@ -503,9 +502,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 			}
 		}
 
-		widget = createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen));
-
-		return widget->getPage();
+		return createWidget(SessionsManager::calculateOpenHints((popupsPolicy == QLatin1String("openAllInBackground")) ? (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen) : SessionsManager::NewTabOpen))->getPage();
 	}
 
 	return QWebPage::createWindow(type);
