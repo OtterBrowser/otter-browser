@@ -267,7 +267,9 @@ void HistoryContentsWidget::handleEntryAdded(HistoryEntryItem *entry)
 	{
 		groupItem = m_model->item(i, 0);
 
-		if (groupItem && (entry->getTimeVisited().date() >= groupItem->data(Qt::UserRole).toDate() || !groupItem->data(Qt::UserRole).toDate().isValid()))
+		const QDate date(groupItem ? groupItem->data(Qt::UserRole).toDate() : QDate());
+
+		if (!date.isValid() || entry->getTimeVisited().date() >= date)
 		{
 			break;
 		}
