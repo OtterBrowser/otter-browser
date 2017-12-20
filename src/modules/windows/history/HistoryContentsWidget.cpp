@@ -178,7 +178,7 @@ void HistoryContentsWidget::removeEntry()
 
 void HistoryContentsWidget::removeDomainEntries()
 {
-	QStandardItem *domainItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
+	const QStandardItem *domainItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
 
 	if (!domainItem)
 	{
