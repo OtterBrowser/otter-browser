@@ -66,15 +66,24 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QMenu menu(this);
-	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
+	QAction *copyAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy")));
+	copyAction->setEnabled(hasSelectedText());
+	copyAction->setShortcut(QKeySequence(QKeySequence::Copy));
 
 	if (m_url.isValid())
 	{
-		menu.addAction(tr("Copy Link Location"), this, SLOT(copyUrl()));
+		connect(menu.addAction(tr("Copy Link Location")), &QAction::triggered, this, &TextLabelWidget::copyUrl);
 	}
 
 	menu.addSeparator();
-	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
+
+	QAction *selectAllAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All")));
+	selectAllAction->setEnabled(!text().isEmpty());
+	selectAllAction->setShortcut(QKeySequence(QKeySequence::SelectAll));
+
+	connect(copyAction, &QAction::triggered, this, &TextLabelWidget::copy);
+	connect(selectAllAction, &QAction::triggered, this, &TextLabelWidget::selectAll);
+
 	menu.exec(event->globalPos());
 }
 
