@@ -83,17 +83,26 @@ void IconWidget::selectFromTheme()
 void IconWidget::updateMenu()
 {
 	menu()->clear();
-	menu()->addAction(tr("Select From File…"), this, SLOT(selectFromFile()));
-	menu()->addAction(tr("Select From Theme…"), this, SLOT(selectFromTheme()));
+
+	connect(menu()->addAction(tr("Select From File…")), &QAction::triggered, this, &IconWidget::selectFromTheme);
+	connect(menu()->addAction(tr("Select From Theme…")), &QAction::triggered, this, &IconWidget::selectFromTheme);
 
 	if (!m_defaultIcon.isNull())
 	{
 		menu()->addSeparator();
-		menu()->addAction(tr("Reset"), this, SLOT(reset()))->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != Utils::savePixmapAsDataUri(m_defaultIcon.pixmap(16, 16)));
+
+		QAction *resetAction(menu()->addAction(tr("Reset")));
+		resetAction->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != Utils::savePixmapAsDataUri(m_defaultIcon.pixmap(16, 16)));
+
+		connect(resetAction, &QAction::triggered, this, &IconWidget::reset);
 	}
 
 	menu()->addSeparator();
-	menu()->addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(!icon().isNull());
+
+	QAction *clearAction(menu()->addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear")));
+	clearAction->setEnabled(!icon().isNull());
+
+	connect(clearAction, &QAction::triggered, this, &IconWidget::clear);
 }
 
 void IconWidget::setIcon(const QIcon &icon)
