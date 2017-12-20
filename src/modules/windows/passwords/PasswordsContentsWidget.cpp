@@ -273,15 +273,20 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 	{
 		if (index.parent() != m_model->invisibleRootItem()->index())
 		{
-			menu.addAction(tr("Remove Password"), this, SLOT(removePasswords()));
+			connect(menu.addAction(tr("Remove Password")), &QAction::triggered , this, &PasswordsContentsWidget::removePasswords);
 		}
 
-		menu.addAction(tr("Remove All Passwords from This Domain…"), this, SLOT(removeHostPasswords()));
+		connect(menu.addAction(tr("Remove All Passwords from This Domain…")), &QAction::triggered, this, &PasswordsContentsWidget::removeHostPasswords);
 	}
 
-	menu.addAction(tr("Remove All Passwords…"), this, SLOT(removeAllPasswords()))->setEnabled(m_ui->passwordsViewWidget->model()->rowCount() > 0);
+	QAction *removeAllPasswordsAction(menu.addAction(tr("Remove All Passwords…")));
+	removeAllPasswordsAction->setEnabled(m_ui->passwordsViewWidget->model()->rowCount() > 0);
+
 	menu.addSeparator();
 	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
+
+	connect(removeAllPasswordsAction, &QAction::triggered, this, &PasswordsContentsWidget::removeAllPasswords);
+
 	menu.exec(m_ui->passwordsViewWidget->mapToGlobal(position));
 }
 
