@@ -43,7 +43,8 @@ public:
 	enum DataRole
 	{
 		IdentifierRole = Qt::UserRole,
-		TimeVisitedRole
+		TimeVisitedRole,
+		GroupDateRole
 	};
 
 	explicit HistoryContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);

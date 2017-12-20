@@ -128,7 +128,7 @@ void HistoryContentsWidget::populateEntries()
 
 		if (groupItem)
 		{
-			groupItem->setData(dates.value(i, QDate()), Qt::UserRole);
+			groupItem->setData(dates.value(i, QDate()), GroupDateRole);
 			groupItem->removeRows(0, groupItem->rowCount());
 		}
 	}
@@ -267,7 +267,7 @@ void HistoryContentsWidget::handleEntryAdded(HistoryEntryItem *entry)
 	{
 		groupItem = m_model->item(i, 0);
 
-		const QDate date(groupItem ? groupItem->data(Qt::UserRole).toDate() : QDate());
+		const QDate date(groupItem ? groupItem->data(GroupDateRole).toDate() : QDate());
 
 		if (!date.isValid() || entry->getTimeVisited().date() >= date)
 		{
