@@ -2434,8 +2434,9 @@ QStringList QtWebKitWebWidget::getBlockedElements() const
 
 QStringList QtWebKitWebWidget::getStyleSheets() const
 {
-	QStringList titles;
 	const QWebElementCollection styleSheets(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
+	QStringList titles;
+	titles.reserve(styleSheets.count());
 
 	for (int i = 0; i < styleSheets.count(); ++i)
 	{
@@ -2453,8 +2454,9 @@ QStringList QtWebKitWebWidget::getStyleSheets() const
 QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
 	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]")));
-	QVector<LinkUrl> links;
 	QSet<QUrl> urls;
+	QVector<LinkUrl> links;
+	links.reserve(elements.count());
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
@@ -2474,6 +2476,8 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 
 		links.append(link);
 	}
+
+	links.squeeze();
 
 	return links;
 }
@@ -2481,8 +2485,9 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 {
 	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]")));
-	QVector<LinkUrl> links;
 	QSet<QUrl> urls;
+	QVector<LinkUrl> links;
+	links.reserve(elements.count());
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
@@ -2502,6 +2507,8 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 
 		links.append(link);
 	}
+
+	links.squeeze();
 
 	return links;
 }
