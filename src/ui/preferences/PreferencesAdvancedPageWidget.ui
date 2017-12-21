@@ -360,18 +360,12 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
         </spacer>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="contentPage">
-      <layout class="QVBoxLayout" name="contentPageLayout" stretch="0,0,0,0,0,1">
+      <layout class="QVBoxLayout" name="contentLayout">
        <item>
         <widget class="QLabel" name="contentGeneralHeader">
          <property name="font">
@@ -452,17 +446,89 @@
         </layout>
        </item>
        <item>
-        <spacer name="advancedContentSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QLabel" name="overridesHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
+         <property name="text">
+          <string>Website Preferences</string>
          </property>
-        </spacer>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="contentOverridesLayout">
+         <item>
+          <layout class="QVBoxLayout" name="contentOverridesContentLayout">
+           <item>
+            <widget class="Otter::LineEditWidget" name="contentOverridesLineEditWidget">
+             <property name="placeholderText">
+              <string>Search…</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Otter::ItemViewWidget" name="contentOverridesItemView">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <attribute name="headerDefaultSectionSize">
+              <number>250</number>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="contentOverridesButtonsLayout" stretch="0,0,0,1">
+           <item>
+            <widget class="QPushButton" name="contentOverridesAddButton">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="contentOverridesEditButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Edit…</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="contentOverridesRemoveButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="contentOverridesButtonsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -1443,9 +1509,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
+   <class>Otter::ApplicationComboBoxWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/ApplicationComboBoxWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::FilePathWidget</class>
@@ -1454,9 +1520,14 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Otter::ApplicationComboBoxWidget</class>
-   <extends>QComboBox</extends>
-   <header>src/ui/ApplicationComboBoxWidget.h</header>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::LineEditWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
