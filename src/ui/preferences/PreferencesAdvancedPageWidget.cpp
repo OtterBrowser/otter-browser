@@ -165,6 +165,20 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::Content_UserStyleSheetOption).toString());
 	m_ui->userStyleSheetFilePathWidget->setFilters({tr("Style sheets (*.css)")});
 
+	QStandardItemModel *overridesModel(new QStandardItemModel(this));
+	const QStringList overrideHosts(SettingsManager::getOverrideHosts());
+
+	for (int i = 0; i < overrideHosts.count(); ++i)
+	{
+		QStandardItem *item(new QStandardItem(overrideHosts.at(i)));
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+		overridesModel->appendRow(item);
+	}
+
+	m_ui->contentOverridesFilterLineEditWidget->setClearOnEscape(true);
+	m_ui->contentOverridesItemView->setModel(overridesModel);
+
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels({tr("Name")});
 
@@ -379,6 +393,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->notificationsPlaySoundButton, &QToolButton::clicked, this, &PreferencesAdvancedPageWidget::playNotificationSound);
 	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->javaScriptOptionsButton, &QPushButton::setEnabled);
 	connect(m_ui->javaScriptOptionsButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::updateJavaScriptOptions);
+	connect(m_ui->contentOverridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->contentOverridesItemView, &ItemViewWidget::setFilterString);
 	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
 	connect(m_ui->downloadsAddMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addDownloadsMimeType);
 	connect(m_ui->downloadsRemoveMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeDownloadsMimeType);

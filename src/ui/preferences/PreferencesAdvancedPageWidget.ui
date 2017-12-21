@@ -463,7 +463,7 @@
          <item>
           <layout class="QVBoxLayout" name="contentOverridesContentLayout">
            <item>
-            <widget class="Otter::LineEditWidget" name="contentOverridesLineEditWidget">
+            <widget class="Otter::LineEditWidget" name="contentOverridesFilterLineEditWidget">
              <property name="placeholderText">
               <string>Search…</string>
              </property>
@@ -480,6 +480,9 @@
              <attribute name="headerDefaultSectionSize">
               <number>250</number>
              </attribute>
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
             </widget>
            </item>
           </layout>
