@@ -585,7 +585,7 @@
             </widget>
            </item>
            <item>
-            <spacer name="downloadsButtonslSpacer">
+            <spacer name="downloadsButtonsSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
