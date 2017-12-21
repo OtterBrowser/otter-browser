@@ -241,7 +241,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Updates_LastCheckOption, StringType, QString());
 	registerOption(Updates_ServerUrlOption, StringType, QLatin1String("https://www.otter-browser.org/updates/update.json"));
 
-	const QStringList hosts(QSettings(m_overridePath, QSettings::IniFormat).childGroups());
+	const QStringList hosts(getOverrideHosts());
 
 	for (int i = 0; i < hosts.count(); ++i)
 	{
@@ -540,6 +540,11 @@ QStringList SettingsManager::getOptions()
 	options.sort();
 
 	return options;
+}
+
+QStringList SettingsManager::getOverrideHosts()
+{
+	return QSettings(m_overridePath, QSettings::IniFormat).childGroups();
 }
 
 SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int identifier)
