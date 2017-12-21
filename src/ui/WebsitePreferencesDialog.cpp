@@ -208,11 +208,11 @@ void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
 {
 	QList<QStandardItem*> items({new QStandardItem(cookie.domain()), new QStandardItem(QString(cookie.name())), new QStandardItem(cookie.path()), new QStandardItem(QString(cookie.value())), new QStandardItem(cookie.isSessionCookie() ? tr("this session only") : Utils::formatDateTime(cookie.expirationDate()))});
 	items[0]->setData(cookie.toRawForm(), Qt::UserRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+	items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 	m_ui->cookiesViewWidget->getSourceModel()->appendRow(items);
 }
