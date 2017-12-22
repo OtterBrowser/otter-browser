@@ -609,14 +609,19 @@ int SettingsManager::getOptionIdentifier(const QString &name)
 	return SettingsManager::staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());
 }
 
-bool SettingsManager::hasOverride(const QUrl &url, int identifier)
+bool SettingsManager::hasOverride(const QString &host, int identifier)
 {
 	if (identifier < 0)
 	{
-		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(getHost(url));
+		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(host);
 	}
 
-	return QSettings(m_overridePath, QSettings::IniFormat).contains(getHost(url) + QLatin1Char('/') + getOptionName(identifier));
+	return QSettings(m_overridePath, QSettings::IniFormat).contains(host + QLatin1Char('/') + getOptionName(identifier));
+}
+
+bool SettingsManager::hasOverride(const QUrl &url, int identifier)
+{
+	return hasOverride(getHost(url), identifier);
 }
 
 }
