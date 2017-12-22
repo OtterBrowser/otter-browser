@@ -254,15 +254,15 @@ void SettingsManager::createInstance(const QString &path)
 	}
 }
 
-void SettingsManager::removeOverride(const QUrl &url, const QString &key)
+void SettingsManager::removeOverride(const QUrl &url, int identifier)
 {
-	if (key.isEmpty())
+	if (identifier < 0)
 	{
 		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url));
 	}
 	else
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + key);
+		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + getOptionName(identifier));
 	}
 }
 

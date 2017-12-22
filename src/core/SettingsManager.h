@@ -298,7 +298,7 @@ public:
 	};
 
 	static void createInstance(const QString &path);
-	static void removeOverride(const QUrl &url, const QString &key = {});
+	static void removeOverride(const QUrl &url, int identifier = -1);
 	static void updateOptionDefinition(int identifier, const OptionDefinition &definition);
 	static void setOption(int identifier, const QVariant &value, const QUrl &url = {});
 	static SettingsManager* getInstance();
