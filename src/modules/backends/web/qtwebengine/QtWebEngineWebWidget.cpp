@@ -932,7 +932,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
-				WebsitePreferencesDialog dialog(url, QVector<QNetworkCookie>(), this);
+				WebsitePreferencesDialog dialog(url, {}, this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
