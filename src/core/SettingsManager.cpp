@@ -619,9 +619,4 @@ bool SettingsManager::hasOverride(const QString &host, int identifier)
 	return QSettings(m_overridePath, QSettings::IniFormat).contains(host + QLatin1Char('/') + getOptionName(identifier));
 }
 
-bool SettingsManager::hasOverride(const QUrl &url, int identifier)
-{
-	return hasOverride(getHost(url), identifier);
-}
-
 }

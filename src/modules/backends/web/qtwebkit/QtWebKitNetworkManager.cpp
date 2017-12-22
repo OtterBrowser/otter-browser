@@ -528,7 +528,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_cookieJarProxy->setup(getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, url).toStringList(), getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 
-	if (!m_proxyFactory && ((m_widget && m_widget->hasOption(SettingsManager::Network_ProxyOption)) || SettingsManager::hasOverride(url, SettingsManager::Network_ProxyOption)))
+	if (!m_proxyFactory && ((m_widget && m_widget->hasOption(SettingsManager::Network_ProxyOption)) || SettingsManager::hasOverride((url.isLocalFile() ? QLatin1String("localhost") : url.host()), SettingsManager::Network_ProxyOption)))
 	{
 		m_proxyFactory = new NetworkProxyFactory(this);
 
