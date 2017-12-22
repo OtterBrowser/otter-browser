@@ -38,7 +38,7 @@
 namespace Otter
 {
 
-WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVector<QNetworkCookie> &cookies, QWidget *parent) : Dialog(parent),
+WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QVector<QNetworkCookie> &cookies, QWidget *parent) : Dialog(parent),
 	m_updateOverride(true),
 	m_ui(new Ui::WebsitePreferencesDialog)
 {
@@ -65,7 +65,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->enableFullScreenLabel, &QCheckBox::setEnabled);
 	connect(m_ui->enableJavaScriptCheckBox, &QCheckBox::toggled, m_ui->enableFullScreenComboBox, &QCheckBox::setEnabled);
 
-	m_ui->websiteLineEditWidget->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+	m_ui->websiteLineEditWidget->setText(host);
 
 	m_ui->encodingComboBox->addItem(tr("Auto Detect"), QLatin1String("auto"));
 
@@ -133,27 +133,27 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QVecto
 	m_ui->userAgentComboBox->setModel(new UserAgentsModel(QString(), false, this));
 	m_ui->proxyComboBox->setModel(new ProxiesModel(QString(), false, this));
 
-	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_DefaultCharacterEncodingOption));
-	m_ui->popupsPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanOpenWindowsOption));
-	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnableImagesOption));
-	m_ui->enablePluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnablePluginsOption));
-	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_UserStyleSheetOption));
-	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_DoNotTrackPolicyOption));
-	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::History_RememberBrowsingOption));
-	m_ui->enableCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_CookiesPolicyOption));
-	m_ui->cookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_CookiesPolicyOption));
-	m_ui->keepCookiesModeOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_CookiesKeepModeOption));
-	m_ui->thirdPartyCookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_ThirdPartyCookiesPolicyOption));
-	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnableJavaScriptOption));
-	m_ui->canChangeWindowGeometryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption));
-	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
-	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanAccessClipboardOption));
-	m_ui->canReceiveRightClicksOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption));
-	m_ui->canCloseWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanCloseWindowsOption));
-	m_ui->enableFullScreenOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnableFullScreenOption));
-	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_EnableReferrerOption));
-	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_UserAgentOption));
-	m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::ContentBlocking_ProfilesOption));
+	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Content_DefaultCharacterEncodingOption));
+	m_ui->popupsPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_ScriptsCanOpenWindowsOption));
+	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_EnableImagesOption));
+	m_ui->enablePluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_EnablePluginsOption));
+	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Content_UserStyleSheetOption));
+	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_DoNotTrackPolicyOption));
+	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::History_RememberBrowsingOption));
+	m_ui->enableCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_CookiesPolicyOption));
+	m_ui->cookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_CookiesPolicyOption));
+	m_ui->keepCookiesModeOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_CookiesKeepModeOption));
+	m_ui->thirdPartyCookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_ThirdPartyCookiesPolicyOption));
+	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_EnableJavaScriptOption));
+	m_ui->canChangeWindowGeometryOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption));
+	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
+	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_ScriptsCanAccessClipboardOption));
+	m_ui->canReceiveRightClicksOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption));
+	m_ui->canCloseWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_ScriptsCanCloseWindowsOption));
+	m_ui->enableFullScreenOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Permissions_EnableFullScreenOption));
+	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_EnableReferrerOption));
+	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::Network_UserAgentOption));
+	m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(SettingsManager::hasOverride(host, SettingsManager::ContentBlocking_ProfilesOption));
 
 	updateValues();
 

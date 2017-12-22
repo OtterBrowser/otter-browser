@@ -40,7 +40,7 @@ class WebsitePreferencesDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit WebsitePreferencesDialog(const QUrl &url, const QVector<QNetworkCookie> &cookies, QWidget *parent = nullptr);
+	explicit WebsitePreferencesDialog(const QString &host, const QVector<QNetworkCookie> &cookies, QWidget *parent = nullptr);
 	~WebsitePreferencesDialog();
 
 	QVector<QNetworkCookie> getCookiesToDelete() const;
