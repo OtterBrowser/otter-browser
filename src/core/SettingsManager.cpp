@@ -489,10 +489,15 @@ QString SettingsManager::getOptionName(int identifier)
 
 QString SettingsManager::getHost(const QUrl &url)
 {
+	if (url.isEmpty())
+	{
+		return {};
+	}
+
 	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
 }
 
-QVariant SettingsManager::getOption(int identifier, const QUrl &url)
+QVariant SettingsManager::getOption(int identifier, const QString &host)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
@@ -501,12 +506,11 @@ QVariant SettingsManager::getOption(int identifier, const QUrl &url)
 
 	const QString name(getOptionName(identifier));
 
-	if (url.isEmpty())
+	if (host.isEmpty())
 	{
 		return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_definitions.at(identifier).defaultValue);
 	}
 
-	const QString host(getHost(url));
 	const QString overrideName(host + QLatin1Char('/') + name);
 	const QSettings overrides(m_overridePath, QSettings::IniFormat);
 
@@ -526,6 +530,11 @@ QVariant SettingsManager::getOption(int identifier, const QUrl &url)
 	}
 
 	return QSettings(m_overridePath, QSettings::IniFormat).value(overrideName, getOption(identifier));
+}
+
+QVariant SettingsManager::getOption(int identifier, const QUrl &url)
+{
+	return getOption(identifier, getHost(url));
 }
 
 QStringList SettingsManager::getOptions()

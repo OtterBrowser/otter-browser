@@ -307,7 +307,8 @@ public:
 	static QString getGlobalPath();
 	static QString getOverridePath();
 	static QString getOptionName(int identifier);
-	static QVariant getOption(int identifier, const QUrl &url = {});
+	static QVariant getOption(int identifier, const QString &host = {});
+	static QVariant getOption(int identifier, const QUrl &url);
 	static QStringList getOptions();
 	static QStringList getOverrideHosts();
 	static OptionDefinition getOptionDefinition(int identifier);
