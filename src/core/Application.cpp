@@ -559,16 +559,16 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 		case ActionsManager::SetOptionAction:
 			{
 				const QString mode(parameters.value(QLatin1String("mode"), QLatin1String("set")).toString());
-				const QUrl url(parameters.contains(QLatin1String("host")) ? QUrl::fromUserInput(parameters.value(QLatin1String("host")).toString()) : QUrl());
+				const QString host(parameters.value(QLatin1String("host")).toString());
 				const int option(SettingsManager::getOptionIdentifier(parameters.value(QLatin1String("option")).toString()));
 
 				if (mode == QLatin1String("set"))
 				{
-					SettingsManager::setOption(option, parameters.value(QLatin1String("value")), url);
+					SettingsManager::setOption(option, parameters.value(QLatin1String("value")), host);
 				}
 				else if (mode == QLatin1String("reset"))
 				{
-					SettingsManager::setOption(option, {}, url);
+					SettingsManager::setOption(option, {}, host);
 				}
 				else if (mode == QLatin1String("toggle"))
 				{
@@ -576,7 +576,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 					if (definition.type == SettingsManager::BooleanType)
 					{
-						SettingsManager::setOption(option, !SettingsManager::getOption(option, url).toBool(), url);
+						SettingsManager::setOption(option, !SettingsManager::getOption(option, host).toBool(), host);
 					}
 				}
 			}

@@ -606,7 +606,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				{
 					exceptions.append(digest);
 
-					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, url);
+					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, (url.isLocalFile() ? QLatin1String("localhost") : url.host()));
 				}
 			}
 			else if (type == QLatin1String("add-content-blocking-exception"))

@@ -341,11 +341,6 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QSt
 	}
 }
 
-void SettingsManager::setOption(int identifier, const QVariant &value, const QUrl &url)
-{
-	setOption(identifier, value, getHost(url));
-}
-
 SettingsManager* SettingsManager::getInstance()
 {
 	return m_instance;

@@ -492,40 +492,41 @@ void WebWidget::setPermission(FeaturePermission feature, const QUrl &url, Permis
 	}
 
 	const QString value(policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow"));
+	const QString host(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
 	switch (feature)
 	{
 		case FullScreenFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableFullScreenOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableFullScreenOption, value, host);
 
 			return;
 		case GeolocationFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableGeolocationOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableGeolocationOption, value, host);
 
 			return;
 		case NotificationsFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableNotificationsOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableNotificationsOption, value, host);
 
 			return;
 		case PointerLockFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnablePointerLockOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnablePointerLockOption, value, host);
 
 			return;
 		case CaptureAudioFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, value, host);
 
 			return;
 		case CaptureVideoFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, value, host);
 
 			return;
 		case CaptureAudioVideoFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, value, url);
-			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, value, host);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, value, host);
 
 			return;
 		case PlaybackAudioFeature:
-			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaPlaybackAudioOption, value, url);
+			SettingsManager::setOption(SettingsManager::Permissions_EnableMediaPlaybackAudioOption, value, host);
 
 			return;
 		default:

@@ -154,7 +154,7 @@ void PopupsBarWidget::setPolicy(QAction *action)
 {
 	if (action)
 	{
-		SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), m_parentUrl);
+		SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), (m_parentUrl.isLocalFile() ? QLatin1String("localhost") : m_parentUrl.host()));
 	}
 }
 
