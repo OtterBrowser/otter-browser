@@ -197,7 +197,7 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 
 	if (url.isValid() && url.scheme() != QLatin1String("data"))
 	{
-		setPageInformation(WebWidget::LoadingMessageInformation, tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+		setPageInformation(WebWidget::LoadingMessageInformation, tr("Receiving data from %1…").arg(Utils::extractHost(reply->url())));
 	}
 
 	const qint64 difference(bytesReceived - m_replies[reply].first);
@@ -269,7 +269,7 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 
 	if (url.isValid() && url.scheme() != QLatin1String("data"))
 	{
-		setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+		setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(Utils::extractHost(url)));
 	}
 
 	disconnect(reply, &QNetworkReply::downloadProgress, this, &QtWebKitNetworkManager::handleDownloadProgress);
@@ -528,7 +528,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_cookieJarProxy->setup(getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, url).toStringList(), getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 
-	if (!m_proxyFactory && ((m_widget && m_widget->hasOption(SettingsManager::Network_ProxyOption)) || SettingsManager::hasOverride((url.isLocalFile() ? QLatin1String("localhost") : url.host()), SettingsManager::Network_ProxyOption)))
+	if (!m_proxyFactory && ((m_widget && m_widget->hasOption(SettingsManager::Network_ProxyOption)) || SettingsManager::hasOverride(Utils::extractHost(url), SettingsManager::Network_ProxyOption)))
 	{
 		m_proxyFactory = new NetworkProxyFactory(this);
 
@@ -606,13 +606,13 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				{
 					exceptions.append(digest);
 
-					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, (url.isLocalFile() ? QLatin1String("localhost") : url.host()));
+					SettingsManager::setOption(SettingsManager::Security_IgnoreSslErrorsOption, exceptions, Utils::extractHost(url));
 				}
 			}
 			else if (type == QLatin1String("add-content-blocking-exception"))
 			{
 				const QUrl url(m_widget->getUrl());
-				const QString host(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+				const QString host(Utils::extractHost(url));
 				QStringList ignoredHosts;
 
 				if (m_widget->hasOption(SettingsManager::ContentBlocking_IgnoreHostsOption))
@@ -677,7 +677,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		const QUrl baseUrl(m_widget->isNavigating() ? request.url() : m_widget->getUrl());
 
-		if (!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(baseUrl.host().isEmpty() ? QLatin1String("localhost") : baseUrl.host())))
+		if (!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(Utils::extractHost(baseUrl))))
 		{
 			const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
 			const QString path(request.url().path());

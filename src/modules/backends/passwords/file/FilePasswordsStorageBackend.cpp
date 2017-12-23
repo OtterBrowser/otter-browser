@@ -261,7 +261,7 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 		initialize();
 	}
 
-	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
+	const QString host(Utils::extractHost(password.url));
 
 	if (m_passwords.contains(host))
 	{
@@ -300,7 +300,7 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 		initialize();
 	}
 
-	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
+	const QString host(Utils::extractHost(password.url));
 
 	if (!m_passwords.contains(host))
 	{
@@ -361,7 +361,7 @@ QVector<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getP
 		initialize();
 	}
 
-	const QString host(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+	const QString host(Utils::extractHost(url));
 
 	if (m_passwords.contains(host))
 	{
@@ -394,7 +394,7 @@ PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const P
 		initialize();
 	}
 
-	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
+	const QString host(Utils::extractHost(password.url));
 
 	if (!m_passwords.contains(host))
 	{
@@ -423,7 +423,7 @@ bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager
 		initialize();
 	}
 
-	const QString host(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+	const QString host(Utils::extractHost(url));
 
 	if (types == PasswordsManager::AnyPassword)
 	{

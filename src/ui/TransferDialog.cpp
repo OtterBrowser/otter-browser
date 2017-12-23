@@ -56,7 +56,7 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(par
 
 	m_ui->nameTextLabelWidget->setText(fileName);
 	m_ui->typeTextLabelWidget->setText(transfer->getMimeType().comment());
-	m_ui->fromTextLabelWidget->setText(transfer->getSource().host().isEmpty() ? QLatin1String("localhost") : transfer->getSource().host());
+	m_ui->fromTextLabelWidget->setText(Utils::extractHost(transfer->getSource()));
 	m_ui->openWithComboBoxWidget->setMimeType(transfer->getMimeType());
 
 	setProgress(m_transfer->getBytesReceived(), m_transfer->getBytesTotal());

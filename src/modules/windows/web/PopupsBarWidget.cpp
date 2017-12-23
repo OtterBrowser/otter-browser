@@ -100,7 +100,7 @@ void PopupsBarWidget::addPopup(const QUrl &url)
 	QAction *action(m_popupsMenu->addAction(QString("%1").arg(fontMetrics().elidedText(url.url(), Qt::ElideMiddle, 256))));
 	action->setData(url.url());
 
-	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", (m_popupsMenu->actions().count() - 2)).arg(m_parentUrl.host().isEmpty() ? QLatin1String("localhost") : m_parentUrl.host()));
+	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", (m_popupsMenu->actions().count() - 2)).arg(Utils::extractHost(m_parentUrl)));
 }
 
 void PopupsBarWidget::openUrl(QAction *action)
@@ -154,7 +154,7 @@ void PopupsBarWidget::setPolicy(QAction *action)
 {
 	if (action)
 	{
-		SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), (m_parentUrl.isLocalFile() ? QLatin1String("localhost") : m_parentUrl.host()));
+		SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), Utils::extractHost(m_parentUrl));
 	}
 }
 

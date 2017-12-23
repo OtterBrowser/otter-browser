@@ -23,6 +23,7 @@
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
@@ -293,7 +294,7 @@ void MacPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title
 	QMimeData *mimeData(new QMimeData());
 	mimeData->setText(url.toString());
 
-	QFile file(drag->getPath() + QDir::separator() + (url.host().isEmpty() ? QLatin1String("localhost") : url.host()) + QLatin1String(".webloc"));
+	QFile file(drag->getPath() + QDir::separator() + Utils::extractHost(url) + QLatin1String(".webloc"));
 
 	if (file.open(QIODevice::WriteOnly))
 	{

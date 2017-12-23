@@ -186,11 +186,11 @@ QString createErrorPage(const ErrorPageInformation &information)
 
 			break;
 		case ErrorPageInformation::ConnectionInsecureError:
-			introduction = QCoreApplication::translate("utils", "The owner of <strong>%1</strong> has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
+			introduction = QCoreApplication::translate("utils", "The owner of <strong>%1</strong> has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.").arg(extractHost(information.url));
 
 			break;
 		case ErrorPageInformation::FraudAttemptError:
-			introduction = QCoreApplication::translate("utils", "This web page at <strong>%1</strong> has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.").arg(information.url.host().isEmpty() ? QLatin1String("localhost") : information.url.host());
+			introduction = QCoreApplication::translate("utils", "This web page at <strong>%1</strong> has been reported as a web forgery. To protect your information from being stolen, connection to this website was aborted.").arg(extractHost(information.url));
 
 			break;
 		default:
@@ -384,6 +384,11 @@ QString savePixmapAsDataUri(const QPixmap &pixmap)
 	pixmap.save(&buffer, "PNG");
 
 	return QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
+}
+
+QString extractHost(const QUrl &url)
+{
+	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
 }
 
 QString formatElapsedTime(int value)

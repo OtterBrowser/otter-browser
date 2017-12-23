@@ -932,7 +932,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
-				WebsitePreferencesDialog dialog((url.isLocalFile() ? QLatin1String("localhost") : url.host()), {}, this);
+				WebsitePreferencesDialog dialog(Utils::extractHost(url), {}, this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{

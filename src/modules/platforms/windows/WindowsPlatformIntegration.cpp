@@ -241,7 +241,7 @@ void WindowsPlatformIntegration::startLinkDrag(const QUrl &url, const QString &t
 	mimeData->setText(url.toString());
 
 	QTemporaryDir directory;
-	QFile file(directory.path() + QDir::separator() + (url.host().isEmpty() ? QLatin1String("localhost") : url.host()) + QLatin1String(".url"));
+	QFile file(directory.path() + QDir::separator() + Utils::extractHost(url) + QLatin1String(".url"));
 
 	if (file.open(QIODevice::WriteOnly))
 	{

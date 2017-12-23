@@ -492,7 +492,7 @@ void WebWidget::setPermission(FeaturePermission feature, const QUrl &url, Permis
 	}
 
 	const QString value(policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow"));
-	const QString host(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+	const QString host(Utils::extractHost(url));
 
 	switch (feature)
 	{
