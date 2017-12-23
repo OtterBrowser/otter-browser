@@ -266,11 +266,6 @@ void SettingsManager::removeOverride(const QString &host, int identifier)
 	}
 }
 
-void SettingsManager::removeOverride(const QUrl &url, int identifier)
-{
-	removeOverride(getHost(url), identifier);
-}
-
 void SettingsManager::registerOption(int identifier, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionDefinition::OptionFlags flags)
 {
 	OptionDefinition definition;
