@@ -24,6 +24,7 @@
 #include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
+#include "../../../../core/Utils.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
@@ -81,13 +82,15 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (!m_contentBlockingProfiles.contains(request.firstPartyUrl().host()))
 	{
-		if (SettingsManager::getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, request.firstPartyUrl()).toBool())
+		const QString host(Utils::extractHost(request.firstPartyUrl()));
+
+		if (SettingsManager::getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, host).toBool())
 		{
-			m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, request.firstPartyUrl()).toStringList());
+			m_contentBlockingProfiles[host] = ContentBlockingManager::getProfileList(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
 		}
 		else
 		{
-			m_contentBlockingProfiles[request.firstPartyUrl().host()] = QVector<int>();
+			m_contentBlockingProfiles[host] = {};
 		}
 	}
 

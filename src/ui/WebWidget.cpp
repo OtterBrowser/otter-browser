@@ -189,14 +189,14 @@ void WebWidget::startTransfer(Transfer *transfer)
 
 void WebWidget::clearOptions()
 {
-	const QUrl url(getUrl());
+	const QString host(Utils::extractHost(getUrl()));
 	const QList<int> identifiers(m_options.keys());
 
 	m_options.clear();
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), url));
+		emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), host));
 	}
 
 	emit arbitraryActionsStateChanged({ActionsManager::ResetQuickPreferencesAction});
@@ -273,14 +273,16 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 
 void WebWidget::handleWindowCloseRequest()
 {
-	if (isPopup() && SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanCloseSelfOpenedWindowsOption, getUrl()).toBool())
+	const QString host(Utils::extractHost(getUrl()));
+
+	if (isPopup() && SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanCloseSelfOpenedWindowsOption, host).toBool())
 	{
 		emit requestedCloseWindow();
 
 		return;
 	}
 
-	const QString mode(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, getUrl()).toString());
+	const QString mode(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, host).toString());
 
 	if (mode != QLatin1String("ask"))
 	{
@@ -609,7 +611,7 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 		}
 	}
 
-	const QUrl url(getUrl());
+	const QString host(Utils::extractHost(getUrl()));
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
@@ -619,7 +621,7 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 		}
 		else
 		{
-			emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), url));
+			emit optionChanged(identifiers.at(i), SettingsManager::getOption(identifiers.at(i), host));
 		}
 	}
 
@@ -774,7 +776,7 @@ QVariant WebWidget::getOption(int identifier, const QUrl &url) const
 		return m_options[identifier];
 	}
 
-	return SettingsManager::getOption(identifier, (url.isEmpty() ? getUrl() : url));
+	return SettingsManager::getOption(identifier, Utils::extractHost(url.isEmpty() ? getUrl() : url));
 }
 
 QVariant WebWidget::getPageInformation(PageInformation key) const

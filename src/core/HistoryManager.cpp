@@ -182,7 +182,7 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		return;
 	}
 
-	if (!SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption, url).toBool())
+	if (!SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption, Utils::extractHost(url)).toBool())
 	{
 		removeEntry(identifier);
 
@@ -356,7 +356,7 @@ QVector<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QStri
 
 quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
 {
-	if (!m_isEnabled || !url.isValid() || !SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption, url).toBool())
+	if (!m_isEnabled || !url.isValid() || !SettingsManager::getOption(SettingsManager::History_RememberBrowsingOption, Utils::extractHost(url)).toBool())
 	{
 		return 0;
 	}

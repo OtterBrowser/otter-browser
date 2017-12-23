@@ -82,7 +82,7 @@ void QtWebEnginePage::validatePopup(const QUrl &url)
 		}
 	}
 
-	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
+	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, Utils::extractHost(m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
 
 	if (popupsPolicy == QLatin1String("ask"))
 	{

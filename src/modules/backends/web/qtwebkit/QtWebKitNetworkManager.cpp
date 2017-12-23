@@ -883,7 +883,7 @@ QString QtWebKitNetworkManager::getUserAgent() const
 
 QVariant QtWebKitNetworkManager::getOption(int identifier, const QUrl &url) const
 {
-	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, url));
+	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, Utils::extractHost(url)));
 }
 
 QStringList QtWebKitNetworkManager::getBlockedElements() const

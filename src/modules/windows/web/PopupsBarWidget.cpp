@@ -136,7 +136,7 @@ void PopupsBarWidget::handleOptionChanged(int identifier)
 {
 	if (identifier == SettingsManager::Permissions_ScriptsCanOpenWindowsOption)
 	{
-		const QString popupsPolicy(SettingsManager::getOption(identifier, m_parentUrl).toString());
+		const QString popupsPolicy(SettingsManager::getOption(identifier, Utils::extractHost(m_parentUrl)).toString());
 
 		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
 		{

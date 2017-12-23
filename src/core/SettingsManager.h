@@ -23,7 +23,6 @@
 #define OTTER_SETTINGSMANAGER_H
 
 #include <QtCore/QObject>
-#include <QtCore/QUrl>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 
@@ -308,7 +307,6 @@ public:
 	static QString getOverridePath();
 	static QString getOptionName(int identifier);
 	static QVariant getOption(int identifier, const QString &host = {});
-	static QVariant getOption(int identifier, const QUrl &url);
 	static QStringList getOptions();
 	static QStringList getOverrideHosts();
 	static OptionDefinition getOptionDefinition(int identifier);
@@ -319,7 +317,6 @@ public:
 protected:
 	explicit SettingsManager(QObject *parent);
 
-	static QString getHost(const QUrl &url);
 	static void registerOption(int identifier, OptionType type, const QVariant &defaultValue = {}, const QStringList &choices = {}, OptionDefinition::OptionFlags flags = static_cast<OptionDefinition::OptionFlags>(OptionDefinition::IsEnabledFlag |OptionDefinition:: IsVisibleFlag | OptionDefinition::IsBuiltInFlag));
 	static void saveOption(const QString &path, const QString &key, const QVariant &value, OptionType type);
 

@@ -977,7 +977,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 {
 	if (state == WebWidget::CrashedLoadingState)
 	{
-		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Interface_TabCrashingActionOption, getUrl()).toString());
+		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Interface_TabCrashingActionOption, Utils::extractHost(getUrl())).toString());
 		bool reloadTab(tabCrashingAction != QLatin1String("close"));
 
 		if (tabCrashingAction == QLatin1String("ask"))

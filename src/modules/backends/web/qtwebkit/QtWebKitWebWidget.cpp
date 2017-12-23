@@ -471,7 +471,7 @@ void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &valu
 		case SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption:
 			disconnect(m_page, &QtWebKitPage::statusBarMessage, this, &QtWebKitWebWidget::setStatusMessage);
 
-			if (value.toBool() || SettingsManager::getOption(identifier, getUrl()).toBool())
+			if (value.toBool() || SettingsManager::getOption(identifier, Utils::extractHost(getUrl())).toBool())
 			{
 				connect(m_page, &QtWebKitPage::statusBarMessage, this, &QtWebKitWebWidget::setStatusMessage);
 			}
@@ -624,7 +624,7 @@ void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
 
 	if (request.toggleOn())
 	{
-		const QString value(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
+		const QString value(SettingsManager::getOption(SettingsManager::Permissions_EnableFullScreenOption, Utils::extractHost(request.origin())).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -2698,7 +2698,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
+		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption, Utils::extractHost(getUrl())).toString() == QLatin1String("onDemand"))
 		{
 			const QWidget *widget(childAt(mouseEvent->pos()));
 			const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));

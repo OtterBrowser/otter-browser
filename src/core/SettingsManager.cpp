@@ -486,16 +486,6 @@ QString SettingsManager::getOptionName(int identifier)
 	return m_customOptions.key(identifier);
 }
 
-QString SettingsManager::getHost(const QUrl &url)
-{
-	if (url.isEmpty())
-	{
-		return {};
-	}
-
-	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
-}
-
 QVariant SettingsManager::getOption(int identifier, const QString &host)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
@@ -529,11 +519,6 @@ QVariant SettingsManager::getOption(int identifier, const QString &host)
 	}
 
 	return QSettings(m_overridePath, QSettings::IniFormat).value(overrideName, getOption(identifier));
-}
-
-QVariant SettingsManager::getOption(int identifier, const QUrl &url)
-{
-	return getOption(identifier, getHost(url));
 }
 
 QStringList SettingsManager::getOptions()
