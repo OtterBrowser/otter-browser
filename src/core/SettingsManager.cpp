@@ -254,16 +254,21 @@ void SettingsManager::createInstance(const QString &path)
 	}
 }
 
-void SettingsManager::removeOverride(const QUrl &url, int identifier)
+void SettingsManager::removeOverride(const QString &host, int identifier)
 {
 	if (identifier < 0)
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url));
+		QSettings(m_overridePath, QSettings::IniFormat).remove(host);
 	}
 	else
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + getOptionName(identifier));
+		QSettings(m_overridePath, QSettings::IniFormat).remove(host + QLatin1Char('/') + getOptionName(identifier));
 	}
+}
+
+void SettingsManager::removeOverride(const QUrl &url, int identifier)
+{
+	removeOverride(getHost(url), identifier);
 }
 
 void SettingsManager::registerOption(int identifier, OptionType type, const QVariant &defaultValue, const QStringList &choices, OptionDefinition::OptionFlags flags)

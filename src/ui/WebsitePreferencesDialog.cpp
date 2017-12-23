@@ -319,7 +319,7 @@ void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 
 			break;
 		case QDialogButtonBox::ResetRole:
-			SettingsManager::removeOverride(url);
+			SettingsManager::removeOverride(url, -1);
 			accept();
 
 			break;
