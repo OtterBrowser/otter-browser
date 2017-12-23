@@ -397,6 +397,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->contentOverridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->contentOverridesItemView, &ItemViewWidget::setFilterString);
 	connect(m_ui->contentOverridesItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateOverridesActions);
 	connect(m_ui->contentOverridesEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editOverride);
+	connect(m_ui->contentOverridesRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeOverride);
 	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
 	connect(m_ui->downloadsAddMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addDownloadsMimeType);
 	connect(m_ui->downloadsRemoveMimeTypeButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeDownloadsMimeType);
@@ -544,6 +545,18 @@ void PreferencesAdvancedPageWidget::editOverride()
 {
 	WebsitePreferencesDialog dialog(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString(), {}, this);
 	dialog.exec();
+}
+
+void PreferencesAdvancedPageWidget::removeOverride()
+{
+	const QString host(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString());
+
+	if (!host.isEmpty() && QMessageBox::question(this, tr("Question"), tr("Do you really want to remove preferences for this host?"), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Ok)
+	{
+		SettingsManager::removeOverride(host);
+
+		m_ui->contentOverridesItemView->removeRow();
+	}
 }
 
 void PreferencesAdvancedPageWidget::updateOverridesActions()
