@@ -301,7 +301,8 @@ public:
 	static void removeOverride(const QString &host, int identifier = -1);
 	static void removeOverride(const QUrl &url, int identifier);
 	static void updateOptionDefinition(int identifier, const OptionDefinition &definition);
-	static void setOption(int identifier, const QVariant &value, const QUrl &url = {});
+	static void setOption(int identifier, const QVariant &value, const QString &host = {});
+	static void setOption(int identifier, const QVariant &value, const QUrl &url);
 	static SettingsManager* getInstance();
 	static QString createDisplayValue(int identifier, const QVariant &value);
 	static QString createReport();

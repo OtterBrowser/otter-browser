@@ -310,14 +310,13 @@ void SettingsManager::updateOptionDefinition(int identifier, const SettingsManag
 	}
 }
 
-void SettingsManager::setOption(int identifier, const QVariant &value, const QUrl &url)
+void SettingsManager::setOption(int identifier, const QVariant &value, const QString &host)
 {
 	const QString name(getOptionName(identifier));
 	const OptionType type(getOptionDefinition(identifier).type);
 
-	if (!url.isEmpty())
+	if (!host.isEmpty())
 	{
-		const QString host(getHost(url));
 		const QString overrideName(host + QLatin1Char('/') + name);
 
 		if (value.isNull())
@@ -345,6 +344,11 @@ void SettingsManager::setOption(int identifier, const QVariant &value, const QUr
 
 		emit m_instance->optionChanged(identifier, value);
 	}
+}
+
+void SettingsManager::setOption(int identifier, const QVariant &value, const QUrl &url)
+{
+	setOption(identifier, value, getHost(url));
 }
 
 SettingsManager* SettingsManager::getInstance()
