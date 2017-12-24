@@ -396,6 +396,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->javaScriptOptionsButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::updateJavaScriptOptions);
 	connect(m_ui->contentOverridesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->contentOverridesItemView, &ItemViewWidget::setFilterString);
 	connect(m_ui->contentOverridesItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateOverridesActions);
+	connect(m_ui->contentOverridesAddButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::addOverride);
 	connect(m_ui->contentOverridesEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editOverride);
 	connect(m_ui->contentOverridesRemoveButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::removeOverride);
 	connect(m_ui->downloadsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateDownloadsActions);
@@ -539,6 +540,12 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 
 		connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
 	}
+}
+
+void PreferencesAdvancedPageWidget::addOverride()
+{
+	WebsitePreferencesDialog dialog({}, {}, this);
+	dialog.exec();
 }
 
 void PreferencesAdvancedPageWidget::editOverride()
