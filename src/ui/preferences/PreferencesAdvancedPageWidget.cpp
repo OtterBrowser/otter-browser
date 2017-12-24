@@ -545,7 +545,21 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 void PreferencesAdvancedPageWidget::addOverride()
 {
 	WebsitePreferencesDialog dialog({}, {}, this);
-	dialog.exec();
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	const QString host(dialog.getHost());
+
+	if (!host.isEmpty())
+	{
+		QStandardItem *item(new QStandardItem(host));
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+		m_ui->contentOverridesItemView->insertRow({item});
+	}
 }
 
 void PreferencesAdvancedPageWidget::editOverride()
