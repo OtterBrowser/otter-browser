@@ -45,6 +45,7 @@ public:
 
 	QVector<QNetworkCookie> getCookiesToDelete() const;
 	QVector<QNetworkCookie> getCookiesToInsert() const;
+	QString getHost() const;
 
 protected:
 	void changeEvent(QEvent *event) override;

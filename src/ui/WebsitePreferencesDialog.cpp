@@ -219,9 +219,9 @@ void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
 
 void WebsitePreferencesDialog::addNewCookie()
 {
-	const QString domain(m_ui->websiteLineEditWidget->text());
+	const QString host(getHost());
 	QNetworkCookie cookie;
-	cookie.setDomain(domain.startsWith(QLatin1String("*.")) ? domain.mid(1) : domain);
+	cookie.setDomain(host.startsWith(QLatin1String("*.")) ? host.mid(1) : host);
 
 	CookiePropertiesDialog dialog(cookie, this);
 
@@ -262,7 +262,7 @@ void WebsitePreferencesDialog::cookieProperties()
 
 void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 {
-	const QString host(m_ui->websiteLineEditWidget->text());
+	const QString host(getHost());
 
 	if (host.isEmpty())
 	{
@@ -435,7 +435,7 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 		return;
 	}
 
-	const QString host(m_ui->websiteLineEditWidget->text());
+	const QString host(getHost());
 
 	m_updateOverride = false;
 
@@ -510,6 +510,11 @@ QVector<QNetworkCookie> WebsitePreferencesDialog::getCookiesToDelete() const
 QVector<QNetworkCookie> WebsitePreferencesDialog::getCookiesToInsert() const
 {
 	return m_cookiesToInsert;
+}
+
+QString WebsitePreferencesDialog::getHost() const
+{
+	return m_ui->websiteLineEditWidget->text().simplified();
 }
 
 }
