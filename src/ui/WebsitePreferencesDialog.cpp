@@ -262,8 +262,14 @@ void WebsitePreferencesDialog::cookieProperties()
 
 void WebsitePreferencesDialog::handleButtonClicked(QAbstractButton *button)
 {
-	QStringList contentBlockingProfiles;
 	const QString host(m_ui->websiteLineEditWidget->text());
+
+	if (host.isEmpty())
+	{
+		return;
+	}
+
+	QStringList contentBlockingProfiles;
 
 	switch (m_ui->buttonBox->buttonRole(button))
 	{
