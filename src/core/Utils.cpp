@@ -253,12 +253,6 @@ QString createErrorPage(const ErrorPageInformation &information)
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
-	QHash<QString, QString> variables;
-	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-	variables[QLatin1String("title")] = QCoreApplication::translate("utils", "Error");
-	variables[QLatin1String("header")] = title;
-	variables[QLatin1String("introduction")] = introduction;
-
 	QString mainTemplate(stream.readAll());
 	const QRegularExpression advancedActionsExpression(QLatin1String("<!--advancedActions:begin-->(.*)<!--advancedActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	const QRegularExpression basicActionsExpression(QLatin1String("<!--basicActions:begin-->(.*)<!--basicActions:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
@@ -324,6 +318,8 @@ QString createErrorPage(const ErrorPageInformation &information)
 			mainTemplate.replace(basicActionsExpression, QLatin1String("\\1"));
 		}
 	}
+
+	QHash<QString, QString> variables({{QLatin1String("dir"), (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"))}, {QLatin1String("title"), QCoreApplication::translate("utils", "Error")}, {QLatin1String("header"), title}, {QLatin1String("introduction"), introduction}});
 
 	if (information.description.isEmpty())
 	{
