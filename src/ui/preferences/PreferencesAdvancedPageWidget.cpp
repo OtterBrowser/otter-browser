@@ -559,6 +559,7 @@ void PreferencesAdvancedPageWidget::addOverride()
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		m_ui->contentOverridesItemView->insertRow({item});
+		m_ui->contentOverridesItemView->sortByColumn(0, Qt::AscendingOrder);
 	}
 }
 
