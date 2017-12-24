@@ -555,11 +555,16 @@ void PreferencesAdvancedPageWidget::addOverride()
 
 	if (!host.isEmpty())
 	{
-		QStandardItem *item(new QStandardItem(host));
-		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+		const QModelIndexList indexes(m_ui->contentOverridesItemView->getSourceModel()->match(m_ui->contentOverridesItemView->getSourceModel()->index(0, 0), Qt::DisplayRole, host));
 
-		m_ui->contentOverridesItemView->insertRow({item});
-		m_ui->contentOverridesItemView->sortByColumn(0, Qt::AscendingOrder);
+		if (indexes.isEmpty())
+		{
+			QStandardItem *item(new QStandardItem(host));
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+			m_ui->contentOverridesItemView->insertRow({item});
+			m_ui->contentOverridesItemView->sortByColumn(0, Qt::AscendingOrder);
+		}
 	}
 }
 
