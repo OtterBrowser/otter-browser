@@ -128,7 +128,7 @@ private:
 	QTime m_urlOpenTime;
 	QModelIndex m_currentIndex;
 	int m_deleteTimer;
-	bool m_ignoreEnter;
+	bool m_isIgnoringEnter;
 
 	static StartPageModel *m_model;
 	static Animation *m_spinnerAnimation;

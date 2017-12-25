@@ -328,7 +328,7 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	m_listView(new QListView(this)),
 	m_searchWidget(nullptr),
 	m_deleteTimer(0),
-	m_ignoreEnter(false)
+	m_isIgnoringEnter(false)
 {
 	if (!m_model)
 	{
@@ -504,7 +504,7 @@ void StartPageWidget::addTile()
 	OpenAddressDialog dialog(ActionExecutor::Object(), this);
 	dialog.setWindowTitle(tr("Add Tile"));
 
-	m_ignoreEnter = true;
+	m_isIgnoringEnter = true;
 
 	if (dialog.exec() == QDialog::Accepted && dialog.getResult().isValid())
 	{
@@ -885,9 +885,9 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (keyEvent)
 		{
-			if (m_ignoreEnter)
+			if (m_isIgnoringEnter)
 			{
-				m_ignoreEnter = false;
+				m_isIgnoringEnter = false;
 
 				if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
 				{
@@ -907,7 +907,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 							if (bookmark && bookmark->rowCount() > 0)
 							{
-								m_ignoreEnter = true;
+								m_isIgnoringEnter = true;
 
 								Menu menu(Menu::BookmarksMenuRole, this);
 								menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
@@ -970,9 +970,9 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (m_ignoreEnter)
+		if (m_isIgnoringEnter)
 		{
-			m_ignoreEnter = false;
+			m_isIgnoringEnter = false;
 		}
 
 		if (mouseEvent && m_listView->indexAt(mouseEvent->pos()) == m_currentIndex)
@@ -989,7 +989,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
-						m_ignoreEnter = true;
+						m_isIgnoringEnter = true;
 
 						Menu menu(Menu::BookmarksMenuRole, this);
 						menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
