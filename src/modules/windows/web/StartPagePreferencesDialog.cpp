@@ -37,7 +37,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 
 	m_ui->customBackgroundCheckBox->setChecked(backgroundModeString != QLatin1String("standard"));
 	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getOption(SettingsManager::StartPage_BackgroundPathOption).toString());
-	m_ui->backgroundFilePathWidget->setFilters({tr("Images (*.png *.jpg *.bmp *.gif)")});
+	m_ui->backgroundFilePathWidget->setFilters({tr("Images (*.png *.jpg *.bmp *.gif *.svg *.svgz)")});
 	m_ui->backgroundModeComboBox->addItem(tr("Best fit"), QLatin1String("bestFit"));
 	m_ui->backgroundModeComboBox->addItem(tr("Center"), QLatin1String("center"));
 	m_ui->backgroundModeComboBox->addItem(tr("Stretch"), QLatin1String("stretch"));
