@@ -899,41 +899,49 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
 			{
-				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
-
-				if (type == BookmarksModel::FolderBookmark)
+				switch (static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()))
 				{
-					const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+					case BookmarksModel::FolderBookmark:
+						{
+							const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
-					if (bookmark && bookmark->rowCount() > 0)
-					{
-						m_ignoreEnter = true;
+							if (bookmark && bookmark->rowCount() > 0)
+							{
+								m_ignoreEnter = true;
 
-						Menu menu(Menu::BookmarksMenuRole, this);
-						menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
-						menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
-					}
-				}
-				else if (type == BookmarksModel::UrlBookmark)
-				{
-					const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
+								Menu menu(Menu::BookmarksMenuRole, this);
+								menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+								menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
+							}
+						}
 
-					if (keyEvent->modifiers() != Qt::NoModifier)
-					{
-						m_urlOpenTime = QTime::currentTime();
+						break;
+					case BookmarksModel::UrlBookmark:
+						{
+							const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
 
-						Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
-					}
-					else
-					{
-						m_urlOpenTime = QTime::currentTime();
+							if (keyEvent->modifiers() != Qt::NoModifier)
+							{
+								m_urlOpenTime = QTime::currentTime();
 
-						m_window->setUrl(url);
-					}
-				}
-				else if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
-				{
-					addTile();
+								Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
+							}
+							else
+							{
+								m_urlOpenTime = QTime::currentTime();
+
+								m_window->setUrl(url);
+							}
+						}
+
+						break;
+					default:
+						if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+						{
+							addTile();
+						}
+
+						break;
 				}
 
 				return true;
