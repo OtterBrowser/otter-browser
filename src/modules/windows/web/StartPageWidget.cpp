@@ -53,15 +53,18 @@ StartPageModel* StartPageWidget::m_model(nullptr);
 Animation* StartPageWidget::m_spinnerAnimation(nullptr);
 QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullptr);
 
-TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
+TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent),
+	m_mode(NoBackground)
 {
+	handleOptionChanged(SettingsManager::StartPage_TileBackgroundModeOption, SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption));
+
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &TileDelegate::handleOptionChanged);
 }
 
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
-	const QString tileBackgroundMode(SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption).toString());
 	QColor backgroundColor(QGuiApplication::palette().color(QPalette::Window));
 	backgroundColor.setAlpha(200);
 
@@ -108,25 +111,25 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	painter->setClipPath(path);
 	painter->fillRect(rectangle, backgroundColor);
 
-	if (tileBackgroundMode != QLatin1String("none"))
+	if (m_mode != NoBackground)
 	{
 		rectangle.adjust(0, 0, 0, -textHeight);
 	}
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
-	if (type == BookmarksModel::FolderBookmark && tileBackgroundMode != QLatin1String("none"))
+	if (type == BookmarksModel::FolderBookmark && m_mode != NoBackground)
 	{
 		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.flags().testFlag(Qt::ItemIsEnabled) ? QIcon::Normal : QIcon::Disabled));
 	}
-	else if (tileBackgroundMode == QLatin1String("thumbnail"))
+	else if (m_mode == ThumbnailBackground)
 	{
 		painter->setBrush(Qt::white);
 		painter->setPen(Qt::transparent);
 		painter->drawRect(rectangle);
 		painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())), QRect(0, 0, rectangle.width(), rectangle.height()));
 	}
-	else if (tileBackgroundMode == QLatin1String("favicon"))
+	else if (m_mode == FaviconBackground)
 	{
 		const int faviconSize(((rectangle.height() > rectangle.width()) ? rectangle.width() : rectangle.height()) / 4);
 		QRect faviconRectangle(0, 0, faviconSize, faviconSize);
@@ -152,7 +155,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	painter->setClipping(false);
 	painter->setPen(QGuiApplication::palette().color((index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled), QPalette::Text));
 
-	if (tileBackgroundMode == QLatin1String("none"))
+	if (m_mode == NoBackground)
 	{
 		painter->drawText(rectangle, Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 	}
@@ -172,6 +175,27 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setBrush(Qt::transparent);
 	painter->drawPath(path);
+}
+
+void TileDelegate::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::StartPage_TileBackgroundModeOption)
+	{
+		const QString mode(value.toString());
+
+		if (mode == QLatin1String("favicon"))
+		{
+			m_mode = FaviconBackground;
+		}
+		else if (mode == QLatin1String("thumbnail"))
+		{
+			m_mode = ThumbnailBackground;
+		}
+		else
+		{
+			m_mode = NoBackground;
+		}
+	}
 }
 
 QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

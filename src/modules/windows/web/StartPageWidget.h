@@ -38,11 +38,26 @@ class Window;
 
 class TileDelegate final : public QStyledItemDelegate
 {
+	Q_OBJECT
+
 public:
+	enum BackgroundMode
+	{
+		NoBackground = 0,
+		FaviconBackground,
+		ThumbnailBackground
+	};
+
 	explicit TileDelegate(QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+protected slots:
+	void handleOptionChanged(int identifier, const QVariant &value);
+
+private:
+	BackgroundMode m_mode;
 };
 
 class StartPageContentsWidget final : public QWidget
