@@ -968,7 +968,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (m_isIgnoringEnter)
 		{
@@ -1008,7 +1008,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						return true;
 					}
 
-					mouseEvent->ignore();
+					event->ignore();
 
 					return true;
 				}
@@ -1040,7 +1040,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else
 			{
-				mouseEvent->ignore();
+				event->ignore();
 			}
 
 			return true;
