@@ -62,6 +62,9 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 	const QString tileBackgroundMode(SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption).toString());
+	QColor backgroundColor(QGuiApplication::palette().color(QPalette::Window));
+	backgroundColor.setAlpha(200);
+
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
 
@@ -83,7 +86,9 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		if (isAddTile)
 		{
-			painter->setBrush(QColor(200, 200, 200, 100));
+			backgroundColor.setAlpha(100);
+
+			painter->setBrush(backgroundColor);
 		}
 		else
 		{
@@ -101,7 +106,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	}
 
 	painter->setClipPath(path);
-	painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));
+	painter->fillRect(rectangle, backgroundColor);
 
 	if (tileBackgroundMode != QLatin1String("none"))
 	{
