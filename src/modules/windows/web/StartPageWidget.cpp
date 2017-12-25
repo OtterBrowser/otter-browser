@@ -122,20 +122,30 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		ThemesManager::createIcon(QLatin1String("inode-directory")).paint(painter, rectangle, Qt::AlignCenter, (index.flags().testFlag(Qt::ItemIsEnabled) ? QIcon::Normal : QIcon::Disabled));
 	}
-	else if (m_mode == ThumbnailBackground)
+	else
 	{
-		painter->setBrush(Qt::white);
-		painter->setPen(Qt::transparent);
-		painter->drawRect(rectangle);
-		painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())), QRect(0, 0, rectangle.width(), rectangle.height()));
-	}
-	else if (m_mode == FaviconBackground)
-	{
-		const int faviconSize(((rectangle.height() > rectangle.width()) ? rectangle.width() : rectangle.height()) / 4);
-		QRect faviconRectangle(0, 0, faviconSize, faviconSize);
-		faviconRectangle.moveCenter(rectangle.center());
+		switch (m_mode)
+		{
+			case FaviconBackground:
+				{
+					const int faviconSize(((rectangle.height() > rectangle.width()) ? rectangle.width() : rectangle.height()) / 4);
+					QRect faviconRectangle(0, 0, faviconSize, faviconSize);
+					faviconRectangle.moveCenter(rectangle.center());
 
-		HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, faviconRectangle);
+					HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, faviconRectangle);
+				}
+
+				break;
+			case ThumbnailBackground:
+				painter->setBrush(Qt::white);
+				painter->setPen(Qt::transparent);
+				painter->drawRect(rectangle);
+				painter->drawPixmap(rectangle, QPixmap(StartPageModel::getThumbnailPath(index.data(BookmarksModel::IdentifierRole).toULongLong())), QRect(0, 0, rectangle.width(), rectangle.height()));
+
+				break;
+			default:
+				break;
+		}
 	}
 
 	if (index.data(StartPageModel::IsReloadingRole).toBool())
