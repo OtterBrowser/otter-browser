@@ -209,8 +209,8 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(SourceViewer_ShowLineNumbersOption, BooleanType, true);
 	registerOption(SourceViewer_WrapLinesOption, BooleanType, false);
 	registerOption(StartPage_BackgroundColorOption, ColorType, QColor());
-	registerOption(StartPage_BackgroundModeOption, EnumerationType, QLatin1String("standard"), QStringList({QLatin1String("standard"), QLatin1String("bestFit"), QLatin1String("center"), QLatin1String("stretch"), QLatin1String("tile")}));
-	registerOption(StartPage_BackgroundPathOption, StringType, QString());
+	registerOption(StartPage_BackgroundModeOption, EnumerationType, QLatin1String("bestFit"), QStringList({QLatin1String("standard"), QLatin1String("bestFit"), QLatin1String("center"), QLatin1String("stretch"), QLatin1String("tile")}));
+	registerOption(StartPage_BackgroundPathOption, StringType, QLatin1String(":/style/start-page.svgz"));
 	registerOption(StartPage_BookmarksFolderOption, StringType, QLatin1String("/Start Page/"));
 	registerOption(StartPage_EnableStartPageOption, BooleanType, true);
 	registerOption(StartPage_ShowAddTileOption, BooleanType, true);
