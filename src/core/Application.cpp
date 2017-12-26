@@ -279,6 +279,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 	{
 		const QStringList decodedArguments(arguments);
 		QStringList encodedArguments;
+		encodedArguments.reserve(decodedArguments.count());
 
 #ifdef Q_OS_WIN
 		AllowSetForegroundWindow(ASFW_ANY);
@@ -950,6 +951,7 @@ void Application::handleNewConnection()
 
 	const QStringList encodedArguments(QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' ')));
 	QStringList decodedArguments;
+	decodedArguments.reserve(encodedArguments.count());
 
 	for (int i = 0; i < encodedArguments.count(); ++i)
 	{
