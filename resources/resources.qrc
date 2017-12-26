@@ -152,5 +152,6 @@
         <file>searchEngines/wikipedia.xml</file>
         <file>searchEngines/yahoo.xml</file>
         <file>searchEngines/youtube.xml</file>
+        <file>style/start-page.svgz</file>
     </qresource>
 </RCC>
