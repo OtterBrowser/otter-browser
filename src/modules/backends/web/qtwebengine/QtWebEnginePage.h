@@ -69,7 +69,7 @@ signals:
 	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebEnginePage::NavigationType navigationType);
-	void viewingMediaChanged(bool viewingMedia);
+	void viewingMediaChanged(bool isViewingMedia);
 };
 
 }

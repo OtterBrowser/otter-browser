@@ -123,7 +123,7 @@ signals:
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
 	void isDisplayingErrorPageChanged(QWebFrame *frame, bool isVisible);
-	void viewingMediaChanged(bool viewingMedia);
+	void viewingMediaChanged(bool isViewingMedia);
 
 friend class QtWebKitThumbnailFetchJob;
 friend class QtWebKitWebBackend;
