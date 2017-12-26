@@ -331,7 +331,9 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(position));
 	QMenu menu(this);
-	menu.addAction(tr("Add Cookie…"), this, SLOT(addCookie()));
+
+	connect(menu.addAction(tr("Add Cookie…")), &QAction::triggered, this, &CookiesContentsWidget::addCookie);
+
 	menu.addSeparator();
 
 	if (index.isValid())
@@ -341,18 +343,23 @@ void CookiesContentsWidget::showContextMenu(const QPoint &position)
 			menu.addAction(new Action(ActionsManager::DeleteAction, {}, ActionExecutor::Object(this, this), &menu));
 		}
 
-		menu.addAction(tr("Remove All Cookies from This Domain…"), this, SLOT(removeDomainCookies()));
+		connect(menu.addAction(tr("Remove All Cookies from This Domain…")), &QAction::triggered, this, &CookiesContentsWidget::removeDomainCookies);
 	}
 
-	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
+	QAction *removeAllCookiesAction(menu.addAction(tr("Remove All Cookies…")));
+	removeAllCookiesAction->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
+
 	menu.addSeparator();
 	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 
 	if (index.parent() != m_model->invisibleRootItem()->index())
 	{
 		menu.addSeparator();
-		menu.addAction(tr("Properties…"), this, SLOT(cookieProperties()));
+
+		connect(menu.addAction(tr("Properties…")), &QAction::triggered, this, &CookiesContentsWidget::cookieProperties);
 	}
+
+	connect(removeAllCookiesAction, &QAction::triggered, this, &CookiesContentsWidget::removeAllCookies);
 
 	menu.exec(m_ui->cookiesViewWidget->mapToGlobal(position));
 }
