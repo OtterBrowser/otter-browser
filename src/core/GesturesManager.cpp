@@ -933,37 +933,39 @@ int GesturesManager::calculateGesturesDifference(const QVector<MouseProfile::Ges
 
 	for (int i = 0; i < steps.count(); ++i)
 	{
+		const MouseProfile::Gesture::Step matchedStep(steps.at(i));
+		const MouseProfile::Gesture::Step recordedStep(m_steps.at(i));
 		int stepDifference(0);
 
-		if (i == (steps.count() - 1) && steps.at(i).type == QEvent::MouseButtonPress && m_steps.at(i).type == QEvent::MouseButtonDblClick && steps.at(i).button == m_steps.at(i).button && steps.at(i).modifiers == m_steps.at(i).modifiers)
+		if (i == (steps.count() - 1) && matchedStep.type == QEvent::MouseButtonPress && recordedStep.type == QEvent::MouseButtonDblClick && matchedStep.button == recordedStep.button && matchedStep.modifiers == recordedStep.modifiers)
 		{
 			stepDifference += 100;
 		}
 
-		if (m_steps.at(i).type == steps.at(i).type && (steps.at(i).type == QEvent::MouseButtonPress || steps.at(i).type == QEvent::MouseButtonRelease || steps.at(i).type == QEvent::MouseButtonDblClick) && m_steps.at(i).button == steps.at(i).button && (m_steps.at(i).modifiers | steps.at(i).modifiers) == m_steps.at(i).modifiers)
+		if (recordedStep.type == matchedStep.type && (matchedStep.type == QEvent::MouseButtonPress || matchedStep.type == QEvent::MouseButtonRelease || matchedStep.type == QEvent::MouseButtonDblClick) && recordedStep.button == matchedStep.button && (recordedStep.modifiers | matchedStep.modifiers) == recordedStep.modifiers)
 		{
-			if (m_steps.at(i).modifiers.testFlag(Qt::ControlModifier) && !steps.at(i).modifiers.testFlag(Qt::ControlModifier))
+			if (recordedStep.modifiers.testFlag(Qt::ControlModifier) && !matchedStep.modifiers.testFlag(Qt::ControlModifier))
 			{
 				stepDifference += 8;
 			}
 
-			if (m_steps.at(i).modifiers.testFlag(Qt::ShiftModifier) && !steps.at(i).modifiers.testFlag(Qt::ShiftModifier))
+			if (recordedStep.modifiers.testFlag(Qt::ShiftModifier) && !matchedStep.modifiers.testFlag(Qt::ShiftModifier))
 			{
 				stepDifference += 4;
 			}
 
-			if (m_steps.at(i).modifiers.testFlag(Qt::AltModifier) && !steps.at(i).modifiers.testFlag(Qt::AltModifier))
+			if (recordedStep.modifiers.testFlag(Qt::AltModifier) && !matchedStep.modifiers.testFlag(Qt::AltModifier))
 			{
 				stepDifference += 2;
 			}
 
-			if (m_steps.at(i).modifiers.testFlag(Qt::MetaModifier) && !steps.at(i).modifiers.testFlag(Qt::MetaModifier))
+			if (recordedStep.modifiers.testFlag(Qt::MetaModifier) && !matchedStep.modifiers.testFlag(Qt::MetaModifier))
 			{
 				stepDifference += 1;
 			}
 		}
 
-		if (stepDifference == 0 && steps.at(i) != m_steps.at(i))
+		if (stepDifference == 0 && matchedStep != recordedStep)
 		{
 			return std::numeric_limits<int>::max();
 		}
