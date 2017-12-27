@@ -128,7 +128,7 @@ protected:
 	explicit GesturesManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static void recognizeMoveStep(QInputEvent *event);
+	static void recognizeMoveStep(const QInputEvent *event);
 	static void releaseObject();
 	static MouseProfile::Gesture matchGesture();
 	static int calculateLastMoveDistance(bool measureFinished = false);

@@ -708,7 +708,7 @@ void GesturesManager::loadProfiles()
 	}
 }
 
-void GesturesManager::recognizeMoveStep(QInputEvent *event)
+void GesturesManager::recognizeMoveStep(const QInputEvent *event)
 {
 	if (!m_recognizer)
 	{
@@ -1100,7 +1100,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			if (!m_events.isEmpty() && m_events.last()->type() == event->type())
 			{
-				QMouseEvent *previousMouseEvent(static_cast<QMouseEvent*>(m_events.last()));
+				const QMouseEvent *previousMouseEvent(static_cast<QMouseEvent*>(m_events.last()));
 
 				if (previousMouseEvent && previousMouseEvent->button() == mouseEvent->button() && previousMouseEvent->modifiers() == mouseEvent->modifiers())
 				{
@@ -1197,7 +1197,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 			break;
 		case QEvent::Wheel:
 			{
-				QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
+				const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 				if (!wheelEvent)
 				{
