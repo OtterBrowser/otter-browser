@@ -764,7 +764,7 @@ bool QtWebKitPage::event(QEvent *event)
 {
 	if (event->type() == QEvent::Wheel)
 	{
-		QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
+		const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 		if (wheelEvent->buttons() == Qt::RightButton)
 		{
