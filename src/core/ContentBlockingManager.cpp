@@ -231,6 +231,7 @@ void ContentBlockingManager::ensureInitialized()
 
 		const QJsonArray languagesArray(profileObject.value(QLatin1String("languages")).toArray());
 		QStringList languages;
+		languages.reserve(languagesArray.count());
 
 		for (int j = 0; j < languagesArray.count(); ++j)
 		{
@@ -362,6 +363,7 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 		{
 			const QVector<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
 			QStringList languageNames;
+			languageNames.reserve(languages.count());
 
 			for (int j = 0; j < languages.count(); ++j)
 			{
