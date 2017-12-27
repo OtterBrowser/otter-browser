@@ -682,15 +682,15 @@ void GesturesManager::loadProfiles()
 		{
 			const QVector<MouseProfile::Gesture> &gestures(iterator.value());
 
-			for (int k = 0; k < gestures.count(); ++k)
+			for (int j = 0; j < gestures.count(); ++j)
 			{
 				bool isAllowed(true);
 
 				if (!areMouseGesturesEnabled)
 				{
-					for (int l = 0; l < gestures.at(k).steps.count(); ++l)
+					for (int k = 0; k < gestures.at(j).steps.count(); ++k)
 					{
-						if (gestures.at(k).steps.at(l).type == QEvent::MouseMove)
+						if (gestures.at(j).steps.at(k).type == QEvent::MouseMove)
 						{
 							isAllowed = false;
 
@@ -701,7 +701,7 @@ void GesturesManager::loadProfiles()
 
 				if (isAllowed)
 				{
-					m_gestures[static_cast<GesturesContext>(iterator.key())].append(gestures.at(k));
+					m_gestures[static_cast<GesturesContext>(iterator.key())].append(gestures.at(j));
 				}
 			}
 		}
