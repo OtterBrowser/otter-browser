@@ -1200,7 +1200,7 @@ QVector<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem 
 
 		if (item)
 		{
-			const BookmarkType type(static_cast<BookmarkType>(item->data(TypeRole).toInt()));
+			const BookmarkType type(static_cast<BookmarkType>(item->getType()));
 
 			if (type == FolderBookmark)
 			{
@@ -1210,7 +1210,7 @@ QVector<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem 
 				items += findUrls(url, item);
 #endif
 			}
-			else if (type == UrlBookmark && url == Utils::normalizeUrl(item->data(UrlRole).toUrl()))
+			else if (type == UrlBookmark && url == Utils::normalizeUrl(item->getUrl()))
 			{
 				items.append(item);
 			}
