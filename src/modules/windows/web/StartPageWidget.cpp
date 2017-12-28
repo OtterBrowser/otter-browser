@@ -65,9 +65,6 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 {
 	const int textHeight(qRound(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5));
 	const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
-	QColor backgroundColor(QGuiApplication::palette().color(QPalette::Window));
-	backgroundColor.setAlpha(200);
-
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
 
@@ -84,14 +81,12 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		}
 		else
 		{
-			painter->setPen(QPen(QColor(200, 200, 200), 1));
+			painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
 		}
 
 		if (isAddTile)
 		{
-			backgroundColor.setAlpha(100);
-
-			painter->setBrush(backgroundColor);
+			painter->setBrush(QColor(179, 229, 252, 224));
 		}
 		else
 		{
@@ -109,7 +104,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	}
 
 	painter->setClipPath(path);
-	painter->fillRect(rectangle, backgroundColor);
+	painter->fillRect(rectangle, QColor(179, 229, 252, 128));
 
 	if (m_mode != NoBackground)
 	{
@@ -162,8 +157,11 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		}
 	}
 
+	QPalette palette(QGuiApplication::palette());
+	palette.setColor(QPalette::Text, QColor(26, 35, 128));
+
 	painter->setClipping(false);
-	painter->setPen(QGuiApplication::palette().color((index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled), QPalette::Text));
+	painter->setPen(palette.color((index.flags().testFlag(Qt::ItemIsEnabled) ? QPalette::Active : QPalette::Disabled), QPalette::Text));
 
 	if (m_mode == NoBackground)
 	{
@@ -180,7 +178,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	}
 	else
 	{
-		painter->setPen(QPen(QColor(200, 200, 200), 1));
+		painter->setPen(QPen(QColor(26, 35, 126, 51), 1));
 	}
 
 	painter->setBrush(Qt::transparent);
