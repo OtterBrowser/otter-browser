@@ -135,7 +135,7 @@ bool JsonSettings::save(const QString &path, bool isAtomic)
 		QTextStream stream(file);
 		stream.setCodec("UTF-8");
 
-		QStringList comment(m_comment.split(QLatin1Char('\n')));
+		const QStringList comment(m_comment.split(QLatin1Char('\n')));
 
 		for (int i = 0; i < comment.count(); ++i)
 		{

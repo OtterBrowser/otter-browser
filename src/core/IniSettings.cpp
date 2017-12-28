@@ -230,7 +230,7 @@ bool IniSettings::save(const QString &path, bool isAtomic)
 
 	if (!m_comment.isEmpty())
 	{
-		QStringList comment(m_comment.split(QLatin1Char('\n')));
+		const QStringList comment(m_comment.split(QLatin1Char('\n')));
 
 		for (int i = 0; i < comment.count(); ++i)
 		{
