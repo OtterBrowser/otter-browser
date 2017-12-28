@@ -176,8 +176,7 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 		if (!SessionsManager::isReadOnly() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
 		{
-			size.setWidth(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt());
-			size.setHeight(SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
+			size = QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
 		}
 		else if (!needsTitleUpdate)
 		{
