@@ -719,9 +719,11 @@ void GesturesManager::recognizeMoveStep(const QInputEvent *event)
 
 	for (int i = 0; i < m_contexts.count(); ++i)
 	{
-		for (int j = 0; j < m_gestures[m_contexts.at(i)].count(); ++j)
+		const QVector<MouseProfile::Gesture> gestures(m_gestures[m_contexts.at(i)]);
+
+		for (int j = 0; j < gestures.count(); ++j)
 		{
-			const QVector<MouseProfile::Gesture::Step> steps(m_gestures[m_contexts.at(i)].at(j).steps);
+			const QVector<MouseProfile::Gesture::Step> steps(gestures.at(j).steps);
 
 			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
 			{
@@ -840,9 +842,11 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 
 	for (int i = 0; i < m_contexts.count(); ++i)
 	{
-		for (int j = 0; j < m_nativeGestures[m_contexts.at(i)].count(); ++j)
+		const QVector<QVector<MouseProfile::Gesture::Step> > nativeGestures(m_nativeGestures[m_contexts.at(i)]);
+
+		for (int j = 0; j < nativeGestures.count(); ++j)
 		{
-			const int difference(calculateGesturesDifference(m_nativeGestures[m_contexts.at(i)].at(j)));
+			const int difference(calculateGesturesDifference(nativeGestures.at(j)));
 
 			if (difference == 0)
 			{
@@ -861,18 +865,20 @@ MouseProfile::Gesture GesturesManager::matchGesture()
 			}
 		}
 
-		for (int j = 0; j < m_gestures[m_contexts.at(i)].count(); ++j)
+		const QVector<MouseProfile::Gesture> gestures(m_gestures[m_contexts.at(i)]);
+
+		for (int j = 0; j < gestures.count(); ++j)
 		{
-			const int difference(calculateGesturesDifference(m_gestures[m_contexts.at(i)].at(j).steps));
+			const int difference(calculateGesturesDifference(gestures.at(j).steps));
 
 			if (difference == 0)
 			{
-				return m_gestures[m_contexts.at(i)].at(j);
+				return gestures.at(j);
 			}
 
 			if (difference < lowestDifference)
 			{
-				bestGesture = m_gestures[m_contexts.at(i)].at(j);
+				bestGesture = gestures.at(j);
 				lowestDifference = difference;
 			}
 		}
