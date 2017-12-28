@@ -98,8 +98,9 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 	}
 
 	const QStringList exceptions(SettingsManager::getOption(SettingsManager::Security_IgnoreSslErrorsOption, Utils::extractHost(reply->url())).toStringList());
-	QStringList messages;
 	QList<QSslError> errorsToIgnore;
+	QStringList messages;
+	messages.reserve(errors.count());
 
 	for (int i = 0; i < errors.count(); ++i)
 	{
