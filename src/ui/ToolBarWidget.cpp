@@ -740,10 +740,8 @@ void ToolBarWidget::handleFullScreenStateChanged(bool isFullScreen)
 	{
 		reload();
 	}
-	else
-	{
-		setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible(isFullScreen ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
-	}
+
+	setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible(isFullScreen ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 }
 
 void ToolBarWidget::updateToggleGeometry()
