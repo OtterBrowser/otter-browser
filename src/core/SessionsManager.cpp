@@ -359,6 +359,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 QStringList SessionsManager::getClosedWindows()
 {
 	QStringList closedWindows;
+	closedWindows.reserve(m_closedWindows.count());
 
 	for (int i = 0; i < m_closedWindows.count(); ++i)
 	{
