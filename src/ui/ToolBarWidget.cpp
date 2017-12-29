@@ -851,14 +851,7 @@ void ToolBarWidget::setState(const ToolBarState &state)
 {
 	m_state = state;
 
-	if (getDefinition().hasToggle)
-	{
-		reload();
-	}
-	else
-	{
-		setVisible(shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
-	}
+	handleFullScreenStateChanged(m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false);
 }
 
 void ToolBarWidget::setToolBarLocked(bool locked)
