@@ -808,7 +808,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
-	setVisible(definition.hasToggle || shouldBeVisible(mode));
+	setVisible(shouldBeVisible(mode));
 	setOrientation((m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea) ? Qt::Horizontal : Qt::Vertical);
 	clearEntries();
 
