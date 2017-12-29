@@ -741,7 +741,7 @@ void ToolBarWidget::handleFullScreenStateChanged(bool isFullScreen)
 		reload();
 	}
 
-	setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible(isFullScreen ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+	setVisible(shouldBeVisible(isFullScreen ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 }
 
 void ToolBarWidget::updateToggleGeometry()
@@ -808,7 +808,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	m_isCollapsed = (definition.hasToggle && !calculateShouldBeVisible(definition, m_state, mode));
 
-	setVisible(m_identifier == ToolBarsManager::ProgressBar || definition.hasToggle || shouldBeVisible(mode));
+	setVisible(definition.hasToggle || shouldBeVisible(mode));
 	setOrientation((m_area != Qt::LeftToolBarArea && m_area != Qt::RightToolBarArea) ? Qt::Horizontal : Qt::Vertical);
 	clearEntries();
 
@@ -857,7 +857,7 @@ void ToolBarWidget::setState(const ToolBarState &state)
 	}
 	else
 	{
-		setVisible(m_identifier == ToolBarsManager::ProgressBar || shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
+		setVisible(shouldBeVisible((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode));
 	}
 }
 
