@@ -153,11 +153,12 @@ void QtWebEnginePage::handleLoadFinished()
 	{
 		if (m_widget)
 		{
-			const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url()).toStringList()));
+			const QUrl url(m_widget->getUrl());
+			const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList()));
 
 			if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 			{
-				const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url(), url(), NetworkManager::OtherType).comesticFiltersMode);
+				const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url, url, NetworkManager::OtherType).comesticFiltersMode);
 				QStringList styleSheetBlackList;
 				QStringList styleSheetWhiteList;
 
@@ -168,7 +169,7 @@ void QtWebEnginePage::handleLoadFinished()
 						styleSheetBlackList = ContentBlockingManager::getStyleSheet(profiles);
 					}
 
-					const QStringList domainList(ContentBlockingManager::createSubdomainList(url().host()));
+					const QStringList domainList(ContentBlockingManager::createSubdomainList(url.host()));
 
 					for (int i = 0; i < domainList.count(); ++i)
 					{
@@ -190,7 +191,7 @@ void QtWebEnginePage::handleLoadFinished()
 				}
 			}
 
-			const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url().host()));
+			const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url.host()));
 
 			if (!blockedRequests.isEmpty())
 			{
