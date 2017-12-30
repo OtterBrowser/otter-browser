@@ -154,40 +154,17 @@ void QtWebEnginePage::handleLoadFinished()
 		if (m_widget)
 		{
 			const QUrl url(m_widget->getUrl());
-			const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList()));
+			const ContentBlockingManager::CosmeticFiltersResult cosmeticFilters(ContentBlockingManager::getCosmeticFilters(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), url));
 
-			if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
+			if (!cosmeticFilters.rules.isEmpty() || !cosmeticFilters.exceptions.isEmpty())
 			{
-				const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url, url, NetworkManager::OtherType).comesticFiltersMode);
-				QStringList styleSheetBlackList;
-				QStringList styleSheetWhiteList;
+				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
 
-				if (mode != ContentBlockingManager::NoFiltersMode)
+				if (file.open(QIODevice::ReadOnly))
 				{
-					if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
-					{
-						styleSheetBlackList = ContentBlockingManager::getStyleSheet(profiles);
-					}
+					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(cosmeticFilters.exceptions)).arg(createJavaScriptList(cosmeticFilters.rules)));
 
-					const QStringList domainList(ContentBlockingManager::createSubdomainList(url.host()));
-
-					for (int i = 0; i < domainList.count(); ++i)
-					{
-						styleSheetBlackList += ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles);
-						styleSheetWhiteList += ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles);
-					}
-				}
-
-				if (!styleSheetBlackList.isEmpty() || !styleSheetWhiteList.isEmpty())
-				{
-					QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
-
-					if (file.open(QIODevice::ReadOnly))
-					{
-						runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
-
-						file.close();
-					}
+					file.close();
 				}
 			}
 
