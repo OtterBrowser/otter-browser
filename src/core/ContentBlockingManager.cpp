@@ -484,22 +484,30 @@ ContentBlockingManager::CosmeticFiltersResult ContentBlockingManager::getCosmeti
 		return {};
 	}
 
-	CosmeticFiltersResult result;
 	const CosmeticFiltersMode mode(checkUrl(profiles, requestUrl, requestUrl, NetworkManager::OtherType).comesticFiltersMode);
 
-	if (mode != ContentBlockingManager::NoFiltersMode)
+	if (mode == ContentBlockingManager::NoFiltersMode)
 	{
-		if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
-		{
-			result.rules = getStyleSheet(profiles);
-		}
+		return {};
+	}
 
-		const QStringList domainList(createSubdomainList(requestUrl.host()));
+	CosmeticFiltersResult result;
+	const QStringList domains(createSubdomainList(requestUrl.host()));
 
-		for (int i = 0; i < domainList.count(); ++i)
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles.at(i) >= 0 && profiles.at(i) < m_profiles.count())
 		{
-			result.rules.append(getStyleSheetBlackList(domainList.at(i), profiles));
-			result.exceptions.append(getStyleSheetWhiteList(domainList.at(i), profiles));
+			if (mode != DomainOnlyFiltersMode)
+			{
+				result.rules.append(m_profiles.at(profiles.at(i))->getStyleSheet());
+			}
+
+			for (int j = 0; j < domains.count(); ++j)
+			{
+				result.rules.append(m_profiles.at(profiles.at(i))->getStyleSheetBlackList(domains.at(j)));
+				result.exceptions.append(m_profiles.at(profiles.at(i))->getStyleSheetWhiteList(domains.at(j)));
+			}
 		}
 	}
 
