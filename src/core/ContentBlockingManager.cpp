@@ -477,6 +477,35 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	return result;
 }
 
+ContentBlockingManager::CosmeticFiltersResult ContentBlockingManager::getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl)
+{
+	if (profiles.isEmpty() || m_cosmeticFiltersMode == NoFiltersMode)
+	{
+		return {};
+	}
+
+	CosmeticFiltersResult result;
+	const CosmeticFiltersMode mode(checkUrl(profiles, requestUrl, requestUrl, NetworkManager::OtherType).comesticFiltersMode);
+
+	if (mode != ContentBlockingManager::NoFiltersMode)
+	{
+		if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
+		{
+			result.rules = getStyleSheet(profiles);
+		}
+
+		const QStringList domainList(createSubdomainList(requestUrl.host()));
+
+		for (int i = 0; i < domainList.count(); ++i)
+		{
+			result.rules.append(getStyleSheetBlackList(domainList.at(i), profiles));
+			result.exceptions.append(getStyleSheetWhiteList(domainList.at(i), profiles));
+		}
+	}
+
+	return result;
+}
+
 QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 {
 	QStringList subdomainList;

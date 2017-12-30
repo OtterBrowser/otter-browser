@@ -72,6 +72,7 @@ public:
 	static ContentBlockingProfile* getProfile(const QString &profile);
 	static ContentBlockingProfile* getProfile(int identifier);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
+	static CosmeticFiltersResult getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl);
 	static QStringList createSubdomainList(const QString &domain);
 	static QStringList getStyleSheet(const QVector<int> &profiles);
 	static QStringList getStyleSheetBlackList(const QString &domain, const QVector<int> &profiles);
