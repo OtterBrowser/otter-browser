@@ -58,6 +58,12 @@ public:
 		bool isException = false;
 	};
 
+	struct CosmeticFiltersResult final
+	{
+		QStringList rules;
+		QStringList exceptions;
+	};
+
 	static void createInstance();
 	static void addProfile(ContentBlockingProfile *profile);
 	static void removeProfile(ContentBlockingProfile *profile);
