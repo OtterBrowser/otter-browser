@@ -157,10 +157,10 @@ private:
 	QUrl m_updateUrl;
 	QDateTime m_lastUpdate;
 	QRegularExpression m_domainExpression;
-	QStringList m_styleSheet;
+	QStringList m_cosmeticFiltersRules;
 	QVector<QLocale::Language> m_languages;
-	QMultiHash<QString, QString> m_styleSheetBlackList;
-	QMultiHash<QString, QString> m_styleSheetWhiteList;
+	QMultiHash<QString, QString> m_cosmeticFiltersDomainRules;
+	QMultiHash<QString, QString> m_cosmeticFiltersDomainExceptions;
 	ProfileCategory m_category;
 	ProfileFlags m_flags;
 	int m_updateInterval;

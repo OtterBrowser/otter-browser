@@ -80,9 +80,9 @@ void ContentBlockingProfile::clear()
 		QtConcurrent::run(this, &ContentBlockingProfile::deleteNode, m_root);
 	}
 
-	m_styleSheet.clear();
-	m_styleSheetWhiteList.clear();
-	m_styleSheetBlackList.clear();
+	m_cosmeticFiltersRules.clear();
+	m_cosmeticFiltersDomainExceptions.clear();
+	m_cosmeticFiltersDomainRules.clear();
 
 	m_wasLoaded = false;
 }
@@ -143,7 +143,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 	{
 		if (ContentBlockingManager::getCosmeticFiltersMode() == ContentBlockingManager::AllFiltersMode)
 		{
-			m_styleSheet.append(rule.mid(2));
+			m_cosmeticFiltersRules.append(rule.mid(2));
 		}
 
 		return;
@@ -153,7 +153,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 	{
 		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 		{
-			parseStyleSheetRule(rule.split(QLatin1String("##")), m_styleSheetBlackList);
+			parseStyleSheetRule(rule.split(QLatin1String("##")), m_cosmeticFiltersDomainRules);
 		}
 
 		return;
@@ -163,7 +163,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 	{
 		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 		{
-			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_styleSheetWhiteList);
+			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_cosmeticFiltersDomainExceptions);
 		}
 
 		return;
@@ -759,13 +759,13 @@ ContentBlockingManager::CosmeticFiltersResult ContentBlockingProfile::getCosmeti
 
 	if (!isDomainOnly)
 	{
-		result.rules = m_styleSheet;
+		result.rules = m_cosmeticFiltersRules;
 	}
 
 	for (int i = 0; i < domains.count(); ++i)
 	{
-		result.rules.append(m_styleSheetBlackList.values(domains.at(i)));
-		result.exceptions.append(m_styleSheetWhiteList.values(domains.at(i)));
+		result.rules.append(m_cosmeticFiltersDomainRules.values(domains.at(i)));
+		result.exceptions.append(m_cosmeticFiltersDomainExceptions.values(domains.at(i)));
 	}
 
 	return result;
