@@ -444,14 +444,14 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 {
 	if (profiles.isEmpty())
 	{
-		return CheckResult();
+		return {};
 	}
 
 	const QString scheme(requestUrl.scheme());
 
 	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
 	{
-		return CheckResult();
+		return {};
 	}
 
 	CheckResult result;
