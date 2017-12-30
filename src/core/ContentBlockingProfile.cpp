@@ -748,34 +748,27 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 	return result;
 }
 
-QStringList ContentBlockingProfile::getStyleSheet()
+ContentBlockingManager::CosmeticFiltersResult ContentBlockingProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
 {
 	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
 
-	return m_styleSheet;
-}
+	ContentBlockingManager::CosmeticFiltersResult result;
 
-QStringList ContentBlockingProfile::getStyleSheetBlackList(const QString &domain)
-{
-	if (!m_wasLoaded)
+	if (!isDomainOnly)
 	{
-		loadRules();
+		result.rules = m_styleSheet;
 	}
 
-	return m_styleSheetBlackList.values(domain);
-}
-
-QStringList ContentBlockingProfile::getStyleSheetWhiteList(const QString &domain)
-{
-	if (!m_wasLoaded)
+	for (int i = 0; i < domains.count(); ++i)
 	{
-		loadRules();
+		result.rules.append(m_styleSheetBlackList.values(domains.at(i)));
+		result.exceptions.append(m_styleSheetWhiteList.values(domains.at(i)));
 	}
 
-	return m_styleSheetWhiteList.values(domain);
+	return result;
 }
 
 QVector<QLocale::Language> ContentBlockingProfile::getLanguages() const

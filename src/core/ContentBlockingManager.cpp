@@ -498,18 +498,10 @@ ContentBlockingManager::CosmeticFiltersResult ContentBlockingManager::getCosmeti
 	{
 		if (profiles.at(i) >= 0 && profiles.at(i) < m_profiles.count())
 		{
-			ContentBlockingProfile *profile(m_profiles.at(profiles.at(i)));
+			const CosmeticFiltersResult profileResult(m_profiles.at(profiles.at(i))->getCosmeticFilters(domains, (mode == DomainOnlyFiltersMode)));
 
-			if (mode != DomainOnlyFiltersMode)
-			{
-				result.rules.append(profile->getStyleSheet());
-			}
-
-			for (int j = 0; j < domains.count(); ++j)
-			{
-				result.rules.append(profile->getStyleSheetBlackList(domains.at(j)));
-				result.exceptions.append(profile->getStyleSheetWhiteList(domains.at(j)));
-			}
+			result.rules.append(profileResult.rules);
+			result.exceptions.append(profileResult.exceptions);
 		}
 	}
 

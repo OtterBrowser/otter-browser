@@ -65,9 +65,7 @@ public:
 	QUrl getUpdateUrl() const;
 	QDateTime getLastUpdate() const;
 	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
-	QStringList getStyleSheet();
-	QStringList getStyleSheetBlackList(const QString &domain);
-	QStringList getStyleSheetWhiteList(const QString &domain);
+	ContentBlockingManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
 	QVector<QLocale::Language> getLanguages() const;
 	ProfileCategory getCategory() const;
 	ProfileFlags getFlags() const;
