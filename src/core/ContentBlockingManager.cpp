@@ -534,51 +534,6 @@ QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 	return subdomainList;
 }
 
-QStringList ContentBlockingManager::getStyleSheet(const QVector<int> &profiles)
-{
-	QStringList styleSheet;
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
-		{
-			styleSheet += m_profiles.at(profiles[i])->getStyleSheet();
-		}
-	}
-
-	return styleSheet;
-}
-
-QStringList ContentBlockingManager::getStyleSheetBlackList(const QString &domain, const QVector<int> &profiles)
-{
-	QStringList data;
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
-		{
-			data.append(m_profiles.at(profiles[i])->getStyleSheetBlackList(domain));
-		}
-	}
-
-	return data;
-}
-
-QStringList ContentBlockingManager::getStyleSheetWhiteList(const QString &domain, const QVector<int> &profiles)
-{
-	QStringList data;
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
-		{
-			data.append(m_profiles.at(profiles[i])->getStyleSheetWhiteList(domain));
-		}
-	}
-
-	return data;
-}
-
 QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 {
 	ensureInitialized();
