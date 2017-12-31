@@ -1674,13 +1674,17 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::InspectPageAction:
-			if (!m_inspector)
 			{
-				getInspector();
-			}
+				const bool showInspector(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 
-			emit arbitraryActionsStateChanged({ActionsManager::InspectPageAction});
-			emit requestedInspectorVisibilityChange(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
+				if (showInspector && !m_inspector)
+				{
+					getInspector();
+				}
+
+				emit requestedInspectorVisibilityChange(showInspector);
+				emit arbitraryActionsStateChanged({ActionsManager::InspectPageAction});
+			}
 
 			break;
 		case ActionsManager::InspectElementAction:
