@@ -172,16 +172,24 @@ SessionInformation StartupDialog::getSession() const
 			entry.url = QLatin1String("about:blank");
 		}
 
-		SessionWindow tab;
-		tab.history.append(entry);
-		tab.historyIndex = 0;
+		SessionWindow window;
+		window.history.append(entry);
+		window.historyIndex = 0;
 
-		SessionMainWindow window;
-		window.windows.append(tab);
+		SessionMainWindow mainWindow;
+		mainWindow.windows.append(window);
+
+		if (!originalSession.windows.isEmpty())
+		{
+			const SessionMainWindow originalMainWindow(originalSession.windows.first());
+
+			mainWindow.toolBars = originalMainWindow.toolBars;
+			mainWindow.hasToolBarsState = originalMainWindow.hasToolBarsState;
+		}
 
 		session.path = QLatin1String("default");
 		session.title = tr("Default");
-		session.windows.append(window);
+		session.windows.append(mainWindow);
 		session.index = 0;
 	}
 
