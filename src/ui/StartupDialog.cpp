@@ -120,56 +120,40 @@ void StartupDialog::setSession(int index)
 
 SessionInformation StartupDialog::getSession() const
 {
+	const SessionInformation originalSession(SessionsManager::getSession(m_ui->sessionComboBox->currentData().toString()));
 	SessionInformation session;
 
 	if (m_ui->continueSessionButton->isChecked())
 	{
-		QVector<SessionMainWindow> windows;
-		windows.reserve(m_windowsModel->rowCount());
+		session = originalSession;
 
-		session = SessionsManager::getSession(m_ui->sessionComboBox->currentData().toString());
-
-		for (int i = 0; i < m_windowsModel->rowCount(); ++i)
+		for (int i = (m_windowsModel->rowCount() - 1); i >= 0; --i)
 		{
-			const QModelIndex windowIndex(m_windowsModel->index(i, 0));
+			const QModelIndex mainWindowIndex(m_windowsModel->index(i, 0));
+			const int amount(m_windowsModel->rowCount(mainWindowIndex));
 
-			if (!windowIndex.isValid() || (windowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && windowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
+			if (!mainWindowIndex.isValid() || i >= session.windows.count() || amount < 1)
 			{
 				continue;
 			}
 
-			const int index(session.windows.value(i, SessionMainWindow()).index - 1);
-			const int windowAmount(m_windowsModel->rowCount(windowIndex));
-			SessionMainWindow window;
-			window.index = (index + 1);
-			window.geometry = windowIndex.data(Qt::UserRole).toByteArray();
-			window.windows.reserve(windowAmount);
-
-			for (int j = 0; j < windowAmount; ++j)
+			if (mainWindowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && mainWindowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked)
 			{
-				const QModelIndex tabIndex(windowIndex.child(j, 0));
+				session.windows.removeAt(i);
 
-				if (tabIndex.isValid() && tabIndex.data(Qt::CheckStateRole).toInt() == Qt::Checked)
-				{
-					window.windows.append(session.windows.value(i, SessionMainWindow()).windows.value(j, SessionWindow()));
-				}
-				else
-				{
-					if (j == index)
-					{
-						window.index = 1;
-					}
-					else if (j > 0 && j < index)
-					{
-						--window.index;
-					}
-				}
+				continue;
 			}
 
-			windows.append(window);
-		}
+			for (int j = (amount - 1); j >= 0; --j)
+			{
+				const QModelIndex windowIndex(mainWindowIndex.child(j, 0));
 
-		session.windows = windows;
+				if (windowIndex.isValid() && windowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && windowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked && j < session.windows.at(i).windows.count())
+				{
+					session.windows[i].windows.removeAt(j);
+				}
+			}
+		}
 	}
 	else
 	{
