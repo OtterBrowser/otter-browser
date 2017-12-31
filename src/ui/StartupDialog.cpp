@@ -32,6 +32,7 @@ StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dial
 {
 	m_ui->setupUi(this);
 	m_ui->windowsTreeView->setModel(m_windowsModel);
+	m_ui->homePageButton->setEnabled(!SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString().isEmpty());
 
 	const QStringList sessionNames(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
