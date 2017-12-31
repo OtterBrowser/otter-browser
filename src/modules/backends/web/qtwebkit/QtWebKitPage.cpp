@@ -67,21 +67,16 @@ void QtWebKitFrame::runUserScripts(const QUrl &url) const
 
 void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool remove)
 {
-	const QWebElement document(m_frame->documentElement());
 	const QString value(remove ? QLatin1String("none !important") : QString());
+	const QWebElementCollection elements(m_frame->documentElement().findAll(rules.join(QLatin1Char(','))));
 
-	for (int i = 0; i < rules.count(); ++i)
+	for (int i = 0; i < elements.count(); ++i)
 	{
-		const QWebElementCollection elements(document.findAll(rules.at(i)));
+		QWebElement element(elements.at(i));
 
-		for (int j = 0; j < elements.count(); ++j)
+		if (!element.isNull())
 		{
-			QWebElement element(elements.at(j));
-
-			if (!element.isNull())
-			{
-				element.setStyleProperty(QLatin1String("display"), value);
-			}
+			element.setStyleProperty(QLatin1String("display"), value);
 		}
 	}
 }
