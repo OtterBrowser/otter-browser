@@ -1,3 +1,8 @@
+0.9.94 (2018-01-01):
+- added new default style for Start Page by Kamil Nęcek;
+- added interface allowing to manage list of hosts using customized website overrides;
+- several bug fixes and some optimizations.
+
 0.9.93 (2017-12-01):
 - added Page Information panel;
 - added support for external icons for User Scripts;
