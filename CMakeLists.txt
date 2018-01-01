@@ -264,6 +264,7 @@ set(otter_src
 	src/modules/windows/web/StartPageWidget.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
 	src/modules/windows/windows/WindowsContentsWidget.cpp
+	3rdparty/columnresizer/ColumnResizer.cpp
 	3rdparty/mousegestures/MouseGestures.cpp
 )
 
