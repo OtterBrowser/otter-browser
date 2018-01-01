@@ -197,5 +197,4 @@ void ColumnResizer::addWidgetsFromFormLayout(QFormLayout* layout, QFormLayout::I
     }
 }
 
-#include <ColumnResizer.moc>
 // vi: ts=4 sw=4 et
