@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "PreferencesContentPageWidget.h"
+#include "../../../3rdparty/columnresizer/ColumnResizer.h"
 #include "../../core/SettingsManager.h"
 #include "../../ui/ColorWidget.h"
 #include "../../ui/OptionWidget.h"
@@ -172,6 +173,11 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	m_ui->colorsViewWidget->setModel(colorsModel);
 	m_ui->colorsViewWidget->setItemDelegateForColumn(1, new ColorItemDelegate(this));
+
+	ColumnResizer *columnResizer(new ColumnResizer(this));
+	columnResizer->addWidgetsFromFormLayout(m_ui->blockingLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->zoomLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->fontsLayout, QFormLayout::LabelRole);
 
 	connect(m_ui->fontsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &PreferencesContentPageWidget::handleCurrentFontChanged);
 	connect(m_ui->colorsViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &PreferencesContentPageWidget::handleCurrentColorChanged);

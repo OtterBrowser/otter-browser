@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -23,6 +23,7 @@
 #include "AcceptLanguageDialog.h"
 #include "../MainWindow.h"
 #include "../Menu.h"
+#include "../../../3rdparty/columnresizer/ColumnResizer.h"
 #include "../../core/Application.h"
 #include "../../core/BookmarksManager.h"
 #include "../../core/BookmarksModel.h"
@@ -74,6 +75,12 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	{
 		connect(m_ui->setDefaultButton, &QPushButton::clicked, platformIntegration, &PlatformIntegration::setAsDefaultBrowser);
 	}
+
+	ColumnResizer *columnResizer(new ColumnResizer(this));
+	columnResizer->addWidgetsFromFormLayout(m_ui->startupLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->downloadsLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->tabsLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->languageLayout, QFormLayout::LabelRole);
 
 	connect(bookmarksMenu, &Menu::triggered, this, &PreferencesGeneralPageWidget::useBookmarkAsHomePage);
 	connect(m_ui->useCurrentAsHomePageButton, &QPushButton::clicked, this, &PreferencesGeneralPageWidget::useCurrentAsHomePage);

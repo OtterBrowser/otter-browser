@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -27,6 +27,7 @@
 #include "UserAgentPropertiesDialog.h"
 #include "../Style.h"
 #include "../WebsitePreferencesDialog.h"
+#include "../../../3rdparty/columnresizer/ColumnResizer.h"
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
 #include "../../core/GesturesManager.h"
@@ -388,6 +389,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
 	updateReaddMouseProfileMenu();
+
+	ColumnResizer *columnResizer(new ColumnResizer(this));
+	columnResizer->addWidgetsFromFormLayout(m_ui->enableImagesLayout, QFormLayout::LabelRole);
+	columnResizer->addWidgetsFromFormLayout(m_ui->contentGeneralLayout, QFormLayout::LabelRole);
 
 	connect(m_ui->advancedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::changeCurrentPage);
 	connect(m_ui->notificationsItemView, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateNotificationsActions);
