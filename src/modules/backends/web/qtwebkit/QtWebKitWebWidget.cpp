@@ -579,7 +579,7 @@ void QtWebKitWebWidget::handleHistory()
 		return;
 	}
 
-	const QUrl url(getUrl());
+	const QUrl url(m_page->history()->currentItem().url());
 	const quint64 identifier(m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toULongLong());
 
 	if (identifier == 0)
