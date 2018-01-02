@@ -55,7 +55,8 @@ Transfer::Transfer(TransferOptions options, QObject *parent) : QObject(parent ? 
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
-	m_isSelectingPath(false)
+	m_isSelectingPath(false),
+	m_isArchived(false)
 {
 }
 
@@ -76,7 +77,8 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent 
 	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived && QFile::exists(settings.value(QLatin1String("target")).toString())) ? FinishedState : ErrorState),
 	m_updateTimer(0),
 	m_updateInterval(0),
-	m_isSelectingPath(false)
+	m_isSelectingPath(false),
+	m_isArchived(true)
 {
 }
 
@@ -94,7 +96,8 @@ Transfer::Transfer(const QUrl &source, const QString &target, TransferOptions op
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
-	m_isSelectingPath(false)
+	m_isSelectingPath(false),
+	m_isArchived(false)
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
@@ -121,7 +124,8 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, Transf
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
-	m_isSelectingPath(false)
+	m_isSelectingPath(false),
+	m_isArchived(false)
 {
 	start(NetworkManagerFactory::getNetworkManager()->get(request), target);
 }
@@ -139,7 +143,8 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, TransferOptions 
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
-	m_isSelectingPath(false)
+	m_isSelectingPath(false),
+	m_isArchived(false)
 {
 	start(reply, target);
 }
@@ -731,6 +736,11 @@ Transfer::TransferOptions Transfer::getOptions() const
 Transfer::TransferState Transfer::getState() const
 {
 	return m_state;
+}
+
+bool Transfer::isArchived() const
+{
+	return m_isArchived;
 }
 
 bool Transfer::resume()

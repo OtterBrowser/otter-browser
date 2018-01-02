@@ -78,6 +78,7 @@ public:
 	virtual qint64 getBytesTotal() const;
 	TransferOptions getOptions() const;
 	virtual TransferState getState() const;
+	bool isArchived() const;
 
 public slots:
 	void openTarget() const;
@@ -120,6 +121,7 @@ private:
 	int m_updateTimer;
 	int m_updateInterval;
 	bool m_isSelectingPath;
+	bool m_isArchived;
 
 signals:
 	void progressChanged(qint64 bytesReceived, qint64 bytesTotal);
