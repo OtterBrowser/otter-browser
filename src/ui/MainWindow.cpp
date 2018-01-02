@@ -433,6 +433,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				QVariantMap mutableParameters(parameters);
 				mutableParameters[QLatin1String("hints")] = SessionsManager::NewTabOpen;
 
+				if (SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
+				{
+					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("about:start"));
+				}
+
 				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
 			}
 
@@ -1587,6 +1592,11 @@ void MainWindow::handleRequestedCloseWindow(Window *window)
 			if (window)
 			{
 				window->clear();
+
+				if (SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
+				{
+					window->setUrl(QUrl(QLatin1String("about:start")));
+				}
 
 				return;
 			}
