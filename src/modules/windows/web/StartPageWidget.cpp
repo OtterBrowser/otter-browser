@@ -783,23 +783,31 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 	if (index.isValid() && index.data(Qt::AccessibleDescriptionRole).toString() != QLatin1String("add"))
 	{
-		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openTile()));
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open")), &QAction::triggered, this, &StartPageWidget::openTile);
+
 		menu.addSeparator();
-		menu.addAction(tr("Edit…"), this, SLOT(editTile()));
+
+		connect(menu.addAction(tr("Edit…")), &QAction::triggered, this, &StartPageWidget::editTile);
 
 		if (SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
 		{
-			menu.addAction(tr("Reload"), this, SLOT(reloadTile()))->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
+			QAction *reloadAction(menu.addAction(tr("Reload")));
+			reloadAction->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
+
+			connect(reloadAction, &QAction::triggered, this, &StartPageWidget::reloadTile);
 		}
 
 		menu.addSeparator();
-		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(removeTile()));
+
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete")), &QAction::triggered, this, &StartPageWidget::removeTile);
 	}
 	else
 	{
-		menu.addAction(tr("Configure…"), this, SLOT(configure()));
+		connect(menu.addAction(tr("Configure…")), &QAction::triggered, this, &StartPageWidget::configure);
+
 		menu.addSeparator();
-		menu.addAction(ThemesManager::createIcon(QLatin1String("list-add")), tr("Add Tile…"), this, SLOT(addTile()));
+
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("list-add")), tr("Add Tile…")), &QAction::triggered, this, &StartPageWidget::addTile);
 	}
 
 	menu.exec(hitPosition);
