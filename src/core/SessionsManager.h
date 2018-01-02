@@ -138,7 +138,7 @@ struct SessionWindow final
 				return history.at(historyIndex).title;
 			}
 
-			if (history.at(historyIndex).url == QLatin1String("about:start") || (SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool() && Utils::isUrlEmpty(history.at(historyIndex).url)))
+			if (history.at(historyIndex).url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
 			{
 				return QCoreApplication::translate("main", "Start Page");
 			}
