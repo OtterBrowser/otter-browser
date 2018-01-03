@@ -81,7 +81,7 @@ void PanelChooserWidget::updateMenu()
 
 		for (int i = 0; i < panels.count(); ++i)
 		{
-			menu()->addAction(SidebarWidget::getPanelTitle(panels[i]))->setData(panels[i]);
+			menu()->addAction(SidebarWidget::getPanelTitle(panels.at(i)))->setData(panels.at(i));
 		}
 	}
 }

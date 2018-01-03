@@ -110,7 +110,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 					for (int i = 0; i < actions.count(); ++i)
 					{
-						if (!actions[i]->data().toString().isEmpty())
+						if (!actions.at(i)->data().toString().isEmpty())
 						{
 							actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
 						}
