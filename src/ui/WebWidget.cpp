@@ -733,7 +733,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 			const QStringList keys(settings.getKeys());
 			QJsonArray tokensArray;
 
-			for (int j = 0; j < keys.length(); ++j)
+			for (int j = 0; j < keys.count(); ++j)
 			{
 				tokensArray.append(QJsonObject({{QLatin1Literal("value"), keys.at(j).toUpper()}, {QLatin1Literal("score"), settings.getValue(keys.at(j)).toInt()}}));
 			}
