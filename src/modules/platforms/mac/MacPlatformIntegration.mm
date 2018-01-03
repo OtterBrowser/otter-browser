@@ -341,12 +341,14 @@ void MacPlatformIntegration::updateTransfersProgress()
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
-		if (transfers[i]->getState() == Transfer::RunningState && transfers[i]->getBytesTotal() > 0)
+		const Transfer *transfer(transfers.at(i));
+
+		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
 		{
 			++transferAmount;
 
-			bytesTotal += transfers[i]->getBytesTotal();
-			bytesReceived += transfers[i]->getBytesReceived();
+			bytesTotal += transfer->getBytesTotal();
+			bytesReceived += transfer->getBytesReceived();
 		}
 	}
 
