@@ -199,7 +199,7 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 		{
 			for (int i = 0; i < m_urls[normalizedUrl].count(); ++i)
 			{
-				removeEntry(m_urls[normalizedUrl][i]->getIdentifier());
+				removeEntry(m_urls[normalizedUrl].at(i)->getIdentifier());
 			}
 		}
 	}

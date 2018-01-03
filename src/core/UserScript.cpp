@@ -408,9 +408,9 @@ bool UserScript::canRemove() const
 
 bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 {
-	for (int i = 0; i < rules.length(); ++i)
+	for (int i = 0; i < rules.count(); ++i)
 	{
-		QString rule(rules[i]);
+		QString rule(rules.at(i));
 
 		if (rule.startsWith(QLatin1Char('/')) && rule.endsWith(QLatin1Char('/')))
 		{
