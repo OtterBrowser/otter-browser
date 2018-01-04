@@ -22,6 +22,7 @@
 #include "TabBarWidget.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
+#include "../core/BookmarksManager.h"
 #include "../modules/widgets/action/ActionWidget.h"
 #include "../modules/widgets/action/NavigationActionWidget.h"
 #include "../modules/widgets/address/AddressWidget.h"
@@ -35,8 +36,8 @@
 #include "../modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.h"
 #include "../modules/widgets/search/SearchWidget.h"
 #include "../modules/widgets/statusMessage/StatusMessageWidget.h"
+#include "../modules/widgets/transfers/TransfersWidget.h"
 #include "../modules/widgets/zoom/ZoomWidget.h"
-#include "../core/BookmarksManager.h"
 #include "../modules/windows/addons/AddonsContentsWidget.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
@@ -139,6 +140,11 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 	if (definition.action == QLatin1String("StatusMessageWidget"))
 	{
 		return new StatusMessageWidget(parent);
+	}
+
+	if (definition.action == QLatin1String("TransfersWidget"))
+	{
+		return new TransfersWidget(definition, parent);
 	}
 
 	if (definition.action == QLatin1String("TabBarWidget"))

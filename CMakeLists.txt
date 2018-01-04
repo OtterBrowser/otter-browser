@@ -242,6 +242,7 @@ set(otter_src
 	src/modules/widgets/progressInformation/ProgressInformationWidget.cpp
 	src/modules/widgets/search/SearchWidget.cpp
 	src/modules/widgets/statusMessage/StatusMessageWidget.cpp
+	src/modules/widgets/transfers/TransfersWidget.cpp
 	src/modules/widgets/zoom/ZoomWidget.cpp
 	src/modules/windows/addons/AddonsContentsWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
