@@ -237,12 +237,12 @@
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="369"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sie sind dabei, %n Addon unwiderruflich zu entfernen.</numerusform><numerusform>Sie sind dabei, %n Addons unwiderruflich zu entfernen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="370"/>
         <source>Do you want to continue?</source>
-        <translation>Fortfahren?</translation>
+        <translation>Möchten Sie fortfahren?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="438"/>
@@ -252,7 +252,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="443"/>
         <source>Open Addon File</source>
-        <translation>Erweiterungsdatei öffnen</translation>
+        <translation>Addon-Datei öffnen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="444"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="487"/>
         <source>Addons</source>
-        <translation>Erweiterungen</translation>
+        <translation>Addons</translation>
     </message>
 </context>
 <context>
@@ -1799,12 +1799,12 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <source>Annoyance</source>
-        <translation>Belästigungen</translation>
+        <translation>Belästigung</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
         <source>Privacy</source>
-        <translation>Privatsphäre</translation>
+        <translation>Datenschutz</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="42"/>
@@ -1831,12 +1831,12 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
         <source>Valid update URL is required.</source>
-        <translation>Gültige Aktualisierungs-URL wird benötigt</translation>
+        <translation>Gültige Aktualisierungs-URL ist erforderlich.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
         <source>Profile with name %1.txt already exists.</source>
-        <translation>Profile mit dem Namen %1.txt existiert bereits.</translation>
+        <translation>Profil mit dem Namen %1.txt existiert bereits.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="115"/>
@@ -2577,7 +2577,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
         <source>Allow to receive right mouse button clicks</source>
-        <translation>Erlaube das Abfangen von rechte-Maustaste-Klicks</translation>
+        <translation>Erhalt von Klicks mit der rechten Maustaste erlauben</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="72"/>
@@ -3293,12 +3293,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="45"/>
         <source>Remove existing search engines</source>
-        <translation>Bestehende Suchmaschine entfernen</translation>
+        <translation>Vorhandene Suchmaschinen entfernen</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="54"/>
         <source>Opera search engines</source>
-        <translation>Suchmaschinen von Opera</translation>
+        <translation>Opera-Suchmaschinen</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="59"/>
@@ -3308,7 +3308,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
         <source>Opera search engines files (search.ini)</source>
-        <translation>Opera-Suchmaschinen-Dateien (search.ini)</translation>
+        <translation>Opera-Suchmaschinendateien (search.ini)</translation>
     </message>
 </context>
 <context>
@@ -3370,7 +3370,7 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="137"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="138"/>
         <source>&lt;empty&gt;</source>
-        <translation>&lt;leer&gt;</translation>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="159"/>
@@ -3390,7 +3390,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="170"/>
         <source>Document size</source>
-        <translation>Dokumentengröße</translation>
+        <translation>Dokumentgröße</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="171"/>
@@ -3406,7 +3406,7 @@ Möchten Sie fortfahren?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <source>%1 (%2 blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%2 blockiert)</numerusform><numerusform>%1 (%2 blockiert)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="184"/>
@@ -3436,7 +3436,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="235"/>
         <source>Cipher protocol</source>
-        <translation>Protokoll des Verschlüsslungsverfahren</translation>
+        <translation>Protokoll des Verschlüsslungsverfahrens</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="236"/>
@@ -3451,7 +3451,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="238"/>
         <source>Cipher key exchange method</source>
-        <translation>Schlüsselaustauschverfahren</translation>
+        <translation>Austauschmethode des Verschlüsselungsschlüssels</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="265"/>
@@ -5044,7 +5044,7 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="433"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="473"/>
         <source>Disable JavaScript popups</source>
-        <translation>JavaScript Popups deaktivieren</translation>
+        <translation>JavaScript-Popups deaktivieren</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
@@ -5062,13 +5062,13 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="347"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="362"/>
         <source>Do you want to resend data?</source>
-        <translation>Sollen die Daten erneut gesendet werden?</translation>
+        <translation>Möchten Sie die Daten erneut senden?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="348"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="366"/>
         <source>Do not show this message again</source>
-        <translation>Diese Nachricht kein weiteres mal anzeigen</translation>
+        <translation>Diese Meldung nicht mehr anzeigen</translation>
     </message>
 </context>
 <context>
@@ -5086,7 +5086,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="65"/>
         <source>Web archive (*.mht)</source>
-        <translation>Web-Archiv (*.mht)</translation>
+        <translation>Webarchiv (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="266"/>
@@ -5096,7 +5096,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="271"/>
         <source>Backend utilizing QtWebEngine module</source>
-        <translation>Backend welches QtWebEngine-Modul nutzt</translation>
+        <translation>Backend, welches das QtWebEngine-Modul nutzt</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="286"/>
@@ -5114,7 +5114,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="552"/>
         <source>Failed to save image: %1</source>
-        <translation>Bildabspeichern fehlgeschlagen: %1</translation>
+        <translation>Speichern des Bildes fehlgeschlagen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1480"/>
@@ -5252,7 +5252,7 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="897"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
-        <translation>Anfrage durch Regel in Profil %1 blockiert:&lt;br&gt;
+        <translation>Anfrage durch Regel aus Profil %1 blockiert:&lt;br&gt;
 %2</translation>
     </message>
     <message>
@@ -7069,7 +7069,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="990"/>
         <source>Page Default</source>
-        <translation>Seitenstandards</translation>
+        <translation>Seitenvorgabe</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="998"/>
@@ -7079,7 +7079,7 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1002"/>
         <source>Reload Every: %n second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Neu laden alle: %n Sekunde</numerusform><numerusform>Neu laden alle: %n Sekunden</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7827,12 +7827,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set Option</source>
-        <translation>Option setzen</translation>
+        <translation>Option festlegen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set, Reset or Toggle Option</source>
-        <translation>Option setzen, zurücksetzen oder umschalten</translation>
+        <translation>Option festlegen, zurücksetzen oder umschalten</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -7883,7 +7883,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="297"/>
         <source>Detach Tab</source>
-        <translation>Tab ablösen</translation>
+        <translation>Tab lösen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
@@ -8016,7 +8016,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Reopen Previously Closed Window</source>
-        <translation>Zuletzt geschlossenes Fenster erneut öffnen</translation>
+        <translation>Vorher geschlossenes Fenster wieder öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="318"/>
@@ -8264,7 +8264,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Go Back</source>
-        <translation>Zurückgehen</translation>
+        <translation>Zurück</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
@@ -8274,7 +8274,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Go Forward</source>
-        <translation>Vorwärts springen</translation>
+        <translation>Vorwärts</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
@@ -8299,7 +8299,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Rewind History</source>
-        <translation>Im Verlauf zurückspringen</translation>
+        <translation>Verlauf zurückspulen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="364"/>
@@ -8800,12 +8800,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="1492"/>
         <source>Set %1</source>
-        <translation>%1 setzen</translation>
+        <translation>%1 festlegen</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1496"/>
         <source>Set %1 for %2</source>
-        <translation>%1 statt %2 setzen</translation>
+        <translation>%1 statt %2 festlegen</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1503"/>
@@ -8825,7 +8825,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="1520"/>
         <source>Toggle %1 for %2</source>
-        <translation>%1 mit %2 wechseln</translation>
+        <translation>%1 zu %2 umschalten</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
@@ -9516,7 +9516,7 @@ Skript: %2</translation>
     <message>
         <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1</source>
-        <translation>Aktualisierung kann nicht herunter geladen werden: %1</translation>
+        <translation>Aktualisierung kann nicht heruntergeladen werden: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="65"/>
@@ -9679,7 +9679,7 @@ Anwendungskennung: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="189"/>
         <source>The owner of &lt;strong&gt;%1&lt;/strong&gt; has configured their page improperly. To protect your information from being stolen, connection to this website was aborted.</source>
-        <translation>Der Betreiber von &lt;strong&gt;%1&lt;/strong&gt; hat den Server falsch konfiguriert. Um Ihre Daten vor Missbrauch zu schützen, wurde die Verbindung zu dieser Webseite abgebrochen.</translation>
+        <translation>Der Inhaber von &lt;strong&gt;%1&lt;/strong&gt; hat seine Seite falsch konfiguriert. Um Ihre Daten vor Diebstahl zu schützen, wurde die Verbindung zu dieser Website abgebrochen.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="193"/>
@@ -9689,7 +9689,7 @@ Anwendungskennung: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="197"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation>Die angefragte Adresse &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; ist zur Zeit nicht erreichbar. Bitte vergewissern Sie sich dass die Adresse korrekt eingegeben wurde und versuchen Sie die Seite ggf. erneut zu laden.</translation>
+        <translation>Sie haben versucht, auf die Adresse &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; zuzugreifen, die momentan nicht verfügbar ist. Bitte stellen Sie sicher, dass die Webadresse (URL) korrekt geschrieben und mit Satzzeichen versehen ist, und versuchen Sie anschließend, die Seite neu zu laden.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
@@ -9709,17 +9709,17 @@ Anwendungskennung: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
-        <translation>Stellen Sie sicher dass Sie über eine aktive Internetverbindung verfügen. Überprüfen Sie dazu gegebenenfalls andere internetfähige Anwendungen auf ihre Konnektivität.</translation>
+        <translation>Stellen Sie sicher, dass Ihre Internetverbindung aktiv ist und prüfen Sie, ob andere Anwendungen, die auf die gleiche Verbindung angewiesen sind, funktionieren.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation>Stellen Sie sicher, dass Sie keine Firewallregeln oder Sicherheitseinstellungen aktiviert haben, die den Betrieb von Otter stören.</translation>
+        <translation>Überprüfen Sie, ob die Einrichtung einer Internet-Sicherheitssoftware korrekt ist und nicht das normale Surfen im Internet stört.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation>Deaktivieren Sie gegebenenfalls nicht mehr benötigte Proxy-Server durch Drücken der F12-Taste und versuchen Sie dann die Seite erneut zu laden.</translation>
+        <translation>Versuchen Sie, die Taste F12 auf Ihrer Tastatur zu drücken und Proxyserver zu deaktivieren, es sei denn, Sie wissen, dass Sie einen Proxy verwenden müssen, um eine Verbindung zum Internet herzustellen, und laden Sie die Seite neu.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>

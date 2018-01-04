@@ -6377,7 +6377,7 @@ Adres: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="529"/>
         <source>Arbitrary List of Actions</source>
-        <translation>Dana lista akcji</translation>
+        <translation>Lista z wybranymi akcjami</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="536"/>

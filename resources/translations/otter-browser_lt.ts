@@ -1502,7 +1502,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation type="unfinished"/>
+        <translation>Pasirinkti parinktį</translation>
     </message>
 </context>
 <context>
@@ -1775,7 +1775,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="30"/>
         <source>Update URL:</source>
-        <translation type="unfinished"/>
+        <translation>Atnaujinimo URL:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="40"/>
@@ -1815,7 +1815,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="43"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Regioniniai</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="44"/>
@@ -1832,7 +1832,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="87"/>
         <source>Valid update URL is required.</source>
-        <translation type="unfinished"/>
+        <translation>Reikalingas teisingas atnaujinimo URL.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="108"/>
@@ -2693,7 +2693,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="371"/>
         <source>This shortcut already used by %1</source>
-        <translation type="unfinished"/>
+        <translation>Šis spartusis klavišas jau yra naudojamas veiksmo %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="371"/>
@@ -2703,12 +2703,12 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="382"/>
         <source>This shortcut cannot be used because it would be overriden by a native hotkey used by an editing action</source>
-        <translation type="unfinished"/>
+        <translation>Šis spartusis klavišas negali būti naudojamas, nes jis būtų nustelbtas savos klavišų kombinacijos, kuri yra naudojama redagavimo veiksmui</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="390"/>
         <source>Single key shortcuts are currently disabled</source>
-        <translation type="unfinished"/>
+        <translation>Vieno klavišo spartieji klavišai šiuo metu yra išjungti</translation>
     </message>
 </context>
 <context>
@@ -3294,7 +3294,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="45"/>
         <source>Remove existing search engines</source>
-        <translation type="unfinished"/>
+        <translation>Šalinti esamas paieškos sistemas</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="54"/>
@@ -3304,7 +3304,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="59"/>
         <source>Imports search engines from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importuoja paieškos sistemas iš „Opera“ naršyklės 12 ar ankstesnės versijos</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
@@ -3345,7 +3345,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="194"/>
         <source>Defaults</source>
-        <translation>Įprasti</translation>
+        <translation>Numatytieji</translation>
     </message>
 </context>
 <context>
@@ -3353,7 +3353,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
@@ -3407,12 +3407,12 @@ Ar norite tęsti?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <source>%1 (%2 blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%2 užblokuota)</numerusform><numerusform>%1 (%2 užblokuotos)</numerusform><numerusform>%1 (%2 užblokuotų)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="184"/>
         <source>Downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Atsisiųsta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="190"/>
@@ -5092,12 +5092,12 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="266"/>
         <source>Blink Backend (experimental)</source>
-        <translation>Blink vidinė pusė (eksperimentinė)</translation>
+        <translation>Blink atvaizdavimo varikliukas (eksperimentinė)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="271"/>
         <source>Backend utilizing QtWebEngine module</source>
-        <translation type="unfinished"/>
+        <translation>Atvaizdavimo varikliukas, naudojantis QtWebEngine modulį</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp" line="286"/>
@@ -7008,7 +7008,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1161"/>
         <source>Failed to load requested web backend: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įkelti norimo atvaizdavimo varikliuko: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1243"/>
@@ -7829,12 +7829,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set Option</source>
-        <translation type="unfinished"/>
+        <translation>Nustatyti parinktį</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set, Reset or Toggle Option</source>
-        <translation type="unfinished"/>
+        <translation>Nustatyti, atstatyti ar perjungti parinktį</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -7874,7 +7874,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Peek Tab</source>
-        <translation type="unfinished"/>
+        <translation>Žvilgtelėti į kortelę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>
@@ -8802,12 +8802,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/Application.cpp" line="1492"/>
         <source>Set %1</source>
-        <translation type="unfinished"/>
+        <translation>Nustatyti %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1496"/>
         <source>Set %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>Nustatyti %1, skirtą %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1503"/>
@@ -8817,7 +8817,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/Application.cpp" line="1507"/>
         <source>Reset %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>Atstatyti %1, skirtą %2</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1516"/>
@@ -8827,7 +8827,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/Application.cpp" line="1520"/>
         <source>Toggle %1 for %2</source>
-        <translation type="unfinished"/>
+        <translation>Perjungti %1, skirtą %2</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
@@ -9006,7 +9006,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/Menu.cpp" line="164"/>
         <source>Open with</source>
-        <translation>Atverti, naudojant</translation>
+        <translation>Atverti naudojant</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="170"/>
@@ -9016,7 +9016,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/ui/Menu.cpp" line="179"/>
         <source>Search Using</source>
-        <translation>Ieškoti, naudojant</translation>
+        <translation>Ieškoti naudojant</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="185"/>
@@ -9533,7 +9533,7 @@ Skriptas: %2</translation>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="226"/>
         <source>Failed to locate header of User Script file</source>
-        <translation>Nepavyko nustatyti naudotojo scenarijaus failo antraštės vietą</translation>
+        <translation>Nepavyko nustatyti naudotojo scenarijaus failo antraštės vietos</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="163"/>
@@ -9617,12 +9617,12 @@ Programos ID: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update Available</source>
-        <translation>Prieinamas atnaujinimas</translation>
+        <translation>Galimas atnaujinimas</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
-        <translation>Atnaujinimas yra prieinamas atsiuntimui</translation>
+        <translation>Galima atsiųsti atnaujinimą</translation>
     </message>
 </context>
 <context>
