@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -130,13 +130,11 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 				resourceType = NetworkManager::ObjectType;
 
 				break;
-#if QT_VERSION >= 0x050700
 			case QWebEngineUrlRequestInfo::ResourceTypePluginResource:
 				resourceType = NetworkManager::ObjectSubrequestType;
 				storeBlockedUrl = false;
 
 				break;
-#endif
 			case QWebEngineUrlRequestInfo::ResourceTypeXhr:
 				resourceType = NetworkManager::XmlHttpRequestType;
 

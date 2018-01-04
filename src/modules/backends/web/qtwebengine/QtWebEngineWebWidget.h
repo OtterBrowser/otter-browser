@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,9 +31,6 @@ namespace Otter
 {
 
 class ContentsDialog;
-#if QT_VERSION < 0x050700
-class IconFetchJob;
-#endif
 class QtWebEnginePage;
 class SourceViewerWebWidget;
 
@@ -81,10 +78,8 @@ public:
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
-#if QT_VERSION >= 0x050700
 	bool isAudible() const override;
 	bool isAudioMuted() const override;
-#endif
 	bool isFullScreen() const override;
 	bool isPrivate() const override;
 	bool eventFilter(QObject *object, QEvent *event) override;
@@ -129,9 +124,6 @@ protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
 	void handleViewSourceReplyFinished();
-#if QT_VERSION < 0x050700
-	void handleIconChange(const QUrl &url);
-#endif
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
 	void handleFullScreenRequest(QWebEngineFullScreenRequest request);
@@ -148,26 +140,14 @@ protected slots:
 private:
 	QWebEngineView *m_webView;
 	QtWebEnginePage *m_page;
-#if QT_VERSION < 0x050700
-	IconFetchJob *m_iconFetchJob;
-#endif
 	QTime *m_loadingTime;
-#if QT_VERSION < 0x050700
-	QIcon m_icon;
-#endif
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
-#if QT_VERSION < 0x050700
-	QPoint m_scrollPosition;
-#endif
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	LoadingState m_loadingState;
 	TrileanValue m_canGoForwardValue;
 	int m_documentLoadingProgress;
 	int m_focusProxyTimer;
-#if QT_VERSION < 0x050700
-	int m_scrollTimer;
-#endif
 	int m_updateNavigationActionsTimer;
 	bool m_isEditing;
 	bool m_isFullScreen;

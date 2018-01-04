@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,6 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 
 void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item)
 {
-#if QT_VERSION >= 0x050700
 	if (item->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
 	{
 		const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)")});
@@ -89,7 +88,6 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 
 		return;
 	}
-#endif
 
 	QWebEngineProfile *profile(qobject_cast<QWebEngineProfile*>(sender()));
 	QtWebEngineTransfer *transfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | ((profile && profile->isOffTheRecord()) ? Transfer::IsPrivateOption : Transfer::NoOption))));
@@ -160,12 +158,10 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 {
 	switch (identifier)
 	{
-#if QT_VERSION >= 0x050800
 		case SettingsManager::Browser_PrintElementBackgroundsOption:
 			QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
 
 			return;
-#endif
 		case SettingsManager::Interface_EnableSmoothScrollingOption:
 			QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 
@@ -201,9 +197,7 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getOption(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, (SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString() != QLatin1String("blockAll")));
-#if QT_VERSION >= 0x050700
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getOption(SettingsManager::Permissions_EnableWebglOption).toBool());
-#endif
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getOption(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
 	}
 }
@@ -220,10 +214,8 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
-#if QT_VERSION >= 0x050800
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
-#endif
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 
 		const QString cachePath(SessionsManager::getCachePath());

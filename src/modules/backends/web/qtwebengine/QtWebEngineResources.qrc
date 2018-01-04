@@ -5,6 +5,5 @@
         <file>resources/hideBlockedRequests.js</file>
         <file>resources/hitTest.js</file>
         <file>resources/imageViewer.js</file>
-        <file>resources/sendPost.js</file>
     </qresource>
 </RCC>

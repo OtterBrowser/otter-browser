@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
-#if QT_VERSION < 0x050700
-#include "../../../../core/Job.h"
-#endif
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
@@ -65,17 +62,11 @@ namespace Otter
 QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
-#if QT_VERSION < 0x050700
-	m_iconFetchJob(nullptr),
-#endif
 	m_loadingTime(nullptr),
 	m_loadingState(FinishedLoadingState),
 	m_canGoForwardValue(UnknownValue),
 	m_documentLoadingProgress(0),
 	m_focusProxyTimer(0),
-#if QT_VERSION < 0x050700
-	m_scrollTimer(startTimer(1000)),
-#endif
 	m_updateNavigationActionsTimer(0),
 	m_isEditing(false),
 	m_isFullScreen(false),
@@ -87,11 +78,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::loadStarted, this, &QtWebEngineWebWidget::pageLoadStarted);
 	connect(m_page, &QtWebEnginePage::loadFinished, this, &QtWebEngineWebWidget::pageLoadFinished);
 	connect(m_page, &QtWebEnginePage::linkHovered, this, &QtWebEngineWebWidget::setStatusMessageOverride);
-#if QT_VERSION < 0x050700
-	connect(m_page, &QtWebEnginePage::iconUrlChanged, this, &QtWebEngineWebWidget::handleIconChange);
-#else
 	connect(m_page, &QtWebEnginePage::iconChanged, this, &QtWebEngineWebWidget::iconChanged);
-#endif
 	connect(m_page, &QtWebEnginePage::requestedPopupWindow, this, &QtWebEngineWebWidget::requestedPopupWindow);
 	connect(m_page, &QtWebEnginePage::aboutToNavigate, this, &QtWebEngineWebWidget::aboutToNavigate);
 	connect(m_page, &QtWebEnginePage::requestedNewWindow, this, &QtWebEngineWebWidget::requestedNewWindow);
@@ -101,15 +88,10 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::fullScreenRequested, this, &QtWebEngineWebWidget::handleFullScreenRequest);
 	connect(m_page, &QtWebEnginePage::featurePermissionRequested, this, &QtWebEngineWebWidget::handlePermissionRequest);
 	connect(m_page, &QtWebEnginePage::featurePermissionRequestCanceled, this, &QtWebEngineWebWidget::handlePermissionCancel);
-#if QT_VERSION >= 0x050700
 	connect(m_page, &QtWebEnginePage::recentlyAudibleChanged, this, &QtWebEngineWebWidget::isAudibleChanged);
-#endif
 	connect(m_page, &QtWebEnginePage::viewingMediaChanged, this, &QtWebEngineWebWidget::notifyNavigationActionsChanged);
 	connect(m_page, &QtWebEnginePage::titleChanged, this, &QtWebEngineWebWidget::notifyTitleChanged);
 	connect(m_page, &QtWebEnginePage::urlChanged, this, &QtWebEngineWebWidget::notifyUrlChanged);
-#if QT_VERSION < 0x050700
-	connect(m_page, &QtWebEnginePage::iconUrlChanged, this, &QtWebEngineWebWidget::notifyIconChanged);
-#endif
 	connect(m_page->action(QWebEnginePage::Redo), &QAction::changed, this, &QtWebEngineWebWidget::notifyRedoActionStateChanged);
 	connect(m_page->action(QWebEnginePage::Undo), &QAction::changed, this, &QtWebEngineWebWidget::notifyUndoActionStateChanged);
 }
@@ -124,18 +106,6 @@ void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 			focusWidget()->installEventFilter(this);
 		}
 	}
-#if QT_VERSION < 0x050700
-	else if (event->timerId() == m_scrollTimer)
-	{
-		m_page->runJavaScript(QLatin1String("[window.scrollX, window.scrollY]"), [&](const QVariant &result)
-		{
-			if (result.isValid())
-			{
-				m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
-			}
-		});
-	}
-#endif
 	else if (event->timerId() == m_updateNavigationActionsTimer)
 	{
 		killTimer(m_updateNavigationActionsTimer);
@@ -212,21 +182,10 @@ void QtWebEngineWebWidget::search(const QString &query, const QString &searchEng
 
 		if (method == QNetworkAccessManager::PostOperation)
 		{
-#if QT_VERSION < 0x050900
-			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/sendPost.js"));
-
-			if (file.open(QIODevice::ReadOnly))
-			{
-				m_page->runJavaScript(QString(file.readAll()).arg(request.url().toString()).arg(QString(body)));
-
-				file.close();
-			}
-#else
 			QWebEngineHttpRequest httpRequest(request.url(), QWebEngineHttpRequest::Post);
 			httpRequest.setPostData(body);
 
 			m_page->load(httpRequest);
-#endif
 		}
 		else
 		{
@@ -237,11 +196,6 @@ void QtWebEngineWebWidget::search(const QString &query, const QString &searchEng
 
 void QtWebEngineWebWidget::print(QPrinter *printer)
 {
-#if QT_VERSION < 0x050800
-	ensureInitialized();
-
-	m_webView->render(printer);
-#else
 	QEventLoop eventLoop;
 
 	m_page->print(printer, [&](bool)
@@ -250,7 +204,6 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 	});
 
 	eventLoop.exec();
-#endif
 }
 
 void QtWebEngineWebWidget::pageLoadStarted()
@@ -330,22 +283,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
-#if QT_VERSION >= 0x050700
 			m_page->triggerAction(QWebEnginePage::SavePage);
-#else
-
-			{
-				const QString path(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)).path);
-
-				if (!path.isEmpty())
-				{
-					QNetworkRequest request(getUrl());
-					request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
-
-					new Transfer(request, path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
-				}
-			}
-#endif
 
 			break;
 		case ActionsManager::ClearTabHistoryAction:
@@ -356,14 +294,12 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			notifyNavigationActionsChanged();
 
 			break;
-#if QT_VERSION >= 0x050700
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
 			emit arbitraryActionsStateChanged({ActionsManager::MuteTabMediaAction});
 
 			break;
-#endif
 		case ActionsManager::OpenLinkAction:
 			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
 
@@ -800,11 +736,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::UnselectAction:
-#if QT_VERSION >= 0x050700
 			m_page->triggerAction(QWebEnginePage::Unselect);
-#else
-			m_page->runJavaScript(QLatin1String("window.getSelection().empty()"));
-#endif
+
 			break;
 		case ActionsManager::ClearAllAction:
 			triggerAction(ActionsManager::SelectAllAction);
@@ -977,33 +910,6 @@ void QtWebEngineWebWidget::handleViewSourceReplyFinished()
 	}
 }
 
-#if QT_VERSION < 0x050700
-void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
-{
-	if (m_iconFetchJob && m_iconFetchJob->getUrl() != url)
-	{
-		m_iconFetchJob->cancel();
-	}
-
-	m_icon = {};
-
-	m_iconFetchJob = new IconFetchJob(url, this);
-
-	connect(m_iconFetchJob, &IconFetchJob::destroyed, this, [&]()
-	{
-		m_iconFetchJob = nullptr;
-	});
-	connect(m_iconFetchJob, &IconFetchJob::jobFinished, this, [&]()
-	{
-		m_icon = m_iconFetchJob->getIcon();
-
-		emit iconChanged(getIcon());
-	});
-
-	emit iconChanged(getIcon());
-}
-#endif
-
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(url, authenticator, AuthenticationDialog::HttpAuthentication, this));
@@ -1090,10 +996,6 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 {
 	notifyNavigationActionsChanged();
 	updateOptions(url);
-
-#if QT_VERSION < 0x050700
-	m_icon = {};
-#endif
 
 	emit iconChanged(getIcon());
 	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_page->requestedUrl() : url);
@@ -1194,9 +1096,7 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 	QWebEngineSettings *settings(m_page->settings());
-#if QT_VERSION >= 0x050800
 	settings->setAttribute(QWebEngineSettings::AllowRunningInsecureContent, getOption(SettingsManager::Security_AllowMixedContentOption, url).toBool());
-#endif
 	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
@@ -1205,9 +1105,7 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 #if QT_VERSION >= 0x050A00
 	settings->setAttribute(QWebEngineSettings::ShowScrollBars, getOption(SettingsManager::Interface_ShowScrollBarsOption, url).toBool());
 #endif
-#if QT_VERSION >= 0x050700
 	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
-#endif
 	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 
 	m_page->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
@@ -1222,17 +1120,7 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 
 void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 {
-#if QT_VERSION < 0x050700
-	m_page->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()), [&](const QVariant &result)
-	{
-		if (result.isValid())
-		{
-			m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
-		}
-	});
-#else
 	m_page->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()));
-#endif
 }
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
@@ -1247,11 +1135,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 		for (int i = 0; i < scripts.count(); ++i)
 		{
-#if QT_VERSION >= 0x050700
 			m_page->runJavaScript(scripts.at(i)->getSource(), QWebEngineScript::UserWorld);
-#else
-			m_page->runJavaScript(scripts.at(i)->getSource());
-#endif
 		}
 
 		notifyNavigationActionsChanged();
@@ -1523,13 +1407,9 @@ QIcon QtWebEngineWebWidget::getIcon() const
 		return ThemesManager::createIcon(QLatin1String("tab-private"));
 	}
 
-#if QT_VERSION < 0x050700
-	return (m_icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : m_icon);
-#else
 	const QIcon icon(m_page->icon());
 
 	return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : icon);
-#endif
 }
 
 QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
@@ -1539,11 +1419,7 @@ QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
 
 QPoint QtWebEngineWebWidget::getScrollPosition() const
 {
-#if QT_VERSION < 0x050700
-	return m_scrollPosition;
-#else
 	return m_page->scrollPosition().toPoint();
-#endif
 }
 
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
@@ -1702,7 +1578,6 @@ bool QtWebEngineWebWidget::hasSelection() const
 	return (m_page->hasSelection() && !m_page->selectedText().isEmpty());
 }
 
-#if QT_VERSION >= 0x050700
 bool QtWebEngineWebWidget::isAudible() const
 {
 	return m_page->recentlyAudible();
@@ -1712,7 +1587,6 @@ bool QtWebEngineWebWidget::isAudioMuted() const
 {
 	return m_page->isAudioMuted();
 }
-#endif
 
 bool QtWebEngineWebWidget::isFullScreen() const
 {

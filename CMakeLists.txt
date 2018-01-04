@@ -77,12 +77,12 @@ set(CMAKE_CXX_STANDARD 11)
 include(FeatureSummary)
 include(GNUInstallDirs)
 
-option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.6)" ON)
+option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.9)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires Qt 5.4)" ON)
 option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
 
 find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
-find_package(Qt5WebEngineWidgets 5.6.0 QUIET)
+find_package(Qt5WebEngineWidgets 5.9.0 QUIET)
 find_package(Qt5WebKitWidgets 5.4.0 QUIET)
 find_package(Hunspell 1.3.0 QUIET)
 
