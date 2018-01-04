@@ -426,9 +426,9 @@ ContentBlockingProfile* ContentBlockingManager::getProfile(const QString &profil
 {
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
-		if (m_profiles[i]->getName() == profile)
+		if (m_profiles.at(i)->getName() == profile)
 		{
-			return m_profiles[i];
+			return m_profiles.at(i);
 		}
 	}
 
@@ -458,10 +458,10 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		if (profiles.at(i) >= 0 && profiles.at(i) < m_profiles.count())
 		{
-			CheckResult currentResult(m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType));
-			currentResult.profile = profiles[i];
+			CheckResult currentResult(m_profiles.at(profiles.at(i))->checkUrl(baseUrl, requestUrl, resourceType));
+			currentResult.profile = profiles.at(i);
 
 			if (currentResult.isBlocked)
 			{
