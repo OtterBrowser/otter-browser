@@ -84,40 +84,40 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_definitions.count(); ++i)
 		{
-			if ((m_definitions[i].isDefault && !m_definitions[i].canReset) || m_definitions[i].wasRemoved)
+			if ((m_definitions.at(i).isDefault && !m_definitions.at(i).canReset) || m_definitions.at(i).wasRemoved)
 			{
 				continue;
 			}
 
-			QString identifier(getToolBarName(m_definitions[i].identifier));
+			QString identifier(getToolBarName(m_definitions.at(i).identifier));
 
 			if (identifier.isEmpty())
 			{
 				continue;
 			}
 
-			QJsonObject definitionObject({{QLatin1String("identifier"), QJsonValue(identifier)}, {QLatin1String("title"), QJsonValue(m_definitions[i].title)}, {QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility))}, {QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].fullScreenVisibility))}});
+			QJsonObject definitionObject({{QLatin1String("identifier"), QJsonValue(identifier)}, {QLatin1String("title"), QJsonValue(m_definitions.at(i).title)}, {QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions.at(i).normalVisibility))}, {QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions.at(i).fullScreenVisibility))}});
 
-			switch (m_definitions[i].type)
+			switch (m_definitions.at(i).type)
 			{
 				case BookmarksBarType:
-					definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
+					definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions.at(i).bookmarksPath));
 
 					break;
 				case SideBarType:
-					definitionObject.insert(QLatin1String("currentPanel"), QJsonValue(m_definitions[i].currentPanel));
-					definitionObject.insert(QLatin1String("panels"), QJsonArray::fromStringList(m_definitions[i].panels));
+					definitionObject.insert(QLatin1String("currentPanel"), QJsonValue(m_definitions.at(i).currentPanel));
+					definitionObject.insert(QLatin1String("panels"), QJsonArray::fromStringList(m_definitions.at(i).panels));
 
 					break;
 				default:
 					break;
 			}
 
-			if (m_definitions[i].location != Qt::NoToolBarArea)
+			if (m_definitions.at(i).location != Qt::NoToolBarArea)
 			{
 				QString location;
 
-				switch (m_definitions[i].location)
+				switch (m_definitions.at(i).location)
 				{
 					case Qt::BottomToolBarArea:
 						location = QLatin1String("bottom");
@@ -142,7 +142,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 			QString buttonStyle;
 
-			switch (m_definitions[i].buttonStyle)
+			switch (m_definitions.at(i).buttonStyle)
 			{
 				case Qt::ToolButtonFollowStyle:
 					buttonStyle = QLatin1String("auto");
@@ -168,35 +168,35 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 			definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(buttonStyle));
 
-			if (m_definitions[i].iconSize > 0)
+			if (m_definitions.at(i).iconSize > 0)
 			{
-				definitionObject.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].iconSize));
+				definitionObject.insert(QLatin1String("iconSize"), QJsonValue(m_definitions.at(i).iconSize));
 			}
 
-			if (m_definitions[i].maximumButtonSize > 0)
+			if (m_definitions.at(i).maximumButtonSize > 0)
 			{
-				definitionObject.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions[i].maximumButtonSize));
+				definitionObject.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions.at(i).maximumButtonSize));
 			}
 
-			if (m_definitions[i].panelSize > 0)
+			if (m_definitions.at(i).panelSize > 0)
 			{
-				definitionObject.insert(QLatin1String("panelSize"), QJsonValue(m_definitions[i].panelSize));
+				definitionObject.insert(QLatin1String("panelSize"), QJsonValue(m_definitions.at(i).panelSize));
 			}
 
-			definitionObject.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
+			definitionObject.insert(QLatin1String("row"), QJsonValue(m_definitions.at(i).row));
 
-			if (m_definitions[i].hasToggle)
+			if (m_definitions.at(i).hasToggle)
 			{
 				definitionObject.insert(QLatin1String("hasToggle"), QJsonValue(true));
 			}
 
-			if (!m_definitions[i].entries.isEmpty())
+			if (!m_definitions.at(i).entries.isEmpty())
 			{
 				QJsonArray actionsArray;
 
-				for (int j = 0; j < m_definitions[i].entries.count(); ++j)
+				for (int j = 0; j < m_definitions.at(i).entries.count(); ++j)
 				{
-					actionsArray.append(encodeEntry(m_definitions[i].entries.at(j)));
+					actionsArray.append(encodeEntry(m_definitions.at(i).entries.at(j)));
 				}
 
 				definitionObject.insert(QLatin1String("actions"), actionsArray);
