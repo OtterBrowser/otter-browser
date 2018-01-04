@@ -462,7 +462,7 @@ void ItemViewWidget::ensureInitialized()
 
 		for (int i = 0; i < columns.count(); ++i)
 		{
-			const int column(columns[i].toInt());
+			const int column(columns.at(i).toInt());
 
 			setColumnHidden(column, false);
 
