@@ -165,7 +165,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
 
-	const QStringList widgets({QLatin1String("CustomMenu"), QLatin1String("ClosedWindowsMenu"), QLatin1String("AddressWidget"), QLatin1String("ConfigurationOptionWidget"), QLatin1String("ContentBlockingInformationWidget"), QLatin1String("MenuButtonWidget"), QLatin1String("PanelChooserWidget"), QLatin1String("PrivateWindowIndicatorWidget"), QLatin1String("SearchWidget"), QLatin1String("SizeGripWidget"), QLatin1String("StatusMessageWidget"), QLatin1String("ZoomWidget")});
+	const QStringList widgets({QLatin1String("CustomMenu"), QLatin1String("ClosedWindowsMenu"), QLatin1String("AddressWidget"), QLatin1String("ConfigurationOptionWidget"), QLatin1String("ContentBlockingInformationWidget"), QLatin1String("MenuButtonWidget"), QLatin1String("PanelChooserWidget"), QLatin1String("PrivateWindowIndicatorWidget"), QLatin1String("SearchWidget"), QLatin1String("SizeGripWidget"), QLatin1String("StatusMessageWidget"), QLatin1String("TransfersWidget"), QLatin1String("ZoomWidget")});
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{
@@ -405,7 +405,7 @@ void ToolBarDialog::editEntry()
 			}
 		});
 	}
-	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
+	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier == QLatin1String("TransfersWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
 		OptionWidget *iconWidget(new OptionWidget({}, SettingsManager::IconType, &dialog));
 		iconWidget->setObjectName(QLatin1String("icon"));
@@ -426,6 +426,11 @@ void ToolBarDialog::editEntry()
 		{
 			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
 			textWidget->setDefaultValue(tr("Menu"));
+		}
+		else if (identifier == QLatin1String("TransfersWidget"))
+		{
+			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("transfers")));
+			textWidget->setDefaultValue(tr("Transfers"));
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
 		{
@@ -640,6 +645,11 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	else if (identifier == QLatin1String("TabBarWidget"))
 	{
 		item->setText(tr("Tab Bar"));
+	}
+	else if (identifier == QLatin1String("TransfersWidget"))
+	{
+		item->setText(tr("Transfer Progress Information"));
+		item->setIcon(ThemesManager::createIcon(QLatin1String("transfers")));
 	}
 	else if (identifier == QLatin1String("ZoomWidget"))
 	{
