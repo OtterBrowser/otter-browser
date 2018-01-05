@@ -319,7 +319,10 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 {
 	QMimeData *mimeData(new QMimeData());
 	QStringList texts;
+	texts.reserve(indexes.count());
+
 	QList<QUrl> urls;
+	urls.reserve(indexes.count());
 
 	if (indexes.count() == 1)
 	{
