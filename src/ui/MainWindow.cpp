@@ -1801,9 +1801,9 @@ void MainWindow::updateShortcuts()
 
 		for (int j = 0; j < definition.shortcuts.count(); ++j)
 		{
-			if (ActionsManager::isShortcutAllowed(definition.shortcuts[j]))
+			if (ActionsManager::isShortcutAllowed(definition.shortcuts.at(j)))
 			{
-				m_shortcuts.append(new Shortcut(definition.action, definition.shortcuts[j], definition.parameters, this));
+				m_shortcuts.append(new Shortcut(definition.action, definition.shortcuts.at(j), definition.parameters, this));
 			}
 		}
 	}
