@@ -1093,9 +1093,8 @@ void Menu::populateProxiesMenu()
 		else
 		{
 			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
-			Action *action(new Action(-1, {}, this));
+			Action *action(new Action(-1, {}, {{QLatin1String("text"), Utils::elideText(definition.getTitle(), this)}}, ActionExecutor::Object(), this));
 			action->setData(proxies.at(i));
-			action->setText(Utils::elideText(definition.getTitle(), this));
 
 			if (definition.isFolder)
 			{
