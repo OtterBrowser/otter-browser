@@ -622,7 +622,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 			{
 				for (int i = 0; i < m_windows.count(); ++i)
 				{
-					if (m_windows[i]->isPrivate())
+					if (m_windows.at(i)->isPrivate())
 					{
 						m_windows[i]->close();
 					}
