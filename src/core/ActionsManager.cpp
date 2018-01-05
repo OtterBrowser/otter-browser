@@ -617,11 +617,11 @@ QString ActionsManager::createReport()
 
 			for (int j = 0; j < definitions.count(); ++j)
 			{
-				const QVector<QKeySequence> shortcuts(definitions[j].second);
+				const QVector<QKeySequence> shortcuts(definitions.at(j).second);
 
 				stream << QLatin1Char('\t');
 				stream.setFieldWidth(30);
-				stream << QLatin1Char(' ') + QJsonDocument(QJsonObject::fromVariantMap(definitions[j].first)).toJson(QJsonDocument::Compact);
+				stream << QLatin1Char(' ') + QJsonDocument(QJsonObject::fromVariantMap(definitions.at(j).first)).toJson(QJsonDocument::Compact);
 				stream.setFieldWidth(20);
 
 				for (int k = 0; k < shortcuts.count(); ++k)
