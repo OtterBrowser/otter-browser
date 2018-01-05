@@ -1797,11 +1797,13 @@ void MainWindow::updateShortcuts()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
+		const KeyboardProfile::Action definition(definitions.at(i));
+
+		for (int j = 0; j < definition.shortcuts.count(); ++j)
 		{
-			if (ActionsManager::isShortcutAllowed(definitions[i].shortcuts[j]))
+			if (ActionsManager::isShortcutAllowed(definition.shortcuts[j]))
 			{
-				m_shortcuts.append(new Shortcut(definitions[i].action, definitions[i].shortcuts[j], definitions[i].parameters, this));
+				m_shortcuts.append(new Shortcut(definition.action, definition.shortcuts[j], definition.parameters, this));
 			}
 		}
 	}
