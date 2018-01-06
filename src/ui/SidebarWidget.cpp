@@ -112,7 +112,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 					{
 						if (!actions.at(i)->data().toString().isEmpty())
 						{
-							actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
+							actions[i]->setText(getPanelTitle(actions.at(i)->data().toString()));
 						}
 					}
 				}
