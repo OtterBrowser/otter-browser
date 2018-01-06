@@ -128,6 +128,11 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 		for (int i = 0; i < applications.count(); ++i)
 		{
 			addItem(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name), applications.at(i).command);
+
+			if (applications.at(i).icon.isNull())
+			{
+				model()->setData(model()->index((count() - 1), 0), QColor(Qt::transparent), Qt::DecorationRole);
+			}
 		}
 	}
 
