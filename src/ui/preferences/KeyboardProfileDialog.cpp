@@ -355,8 +355,8 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 		for (int j = 0; j < actionVariants.count(); ++j)
 		{
 			KeyboardProfile::Action definition;
-			definition.parameters = actionVariants[j].first;
-			definition.shortcuts = actionVariants[j].second;
+			definition.parameters = actionVariants.at(j).first;
+			definition.shortcuts = actionVariants.at(j).second;
 			definition.action = iterator.key();
 
 			definitions.append(definition);

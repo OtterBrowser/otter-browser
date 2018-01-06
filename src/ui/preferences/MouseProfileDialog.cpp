@@ -93,26 +93,26 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 
 			for (int j = 0; j < gestures.count(); ++j)
 			{
-				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures[j].action));
+				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(gestures.at(j).action));
 				const QString name(ActionsManager::getActionName(gestures.at(j).action));
 				const QString parameters(gestures.at(j).parameters.isEmpty() ? QString() : QJsonDocument(QJsonObject::fromVariantMap(gestures.at(j).parameters)).toJson(QJsonDocument::Compact));
 				QString steps;
 
-				for (int k = 0; k < gestures[j].steps.count(); ++k)
+				for (int k = 0; k < gestures.at(j).steps.count(); ++k)
 				{
 					if (k > 0)
 					{
 						steps += QLatin1String(", ");
 					}
 
-					steps += gestures[j].steps.at(k).toString();
+					steps += gestures.at(j).steps.at(k).toString();
 				}
 
 				QList<QStandardItem*> items({new QStandardItem(action.getText(true)), new QStandardItem(parameters), new QStandardItem(steps)});
 				items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 				items[0]->setData(action.identifier, IdentifierRole);
 				items[0]->setData(name, NameRole);
-				items[0]->setData(gestures[j].parameters, ParametersRole);
+				items[0]->setData(gestures.at(j).parameters, ParametersRole);
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 				items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(action.getText(true)).arg(name));
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
