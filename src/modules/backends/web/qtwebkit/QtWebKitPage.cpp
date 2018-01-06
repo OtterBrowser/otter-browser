@@ -146,7 +146,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 			for (int j = 0; j < blockedRequests.count(); ++j)
 			{
-				if (url.matches(QUrl(blockedRequests[j]), QUrl::None) || blockedRequests[j].endsWith(url.url()))
+				if (url.matches(QUrl(blockedRequests.at(j)), QUrl::None) || blockedRequests.at(j).endsWith(url.url()))
 				{
 					element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
 
