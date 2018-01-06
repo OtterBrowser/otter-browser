@@ -249,7 +249,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 
 				for (int j = 0; j < plainValue.length(); ++j)
 				{
-					const char character(plainValue[j]);
+					const char character(plainValue.at(j));
 
 					if (character == 32 || (character >= 33 && character <= 126 && character != 61))
 					{
