@@ -64,10 +64,13 @@ void SearchEnginesManager::ensureInitialized()
 
 void SearchEnginesManager::loadSearchEngines()
 {
-	m_searchEngines.clear();
-	m_searchKeywords.clear();
-
 	m_searchEnginesOrder = SettingsManager::getOption(SettingsManager::Search_SearchEnginesOrderOption).toStringList();
+
+	m_searchEngines.clear();
+	m_searchEngines.reserve(m_searchEnginesOrder.count());
+
+	m_searchKeywords.clear();
+	m_searchKeywords.reserve(m_searchEnginesOrder.count());
 
 	const QStringList searchEnginesOrder(m_searchEnginesOrder);
 
@@ -95,6 +98,8 @@ void SearchEnginesManager::loadSearchEngines()
 			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
 		}
 	}
+
+	m_searchEngines.squeeze();
 
 	emit m_instance->searchEnginesModified();
 
