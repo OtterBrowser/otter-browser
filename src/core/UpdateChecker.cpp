@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ void UpdateChecker::runUpdateCheck()
 	activeChannels.removeAll(QString());
 
 	const PlatformIntegration *integration(Application::getPlatformIntegration());
-	const QJsonArray channels(QJsonDocument::fromJson(m_networkReply->readAll()).object().value(QLatin1String("channels")).toArray());
+	const QJsonArray channelsArray(QJsonDocument::fromJson(m_networkReply->readAll()).object().value(QLatin1String("channels")).toArray());
 	const QString platform(integration ? integration->getPlatformName() : QString());
 	const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
 	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
@@ -81,13 +81,13 @@ void UpdateChecker::runUpdateCheck()
 	int latestVersionIndex(0);
 	QVector<UpdateInformation> availableUpdates;
 
-	for (int i = 0; i < channels.count(); ++i)
+	for (int i = 0; i < channelsArray.count(); ++i)
 	{
-		if (channels.at(i).isObject())
+		if (channelsArray.at(i).isObject())
 		{
-			const QJsonObject object(channels.at(i).toObject());
-			const QString identifier(object[QLatin1String("identifier")].toString());
-			const QString channelVersion(object[QLatin1String("version")].toString());
+			const QJsonObject channelObject(channelsArray.at(i).toObject());
+			const QString identifier(channelObject[QLatin1String("identifier")].toString());
+			const QString channelVersion(channelObject[QLatin1String("version")].toString());
 
 			if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!m_isInBackground && activeChannels.isEmpty()))
 			{
@@ -100,21 +100,21 @@ void UpdateChecker::runUpdateCheck()
 					continue;
 				}
 
-				const int channelSubVersion(object[QLatin1String("subVersion")].toString().toInt());
+				const int channelSubVersion(channelObject[QLatin1String("subVersion")].toString().toInt());
 
 				if (mainVersion < channelMainVersion || (subVersion > 0 && subVersion < channelSubVersion))
 				{
 					UpdateInformation information;
 					information.channel = identifier;
 					information.version = channelVersion;
-					information.isAvailable = object[QLatin1String("availablePlatforms")].toArray().contains(QJsonValue(platform));
-					information.detailsUrl = QUrl(object[QLatin1String("detailsUrl")].toString());
-					information.scriptUrl = QUrl(object[QLatin1String("scriptUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
-					information.fileUrl = QUrl(object[QLatin1String("fileUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toMSecsSinceEpoch() / 1000)));
+					information.isAvailable = channelObject[QLatin1String("availablePlatforms")].toArray().contains(QJsonValue(platform));
+					information.detailsUrl = QUrl(channelObject[QLatin1String("detailsUrl")].toString());
+					information.scriptUrl = QUrl(channelObject[QLatin1String("scriptUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
+					information.fileUrl = QUrl(channelObject[QLatin1String("fileUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toMSecsSinceEpoch() / 1000)));
 
-					if (!object[QLatin1String("subVersion")].toString().isEmpty())
+					if (!channelObject[QLatin1String("subVersion")].toString().isEmpty())
 					{
-						information.version.append(QLatin1Char('#') + object[QLatin1String("subVersion")].toString());
+						information.version.append(QLatin1Char('#') + channelObject[QLatin1String("subVersion")].toString());
 					}
 
 					if (mainVersion < channelMainVersion && latestVersion < channelMainVersion)
