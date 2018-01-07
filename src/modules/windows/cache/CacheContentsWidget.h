@@ -65,7 +65,7 @@ protected slots:
 	void removeEntry();
 	void removeDomainEntries();
 	void removeDomainEntriesOrEntry();
-	void openEntry(const QModelIndex &index = {});
+	void openEntry();
 	void copyEntryLink();
 	void handleEntryAdded(const QUrl &entry);
 	void handleEntryRemoved(const QUrl &entry);

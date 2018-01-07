@@ -188,9 +188,9 @@ void CacheContentsWidget::removeDomainEntriesOrEntry()
 	}
 }
 
-void CacheContentsWidget::openEntry(const QModelIndex &index)
+void CacheContentsWidget::openEntry()
 {
-	const QModelIndex entryIndex(index.isValid() ? index : m_ui->cacheViewWidget->currentIndex());
+	const QModelIndex entryIndex(m_ui->cacheViewWidget->currentIndex());
 
 	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 	{
@@ -341,21 +341,40 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 
 	if (entry.isValid())
 	{
-		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(SessionsManager::NewTabOpen);
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open")), &QAction::triggered, this, &CacheContentsWidget::openEntry);
+
+		QAction *openInNewTabAction(menu.addAction(tr("Open in New Tab")));
+		openInNewTabAction->setData(SessionsManager::NewTabOpen);
+
+		QAction *openInNewBackgroundTabAction(menu.addAction(tr("Open in New Background Tab")));
+		openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(SessionsManager::NewWindowOpen);
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+
+		QAction *openInNewWindowAction(menu.addAction(tr("Open in New Window")));
+		openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
+
+		QAction *openInNewBackgroundWindowAction(menu.addAction(tr("Open in New Background Window")));
+		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+
 		menu.addSeparator();
-		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
+
+		connect(menu.addAction(tr("Copy Link to Clipboard")), &QAction::triggered, this, &CacheContentsWidget::copyEntryLink);
+
 		menu.addSeparator();
-		menu.addAction(tr("Remove Entry"), this, SLOT(removeEntry()));
+
+		connect(menu.addAction(tr("Remove Entry")), &QAction::triggered, this, &CacheContentsWidget::removeEntry);
+
+		connect(openInNewTabAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
+		connect(openInNewBackgroundTabAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
+		connect(openInNewWindowAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
+		connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
 	}
 
 	if (entry.isValid() || (index.isValid() && index.parent() == m_model->invisibleRootItem()->index()))
 	{
-		menu.addAction(tr("Remove All Entries from This Domain"), this, SLOT(removeDomainEntries()));
+		connect(menu.addAction(tr("Remove All Entries from This Domain")), &QAction::triggered, this, &CacheContentsWidget::removeDomainEntries);
+
 		menu.addSeparator();
 	}
 
