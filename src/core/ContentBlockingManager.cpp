@@ -124,14 +124,14 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 
 			if (!languages.contains(QLocale::AnyLanguage))
 			{
-				QJsonArray languageNames;
+				QJsonArray languagesArray;
 
 				for (int j = 0; j < languages.count(); ++j)
 				{
-					languageNames.append(QLocale(languages.at(j)).name());
+					languagesArray.append(QLocale(languages.at(j)).name());
 				}
 
-				profileObject.insert(QLatin1String("languages"), languageNames);
+				profileObject.insert(QLatin1String("languages"), languagesArray);
 			}
 
 			mainObject.insert(profile->getName(), profileObject);

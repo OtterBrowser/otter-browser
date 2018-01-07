@@ -411,9 +411,9 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : Addon(),
 		for (int j = 0; j < gesturesArray.count(); ++j)
 		{
 			const QJsonObject actionObject(gesturesArray.at(j).toObject());
-			const QJsonArray rawSteps(actionObject.value(QLatin1String("steps")).toArray());
+			const QJsonArray stepsArray(actionObject.value(QLatin1String("steps")).toArray());
 
-			if (rawSteps.isEmpty())
+			if (stepsArray.isEmpty())
 			{
 				continue;
 			}
@@ -428,11 +428,11 @@ MouseProfile::MouseProfile(const QString &identifier, LoadMode mode) : Addon(),
 			}
 
 			QVector<MouseProfile::Gesture::Step> steps;
-			steps.reserve(rawSteps.count());
+			steps.reserve(stepsArray.count());
 
-			for (int k = 0; k < rawSteps.count(); ++k)
+			for (int k = 0; k < stepsArray.count(); ++k)
 			{
-				steps.append(Gesture::Step::fromString(rawSteps.at(k).toString()));
+				steps.append(Gesture::Step::fromString(stepsArray.at(k).toString()));
 			}
 
 			MouseProfile::Gesture definition;
