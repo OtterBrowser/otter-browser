@@ -239,7 +239,7 @@
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="369"/>
         <source>You are about to irreversibly remove %n addon(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Вы собираетесь необратимо удалить %n дополнение.</numerusform><numerusform>Вы собираетесь необратимо удалить %n дополнения.</numerusform><numerusform>Вы собираетесь необратимо удалить %n дополнений.</numerusform><numerusform>Вы собираетесь необратимо удалить %n дополнений.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="370"/>
@@ -3408,7 +3408,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="177"/>
         <source>%1 (%2 blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%2 заблокирован)</numerusform><numerusform>%1 (%2 заблокировано)</numerusform><numerusform>%1 (%2 заблокировано)</numerusform><numerusform>%1 (%2 заблокировано)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="184"/>
@@ -7082,7 +7082,7 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1002"/>
         <source>Reload Every: %n second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Перезагрузка каждую: %n секунду</numerusform><numerusform>Перезагрузка каждые: %n секунды</numerusform><numerusform>Перезагрузка каждые: %n секунд</numerusform><numerusform>Перезагрузка каждые: %n секунд</numerusform></translation>
     </message>
 </context>
 <context>
