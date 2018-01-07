@@ -21,11 +21,13 @@
 #include "SidebarWidget.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
+#include "OpenAddressDialog.h"
 #include "ResizerWidget.h"
 #include "ToolBarWidget.h"
 #include "WidgetFactory.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
+#include "../core/BookmarksModel.h"
 #include "../core/HistoryManager.h"
 #include "../core/ThemesManager.h"
 #include "../modules/widgets/action/ActionWidget.h"
@@ -33,7 +35,6 @@
 
 #include "ui_SidebarWidget.h"
 
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -144,19 +145,37 @@ void SidebarWidget::reload()
 void SidebarWidget::addWebPanel()
 {
 	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	QString url;
+	OpenAddressDialog dialog(ActionExecutor::Object(), this);
+	dialog.setWindowTitle(tr("Add web panel"));
 
 	if (mainWindow)
 	{
-		url = mainWindow->getUrl().toString(QUrl::RemovePassword);
+		dialog.setText(mainWindow->getUrl().toString(QUrl::RemovePassword));
 	}
 
-	url = QInputDialog::getText(this, tr("Add web panel"), tr("Input address of web page to be shown in panel:"), QLineEdit::Normal, url);
+	QUrl url;
+
+	if (dialog.exec() == QDialog::Accepted && dialog.getResult().isValid())
+	{
+		switch (dialog.getResult().type)
+		{
+			case InputInterpreter::InterpreterResult::BookmarkType:
+				url = dialog.getResult().bookmark->getUrl();
+
+				break;
+			case InputInterpreter::InterpreterResult::UrlType:
+				url = dialog.getResult().url;
+
+				break;
+			default:
+				break;
+		}
+	}
 
 	if (!url.isEmpty())
 	{
 		ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
-		definition.panels.append(QLatin1String("web:") + url);
+		definition.panels.append(QLatin1String("web:") + url.toString());
 
 		ToolBarsManager::setToolBar(definition);
 	}
