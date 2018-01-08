@@ -134,7 +134,6 @@ protected slots:
 	void notifyIconChanged();
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature nativeFeature, bool cancel);
 	void notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status);
-	void notifyDocumentLoadingProgress(int progress);
 	void notifyNavigationActionsChanged();
 
 private:

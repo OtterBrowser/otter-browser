@@ -75,7 +75,12 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 {
 	setFocusPolicy(Qt::StrongFocus);
 
-	connect(m_page, &QtWebEnginePage::loadProgress, this, &QtWebEngineWebWidget::notifyDocumentLoadingProgress);
+	connect(m_page, &QtWebEnginePage::loadProgress, [&](int progress)
+	{
+		m_documentLoadingProgress = progress;
+
+		emit pageInformationChanged(DocumentLoadingProgressInformation, progress);
+	});
 	connect(m_page, &QtWebEnginePage::loadStarted, this, &QtWebEngineWebWidget::pageLoadStarted);
 	connect(m_page, &QtWebEnginePage::loadFinished, this, &QtWebEngineWebWidget::pageLoadFinished);
 	connect(m_page, &QtWebEnginePage::linkHovered, this, &QtWebEngineWebWidget::setStatusMessageOverride);
@@ -1076,13 +1081,6 @@ void QtWebEngineWebWidget::notifyRenderProcessTerminated(QWebEnginePage::RenderP
 
 		emit loadingStateChanged(CrashedLoadingState);
 	}
-}
-
-void QtWebEngineWebWidget::notifyDocumentLoadingProgress(int progress)
-{
-	m_documentLoadingProgress = progress;
-
-	emit pageInformationChanged(DocumentLoadingProgressInformation, progress);
 }
 
 void QtWebEngineWebWidget::notifyNavigationActionsChanged()
