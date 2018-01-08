@@ -197,7 +197,7 @@ void CacheContentsWidget::openEntry()
 		return;
 	}
 
-	const QUrl url(index.sibling(index.row(), 0).data(Qt::UserRole).toUrl());
+	const QUrl url(getEntry(index));
 
 	if (url.isValid())
 	{
