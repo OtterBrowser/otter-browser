@@ -213,11 +213,11 @@ void CacheContentsWidget::openEntry()
 
 void CacheContentsWidget::copyEntryLink()
 {
-	const QStandardItem *entryItem(findEntry(getEntry(m_ui->cacheViewWidget->currentIndex())));
+	const QUrl url(getEntry(m_ui->cacheViewWidget->currentIndex()));
 
-	if (entryItem)
+	if (url.isValid())
 	{
-		QApplication::clipboard()->setText(entryItem->data(Qt::UserRole).toString());
+		QApplication::clipboard()->setText(url.toDisplayString());
 	}
 }
 
