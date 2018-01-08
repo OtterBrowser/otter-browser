@@ -86,8 +86,8 @@ void UpdateChecker::runUpdateCheck()
 		if (channelsArray.at(i).isObject())
 		{
 			const QJsonObject channelObject(channelsArray.at(i).toObject());
-			const QString identifier(channelObject[QLatin1String("identifier")].toString());
-			const QString channelVersion(channelObject[QLatin1String("version")].toString());
+			const QString identifier(channelObject.value(QLatin1String("identifier")).toString());
+			const QString channelVersion(channelObject.value(QLatin1String("version")).toString());
 
 			if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!m_isInBackground && activeChannels.isEmpty()))
 			{
@@ -100,21 +100,21 @@ void UpdateChecker::runUpdateCheck()
 					continue;
 				}
 
-				const int channelSubVersion(channelObject[QLatin1String("subVersion")].toString().toInt());
+				const int channelSubVersion(channelObject.value(QLatin1String("subVersion")).toString().toInt());
 
 				if (mainVersion < channelMainVersion || (subVersion > 0 && subVersion < channelSubVersion))
 				{
 					UpdateInformation information;
 					information.channel = identifier;
 					information.version = channelVersion;
-					information.isAvailable = channelObject[QLatin1String("availablePlatforms")].toArray().contains(QJsonValue(platform));
-					information.detailsUrl = QUrl(channelObject[QLatin1String("detailsUrl")].toString());
-					information.scriptUrl = QUrl(channelObject[QLatin1String("scriptUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
-					information.fileUrl = QUrl(channelObject[QLatin1String("fileUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toMSecsSinceEpoch() / 1000)));
+					information.isAvailable = channelObject.value(QLatin1String("availablePlatforms")).toArray().contains(QJsonValue(platform));
+					information.detailsUrl = QUrl(channelObject.value(QLatin1String("detailsUrl")).toString());
+					information.scriptUrl = QUrl(channelObject.value(QLatin1String("scriptUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
+					information.fileUrl = QUrl(channelObject.value(QLatin1String("fileUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toMSecsSinceEpoch() / 1000)));
 
-					if (!channelObject[QLatin1String("subVersion")].toString().isEmpty())
+					if (!channelObject.value(QLatin1String("subVersion")).toString().isEmpty())
 					{
-						information.version.append(QLatin1Char('#') + channelObject[QLatin1String("subVersion")].toString());
+						information.version.append(QLatin1Char('#') + channelObject.value(QLatin1String("subVersion")).toString());
 					}
 
 					if (mainVersion < channelMainVersion && latestVersion < channelMainVersion)
