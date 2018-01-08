@@ -70,7 +70,7 @@ protected slots:
 	void populateEntries();
 	void removeEntry();
 	void removeDomainEntries();
-	void openEntry(const QModelIndex &index = {});
+	void openEntry();
 	void bookmarkEntry();
 	void copyEntryLink();
 	void handleEntryAdded(HistoryEntryItem *entry);
