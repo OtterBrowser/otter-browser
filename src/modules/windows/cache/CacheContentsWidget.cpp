@@ -159,7 +159,7 @@ void CacheContentsWidget::removeEntry()
 void CacheContentsWidget::removeDomainEntries()
 {
 	const QModelIndex index(m_ui->cacheViewWidget->currentIndex());
-	const QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
+	const QStandardItem *domainItem(findDomain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : Utils::extractHost(getEntry(index))));
 
 	if (!domainItem)
 	{
