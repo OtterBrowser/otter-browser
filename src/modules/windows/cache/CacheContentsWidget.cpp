@@ -300,13 +300,18 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 
 void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 {
-	QStandardItem *entryItem(findEntry(entry));
+	QStandardItem *domainItem(findDomain(Utils::extractHost(entry)));
 
-	if (entryItem)
+	if (!domainItem)
 	{
-		QStandardItem *domainItem(entryItem->parent());
+		return;
+	}
 
-		if (domainItem)
+	for (int i = 0; i < domainItem->rowCount(); ++i)
+	{
+		QStandardItem *entryItem(domainItem->child(i, 0));
+
+		if (entryItem && entryItem->data(Qt::UserRole).toUrl() == entry)
 		{
 			const qint64 size(domainItem->index().child(entryItem->row(), 2).data(Qt::UserRole).toLongLong());
 
@@ -328,6 +333,8 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 
 				domainItem->setText(QStringLiteral("%1 (%2)").arg(entry.host()).arg(domainItem->rowCount()));
 			}
+
+			break;
 		}
 	}
 }
