@@ -129,6 +129,8 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		m_model->setHorizontalHeaderLabels({tr("Status"), tr("Filename"), tr("Size"), tr("Progress"), tr("Time"), tr("Speed"), tr("Started"), tr("Finished")});
 	}
 }
 
