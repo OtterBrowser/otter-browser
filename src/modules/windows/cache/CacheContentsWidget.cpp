@@ -532,26 +532,6 @@ QStandardItem* CacheContentsWidget::findDomain(const QString &domain)
 	return nullptr;
 }
 
-QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		const QModelIndex domainIndex(m_model->index(i, 0));
-
-		for (int j = 0; j < m_model->rowCount(domainIndex); ++j)
-		{
-			const QModelIndex index(domainIndex.child(j, 0));
-
-			if (index.data(Qt::UserRole).toUrl() == entry)
-			{
-				return m_model->itemFromIndex(index);
-			}
-		}
-	}
-
-	return nullptr;
-}
-
 QString CacheContentsWidget::getTitle() const
 {
 	return tr("Cache");
