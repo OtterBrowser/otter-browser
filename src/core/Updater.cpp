@@ -130,7 +130,7 @@ void Updater::handleTransferFinished()
 
 void Updater::updateProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	emit progress(qFloor((static_cast<qreal>(bytesReceived) / bytesTotal) * 100));
+	emit progress(qFloor(Utils::calculatePercent(bytesReceived, bytesTotal)));
 }
 
 void Updater::clearUpdate()

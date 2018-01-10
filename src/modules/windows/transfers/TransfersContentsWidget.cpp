@@ -315,7 +315,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 			break;
 	}
 
-	const QString toolTip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(isIndeterminate ? tr("Unknown") : Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100), 0, 'f', 1)));
+	const QString toolTip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(isIndeterminate ? tr("Unknown") : Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(Utils::calculatePercent(transfer->getBytesReceived(), transfer->getBytesTotal()), 0, 'f', 1)));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
@@ -342,7 +342,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 			case 3:
 				m_model->setData(index, transfer->getBytesReceived(), BytesReceivedRole);
 				m_model->setData(index, transfer->getBytesTotal(), BytesTotalRole);
-				m_model->setData(index, ((transfer->getBytesTotal() > 0) ? qFloor((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : -1), ProgressRole);
+				m_model->setData(index, ((transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(transfer->getBytesReceived(), transfer->getBytesTotal())) : -1), ProgressRole);
 				m_model->setData(index, transfer->getState(), StateRole);
 
 				break;
@@ -509,7 +509,7 @@ void TransfersContentsWidget::updateActions()
 		m_ui->targetLabelWidget->setUrl(QUrl(transfer->getTarget()));
 		m_ui->sizeLabelWidget->setText(isIndeterminate ? tr("Unknown") : Utils::formatUnit(transfer->getBytesTotal(), false, 1, true));
 		m_ui->downloadedLabelWidget->setText(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true));
-		m_ui->progressLabelWidget->setText(isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100), 0, 'f', 1));
+		m_ui->progressLabelWidget->setText(isIndeterminate ? tr("Unknown") : QStringLiteral("%1%").arg(Utils::calculatePercent(transfer->getBytesReceived(), transfer->getBytesTotal()), 0, 'f', 1));
 	}
 	else
 	{
