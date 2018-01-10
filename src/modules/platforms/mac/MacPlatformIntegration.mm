@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -352,7 +352,7 @@ void MacPlatformIntegration::updateTransfersProgress()
 		}
 	}
 
-	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((transferAmount > 0 && bytesTotal > 0) ? (static_cast<double>(bytesReceived) / bytesTotal) : -1)];
+	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((transferAmount > 0 && bytesTotal > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal) : -1)];
 	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((transferAmount > 0) ? [NSString stringWithFormat:@"%d", transferAmount] : @"")];
 }
 
