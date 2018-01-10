@@ -110,6 +110,7 @@ SaveInformation getSavePath(const QString &fileName, QString path = {}, QStringL
 QStringList getOpenPaths(const QStringList &fileNames = {}, QStringList filters = {}, bool selectMultiple = false);
 QVector<QUrl> extractUrls(const QMimeData *mimeData);
 QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
+qreal calculatePercent(qint64 amount, qint64 total);
 bool isUrlEmpty(const QUrl &url);
 
 }

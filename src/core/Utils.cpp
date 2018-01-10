@@ -654,6 +654,11 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 	return information;
 }
 
+qreal calculatePercent(qint64 amount, qint64 total)
+{
+	return ((static_cast<qreal>(amount) / static_cast<qreal>(total)) * 100);
+}
+
 bool isUrlEmpty(const QUrl &url)
 {
 	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));
