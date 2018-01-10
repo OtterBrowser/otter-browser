@@ -20,7 +20,7 @@ class ColumnResizer : public QObject
 {
     Q_OBJECT
 public:
-    ColumnResizer(QObject* parent = 0);
+    explicit ColumnResizer(QObject* parent = 0);
     ~ColumnResizer();
 
     void addWidget(QWidget* widget);
