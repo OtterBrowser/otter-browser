@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -269,7 +269,7 @@ void FreeDesktopOrgPlatformIntegration::updateTransfersProgress(bool clear)
 	QVariantMap properties;
 	properties[QLatin1String("count")] = transferAmount;
 	properties[QLatin1String("count-visible")] = hasActiveTransfers;
-	properties[QLatin1String("progress")] = ((bytesReceived > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0.0);
+	properties[QLatin1String("progress")] = ((bytesReceived > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal, 1) : 0.0);
 	properties[QLatin1String("progress-visible")] = hasActiveTransfers;
 
 	QVariantList arguments;
