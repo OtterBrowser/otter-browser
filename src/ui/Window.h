@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -136,7 +136,7 @@ signals:
 	void aboutToNavigate();
 	void needsAttention();
 	void requestedSearch(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
-	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints);
+	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedCloseWindow(Window *window);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

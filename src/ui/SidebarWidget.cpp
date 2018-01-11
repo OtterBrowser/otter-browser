@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -219,10 +219,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	if (contentsWidget && mainWindow)
 	{
 		connect(contentsWidget, &ContentsWidget::requestedSearch, mainWindow, &MainWindow::search);
-		connect(contentsWidget, &ContentsWidget::requestedNewWindow, [=](ContentsWidget *widget, SessionsManager::OpenHints hints)
-		{
-			mainWindow->openWindow(widget, hints);
-		});
+		connect(contentsWidget, &ContentsWidget::requestedNewWindow, mainWindow, &MainWindow::openWindow);
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])

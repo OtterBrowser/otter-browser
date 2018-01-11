@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -305,7 +305,7 @@ signals:
 	void aboutToReload();
 	void needsAttention();
 	void requestedCloseWindow();
-	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool isCancellation);
 	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);

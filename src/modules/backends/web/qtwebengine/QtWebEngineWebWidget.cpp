@@ -454,7 +454,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
 
-				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
+				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
 			}
 
 			break;
@@ -853,7 +853,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				connect(reply, &QNetworkReply::finished, this, &QtWebEngineWebWidget::handleViewSourceReplyFinished);
 
-				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
+				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
 			}
 
 			break;

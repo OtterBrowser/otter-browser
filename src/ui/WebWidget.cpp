@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -212,7 +212,7 @@ void WebWidget::openUrl(const QUrl &url, SessionsManager::OpenHints hints)
 	WebWidget *widget(clone(false, hints.testFlag(SessionsManager::PrivateOpen), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 	widget->setRequestedUrl(url, false);
 
-	emit requestedNewWindow(widget, hints);
+	emit requestedNewWindow(widget, hints, {});
 }
 
 void WebWidget::handleLoadingStateChange(LoadingState state)

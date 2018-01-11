@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -675,7 +675,7 @@ void QtWebKitWebWidget::openFormRequest(const QNetworkRequest &request, QNetwork
 	QtWebKitWebWidget *widget(qobject_cast<QtWebKitWebWidget*>(clone(false)));
 	widget->openRequest(request, operation, outgoingData);
 
-	emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
+	emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen), {});
 }
 
 void QtWebKitWebWidget::startDelayedTransfer(Transfer *transfer)
@@ -1122,7 +1122,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				connect(reply, &QNetworkReply::finished, this, &QtWebKitWebWidget::handleViewSourceReplyFinished);
 
-				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
+				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
 			}
 
 			break;
@@ -1669,7 +1669,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				connect(reply, &QNetworkReply::finished, this, &QtWebKitWebWidget::handleViewSourceReplyFinished);
 
-				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen);
+				emit requestedNewWindow(sourceViewer, SessionsManager::DefaultOpen, {});
 			}
 
 			break;

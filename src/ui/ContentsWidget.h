@@ -96,7 +96,7 @@ private:
 signals:
 	void aboutToNavigate();
 	void needsAttention();
-	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints);
+	void requestedNewWindow(ContentsWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedSearch(const QString &query, const QString &search, SessionsManager::OpenHints hints);
 	void requestedGeometryChange(const QRect &geometry);
 	void webWidgetChanged();

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -66,7 +66,7 @@ private:
 	bool m_isPopup;
 
 signals:
-	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void aboutToNavigate(const QUrl &url, QWebEnginePage::NavigationType navigationType);
 	void viewingMediaChanged(bool isViewingMedia);

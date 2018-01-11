@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -124,7 +124,7 @@ protected slots:
 	void handleLoadingStateChange(WebWidget::LoadingState state);
 	void handleFindInPageQueryChanged();
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
-	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints);
+	void notifyRequestedNewWindow(WebWidget *widget, SessionsManager::OpenHints hints, const QVariantMap &parameters);
 	void updateFindHighlight(WebWidget::FindFlags flags);
 
 private:

@@ -1361,10 +1361,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 	connect(window, &Window::requestedSearch, this, &MainWindow::search);
 	connect(window, &Window::requestedCloseWindow, this, &MainWindow::handleRequestedCloseWindow);
 	connect(window, &Window::isPinnedChanged, this, &MainWindow::handleWindowIsPinnedChanged);
-	connect(window, &Window::requestedNewWindow, this, [&](ContentsWidget *widget, SessionsManager::OpenHints hints)
-	{
-		openWindow(widget, hints);
-	});
+	connect(window, &Window::requestedNewWindow, this, &MainWindow::openWindow);
 
 	emit windowAdded(window->getIdentifier());
 }
