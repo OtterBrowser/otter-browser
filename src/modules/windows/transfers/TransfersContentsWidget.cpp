@@ -229,7 +229,7 @@ void TransfersContentsWidget::clearFinishedTransfers()
 void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
 {
 	QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(QFileInfo(transfer->getTarget()).fileName())});
-	items[0]->setData(qVariantFromValue(static_cast<void*>(transfer)), Qt::UserRole);
+	items[0]->setData(qVariantFromValue(static_cast<void*>(transfer)), InstanceRole);
 	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 	items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 
@@ -580,7 +580,7 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 {
 	if (index.isValid())
 	{
-		return static_cast<Transfer*>(index.sibling(index.row(), 0).data(Qt::UserRole).value<void*>());
+		return static_cast<Transfer*>(index.sibling(index.row(), 0).data(InstanceRole).value<void*>());
 	}
 
 	return nullptr;
