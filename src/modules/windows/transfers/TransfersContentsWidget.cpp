@@ -642,7 +642,7 @@ int TransfersContentsWidget::findTransfer(Transfer *transfer) const
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (transfer == static_cast<Transfer*>(m_model->index(i, 0).data(Qt::UserRole).value<void*>()))
+		if (transfer == getTransfer(m_model->index(i, 0)))
 		{
 			return i;
 		}
