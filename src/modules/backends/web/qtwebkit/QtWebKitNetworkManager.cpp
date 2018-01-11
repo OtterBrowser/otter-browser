@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -184,7 +184,7 @@ void QtWebKitNetworkManager::handleDownloadProgress(qint64 bytesReceived, qint64
 		{
 			setPageInformation(WebWidget::DocumentBytesReceivedInformation, bytesReceived);
 			setPageInformation(WebWidget::DocumentBytesTotalInformation, bytesTotal);
-			setPageInformation(WebWidget::DocumentLoadingProgressInformation, ((bytesTotal > 0) ? (((bytesReceived * 1.0) / bytesTotal) * 100) : -1));
+			setPageInformation(WebWidget::DocumentLoadingProgressInformation, ((bytesTotal > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal) : -1));
 		}
 	}
 
