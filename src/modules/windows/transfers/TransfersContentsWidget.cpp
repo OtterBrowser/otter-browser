@@ -177,11 +177,11 @@ void TransfersContentsWidget::openTransferFolder()
 
 void TransfersContentsWidget::copyTransferInformation()
 {
-	const QStandardItem *item(m_model->itemFromIndex(m_ui->transfersViewWidget->currentIndex()));
+	const QModelIndex index(m_ui->transfersViewWidget->currentIndex());
 
-	if (item)
+	if (index.isValid() && index.data(Qt::ToolTipRole).isValid())
 	{
-		QApplication::clipboard()->setText(item->toolTip().remove(QRegularExpression(QLatin1String("<[^>]*>"))));
+		QApplication::clipboard()->setText(index.data(Qt::ToolTipRole).toString().remove(QRegularExpression(QLatin1String("<[^>]*>"))));
 	}
 }
 
