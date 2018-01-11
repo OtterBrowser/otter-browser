@@ -342,31 +342,28 @@ void SidebarWidget::updatePanels()
 
 	m_buttons.clear();
 
-	QHash<QString, ContentsWidget*>::iterator iterator(m_panels.begin());
+	const QStringList currentPanels(m_panels.keys());
 
-	while (iterator != m_panels.end())
+	for (int i = 0; i < currentPanels.count(); ++i)
 	{
-		if (!panels.contains(iterator.key()))
-		{
-			iterator.value()->hide();
+		const QString panel(currentPanels.at(i));
 
-			if (iterator.key() == m_currentPanel)
+		if (!panels.contains(panel))
+		{
+			ContentsWidget *widget(m_panels[panel]);
+			widget->hide();
+
+			if (panel == m_currentPanel)
 			{
 				m_currentPanel.clear();
 
-				m_ui->panelLayout->removeWidget(iterator.value());
+				m_ui->panelLayout->removeWidget(widget);
 				m_ui->containerWidget->hide();
 
 				m_resizerWidget->hide();
 			}
 
-			iterator.value()->deleteLater();
-
-			iterator = m_panels.erase(iterator);
-		}
-		else
-		{
-			++iterator;
+			widget->deleteLater();
 		}
 	}
 
