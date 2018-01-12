@@ -125,11 +125,6 @@ void BookmarksContentsWidget::removeBookmark()
 	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
-void BookmarksContentsWidget::restoreBookmark()
-{
-	BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
-}
-
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
 	const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
@@ -228,7 +223,10 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 					if (isInTrash)
 					{
-						connect(menu.addAction(tr("Restore Bookmark")), &QAction::triggered, this, &BookmarksContentsWidget::restoreBookmark);
+						connect(menu.addAction(tr("Restore Bookmark")), &QAction::triggered, [&]()
+						{
+							BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+						});
 					}
 					else
 					{
