@@ -55,8 +55,14 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 
 protected:
+	struct BookmarkLocation final
+	{
+		BookmarksItem *folder = nullptr;
+		int row = -1;
+	};
+
 	void changeEvent(QEvent *event) override;
-	BookmarksItem* findFolder(const QModelIndex &index);
+	BookmarkLocation getBookmarkCreationLocation();
 
 protected slots:
 	void addBookmark();

@@ -100,26 +100,23 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 
 void BookmarksContentsWidget::addBookmark()
 {
-	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
-	BookmarksItem *folder(findFolder(index));
-	BookmarkPropertiesDialog dialog({}, {}, {}, folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), true, this);
+	const BookmarkLocation location(getBookmarkCreationLocation());
+	BookmarkPropertiesDialog dialog({}, {}, {}, location.folder, location.row, true, this);
 	dialog.exec();
 }
 
 void BookmarksContentsWidget::addFolder()
 {
-	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
-	BookmarksItem *folder(findFolder(index));
-	BookmarkPropertiesDialog dialog({}, {}, {}, folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), false, this);
+	const BookmarkLocation location(getBookmarkCreationLocation());
+	BookmarkPropertiesDialog dialog({}, {}, {}, location.folder, location.row, false, this);
 	dialog.exec();
 }
 
 void BookmarksContentsWidget::addSeparator()
 {
-	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
-	BookmarksItem *folder(findFolder(index));
+	const BookmarkLocation location(getBookmarkCreationLocation());
 
-	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, {}, folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)));
+	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, {}, location.folder, location.row);
 }
 
 void BookmarksContentsWidget::removeBookmark()
@@ -297,18 +294,25 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 	m_ui->bookmarksViewWidget->render(printer);
 }
 
-BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
+BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCreationLocation()
 {
+	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
 	BookmarksItem *item(BookmarksManager::getModel()->getBookmark(index));
+	BookmarkLocation location;
 
 	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
 	{
-		return BookmarksManager::getModel()->getRootItem();
+		location.folder = BookmarksManager::getModel()->getRootItem();
+
+		return location;
 	}
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->getType()));
 
-	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
+	location.folder = ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
+	location.row = ((location.folder && location.folder->index() == index) ? -1 : (index.row() + 1));
+
+	return location;
 }
 
 QString BookmarksContentsWidget::getTitle() const
