@@ -657,18 +657,22 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		if (keyEvent)
 		{
-			openTransfer();
+			switch (keyEvent->key())
+			{
+				case Qt::Key_Delete:
+					removeTransfer();
 
-			return true;
-		}
+					return true;
+				case Qt::Key_Enter:
+				case Qt::Key_Return:
+					openTransfer();
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
-		{
-			removeTransfer();
-
-			return true;
+					return true;
+				default:
+					break;
+			}
 		}
 	}
 	else if (object == m_ui->downloadLineEditWidget && event->type() == QEvent::KeyPress)
