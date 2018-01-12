@@ -63,7 +63,6 @@ protected slots:
 	void addFolder();
 	void addSeparator();
 	void removeNote();
-	void restoreNote();
 	void openUrl();
 	void notifyPasteActionStateChanged();
 	void showContextMenu(const QPoint &position);

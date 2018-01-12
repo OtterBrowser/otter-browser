@@ -122,11 +122,6 @@ void NotesContentsWidget::removeNote()
 	NotesManager::getModel()->trashBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
 }
 
-void NotesContentsWidget::restoreNote()
-{
-	NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
-}
-
 void NotesContentsWidget::openUrl()
 {
 	const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
@@ -205,7 +200,10 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 			if (isInTrash)
 			{
-				connect(menu.addAction(tr("Restore Note")), &QAction::triggered, this, &NotesContentsWidget::restoreNote);
+				connect(menu.addAction(tr("Restore Note")), &QAction::triggered, [&]()
+				{
+					NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
+				});
 			}
 			else
 			{
