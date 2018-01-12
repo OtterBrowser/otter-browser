@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -363,13 +363,13 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			switch (keyEvent->key())
 			{
+				case Qt::Key_Delete:
+					removeBookmark();
+
+					return true;
 				case Qt::Key_Enter:
 				case Qt::Key_Return:
 					openBookmark();
-
-					return true;
-				case Qt::Key_Delete:
-					removeBookmark();
 
 					return true;
 				default:
