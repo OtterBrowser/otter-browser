@@ -125,9 +125,9 @@ void BookmarksContentsWidget::removeBookmark()
 	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
-void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
+void BookmarksContentsWidget::openBookmark()
 {
-	const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
+	const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
