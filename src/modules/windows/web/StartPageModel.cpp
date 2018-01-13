@@ -87,6 +87,7 @@ void StartPageModel::reloadModel()
 				const QUrl url(bookmark->getUrl());
 				QStandardItem *item(bookmark->clone());
 				item->setData(identifier, BookmarksModel::IdentifierRole);
+				item->setData(bookmark->getTitle(), Qt::ToolTipRole);
 				item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 				if (type == BookmarksModel::FolderBookmark && bookmark->rowCount() == 0)
