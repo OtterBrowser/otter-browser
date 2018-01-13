@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -247,7 +247,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 		for (int i = 0; i < m_sslInformation.errors.count(); ++i)
 		{
-			QList<QStandardItem*> items({new QStandardItem(m_sslInformation.errors.at(i).second.errorString()), new QStandardItem(m_sslInformation.errors.at(i).first.toDisplayString())});
+			QList<QStandardItem*> items({new QStandardItem(m_sslInformation.errors.at(i).error.errorString()), new QStandardItem(m_sslInformation.errors.at(i).url.toDisplayString())});
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 			items[0]->setToolTip(items[0]->text());
 			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

@@ -373,7 +373,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	{
 		if (errors.at(i).error() != QSslError::NoError)
 		{
-			m_sslInformation.errors.append({reply->url(), errors.at(i)});
+			m_sslInformation.errors.append({errors.at(i), reply->url()});
 
 			if (exceptions.contains(errors.at(i).certificate().digest().toBase64()))
 			{

@@ -98,12 +98,12 @@ void QtWebKitFrame::handleLoadFinished()
 
 	if (m_isDisplayingErrorPage)
 	{
-		const QVector<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
+		const QVector<WebWidget::SslInformation::SslError> sslErrors(m_widget->getSslInformation().errors);
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/errorPage.js"));
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken(), (sslErrors.isEmpty() ? QByteArray() : sslErrors.first().second.certificate().digest().toBase64()), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
+			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getMessageToken(), (sslErrors.isEmpty() ? QByteArray() : sslErrors.first().error.certificate().digest().toBase64()), ((m_frame->page()->history()->currentItemIndex() > 0) ? QLatin1String("true") : QLatin1String("false"))));
 
 			file.close();
 		}
@@ -841,11 +841,11 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			information.description.clear();
 			information.type = ErrorPageInformation::ConnectionInsecureError;
 
-			const QVector<QPair<QUrl, QSslError> > sslErrors(m_widget->getSslInformation().errors);
+			const QVector<WebWidget::SslInformation::SslError> sslErrors(m_widget->getSslInformation().errors);
 
 			for (int i = 0; i < sslErrors.count(); ++i)
 			{
-				information.description.append(sslErrors.at(i).second.errorString());
+				information.description.append(sslErrors.at(i).error.errorString());
 			}
 		}
 		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)

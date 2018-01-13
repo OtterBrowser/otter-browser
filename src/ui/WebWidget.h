@@ -175,9 +175,15 @@ public:
 
 	struct SslInformation final
 	{
+		struct SslError final
+		{
+			QSslError error;
+			QUrl url;
+		};
+
 		QSslCipher cipher;
 		QVector<QSslCertificate> certificates;
-		QVector<QPair<QUrl, QSslError> > errors;
+		QVector<SslError> errors;
 	};
 
 	virtual void search(const QString &query, const QString &searchEngine);
