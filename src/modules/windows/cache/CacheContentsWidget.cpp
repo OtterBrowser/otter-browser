@@ -371,7 +371,6 @@ void CacheContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 
 		connect(menu.addAction(tr("Remove Entry")), &QAction::triggered, this, &CacheContentsWidget::removeEntry);
-
 		connect(openInNewTabAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
 		connect(openInNewBackgroundTabAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
 		connect(openInNewWindowAction, &QAction::triggered, this, &CacheContentsWidget::openEntry);
