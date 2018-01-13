@@ -177,12 +177,21 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 			{
 				const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
 
-				menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-				menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(SessionsManager::NewTabOpen);
-				menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+				connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open")), &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
+
+				QAction *openInNewTabAction(menu.addAction(tr("Open in New Tab")));
+				openInNewTabAction->setData(SessionsManager::NewTabOpen);
+
+				QAction *openInNewBackgroundTabAction(menu.addAction(tr("Open in New Background Tab")));
+				openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+
 				menu.addSeparator();
-				menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(SessionsManager::NewWindowOpen);
-				menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+
+				QAction *openInNewWindowAction(menu.addAction(tr("Open in New Window")));
+				openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
+
+				QAction *openInNewBackgroundWindowAction(menu.addAction(tr("Open in New Background Window")));
+				openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
 				if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && index.child(0, 0).data(BookmarksModel::TypeRole).toInt() == 0))
 				{
@@ -240,6 +249,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 						connect(menu.addAction(tr("Properties…")), &QAction::triggered, this, &BookmarksContentsWidget::bookmarkProperties);
 					}
 				}
+
+				connect(openInNewTabAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
+				connect(openInNewBackgroundTabAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
+				connect(openInNewWindowAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
+				connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
 			}
 
 			break;
