@@ -70,7 +70,7 @@ void UpdateChecker::runUpdateCheck()
 	}
 
 	QStringList activeChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
-	activeChannels.removeAll(QString());
+	activeChannels.removeAll({});
 
 	const PlatformIntegration *integration(Application::getPlatformIntegration());
 	const QJsonArray channelsArray(QJsonDocument::fromJson(m_networkReply->readAll()).object().value(QLatin1String("channels")).toArray());
