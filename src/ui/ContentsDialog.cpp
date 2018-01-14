@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -360,17 +360,23 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		switch (keyEvent->key())
 		{
-			m_isAccepted = true;
+			case Qt::Key_Enter:
+			case Qt::Key_Return:
+				m_isAccepted = true;
 
-			close();
-		}
-		else if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_isAccepted = false;
+				close();
 
-			close();
+				break;
+			case Qt::Key_Escape:
+				m_isAccepted = false;
+
+				close();
+
+				break;
+			default:
+				break;
 		}
 	}
 
