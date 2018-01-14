@@ -31,8 +31,8 @@
 namespace Otter
 {
 
-ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool configureMode, QWidget *parent) : Dialog(parent),
-	m_configureMode(configureMode),
+ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool isConfiguring, QWidget *parent) : Dialog(parent),
+	m_isConfiguring(isConfiguring),
 	m_ui(new Ui::ClearHistoryDialog)
 {
 	m_ui->setupUi(this);
@@ -45,7 +45,7 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool co
 		settings = QStringList({QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")});
 	}
 
-	if (m_configureMode)
+	if (m_isConfiguring)
 	{
 		m_ui->periodWidget->hide();
 	}
