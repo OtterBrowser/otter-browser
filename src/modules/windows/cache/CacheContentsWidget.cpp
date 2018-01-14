@@ -580,18 +580,19 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		switch (keyEvent->key())
 		{
-			openEntry();
+			case Qt::Key_Delete:
+				removeDomainEntriesOrEntry();
 
-			return true;
-		}
+				return true;
+			case Qt::Key_Enter:
+			case Qt::Key_Return:
+				openEntry();
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
-		{
-			removeDomainEntriesOrEntry();
-
-			return true;
+				return true;
+			default:
+				break;
 		}
 	}
 	else if (object == m_ui->cacheViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
