@@ -64,6 +64,7 @@ public:
 	LinkUrl getActiveFrame() const override;
 	LinkUrl getActiveImage() const override;
 	LinkUrl getActiveLink() const override;
+	LinkUrl getActiveMedia() const override;
 	SslInformation getSslInformation() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;

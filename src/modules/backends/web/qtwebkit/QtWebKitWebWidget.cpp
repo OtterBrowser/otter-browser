@@ -2272,6 +2272,20 @@ WebWidget::LinkUrl QtWebKitWebWidget::getActiveLink() const
 	return link;
 }
 
+WebWidget::LinkUrl QtWebKitWebWidget::getActiveMedia() const
+{
+	const QWebHitTestResult result(m_page->mainFrame()->hitTestContent(getClickPosition()));
+	LinkUrl link;
+
+	if (!result.mediaUrl().isEmpty())
+	{
+		link.title = result.title();
+		link.url = result.mediaUrl();
+	}
+
+	return link;
+}
+
 WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
 {
 	return m_networkManager->getSslInformation();
