@@ -1434,6 +1434,20 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveImage() const
 	return link;
 }
 
+WebWidget::LinkUrl QtWebEngineWebWidget::getActiveLink() const
+{
+	LinkUrl link;
+
+	if (!m_hitResult.linkUrl.isEmpty())
+	{
+//TODO Extract text?
+		link.title = m_hitResult.title;
+		link.url = m_hitResult.linkUrl;
+	}
+
+	return link;
+}
+
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
 	const QWebEngineHistory *history(m_page->history());
