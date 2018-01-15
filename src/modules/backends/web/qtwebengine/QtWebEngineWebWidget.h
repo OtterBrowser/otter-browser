@@ -72,6 +72,7 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPoint getScrollPosition() const override;
+	LinkUrl getActiveFrame() const override;
 	LinkUrl getActiveImage() const override;
 	LinkUrl getActiveLink() const override;
 	LinkUrl getActiveMedia() const override;

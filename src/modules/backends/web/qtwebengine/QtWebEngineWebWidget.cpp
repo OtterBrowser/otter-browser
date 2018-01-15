@@ -1421,6 +1421,19 @@ QPoint QtWebEngineWebWidget::getScrollPosition() const
 	return m_page->scrollPosition().toPoint();
 }
 
+WebWidget::LinkUrl QtWebEngineWebWidget::getActiveFrame() const
+{
+	LinkUrl link;
+
+	if (!m_hitResult.frameUrl.isEmpty())
+	{
+		link.title = m_hitResult.title;
+		link.url = m_hitResult.frameUrl;
+	}
+
+	return link;
+}
+
 WebWidget::LinkUrl QtWebEngineWebWidget::getActiveImage() const
 {
 	LinkUrl link;
