@@ -1144,6 +1144,11 @@ WebWidget::LinkUrl WebWidget::getActiveLink() const
 	return {};
 }
 
+WebWidget::LinkUrl WebWidget::getActiveMedia() const
+{
+	return {};
+}
+
 WebWidget::SslInformation WebWidget::getSslInformation() const
 {
 	return SslInformation();

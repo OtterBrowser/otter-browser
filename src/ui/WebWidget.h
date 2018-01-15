@@ -215,6 +215,7 @@ public:
 	virtual LinkUrl getActiveFrame() const;
 	virtual LinkUrl getActiveImage() const;
 	virtual LinkUrl getActiveLink() const;
+	virtual LinkUrl getActiveMedia() const;
 	virtual SslInformation getSslInformation() const;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
