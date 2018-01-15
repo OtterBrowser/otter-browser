@@ -1448,6 +1448,19 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveLink() const
 	return link;
 }
 
+WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
+{
+	LinkUrl link;
+
+	if (!m_hitResult.mediaUrl.isEmpty())
+	{
+		link.title = m_hitResult.title;
+		link.url = m_hitResult.mediaUrl;
+	}
+
+	return link;
+}
+
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
 	const QWebEngineHistory *history(m_page->history());
