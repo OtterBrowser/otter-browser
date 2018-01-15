@@ -72,6 +72,7 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	QPoint getScrollPosition() const override;
+	LinkUrl getActiveImage() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	LoadingState getLoadingState() const override;
