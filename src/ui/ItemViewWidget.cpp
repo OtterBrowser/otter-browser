@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -988,7 +988,7 @@ bool ItemViewWidget::isExclusive() const
 
 bool ItemViewWidget::applyFilter(const QModelIndex &index)
 {
-	bool hasFound(m_filterString.isEmpty());
+	bool hasMatch(m_filterString.isEmpty());
 	const bool isFolder(!index.flags().testFlag(Qt::ItemNeverHasChildren));
 
 	if (isFolder)
@@ -1004,7 +1004,7 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index)
 		{
 			if (applyFilter(index.child(i, 0)))
 			{
-				hasFound = true;
+				hasMatch = true;
 			}
 		}
 	}
@@ -1029,27 +1029,27 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index)
 
 				if (!roleData.isNull() && roleData.toString().contains(m_filterString, Qt::CaseInsensitive))
 				{
-					hasFound = true;
+					hasMatch = true;
 
 					break;
 				}
 			}
 
-			if (hasFound)
+			if (hasMatch)
 			{
 				break;
 			}
 		}
 	}
 
-	setRowHidden(index.row(), index.parent(), (!hasFound || (isFolder && getRowCount(index) == 0)));
+	setRowHidden(index.row(), index.parent(), (!hasMatch || (isFolder && getRowCount(index) == 0)));
 
 	if (isFolder)
 	{
-		setExpanded(index, ((hasFound && !m_filterString.isEmpty()) || (m_filterString.isEmpty() && m_expandedBranches.contains(index))));
+		setExpanded(index, ((hasMatch && !m_filterString.isEmpty()) || (m_filterString.isEmpty() && m_expandedBranches.contains(index))));
 	}
 
-	return hasFound;
+	return hasMatch;
 }
 
 bool ItemViewWidget::isModified() const

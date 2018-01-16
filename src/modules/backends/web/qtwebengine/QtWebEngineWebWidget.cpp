@@ -1566,11 +1566,11 @@ int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 	}
 
 	QEventLoop eventLoop;
-	bool hasFound(false);
+	bool hasMatch(false);
 
 	m_page->findText(text, nativeFlags, [&](const QVariant &result)
 	{
-		hasFound = result.toBool();
+		hasMatch = result.toBool();
 
 		eventLoop.quit();
 	});
@@ -1580,7 +1580,7 @@ int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 
 	eventLoop.exec();
 
-	return (hasFound ? -1 : 0);
+	return (hasMatch ? -1 : 0);
 }
 
 bool QtWebEngineWebWidget::canGoBack() const

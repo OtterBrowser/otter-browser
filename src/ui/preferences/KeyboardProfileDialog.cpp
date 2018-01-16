@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -316,7 +316,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 		if (action >= 0 && !shortcut.isEmpty())
 		{
 			const QVariantMap parameters(m_ui->actionsViewWidget->getIndex(i, 1).data(ParametersRole).toMap());
-			bool hasFound(false);
+			bool hasMatch(false);
 
 			if (actions.contains(action))
 			{
@@ -330,14 +330,14 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 
 						actions[action] = actionVariants;
 
-						hasFound = true;
+						hasMatch = true;
 
 						break;
 					}
 				}
 			}
 
-			if (!hasFound)
+			if (!hasMatch)
 			{
 				actions[action] = {{parameters, {shortcut}}};
 			}

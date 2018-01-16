@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -184,19 +184,19 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 		if (!QApplication::style()->inherits("Otter::Style"))
 		{
 			const QList<QStyle*> children(QApplication::style()->findChildren<QStyle*>());
-			bool hasFound(false);
+			bool hasMatch(false);
 
 			for (int i = 0; i < children.count(); ++i)
 			{
 				if (children.at(i)->inherits("Otter::Style"))
 				{
-					hasFound = true;
+					hasMatch = true;
 
 					break;
 				}
 			}
 
-			if (!hasFound)
+			if (!hasMatch)
 			{
 				QApplication::setStyle(createStyle(SettingsManager::getOption(SettingsManager::Interface_WidgetStyleOption).toString()));
 			}

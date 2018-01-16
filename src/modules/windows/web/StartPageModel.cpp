@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@ void StartPageModel::addTile(const QUrl &url)
 
 		for (int i = 0; i < directories.count(); ++i)
 		{
-			bool hasFound(false);
+			bool hasMatch(false);
 
 			for (int j = 0; j < m_bookmark->rowCount(); ++j)
 			{
@@ -143,13 +143,13 @@ void StartPageModel::addTile(const QUrl &url)
 				{
 					m_bookmark = static_cast<BookmarksItem*>(m_bookmark->child(j));
 
-					hasFound = true;
+					hasMatch = true;
 
 					break;
 				}
 			}
 
-			if (!hasFound)
+			if (!hasMatch)
 			{
 				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, {{BookmarksModel::TitleRole, directories.at(i)}}, m_bookmark);
 			}

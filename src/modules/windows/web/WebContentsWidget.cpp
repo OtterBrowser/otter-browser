@@ -692,7 +692,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	m_quickFindQuery = (m_searchBarWidget ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
 
-	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags) != 0);
+	const bool hasMatch(m_webWidget->findInPage(m_quickFindQuery, flags) != 0);
 
 	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getOption(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 	{
@@ -701,7 +701,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	if (m_searchBarWidget)
 	{
-		m_searchBarWidget->setResultsFound(hasFound);
+		m_searchBarWidget->setResultsFound(hasMatch);
 	}
 }
 
