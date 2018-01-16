@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -191,13 +191,10 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 	messageItem->setData(source, SourceRole);
 	messageItem->setData(message.window, WindowRole);
 
-	if (!message.note.isEmpty())
-	{
-		QStandardItem *descriptionItem(new QStandardItem(message.note));
-		descriptionItem->setFlags(descriptionItem->flags() | Qt::ItemNeverHasChildren);
+	QStandardItem *descriptionItem(new QStandardItem(message.note.isEmpty() ? tr("<empty>") : message.note));
+	descriptionItem->setFlags(descriptionItem->flags() | Qt::ItemNeverHasChildren);
 
-		messageItem->appendRow(descriptionItem);
-	}
+	messageItem->appendRow(descriptionItem);
 
 	m_model->appendRow(messageItem);
 	m_model->sort(0, Qt::DescendingOrder);
