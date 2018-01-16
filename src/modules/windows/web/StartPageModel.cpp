@@ -301,17 +301,16 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 	}
 
 	const ThumbnailRequestInformation information(m_reloads[url]);
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(information.bookmarkIdentifier));
 
 	m_reloads.remove(url);
 
-	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && BookmarksManager::getBookmark(information.bookmarkIdentifier))
+	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && bookmark)
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
 		thumbnail.save(getThumbnailPath(information.bookmarkIdentifier), "png");
 	}
-
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(information.bookmarkIdentifier));
 
 	if (bookmark)
 	{
