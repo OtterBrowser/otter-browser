@@ -50,6 +50,7 @@ if (element)
 	if (result.tagName == 'frame' || result.tagName == 'iframe')
 	{
 		result.frameUrl = createUrl(element.src);
+		result.title = element.contentDocument.title;
 	}
 	else if (result.tagName == 'img')
 	{
