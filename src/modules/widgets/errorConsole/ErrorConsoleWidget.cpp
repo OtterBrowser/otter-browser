@@ -246,20 +246,20 @@ void ErrorConsoleWidget::filterMessages(const QString &filter)
 
 void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &filter, const QVector<Console::MessageCategory> &categories, quint64 currentWindow)
 {
-	bool matched(true);
+	bool hasMatch(true);
 
 	if (!filter.isEmpty() && !(index.data(SourceRole).toString().contains(filter, Qt::CaseInsensitive) || index.child(0, 0).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
 	{
-		matched = false;
+		hasMatch = false;
 	}
 	else
 	{
 		const quint64 window(index.data(WindowRole).toULongLong());
 
-		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
+		hasMatch = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
 	}
 
-	m_ui->consoleView->setRowHidden(index.row(), m_ui->consoleView->rootIndex(), !matched);
+	m_ui->consoleView->setRowHidden(index.row(), m_ui->consoleView->rootIndex(), !hasMatch);
 }
 
 void ErrorConsoleWidget::showContextMenu(const QPoint position)
