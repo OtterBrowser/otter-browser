@@ -174,48 +174,50 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 {
 	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
 
-	if (url.isValid())
+	if (!url.isValid())
 	{
-		QSize size;
-		ThumbnailRequestInformation thumbnailRequestInformation;
-		thumbnailRequestInformation.bookmarkIdentifier = index.data(BookmarksModel::IdentifierRole).toULongLong();
-		thumbnailRequestInformation.needsTitleUpdate = needsTitleUpdate;
+		return;
+	}
 
-		if (!SessionsManager::isReadOnly() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
+	QSize size;
+	ThumbnailRequestInformation thumbnailRequestInformation;
+	thumbnailRequestInformation.bookmarkIdentifier = index.data(BookmarksModel::IdentifierRole).toULongLong();
+	thumbnailRequestInformation.needsTitleUpdate = needsTitleUpdate;
+
+	if (!SessionsManager::isReadOnly() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
+	{
+		size = QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
+	}
+	else if (!needsTitleUpdate)
+	{
+		return;
+	}
+
+	if (url.scheme() == QLatin1String("about"))
+	{
+		const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
+
+		if (SessionsManager::isReadOnly())
 		{
-			size = QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt());
+			handleThumbnailCreated(url, {}, information.getTitle());
 		}
-		else if (!needsTitleUpdate)
+		else
 		{
-			return;
-		}
+			QPixmap thumbnail(size);
+			thumbnail.fill(Qt::white);
 
-		if (url.scheme() == QLatin1String("about"))
-		{
-			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
+			QPainter painter(&thumbnail);
 
-			if (SessionsManager::isReadOnly())
-			{
-				handleThumbnailCreated(url, {}, information.getTitle());
-			}
-			else
-			{
-				QPixmap thumbnail(size);
-				thumbnail.fill(Qt::white);
+			information.icon.paint(&painter, QRect(QPoint(0, 0), size));
 
-				QPainter painter(&thumbnail);
-
-				information.icon.paint(&painter, QRect(QPoint(0, 0), size));
-
-				m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
-
-				handleThumbnailCreated(url, thumbnail, information.getTitle());
-			}
-		}
-		else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
-		{
 			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
+
+			handleThumbnailCreated(url, thumbnail, information.getTitle());
 		}
+	}
+	else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
+	{
+		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
 	}
 }
 
