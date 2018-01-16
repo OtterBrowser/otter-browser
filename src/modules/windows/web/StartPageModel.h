@@ -52,6 +52,13 @@ public slots:
 	void addTile(const QUrl &url);
 	void reloadTile(const QModelIndex &index, bool needsTitleUpdate = false);
 
+protected:
+	struct ThumbnailRequestInformation final
+	{
+		quint64 bookmarkIdentifier = 0;
+		bool needsTitleUpdate = false;
+	};
+
 protected slots:
 	void dragEnded();
 	void handleOptionChanged(int identifier);
@@ -62,7 +69,7 @@ protected slots:
 
 private:
 	BookmarksItem *m_bookmark;
-	QHash<QUrl, QPair<quint64, bool> > m_reloads;
+	QHash<QUrl, ThumbnailRequestInformation> m_reloads;
 
 signals:
 	void modelModified();

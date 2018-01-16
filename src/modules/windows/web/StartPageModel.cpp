@@ -96,7 +96,10 @@ void StartPageModel::reloadModel()
 				}
 				else if (url.isValid() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(getThumbnailPath(identifier)))
 				{
-					m_reloads[url] = {identifier, false};
+					ThumbnailRequestInformation thumbnailRequestInformation;
+					thumbnailRequestInformation.bookmarkIdentifier = identifier;
+
+					m_reloads[url] = thumbnailRequestInformation;
 
 					AddonsManager::getWebBackend()->requestThumbnail(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()));
 				}
@@ -174,6 +177,9 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 	if (url.isValid())
 	{
 		QSize size;
+		ThumbnailRequestInformation thumbnailRequestInformation;
+		thumbnailRequestInformation.bookmarkIdentifier = index.data(BookmarksModel::IdentifierRole).toULongLong();
+		thumbnailRequestInformation.needsTitleUpdate = needsTitleUpdate;
 
 		if (!SessionsManager::isReadOnly() && SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
 		{
@@ -201,14 +207,14 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 
 				information.icon.paint(&painter, QRect(QPoint(0, 0), size));
 
-				m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = {index.data(BookmarksModel::IdentifierRole).toULongLong(), needsTitleUpdate};
+				m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
 
 				handleThumbnailCreated(url, thumbnail, information.getTitle());
 			}
 		}
 		else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
 		{
-			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = {index.data(BookmarksModel::IdentifierRole).toULongLong(), needsTitleUpdate};
+			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
 		}
 	}
 }
@@ -292,22 +298,22 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 		return;
 	}
 
-	const QPair<quint64, bool> information(m_reloads[url]);
+	const ThumbnailRequestInformation information(m_reloads[url]);
 
 	m_reloads.remove(url);
 
-	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && BookmarksManager::getBookmark(information.first))
+	if (!SessionsManager::isReadOnly() && !thumbnail.isNull() && BookmarksManager::getBookmark(information.bookmarkIdentifier))
 	{
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
-		thumbnail.save(getThumbnailPath(information.first), "png");
+		thumbnail.save(getThumbnailPath(information.bookmarkIdentifier), "png");
 	}
 
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(information.first));
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(information.bookmarkIdentifier));
 
 	if (bookmark)
 	{
-		if (information.second)
+		if (information.needsTitleUpdate)
 		{
 			bookmark->setData(title, BookmarksModel::TitleRole);
 		}
