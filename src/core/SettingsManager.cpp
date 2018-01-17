@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -107,12 +107,12 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Choices_WarnQuitOption, EnumerationType, QLatin1String("noWarn"), {QLatin1String("alwaysWarn"), QLatin1String("warnOpenTabs"), QLatin1String("noWarn")});
 	registerOption(Choices_WarnQuitTransfersOption, BooleanType, true);
 	registerOption(Content_BackgroundColorOption, ColorType, QColor(0xFF, 0xFF, 0xFF));
-	registerOption(Content_CursiveFontOption, FontType, QLatin1String("Impact"));
+	registerOption(Content_CursiveFontOption, FontType, QLatin1String("Comic Sans MS"));
 	registerOption(Content_DefaultCharacterEncodingOption, StringType, QLatin1String("auto"));
 	registerOption(Content_DefaultFixedFontSizeOption, IntegerType, 16);
 	registerOption(Content_DefaultFontSizeOption, IntegerType, 16);
 	registerOption(Content_DefaultZoomOption, IntegerType, 100);
-	registerOption(Content_FantasyFontOption, FontType, QLatin1String("Comic Sans MS"));
+	registerOption(Content_FantasyFontOption, FontType, QLatin1String("Impact"));
 	registerOption(Content_FixedFontOption, FontType, QLatin1String("DejaVu Sans Mono"));
 	registerOption(Content_LinkColorOption, ColorType, QColor(0, 0, 0xEE));
 	registerOption(Content_MinimumFontSizeOption, IntegerType, -1);
