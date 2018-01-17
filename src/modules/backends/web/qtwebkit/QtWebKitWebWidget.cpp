@@ -958,9 +958,20 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 #endif
 		case ActionsManager::OpenLinkAction:
-			m_page->triggerAction(QWebPage::OpenLink);
+			{
+				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
 
-			setClickPosition({});
+				if (hints == SessionsManager::DefaultOpen)
+				{
+					m_page->triggerAction(QWebPage::OpenLink);
+
+					setClickPosition({});
+				}
+				else if (getCurrentHitTestResult().linkUrl.isValid())
+				{
+					openUrl(getCurrentHitTestResult().linkUrl, hints);
+				}
+			}
 
 			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:

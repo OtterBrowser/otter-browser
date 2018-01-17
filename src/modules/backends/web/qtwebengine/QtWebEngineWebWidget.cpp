@@ -307,9 +307,20 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::OpenLinkAction:
-			m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
+			{
+				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
 
-			setClickPosition({});
+				if (hints == SessionsManager::DefaultOpen)
+				{
+					m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
+
+					setClickPosition({});
+				}
+				else if (m_hitResult.linkUrl.isValid())
+				{
+					openUrl(m_hitResult.linkUrl, hints);
+				}
+			}
 
 			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
