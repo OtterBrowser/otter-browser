@@ -887,6 +887,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			state.isEnabled = m_hitResult.linkUrl.isValid();
 
 			break;
+		case ActionsManager::OpenFrameAction:
 		case ActionsManager::OpenFrameInCurrentTabAction:
 		case ActionsManager::OpenFrameInNewTabAction:
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
@@ -894,6 +895,11 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::ReloadFrameAction:
 		case ActionsManager::ViewFrameSourceAction:
 			state.isEnabled = m_hitResult.frameUrl.isValid();
+
+			if (identifier == ActionsManager::OpenFrameAction && parameters.contains(QLatin1String("hints")))
+			{
+				state.text = getOpenActionText(SessionsManager::calculateOpenHints(parameters));
+			}
 
 			break;
 		case ActionsManager::OpenImageInNewTabAction:
