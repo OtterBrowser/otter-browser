@@ -266,6 +266,7 @@ protected:
 	void updateHitTestResult(const QPoint &position);
 	void setClickPosition(const QPoint &position);
 	QString suggestSaveFileName(SaveFormat format) const;
+	QString getOpenActionText(SessionsManager::OpenHints hints) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	HitTestResult getCurrentHitTestResult() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;

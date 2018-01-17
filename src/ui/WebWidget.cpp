@@ -706,6 +706,35 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 	return fileName;
 }
 
+QString WebWidget::getOpenActionText(SessionsManager::OpenHints hints) const
+{
+	switch (hints)
+	{
+		case SessionsManager::CurrentTabOpen:
+			return QCoreApplication::translate("actions", "Open in This Tab");
+		case SessionsManager::NewTabOpen:
+			return QCoreApplication::translate("actions", "Open in New Tab");
+		case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen):
+			return QCoreApplication::translate("actions", "Open in New Background Tab");
+		case SessionsManager::NewWindowOpen:
+			return QCoreApplication::translate("actions", "Open in New Window");
+		case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen):
+			return QCoreApplication::translate("actions", "Open in New Background Window");
+		case (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen):
+			return QCoreApplication::translate("actions", "Open in New Private Tab");
+		case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
+			return QCoreApplication::translate("actions", "Open in New Private Background Tab");
+		case (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen):
+			return QCoreApplication::translate("actions", "Open in New Private Window");
+		case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
+			return QCoreApplication::translate("actions", "Open in New Private Background Window");
+		default:
+			break;
+	}
+
+	return QCoreApplication::translate("actions", "Open");
+}
+
 QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 {
 	QString script(m_fastForwardScript);
@@ -849,47 +878,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			if (identifier == ActionsManager::OpenLinkAction && parameters.contains(QLatin1String("hints")))
 			{
-				switch (SessionsManager::calculateOpenHints(parameters))
-				{
-					case SessionsManager::CurrentTabOpen:
-						state.text = QCoreApplication::translate("actions", "Open in This Tab");
-
-						break;
-					case SessionsManager::NewTabOpen:
-						state.text = QCoreApplication::translate("actions", "Open in New Tab");
-
-						break;
-					case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen):
-						state.text = QCoreApplication::translate("actions", "Open in New Background Tab");
-
-						break;
-					case SessionsManager::NewWindowOpen:
-						state.text = QCoreApplication::translate("actions", "Open in New Window");
-
-						break;
-					case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen):
-						state.text = QCoreApplication::translate("actions", "Open in New Background Window");
-
-						break;
-					case (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen):
-						state.text = QCoreApplication::translate("actions", "Open in New Private Tab");
-
-						break;
-					case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
-						state.text = QCoreApplication::translate("actions", "Open in New Private Background Tab");
-
-						break;
-					case (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen):
-						state.text = QCoreApplication::translate("actions", "Open in New Private Window");
-
-						break;
-					case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
-						state.text = QCoreApplication::translate("actions", "Open in New Private Background Window");
-
-						break;
-					default:
-						break;
-				}
+				state.text = getOpenActionText(SessionsManager::calculateOpenHints(parameters));
 			}
 
 			break;
