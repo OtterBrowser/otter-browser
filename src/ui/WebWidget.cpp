@@ -847,6 +847,51 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::SaveLinkToDownloadsAction:
 			state.isEnabled = m_hitResult.linkUrl.isValid();
 
+			if (identifier == ActionsManager::OpenLinkAction && parameters.contains(QLatin1String("hints")))
+			{
+				switch (SessionsManager::calculateOpenHints(parameters))
+				{
+					case SessionsManager::CurrentTabOpen:
+						state.text = QCoreApplication::translate("actions", "Open in This Tab");
+
+						break;
+					case SessionsManager::NewTabOpen:
+						state.text = QCoreApplication::translate("actions", "Open in New Tab");
+
+						break;
+					case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen):
+						state.text = QCoreApplication::translate("actions", "Open in New Background Tab");
+
+						break;
+					case SessionsManager::NewWindowOpen:
+						state.text = QCoreApplication::translate("actions", "Open in New Window");
+
+						break;
+					case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen):
+						state.text = QCoreApplication::translate("actions", "Open in New Background Window");
+
+						break;
+					case (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen):
+						state.text = QCoreApplication::translate("actions", "Open in New Private Tab");
+
+						break;
+					case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
+						state.text = QCoreApplication::translate("actions", "Open in New Private Background Tab");
+
+						break;
+					case (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen):
+						state.text = QCoreApplication::translate("actions", "Open in New Private Window");
+
+						break;
+					case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
+						state.text = QCoreApplication::translate("actions", "Open in New Private Background Window");
+
+						break;
+					default:
+						break;
+				}
+			}
+
 			break;
 		case ActionsManager::BookmarkLinkAction:
 			state.text = (BookmarksManager::hasBookmark(m_hitResult.linkUrl) ? QCoreApplication::translate("actions", "Edit Link Bookmark…") : QCoreApplication::translate("actions", "Bookmark Link…"));
