@@ -147,6 +147,7 @@ public:
 		SaveLinkToDiskAction,
 		SaveLinkToDownloadsAction,
 		OpenSelectionAsLinkAction,
+		OpenFrameAction,
 		OpenFrameInCurrentTabAction,
 		OpenFrameInNewTabAction,
 		OpenFrameInNewTabBackgroundAction,
