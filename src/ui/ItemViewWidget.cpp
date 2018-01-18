@@ -390,10 +390,9 @@ void ItemViewWidget::ensureInitialized()
 		return;
 	}
 
-	const QString suffix(QLatin1String("ViewWidget"));
-	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().length() - suffix.length()) : objectName());
+	const QString name(normalizeViewName(objectName()));
 
-	if (type.isEmpty())
+	if (name.isEmpty())
 	{
 		return;
 	}
@@ -444,7 +443,7 @@ void ItemViewWidget::ensureInitialized()
 	}
 
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
-	settings.beginGroup(type);
+	settings.beginGroup(name);
 
 	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
@@ -614,16 +613,15 @@ void ItemViewWidget::saveState()
 		return;
 	}
 
-	const QString suffix(QLatin1String("ViewWidget"));
-	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().length() - suffix.length()) : objectName());
+	const QString name(normalizeViewName(objectName()));
 
-	if (type.isEmpty())
+	if (name.isEmpty())
 	{
 		return;
 	}
 
 	IniSettings settings(SessionsManager::getWritableDataPath(QLatin1String("views.ini")));
-	settings.beginGroup(type);
+	settings.beginGroup(name);
 
 	QStringList columns;
 
@@ -877,6 +875,18 @@ QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
 QStandardItem* ItemViewWidget::getItem(int row, int column, const QModelIndex &parent) const
 {
 	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
+}
+
+QString ItemViewWidget::normalizeViewName(QString name)
+{
+	name.remove(QLatin1String("Otter__"));
+
+	if (name.endsWith(QLatin1String("ViewWidget")))
+	{
+		name.remove((name.length() - 10), 10);
+	}
+
+	return name;
 }
 
 QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
