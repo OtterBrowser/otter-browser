@@ -917,11 +917,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::OpenImageInNewTabAction:
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
-			if (m_hitResult.imageUrl.isEmpty())
-			{
-				state.isEnabled = false;
-			}
-			else
+			if (m_hitResult.imageUrl.isValid())
 			{
 				const QString fileName((m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? QString() : fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256));
 
@@ -939,6 +935,10 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 				state.isEnabled = !getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
 			}
+			else
+			{
+				state.isEnabled = false;
+			}
 
 			break;
 		case ActionsManager::SaveImageToDiskAction:
@@ -946,7 +946,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::CopyImageUrlToClipboardAction:
 		case ActionsManager::ReloadImageAction:
 		case ActionsManager::ImagePropertiesAction:
-			state.isEnabled = !m_hitResult.imageUrl.isEmpty();
+			state.isEnabled = m_hitResult.imageUrl.isValid();
 
 			break;
 		case ActionsManager::SaveMediaToDiskAction:
