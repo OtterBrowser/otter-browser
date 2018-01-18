@@ -154,6 +154,7 @@ public:
 		CopyFrameLinkToClipboardAction,
 		ReloadFrameAction,
 		ViewFrameSourceAction,
+		OpenImageAction,
 		OpenImageInNewTabAction,
 		OpenImageInNewTabBackgroundAction,
 		SaveImageToDiskAction,
