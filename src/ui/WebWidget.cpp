@@ -209,10 +209,23 @@ void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &passwo
 
 void WebWidget::openUrl(const QUrl &url, SessionsManager::OpenHints hints)
 {
-	WebWidget *widget(clone(false, hints.testFlag(SessionsManager::PrivateOpen), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
-	widget->setRequestedUrl(url, false);
+	switch (hints)
+	{
+		case SessionsManager::CurrentTabOpen:
+		case SessionsManager::DefaultOpen:
+			setUrl(url, false);
 
-	emit requestedNewWindow(widget, hints, {});
+			break;
+		default:
+			{
+				WebWidget *widget(clone(false, hints.testFlag(SessionsManager::PrivateOpen), SettingsManager::getOption(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
+				widget->setRequestedUrl(url, false);
+
+				emit requestedNewWindow(widget, hints, {});
+			}
+
+			break;
+	}
 }
 
 void WebWidget::handleLoadingStateChange(LoadingState state)
