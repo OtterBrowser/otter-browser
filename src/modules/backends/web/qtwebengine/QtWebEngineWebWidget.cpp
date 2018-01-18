@@ -476,6 +476,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			break;
+		case ActionsManager::OpenImageAction:
+			if (m_hitResult.imageUrl.isValid())
+			{
+				openUrl(m_hitResult.imageUrl, SessionsManager::calculateOpenHints(parameters));
+			}
+
+			break;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{

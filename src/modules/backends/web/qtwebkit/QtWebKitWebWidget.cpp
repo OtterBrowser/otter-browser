@@ -1144,6 +1144,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+		case ActionsManager::OpenImageAction:
+			if (getCurrentHitTestResult().imageUrl.isValid())
+			{
+				openUrl(getCurrentHitTestResult().imageUrl, SessionsManager::calculateOpenHints(parameters));
+			}
+
+			break;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
