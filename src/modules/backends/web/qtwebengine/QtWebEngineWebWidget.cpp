@@ -484,14 +484,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::OpenImageInNewTabAction:
-			if (!m_hitResult.imageUrl.isEmpty())
+			if (m_hitResult.imageUrl.isValid())
 			{
 				openUrl(m_hitResult.imageUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
 			}
 
 			break;
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
-			if (!m_hitResult.imageUrl.isEmpty())
+			if (m_hitResult.imageUrl.isValid())
 			{
 				openUrl(m_hitResult.imageUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 			}
