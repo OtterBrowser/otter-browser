@@ -408,6 +408,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			TransfersManager::addTransfer(new Transfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
+		case ActionsManager::OpenFrameAction:
+			if (m_hitResult.frameUrl.isValid())
+			{
+				openUrl(m_hitResult.frameUrl, SessionsManager::calculateOpenHints(parameters));
+			}
+
+			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
