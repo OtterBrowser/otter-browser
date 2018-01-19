@@ -95,6 +95,7 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->sessionsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Identifier"), tr("Windows")});
 	}
 }
 
