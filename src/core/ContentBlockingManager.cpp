@@ -356,7 +356,7 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 			continue;
 		}
 
-		ContentBlockingProfile::ProfileCategory category(m_profiles.at(i)->getCategory());
+		const ContentBlockingProfile::ProfileCategory category(m_profiles.at(i)->getCategory());
 		QString title(m_profiles.at(i)->getTitle());
 
 		if (category == ContentBlockingProfile::RegionalCategory)
