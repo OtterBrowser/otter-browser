@@ -45,6 +45,8 @@ SelectPasswordDialog::SelectPasswordDialog(const QVector<PasswordsManager::Passw
 		for (int j = 0; j < passwords.at(i).fields.count(); ++j)
 		{
 			QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(i).fields.at(j).name), new QStandardItem((passwords.at(i).fields.at(j).type == PasswordsManager::PasswordField) ? QLatin1String("*****") : passwords.at(i).fields.at(j).value)});
+			fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
+			fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
 
 			setItem->appendRow(fieldItems);
 		}
