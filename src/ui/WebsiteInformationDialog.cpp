@@ -285,6 +285,11 @@ void WebsiteInformationDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		if (m_ui->sslErrorsViewWidget->isVisible() && m_ui->sslErrorsViewWidget->getSourceModel())
+		{
+			m_ui->sslErrorsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Error Message"), tr("URL")});
+		}
 	}
 }
 
