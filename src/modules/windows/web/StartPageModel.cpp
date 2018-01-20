@@ -142,9 +142,11 @@ void StartPageModel::addTile(const QUrl &url)
 
 			for (int j = 0; j < m_bookmark->rowCount(); ++j)
 			{
-				if (m_bookmark->child(j) && m_bookmark->child(j)->data(Qt::DisplayRole) == directories.at(i))
+				BookmarksItem *childBookmark(static_cast<BookmarksItem*>(m_bookmark->child(j)));
+
+				if (childBookmark && childBookmark->data(Qt::DisplayRole) == directories.at(i))
 				{
-					m_bookmark = static_cast<BookmarksItem*>(m_bookmark->child(j));
+					m_bookmark = childBookmark;
 
 					hasMatch = true;
 
