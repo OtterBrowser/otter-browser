@@ -267,6 +267,7 @@ void KeyboardProfileDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->actionsViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
 	}
 }
 
