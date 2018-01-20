@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -26,13 +26,10 @@
 #include "../core/ContentBlockingProfile.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
-#include "../core/SessionsManager.h"
 #include "../core/Utils.h"
 
 #include "ui_WebsitePreferencesDialog.h"
 
-#include <QtCore/QDateTime>
-#include <QtCore/QSettings>
 #include <QtCore/QTextCodec>
 
 namespace Otter
