@@ -107,6 +107,8 @@ void AcceptLanguageDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		m_model->setHorizontalHeaderLabels({tr("Name"), tr("Code")});
 	}
 }
 
