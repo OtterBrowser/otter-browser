@@ -462,9 +462,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 	}
 
 	const QDate lastUpdate(QDate::fromString(SettingsManager::getOption(SettingsManager::Updates_LastCheckOption).toString(), Qt::ISODate));
-	const int interval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
+	const int updateCheckInterval(SettingsManager::getOption(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
+	if (updateCheckInterval > 0 && (lastUpdate.isNull() ? updateCheckInterval : lastUpdate.daysTo(QDate::currentDate())) >= updateCheckInterval && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
 		UpdateChecker *updateChecker(new UpdateChecker(this));
 
@@ -473,7 +473,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		if (!m_updateCheckTimer)
 		{
 			m_updateCheckTimer = new LongTermTimer(this);
-			m_updateCheckTimer->start(static_cast<quint64>(interval * 1000 * SECONDS_IN_DAY));
+			m_updateCheckTimer->start(static_cast<quint64>(updateCheckInterval * 1000 * SECONDS_IN_DAY));
 
 			connect(m_updateCheckTimer, &LongTermTimer::timeout, this, &Application::periodicUpdateCheck);
 		}
