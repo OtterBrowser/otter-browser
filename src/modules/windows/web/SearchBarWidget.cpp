@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -119,14 +119,15 @@ void SearchBarWidget::setVisible(bool visible)
 	}
 }
 
-void SearchBarWidget::setResultsFound(bool found)
+void SearchBarWidget::setMatchesAmount(int matchesAmount)
 {
 	QPalette palette(this->palette());
+	const bool hasMatches(matchesAmount > 0);
 
 	if (!m_ui->queryLineEditWidget->text().isEmpty())
 	{
 //TODO Ensure that text is readable
-		if (found)
+		if (hasMatches)
 		{
 			palette.setColor(QPalette::Base, QColor(0xCE, 0xF6, 0xDF));
 		}
@@ -137,8 +138,8 @@ void SearchBarWidget::setResultsFound(bool found)
 	}
 
 	m_ui->queryLineEditWidget->setPalette(palette);
-	m_ui->nextButton->setEnabled(found);
-	m_ui->previousButton->setEnabled(found);
+	m_ui->nextButton->setEnabled(hasMatches);
+	m_ui->previousButton->setEnabled(hasMatches);
 }
 
 QString SearchBarWidget::getQuery() const
