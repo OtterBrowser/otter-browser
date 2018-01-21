@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -663,7 +663,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 								{
 									if (action->data().isNull())
 									{
-										BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), nullptr, -1, true, this);
+										BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), {}, nullptr, -1, true, this);
 										dialog.exec();
 									}
 									else
@@ -1248,7 +1248,7 @@ void AddressWidget::setCompletion(const QString &filter)
 	{
 		hidePopup();
 
-		LineEditWidget::setCompletion(QString());
+		LineEditWidget::setCompletion({});
 
 		return;
 	}
