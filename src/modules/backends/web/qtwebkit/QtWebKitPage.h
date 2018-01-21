@@ -48,7 +48,7 @@ public slots:
 	void handleIsDisplayingErrorPageChanged(QWebFrame *frame, bool isDisplayingErrorPage);
 
 protected:
-	void applyContentBlockingRules(const QStringList &rules, bool remove);
+	void applyContentBlockingRules(const QStringList &rules, bool isHiding);
 
 protected slots:
 	void handleLoadFinished();

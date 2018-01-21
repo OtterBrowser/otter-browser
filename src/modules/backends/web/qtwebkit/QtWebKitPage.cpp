@@ -65,9 +65,9 @@ void QtWebKitFrame::runUserScripts(const QUrl &url) const
 	}
 }
 
-void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool remove)
+void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool isHiding)
 {
-	const QString value(remove ? QLatin1String("none !important") : QString());
+	const QString value(isHiding ? QLatin1String("none !important") : QString());
 	const QWebElementCollection elements(m_frame->documentElement().findAll(rules.join(QLatin1Char(','))));
 
 	for (int i = 0; i < elements.count(); ++i)
