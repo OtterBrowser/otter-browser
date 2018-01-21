@@ -514,19 +514,19 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		thirdPartyCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString keepModeValue(getOption(SettingsManager::Network_CookiesKeepModeOption, url).toString());
-	CookieJar::KeepMode keepMode(CookieJar::KeepUntilExpiresMode);
+	const QString keepCookiesModeValue(getOption(SettingsManager::Network_CookiesKeepModeOption, url).toString());
+	CookieJar::KeepMode keepCookiesMode(CookieJar::KeepUntilExpiresMode);
 
-	if (keepModeValue == QLatin1String("keepUntilExit"))
+	if (keepCookiesModeValue == QLatin1String("keepUntilExit"))
 	{
-		keepMode = CookieJar::KeepUntilExitMode;
+		keepCookiesMode = CookieJar::KeepUntilExitMode;
 	}
-	else if (keepModeValue == QLatin1String("ask"))
+	else if (keepCookiesModeValue == QLatin1String("ask"))
 	{
-		keepMode = CookieJar::AskIfKeepMode;
+		keepCookiesMode = CookieJar::AskIfKeepMode;
 	}
 
-	m_cookieJarProxy->setup(getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, url).toStringList(), getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
+	m_cookieJarProxy->setup(getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, url).toStringList(), getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepCookiesMode);
 
 	if (!m_proxyFactory && ((m_widget && m_widget->hasOption(SettingsManager::Network_ProxyOption)) || SettingsManager::hasOverride(Utils::extractHost(url), SettingsManager::Network_ProxyOption)))
 	{
