@@ -1460,7 +1460,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="362"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation>Вы действительно хотите восстановить первоначальные значения всех опций?</translation>
+        <translation>Вы действительно хотите восстановить первоначальные значения всех настроек?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="499"/>
@@ -7832,12 +7832,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set Option</source>
-        <translation>Настроить опцию</translation>
+        <translation>Настроить параметры</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set, Reset or Toggle Option</source>
-        <translation>Настроить, сбросить или переключить опцию</translation>
+        <translation>Настроить, сбросить или переключить параметр</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -8760,7 +8760,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Reset Options</source>
-        <translation>Опции сброса</translation>
+        <translation>Параметры сброса</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="452"/>

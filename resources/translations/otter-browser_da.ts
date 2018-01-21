@@ -3540,17 +3540,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="62"/>
         <source>Allow this time</source>
-        <translation type="unfinished"/>
+        <translation>Tillad denne gang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>Always allow</source>
-        <translation type="unfinished"/>
+        <translation>Tillad altid</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="72"/>
         <source>Always deny</source>
-        <translation type="unfinished"/>
+        <translation>Tillad aldrig</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="80"/>
@@ -5242,17 +5242,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="897"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(ukendt)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="915"/>
         <source>WebKit error %1</source>
-        <translation type="unfinished"/>
+        <translation>WebKit-fejl %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="919"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Netværksfejl %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="986"/>
@@ -5705,12 +5705,12 @@ Do you want to overwrite it?</source>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="70"/>
         <source>%n window(s) (%1)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n vindue (%1)</numerusform><numerusform>%n vinduer (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="70"/>
         <source>%n tab(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n faneblad</numerusform><numerusform>%n faneblade</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="106"/>
@@ -5741,7 +5741,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="131"/>
         <source>Failed to delete session.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke slette session.</translation>
     </message>
 </context>
 <context>
@@ -5790,7 +5790,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
         <source>Add Web Panel…</source>
-        <translation type="unfinished"/>
+        <translation>Tilføj webpanel…</translation>
     </message>
 </context>
 <context>
@@ -5808,7 +5808,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="88"/>
         <source>Failed to save file.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke gemme fil.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="114"/>
@@ -5861,7 +5861,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Skaleringstilstand:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
@@ -5876,7 +5876,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="109"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>Kolonner pr. række:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="119"/>
@@ -5896,7 +5896,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="154"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Vis søgefelt</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
@@ -5906,12 +5906,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Billeder (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>Bedste tilpasning</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
@@ -6106,7 +6106,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="73"/>
         <source>Copy Link Location</source>
-        <translation type="unfinished"/>
+        <translation>Kopiér linkplacering</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="77"/>
@@ -6119,7 +6119,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Rediger værktøjslinje</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="22"/>
@@ -6185,7 +6185,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="374"/>
         <source>Icon size:</source>
-        <translation type="unfinished"/>
+        <translation>Ikonstørrelse:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="384"/>
@@ -6232,13 +6232,13 @@ Adresse: %2</translation>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="67"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="74"/>
         <source>Always visible</source>
-        <translation type="unfinished"/>
+        <translation>Altid synlig</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="75"/>
         <source>Always hidden</source>
-        <translation type="unfinished"/>
+        <translation>Altid skjult</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="69"/>
@@ -6920,7 +6920,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.ui" line="47"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Forhåndsvis</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="52"/>
@@ -6950,7 +6950,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/preferences/UserAgentPropertiesDialog.cpp" line="108"/>
         <source>Application Version</source>
-        <translation type="unfinished"/>
+        <translation>Programversion</translation>
     </message>
 </context>
 <context>
@@ -7170,17 +7170,17 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="316"/>
         <source>Issued to:</source>
-        <translation type="unfinished"/>
+        <translation>Udstedt til:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="323"/>
         <source>Issued by:</source>
-        <translation type="unfinished"/>
+        <translation>Udstedt af:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="330"/>
         <source>Issued on:</source>
-        <translation type="unfinished"/>
+        <translation>Udstedt den:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="337"/>
@@ -7215,7 +7215,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
         <source>SSL Errors</source>
-        <translation type="unfinished"/>
+        <translation>SSL-fejl</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="43"/>
@@ -7251,7 +7251,7 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="78"/>
         <source>No information.</source>
-        <translation type="unfinished"/>
+        <translation>Ingen information.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="85"/>
@@ -9102,12 +9102,12 @@ Klik på Installer-knappen for at genstarte browseren og installere opdateringen
     <message>
         <location filename="../../src/ui/Menu.cpp" line="757"/>
         <source>Always Allow</source>
-        <translation type="unfinished"/>
+        <translation>Tillad altid</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="761"/>
         <source>Always Deny</source>
-        <translation type="unfinished"/>
+        <translation>Tillad aldrig</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="765"/>
