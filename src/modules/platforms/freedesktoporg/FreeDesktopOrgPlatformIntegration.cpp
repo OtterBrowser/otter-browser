@@ -149,7 +149,7 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 	}
 
 	QStringList arguments;
-	arguments.reserve(parsed.size());
+	arguments.reserve(static_cast<int>(parsed.size()));
 
 	for (std::vector<std::string>::size_type i = 1; i < parsed.size(); ++i)
 	{
