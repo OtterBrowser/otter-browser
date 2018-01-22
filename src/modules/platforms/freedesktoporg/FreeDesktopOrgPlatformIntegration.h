@@ -55,7 +55,6 @@ protected:
 	void setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transferAmount);
 
 protected slots:
-	void createApplicationsCache();
 	void handleNotificationCallFinished(QDBusPendingCallWatcher *watcher);
 	void handleNotificationIgnored(quint32 identifier, quint32 reason);
 	void handleNotificationClicked(quint32 identifier, const QString &action);
