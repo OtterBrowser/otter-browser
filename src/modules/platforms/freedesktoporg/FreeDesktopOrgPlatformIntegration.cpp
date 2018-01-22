@@ -271,12 +271,8 @@ void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, 
 	properties[QLatin1String("progress")] = ((bytesReceived > 0) ? Utils::calculatePercent(bytesReceived, bytesTotal, 1) : 0.0);
 	properties[QLatin1String("progress-visible")] = hasActiveTransfers;
 
-	QVariantList arguments;
-	arguments << QLatin1String("application://otter-browser.desktop");
-	arguments << properties;
-
 	QDBusMessage message(QDBusMessage::createSignal(QLatin1String("/com/canonical/unity/launcherentry/9ddcf02c30a33cd63e9762f06957263f"), QLatin1String("com.canonical.Unity.LauncherEntry"), QLatin1String("Update")));
-	message.setArguments(arguments);
+	message.setArguments({QLatin1String("application://otter-browser.desktop"), properties});
 
 	QDBusConnection::sessionBus().send(message);
 }
