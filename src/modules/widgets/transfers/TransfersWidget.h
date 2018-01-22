@@ -36,6 +36,9 @@ public:
 
 	QIcon getIcon() const override;
 
+protected slots:
+	void updateState();
+
 private:
 	QIcon m_icon;
 };

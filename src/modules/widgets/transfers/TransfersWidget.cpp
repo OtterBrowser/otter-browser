@@ -19,6 +19,7 @@
 
 #include "TransfersWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../core/TransfersManager.h"
 
 namespace Otter
 {
@@ -27,6 +28,33 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 	m_icon(ThemesManager::createIcon(QLatin1String("transfers")))
 {
 	setIcon(getIcon());
+
+	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &TransfersWidget::updateState);
+}
+
+void TransfersWidget::updateState()
+{
+	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+	qint64 bytesTotal(0);
+	qint64 bytesReceived(0);
+	qint64 transferAmount(0);
+
+	for (int i = 0; i < transfers.count(); ++i)
+	{
+		const Transfer *transfer(transfers.at(i));
+
+		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
+		{
+			++transferAmount;
+
+			bytesTotal += transfer->getBytesTotal();
+			bytesReceived += transfer->getBytesReceived();
+		}
+	}
 }
 
 QIcon TransfersWidget::getIcon() const
