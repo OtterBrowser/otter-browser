@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -180,9 +180,9 @@ void UpdateCheckerDialog::handleUpdateProgress(int progress)
 	m_ui->progressBar->setFormat(QString::number(progress) + QLatin1Char('%'));
 }
 
-void UpdateCheckerDialog::handleTransferFinished(bool success)
+void UpdateCheckerDialog::handleTransferFinished(bool isSuccess)
 {
-	if (success)
+	if (isSuccess)
 	{
 		handleReadyToInstall();
 	}
