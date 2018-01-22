@@ -125,7 +125,7 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 FreeDesktopOrgPlatformIntegration::~FreeDesktopOrgPlatformIntegration()
 {
-	updateTransfersProgress(true);
+	setTransfersProgress(0, 0, 0);
 }
 
 void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QUrl &url) const
@@ -241,30 +241,31 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	connect(watcher, &QDBusPendingCallWatcher::finished, this, &FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished);
 }
 
-void FreeDesktopOrgPlatformIntegration::updateTransfersProgress(bool clear)
+void FreeDesktopOrgPlatformIntegration::updateTransfersProgress()
 {
+	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
 	qint64 transferAmount(0);
 
-	if (!clear)
+	for (int i = 0; i < transfers.count(); ++i)
 	{
-		const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+		const Transfer *transfer(transfers.at(i));
 
-		for (int i = 0; i < transfers.count(); ++i)
+		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
 		{
-			const Transfer *transfer(transfers.at(i));
+			++transferAmount;
 
-			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
-			{
-				++transferAmount;
-
-				bytesTotal += transfer->getBytesTotal();
-				bytesReceived += transfer->getBytesReceived();
-			}
+			bytesTotal += transfer->getBytesTotal();
+			bytesReceived += transfer->getBytesReceived();
 		}
 	}
 
+	setTransfersProgress(bytesTotal, bytesReceived, transferAmount);
+}
+
+void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, qint64 bytesReceived, qint64 transferAmount)
+{
 	const bool hasActiveTransfers(transferAmount > 0);
 	QVariantMap properties;
 	properties[QLatin1String("count")] = transferAmount;
