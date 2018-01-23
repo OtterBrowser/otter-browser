@@ -105,7 +105,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 
 			if (availableUpdates.at(i).isAvailable)
 			{
-				updateButton->setProperty("downloadInfo", QVariant::fromValue<UpdateChecker::UpdateInformation>(availableUpdates.at(i)));
+				updateButton->setProperty("updateInformation", QVariant::fromValue<UpdateChecker::UpdateInformation>(availableUpdates.at(i)));
 			}
 			else
 			{
@@ -138,9 +138,9 @@ void UpdateCheckerDialog::downloadUpdate()
 
 	if (button)
 	{
-		QVariant updateInfo(button->property("downloadInfo"));
+		const QVariant updateInformation(button->property("updateInformation"));
 
-		if (!updateInfo.isNull())
+		if (!updateInformation.isNull())
 		{
 			for (int i = 0; i < m_ui->gridLayout->count(); ++i)
 			{
@@ -153,7 +153,7 @@ void UpdateCheckerDialog::downloadUpdate()
 			m_ui->progressBar->show();
 			m_ui->buttonBox->setDisabled(true);
 
-			Updater *updater(new Updater(updateInfo.value<UpdateChecker::UpdateInformation>(), this));
+			Updater *updater(new Updater(updateInformation.value<UpdateChecker::UpdateInformation>(), this));
 
 			connect(updater, &Updater::progress, this, &UpdateCheckerDialog::handleUpdateProgress);
 			connect(updater, &Updater::finished, this, &UpdateCheckerDialog::handleTransferFinished);
