@@ -269,15 +269,12 @@ void ErrorConsoleWidget::showContextMenu(const QPoint position)
 
 	menu.addSeparator();
 
-	const QAction *expandAllAction(menu.addAction(tr("Expand All")));
-	const QAction *collapseAllAction(menu.addAction(tr("Collapse All")));
-
+	connect(menu.addAction(tr("Expand All")), &QAction::triggered, m_ui->consoleView, &QTreeView::expandAll);
+	connect(menu.addAction(tr("Collapse All")), &QAction::triggered, m_ui->consoleView, &QTreeView::collapseAll);
 	connect(copyTextAction, &QAction::triggered, this, [&]()
 	{
 		QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
 	});
-	connect(expandAllAction, &QAction::triggered, m_ui->consoleView, &QTreeView::expandAll);
-	connect(collapseAllAction, &QAction::triggered, m_ui->consoleView, &QTreeView::collapseAll);
 
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
