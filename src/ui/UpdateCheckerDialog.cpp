@@ -134,7 +134,7 @@ void UpdateCheckerDialog::handleUpdateCheckFinished(const QVector<UpdateChecker:
 
 void UpdateCheckerDialog::downloadUpdate()
 {
-	QPushButton *button(qobject_cast<QPushButton*>(sender()));
+	const QPushButton *button(qobject_cast<QPushButton*>(sender()));
 
 	if (button)
 	{
@@ -201,7 +201,7 @@ void UpdateCheckerDialog::handleTransferFinished(bool isSuccess)
 
 void UpdateCheckerDialog::showDetails()
 {
-	QPushButton *button(qobject_cast<QPushButton*>(sender()));
+	const QPushButton *button(qobject_cast<QPushButton*>(sender()));
 
 	if (button)
 	{
