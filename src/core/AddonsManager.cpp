@@ -250,7 +250,7 @@ AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QStrin
 		return m_specialPages[name];
 	}
 
-	return SpecialPageInformation();
+	return {};
 }
 
 QStringList AddonsManager::getUserScripts()
