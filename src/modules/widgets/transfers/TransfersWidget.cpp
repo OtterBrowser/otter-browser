@@ -21,6 +21,7 @@
 #include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
 
 #include <QtCore/QFileInfo>
@@ -66,7 +67,7 @@ void TransfersWidget::updateState()
 
 		if (!transfer->isArchived() || transfer->getState() == Transfer::RunningState)
 		{
-			menu()->addAction(QFileInfo(transfer->getTarget()).fileName());
+			menu()->addAction(Utils::elideText(QFileInfo(transfer->getTarget()).fileName(), menu()));
 		}
 	}
 
