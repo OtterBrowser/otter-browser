@@ -20,6 +20,9 @@
 #include "TransfersWidget.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../ui/Action.h"
+
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -27,7 +30,9 @@ namespace Otter
 TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_icon(ThemesManager::createIcon(QLatin1String("transfers")))
 {
-	setIcon(getIcon());
+	setMenu(new QMenu(this));
+	setPopupMode(QToolButton::InstantPopup);
+	updateState();
 
 	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &TransfersWidget::updateState);
@@ -38,6 +43,8 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 
 void TransfersWidget::updateState()
 {
+	menu()->clear();
+
 	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
@@ -55,6 +62,9 @@ void TransfersWidget::updateState()
 			bytesReceived += transfer->getBytesReceived();
 		}
 	}
+
+	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, this));
+	setIcon(getIcon());
 }
 
 QIcon TransfersWidget::getIcon() const
