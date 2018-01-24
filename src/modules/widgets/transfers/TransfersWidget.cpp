@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TransfersWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/Action.h"
@@ -70,7 +71,7 @@ void TransfersWidget::updateState()
 	}
 
 	menu()->addSeparator();
-	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, this));
+	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
 	setIcon(getIcon());
 }
 
