@@ -22,6 +22,7 @@
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/Action.h"
 
+#include <QtCore/QFileInfo>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -61,8 +62,11 @@ void TransfersWidget::updateState()
 			bytesTotal += transfer->getBytesTotal();
 			bytesReceived += transfer->getBytesReceived();
 		}
+
+		menu()->addAction(QFileInfo(transfer->getTarget()).fileName());
 	}
 
+	menu()->addSeparator();
 	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, this));
 	setIcon(getIcon());
 }
