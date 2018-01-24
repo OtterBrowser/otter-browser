@@ -63,7 +63,10 @@ void TransfersWidget::updateState()
 			bytesReceived += transfer->getBytesReceived();
 		}
 
-		menu()->addAction(QFileInfo(transfer->getTarget()).fileName());
+		if (!transfer->isArchived() || transfer->getState() == Transfer::RunningState)
+		{
+			menu()->addAction(QFileInfo(transfer->getTarget()).fileName());
+		}
 	}
 
 	menu()->addSeparator();
