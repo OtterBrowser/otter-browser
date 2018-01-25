@@ -596,15 +596,15 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		return definitions;
 	}
 
-	const QJsonArray toolBars(QJsonDocument::fromJson(file.readAll()).array());
+	const QJsonArray toolBarsArray(QJsonDocument::fromJson(file.readAll()).array());
 	const QMap<QString, ToolBarVisibility> visibilityModes({{QLatin1String("visible"), AlwaysVisibleToolBar}, {QLatin1String("hover"), OnHoverVisibleToolBar}, {QLatin1String("auto"), AutoVisibilityToolBar}, {QLatin1String("hidden"), AlwaysHiddenToolBar}});
 
 	file.close();
 
-	for (int i = 0; i < toolBars.count(); ++i)
+	for (int i = 0; i < toolBarsArray.count(); ++i)
 	{
-		const QJsonObject toolBarObject(toolBars.at(i).toObject());
-		const QJsonArray actions(toolBarObject.value(QLatin1String("actions")).toArray());
+		const QJsonObject toolBarObject(toolBarsArray.at(i).toObject());
+		const QJsonArray actionsArray(toolBarObject.value(QLatin1String("actions")).toArray());
 		const QString identifier(toolBarObject.value(QLatin1String("identifier")).toString());
 		const QString location(toolBarObject.value(QLatin1String("location")).toString());
 		const QString buttonStyle(toolBarObject.value(QLatin1String("buttonStyle")).toString());
@@ -667,11 +667,11 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 			toolBar.buttonStyle = Qt::ToolButtonTextUnderIcon;
 		}
 
-		toolBar.entries.reserve(actions.count());
+		toolBar.entries.reserve(actionsArray.count());
 
-		for (int j = 0; j < actions.count(); ++j)
+		for (int j = 0; j < actionsArray.count(); ++j)
 		{
-			toolBar.entries.append(decodeEntry(actions.at(j)));
+			toolBar.entries.append(decodeEntry(actionsArray.at(j)));
 		}
 
 		definitions[identifier] = toolBar;
