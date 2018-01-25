@@ -915,13 +915,63 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			}
 
 			break;
+		case ActionsManager::OpenImageAction:
 		case ActionsManager::OpenImageInNewTabAction:
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
 			if (m_hitResult.imageUrl.isValid())
 			{
 				const QString fileName((m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? QString() : fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256));
 
-				if (!fileName.isEmpty())
+				if (identifier == ActionsManager::OpenImageAction)
+				{
+					switch (SessionsManager::calculateOpenHints(parameters))
+					{
+						case SessionsManager::CurrentTabOpen:
+							state.text = QCoreApplication::translate("actions", "Open Image in This Tab");
+
+							break;
+						case SessionsManager::NewTabOpen:
+							state.text = QCoreApplication::translate("actions", "Open Image in New Tab");
+
+							break;
+						case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen):
+							state.text = QCoreApplication::translate("actions", "Open Image in New Background Tab");
+
+							break;
+						case SessionsManager::NewWindowOpen:
+							state.text = QCoreApplication::translate("actions", "Open Image in New Window");
+
+							break;
+						case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen):
+							state.text = QCoreApplication::translate("actions", "Open Image in New Background Window");
+
+							break;
+						case (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen):
+							state.text = QCoreApplication::translate("actions", "Open Image in New Private Tab");
+
+							break;
+						case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
+							state.text = QCoreApplication::translate("actions", "Open Image in New Private Background Tab");
+
+							break;
+						case (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen):
+							state.text = QCoreApplication::translate("actions", "Open Image in New Private Window");
+
+							break;
+						case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
+							state.text = QCoreApplication::translate("actions", "Open Image in New Private Background Window");
+
+							break;
+						default:
+							break;
+					}
+
+					if (!fileName.isEmpty())
+					{
+						state.text.append(QLatin1String(" (") + fileName + QLatin1Char(')'));
+					}
+				}
+				else if (!fileName.isEmpty())
 				{
 					if (identifier == ActionsManager::OpenImageInNewTabBackgroundAction)
 					{
