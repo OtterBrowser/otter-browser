@@ -50,6 +50,7 @@ public:
 	QVector<QUrl> getUrls() const;
 	quint64 getIdentifier() const;
 	int getType() const;
+	int getVisits() const;
 	bool isAncestorOf(BookmarksItem *child) const;
 	bool operator<(const QStandardItem &other) const override;
 

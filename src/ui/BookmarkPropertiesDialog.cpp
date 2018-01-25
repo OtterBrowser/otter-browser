@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	if (isUrlBookmark)
 	{
 		m_ui->lastVisitLabelWidget->setText(m_bookmark->getTimeVisited().isValid() ? m_bookmark->getTimeVisited().toString() : tr("Unknown"));
-		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->data(BookmarksModel::VisitsRole).toInt()));
+		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->getVisits()));
 	}
 	else
 	{

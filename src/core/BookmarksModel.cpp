@@ -291,6 +291,11 @@ int BookmarksItem::getType() const
 	return QStandardItem::data(BookmarksModel::TypeRole).toInt();
 }
 
+int BookmarksItem::getVisits() const
+{
+	return QStandardItem::data(BookmarksModel::VisitsRole).toInt();
+}
+
 bool BookmarksItem::isAncestorOf(BookmarksItem *child) const
 {
 	if (child == nullptr || child == this)
