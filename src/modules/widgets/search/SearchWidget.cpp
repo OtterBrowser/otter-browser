@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -678,7 +678,7 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 	{
 		const QString query(m_query);
 
-		if (query != getPopup()->getItem(index)->text())
+		if (query != index.data(Qt::DisplayRole).toString())
 		{
 			setText(query);
 		}
