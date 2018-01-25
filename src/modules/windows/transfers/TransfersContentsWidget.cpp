@@ -247,7 +247,7 @@ void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
 
 	if (transfer->getState() == Transfer::RunningState)
 	{
-		m_speeds[transfer] = QQueue<qint64>();
+		m_speeds[transfer] = {};
 	}
 
 	handleTransferChanged(transfer);
@@ -269,7 +269,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 	{
 		if (!m_speeds.contains(transfer))
 		{
-			m_speeds[transfer] = QQueue<qint64>();
+			m_speeds[transfer] = {};
 		}
 
 		m_speeds[transfer].enqueue(transfer->getSpeed());
