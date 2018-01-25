@@ -238,8 +238,8 @@ void QtWebKitNetworkManager::handleRequestFinished(QNetworkReply *reply)
 	{
 		if (reply->sslConfiguration().isNull())
 		{
-			m_sslInformation.certificates = QVector<QSslCertificate>();
-			m_sslInformation.cipher = QSslCipher();
+			m_sslInformation.certificates = {};
+			m_sslInformation.cipher = {};
 		}
 		else
 		{
