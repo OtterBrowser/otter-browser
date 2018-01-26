@@ -1063,7 +1063,7 @@ void TransfersManager::handleTransferFinished()
 	{
 		if (transfer->getState() == Transfer::FinishedState)
 		{
-			connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Transfer completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationLevel, this), &Notification::clicked, transfer, &Transfer::openTarget);
+			connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Download completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationLevel, this), &Notification::clicked, transfer, &Transfer::openTarget);
 		}
 
 		emit transferFinished(transfer);
