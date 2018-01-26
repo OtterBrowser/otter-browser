@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ Notification::NotificationLevel Notification::getLevel() const
 
 NotificationsManager::NotificationsManager(QObject *parent) : QObject(parent)
 {
-	registerEvent(QT_TRANSLATE_NOOP("notifications", "Transfer Completed"), QT_TRANSLATE_NOOP("notifications", "File transfer was completed"));
+	registerEvent(QT_TRANSLATE_NOOP("notifications", "Download Completed"), QT_TRANSLATE_NOOP("notifications", "File download was completed"));
 	registerEvent(QT_TRANSLATE_NOOP("notifications", "Update Available"), QT_TRANSLATE_NOOP("notifications", "Update is available to be downloaded"));
 }
 
