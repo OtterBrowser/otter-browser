@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -430,7 +430,7 @@ void ToolBarDialog::editEntry()
 		else if (identifier == QLatin1String("TransfersWidget"))
 		{
 			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("transfers")));
-			textWidget->setDefaultValue(tr("Transfers"));
+			textWidget->setDefaultValue(tr("Downloads"));
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
 		{
@@ -648,7 +648,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("TransfersWidget"))
 	{
-		item->setText(tr("Transfer Progress Information"));
+		item->setText(tr("Downloads Progress Information"));
 		item->setIcon(ThemesManager::createIcon(QLatin1String("transfers")));
 	}
 	else if (identifier == QLatin1String("ZoomWidget"))
