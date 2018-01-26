@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -446,7 +446,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(AddonsAction, QT_TRANSLATE_NOOP("actions", "Addons"), {}, ThemesManager::createIcon(QLatin1String("preferences-plugin")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(NotesAction, QT_TRANSLATE_NOOP("actions", "Notes"), {}, ThemesManager::createIcon(QLatin1String("notes")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(PasswordsAction, QT_TRANSLATE_NOOP("actions", "Passwords"), {}, ThemesManager::createIcon(QLatin1String("dialog-password")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
-	registerAction(TransfersAction, QT_TRANSLATE_NOOP("actions", "Transfers"), {}, ThemesManager::createIcon(QLatin1String("transfers")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
+	registerAction(TransfersAction, QT_TRANSLATE_NOOP("actions", "Downloads"), {}, ThemesManager::createIcon(QLatin1String("transfers")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(PreferencesAction, QT_TRANSLATE_NOOP("actions", "Preferences…"), {}, {}, ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(WebsitePreferencesAction, QT_TRANSLATE_NOOP("actions", "Website Preferences…"), {}, {}, ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::PageCategory);
 	registerAction(QuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Quick Preferences"), {}, {}, ActionDefinition::WindowScope);
