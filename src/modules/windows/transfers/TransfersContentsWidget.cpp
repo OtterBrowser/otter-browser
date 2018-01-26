@@ -588,7 +588,7 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index) const
 
 QString TransfersContentsWidget::getTitle() const
 {
-	return tr("Transfers");
+	return tr("Downloads");
 }
 
 QLatin1String TransfersContentsWidget::getType() const
