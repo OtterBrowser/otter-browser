@@ -79,7 +79,6 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 void ContentBlockingProfileDialog::save()
 {
 	const ContentBlockingProfile::ProfileCategory category(static_cast<ContentBlockingProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt()));
-
 	const QUrl url(m_ui->updateUrlEdit->text());
 
 	if (!url.isValid())
