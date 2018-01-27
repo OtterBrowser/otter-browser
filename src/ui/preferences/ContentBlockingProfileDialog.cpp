@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -73,6 +74,12 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->categoryComboBox->setItemText(0, tr("Advertisements"));
+		m_ui->categoryComboBox->setItemText(1, tr("Annoyance"));
+		m_ui->categoryComboBox->setItemText(2, tr("Privacy"));
+		m_ui->categoryComboBox->setItemText(3, tr("Social"));
+		m_ui->categoryComboBox->setItemText(4, tr("Regional"));
+		m_ui->categoryComboBox->setItemText(5, tr("Other"));
 	}
 }
 
