@@ -782,7 +782,7 @@ void ItemViewWidget::setModel(QAbstractItemModel *model)
 
 void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 {
-	QAbstractItemModel *usedModel(model);
+	QAbstractItemModel *activeModel(model);
 
 	if (model && useSortProxy)
 	{
@@ -790,7 +790,7 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 		m_proxyModel->setSourceModel(model);
 		m_proxyModel->setDynamicSortFilter(true);
 
-		usedModel = m_proxyModel;
+		activeModel = m_proxyModel;
 	}
 	else if (m_proxyModel)
 	{
@@ -800,7 +800,7 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 
 	m_sourceModel = qobject_cast<QStandardItemModel*>(model);
 
-	QTreeView::setModel(usedModel);
+	QTreeView::setModel(activeModel);
 
 	if (!model)
 	{
