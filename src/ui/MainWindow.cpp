@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -2202,7 +2202,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::OpenPanelAction:
 			{
-				ToolBarsManager::ToolBarDefinition toolBarDefinition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+				const ToolBarsManager::ToolBarDefinition toolBarDefinition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 
 				state.isEnabled = (toolBarDefinition.isValid() && !toolBarDefinition.currentPanel.isEmpty());
 			}
