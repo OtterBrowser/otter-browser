@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1115,7 +1115,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 
 		if (m_isHidden)
 		{
-			m_instance->setHidden(false);
+			setHidden(false);
 		}
 		else
 		{
@@ -1618,7 +1618,7 @@ bool Application::canClose()
 
 		if (messageBox.clickedButton() == hideButton)
 		{
-			m_instance->setHidden(true);
+			setHidden(true);
 
 			return false;
 		}
@@ -1675,7 +1675,7 @@ bool Application::canClose()
 
 			if (messageBox.clickedButton() == hideButton)
 			{
-				m_instance->setHidden(true);
+				setHidden(true);
 
 				return false;
 			}
