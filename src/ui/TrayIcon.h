@@ -21,7 +21,6 @@
 #ifndef OTTER_TRAYICON_H
 #define OTTER_TRAYICON_H
 
-#include <QtWidgets/QAction>
 #include <QtWidgets/QSystemTrayIcon>
 
 namespace Otter
