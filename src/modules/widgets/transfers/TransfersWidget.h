@@ -24,6 +24,7 @@
 
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -62,6 +63,7 @@ private:
 	QLabel *m_fileNameLabel;
 	QLabel *m_iconLabel;
 	QProgressBar *m_progressBar;
+	QToolButton *m_toolButton;
 	QWidget *m_centralWidget;
 };
 

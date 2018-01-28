@@ -24,6 +24,7 @@
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
 #include <QtWidgets/QBoxLayout>
@@ -91,6 +92,7 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	m_fileNameLabel(new QLabel(this)),
 	m_iconLabel(new QLabel(this)),
 	m_progressBar(new QProgressBar(this)),
+	m_toolButton(new QToolButton(this)),
 	m_centralWidget(new QWidget(this))
 {
 	QVBoxLayout *centralLayout(new QVBoxLayout(m_centralWidget));
@@ -101,20 +103,46 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	QFrame *leftSeparatorFrame(new QFrame(this));
 	leftSeparatorFrame->setFrameShape(QFrame::VLine);
 
+	QFrame *rightSeparatorFrame(new QFrame(this));
+	rightSeparatorFrame->setFrameShape(QFrame::VLine);
+
 	QHBoxLayout *mainLayout(new QHBoxLayout(this));
 	mainLayout->addWidget(m_iconLabel);
 	mainLayout->addWidget(leftSeparatorFrame);
 	mainLayout->addWidget(m_centralWidget);
+	mainLayout->addWidget(rightSeparatorFrame);
+	mainLayout->addWidget(m_toolButton);
 
 	setLayout(mainLayout);
 	updateState();
 
 	m_iconLabel->setFixedSize(32, 32);
+	m_toolButton->setIconSize({16, 16});
+	m_toolButton->setAutoRaise(true);
 
 	connect(transfer, &Transfer::changed, this, &TransferActionWidget::updateState);
 	connect(transfer, &Transfer::finished, this, &TransferActionWidget::updateState);
 	connect(transfer, &Transfer::stopped, this, &TransferActionWidget::updateState);
 	connect(transfer, &Transfer::progressChanged, this, &TransferActionWidget::updateState);
+	connect(m_toolButton, &QToolButton::clicked, [&]()
+	{
+		switch (m_transfer->getState())
+		{
+			case Transfer::CancelledState:
+			case Transfer::ErrorState:
+				m_transfer->restart();
+
+				break;
+			case Transfer::FinishedState:
+				Utils::runApplication({}, QUrl::fromLocalFile(QFileInfo(m_transfer->getTarget()).dir().canonicalPath()));
+
+				break;
+			default:
+				m_transfer->cancel();
+
+				break;
+		}
+	});
 }
 
 void TransferActionWidget::updateState()
@@ -128,6 +156,26 @@ void TransferActionWidget::updateState()
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
 	m_progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
+
+	switch (m_transfer->getState())
+	{
+		case Transfer::CancelledState:
+		case Transfer::ErrorState:
+			m_toolButton->setIcon(ThemesManager::createIcon(QLatin1String("view-refresh")));
+			m_toolButton->setToolTip(tr("Redownload"));
+
+			break;
+		case Transfer::FinishedState:
+			m_toolButton->setIcon(ThemesManager::createIcon(QLatin1String("document-open-folder")));
+			m_toolButton->setToolTip(tr("Open Folder"));
+
+			break;
+		default:
+			m_toolButton->setIcon(ThemesManager::createIcon(QLatin1String("task-reject")));
+			m_toolButton->setToolTip(tr("Cancel"));
+
+			break;
+	}
 }
 
 }
