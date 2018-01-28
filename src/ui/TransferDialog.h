@@ -23,7 +23,7 @@
 #include "Dialog.h"
 
 #include <QtCore/QPointer>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QAbstractButton>
 
 namespace Otter
 {
