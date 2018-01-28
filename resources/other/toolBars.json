@@ -95,7 +95,8 @@
 			"ZoomOutAction",
 			"ZoomWidget",
 			"ZoomInAction",
-			"ContentBlockingInformationWidget"
+			"ContentBlockingInformationWidget",
+			"TransfersWidget"
 		]
 	},
 	{
