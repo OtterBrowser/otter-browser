@@ -78,7 +78,7 @@ void TransfersWidget::updateState()
 		}
 	}
 
-	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
+	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, {{QLatin1String("text"), tr("Show all Downloads")}}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
 	setIcon(getIcon());
 }
 
