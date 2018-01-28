@@ -22,9 +22,13 @@
 
 #include "../../../ui/ToolButtonWidget.h"
 
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QProgressBar>
+
 namespace Otter
 {
 
+class Transfer;
 class Window;
 
 class TransfersWidget final : public ToolButtonWidget
@@ -41,6 +45,23 @@ protected slots:
 
 private:
 	QIcon m_icon;
+};
+
+class TransferActionWidget final : public QWidget
+{
+	Q_OBJECT
+
+public:
+	explicit TransferActionWidget(Transfer *transfer, QWidget *parent = nullptr);
+
+protected slots:
+	void updateState();
+
+private:
+	Transfer *m_transfer;
+	QLabel *m_fileNameLabel;
+	QProgressBar *m_progressBar;
+	QWidget *m_centralWidget;
 };
 
 }

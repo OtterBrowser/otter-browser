@@ -25,7 +25,10 @@
 #include "../../../ui/Action.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QtMath>
+#include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QWidgetAction>
 
 namespace Otter
 {
@@ -37,11 +40,8 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 	setPopupMode(QToolButton::InstantPopup);
 	updateState();
 
-	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &TransfersWidget::updateState);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersWidget::updateState);
-	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &TransfersWidget::updateState);
 }
 
 void TransfersWidget::updateState()
@@ -55,7 +55,7 @@ void TransfersWidget::updateState()
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
-		const Transfer *transfer(transfers.at(i));
+		Transfer *transfer(transfers.at(i));
 
 		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
 		{
@@ -67,11 +67,14 @@ void TransfersWidget::updateState()
 
 		if (!transfer->isArchived() || transfer->getState() == Transfer::RunningState)
 		{
-			menu()->addAction(Utils::elideText(QFileInfo(transfer->getTarget()).fileName(), menu()));
+			QWidgetAction *widgetAction(new QWidgetAction(menu()));
+			widgetAction->setDefaultWidget(new TransferActionWidget(transfer, menu()));
+
+			menu()->addAction(widgetAction);
+			menu()->addSeparator();
 		}
 	}
 
-	menu()->addSeparator();
 	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
 	setIcon(getIcon());
 }
@@ -79,6 +82,40 @@ void TransfersWidget::updateState()
 QIcon TransfersWidget::getIcon() const
 {
 	return m_icon;
+}
+
+TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) : QWidget(parent),
+	m_transfer(transfer),
+	m_fileNameLabel(new QLabel(this)),
+	m_progressBar(new QProgressBar(this)),
+	m_centralWidget(new QWidget(this))
+{
+	QVBoxLayout *centralLayout(new QVBoxLayout(m_centralWidget));
+	centralLayout->setContentsMargins(0, 0, 0, 0);
+	centralLayout->addWidget(m_fileNameLabel);
+	centralLayout->addWidget(m_progressBar);
+
+	QHBoxLayout *mainLayout(new QHBoxLayout(this));
+	mainLayout->addWidget(m_centralWidget);
+
+	setLayout(mainLayout);
+	updateState();
+
+	connect(transfer, &Transfer::changed, this, &TransferActionWidget::updateState);
+	connect(transfer, &Transfer::finished, this, &TransferActionWidget::updateState);
+	connect(transfer, &Transfer::stopped, this, &TransferActionWidget::updateState);
+	connect(transfer, &Transfer::progressChanged, this, &TransferActionWidget::updateState);
+}
+
+void TransferActionWidget::updateState()
+{
+	const bool isIndeterminate(m_transfer->getBytesTotal() <= 0);
+	const bool hasError(m_transfer->getState() == Transfer::UnknownState || m_transfer->getState() == Transfer::ErrorState);
+
+	m_fileNameLabel->setText(QFileInfo(m_transfer->getTarget()).fileName());
+	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
+	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
+	m_progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
 }
 
 }
