@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
+#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
@@ -35,7 +36,8 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(par
 	m_transfer(transfer),
 	m_ui(new Ui::TransferDialog)
 {
-	const QPixmap icon(ThemesManager::createIcon(transfer->getMimeType().iconName()).pixmap(16, 16));
+	const QString iconName(transfer->getMimeType().iconName());
+	const QPixmap icon(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(16, 16));
 	QString fileName(transfer->getSuggestedFileName());
 
 	if (fileName.isEmpty())
