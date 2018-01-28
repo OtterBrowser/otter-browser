@@ -151,7 +151,7 @@ void TransferActionWidget::updateState()
 	const bool isIndeterminate(m_transfer->getBytesTotal() <= 0);
 	const bool hasError(m_transfer->getState() == Transfer::UnknownState || m_transfer->getState() == Transfer::ErrorState);
 
-	m_fileNameLabel->setText(QFileInfo(m_transfer->getTarget()).fileName());
+	m_fileNameLabel->setText(Utils::elideText(QFileInfo(m_transfer->getTarget()).fileName(), nullptr, 300));
 	m_iconLabel->setPixmap(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(32, 32));
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
