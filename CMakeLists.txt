@@ -230,7 +230,6 @@ set(otter_src
 	src/modules/importers/opera/OperaSearchEnginesImporter.cpp
 	src/modules/importers/opera/OperaSessionImporter.cpp
 	src/modules/widgets/action/ActionWidget.cpp
-	src/modules/widgets/action/NavigationActionWidget.cpp
 	src/modules/widgets/address/AddressWidget.cpp
 	src/modules/widgets/bookmark/BookmarkWidget.cpp
 	src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp

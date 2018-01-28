@@ -24,7 +24,6 @@
 #include "Window.h"
 #include "../core/BookmarksManager.h"
 #include "../modules/widgets/action/ActionWidget.h"
-#include "../modules/widgets/action/NavigationActionWidget.h"
 #include "../modules/widgets/address/AddressWidget.h"
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
 #include "../modules/widgets/configurationOption/ConfigurationOptionWidget.h"
