@@ -27,6 +27,8 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
 #include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QFileIconProvider>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QWidgetAction>
 
@@ -87,6 +89,7 @@ QIcon TransfersWidget::getIcon() const
 TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) : QWidget(parent),
 	m_transfer(transfer),
 	m_fileNameLabel(new QLabel(this)),
+	m_iconLabel(new QLabel(this)),
 	m_progressBar(new QProgressBar(this)),
 	m_centralWidget(new QWidget(this))
 {
@@ -95,11 +98,18 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	centralLayout->addWidget(m_fileNameLabel);
 	centralLayout->addWidget(m_progressBar);
 
+	QFrame *leftSeparatorFrame(new QFrame(this));
+	leftSeparatorFrame->setFrameShape(QFrame::VLine);
+
 	QHBoxLayout *mainLayout(new QHBoxLayout(this));
+	mainLayout->addWidget(m_iconLabel);
+	mainLayout->addWidget(leftSeparatorFrame);
 	mainLayout->addWidget(m_centralWidget);
 
 	setLayout(mainLayout);
 	updateState();
+
+	m_iconLabel->setFixedSize(32, 32);
 
 	connect(transfer, &Transfer::changed, this, &TransferActionWidget::updateState);
 	connect(transfer, &Transfer::finished, this, &TransferActionWidget::updateState);
@@ -109,10 +119,12 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 
 void TransferActionWidget::updateState()
 {
+	const QString iconName(m_transfer->getMimeType().iconName());
 	const bool isIndeterminate(m_transfer->getBytesTotal() <= 0);
 	const bool hasError(m_transfer->getState() == Transfer::UnknownState || m_transfer->getState() == Transfer::ErrorState);
 
 	m_fileNameLabel->setText(QFileInfo(m_transfer->getTarget()).fileName());
+	m_iconLabel->setPixmap(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(32, 32));
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
 	m_progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));

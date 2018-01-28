@@ -60,6 +60,7 @@ protected slots:
 private:
 	Transfer *m_transfer;
 	QLabel *m_fileNameLabel;
+	QLabel *m_iconLabel;
 	QProgressBar *m_progressBar;
 	QWidget *m_centralWidget;
 };
