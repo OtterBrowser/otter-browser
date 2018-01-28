@@ -207,15 +207,13 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 	}
 
 	connect(menu(), &QMenu::aboutToShow, this, &NavigationActionWidget::updateMenu);
-	connect(menu(), &QMenu::triggered, this, &NavigationActionWidget::goToHistoryIndex);
-}
-
-void NavigationActionWidget::goToHistoryIndex(QAction *action)
-{
-	if (m_window && action && action->data().type() == QVariant::Int)
+	connect(menu(), &QMenu::triggered, [&](QAction *action)
 	{
-		m_window->getContentsWidget()->goToHistoryIndex(action->data().toInt());
-	}
+		if (m_window && action && action->data().type() == QVariant::Int)
+		{
+			m_window->getContentsWidget()->goToHistoryIndex(action->data().toInt());
+		}
+	});
 }
 
 void NavigationActionWidget::addMenuEntry(int index, const WindowHistoryEntry &entry)

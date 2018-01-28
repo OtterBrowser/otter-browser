@@ -69,7 +69,6 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void goToHistoryIndex(QAction *action);
 	void updateMenu();
 	void setWindow(Window *window);
 
