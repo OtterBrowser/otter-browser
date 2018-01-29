@@ -28,7 +28,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
-#include <QtCore/QQueue>
 #include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
 #include <QtWidgets/QApplication>
@@ -147,8 +146,6 @@ void TransfersContentsWidget::removeTransfer()
 			return;
 		}
 
-		m_speeds.remove(transfer);
-
 		m_model->removeRow(m_ui->transfersViewWidget->currentIndex().row());
 
 		TransfersManager::removeTransfer(transfer);
@@ -245,11 +242,6 @@ void TransfersContentsWidget::handleTransferAdded(Transfer *transfer)
 
 	m_ui->transfersViewWidget->openPersistentEditor(items[3]->index());
 
-	if (transfer->getState() == Transfer::RunningState)
-	{
-		m_speeds[transfer] = {};
-	}
-
 	handleTransferChanged(transfer);
 }
 
@@ -262,44 +254,8 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 		return;
 	}
 
-	QString remainingTime;
-	const bool isIndeterminate(transfer->getBytesTotal() <= 0);
-
-	if (transfer->getState() == Transfer::RunningState)
-	{
-		if (!m_speeds.contains(transfer))
-		{
-			m_speeds[transfer] = {};
-		}
-
-		m_speeds[transfer].enqueue(transfer->getSpeed());
-
-		if (m_speeds[transfer].count() > 10)
-		{
-			m_speeds[transfer].dequeue();
-		}
-
-		if (!isIndeterminate)
-		{
-			qint64 speedSum(0);
-			const QQueue<qint64> speeds(m_speeds[transfer]);
-
-			for (int i = 0; i < speeds.count(); ++i)
-			{
-				speedSum += speeds.at(i);
-			}
-
-			speedSum /= (speeds.count());
-
-			remainingTime = Utils::formatElapsedTime(qreal(transfer->getBytesTotal() - transfer->getBytesReceived()) / speedSum);
-		}
-	}
-	else
-	{
-		m_speeds.remove(transfer);
-	}
-
 	QIcon icon;
+	const bool isIndeterminate(transfer->getBytesTotal() <= 0);
 
 	switch (transfer->getState())
 	{
@@ -349,7 +305,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 				break;
 			case 4:
-				m_model->setData(index, remainingTime, Qt::DisplayRole);
+				m_model->setData(index, (isIndeterminate ? QString() : Utils::formatElapsedTime(transfer->getRemainingTime())), Qt::DisplayRole);
 
 				break;
 			case 5:
@@ -419,8 +375,6 @@ void TransfersContentsWidget::handleTransferRemoved(Transfer *transfer)
 	{
 		m_model->removeRow(row);
 	}
-
-	m_speeds.remove(transfer);
 }
 
 void TransfersContentsWidget::showContextMenu(const QPoint &position)

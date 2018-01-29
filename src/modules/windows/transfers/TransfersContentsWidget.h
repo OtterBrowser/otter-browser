@@ -98,7 +98,6 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<Transfer*, QQueue<qint64> > m_speeds;
 	bool m_isLoading;
 	Ui::TransfersContentsWidget *m_ui;
 };
