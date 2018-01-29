@@ -45,12 +45,12 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersWidget::updateState);
+	connect(menu(), &QMenu::aboutToShow, this, &TransfersWidget::populateMenu);
+	connect(menu(), &QMenu::aboutToHide, menu(), &QMenu::clear);
 }
 
-void TransfersWidget::updateState()
+void TransfersWidget::populateMenu()
 {
-	menu()->clear();
-
 	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
@@ -79,6 +79,10 @@ void TransfersWidget::updateState()
 	}
 
 	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, {{QLatin1String("text"), tr("Show all Downloads")}}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
+}
+
+void TransfersWidget::updateState()
+{
 	setIcon(getIcon());
 }
 

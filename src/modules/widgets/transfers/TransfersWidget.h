@@ -42,6 +42,7 @@ public:
 	QIcon getIcon() const override;
 
 protected slots:
+	void populateMenu();
 	void updateState();
 
 private:
