@@ -59,7 +59,30 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 
 		updateState();
 	});
-	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, [&](Transfer *transfer)
+	{
+		const QList<QAction*> actions(menu()->actions());
+
+		for (int i = 0; i < actions.count(); ++i)
+		{
+			const QWidgetAction *widgetAction(qobject_cast<QWidgetAction*>(actions.at(i)));
+
+			if (widgetAction && widgetAction->defaultWidget())
+			{
+				const TransferActionWidget *transferActionWidget(qobject_cast<TransferActionWidget*>(widgetAction->defaultWidget()));
+
+				if (transferActionWidget && transferActionWidget->getTransfer() == transfer)
+				{
+					menu()->removeAction(actions.at(i));
+					menu()->removeAction(actions.value(i + 1));
+
+					break;
+				}
+			}
+		}
+
+		updateState();
+	});
 	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &TransfersWidget::updateState);
 	connect(menu(), &QMenu::aboutToShow, this, &TransfersWidget::populateMenu);
@@ -219,6 +242,11 @@ void TransferActionWidget::updateState()
 
 			break;
 	}
+}
+
+Transfer* TransferActionWidget::getTransfer() const
+{
+	return m_transfer;
 }
 
 }
