@@ -27,6 +27,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
+#include <QtGui/QMouseEvent>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QFrame>
@@ -157,6 +158,21 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 				break;
 		}
 	});
+}
+
+void TransferActionWidget::mousePressEvent(QMouseEvent *event)
+{
+	event->accept();
+}
+
+void TransferActionWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	event->accept();
+
+	if (event->button() == Qt::LeftButton)
+	{
+		m_transfer->openTarget();
+	}
 }
 
 void TransferActionWidget::updateState()

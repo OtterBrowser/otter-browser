@@ -56,6 +56,10 @@ class TransferActionWidget final : public QWidget
 public:
 	explicit TransferActionWidget(Transfer *transfer, QWidget *parent = nullptr);
 
+protected:
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+
 protected slots:
 	void updateState();
 
