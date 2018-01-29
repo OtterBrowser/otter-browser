@@ -23,6 +23,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QMimeType>
 #include <QtCore/QPointer>
+#include <QtCore/QQueue>
 #include <QtCore/QSettings>
 #include <QtNetwork/QNetworkReply>
 
@@ -78,6 +79,7 @@ public:
 	virtual qint64 getBytesTotal() const;
 	TransferOptions getOptions() const;
 	virtual TransferState getState() const;
+	virtual int getRemainingTime() const;
 	bool isArchived() const;
 
 public slots:
@@ -111,6 +113,7 @@ private:
 	QDateTime m_timeStarted;
 	QDateTime m_timeFinished;
 	QMimeType m_mimeType;
+	QQueue<qint64> m_speeds;
 	qint64 m_speed;
 	qint64 m_bytesStart;
 	qint64 m_bytesReceivedDifference;
@@ -120,6 +123,7 @@ private:
 	TransferState m_state;
 	int m_updateTimer;
 	int m_updateInterval;
+	int m_remainingTime;
 	bool m_isSelectingPath;
 	bool m_isArchived;
 

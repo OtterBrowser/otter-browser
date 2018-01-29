@@ -55,6 +55,7 @@ Transfer::Transfer(TransferOptions options, QObject *parent) : QObject(parent ? 
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
+	m_remainingTime(-1),
 	m_isSelectingPath(false),
 	m_isArchived(false)
 {
@@ -77,6 +78,7 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent 
 	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived && QFile::exists(settings.value(QLatin1String("target")).toString())) ? FinishedState : ErrorState),
 	m_updateTimer(0),
 	m_updateInterval(0),
+	m_remainingTime(-1),
 	m_isSelectingPath(false),
 	m_isArchived(true)
 {
@@ -96,6 +98,7 @@ Transfer::Transfer(const QUrl &source, const QString &target, TransferOptions op
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
+	m_remainingTime(-1),
 	m_isSelectingPath(false),
 	m_isArchived(false)
 {
@@ -124,6 +127,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, Transf
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
+	m_remainingTime(-1),
 	m_isSelectingPath(false),
 	m_isArchived(false)
 {
@@ -143,6 +147,7 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, TransferOptions 
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
+	m_remainingTime(-1),
 	m_isSelectingPath(false),
 	m_isArchived(false)
 {
@@ -168,6 +173,27 @@ void Transfer::timerEvent(QTimerEvent *event)
 
 		if (m_speed != oldSpeed)
 		{
+			m_speeds.enqueue(m_speed);
+
+			if (m_speeds.count() > 10)
+			{
+				m_speeds.dequeue();
+			}
+
+			if (m_bytesTotal > 0)
+			{
+				qint64 speedSum(0);
+
+				for (int i = 0; i < m_speeds.count(); ++i)
+				{
+					speedSum += m_speeds.at(i);
+				}
+
+				speedSum /= (m_speeds.count());
+
+				m_remainingTime = (qreal(m_bytesTotal - m_bytesReceived) / speedSum);
+			}
+
 			emit changed();
 		}
 	}
@@ -421,6 +447,8 @@ void Transfer::stop()
 			deleteLater();
 		}
 	}
+
+	m_speeds.clear();
 
 	emit stopped();
 	emit changed();
@@ -736,6 +764,11 @@ Transfer::TransferOptions Transfer::getOptions() const
 Transfer::TransferState Transfer::getState() const
 {
 	return m_state;
+}
+
+int Transfer::getRemainingTime() const
+{
+	return m_remainingTime;
 }
 
 bool Transfer::isArchived() const
