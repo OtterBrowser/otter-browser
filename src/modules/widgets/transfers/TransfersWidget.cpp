@@ -43,13 +43,37 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 	setPopupMode(QToolButton::InstantPopup);
 	updateState();
 
+	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &TransfersWidget::updateState);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &TransfersWidget::updateState);
+	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &TransfersWidget::updateState);
 	connect(menu(), &QMenu::aboutToShow, this, &TransfersWidget::populateMenu);
 	connect(menu(), &QMenu::aboutToHide, menu(), &QMenu::clear);
 }
 
 void TransfersWidget::populateMenu()
+{
+	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+
+	for (int i = 0; i < transfers.count(); ++i)
+	{
+		Transfer *transfer(transfers.at(i));
+
+		if (!transfer->isArchived() || transfer->getState() == Transfer::RunningState)
+		{
+			QWidgetAction *widgetAction(new QWidgetAction(menu()));
+			widgetAction->setDefaultWidget(new TransferActionWidget(transfer, menu()));
+
+			menu()->addAction(widgetAction);
+			menu()->addSeparator();
+		}
+	}
+
+	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, {{QLatin1String("text"), tr("Show all Downloads")}}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
+}
+
+void TransfersWidget::updateState()
 {
 	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
@@ -67,22 +91,8 @@ void TransfersWidget::populateMenu()
 			bytesTotal += transfer->getBytesTotal();
 			bytesReceived += transfer->getBytesReceived();
 		}
-
-		if (!transfer->isArchived() || transfer->getState() == Transfer::RunningState)
-		{
-			QWidgetAction *widgetAction(new QWidgetAction(menu()));
-			widgetAction->setDefaultWidget(new TransferActionWidget(transfer, menu()));
-
-			menu()->addAction(widgetAction);
-			menu()->addSeparator();
-		}
 	}
 
-	menu()->addAction(new Action(ActionsManager::TransfersAction, {}, {{QLatin1String("text"), tr("Show all Downloads")}}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), this));
-}
-
-void TransfersWidget::updateState()
-{
 	setIcon(getIcon());
 }
 
