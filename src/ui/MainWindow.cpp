@@ -932,8 +932,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowPanelAction:
 			{
 				const int toolBarIdentifier(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt());
+				const QString panel(parameters.value(QLatin1String("panel")).toString());
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBarIdentifier));
-				definition.currentPanel = parameters.value(QLatin1String("panel")).toString();
+				definition.currentPanel = ((definition.currentPanel == panel) ? QString() : panel);
 
 				if (definition.isValid())
 				{
