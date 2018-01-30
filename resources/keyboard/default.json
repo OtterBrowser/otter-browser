@@ -346,6 +346,15 @@
 				]
 			},
 			{
+				"action": "ShowPanel",
+				"parameters": {
+					"panel": "bookmarks"
+				},
+				"shortcuts": [
+					"Ctrl+B"
+				]
+			},
+			{
 				"action": "Addons",
 				"shortcuts": [
 					"Ctrl+Shift+A"
