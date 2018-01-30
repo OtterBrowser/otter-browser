@@ -346,6 +346,12 @@
 				]
 			},
 			{
+				"action": "History",
+				"shortcuts": [
+					"Ctrl+Shift+H"
+				]
+			},
+			{
 				"action": "Transfers",
 				"shortcuts": [
 					"Ctrl+Shift+J"
