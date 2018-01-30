@@ -355,6 +355,15 @@
 				]
 			},
 			{
+				"action": "ShowPanel",
+				"parameters": {
+					"panel": "history"
+				},
+				"shortcuts": [
+					"Ctrl+H"
+				]
+			},
+			{
 				"action": "Addons",
 				"shortcuts": [
 					"Ctrl+Shift+A"
