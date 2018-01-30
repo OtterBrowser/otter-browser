@@ -42,6 +42,7 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::InstantPopup);
+	setToolTip(tr("Downloads"));
 	updateState();
 
 	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &TransfersWidget::updateState);
