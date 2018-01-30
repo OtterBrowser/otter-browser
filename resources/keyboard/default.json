@@ -346,6 +346,12 @@
 				]
 			},
 			{
+				"action": "Transfers",
+				"shortcuts": [
+					"Ctrl+Shift+J"
+				]
+			},
+			{
 				"action": "Preferences",
 				"shortcuts": [
 					"Ctrl+F12",
