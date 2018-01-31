@@ -262,11 +262,49 @@
 			"actions":
 			[
 				"OpenLink",
-				"OpenLinkInNewTab",
-				"OpenLinkInNewTabBackground",
+				{
+					"type": "action",
+					"identifier": "OpenLink",
+					"parameters":
+					{
+						"hints": [
+							"NewTab"
+						]
+					}
+				},
+				{
+					"type": "action",
+					"identifier": "OpenLink",
+					"parameters":
+					{
+						"hints": [
+							"NewTab",
+							"Background"
+						]
+					}
+				},
 				"separator",
-				"OpenLinkInNewWindow",
-				"OpenLinkInNewWindowBackground",
+				{
+					"type": "action",
+					"identifier": "OpenLink",
+					"parameters":
+					{
+						"hints": [
+							"NewWindow"
+						]
+					}
+				},
+				{
+					"type": "action",
+					"identifier": "OpenLink",
+					"parameters":
+					{
+						"hints": [
+							"NewWindow",
+							"Background"
+						]
+					}
+				},
 				"separator",
 				"BookmarkLink",
 				"CopyLinkToClipboard",
