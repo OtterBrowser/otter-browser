@@ -120,9 +120,37 @@
 					"title": "Frame",
 					"actions":
 					[
-						"OpenFrameInCurrentTab",
-						"OpenFrameInNewTab",
-						"OpenFrameInNewTabBackground",
+						{
+							"type": "action",
+							"identifier": "OpenFrame",
+							"parameters":
+							{
+								"hints": [
+									"CurrentTab"
+								]
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "OpenFrame",
+							"parameters":
+							{
+								"hints": [
+									"NewTab"
+								]
+							}
+						},
+						{
+							"type": "action",
+							"identifier": "OpenFrame",
+							"parameters":
+							{
+								"hints": [
+									"NewTab",
+									"Background"
+								]
+							}
+						},
 						"separator",
 						"ViewFrameSource",
 						"ReloadFrame",
