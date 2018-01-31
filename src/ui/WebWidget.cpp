@@ -891,7 +891,14 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			if (identifier == ActionsManager::OpenLinkAction && parameters.contains(QLatin1String("hints")))
 			{
-				state.text = getOpenActionText(SessionsManager::calculateOpenHints(parameters));
+				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+
+				state.text = getOpenActionText(hints);
+
+				if (hints != SessionsManager::DefaultOpen)
+				{
+					state.icon = {};
+				}
 			}
 
 			break;
