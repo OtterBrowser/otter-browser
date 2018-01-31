@@ -1806,7 +1806,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		stream << QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded()) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
+		stream << QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded()) << history.entries.at(i).title << history.entries.at(i).url << static_cast<quint32>(2) << static_cast<quint64>(0) << ++documentSequence << static_cast<quint64>(0) << QString() << false << ++itemSequence << QString() << static_cast<qint32>(history.entries.at(i).position.x()) << static_cast<qint32>(history.entries.at(i).position.y()) << static_cast<qreal>(1) << false << QString() << false;
 	}
 
 	stream.device()->reset();
@@ -2189,7 +2189,7 @@ QPixmap QtWebKitWebWidget::createThumbnail(const QSize &size)
 		contentsSize.setWidth(2000);
 	}
 
-	contentsSize.setHeight(qRound(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width())));
+	contentsSize.setHeight(qRound(thumbnailSize.height() * (static_cast<qreal>(contentsSize.width()) / thumbnailSize.width())));
 
 	m_page->setViewportSize(contentsSize);
 

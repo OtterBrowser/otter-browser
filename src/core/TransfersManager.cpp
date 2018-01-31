@@ -191,7 +191,7 @@ void Transfer::timerEvent(QTimerEvent *event)
 
 				speedSum /= (m_speeds.count());
 
-				m_remainingTime = (qreal(m_bytesTotal - m_bytesReceived) / speedSum);
+				m_remainingTime = (static_cast<qreal>(m_bytesTotal - m_bytesReceived) / speedSum);
 			}
 
 			emit changed();

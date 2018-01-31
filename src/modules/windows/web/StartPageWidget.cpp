@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -211,7 +211,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
+	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / static_cast<qreal>(100));
 
 	return QSize(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom), qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
 }
@@ -256,8 +256,8 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 				}
 				else
 				{
-					const qreal pixmapAspectRatio(pixmap.width() / qreal(pixmap.height()));
-					const qreal backgroundAspectRatio(width() / qreal(height()));
+					const qreal pixmapAspectRatio(pixmap.width() / static_cast<qreal>(pixmap.height()));
+					const qreal backgroundAspectRatio(width() / static_cast<qreal>(height()));
 					QPixmap newBackground(size());
 
 					if (pixmapAspectRatio > backgroundAspectRatio)
@@ -755,13 +755,13 @@ void StartPageWidget::handleIsReloadingTileChanged(const QModelIndex &index)
 
 void StartPageWidget::updateSize()
 {
-	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
+	const qreal zoom(SettingsManager::getOption(SettingsManager::StartPage_ZoomLevelOption).toInt() / static_cast<qreal>(100));
 	const int tileHeight(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt() + 6) * zoom));
 	const int tileWidth(qRound((SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt() + 6) * zoom));
 	const int tilesPerRow(SettingsManager::getOption(SettingsManager::StartPage_TilesPerRowOption).toInt());
 	const int amount(m_model->rowCount());
 	const int columns((tilesPerRow > 0) ? tilesPerRow : qMax(1, ((width() - 50) / tileWidth)));
-	const int rows(qCeil(amount / qreal(columns)));
+	const int rows(qCeil(amount / static_cast<qreal>(columns)));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
