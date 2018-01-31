@@ -283,8 +283,27 @@
 			"includeIn": "image",
 			"actions":
 			[
-				"OpenImageInNewTab",
-				"OpenImageInNewTabBackground",
+				{
+					"type": "action",
+					"identifier": "OpenImage",
+					"parameters":
+					{
+						"hints": [
+							"NewTab"
+						]
+					}
+				},
+				{
+					"type": "action",
+					"identifier": "OpenImage",
+					"parameters":
+					{
+						"hints": [
+							"NewTab",
+							"Background"
+						]
+					}
+				},
 				"ReloadImage",
 				"CopyImageUrlToClipboard",
 				"separator",
