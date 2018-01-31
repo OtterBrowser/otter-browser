@@ -20,7 +20,6 @@
 
 #include "StartPageWidget.h"
 #include "StartPageModel.h"
-#include "WebContentsWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/GesturesManager.h"
@@ -28,7 +27,6 @@
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../core/Utils.h"
 #include "../../../modules/widgets/search/SearchWidget.h"
 #include "../../../ui/Animation.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
