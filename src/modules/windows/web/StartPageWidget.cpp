@@ -234,7 +234,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	QPixmap pixmap(m_path);
+	const QPixmap pixmap(m_path);
 
 	if (pixmap.isNull())
 	{
