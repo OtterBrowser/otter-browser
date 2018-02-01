@@ -104,7 +104,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 				{
 					const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), iterator.key()}}));
 
-					iterator.value()->setToolTip(getPanelTitle(iterator.key() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'))));
+					iterator.value()->setToolTip(getPanelTitle(iterator.key()) + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
 				}
 
 				if (m_ui->panelsButton->menu())
