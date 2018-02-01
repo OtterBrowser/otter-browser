@@ -115,7 +115,16 @@ void SidebarWidget::changeEvent(QEvent *event)
 					{
 						if (!actions.at(i)->data().toString().isEmpty())
 						{
-							actions[i]->setText(getPanelTitle(actions.at(i)->data().toString()));
+							const QString panel(actions.at(i)->data().toString());
+
+							if (panel.startsWith(QLatin1String("web:")))
+							{
+								actions[i]->setText(Utils::elideText(getPanelTitle(panel), nullptr, 300));
+							}
+							else
+							{
+								actions[i]->setText(getPanelTitle(panel));
+							}
 						}
 					}
 				}
@@ -417,7 +426,7 @@ void SidebarWidget::updatePanels()
 
 		if (isWebPanel)
 		{
-			QAction *selectPanelMenuAction(menu->addAction(title));
+			QAction *selectPanelMenuAction(menu->addAction(Utils::elideText(title, nullptr, 300)));
 			selectPanelMenuAction->setCheckable(true);
 			selectPanelMenuAction->setChecked(true);
 			selectPanelMenuAction->setData(panels.at(i));
