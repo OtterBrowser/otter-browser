@@ -364,6 +364,15 @@
 				]
 			},
 			{
+				"action": "ShowPanel",
+				"parameters": {
+					"panel": "transfers"
+				},
+				"shortcuts": [
+					"Ctrl+J"
+				]
+			},
+			{
 				"action": "Addons",
 				"shortcuts": [
 					"Ctrl+Shift+A"
