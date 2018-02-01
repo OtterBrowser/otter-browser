@@ -102,7 +102,9 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 				for (iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
 				{
-					iterator.value()->setToolTip(getPanelTitle(iterator.key()));
+					const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), iterator.key()}}));
+
+					iterator.value()->setToolTip(getPanelTitle(iterator.key() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'))));
 				}
 
 				if (m_ui->panelsButton->menu())
@@ -400,12 +402,13 @@ void SidebarWidget::updatePanels()
 			continue;
 		}
 
+		const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), panels.at(i)}}));
 		const QString title(getPanelTitle(panels.at(i)));
 		QToolButton *button(new QToolButton(this));
 		QAction *selectPanelButtonAction(new QAction(button));
 		selectPanelButtonAction->setData(panels.at(i));
 		selectPanelButtonAction->setIcon(getPanelIcon(panels.at(i)));
-		selectPanelButtonAction->setToolTip(title);
+		selectPanelButtonAction->setToolTip(title + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
 		button->setDefaultAction(selectPanelButtonAction);
 		button->setAutoRaise(true);
