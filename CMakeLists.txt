@@ -19,7 +19,7 @@ add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_
 add_definitions(-DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 if ("${WEEKLY_VERSION}" STREQUAL "")
-	add_definitions(-DOTTER_VERSION_CONTEXT="-dev")
+	add_definitions(-DOTTER_VERSION_CONTEXT=" RC 5")
 	add_definitions(-DOTTER_VERSION_WEEKLY=" ")
 else ("${WEEKLY_VERSION}" STREQUAL "")
 	add_definitions(-DOTTER_VERSION_CONTEXT=" weekly ${WEEKLY_VERSION}")
