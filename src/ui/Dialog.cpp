@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -80,11 +80,7 @@ void Dialog::resizeEvent(QResizeEvent *event)
 	QJsonObject settingsObject(settings.object());
 	const QString name(normalizeDialogName(objectName()));
 	QJsonObject dialogObject(settingsObject.value(name).toObject());
-	QJsonObject sizeObject;
-	sizeObject.insert(QLatin1String("width"), width());
-	sizeObject.insert(QLatin1String("height"), height());
-
-	dialogObject.insert(QLatin1String("size"), sizeObject);
+	dialogObject.insert(QLatin1String("size"), QJsonObject({{QLatin1String("width"), width()}, {QLatin1String("height"), height()}}));
 
 	settingsObject.insert(name, dialogObject);
 
