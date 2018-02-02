@@ -47,21 +47,6 @@ StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &StartPageModel::handleOptionChanged);
 }
 
-void StartPageModel::dragEnded()
-{
-	for (int i = 0; i < rowCount(); ++i)
-	{
-		const QModelIndex index(this->index(i, 0));
-
-		if (index.data(IsDraggedRole).toBool())
-		{
-			setData(index, {}, IsDraggedRole);
-
-			emit isReloadingTileChanged(index);
-		}
-	}
-}
-
 void StartPageModel::reloadModel()
 {
 	m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
@@ -241,6 +226,21 @@ void StartPageModel::handleOptionChanged(int identifier)
 	}
 }
 
+void StartPageModel::handleDragEnded()
+{
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		const QModelIndex index(this->index(i, 0));
+
+		if (index.data(IsDraggedRole).toBool())
+		{
+			setData(index, {}, IsDraggedRole);
+
+			emit isReloadingTileChanged(index);
+		}
+	}
+}
+
 void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
 {
 	if (!m_bookmark)
@@ -353,7 +353,7 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	mimeData->setText(texts.join(QLatin1String(", ")));
 	mimeData->setUrls(urls);
 
-	connect(mimeData, &QMimeData::destroyed, this, &StartPageModel::dragEnded);
+	connect(mimeData, &QMimeData::destroyed, this, &StartPageModel::handleDragEnded);
 
 	return mimeData;
 }

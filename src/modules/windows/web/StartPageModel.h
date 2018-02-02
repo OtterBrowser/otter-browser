@@ -60,8 +60,8 @@ protected:
 	};
 
 protected slots:
-	void dragEnded();
 	void handleOptionChanged(int identifier);
+	void handleDragEnded();
 	void handleBookmarkModified(BookmarksItem *bookmark);
 	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
