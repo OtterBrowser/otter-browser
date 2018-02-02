@@ -317,7 +317,7 @@ void ContentBlockingManager::removeProfile(ContentBlockingProfile *profile)
 
 	JsonSettings localSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
 	QJsonObject localMainObject(localSettings.object());
-	QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
+	const QJsonObject bundledMainObject(JsonSettings(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true)).object());
 
 	if (bundledMainObject.keys().contains(profile->getName()))
 	{
