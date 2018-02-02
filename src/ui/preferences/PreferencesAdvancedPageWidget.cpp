@@ -582,7 +582,7 @@ void PreferencesAdvancedPageWidget::removeOverride()
 {
 	const QString host(m_ui->contentOverridesItemView->getCurrentIndex().data(Qt::DisplayRole).toString());
 
-	if (!host.isEmpty() && QMessageBox::question(this, tr("Question"), tr("Do you really want to remove preferences for this host?"), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Ok)
+	if (!host.isEmpty() && QMessageBox::question(this, tr("Question"), tr("Do you really want to remove preferences for this website?"), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Ok)
 	{
 		SettingsManager::removeOverride(host);
 
