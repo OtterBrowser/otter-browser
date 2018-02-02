@@ -297,15 +297,14 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	QStandardItemModel *updateChannelsModel(new QStandardItemModel(this));
 	const QStringList activeUpdateChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
-	const QMap<QString, QString> updateChannels({{QLatin1String("release"), tr("Stable version")}, {QLatin1String("beta"), tr("Beta version")}, {QLatin1String("weekly"), tr("Weekly development version")}});
-	QMap<QString, QString>::const_iterator iterator;
+	const QVector<QPair<QString, QString> > updateChannels({{QLatin1String("release"), tr("Stable version")}, {QLatin1String("beta"), tr("Beta version")}, {QLatin1String("weekly"), tr("Weekly development version")}});
 
-	for (iterator = updateChannels.constBegin(); iterator != updateChannels.constEnd(); ++iterator)
+	for (int i = 0; i < updateChannels.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(iterator.value()));
+		QStandardItem *item(new QStandardItem(updateChannels.at(i).second));
 		item->setCheckable(true);
-		item->setCheckState(activeUpdateChannels.contains(iterator.key()) ? Qt::Checked : Qt::Unchecked);
-		item->setData(iterator.key(), Qt::UserRole);
+		item->setCheckState(activeUpdateChannels.contains(updateChannels.at(i).first) ? Qt::Checked : Qt::Unchecked);
+		item->setData(updateChannels.at(i).first, Qt::UserRole);
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		updateChannelsModel->appendRow(item);
