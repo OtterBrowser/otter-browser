@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "CacheContentsWidget.h"
-#include "../../../core/Application.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkCache.h"
 #include "../../../core/NetworkManagerFactory.h"
@@ -29,7 +28,7 @@
 
 #include "ui_CacheContentsWidget.h"
 
-#include <QtCore/QDateTime>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
