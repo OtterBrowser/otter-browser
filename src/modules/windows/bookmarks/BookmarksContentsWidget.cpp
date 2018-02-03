@@ -23,7 +23,6 @@
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
@@ -32,7 +31,6 @@
 
 #include "ui_BookmarksContentsWidget.h"
 
-#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QDesktopWidget>
