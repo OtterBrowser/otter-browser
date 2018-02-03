@@ -150,68 +150,76 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 	}
 
-	if (type == BookmarksModel::TrashBookmark)
+	switch (type)
 	{
-		QAction *emptyTrashAction(menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash")));
-		emptyTrashAction->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
-
-		connect(emptyTrashAction, &QAction::triggered, NotesManager::getModel(), &BookmarksModel::emptyTrash);
-	}
-	else if (type == BookmarksModel::UnknownBookmark)
-	{
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
-		connect(menu.addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
-		connect(menu.addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
-	}
-	else
-	{
-		const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
-
-		if (type == BookmarksModel::UrlBookmark)
-		{
-			menu.addAction(new Action(ActionsManager::CutAction, {}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::CopyAction, {}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::PasteAction, {}, executor, &menu));
-			menu.addSeparator();
-		}
-
-		QAction *openAction(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open source page")));
-		openAction->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
-
-		if (type != BookmarksModel::RootBookmark)
-		{
-			menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, executor, &menu));
-		}
-
-		if (!isInTrash)
-		{
-			menu.addSeparator();
-
-			QMenu *addMenu(menu.addMenu(tr("Add Note")));
-
-			connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
-			connect(addMenu->addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
-			connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
-		}
-
-		if (type != BookmarksModel::RootBookmark)
-		{
-			menu.addSeparator();
-
-			if (isInTrash)
+		case BookmarksModel::TrashBookmark:
 			{
-				connect(menu.addAction(tr("Restore Note")), &QAction::triggered, [&]()
+				QAction *emptyTrashAction(menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash")));
+				emptyTrashAction->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
+
+				connect(emptyTrashAction, &QAction::triggered, NotesManager::getModel(), &BookmarksModel::emptyTrash);
+
+			}
+
+			break;
+		case BookmarksModel::UnknownBookmark:
+			connect(menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
+			connect(menu.addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
+			connect(menu.addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
+
+			break;
+		default:
+			{
+				const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
+
+				if (type == BookmarksModel::UrlBookmark)
 				{
-					NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
-				});
-			}
-			else
-			{
-				menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
-			}
-		}
+					menu.addAction(new Action(ActionsManager::CutAction, {}, executor, &menu));
+					menu.addAction(new Action(ActionsManager::CopyAction, {}, executor, &menu));
+					menu.addAction(new Action(ActionsManager::PasteAction, {}, executor, &menu));
+					menu.addSeparator();
+				}
 
-		connect(openAction, &QAction::triggered, this, &NotesContentsWidget::openUrl);
+				QAction *openAction(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open source page")));
+				openAction->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
+
+				if (type != BookmarksModel::RootBookmark)
+				{
+					menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, executor, &menu));
+				}
+
+				if (!isInTrash)
+				{
+					menu.addSeparator();
+
+					QMenu *addMenu(menu.addMenu(tr("Add Note")));
+
+					connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
+					connect(addMenu->addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
+					connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
+				}
+
+				if (type != BookmarksModel::RootBookmark)
+				{
+					menu.addSeparator();
+
+					if (isInTrash)
+					{
+						connect(menu.addAction(tr("Restore Note")), &QAction::triggered, [&]()
+						{
+							NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
+						});
+					}
+					else
+					{
+						menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
+					}
+				}
+
+				connect(openAction, &QAction::triggered, this, &NotesContentsWidget::openUrl);
+			}
+
+			break;
 	}
 
 	menu.exec(m_ui->notesViewWidget->mapToGlobal(position));
