@@ -27,7 +27,6 @@
 
 #include "ui_NotesContentsWidget.h"
 
-#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QDesktopWidget>
