@@ -721,28 +721,49 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 
 QString WebWidget::getOpenActionText(SessionsManager::OpenHints hints) const
 {
-	switch (hints)
+	if (hints == SessionsManager::CurrentTabOpen)
 	{
-		case SessionsManager::CurrentTabOpen:
-			return QCoreApplication::translate("actions", "Open in This Tab");
-		case SessionsManager::NewTabOpen:
-			return QCoreApplication::translate("actions", "Open in New Tab");
-		case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen):
-			return QCoreApplication::translate("actions", "Open in New Background Tab");
-		case SessionsManager::NewWindowOpen:
-			return QCoreApplication::translate("actions", "Open in New Window");
-		case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen):
-			return QCoreApplication::translate("actions", "Open in New Background Window");
-		case (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen):
-			return QCoreApplication::translate("actions", "Open in New Private Tab");
-		case (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
-			return QCoreApplication::translate("actions", "Open in New Private Background Tab");
-		case (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen):
-			return QCoreApplication::translate("actions", "Open in New Private Window");
-		case (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen):
-			return QCoreApplication::translate("actions", "Open in New Private Background Window");
-		default:
-			break;
+		return QCoreApplication::translate("actions", "Open in This Tab");
+	}
+
+	if (hints == SessionsManager::NewTabOpen)
+	{
+		return QCoreApplication::translate("actions", "Open in New Tab");
+	}
+
+	if (hints == (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen))
+	{
+		return QCoreApplication::translate("actions", "Open in New Background Tab");
+	}
+
+	if (hints == SessionsManager::NewWindowOpen)
+	{
+		return QCoreApplication::translate("actions", "Open in New Window");
+	}
+
+	if (hints == (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen))
+	{
+		return QCoreApplication::translate("actions", "Open in New Background Window");
+	}
+
+	if (hints == (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen))
+	{
+		return QCoreApplication::translate("actions", "Open in New Private Tab");
+	}
+
+	if (hints == (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen))
+	{
+		return QCoreApplication::translate("actions", "Open in New Private Background Tab");
+	}
+
+	if (hints == (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen))
+	{
+		return QCoreApplication::translate("actions", "Open in New Private Window");
+	}
+
+	if (hints == (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen))
+	{
+		return QCoreApplication::translate("actions", "Open in New Private Background Window");
 	}
 
 	return QCoreApplication::translate("actions", "Open");
