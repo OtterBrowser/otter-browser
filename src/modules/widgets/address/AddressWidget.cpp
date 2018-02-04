@@ -1416,6 +1416,18 @@ bool AddressWidget::event(QEvent *event)
 
 				if (!title.isEmpty())
 				{
+					if (entry == WebsiteInformationEntry)
+					{
+						const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::WebsiteInformationAction));
+
+						if (!shortcut.isEmpty())
+						{
+							QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()) + QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
+
+							return true;
+						}
+					}
+
 					QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()));
 
 					return true;
