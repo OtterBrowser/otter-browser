@@ -26,7 +26,6 @@
 #include "../core/SettingsManager.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionTitleBar>
