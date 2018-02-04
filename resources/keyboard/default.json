@@ -422,6 +422,12 @@
 				]
 			},
 			{
+				"action": "WebsiteInformation",
+				"shortcuts": [
+					"Ctrl+I"
+				]
+			},
+			{
 				"action": "Exit",
 				"shortcuts": [
 					"Ctrl+Q"
