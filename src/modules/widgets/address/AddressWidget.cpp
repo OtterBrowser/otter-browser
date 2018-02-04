@@ -32,7 +32,6 @@
 #include "../../../ui/Action.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsWidget.h"
-#include "../../../ui/ItemViewWidget.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
@@ -44,9 +43,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextDocument>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
-#include <QtWidgets/QStyleOptionFrame>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
