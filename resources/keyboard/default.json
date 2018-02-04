@@ -247,6 +247,12 @@
 				]
 			},
 			{
+				"action": "FastForward",
+				"shortcuts": [
+					"Space"
+				]
+			},
+			{
 				"action": "Print",
 				"shortcuts": [
 					"Ctrl+P"
