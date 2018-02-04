@@ -241,6 +241,12 @@
 				]
 			},
 			{
+				"action": "Rewind",
+				"shortcuts": [
+					"Shift+Z"
+				]
+			},
+			{
 				"action": "Print",
 				"shortcuts": [
 					"Ctrl+P"
