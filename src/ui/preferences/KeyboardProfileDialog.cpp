@@ -412,7 +412,7 @@ KeyboardProfileDialog::ValidationResult KeyboardProfileDialog::validateShortcut(
 	if (!messages.isEmpty())
 	{
 		result.text = messages.join(QLatin1Char('\n'));
-		result.icon = (ThemesManager::createIcon(result.isError ? QLatin1String("dialog-error") : QLatin1String("dialog-warning")));
+		result.icon = ThemesManager::createIcon(result.isError ? QLatin1String("dialog-error") : QLatin1String("dialog-warning"));
 	}
 
 	return result;
