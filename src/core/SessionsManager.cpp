@@ -374,26 +374,28 @@ QStringList SessionsManager::getClosedWindows()
 
 QStringList SessionsManager::getSessions()
 {
-	QStringList entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryList({QLatin1String("*.json")}, QDir::Files));
+	const QList<QFileInfo> entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryInfoList({QLatin1String("*.json")}, QDir::Files));
+	QStringList sessions;
+	sessions.reserve(entries.count());
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		entries[i] = QFileInfo(entries.at(i)).completeBaseName();
+		sessions.append(entries.at(i).completeBaseName());
 	}
 
 	if (!m_sessionPath.isEmpty() && !entries.contains(m_sessionPath))
 	{
-		entries.append(m_sessionPath);
+		sessions.append(m_sessionPath);
 	}
 
-	if (!entries.contains(QLatin1String("default")))
+	if (!sessions.contains(QLatin1String("default")))
 	{
-		entries.append(QLatin1String("default"));
+		sessions.append(QLatin1String("default"));
 	}
 
-	entries.sort();
+	sessions.sort();
 
-	return entries;
+	return sessions;
 }
 
 SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, Qt::KeyboardModifiers modifiers)
