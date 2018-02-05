@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -562,15 +562,15 @@ bool Migrator::run()
 
 	for (int i = 0; i < availableMigrations.count(); ++i)
 	{
-		if (!processedMigrations.contains(availableMigrations[i]->getName()))
+		if (!processedMigrations.contains(availableMigrations.at(i)->getName()))
 		{
-			if (availableMigrations[i]->needsMigration())
+			if (availableMigrations.at(i)->needsMigration())
 			{
-				possibleMigrations.append(availableMigrations[i]);
+				possibleMigrations.append(availableMigrations.at(i));
 			}
 			else
 			{
-				processedMigrations.append(availableMigrations[i]->getName());
+				processedMigrations.append(availableMigrations.at(i)->getName());
 			}
 		}
 	}
@@ -598,10 +598,10 @@ bool Migrator::run()
 
 	for (int i = 0; i < possibleMigrations.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations[i]->getTitle().toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("migrations", possibleMigrations.at(i)->getTitle().toUtf8().constData())));
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsSelectable);
 
-		if (possibleMigrations[i]->needsBackup())
+		if (possibleMigrations.at(i)->needsBackup())
 		{
 			needsBackup = true;
 		}
@@ -639,16 +639,16 @@ bool Migrator::run()
 	{
 		for (int i = 0; i < possibleMigrations.count(); ++i)
 		{
-			processedMigrations.append(possibleMigrations[i]->getName());
+			processedMigrations.append(possibleMigrations.at(i)->getName());
 
 			if (createBackupCheckBox->isChecked())
 			{
-				possibleMigrations[i]->createBackup();
+				possibleMigrations.at(i)->createBackup();
 			}
 
 			if (canProceed)
 			{
-				possibleMigrations[i]->migrate();
+				possibleMigrations.at(i)->migrate();
 			}
 		}
 	}
