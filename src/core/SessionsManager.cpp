@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -638,24 +638,29 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				windowObject.insert(QLatin1String("options"), optionsObject);
 			}
 
-			if (sessionEntry.windows.at(j).state.state == Qt::WindowMaximized)
+			switch (sessionEntry.windows.at(j).state.state)
 			{
-				windowObject.insert(QLatin1String("state"), QLatin1String("maximized"));
-			}
-			else if (sessionEntry.windows.at(j).state.state == Qt::WindowMinimized)
-			{
-				windowObject.insert(QLatin1String("state"), QLatin1String("minimized"));
-			}
-			else
-			{
-				const QRect geometry(sessionEntry.windows.at(j).state.geometry);
+				case Qt::WindowMaximized:
+					windowObject.insert(QLatin1String("state"), QLatin1String("maximized"));
 
-				windowObject.insert(QLatin1String("state"), QLatin1String("normal"));
+					break;
+				case Qt::WindowMinimized:
+					windowObject.insert(QLatin1String("state"), QLatin1String("minimized"));
 
-				if (geometry.isValid())
-				{
-					windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(geometry.x()).arg(geometry.y()).arg(geometry.width()).arg(geometry.height()));
-				}
+					break;
+				default:
+					{
+						const QRect geometry(sessionEntry.windows.at(j).state.geometry);
+
+						windowObject.insert(QLatin1String("state"), QLatin1String("normal"));
+
+						if (geometry.isValid())
+						{
+							windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(geometry.x()).arg(geometry.y()).arg(geometry.width()).arg(geometry.height()));
+						}
+					}
+
+					break;
 			}
 
 			if (sessionEntry.windows.at(j).isAlwaysOnTop)
