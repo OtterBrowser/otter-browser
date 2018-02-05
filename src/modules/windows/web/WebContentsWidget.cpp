@@ -50,7 +50,6 @@
 
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QInputDialog>
 
 namespace Otter
