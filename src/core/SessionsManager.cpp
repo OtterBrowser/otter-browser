@@ -680,7 +680,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				const QPoint position(sessionEntry.windows.at(j).history.at(k).position);
 				QJsonObject historyEntryObject({{QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url}, {QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title}, {QLatin1String("zoom"), sessionEntry.windows.at(j).history.at(k).zoom}});
 
-				if (position.x() != 0 || position.y() != 0)
+				if (!position.isNull())
 				{
 					historyEntryObject.insert(QLatin1String("position"), QStringLiteral("%1, %2").arg(position.x()).arg(position.y()));
 				}
