@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -100,23 +100,30 @@ void HandlersManager::setHandler(const QString &type, const HandlerDefinition &d
 
 	const QString path(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 	IniSettings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
-	QString transferMode(QLatin1String("ask"));
+	QString transferMode;
 
-	if (definition.transferMode == HandlerDefinition::IgnoreTransfer)
+	switch (definition.transferMode)
 	{
-		transferMode = QLatin1String("ignore");
-	}
-	else if (definition.transferMode == HandlerDefinition::OpenTransfer)
-	{
-		transferMode = QLatin1String("open");
-	}
-	else if (definition.transferMode == HandlerDefinition::SaveTransfer)
-	{
-		transferMode = QLatin1String("save");
-	}
-	else if (definition.transferMode == HandlerDefinition::SaveAsTransfer)
-	{
-		transferMode = QLatin1String("saveAs");
+		case HandlerDefinition::IgnoreTransfer:
+			transferMode = QLatin1String("ignore");
+
+			break;
+		case HandlerDefinition::OpenTransfer:
+			transferMode = QLatin1String("open");
+
+			break;
+		case HandlerDefinition::SaveTransfer:
+			transferMode = QLatin1String("save");
+
+			break;
+		case HandlerDefinition::SaveAsTransfer:
+			transferMode = QLatin1String("saveAs");
+
+			break;
+		default:
+			transferMode = QLatin1String("ask");
+
+			break;
 	}
 
 	settings.beginGroup(type);
