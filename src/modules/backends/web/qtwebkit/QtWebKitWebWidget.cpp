@@ -2318,11 +2318,11 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	m_page->history()->currentItem().setUserData(state);
 
 	const QWebHistory *history(m_page->history());
-	WindowHistoryInformation information;
-	information.index = history->currentItemIndex();
-
 	const QString requestedUrl(m_page->mainFrame()->requestedUrl().toString());
 	const int historyCount(history->count());
+	WindowHistoryInformation information;
+	information.entries.reserve(historyCount);
+	information.index = history->currentItemIndex();
 
 	for (int i = 0; i < historyCount; ++i)
 	{
