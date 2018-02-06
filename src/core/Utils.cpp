@@ -502,7 +502,7 @@ QUrl expandUrl(const QUrl &url)
 		return httpUrl;
 	}
 
-	if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
+	if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == QLatin1String("file")))
 	{
 		QUrl localUrl(url);
 		localUrl.setScheme(QLatin1String("file"));
