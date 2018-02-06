@@ -1171,11 +1171,11 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	QByteArray byteArray;
 	QDataStream stream(&byteArray, QIODevice::ReadWrite);
-	stream << int(3) << history.entries.count() << history.index;
+	stream << static_cast<int>(3) << history.entries.count() << history.index;
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		stream << QUrl(history.entries.at(i).url) << history.entries.at(i).title << QByteArray() << qint32(0) << false << QUrl() << qint32(0) << QUrl(history.entries.at(i).url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << int(200);
+		stream << QUrl(history.entries.at(i).url) << history.entries.at(i).title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(history.entries.at(i).url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << static_cast<int>(200);
 	}
 
 	stream.device()->reset();
