@@ -160,8 +160,8 @@ public:
 		QUrl imageUrl;
 		QUrl linkUrl;
 		QUrl mediaUrl;
-		QPoint position;
-		QRect geometry;
+		QPoint hitPosition;
+		QRect elementGeometry;
 		qreal playbackRate = 1;
 		HitTestFlags flags = NoFlagsTest;
 	};

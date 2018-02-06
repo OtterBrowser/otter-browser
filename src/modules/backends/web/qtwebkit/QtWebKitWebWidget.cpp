@@ -1047,7 +1047,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::BookmarkLinkAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 				const QString title(getCurrentHitTestResult().title);
 
 				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}}, parentWidget());
@@ -1108,7 +1108,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
 				const QUrl url(getCurrentHitTestResult().frameUrl);
-				QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 
 				if (hitResult.frame())
 				{
@@ -1174,7 +1174,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::CopyImageToClipboardAction:
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 
 				if (!hitResult.pixmap().isNull())
 				{
@@ -1207,7 +1207,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 				else
 				{
-					const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+					const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 					const QUrl url(getCurrentHitTestResult().imageUrl);
 					const QString src(hitResult.element().attribute(QLatin1String("src")));
 					NetworkCache *cache(NetworkManagerFactory::getCache());
@@ -1229,7 +1229,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ImagePropertiesAction:
 			{
 				QVariantMap properties({{QLatin1String("alternativeText"), getCurrentHitTestResult().alternateText}, {QLatin1String("longDescription"), getCurrentHitTestResult().longDescription}});
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 
 				if (!hitResult.pixmap().isNull())
 				{
@@ -1281,7 +1281,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::MediaPlaybackRateAction:
-			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element().evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
+			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element().evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
 			break;
 		case ActionsManager::GoBackAction:
@@ -1482,7 +1482,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::CheckSpellingAction:
 			{
-				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
+				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element());
 				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? QLatin1String("true") : QLatin1String("false")));
 
 				if (parameters.contains(QLatin1String("dictionary")))
@@ -1500,7 +1500,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::CreateSearchAction:
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 				QWebElement parentElement(hitResult.element().parent());
 
 				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
@@ -1982,7 +1982,7 @@ void QtWebKitWebWidget::setOption(int identifier, const QVariant &value)
 		case SettingsManager::Browser_SpellCheckDictionaryOption:
 			emit widgetActivated(this);
 
-			resetSpellCheck(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
+			resetSpellCheck(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element());
 
 			break;
 		default:
@@ -2370,8 +2370,8 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	result.imageUrl = nativeResult.imageUrl();
 	result.linkUrl = nativeResult.linkUrl();
 	result.mediaUrl = nativeResult.mediaUrl();
-	result.position = position;
-	result.geometry = nativeResult.element().geometry();
+	result.hitPosition = position;
+	result.elementGeometry = nativeResult.element().geometry();
 
 	QWebElement parentElement(nativeResult.element().parent());
 	const QString type(nativeResult.element().attribute(QLatin1String("type")).toLower());

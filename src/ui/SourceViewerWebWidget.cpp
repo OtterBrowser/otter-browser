@@ -514,7 +514,7 @@ WindowHistoryInformation SourceViewerWebWidget::getHistory() const
 WebWidget::HitTestResult SourceViewerWebWidget::getHitTestResult(const QPoint &position)
 {
 	HitTestResult result;
-	result.position = position;
+	result.hitPosition = position;
 	result.flags = HitTestResult::IsContentEditableTest;
 
 	if (m_sourceViewer->document()->isEmpty())
