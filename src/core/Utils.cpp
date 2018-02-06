@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -490,6 +490,27 @@ QString normalizePath(const QString &path)
 	}
 
 	return path;
+}
+
+QUrl expandUrl(const QUrl &url)
+{
+	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
+	{
+		QUrl httpUrl(url);
+		httpUrl.setScheme(QLatin1String("http"));
+
+		return httpUrl;
+	}
+
+	if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
+	{
+		QUrl localUrl(url);
+		localUrl.setScheme(QLatin1String("file"));
+
+		return localUrl;
+	}
+
+	return url;
 }
 
 QUrl normalizeUrl(QUrl url)

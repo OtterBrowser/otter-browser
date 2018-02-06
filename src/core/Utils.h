@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -103,6 +103,7 @@ QString formatDateTime(const QDateTime &dateTime, QString format = {}, bool allo
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
 QString formatFileTypes(const QStringList &filters = {});
 QString normalizePath(const QString &path);
+QUrl expandUrl(const QUrl &url);
 QUrl normalizeUrl(QUrl url);
 QLocale createLocale(const QString &name);
 QPixmap loadPixmapFromDataUri(const QString &data);
