@@ -1907,22 +1907,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 
 	m_isTyped = isTyped;
 
-	QUrl targetUrl(url);
-
-	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
-	{
-		QUrl httpUrl(url);
-		httpUrl.setScheme(QLatin1String("http"));
-
-		targetUrl = httpUrl;
-	}
-	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
-	{
-		QUrl localUrl(url);
-		localUrl.setScheme(QLatin1String("file"));
-
-		targetUrl = localUrl;
-	}
+	const QUrl targetUrl(Utils::expandUrl(url));
 
 	updateOptions(targetUrl);
 
