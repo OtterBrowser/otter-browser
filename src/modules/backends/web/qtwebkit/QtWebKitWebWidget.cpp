@@ -279,7 +279,7 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 
 		setZoom(state.value(ZoomEntryData, getZoom()).toInt());
 
-		if (m_page->mainFrame()->scrollPosition() == QPoint(0, 0))
+		if (m_page->mainFrame()->scrollPosition().isNull())
 		{
 			m_page->mainFrame()->setScrollPosition(state.value(PositionEntryData).toPoint());
 		}
