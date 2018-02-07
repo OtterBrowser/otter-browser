@@ -1459,8 +1459,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const QWebFrame *frame(m_page->currentFrame() ? m_page->currentFrame() : m_page->mainFrame());
 				const QWebElement element(frame->findFirstElement(QLatin1String(":focus")));
+				const QString tagName(element.tagName().toLower());
 
-				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
+				if (tagName == QLatin1String("textarea") || tagName == QLatin1String("input"))
 				{
 					m_page->triggerAction(QWebPage::MoveToPreviousChar);
 				}
