@@ -2370,12 +2370,13 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	result.hitPosition = position;
 	result.elementGeometry = nativeResult.element().geometry();
 
-	QWebElement parentElement(nativeResult.element().parent());
 	const QString type(nativeResult.element().attribute(QLatin1String("type")).toLower());
 	const bool isSubmit((result.tagName == QLatin1String("button") || result.tagName == QLatin1String("input")) && (type == QLatin1String("image") || type == QLatin1String("submit")));
 
 	if (isSubmit || result.tagName == QLatin1String("button") || result.tagName == QLatin1String("input") || result.tagName == QLatin1String("select") || result.tagName == QLatin1String("textarea"))
 	{
+		QWebElement parentElement(nativeResult.element().parent());
+
 		while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 		{
 			parentElement = parentElement.parent();
