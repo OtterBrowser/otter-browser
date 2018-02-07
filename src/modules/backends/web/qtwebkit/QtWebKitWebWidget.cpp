@@ -1894,27 +1894,24 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 	if (url.scheme() == QLatin1String("javascript"))
 	{
 		m_page->mainFrame()->documentElement().evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
-
-		return;
 	}
-
-	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
+	else if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
 		m_page->mainFrame()->scrollToAnchor(url.fragment());
-
-		return;
 	}
+	else
+	{
+		m_isTyped = isTyped;
 
-	m_isTyped = isTyped;
+		const QUrl targetUrl(Utils::expandUrl(url));
 
-	const QUrl targetUrl(Utils::expandUrl(url));
+		updateOptions(targetUrl);
 
-	updateOptions(targetUrl);
+		m_page->mainFrame()->load(targetUrl);
 
-	m_page->mainFrame()->load(targetUrl);
-
-	notifyTitleChanged();
-	notifyIconChanged();
+		notifyTitleChanged();
+		notifyIconChanged();
+	}
 }
 
 void QtWebKitWebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)

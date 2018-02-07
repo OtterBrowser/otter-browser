@@ -1222,11 +1222,8 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 	if (url.scheme() == QLatin1String("javascript"))
 	{
 		m_page->runJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
-
-		return;
 	}
-
-	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
+	else if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
 		m_page->runJavaScript(QStringLiteral("var element = document.querySelector('a[name=%1], [id=%1]'); if (element) { var geometry = element.getBoundingClientRect(); [(geometry.left + window.scrollX), (geometry.top + window.scrollY)]; }").arg(url.fragment()), [&](const QVariant &result)
 		{
@@ -1235,20 +1232,20 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 				setScrollPosition(QPoint(result.toList()[0].toInt(), result.toList()[1].toInt()));
 			}
 		});
-
-		return;
 	}
+	else
+	{
+		m_isTyped = isTyped;
 
-	m_isTyped = isTyped;
+		const QUrl targetUrl(Utils::expandUrl(url));
 
-	const QUrl targetUrl(Utils::expandUrl(url));
+		updateOptions(targetUrl);
 
-	updateOptions(targetUrl);
+		m_page->load(targetUrl);
 
-	m_page->load(targetUrl);
-
-	notifyTitleChanged();
-	notifyIconChanged();
+		notifyTitleChanged();
+		notifyIconChanged();
+	}
 }
 
 void QtWebEngineWebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
