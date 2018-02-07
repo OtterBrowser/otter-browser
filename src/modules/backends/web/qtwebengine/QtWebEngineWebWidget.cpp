@@ -807,12 +807,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 					SearchEnginePropertiesDialog dialog(searchEngine, keywords, this);
 
-					if (dialog.exec() == QDialog::Rejected)
+					if (dialog.exec() == QDialog::Accepted)
 					{
-						return;
+						SearchEnginesManager::addSearchEngine(dialog.getSearchEngine());
 					}
-
-					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine());
 				});
 
 				file.close();
