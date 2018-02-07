@@ -331,11 +331,12 @@ void QtWebKitWebWidget::muteAudio(QWebFrame *frame, bool isMuted)
 		return;
 	}
 
+	const QString script(QLatin1String("this.muted = ") + (isMuted ? QLatin1String("true") : QLatin1String("false")));
 	const QWebElementCollection elements(frame->findAllElements(QLatin1String("audio, video")));
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		elements.at(i).evaluateJavaScript(QLatin1String("this.muted = ") + (isMuted ? QLatin1String("true") : QLatin1String("false")));
+		elements.at(i).evaluateJavaScript(script);
 	}
 
 	const QList<QWebFrame*> frames(frame->childFrames());
