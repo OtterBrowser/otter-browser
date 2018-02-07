@@ -418,16 +418,14 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
 			const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
 
-			if (path.isEmpty())
+			if (!path.isEmpty())
 			{
-				return;
-			}
+				QImageWriter writer(path);
 
-			QImageWriter writer(path);
-
-			if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
-			{
-				Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), Console::OtherCategory, Console::ErrorLevel, path, -1, getWindowIdentifier());
+				if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
+				{
+					Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), Console::OtherCategory, Console::ErrorLevel, path, -1, getWindowIdentifier());
+				}
 			}
 
 			return;
