@@ -40,7 +40,6 @@
 #include <QtGui/QWheelEvent>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
