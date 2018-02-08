@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation type="unfinished"/>
+        <translation>Criando instância de ação obsoleta: %1</translation>
     </message>
 </context>
 <context>
@@ -2144,7 +2144,7 @@ Você quer salvá-las?</translation>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="194"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="268"/>
@@ -2427,7 +2427,7 @@ Você quer salvá-las?</translation>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="65"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Imagens (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="75"/>
@@ -3433,7 +3433,7 @@ Você quer continuar?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n bloqueados)</numerusform><numerusform>%1 (%n bloqueados)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -3855,12 +3855,12 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Preferências do Site da Web</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Procurar...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -4213,7 +4213,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="586"/>
         <source>Do you really want to remove preferences for this host?</source>
-        <translation type="unfinished"/>
+        <translation>Você realmente quer remover as preferências para este host?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="604"/>
@@ -5988,7 +5988,7 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz)</source>
-        <translation type="unfinished"/>
+        <translation>Imagens (*.png *.jpg *.bmp *.gif *.svg *.svgz)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
@@ -6248,7 +6248,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="305"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Novo...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="345"/>
@@ -6304,7 +6304,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="46"/>
         <source>Edit Bookmarks Bar</source>
-        <translation type="unfinished"/>
+        <translation>Editar Barra dos Favoritos</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
@@ -6314,7 +6314,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="55"/>
         <source>Edit Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Editar Barra Lateral</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
@@ -6439,7 +6439,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="461"/>
@@ -6569,7 +6569,7 @@ Endereço: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="651"/>
         <source>Downloads Progress Information</source>
-        <translation type="unfinished"/>
+        <translation>Informação do Progresso dos Downloads</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="656"/>
@@ -6861,7 +6861,8 @@ Você quer sobrescrevê-lo?
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="145"/>
         <source>This file is still being downloaded.
 Do you really want to remove it?</source>
-        <translation type="unfinished"/>
+        <translation>O arquivo ainda está sendo baixado.
+Você realmente quer removê-lo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="320"/>
@@ -6917,7 +6918,7 @@ Progresso: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="591"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
 </context>
 <context>
@@ -6926,7 +6927,8 @@ Progresso: %5&lt;/div&gt;</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="1066"/>
         <source>Download completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Download completado:
+%1</translation>
     </message>
 </context>
 <context>
@@ -7814,7 +7816,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="169"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Janelas e Abas</translation>
     </message>
 </context>
 <context>
@@ -8225,7 +8227,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Open Frame</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Frame</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
@@ -8267,7 +8269,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
@@ -8854,7 +8856,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
@@ -9385,42 +9387,42 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="930"/>
         <source>Open Image in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem Nesta Aba</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="934"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="942"/>
         <source>Open Image in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Janela</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="946"/>
         <source>Open Image in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Janela em 2º Plano</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="950"/>
         <source>Open Image in New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba Privada</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="954"/>
         <source>Open Image in New Private Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba Privada em 2º Plano</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="958"/>
         <source>Open Image in New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Janela Privada</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="962"/>
         <source>Open Image in New Private Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba Privada em 2º Plano</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1003"/>
@@ -9528,12 +9530,12 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="132"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Janelas e Abas</translation>
     </message>
 </context>
 <context>
@@ -9762,7 +9764,7 @@ ID do Aplicativo: %2</translation>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="363"/>
         <source>Search Engines</source>
-        <translation type="unfinished"/>
+        <translation>Engines de Busca</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="486"/>
@@ -9775,12 +9777,12 @@ ID do Aplicativo: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Download Completed</source>
-        <translation type="unfinished"/>
+        <translation>Download Completado</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>File download was completed</source>
-        <translation type="unfinished"/>
+        <translation>O download do arquivo foi completado</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>

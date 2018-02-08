@@ -9169,7 +9169,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="233"/>
         <source>Validate Using</source>
-        <translation>Перевірити використання</translation>
+        <translation>Перевірити за допомогою</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="239"/>
