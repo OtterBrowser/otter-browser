@@ -314,8 +314,8 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 
 	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
-		bool cancel(false);
-		bool warn(true);
+		bool shouldCancelRequest(false);
+		bool shouldWarnNextTime(true);
 
 		if (m_widget)
 		{
@@ -326,8 +326,8 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 
 			m_widget->showDialog(&dialog);
 
-			cancel = !dialog.isAccepted();
-			warn = !dialog.getCheckBoxState();
+			shouldCancelRequest = !dialog.isAccepted();
+			shouldWarnNextTime = !dialog.getCheckBoxState();
 		}
 		else
 		{
@@ -340,13 +340,13 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 			dialog.setDefaultButton(QMessageBox::Cancel);
 			dialog.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
-			cancel = (dialog.exec() == QMessageBox::Cancel);
-			warn = !dialog.checkBox()->isChecked();
+			shouldCancelRequest = (dialog.exec() == QMessageBox::Cancel);
+			shouldWarnNextTime = !dialog.checkBox()->isChecked();
 		}
 
-		SettingsManager::setOption(SettingsManager::Choices_WarnFormResendOption, warn);
+		SettingsManager::setOption(SettingsManager::Choices_WarnFormResendOption, shouldWarnNextTime);
 
-		if (cancel)
+		if (shouldCancelRequest)
 		{
 			return false;
 		}
