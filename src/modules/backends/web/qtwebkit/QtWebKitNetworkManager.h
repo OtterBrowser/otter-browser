@@ -33,7 +33,6 @@ namespace Otter
 
 class NetworkProxyFactory;
 class QtWebKitCookieJar;
-class QtWebKitWebWidget;
 class WebBackend;
 
 class QtWebKitNetworkManager final : public QNetworkAccessManager
