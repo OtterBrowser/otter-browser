@@ -23,10 +23,8 @@
 #define OTTER_QTWEBKITNETWORKMANAGER_H
 
 #include "QtWebKitWebWidget.h"
-#include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
-#include "../../../../core/Utils.h"
 
 #include <QtNetwork/QNetworkRequest>
 
