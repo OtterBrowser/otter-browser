@@ -248,7 +248,7 @@ void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine
 
 void QtWebKitWebWidget::print(QPrinter *printer)
 {
-	m_webView->print(printer);
+	m_page->mainFrame()->print(printer);
 }
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
