@@ -107,9 +107,10 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 
 void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
 {
-	Q_UNUSED(event)
-
-	updateLoadingSpeed();
+	if (event->timerId() == m_loadingSpeedTimer)
+	{
+		updateLoadingSpeed();
+	}
 }
 
 void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, NetworkManager::ResourceType resourceType)
