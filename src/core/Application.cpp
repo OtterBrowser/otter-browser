@@ -466,9 +466,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	if (updateCheckInterval > 0 && (lastUpdate.isNull() ? updateCheckInterval : lastUpdate.daysTo(QDate::currentDate())) >= updateCheckInterval && !SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
-		UpdateChecker *updateChecker(new UpdateChecker(this));
-
-		connect(updateChecker, &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
+		connect(new UpdateChecker(this), &UpdateChecker::finished, this, &Application::handleUpdateCheckResult);
 
 		if (!m_updateCheckTimer)
 		{
