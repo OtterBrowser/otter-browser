@@ -362,7 +362,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 				if (messageBox.clickedButton() == quitButton)
 				{
-					quit();
+					exit();
 
 					return;
 				}
