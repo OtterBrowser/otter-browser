@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -101,19 +101,16 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 	if (event->button() == Qt::LeftButton && m_buttonRectangle.contains(event->pos()))
 	{
 		QMenu menu(this);
-		const QAction *selectColorAction(menu.addAction(tr("Select Color…")));
-		const QAction *copyColorAction(menu.addAction(tr("Copy Color")));
 
-		menu.addSeparator();
-
-		const QAction *clearAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear")));
-
-		connect(selectColorAction, &QAction::triggered, this, &ColorWidget::selectColor);
-		connect(copyColorAction, &QAction::triggered, this, [&]()
+		connect(menu.addAction(tr("Select Color…")), &QAction::triggered, this, &ColorWidget::selectColor);
+		connect(menu.addAction(tr("Copy Color")), &QAction::triggered, this, [&]()
 		{
 			QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
 		});
-		connect(clearAction, &QAction::triggered, this, [&]()
+
+		menu.addSeparator();
+
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear")), &QAction::triggered, this, [&]()
 		{
 			setColor(QColor());
 		});
