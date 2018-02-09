@@ -355,8 +355,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 				messageBox.addButton(tr("Continue in Read-only Mode"), QMessageBox::YesRole);
 
-				QAbstractButton *ignoreButton(messageBox.addButton(tr("Ignore"), QMessageBox::ActionRole));
-				QAbstractButton *quitButton(messageBox.addButton(tr("Quit"), QMessageBox::RejectRole));
+				const QAbstractButton *ignoreButton(messageBox.addButton(tr("Ignore"), QMessageBox::ActionRole));
+				const QAbstractButton *quitButton(messageBox.addButton(tr("Quit"), QMessageBox::RejectRole));
 
 				messageBox.exec();
 
