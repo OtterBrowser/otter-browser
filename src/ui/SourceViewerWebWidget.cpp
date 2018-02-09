@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -304,7 +304,10 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 		showLineNumbersAction->setCheckable(true);
 		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
 
-		connect(showLineNumbersAction, &QAction::triggered, this, &SourceViewerWebWidget::setShowLineNumbers);
+		connect(showLineNumbersAction, &QAction::triggered, [&](bool show)
+		{
+			SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
+		});
 
 		menu.exec(menuPosition);
 	}
@@ -314,11 +317,6 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 		menu.load(QLatin1String("menu/webWidget.json"), {QLatin1String("edit"), QLatin1String("source")}, ActionExecutor::Object(this, this));
 		menu.exec(menuPosition);
 	}
-}
-
-void SourceViewerWebWidget::setShowLineNumbers(bool show)
-{
-	SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
 }
 
 void SourceViewerWebWidget::setOption(int identifier, const QVariant &value)
