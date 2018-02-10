@@ -534,6 +534,16 @@ int SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags 
 	return m_sourceViewer->findText(text, flags);
 }
 
+bool SourceViewerWebWidget::canRedo() const
+{
+	return m_sourceViewer->document()->isRedoAvailable();
+}
+
+bool SourceViewerWebWidget::canUndo() const
+{
+	return m_sourceViewer->document()->isUndoAvailable();
+}
+
 bool SourceViewerWebWidget::hasSelection() const
 {
 	return m_sourceViewer->textCursor().hasSelection();

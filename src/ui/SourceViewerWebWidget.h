@@ -50,6 +50,8 @@ public:
 	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
+	bool canRedo() const override;
+	bool canUndo() const override;
 	bool hasSelection() const override;
 	bool isPrivate() const override;
 
