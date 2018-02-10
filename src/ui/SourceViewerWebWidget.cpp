@@ -480,19 +480,15 @@ ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(in
 		case ActionsManager::FindPreviousAction:
 		case ActionsManager::QuickFindAction:
 		case ActionsManager::ActivateContentAction:
-			break;
+			return WebWidget::getActionState(identifier, parameters);
 		default:
-			{
-				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
-				state.isEnabled = false;
-
-				return state;
-			}
-
 			break;
 	}
 
-	return WebWidget::getActionState(identifier, parameters);
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
+	state.isEnabled = false;
+
+	return state;
 }
 
 WindowHistoryInformation SourceViewerWebWidget::getHistory() const
