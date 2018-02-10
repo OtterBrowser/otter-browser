@@ -46,8 +46,8 @@ protected:
 	void setup();
 
 protected slots:
-	void accepted();
-	void rejected();
+	void handleAccepted();
+	void handleRejected();
 
 private:
 	QUrl m_url;

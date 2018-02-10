@@ -34,8 +34,8 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 
 	setup();
 
-	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::accepted);
-	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::rejected);
+	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::handleAccepted);
+	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::handleRejected);
 }
 
 PermissionBarWidget::~PermissionBarWidget()
@@ -111,7 +111,7 @@ void PermissionBarWidget::setup()
 	}
 }
 
-void PermissionBarWidget::accepted()
+void PermissionBarWidget::handleAccepted()
 {
 	hide();
 
@@ -125,7 +125,7 @@ void PermissionBarWidget::accepted()
 	}
 }
 
-void PermissionBarWidget::rejected()
+void PermissionBarWidget::handleRejected()
 {
 	hide();
 
