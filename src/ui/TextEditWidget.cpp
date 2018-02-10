@@ -180,7 +180,8 @@ void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::ClearAllAction:
 			if (!isReadOnly())
 			{
-				clear();
+				selectAll();
+				textCursor().removeSelectedText();
 			}
 
 			break;
