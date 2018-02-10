@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,36 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 	m_feature(feature),
 	m_ui(new Ui::PermissionBarWidget)
 {
-	const QString domain(Utils::extractHost(url));
-
 	m_ui->setupUi(this);
 
-	switch (feature)
+	setup();
+
+	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::accepted);
+	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::rejected);
+}
+
+PermissionBarWidget::~PermissionBarWidget()
+{
+	delete m_ui;
+}
+
+void PermissionBarWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+
+		setup();
+	}
+}
+
+void PermissionBarWidget::setup()
+{
+	const QString domain(Utils::extractHost(m_url));
+
+	switch (m_feature)
 	{
 		case WebWidget::FullScreenFeature:
 			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
@@ -83,24 +108,6 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 			m_ui->okButton->hide();
 
 			break;
-	}
-
-	connect(m_ui->okButton, &QToolButton::clicked, this, &PermissionBarWidget::accepted);
-	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PermissionBarWidget::rejected);
-}
-
-PermissionBarWidget::~PermissionBarWidget()
-{
-	delete m_ui;
-}
-
-void PermissionBarWidget::changeEvent(QEvent *event)
-{
-	QWidget::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
 	}
 }
 
