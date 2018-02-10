@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ namespace Otter
 PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation &password, bool isUpdate, QWidget *parent) : QWidget(parent),
 	m_created(QDateTime::currentDateTime()),
 	m_password(password),
+	m_isUpdate(isUpdate),
 	m_ui(new Ui::PasswordBarWidget)
 {
 	m_ui->setupUi(this);
@@ -51,6 +52,7 @@ void PasswordBarWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->messageLabel->setText((m_isUpdate ? tr("Do you want to update login data for %1?") : tr("Do you want to save login data for %1?")).arg(Utils::extractHost(m_password.url)));
 	}
 }
 
