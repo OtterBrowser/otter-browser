@@ -47,8 +47,8 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void accepted();
-	void rejected();
+	void handleAccepted();
+	void handleRejected();
 
 private:
 	QDateTime m_created;

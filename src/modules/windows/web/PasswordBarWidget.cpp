@@ -36,8 +36,8 @@ PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation
 	m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
 	m_ui->messageLabel->setText((isUpdate ? tr("Do you want to update login data for %1?") : tr("Do you want to save login data for %1?")).arg(Utils::extractHost(password.url)));
 
-	connect(m_ui->okButton, &QToolButton::clicked, this, &PasswordBarWidget::accepted);
-	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PasswordBarWidget::rejected);
+	connect(m_ui->okButton, &QToolButton::clicked, this, &PasswordBarWidget::handleAccepted);
+	connect(m_ui->cancelButton, &QToolButton::clicked, this, &PasswordBarWidget::handleRejected);
 }
 
 PasswordBarWidget::~PasswordBarWidget()
@@ -56,7 +56,7 @@ void PasswordBarWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PasswordBarWidget::accepted()
+void PasswordBarWidget::handleAccepted()
 {
 	hide();
 
@@ -65,7 +65,7 @@ void PasswordBarWidget::accepted()
 	PasswordsManager::addPassword(m_password);
 }
 
-void PasswordBarWidget::rejected()
+void PasswordBarWidget::handleRejected()
 {
 	hide();
 
