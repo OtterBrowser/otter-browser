@@ -177,7 +177,7 @@ signals:
 	void toolBarModified(int identifier);
 	void toolBarMoved(int identifier);
 	void toolBarRemoved(int identifier);
-	void toolBarsLockedChanged(bool locked);
+	void toolBarsLockedChanged(bool areLocked);
 };
 
 }
