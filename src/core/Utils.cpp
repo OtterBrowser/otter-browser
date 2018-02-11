@@ -494,7 +494,7 @@ QString normalizePath(const QString &path)
 
 QUrl expandUrl(const QUrl &url)
 {
-	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
+	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith(QLatin1Char('/')))
 	{
 		QUrl httpUrl(url);
 		httpUrl.setScheme(QLatin1String("http"));
