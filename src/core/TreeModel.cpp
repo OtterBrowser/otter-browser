@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -135,14 +135,17 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
 QVariantList TreeModel::getAllData(int role, int column, const QModelIndex &parent) const
 {
 	QVariantList data;
+	const int rowAmount(rowCount(parent));
 
-	for (int i = 0; i < rowCount(parent); ++i)
+	for (int i = 0; i < rowAmount; ++i)
 	{
 		const QModelIndex rowIndex(index(i, 0, parent));
 
 		if (column < 0)
 		{
-			for (int j = 0; j < columnCount(rowIndex); ++j)
+			const int columnAmount(columnCount(rowIndex));
+
+			for (int j = 0; j < columnAmount; ++j)
 			{
 				const QVariant value(index(i, j, parent).data(role));
 
