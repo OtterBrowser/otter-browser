@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "TreeModel.h"
-#include "ThemesManager.h"
 
 #include <QtCore/QMimeData>
 
