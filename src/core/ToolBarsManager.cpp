@@ -327,7 +327,7 @@ void ToolBarsManager::addToolBar(ToolBarsManager::ToolBarType type)
 	switch (type)
 	{
 		case BookmarksBarType:
-			definition.bookmarksPath = QLatin1String("/");
+			definition.bookmarksPath = QLatin1Char('/');
 
 			break;
 		case SideBarType:
