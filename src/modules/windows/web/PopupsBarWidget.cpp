@@ -137,16 +137,14 @@ void PopupsBarWidget::populateMenu()
 	}
 
 	connect(menu, &QMenu::aboutToHide, actionGroup, &QActionGroup::deleteLater);
-	connect(actionGroup, &QActionGroup::triggered, this, &PopupsBarWidget::setPolicy);
 	connect(popupsMenu, &QMenu::triggered, this, &PopupsBarWidget::openUrl);
-}
-
-void PopupsBarWidget::setPolicy(QAction *action)
-{
-	if (action)
+	connect(actionGroup, &QActionGroup::triggered, [&](QAction *action)
 	{
-		SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), Utils::extractHost(m_parentUrl));
-	}
+		if (action)
+		{
+			SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), Utils::extractHost(m_parentUrl));
+		}
+	});
 }
 
 }

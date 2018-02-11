@@ -47,7 +47,6 @@ protected:
 protected slots:
 	void openUrl(QAction *action);
 	void populateMenu();
-	void setPolicy(QAction *action);
 
 private:
 	QUrl m_parentUrl;
