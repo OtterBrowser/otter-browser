@@ -59,6 +59,7 @@ void PopupsBarWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", m_popupUrls.count()).arg(Utils::extractHost(m_parentUrl)));
 	}
 }
 
