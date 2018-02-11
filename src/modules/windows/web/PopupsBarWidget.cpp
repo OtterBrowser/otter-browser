@@ -95,34 +95,22 @@ void PopupsBarWidget::openUrl(QAction *action)
 
 void PopupsBarWidget::populateMenu()
 {
-	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, Utils::extractHost(m_parentUrl)).toString());
 	QMenu *menu(m_ui->detailsButton->menu());
-	QAction *openAllAction(menu->addAction(tr("Open All Pop-Ups from This Website")));
-	openAllAction->setCheckable(true);
-	openAllAction->setChecked(popupsPolicy == QLatin1String("openAll"));
-	openAllAction->setData(QLatin1String("openAll"));
-
-	QAction *openAllInBackgroundAction(menu->addAction(tr("Open Pop-Ups from This Website in Background")));
-	openAllInBackgroundAction->setCheckable(true);
-	openAllInBackgroundAction->setChecked(popupsPolicy == QLatin1String("openAllInBackground"));
-	openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
-
-	QAction *blockAllAction(menu->addAction(tr("Block All Pop-Ups from This Website")));
-	blockAllAction->setCheckable(true);
-	blockAllAction->setChecked(popupsPolicy == QLatin1String("blockAll"));
-	blockAllAction->setData(QLatin1String("blockAll"));
-
-	QAction *askAction(menu->addAction(tr("Always Ask What to Do for This Website")));
-	askAction->setCheckable(true);
-	askAction->setChecked(popupsPolicy == QLatin1String("ask"));
-	askAction->setData(QLatin1String("ask"));
-
 	QActionGroup *actionGroup(new QActionGroup(this));
 	actionGroup->setExclusive(true);
-	actionGroup->addAction(openAllAction);
-	actionGroup->addAction(openAllInBackgroundAction);
-	actionGroup->addAction(blockAllAction);
-	actionGroup->addAction(askAction);
+
+	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, Utils::extractHost(m_parentUrl)).toString());
+	const QVector<QPair<QString, QString> > policies({{QLatin1String("openAll"), tr("Open All Pop-Ups from This Website")}, {QLatin1String("openAllInBackground"), tr("Open Pop-Ups from This Website in Background")}, {QLatin1String("blockAll"), tr("Block All Pop-Ups from This Website")}, {QLatin1String("ask"), tr("Always Ask What to Do for This Website")}});
+
+	for (int i = 0; i < policies.count(); ++i)
+	{
+		QAction *action(menu->addAction(policies.at(i).second));
+		action->setCheckable(true);
+		action->setChecked(popupsPolicy == policies.at(i).first);
+		action->setData(policies.at(i).first);
+
+		actionGroup->addAction(action);
+	}
 
 	menu->addSeparator();
 
