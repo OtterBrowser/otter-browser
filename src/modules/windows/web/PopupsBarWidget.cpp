@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,6 @@ namespace Otter
 {
 
 PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget *parent) : QWidget(parent),
-	m_popupsMenu(nullptr),
-	m_popupsGroup(new QActionGroup(this)),
 	m_parentUrl(parentUrl),
 	m_isPrivate(isPrivate),
 	m_ui(new Ui::PopupsBarWidget)
@@ -44,40 +42,9 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget 
 	m_ui->detailsButton->setMenu(menu);
 	m_ui->detailsButton->setPopupMode(QToolButton::InstantPopup);
 
-	QAction *openAllAction(menu->addAction(tr("Open All Pop-Ups from This Website")));
-	openAllAction->setCheckable(true);
-	openAllAction->setData(QLatin1String("openAll"));
-
-	QAction *openAllInBackgroundAction(menu->addAction(tr("Open Pop-Ups from This Website in Background")));
-	openAllInBackgroundAction->setCheckable(true);
-	openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
-
-	QAction *blockAllAction(menu->addAction(tr("Block All Pop-Ups from This Website")));
-	blockAllAction->setCheckable(true);
-	blockAllAction->setData(QLatin1String("blockAll"));
-
-	QAction *askAction(menu->addAction(tr("Always Ask What to Do for This Website")));
-	askAction->setCheckable(true);
-	askAction->setData(QLatin1String("ask"));
-
-	m_popupsGroup->setExclusive(true);
-	m_popupsGroup->addAction(openAllAction);
-	m_popupsGroup->addAction(openAllInBackgroundAction);
-	m_popupsGroup->addAction(blockAllAction);
-	m_popupsGroup->addAction(askAction);
-
-	menu->addSeparator();
-
-	m_popupsMenu = menu->addMenu(tr("Blocked Pop-ups"));
-	m_popupsMenu->addAction(tr("Open All"));
-	m_popupsMenu->addSeparator();
-
-	handleOptionChanged(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
-
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &PopupsBarWidget::handleOptionChanged);
-	connect(m_popupsGroup, &QActionGroup::triggered, this, &PopupsBarWidget::setPolicy);
-	connect(m_popupsMenu, &QMenu::triggered, this, &PopupsBarWidget::openUrl);
 	connect(m_ui->closeButton, &QToolButton::clicked, this, &PopupsBarWidget::requestedClose);
+	connect(menu, &QMenu::aboutToShow, this, &PopupsBarWidget::populateMenu);
+	connect(menu, &QMenu::aboutToHide, menu, &QMenu::clear);
 }
 
 PopupsBarWidget::~PopupsBarWidget()
@@ -97,10 +64,9 @@ void PopupsBarWidget::changeEvent(QEvent *event)
 
 void PopupsBarWidget::addPopup(const QUrl &url)
 {
-	QAction *action(m_popupsMenu->addAction(QString("%1").arg(fontMetrics().elidedText(url.url(), Qt::ElideMiddle, 256))));
-	action->setData(url.url());
+	m_popupUrls.append(url);
 
-	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", (m_popupsMenu->actions().count() - 2)).arg(Utils::extractHost(m_parentUrl)));
+	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", m_popupUrls.count()).arg(Utils::extractHost(m_parentUrl)));
 }
 
 void PopupsBarWidget::openUrl(QAction *action)
@@ -116,38 +82,63 @@ void PopupsBarWidget::openUrl(QAction *action)
 
 	if (action->data().isNull())
 	{
-		for (int i = 0; i < m_popupsMenu->actions().count(); ++i)
+		for (int i = 0; i < m_popupUrls.count(); ++i)
 		{
-			const QUrl url(m_popupsMenu->actions().at(i)->data().toUrl());
-
-			if (!url.isEmpty())
-			{
-				mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}});
-			}
+			mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), m_popupUrls.at(i)}, {QLatin1String("hints"), QVariant(hints)}});
 		}
-
-		return;
 	}
-
-	mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), action->data().toUrl()}, {QLatin1String("hints"), QVariant(hints)}});
+	else
+	{
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), action->data().toUrl()}, {QLatin1String("hints"), QVariant(hints)}});
+	}
 }
 
-void PopupsBarWidget::handleOptionChanged(int identifier)
+void PopupsBarWidget::populateMenu()
 {
-	if (identifier == SettingsManager::Permissions_ScriptsCanOpenWindowsOption)
+	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, Utils::extractHost(m_parentUrl)).toString());
+	QMenu *menu(m_ui->detailsButton->menu());
+	QAction *openAllAction(menu->addAction(tr("Open All Pop-Ups from This Website")));
+	openAllAction->setCheckable(true);
+	openAllAction->setChecked(popupsPolicy == QLatin1String("openAll"));
+	openAllAction->setData(QLatin1String("openAll"));
+
+	QAction *openAllInBackgroundAction(menu->addAction(tr("Open Pop-Ups from This Website in Background")));
+	openAllInBackgroundAction->setCheckable(true);
+	openAllInBackgroundAction->setChecked(popupsPolicy == QLatin1String("openAllInBackground"));
+	openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
+
+	QAction *blockAllAction(menu->addAction(tr("Block All Pop-Ups from This Website")));
+	blockAllAction->setCheckable(true);
+	blockAllAction->setChecked(popupsPolicy == QLatin1String("blockAll"));
+	blockAllAction->setData(QLatin1String("blockAll"));
+
+	QAction *askAction(menu->addAction(tr("Always Ask What to Do for This Website")));
+	askAction->setCheckable(true);
+	askAction->setChecked(popupsPolicy == QLatin1String("ask"));
+	askAction->setData(QLatin1String("ask"));
+
+	QActionGroup *actionGroup(new QActionGroup(this));
+	actionGroup->setExclusive(true);
+	actionGroup->addAction(openAllAction);
+	actionGroup->addAction(openAllInBackgroundAction);
+	actionGroup->addAction(blockAllAction);
+	actionGroup->addAction(askAction);
+
+	menu->addSeparator();
+
+	QMenu *popupsMenu(menu->addMenu(tr("Blocked Pop-ups")));
+	popupsMenu->addAction(tr("Open All"));
+	popupsMenu->addSeparator();
+
+	for (int i = 0; i < m_popupUrls.count(); ++i)
 	{
-		const QString popupsPolicy(SettingsManager::getOption(identifier, Utils::extractHost(m_parentUrl)).toString());
-
-		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
-		{
-			if (popupsPolicy == m_popupsGroup->actions().at(i)->data().toString())
-			{
-				m_popupsGroup->actions().at(i)->setChecked(true);
-
-				break;
-			}
-		}
+		QAction *action(popupsMenu->addAction(Utils::elideText(m_popupUrls.at(i).url(), nullptr, 300)));
+		action->setData(m_popupUrls.at(i).url());
 	}
+
+	connect(menu, &QMenu::aboutToHide, actionGroup, &QActionGroup::deleteLater);
+	connect(actionGroup, &QActionGroup::triggered, this, &PopupsBarWidget::setPolicy);
+	connect(popupsMenu, &QMenu::triggered, this, &PopupsBarWidget::openUrl);
 }
 
 void PopupsBarWidget::setPolicy(QAction *action)
