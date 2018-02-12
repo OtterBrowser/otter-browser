@@ -310,7 +310,10 @@ void Window::requestClose()
 
 		emit aboutToClose();
 
-		QTimer::singleShot(50, this, &Window::notifyRequestedCloseWindow);
+		QTimer::singleShot(50, this, [&]()
+		{
+			emit requestedCloseWindow(this);
+		});
 	}
 }
 
@@ -407,11 +410,6 @@ void Window::handleToolBarStateChanged(int identifier, const ToolBarState &state
 	{
 		m_addressBar->setState(state);
 	}
-}
-
-void Window::notifyRequestedCloseWindow()
-{
-	emit requestedCloseWindow(this);
 }
 
 void Window::updateNavigationBar()
