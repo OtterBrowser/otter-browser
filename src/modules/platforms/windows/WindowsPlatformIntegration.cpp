@@ -32,7 +32,6 @@
 
 #include <windows.h>
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QMimeData>
 #include <QtCore/QTemporaryDir>
