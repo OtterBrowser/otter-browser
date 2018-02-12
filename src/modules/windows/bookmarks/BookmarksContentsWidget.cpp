@@ -19,7 +19,6 @@
 
 #include "BookmarksContentsWidget.h"
 #include "../../../core/Application.h"
-#include "../../../core/SessionModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
