@@ -334,21 +334,25 @@ void MacPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title
 
 void MacPlatformIntegration::updateTransfersProgress()
 {
-	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
 	int transferAmount(0);
 
-	for (int i = 0; i < transfers.count(); ++i)
+	if (TransfersManager::hasRunningTransfers())
 	{
-		const Transfer *transfer(transfers.at(i));
+		const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 
-		if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
+		for (int i = 0; i < transfers.count(); ++i)
 		{
-			++transferAmount;
+			const Transfer *transfer(transfers.at(i));
 
-			bytesTotal += transfer->getBytesTotal();
-			bytesReceived += transfer->getBytesReceived();
+			if (transfer->getState() == Transfer::RunningState && transfer->getBytesTotal() > 0)
+			{
+				++transferAmount;
+
+				bytesTotal += transfer->getBytesTotal();
+				bytesReceived += transfer->getBytesReceived();
+			}
 		}
 	}
 
