@@ -150,12 +150,14 @@ public:
 	static QVector<Transfer*> getTransfers();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
 	static bool isDownloading(const QString &source, const QString &target = {});
+	static bool hasRunningTransfers();
 
 protected:
 	explicit TransfersManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();
+	void updateRunningTransfersState();
 
 protected slots:
 	void save();
@@ -171,6 +173,7 @@ private:
 	static QVector<Transfer*> m_transfers;
 	static QVector<Transfer*> m_privateTransfers;
 	static bool m_isInitilized;
+	static bool m_hasRunningTransfers;
 
 signals:
 	void transferStarted(Transfer *transfer);

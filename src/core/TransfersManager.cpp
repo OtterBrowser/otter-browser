@@ -42,6 +42,7 @@ TransfersManager* TransfersManager::m_instance(nullptr);
 QVector<Transfer*> TransfersManager::m_transfers;
 QVector<Transfer*> TransfersManager::m_privateTransfers;
 bool TransfersManager::m_isInitilized(false);
+bool TransfersManager::m_hasRunningTransfers(false);
 
 Transfer::Transfer(TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(nullptr),
@@ -1005,6 +1006,23 @@ void TransfersManager::scheduleSave()
 	}
 }
 
+void TransfersManager::updateRunningTransfersState()
+{
+	bool hasRunningTransfers(false);
+
+	for (int i = 0; i < m_transfers.count(); ++i)
+	{
+		if (m_transfers.at(i)->getState() == Transfer::RunningState)
+		{
+			hasRunningTransfers = true;
+
+			break;
+		}
+	}
+
+	m_hasRunningTransfers = hasRunningTransfers;
+}
+
 void TransfersManager::addTransfer(Transfer *transfer)
 {
 	m_transfers.append(transfer);
@@ -1082,6 +1100,11 @@ void TransfersManager::handleTransferStarted()
 
 	if (transfer && transfer->getState() != Transfer::CancelledState)
 	{
+		if (transfer->getState() == Transfer::RunningState)
+		{
+			m_hasRunningTransfers = true;
+		}
+
 		emit transferStarted(transfer);
 
 		scheduleSave();
@@ -1091,6 +1114,8 @@ void TransfersManager::handleTransferStarted()
 void TransfersManager::handleTransferFinished()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
+
+	updateRunningTransfersState();
 
 	if (transfer)
 	{
@@ -1123,6 +1148,8 @@ void TransfersManager::handleTransferChanged()
 void TransfersManager::handleTransferStopped()
 {
 	Transfer *transfer(qobject_cast<Transfer*>(sender()));
+
+	updateRunningTransfersState();
 
 	if (transfer)
 	{
@@ -1273,6 +1300,11 @@ bool TransfersManager::isDownloading(const QString &source, const QString &targe
 	}
 
 	return false;
+}
+
+bool TransfersManager::hasRunningTransfers()
+{
+	return m_hasRunningTransfers;
 }
 
 }
