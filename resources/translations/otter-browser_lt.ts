@@ -117,12 +117,12 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="107"/>
         <source>Move Up</source>
-        <translation>Perkelti aukštyn</translation>
+        <translation>Pakelti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="133"/>
         <source>Move Down</source>
-        <translation>Nuleisti žemyn</translation>
+        <translation>Nuleisti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
@@ -3950,14 +3950,14 @@ Ar norite tęsti?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1294"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1447"/>
         <source>Move Up</source>
-        <translation>Perkelti aukščiau</translation>
+        <translation>Pakelti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1077"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1320"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1473"/>
         <source>Move Down</source>
-        <translation>Nuleisti žemiau</translation>
+        <translation>Nuleisti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1100"/>
@@ -4823,12 +4823,12 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="121"/>
         <source>Move Up</source>
-        <translation>Perkelti aukščiau</translation>
+        <translation>Pakelti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="147"/>
         <source>Move Down</source>
-        <translation>Nuleisti žemiau</translation>
+        <translation>Nuleisti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="160"/>
