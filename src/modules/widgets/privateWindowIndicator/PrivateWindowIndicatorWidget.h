@@ -36,6 +36,7 @@ public:
 	QSize sizeHint() const override;
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 

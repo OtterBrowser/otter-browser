@@ -40,6 +40,16 @@ PrivateWindowIndicatorWidget::PrivateWindowIndicatorWidget(const ToolBarsManager
 	m_isHidden = (mainWindow && !mainWindow->isPrivate());
 }
 
+void PrivateWindowIndicatorWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setText(getOptions().value(QLatin1String("text"), tr("Private Window")).toString());
+	}
+}
+
 void PrivateWindowIndicatorWidget::mousePressEvent(QMouseEvent *event)
 {
 	event->ignore();
