@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ PanelChooserWidget::PanelChooserWidget(const ToolBarsManager::ToolBarDefinition:
 	updateText();
 
 	connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &PanelChooserWidget::handleToolBarModified);
-	connect(menu(), &QMenu::aboutToShow, this, &PanelChooserWidget::updateMenu);
+	connect(menu(), &QMenu::aboutToShow, this, &PanelChooserWidget::populateMenu);
 	connect(menu(), &QMenu::triggered, this, &PanelChooserWidget::selectPanel);
 }
 
@@ -45,6 +45,23 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		updateText();
+	}
+}
+
+void PanelChooserWidget::populateMenu()
+{
+	menu()->clear();
+
+	const int identifier(getSideBarIdentifier());
+
+	if (identifier >= 0)
+	{
+		const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
+
+		for (int i = 0; i < panels.count(); ++i)
+		{
+			menu()->addAction(SidebarWidget::getPanelTitle(panels.at(i)))->setData(panels.at(i));
+		}
 	}
 }
 
@@ -66,23 +83,6 @@ void PanelChooserWidget::handleToolBarModified(int identifier)
 	if (identifier == getSideBarIdentifier())
 	{
 		updateText();
-	}
-}
-
-void PanelChooserWidget::updateMenu()
-{
-	menu()->clear();
-
-	const int identifier(getSideBarIdentifier());
-
-	if (identifier >= 0)
-	{
-		const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
-
-		for (int i = 0; i < panels.count(); ++i)
-		{
-			menu()->addAction(SidebarWidget::getPanelTitle(panels.at(i)))->setData(panels.at(i));
-		}
 	}
 }
 
