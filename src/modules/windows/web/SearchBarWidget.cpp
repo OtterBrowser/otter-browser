@@ -122,7 +122,7 @@ void SearchBarWidget::setVisible(bool visible)
 void SearchBarWidget::setMatchesAmount(int matchesAmount)
 {
 	QPalette palette(this->palette());
-	const bool hasMatches(matchesAmount > 0);
+	const bool hasMatches(matchesAmount != 0);
 
 	if (!m_ui->queryLineEditWidget->text().isEmpty())
 	{
