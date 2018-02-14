@@ -32,6 +32,7 @@
 #include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QScrollBar>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -343,7 +344,8 @@ void SourceViewerWebWidget::setOptions(const QHash<int, QVariant> &options, cons
 
 void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
 {
-	Q_UNUSED(position)
+	m_sourceViewer->horizontalScrollBar()->setValue(position.x());
+	m_sourceViewer->verticalScrollBar()->setValue(position.y());
 }
 
 void SourceViewerWebWidget::setHistory(const WindowHistoryInformation &history)
