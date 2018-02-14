@@ -401,18 +401,15 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 		codec = QTextCodec::codecForHtml(contents);
 	}
 
-	QString text;
-
 	if (codec)
 	{
-		text = codec->toUnicode(contents);
+		m_sourceViewer->setPlainText(codec->toUnicode(contents));
 	}
 	else
 	{
-		text = QString(contents);
+		m_sourceViewer->setPlainText(QString(contents));
 	}
 
-	m_sourceViewer->setPlainText(text);
 	m_sourceViewer->document()->setModified(false);
 }
 
