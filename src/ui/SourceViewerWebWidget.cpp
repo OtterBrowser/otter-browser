@@ -446,7 +446,7 @@ QIcon SourceViewerWebWidget::getIcon() const
 
 QPoint SourceViewerWebWidget::getScrollPosition() const
 {
-	return {};
+	return {m_sourceViewer->horizontalScrollBar()->value(), m_sourceViewer->verticalScrollBar()->value()};
 }
 
 ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(int identifier, const QVariantMap &parameters) const
