@@ -49,11 +49,13 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 		return;
 	}
 
-	QList<QNetworkCookie> allCookies;
 	QDataStream stream(&file);
 	quint32 amount;
 
 	stream >> amount;
+
+	QList<QNetworkCookie> allCookies;
+	allCookies.reserve(amount);
 
 	for (quint32 i = 0; i < amount; ++i)
 	{
