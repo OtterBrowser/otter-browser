@@ -129,6 +129,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+				request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
 				if (!m_networkManager)
 				{
@@ -163,6 +164,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+				request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
 				m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
 
