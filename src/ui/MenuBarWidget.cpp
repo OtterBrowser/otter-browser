@@ -21,7 +21,6 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
-#include "../core/ActionsManager.h"
 #include "../core/SessionsManager.h"
 
 #include <QtCore/QFile>
