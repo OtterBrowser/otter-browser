@@ -22,7 +22,6 @@
 #ifndef OTTER_WINDOW_H
 #define OTTER_WINDOW_H
 
-#include "ContentsWidget.h"
 #include "ToolBarWidget.h"
 #include "WebWidget.h"
 #include "../core/SessionsManager.h"
@@ -35,7 +34,6 @@ namespace Otter
 {
 
 class AddressWidget;
-class BookmarksItem;
 class ContentsWidget;
 class SearchWidget;
 

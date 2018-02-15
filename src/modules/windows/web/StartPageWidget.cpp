@@ -31,6 +31,7 @@
 #include "../../../ui/Animation.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsDialog.h"
+#include "../../../ui/ContentsWidget.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/Window.h"
