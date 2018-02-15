@@ -651,8 +651,11 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						else
 						{
 							QMenu menu;
+							QAction *addBookmarkAction(menu.addAction(tr("Add to Bookmarks")));
+							addBookmarkAction->setShortcut(ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction));
+							addBookmarkAction->setShortcutContext(Qt::WidgetShortcut);
 
-							connect(menu.addAction(tr("Add to Bookmarks")), &QAction::triggered, [&]()
+							connect(addBookmarkAction, &QAction::triggered, [&]()
 							{
 								if (m_window)
 								{
