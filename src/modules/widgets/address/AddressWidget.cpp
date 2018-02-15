@@ -651,22 +651,20 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						else
 						{
 							QMenu menu;
-							menu.addAction(tr("Add to Bookmarks"));
-							menu.addAction(tr("Add to Start Page"))->setData(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption));
 
-							connect(&menu, &QMenu::triggered, this, [&](QAction *action)
+							connect(menu.addAction(tr("Add to Bookmarks")), &QAction::triggered, [&]()
 							{
-								if (action && m_window)
+								if (m_window)
 								{
-									if (action->data().isNull())
-									{
-										BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), (m_window->getContentsWidget() ? m_window->getContentsWidget()->getDescription() : QString()), nullptr, -1, true, this);
-										dialog.exec();
-									}
-									else
-									{
-										BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl().adjusted(QUrl::RemovePassword)}, {BookmarksModel::TitleRole, m_window->getTitle()}}, BookmarksManager::getModel()->getItem(action->data().toString()));
-									}
+									BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), (m_window->getContentsWidget() ? m_window->getContentsWidget()->getDescription() : QString()), nullptr, -1, true, this);
+									dialog.exec();
+								}
+							});
+							connect(menu.addAction(tr("Add to Start Page")), &QAction::triggered, [&]()
+							{
+								if (m_window)
+								{
+									BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl().adjusted(QUrl::RemovePassword)}, {BookmarksModel::TitleRole, m_window->getTitle()}}, BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString()));
 								}
 							});
 
