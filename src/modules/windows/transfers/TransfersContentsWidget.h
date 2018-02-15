@@ -20,7 +20,6 @@
 #ifndef OTTER_TRANSFERSCONTENTSWIDGET_H
 #define OTTER_TRANSFERSCONTENTSWIDGET_H
 
-#include "../../../core/TransfersManager.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/ItemDelegate.h"
 
@@ -34,6 +33,7 @@ namespace Ui
 	class TransfersContentsWidget;
 }
 
+class Transfer;
 class Window;
 
 class ProgressBarDelegate final : public ItemDelegate
