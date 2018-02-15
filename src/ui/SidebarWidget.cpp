@@ -396,7 +396,7 @@ void SidebarWidget::updatePanels()
 		action->setCheckable(true);
 		action->setChecked(panels.contains(specialPages.at(i)));
 		action->setData(specialPages.at(i));
-		action->setShortcuts({ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), specialPages.at(i)}})});
+		action->setShortcut(ActionsManager::getActionShortcut(ActionsManager::ShowPanelAction, {{QLatin1String("panel"), specialPages.at(i)}}));
 		action->setShortcutContext(Qt::WidgetShortcut);
 
 		connect(action, &QAction::toggled, this, &SidebarWidget::choosePanel);
