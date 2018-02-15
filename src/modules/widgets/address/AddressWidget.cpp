@@ -660,7 +660,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 								{
 									if (action->data().isNull())
 									{
-										BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), {}, nullptr, -1, true, this);
+										BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), (m_window->getContentsWidget() ? m_window->getContentsWidget()->getDescription() : QString()), nullptr, -1, true, this);
 										dialog.exec();
 									}
 									else
