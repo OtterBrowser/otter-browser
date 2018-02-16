@@ -1306,18 +1306,21 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 
 	if (m_isSessionRestored && SettingsManager::getOption(SettingsManager::TabBar_PrependPinnedTabOption).toBool() && !window->isPinned())
 	{
-		for (int i = 0; i < m_windows.count(); ++i)
+		const MainWindowSessionItem *mainWindowItem(SessionsManager::getModel()->getMainWindowItem(this));
+
+		if (mainWindowItem)
 		{
-			const Window *window(getWindowByIndex(i));
-
-			if (!window || !window->isPinned())
+			for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 			{
-				if (index < i)
+				if (!mainWindowItem->index().child(i, 0).data(SessionModel::IsPinnedRole).toBool())
 				{
-					index = i;
-				}
+					if (index < i)
+					{
+						index = i;
+					}
 
-				break;
+					break;
+				}
 			}
 		}
 	}
