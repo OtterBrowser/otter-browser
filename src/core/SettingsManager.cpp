@@ -65,7 +65,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(AddressField_HostLookupTimeoutOption, IntegerType, 200);
 	registerOption(AddressField_LayoutOption, ListType, QStringList({QLatin1String("websiteInformation"), QLatin1String("address"), QLatin1String("fillPassword"), QLatin1String("loadPlugins"), QLatin1String("listFeeds"), QLatin1String("bookmark"), QLatin1String("historyDropdown")}));
 	registerOption(AddressField_PasteAndGoOnMiddleClickOption, BooleanType, true);
-	registerOption(AddressField_SelectAllOnFocusOption, BooleanType, true);
+	registerOption(AddressField_SelectAllOnFocusOption, BooleanType, false);
 	registerOption(AddressField_ShowCompletionCategoriesOption, BooleanType, true);
 	registerOption(AddressField_SuggestBookmarksOption, BooleanType, true);
 	registerOption(AddressField_SuggestHistoryOption, BooleanType, true);
