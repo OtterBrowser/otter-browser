@@ -46,7 +46,7 @@ protected slots:
 	void reset();
 	void selectFromFile();
 	void selectFromTheme();
-	void updateMenu();
+	void populateMenu();
 
 private:
 	QIcon m_defaultIcon;
