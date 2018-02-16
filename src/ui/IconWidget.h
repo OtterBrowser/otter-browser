@@ -39,6 +39,7 @@ public:
 	bool hasHeightForWidth() const override;
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 
 protected slots:

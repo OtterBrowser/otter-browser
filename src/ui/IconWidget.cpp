@@ -22,6 +22,7 @@
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QEvent>
 #include <QtCore/QtMath>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
@@ -39,6 +40,16 @@ IconWidget::IconWidget(QWidget *parent) : QToolButton(parent)
 	setMaximumSize(64, 64);
 
 	connect(menu(), &QMenu::aboutToShow, this, &IconWidget::populateMenu);
+}
+
+void IconWidget::changeEvent(QEvent *event)
+{
+	QToolButton::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setToolTip(tr("Select Icon"));
+	}
 }
 
 void IconWidget::resizeEvent(QResizeEvent *event)
