@@ -436,13 +436,13 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					MdiWindow *subWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
+					MdiWindow *mdiWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
 
-					if (subWindow)
+					if (mdiWindow)
 					{
-						subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-						subWindow->showMaximized();
-						subWindow->storeState();
+						mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+						mdiWindow->showMaximized();
+						mdiWindow->storeState();
 					}
 				}
 
@@ -460,13 +460,13 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					MdiWindow *subWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
+					MdiWindow *mdiWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
 
-					if (subWindow)
+					if (mdiWindow)
 					{
-						subWindow->storeState();
-						subWindow->setWindowFlags(Qt::SubWindow);
-						subWindow->showMinimized();
+						mdiWindow->storeState();
+						mdiWindow->setWindowFlags(Qt::SubWindow);
+						mdiWindow->showMinimized();
 					}
 				}
 
@@ -484,13 +484,13 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					MdiWindow *subWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
+					MdiWindow *mdiWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
 
-					if (subWindow)
+					if (mdiWindow)
 					{
-						subWindow->setWindowFlags(Qt::SubWindow);
-						subWindow->showNormal();
-						subWindow->storeState();
+						mdiWindow->setWindowFlags(Qt::SubWindow);
+						mdiWindow->showNormal();
+						mdiWindow->storeState();
 					}
 				}
 
