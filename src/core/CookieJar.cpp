@@ -55,7 +55,7 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 	stream >> amount;
 
 	QList<QNetworkCookie> allCookies;
-	allCookies.reserve(amount);
+	allCookies.reserve(static_cast<int>(amount));
 
 	for (quint32 i = 0; i < amount; ++i)
 	{
