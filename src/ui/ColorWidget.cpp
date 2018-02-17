@@ -167,14 +167,14 @@ void ColorWidget::setColor(const QColor &color)
 {
 	if (color != m_color)
 	{
-		const QString text(color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : tr("Invalid"));
+		const QString text(color.isValid() ? color.name((color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper() : QString());
 
 		if (!m_lineEditWidget->hasFocus())
 		{
 			m_lineEditWidget->setText(text);
 		}
 
-		setToolTip(text);
+		setToolTip(text.isEmpty() ? tr("Invalid") : text);
 		update();
 
 		m_color = color;
