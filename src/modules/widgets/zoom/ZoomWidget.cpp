@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,16 @@ ZoomWidget::ZoomWidget(Window *window, QWidget *parent) : QSlider(parent),
 	if (toolBar && toolBar->getDefinition().isGlobal())
 	{
 		connect(toolBar, &ToolBarWidget::windowChanged, this, &ZoomWidget::setWindow);
+	}
+}
+
+void ZoomWidget::changeEvent(QEvent *event)
+{
+	QSlider::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setZoom(m_window ? m_window->getZoom() : SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt());
 	}
 }
 
