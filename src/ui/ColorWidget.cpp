@@ -51,9 +51,9 @@ void ColorWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	if (event->type() == QEvent::LanguageChange && !m_color.isValid())
 	{
-		setColor(m_color);
+		setToolTip(tr("Invalid"));
 	}
 }
 
