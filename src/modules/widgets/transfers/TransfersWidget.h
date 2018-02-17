@@ -41,6 +41,9 @@ public:
 
 	QIcon getIcon() const override;
 
+protected:
+	void changeEvent(QEvent *event) override;
+
 protected slots:
 	void populateMenu();
 	void updateState();

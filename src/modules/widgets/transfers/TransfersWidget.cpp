@@ -90,6 +90,16 @@ TransfersWidget::TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry
 	connect(menu(), &QMenu::aboutToHide, menu(), &QMenu::clear);
 }
 
+void TransfersWidget::changeEvent(QEvent *event)
+{
+	ToolButtonWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setToolTip(tr("Downloads"));
+	}
+}
+
 void TransfersWidget::populateMenu()
 {
 	const QVector<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
