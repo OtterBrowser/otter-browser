@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -64,6 +64,16 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	connect(m_profilesMenu, &QMenu::aboutToShow, this, &ContentBlockingInformationWidget::populateProfilesMenu);
 	connect(m_profilesMenu, &QMenu::triggered, this, &ContentBlockingInformationWidget::toggleOption);
 	connect(defaultAction(), &QAction::triggered, this, &ContentBlockingInformationWidget::toggleContentBlocking);
+}
+
+void ContentBlockingInformationWidget::changeEvent(QEvent *event)
+{
+	ToolButtonWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		updateState();
+	}
 }
 
 void ContentBlockingInformationWidget::resizeEvent(QResizeEvent *event)
