@@ -305,7 +305,7 @@ void TransfersContentsWidget::handleTransferChanged(Transfer *transfer)
 
 				break;
 			case 4:
-				m_model->setData(index, (isIndeterminate ? QString() : Utils::formatElapsedTime(transfer->getRemainingTime())), Qt::DisplayRole);
+				m_model->setData(index, ((isIndeterminate || transfer->getRemainingTime() <= 0) ? QString() : Utils::formatElapsedTime(transfer->getRemainingTime())), Qt::DisplayRole);
 
 				break;
 			case 5:
