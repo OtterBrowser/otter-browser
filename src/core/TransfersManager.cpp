@@ -320,9 +320,9 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			path = SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString();
 
-			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+			if (QFile::exists(path + QDir::separator() + fileName))
 			{
-				path.clear();
+				m_options |= CanAskForPathOption;
 			}
 		}
 
