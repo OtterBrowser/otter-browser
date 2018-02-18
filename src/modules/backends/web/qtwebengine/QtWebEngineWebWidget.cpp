@@ -30,6 +30,7 @@
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/UserScript.h"
+#include "../../../../core/Utils.h"
 #include "../../../../core/WebBackend.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"

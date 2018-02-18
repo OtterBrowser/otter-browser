@@ -20,7 +20,6 @@
 #ifndef OTTER_QTWEBENGINEWEBWIDGET_H
 #define OTTER_QTWEBENGINEWEBWIDGET_H
 
-#include "../../../../core/Utils.h"
 #include "../../../../ui/WebWidget.h"
 
 #include <QtNetwork/QNetworkReply>
