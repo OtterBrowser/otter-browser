@@ -592,14 +592,10 @@ QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mime
 	return {};
 }
 
-SaveInformation getSavePath(const QString &fileName, QString path, QStringList filters, bool forceAsk)
+SaveInformation getSavePath(const QString &fileName, const QString &directory, QStringList filters, bool forceAsk)
 {
 	SaveInformation information;
-
-	if (!path.isEmpty())
-	{
-		path.append(QDir::separator() + fileName);
-	}
+	QString path(directory.isEmpty() ? QString() : directory + QDir::separator() + fileName);
 
 	if (filters.isEmpty())
 	{
