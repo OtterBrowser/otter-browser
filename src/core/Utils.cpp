@@ -389,6 +389,11 @@ QString extractHost(const QUrl &url)
 
 QString formatElapsedTime(int value)
 {
+	if (value < 0)
+	{
+		return {};
+	}
+
 	QTime time(0, 0);
 	time = time.addSecs(value);
 
