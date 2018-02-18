@@ -308,19 +308,19 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	if (target.isEmpty())
 	{
-		QString path;
-		QString fileName(getSuggestedFileName());
-
 		if (!SettingsManager::getOption(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool())
 		{
 			m_options |= IsQuickTransferOption;
 		}
 
+		const QString directory(m_options.testFlag(IsQuickTransferOption) ? SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString() : QString());
+		const QString fileName(getSuggestedFileName());
+
 		if (m_options.testFlag(IsQuickTransferOption))
 		{
-			path = SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString();
+			finalTarget = directory + QDir::separator() + fileName;
 
-			if (QFile::exists(path + QDir::separator() + fileName))
+			if (QFile::exists(finalTarget))
 			{
 				m_options |= CanAskForPathOption;
 			}
@@ -330,7 +330,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			m_isSelectingPath = true;
 
-			const SaveInformation information(Utils::getSavePath(fileName, path));
+			const SaveInformation information(Utils::getSavePath(fileName, directory));
 
 			finalTarget = information.path;
 			canOverwriteExisting = information.canOverwriteExisting;
@@ -350,10 +350,6 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 				return;
 			}
-		}
-		else
-		{
-			finalTarget = path + QDir::separator() + fileName;
 		}
 
 		finalTarget = QDir::toNativeSeparators(finalTarget);
