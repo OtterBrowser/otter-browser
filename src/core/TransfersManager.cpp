@@ -332,12 +332,12 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 			const SaveInformation information(Utils::getSavePath(fileName, path));
 
-			path = information.path;
+			finalTarget = information.path;
 			canOverwriteExisting = information.canOverwriteExisting;
 
 			m_isSelectingPath = false;
 
-			if (path.isEmpty())
+			if (finalTarget.isEmpty())
 			{
 				if (m_reply)
 				{
@@ -351,8 +351,12 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 				return;
 			}
 		}
+		else
+		{
+			finalTarget = path + QDir::separator() + fileName;
+		}
 
-		finalTarget = QDir::toNativeSeparators(path);
+		finalTarget = QDir::toNativeSeparators(finalTarget);
 	}
 	else
 	{
