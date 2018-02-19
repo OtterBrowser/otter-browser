@@ -22,7 +22,6 @@
 #ifndef OTTER_FREEDESKTOPORGPLATFORMINTEGRATION_H
 #define OTTER_FREEDESKTOPORGPLATFORMINTEGRATION_H
 
-#include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
 #include <QtDBus/QDBusArgument>

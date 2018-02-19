@@ -25,6 +25,7 @@
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../core/Utils.h"
 #include "../../../../3rdparty/libmimeapps/DesktopEntry.h"
 #include "../../../../3rdparty/libmimeapps/Index.h"
 
