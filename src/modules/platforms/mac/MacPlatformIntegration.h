@@ -20,7 +20,6 @@
 #ifndef OTTER_MACPLATFORMINTEGRATION_H
 #define OTTER_MACPLATFORMINTEGRATION_H
 
-#include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
 #include <QtCore/QTemporaryDir>
