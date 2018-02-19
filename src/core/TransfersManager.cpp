@@ -887,7 +887,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 
 		if (result == QMessageBox::No)
 		{
-			QFileInfo information(target);
+			const QFileInfo information(target);
 			const QString path(Utils::getSavePath(information.fileName(), information.path(), {}, true).path);
 
 			if (path.isEmpty())
