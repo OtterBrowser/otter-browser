@@ -666,7 +666,11 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 	}
 	while (true);
 
-	if (!path.isEmpty())
+	if (path.isEmpty())
+	{
+		information.canSave = false;
+	}
+	else
 	{
 		SettingsManager::setOption(SettingsManager::Paths_SaveFileOption, QFileInfo(path).dir().canonicalPath());
 	}
