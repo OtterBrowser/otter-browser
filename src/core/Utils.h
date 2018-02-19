@@ -84,7 +84,7 @@ struct SaveInformation final
 {
 	QString path;
 	QString filter;
-	bool canOverwriteExisting = false;
+	bool canSave = false;
 };
 
 namespace Utils

@@ -333,7 +333,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 			const SaveInformation information(Utils::getSavePath(fileName, directory));
 
 			finalTarget = information.path;
-			canOverwriteExisting = information.canOverwriteExisting;
+			canOverwriteExisting = information.canSave;
 
 			m_isSelectingPath = false;
 

@@ -634,7 +634,7 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 			}
 
 			information.filter = dialog.selectedNameFilter();
-			information.canOverwriteExisting = true;
+			information.canSave = true;
 
 			path = dialog.selectedFiles().value(0);
 		}
