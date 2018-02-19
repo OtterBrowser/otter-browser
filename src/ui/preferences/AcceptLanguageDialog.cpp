@@ -179,7 +179,7 @@ void AcceptLanguageDialog::updateActions()
 QString AcceptLanguageDialog::getLanguages()
 {
 	QString result;
-	double step(0.1);
+	qreal step(0.1);
 
 	if (m_model->rowCount() > 100)
 	{
