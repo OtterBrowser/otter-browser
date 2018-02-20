@@ -292,7 +292,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	m_device->reset();
 
-	m_mimeType = QMimeDatabase().mimeTypeForData(m_device);
+	m_mimeType = mimeDatabase.mimeTypeForData(m_device);
 
 	m_device->seek(m_device->size());
 
@@ -382,7 +382,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		}
 		else
 		{
-			m_mimeType = QMimeDatabase().mimeTypeForFile(m_target);
+			m_mimeType = mimeDatabase.mimeTypeForFile(m_target);
 		}
 	}
 }
