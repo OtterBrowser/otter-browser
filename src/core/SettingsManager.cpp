@@ -517,6 +517,7 @@ QVariant SettingsManager::getOption(int identifier, const QString &host)
 QStringList SettingsManager::getOptions()
 {
 	QStringList options;
+	options.reserve(m_definitions.count());
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
