@@ -424,14 +424,7 @@ QString SettingsManager::createReport()
 		overrides.endGroup();
 	}
 
-	QStringList options;
-
-	for (int i = 0; i < m_definitions.count(); ++i)
-	{
-		options.append(getOptionName(i));
-	}
-
-	options.sort();
+	const QStringList options(getOptions());
 
 	for (int i = 0; i < options.count(); ++i)
 	{
