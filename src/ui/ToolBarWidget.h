@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,13 @@
 #ifndef OTTER_TOOLBARWIDGET_H
 #define OTTER_TOOLBARWIDGET_H
 
+#include "../core/SessionsManager.h"
+#include "../core/ToolBarsManager.h"
+
 #include <QtCore/QMimeData>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
-
-#include "../core/SessionsManager.h"
-#include "../core/ToolBarsManager.h"
 
 namespace Otter
 {
