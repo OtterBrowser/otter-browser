@@ -576,7 +576,9 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 bool SessionsManager::saveSession(const SessionInformation &session)
 {
-	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
+	const QString sessionsPath(m_profilePath + QLatin1String("/sessions/"));
+
+	QDir().mkpath(sessionsPath);
 
 	if (session.windows.isEmpty())
 	{
@@ -587,18 +589,18 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	if (path.isEmpty())
 	{
-		path = m_profilePath + QLatin1String("/sessions/") + session.title + QLatin1String(".json");
+		path = sessionsPath + session.title + QLatin1String(".json");
 
 		if (QFileInfo(path).exists())
 		{
 			int i = 1;
 
-			while (QFileInfo(m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".json")).exists())
+			while (QFileInfo(sessionsPath + session.title + QString::number(i) + QLatin1String(".json")).exists())
 			{
 				++i;
 			}
 
-			path = m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".json");
+			path = sessionsPath + session.title + QString::number(i) + QLatin1String(".json");
 		}
 	}
 
