@@ -1344,7 +1344,7 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 
 	for (int i = 0; i < placeholders.count(); ++i)
 	{
-		const QString placeholder(QStringLiteral("{%1}").arg(placeholders.at(i)));
+		const QString placeholder(QLatin1Char('{') + placeholders.at(i) + QLatin1Char('}'));
 
 		if (mutableQuery.contains(placeholder))
 		{
