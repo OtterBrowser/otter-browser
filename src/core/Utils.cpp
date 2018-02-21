@@ -355,7 +355,7 @@ QString createErrorPage(const ErrorPageInformation &information)
 
 	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
 	{
-		mainTemplate.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+		mainTemplate.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
 	}
 
 	return mainTemplate;
