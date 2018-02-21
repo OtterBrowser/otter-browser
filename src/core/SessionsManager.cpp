@@ -597,7 +597,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 			do
 			{
-				path = sessionsPath + session.title + QString::number(i) + QLatin1String(".json");
+				path = sessionsPath + session.title + QLatin1Char('_') + QString::number(i) + QLatin1String(".json");
 
 				++i;
 			}
