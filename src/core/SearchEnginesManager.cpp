@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 
 	for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
 	{
-		urlString = urlString.replace(QStringLiteral("{%1}").arg(iterator.key()), QUrl::toPercentEncoding(iterator.value()));
+		urlString = urlString.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), QUrl::toPercentEncoding(iterator.value()));
 	}
 
 	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
@@ -233,7 +233,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 
 		for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
 		{
-			value = value.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+			value = value.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
 		}
 
 		if (*method == QNetworkAccessManager::GetOperation)
