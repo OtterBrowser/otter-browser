@@ -89,12 +89,12 @@ void ContentBlockingProfile::clear()
 
 void ContentBlockingProfile::loadHeader(const QString &path)
 {
-	QFile file(path);
-
-	if (!file.exists())
+	if (!QFile::exists(path))
 	{
 		return;
 	}
+
+	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
