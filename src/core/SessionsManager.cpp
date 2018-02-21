@@ -591,11 +591,11 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 	{
 		path = sessionsPath + session.title + QLatin1String(".json");
 
-		if (QFileInfo(path).exists())
+		if (QFile::exists(path))
 		{
 			int i = 1;
 
-			while (QFileInfo(sessionsPath + session.title + QString::number(i) + QLatin1String(".json")).exists())
+			while (QFile::exists(sessionsPath + session.title + QString::number(i) + QLatin1String(".json")))
 			{
 				++i;
 			}
