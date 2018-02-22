@@ -23,8 +23,6 @@
 #include "Dialog.h"
 #include "../core/SearchEnginesManager.h"
 
-#include <QtWidgets/QLineEdit>
-
 namespace Otter
 {
 
