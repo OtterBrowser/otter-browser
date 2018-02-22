@@ -24,6 +24,7 @@
 #include "Utils.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
 #include <QtNetwork/QNetworkRequest>

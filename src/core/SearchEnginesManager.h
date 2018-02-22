@@ -20,7 +20,6 @@
 #ifndef OTTER_SEARCHENGINESMANAGER_H
 #define OTTER_SEARCHENGINESMANAGER_H
 
-#include <QtCore/QFile>
 #include <QtCore/QUrlQuery>
 #include <QtGui/QIcon>
 #include <QtGui/QStandardItemModel>
