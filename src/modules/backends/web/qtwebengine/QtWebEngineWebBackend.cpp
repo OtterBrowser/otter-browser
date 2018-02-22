@@ -288,7 +288,7 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 
 		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
 		{
-			userAgent = userAgent.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+			userAgent = userAgent.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
 		}
 
 		m_userAgents[pattern] = ((pattern == userAgent) ? QString() : userAgent);
