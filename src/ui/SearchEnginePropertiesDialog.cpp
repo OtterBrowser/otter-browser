@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ void SearchEnginePropertiesDialog::insertPlaceholder(QAction *action)
 {
 	if (m_currentLineEditWidget && !action->data().toString().isEmpty())
 	{
-		m_currentLineEditWidget->insert(QStringLiteral("{%1}").arg(action->data().toString()));
+		m_currentLineEditWidget->insert(QLatin1Char('{') + action->data().toString() + QLatin1Char('}'));
 	}
 }
 
