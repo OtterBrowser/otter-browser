@@ -379,6 +379,15 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
 	)
 
+	if (HUNSPELL_FOUND)
+		set(otter_src
+			${otter_src}
+			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
+			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
+			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
+		)
+	endif (HUNSPELL_FOUND)
+
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 	)
@@ -442,15 +451,6 @@ if (HUNSPELL_FOUND)
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldebug.cpp
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
 	)
-
-	if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
-		set(otter_src
-			${otter_src}
-			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
-			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
-			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
-		)
-	endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 endif (HUNSPELL_FOUND)
 
 if (WIN32)
