@@ -803,7 +803,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 
 			settings.endGroup();
 
-			script.replace(QStringLiteral("{%1Tokens}").arg(categories.at(i).toLower()), QString::fromUtf8(QJsonDocument(tokensArray).toJson(QJsonDocument::Compact)));
+			script.replace(QLatin1Char('{') + categories.at(i).toLower() + QLatin1String("Tokens}"), QString::fromUtf8(QJsonDocument(tokensArray).toJson(QJsonDocument::Compact)));
 		}
 
 		m_fastForwardScript = script;
