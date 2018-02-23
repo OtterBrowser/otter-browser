@@ -562,10 +562,9 @@ QVariant QtWebKitPage::getOption(int identifier) const
 		return m_widget->getOption(identifier);
 	}
 
-	QUrl url(mainFrame()->url());
-	url = (url.isEmpty() ? mainFrame()->requestedUrl() : url);
+	const QUrl url(mainFrame()->url());
 
-	return SettingsManager::getOption(identifier, Utils::extractHost(url));
+	return SettingsManager::getOption(identifier, Utils::extractHost(url.isEmpty() ? mainFrame()->requestedUrl() : url));
 }
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
