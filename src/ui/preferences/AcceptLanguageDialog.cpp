@@ -75,7 +75,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	});
 
 	entries.prepend(QPair<QString, QString>(tr("Any other"), QLatin1String("*")));
-	entries.prepend(QPair<QString, QString>(tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName()), QString("system")));
+	entries.prepend(QPair<QString, QString>(tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName()), QLatin1String("system")));
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
