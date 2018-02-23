@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργία παρουσίας δράσης: %1</translation>
     </message>
 </context>
 <context>
@@ -2143,7 +2143,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="194"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="268"/>
@@ -2426,7 +2426,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="65"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Εικόνες  (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="75"/>
@@ -3432,7 +3432,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n σε φραγή)</numerusform><numerusform>%1 (%2 Σε φραγή)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -3854,12 +3854,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Προτιμήσεις ιστοσελίδας</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση....</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -4212,7 +4212,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="586"/>
         <source>Do you really want to remove preferences for this host?</source>
-        <translation type="unfinished"/>
+        <translation>Επιθυμείτε πραγματικά την αφαίρεση των προτιμήσεων για αυτόν τον ξενιστή;</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="604"/>
@@ -5987,7 +5987,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz)</source>
-        <translation type="unfinished"/>
+        <translation>Εικόνες  (*.png *.jpg *.bmp *.gif *.svg *.svgz)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
@@ -6247,7 +6247,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="305"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Νέο...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="345"/>
@@ -6303,7 +6303,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="46"/>
         <source>Edit Bookmarks Bar</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία γραμμής σελιδοδεικτών</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
@@ -6313,7 +6313,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="55"/>
         <source>Edit Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία πλευρικής στήλης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
@@ -6438,7 +6438,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Λήψεις</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="461"/>
@@ -6568,7 +6568,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="651"/>
         <source>Downloads Progress Information</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου λήψεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="656"/>
@@ -6860,7 +6860,8 @@ Do you want to overwrite it?
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="145"/>
         <source>This file is still being downloaded.
 Do you really want to remove it?</source>
-        <translation type="unfinished"/>
+        <translation>Αυτή η λήψη είναι ενεργή.
+Είστε σίγουρος-η ότι θέλετε να την αφαιρέσετε;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="320"/>
@@ -6916,7 +6917,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="591"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Λήψεις</translation>
     </message>
 </context>
 <context>
@@ -6925,7 +6926,8 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/core/TransfersManager.cpp" line="1066"/>
         <source>Download completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Η λήψη ολοκληρώθηκε
+%1</translation>
     </message>
 </context>
 <context>
@@ -7813,7 +7815,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="169"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Παράθυρα καί Καρτέλες</translation>
     </message>
 </context>
 <context>
@@ -8226,7 +8228,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Open Frame</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα πλαισίου</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
@@ -8268,7 +8270,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα Εικόνας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
@@ -8855,7 +8857,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Λήψεις</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
@@ -9386,42 +9388,42 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="930"/>
         <source>Open Image in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε αυτήν την καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="934"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέα καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="942"/>
         <source>Open Image in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέο παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="946"/>
         <source>Open Image in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέο παράθυρο παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="950"/>
         <source>Open Image in New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέα ιδιωτική καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="954"/>
         <source>Open Image in New Private Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέα ιδιωτική καρτέλα παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="958"/>
         <source>Open Image in New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέο ιδιωτικό παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="962"/>
         <source>Open Image in New Private Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα εικόνας σε νέο ιδιωτικό παράθυρο παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1003"/>
@@ -9529,12 +9531,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="132"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Λήψεις</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Παράθυρα καί Καρτέλες</translation>
     </message>
 </context>
 <context>
@@ -9763,7 +9765,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="363"/>
         <source>Search Engines</source>
-        <translation type="unfinished"/>
+        <translation>Μηχανές αναζήτησης</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="486"/>
@@ -9776,12 +9778,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Download Completed</source>
-        <translation type="unfinished"/>
+        <translation>Η λήψη ολοκληρώθηκε</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>File download was completed</source>
-        <translation type="unfinished"/>
+        <translation>Η λήψη του αρχείου ολοκληρώθηκε</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>

@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation type="unfinished"/>
+        <translation>Instanz abgelehnter Aktion erstellen: %1</translation>
     </message>
 </context>
 <context>
@@ -2145,7 +2145,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="194"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="268"/>
@@ -2428,7 +2428,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="65"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</source>
-        <translation type="unfinished"/>
+        <translation> Bilder (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="75"/>
@@ -3434,7 +3434,7 @@ Möchten Sie fortfahren?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n blockiert)</numerusform><numerusform>%1 (%n blockiert)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -4214,7 +4214,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="586"/>
         <source>Do you really want to remove preferences for this host?</source>
-        <translation type="unfinished"/>
+        <translation>Wollen Sie wirklich die Einstellungen für diesen host entfernen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="604"/>
@@ -6919,7 +6919,7 @@ Fortschritt: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="591"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
 </context>
 <context>
@@ -8856,7 +8856,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
@@ -9407,22 +9407,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="950"/>
         <source>Open Image in New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Bild in neuem privaten Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="954"/>
         <source>Open Image in New Private Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Bild in neuem privaten Hintergrund-Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="958"/>
         <source>Open Image in New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Bild in neuem privaten Fenster öffnen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="962"/>
         <source>Open Image in New Private Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Bild in neuem privaten Hintergrundfenster öffnen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1003"/>
@@ -9530,7 +9530,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="132"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Downloads</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
@@ -9782,7 +9782,7 @@ Anwendungskennung: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>File download was completed</source>
-        <translation type="unfinished"/>
+        <translation>Herunterladen abgeschlossen</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
