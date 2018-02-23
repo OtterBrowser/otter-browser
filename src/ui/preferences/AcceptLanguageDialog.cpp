@@ -192,15 +192,17 @@ QString AcceptLanguageDialog::getLanguages()
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (m_model->item(i))
+		const QModelIndex index(m_model->index(i, 0));
+
+		if (index.isValid())
 		{
 			if (result.isEmpty())
 			{
-				result += m_model->item(i)->data(Qt::UserRole).toString();
+				result.append(index.data(Qt::UserRole).toString());
 			}
 			else
 			{
-				result += QStringLiteral(",%1;q=%2").arg(m_model->item(i)->data(Qt::UserRole).toString()).arg(qMax(1 - (i * step), 0.001));
+				result.append(QStringLiteral(",%1;q=%2").arg(index.data(Qt::UserRole).toString()).arg(qMax(1 - (i * step), 0.001)));
 			}
 		}
 	}
