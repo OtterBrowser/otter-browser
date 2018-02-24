@@ -1248,11 +1248,9 @@ void AddressWidget::setCompletion(const QString &filter)
 
 	if (m_completionModes.testFlag(InlineCompletionMode))
 	{
-		QString matchedText;
-
 		for (int i = 0; i < m_completionModel->rowCount(); ++i)
 		{
-			matchedText = m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString();
+			const QString matchedText(m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString());
 
 			if (!matchedText.isEmpty())
 			{
