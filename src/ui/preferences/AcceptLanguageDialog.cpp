@@ -39,7 +39,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 
 	m_ui->languagesViewWidget->setModel(m_model);
 
-	QStringList chosenLanguages(languages.split(QLatin1Char(','), QString::SkipEmptyParts));
+	const QStringList chosenLanguages(languages.split(QLatin1Char(','), QString::SkipEmptyParts));
 
 	for (int i = 0; i < chosenLanguages.count(); ++i)
 	{
