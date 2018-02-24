@@ -490,7 +490,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 
 		if (result == S_OK)
 		{
-			result = activationManager->ActivateApplication(QString("windows.immersivecontrolpanel_cw5n1h2txyewy!microsoft.windows.immersivecontrolpanel").toStdWString().c_str(), QString("page=SettingsPageAppsDefaults").toStdWString().c_str(), AO_NONE, &pid);
+			result = activationManager->ActivateApplication(QStringLiteral("windows.immersivecontrolpanel_cw5n1h2txyewy!microsoft.windows.immersivecontrolpanel").toStdWString().c_str(), QStringLiteral("page=SettingsPageAppsDefaults").toStdWString().c_str(), AO_NONE, &pid);
 
 			activationManager->Release();
 
