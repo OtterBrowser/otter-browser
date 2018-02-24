@@ -997,6 +997,7 @@ void AddressWidget::updateGeometries()
 	QVector<EntryDefinition> trailingEntries;
 	const int offset(qMax(((height() - 16) / 2), 2));
 	QMargins margins(offset, 0, offset, 0);
+	const QUrl url(getUrl());
 	int availableWidth(width() - margins.left() - margins.right());
 	const bool hasValidWindow(m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
 	bool isLeading(true);
@@ -1030,7 +1031,6 @@ void AddressWidget::updateGeometries()
 				break;
 			case WebsiteInformationEntry:
 				{
-					const QUrl url(getUrl());
 					QString icon(QLatin1String("unknown"));
 					const WebWidget::ContentStates state(m_window ? m_window->getContentState() : WebWidget::UnknownContentState);
 
@@ -1081,14 +1081,8 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case BookmarkEntry:
+				if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
 				{
-					const QUrl url(getUrl());
-
-					if (Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about"))
-					{
-						continue;
-					}
-
 					definition.icon = ThemesManager::createIcon(QLatin1String("bookmarks"), false);
 
 					if (BookmarksManager::hasBookmark(url))
@@ -1113,14 +1107,10 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case FillPasswordEntry:
+				if (hasValidWindow && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about") && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
 				{
-					const QUrl url(getUrl());
-
-					if (hasValidWindow && !Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about") && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
-					{
-						definition.title = QT_TR_NOOP("Log in");
-						definition.icon = ThemesManager::createIcon(QLatin1String("fill-password"), false);
-					}
+					definition.title = QT_TR_NOOP("Log in");
+					definition.icon = ThemesManager::createIcon(QLatin1String("fill-password"), false);
 				}
 
 				break;
