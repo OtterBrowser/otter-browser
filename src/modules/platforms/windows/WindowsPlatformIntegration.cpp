@@ -216,9 +216,9 @@ void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformatio
 
 	const QString fullApplicationPath(information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4));
 	const QFileInfo fileInformation(fullApplicationPath);
-	HKEY key = nullptr;
+	HKEY key(nullptr);
 	TCHAR readBuffer[128];
-	DWORD bufferSize = sizeof(readBuffer);
+	DWORD bufferSize(sizeof(readBuffer));
 
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\MuiCache"), 0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
 	{
@@ -484,9 +484,9 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 	{
-		DWORD pid = 0;
-		IApplicationActivationManager *activationManager = nullptr;
-		HRESULT result = CoCreateInstance(CLSID_ApplicationActivationManager, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationActivationManager, (LPVOID*)&activationManager);
+		DWORD pid(0);
+		IApplicationActivationManager *activationManager(nullptr);
+		HRESULT result(CoCreateInstance(CLSID_ApplicationActivationManager, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationActivationManager, (LPVOID*)&activationManager));
 
 		if (result == S_OK)
 		{
@@ -504,8 +504,8 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 	}
 	else if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
-		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI = nullptr;
-		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI);
+		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI(nullptr);
+		HRESULT result(CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI));
 
 		if (result == S_OK && applicationAssociationRegistrationUI)
 		{
