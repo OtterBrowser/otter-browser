@@ -264,11 +264,11 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 	return nullptr;
 }
 
-ContentsWidget* createSidebarPanel(const QString &panel, int sidebar, MainWindow *mainWindow, QWidget *parent)
+ContentsWidget* createSidebarPanel(const QString &identifier, int sidebar, MainWindow *mainWindow, QWidget *parent)
 {
 	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
 
-	if (panel.startsWith(QLatin1String("web:")))
+	if (identifier.startsWith(QLatin1String("web:")))
 	{
 		if (!mainWindow || mainWindow->isPrivate())
 		{
@@ -276,17 +276,17 @@ ContentsWidget* createSidebarPanel(const QString &panel, int sidebar, MainWindow
 		}
 
 		WebContentsWidget *webWidget(new WebContentsWidget(parameters, {}, nullptr, nullptr, nullptr));
-		webWidget->setUrl(panel.section(QLatin1Char(':'), 1, -1), false);
+		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
 
 		return webWidget;
 	}
 
-	if (!AddonsManager::getSpecialPage(panel).types.testFlag(AddonsManager::SpecialPageInformation::SidebarPanelType))
+	if (!AddonsManager::getSpecialPage(identifier).types.testFlag(AddonsManager::SpecialPageInformation::SidebarPanelType))
 	{
 		return nullptr;
 	}
 
-	return createContentsWidget(panel, parameters, nullptr, parent);
+	return createContentsWidget(identifier, parameters, nullptr, parent);
 }
 
 }
