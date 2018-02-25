@@ -26,6 +26,7 @@
 #include "Utils.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDateTime>
 #include <QtCore/QRect>
 
 namespace Otter
@@ -94,6 +95,7 @@ struct WindowHistoryEntry final
 {
 	QString url;
 	QString title;
+	QDateTime time;
 	QPoint position;
 	int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
 };
