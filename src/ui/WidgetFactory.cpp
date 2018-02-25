@@ -236,19 +236,9 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 		return new NotesContentsWidget(parameters, window, parent);
 	}
 
-	if (identifier == QLatin1String("pageInformation"))
-	{
-		return new PageInformationContentsWidget(parameters, parent);
-	}
-
 	if (identifier == QLatin1String("passwords"))
 	{
 		return new PasswordsContentsWidget(parameters, window, parent);
-	}
-
-	if (identifier == QLatin1String("tabHistory"))
-	{
-		return new TabHistoryContentsWidget(parameters, parent);
 	}
 
 	if (identifier == QLatin1String("transfers"))
@@ -267,6 +257,16 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 ContentsWidget* createSidebarPanel(const QString &identifier, int sidebar, MainWindow *mainWindow, QWidget *parent)
 {
 	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
+
+	if (identifier == QLatin1String("pageInformation"))
+	{
+		return new PageInformationContentsWidget(parameters, parent);
+	}
+
+	if (identifier == QLatin1String("tabHistory"))
+	{
+		return new TabHistoryContentsWidget(parameters, parent);
+	}
 
 	if (identifier.startsWith(QLatin1String("web:")))
 	{
