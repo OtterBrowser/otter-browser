@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,41 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_WIDGETFACTORY_H
-#define OTTER_WIDGETFACTORY_H
+#ifndef OTTER_TABHISTORYCONTENTSWIDGET_H
+#define OTTER_TABHISTORYCONTENTSWIDGET_H
 
-#include "../core/ToolBarsManager.h"
-
-#include <QtWidgets/QWidget>
+#include "../../../ui/ContentsWidget.h"
 
 namespace Otter
 {
 
-class ContentsWidget;
-class MainWindow;
-class ToolBarWidget;
+namespace Ui
+{
+	class TabHistoryContentsWidget;
+}
+
 class Window;
 
-namespace WidgetFactory
+class TabHistoryContentsWidget final : public ContentsWidget
 {
+	Q_OBJECT
 
-ToolBarWidget* createToolBar(int identifier, Window *window, QWidget *parent);
-QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &definition, Window *window, QWidget *parent);
-ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window, QWidget *parent);
-ContentsWidget* createSidebarPanel(const QString &panel, int sidebar, MainWindow *mainWindow, QWidget *parent);
+public:
+	explicit TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent);
+	~TabHistoryContentsWidget();
 
-}
+	QString getTitle() const override;
+	QLatin1String getType() const override;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+
+protected:
+	void changeEvent(QEvent *event) override;
+
+private:
+	Window *m_window;
+	Ui::TabHistoryContentsWidget *m_ui;
+};
 
 }
 
