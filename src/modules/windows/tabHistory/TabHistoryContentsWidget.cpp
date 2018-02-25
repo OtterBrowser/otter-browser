@@ -32,9 +32,9 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->informationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 
-	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->informationViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
 }
 
 TabHistoryContentsWidget::~TabHistoryContentsWidget()

@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Otter::ItemViewWidget" name="informationViewWidget">
+    <widget class="Otter::ItemViewWidget" name="historyViewWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -64,7 +64,7 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>informationViewWidget</tabstop>
+  <tabstop>historyViewWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>
