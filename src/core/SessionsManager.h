@@ -98,6 +98,21 @@ struct WindowHistoryEntry final
 	QDateTime time;
 	QPoint position;
 	int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
+
+	QString getTitle() const
+	{
+		if (title.isEmpty())
+		{
+			if (url == QLatin1String("about:start"))
+			{
+				return QCoreApplication::translate("Otter::SessionsManager", "Start Page");
+			}
+
+			return QCoreApplication::translate("Otter::SessionsManager", "(Unknown)");
+		}
+
+		return title;
+	}
 };
 
 struct WindowHistoryInformation final
