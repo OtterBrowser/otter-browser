@@ -218,8 +218,7 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 
 void NavigationActionWidget::addMenuEntry(int index, const WindowHistoryEntry &entry)
 {
-	QString title(entry.title);
-	QAction *action(menu()->addAction(HistoryManager::getIcon(QUrl(entry.url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")))));
+	QAction *action(menu()->addAction(HistoryManager::getIcon(QUrl(entry.url)), entry.getTitle().replace(QLatin1Char('&'), QLatin1String("&&"))));
 	action->setData(index);
 	action->setStatusTip(entry.url);
 }
@@ -329,10 +328,7 @@ bool NavigationActionWidget::event(QEvent *event)
 
 							if (index >= 0)
 							{
-								QString title(history.entries.at(index).title);
-								title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
-
-								toolTip = title + QLatin1String(" (") + text() + (shortcut.isEmpty() ? QString() : QLatin1String(" - ") + shortcut.toString(QKeySequence::NativeText)) + QLatin1Char(')');
+								toolTip = history.entries.at(index).getTitle().replace(QLatin1Char('&'), QLatin1String("&&")) + QLatin1String(" (") + text() + (shortcut.isEmpty() ? QString() : QLatin1String(" - ") + shortcut.toString(QKeySequence::NativeText)) + QLatin1Char(')');
 							}
 						}
 					}
