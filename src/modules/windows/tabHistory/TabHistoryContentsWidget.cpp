@@ -71,6 +71,13 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	updateHistory();
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->historyViewWidget, &ItemViewWidget::clicked, [&](const QModelIndex &index)
+	{
+		if (m_window && m_window->getWebWidget())
+		{
+			m_window->getWebWidget()->goToHistoryIndex(index.row());
+		}
+	});
 }
 
 TabHistoryContentsWidget::~TabHistoryContentsWidget()
