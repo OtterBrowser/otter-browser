@@ -48,6 +48,9 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void updateHistory();
+
 private:
 	Window *m_window;
 	Ui::TabHistoryContentsWidget *m_ui;

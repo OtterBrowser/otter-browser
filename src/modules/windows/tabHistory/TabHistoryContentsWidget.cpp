@@ -19,6 +19,7 @@
 
 #include "TabHistoryContentsWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 
 #include "ui_TabHistoryContentsWidget.h"
@@ -32,7 +33,42 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+
+	QStandardItemModel *model(new QStandardItemModel(this));
+	model->setHorizontalHeaderLabels({tr("Title"), tr("Address")});
+
+	m_ui->historyViewWidget->setModel(model);
+
+	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
+
+	if (mainWindow)
+	{
+		m_window = mainWindow->getActiveWindow();
+
+		connect(mainWindow, &MainWindow::currentWindowChanged, this, [=]()
+		{
+			Window *window(mainWindow->getActiveWindow());
+
+			if (window != m_window)
+			{
+				if (m_window)
+				{
+					disconnect(m_window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
+				}
+
+				m_window = window;
+
+				if (window)
+				{
+					connect(window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
+				}
+			}
+
+			updateHistory();
+		});
+	}
+
+	updateHistory();
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
 }
@@ -49,6 +85,27 @@ void TabHistoryContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+		m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Address")});
+	}
+}
+
+void TabHistoryContentsWidget::updateHistory()
+{
+	m_ui->historyViewWidget->getSourceModel()->clear();
+	m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Address")});
+
+	if (m_window)
+	{
+		const WindowHistoryInformation history(m_window->getHistory());
+
+		for (int i = 0; i < history.entries.count(); ++i)
+		{
+			QList<QStandardItem*> items({new QStandardItem(history.entries.at(i).getTitle()), new QStandardItem(history.entries.at(i).url)});
+			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+
+			m_ui->historyViewWidget->getSourceModel()->appendRow(items);
+		}
 	}
 }
 
