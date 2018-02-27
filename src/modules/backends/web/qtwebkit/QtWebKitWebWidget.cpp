@@ -2325,12 +2325,13 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	for (int i = 0; i < historyCount; ++i)
 	{
 		const QWebHistoryItem item(history->itemAt(i));
+		const QVariantList state(item.userData().toList());
 		WindowHistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
-		entry.time = item.userData().toList().value(VisitTimeEntryData).toDateTime();
-		entry.position = item.userData().toList().value(PositionEntryData, QPoint(0, 0)).toPoint();
-		entry.zoom = item.userData().toList().value(ZoomEntryData).toInt();
+		entry.time = state.value(VisitTimeEntryData).toDateTime();
+		entry.position = state.value(PositionEntryData, QPoint(0, 0)).toPoint();
+		entry.zoom = state.value(ZoomEntryData).toInt();
 
 		information.entries.append(entry);
 	}
