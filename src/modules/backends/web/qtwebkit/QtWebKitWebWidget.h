@@ -106,7 +106,8 @@ protected:
 	{
 		IdentifierEntryData = 0,
 		ZoomEntryData,
-		PositionEntryData
+		PositionEntryData,
+		VisitTimeEntryData
 	};
 
 	explicit QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);
