@@ -2328,6 +2328,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		WindowHistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
+		entry.time = item.userData().toList().value(VisitTimeEntryData).toDateTime();
 		entry.position = item.userData().toList().value(PositionEntryData, QPoint(0, 0)).toPoint();
 		entry.zoom = item.userData().toList().value(ZoomEntryData).toInt();
 
