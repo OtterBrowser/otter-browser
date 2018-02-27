@@ -257,9 +257,9 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 	{
 		QVariantList state(m_page->history()->currentItem().userData().toList());
 
-		if (state.isEmpty() || state.count() < 3)
+		if (state.isEmpty() || state.count() < 4)
 		{
-			state = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
+			state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTime()};
 		}
 		else
 		{
@@ -583,7 +583,7 @@ void QtWebKitWebWidget::handleHistory()
 
 	if (identifier == 0)
 	{
-		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0)}));
+		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0), QDateTime::currentDateTime()}));
 
 		if (m_isTyped)
 		{
@@ -1831,7 +1831,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		m_page->history()->itemAt(i).setUserData(QVariantList({-1, history.entries.at(i).zoom, history.entries.at(i).position}));
+		m_page->history()->itemAt(i).setUserData(QVariantList({-1, history.entries.at(i).zoom, history.entries.at(i).position, history.entries.at(i).time}));
 	}
 
 	m_page->history()->goToItem(m_page->history()->itemAt(index));
@@ -2303,9 +2303,9 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantList state(m_page->history()->currentItem().userData().toList());
 
-	if (state.isEmpty() || state.count() < 3)
+	if (state.isEmpty() || state.count() < 4)
 	{
-		state = {0, getZoom(), m_page->mainFrame()->scrollPosition()};
+		state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTime()};
 	}
 	else
 	{
