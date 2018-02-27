@@ -35,7 +35,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels({tr("Title"), tr("Address")});
+	model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 
 	m_ui->historyViewWidget->setModel(model);
 
@@ -92,14 +92,14 @@ void TabHistoryContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-		m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Address")});
+		m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 	}
 }
 
 void TabHistoryContentsWidget::updateHistory()
 {
 	m_ui->historyViewWidget->getSourceModel()->clear();
-	m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Title"), tr("Address")});
+	m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 
 	if (m_window)
 	{
@@ -107,9 +107,10 @@ void TabHistoryContentsWidget::updateHistory()
 
 		for (int i = 0; i < history.entries.count(); ++i)
 		{
-			QList<QStandardItem*> items({new QStandardItem(history.entries.at(i).getTitle()), new QStandardItem(history.entries.at(i).url)});
+			QList<QStandardItem*> items({new QStandardItem(history.entries.at(i).url), new QStandardItem(history.entries.at(i).getTitle()), new QStandardItem(Utils::formatDateTime(history.entries.at(i).time))});
 			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+			items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 
 			m_ui->historyViewWidget->getSourceModel()->appendRow(items);
 		}
