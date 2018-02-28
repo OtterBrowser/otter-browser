@@ -207,20 +207,14 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 	}
 
 	connect(menu(), &QMenu::aboutToShow, this, &NavigationActionWidget::updateMenu);
-	connect(menu(), &QMenu::triggered, [&](QAction *action)
-	{
-		if (m_window && action && action->data().type() == QVariant::Int)
-		{
-			m_window->getContentsWidget()->goToHistoryIndex(action->data().toInt());
-		}
-	});
 }
 
 void NavigationActionWidget::addMenuEntry(int index, const WindowHistoryEntry &entry)
 {
-	QAction *action(menu()->addAction(HistoryManager::getIcon(QUrl(entry.url)), entry.getTitle().replace(QLatin1Char('&'), QLatin1String("&&"))));
-	action->setData(index);
+	Action *action(new Action(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index}}, ActionExecutor::Object(m_window, m_window), this));
 	action->setStatusTip(entry.url);
+
+	menu()->addAction(action);
 }
 
 void NavigationActionWidget::updateMenu()
