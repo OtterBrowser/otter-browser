@@ -29,6 +29,7 @@
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"
+#include "../core/HistoryManager.h"
 #include "../core/IniSettings.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
@@ -1082,6 +1083,21 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			break;
 		case ActionsManager::GoForwardAction:
 			state.isEnabled = canGoForward();
+
+			break;
+		case ActionsManager::GoToHistoryIndexAction:
+			if (parameters.contains(QLatin1String("index")))
+			{
+				const WindowHistoryInformation history(getHistory());
+				const int index(parameters[QLatin1String("index")].toInt());
+
+				if (index >= 0 && index < history.entries.count())
+				{
+					state.icon = HistoryManager::getIcon(QUrl(history.entries.at(index).url));
+					state.text = history.entries.at(index).getTitle().replace(QLatin1Char('&'), QLatin1String("&&"));
+					state.isEnabled = true;
+				}
+			}
 
 			break;
 		case ActionsManager::FastForwardAction:
