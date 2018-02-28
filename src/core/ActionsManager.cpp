@@ -359,6 +359,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QT_TRANSLATE_NOOP("actions", "Go to URL"), ThemesManager::createIcon(QLatin1String("go-jump-locationbar")), ActionDefinition::MainWindowScope);
 	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QT_TRANSLATE_NOOP("actions", "Go Back"), ThemesManager::createIcon(QLatin1String("go-previous")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::NavigationCategory);
 	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QT_TRANSLATE_NOOP("actions", "Go Forward"), ThemesManager::createIcon(QLatin1String("go-next")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::NavigationCategory);
+	registerAction(GoToHistoryIndexAction, QT_TRANSLATE_NOOP("actions", "Go to History Index"), {}, {}, ActionDefinition::WindowScope, ActionDefinition::RequiresParameters, ActionDefinition::NavigationCategory);
 	registerAction(GoToPageAction, QT_TRANSLATE_NOOP("actions", "Go to Page or Search"), {}, {}, ActionDefinition::MainWindowScope);
 	registerAction(GoToHomePageAction, QT_TRANSLATE_NOOP("actions", "Go to Home Page"), {}, ThemesManager::createIcon(QLatin1String("go-home")), ActionDefinition::MainWindowScope);
 	registerAction(GoToParentDirectoryAction, QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"), {}, {}, ActionDefinition::WindowScope);

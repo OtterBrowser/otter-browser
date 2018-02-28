@@ -173,6 +173,7 @@ public:
 		GoAction,
 		GoBackAction,
 		GoForwardAction,
+		GoToHistoryIndexAction,
 		GoToPageAction,
 		GoToHomePageAction,
 		GoToParentDirectoryAction,
