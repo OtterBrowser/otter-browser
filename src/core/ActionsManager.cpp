@@ -365,6 +365,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(GoToParentDirectoryAction, QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"), {}, {}, ActionDefinition::WindowScope);
 	registerAction(RewindAction, QT_TRANSLATE_NOOP("actions", "Rewind"), QT_TRANSLATE_NOOP("actions", "Rewind History"), ThemesManager::createIcon(QLatin1String("go-first")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::NavigationCategory);
 	registerAction(FastForwardAction, QT_TRANSLATE_NOOP("actions", "Fast Forward"), {}, ThemesManager::createIcon(QLatin1String("go-last")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::NavigationCategory);
+	registerAction(RemoveHistoryIndexAction, QT_TRANSLATE_NOOP("actions", "Remove History Index"), {}, {}, ActionDefinition::WindowScope, ActionDefinition::RequiresParameters, ActionDefinition::NavigationCategory);
 	registerAction(StopAction, QT_TRANSLATE_NOOP("actions", "Stop"), {}, ThemesManager::createIcon(QLatin1String("process-stop")), ActionDefinition::WindowScope, ActionDefinition::IsEnabledFlag, ActionDefinition::NavigationCategory);
 	registerAction(StopScheduledReloadAction, QT_TRANSLATE_NOOP("actions", "Stop Scheduled Page Reload"), {}, {}, ActionDefinition::WindowScope);
 	registerAction(StopAllAction, QT_TRANSLATE_NOOP("actions", "Stop All Pages"), {}, ThemesManager::createIcon(QLatin1String("process-stop")), ActionDefinition::MainWindowScope);

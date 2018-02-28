@@ -179,6 +179,7 @@ public:
 		GoToParentDirectoryAction,
 		RewindAction,
 		FastForwardAction,
+		RemoveHistoryIndexAction,
 		StopAction,
 		StopScheduledReloadAction,
 		StopAllAction,
