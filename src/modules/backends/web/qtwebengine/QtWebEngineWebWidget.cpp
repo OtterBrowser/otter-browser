@@ -259,11 +259,6 @@ void QtWebEngineWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebEngineWebWidget::goToHistoryIndex(int index)
-{
-	m_page->history()->goToItem(m_page->history()->itemAt(index));
-}
-
 void QtWebEngineWebWidget::removeHistoryIndex(int index, bool purge)
 {
 	Q_UNUSED(purge)

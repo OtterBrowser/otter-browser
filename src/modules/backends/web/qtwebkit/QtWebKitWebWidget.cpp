@@ -833,11 +833,6 @@ void QtWebKitWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebKitWebWidget::goToHistoryIndex(int index)
-{
-	m_page->history()->goToItem(m_page->history()->itemAt(index));
-}
-
 void QtWebKitWebWidget::removeHistoryIndex(int index, bool purge)
 {
 	if (purge)

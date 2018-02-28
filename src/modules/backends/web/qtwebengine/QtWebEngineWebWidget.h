@@ -89,7 +89,6 @@ public:
 
 public slots:
 	void clearOptions() override;
-	void goToHistoryIndex(int index) override;
 	void removeHistoryIndex(int index, bool purge = false) override;
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;

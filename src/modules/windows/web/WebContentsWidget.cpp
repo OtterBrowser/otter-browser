@@ -328,11 +328,6 @@ void WebContentsWidget::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
-void WebContentsWidget::goToHistoryIndex(int index)
-{
-	m_webWidget->goToHistoryIndex(index);
-}
-
 void WebContentsWidget::removeHistoryIndex(int index, bool purge)
 {
 	m_webWidget->removeHistoryIndex(index, purge);

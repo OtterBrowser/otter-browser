@@ -75,7 +75,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	{
 		if (m_window && m_window->getWebWidget())
 		{
-			m_window->getWebWidget()->goToHistoryIndex(index.row());
+			m_window->triggerAction(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index.row()}});
 		}
 	});
 }

@@ -270,11 +270,6 @@ void SourceViewerWebWidget::handleViewSourceReplyFinished()
 	}
 }
 
-void SourceViewerWebWidget::goToHistoryIndex(int index)
-{
-	Q_UNUSED(index)
-}
-
 void SourceViewerWebWidget::removeHistoryIndex(int index, bool purge)
 {
 	Q_UNUSED(index)

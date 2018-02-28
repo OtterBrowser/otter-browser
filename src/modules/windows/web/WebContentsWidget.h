@@ -89,7 +89,6 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void goToHistoryIndex(int index) override;
 	void removeHistoryIndex(int index, bool purge = false) override;
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setOption(int identifier, const QVariant &value) override;
