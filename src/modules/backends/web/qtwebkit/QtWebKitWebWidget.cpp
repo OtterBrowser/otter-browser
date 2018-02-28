@@ -1291,6 +1291,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_page->triggerAction(QWebPage::Forward);
 
 			break;
+		case ActionsManager::GoToHistoryIndexAction:
+			if (parameters.contains(QLatin1String("index")))
+			{
+				const int index(parameters[QLatin1String("index")].toInt());
+
+				if (index >= 0 && index < m_page->history()->count())
+				{
+					m_page->history()->goToItem(m_page->history()->itemAt(index));
+				}
+			}
+
+			break;
 		case ActionsManager::RewindAction:
 			m_page->history()->goToItem(m_page->history()->itemAt(0));
 
