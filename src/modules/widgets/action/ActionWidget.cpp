@@ -347,10 +347,11 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (contextMenuEvent)
 		{
-			const QAction *action(menu()->activeAction());
+			const Action *action(qobject_cast<Action*>(menu()->activeAction()));
 
-			if (action && action->data().type() == QVariant::Int)
+			if (action && action->getIdentifier() == ActionsManager::GoToHistoryIndexAction)
 			{
+				const int index(action->getParameters().value(QLatin1String("index")).toInt());
 				QMenu contextMenu(menu());
 				const QAction *removeEntryAction(contextMenu.addAction(tr("Remove Entry"), nullptr, nullptr, QKeySequence(Qt::Key_Delete)));
 				const QAction *purgeEntryAction(contextMenu.addAction(tr("Purge Entry"), nullptr, nullptr, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete)));
@@ -360,13 +361,13 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					menu()->close();
 
-					m_window->getContentsWidget()->removeHistoryIndex(action->data().toInt());
+					m_window->getContentsWidget()->removeHistoryIndex(index);
 				}
 				else if (selectedAction == purgeEntryAction)
 				{
 					menu()->close();
 
-					m_window->getContentsWidget()->removeHistoryIndex(action->data().toInt(), true);
+					m_window->getContentsWidget()->removeHistoryIndex(index, true);
 				}
 			}
 		}
@@ -377,13 +378,13 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete && m_window)
 		{
-			const QAction *action(menu()->activeAction());
+			const Action *action(qobject_cast<Action*>(menu()->activeAction()));
 
-			if (action && action->data().type() == QVariant::Int)
+			if (action && action->getIdentifier() == ActionsManager::GoToHistoryIndexAction)
 			{
 				menu()->close();
 
-				m_window->getContentsWidget()->removeHistoryIndex(action->data().toInt(), keyEvent->modifiers().testFlag(Qt::ShiftModifier));
+				m_window->getContentsWidget()->removeHistoryIndex(action->getParameters().value(QLatin1String("index"), -1).toInt(), keyEvent->modifiers().testFlag(Qt::ShiftModifier));
 			}
 		}
 	}
