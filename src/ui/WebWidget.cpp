@@ -1105,6 +1105,11 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::RemoveHistoryIndexAction:
+			if (parameters.value(QLatin1String("purge"), false).toBool())
+			{
+				state.text = QCoreApplication::translate("actions", "Purge History Index");
+			}
+
 			if (parameters.contains(QLatin1String("index")))
 			{
 				const int index(parameters[QLatin1String("index")].toInt());
