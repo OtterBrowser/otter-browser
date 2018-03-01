@@ -19,6 +19,7 @@
 
 #include "TabHistoryContentsWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 
@@ -71,6 +72,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	updateHistory();
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->historyViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->historyViewWidget, &ItemViewWidget::customContextMenuRequested, this, &TabHistoryContentsWidget::showContextMenu);
 	connect(m_ui->historyViewWidget, &ItemViewWidget::clicked, [&](const QModelIndex &index)
 	{
 		if (m_window && m_window->getWebWidget())
@@ -114,6 +116,20 @@ void TabHistoryContentsWidget::updateHistory()
 
 			m_ui->historyViewWidget->getSourceModel()->appendRow(items);
 		}
+	}
+}
+
+void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
+{
+	const QModelIndex index(m_ui->historyViewWidget->indexAt(position));
+
+	if (index.isValid())
+	{
+		ActionExecutor::Object executor(m_window, m_window);
+		QMenu menu(this);
+		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}, {QLatin1String("purge"), true}}, executor, &menu));
+		menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
 	}
 }
 

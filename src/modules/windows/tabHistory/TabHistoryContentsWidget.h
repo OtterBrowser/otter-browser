@@ -50,6 +50,7 @@ protected:
 
 protected slots:
 	void updateHistory();
+	void showContextMenu(const QPoint &position);
 
 private:
 	Window *m_window;
