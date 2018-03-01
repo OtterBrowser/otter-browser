@@ -1104,6 +1104,18 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			state.isEnabled = canFastForward();
 
 			break;
+		case ActionsManager::RemoveHistoryIndexAction:
+			if (parameters.contains(QLatin1String("index")))
+			{
+				const int index(parameters[QLatin1String("index")].toInt());
+
+				if (index >= 0 && index < getHistory().entries.count())
+				{
+					state.isEnabled = true;
+				}
+			}
+
+			break;
 		case ActionsManager::StopAction:
 			state.isEnabled = (getLoadingState() == OngoingLoadingState);
 
