@@ -351,23 +351,23 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (action && action->getIdentifier() == ActionsManager::GoToHistoryIndexAction)
 			{
+				ActionExecutor::Object executor(m_window, m_window);
 				const int index(action->getParameters().value(QLatin1String("index")).toInt());
 				QMenu contextMenu(menu());
-				const QAction *removeEntryAction(contextMenu.addAction(tr("Remove Entry"), nullptr, nullptr, QKeySequence(Qt::Key_Delete)));
-				const QAction *purgeEntryAction(contextMenu.addAction(tr("Purge Entry"), nullptr, nullptr, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete)));
+				Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Remove Entry")}}, executor, &contextMenu));
+				removeEntryAction->setShortcut(QKeySequence(Qt::Key_Delete));
+
+				Action *purgeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Purge Entry")}}, executor, &contextMenu));
+				purgeEntryAction->setShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
+
+				contextMenu.addAction(removeEntryAction);
+				contextMenu.addAction(purgeEntryAction);
+
 				const QAction *selectedAction(contextMenu.exec(contextMenuEvent->globalPos()));
 
-				if (selectedAction == removeEntryAction)
+				if (selectedAction == removeEntryAction || selectedAction == purgeEntryAction)
 				{
 					menu()->close();
-
-					m_window->getContentsWidget()->removeHistoryIndex(index);
-				}
-				else if (selectedAction == purgeEntryAction)
-				{
-					menu()->close();
-
-					m_window->getContentsWidget()->removeHistoryIndex(index, true);
 				}
 			}
 		}
@@ -384,7 +384,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				menu()->close();
 
-				m_window->getContentsWidget()->removeHistoryIndex(action->getParameters().value(QLatin1String("index"), -1).toInt(), keyEvent->modifiers().testFlag(Qt::ShiftModifier));
+				m_window->triggerAction(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), action->getParameters().value(QLatin1String("index"), -1).toInt()}, {QLatin1String("purge"), keyEvent->modifiers().testFlag(Qt::ShiftModifier)}});
 			}
 		}
 	}
