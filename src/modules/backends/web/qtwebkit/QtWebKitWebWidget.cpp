@@ -1295,13 +1295,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (index >= 0 && index < m_page->history()->count())
 				{
-					if (parameters.value(QLatin1String("purge")).toBool())
+					if (parameters.value(QLatin1String("purge"), false).toBool())
 					{
-						const quint64 identifier(m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong());
+						const quint64 entryIdentifier(m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong());
 
-						if (identifier > 0)
+						if (entryIdentifier > 0)
 						{
-							HistoryManager::removeEntry(identifier);
+							HistoryManager::removeEntry(entryIdentifier);
 						}
 					}
 
