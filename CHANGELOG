@@ -1,3 +1,7 @@
+0.9.96 (2018-03-01):
+- added initial version of Tab History panel;
+- some minor optimizations.
+
 0.9.95 (2018-02-01):
 - added initial version of toolbar widget for viewing downloads from current session;
 - added some new keyboard shortcuts;
