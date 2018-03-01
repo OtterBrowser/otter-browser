@@ -89,7 +89,6 @@ public:
 
 public slots:
 	void clearOptions() override;
-	void removeHistoryIndex(int index, bool purge = false) override;
 	void fillPassword(const PasswordsManager::PasswordInformation &password) override;
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	void setActiveStyleSheet(const QString &styleSheet) override;

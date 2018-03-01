@@ -243,7 +243,6 @@ public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	virtual void clearOptions();
 	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
-	virtual void removeHistoryIndex(int index, bool purge = false) = 0;
 	virtual void showContextMenu(const QPoint &position = {});
 	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);

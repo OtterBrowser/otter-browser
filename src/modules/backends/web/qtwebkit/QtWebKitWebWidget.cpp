@@ -833,35 +833,6 @@ void QtWebKitWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebKitWebWidget::removeHistoryIndex(int index, bool purge)
-{
-	if (purge)
-	{
-		const quint64 identifier(m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong());
-
-		if (identifier > 0)
-		{
-			HistoryManager::removeEntry(identifier);
-		}
-	}
-
-	WindowHistoryInformation history(getHistory());
-
-	if (index < 0 || index >= history.entries.count())
-	{
-		return;
-	}
-
-	history.entries.removeAt(index);
-
-	if (history.index >= index)
-	{
-		history.index = (history.index - 1);
-	}
-
-	setHistory(history);
-}
-
 void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
 {
 	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formFiller.js"));

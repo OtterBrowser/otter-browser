@@ -65,7 +65,6 @@ public:
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
 	virtual void print(QPrinter *printer);
-	virtual void removeHistoryIndex(int index, bool purge = false);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setOption(int identifier, const QVariant &value);
 	virtual void setHistory(const WindowHistoryInformation &history);

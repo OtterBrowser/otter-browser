@@ -259,27 +259,6 @@ void QtWebEngineWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebEngineWebWidget::removeHistoryIndex(int index, bool purge)
-{
-	Q_UNUSED(purge)
-
-	WindowHistoryInformation history(getHistory());
-
-	if (index < 0 || index >= history.entries.count())
-	{
-		return;
-	}
-
-	history.entries.removeAt(index);
-
-	if (history.index >= index)
-	{
-		history.index = (history.index - 1);
-	}
-
-	setHistory(history);
-}
-
 void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	switch (identifier)

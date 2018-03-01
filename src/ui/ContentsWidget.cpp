@@ -306,12 +306,6 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 	}
 }
 
-void ContentsWidget::removeHistoryIndex(int index, bool purge)
-{
-	Q_UNUSED(index)
-	Q_UNUSED(purge)
-}
-
 void ContentsWidget::setOption(int identifier, const QVariant &value)
 {
 	Q_UNUSED(identifier)

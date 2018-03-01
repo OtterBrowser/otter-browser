@@ -270,12 +270,6 @@ void SourceViewerWebWidget::handleViewSourceReplyFinished()
 	}
 }
 
-void SourceViewerWebWidget::removeHistoryIndex(int index, bool purge)
-{
-	Q_UNUSED(index)
-	Q_UNUSED(purge)
-}
-
 void SourceViewerWebWidget::handleZoomChanged()
 {
 	SessionsManager::markSessionAsModified();
