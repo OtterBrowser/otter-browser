@@ -1317,6 +1317,36 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+		case ActionsManager::RemoveHistoryIndexAction:
+			if (parameters.contains(QLatin1String("index")))
+			{
+				const int index(parameters[QLatin1String("index")].toInt());
+
+				if (index >= 0 && index < m_page->history()->count())
+				{
+					if (parameters.value(QLatin1String("purge")).toBool())
+					{
+						const quint64 identifier(m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong());
+
+						if (identifier > 0)
+						{
+							HistoryManager::removeEntry(identifier);
+						}
+					}
+
+					WindowHistoryInformation history(getHistory());
+					history.entries.removeAt(index);
+
+					if (history.index >= index)
+					{
+						history.index = (history.index - 1);
+					}
+
+					setHistory(history);
+				}
+			}
+
+			break;
 		case ActionsManager::StopAction:
 			m_page->triggerAction(QWebPage::Stop);
 

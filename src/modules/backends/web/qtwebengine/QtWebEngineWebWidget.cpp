@@ -664,6 +664,26 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			});
 
 			break;
+		case ActionsManager::RemoveHistoryIndexAction:
+			if (parameters.contains(QLatin1String("index")))
+			{
+				const int index(parameters[QLatin1String("index")].toInt());
+
+				if (index >= 0 && index < m_page->history()->count())
+				{
+					WindowHistoryInformation history(getHistory());
+					history.entries.removeAt(index);
+
+					if (history.index >= index)
+					{
+						history.index = (history.index - 1);
+					}
+
+					setHistory(history);
+				}
+			}
+
+			break;
 		case ActionsManager::StopAction:
 			m_page->triggerAction(QWebEnginePage::Stop);
 
