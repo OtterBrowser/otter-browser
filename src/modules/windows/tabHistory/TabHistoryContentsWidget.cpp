@@ -122,15 +122,19 @@ void TabHistoryContentsWidget::updateHistory()
 void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 {
 	const QModelIndex index(m_ui->historyViewWidget->indexAt(position));
+	ActionExecutor::Object executor(m_window, m_window);
+	QMenu menu(this);
 
 	if (index.isValid())
 	{
-		ActionExecutor::Object executor(m_window, m_window);
-		QMenu menu(this);
 		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}}, executor, &menu));
 		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}, {QLatin1String("purge"), true}}, executor, &menu));
-		menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
+		menu.addSeparator();
 	}
+
+	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {}, executor, &menu));
+	menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Purge Tab History")}}, executor, &menu));
+	menu.exec(m_ui->historyViewWidget->mapToGlobal(position));
 }
 
 QString TabHistoryContentsWidget::getTitle() const
