@@ -534,6 +534,11 @@ bool SourceViewerWebWidget::canUndo() const
 	return m_sourceViewer->document()->isUndoAvailable();
 }
 
+bool SourceViewerWebWidget::canViewSource() const
+{
+	return false;
+}
+
 bool SourceViewerWebWidget::hasSelection() const
 {
 	return m_sourceViewer->textCursor().hasSelection();

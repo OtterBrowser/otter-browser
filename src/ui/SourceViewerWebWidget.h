@@ -66,6 +66,7 @@ public slots:
 
 protected:
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
+	bool canViewSource() const override;
 
 protected slots:
 	void handleViewSourceReplyFinished();
