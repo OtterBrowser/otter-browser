@@ -1195,7 +1195,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::SelectAllAction:
-			state.isEnabled = (!m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest));
+			state.isEnabled = !m_hitResult.flags.testFlag(HitTestResult::IsEmptyTest);
 
 			break;
 		case ActionsManager::ClearAllAction:
