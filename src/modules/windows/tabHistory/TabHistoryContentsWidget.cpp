@@ -128,7 +128,7 @@ void TabHistoryContentsWidget::showContextMenu(const QPoint &position)
 	if (index.isValid())
 	{
 		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}}, executor, &menu));
-		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}, {QLatin1String("purge"), true}}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index.row()}, {QLatin1String("clearGlobalHistory"), true}}, executor, &menu));
 		menu.addSeparator();
 	}
 

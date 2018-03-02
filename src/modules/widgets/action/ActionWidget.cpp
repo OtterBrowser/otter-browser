@@ -384,7 +384,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				menu()->close();
 
-				m_window->triggerAction(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), action->getParameters().value(QLatin1String("index"), -1).toInt()}, {QLatin1String("purge"), keyEvent->modifiers().testFlag(Qt::ShiftModifier)}});
+				m_window->triggerAction(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), action->getParameters().value(QLatin1String("index"), -1).toInt()}, {QLatin1String("clearGlobalHistory"), keyEvent->modifiers().testFlag(Qt::ShiftModifier)}});
 			}
 		}
 	}

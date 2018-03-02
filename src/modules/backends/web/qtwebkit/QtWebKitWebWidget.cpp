@@ -1295,7 +1295,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (index >= 0 && index < m_page->history()->count())
 				{
-					if (parameters.value(QLatin1String("purge"), false).toBool())
+					if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 					{
 						const quint64 entryIdentifier(m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong());
 
