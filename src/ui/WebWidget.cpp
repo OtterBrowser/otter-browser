@@ -1107,7 +1107,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::RemoveHistoryIndexAction:
 			if (parameters.value(QLatin1String("clearGlobalHistory"), false).toBool())
 			{
-				state.text = QCoreApplication::translate("actions", "Purge History Index");
+				state.text = QCoreApplication::translate("actions", "Purge History Entry");
 			}
 
 			if (parameters.contains(QLatin1String("index")))
