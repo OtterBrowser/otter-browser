@@ -274,7 +274,7 @@ QUrl PageInformationContentsWidget::getUrl() const
 
 QIcon PageInformationContentsWidget::getIcon() const
 {
-	return ThemesManager::createIcon(QLatin1String("dialog-information"), false);
+	return ThemesManager::createIcon(QLatin1String("view-information"), false);
 }
 
 ActionsManager::ActionDefinition::State PageInformationContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
