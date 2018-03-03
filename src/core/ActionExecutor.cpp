@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,9 +38,10 @@ void ActionExecutor::Object::connectSignals(const QObject *receiver, const QMeta
 {
 	if (receiver && m_object)
 	{
-		const QMetaMethod actionsStateChangedSignal(m_object.data()->metaObject()->method(m_object.data()->metaObject()->indexOfSignal("actionsStateChanged()")));
-		const QMetaMethod arbitraryActionsStateChangedSignal(m_object.data()->metaObject()->method(m_object.data()->metaObject()->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
-		const QMetaMethod categorizedActionsStateChangedSignal(m_object.data()->metaObject()->method(m_object.data()->metaObject()->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
+		const QMetaObject *metaObject(m_object.data()->metaObject());
+		const QMetaMethod actionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("actionsStateChanged()")));
+		const QMetaMethod arbitraryActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
+		const QMetaMethod categorizedActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
 
 		if (actionsStateChangedSignal.isValid() && actionsStateChangedMethod)
 		{
@@ -63,9 +64,10 @@ void ActionExecutor::Object::disconnectSignals(const QObject *receiver, const QM
 {
 	if (receiver && m_object)
 	{
-		const QMetaMethod actionsStateChangedSignal(m_object.data()->metaObject()->method(m_object.data()->metaObject()->indexOfSignal("actionsStateChanged()")));
-		const QMetaMethod arbitraryActionsStateChangedSignal(m_object.data()->metaObject()->method(m_object.data()->metaObject()->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
-		const QMetaMethod categorizedActionsStateChangedSignal(m_object.data()->metaObject()->method(m_object.data()->metaObject()->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
+		const QMetaObject *metaObject(m_object.data()->metaObject());
+		const QMetaMethod actionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("actionsStateChanged()")));
+		const QMetaMethod arbitraryActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("arbitraryActionsStateChanged(QVector<int>)")));
+		const QMetaMethod categorizedActionsStateChangedSignal(metaObject->method(metaObject->indexOfSignal("categorizedActionsStateChanged(QVector<int>)")));
 
 		if (actionsStateChangedSignal.isValid() && actionsStateChangedMethod)
 		{
