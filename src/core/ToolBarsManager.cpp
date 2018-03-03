@@ -448,8 +448,9 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 		m_identifiers[identifier] = Utils::createIdentifier(QLatin1String("CustomBar"), toolBars, false);
 
+		definition.identifier = identifier;
+
 		m_definitions.append(definition);
-		m_definitions[identifier].identifier = identifier;
 
 		if (m_definitions[identifier].location == Qt::NoToolBarArea)
 		{
