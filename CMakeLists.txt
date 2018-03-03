@@ -173,6 +173,7 @@ set(otter_src
 	src/ui/OpenAddressDialog.cpp
 	src/ui/OpenBookmarkDialog.cpp
 	src/ui/OptionWidget.cpp
+	src/ui/PageScreenDialog.cpp
 	src/ui/PreferencesDialog.cpp
 	src/ui/PreviewWidget.cpp
 	src/ui/ProxyModel.cpp
@@ -285,6 +286,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/MasterPasswordDialog.ui
 	src/ui/OpenAddressDialog.ui
 	src/ui/OpenBookmarkDialog.ui
+	src/ui/PageScreenDialog.ui
 	src/ui/PreferencesDialog.ui
 	src/ui/ReloadTimeDialog.ui
 	src/ui/ReportDialog.ui

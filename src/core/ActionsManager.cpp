@@ -291,6 +291,9 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(NewWindowPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Window"), {}, ThemesManager::createIcon(QLatin1String("window-new-private")), ActionDefinition::ApplicationScope);
 	registerAction(OpenAction, QT_TRANSLATE_NOOP("actions", "Open…"), {}, ThemesManager::createIcon(QLatin1String("document-open")), ActionDefinition::MainWindowScope);
 	registerAction(SaveAction, QT_TRANSLATE_NOOP("actions", "Save…"), {}, ThemesManager::createIcon(QLatin1String("document-save")), ActionDefinition::WindowScope);
+	#ifdef OTTER_ENABLE_QTWEBKIT
+	registerAction(SavePageScreenAction, QT_TRANSLATE_NOOP("actions", "Save Page Screen"), {}, ThemesManager::createIcon(QLatin1String("image-loading")), ActionDefinition::WindowScope);
+	#endif
 	registerAction(CloneTabAction, QT_TRANSLATE_NOOP("actions", "Clone Tab"), {}, {}, ActionDefinition::WindowScope);
 	registerAction(PeekTabAction, QT_TRANSLATE_NOOP("actions", "Peek Tab"), {}, {}, ActionDefinition::MainWindowScope);
 	registerAction(PinTabAction, QT_TRANSLATE_NOOP("actions", "Pin Tab"), {}, {}, ActionDefinition::WindowScope);

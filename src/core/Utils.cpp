@@ -530,6 +530,23 @@ QUrl normalizeUrl(QUrl url)
 	return url;
 }
 
+QString filterCharsFromFilename(const QString &name)
+{
+	QString value = name;
+
+	value.replace(QLatin1Char('/'), QLatin1Char('-'));
+	value.remove(QLatin1Char('\\'));
+	value.remove(QLatin1Char(':'));
+	value.remove(QLatin1Char('*'));
+	value.remove(QLatin1Char('?'));
+	value.remove(QLatin1Char('"'));
+	value.remove(QLatin1Char('<'));
+	value.remove(QLatin1Char('>'));
+	value.remove(QLatin1Char('|'));
+
+	return value;
+}
+
 QLocale createLocale(const QString &name)
 {
 	if (name == QLatin1String("pt"))
