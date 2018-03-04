@@ -764,9 +764,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		return;
 	}
 
-	const bool showStartPage(m_isStartPageEnabled && url.scheme() == QLatin1String("about") && url.path() == QLatin1String("start"));
-
-	if (showStartPage)
+	if (m_isStartPageEnabled && url.scheme() == QLatin1String("about") && url.path() == QLatin1String("start"))
 	{
 		if (m_webWidget)
 		{
