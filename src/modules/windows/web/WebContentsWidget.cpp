@@ -962,7 +962,7 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 	if (state == WebWidget::CrashedLoadingState)
 	{
 		const QString tabCrashingAction(SettingsManager::getOption(SettingsManager::Interface_TabCrashingActionOption, Utils::extractHost(getUrl())).toString());
-		bool reloadTab(tabCrashingAction != QLatin1String("close"));
+		bool shouldReloadTab(tabCrashingAction != QLatin1String("close"));
 
 		if (tabCrashingAction == QLatin1String("ask"))
 		{
@@ -976,10 +976,10 @@ void WebContentsWidget::handleLoadingStateChange(WebWidget::LoadingState state)
 				SettingsManager::setOption(SettingsManager::Interface_TabCrashingActionOption, (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
 			}
 
-			reloadTab = dialog.isAccepted();
+			shouldReloadTab = dialog.isAccepted();
 		}
 
-		if (reloadTab)
+		if (shouldReloadTab)
 		{
 			triggerAction(ActionsManager::ReloadAction);
 		}
