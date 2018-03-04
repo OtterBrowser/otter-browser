@@ -589,12 +589,8 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::QuickPreferencesAction:
+			if (!m_isTabPreferencesMenuVisible)
 			{
-				if (m_isTabPreferencesMenuVisible)
-				{
-					return;
-				}
-
 				m_isTabPreferencesMenuVisible = true;
 
 				Menu menu(Menu::NoMenuRole, this);
