@@ -105,6 +105,7 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
+	void addInformationBar(QWidget *widget);
 	void scrollContents(const QPoint &delta);
 	void setScrollMode(ScrollMode mode);
 	void setWidget(WebWidget *widget, const QVariantMap &parameters, const QHash<int, QVariant> &options);

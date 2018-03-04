@@ -690,6 +690,13 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 	}
 }
 
+void WebContentsWidget::addInformationBar(QWidget *widget)
+{
+	m_layout->insertWidget(0, widget);
+
+	widget->show();
+}
+
 void WebContentsWidget::closePasswordBar()
 {
 	if (m_passwordBarWidget)
@@ -861,9 +868,7 @@ void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Passwo
 
 			connect(m_passwordBarWidget, &PasswordBarWidget::requestedClose, this, &WebContentsWidget::closePasswordBar);
 
-			m_layout->insertWidget(0, m_passwordBarWidget);
-
-			m_passwordBarWidget->show();
+			addInformationBar(m_passwordBarWidget);
 		}
 	}
 }
@@ -876,9 +881,7 @@ void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QU
 
 		connect(m_popupsBarWidget, &PopupsBarWidget::requestedClose, this, &WebContentsWidget::closePopupsBar);
 
-		m_layout->insertWidget(0, m_popupsBarWidget);
-
-		m_popupsBarWidget->show();
+		addInformationBar(m_popupsBarWidget);
 	}
 
 	m_popupsBarWidget->addPopup(popupUrl);
@@ -919,9 +922,7 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 
 		PermissionBarWidget *widget(new PermissionBarWidget(feature, url, this));
 
-		m_layout->insertWidget((m_permissionBarWidgets.count() + (m_searchBarWidget ? 1 : 0)), widget);
-
-		widget->show();
+		addInformationBar(widget);
 
 		m_permissionBarWidgets.append(widget);
 
