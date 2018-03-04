@@ -118,7 +118,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QString &host, const QV
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
 	QStandardItemModel *cookiesModel(new QStandardItemModel(this));
-	cookiesModel->setHorizontalHeaderLabels({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration date")});
+	cookiesModel->setHorizontalHeaderLabels({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration Date")});
 
 	m_ui->cookiesViewWidget->setModel(cookiesModel);
 
@@ -198,7 +198,7 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-		m_ui->cookiesViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration date")});
+		m_ui->cookiesViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration Date")});
 	}
 }
 
