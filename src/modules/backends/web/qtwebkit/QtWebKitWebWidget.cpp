@@ -2492,6 +2492,8 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
 	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]")));
 	QSet<QUrl> urls;
+	urls.reserve(elements.count());
+
 	QVector<LinkUrl> links;
 	links.reserve(elements.count());
 
@@ -2523,6 +2525,8 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 {
 	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]")));
 	QSet<QUrl> urls;
+	urls.reserve(elements.count());
+
 	QVector<LinkUrl> links;
 	links.reserve(elements.count());
 
