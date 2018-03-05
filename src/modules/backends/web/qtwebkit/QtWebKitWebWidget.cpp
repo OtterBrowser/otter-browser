@@ -1349,37 +1349,35 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::ContextMenuAction:
+			if (parameters.contains(QLatin1String("context")) && parameters[QLatin1String("context")].toInt() == QContextMenuEvent::Keyboard)
 			{
-				if (parameters.contains(QLatin1String("context")) && parameters[QLatin1String("context")].toInt() == QContextMenuEvent::Keyboard)
-				{
-					const QWebElement element(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")));
+				const QWebElement element(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")));
 
-					if (element.isNull())
-					{
-						setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
-					}
-					else
-					{
-						QPoint clickPosition(element.geometry().center());
-						QWebFrame *frame(element.webFrame());
-
-						while (frame)
-						{
-							clickPosition -= frame->scrollPosition();
-
-							frame = frame->parentFrame();
-						}
-
-						setClickPosition(clickPosition);
-					}
-				}
-				else
+				if (element.isNull())
 				{
 					setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
 				}
+				else
+				{
+					QPoint clickPosition(element.geometry().center());
+					QWebFrame *frame(element.webFrame());
 
-				showContextMenu(getClickPosition());
+					while (frame)
+					{
+						clickPosition -= frame->scrollPosition();
+
+						frame = frame->parentFrame();
+					}
+
+					setClickPosition(clickPosition);
+				}
 			}
+			else
+			{
+				setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
+			}
+
+			showContextMenu(getClickPosition());
 
 			break;
 		case ActionsManager::UndoAction:
