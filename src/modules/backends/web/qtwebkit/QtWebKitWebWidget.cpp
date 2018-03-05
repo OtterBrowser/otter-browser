@@ -2738,19 +2738,23 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption, Utils::extractHost(getUrl())).toString() == QLatin1String("onDemand"))
 		{
 			const QWidget *widget(childAt(mouseEvent->pos()));
-			const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));
-			const QString tagName(hitResult.element().tagName().toLower());
 
-			if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
+			if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget"))
 			{
-				m_pluginToken = QUuid::createUuid().toString();
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));
+				const QString tagName(hitResult.element().tagName().toLower());
 
-				QWebElement element(hitResult.element().clone());
-				element.setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
+				if (tagName == QLatin1String("object") || tagName == QLatin1String("embed"))
+				{
+					m_pluginToken = QUuid::createUuid().toString();
 
-				hitResult.element().replace(element);
+					QWebElement element(hitResult.element().clone());
+					element.setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
 
-				return true;
+					hitResult.element().replace(element);
+
+					return true;
+				}
 			}
 		}
 
