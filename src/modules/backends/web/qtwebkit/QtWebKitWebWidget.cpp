@@ -2892,14 +2892,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				break;
 			case QEvent::ToolTip:
-				{
-					QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
-
-					if (helpEvent)
-					{
-						handleToolTipEvent(helpEvent, m_webView);
-					}
-				}
+				handleToolTipEvent(static_cast<QHelpEvent*>(event), m_webView);
 
 				return true;
 			default:
