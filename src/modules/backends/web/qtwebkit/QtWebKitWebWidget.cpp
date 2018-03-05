@@ -2741,17 +2741,17 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget"))
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(mouseEvent->pos()));
-				const QString tagName(hitResult.element().tagName().toLower());
+				QWebElement element(m_page->mainFrame()->hitTestContent(mouseEvent->pos()).element());
+				const QString tagName(element.tagName().toLower());
 
 				if (tagName == QLatin1String("object") || tagName == QLatin1String("embed"))
 				{
 					m_pluginToken = QUuid::createUuid().toString();
 
-					QWebElement element(hitResult.element().clone());
-					element.setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
+					QWebElement clonedElement(element.clone());
+					clonedElement.setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
 
-					hitResult.element().replace(element);
+					element.replace(clonedElement);
 
 					return true;
 				}
