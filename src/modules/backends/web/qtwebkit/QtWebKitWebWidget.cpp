@@ -1770,15 +1770,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 {
-	const QWebElementCollection styleSheets(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
+	const QWebElementCollection styleSheetElements(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
 
-	for (int i = 0; i < styleSheets.count(); ++i)
+	for (int i = 0; i < styleSheetElements.count(); ++i)
 	{
-		styleSheets.at(i).evaluateJavaScript(QLatin1String("this.disabled = true"));
+		styleSheetElements.at(i).evaluateJavaScript(QLatin1String("this.disabled = true"));
 
-		if (styleSheets.at(i).attribute(QLatin1String("title")) == styleSheet)
+		if (styleSheetElements.at(i).attribute(QLatin1String("title")) == styleSheet)
 		{
-			styleSheets.at(i).evaluateJavaScript(QLatin1String("this.disabled = false"));
+			styleSheetElements.at(i).evaluateJavaScript(QLatin1String("this.disabled = false"));
 		}
 	}
 }
