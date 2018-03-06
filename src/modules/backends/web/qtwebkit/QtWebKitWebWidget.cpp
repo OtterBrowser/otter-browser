@@ -1464,8 +1464,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 			{
 				const QWebFrame *frame(m_page->currentFrame() ? m_page->currentFrame() : m_page->mainFrame());
-				const QWebElement element(frame->findFirstElement(QLatin1String(":focus")));
-				const QString tagName(element.tagName().toLower());
+				const QString tagName(frame->findFirstElement(QLatin1String(":focus")).tagName().toLower());
 
 				if (tagName == QLatin1String("textarea") || tagName == QLatin1String("input"))
 				{
