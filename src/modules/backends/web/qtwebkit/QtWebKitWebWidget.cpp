@@ -2128,7 +2128,7 @@ QUrl QtWebKitWebWidget::resolveUrl(QWebFrame *frame, const QUrl &url) const
 {
 	if (url.isRelative())
 	{
-		return ((frame ? frame->baseUrl() : getUrl()).resolved(url));
+		return (frame ? frame->baseUrl() : getUrl()).resolved(url);
 	}
 
 	return url;
