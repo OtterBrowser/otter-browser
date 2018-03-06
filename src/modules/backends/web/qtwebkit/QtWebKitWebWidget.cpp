@@ -2468,13 +2468,13 @@ QStringList QtWebKitWebWidget::getBlockedElements() const
 
 QStringList QtWebKitWebWidget::getStyleSheets() const
 {
-	const QWebElementCollection styleSheets(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
 	QStringList titles;
-	titles.reserve(styleSheets.count());
+	titles.reserve(elements.count());
 
-	for (int i = 0; i < styleSheets.count(); ++i)
+	for (int i = 0; i < elements.count(); ++i)
 	{
-		const QString title(styleSheets.at(i).attribute(QLatin1String("title")));
+		const QString title(elements.at(i).attribute(QLatin1String("title")));
 
 		if (!title.isEmpty() && !titles.contains(title))
 		{
