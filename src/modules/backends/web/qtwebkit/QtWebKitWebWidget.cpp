@@ -1819,6 +1819,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	stream >> *(m_page->history());
 #else
 	QVariantList entries;
+	entries.reserve(history.entries.count());
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
