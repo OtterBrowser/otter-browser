@@ -1802,7 +1802,6 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	}
 
 	const int index(qMin(history.index, (m_page->history()->maximumItemCount() - 1)));
-
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	qint64 documentSequence(0);
 	qint64 itemSequence(0);
