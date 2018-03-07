@@ -1134,11 +1134,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::CopyImageToClipboardAction:
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
+				const QPixmap pixmap(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).pixmap());
 
-				if (!hitResult.pixmap().isNull())
+				if (!pixmap.isNull())
 				{
-					Application::clipboard()->setPixmap(hitResult.pixmap());
+					Application::clipboard()->setPixmap(pixmap);
 				}
 				else
 				{
