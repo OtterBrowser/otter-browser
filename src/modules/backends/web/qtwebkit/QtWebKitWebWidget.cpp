@@ -1000,7 +1000,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyLinkToClipboardAction:
 			if (!getCurrentHitTestResult().linkUrl.isEmpty())
 			{
-				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -1060,7 +1060,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -1428,18 +1428,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			else if (parameters.contains(QLatin1String("text")))
 			{
 				QMimeData *mimeData(new QMimeData());
-				const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());
+				const QStringList mimeTypes(Application::clipboard()->mimeData()->formats());
 
 				for (int i = 0; i < mimeTypes.count(); ++i)
 				{
-					mimeData->setData(mimeTypes.at(i), QGuiApplication::clipboard()->mimeData()->data(mimeTypes.at(i)));
+					mimeData->setData(mimeTypes.at(i), Application::clipboard()->mimeData()->data(mimeTypes.at(i)));
 				}
 
-				QGuiApplication::clipboard()->setText(parameters[QLatin1String("text")].toString());
+				Application::clipboard()->setText(parameters[QLatin1String("text")].toString());
 
 				m_page->triggerAction(QWebPage::Paste);
 
-				QGuiApplication::clipboard()->setMimeData(mimeData);
+				Application::clipboard()->setMimeData(mimeData);
 			}
 			else
 			{
