@@ -853,13 +853,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			{
-				ensureInitialized();
+			ensureInitialized();
 
-				m_webView->setFocus();
+			m_webView->setFocus();
 
-				m_page->runJavaScript(QLatin1String("var element = document.activeElement; if (element && element.tagName && (element.tagName.toLowerCase() == 'input' || element.tagName.toLowerCase() == 'textarea'))) { document.activeElement.blur(); }"));
-			}
+			m_page->runJavaScript(QLatin1String("var element = document.activeElement; if (element && element.tagName && (element.tagName.toLowerCase() == 'input' || element.tagName.toLowerCase() == 'textarea'))) { document.activeElement.blur(); }"));
 
 			break;
 		case ActionsManager::ViewSourceAction:
