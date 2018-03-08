@@ -889,7 +889,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			break;
 		case ActionsManager::FullScreenAction:
 			{
-				MainWindow *mainWindow(MainWindow::findMainWindow(this));
+				const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 				if (mainWindow && !mainWindow->isFullScreen())
 				{
