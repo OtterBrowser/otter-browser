@@ -1489,11 +1489,12 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
 	const QWebEngineHistory *history(m_page->history());
+	const int historyCount(history->count());
 	WindowHistoryInformation information;
+	information.entries.reserve(historyCount);
 	information.index = history->currentItemIndex();
 
 	const QString requestedUrl(m_page->requestedUrl().toString());
-	const int historyCount(history->count());
 
 	for (int i = 0; i < historyCount; ++i)
 	{
