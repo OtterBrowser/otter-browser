@@ -1790,18 +1790,9 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			break;
 		case QEvent::ToolTip:
-			{
-				QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+			handleToolTipEvent(static_cast<QHelpEvent*>(event), m_webView);
 
-				if (helpEvent)
-				{
-					handleToolTipEvent(helpEvent, m_webView);
-				}
-
-				return true;
-			}
-
-			break;
+			return true;
 		default:
 			break;
 	}
