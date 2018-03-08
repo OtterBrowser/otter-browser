@@ -1607,12 +1607,7 @@ bool QtWebEngineWebWidget::canGoForward() const
 
 bool QtWebEngineWebWidget::canFastForward() const
 {
-	if (m_canGoForwardValue == TrueValue || canGoForward())
-	{
-		return true;
-	}
-
-	return false;
+	return (m_canGoForwardValue == TrueValue || canGoForward());
 }
 
 bool QtWebEngineWebWidget::canRedo() const
