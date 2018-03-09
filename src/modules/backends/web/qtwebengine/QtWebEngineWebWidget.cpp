@@ -55,7 +55,6 @@
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QAction>
-#include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
