@@ -89,7 +89,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 		return;
 	}
 
-	QWebEngineProfile *profile(qobject_cast<QWebEngineProfile*>(sender()));
+	const QWebEngineProfile *profile(qobject_cast<QWebEngineProfile*>(sender()));
 	QtWebEngineTransfer *transfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | ((profile && profile->isOffTheRecord()) ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 	if (transfer->getState() == Transfer::CancelledState)
