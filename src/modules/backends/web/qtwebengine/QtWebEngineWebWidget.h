@@ -140,7 +140,6 @@ protected slots:
 private:
 	QWebEngineView *m_webView;
 	QtWebEnginePage *m_page;
-	QTime *m_loadingTime;
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;

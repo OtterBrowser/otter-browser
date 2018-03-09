@@ -64,7 +64,6 @@ namespace Otter
 QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
-	m_loadingTime(nullptr),
 	m_loadingState(FinishedLoadingState),
 	m_canGoForwardValue(UnknownValue),
 	m_documentLoadingProgress(0),
@@ -218,12 +217,6 @@ void QtWebEngineWebWidget::pageLoadStarted()
 	m_lastUrlClickTime = QDateTime();
 	m_loadingState = OngoingLoadingState;
 	m_documentLoadingProgress = 0;
-
-	if (!m_loadingTime)
-	{
-		m_loadingTime = new QTime();
-		m_loadingTime->start();
-	}
 
 	setStatusMessage({});
 	setStatusMessageOverride({});
