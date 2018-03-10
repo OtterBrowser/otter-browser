@@ -1195,8 +1195,10 @@ void QtWebEngineWebWidget::setHistory(QDataStream &stream)
 	stream.device()->reset();
 	stream >> *(m_page->history());
 
-	setRequestedUrl(m_page->history()->currentItem().url(), false, true);
-	updateOptions(m_page->history()->currentItem().url());
+	const QUrl url(m_page->history()->currentItem().url());
+
+	setRequestedUrl(url, false, true);
+	updateOptions(url);
 }
 
 void QtWebEngineWebWidget::setZoom(int zoom)
