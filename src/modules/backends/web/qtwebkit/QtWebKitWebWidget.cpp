@@ -1738,7 +1738,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
-					updateOptions(getUrl());
+					updateOptions(url);
 
 					const QVector<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
 
