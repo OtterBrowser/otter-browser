@@ -1768,12 +1768,7 @@ void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		elements.at(i).evaluateJavaScript(QLatin1String("this.disabled = true"));
-
-		if (elements.at(i).attribute(QLatin1String("title")) == styleSheet)
-		{
-			elements.at(i).evaluateJavaScript(QLatin1String("this.disabled = false"));
-		}
+		elements.at(i).evaluateJavaScript(QLatin1String("this.disabled = ") + ((elements.at(i).attribute(QLatin1String("title")) == styleSheet) ? QLatin1String("false") : QLatin1String("true")));
 	}
 }
 
