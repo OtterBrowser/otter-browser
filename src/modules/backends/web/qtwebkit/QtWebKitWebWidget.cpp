@@ -1640,8 +1640,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_page->mainFrame()->setFocus();
 
-				const QWebElement element(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")));
-				const QString tagName(element.tagName().toLower());
+				const QString tagName(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")).tagName().toLower());
 
 				if (tagName == QLatin1String("textarea") || tagName == QLatin1String("input"))
 				{
