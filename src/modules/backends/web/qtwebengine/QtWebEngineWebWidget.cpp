@@ -1354,29 +1354,29 @@ QString QtWebEngineWebWidget::getTitle() const
 {
 	const QString title(m_page->title());
 
-	if (title.isEmpty())
+	if (!title.isEmpty())
 	{
-		const QUrl url(getUrl());
-
-		if (Utils::isUrlEmpty(url))
-		{
-			return tr("Blank Page");
-		}
-
-		if (url.isLocalFile())
-		{
-			return QFileInfo(url.toLocalFile()).canonicalFilePath();
-		}
-
-		if (!url.isEmpty())
-		{
-			return url.toString();
-		}
-
-		return tr("(Untitled)");
+		return title;
 	}
 
-	return title;
+	const QUrl url(getUrl());
+
+	if (Utils::isUrlEmpty(url))
+	{
+		return tr("Blank Page");
+	}
+
+	if (url.isLocalFile())
+	{
+		return QFileInfo(url.toLocalFile()).canonicalFilePath();
+	}
+
+	if (!url.isEmpty())
+	{
+		return url.toString();
+	}
+
+	return tr("(Untitled)");
 }
 
 QString QtWebEngineWebWidget::getSelectedText() const
