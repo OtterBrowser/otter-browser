@@ -413,8 +413,7 @@ void ItemViewWidget::ensureInitialized()
 
 				if (size.width() > maximumSectionWidth)
 				{
-					widestSections.clear();
-					widestSections.append(i);
+					widestSections = {i};
 
 					maximumSectionWidth = size.width();
 				}
