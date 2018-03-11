@@ -95,7 +95,7 @@ void IconWidget::populateMenu()
 {
 	menu()->clear();
 
-	connect(menu()->addAction(tr("Select From File…")), &QAction::triggered, this, &IconWidget::selectFromTheme);
+	connect(menu()->addAction(tr("Select From File…")), &QAction::triggered, this, &IconWidget::selectFromFile);
 	connect(menu()->addAction(tr("Select From Theme…")), &QAction::triggered, this, &IconWidget::selectFromTheme);
 
 	if (!m_defaultIcon.isNull())
