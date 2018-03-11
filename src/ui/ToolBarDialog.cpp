@@ -159,7 +159,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_ui->addButton->setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
 	m_ui->moveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("go-up")));
 	m_ui->moveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("go-down")));
-	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
+	m_ui->addBookmarkButton->setMenu(new QMenu(m_ui->addBookmarkButton));
 
 	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
@@ -221,10 +221,10 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	m_definition.entries.clear();
 
-	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addEntryButton));
+	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addBookmarkButton));
 
-	m_ui->addEntryButton->setMenu(bookmarksMenu);
-	m_ui->addEntryButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
+	m_ui->addBookmarkButton->setMenu(bookmarksMenu);
+	m_ui->addBookmarkButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
 
 	connect(bookmarksMenu, &Menu::triggered, this, &ToolBarDialog::addBookmark);
 	connect(m_ui->addButton, &QToolButton::clicked, this, &ToolBarDialog::addNewEntry);
