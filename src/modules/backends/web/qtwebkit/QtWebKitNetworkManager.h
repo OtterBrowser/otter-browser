@@ -77,7 +77,7 @@ protected slots:
 	void handleLoadFinished(bool result);
 
 private:
-	QtWebKitWebWidget *m_widget;
+	QPointer<QtWebKitWebWidget> m_widget;
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
 	NetworkProxyFactory *m_proxyFactory;
