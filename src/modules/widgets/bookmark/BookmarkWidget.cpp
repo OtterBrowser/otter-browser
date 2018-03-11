@@ -120,9 +120,23 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		setMenu(nullptr);
 	}
 
-	setText(m_bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")));
+	setIcon(getIcon());
 	setStatusTip(m_bookmark->getUrl().toDisplayString());
-	setIcon(m_bookmark->getIcon());
+	setText(getText().replace(QLatin1Char('&'), QLatin1String("&&")));
+}
+
+QString BookmarkWidget::getText() const
+{
+	const QVariantMap options(getOptions());
+
+	return ((isCustomized() && options.contains(QLatin1String("text"))) ? options[QLatin1String("text")].toString() : m_bookmark->getTitle());
+}
+
+QIcon BookmarkWidget::getIcon() const
+{
+	const QVariantMap options(getOptions());
+
+	return ((isCustomized() && options.contains(QLatin1String("icon"))) ? options[QLatin1String("icon")].value<QIcon>() : m_bookmark->getIcon());
 }
 
 }

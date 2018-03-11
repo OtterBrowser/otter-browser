@@ -34,6 +34,9 @@ class BookmarkWidget final : public ToolButtonWidget
 public:
 	explicit BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
+	QString getText() const override;
+	QIcon getIcon() const override;
+
 protected:
 	void changeEvent(QEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
