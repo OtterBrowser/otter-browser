@@ -388,10 +388,6 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				subWindow->storeState();
-				subWindow->setWindowFlags(Qt::SubWindow);
-				subWindow->showMinimized();
-
 				if (activeSubWindows == 1)
 				{
 					m_mainWindow->setActiveWindowByIndex(-1);
@@ -400,6 +396,10 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				{
 					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, m_mainWindow);
 				}
+
+				subWindow->storeState();
+				subWindow->setWindowFlags(Qt::SubWindow);
+				subWindow->showMinimized();
 			}
 
 			break;
