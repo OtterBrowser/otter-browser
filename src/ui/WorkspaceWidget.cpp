@@ -377,13 +377,12 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			if (subWindow)
 			{
 				const int activeSubWindows(m_mainWindow->getWindowCount() - getWindowCount(Qt::WindowMinimized));
-				const bool wasActive(subWindow == m_mdi->currentSubWindow());
 
 				if (activeSubWindows == 1)
 				{
 					m_mainWindow->setActiveWindowByIndex(-1);
 				}
-				else if (wasActive && activeSubWindows > 1)
+				else if (subWindow == m_mdi->currentSubWindow() && activeSubWindows > 1)
 				{
 					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, m_mainWindow);
 				}
