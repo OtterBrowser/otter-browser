@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class FilePasswordsStorageBackend : public PasswordsStorageBackend
+class FilePasswordsStorageBackend final : public PasswordsStorageBackend
 {
 	Q_OBJECT
 
