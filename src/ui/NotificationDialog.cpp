@@ -157,27 +157,22 @@ void NotificationDialog::resizeEvent(QResizeEvent *event)
 
 bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonPress)
+	if (event->type() == QEvent::MouseButtonPress && static_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
 	{
-		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		m_animation->stop();
 
-		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+		if (object == m_closeLabel)
 		{
-			m_animation->stop();
-
-			if (object == m_closeLabel)
-			{
-				m_notification->markAsIgnored();
-
-				close();
-
-				return true;
-			}
-
-			m_notification->markAsClicked();
+			m_notification->markAsIgnored();
 
 			close();
+
+			return true;
 		}
+
+		m_notification->markAsClicked();
+
+		close();
 	}
 
 	return QWidget::eventFilter(object, event);
