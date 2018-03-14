@@ -221,7 +221,7 @@ QVector<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 {
 	if (!domain.isEmpty())
 	{
-		const QVector<QNetworkCookie> cookies(allCookies().toVector());
+		const QList<QNetworkCookie> cookies(allCookies());
 		QVector<QNetworkCookie> domainCookies;
 
 		for (int i = 0; i < cookies.count(); ++i)
