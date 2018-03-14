@@ -102,10 +102,10 @@ void CookieJar::clearCookies(int period)
 
 	const QList<QNetworkCookie> cookies(allCookies());
 
+	setAllCookies({});
+
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		QNetworkCookieJar::deleteCookie(cookies.at(i));
-
 		emit cookieRemoved(cookies.at(i));
 	}
 
