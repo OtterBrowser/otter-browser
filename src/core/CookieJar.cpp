@@ -109,24 +109,21 @@ void CookieJar::clearCookies(int period)
 		emit cookieRemoved(cookies.at(i));
 	}
 
+	scheduleSave();
+}
+
+void CookieJar::scheduleSave()
+{
 	if (!m_isPrivate)
 	{
 		if (Application::isAboutToQuit())
 		{
 			save();
 		}
-		else
+		else if (m_saveTimer == 0)
 		{
-			scheduleSave();
+			m_saveTimer = startTimer(500);
 		}
-	}
-}
-
-void CookieJar::scheduleSave()
-{
-	if (!m_isPrivate && m_saveTimer == 0)
-	{
-		m_saveTimer = startTimer(500);
 	}
 }
 
