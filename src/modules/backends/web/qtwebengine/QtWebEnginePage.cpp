@@ -361,13 +361,13 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 	{
 		scripts().clear();
 
-		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(url));
+		const QVector<UserScript*> userScripts(UserScript::getUserScriptsForUrl(url));
 
-		for (int i = 0; i < scripts.count(); ++i)
+		for (int i = 0; i < userScripts.count(); ++i)
 		{
 			QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
 
-			switch (scripts.at(i)->getInjectionTime())
+			switch (userScripts.at(i)->getInjectionTime())
 			{
 				case UserScript::DeferredTime:
 					injectionPoint = QWebEngineScript::Deferred;
@@ -382,11 +382,11 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 			}
 
 			QWebEngineScript script;
-			script.setSourceCode(scripts.at(i)->getSource());
-			script.setRunsOnSubFrames(scripts.at(i)->shouldRunOnSubFrames());
+			script.setSourceCode(userScripts.at(i)->getSource());
+			script.setRunsOnSubFrames(userScripts.at(i)->shouldRunOnSubFrames());
 			script.setInjectionPoint(injectionPoint);
 
-			this->scripts().insert(script);
+			scripts().insert(script);
 		}
 
 		emit aboutToNavigate(url, type);
