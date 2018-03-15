@@ -79,6 +79,11 @@ void ClearHistoryDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		if (!m_isConfiguring)
+		{
+			m_ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Clear Now"));
+		}
 	}
 }
 
