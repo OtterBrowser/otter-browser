@@ -42,7 +42,7 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool is
 
 	if (settings.isEmpty())
 	{
-		settings = QStringList({QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")});
+		settings = getDefaultClearSettings();
 	}
 
 	if (m_isConfiguring)
@@ -163,6 +163,11 @@ QStringList ClearHistoryDialog::getClearSettings() const
 	}
 
 	return clearSettings;
+}
+
+QStringList ClearHistoryDialog::getDefaultClearSettings()
+{
+	return {QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")};
 }
 
 }

@@ -39,6 +39,7 @@ public:
 	~ClearHistoryDialog();
 
 	QStringList getClearSettings() const;
+	static QStringList getDefaultClearSettings();
 
 protected:
 	void changeEvent(QEvent *event) override;
