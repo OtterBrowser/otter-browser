@@ -80,6 +80,15 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	connect(m_ui->enableCookiesCheckBox, &QCheckBox::toggled, m_ui->cookiesWidget, &QWidget::setEnabled);
 	connect(m_ui->thirdPartyCookiesExceptionsButton, &QPushButton::clicked, this, &PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions);
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, m_ui->clearHistoryButton, &QPushButton::setEnabled);
+	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, [&](bool isChecked)
+	{
+		if (isChecked && m_clearHisorySettings.isEmpty())
+		{
+			m_clearHisorySettings = ClearHistoryDialog::getDefaultClearSettings();
+
+			emit settingsModified();
+		}
+	});
 	connect(m_ui->clearHistoryButton, &QPushButton::clicked, this, &PreferencesPrivacyPageWidget::setupClearHistory);
 	connect(m_ui->managePasswordsButton, &QPushButton::clicked, [&]()
 	{
