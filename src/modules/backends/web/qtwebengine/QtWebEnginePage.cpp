@@ -367,13 +367,18 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 		{
 			QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
 
-			if (scripts.at(i)->getInjectionTime() == UserScript::DocumentCreationTime)
+			switch (scripts.at(i)->getInjectionTime())
 			{
-				injectionPoint = QWebEngineScript::DocumentCreation;
-			}
-			else if (scripts.at(i)->getInjectionTime() == UserScript::DeferredTime)
-			{
-				injectionPoint = QWebEngineScript::Deferred;
+				case UserScript::DeferredTime:
+					injectionPoint = QWebEngineScript::Deferred;
+
+					break;
+				case UserScript::DocumentCreationTime:
+					injectionPoint = QWebEngineScript::DocumentCreation;
+
+					break;
+				default:
+					break;
 			}
 
 			QWebEngineScript script;
