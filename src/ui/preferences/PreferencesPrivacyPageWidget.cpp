@@ -34,7 +34,7 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	m_clearHisorySettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList()),
 	m_ui(new Ui::PreferencesPrivacyPageWidget)
 {
-	m_clearHisorySettings.removeAll(QString());
+	m_clearHisorySettings.removeAll({});
 
 	m_ui->setupUi(this);
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I do not want to be tracked"), QLatin1String("doNotAllow"));
