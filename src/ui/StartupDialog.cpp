@@ -68,7 +68,25 @@ StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dial
 
 	setSession(index);
 
-	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, [&]()
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, [&]()
+	{
+		switch (m_ui->enablePluginsCheckBox->checkState())
+		{
+			case Qt::Checked:
+				SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, QLatin1String("enabled"));
+
+				break;
+			case Qt::PartiallyChecked:
+				SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, QLatin1String("onDemand"));
+
+				break;
+			default:
+				SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, QLatin1String("disabled"));
+
+				break;
+		}
+	});
+	connect(m_ui->buttonGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), [&]()
 	{
 		m_ui->continueSessionWidget->setEnabled(m_ui->continueSessionButton->isChecked());
 	});
