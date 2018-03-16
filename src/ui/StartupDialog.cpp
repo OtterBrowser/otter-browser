@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,17 @@ StartupDialog::StartupDialog(const QString &sessionName, QWidget *parent) : Dial
 	m_ui->setupUi(this);
 	m_ui->windowsTreeView->setModel(m_windowsModel);
 	m_ui->homePageButton->setEnabled(!SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString().isEmpty());
+
+	const QString pluginsPolicy(SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString());
+
+	if (pluginsPolicy == QLatin1String("enabled"))
+	{
+		m_ui->enablePluginsCheckBox->setCheckState(Qt::Checked);
+	}
+	else if (pluginsPolicy == QLatin1String("onDemand"))
+	{
+		m_ui->enablePluginsCheckBox->setCheckState(Qt::PartiallyChecked);
+	}
 
 	const QStringList sessionNames(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
