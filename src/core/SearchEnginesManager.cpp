@@ -416,7 +416,7 @@ QStandardItemModel* SearchEnginesManager::getSearchEnginesModel()
 	{
 		m_searchEnginesModel = new QStandardItemModel(m_instance);
 
-		m_instance->updateSearchEnginesModel();
+		updateSearchEnginesModel();
 	}
 
 	return m_searchEnginesModel;
