@@ -29,11 +29,11 @@
 #elif defined(Q_OS_LINUX)
 #include "../3rdparty/breakpad/src/client/linux/handler/exception_handler.h"
 #endif
-#endif
 
 #include <QtCore/QDir>
 #include <QtCore/QProcess>
 #include <QtCore/QStandardPaths>
+#endif
 #include <QtCore/QUrl>
 #include <QtWidgets/QMessageBox>
 
