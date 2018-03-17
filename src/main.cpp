@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
 
 	Application::handlePositionalArguments(Application::getCommandLineParser());
 
-	if (application.getWindows().isEmpty())
+	if (Application::getWindows().isEmpty())
 	{
 		QVariantMap parameters;
 
@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
 			parameters[QLatin1String("hints")] = SessionsManager::PrivateOpen;
 		}
 
-		application.createWindow(parameters);
+		Application::createWindow(parameters);
 	}
 
 	return application.exec();
