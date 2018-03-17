@@ -580,6 +580,33 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			ContentsWidget::triggerAction(identifier, parameters);
 
 			break;
+		case ActionsManager::ImagesPolicyAction:
+		{
+			using EnableImages = EnumerationOptions::EnableImages;
+			QString enableImagesOption = m_webWidget->getOption(SettingsManager::Permissions_EnableImagesOption).toString();
+			EnableImages e = STRING_TO_ENUM(EnumerationOptions, EnableImages, enableImagesOption);
+			switch (e)
+			{
+			case EnableImages::disabled:
+				e = EnableImages::onlyCached;
+				break;
+			case EnableImages::onlyCached:
+				e = EnableImages::enabled;
+				break;
+			case EnableImages::enabled:
+				e = EnableImages::disabled;
+				break;
+			default:
+				Q_ASSERT(false);
+				break;
+			}
+			enableImagesOption = ENUM_TO_STRING(EnumerationOptions, EnableImages, e);
+			if (!enableImagesOption.isEmpty())
+			{
+				m_webWidget->setOption(SettingsManager::Permissions_EnableImagesOption, enableImagesOption);
+			}
+		}
+		break;
 		case ActionsManager::EnableJavaScriptAction:
 			m_webWidget->setOption(SettingsManager::Permissions_EnableJavaScriptOption, parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
 

@@ -293,6 +293,12 @@
 				]
 			},
 			{
+				"action": "ImagesPolicyAction",
+				"shortcuts": [
+					"Shift+I"
+				]
+			},
+			{
 				"action": "ActivateTabOnRight",
 				"shortcuts": [
 					"2",
