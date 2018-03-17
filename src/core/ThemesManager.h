@@ -21,7 +21,7 @@
 #define OTTER_THEMESMANAGER_H
 
 #include <QtCore/QObject>
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 #include <QtCore/QAbstractNativeEventFilter>
 #endif
 #include <QtWidgets/QStyle>
@@ -31,7 +31,7 @@ namespace Otter
 
 class Style;
 
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 class ThemesManager final : public QObject, public QAbstractNativeEventFilter
 #else
 class ThemesManager final : public QObject
@@ -50,7 +50,7 @@ protected:
 	explicit ThemesManager(QObject *parent);
 
 	bool eventFilter(QObject *object, QEvent *event) override;
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 	bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
 #endif
 

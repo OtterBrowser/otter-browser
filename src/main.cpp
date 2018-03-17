@@ -24,7 +24,7 @@
 #include "ui/MainWindow.h"
 #include "ui/StartupDialog.h"
 #ifdef OTTER_ENABLE_CRASHREPORTS
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 #include "../3rdparty/breakpad/src/client/windows/handler/exception_handler.h"
 #elif defined(Q_OS_LINUX)
 #include "../3rdparty/breakpad/src/client/linux/handler/exception_handler.h"
@@ -57,7 +57,7 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 #endif
 
 #ifdef OTTER_ENABLE_CRASHREPORTS
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIdentifier, void *context, EXCEPTION_POINTERS *exceptionInformation, MDRawAssertionInfo *assertionInformation, bool succeeded)
 {
 	Q_UNUSED(context)
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef OTTER_ENABLE_CRASHREPORTS
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 	new google_breakpad::ExceptionHandler(reinterpret_cast<const wchar_t*>(QStandardPaths::writableLocation(QStandardPaths::TempLocation).utf16()), 0, otterCrashDumpHandler, 0, true);
 #elif defined(Q_OS_LINUX)
 	new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor(QStandardPaths::writableLocation(QStandardPaths::TempLocation).toStdString()), 0, otterCrashDumpHandler, 0, true, -1);

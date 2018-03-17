@@ -23,7 +23,7 @@
 #include "SettingsManager.h"
 #include "../ui/Style.h"
 
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 #include <QtCore/QAbstractEventDispatcher>
 #endif
 #include <QtCore/QDir>
@@ -31,7 +31,7 @@
 #include <QtGui/QIcon>
 #include <QtWidgets/QWidget>
 
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 #include <windows.h>
 #endif
 
@@ -62,7 +62,7 @@ void ThemesManager::createInstance()
 		m_probeWidget->setAttribute(Qt::WA_DontShowOnScreen, true);
 		m_probeWidget->installEventFilter(m_instance);
 
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 		QAbstractEventDispatcher::instance()->installNativeEventFilter(m_instance);
 #endif
 	}
@@ -208,7 +208,7 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 	return QObject::eventFilter(object, event);
 }
 
-#if defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
 bool ThemesManager::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
 {
 	Q_UNUSED(eventType)
