@@ -271,7 +271,7 @@ QString QtWebEngineWebBackend::getEngineVersion() const
 
 QString QtWebEngineWebBackend::getSslVersion() const
 {
-	return tr("unknown");
+	return QLatin1String("BoringSSL");
 }
 
 QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
