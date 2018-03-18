@@ -324,6 +324,12 @@
 				]
 			},
 			{
+				"action": "InspectPage",
+				"shortcuts": [
+					"Ctrl+Shift+I"
+				]
+			},
+			{
 				"action": "FullScreen",
 				"shortcuts": [
 					"F11"
