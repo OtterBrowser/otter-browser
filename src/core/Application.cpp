@@ -569,14 +569,9 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 				{
 					SettingsManager::setOption(option, {}, host);
 				}
-				else if (mode == QLatin1String("toggle"))
+				else if (mode == QLatin1String("toggle") && SettingsManager::getOptionDefinition(option).type == SettingsManager::BooleanType)
 				{
-					const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(option));
-
-					if (definition.type == SettingsManager::BooleanType)
-					{
-						SettingsManager::setOption(option, !SettingsManager::getOption(option, host).toBool(), host);
-					}
+					SettingsManager::setOption(option, !SettingsManager::getOption(option, host).toBool(), host);
 				}
 			}
 
