@@ -335,6 +335,25 @@ signals:
 	void hostOptionChanged(int identifier, const QVariant &value, const QString &host);
 };
 
+
+/// Options of enumeration type which are convertible to string
+class EnumerationOptions : public QObject
+{
+	Q_OBJECT
+	Q_ENUMS(EnableImages)
+public:
+	enum class EnableImages
+	{
+		disabled,
+		onlyCached,
+		enabled
+	};
+};
+#define ENUM_TO_STRING(cls, enm, val) \
+	(cls::staticMetaObject.enumerator(cls::staticMetaObject.indexOfEnumerator(#enm)).valueToKey(static_cast<int>(val)))
+#define STRING_TO_ENUM(cls, enm, str) \
+	static_cast<cls::enm>(cls::staticMetaObject.enumerator(cls::staticMetaObject.indexOfEnumerator(#enm)).keyToValue(str.toLatin1()))
+
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::SettingsManager::OptionDefinition::OptionFlags)

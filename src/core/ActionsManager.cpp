@@ -423,6 +423,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(BookmarkAllOpenPagesAction, QT_TRANSLATE_NOOP("actions", "Bookmark All Open Pages"), {}, {}, ActionDefinition::MainWindowScope);
 	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"), {}, {}, ActionDefinition::MainWindowScope, ActionDefinition::RequiresParameters);
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"), {}, {}, ActionDefinition::MainWindowScope);
+	registerAction(ImagesPolicyAction, QT_TRANSLATE_NOOP("actions", "Load Images"), {}, {}, ActionDefinition::WindowScope);
 	registerAction(CookiesAction, QT_TRANSLATE_NOOP("actions", "Cookies"), {}, ThemesManager::createIcon(QLatin1String("cookies")), ActionDefinition::MainWindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsImmutableFlag));
 	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load All Plugins on the Page"), {}, ThemesManager::createIcon(QLatin1String("preferences-plugin")), ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), {}, {}, ActionDefinition::WindowScope, (ActionDefinition::IsEnabledFlag | ActionDefinition::IsCheckableFlag), ActionDefinition::PageCategory);
