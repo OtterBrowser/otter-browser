@@ -256,7 +256,29 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
-			m_page->triggerAction(QWebEnginePage::SavePage);
+			{
+				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)")});
+				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
+
+				if (!result.path.isEmpty())
+				{
+					switch (filters.indexOf(result.filter))
+					{
+						case 1:
+							m_page->save(result.path, QWebEngineDownloadItem::CompleteHtmlSaveFormat);
+
+							break;
+						case 2:
+							m_page->save(result.path, QWebEngineDownloadItem::MimeHtmlSaveFormat);
+
+							break;
+						default:
+							m_page->save(result.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+
+							break;
+					}
+				}
+			}
 
 			break;
 		case ActionsManager::ClearTabHistoryAction:
