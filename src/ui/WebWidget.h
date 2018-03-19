@@ -109,7 +109,8 @@ public:
 		UnknownSaveFormat = 0,
 		CompletePageSaveFormat = 1,
 		MhtmlSaveFormat = 2,
-		SingleHtmlFileSaveFormat = 4
+		PdfSaveFormat = 4,
+		SingleHtmlFileSaveFormat = 8
 	};
 
 	Q_DECLARE_FLAGS(SaveFormats, SaveFormat)
