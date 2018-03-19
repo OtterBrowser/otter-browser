@@ -257,7 +257,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)")});
+				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)"), tr("PDF document (*.pdf)")});
 				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
 
 				if (!result.path.isEmpty())
@@ -270,6 +270,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 							break;
 						case 2:
 							m_page->save(result.path, QWebEngineDownloadItem::MimeHtmlSaveFormat);
+
+							break;
+						case 3:
+							m_page->printToPdf(result.path);
 
 							break;
 						default:
