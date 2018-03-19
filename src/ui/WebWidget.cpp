@@ -689,6 +689,10 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 			extension = QLatin1String(".mht");
 
 			break;
+		case PdfSaveFormat:
+			extension = QLatin1String(".pdf");
+
+			break;
 		case SingleHtmlFileSaveFormat:
 			extension = QLatin1String(".html");
 
