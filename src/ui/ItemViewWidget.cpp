@@ -542,7 +542,7 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 			m_sourceModel->insertRow(row);
 		}
 
-		setCurrentIndex(getIndex(row, 0));
+		selectRow(getIndex(row, 0));
 	}
 	else
 	{
@@ -558,7 +558,7 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 			m_sourceModel->appendRow(items);
 		}
 
-		setCurrentIndex(getIndex(0, 0));
+		selectRow(getIndex(0, 0));
 	}
 
 	markAsModified();
