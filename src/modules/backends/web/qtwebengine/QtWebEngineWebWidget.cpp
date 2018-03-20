@@ -260,7 +260,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)"), tr("PDF document (*.pdf)")});
 				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
 
-				if (!result.path.isEmpty())
+				if (result.canSave)
 				{
 					switch (filters.indexOf(result.filter))
 					{

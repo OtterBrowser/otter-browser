@@ -873,7 +873,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("PDF document (*.pdf)")});
 				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
 
-				if (!result.path.isEmpty())
+				if (result.canSave)
 				{
 					switch (filters.indexOf(result.filter))
 					{
