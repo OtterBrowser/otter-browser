@@ -516,7 +516,10 @@ void ItemViewWidget::moveRow(bool up)
 	{
 		m_sourceModel->insertRow(sourceRow, m_sourceModel->takeRow(destinationRow));
 
-		setCurrentIndex(getIndex(destinationRow, 0));
+		const QModelIndex index(getIndex(destinationRow, 0));
+
+		setCurrentIndex(index);
+		scrollTo(index);
 		notifySelectionChanged();
 		markAsModified();
 	}
