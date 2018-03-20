@@ -1464,11 +1464,6 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 	return KeepAskingPermission;
 }
 
-WebWidget::SaveFormats WebWidget::getSupportedSaveFormats() const
-{
-	return SingleHtmlFileSaveFormat;
-}
-
 quint64 WebWidget::getWindowIdentifier() const
 {
 	return m_windowIdentifier;

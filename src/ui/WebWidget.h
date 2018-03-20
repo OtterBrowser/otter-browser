@@ -269,7 +269,6 @@ protected:
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	HitTestResult getCurrentHitTestResult() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
-	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfDeferredPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
