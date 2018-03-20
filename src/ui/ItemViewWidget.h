@@ -121,6 +121,7 @@ protected:
 	void startDrag(Qt::DropActions supportedActions) override;
 	void ensureInitialized();
 	void moveRow(bool up);
+	void selectRow(const QModelIndex &index);
 	bool applyFilter(const QModelIndex &index);
 
 protected slots:

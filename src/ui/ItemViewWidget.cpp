@@ -516,10 +516,7 @@ void ItemViewWidget::moveRow(bool up)
 	{
 		m_sourceModel->insertRow(sourceRow, m_sourceModel->takeRow(destinationRow));
 
-		const QModelIndex index(getIndex(destinationRow, 0));
-
-		setCurrentIndex(index);
-		scrollTo(index);
+		selectRow(getIndex(destinationRow, 0));
 		notifySelectionChanged();
 		markAsModified();
 	}
@@ -601,6 +598,12 @@ void ItemViewWidget::moveUpRow()
 void ItemViewWidget::moveDownRow()
 {
 	moveRow(false);
+}
+
+void ItemViewWidget::selectRow(const QModelIndex &index)
+{
+	setCurrentIndex(index);
+	scrollTo(index);
 }
 
 void ItemViewWidget::markAsModified()
