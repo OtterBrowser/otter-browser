@@ -107,13 +107,11 @@ public:
 	enum SaveFormat
 	{
 		UnknownSaveFormat = 0,
-		CompletePageSaveFormat = 1,
-		MhtmlSaveFormat = 2,
-		PdfSaveFormat = 4,
-		SingleHtmlFileSaveFormat = 8
+		CompletePageSaveFormat,
+		MhtmlSaveFormat,
+		PdfSaveFormat,
+		SingleHtmlFileSaveFormat
 	};
-
-	Q_DECLARE_FLAGS(SaveFormats, SaveFormat)
 
 	enum PageInformation
 	{
