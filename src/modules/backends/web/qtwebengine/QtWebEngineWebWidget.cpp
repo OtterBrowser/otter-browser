@@ -257,27 +257,27 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)"), tr("PDF document (*.pdf)")});
-				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
+				SaveFormat format(UnknownSaveFormat);
+				const QString path(getSavePath({SingleHtmlFileSaveFormat, CompletePageSaveFormat, MhtmlSaveFormat, PdfSaveFormat}, &format));
 
-				if (result.canSave)
+				if (!path.isEmpty())
 				{
-					switch (filters.indexOf(result.filter))
+					switch (format)
 					{
-						case 1:
-							m_page->save(result.path, QWebEngineDownloadItem::CompleteHtmlSaveFormat);
+						case CompletePageSaveFormat:
+							m_page->save(path, QWebEngineDownloadItem::CompleteHtmlSaveFormat);
 
 							break;
-						case 2:
-							m_page->save(result.path, QWebEngineDownloadItem::MimeHtmlSaveFormat);
+						case MhtmlSaveFormat:
+							m_page->save(path, QWebEngineDownloadItem::MimeHtmlSaveFormat);
 
 							break;
-						case 3:
-							m_page->printToPdf(result.path);
+						case PdfSaveFormat:
+							m_page->printToPdf(path);
 
 							break;
 						default:
-							m_page->save(result.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+							m_page->save(path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
 
 							break;
 					}
