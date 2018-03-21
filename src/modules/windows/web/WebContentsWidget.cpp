@@ -1147,7 +1147,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 		connect(m_splitter, &QSplitter::splitterMoved, widget, &WebWidget::geometryChanged);
 	}
 
-	bool isHidden(m_isStartPageEnabled && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
+	const bool isHidden(m_isStartPageEnabled && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
 
 	m_webWidget = widget;
 	m_webWidget->setOptions(options);
