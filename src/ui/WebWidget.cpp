@@ -724,6 +724,29 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 	return fileName;
 }
 
+QString WebWidget::getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const
+{
+	const QMap<SaveFormat, QString> formats({{SingleHtmlFileSaveFormat, tr("HTML file (*.html *.htm)")}, {CompletePageSaveFormat, tr("HTML file with all resources (*.html *.htm)")}, {MhtmlSaveFormat, tr("Web archive (*.mht)")}, {PdfSaveFormat, tr("PDF document (*.pdf)")}});
+	QStringList filters;
+	filters.reserve(allowedFormats.count());
+
+	for (int i = 0; i < allowedFormats.count(); ++i)
+	{
+		filters.append(formats.value(allowedFormats.at(i)));
+	}
+
+	const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
+
+	if (!result.canSave)
+	{
+		return {};
+	}
+
+	*selectedFormat = formats.key(result.filter);
+
+	return result.path;
+}
+
 QString WebWidget::getOpenActionText(SessionsManager::OpenHints hints) const
 {
 	if (hints == SessionsManager::CurrentTabOpen)

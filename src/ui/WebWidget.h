@@ -263,6 +263,7 @@ protected:
 	void updateHitTestResult(const QPoint &position);
 	void setClickPosition(const QPoint &position);
 	QString suggestSaveFileName(SaveFormat format) const;
+	QString getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const;
 	QString getOpenActionText(SessionsManager::OpenHints hints) const;
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	HitTestResult getCurrentHitTestResult() const;
