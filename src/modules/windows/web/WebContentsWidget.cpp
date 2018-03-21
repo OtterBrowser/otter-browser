@@ -1359,7 +1359,7 @@ QString WebContentsWidget::parseQuery(const QString &query) const
 				{
 					mutableQuery.replace(placeholder, m_webWidget->getUrl().toString());
 				}
-				else
+				else if (placeholders.at(i) == QLatin1String("selection"))
 				{
 					mutableQuery.replace(placeholder, m_webWidget->getSelectedText());
 				}
