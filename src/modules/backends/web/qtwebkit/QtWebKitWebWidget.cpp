@@ -870,18 +870,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QStringList filters({tr("HTML file (*.html *.htm)"), tr("PDF document (*.pdf)")});
-				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
+				SaveFormat format(UnknownSaveFormat);
+				const QString path(getSavePath({SingleHtmlFileSaveFormat, PdfSaveFormat}, &format));
 
-				if (result.canSave)
+				if (!path.isEmpty())
 				{
-					switch (filters.indexOf(result.filter))
+					switch (format)
 					{
-						case 1:
+						case PdfSaveFormat:
 							{
 								QPrinter printer;
 								printer.setOutputFormat(QPrinter::PdfFormat);
-								printer.setOutputFileName(result.path);
+								printer.setOutputFileName(path);
 								printer.setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
 								printer.setDocName(getTitle());
 
@@ -894,7 +894,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 								QNetworkRequest request(getUrl());
 								request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-								new Transfer(m_networkManager->get(request), result.path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
+								new Transfer(m_networkManager->get(request), path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 							}
 
 							break;
