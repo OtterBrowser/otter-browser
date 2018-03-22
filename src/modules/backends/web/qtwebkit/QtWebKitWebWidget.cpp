@@ -871,7 +871,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::SaveAction:
 			if (m_page->isViewingMedia())
 			{
-				const SaveInformation information(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)));
+				const SaveInformation information(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
 
 				if (information.canSave)
 				{
@@ -884,7 +884,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			else
 			{
 				SaveFormat format(UnknownSaveFormat);
-				const QString path(getSavePath({SingleHtmlFileSaveFormat, PdfSaveFormat}, &format));
+				const QString path(getSavePath({SingleFileSaveFormat, PdfSaveFormat}, &format));
 
 				if (!path.isEmpty())
 				{

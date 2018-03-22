@@ -69,7 +69,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)).path);
+				const QString path(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)).path);
 
 				if (!path.isEmpty())
 				{

@@ -693,7 +693,7 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 			extension = QLatin1String(".pdf");
 
 			break;
-		case SingleHtmlFileSaveFormat:
+		case SingleFileSaveFormat:
 			extension = QLatin1String(".html");
 
 			break;
@@ -726,7 +726,7 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 
 QString WebWidget::getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const
 {
-	const QMap<SaveFormat, QString> formats({{SingleHtmlFileSaveFormat, tr("HTML file (*.html *.htm)")}, {CompletePageSaveFormat, tr("HTML file with all resources (*.html *.htm)")}, {MhtmlSaveFormat, tr("Web archive (*.mht)")}, {PdfSaveFormat, tr("PDF document (*.pdf)")}});
+	const QMap<SaveFormat, QString> formats({{SingleFileSaveFormat, tr("HTML file (*.html *.htm)")}, {CompletePageSaveFormat, tr("HTML file with all resources (*.html *.htm)")}, {MhtmlSaveFormat, tr("Web archive (*.mht)")}, {PdfSaveFormat, tr("PDF document (*.pdf)")}});
 	QStringList filters;
 	filters.reserve(allowedFormats.count());
 
@@ -735,7 +735,7 @@ QString WebWidget::getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFo
 		filters.append(formats.value(allowedFormats.at(i)));
 	}
 
-	const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat), {}, filters));
+	const SaveInformation result(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat), {}, filters));
 
 	if (!result.canSave)
 	{

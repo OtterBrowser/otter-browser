@@ -258,7 +258,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::SaveAction:
 			{
 				SaveFormat format(UnknownSaveFormat);
-				const QString path(getSavePath({SingleHtmlFileSaveFormat, CompletePageSaveFormat, MhtmlSaveFormat, PdfSaveFormat}, &format));
+				const QString path(getSavePath({SingleFileSaveFormat, CompletePageSaveFormat, MhtmlSaveFormat, PdfSaveFormat}, &format));
 
 				if (!path.isEmpty())
 				{

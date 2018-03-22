@@ -110,7 +110,7 @@ public:
 		CompletePageSaveFormat,
 		MhtmlSaveFormat,
 		PdfSaveFormat,
-		SingleHtmlFileSaveFormat
+		SingleFileSaveFormat
 	};
 
 	enum PageInformation
