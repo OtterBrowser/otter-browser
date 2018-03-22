@@ -256,6 +256,16 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
+			if (m_page->isViewingMedia())
+			{
+				const SaveInformation information(Utils::getSavePath(suggestSaveFileName(SingleFileSaveFormat)));
+
+				if (information.canSave)
+				{
+					m_page->save(information.path, QWebEngineDownloadItem::SingleHtmlSaveFormat);
+				}
+			}
+			else
 			{
 				SaveFormat format(UnknownSaveFormat);
 				const QString path(getSavePath({SingleFileSaveFormat, CompletePageSaveFormat, MhtmlSaveFormat, PdfSaveFormat}, &format));
