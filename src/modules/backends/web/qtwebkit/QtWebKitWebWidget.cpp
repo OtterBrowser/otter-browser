@@ -869,6 +869,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
+			if (m_page->isViewingMedia())
+			{
+				const SaveInformation information(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)));
+
+				if (information.canSave)
+				{
+					QNetworkRequest request(getUrl());
+					request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+					new Transfer(m_networkManager->get(request), information.path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
+				}
+			}
+			else
 			{
 				SaveFormat format(UnknownSaveFormat);
 				const QString path(getSavePath({SingleHtmlFileSaveFormat, PdfSaveFormat}, &format));
