@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/ui/Action.cpp" line="119"/>
         <source>Creating instance of deprecated action: %1</source>
-        <translation type="unfinished"/>
+        <translation>Skapar instans av föråldrad aktion: %1</translation>
     </message>
 </context>
 <context>
@@ -478,7 +478,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1607"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Du är på väg att avsluta medans %n filer fortfarande håller på att laddas ner.</numerusform><numerusform>Du är på väg att avsluta medans %n filer fortfarande håller på att laddas ner.</numerusform></translation>
+        <translation><numerusform>Du är på väg att avsluta medans %n filer fortfarande håller på att laddas ned.</numerusform><numerusform>Du är på väg att avsluta medans %n filer fortfarande håller på att laddas ned.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1614"/>
@@ -1355,7 +1355,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation>Rensa nerladdningshistoriken</translation>
+        <translation>Rensa nedladdningshistoriken</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
@@ -2145,7 +2145,7 @@ Vill du spara dem?</translation>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="194"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/errorConsole/ErrorConsoleWidget.cpp" line="268"/>
@@ -2428,7 +2428,7 @@ Vill du spara dem?</translation>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="65"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Bilder (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="75"/>
@@ -3398,7 +3398,7 @@ Vill du fortsätta?</translation>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="136"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="137"/>
         <source>&lt;empty&gt;</source>
-        <translation>&lt;leer&gt;</translation>
+        <translation>&lt;empty&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="158"/>
@@ -3434,12 +3434,12 @@ Vill du fortsätta?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n blockerad)</numerusform><numerusform>%1 (%n blockerade)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
         <source>Downloaded</source>
-        <translation>Hämtade</translation>
+        <translation>Nedladdade</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="187"/>
@@ -3856,12 +3856,12 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Egenskaper för webbplats</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Sök…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -3902,7 +3902,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="611"/>
         <source>Show download dialog</source>
-        <translation>Visa dialogrutan för nerladdning</translation>
+        <translation>Visa dialogrutan för nedladdning</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="621"/>
@@ -4039,7 +4039,7 @@ Vill du fortsätta?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="463"/>
         <source>Downloads</source>
-        <translation>Nerladdningar</translation>
+        <translation>Nedladdningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
@@ -4214,7 +4214,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="586"/>
         <source>Do you really want to remove preferences for this host?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen ta bort egenskaperna för denna värden?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="604"/>
@@ -4529,7 +4529,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
         <source>Downloads</source>
-        <translation>Nerladdningar</translation>
+        <translation>Nedladdningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="126"/>
@@ -4662,7 +4662,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="114"/>
         <source>Remember downloads history</source>
-        <translation>Kom ihåg nerladdningshistoriken</translation>
+        <translation>Kom ihåg nedladdningshistoriken</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="124"/>
@@ -5990,7 +5990,7 @@ Vill du spara ändringarna eller kasta dem?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz)</source>
-        <translation type="unfinished"/>
+        <translation>Bilder (*.png *.jpg *.bmp *.gif *.svg *.svgz)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
@@ -6249,7 +6249,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="305"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Ny…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="345"/>
@@ -6305,7 +6305,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="46"/>
         <source>Edit Bookmarks Bar</source>
-        <translation type="unfinished"/>
+        <translation>Redigera bokmärkesraden</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
@@ -6315,7 +6315,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="55"/>
         <source>Edit Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Redigera sidorad</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
@@ -6440,7 +6440,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdningar</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="461"/>
@@ -6570,7 +6570,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="651"/>
         <source>Downloads Progress Information</source>
-        <translation type="unfinished"/>
+        <translation>Information om nedladdningsförlopp</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="656"/>
@@ -6752,7 +6752,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="175"/>
         <source>%1 (download completed)</source>
-        <translation>%1 (nerladdning slutförd)</translation>
+        <translation>%1 (nedladdning slutförd)</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="181"/>
@@ -6765,7 +6765,7 @@ Vill du skriva över den?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="31"/>
         <source>Quick Download…</source>
-        <translation>Snabb nerladdning…</translation>
+        <translation>Snabb nedladdning…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="120"/>
@@ -6862,7 +6862,8 @@ Vill du skriva över den?
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="145"/>
         <source>This file is still being downloaded.
 Do you really want to remove it?</source>
-        <translation type="unfinished"/>
+        <translation>Denna filen laddas precis ned.
+Vill du verkligen ta bort den?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="320"/>
@@ -6918,7 +6919,7 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="591"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdningar</translation>
     </message>
 </context>
 <context>
@@ -6927,7 +6928,8 @@ Framgång: %5&lt;/div&gt;</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="1066"/>
         <source>Download completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdat:
+%1</translation>
     </message>
 </context>
 <context>
@@ -6985,7 +6987,7 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="104"/>
         <source>Download</source>
-        <translation>Hämta</translation>
+        <translation>Ladda ned</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="117"/>
@@ -7005,7 +7007,7 @@ Framgång: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="166"/>
         <source>Download finished!</source>
-        <translation>Nerladdningen är slutförd!</translation>
+        <translation>Nedladdningen är slutförd!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="167"/>
@@ -7022,7 +7024,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
         <source>Download failed!</source>
-        <translation>Nerladdningen misslyckades!</translation>
+        <translation>Nedladdningen misslyckades!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
@@ -7171,7 +7173,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1098"/>
         <source>Never Reload</source>
-        <translation>Hämt aldrig om</translation>
+        <translation>Hämta aldrig om</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1102"/>
@@ -7214,7 +7216,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="104"/>
         <source>Download date:</source>
-        <translation>Datum för nerladdning:</translation>
+        <translation>Hämtat den:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="126"/>
@@ -7815,7 +7817,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="169"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Fönster och flikar</translation>
     </message>
 </context>
 <context>
@@ -8216,7 +8218,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Save to Downloads</source>
-        <translation>Spara ner till Nerladdningar</translation>
+        <translation>Spara ner till Nedladdningar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="335"/>
@@ -8226,7 +8228,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Open Frame</source>
-        <translation type="unfinished"/>
+        <translation>Öppna ram</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
@@ -8268,7 +8270,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bild</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
@@ -8778,7 +8780,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Show Sidebar</source>
-        <translation>Visa sidofält</translation>
+        <translation>Visa sidorad</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8855,7 +8857,7 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdningar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
@@ -9386,42 +9388,42 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="930"/>
         <source>Open Image in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden i denna fliken</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="934"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden i ny flik</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="942"/>
         <source>Open Image in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden i nytt fönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="946"/>
         <source>Open Image in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden in nytt bakgrundsfönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="950"/>
         <source>Open Image in New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden in ny privat flik</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="954"/>
         <source>Open Image in New Private Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden i ny privat bakgrundsflik</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="958"/>
         <source>Open Image in New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden in nytt privat fönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="962"/>
         <source>Open Image in New Private Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Öppna bilden in nytt privat bakgrundsfönster</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1003"/>
@@ -9529,12 +9531,12 @@ Klicka på knappen Installera för att starta om webbläsaren och installera upp
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="132"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdningar</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Fönster och flikar</translation>
     </message>
 </context>
 <context>
@@ -9763,7 +9765,7 @@ Applikations-ID: %2</translation>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="363"/>
         <source>Search Engines</source>
-        <translation type="unfinished"/>
+        <translation>Sökmotorer</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="486"/>
@@ -9776,12 +9778,12 @@ Applikations-ID: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Download Completed</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdningen är slutförd</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>File download was completed</source>
-        <translation type="unfinished"/>
+        <translation>Nedladdningen av filen slutfördes</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
@@ -9791,7 +9793,7 @@ Applikations-ID: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>Update is available to be downloaded</source>
-        <translation>Uppdateringen är tillgänglig för hämtning</translation>
+        <translation>Uppdateringen står redo för hämtning</translation>
     </message>
 </context>
 <context>
