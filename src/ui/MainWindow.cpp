@@ -524,7 +524,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ClosePrivateTabsAction:
 			for (int i = 0; i < m_privateWindows.count(); ++i)
 			{
-				m_privateWindows[i]->requestClose();
+				m_privateWindows.at(i)->requestClose();
 			}
 
 			emit arbitraryActionsStateChanged({ActionsManager::ClosePrivateTabsAction});
