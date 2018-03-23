@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -302,7 +302,7 @@ void ContentBlockingManager::handleOptionChanged(int identifier, const QVariant 
 
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
-		m_profiles[i]->clear();
+		m_profiles.at(i)->clear();
 	}
 }
 
