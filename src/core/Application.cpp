@@ -651,11 +651,11 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 				{
 					if (m_windows.at(i)->isPrivate())
 					{
-						m_windows[i]->close();
+						m_windows.at(i)->close();
 					}
 					else
 					{
-						m_windows[i]->triggerAction(ActionsManager::ClosePrivateTabsAction);
+						m_windows.at(i)->triggerAction(ActionsManager::ClosePrivateTabsAction);
 					}
 				}
 			}
