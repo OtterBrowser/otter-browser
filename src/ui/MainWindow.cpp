@@ -592,7 +592,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				}
 
 				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
-				int index(parameters.value(QLatin1String("index"), -1).toInt());
+				const int index(parameters.value(QLatin1String("index"), -1).toInt());
 
 				if (m_isPrivate)
 				{
