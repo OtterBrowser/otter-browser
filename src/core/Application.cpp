@@ -1232,9 +1232,10 @@ void Application::setLocale(const QString &locale)
 	}
 
 	const QString identifier(locale.endsWith(QLatin1String(".qm")) ? QFileInfo(locale).baseName().remove(QLatin1String("otter-browser_")) : ((locale == QLatin1String("system")) ? QLocale::system().name() : locale));
+	const bool useSystemLocale(locale.isEmpty() || locale == QLatin1String("system"));
 
-	m_qtTranslator->load(QLatin1String("qt_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : locale)), m_localePath);
+	m_qtTranslator->load(QLatin1String("qt_") + (useSystemLocale ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + (useSystemLocale ? QLocale::system().name() : locale)), m_localePath);
 
 	QLocale::setDefault(Utils::createLocale(identifier));
 }
