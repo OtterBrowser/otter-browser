@@ -1118,6 +1118,11 @@ void AddressWidget::updateGeometries()
 				break;
 		}
 
+		if (m_layout.at(i) != HistoryDropdownEntry && definition.icon.isNull())
+		{
+			continue;
+		}
+
 		switch (m_layout.at(i))
 		{
 			case AddressEntry:
