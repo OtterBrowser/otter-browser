@@ -25,7 +25,6 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
-#include "../../../ui/PreferencesDialog.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
@@ -690,8 +689,12 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
 	{
-		PreferencesDialog dialog(QLatin1String("search"), this);
-		dialog.exec();
+		MainWindow *mainWindow(m_window ? MainWindow::findMainWindow(m_window) : MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			mainWindow->triggerAction(ActionsManager::PreferencesAction, {{QLatin1String("page"), QLatin1String("search")}});
+		}
 	}
 }
 
