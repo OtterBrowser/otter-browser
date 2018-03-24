@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ class PreferencesDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = nullptr);
+	explicit PreferencesDialog(const QString &section, QWidget *parent = nullptr);
 	~PreferencesDialog();
 
 protected:
