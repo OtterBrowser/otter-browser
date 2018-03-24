@@ -569,6 +569,7 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 {
+	const QUrl url(getUrl());
 	const EntryIdentifier entry(getEntry(event->pos()));
 
 	if (entry != m_hoveredEntry)
@@ -585,7 +586,11 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 		m_hoveredEntry = entry;
 	}
 
-	if (!startDrag(event))
+	if (event->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (event->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance() && url.isValid())
+	{
+		Utils::startLinkDrag(url, (m_window ? m_window->getTitle() : QString()), ((m_window ? m_window->getIcon() : ThemesManager::createIcon(QLatin1String("tab"))).pixmap(16, 16)), this);
+	}
+	else
 	{
 		LineEditWidget::mouseMoveEvent(event);
 	}
@@ -1375,20 +1380,6 @@ AddressWidget::EntryIdentifier AddressWidget::getEntry(const QPoint &position) c
 	}
 
 	return UnknownEntry;
-}
-
-bool AddressWidget::startDrag(QMouseEvent *event)
-{
-	const QUrl url(getUrl());
-
-	if (event->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (event->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance() && url.isValid())
-	{
-		Utils::startLinkDrag(url, (m_window ? m_window->getTitle() : QString()), ((m_window ? m_window->getIcon() : ThemesManager::createIcon(QLatin1String("tab"))).pixmap(16, 16)), this);
-
-		return true;
-	}
-
-	return false;
 }
 
 bool AddressWidget::event(QEvent *event)

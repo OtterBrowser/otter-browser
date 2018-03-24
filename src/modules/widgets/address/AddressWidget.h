@@ -132,7 +132,6 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *event) override;
 	void showCompletion(bool isTypedHistory);
 	EntryIdentifier getEntry(const QPoint &position) const;
-	bool startDrag(QMouseEvent *event);
 
 protected slots:
 	void openUrl(const QString &url);
