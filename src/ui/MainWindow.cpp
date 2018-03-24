@@ -1059,7 +1059,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			return;
 		case ActionsManager::PreferencesAction:
 			{
-				PreferencesDialog dialog(QLatin1String("general"), this);
+				PreferencesDialog dialog(parameters.value(QLatin1String("page"), QLatin1String("general")).toString(), this);
 				dialog.exec();
 			}
 
