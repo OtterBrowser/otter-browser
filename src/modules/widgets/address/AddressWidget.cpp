@@ -1387,33 +1387,29 @@ bool AddressWidget::event(QEvent *event)
 	if (event->type() == QEvent::ToolTip)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const EntryIdentifier entry(getEntry(helpEvent->pos()));
 
-		if (helpEvent)
+		if (entry != UnknownEntry && entry != AddressEntry)
 		{
-			const EntryIdentifier entry(getEntry(helpEvent->pos()));
+			const QString title(m_entries[entry].title);
 
-			if (entry != UnknownEntry && entry != AddressEntry)
+			if (!title.isEmpty())
 			{
-				const QString title(m_entries[entry].title);
-
-				if (!title.isEmpty())
+				if (entry == WebsiteInformationEntry)
 				{
-					if (entry == WebsiteInformationEntry)
+					const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::WebsiteInformationAction));
+
+					if (!shortcut.isEmpty())
 					{
-						const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::WebsiteInformationAction));
+						QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()) + QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
 
-						if (!shortcut.isEmpty())
-						{
-							QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()) + QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
-
-							return true;
-						}
+						return true;
 					}
-
-					QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()));
-
-					return true;
 				}
+
+				QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()));
+
+				return true;
 			}
 		}
 	}
