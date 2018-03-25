@@ -1357,6 +1357,11 @@ QVector<WebWidget::LinkUrl> WebWidget::getFeeds() const
 	return {};
 }
 
+QVector<WebWidget::LinkUrl> WebWidget::getLinks() const
+{
+	return {};
+}
+
 QVector<WebWidget::LinkUrl> WebWidget::getSearchEngines() const
 {
 	return {};

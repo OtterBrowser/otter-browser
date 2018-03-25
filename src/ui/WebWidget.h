@@ -221,6 +221,7 @@ public:
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual QVector<LinkUrl> getFeeds() const;
+	virtual QVector<LinkUrl> getLinks() const;
 	virtual QVector<LinkUrl> getSearchEngines() const;
 	virtual QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<int, QVariant> getOptions() const;
