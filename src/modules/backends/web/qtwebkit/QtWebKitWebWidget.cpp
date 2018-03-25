@@ -2562,8 +2562,13 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
 		urls.insert(url);
 
 		LinkUrl link;
-		link.title = elements.at(i).toPlainText();
+		link.title = elements.at(i).attribute(QLatin1String("title"));
 		link.url = url;
+
+		if (link.title.isEmpty())
+		{
+			link.title = elements.at(i).toPlainText();
+		}
 
 		if (link.title.isEmpty())
 		{
