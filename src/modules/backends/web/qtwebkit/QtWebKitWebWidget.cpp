@@ -293,7 +293,7 @@ void QtWebKitWebWidget::clearPluginToken()
 	while (!frames.isEmpty())
 	{
 		const QWebFrame *frame(frames.takeFirst());
-		QWebElement element(frame->documentElement().findFirst(QStringLiteral("object[data-otter-browser=\"%1\"], embed[data-otter-browser=\"%1\"]").arg(m_pluginToken)));
+		QWebElement element(frame->documentElement().findFirst(QStringLiteral("object[data-otter-browser='%1'], embed[data-otter-browser='%1']").arg(m_pluginToken)));
 
 		if (!element.isNull())
 		{
@@ -1215,7 +1215,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					hitResult.element().setAttribute(QLatin1String("src"), src);
 
-					m_page->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+					m_page->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = '%1'; }").arg(src));
 				}
 			}
 
@@ -1542,7 +1542,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					parentElement = parentElement.parent();
 				}
 
-				QList<QWebElement> inputElements(parentElement.findAll(QLatin1String("button:not([disabled])[name][type=\"submit\"], input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")).toList());
+				QList<QWebElement> inputElements(parentElement.findAll(QLatin1String("button:not([disabled])[name][type='submit'], input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")).toList());
 
 				if (!parentElement.hasAttribute(QLatin1String("action")) || inputElements.count() == 0)
 				{
@@ -1579,7 +1579,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (searchTermsElement.isNull())
 				{
-					searchTermsElement = parentElement.findFirst(QLatin1String("input:not([disabled])[name][type=\"search\"]"));
+					searchTermsElement = parentElement.findFirst(QLatin1String("input:not([disabled])[name][type='search']"));
 				}
 
 				for (int i = 0; i < inputElements.count(); ++i)
@@ -1798,7 +1798,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 {
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[rel='alternate stylesheet']")));
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
@@ -2107,9 +2107,9 @@ QString QtWebKitWebWidget::getTitle() const
 
 QString QtWebKitWebWidget::getDescription() const
 {
-	const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content")));
+	const QString description(m_page->mainFrame()->findFirstElement(QLatin1String("[name='description']")).attribute(QLatin1String("content")));
 
-	return (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description);
+	return (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name='og:description']")).attribute(QLatin1String("property")) : description);
 }
 
 QString QtWebKitWebWidget::getActiveStyleSheet() const
@@ -2119,7 +2119,7 @@ QString QtWebKitWebWidget::getActiveStyleSheet() const
 		return {};
 	}
 
-	return m_page->mainFrame()->findFirstElement(QLatin1String("link[rel=\"alternate stylesheet\"]:not([disabled])")).attribute(QLatin1String("title"));
+	return m_page->mainFrame()->findFirstElement(QLatin1String("link[rel='alternate stylesheet']:not([disabled])")).attribute(QLatin1String("title"));
 }
 
 QString QtWebKitWebWidget::getSelectedText() const
@@ -2491,7 +2491,7 @@ QStringList QtWebKitWebWidget::getBlockedElements() const
 
 QStringList QtWebKitWebWidget::getStyleSheets() const
 {
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[rel='alternate stylesheet']")));
 	QStringList titles;
 	titles.reserve(elements.count());
 
@@ -2510,7 +2510,7 @@ QStringList QtWebKitWebWidget::getStyleSheets() const
 
 QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[type='application/atom+xml'], a[type='application/rss+xml'], link[type='application/atom+xml'], link[type='application/rss+xml']")));
 	QSet<QUrl> urls;
 	urls.reserve(elements.count());
 
@@ -2590,7 +2590,7 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
 
 QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 {
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]")));
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[type='application/opensearchdescription+xml']")));
 	QSet<QUrl> urls;
 	urls.reserve(elements.count());
 
