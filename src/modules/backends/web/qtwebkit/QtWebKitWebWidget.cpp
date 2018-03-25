@@ -2565,6 +2565,16 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
 		link.title = elements.at(i).toPlainText();
 		link.url = url;
 
+		if (link.title.isEmpty())
+		{
+			const QWebElement imageElement(elements.at(i).findFirst(QLatin1String("img[alt]:not([alt=''])")));
+
+			if (!imageElement.isNull())
+			{
+				link.title = imageElement.attribute(QLatin1String("alt"));
+			}
+		}
+
 		links.append(link);
 	}
 
