@@ -19,10 +19,13 @@
 
 #include "LinksContentsWidget.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Window.h"
 
 #include "ui_LinksContentsWidget.h"
+
+#include <QtGui/QClipboard>
 
 namespace Otter
 {
@@ -69,6 +72,11 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 	updateLinks();
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->linksViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->linksViewWidget, &ItemViewWidget::customContextMenuRequested, this, &LinksContentsWidget::showContextMenu);
+	connect(m_ui->linksViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::CopyLinkToClipboardAction});
+	});
 }
 
 LinksContentsWidget::~LinksContentsWidget()
@@ -83,6 +91,27 @@ void LinksContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+	}
+}
+
+void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	if (identifier == ActionsManager::CopyLinkToClipboardAction)
+	{
+		const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
+		QStringList links;
+		links.reserve(indexes.count());
+
+		for (int i = 0; i < indexes.count(); ++i)
+		{
+			links.append(indexes.at(i).data(Qt::ToolTipRole).toString());
+		}
+
+		QGuiApplication::clipboard()->setText(links.join(QLatin1Char('\n')));
+	}
+	else
+	{
+		ContentsWidget::triggerAction(identifier, parameters);
 	}
 }
 
@@ -101,6 +130,18 @@ void LinksContentsWidget::updateLinks()
 		}
 
 		m_ui->linksViewWidget->expandAll();
+	}
+}
+
+void LinksContentsWidget::showContextMenu(const QPoint &position)
+{
+	const QModelIndex index(m_ui->linksViewWidget->indexAt(position));
+
+	if (index.isValid())
+	{
+		QMenu menu(this);
+		menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
+		menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
 	}
 }
 
@@ -139,6 +180,19 @@ QUrl LinksContentsWidget::getUrl() const
 QIcon LinksContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("links"), false);
+}
+
+ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	if (identifier == ActionsManager::CopyLinkToClipboardAction)
+	{
+		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(ActionsManager::CopyLinkToClipboardAction).getDefaultState());
+		state.isEnabled = !m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty();
+
+		return state;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
 }
 
 }
