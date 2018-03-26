@@ -47,6 +47,7 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;

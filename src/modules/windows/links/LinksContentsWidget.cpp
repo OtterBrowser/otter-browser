@@ -26,6 +26,8 @@
 #include "ui_LinksContentsWidget.h"
 
 #include <QtGui/QClipboard>
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -38,7 +40,8 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->linksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->linksViewWidget->setModel(new QStandardItemModel(this));
-	m_ui->linksViewWidget->expandAll();
+	m_ui->linksViewWidget->viewport()->installEventFilter(this);
+	m_ui->linksViewWidget->viewport()->setMouseTracking(true);
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
 
@@ -193,6 +196,29 @@ ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int 
 	}
 
 	return ContentsWidget::getActionState(identifier, parameters);
+}
+
+bool LinksContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->linksViewWidget->viewport() && event->type() == QEvent::ToolTip)
+	{
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QModelIndex index(m_ui->linksViewWidget->indexAt(helpEvent->pos()));
+		QString toolTip;
+
+		if (index.data(Qt::DisplayRole).toString() != index.data(Qt::ToolTipRole).toUrl().toDisplayString(QUrl::RemovePassword))
+		{
+			toolTip.append(tr("Title: %1").arg(index.data(Qt::DisplayRole).toString()) + QLatin1Char('\n'));
+		}
+
+		toolTip.append(tr("Address: %1").arg(index.data(Qt::ToolTipRole).toUrl().toDisplayString()));
+
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->linksViewWidget).width() / 2)), m_ui->linksViewWidget, m_ui->linksViewWidget->visualRect(index));
+
+		return true;
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }
