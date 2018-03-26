@@ -43,6 +43,7 @@
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
+#include "../modules/windows/links/LinksContentsWidget.h"
 #include "../modules/windows/notes/NotesContentsWidget.h"
 #include "../modules/windows/pageInformation/PageInformationContentsWidget.h"
 #include "../modules/windows/passwords/PasswordsContentsWidget.h"
@@ -257,6 +258,11 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 ContentsWidget* createSidebarPanel(const QString &identifier, int sidebar, MainWindow *mainWindow, QWidget *parent)
 {
 	QVariantMap parameters({{QLatin1String("sidebar"), sidebar}});
+
+	if (identifier == QLatin1String("links"))
+	{
+		return new LinksContentsWidget(parameters, parent);
+	}
 
 	if (identifier == QLatin1String("pageInformation"))
 	{

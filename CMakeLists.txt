@@ -246,6 +246,7 @@ set(otter_src
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
 	src/modules/windows/cookies/CookiesContentsWidget.cpp
 	src/modules/windows/history/HistoryContentsWidget.cpp
+	src/modules/windows/links/LinksContentsWidget.cpp
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/pageInformation/PageInformationContentsWidget.cpp
 	src/modules/windows/passwords/PasswordsContentsWidget.cpp
@@ -319,6 +320,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
 	src/modules/windows/cookies/CookiesContentsWidget.ui
 	src/modules/windows/history/HistoryContentsWidget.ui
+	src/modules/windows/links/LinksContentsWidget.ui
 	src/modules/windows/notes/NotesContentsWidget.ui
 	src/modules/windows/pageInformation/PageInformationContentsWidget.ui
 	src/modules/windows/passwords/PasswordsContentsWidget.ui
