@@ -107,7 +107,7 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 		for (int i = 0; i < indexes.count(); ++i)
 		{
-			links.append(indexes.at(i).data(Qt::ToolTipRole).toString());
+			links.append(indexes.at(i).data(Qt::StatusTipRole).toString());
 		}
 
 		QGuiApplication::clipboard()->setText(links.join(QLatin1Char('\n')));
@@ -151,7 +151,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 QStandardItem* LinksContentsWidget::addEntry(QStandardItem *parent, const QString &title, const QUrl &url)
 {
 	QStandardItem *item(new QStandardItem(title.isEmpty() ? url.toDisplayString(QUrl::RemovePassword) : title));
-	item->setData(url, Qt::ToolTipRole);
+	item->setData(url, Qt::StatusTipRole);
 
 	if (parent)
 	{
@@ -206,12 +206,12 @@ bool LinksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		const QModelIndex index(m_ui->linksViewWidget->indexAt(helpEvent->pos()));
 		QString toolTip;
 
-		if (index.data(Qt::DisplayRole).toString() != index.data(Qt::ToolTipRole).toUrl().toDisplayString(QUrl::RemovePassword))
+		if (index.data(Qt::DisplayRole).toString() != index.data(Qt::StatusTipRole).toUrl().toDisplayString(QUrl::RemovePassword))
 		{
 			toolTip.append(tr("Title: %1").arg(index.data(Qt::DisplayRole).toString()) + QLatin1Char('\n'));
 		}
 
-		toolTip.append(tr("Address: %1").arg(index.data(Qt::ToolTipRole).toUrl().toDisplayString()));
+		toolTip.append(tr("Address: %1").arg(index.data(Qt::StatusTipRole).toUrl().toDisplayString()));
 
 		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->linksViewWidget).width() / 2)), m_ui->linksViewWidget, m_ui->linksViewWidget->visualRect(index));
 
