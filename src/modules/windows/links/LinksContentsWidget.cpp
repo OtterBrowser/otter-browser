@@ -123,6 +123,21 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 	}
 }
 
+void LinksContentsWidget::openLink()
+{
+	const QAction *action(qobject_cast<QAction*>(sender()));
+
+	if (action)
+	{
+		const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
+
+		for (int i = 0; i < indexes.count(); ++i)
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), indexes.at(i).data(Qt::StatusTipRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
+		}
+	}
+}
+
 void LinksContentsWidget::updateLinks()
 {
 	m_ui->linksViewWidget->getSourceModel()->clear();
@@ -148,7 +163,31 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	if (index.isValid())
 	{
 		QMenu menu(this);
+
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
+
+		QAction *openInNewTabAction(menu.addAction(tr("Open in New Tab")));
+		openInNewTabAction->setData(SessionsManager::NewTabOpen);
+
+		QAction *openInNewBackgroundTabAction(menu.addAction(tr("Open in New Background Tab")));
+		openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+
+		menu.addSeparator();
+
+		QAction *openInNewWindowAction(menu.addAction(tr("Open in New Window")));
+		openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
+
+		QAction *openInNewBackgroundWindowAction(menu.addAction(tr("Open in New Background Window")));
+		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+
+		menu.addSeparator();
 		menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
+
+		connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewBackgroundTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+
 		menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
 	}
 }

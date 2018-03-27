@@ -58,6 +58,7 @@ protected:
 	QStandardItem* addEntry(QStandardItem *parent, const QString &title, const QUrl &url);
 
 protected slots:
+	void openLink();
 	void showContextMenu(const QPoint &position);
 
 private:
