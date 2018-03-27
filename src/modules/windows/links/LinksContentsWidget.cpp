@@ -158,38 +158,38 @@ void LinksContentsWidget::updateLinks()
 
 void LinksContentsWidget::showContextMenu(const QPoint &position)
 {
-	const QModelIndex index(m_ui->linksViewWidget->indexAt(position));
-
-	if (index.isValid())
+	if (!m_ui->linksViewWidget->selectionModel()->hasSelection())
 	{
-		QMenu menu(this);
-
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
-
-		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
-		openInNewTabAction->setData(SessionsManager::NewTabOpen);
-
-		QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
-		openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
-
-		menu.addSeparator();
-
-		QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
-		openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
-
-		QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
-		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
-
-		menu.addSeparator();
-		menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
-
-		connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-		connect(openInNewBackgroundTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-		connect(openInNewWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-		connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-
-		menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
+		return;
 	}
+
+	QMenu menu(this);
+
+	connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
+
+	QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
+	openInNewTabAction->setData(SessionsManager::NewTabOpen);
+
+	QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
+	openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+
+	menu.addSeparator();
+
+	QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
+	openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
+
+	QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
+	openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+
+	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
+
+	connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+	connect(openInNewBackgroundTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+	connect(openInNewWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+	connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+
+	menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
 }
 
 QStandardItem* LinksContentsWidget::addEntry(QStandardItem *parent, const QString &title, const QUrl &url)
@@ -234,7 +234,7 @@ ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int 
 	if (identifier == ActionsManager::CopyLinkToClipboardAction)
 	{
 		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(ActionsManager::CopyLinkToClipboardAction).getDefaultState());
-		state.isEnabled = !m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty();
+		state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
 
 		return state;
 	}
