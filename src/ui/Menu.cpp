@@ -321,12 +321,12 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 			MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 			ActionExecutor::Object executor(mainWindow, mainWindow);
 			QMenu menu(this);
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}}, {{QLatin1String("icon"), QLatin1String("document-open")}, {QLatin1String("text"), tr("Open")}}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), tr("Open in New Tab")}}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), tr("Open in New Background Tab")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}}, {{QLatin1String("icon"), QLatin1String("document-open")}, {QLatin1String("text"), QCoreApplication::translate("actions", "Open")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QCoreApplication::translate("actions", "Open in New Tab")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QCoreApplication::translate("actions", "Open in New Background Tab")}}, executor, &menu));
 			menu.addSeparator();
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), tr("Open in New Window")}}, executor, &menu));
-			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), tr("Open in New Background Window")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QCoreApplication::translate("actions", "Open in New Window")}}, executor, &menu));
+			menu.addAction(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), identifier}, {QLatin1String("hints"), QVariant(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen)}}, {{QLatin1String("icon"), {}}, {QLatin1String("text"), QCoreApplication::translate("actions", "Open in New Background Window")}}, executor, &menu));
 
 			connect(&menu, &QMenu::triggered, this, &Menu::hideMenu);
 

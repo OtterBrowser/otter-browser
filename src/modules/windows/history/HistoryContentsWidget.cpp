@@ -367,20 +367,20 @@ void HistoryContentsWidget::showContextMenu(const QPoint &position)
 
 	if (entry > 0)
 	{
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open")), &QAction::triggered, this, &HistoryContentsWidget::openEntry);
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &HistoryContentsWidget::openEntry);
 
-		QAction *openInNewTabAction(menu.addAction(tr("Open in New Tab")));
+		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
 		openInNewTabAction->setData(SessionsManager::NewTabOpen);
 
-		QAction *openInNewBackgroundTabAction(menu.addAction(tr("Open in New Background Tab")));
+		QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
 		openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 
 		menu.addSeparator();
 
-		QAction *openInNewWindowAction(menu.addAction(tr("Open in New Window")));
+		QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
 		openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
 
-		QAction *openInNewBackgroundWindowAction(menu.addAction(tr("Open in New Background Window")));
+		QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
 		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
 		menu.addSeparator();

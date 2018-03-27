@@ -385,7 +385,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 	if (transfer)
 	{
 		const bool canOpen(QFile::exists(transfer->getTarget()));
-		QAction *openAction(menu.addAction(tr("Open")));
+		QAction *openAction(menu.addAction(QCoreApplication::translate("actions", "Open")));
 		openAction->setEnabled(canOpen);
 
 		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenuRole, this));
