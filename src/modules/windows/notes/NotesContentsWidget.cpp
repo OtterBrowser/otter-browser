@@ -157,7 +157,6 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 				emptyTrashAction->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
 
 				connect(emptyTrashAction, &QAction::triggered, NotesManager::getModel(), &BookmarksModel::emptyTrash);
-
 			}
 
 			break;
