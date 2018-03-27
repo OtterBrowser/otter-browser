@@ -2567,7 +2567,7 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
 
 		if (link.title.isEmpty())
 		{
-			link.title = elements.at(i).toPlainText();
+			link.title = elements.at(i).toPlainText().simplified();
 		}
 
 		if (link.title.isEmpty())
