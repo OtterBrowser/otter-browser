@@ -63,6 +63,7 @@ protected slots:
 
 private:
 	Window *m_window;
+	bool m_isLocked;
 	Ui::LinksContentsWidget *m_ui;
 };
 

@@ -36,6 +36,7 @@ namespace Otter
 
 LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
 	m_window(nullptr),
+	m_isLocked(false),
 	m_ui(new Ui::LinksContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -158,6 +159,11 @@ void LinksContentsWidget::openLink()
 
 void LinksContentsWidget::updateLinks()
 {
+	if (m_isLocked)
+	{
+		return;
+	}
+
 	m_ui->linksViewWidget->getSourceModel()->clear();
 
 	if (m_window && m_window->getWebWidget())
@@ -176,37 +182,45 @@ void LinksContentsWidget::updateLinks()
 
 void LinksContentsWidget::showContextMenu(const QPoint &position)
 {
-	if (!m_ui->linksViewWidget->selectionModel()->hasSelection())
-	{
-		return;
-	}
-
 	QMenu menu(this);
 
-	connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
+	if (m_ui->linksViewWidget->selectionModel()->hasSelection())
+	{
+		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
 
-	QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
-	openInNewTabAction->setData(SessionsManager::NewTabOpen);
+		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
+		openInNewTabAction->setData(SessionsManager::NewTabOpen);
 
-	QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
-	openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+		QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
+		openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 
-	menu.addSeparator();
+		menu.addSeparator();
 
-	QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
-	openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
+		QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
+		openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
 
-	QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
-	openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+		QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
+		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
-	menu.addSeparator();
-	menu.addAction(new Action(ActionsManager::BookmarkLinkAction, {}, ActionExecutor::Object(this, this), &menu));
-	menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
+		menu.addSeparator();
+		menu.addAction(new Action(ActionsManager::BookmarkLinkAction, {}, ActionExecutor::Object(this, this), &menu));
+		menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
+		menu.addSeparator();
 
-	connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-	connect(openInNewBackgroundTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-	connect(openInNewWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
-	connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewBackgroundTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+		connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
+	}
+
+	QAction *lockPanelAction(menu.addAction(tr("Lock Panel")));
+	lockPanelAction->setCheckable(true);
+	lockPanelAction->setChecked(m_isLocked);
+
+	connect(lockPanelAction, &QAction::toggled, [&](bool isChecked)
+	{
+		m_isLocked = isChecked;
+	});
 
 	menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
 }
