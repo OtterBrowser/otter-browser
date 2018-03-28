@@ -110,7 +110,7 @@ void QtWebKitFrame::handleLoadFinished()
 
 	runUserScripts(m_widget->getUrl());
 
-	if (m_widget->getOption(SettingsManager::Browser_RememberPasswordsOption).toBool())
+	if (!m_widget->isPrivate() && m_widget->getOption(SettingsManager::Browser_RememberPasswordsOption).toBool())
 	{
 		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formExtractor.js"));
 
