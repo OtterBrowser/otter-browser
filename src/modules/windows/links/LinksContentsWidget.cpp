@@ -186,6 +186,8 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 
 	if (m_ui->linksViewWidget->selectionModel()->hasSelection())
 	{
+		ActionExecutor::Object executor(this, this);
+
 		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
 
 		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
@@ -203,8 +205,8 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
 		menu.addSeparator();
-		menu.addAction(new Action(ActionsManager::BookmarkLinkAction, {}, ActionExecutor::Object(this, this), &menu));
-		menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
+		menu.addAction(new Action(ActionsManager::BookmarkLinkAction, {}, executor, &menu));
+		menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, executor, &menu));
 		menu.addSeparator();
 
 		connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
