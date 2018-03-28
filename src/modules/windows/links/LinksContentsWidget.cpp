@@ -19,6 +19,7 @@
 
 #include "LinksContentsWidget.h"
 #include "../../../core/Application.h"
+#include "../../../core/BookmarksManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
@@ -84,7 +85,7 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 	});
 	connect(m_ui->linksViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
-		emit arbitraryActionsStateChanged({ActionsManager::CopyLinkToClipboardAction});
+		emit arbitraryActionsStateChanged({ActionsManager::CopyLinkToClipboardAction, ActionsManager::BookmarkLinkAction});
 	});
 }
 
@@ -105,22 +106,38 @@ void LinksContentsWidget::changeEvent(QEvent *event)
 
 void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (identifier == ActionsManager::CopyLinkToClipboardAction)
+	switch (identifier)
 	{
-		const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
-		QStringList links;
-		links.reserve(indexes.count());
+		case ActionsManager::CopyLinkToClipboardAction:
+			{
+				const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
+				QStringList links;
+				links.reserve(indexes.count());
 
-		for (int i = 0; i < indexes.count(); ++i)
-		{
-			links.append(indexes.at(i).data(Qt::StatusTipRole).toString());
-		}
+				for (int i = 0; i < indexes.count(); ++i)
+				{
+					links.append(indexes.at(i).data(Qt::StatusTipRole).toString());
+				}
 
-		QGuiApplication::clipboard()->setText(links.join(QLatin1Char('\n')));
-	}
-	else
-	{
-		ContentsWidget::triggerAction(identifier, parameters);
+				QGuiApplication::clipboard()->setText(links.join(QLatin1Char('\n')));
+			}
+
+			break;
+		case ActionsManager::BookmarkLinkAction:
+			{
+				const QList<QModelIndex> indexes(m_ui->linksViewWidget->selectionModel()->selectedIndexes());
+
+				for (int i = 0; i < indexes.count(); ++i)
+				{
+					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, indexes.at(i).data(Qt::StatusTipRole)}, {BookmarksModel::TitleRole, indexes.at(i).data(Qt::DisplayRole)}}, nullptr);
+				}
+			}
+
+			break;
+		default:
+			ContentsWidget::triggerAction(identifier, parameters);
+
+			break;
 	}
 }
 
@@ -183,6 +200,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
 	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::BookmarkLinkAction, {}, ActionExecutor::Object(this, this), &menu));
 	menu.addAction(new Action(ActionsManager::CopyLinkToClipboardAction, {}, ActionExecutor::Object(this, this), &menu));
 
 	connect(openInNewTabAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
@@ -232,12 +250,18 @@ QIcon LinksContentsWidget::getIcon() const
 
 ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
-	if (identifier == ActionsManager::CopyLinkToClipboardAction)
+	switch (identifier)
 	{
-		ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(ActionsManager::CopyLinkToClipboardAction).getDefaultState());
-		state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
+		case ActionsManager::CopyLinkToClipboardAction:
+		case ActionsManager::BookmarkLinkAction:
+			{
+				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
+				state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
 
-		return state;
+				return state;
+			}
+		default:
+			break;
 	}
 
 	return ContentsWidget::getActionState(identifier, parameters);
