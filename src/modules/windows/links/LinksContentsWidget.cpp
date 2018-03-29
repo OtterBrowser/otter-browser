@@ -136,7 +136,15 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		case ActionsManager::ReloadAction:
-			updateLinks();
+			{
+				const bool isLocked(m_isLocked);
+
+				m_isLocked = false;
+
+				updateLinks();
+
+				m_isLocked = isLocked;
+			}
 
 			break;
 		default:
