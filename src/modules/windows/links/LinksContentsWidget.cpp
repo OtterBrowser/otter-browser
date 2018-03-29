@@ -180,12 +180,12 @@ void LinksContentsWidget::updateLinks()
 
 	if (m_window && m_window->getWebWidget())
 	{
-		QStandardItem *pageEntry(addEntry(nullptr, m_window->getTitle(), m_window->getUrl()));
+		QStandardItem *pageEntry(addLink(nullptr, m_window->getTitle(), m_window->getUrl()));
 		const QVector<WebWidget::LinkUrl> links(m_window->getWebWidget()->getLinks());
 
 		for (int i = 0; i < links.count(); ++i)
 		{
-			addEntry(pageEntry, links.at(i).title, links.at(i).url);
+			addLink(pageEntry, links.at(i).title, links.at(i).url);
 		}
 
 		m_ui->linksViewWidget->expandAll();
@@ -241,7 +241,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
 }
 
-QStandardItem* LinksContentsWidget::addEntry(QStandardItem *parent, const QString &title, const QUrl &url)
+QStandardItem* LinksContentsWidget::addLink(QStandardItem *parent, const QString &title, const QUrl &url)
 {
 	QStandardItem *item(new QStandardItem(title.isEmpty() ? url.toDisplayString(QUrl::RemovePassword) : title));
 	item->setData(url, Qt::StatusTipRole);

@@ -55,7 +55,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event) override;
 	void updateLinks();
-	QStandardItem* addEntry(QStandardItem *parent, const QString &title, const QUrl &url);
+	QStandardItem* addLink(QStandardItem *parent, const QString &title, const QUrl &url);
 
 protected slots:
 	void openLink();
