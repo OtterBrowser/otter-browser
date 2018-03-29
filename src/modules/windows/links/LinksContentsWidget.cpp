@@ -135,6 +135,10 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			}
 
 			break;
+		case ActionsManager::ReloadAction:
+			updateLinks();
+
+			break;
 		default:
 			ContentsWidget::triggerAction(identifier, parameters);
 
@@ -182,12 +186,11 @@ void LinksContentsWidget::updateLinks()
 
 void LinksContentsWidget::showContextMenu(const QPoint &position)
 {
+	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
 
 	if (m_ui->linksViewWidget->selectionModel()->hasSelection())
 	{
-		ActionExecutor::Object executor(this, this);
-
 		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
 
 		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
@@ -214,6 +217,9 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 		connect(openInNewWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
 		connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &LinksContentsWidget::openLink);
 	}
+
+	menu.addAction(new Action(ActionsManager::ReloadAction, {}, executor, &menu));
+	menu.addSeparator();
 
 	QAction *lockPanelAction(menu.addAction(tr("Lock Panel")));
 	lockPanelAction->setCheckable(true);
@@ -272,6 +278,7 @@ ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int 
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
 		case ActionsManager::BookmarkLinkAction:
+		case ActionsManager::ReloadAction:
 			{
 				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
 				state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
