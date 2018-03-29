@@ -234,6 +234,8 @@ QStandardItem* LinksContentsWidget::addEntry(QStandardItem *parent, const QStrin
 
 	if (parent)
 	{
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
 		parent->appendRow(item);
 	}
 	else
