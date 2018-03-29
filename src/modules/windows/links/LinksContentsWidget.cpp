@@ -73,6 +73,8 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 			}
 
 			updateLinks();
+
+			emit arbitraryActionsStateChanged({ActionsManager::ReloadAction});
 		});
 	}
 
