@@ -282,17 +282,19 @@ QIcon LinksContentsWidget::getIcon() const
 
 ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
 {
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
+
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
 		case ActionsManager::BookmarkLinkAction:
-		case ActionsManager::ReloadAction:
-			{
-				ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
-				state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
+			state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
 
-				return state;
-			}
+			return state;
+		case ActionsManager::ReloadAction:
+			state.isEnabled = (m_window != nullptr);
+
+			return state;
 		default:
 			break;
 	}
