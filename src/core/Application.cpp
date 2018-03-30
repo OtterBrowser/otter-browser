@@ -213,7 +213,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 		SessionsManager::createInstance(profilePath, cachePath, isPrivate, false);
 
-		const QStringList rawReportOptions(m_commandLineParser.positionalArguments());
+		QStringList rawReportOptions(m_commandLineParser.positionalArguments());
 		ReportOptions reportOptions(BasicReport);
 
 		if (rawReportOptions.isEmpty() || rawReportOptions.contains(QLatin1String("standard")))
