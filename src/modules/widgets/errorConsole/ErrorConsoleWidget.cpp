@@ -183,7 +183,7 @@ void ErrorConsoleWidget::addMessage(const Console::Message &message)
 
 	if (!message.source.isEmpty())
 	{
-		entry.append(QStringLiteral(" - %1").arg(source));
+		entry.append(QLatin1String(" - ") + source);
 	}
 
 	QStandardItem *messageItem(new QStandardItem(icon, entry));
