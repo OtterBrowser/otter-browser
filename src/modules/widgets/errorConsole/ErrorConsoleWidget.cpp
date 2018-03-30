@@ -262,7 +262,7 @@ void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &f
 	m_ui->consoleView->setRowHidden(index.row(), m_ui->consoleView->rootIndex(), !hasMatch);
 }
 
-void ErrorConsoleWidget::showContextMenu(const QPoint position)
+void ErrorConsoleWidget::showContextMenu(const QPoint &position)
 {
 	QMenu menu(m_ui->consoleView);
 

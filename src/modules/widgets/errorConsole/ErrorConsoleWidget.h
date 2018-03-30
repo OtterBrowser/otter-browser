@@ -69,7 +69,7 @@ protected slots:
 	void addMessage(const Console::Message &message);
 	void filterCategories();
 	void filterMessages(const QString &filter);
-	void showContextMenu(const QPoint position);
+	void showContextMenu(const QPoint &position);
 
 private:
 	QStandardItemModel *m_model;
