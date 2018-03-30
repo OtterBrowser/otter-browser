@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,6 @@ void Console::createInstance()
 void Console::addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source, int line, quint64 window)
 {
 	Message message;
-	message.time = QDateTime::currentDateTime();
 	message.note = note;
 	message.source = source;
 	message.category = category;
