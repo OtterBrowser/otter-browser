@@ -216,6 +216,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		QStringList rawReportOptions(m_commandLineParser.positionalArguments());
 		ReportOptions reportOptions(BasicReport);
 
+#ifdef Q_OS_WIN
+		if (!rawReportOptions.contains(QLatin1String("noDialog")))
+		{
+			rawReportOptions.append(QLatin1String("dialog"));
+		}
+#endif
+
 		if (rawReportOptions.isEmpty() || rawReportOptions.contains(QLatin1String("standard")))
 		{
 			reportOptions = StandardReport;
@@ -247,12 +254,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 			}
 		}
 
-#ifdef Q_OS_WIN
-		if (!rawReportOptions.contains(QLatin1String("noDialog")))
-		{
-			rawReportOptions.append(QLatin1String("dialog"));
-		}
-#endif
 		if (rawReportOptions.contains(QLatin1String("dialog")))
 		{
 			ReportDialog dialog(reportOptions);
