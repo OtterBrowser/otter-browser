@@ -388,11 +388,11 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		styleSheet.append(QLatin1String("body::-webkit-scrollbar {display:none;}"));
 	}
 
-	const QString userSyleSheet(getOption(SettingsManager::Content_UserStyleSheetOption).toString());
+	const QString userSyleSheetPath(getOption(SettingsManager::Content_UserStyleSheetOption).toString());
 
-	if (!userSyleSheet.isEmpty())
+	if (!userSyleSheetPath.isEmpty())
 	{
-		QFile file(userSyleSheet);
+		QFile file(Utils::normalizePath(userSyleSheetPath));
 
 		if (file.open(QIODevice::ReadOnly))
 		{
