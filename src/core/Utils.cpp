@@ -486,12 +486,7 @@ QString normalizePath(const QString &path)
 {
 	if (path == QString(QLatin1Char('~')) || path.startsWith(QLatin1Char('~') + QDir::separator()))
 	{
-		const QStringList locations(QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
-
-		if (!locations.isEmpty())
-		{
-			return locations.first() + path.mid(1);
-		}
+		return QDir::homePath() + path.mid(1);
 	}
 
 	return path;
