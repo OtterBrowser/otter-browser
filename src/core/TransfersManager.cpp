@@ -313,7 +313,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 			m_options |= IsQuickTransferOption;
 		}
 
-		const QString directory(m_options.testFlag(IsQuickTransferOption) ? SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString() : QString());
+		const QString directory(m_options.testFlag(IsQuickTransferOption) ? Utils::normalizePath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString()) : QString());
 		const QString fileName(getSuggestedFileName());
 
 		if (m_options.testFlag(IsQuickTransferOption))
