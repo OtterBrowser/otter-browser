@@ -484,7 +484,7 @@ QString formatFileTypes(const QStringList &filters)
 
 QString normalizePath(const QString &path)
 {
-	if (path == QString(QLatin1Char('~')) || path.startsWith(QLatin1Char('~') + QDir::separator()))
+	if (path == QString(QLatin1Char('~')) || QDir::toNativeSeparators(path).startsWith(QLatin1Char('~') + QDir::separator()))
 	{
 		return QDir::homePath() + path.mid(1);
 	}
