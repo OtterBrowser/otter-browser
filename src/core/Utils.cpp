@@ -379,7 +379,7 @@ QString savePixmapAsDataUri(const QPixmap &pixmap)
 
 	pixmap.save(&buffer, "PNG");
 
-	return QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
+	return QLatin1String("data:image/png;base64,") + data.toBase64();
 }
 
 QString extractHost(const QUrl &url)
