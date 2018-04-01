@@ -156,6 +156,14 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 	}
 }
 
+void LinksContentsWidget::addLink(const QString &title, const QUrl &url)
+{
+	QStandardItem *item(new QStandardItem(title.isEmpty() ? url.toDisplayString(QUrl::RemovePassword) : title));
+	item->setData(url, Qt::StatusTipRole);
+
+	m_ui->linksViewWidget->getSourceModel()->appendRow(item);
+}
+
 void LinksContentsWidget::openLink()
 {
 	const QAction *action(qobject_cast<QAction*>(sender()));
@@ -182,12 +190,22 @@ void LinksContentsWidget::updateLinks()
 
 	if (m_window && m_window->getWebWidget())
 	{
-		QStandardItem *pageEntry(addLink(nullptr, m_window->getTitle(), m_window->getUrl()));
 		const QVector<WebWidget::LinkUrl> links(m_window->getWebWidget()->getLinks());
 
-		for (int i = 0; i < links.count(); ++i)
+		addLink(m_window->getTitle(), m_window->getUrl());
+
+		if (!links.isEmpty())
 		{
-			addLink(pageEntry, links.at(i).title, links.at(i).url);
+			QStandardItem *separatorItem(new QStandardItem());
+			separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+			separatorItem->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+
+			m_ui->linksViewWidget->getSourceModel()->appendRow(separatorItem);
+
+			for (int i = 0; i < links.count(); ++i)
+			{
+				addLink(links.at(i).title, links.at(i).url);
+			}
 		}
 
 		m_ui->linksViewWidget->expandAll();
@@ -241,25 +259,6 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	});
 
 	menu.exec(m_ui->linksViewWidget->mapToGlobal(position));
-}
-
-QStandardItem* LinksContentsWidget::addLink(QStandardItem *parent, const QString &title, const QUrl &url)
-{
-	QStandardItem *item(new QStandardItem(title.isEmpty() ? url.toDisplayString(QUrl::RemovePassword) : title));
-	item->setData(url, Qt::StatusTipRole);
-
-	if (parent)
-	{
-		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-		parent->appendRow(item);
-	}
-	else
-	{
-		m_ui->linksViewWidget->getSourceModel()->appendRow(item);
-	}
-
-	return item;
 }
 
 QString LinksContentsWidget::getTitle() const
