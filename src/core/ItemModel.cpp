@@ -43,9 +43,19 @@ void ItemModel::Item::setup(ItemModel::ItemType type)
 {
 	setData(type, TypeRole);
 
-	if (type != FolderType)
+	switch (type)
 	{
-		setFlags(flags() | Qt::ItemNeverHasChildren);
+		case EntryType:
+			setFlags(flags() | Qt::ItemNeverHasChildren);
+
+			break;
+		case SeparatorType:
+			setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+			setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+
+			break;
+		default:
+			break;
 	}
 }
 
