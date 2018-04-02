@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ bool NetworkManagerFactory::m_canSendReferrer(true);
 bool NetworkManagerFactory::m_isInitialized(false);
 bool NetworkManagerFactory::m_isWorkingOffline(false);
 
-ProxiesModel::ProxiesModel(const QString &selectedProxy, bool isEditor, QObject *parent) : TreeModel(parent),
+ProxiesModel::ProxiesModel(const QString &selectedProxy, bool isEditor, QObject *parent) : ItemModel(parent),
 	m_isEditor(isEditor)
 {
 	if (isEditor)
@@ -124,7 +124,7 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 	}
 }
 
-UserAgentsModel::UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent) : TreeModel(parent),
+UserAgentsModel::UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent) : ItemModel(parent),
 	m_isEditor(isEditor)
 {
 	if (isEditor)

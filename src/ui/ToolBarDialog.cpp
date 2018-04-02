@@ -25,9 +25,9 @@
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
+#include "../core/ItemModel.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/ThemesManager.h"
-#include "../core/TreeModel.h"
 
 #include "ui_ToolBarDialog.h"
 
@@ -119,7 +119,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 			return;
 		case ToolBarsManager::SideBarType:
 			{
-				TreeModel *panelsModel(new TreeModel(this));
+				ItemModel *panelsModel(new ItemModel(this));
 				const QStringList specialPages(AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType));
 
 				for (int i = 0; i < specialPages.count(); ++i)
@@ -127,7 +127,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 					QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
 					item->setCheckable(true);
 					item->setCheckState(definition.panels.contains(specialPages.at(i)) ? Qt::Checked : Qt::Unchecked);
-					item->setData(specialPages.at(i), TreeModel::UserRole);
+					item->setData(specialPages.at(i), ItemModel::UserRole);
 					item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 					panelsModel->insertRow(item);
@@ -140,7 +140,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(definition.panels.at(i))));
 						item->setCheckable(true);
 						item->setCheckState(Qt::Checked);
-						item->setData(definition.panels.at(i), TreeModel::UserRole);
+						item->setData(definition.panels.at(i), ItemModel::UserRole);
 						item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 						panelsModel->insertRow(item);
@@ -783,7 +783,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 				if (item->data(Qt::CheckStateRole).toInt() == Qt::Checked)
 				{
-					definition.panels.append(item->data(TreeModel::UserRole).toString());
+					definition.panels.append(item->data(ItemModel::UserRole).toString());
 				}
 			}
 

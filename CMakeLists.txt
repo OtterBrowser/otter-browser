@@ -110,6 +110,7 @@ set(otter_src
 	src/core/Importer.cpp
 	src/core/IniSettings.cpp
 	src/core/InputInterpreter.cpp
+	src/core/ItemModel.cpp
 	src/core/Job.cpp
 	src/core/JsonSettings.cpp
 	src/core/LocalListingNetworkReply.cpp
@@ -134,7 +135,6 @@ set(otter_src
 	src/core/ThemesManager.cpp
 	src/core/ToolBarsManager.cpp
 	src/core/TransfersManager.cpp
-	src/core/TreeModel.cpp
 	src/core/UpdateChecker.cpp
 	src/core/Updater.cpp
 	src/core/UserScript.cpp

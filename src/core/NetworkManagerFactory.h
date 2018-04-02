@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 #ifndef OTTER_NETWORKMANAGERFACTORY_H
 #define OTTER_NETWORKMANAGERFACTORY_H
 
-#include "TreeModel.h"
+#include "ItemModel.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtNetwork/QAuthenticator>
@@ -138,13 +138,13 @@ class NetworkManager;
 class NetworkManagerFactory;
 class NetworkProxyFactory;
 
-class ProxiesModel final : public TreeModel
+class ProxiesModel final : public ItemModel
 {
 public:
 	enum ItemRole
 	{
-		TitleRole = TreeModel::TitleRole,
-		IdentifierRole = TreeModel::UserRole
+		TitleRole = ItemModel::TitleRole,
+		IdentifierRole = ItemModel::UserRole
 	};
 
 	explicit ProxiesModel(const QString &selectedProxy, bool isEditor, QObject *parent = nullptr);
@@ -156,13 +156,13 @@ private:
 	bool m_isEditor;
 };
 
-class UserAgentsModel final : public TreeModel
+class UserAgentsModel final : public ItemModel
 {
 public:
 	enum ItemRole
 	{
-		TitleRole = TreeModel::TitleRole,
-		IdentifierRole = TreeModel::UserRole,
+		TitleRole = ItemModel::TitleRole,
+		IdentifierRole = ItemModel::UserRole,
 		UserAgentRole
 	};
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@
 #include "../Animation.h"
 #include "../LineEditWidget.h"
 #include "../SearchEnginePropertiesDialog.h"
+#include "../../core/ItemModel.h"
 #include "../../core/Job.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"
-#include "../../core/TreeModel.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesSearchPageWidget.h"
@@ -94,7 +94,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 {
 	m_ui->setupUi(this);
 
-	TreeModel *searchEnginesModel(new TreeModel(this));
+	ItemModel *searchEnginesModel(new ItemModel(this));
 	searchEnginesModel->setHorizontalHeaderLabels({tr("Name"), tr("Keyword")});
 	searchEnginesModel->setExclusive(true);
 
