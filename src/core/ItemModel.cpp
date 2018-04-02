@@ -26,17 +26,27 @@ namespace Otter
 
 ItemModel::Item::Item(ItemModel::ItemType type) : QStandardItem()
 {
-	setData(type, TypeRole);
+	setup(type);
 }
 
 ItemModel::Item::Item(const QString &title, ItemModel::ItemType type) : QStandardItem(title)
 {
-	setData(type, TypeRole);
+	setup(type);
 }
 
 ItemModel::Item::Item(const QIcon &icon, const QString &title, ItemModel::ItemType type) : QStandardItem(icon, title)
 {
+	setup(type);
+}
+
+void ItemModel::Item::setup(ItemModel::ItemType type)
+{
 	setData(type, TypeRole);
+
+	if (type != FolderType)
+	{
+		setFlags(flags() | Qt::ItemNeverHasChildren);
+	}
 }
 
 ItemModel::ItemModel(QObject *parent) : QStandardItemModel(parent),

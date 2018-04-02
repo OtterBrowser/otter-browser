@@ -52,6 +52,9 @@ public:
 		explicit Item(ItemModel::ItemType type = EntryType);
 		explicit Item(const QString &title, ItemModel::ItemType type = EntryType);
 		explicit Item(const QIcon &icon, const QString &title, ItemModel::ItemType type = EntryType);
+
+	protected:
+		void setup(ItemModel::ItemType type);
 	};
 
 	explicit ItemModel(QObject *parent = nullptr);
