@@ -85,7 +85,10 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 	connect(m_ui->linksViewWidget, &ItemViewWidget::customContextMenuRequested, this, &LinksContentsWidget::showContextMenu);
 	connect(m_ui->linksViewWidget, &ItemViewWidget::clicked, [&](const QModelIndex &index)
 	{
-		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(Qt::StatusTipRole)}}, parentWidget());
+		if (!index.data(Qt::StatusTipRole).isNull())
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(Qt::StatusTipRole)}}, parentWidget());
+		}
 	});
 	connect(m_ui->linksViewWidget, &ItemViewWidget::needsActionsUpdate, this, [&]()
 	{
