@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SearchEnginesManager.h"
+#include "ItemModel.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
@@ -167,15 +168,11 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 	if (searchEngines.count() > 0)
 	{
-		QStandardItem *separatorItem(new QStandardItem());
-		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
-		separatorItem->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-
 		QStandardItem *manageItem(new QStandardItem(ThemesManager::createIcon(QLatin1String("configure")), tr("Manage Search Engines…")));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
 		manageItem->setFlags(manageItem->flags() | Qt::ItemNeverHasChildren);
 
-		m_searchEnginesModel->appendRow(separatorItem);
+		m_searchEnginesModel->appendRow(new ItemModel::Item(ItemModel::SeparatorType));
 		m_searchEnginesModel->appendRow(manageItem);
 	}
 

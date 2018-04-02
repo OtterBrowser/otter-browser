@@ -20,6 +20,7 @@
 #include "LinksContentsWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../core/ItemModel.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/MainWindow.h"
@@ -196,11 +197,7 @@ void LinksContentsWidget::updateLinks()
 
 		if (!links.isEmpty())
 		{
-			QStandardItem *separatorItem(new QStandardItem());
-			separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
-			separatorItem->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-
-			m_ui->linksViewWidget->getSourceModel()->appendRow(separatorItem);
+			m_ui->linksViewWidget->getSourceModel()->appendRow(new ItemModel::Item(ItemModel::SeparatorType));
 
 			for (int i = 0; i < links.count(); ++i)
 			{
