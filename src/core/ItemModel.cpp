@@ -24,6 +24,21 @@
 namespace Otter
 {
 
+ItemModel::Item::Item(ItemModel::ItemType type) : QStandardItem()
+{
+	setData(type, TypeRole);
+}
+
+ItemModel::Item::Item(const QString &title, ItemModel::ItemType type) : QStandardItem(title)
+{
+	setData(type, TypeRole);
+}
+
+ItemModel::Item::Item(const QIcon &icon, const QString &title, ItemModel::ItemType type) : QStandardItem(icon, title)
+{
+	setData(type, TypeRole);
+}
+
 ItemModel::ItemModel(QObject *parent) : QStandardItemModel(parent),
 	m_isExclusive(false),
 	m_isIgnoringCheckStateReset(true)

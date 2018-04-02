@@ -46,6 +46,14 @@ public:
 		UserRole
 	};
 
+	class Item : public QStandardItem
+	{
+	public:
+		explicit Item(ItemModel::ItemType type = EntryType);
+		explicit Item(const QString &title, ItemModel::ItemType type = EntryType);
+		explicit Item(const QIcon &icon, const QString &title, ItemModel::ItemType type = EntryType);
+	};
+
 	explicit ItemModel(QObject *parent = nullptr);
 
 	void insertRow(QStandardItem *item = nullptr, QStandardItem *parent = nullptr, int row = -1, ItemType type = EntryType);
