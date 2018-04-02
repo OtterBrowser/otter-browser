@@ -217,7 +217,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
 
-	if (m_ui->linksViewWidget->selectionModel()->hasSelection())
+	if (!m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty())
 	{
 		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
 
@@ -289,7 +289,7 @@ ActionsManager::ActionDefinition::State LinksContentsWidget::getActionState(int 
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
 		case ActionsManager::BookmarkLinkAction:
-			state.isEnabled = m_ui->linksViewWidget->selectionModel()->hasSelection();
+			state.isEnabled = !m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty();
 
 			return state;
 		case ActionsManager::ReloadAction:
