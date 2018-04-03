@@ -379,7 +379,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 			if (reader.hasError())
 			{
-				getRootItem()->removeRows(0, getRootItem()->rowCount());
+				m_rootItem->removeRows(0, m_rootItem->rowCount());
 
 				Console::addMessage(((m_mode == NotesMode) ? tr("Failed to load notes file: %1") : tr("Failed to load bookmarks file: %1")).arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
@@ -451,13 +451,12 @@ void BookmarksModel::trashBookmark(Bookmark *bookmark)
 		}
 		else
 		{
-			Bookmark *trashItem(getTrashItem());
 			Bookmark *previousParent(static_cast<Bookmark*>(bookmark->parent()));
 
 			m_trash[bookmark] = {bookmark->parent()->index(), bookmark->row()};
 
-			trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
-			trashItem->setEnabled(true);
+			m_trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+			m_trashItem->setEnabled(true);
 
 			removeBookmarkUrl(bookmark);
 
@@ -475,11 +474,11 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 		return;
 	}
 
-	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : getRootItem());
+	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : m_rootItem);
 
 	if (!formerParent || static_cast<BookmarkType>(formerParent->data(TypeRole).toInt()) != FolderBookmark)
 	{
-		formerParent = getRootItem();
+		formerParent = m_rootItem;
 	}
 
 	if (m_trash.contains(bookmark))
@@ -495,8 +494,7 @@ void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 
 	readdBookmarkUrl(bookmark);
 
-	Bookmark *trashItem(getTrashItem());
-	trashItem->setEnabled(trashItem->rowCount() > 0);
+	m_trashItem->setEnabled(m_trashItem->rowCount() > 0);
 
 	emit bookmarkModified(bookmark);
 	emit bookmarkRestored(bookmark);
@@ -881,9 +879,8 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 
 void BookmarksModel::emptyTrash()
 {
-	Bookmark *trashItem(getTrashItem());
-	trashItem->removeRows(0, trashItem->rowCount());
-	trashItem->setEnabled(false);
+	m_trashItem->removeRows(0, m_trashItem->rowCount());
+	m_trashItem->setEnabled(false);
 
 	m_trash.clear();
 
@@ -942,7 +939,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 
 	if (!parent)
 	{
-		parent = getRootItem();
+		parent = m_rootItem;
 	}
 
 	parent->insertRow(((index < 0) ? parent->rowCount() : index), bookmark);
@@ -1022,7 +1019,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmark(quint64 identifier) const
 {
 	if (identifier == 0)
 	{
-		return getRootItem();
+		return m_rootItem;
 	}
 
 	if (m_identifiers.contains(identifier))
@@ -1047,7 +1044,7 @@ BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
 {
 	if (path == QLatin1String("/"))
 	{
-		return getRootItem();
+		return m_rootItem;
 	}
 
 	if (path.startsWith(QLatin1Char('#')))
@@ -1055,7 +1052,7 @@ BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
 		return getBookmark(path.mid(1).toULongLong());
 	}
 
-	QStandardItem *item(getRootItem());
+	QStandardItem *item(m_rootItem);
 	const QStringList directories(path.split(QLatin1Char('/'), QString::SkipEmptyParts));
 
 	for (int i = 0; i < directories.count(); ++i)
