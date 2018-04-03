@@ -1197,7 +1197,7 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 {
 	if (!branch)
 	{
-		branch = item(0, 0);
+		branch = m_rootItem;
 	}
 
 	QVector<Bookmark*> bookmarks;
