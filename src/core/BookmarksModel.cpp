@@ -1200,32 +1200,38 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 		branch = item(0, 0);
 	}
 
-	QVector<Bookmark*> items;
+	QVector<Bookmark*> bookmarks;
 
 	for (int i = 0; i < branch->rowCount(); ++i)
 	{
-		Bookmark *item(static_cast<Bookmark*>(branch->child(i)));
+		Bookmark *bookmark(static_cast<Bookmark*>(branch->child(i)));
 
-		if (item)
+		if (bookmark)
 		{
-			const BookmarkType type(item->getType());
-
-			if (type == FolderBookmark)
+			switch (bookmark->getType())
 			{
+				case FolderBookmark:
 #if QT_VERSION >= 0x050500
-				items.append(findUrls(url, item));
+					bookmarks.append(findUrls(url, bookmark));
 #else
-				items += findUrls(url, item);
+					bookmarks += findUrls(url, bookmark);
 #endif
-			}
-			else if (type == UrlBookmark && url == Utils::normalizeUrl(item->getUrl()))
-			{
-				items.append(item);
+
+					break;
+				case UrlBookmark:
+					if (url == Utils::normalizeUrl(bookmark->getUrl()))
+					{
+						bookmarks.append(bookmark);
+					}
+
+					break;
+				default:
+					break;
 			}
 		}
 	}
 
-	return items;
+	return bookmarks;
 }
 
 QVector<BookmarksModel::Bookmark*> BookmarksModel::getBookmarks(const QUrl &url) const
