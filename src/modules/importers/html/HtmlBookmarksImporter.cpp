@@ -134,7 +134,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 					}
 				}
 
-				BookmarksItem *bookmark(BookmarksManager::addBookmark(type, metaData, getCurrentFolder()));
+				BookmarksModel::Bookmark *bookmark(BookmarksManager::addBookmark(type, metaData, getCurrentFolder()));
 
 				++m_currentAmount;
 

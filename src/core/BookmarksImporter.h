@@ -21,12 +21,11 @@
 #ifndef OTTER_BOOKMARKSIMPORTER_H
 #define OTTER_BOOKMARKSIMPORTER_H
 
+#include "BookmarksModel.h"
 #include "Importer.h"
 
 namespace Otter
 {
-
-class BookmarksItem;
 
 class BookmarksImporter : public Importer
 {
@@ -41,15 +40,15 @@ protected:
 	void goToParent();
 	void removeAllBookmarks();
 	void setAllowDuplicates(bool allow);
-	void setCurrentFolder(BookmarksItem *folder);
-	void setImportFolder(BookmarksItem *folder);
-	BookmarksItem* getCurrentFolder() const;
-	BookmarksItem* getImportFolder() const;
+	void setCurrentFolder(BookmarksModel::Bookmark *folder);
+	void setImportFolder(BookmarksModel::Bookmark *folder);
+	BookmarksModel::Bookmark* getCurrentFolder() const;
+	BookmarksModel::Bookmark* getImportFolder() const;
 	bool areDuplicatesAllowed() const;
 
 private:
-	BookmarksItem *m_currentFolder;
-	BookmarksItem *m_importFolder;
+	BookmarksModel::Bookmark *m_currentFolder;
+	BookmarksModel::Bookmark *m_importFolder;
 	bool m_areDuplicatesAllowed;
 };
 

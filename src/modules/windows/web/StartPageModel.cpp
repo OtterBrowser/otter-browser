@@ -57,7 +57,7 @@ void StartPageModel::reloadModel()
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			const BookmarksItem *bookmark(static_cast<BookmarksItem*>(m_bookmark->child(i)));
+			const BookmarksModel::Bookmark *bookmark(static_cast<BookmarksModel::Bookmark*>(m_bookmark->child(i)));
 
 			if (bookmark)
 			{
@@ -127,7 +127,7 @@ void StartPageModel::addTile(const QUrl &url)
 
 			for (int j = 0; j < m_bookmark->rowCount(); ++j)
 			{
-				BookmarksItem *childBookmark(static_cast<BookmarksItem*>(m_bookmark->child(j)));
+				BookmarksModel::Bookmark *childBookmark(static_cast<BookmarksModel::Bookmark*>(m_bookmark->child(j)));
 
 				if (childBookmark && childBookmark->getRawData(Qt::DisplayRole).toString() == directories.at(i))
 				{
@@ -149,7 +149,7 @@ void StartPageModel::addTile(const QUrl &url)
 		connect(BookmarksManager::getModel(), &BookmarksModel::bookmarkModified, this, &StartPageModel::handleBookmarkModified);
 	}
 
-	const BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}}, m_bookmark));
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}}, m_bookmark));
 
 	if (bookmark)
 	{
@@ -241,7 +241,7 @@ void StartPageModel::handleDragEnded()
 	}
 }
 
-void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
+void StartPageModel::handleBookmarkModified(BookmarksModel::Bookmark *bookmark)
 {
 	if (!m_bookmark)
 	{
@@ -254,7 +254,7 @@ void StartPageModel::handleBookmarkModified(BookmarksItem *bookmark)
 	}
 }
 
-void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
+void StartPageModel::handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent)
 {
 	if (!m_bookmark)
 	{
@@ -280,7 +280,7 @@ void StartPageModel::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem 
 	}
 }
 
-void StartPageModel::handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
+void StartPageModel::handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent)
 {
 	if (m_bookmark && (bookmark == m_bookmark || previousParent == m_bookmark || m_bookmark->isAncestorOf(previousParent)))
 	{
@@ -303,7 +303,7 @@ void StartPageModel::handleThumbnailCreated(const QUrl &url, const QPixmap &thum
 	}
 
 	const ThumbnailRequestInformation information(m_reloads[url]);
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(information.bookmarkIdentifier));
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(information.bookmarkIdentifier));
 
 	m_reloads.remove(url);
 

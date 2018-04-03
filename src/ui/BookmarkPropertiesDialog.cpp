@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent) : Dialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *bookmark, QWidget *parent) : Dialog(parent),
 	m_bookmark(bookmark),
 	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
@@ -39,7 +39,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	const bool isUrlBookmark(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()) == BookmarksModel::UrlBookmark);
 
 	m_ui->setupUi(this);
-	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksItem*>(bookmark->parent()));
+	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksModel::Bookmark*>(bookmark->parent()));
 	m_ui->titleLineEditWidget->setText(m_bookmark->getTitle());
 	m_ui->addressLineEditWidget->setText(m_bookmark->getUrl().toDisplayString());
 	m_ui->addressLineEditWidget->setVisible(isUrlBookmark);
@@ -84,7 +84,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &BookmarkPropertiesDialog::close);
 }
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description, BookmarksItem *folder, int index, bool isUrl, QWidget *parent) : Dialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description, BookmarksModel::Bookmark *folder, int index, bool isUrl, QWidget *parent) : Dialog(parent),
 	m_bookmark(nullptr),
 	m_index(index),
 	m_ui(new Ui::BookmarkPropertiesDialog)

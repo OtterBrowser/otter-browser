@@ -34,7 +34,6 @@ namespace Ui
 }
 
 class AddressWidget;
-class BookmarksItem;
 
 class OpenAddressDialog final : public Dialog
 {

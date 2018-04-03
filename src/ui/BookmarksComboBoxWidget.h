@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -27,8 +27,6 @@
 namespace Otter
 {
 
-class BookmarksItem;
-
 class BookmarksComboBoxWidget final : public ComboBoxWidget
 {
 	Q_OBJECT
@@ -36,9 +34,9 @@ class BookmarksComboBoxWidget final : public ComboBoxWidget
 public:
 	explicit BookmarksComboBoxWidget(QWidget *parent = nullptr);
 
-	void setCurrentFolder(BookmarksItem *folder);
+	void setCurrentFolder(BookmarksModel::Bookmark *folder);
 	void setMode(BookmarksModel::FormatMode mode);
-	BookmarksItem* getCurrentFolder() const;
+	BookmarksModel::Bookmark* getCurrentFolder() const;
 
 public slots:
 	void createFolder();

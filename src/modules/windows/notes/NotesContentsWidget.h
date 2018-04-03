@@ -56,7 +56,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	BookmarksItem* findFolder(const QModelIndex &index);
+	BookmarksModel::Bookmark* findFolder(const QModelIndex &index);
 
 protected slots:
 	void addNote();

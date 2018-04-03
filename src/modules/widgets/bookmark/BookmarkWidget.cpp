@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
+BookmarkWidget::BookmarkWidget(BookmarksModel::Bookmark *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_bookmark(bookmark)
 {
 	updateBookmark(m_bookmark);
@@ -58,7 +58,7 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
-void BookmarkWidget::removeBookmark(BookmarksItem *bookmark)
+void BookmarkWidget::removeBookmark(BookmarksModel::Bookmark *bookmark)
 {
 	if (m_bookmark && m_bookmark == bookmark)
 	{
@@ -68,7 +68,7 @@ void BookmarkWidget::removeBookmark(BookmarksItem *bookmark)
 	}
 }
 
-void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
+void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 {
 	if (bookmark != m_bookmark)
 	{

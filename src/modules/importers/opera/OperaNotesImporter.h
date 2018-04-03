@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
 #ifndef OTTER_OPERANOTESIMPORTER_H
 #define OTTER_OPERANOTESIMPORTER_H
 
+#include "../../../core/BookmarksModel.h"
 #include "../../../core/Importer.h"
 
 namespace Otter
 {
 
 class BookmarksComboBoxWidget;
-class BookmarksItem;
 
 class OperaNotesImporter final : public Importer
 {
@@ -61,8 +61,8 @@ protected:
 
 private:
 	BookmarksComboBoxWidget *m_folderComboBox;
-	BookmarksItem *m_currentFolder;
-	BookmarksItem *m_importFolder;
+	BookmarksModel::Bookmark *m_currentFolder;
+	BookmarksModel::Bookmark *m_importFolder;
 	QWidget *m_optionsWidget;
 };
 

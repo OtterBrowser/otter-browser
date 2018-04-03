@@ -29,37 +29,6 @@
 namespace Otter
 {
 
-class BookmarksItem final : public QStandardItem
-{
-public:
-	void remove();
-	void setData(const QVariant &value, int role) override;
-	void setItemData(const QVariant &value, int role);
-	QStandardItem* clone() const override;
-	BookmarksItem* getChild(int index) const;
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getKeyword() const;
-	QUrl getUrl() const;
-	QDateTime getTimeAdded() const;
-	QDateTime getTimeModified() const;
-	QDateTime getTimeVisited() const;
-	QIcon getIcon() const;
-	QVariant data(int role) const override;
-	QVariant getRawData(int role) const;
-	QVector<QUrl> getUrls() const;
-	quint64 getIdentifier() const;
-	int getType() const;
-	int getVisits() const;
-	bool isAncestorOf(BookmarksItem *child) const;
-	bool operator<(const QStandardItem &other) const override;
-
-protected:
-	explicit BookmarksItem();
-
-friend class BookmarksModel;
-};
-
 class BookmarksModel final : public QStandardItemModel
 {
 	Q_OBJECT
@@ -97,34 +66,65 @@ public:
 		NotesMode
 	};
 
+	class Bookmark final : public QStandardItem
+	{
+	public:
+		void remove();
+		void setData(const QVariant &value, int role) override;
+		void setItemData(const QVariant &value, int role);
+		QStandardItem* clone() const override;
+		Bookmark* getChild(int index) const;
+		QString getTitle() const;
+		QString getDescription() const;
+		QString getKeyword() const;
+		QUrl getUrl() const;
+		QDateTime getTimeAdded() const;
+		QDateTime getTimeModified() const;
+		QDateTime getTimeVisited() const;
+		QIcon getIcon() const;
+		QVariant data(int role) const override;
+		QVariant getRawData(int role) const;
+		QVector<QUrl> getUrls() const;
+		quint64 getIdentifier() const;
+		int getType() const;
+		int getVisits() const;
+		bool isAncestorOf(Bookmark *child) const;
+		bool operator<(const QStandardItem &other) const override;
+
+	protected:
+		explicit Bookmark();
+
+	friend class BookmarksModel;
+	};
+
 	struct BookmarkMatch final
 	{
-		BookmarksItem *bookmark = nullptr;
+		Bookmark *bookmark = nullptr;
 		QString match;
 	};
 
 	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = nullptr);
 
-	void beginImport(BookmarksItem *target, int estimatedUrlsAmount = 0, int estimatedKeywordsAmount = 0);
+	void beginImport(Bookmark *target, int estimatedUrlsAmount = 0, int estimatedKeywordsAmount = 0);
 	void endImport();
-	void trashBookmark(BookmarksItem *bookmark);
-	void restoreBookmark(BookmarksItem *bookmark);
-	void removeBookmark(BookmarksItem *bookmark);
-	BookmarksItem* addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksItem *parent = nullptr, int index = -1);
-	BookmarksItem* getBookmark(const QString &keyword) const;
-	BookmarksItem* getBookmark(const QModelIndex &index) const;
-	BookmarksItem* getBookmark(quint64 identifier) const;
-	BookmarksItem* getRootItem() const;
-	BookmarksItem* getTrashItem() const;
-	BookmarksItem* getItem(const QString &path) const;
+	void trashBookmark(Bookmark *bookmark);
+	void restoreBookmark(Bookmark *bookmark);
+	void removeBookmark(Bookmark *bookmark);
+	Bookmark* addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData = {}, Bookmark *parent = nullptr, int index = -1);
+	Bookmark* getBookmark(const QString &keyword) const;
+	Bookmark* getBookmark(const QModelIndex &index) const;
+	Bookmark* getBookmark(quint64 identifier) const;
+	Bookmark* getRootItem() const;
+	Bookmark* getTrashItem() const;
+	Bookmark* getItem(const QString &path) const;
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QStringList mimeTypes() const override;
 	QStringList getKeywords() const;
 	QVector<BookmarkMatch> findBookmarks(const QString &prefix) const;
-	QVector<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = nullptr) const;
-	QVector<BookmarksItem*> getBookmarks(const QUrl &url) const;
+	QVector<Bookmark*> findUrls(const QUrl &url, QStandardItem *branch = nullptr) const;
+	QVector<Bookmark*> getBookmarks(const QUrl &url) const;
 	FormatMode getFormatMode() const;
-	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);
+	bool moveBookmark(Bookmark *bookmark, Bookmark *newParent, int newRow = -1);
 	bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool save(const QString &path) const;
@@ -136,37 +136,37 @@ public slots:
 	void emptyTrash();
 
 protected:
-	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
-	void writeBookmark(QXmlStreamWriter *writer, BookmarksItem *bookmark) const;
-	void removeBookmarkUrl(BookmarksItem *bookmark);
-	void readdBookmarkUrl(BookmarksItem *bookmark);
-	void handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword = {});
-	void handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl = {});
+	void readBookmark(QXmlStreamReader *reader, Bookmark *parent);
+	void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark) const;
+	void removeBookmarkUrl(Bookmark *bookmark);
+	void readdBookmarkUrl(Bookmark *bookmark);
+	void handleKeywordChanged(Bookmark *bookmark, const QString &newKeyword, const QString &oldKeyword = {});
+	void handleUrlChanged(Bookmark *bookmark, const QUrl &newUrl, const QUrl &oldUrl = {});
 	static QDateTime readDateTime(QXmlStreamReader *reader, const QString &attribute);
 
 protected slots:
 	void notifyBookmarkModified(const QModelIndex &index);
 
 private:
-	BookmarksItem *m_rootItem;
-	BookmarksItem *m_trashItem;
-	BookmarksItem *m_importTargetItem;
-	QHash<BookmarksItem*, QPair<QModelIndex, int> > m_trash;
-	QHash<QUrl, QVector<BookmarksItem*> > m_urls;
-	QHash<QString, BookmarksItem*> m_keywords;
-	QMap<quint64, BookmarksItem*> m_identifiers;
+	Bookmark *m_rootItem;
+	Bookmark *m_trashItem;
+	Bookmark *m_importTargetItem;
+	QHash<Bookmark*, QPair<QModelIndex, int> > m_trash;
+	QHash<QUrl, QVector<Bookmark*> > m_urls;
+	QHash<QString, Bookmark*> m_keywords;
+	QMap<quint64, Bookmark*> m_identifiers;
 	FormatMode m_mode;
 
 signals:
-	void bookmarkAdded(BookmarksItem *bookmark);
-	void bookmarkModified(BookmarksItem *bookmark);
-	void bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent, int previousRow);
-	void bookmarkTrashed(BookmarksItem *bookmark, BookmarksItem *previousParent);
-	void bookmarkRestored(BookmarksItem *bookmark);
-	void bookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void bookmarkAdded(Bookmark *bookmark);
+	void bookmarkModified(Bookmark *bookmark);
+	void bookmarkMoved(Bookmark *bookmark, Bookmark *previousParent, int previousRow);
+	void bookmarkTrashed(Bookmark *bookmark, Bookmark *previousParent);
+	void bookmarkRestored(Bookmark *bookmark);
+	void bookmarkRemoved(Bookmark *bookmark, Bookmark *previousParent);
 	void modelModified();
 
-friend class BookmarksItem;
+friend class Bookmark;
 };
 
 }

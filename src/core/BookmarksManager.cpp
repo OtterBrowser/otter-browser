@@ -78,7 +78,7 @@ void BookmarksManager::updateVisits(const QUrl &url)
 
 	if (m_model->hasBookmark(adjustedUrl))
 	{
-		const QVector<BookmarksItem*> bookmarks(m_model->getBookmarks(adjustedUrl));
+		const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(adjustedUrl));
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
@@ -102,7 +102,7 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 		return;
 	}
 
-	const QVector<BookmarksItem*> items(m_model->findUrls(adjustedUrl));
+	const QVector<BookmarksModel::Bookmark*> items(m_model->findUrls(adjustedUrl));
 
 	for (int i = 0; i < items.count(); ++i)
 	{
@@ -110,7 +110,7 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 	}
 }
 
-void BookmarksManager::setLastUsedFolder(BookmarksItem *folder)
+void BookmarksManager::setLastUsedFolder(BookmarksModel::Bookmark *folder)
 {
 	m_lastUsedFolder = (folder ? folder->getIdentifier() : 0);
 }
@@ -132,7 +132,7 @@ BookmarksModel* BookmarksManager::getModel()
 	return m_model;
 }
 
-BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksItem *parent, int index)
+BookmarksModel::Bookmark* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksModel::Bookmark *parent, int index)
 {
 	if (!m_model)
 	{
@@ -142,7 +142,7 @@ BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, 
 	return m_model->addBookmark(type, metaData, parent, index);
 }
 
-BookmarksItem* BookmarksManager::getBookmark(const QString &text)
+BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 {
 	if (!m_model)
 	{
@@ -157,7 +157,7 @@ BookmarksItem* BookmarksManager::getBookmark(const QString &text)
 	return m_model->getBookmark(text);
 }
 
-BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
+BookmarksModel::Bookmark* BookmarksManager::getBookmark(quint64 identifier)
 {
 	if (!m_model)
 	{
@@ -172,9 +172,9 @@ BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
 	return m_model->getBookmark(identifier);
 }
 
-BookmarksItem* BookmarksManager::getLastUsedFolder()
+BookmarksModel::Bookmark* BookmarksManager::getLastUsedFolder()
 {
-	BookmarksItem *folder(getModel()->getBookmark(m_lastUsedFolder));
+	BookmarksModel::Bookmark *folder(getModel()->getBookmark(m_lastUsedFolder));
 
 	return ((!folder || static_cast<BookmarksModel::BookmarkType>(folder->getType()) != BookmarksModel::FolderBookmark) ? getModel()->getRootItem() : folder);
 }

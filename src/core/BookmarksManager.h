@@ -36,13 +36,13 @@ public:
 	static void createInstance();
 	static void updateVisits(const QUrl &url);
 	static void removeBookmark(const QUrl &url);
-	static void setLastUsedFolder(BookmarksItem *folder);
+	static void setLastUsedFolder(BookmarksModel::Bookmark *folder);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksItem *parent = nullptr, int index = -1);
-	static BookmarksItem* getBookmark(const QString &text);
-	static BookmarksItem* getBookmark(quint64 identifier);
-	static BookmarksItem* getLastUsedFolder();
+	static BookmarksModel::Bookmark* addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksModel::Bookmark *parent = nullptr, int index = -1);
+	static BookmarksModel::Bookmark* getBookmark(const QString &text);
+	static BookmarksModel::Bookmark* getBookmark(quint64 identifier);
+	static BookmarksModel::Bookmark* getLastUsedFolder();
 	static QStringList getKeywords();
 	static QVector<BookmarksModel::BookmarkMatch> findBookmarks(const QString &prefix);
 	static bool hasBookmark(const QUrl &url);

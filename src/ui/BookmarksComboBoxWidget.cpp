@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -92,7 +92,7 @@ void BookmarksComboBoxWidget::updateBranch(const QModelIndex &parent)
 	}
 }
 
-void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
+void BookmarksComboBoxWidget::setCurrentFolder(BookmarksModel::Bookmark *folder)
 {
 	if (folder)
 	{
@@ -112,9 +112,9 @@ void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 	connect(m_model, &BookmarksModel::layoutChanged, this, &BookmarksComboBoxWidget::handleLayoutChanged);
 }
 
-BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder() const
+BookmarksModel::Bookmark* BookmarksComboBoxWidget::getCurrentFolder() const
 {
-	BookmarksItem *item(m_model->getBookmark(currentData(BookmarksModel::IdentifierRole).toULongLong()));
+	BookmarksModel::Bookmark *item(m_model->getBookmark(currentData(BookmarksModel::IdentifierRole).toULongLong()));
 
 	return (item ? item : m_model->getRootItem());
 }

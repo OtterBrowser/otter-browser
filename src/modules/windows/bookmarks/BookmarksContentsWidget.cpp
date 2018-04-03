@@ -124,7 +124,7 @@ void BookmarksContentsWidget::removeBookmark()
 
 void BookmarksContentsWidget::openBookmark()
 {
-	const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
@@ -136,7 +136,7 @@ void BookmarksContentsWidget::openBookmark()
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
@@ -314,7 +314,7 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCreationLocation()
 {
 	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
-	BookmarksItem *item(BookmarksManager::getModel()->getBookmark(index));
+	BookmarksModel::Bookmark *item(BookmarksManager::getModel()->getBookmark(index));
 	BookmarkLocation location;
 
 	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
@@ -326,7 +326,7 @@ BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCr
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->getType()));
 
-	location.folder = ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksItem*>(item->parent()));
+	location.folder = ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksModel::Bookmark*>(item->parent()));
 	location.row = ((location.folder && location.folder->index() == index) ? -1 : (index.row() + 1));
 
 	return location;
@@ -404,7 +404,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
+			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
@@ -421,7 +421,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		if (helpEvent)
 		{
 			const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(helpEvent->pos()));
-			const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index));
+			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index));
 
 			if (bookmark)
 			{

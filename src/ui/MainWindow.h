@@ -36,7 +36,6 @@ namespace Ui
 	class MainWindow;
 }
 
-class BookmarksItem;
 class ContentsWidget;
 class MenuBarWidget;
 class Shortcut;

@@ -41,7 +41,7 @@ void BookmarksImporter::goToParent()
 
 	if (m_currentFolder)
 	{
-		m_currentFolder = static_cast<BookmarksItem*>(m_currentFolder->parent());
+		m_currentFolder = static_cast<BookmarksModel::Bookmark*>(m_currentFolder->parent());
 	}
 
 	if (!m_currentFolder)
@@ -60,23 +60,23 @@ void BookmarksImporter::setAllowDuplicates(bool allow)
 	m_areDuplicatesAllowed = allow;
 }
 
-void BookmarksImporter::setCurrentFolder(BookmarksItem *folder)
+void BookmarksImporter::setCurrentFolder(BookmarksModel::Bookmark *folder)
 {
 	m_currentFolder = folder;
 }
 
-void BookmarksImporter::setImportFolder(BookmarksItem *folder)
+void BookmarksImporter::setImportFolder(BookmarksModel::Bookmark *folder)
 {
 	m_importFolder = folder;
 	m_currentFolder = folder;
 }
 
-BookmarksItem* BookmarksImporter::getCurrentFolder() const
+BookmarksModel::Bookmark* BookmarksImporter::getCurrentFolder() const
 {
 	return m_currentFolder;
 }
 
-BookmarksItem* BookmarksImporter::getImportFolder() const
+BookmarksModel::Bookmark* BookmarksImporter::getImportFolder() const
 {
 	return m_importFolder;
 }

@@ -57,7 +57,7 @@ public slots:
 protected:
 	struct BookmarkLocation final
 	{
-		BookmarksItem *folder = nullptr;
+		BookmarksModel::Bookmark *folder = nullptr;
 		int row = -1;
 	};
 

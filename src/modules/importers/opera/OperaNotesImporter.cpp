@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 	NotesManager::getModel()->beginImport(m_importFolder, ((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0));
 
-	BookmarksItem *note(nullptr);
+	BookmarksModel::Bookmark *note(nullptr);
 	OperaNoteEntry type(NoEntry);
 	bool isHeader(true);
 
@@ -224,7 +224,7 @@ bool OperaNotesImporter::import(const QString &path)
 			{
 				if (m_currentFolder)
 				{
-					m_currentFolder = static_cast<BookmarksItem*>(m_currentFolder->parent());
+					m_currentFolder = static_cast<BookmarksModel::Bookmark*>(m_currentFolder->parent());
 				}
 
 				if (!m_currentFolder)

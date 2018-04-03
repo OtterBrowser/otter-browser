@@ -25,8 +25,6 @@
 namespace Otter
 {
 
-class BookmarksItem;
-
 class StartPageModel final : public QStandardItemModel
 {
 	Q_OBJECT
@@ -62,13 +60,13 @@ protected:
 protected slots:
 	void handleOptionChanged(int identifier);
 	void handleDragEnded();
-	void handleBookmarkModified(BookmarksItem *bookmark);
-	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
-	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void handleBookmarkModified(BookmarksModel::Bookmark *bookmark);
+	void handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent);
+	void handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent);
 	void handleThumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 
 private:
-	BookmarksItem *m_bookmark;
+	BookmarksModel::Bookmark *m_bookmark;
 	QHash<QUrl, ThumbnailRequestInformation> m_reloads;
 
 signals:

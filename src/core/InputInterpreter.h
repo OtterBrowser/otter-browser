@@ -21,13 +21,10 @@
 #ifndef OTTER_INPUTINTERPRETER_H
 #define OTTER_INPUTINTERPRETER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
+#include "BookmarksModel.h"
 
 namespace Otter
 {
-
-class BookmarksItem;
 
 class InputInterpreter final : public QObject
 {
@@ -54,7 +51,7 @@ public:
 			UrlType
 		};
 
-		BookmarksItem *bookmark = nullptr;
+		BookmarksModel::Bookmark *bookmark = nullptr;
 		QString searchEngine;
 		QString searchQuery;
 		QUrl url;

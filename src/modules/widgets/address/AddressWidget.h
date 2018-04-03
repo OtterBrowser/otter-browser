@@ -33,7 +33,6 @@ namespace Otter
 {
 
 class AddressCompletionModel;
-class BookmarksItem;
 class ItemViewWidget;
 class Window;
 

@@ -32,15 +32,13 @@ namespace Ui
 	class BookmarkPropertiesDialog;
 }
 
-class BookmarksItem;
-
 class BookmarkPropertiesDialog final : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent = nullptr);
-	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = {}, BookmarksItem *folder = nullptr, int index = -1, bool isUrl = true, QWidget *parent = nullptr);
+	explicit BookmarkPropertiesDialog(BookmarksModel::Bookmark *bookmark, QWidget *parent = nullptr);
+	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = {}, BookmarksModel::Bookmark *folder = nullptr, int index = -1, bool isUrl = true, QWidget *parent = nullptr);
 	~BookmarkPropertiesDialog();
 
 protected:
@@ -50,7 +48,7 @@ protected slots:
 	void saveBookmark();
 
 private:
-	BookmarksItem *m_bookmark;
+	BookmarksModel::Bookmark *m_bookmark;
 	int m_index;
 	Ui::BookmarkPropertiesDialog *m_ui;
 };

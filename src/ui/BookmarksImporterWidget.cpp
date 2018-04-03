@@ -60,7 +60,7 @@ void BookmarksImporterWidget::handleImportToSubfolderChanged(bool isChecked)
 	m_ui->subfolderNameLineEditWidget->setEnabled(isChecked);
 }
 
-BookmarksItem* BookmarksImporterWidget::getTargetFolder() const
+BookmarksModel::Bookmark* BookmarksImporterWidget::getTargetFolder() const
 {
 	return m_ui->folderComboBox->getCurrentFolder();
 }

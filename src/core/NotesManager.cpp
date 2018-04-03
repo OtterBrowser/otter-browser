@@ -81,7 +81,7 @@ BookmarksModel* NotesManager::getModel()
 	return m_model;
 }
 
-BookmarksItem* NotesManager::addNote(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksItem *parent)
+BookmarksModel::Bookmark* NotesManager::addNote(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksModel::Bookmark *parent)
 {
 	if (!m_model)
 	{

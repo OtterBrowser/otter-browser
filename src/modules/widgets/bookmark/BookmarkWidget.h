@@ -20,19 +20,18 @@
 #ifndef OTTER_BOOKMARKWIDGET_H
 #define OTTER_BOOKMARKWIDGET_H
 
+#include "../../../core/BookmarksModel.h"
 #include "../../../ui/ToolButtonWidget.h"
 
 namespace Otter
 {
-
-class BookmarksItem;
 
 class BookmarkWidget final : public ToolButtonWidget
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
+	explicit BookmarkWidget(BookmarksModel::Bookmark *bookmark, const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 	QString getText() const override;
 	QIcon getIcon() const override;
@@ -42,11 +41,11 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected slots:
-	void removeBookmark(BookmarksItem *bookmark);
-	void updateBookmark(BookmarksItem *bookmark);
+	void removeBookmark(BookmarksModel::Bookmark *bookmark);
+	void updateBookmark(BookmarksModel::Bookmark *bookmark);
 
 private:
-	BookmarksItem *m_bookmark;
+	BookmarksModel::Bookmark *m_bookmark;
 };
 
 }

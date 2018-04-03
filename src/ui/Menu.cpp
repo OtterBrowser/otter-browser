@@ -291,7 +291,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
+			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
 
 			if (bookmark)
 			{
@@ -607,7 +607,7 @@ void Menu::hideMenu()
 
 void Menu::populateBookmarksMenu()
 {
-	const BookmarksItem *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
 	if (!actions().isEmpty() && !(folderBookmark->getType() == BookmarksModel::RootBookmark && actions().count() == 3))
 	{
@@ -625,7 +625,7 @@ void Menu::populateBookmarksMenu()
 
 	for (int i = 0; i < folderBookmark->rowCount(); ++i)
 	{
-		const BookmarksItem *bookmark(folderBookmark->getChild(i));
+		const BookmarksModel::Bookmark *bookmark(folderBookmark->getChild(i));
 
 		if (!bookmark)
 		{
@@ -671,7 +671,7 @@ void Menu::populateBookmarkSelectorMenu()
 		return;
 	}
 
-	const BookmarksItem *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+	const BookmarksModel::Bookmark *folderBookmark(BookmarksManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 	Action *addFolderAction(new Action(-1, {}, {{QLatin1String("icon"), QLatin1String("document-open-folder")}, {QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "This Folder")}}, ActionExecutor::Object(), this));
 	addFolderAction->setData(folderBookmark->getIdentifier());
 
@@ -680,7 +680,7 @@ void Menu::populateBookmarkSelectorMenu()
 
 	for (int i = 0; i < folderBookmark->rowCount(); ++i)
 	{
-		const BookmarksItem *bookmark(folderBookmark->getChild(i));
+		const BookmarksModel::Bookmark *bookmark(folderBookmark->getChild(i));
 
 		if (!bookmark)
 		{
@@ -995,11 +995,11 @@ void Menu::populateNotesMenu()
 		return;
 	}
 
-	const BookmarksItem *folderBookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
+	const BookmarksModel::Bookmark *folderBookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
 	for (int i = 0; i < folderBookmark->rowCount(); ++i)
 	{
-		const BookmarksItem *bookmark(folderBookmark->getChild(i));
+		const BookmarksModel::Bookmark *bookmark(folderBookmark->getChild(i));
 
 		if (!bookmark)
 		{
@@ -1420,7 +1420,7 @@ void Menu::clearNotesMenu()
 
 	if (menuAction())
 	{
-		const BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(menuAction()->data().toULongLong()));
+		const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(menuAction()->data().toULongLong()));
 
 		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
 	}

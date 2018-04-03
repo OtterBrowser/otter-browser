@@ -62,7 +62,7 @@ void OpenBookmarkDialog::changeEvent(QEvent *event)
 
 void OpenBookmarkDialog::openBookmark()
 {
-	const BookmarksItem *bookmark(BookmarksManager::getBookmark(m_ui->lineEditWidget->text()));
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(m_ui->lineEditWidget->text()));
 
 	if (bookmark && m_executor.isValid())
 	{
@@ -76,7 +76,7 @@ void OpenBookmarkDialog::setCompletion(const QString &text)
 
 	if (m_completer->completionCount() == 1)
 	{
-		const BookmarksItem *bookmark(BookmarksManager::getBookmark(m_completer->currentCompletion()));
+		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(m_completer->currentCompletion()));
 
 		if (bookmark && m_executor.isValid())
 		{

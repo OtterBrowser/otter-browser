@@ -21,6 +21,7 @@
 #ifndef OTTER_TOOLBARWIDGET_H
 #define OTTER_TOOLBARWIDGET_H
 
+#include "../core/BookmarksModel.h"
 #include "../core/SessionsManager.h"
 #include "../core/ToolBarsManager.h"
 
@@ -32,7 +33,6 @@
 namespace Otter
 {
 
-class BookmarksItem;
 class MainWindow;
 class SidebarWidget;
 class TabBarWidget;
@@ -98,9 +98,9 @@ protected slots:
 	void notifyWindowChanged(quint64 identifier);
 	void handleToolBarModified(int identifier);
 	void handleToolBarRemoved(int identifier);
-	void handleBookmarkModified(BookmarksItem *bookmark);
-	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
-	void handleBookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void handleBookmarkModified(BookmarksModel::Bookmark *bookmark);
+	void handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent);
+	void handleBookmarkRemoved(BookmarksModel::Bookmark *bookmark, BookmarksModel::Bookmark *previousParent);
 	void handleFullScreenStateChanged(bool isFullScreen);
 	void setToolBarLocked(bool locked);
 
@@ -108,8 +108,8 @@ private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
 	SidebarWidget *m_sidebarWidget;
-	BookmarksItem *m_bookmark;
-	BookmarksItem *m_dropBookmark;
+	BookmarksModel::Bookmark *m_bookmark;
+	BookmarksModel::Bookmark *m_dropBookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
 	ToolBarState m_state;

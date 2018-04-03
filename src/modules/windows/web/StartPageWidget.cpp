@@ -540,7 +540,7 @@ void StartPageWidget::openTile()
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
-		const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 		if (bookmark && bookmark->rowCount() > 0)
 		{
@@ -569,7 +569,7 @@ void StartPageWidget::openTile()
 
 void StartPageWidget::editTile()
 {
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 	if (bookmark)
 	{
@@ -605,7 +605,7 @@ void StartPageWidget::reloadTile()
 
 void StartPageWidget::removeTile()
 {
-	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 	if (bookmark)
 	{
@@ -908,7 +908,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					case BookmarksModel::FolderBookmark:
 						{
-							const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+							const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 							if (bookmark && bookmark->rowCount() > 0)
 							{
@@ -990,7 +990,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					const BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+					const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{

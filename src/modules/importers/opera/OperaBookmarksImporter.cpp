@@ -153,7 +153,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 	BookmarksManager::getModel()->beginImport(getImportFolder(), estimatedAmount, qMin(estimatedAmount, 100));
 
-	BookmarksItem *bookmark(nullptr);
+	BookmarksModel::Bookmark *bookmark(nullptr);
 	OperaBookmarkEntry type(NoEntry);
 	bool isHeader(true);
 

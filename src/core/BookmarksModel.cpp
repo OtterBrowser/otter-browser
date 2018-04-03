@@ -34,11 +34,11 @@
 namespace Otter
 {
 
-BookmarksItem::BookmarksItem() : QStandardItem()
+BookmarksModel::Bookmark::Bookmark() : QStandardItem()
 {
 }
 
-void BookmarksItem::remove()
+void BookmarksModel::Bookmark::remove()
 {
 	BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
 
@@ -52,7 +52,7 @@ void BookmarksItem::remove()
 	}
 }
 
-void BookmarksItem::setData(const QVariant &value, int role)
+void BookmarksModel::Bookmark::setData(const QVariant &value, int role)
 {
 	if (model() && qobject_cast<BookmarksModel*>(model()))
 	{
@@ -64,14 +64,14 @@ void BookmarksItem::setData(const QVariant &value, int role)
 	}
 }
 
-void BookmarksItem::setItemData(const QVariant &value, int role)
+void BookmarksModel::Bookmark::setItemData(const QVariant &value, int role)
 {
 	QStandardItem::setData(value, role);
 }
 
-QStandardItem* BookmarksItem::clone() const
+QStandardItem* BookmarksModel::Bookmark::clone() const
 {
-	BookmarksItem *item(new BookmarksItem());
+	Bookmark *item(new Bookmark());
 	item->setData(data(BookmarksModel::TypeRole), BookmarksModel::TypeRole);
 	item->setData(data(BookmarksModel::UrlRole), BookmarksModel::UrlRole);
 	item->setData(data(BookmarksModel::TitleRole), BookmarksModel::TitleRole);
@@ -85,7 +85,7 @@ QStandardItem* BookmarksItem::clone() const
 	return item;
 }
 
-BookmarksItem* BookmarksItem::getChild(int index) const
+BookmarksModel::Bookmark* BookmarksModel::Bookmark::getChild(int index) const
 {
 	BookmarksModel *model(qobject_cast<BookmarksModel*>(this->model()));
 
@@ -97,47 +97,47 @@ BookmarksItem* BookmarksItem::getChild(int index) const
 	return nullptr;
 }
 
-QString BookmarksItem::getTitle() const
+QString BookmarksModel::Bookmark::getTitle() const
 {
 	return data(BookmarksModel::TitleRole).toString();
 }
 
-QString BookmarksItem::getDescription() const
+QString BookmarksModel::Bookmark::getDescription() const
 {
 	return QStandardItem::data(BookmarksModel::DescriptionRole).toString();
 }
 
-QString BookmarksItem::getKeyword() const
+QString BookmarksModel::Bookmark::getKeyword() const
 {
 	return QStandardItem::data(BookmarksModel::KeywordRole).toString();
 }
 
-QUrl BookmarksItem::getUrl() const
+QUrl BookmarksModel::Bookmark::getUrl() const
 {
 	return QStandardItem::data(BookmarksModel::UrlRole).toUrl();
 }
 
-QDateTime BookmarksItem::getTimeAdded() const
+QDateTime BookmarksModel::Bookmark::getTimeAdded() const
 {
 	return QStandardItem::data(BookmarksModel::TimeAddedRole).toDateTime();
 }
 
-QDateTime BookmarksItem::getTimeModified() const
+QDateTime BookmarksModel::Bookmark::getTimeModified() const
 {
 	return QStandardItem::data(BookmarksModel::TimeModifiedRole).toDateTime();
 }
 
-QDateTime BookmarksItem::getTimeVisited() const
+QDateTime BookmarksModel::Bookmark::getTimeVisited() const
 {
 	return QStandardItem::data(BookmarksModel::TimeVisitedRole).toDateTime();
 }
 
-QIcon BookmarksItem::getIcon() const
+QIcon BookmarksModel::Bookmark::getIcon() const
 {
 	return data(Qt::DecorationRole).value<QIcon>();
 }
 
-QVariant BookmarksItem::data(int role) const
+QVariant BookmarksModel::Bookmark::data(int role) const
 {
 	if (role == Qt::DisplayRole)
 	{
@@ -239,12 +239,12 @@ QVariant BookmarksItem::data(int role) const
 	return QStandardItem::data(role);
 }
 
-QVariant BookmarksItem::getRawData(int role) const
+QVariant BookmarksModel::Bookmark::getRawData(int role) const
 {
 	return QStandardItem::data(role);
 }
 
-QVector<QUrl> BookmarksItem::getUrls() const
+QVector<QUrl> BookmarksModel::Bookmark::getUrls() const
 {
 	QVector<QUrl> urls;
 
@@ -255,7 +255,7 @@ QVector<QUrl> BookmarksItem::getUrls() const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		const BookmarksItem *bookmark(static_cast<BookmarksItem*>(child(i, 0)));
+		const Bookmark *bookmark(static_cast<Bookmark*>(child(i, 0)));
 
 		if (!bookmark)
 		{
@@ -281,22 +281,22 @@ QVector<QUrl> BookmarksItem::getUrls() const
 	return urls;
 }
 
-quint64 BookmarksItem::getIdentifier() const
+quint64 BookmarksModel::Bookmark::getIdentifier() const
 {
 	return QStandardItem::data(BookmarksModel::IdentifierRole).toULongLong();
 }
 
-int BookmarksItem::getType() const
+int BookmarksModel::Bookmark::getType() const
 {
 	return QStandardItem::data(BookmarksModel::TypeRole).toInt();
 }
 
-int BookmarksItem::getVisits() const
+int BookmarksModel::Bookmark::getVisits() const
 {
 	return QStandardItem::data(BookmarksModel::VisitsRole).toInt();
 }
 
-bool BookmarksItem::isAncestorOf(BookmarksItem *child) const
+bool BookmarksModel::Bookmark::isAncestorOf(Bookmark *child) const
 {
 	if (child == nullptr || child == this)
 	{
@@ -318,7 +318,7 @@ bool BookmarksItem::isAncestorOf(BookmarksItem *child) const
 	return false;
 }
 
-bool BookmarksItem::operator<(const QStandardItem &other) const
+bool BookmarksModel::Bookmark::operator<(const QStandardItem &other) const
 {
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()));
 
@@ -331,8 +331,8 @@ bool BookmarksItem::operator<(const QStandardItem &other) const
 }
 
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
-	m_rootItem(new BookmarksItem()),
-	m_trashItem(new BookmarksItem()),
+	m_rootItem(new Bookmark()),
+	m_trashItem(new Bookmark()),
 	m_importTargetItem(nullptr),
 	m_mode(mode)
 {
@@ -346,7 +346,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 	appendRow(m_rootItem);
 	appendRow(m_trashItem);
-	setItemPrototype(new BookmarksItem());
+	setItemPrototype(new Bookmark());
 
 	if (!QFile::exists(path))
 	{
@@ -398,7 +398,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 	connect(this, &BookmarksModel::rowsMoved, this, &BookmarksModel::modelModified);
 }
 
-void BookmarksModel::beginImport(BookmarksItem *target, int estimatedUrlsAmount, int estimatedKeywordsAmount)
+void BookmarksModel::beginImport(Bookmark *target, int estimatedUrlsAmount, int estimatedKeywordsAmount)
 {
 	m_importTargetItem = target;
 
@@ -434,7 +434,7 @@ void BookmarksModel::endImport()
 	emit modelModified();
 }
 
-void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
+void BookmarksModel::trashBookmark(Bookmark *bookmark)
 {
 	if (!bookmark)
 	{
@@ -451,8 +451,8 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 		}
 		else
 		{
-			BookmarksItem *trashItem(getTrashItem());
-			BookmarksItem *previousParent(static_cast<BookmarksItem*>(bookmark->parent()));
+			Bookmark *trashItem(getTrashItem());
+			Bookmark *previousParent(static_cast<Bookmark*>(bookmark->parent()));
 
 			m_trash[bookmark] = {bookmark->parent()->index(), bookmark->row()};
 
@@ -468,14 +468,14 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 	}
 }
 
-void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
+void BookmarksModel::restoreBookmark(Bookmark *bookmark)
 {
 	if (!bookmark)
 	{
 		return;
 	}
 
-	BookmarksItem *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : getRootItem());
+	Bookmark *formerParent(m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : getRootItem());
 
 	if (!formerParent || static_cast<BookmarkType>(formerParent->data(TypeRole).toInt()) != FolderBookmark)
 	{
@@ -495,7 +495,7 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 
 	readdBookmarkUrl(bookmark);
 
-	BookmarksItem *trashItem(getTrashItem());
+	Bookmark *trashItem(getTrashItem());
 	trashItem->setEnabled(trashItem->rowCount() > 0);
 
 	emit bookmarkModified(bookmark);
@@ -503,7 +503,7 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 	emit modelModified();
 }
 
-void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
+void BookmarksModel::removeBookmark(Bookmark *bookmark)
 {
 	if (!bookmark)
 	{
@@ -524,16 +524,16 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 		m_keywords.remove(bookmark->data(KeywordRole).toString());
 	}
 
-	emit bookmarkRemoved(bookmark, static_cast<BookmarksItem*>(bookmark->parent()));
+	emit bookmarkRemoved(bookmark, static_cast<Bookmark*>(bookmark->parent()));
 
 	bookmark->parent()->removeRow(bookmark->row());
 
 	emit modelModified();
 }
 
-void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent)
+void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 {
-	BookmarksItem *bookmark(nullptr);
+	Bookmark *bookmark(nullptr);
 
 	if (reader->name() == QLatin1String("folder"))
 	{
@@ -703,7 +703,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 	}
 }
 
-void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, BookmarksItem *bookmark) const
+void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark) const
 {
 	if (!bookmark)
 	{
@@ -745,7 +745,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, BookmarksItem *book
 
 			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				writeBookmark(writer, static_cast<BookmarksItem*>(bookmark->child(i, 0)));
+				writeBookmark(writer, static_cast<Bookmark*>(bookmark->child(i, 0)));
 			}
 
 			writer->writeEndElement();
@@ -815,7 +815,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, BookmarksItem *book
 	}
 }
 
-void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
+void BookmarksModel::removeBookmarkUrl(Bookmark *bookmark)
 {
 	if (!bookmark)
 	{
@@ -842,12 +842,12 @@ void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
 	{
 		for (int i = 0; i < bookmark->rowCount(); ++i)
 		{
-			removeBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
+			removeBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
 		}
 	}
 }
 
-void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
+void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 {
 	if (!bookmark)
 	{
@@ -864,7 +864,7 @@ void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
 		{
 			if (!m_urls.contains(url))
 			{
-				m_urls[url] = QVector<BookmarksItem*>();
+				m_urls[url] = QVector<Bookmark*>();
 			}
 
 			m_urls[url].append(bookmark);
@@ -874,14 +874,14 @@ void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
 	{
 		for (int i = 0; i < bookmark->rowCount(); ++i)
 		{
-			readdBookmarkUrl(static_cast<BookmarksItem*>(bookmark->child(i, 0)));
+			readdBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
 		}
 	}
 }
 
 void BookmarksModel::emptyTrash()
 {
-	BookmarksItem *trashItem(getTrashItem());
+	Bookmark *trashItem(getTrashItem());
 	trashItem->removeRows(0, trashItem->rowCount());
 	trashItem->setEnabled(false);
 
@@ -890,7 +890,7 @@ void BookmarksModel::emptyTrash()
 	emit modelModified();
 }
 
-void BookmarksModel::handleKeywordChanged(BookmarksItem *bookmark, const QString &newKeyword, const QString &oldKeyword)
+void BookmarksModel::handleKeywordChanged(Bookmark *bookmark, const QString &newKeyword, const QString &oldKeyword)
 {
 	if (!oldKeyword.isEmpty() && m_keywords.contains(oldKeyword))
 	{
@@ -903,7 +903,7 @@ void BookmarksModel::handleKeywordChanged(BookmarksItem *bookmark, const QString
 	}
 }
 
-void BookmarksModel::handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUrl, const QUrl &oldUrl)
+void BookmarksModel::handleUrlChanged(Bookmark *bookmark, const QUrl &newUrl, const QUrl &oldUrl)
 {
 	if (!oldUrl.isEmpty() && m_urls.contains(oldUrl))
 	{
@@ -919,7 +919,7 @@ void BookmarksModel::handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUr
 	{
 		if (!m_urls.contains(newUrl))
 		{
-			m_urls[newUrl] = QVector<BookmarksItem*>();
+			m_urls[newUrl] = QVector<Bookmark*>();
 		}
 
 		m_urls[newUrl].append(bookmark);
@@ -928,7 +928,7 @@ void BookmarksModel::handleUrlChanged(BookmarksItem *bookmark, const QUrl &newUr
 
 void BookmarksModel::notifyBookmarkModified(const QModelIndex &index)
 {
-	BookmarksItem *bookmark(getBookmark(index));
+	Bookmark *bookmark(getBookmark(index));
 
 	if (bookmark)
 	{
@@ -936,9 +936,9 @@ void BookmarksModel::notifyBookmarkModified(const QModelIndex &index)
 	}
 }
 
-BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksItem *parent, int index)
+BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData, Bookmark *parent, int index)
 {
-	BookmarksItem *bookmark(new BookmarksItem());
+	Bookmark *bookmark(new Bookmark());
 
 	if (!parent)
 	{
@@ -996,7 +996,7 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, const QMap<int, QV
 	return bookmark;
 }
 
-BookmarksItem* BookmarksModel::getBookmark(const QString &keyword) const
+BookmarksModel::Bookmark* BookmarksModel::getBookmark(const QString &keyword) const
 {
 	if (m_keywords.contains(keyword))
 	{
@@ -1006,9 +1006,9 @@ BookmarksItem* BookmarksModel::getBookmark(const QString &keyword) const
 	return nullptr;
 }
 
-BookmarksItem* BookmarksModel::getBookmark(const QModelIndex &index) const
+BookmarksModel::Bookmark* BookmarksModel::getBookmark(const QModelIndex &index) const
 {
-	BookmarksItem *bookmark(static_cast<BookmarksItem*>(itemFromIndex(index)));
+	Bookmark *bookmark(static_cast<Bookmark*>(itemFromIndex(index)));
 
 	if (bookmark)
 	{
@@ -1018,7 +1018,7 @@ BookmarksItem* BookmarksModel::getBookmark(const QModelIndex &index) const
 	return getBookmark(index.data(IdentifierRole).toULongLong());
 }
 
-BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
+BookmarksModel::Bookmark* BookmarksModel::getBookmark(quint64 identifier) const
 {
 	if (identifier == 0)
 	{
@@ -1033,17 +1033,17 @@ BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
 	return nullptr;
 }
 
-BookmarksItem* BookmarksModel::getRootItem() const
+BookmarksModel::Bookmark* BookmarksModel::getRootItem() const
 {
 	return m_rootItem;
 }
 
-BookmarksItem* BookmarksModel::getTrashItem() const
+BookmarksModel::Bookmark* BookmarksModel::getTrashItem() const
 {
 	return m_trashItem;
 }
 
-BookmarksItem* BookmarksModel::getItem(const QString &path) const
+BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
 {
 	if (path == QLatin1String("/"))
 	{
@@ -1080,7 +1080,7 @@ BookmarksItem* BookmarksModel::getItem(const QString &path) const
 		}
 	}
 
-	return static_cast<BookmarksItem*>(item);
+	return static_cast<Bookmark*>(item);
 }
 
 QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
@@ -1129,11 +1129,11 @@ QStringList BookmarksModel::getKeywords() const
 
 QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString &prefix) const
 {
-	QVector<BookmarksItem*> matchedBookmarks;
+	QVector<Bookmark*> matchedBookmarks;
 	QVector<BookmarksModel::BookmarkMatch> allMatches;
 	QVector<BookmarksModel::BookmarkMatch> currentMatches;
 	QMultiMap<QDateTime, BookmarksModel::BookmarkMatch> matchesMap;
-	QHash<QString, BookmarksItem*>::const_iterator keywordsIterator;
+	QHash<QString, Bookmark*>::const_iterator keywordsIterator;
 
 	for (keywordsIterator = m_keywords.constBegin(); keywordsIterator != m_keywords.constEnd(); ++keywordsIterator)
 	{
@@ -1158,7 +1158,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 		allMatches.append(currentMatches.at(i));
 	}
 
-	QHash<QUrl, QVector<BookmarksItem*> >::const_iterator urlsIterator;
+	QHash<QUrl, QVector<Bookmark*> >::const_iterator urlsIterator;
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
@@ -1193,18 +1193,18 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 	return allMatches;
 }
 
-QVector<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
+QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
 {
 	if (!branch)
 	{
 		branch = item(0, 0);
 	}
 
-	QVector<BookmarksItem*> items;
+	QVector<Bookmark*> items;
 
 	for (int i = 0; i < branch->rowCount(); ++i)
 	{
-		BookmarksItem *item(static_cast<BookmarksItem*>(branch->child(i)));
+		Bookmark *item(static_cast<Bookmark*>(branch->child(i)));
 
 		if (item)
 		{
@@ -1228,7 +1228,7 @@ QVector<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem 
 	return items;
 }
 
-QVector<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
+QVector<BookmarksModel::Bookmark*> BookmarksModel::getBookmarks(const QUrl &url) const
 {
 	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
@@ -1245,14 +1245,14 @@ BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
 	return m_mode;
 }
 
-bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow)
+bool BookmarksModel::moveBookmark(Bookmark *bookmark, Bookmark *newParent, int newRow)
 {
 	if (!bookmark || !newParent || bookmark == newParent || bookmark->isAncestorOf(newParent))
 	{
 		return false;
 	}
 
-	BookmarksItem *previousParent(static_cast<BookmarksItem*>(bookmark->parent()));
+	Bookmark *previousParent(static_cast<Bookmark*>(bookmark->parent()));
 
 	if (!previousParent)
 	{
@@ -1303,8 +1303,8 @@ bool BookmarksModel::canDropMimeData(const QMimeData *data, Qt::DropAction actio
 
 	if (index.isValid())
 	{
-		const BookmarksItem *bookmark(getBookmark(index));
-		BookmarksItem *newParent(getBookmark(parent));
+		const Bookmark *bookmark(getBookmark(index));
+		Bookmark *newParent(getBookmark(parent));
 
 		return (bookmark && newParent && bookmark != newParent && !bookmark->isAncestorOf(newParent));
 	}
@@ -1367,7 +1367,7 @@ bool BookmarksModel::save(const QString &path) const
 
 	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		writeBookmark(&writer, static_cast<BookmarksItem*>(m_rootItem->child(i, 0)));
+		writeBookmark(&writer, static_cast<Bookmark*>(m_rootItem->child(i, 0)));
 	}
 
 	writer.writeEndDocument();
@@ -1377,7 +1377,7 @@ bool BookmarksModel::save(const QString &path) const
 
 bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	BookmarksItem *bookmark(getBookmark(index));
+	Bookmark *bookmark(getBookmark(index));
 
 	if (!bookmark)
 	{
