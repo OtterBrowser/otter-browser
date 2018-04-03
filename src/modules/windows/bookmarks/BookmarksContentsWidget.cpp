@@ -324,7 +324,7 @@ BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCr
 		return location;
 	}
 
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->getType()));
+	const BookmarksModel::BookmarkType type(item->getType());
 
 	location.folder = ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : static_cast<BookmarksModel::Bookmark*>(item->parent()));
 	location.row = ((location.folder && location.folder->index() == index) ? -1 : (index.row() + 1));

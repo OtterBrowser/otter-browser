@@ -748,7 +748,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				QVariantMap mutableParameters(parameters);
 				mutableParameters.remove(QLatin1String("bookmark"));
 
-				switch (static_cast<BookmarksModel::BookmarkType>(bookmark->getType()))
+				switch (bookmark->getType())
 				{
 					case BookmarksModel::UrlBookmark:
 						mutableParameters[QLatin1String("url")] = bookmark->getUrl();

@@ -86,7 +86,7 @@ public:
 		QVariant getRawData(int role) const;
 		QVector<QUrl> getUrls() const;
 		quint64 getIdentifier() const;
-		int getType() const;
+		BookmarkType getType() const;
 		int getVisits() const;
 		bool isAncestorOf(Bookmark *child) const;
 		bool operator<(const QStandardItem &other) const override;

@@ -75,7 +75,7 @@ void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 		return;
 	}
 
-	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->getType()));
+	const BookmarksModel::BookmarkType type(m_bookmark->getType());
 
 	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
 	{

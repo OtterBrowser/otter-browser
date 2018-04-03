@@ -262,7 +262,7 @@ QVector<QUrl> BookmarksModel::Bookmark::getUrls() const
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+		const BookmarksModel::BookmarkType type(bookmark->getType());
 
 		if (type == BookmarksModel::FolderBookmark)
 		{
@@ -286,9 +286,9 @@ quint64 BookmarksModel::Bookmark::getIdentifier() const
 	return QStandardItem::data(BookmarksModel::IdentifierRole).toULongLong();
 }
 
-int BookmarksModel::Bookmark::getType() const
+BookmarksModel::BookmarkType BookmarksModel::Bookmark::getType() const
 {
-	return QStandardItem::data(BookmarksModel::TypeRole).toInt();
+	return static_cast<BookmarkType>(QStandardItem::data(BookmarksModel::TypeRole).toInt());
 }
 
 int BookmarksModel::Bookmark::getVisits() const
@@ -1208,7 +1208,7 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 
 		if (item)
 		{
-			const BookmarkType type(static_cast<BookmarkType>(item->getType()));
+			const BookmarkType type(item->getType());
 
 			if (type == FolderBookmark)
 			{

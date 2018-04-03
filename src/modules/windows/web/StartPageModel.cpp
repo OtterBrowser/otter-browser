@@ -61,7 +61,7 @@ void StartPageModel::reloadModel()
 
 			if (bookmark)
 			{
-				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+				const BookmarksModel::BookmarkType type(bookmark->getType());
 
 				if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
 				{

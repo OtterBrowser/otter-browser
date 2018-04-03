@@ -176,7 +176,7 @@ BookmarksModel::Bookmark* BookmarksManager::getLastUsedFolder()
 {
 	BookmarksModel::Bookmark *folder(getModel()->getBookmark(m_lastUsedFolder));
 
-	return ((!folder || static_cast<BookmarksModel::BookmarkType>(folder->getType()) != BookmarksModel::FolderBookmark) ? getModel()->getRootItem() : folder);
+	return ((!folder || folder->getType() != BookmarksModel::FolderBookmark) ? getModel()->getRootItem() : folder);
 }
 
 QStringList BookmarksManager::getKeywords()

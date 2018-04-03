@@ -36,7 +36,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	const bool isUrlBookmark(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()) == BookmarksModel::UrlBookmark);
+	const bool isUrlBookmark(bookmark->getType() == BookmarksModel::UrlBookmark);
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksModel::Bookmark*>(bookmark->parent()));

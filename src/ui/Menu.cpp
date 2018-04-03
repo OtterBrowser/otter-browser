@@ -632,7 +632,7 @@ void Menu::populateBookmarksMenu()
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+		const BookmarksModel::BookmarkType type(bookmark->getType());
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
@@ -687,7 +687,7 @@ void Menu::populateBookmarkSelectorMenu()
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+		const BookmarksModel::BookmarkType type(bookmark->getType());
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
@@ -1006,7 +1006,7 @@ void Menu::populateNotesMenu()
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->getType()));
+		const BookmarksModel::BookmarkType type(bookmark->getType());
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
