@@ -71,18 +71,18 @@ void BookmarksModel::Bookmark::setItemData(const QVariant &value, int role)
 
 QStandardItem* BookmarksModel::Bookmark::clone() const
 {
-	Bookmark *item(new Bookmark());
-	item->setData(data(BookmarksModel::TypeRole), BookmarksModel::TypeRole);
-	item->setData(data(BookmarksModel::UrlRole), BookmarksModel::UrlRole);
-	item->setData(data(BookmarksModel::TitleRole), BookmarksModel::TitleRole);
-	item->setData(data(BookmarksModel::DescriptionRole), BookmarksModel::DescriptionRole);
-	item->setData(data(BookmarksModel::KeywordRole), BookmarksModel::KeywordRole);
-	item->setData(data(BookmarksModel::TimeAddedRole), BookmarksModel::TimeAddedRole);
-	item->setData(data(BookmarksModel::TimeModifiedRole), BookmarksModel::TimeModifiedRole);
-	item->setData(data(BookmarksModel::TimeVisitedRole), BookmarksModel::TimeVisitedRole);
-	item->setData(data(BookmarksModel::VisitsRole), BookmarksModel::VisitsRole);
+	Bookmark *bookmark(new Bookmark());
+	bookmark->setData(data(BookmarksModel::TypeRole), BookmarksModel::TypeRole);
+	bookmark->setData(data(BookmarksModel::UrlRole), BookmarksModel::UrlRole);
+	bookmark->setData(data(BookmarksModel::TitleRole), BookmarksModel::TitleRole);
+	bookmark->setData(data(BookmarksModel::DescriptionRole), BookmarksModel::DescriptionRole);
+	bookmark->setData(data(BookmarksModel::KeywordRole), BookmarksModel::KeywordRole);
+	bookmark->setData(data(BookmarksModel::TimeAddedRole), BookmarksModel::TimeAddedRole);
+	bookmark->setData(data(BookmarksModel::TimeModifiedRole), BookmarksModel::TimeModifiedRole);
+	bookmark->setData(data(BookmarksModel::TimeVisitedRole), BookmarksModel::TimeVisitedRole);
+	bookmark->setData(data(BookmarksModel::VisitsRole), BookmarksModel::VisitsRole);
 
-	return item;
+	return bookmark;
 }
 
 BookmarksModel::Bookmark* BookmarksModel::Bookmark::getChild(int index) const
@@ -1052,18 +1052,20 @@ BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
 		return getBookmark(path.mid(1).toULongLong());
 	}
 
-	QStandardItem *item(m_rootItem);
+	Bookmark *bookmark(m_rootItem);
 	const QStringList directories(path.split(QLatin1Char('/'), QString::SkipEmptyParts));
 
 	for (int i = 0; i < directories.count(); ++i)
 	{
 		bool hasMatch(false);
 
-		for (int j = 0; j < item->rowCount(); ++j)
+		for (int j = 0; j < bookmark->rowCount(); ++j)
 		{
-			if (item->child(j) && item->child(j)->data(Qt::DisplayRole) == directories.at(i))
+			Bookmark *childBookmark(static_cast<Bookmark*>(bookmark->child(j)));
+
+			if (childBookmark && childBookmark->data(Qt::DisplayRole) == directories.at(i))
 			{
-				item = item->child(j);
+				bookmark = childBookmark;
 
 				hasMatch = true;
 
@@ -1077,7 +1079,7 @@ BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
 		}
 	}
 
-	return static_cast<Bookmark*>(item);
+	return bookmark;
 }
 
 QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
