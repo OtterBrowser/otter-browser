@@ -149,6 +149,11 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 		getModel();
 	}
 
+	if (text.startsWith(QLatin1Char('#')))
+	{
+		return m_model->getBookmark(text.mid(1).toULongLong());
+	}
+
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{
 		return (text.startsWith(QLatin1String("bookmarks:/")) ? m_model->getBookmarkByPath(text.mid(11)) : getBookmark(text.mid(10).toULongLong()));
