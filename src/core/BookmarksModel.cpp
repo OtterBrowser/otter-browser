@@ -993,7 +993,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 	return bookmark;
 }
 
-BookmarksModel::Bookmark* BookmarksModel::getBookmark(const QString &keyword) const
+BookmarksModel::Bookmark* BookmarksModel::getBookmarkByKeyword(const QString &keyword) const
 {
 	if (m_keywords.contains(keyword))
 	{
@@ -1003,44 +1003,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmark(const QString &keyword) co
 	return nullptr;
 }
 
-BookmarksModel::Bookmark* BookmarksModel::getBookmark(const QModelIndex &index) const
-{
-	Bookmark *bookmark(static_cast<Bookmark*>(itemFromIndex(index)));
-
-	if (bookmark)
-	{
-		return bookmark;
-	}
-
-	return getBookmark(index.data(IdentifierRole).toULongLong());
-}
-
-BookmarksModel::Bookmark* BookmarksModel::getBookmark(quint64 identifier) const
-{
-	if (identifier == 0)
-	{
-		return m_rootItem;
-	}
-
-	if (m_identifiers.contains(identifier))
-	{
-		return m_identifiers[identifier];
-	}
-
-	return nullptr;
-}
-
-BookmarksModel::Bookmark* BookmarksModel::getRootItem() const
-{
-	return m_rootItem;
-}
-
-BookmarksModel::Bookmark* BookmarksModel::getTrashItem() const
-{
-	return m_trashItem;
-}
-
-BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
+BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path) const
 {
 	if (path == QLatin1String("/"))
 	{
@@ -1080,6 +1043,43 @@ BookmarksModel::Bookmark* BookmarksModel::getItem(const QString &path) const
 	}
 
 	return bookmark;
+}
+
+BookmarksModel::Bookmark* BookmarksModel::getBookmark(const QModelIndex &index) const
+{
+	Bookmark *bookmark(static_cast<Bookmark*>(itemFromIndex(index)));
+
+	if (bookmark)
+	{
+		return bookmark;
+	}
+
+	return getBookmark(index.data(IdentifierRole).toULongLong());
+}
+
+BookmarksModel::Bookmark* BookmarksModel::getBookmark(quint64 identifier) const
+{
+	if (identifier == 0)
+	{
+		return m_rootItem;
+	}
+
+	if (m_identifiers.contains(identifier))
+	{
+		return m_identifiers[identifier];
+	}
+
+	return nullptr;
+}
+
+BookmarksModel::Bookmark* BookmarksModel::getRootItem() const
+{
+	return m_rootItem;
+}
+
+BookmarksModel::Bookmark* BookmarksModel::getTrashItem() const
+{
+	return m_trashItem;
 }
 
 QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const

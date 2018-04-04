@@ -151,10 +151,10 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{
-		return (text.startsWith(QLatin1String("bookmarks:/")) ? m_model->getItem(text.mid(11)) : getBookmark(text.mid(10).toULongLong()));
+		return (text.startsWith(QLatin1String("bookmarks:/")) ? m_model->getBookmarkByPath(text.mid(11)) : getBookmark(text.mid(10).toULongLong()));
 	}
 
-	return m_model->getBookmark(text);
+	return m_model->getBookmarkByKeyword(text);
 }
 
 BookmarksModel::Bookmark* BookmarksManager::getBookmark(quint64 identifier)

@@ -49,7 +49,7 @@ StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 
 void StartPageModel::reloadModel()
 {
-	m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+	m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
 
 	clear();
 
@@ -245,7 +245,7 @@ void StartPageModel::handleBookmarkModified(BookmarksModel::Bookmark *bookmark)
 {
 	if (!m_bookmark)
 	{
-		m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
 	}
 
 	if (m_bookmark && (bookmark == m_bookmark || m_bookmark->isAncestorOf(bookmark)))
@@ -258,7 +258,7 @@ void StartPageModel::handleBookmarkMoved(BookmarksModel::Bookmark *bookmark, Boo
 {
 	if (!m_bookmark)
 	{
-		m_bookmark = BookmarksManager::getModel()->getItem(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
+		m_bookmark = BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString());
 	}
 
 	if (m_bookmark)

@@ -400,7 +400,7 @@ void ToolBarWidget::populateEntries()
 	switch (definition.type)
 	{
 		case ToolBarsManager::BookmarksBarType:
-			m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
+			m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getBookmarkByPath(definition.bookmarksPath));
 
 			loadBookmarks();
 

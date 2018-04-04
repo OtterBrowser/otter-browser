@@ -111,12 +111,12 @@ public:
 	void restoreBookmark(Bookmark *bookmark);
 	void removeBookmark(Bookmark *bookmark);
 	Bookmark* addBookmark(BookmarkType type, const QMap<int, QVariant> &metaData = {}, Bookmark *parent = nullptr, int index = -1);
-	Bookmark* getBookmark(const QString &keyword) const;
+	Bookmark* getBookmarkByKeyword(const QString &keyword) const;
+	Bookmark* getBookmarkByPath(const QString &path) const;
 	Bookmark* getBookmark(const QModelIndex &index) const;
 	Bookmark* getBookmark(quint64 identifier) const;
 	Bookmark* getRootItem() const;
 	Bookmark* getTrashItem() const;
-	Bookmark* getItem(const QString &path) const;
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QStringList mimeTypes() const override;
 	QStringList getKeywords() const;
