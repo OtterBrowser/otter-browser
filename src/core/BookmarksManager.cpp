@@ -102,11 +102,11 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 		return;
 	}
 
-	const QVector<BookmarksModel::Bookmark*> items(m_model->findUrls(adjustedUrl));
+	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->findUrls(adjustedUrl));
 
-	for (int i = 0; i < items.count(); ++i)
+	for (int i = 0; i < bookmarks.count(); ++i)
 	{
-		items.at(i)->remove();
+		bookmarks.at(i)->remove();
 	}
 }
 
