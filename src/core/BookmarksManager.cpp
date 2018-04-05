@@ -94,8 +94,9 @@ void BookmarksManager::updateVisits(const QUrl &url)
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			bookmarks.at(i)->setData((bookmarks.at(i)->getVisits() + 1), BookmarksModel::VisitsRole);
-			bookmarks.at(i)->setData(QDateTime::currentDateTime(), BookmarksModel::TimeVisitedRole);
+			BookmarksModel::Bookmark *bookmark(bookmarks.at(i));
+			bookmark->setData((bookmark->getVisits() + 1), BookmarksModel::VisitsRole);
+			bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeVisitedRole);
 		}
 	}
 }
