@@ -48,7 +48,6 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
-#include <QtWebEngineCore/QtWebEngineCoreVersion>
 #include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
@@ -62,6 +61,9 @@ namespace Otter
 
 QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+	m_inspectorView(nullptr),
+#endif
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
 	m_loadingState(FinishedLoadingState),
 	m_canGoForwardValue(UnknownValue),
@@ -913,6 +915,28 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			break;
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+		case ActionsManager::InspectPageAction:
+			{
+				const bool showInspector(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
+
+				if (showInspector && !m_inspectorView)
+				{
+					getInspector();
+				}
+
+				emit requestedInspectorVisibilityChange(showInspector);
+				emit arbitraryActionsStateChanged({ActionsManager::InspectPageAction});
+			}
+
+			break;
+		case ActionsManager::InspectElementAction:
+			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}});
+
+			m_page->triggerAction(QWebEnginePage::InspectElement);
+
+			break;
+#endif
 		case ActionsManager::FullScreenAction:
 			{
 				const MainWindow *mainWindow(MainWindow::findMainWindow(this));
@@ -1373,6 +1397,19 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const 
 	return widget;
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+QWidget* QtWebEngineWebWidget::getInspector()
+{
+	if (!m_inspectorView)
+	{
+		m_inspectorView = new QWebEngineView(this);
+		m_inspectorView->page()->setInspectedPage(m_page);
+	}
+
+	return m_inspectorView;
+}
+#endif
+
 QWidget* QtWebEngineWebWidget::getViewport()
 {
 	return (focusWidget() ? focusWidget() : m_webView);
@@ -1639,6 +1676,13 @@ bool QtWebEngineWebWidget::canFastForward() const
 	return (m_canGoForwardValue == TrueValue || canGoForward());
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+bool QtWebEngineWebWidget::canInspect() const
+{
+	return !Utils::isUrlEmpty(getUrl());
+}
+#endif
+
 bool QtWebEngineWebWidget::canRedo() const
 {
 	return m_page->action(QWebEnginePage::Redo)->isEnabled();
@@ -1680,6 +1724,13 @@ bool QtWebEngineWebWidget::isFullScreen() const
 {
 	return m_isFullScreen;
 }
+
+#if QTWEBENGINECORE_VERSION >= 0x050B00
+bool QtWebEngineWebWidget::isInspecting() const
+{
+	return (m_inspectorView && m_inspectorView->isVisible());
+}
+#endif
 
 bool QtWebEngineWebWidget::isPopup() const
 {
