@@ -59,6 +59,21 @@ void BookmarksManager::createInstance()
 	}
 }
 
+void BookmarksManager::ensureInitialized()
+{
+	if (!m_instance)
+	{
+		createInstance();
+	}
+
+	if (!m_model)
+	{
+		m_model = new BookmarksModel(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), BookmarksModel::BookmarksMode, m_instance);
+
+		connect(m_model, &BookmarksModel::modelModified, m_instance, &BookmarksManager::scheduleSave);
+	}
+}
+
 void BookmarksManager::scheduleSave()
 {
 	if (m_saveTimer == 0)
@@ -69,10 +84,7 @@ void BookmarksManager::scheduleSave()
 
 void BookmarksManager::updateVisits(const QUrl &url)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
@@ -90,10 +102,7 @@ void BookmarksManager::updateVisits(const QUrl &url)
 
 void BookmarksManager::removeBookmark(const QUrl &url)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
@@ -122,32 +131,21 @@ BookmarksManager* BookmarksManager::getInstance()
 
 BookmarksModel* BookmarksManager::getModel()
 {
-	if (!m_model && m_instance)
-	{
-		m_model = new BookmarksModel(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), BookmarksModel::BookmarksMode, m_instance);
-
-		connect(m_model, &BookmarksModel::modelModified, m_instance, &BookmarksManager::scheduleSave);
-	}
+	ensureInitialized();
 
 	return m_model;
 }
 
 BookmarksModel::Bookmark* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData, BookmarksModel::Bookmark *parent, int index)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	return m_model->addBookmark(type, metaData, parent, index);
 }
 
 BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	if (text.startsWith(QLatin1Char('#')))
 	{
@@ -164,10 +162,7 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 
 BookmarksModel::Bookmark* BookmarksManager::getBookmark(quint64 identifier)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	if (identifier == 0)
 	{
@@ -179,47 +174,37 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(quint64 identifier)
 
 BookmarksModel::Bookmark* BookmarksManager::getLastUsedFolder()
 {
-	BookmarksModel::Bookmark *folder(getModel()->getBookmark(m_lastUsedFolder));
+	ensureInitialized();
 
-	return ((!folder || folder->getType() != BookmarksModel::FolderBookmark) ? getModel()->getRootItem() : folder);
+	BookmarksModel::Bookmark *folder(m_model->getBookmark(m_lastUsedFolder));
+
+	return ((!folder || folder->getType() != BookmarksModel::FolderBookmark) ? m_model->getRootItem() : folder);
 }
 
 QStringList BookmarksManager::getKeywords()
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	return m_model->getKeywords();
 }
 
 QVector<BookmarksModel::BookmarkMatch> BookmarksManager::findBookmarks(const QString &prefix)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	return m_model->findBookmarks(prefix);
 }
 
 bool BookmarksManager::hasBookmark(const QUrl &url)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	return m_model->hasBookmark(url);
 }
 
 bool BookmarksManager::hasKeyword(const QString &keyword)
 {
-	if (!m_model)
-	{
-		getModel();
-	}
+	ensureInitialized();
 
 	return m_model->hasKeyword(keyword);
 }

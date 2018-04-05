@@ -52,6 +52,7 @@ protected:
 	explicit BookmarksManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
+	static void ensureInitialized();
 
 protected slots:
 	void scheduleSave();
