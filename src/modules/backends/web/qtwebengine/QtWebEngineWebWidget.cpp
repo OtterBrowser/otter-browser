@@ -1285,7 +1285,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 		{
 			if (result.isValid())
 			{
-				setScrollPosition(QPoint(result.toList()[0].toInt(), result.toList()[1].toInt()));
+				setScrollPosition(QPoint(result.toList().value(0).toInt(), result.toList().value(1).toInt()));
 			}
 		});
 	}
