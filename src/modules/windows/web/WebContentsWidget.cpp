@@ -945,6 +945,15 @@ void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
 				if (m_splitter->indexOf(inspector) < 0)
 				{
 					m_splitter->addWidget(inspector);
+
+					if (height() > 500)
+					{
+						m_splitter->setSizes({(height() - 300), 300});
+					}
+					else
+					{
+						m_splitter->setSizes({(height() / 2), (height() / 2)});
+					}
 				}
 
 				inspector->show();
