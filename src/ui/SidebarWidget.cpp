@@ -202,14 +202,20 @@ void SidebarWidget::choosePanel(bool isChecked)
 	}
 
 	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+	const QString panel(action->data().toString());
 
 	if (isChecked)
 	{
-		definition.panels.append(action->data().toString());
+		definition.panels.append(panel);
 	}
 	else
 	{
-		definition.panels.removeAll(action->data().toString());
+		definition.panels.removeAll(panel);
+
+		if (panel == definition.currentPanel)
+		{
+			definition.currentPanel.clear();
+		}
 	}
 
 	ToolBarsManager::setToolBar(definition);
