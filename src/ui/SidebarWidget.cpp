@@ -372,6 +372,8 @@ void SidebarWidget::updatePanels()
 			}
 
 			widget->deleteLater();
+
+			m_panels.remove(panel);
 		}
 	}
 
