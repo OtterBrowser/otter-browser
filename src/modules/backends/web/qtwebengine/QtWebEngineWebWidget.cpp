@@ -165,6 +165,7 @@ void QtWebEngineWebWidget::ensureInitialized()
 		m_webView = new QWebEngineView(this);
 		m_webView->setPage(m_page);
 		m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+		m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		m_webView->installEventFilter(this);
 
 		QVBoxLayout *layout(new QVBoxLayout(this));
@@ -1402,6 +1403,7 @@ QWidget* QtWebEngineWebWidget::getInspector()
 	if (!m_inspectorView)
 	{
 		m_inspectorView = new QWebEngineView(this);
+		m_inspectorView->setMinimumHeight(200);
 		m_inspectorView->page()->setInspectedPage(m_page);
 	}
 
