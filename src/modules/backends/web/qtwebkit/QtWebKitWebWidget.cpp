@@ -2510,7 +2510,12 @@ QStringList QtWebKitWebWidget::getStyleSheets() const
 
 QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[type='application/atom+xml'], a[type='application/rss+xml'], link[type='application/atom+xml'], link[type='application/rss+xml']")));
+	return getLinks(QLatin1String("a[type='application/atom+xml'], a[type='application/rss+xml'], link[type='application/atom+xml'], link[type='application/rss+xml']"));
+}
+
+QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks(const QString &query) const
+{
+	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(query));
 	QSet<QUrl> urls;
 	urls.reserve(elements.count());
 
@@ -2531,38 +2536,6 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 		LinkUrl link;
 		link.title = elements.at(i).attribute(QLatin1String("title"));
 		link.mimeType = elements.at(i).attribute(QLatin1String("type"));
-		link.url = url;
-
-		links.append(link);
-	}
-
-	links.squeeze();
-
-	return links;
-}
-
-QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
-{
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("a[href]")));
-	QSet<QUrl> urls;
-	urls.reserve(elements.count());
-
-	QVector<LinkUrl> links;
-	links.reserve(elements.count());
-
-	for (int i = 0; i < elements.count(); ++i)
-	{
-		const QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
-
-		if (urls.contains(url))
-		{
-			continue;
-		}
-
-		urls.insert(url);
-
-		LinkUrl link;
-		link.title = elements.at(i).attribute(QLatin1String("title"));
 		link.url = url;
 
 		if (link.title.isEmpty())
@@ -2588,37 +2561,14 @@ QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
 	return links;
 }
 
+QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getLinks() const
+{
+	return getLinks(QLatin1String("a[href]"));
+}
+
 QVector<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 {
-	const QWebElementCollection elements(m_page->mainFrame()->findAllElements(QLatin1String("link[type='application/opensearchdescription+xml']")));
-	QSet<QUrl> urls;
-	urls.reserve(elements.count());
-
-	QVector<LinkUrl> links;
-	links.reserve(elements.count());
-
-	for (int i = 0; i < elements.count(); ++i)
-	{
-		const QUrl url(resolveUrl(m_page->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
-
-		if (urls.contains(url))
-		{
-			continue;
-		}
-
-		urls.insert(url);
-
-		LinkUrl link;
-		link.title = elements.at(i).attribute(QLatin1String("title"));
-		link.mimeType = elements.at(i).attribute(QLatin1String("type"));
-		link.url = url;
-
-		links.append(link);
-	}
-
-	links.squeeze();
-
-	return links;
+	return getLinks(QLatin1String("link[type='application/opensearchdescription+xml']"));
 }
 
 QVector<NetworkManager::ResourceInformation> QtWebKitWebWidget::getBlockedRequests() const

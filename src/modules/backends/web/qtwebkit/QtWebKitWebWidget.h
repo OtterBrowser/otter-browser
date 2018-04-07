@@ -135,6 +135,7 @@ protected:
 	QString getMessageToken() const;
 	QString getPluginToken() const;
 	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;
+	QVector<LinkUrl> getLinks(const QString &query) const;
 	int getAmountOfDeferredPlugins() const override;
 	bool canLoadPlugins() const;
 	bool canGoBack() const override;
