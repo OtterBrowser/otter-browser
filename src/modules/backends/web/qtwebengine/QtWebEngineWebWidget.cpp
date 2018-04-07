@@ -1613,6 +1613,38 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 	return m_hitResult;
 }
 
+QStringList QtWebEngineWebWidget::getStyleSheets() const
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getStyleSheets.js"));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return {};
+	}
+
+	QStringList titles;
+	QEventLoop eventLoop;
+
+	m_page->runJavaScript(file.readAll(), [&](const QVariant &result)
+	{
+		if (result.isValid())
+		{
+			titles = result.toStringList();
+		}
+
+		eventLoop.quit();
+	});
+
+	file.close();
+
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
+
+	eventLoop.exec();
+
+	return titles;
+}
+
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
 {
 	return getLinks(QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']"));

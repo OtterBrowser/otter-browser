@@ -81,6 +81,7 @@ public:
 	LinkUrl getActiveMedia() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
+	QStringList getStyleSheets() const override;
 	QVector<LinkUrl> getFeeds() const override;
 	QVector<LinkUrl> getLinks() const override;
 	QVector<LinkUrl> getSearchEngines() const override;
