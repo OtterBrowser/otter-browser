@@ -1305,6 +1305,11 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 	}
 }
 
+void QtWebEngineWebWidget::setActiveStyleSheet(const QString &styleSheet)
+{
+	m_page->runJavaScript(QStringLiteral("var elements = document.querySelectorAll('link[rel=\\'alternate stylesheet\\']'); for (var i = 0; i < elements.length; ++i) { elements[i].disabled = (elements[i].title !== '%1'); }").arg(QString(styleSheet).replace(QLatin1Char('\''), QLatin1String("\\'"))));
+}
+
 void QtWebEngineWebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
 {
 	WebWidget::setPermission(feature, url, policies);
