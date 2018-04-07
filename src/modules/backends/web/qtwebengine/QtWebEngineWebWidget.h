@@ -81,6 +81,7 @@ public:
 	LinkUrl getActiveMedia() const override;
 	WindowHistoryInformation getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
+	QVector<LinkUrl> getLinks() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;

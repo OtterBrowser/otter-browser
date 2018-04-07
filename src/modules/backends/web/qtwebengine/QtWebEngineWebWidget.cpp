@@ -1613,6 +1613,50 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 	return m_hitResult;
 }
 
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getLinks.js"));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return {};
+	}
+
+	QVector<WebWidget::LinkUrl> links;
+	QEventLoop eventLoop;
+
+	m_page->runJavaScript(file.readAll(), [&](const QVariant &result)
+	{
+		if (result.isValid())
+		{
+			const QVariantList rawLinks(result.toList());
+
+			links.reserve(rawLinks.count());
+
+			for (int i = 0; i < rawLinks.count(); ++i)
+			{
+				const QVariantHash rawLink(rawLinks.at(i).toHash());
+				LinkUrl link;
+				link.title = rawLink.value(QLatin1String("title")).toString();
+				link.url = QUrl(rawLink.value(QLatin1String("url")).toString());
+
+				links.append(link);
+			}
+		}
+
+		eventLoop.quit();
+	});
+
+	file.close();
+
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
+
+	eventLoop.exec();
+
+	return links;
+}
+
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const
 {
 	return m_loadingState;

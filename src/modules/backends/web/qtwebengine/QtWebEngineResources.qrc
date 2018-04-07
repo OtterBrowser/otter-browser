@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/modules/backends/web/qtwebengine">
         <file>resources/createSearch.js</file>
+        <file>resources/getLinks.js</file>
         <file>resources/hideElements.js</file>
         <file>resources/hideBlockedRequests.js</file>
         <file>resources/hitTest.js</file>
