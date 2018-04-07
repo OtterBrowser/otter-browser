@@ -116,6 +116,7 @@ protected:
 	QWebEnginePage* getPage() const;
 	QString parsePosition(const QString &script, const QPoint &position) const;
 	QDateTime getLastUrlClickTime() const;
+	QVector<LinkUrl> getLinks(const QString &query) const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;
 	bool canFastForward() const override;

@@ -1613,7 +1613,7 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 	return m_hitResult;
 }
 
-QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query) const
 {
 	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getLinks.js"));
 
@@ -1625,7 +1625,7 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
 	QVector<WebWidget::LinkUrl> links;
 	QEventLoop eventLoop;
 
-	m_page->runJavaScript(file.readAll(), [&](const QVariant &result)
+	m_page->runJavaScript(QString(file.readAll()).arg(query), [&](const QVariant &result)
 	{
 		if (result.isValid())
 		{
@@ -1638,6 +1638,7 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
 				const QVariantHash rawLink(rawLinks.at(i).toHash());
 				LinkUrl link;
 				link.title = rawLink.value(QLatin1String("title")).toString();
+				link.mimeType = rawLink.value(QLatin1String("mimeType")).toString();
 				link.url = QUrl(rawLink.value(QLatin1String("url")).toString());
 
 				links.append(link);
@@ -1655,6 +1656,11 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
 	eventLoop.exec();
 
 	return links;
+}
+
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
+{
+	return getLinks(QLatin1String("a[href]"));
 }
 
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const

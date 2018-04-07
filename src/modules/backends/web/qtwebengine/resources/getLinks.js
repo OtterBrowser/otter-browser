@@ -1,4 +1,4 @@
-var elements = document.querySelectorAll('a[href]');
+var elements = document.querySelectorAll('%1');
 var urls = [];
 var links = [];
 
@@ -13,8 +13,8 @@ for (var i = 0; i < elements.length; ++i)
 
 	var link = {
 		title: elements[i].title.trim(),
+		mimeType: elements[i].type,
 		url: elements[i].href
-
 	};
 
 	if (link.title == '')
