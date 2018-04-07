@@ -1455,6 +1455,38 @@ QString QtWebEngineWebWidget::getTitle() const
 	return tr("(Untitled)");
 }
 
+QString QtWebEngineWebWidget::getActiveStyleSheet() const
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getActiveStyleSheet.js"));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return {};
+	}
+
+	QString title;
+	QEventLoop eventLoop;
+
+	m_page->runJavaScript(file.readAll(), [&](const QVariant &result)
+	{
+		if (result.isValid())
+		{
+			title = result.toString();
+		}
+
+		eventLoop.quit();
+	});
+
+	file.close();
+
+	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
+
+	eventLoop.exec();
+
+	return title;
+}
+
 QString QtWebEngineWebWidget::getSelectedText() const
 {
 	return m_page->selectedText();

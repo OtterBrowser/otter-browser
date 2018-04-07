@@ -70,6 +70,7 @@ public:
 #endif
 	QWidget* getViewport() override;
 	QString getTitle() const override;
+	QString getActiveStyleSheet() const override;
 	QString getSelectedText() const override;
 	QVariant getPageInformation(PageInformation key) const override;
 	QUrl getUrl() const override;
