@@ -1613,6 +1613,11 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 	return m_hitResult;
 }
 
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
+{
+	return getLinks(QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']"));
+}
+
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query) const
 {
 	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getLinks.js"));
@@ -1661,6 +1666,11 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query)
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
 {
 	return getLinks(QLatin1String("a[href]"));
+}
+
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getSearchEngines() const
+{
+	return getLinks(QLatin1String("link[type=\\'application/opensearchdescription+xml\\']"));
 }
 
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const
