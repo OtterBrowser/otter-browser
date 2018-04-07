@@ -77,6 +77,7 @@ protected slots:
 	void restoreCurrentSearchEngine();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleWindowOptionChanged(int identifier, const QVariant &value);
+	void handleLoadingStateChanged();
 	void updateGeometries();
 	void setSearchEngine(const QString &searchEngine);
 	void setSearchEngine(const QModelIndex &index, bool canSendRequest = true);
@@ -91,6 +92,7 @@ private:
 	QRect m_addButtonRectangle;
 	QRect m_searchButtonRectangle;
 	QVariantMap m_options;
+	bool m_hasAllWindowSearchEngines;
 	bool m_isSearchEngineLocked;
 
 signals:

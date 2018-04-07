@@ -143,6 +143,7 @@ QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 SearchWidget::SearchWidget(Window *window, QWidget *parent) : LineEditWidget(parent),
 	m_window(nullptr),
 	m_suggester(nullptr),
+	m_hasAllWindowSearchEngines(true),
 	m_isSearchEngineLocked(false)
 {
 	setMinimumWidth(100);
@@ -520,6 +521,29 @@ void SearchWidget::handleWindowOptionChanged(int identifier, const QVariant &val
 	}
 }
 
+void SearchWidget::handleLoadingStateChanged()
+{
+	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
+	bool hasAllSearchEngines(true);
+
+	for (int i = 0; i < searchEngines.count(); ++i)
+	{
+		if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
+		{
+			hasAllSearchEngines = false;
+
+			break;
+		}
+	}
+
+	if (m_hasAllWindowSearchEngines != hasAllSearchEngines)
+	{
+		m_hasAllWindowSearchEngines = hasAllSearchEngines;
+
+		updateGeometries();
+	}
+}
+
 void SearchWidget::updateGeometries()
 {
 	QStyleOptionFrame panel;
@@ -527,7 +551,6 @@ void SearchWidget::updateGeometries()
 	panel.rect = rect();
 	panel.lineWidth = 1;
 
-	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
 	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
 	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
@@ -580,34 +603,19 @@ void SearchWidget::updateGeometries()
 		}
 	}
 
-	if (m_window && !searchEngines.isEmpty())
+	if (!m_hasAllWindowSearchEngines && rect().marginsRemoved(margins).width() > 50)
 	{
-		bool hasAllSearchEngines(true);
-
-		for (int i = 0; i < searchEngines.count(); ++i)
+		if (isRightToLeft)
 		{
-			if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
-			{
-				hasAllSearchEngines = false;
+			m_addButtonRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
 
-				break;
-			}
+			margins.setLeft(margins.left() + 20);
 		}
-
-		if (!hasAllSearchEngines && rect().marginsRemoved(margins).width() > 50)
+		else
 		{
-			if (isRightToLeft)
-			{
-				m_addButtonRectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
+			m_addButtonRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
 
-				margins.setLeft(margins.left() + 20);
-			}
-			else
-			{
-				m_addButtonRectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
-
-				margins.setRight(margins.right() + 20);
-			}
+			margins.setRight(margins.right() + 20);
 		}
 	}
 
@@ -735,7 +743,7 @@ void SearchWidget::setWindow(Window *window)
 		m_window->detachSearchWidget(this);
 
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
-		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::updateGeometries);
+		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
 	}
 
@@ -753,7 +761,7 @@ void SearchWidget::setWindow(Window *window)
 		setSearchEngine(window->getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 
 		connect(this, &SearchWidget::requestedSearch, window, &Window::requestedSearch);
-		connect(window, &Window::loadingStateChanged, this, &SearchWidget::updateGeometries);
+		connect(window, &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		connect(window, &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
