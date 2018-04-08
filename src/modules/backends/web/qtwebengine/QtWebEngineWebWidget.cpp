@@ -1460,6 +1460,11 @@ QString QtWebEngineWebWidget::getTitle() const
 	return tr("(Untitled)");
 }
 
+QString QtWebEngineWebWidget::getDescription() const
+{
+	return m_page->runScriptSource(QLatin1String("var element = document.querySelector('[name=\\'description\\']'); var description = (element ? element.content : ''); if (description == '') { element = document.querySelector('[name=\\'og:description\\']'); description = (element ? element.property : ''); } description;")).toString();
+}
+
 QString QtWebEngineWebWidget::getActiveStyleSheet() const
 {
 	return m_page->runScriptFile(QLatin1String("getActiveStyleSheet")).toString();
