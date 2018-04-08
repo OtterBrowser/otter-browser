@@ -372,6 +372,26 @@ void QtWebKitWebWidget::openRequest(const QNetworkRequest &request, QNetworkAcce
 	});
 }
 
+void QtWebKitWebWidget::openFormRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
+{
+	m_page->triggerAction(QWebPage::Stop);
+
+	QtWebKitWebWidget *widget(qobject_cast<QtWebKitWebWidget*>(clone(false)));
+	widget->openRequest(request, operation, outgoingData);
+
+	emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen), {});
+}
+
+void QtWebKitWebWidget::startDelayedTransfer(Transfer *transfer)
+{
+	m_transfers.enqueue(transfer);
+
+	if (m_transfersTimer == 0)
+	{
+		m_transfersTimer = startTimer(250);
+	}
+}
+
 void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 {
 	if ((!getCurrentHitTestResult().imageUrl.isEmpty() && request.url() == getCurrentHitTestResult().imageUrl) || (!getCurrentHitTestResult().mediaUrl.isEmpty() && request.url() == getCurrentHitTestResult().mediaUrl))
@@ -665,26 +685,6 @@ void QtWebKitWebWidget::handlePermissionRequest(QWebFrame *frame, QWebPage::Feat
 void QtWebKitWebWidget::handlePermissionCancel(QWebFrame *frame, QWebPage::Feature feature)
 {
 	notifyPermissionRequested(frame, feature, true);
-}
-
-void QtWebKitWebWidget::openFormRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
-{
-	m_page->triggerAction(QWebPage::Stop);
-
-	QtWebKitWebWidget *widget(qobject_cast<QtWebKitWebWidget*>(clone(false)));
-	widget->openRequest(request, operation, outgoingData);
-
-	emit requestedNewWindow(widget, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen), {});
-}
-
-void QtWebKitWebWidget::startDelayedTransfer(Transfer *transfer)
-{
-	m_transfers.enqueue(transfer);
-
-	if (m_transfersTimer == 0)
-	{
-		m_transfersTimer = startTimer(250);
-	}
 }
 
 void QtWebKitWebWidget::notifyTitleChanged()
