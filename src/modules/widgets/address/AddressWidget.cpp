@@ -314,6 +314,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	m_hoveredEntry(UnknownEntry),
 	m_completionModes(NoCompletionMode),
 	m_hints(SessionsManager::DefaultOpen),
+	m_hasFeeds(false),
 	m_isNavigatingCompletion(false),
 	m_isUsingSimpleMode(false),
 	m_wasEdited(false)
@@ -947,6 +948,13 @@ void AddressWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 	}
 }
 
+void AddressWidget::handleLoadingStateChanged()
+{
+	m_hasFeeds = (m_window && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty());
+
+	updateGeometries();
+}
+
 void AddressWidget::handleUserInput(const QString &text, SessionsManager::OpenHints hints)
 {
 	if (m_isUsingSimpleMode)
@@ -1078,7 +1086,7 @@ void AddressWidget::updateGeometries()
 
 				break;
 			case ListFeedsEntry:
-				if (hasValidWindow && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty())
+				if (m_hasFeeds)
 				{
 					definition.title = QT_TR_NOOP("Show feed list");
 					definition.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"), false);
@@ -1285,7 +1293,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), &Window::iconChanged, this, &AddressWidget::setIcon);
 		disconnect(m_window.data(), &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
-		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
+		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
 	}
 
 	m_window = window;
@@ -1304,7 +1312,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(window, &Window::iconChanged, this, &AddressWidget::setIcon);
 		connect(window, &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		connect(window, &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
-		connect(window, &Window::loadingStateChanged, this, &AddressWidget::updateGeometries);
+		connect(window, &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
 		connect(window, &Window::destroyed, this, [&](QObject *object)
 		{
 			if (qobject_cast<Window*>(object) == m_window)
