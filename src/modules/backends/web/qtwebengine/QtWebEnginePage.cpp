@@ -282,6 +282,51 @@ QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 	return QLatin1Char('\'') + rules.join(QLatin1String("','")) + QLatin1Char('\'');
 }
 
+QVariant QtWebEnginePage::runScriptSource(const QString &script)
+{
+	QVariant result;
+	QEventLoop eventLoop;
+
+	runJavaScript(script, [&](const QVariant &runResult)
+	{
+		result = runResult;
+
+		eventLoop.quit();
+	});
+
+	if (m_widget)
+	{
+		connect(m_widget, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
+	}
+
+	connect(this, &QtWebEnginePage::destroyed, &eventLoop, &QEventLoop::quit);
+
+	eventLoop.exec();
+
+	return result;
+}
+
+QVariant QtWebEnginePage::runScriptFile(const QString &path, const QStringList &parameters)
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/") + path + QLatin1String(".js"));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return {};
+	}
+
+	QString script(file.readAll());
+
+	file.close();
+
+	for (int i = 0; i < parameters.count(); ++i)
+	{
+		script = script.arg(parameters.at(i));
+	}
+
+	return runScriptSource(script);
+}
+
 QStringList QtWebEnginePage::chooseFiles(QWebEnginePage::FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)
 {
 	Q_UNUSED(acceptedMimeTypes)

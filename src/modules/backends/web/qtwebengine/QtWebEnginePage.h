@@ -38,6 +38,8 @@ class QtWebEnginePage final : public QWebEnginePage
 public:
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
+	QVariant runScriptSource(const QString &script);
+	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
 	bool isPopup() const;
 	bool isViewingMedia() const;
 
