@@ -1462,34 +1462,7 @@ QString QtWebEngineWebWidget::getTitle() const
 
 QString QtWebEngineWebWidget::getActiveStyleSheet() const
 {
-	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getActiveStyleSheet.js"));
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		return {};
-	}
-
-	QString title;
-	QEventLoop eventLoop;
-
-	m_page->runJavaScript(file.readAll(), [&](const QVariant &result)
-	{
-		if (result.isValid())
-		{
-			title = result.toString();
-		}
-
-		eventLoop.quit();
-	});
-
-	file.close();
-
-	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-	eventLoop.exec();
-
-	return title;
+	return m_page->runScriptFile(QLatin1String("getActiveStyleSheet")).toString();
 }
 
 QString QtWebEngineWebWidget::getSelectedText() const
@@ -1624,62 +1597,14 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 
 WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)
 {
-	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		return {};
-	}
-
-	QEventLoop eventLoop;
-
-	m_page->runJavaScript(parsePosition(QString(file.readAll()), position), [&](const QVariant &result)
-	{
-		m_hitResult = QtWebEngineHitTestResult(result);
-
-		eventLoop.quit();
-	});
-
-	file.close();
-
-	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-	eventLoop.exec();
+	m_hitResult = QtWebEngineHitTestResult(m_page->runScriptFile(QLatin1String("hitTest")));
 
 	return m_hitResult;
 }
 
 QStringList QtWebEngineWebWidget::getStyleSheets() const
 {
-	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getStyleSheets.js"));
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		return {};
-	}
-
-	QStringList titles;
-	QEventLoop eventLoop;
-
-	m_page->runJavaScript(file.readAll(), [&](const QVariant &result)
-	{
-		if (result.isValid())
-		{
-			titles = result.toStringList();
-		}
-
-		eventLoop.quit();
-	});
-
-	file.close();
-
-	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-	eventLoop.exec();
-
-	return titles;
+	return m_page->runScriptFile(QLatin1String("getStyleSheets")).toStringList();
 }
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
@@ -1689,45 +1614,26 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query) const
 {
-	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/getLinks.js"));
+	const QVariant result(m_page->runScriptFile(QLatin1String("getLinks"), {query}));
+	QVector<LinkUrl> links;
 
-	if (!file.open(QIODevice::ReadOnly))
+	if (result.isValid())
 	{
-		return {};
-	}
+		const QVariantList rawLinks(result.toList());
 
-	QVector<WebWidget::LinkUrl> links;
-	QEventLoop eventLoop;
+		links.reserve(rawLinks.count());
 
-	m_page->runJavaScript(QString(file.readAll()).arg(query), [&](const QVariant &result)
-	{
-		if (result.isValid())
+		for (int i = 0; i < rawLinks.count(); ++i)
 		{
-			const QVariantList rawLinks(result.toList());
+			const QVariantHash rawLink(rawLinks.at(i).toHash());
+			LinkUrl link;
+			link.title = rawLink.value(QLatin1String("title")).toString();
+			link.mimeType = rawLink.value(QLatin1String("mimeType")).toString();
+			link.url = QUrl(rawLink.value(QLatin1String("url")).toString());
 
-			links.reserve(rawLinks.count());
-
-			for (int i = 0; i < rawLinks.count(); ++i)
-			{
-				const QVariantHash rawLink(rawLinks.at(i).toHash());
-				LinkUrl link;
-				link.title = rawLink.value(QLatin1String("title")).toString();
-				link.mimeType = rawLink.value(QLatin1String("mimeType")).toString();
-				link.url = QUrl(rawLink.value(QLatin1String("url")).toString());
-
-				links.append(link);
-			}
+			links.append(link);
 		}
-
-		eventLoop.quit();
-	});
-
-	file.close();
-
-	connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-	connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-	eventLoop.exec();
+	}
 
 	return links;
 }
@@ -1970,27 +1876,13 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			break;
 		case QEvent::ShortcutOverride:
+			m_isEditing = m_page->runScriptSource(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;")).toBool();
+
+			if (m_isEditing)
 			{
-				QEventLoop eventLoop;
+				event->accept();
 
-				m_page->runJavaScript(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;"), [&](const QVariant &result)
-				{
-					m_isEditing = result.toBool();
-
-					eventLoop.quit();
-				});
-
-				connect(this, &QtWebEngineWebWidget::aboutToReload, &eventLoop, &QEventLoop::quit);
-				connect(this, &QtWebEngineWebWidget::destroyed, &eventLoop, &QEventLoop::quit);
-
-				eventLoop.exec();
-
-				if (m_isEditing)
-				{
-					event->accept();
-
-					return true;
-				}
+				return true;
 			}
 
 			break;
