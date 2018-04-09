@@ -87,6 +87,7 @@ public:
 	QVector<LinkUrl> getFeeds() const override;
 	QVector<LinkUrl> getLinks() const override;
 	QVector<LinkUrl> getSearchEngines() const override;
+	QMultiMap<QString, QString> getMetaData() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;

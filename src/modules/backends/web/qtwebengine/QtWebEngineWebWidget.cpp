@@ -1653,6 +1653,21 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getSearchEngines() const
 	return getLinks(QLatin1String("link[type=\\'application/opensearchdescription+xml\\']"));
 }
 
+QMultiMap<QString, QString> QtWebEngineWebWidget::getMetaData() const
+{
+	QMultiMap<QString, QString> metaData;
+	const QVariantList rawMetaData(m_page->runScriptSource(QLatin1String("var elements = document.querySelectorAll('meta'); var metaData = []; for (var i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;")).toList());
+
+	for (int i = 0; i < rawMetaData.count(); ++i)
+	{
+		const QVariantHash metaDataEntry(rawMetaData.at(i).toHash());
+
+		metaData.insertMulti(metaDataEntry.value(QLatin1String("key")).toString(), metaDataEntry.value(QLatin1String("value")).toString());
+	}
+
+	return metaData;
+}
+
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const
 {
 	return m_loadingState;
