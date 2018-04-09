@@ -56,6 +56,8 @@ QVariant SessionItem::data(int role) const
 			}
 
 			break;
+		case Qt::ToolTipRole:
+			return data(Qt::DisplayRole);
 		case SessionModel::IsTrashedRole:
 			{
 				QModelIndex parent(index().parent());
