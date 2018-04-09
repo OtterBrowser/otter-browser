@@ -563,6 +563,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		windows = Application::getWindows();
 	}
 
+	session.windows.reserve(windows.count());
+
 	for (int i = 0; i < windows.count(); ++i)
 	{
 		if (!windows.at(i)->isPrivate())
@@ -570,6 +572,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 			session.windows.append(windows.at(i)->getSession());
 		}
 	}
+
+	session.windows.squeeze();
 
 	return saveSession(session);
 }
