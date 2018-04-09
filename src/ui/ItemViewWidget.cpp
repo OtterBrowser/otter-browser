@@ -738,7 +738,7 @@ void ItemViewWidget::setExclusive(bool isExclusive)
 	update();
 }
 
-void ItemViewWidget::setFilterString(const QString filter)
+void ItemViewWidget::setFilterString(const QString &filter)
 {
 	if (filter == m_filterString || !model())
 	{
