@@ -2001,9 +2001,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 			session.toolBars = getSession().toolBars;
 		}
 
-		MainWindow *mainWindow(Application::createWindow({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}}, session));
-
-		window = mainWindow->openWindow(widget);
+		window = Application::createWindow({{QLatin1String("hints"), QVariant(hints)}, {QLatin1String("noTabs"), true}}, session)->openWindow(widget);
 	}
 	else
 	{
