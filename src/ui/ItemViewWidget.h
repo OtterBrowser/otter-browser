@@ -110,7 +110,7 @@ public slots:
 	void setSort(int column, Qt::SortOrder order);
 	void setColumnVisibility(int column, bool hide);
 	void setExclusive(bool isExclusive);
-	void setFilterString(const QString &filter = {});
+	void setFilterString(const QString &filter);
 	void setFilterRoles(const QSet<int> &roles);
 	void setModified(bool isModified);
 
