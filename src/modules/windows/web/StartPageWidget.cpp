@@ -414,7 +414,7 @@ void StartPageWidget::wheelEvent(QWheelEvent *event)
 
 void StartPageWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasUrls())
+	if (event->mimeData()->hasUrls() || event->mimeData()->hasText())
 	{
 		event->accept();
 	}
@@ -426,15 +426,39 @@ void StartPageWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void StartPageWidget::dropEvent(QDropEvent *event)
 {
-	if (event->mimeData()->hasUrls())
+	if (event->mimeData()->hasUrls() || event->mimeData()->hasText())
 	{
 		event->accept();
 
 		const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
 
-		for (int i = 0; i < urls.count(); ++i)
+		if (urls.isEmpty())
 		{
-			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}}, parentWidget());
+			const InputInterpreter::InterpreterResult result(InputInterpreter::interpret(event->mimeData()->text(), (InputInterpreter::NoBookmarkKeywordsFlag | InputInterpreter::NoSearchKeywordsFlag)));
+
+			if (result.isValid())
+			{
+				switch (result.type)
+				{
+					case InputInterpreter::InterpreterResult::UrlType:
+						Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}}, parentWidget());
+
+						break;
+					case InputInterpreter::InterpreterResult::SearchType:
+						m_window->search(result.searchQuery, result.searchEngine);
+
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < urls.count(); ++i)
+			{
+				Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}}, parentWidget());
+			}
 		}
 	}
 	else
