@@ -350,6 +350,7 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	m_listView->viewport()->setMouseTracking(true);
 	m_listView->viewport()->installEventFilter(this);
 
+	setAcceptDrops(true);
 	setWidget(m_contentsWidget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
@@ -408,6 +409,37 @@ void StartPageWidget::wheelEvent(QWheelEvent *event)
 	if (event->buttons() == Qt::NoButton && event->modifiers() == Qt::NoModifier)
 	{
 		QScrollArea::wheelEvent(event);
+	}
+}
+
+void StartPageWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
+	}
+}
+
+void StartPageWidget::dropEvent(QDropEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+
+		const QVector<QUrl> urls(Utils::extractUrls(event->mimeData()));
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}}, parentWidget());
+		}
+	}
+	else
+	{
+		event->ignore();
 	}
 }
 
