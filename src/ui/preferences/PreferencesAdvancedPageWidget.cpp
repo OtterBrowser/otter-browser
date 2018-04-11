@@ -746,6 +746,7 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 				if (result)
 				{
 					QList<QStandardItem*> items({new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title), new QStandardItem()});
+					items[0]->setData(items[0]->data(Qt::DisplayRole), Qt::ToolTipRole);
 					items[0]->setData(Utils::createIdentifier({}, QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList()), UserAgentsModel::IdentifierRole);
 
 					model->insertRow(items, parent, row, ItemModel::FolderType);
@@ -770,7 +771,9 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 
 					QList<QStandardItem*> items({new QStandardItem(userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), new QStandardItem(userAgent.value)});
 					items[0]->setCheckable(true);
+					items[0]->setData(items[0]->data(Qt::DisplayRole), Qt::ToolTipRole);
 					items[0]->setData(userAgent.identifier, UserAgentsModel::IdentifierRole);
+					items[1]->setData(items[1]->data(Qt::DisplayRole), Qt::ToolTipRole);
 
 					model->insertRow(items, parent, row, ItemModel::EntryType);
 				}
@@ -805,6 +808,7 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 		if (result)
 		{
 			m_ui->userAgentsViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), UserAgentsModel::TitleRole);
+			m_ui->userAgentsViewWidget->setData(index, index.data(Qt::DisplayRole), Qt::ToolTipRole);
 		}
 	}
 	else if (type == ItemModel::EntryType)
@@ -821,7 +825,9 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 			userAgent = dialog.getUserAgent();
 
 			m_ui->userAgentsViewWidget->setData(index, (userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), UserAgentsModel::TitleRole);
+			m_ui->userAgentsViewWidget->setData(index, index.data(Qt::DisplayRole), Qt::ToolTipRole);
 			m_ui->userAgentsViewWidget->setData(index.sibling(index.row(), 1), userAgent.value, Qt::DisplayRole);
+			m_ui->userAgentsViewWidget->setData(index.sibling(index.row(), 1), userAgent.value, Qt::ToolTipRole);
 		}
 	}
 }
@@ -906,6 +912,7 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 				if (result)
 				{
 					QStandardItem *item(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
+					item->setData(item->data(Qt::DisplayRole), Qt::ToolTipRole);
 					item->setData(Utils::createIdentifier({}, QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList()), ProxiesModel::IdentifierRole);
 
 					model->insertRow(item, parent, row, ItemModel::FolderType);
@@ -931,6 +938,7 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 
 					QStandardItem *item(new QStandardItem(proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title));
 					item->setCheckable(true);
+					item->setData(item->data(Qt::DisplayRole), Qt::ToolTipRole);
 					item->setData(proxy.identifier, ProxiesModel::IdentifierRole);
 
 					model->insertRow(item, parent, row, ItemModel::EntryType);
@@ -966,6 +974,7 @@ void PreferencesAdvancedPageWidget::editProxy()
 		if (result)
 		{
 			m_ui->proxiesViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), ProxiesModel::TitleRole);
+			m_ui->proxiesViewWidget->setData(index, index.data(Qt::DisplayRole), Qt::ToolTipRole);
 		}
 	}
 	else if (type == ItemModel::EntryType)
@@ -981,6 +990,7 @@ void PreferencesAdvancedPageWidget::editProxy()
 
 			m_ui->proxiesViewWidget->markAsModified();
 			m_ui->proxiesViewWidget->setData(index, (proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title), ProxiesModel::TitleRole);
+			m_ui->proxiesViewWidget->setData(index, index.data(Qt::DisplayRole), Qt::ToolTipRole);
 		}
 	}
 }
