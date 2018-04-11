@@ -72,6 +72,7 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 		const ProxyDefinition proxy(proxies.at(i).isEmpty() ? ProxyDefinition() : NetworkManagerFactory::getProxy(proxies.at(i)));
 		ItemType type(EntryType);
 		QStandardItem *item(new QStandardItem(proxy.isValid() ? proxy.getTitle() : QString()));
+		item->setData(item->data(Qt::DisplayRole), Qt::ToolTipRole);
 
 		if (m_isEditor)
 		{
@@ -142,11 +143,13 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 		const UserAgentDefinition userAgent(userAgents.at(i).isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(userAgents.at(i)));
 		ItemType type(EntryType);
 		QList<QStandardItem*> items({new QStandardItem(userAgent.isValid() ? userAgent.getTitle() : QString())});
+		items[0]->setData(items[0]->data(Qt::DisplayRole), Qt::ToolTipRole);
 
 		if (m_isEditor)
 		{
 			items.append(new QStandardItem(userAgent.value));
 			items[0]->setFlags(items[0]->flags() | Qt::ItemIsDragEnabled);
+			items[1]->setData(items[1]->data(Qt::DisplayRole), Qt::ToolTipRole);
 			items[1]->setFlags(items[1]->flags() | Qt::ItemIsDragEnabled);
 		}
 
