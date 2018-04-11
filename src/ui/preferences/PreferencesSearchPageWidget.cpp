@@ -240,7 +240,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 	m_searchEngines[identifier] = {true, searchEngine};
 
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
-	m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
+	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
 	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), searchEngine.keyword, Qt::DisplayRole);
 
 	if (searchEngine.icon.isNull())
@@ -413,7 +413,7 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 				if (isSuccess)
 				{
 					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
-					m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
+					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::ToolTipRole);
 
 					if (searchEngine.icon.isNull())
 					{
@@ -597,7 +597,7 @@ QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEngines
 	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
 	items[0]->setCheckable(true);
 	items[0]->setData(searchEngine.identifier, IdentifierRole);
-	items[0]->setToolTip(searchEngine.description);
+	items[0]->setToolTip(searchEngine.title);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsUserCheckable | Qt::ItemNeverHasChildren);
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
