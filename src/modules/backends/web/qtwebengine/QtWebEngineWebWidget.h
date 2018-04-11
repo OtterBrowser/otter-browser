@@ -30,7 +30,6 @@
 namespace Otter
 {
 
-class ContentsDialog;
 class QtWebEnginePage;
 class SourceViewerWebWidget;
 
