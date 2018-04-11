@@ -9499,7 +9499,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
         <source>Purge History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Remover entrada do histórico global</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1277"/>

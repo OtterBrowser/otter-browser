@@ -2675,27 +2675,27 @@ El akarja menteni őket?</translation>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Keresés…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="234"/>
         <source>Lock Panel</source>
-        <translation type="unfinished"/>
+        <translation>Panel zárolása</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="267"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Hivatkozások</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="317"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Név: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="320"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Cím: %1</translation>
     </message>
 </context>
 <context>
@@ -4143,7 +4143,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="585"/>
         <source>Do you really want to remove preferences for this website?</source>
-        <translation type="unfinished"/>
+        <translation>Biztosan el akarja távolítani a weboldal beállításait?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="603"/>
@@ -5653,12 +5653,12 @@ Ki akarja cserélni erre?</translation>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="108"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Kezdőlap</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="111"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Ismeretlen)</translation>
     </message>
 </context>
 <context>
@@ -5996,7 +5996,7 @@ Menti vagy nem?</translation>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
         <source>Enable plugins</source>
-        <translation type="unfinished"/>
+        <translation>Beépülők engedélyezése </translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="55"/>
@@ -6096,33 +6096,33 @@ Cím: %2</translation>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Keresés…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Cím</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Dátum</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="142"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Fül előzmények</translation>
     </message>
 </context>
 <context>
@@ -6193,7 +6193,7 @@ Cím: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Könyvjelző hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6648,22 +6648,22 @@ Felül akarja írni?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="235"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ismeretlen</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="242"/>
         <source>Redownload</source>
-        <translation type="unfinished"/>
+        <translation>Újrakezdés</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="247"/>
         <source>Open Folder</source>
-        <translation type="unfinished"/>
+        <translation>Mappa megnyitása</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="252"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
@@ -6902,12 +6902,12 @@ Folyamat: %5&lt;/div&gt;</translation>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="45"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="99"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Letöltések</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="121"/>
         <source>Show all Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Összes letöltés megjelenítése</translation>
     </message>
 </context>
 <context>
@@ -7131,22 +7131,22 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML fájl (*.htm, *.html)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML fájl az összes forrással (*.htm, *.html)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>Web archive (*.mht)</source>
-        <translation type="unfinished"/>
+        <translation>Web archívum (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>PDF document (*.pdf)</source>
-        <translation type="unfinished"/>
+        <translation>PDF dokumentum (*.pdf)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1031"/>
@@ -7797,7 +7797,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
         <source>Expiration Date</source>
-        <translation type="unfinished"/>
+        <translation>Lejárat ideje</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
@@ -8430,7 +8430,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Go to History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Ugrás az előzmény bejegyzéshez</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
@@ -8465,7 +8465,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Remove History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Előzmény bejegyzés eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
@@ -9500,7 +9500,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
         <source>Purge History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Előzmény bejegyzés törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1277"/>
@@ -9558,7 +9558,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Hivatkozások</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
@@ -9578,7 +9578,7 @@ Kattintson a telepítés gombra a böngésző újraindításához és a frissít
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Fül előzmények</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="134"/>

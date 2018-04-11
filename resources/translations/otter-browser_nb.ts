@@ -2675,27 +2675,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Søk…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="234"/>
         <source>Lock Panel</source>
-        <translation type="unfinished"/>
+        <translation>Lås panel</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="267"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Lenker</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="317"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tittel: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="320"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresse: %1</translation>
     </message>
 </context>
 <context>
@@ -4143,7 +4143,7 @@ Vil du fortsette?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="585"/>
         <source>Do you really want to remove preferences for this website?</source>
-        <translation type="unfinished"/>
+        <translation>Ønsker du virkelig å fjerne innstillingene for denne nettsiden?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="603"/>
@@ -5653,12 +5653,12 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="108"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Startside</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="111"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Ukjent)</translation>
     </message>
 </context>
 <context>
@@ -5996,7 +5996,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
         <source>Enable plugins</source>
-        <translation type="unfinished"/>
+        <translation>Skru på programtillegg</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="55"/>
@@ -6096,33 +6096,33 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Søk…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adresse</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Tittel</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Dato</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="142"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Fanehistorikk</translation>
     </message>
 </context>
 <context>
@@ -6193,7 +6193,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Legg til bokmerke</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6648,22 +6648,22 @@ Vil du overskrive den?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="235"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ukjent</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="242"/>
         <source>Redownload</source>
-        <translation type="unfinished"/>
+        <translation>Last ned på ny</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="247"/>
         <source>Open Folder</source>
-        <translation type="unfinished"/>
+        <translation>Åpne mappe</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="252"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -6902,12 +6902,12 @@ Framdrift: %5&lt;/div&gt;</translation>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="45"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="99"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Nedlastinger</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="121"/>
         <source>Show all Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Vis alle nedlastinger</translation>
     </message>
 </context>
 <context>
@@ -7131,22 +7131,22 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML-fil (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML-fil inneholdende alle ressurser (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>Web archive (*.mht)</source>
-        <translation type="unfinished"/>
+        <translation>Nettarkiv (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>PDF document (*.pdf)</source>
-        <translation type="unfinished"/>
+        <translation>PDF-dokument: (*.pdf)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1031"/>
@@ -7797,7 +7797,7 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
         <source>Expiration Date</source>
-        <translation type="unfinished"/>
+        <translation>Utløpsdato</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
@@ -8429,7 +8429,7 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Go to History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Gå til historikkoppføring</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
@@ -8464,7 +8464,7 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Remove History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Fjern historikkoppføring</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
@@ -9499,7 +9499,7 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
         <source>Purge History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Tøm historikkoppføring</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1277"/>
@@ -9557,7 +9557,7 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Lenker</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
@@ -9577,7 +9577,7 @@ Klikk Installer-knappen for å starte nettleseren på nytt og oppdatere oppgrade
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Fanehistorikk</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="134"/>
