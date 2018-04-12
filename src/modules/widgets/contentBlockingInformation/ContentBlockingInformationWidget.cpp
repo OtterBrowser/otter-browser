@@ -249,10 +249,8 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	connect(enableContentBlockingAction, &QAction::triggered, this, &ContentBlockingInformationWidget::toggleContentBlocking);
 }
 
-void ContentBlockingInformationWidget::handleRequest(const NetworkManager::ResourceInformation &request)
+void ContentBlockingInformationWidget::handleRequest()
 {
-	Q_UNUSED(request)
-
 	++m_amount;
 
 	updateState();
