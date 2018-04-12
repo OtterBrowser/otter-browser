@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -136,11 +136,8 @@ void AddonsContentsWidget::populateAddons()
 	emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 	connect(AddonsManager::getInstance(), &AddonsManager::userScriptModified, this, &AddonsContentsWidget::updateAddon);
-	connect(m_ui->addonsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&](const QItemSelection &selected, const QItemSelection &deselected)
+	connect(m_ui->addonsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&]()
 	{
-		Q_UNUSED(selected)
-		Q_UNUSED(deselected)
-
 		emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 	});
 }
