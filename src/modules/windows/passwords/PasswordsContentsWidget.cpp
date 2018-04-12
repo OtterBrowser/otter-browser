@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -117,11 +117,8 @@ void PasswordsContentsWidget::populatePasswords()
 		emit loadingStateChanged(WebWidget::FinishedLoadingState);
 
 		connect(PasswordsManager::getInstance(), &PasswordsManager::passwordsModified, this, &PasswordsContentsWidget::populatePasswords);
-		connect(m_ui->passwordsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&](const QItemSelection &selected, const QItemSelection &deselected)
+		connect(m_ui->passwordsViewWidget->selectionModel(), &QItemSelectionModel::selectionChanged, [&]()
 		{
-			Q_UNUSED(selected)
-			Q_UNUSED(deselected)
-
 			emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 		});
 	}
