@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,7 @@ FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
 
 	connect(m_reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal)
 	{
-		Q_UNUSED(bytesReceived)
-
-		if (bytesTotal > 0 && m_sizeLimit >= 0 && bytesTotal > m_sizeLimit)
+		if (m_sizeLimit >= 0 && ((bytesReceived > m_sizeLimit) || (bytesTotal > m_sizeLimit)))
 		{
 			cancel();
 		}
