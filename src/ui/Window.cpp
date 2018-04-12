@@ -927,11 +927,8 @@ bool Window::event(QEvent *event)
 
 		if (subWindow)
 		{
-			connect(subWindow, &QMdiSubWindow::windowStateChanged, [&](Qt::WindowStates oldState, Qt::WindowStates newState)
+			connect(subWindow, &QMdiSubWindow::windowStateChanged, [&]()
 			{
-				Q_UNUSED(oldState)
-				Q_UNUSED(newState)
-
 				emit arbitraryActionsStateChanged({ActionsManager::MaximizeTabAction, ActionsManager::MinimizeTabAction, ActionsManager::RestoreTabAction});
 			});
 		}
