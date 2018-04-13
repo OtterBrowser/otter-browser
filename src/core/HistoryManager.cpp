@@ -191,7 +191,7 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		getBrowsingHistoryModel();
 	}
 
-	HistoryEntryItem *item(m_browsingHistoryModel->getEntry(identifier));
+	HistoryModel::Entry *item(m_browsingHistoryModel->getEntry(identifier));
 
 	if (item)
 	{
@@ -315,7 +315,7 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 	return ThemesManager::createIcon(QLatin1String("text-html"));
 }
 
-HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)
+HistoryModel::Entry* HistoryManager::getEntry(quint64 identifier)
 {
 	if (!m_browsingHistoryModel)
 	{

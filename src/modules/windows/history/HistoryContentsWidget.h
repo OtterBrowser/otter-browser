@@ -73,9 +73,9 @@ protected slots:
 	void openEntry();
 	void bookmarkEntry();
 	void copyEntryLink();
-	void handleEntryAdded(HistoryEntryItem *entry);
-	void handleEntryModified(HistoryEntryItem *entry);
-	void handleEntryRemoved(HistoryEntryItem *entry);
+	void handleEntryAdded(HistoryModel::Entry *entry);
+	void handleEntryModified(HistoryModel::Entry *entry);
+	void handleEntryRemoved(HistoryModel::Entry *entry);
 	void showContextMenu(const QPoint &position);
 
 private:

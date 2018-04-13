@@ -139,7 +139,7 @@ void HistoryContentsWidget::populateEntries()
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		handleEntryAdded(static_cast<HistoryEntryItem*>(model->item(i, 0)));
+		handleEntryAdded(static_cast<HistoryModel::Entry*>(model->item(i, 0)));
 	}
 
 	const QString expandBranches(SettingsManager::getOption(SettingsManager::History_ExpandBranchesOption).toString());
@@ -256,7 +256,7 @@ void HistoryContentsWidget::copyEntryLink()
 	}
 }
 
-void HistoryContentsWidget::handleEntryAdded(HistoryEntryItem *entry)
+void HistoryContentsWidget::handleEntryAdded(HistoryModel::Entry *entry)
 {
 	if (!entry || entry->getIdentifier() == 0 || findEntry(entry->getIdentifier()))
 	{
@@ -312,7 +312,7 @@ void HistoryContentsWidget::handleEntryAdded(HistoryEntryItem *entry)
 	}
 }
 
-void HistoryContentsWidget::handleEntryModified(HistoryEntryItem *entry)
+void HistoryContentsWidget::handleEntryModified(HistoryModel::Entry *entry)
 {
 	if (!entry || entry->getIdentifier() == 0)
 	{
@@ -334,7 +334,7 @@ void HistoryContentsWidget::handleEntryModified(HistoryEntryItem *entry)
 	entryItem->parent()->child(entryItem->row(), 2)->setText(Utils::formatDateTime(entry->getTimeVisited()));
 }
 
-void HistoryContentsWidget::handleEntryRemoved(HistoryEntryItem *entry)
+void HistoryContentsWidget::handleEntryRemoved(HistoryModel::Entry *entry)
 {
 	if (!entry || entry->getIdentifier() == 0)
 	{
