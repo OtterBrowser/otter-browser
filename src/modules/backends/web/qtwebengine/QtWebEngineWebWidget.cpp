@@ -93,8 +93,14 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::proxyAuthenticationRequired, this, &QtWebEngineWebWidget::handleProxyAuthenticationRequired);
 	connect(m_page, &QtWebEnginePage::windowCloseRequested, this, &QtWebEngineWebWidget::handleWindowCloseRequest);
 	connect(m_page, &QtWebEnginePage::fullScreenRequested, this, &QtWebEngineWebWidget::handleFullScreenRequest);
-	connect(m_page, &QtWebEnginePage::featurePermissionRequested, this, &QtWebEngineWebWidget::handlePermissionRequest);
-	connect(m_page, &QtWebEnginePage::featurePermissionRequestCanceled, this, &QtWebEngineWebWidget::handlePermissionCancel);
+	connect(m_page, &QtWebEnginePage::featurePermissionRequested, [&](const QUrl &url, QWebEnginePage::Feature feature)
+	{
+		notifyPermissionRequested(url, feature, false);
+	});
+	connect(m_page, &QtWebEnginePage::featurePermissionRequestCanceled, [&](const QUrl &url, QWebEnginePage::Feature feature)
+	{
+		notifyPermissionRequested(url, feature, true);
+	});
 	connect(m_page, &QtWebEnginePage::recentlyAudibleChanged, this, &QtWebEngineWebWidget::isAudibleChanged);
 	connect(m_page, &QtWebEnginePage::viewingMediaChanged, this, &QtWebEngineWebWidget::notifyNavigationActionsChanged);
 	connect(m_page, &QtWebEnginePage::titleChanged, this, &QtWebEngineWebWidget::notifyTitleChanged);
@@ -1059,16 +1065,6 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 	m_isFullScreen = request.toggleOn();
 
 	emit isFullScreenChanged(m_isFullScreen);
-}
-
-void QtWebEngineWebWidget::handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature)
-{
-	notifyPermissionRequested(url, feature, false);
-}
-
-void QtWebEngineWebWidget::handlePermissionCancel(const QUrl &url, QWebEnginePage::Feature feature)
-{
-	notifyPermissionRequested(url, feature, true);
 }
 
 void QtWebEngineWebWidget::notifyTitleChanged()
