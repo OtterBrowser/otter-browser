@@ -1602,7 +1602,7 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 
 WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)
 {
-	m_hitResult = QtWebEngineHitTestResult(m_page->runScriptFile(QLatin1String("hitTest")));
+	m_hitResult = QtWebEngineHitTestResult(m_page->runScriptFile(QLatin1String("hitTest"), {QString::number(position.x() / m_page->zoomFactor()), QString::number(position.y() / m_page->zoomFactor())}));
 
 	return m_hitResult;
 }
