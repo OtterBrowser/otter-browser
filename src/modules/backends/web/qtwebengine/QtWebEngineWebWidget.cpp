@@ -828,12 +828,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 						return;
 					}
 
-					const QStringList identifiers(SearchEnginesManager::getSearchEngines());
-					const QStringList keywords(SearchEnginesManager::getSearchKeywords());
 					const QIcon icon(getIcon());
 					const QUrl url(result.toMap().value(QLatin1String("url")).toString());
 					SearchEnginesManager::SearchEngineDefinition searchEngine;
-					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
+					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), SearchEnginesManager::getSearchEngines());
 					searchEngine.title = getTitle();
 					searchEngine.formUrl = getUrl();
 					searchEngine.icon = (icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : icon);
@@ -842,7 +840,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
 					searchEngine.resultsUrl.parameters = QUrlQuery(result.toMap().value(QLatin1String("query")).toString());
 
-					SearchEnginePropertiesDialog dialog(searchEngine, keywords, this);
+					SearchEnginePropertiesDialog dialog(searchEngine, SearchEnginesManager::getSearchKeywords(), this);
 
 					if (dialog.exec() == QDialog::Accepted)
 					{
