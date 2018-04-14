@@ -541,7 +541,7 @@ QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
 		element = mainFrame()->documentElement();
 	}
 
-	QFile file(QStringLiteral(":/modules/backends/web/qtwebkit/resources/%1.js").arg(path));
+	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/") + path + QLatin1String(".js"));
 
 	if (file.open(QIODevice::ReadOnly))
 	{
