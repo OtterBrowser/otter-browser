@@ -1142,7 +1142,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 			match.bookmark = keywordsIterator.value();
 			match.match = keywordsIterator.key();
 
-			matchesMap.insert(match.bookmark->data(TimeVisitedRole).toDateTime(), match);
+			matchesMap.insert(match.bookmark->getTimeVisited(), match);
 
 			matchedBookmarks.append(match.bookmark);
 		}
@@ -1174,7 +1174,7 @@ QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QStri
 			match.bookmark = urlsIterator.value().first();
 			match.match = result;
 
-			matchesMap.insert(match.bookmark->data(TimeVisitedRole).toDateTime(), match);
+			matchesMap.insert(match.bookmark->getTimeVisited(), match);
 
 			matchedBookmarks.append(match.bookmark);
 		}
