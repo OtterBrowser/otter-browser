@@ -170,12 +170,13 @@ QVariantList ItemModel::getAllData(int role, int column, const QModelIndex &pare
 {
 	QVariantList data;
 	const int rowAmount(rowCount(parent));
+	const bool useAllColumns(column < 0);
 
 	for (int i = 0; i < rowAmount; ++i)
 	{
 		const QModelIndex rowIndex(index(i, 0, parent));
 
-		if (column < 0)
+		if (useAllColumns)
 		{
 			const int columnAmount(columnCount(rowIndex));
 
