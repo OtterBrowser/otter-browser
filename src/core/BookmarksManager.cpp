@@ -86,11 +86,11 @@ void BookmarksManager::updateVisits(const QUrl &url)
 {
 	ensureInitialized();
 
-	const QUrl adjustedUrl(Utils::normalizeUrl(url));
+	const QUrl normalizedUrl(Utils::normalizeUrl(url));
 
-	if (m_model->hasBookmark(adjustedUrl))
+	if (m_model->hasBookmark(normalizedUrl))
 	{
-		const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(adjustedUrl));
+		const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(normalizedUrl));
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
@@ -105,14 +105,14 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 {
 	ensureInitialized();
 
-	const QUrl adjustedUrl(Utils::normalizeUrl(url));
+	const QUrl normalizedUrl(Utils::normalizeUrl(url));
 
-	if (!hasBookmark(adjustedUrl))
+	if (!hasBookmark(normalizedUrl))
 	{
 		return;
 	}
 
-	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->findUrls(adjustedUrl));
+	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->findUrls(normalizedUrl));
 
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{
