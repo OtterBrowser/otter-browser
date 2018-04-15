@@ -125,10 +125,10 @@ void AddressCompletionModel::updateModel()
 		}
 	}
 
-	if (m_types.testFlag(LocalPathSuggestionsCompletionType) && m_filter.contains(QDir::separator()))
+	if (m_types.testFlag(LocalPathSuggestionsCompletionType) && (m_filter == QString(QLatin1Char('~')) || m_filter.contains(QDir::separator())))
 	{
-		const QString directory(m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
-		const QString prefix(m_filter.section(QDir::separator(), -1, -1));
+		const QString directory((m_filter == QString(QLatin1Char('~'))) ? QDir::homePath() : m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
+		const QString prefix(m_filter.contains(QDir::separator()) ? m_filter.section(QDir::separator(), -1, -1) : QString());
 		const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
 		const QFileIconProvider iconProvider;
 		bool wasAdded(!m_showCompletionCategories);
