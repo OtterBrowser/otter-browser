@@ -285,7 +285,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				menu->close();
 				menu = menu->parentWidget();
 
-				if (!menu || !menu->inherits(QLatin1String("QMenu").data()))
+				if (!menu || !menu->inherits("QMenu"))
 				{
 					break;
 				}
@@ -598,7 +598,7 @@ void Menu::hideMenu()
 		menu->close();
 		menu = menu->parentWidget();
 
-		if (!menu || !menu->inherits(QLatin1String("QMenu").data()))
+		if (!menu || !menu->inherits("QMenu"))
 		{
 			break;
 		}

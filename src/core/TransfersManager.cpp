@@ -432,7 +432,7 @@ void Transfer::stop()
 		QTimer::singleShot(250, m_reply, &QNetworkReply::deleteLater);
 	}
 
-	if (m_device && !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
+	if (m_device && !m_device->inherits("QTemporaryFile"))
 	{
 		m_device->close();
 		m_device->deleteLater();
@@ -504,7 +504,7 @@ void Transfer::handleDownloadFinished()
 {
 	if (!m_reply)
 	{
-		if (m_device && !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
+		if (m_device && !m_device->inherits("QTemporaryFile"))
 		{
 			m_device->close();
 			m_device->deleteLater();
@@ -575,7 +575,7 @@ void Transfer::handleDownloadFinished()
 	emit finished();
 	emit changed();
 
-	if (m_device && (m_options.testFlag(HasToOpenAfterFinishOption) || !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1())))
+	if (m_device && (m_options.testFlag(HasToOpenAfterFinishOption) || !m_device->inherits("QTemporaryFile")))
 	{
 		m_device->close();
 		m_device->deleteLater();
