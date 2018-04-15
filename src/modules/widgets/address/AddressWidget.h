@@ -139,6 +139,7 @@ protected slots:
 	void handleActionsStateChanged(const QVector<int> &identifiers);
 	void handleLoadingStateChanged();
 	void updateGeometries();
+	void updateCompletion(bool isTypedHistory);
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
 

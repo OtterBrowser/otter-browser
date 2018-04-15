@@ -329,6 +329,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
 	setWindow(window);
+	updateCompletion(false);
 	handleOptionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getOption(SettingsManager::AddressField_CompletionModeOption));
 	handleOptionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getOption(SettingsManager::AddressField_DropActionOption));
 	handleOptionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getOption(SettingsManager::AddressField_LayoutOption));
@@ -768,41 +769,7 @@ void AddressWidget::showCompletion(bool isTypedHistory)
 	popupWidget->setModel(m_completionModel);
 	popupWidget->setItemDelegate(new AddressDelegate((isTypedHistory ? QString() : text()), (isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode), popupWidget));
 
-	if (isTypedHistory)
-	{
-		m_completionModel->setTypes(AddressCompletionModel::TypedHistoryCompletionType);
-	}
-	else
-	{
-		AddressCompletionModel::CompletionTypes types(AddressCompletionModel::UnknownCompletionType);
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
-		{
-			types |= AddressCompletionModel::BookmarksCompletionType;
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool())
-		{
-			types |= AddressCompletionModel::HistoryCompletionType;
-		}
-
-		if (!m_isUsingSimpleMode && SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
-		{
-			types |= AddressCompletionModel::SearchSuggestionsCompletionType;
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
-		{
-			types |= AddressCompletionModel::SpecialPagesCompletionType;
-		}
-
-		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
-		{
-			types |= AddressCompletionModel::LocalPathSuggestionsCompletionType;
-		}
-
-		m_completionModel->setTypes(types);
-	}
+	updateCompletion(isTypedHistory);
 
 	if (!isPopupVisible())
 	{
@@ -1246,6 +1213,45 @@ void AddressWidget::updateGeometries()
 	}
 
 	setTextMargins(margins);
+}
+
+void AddressWidget::updateCompletion(bool isTypedHistory)
+{
+	AddressCompletionModel::CompletionTypes types(AddressCompletionModel::UnknownCompletionType);
+
+	if (isTypedHistory)
+	{
+		types = AddressCompletionModel::TypedHistoryCompletionType;
+	}
+	else
+	{
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
+		{
+			types |= AddressCompletionModel::BookmarksCompletionType;
+		}
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestHistoryOption).toBool())
+		{
+			types |= AddressCompletionModel::HistoryCompletionType;
+		}
+
+		if (!m_isUsingSimpleMode && SettingsManager::getOption(SettingsManager::AddressField_SuggestSearchOption).toBool())
+		{
+			types |= AddressCompletionModel::SearchSuggestionsCompletionType;
+		}
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
+		{
+			types |= AddressCompletionModel::SpecialPagesCompletionType;
+		}
+
+		if (SettingsManager::getOption(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
+		{
+			types |= AddressCompletionModel::LocalPathSuggestionsCompletionType;
+		}
+	}
+
+	m_completionModel->setTypes(types);
 }
 
 void AddressWidget::setCompletion(const QString &filter)
