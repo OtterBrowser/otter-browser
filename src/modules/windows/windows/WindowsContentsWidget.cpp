@@ -36,12 +36,13 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui(new Ui::WindowsContentsWidget)
 {
 	m_ui->setupUi(this);
-
+	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->windowsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->windowsViewWidget->setModel(SessionsManager::getModel());
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
 
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->windowsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->windowsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &WindowsContentsWidget::showContextMenu);
 	connect(m_ui->windowsViewWidget, &ItemViewWidget::clicked, this, &WindowsContentsWidget::activateWindow);
 }
