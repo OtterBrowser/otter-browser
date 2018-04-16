@@ -25,6 +25,9 @@
 
 #include "ui_TabHistoryContentsWidget.h"
 
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QToolTip>
+
 namespace Otter
 {
 
@@ -39,6 +42,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 
 	m_ui->historyViewWidget->setModel(model);
+	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->setMouseTracking(true);
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
@@ -159,6 +163,27 @@ QUrl TabHistoryContentsWidget::getUrl() const
 QIcon TabHistoryContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("view-history"), false);
+}
+
+bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->historyViewWidget->viewport() && event->type() == QEvent::ToolTip)
+	{
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QModelIndex index(m_ui->historyViewWidget->indexAt(helpEvent->pos()));
+		QString toolTip;
+
+		if (index.isValid())
+		{
+			toolTip = tr("Title: %1").arg(index.sibling(index.row(), 1).data(Qt::DisplayRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(Qt::StatusTipRole).toUrl().toDisplayString());
+		}
+
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->historyViewWidget).width() / 2)), m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
+
+		return true;
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }
