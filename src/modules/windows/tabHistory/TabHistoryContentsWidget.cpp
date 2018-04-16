@@ -39,6 +39,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 	model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 
 	m_ui->historyViewWidget->setModel(model);
+	m_ui->historyViewWidget->viewport()->setMouseTracking(true);
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
 
