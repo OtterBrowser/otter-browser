@@ -110,8 +110,11 @@ void TabHistoryContentsWidget::updateHistory()
 		for (int i = 0; i < history.entries.count(); ++i)
 		{
 			QList<QStandardItem*> items({new QStandardItem(history.entries.at(i).url), new QStandardItem(history.entries.at(i).getTitle()), new QStandardItem(Utils::formatDateTime(history.entries.at(i).time))});
+			items[0]->setData(history.entries.at(i).url, Qt::StatusTipRole);
 			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+			items[1]->setData(history.entries.at(i).url, Qt::StatusTipRole);
 			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+			items[2]->setData(history.entries.at(i).url, Qt::StatusTipRole);
 			items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 
 			m_ui->historyViewWidget->getSourceModel()->appendRow(items);
