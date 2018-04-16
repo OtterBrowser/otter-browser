@@ -39,6 +39,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->windowsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->windowsViewWidget->setModel(SessionsManager::getModel());
+	m_ui->windowsViewWidget->setFilterRoles({SessionModel::TitleRole, SessionModel::UrlRole});
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
 
