@@ -100,11 +100,11 @@ void TabHistoryContentsWidget::changeEvent(QEvent *event)
 
 void TabHistoryContentsWidget::updateHistory()
 {
-	m_ui->historyViewWidget->getSourceModel()->clear();
-
 	if (m_window)
 	{
 		const WindowHistoryInformation history(m_window->getHistory());
+
+		m_ui->historyViewWidget->getSourceModel()->clear();
 
 		for (int i = 0; i < history.entries.count(); ++i)
 		{
@@ -116,6 +116,10 @@ void TabHistoryContentsWidget::updateHistory()
 
 			m_ui->historyViewWidget->getSourceModel()->appendRow(item);
 		}
+	}
+	else
+	{
+		m_ui->historyViewWidget->getSourceModel()->clear();
 	}
 }
 
