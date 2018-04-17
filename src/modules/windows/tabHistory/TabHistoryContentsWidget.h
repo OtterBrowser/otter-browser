@@ -40,7 +40,7 @@ public:
 	enum DataRole
 	{
 		TitleRole = Qt::DisplayRole,
-		TimeVisited = Qt::UserRole,
+		TimeVisitedRole = Qt::UserRole,
 		UrlRole = Qt::StatusTipRole
 	};
 

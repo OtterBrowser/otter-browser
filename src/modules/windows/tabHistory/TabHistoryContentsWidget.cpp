@@ -110,7 +110,7 @@ void TabHistoryContentsWidget::updateHistory()
 		{
 			QStandardItem *item(new QStandardItem(history.entries.at(i).getTitle()));
 			item->setData(history.entries.at(i).url, UrlRole);
-			item->setData(Utils::formatDateTime(history.entries.at(i).time), TimeVisited);
+			item->setData(history.entries.at(i).time, TimeVisitedRole);
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 			m_ui->historyViewWidget->getSourceModel()->appendRow(item);
@@ -167,6 +167,11 @@ bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 		if (index.isValid())
 		{
 			toolTip = tr("Title: %1").arg(index.data(TitleRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(UrlRole).toUrl().toDisplayString());
+
+			if (!index.data(TimeVisitedRole).isNull())
+			{
+				toolTip.append(QLatin1Char('\n') + tr("Date: %1").arg(Utils::formatDateTime(index.data(TimeVisitedRole).toDateTime())));
+			}
 		}
 
 		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->historyViewWidget).width() / 2)), m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
