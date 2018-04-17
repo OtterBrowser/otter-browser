@@ -55,14 +55,14 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 			{
 				if (m_window)
 				{
-					disconnect(m_window, &Window::urlChanged, this, &TabHistoryContentsWidget::updateHistory);
+					disconnect(m_window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
 				}
 
 				m_window = window;
 
 				if (window)
 				{
-					connect(window, &Window::urlChanged, this, &TabHistoryContentsWidget::updateHistory);
+					connect(window, &Window::loadingStateChanged, this, &TabHistoryContentsWidget::updateHistory);
 				}
 			}
 
