@@ -37,6 +37,13 @@ class TabHistoryContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		TitleRole = Qt::DisplayRole,
+		TimeVisited = Qt::UserRole,
+		UrlRole = Qt::StatusTipRole
+	};
+
 	explicit TabHistoryContentsWidget(const QVariantMap &parameters, QWidget *parent);
 	~TabHistoryContentsWidget();
 

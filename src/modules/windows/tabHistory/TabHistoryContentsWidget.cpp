@@ -37,11 +37,7 @@ TabHistoryContentsWidget::TabHistoryContentsWidget(const QVariantMap &parameters
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-
-	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
-
-	m_ui->historyViewWidget->setModel(model);
+	m_ui->historyViewWidget->setModel(new QStandardItemModel(this));
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->setMouseTracking(true);
 
@@ -99,14 +95,12 @@ void TabHistoryContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-		m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 	}
 }
 
 void TabHistoryContentsWidget::updateHistory()
 {
 	m_ui->historyViewWidget->getSourceModel()->clear();
-	m_ui->historyViewWidget->getSourceModel()->setHorizontalHeaderLabels({tr("Address"), tr("Title"), tr("Date")});
 
 	if (m_window)
 	{
@@ -114,15 +108,12 @@ void TabHistoryContentsWidget::updateHistory()
 
 		for (int i = 0; i < history.entries.count(); ++i)
 		{
-			QList<QStandardItem*> items({new QStandardItem(history.entries.at(i).url), new QStandardItem(history.entries.at(i).getTitle()), new QStandardItem(Utils::formatDateTime(history.entries.at(i).time))});
-			items[0]->setData(history.entries.at(i).url, Qt::StatusTipRole);
-			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-			items[1]->setData(history.entries.at(i).url, Qt::StatusTipRole);
-			items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
-			items[2]->setData(history.entries.at(i).url, Qt::StatusTipRole);
-			items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
+			QStandardItem *item(new QStandardItem(history.entries.at(i).getTitle()));
+			item->setData(history.entries.at(i).url, UrlRole);
+			item->setData(Utils::formatDateTime(history.entries.at(i).time), TimeVisited);
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
-			m_ui->historyViewWidget->getSourceModel()->appendRow(items);
+			m_ui->historyViewWidget->getSourceModel()->appendRow(item);
 		}
 	}
 }
@@ -175,7 +166,7 @@ bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (index.isValid())
 		{
-			toolTip = tr("Title: %1").arg(index.sibling(index.row(), 1).data(Qt::DisplayRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(Qt::StatusTipRole).toUrl().toDisplayString());
+			toolTip = tr("Title: %1").arg(index.data(TitleRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(UrlRole).toUrl().toDisplayString());
 		}
 
 		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->historyViewWidget).width() / 2)), m_ui->historyViewWidget, m_ui->historyViewWidget->visualRect(index));
