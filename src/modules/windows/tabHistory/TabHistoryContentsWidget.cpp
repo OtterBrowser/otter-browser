@@ -109,6 +109,7 @@ void TabHistoryContentsWidget::updateHistory()
 		for (int i = 0; i < history.entries.count(); ++i)
 		{
 			QStandardItem *item(new QStandardItem(history.entries.at(i).getTitle()));
+			item->setData((history.entries.at(i).icon.isNull() ? ThemesManager::createIcon(QLatin1String("text-html")) : history.entries.at(i).icon), Qt::DecorationRole);
 			item->setData(history.entries.at(i).url, UrlRole);
 			item->setData(history.entries.at(i).time, TimeVisitedRole);
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
