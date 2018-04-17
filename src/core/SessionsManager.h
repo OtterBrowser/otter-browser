@@ -95,6 +95,7 @@ struct WindowHistoryEntry final
 {
 	QString url;
 	QString title;
+	QIcon icon;
 	QDateTime time;
 	QPoint position;
 	int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
