@@ -2361,6 +2361,18 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		entry.position = itemState.value(PositionEntryData, QPoint(0, 0)).toPoint();
 		entry.zoom = itemState.value(ZoomEntryData).toInt();
 
+		const quint64 identifier(itemState.value(IdentifierEntryData).toULongLong());
+
+		if (identifier > 0)
+		{
+			const HistoryModel::Entry *globalEntry(HistoryManager::getEntry(identifier));
+
+			if (globalEntry)
+			{
+				entry.icon = globalEntry->icon();
+			}
+		}
+
 		information.entries.append(entry);
 	}
 
