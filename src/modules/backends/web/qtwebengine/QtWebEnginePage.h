@@ -38,6 +38,7 @@ class QtWebEnginePage final : public QWebEnginePage
 public:
 	struct HistoryEntryInformation
 	{
+		QIcon icon;
 		QDateTime timeVisited;
 		QPoint position;
 		quint64 identifier = 0;

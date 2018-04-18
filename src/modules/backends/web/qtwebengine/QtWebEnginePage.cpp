@@ -150,6 +150,16 @@ void QtWebEnginePage::handleLoadFinished()
 {
 	m_isIgnoringJavaScriptPopups = false;
 
+	const int historyIndex(history()->currentItemIndex());
+	HistoryEntryInformation entry(m_history.value(historyIndex));
+
+	if (entry.isValid)
+	{
+		entry.icon = icon();
+
+		m_history[historyIndex] = entry;
+	}
+
 	toHtml([&](const QString &result)
 	{
 		if (m_widget)
@@ -392,6 +402,7 @@ WindowHistoryInformation QtWebEnginePage::getHistory() const
 
 		if (entryInformation.isValid)
 		{
+			entry.icon = entryInformation.icon;
 			entry.position = entryInformation.position;
 			entry.time = entryInformation.timeVisited;
 			entry.zoom = entryInformation.zoom;
@@ -498,6 +509,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 				m_history.resize(history()->currentItemIndex());
 
 				HistoryEntryInformation entry;
+				entry.icon = icon();
 				entry.timeVisited = QDateTime::currentDateTime();
 				entry.position = scrollPosition().toPoint();
 				entry.zoom = static_cast<int>(zoomFactor() * 100);
