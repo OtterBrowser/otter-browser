@@ -33,6 +33,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
 #include <QtGui/QDesktopServices>
+#include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineScriptCollection>
@@ -213,6 +214,51 @@ void QtWebEnginePage::handleLoadFinished()
 	});
 }
 
+void QtWebEnginePage::setHistory(const WindowHistoryInformation &history)
+{
+	m_history.clear();
+
+	if (history.entries.count() == 0)
+	{
+		this->history()->clear();
+
+		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
+
+		for (int i = 0; i < scripts.count(); ++i)
+		{
+			runJavaScript(scripts.at(i)->getSource(), QWebEngineScript::UserWorld);
+		}
+
+		return;
+	}
+
+	m_history.reserve(history.entries.count());
+
+	QByteArray byteArray;
+	QDataStream stream(&byteArray, QIODevice::ReadWrite);
+	stream << static_cast<int>(3) << history.entries.count() << history.index;
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		const WindowHistoryEntry entry(history.entries.at(i));
+
+		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << static_cast<int>(200);
+
+		HistoryEntryInformation entryInformation;
+		entryInformation.timeVisited = entry.time;
+		entryInformation.position = entry.position;
+		entryInformation.zoom = entry.zoom;
+		entryInformation.isValid = true;
+
+		m_history.append(entryInformation);
+	}
+
+	stream.device()->reset();
+	stream >> *(this->history());
+
+	this->history()->goToItem(this->history()->itemAt(history.index));
+}
+
 QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type)
 {
 	if (type != QWebEnginePage::WebDialog)
@@ -327,6 +373,50 @@ QVariant QtWebEnginePage::runScriptFile(const QString &path, const QStringList &
 	return runScriptSource(script);
 }
 
+WindowHistoryInformation QtWebEnginePage::getHistory() const
+{
+	const int historyCount(history()->count());
+	WindowHistoryInformation information;
+	information.entries.reserve(historyCount);
+	information.index = history()->currentItemIndex();
+
+	const QString url(requestedUrl().toString());
+
+	for (int i = 0; i < historyCount; ++i)
+	{
+		const QWebEngineHistoryItem item(history()->itemAt(i));
+		const HistoryEntryInformation entryInformation(m_history.value(i));
+		WindowHistoryEntry entry;
+		entry.url = item.url().toString();
+		entry.title = item.title();
+
+		if (entryInformation.isValid)
+		{
+			entry.position = entryInformation.position;
+			entry.time = entryInformation.timeVisited;
+			entry.zoom = entryInformation.zoom;
+		}
+
+		information.entries.append(entry);
+	}
+
+	if (m_widget && m_widget->getLoadingState() == WebWidget::OngoingLoadingState && url != history()->itemAt(history()->currentItemIndex()).url().toString())
+	{
+		WindowHistoryEntry entry;
+		entry.url = url;
+		entry.title = m_widget->getTitle();
+		entry.icon = icon();
+		entry.time = QDateTime::currentDateTime();
+		entry.position = scrollPosition().toPoint();
+		entry.zoom = static_cast<int>(zoomFactor() * 100);
+
+		information.index = historyCount;
+		information.entries.append(entry);
+	}
+
+	return information;
+}
+
 QStringList QtWebEnginePage::chooseFiles(QWebEnginePage::FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)
 {
 	Q_UNUSED(acceptedMimeTypes)
@@ -357,7 +447,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 		return false;
 	}
 
-	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
+	if (isMainFrame && type == NavigationTypeReload && m_previousNavigationType == NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool shouldCancelRequest(false);
 		bool shouldWarnNextTime(true);
@@ -397,13 +487,25 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 		}
 	}
 
-	if (isMainFrame && type != QWebEnginePage::NavigationTypeReload)
-	{
-		m_previousNavigationType = type;
-	}
-
 	if (isMainFrame)
 	{
+		if (type != NavigationTypeReload)
+		{
+			m_previousNavigationType = type;
+
+			if (type != NavigationTypeBackForward)
+			{
+				m_history.resize(history()->currentItemIndex());
+
+				HistoryEntryInformation entry;
+				entry.timeVisited = QDateTime::currentDateTime();
+				entry.position = scrollPosition().toPoint();
+				entry.zoom = static_cast<int>(zoomFactor() * 100);
+
+				m_history.append(entry);
+			}
+		}
+
 		scripts().clear();
 
 		const QVector<UserScript*> userScripts(UserScript::getUserScriptsForUrl(url));

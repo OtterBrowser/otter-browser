@@ -1198,46 +1198,21 @@ void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 {
+	m_page->setHistory(history);
+
 	if (history.entries.count() == 0)
 	{
-		m_page->history()->clear();
-
 		updateOptions({});
-
-		const QVector<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
-
-		for (int i = 0; i < scripts.count(); ++i)
-		{
-			m_page->runJavaScript(scripts.at(i)->getSource(), QWebEngineScript::UserWorld);
-		}
-
-		notifyNavigationActionsChanged();
-
-		emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::PageCategory});
-
-		return;
 	}
-
-	QByteArray byteArray;
-	QDataStream stream(&byteArray, QIODevice::ReadWrite);
-	stream << static_cast<int>(3) << history.entries.count() << history.index;
-
-	for (int i = 0; i < history.entries.count(); ++i)
+	else
 	{
-		stream << QUrl(history.entries.at(i).url) << history.entries.at(i).title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(history.entries.at(i).url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << static_cast<int>(200);
+		const QUrl url(m_page->history()->itemAt(history.index).url());
+
+		setRequestedUrl(url, false, true);
+		updateOptions(url);
+
+		m_page->triggerAction(QWebEnginePage::Reload);
 	}
-
-	stream.device()->reset();
-	stream >> *(m_page->history());
-
-	m_page->history()->goToItem(m_page->history()->itemAt(history.index));
-
-	const QUrl url(m_page->history()->itemAt(history.index).url());
-
-	setRequestedUrl(url, false, true);
-	updateOptions(url);
-
-	m_page->triggerAction(QWebEnginePage::Reload);
 
 	notifyNavigationActionsChanged();
 
@@ -1563,35 +1538,7 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
 
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
-	const QWebEngineHistory *history(m_page->history());
-	const int historyCount(history->count());
-	WindowHistoryInformation information;
-	information.entries.reserve(historyCount);
-	information.index = history->currentItemIndex();
-
-	const QString requestedUrl(m_page->requestedUrl().toString());
-
-	for (int i = 0; i < historyCount; ++i)
-	{
-		const QWebEngineHistoryItem item(history->itemAt(i));
-		WindowHistoryEntry entry;
-		entry.url = item.url().toString();
-		entry.title = item.title();
-
-		information.entries.append(entry);
-	}
-
-	if (m_loadingState == OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
-	{
-		WindowHistoryEntry entry;
-		entry.url = requestedUrl;
-		entry.title = getTitle();
-
-		information.index = historyCount;
-		information.entries.append(entry);
-	}
-
-	return information;
+	return m_page->getHistory();
 }
 
 WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)

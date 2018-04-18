@@ -36,10 +36,21 @@ class QtWebEnginePage final : public QWebEnginePage
 	Q_OBJECT
 
 public:
+	struct HistoryEntryInformation
+	{
+		QDateTime timeVisited;
+		QPoint position;
+		quint64 identifier = 0;
+		int zoom = -1;
+		bool isValid = false;
+	};
+
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
+	void setHistory(const WindowHistoryInformation &history);
 	QVariant runScriptSource(const QString &script);
 	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
+	WindowHistoryInformation getHistory() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
 
@@ -62,6 +73,7 @@ protected slots:
 private:
 	QtWebEngineWebWidget *m_widget;
 	QVector<QtWebEnginePage*> m_popups;
+	QVector<HistoryEntryInformation> m_history;
 	QWebEnginePage::NavigationType m_previousNavigationType;
 	bool m_isIgnoringJavaScriptPopups;
 	bool m_isViewingMedia;
