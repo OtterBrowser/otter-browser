@@ -444,13 +444,6 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		return false;
 	}
 
-	if (isMainFrame && url.scheme() == QLatin1String("javascript"))
-	{
-		runJavaScript(url.path());
-
-		return false;
-	}
-
 	if (url.scheme() == QLatin1String("mailto"))
 	{
 		QDesktopServices::openUrl(url);
@@ -458,7 +451,19 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		return false;
 	}
 
-	if (isMainFrame && type == NavigationTypeReload && m_previousNavigationType == NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
+	if (!isMainFrame)
+	{
+		return true;
+	}
+
+	if (url.scheme() == QLatin1String("javascript"))
+	{
+		runJavaScript(url.path());
+
+		return false;
+	}
+
+	if (type == NavigationTypeReload && m_previousNavigationType == NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool shouldCancelRequest(false);
 		bool shouldWarnNextTime(true);
@@ -498,59 +503,56 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		}
 	}
 
-	if (isMainFrame)
+	if (type != NavigationTypeReload)
 	{
-		if (type != NavigationTypeReload)
+		m_previousNavigationType = type;
+
+		if (type != NavigationTypeBackForward)
 		{
-			m_previousNavigationType = type;
+			m_history.resize(history()->currentItemIndex());
 
-			if (type != NavigationTypeBackForward)
-			{
-				m_history.resize(history()->currentItemIndex());
+			HistoryEntryInformation entry;
+			entry.icon = icon();
+			entry.timeVisited = QDateTime::currentDateTime();
+			entry.position = scrollPosition().toPoint();
+			entry.zoom = static_cast<int>(zoomFactor() * 100);
+			entry.isValid = true;
 
-				HistoryEntryInformation entry;
-				entry.icon = icon();
-				entry.timeVisited = QDateTime::currentDateTime();
-				entry.position = scrollPosition().toPoint();
-				entry.zoom = static_cast<int>(zoomFactor() * 100);
-				entry.isValid = true;
-
-				m_history.append(entry);
-			}
+			m_history.append(entry);
 		}
-
-		scripts().clear();
-
-		const QVector<UserScript*> userScripts(UserScript::getUserScriptsForUrl(url));
-
-		for (int i = 0; i < userScripts.count(); ++i)
-		{
-			QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
-
-			switch (userScripts.at(i)->getInjectionTime())
-			{
-				case UserScript::DeferredTime:
-					injectionPoint = QWebEngineScript::Deferred;
-
-					break;
-				case UserScript::DocumentCreationTime:
-					injectionPoint = QWebEngineScript::DocumentCreation;
-
-					break;
-				default:
-					break;
-			}
-
-			QWebEngineScript script;
-			script.setSourceCode(userScripts.at(i)->getSource());
-			script.setRunsOnSubFrames(userScripts.at(i)->shouldRunOnSubFrames());
-			script.setInjectionPoint(injectionPoint);
-
-			scripts().insert(script);
-		}
-
-		emit aboutToNavigate(url, type);
 	}
+
+	scripts().clear();
+
+	const QVector<UserScript*> userScripts(UserScript::getUserScriptsForUrl(url));
+
+	for (int i = 0; i < userScripts.count(); ++i)
+	{
+		QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
+
+		switch (userScripts.at(i)->getInjectionTime())
+		{
+			case UserScript::DeferredTime:
+				injectionPoint = QWebEngineScript::Deferred;
+
+				break;
+			case UserScript::DocumentCreationTime:
+				injectionPoint = QWebEngineScript::DocumentCreation;
+
+				break;
+			default:
+				break;
+		}
+
+		QWebEngineScript script;
+		script.setSourceCode(userScripts.at(i)->getSource());
+		script.setRunsOnSubFrames(userScripts.at(i)->shouldRunOnSubFrames());
+		script.setInjectionPoint(injectionPoint);
+
+		scripts().insert(script);
+	}
+
+	emit aboutToNavigate(url, type);
 
 	return true;
 }
