@@ -134,11 +134,11 @@ void QtWebEnginePage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel lev
 {
 	Console::MessageLevel mappedLevel(Console::LogLevel);
 
-	if (level == QWebEnginePage::WarningMessageLevel)
+	if (level == WarningMessageLevel)
 	{
 		mappedLevel = Console::WarningLevel;
 	}
-	else if (level == QWebEnginePage::ErrorMessageLevel)
+	else if (level == ErrorMessageLevel)
 	{
 		mappedLevel = Console::ErrorLevel;
 	}
@@ -269,9 +269,9 @@ void QtWebEnginePage::setHistory(const WindowHistoryInformation &history)
 	this->history()->goToItem(this->history()->itemAt(history.index));
 }
 
-QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type)
+QWebEnginePage* QtWebEnginePage::createWindow(WebWindowType type)
 {
-	if (type != QWebEnginePage::WebDialog)
+	if (type != WebDialog)
 	{
 		const QString popupsPolicy((m_widget ? m_widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption) : SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption)).toString());
 
@@ -428,14 +428,14 @@ WindowHistoryInformation QtWebEnginePage::getHistory() const
 	return information;
 }
 
-QStringList QtWebEnginePage::chooseFiles(QWebEnginePage::FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)
+QStringList QtWebEnginePage::chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)
 {
 	Q_UNUSED(acceptedMimeTypes)
 
-	return Utils::getOpenPaths(oldFiles, {}, (mode == QWebEnginePage::FileSelectOpenMultiple));
+	return Utils::getOpenPaths(oldFiles, {}, (mode == FileSelectOpenMultiple));
 }
 
-bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame)
+bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame)
 {
 	if (m_isPopup)
 	{
