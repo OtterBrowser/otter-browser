@@ -24,6 +24,7 @@
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/ContentBlockingProfile.h"
+#include "../../../../core/HistoryManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
@@ -156,6 +157,11 @@ void QtWebEnginePage::handleLoadFinished()
 	if (entry.isValid)
 	{
 		entry.icon = icon();
+
+		if (entry.identifier > 0)
+		{
+			HistoryManager::updateEntry(entry.identifier, url(), (m_widget ? m_widget->getTitle() : title()), icon());
+		}
 
 		m_history[historyIndex] = entry;
 	}
@@ -515,6 +521,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 			entry.icon = icon();
 			entry.timeVisited = QDateTime::currentDateTime();
 			entry.position = scrollPosition().toPoint();
+			entry.identifier = HistoryManager::addEntry(url, {}, {});
 			entry.zoom = static_cast<int>(zoomFactor() * 100);
 			entry.isValid = true;
 
