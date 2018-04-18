@@ -513,6 +513,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 				entry.timeVisited = QDateTime::currentDateTime();
 				entry.position = scrollPosition().toPoint();
 				entry.zoom = static_cast<int>(zoomFactor() * 100);
+				entry.isValid = true;
 
 				m_history.append(entry);
 			}
