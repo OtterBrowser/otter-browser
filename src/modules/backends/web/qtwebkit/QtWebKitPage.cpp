@@ -441,7 +441,7 @@ void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const
 }
 #endif
 
-void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool isChecked)
+void QtWebKitPage::triggerAction(WebAction action, bool isChecked)
 {
 	if (action == InspectElement && m_widget && !m_widget->isInspecting())
 	{
@@ -453,9 +453,9 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool isChecked)
 	QWebPage::triggerAction(action, isChecked);
 }
 
-QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
+QWebPage* QtWebKitPage::createWindow(WebWindowType type)
 {
-	if (type != QWebPage::WebModalDialog)
+	if (type != WebModalDialog)
 	{
 		const QString popupsPolicy(getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
 
@@ -567,7 +567,7 @@ QVariant QtWebKitPage::getOption(int identifier) const
 	return SettingsManager::getOption(identifier, Utils::extractHost(url.isEmpty() ? mainFrame()->requestedUrl() : url));
 }
 
-bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
+bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type)
 {
 	if (m_isPopup)
 	{
@@ -590,7 +590,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		return false;
 	}
 
-	const bool isAnchorNavigation(frame && (type == QWebPage::NavigationTypeLinkClicked || type == QWebPage::NavigationTypeOther) && frame->url().matches(request.url(), QUrl::RemoveFragment));
+	const bool isAnchorNavigation(frame && (type == NavigationTypeLinkClicked || type == NavigationTypeOther) && frame->url().matches(request.url(), QUrl::RemoveFragment));
 
 	if (mainFrame() == frame)
 	{
@@ -602,12 +602,12 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		m_networkManager->setMainRequest(request.url());
 	}
 
-	if (type == QWebPage::NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
+	if (type == NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
 	{
 		m_networkManager->setFormRequest(request.url());
 	}
 
-	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
+	if (type == NavigationTypeFormResubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool shouldCancelRequest(false);
 		bool shouldWarnNextTime(true);
@@ -647,7 +647,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		}
 	}
 
-	if (type != QWebPage::NavigationTypeOther)
+	if (type != NavigationTypeOther)
 	{
 		emit isDisplayingErrorPageChanged(frame, false);
 	}
@@ -749,27 +749,27 @@ bool QtWebKitPage::event(QEvent *event)
 	return QWebPage::event(event);
 }
 
-bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
+bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option, ExtensionReturn *output)
 {
 	if (!m_widget)
 	{
 		return false;
 	}
 
-	if (extension == QWebPage::ChooseMultipleFilesExtension)
+	if (extension == ChooseMultipleFilesExtension)
 	{
-		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption(static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option));
-		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output));
+		const ChooseMultipleFilesExtensionOption *filesOption(static_cast<const ChooseMultipleFilesExtensionOption*>(option));
+		ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<ChooseMultipleFilesExtensionReturn*>(output));
 
 		filesOutput->fileNames = Utils::getOpenPaths(filesOption->suggestedFileNames, {}, true);
 
 		return true;
 	}
 
-	if (extension == QWebPage::ErrorPageExtension)
+	if (extension == ErrorPageExtension)
 	{
-		const QWebPage::ErrorPageExtensionOption *errorOption(static_cast<const QWebPage::ErrorPageExtensionOption*>(option));
-		QWebPage::ErrorPageExtensionReturn *errorOutput(static_cast<QWebPage::ErrorPageExtensionReturn*>(output));
+		const ErrorPageExtensionOption *errorOption(static_cast<const ErrorPageExtensionOption*>(option));
+		ErrorPageExtensionReturn *errorOutput(static_cast<ErrorPageExtensionReturn*>(output));
 
 		if (!errorOption || !errorOutput)
 		{
@@ -779,11 +779,11 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		const QUrl url((errorOption->url.isEmpty() && m_widget) ? m_widget->getRequestedUrl() : errorOption->url);
 		QString domain;
 
-		if (errorOption->domain == QWebPage::QtNetwork)
+		if (errorOption->domain == QtNetwork)
 		{
 			domain = QLatin1String("QtNetwork");
 		}
-		else if (errorOption->domain == QWebPage::WebKit)
+		else if (errorOption->domain == WebKit)
 		{
 			domain = QLatin1String("WebKit");
 		}
@@ -795,7 +795,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		const QString logMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString));
 		const quint64 windowIdentifier(m_widget ? m_widget->getWindowIdentifier() : 0);
 
-		if (errorOption->domain == QWebPage::WebKit && (errorOption->error == 102 || errorOption->error == 203))
+		if (errorOption->domain == WebKit && (errorOption->error == 102 || errorOption->error == 203))
 		{
 			Console::addMessage(logMessage, Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, windowIdentifier);
 
@@ -808,7 +808,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 
 		emit isDisplayingErrorPageChanged(errorOption->frame, true);
 
-		if (errorOption->domain == QWebPage::QtNetwork && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
+		if (errorOption->domain == QtNetwork && url.isLocalFile() && QFileInfo(url.toLocalFile()).isDir())
 		{
 			Console::addMessage(logMessage, Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, windowIdentifier);
 
@@ -819,7 +819,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		information.url = url;
 		information.description = QStringList(errorOption->errorString);
 
-		if ((errorOption->domain == QWebPage::QtNetwork && (errorOption->error == QNetworkReply::HostNotFoundError || errorOption->error == QNetworkReply::ContentNotFoundError)) || (errorOption->domain == QWebPage::Http && errorOption->error == 404))
+		if ((errorOption->domain == QtNetwork && (errorOption->error == QNetworkReply::HostNotFoundError || errorOption->error == QNetworkReply::ContentNotFoundError)) || (errorOption->domain == Http && errorOption->error == 404))
 		{
 			if (errorOption->url.isLocalFile())
 			{
@@ -830,11 +830,11 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 				information.type = ErrorPageInformation::ServerNotFoundError;
 			}
 		}
-		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::ConnectionRefusedError)
+		else if (errorOption->domain == QtNetwork && errorOption->error == QNetworkReply::ConnectionRefusedError)
 		{
 			information.type = ErrorPageInformation::ConnectionRefusedError;
 		}
-		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::SslHandshakeFailedError)
+		else if (errorOption->domain == QtNetwork && errorOption->error == QNetworkReply::SslHandshakeFailedError)
 		{
 			information.description.clear();
 			information.type = ErrorPageInformation::ConnectionInsecureError;
@@ -846,7 +846,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 				information.description.append(sslErrors.at(i).error.errorString());
 			}
 		}
-		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
+		else if (errorOption->domain == QtNetwork && errorOption->error == QNetworkReply::QNetworkReply::ProtocolUnknownError)
 		{
 			const QUrl normalizedUrl(Utils::normalizeUrl(url));
 			const QVector<NetworkManager::ResourceInformation> blockeckedRequests(m_networkManager->getBlockedRequests());
@@ -880,7 +880,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 				information.type = ErrorPageInformation::UnsupportedAddressTypeError;
 			}
 		}
-		else if (errorOption->domain == QWebPage::WebKit)
+		else if (errorOption->domain == WebKit)
 		{
 			information.title = tr("WebKit error %1").arg(errorOption->error);
 		}
@@ -967,7 +967,7 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 
 bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 {
-	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
+	return (extension == ChooseMultipleFilesExtension || extension == ErrorPageExtension);
 }
 
 bool QtWebKitPage::isDisplayingErrorPage() const
