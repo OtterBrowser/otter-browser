@@ -69,7 +69,7 @@ public:
 
 	void triggerAction(WebAction action, bool isChecked = false) override;
 	QtWebKitFrame* getMainFrame() const;
-	QVariant runScript(const QString &path, QWebElement element = QWebElement());
+	QVariant runScript(const QString &path, QWebElement element = {});
 	bool event(QEvent *event) override;
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;
 	bool shouldInterruptJavaScript() override;
