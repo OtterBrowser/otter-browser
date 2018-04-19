@@ -113,6 +113,7 @@ void StartupDialog::setSession(int index)
 	m_windowsModel->clear();
 
 	const SessionInformation session(SessionsManager::getSession(m_ui->sessionComboBox->itemData(index).toString()));
+	QModelIndex activeIndex;
 	QFont font(m_ui->windowsTreeView->font());
 	font.setBold(true);
 
@@ -121,6 +122,8 @@ void StartupDialog::setSession(int index)
 		QStandardItem *windowItem(new QStandardItem(tr("Window %1").arg(i + 1)));
 		windowItem->setData(session.windows.at(i).geometry, Qt::UserRole);
 
+		m_windowsModel->invisibleRootItem()->appendRow(windowItem);
+
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
 			QStandardItem *tabItem(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
@@ -128,12 +131,14 @@ void StartupDialog::setSession(int index)
 			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
 			tabItem->setData(tr("Title: %1\nAddress: %2").arg(tabItem->text()).arg(session.windows.at(i).windows.at(j).getUrl()), Qt::ToolTipRole);
 
+			windowItem->appendRow(tabItem);
+
 			if (j == session.windows.at(i).index)
 			{
 				tabItem->setData(font, Qt::FontRole);
-			}
 
-			windowItem->appendRow(tabItem);
+				activeIndex = tabItem->index();
+			}
 		}
 
 		if (session.windows.count() > 1)
@@ -141,11 +146,10 @@ void StartupDialog::setSession(int index)
 			windowItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
 			windowItem->setData(Qt::Checked, Qt::CheckStateRole);
 		}
-
-		m_windowsModel->invisibleRootItem()->appendRow(windowItem);
 	}
 
 	m_ui->windowsTreeView->expandAll();
+	m_ui->windowsTreeView->scrollTo(activeIndex);
 }
 
 SessionInformation StartupDialog::getSession() const
