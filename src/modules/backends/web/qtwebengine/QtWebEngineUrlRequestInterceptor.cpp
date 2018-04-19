@@ -27,26 +27,32 @@
 #include "../../../../core/Utils.h"
 
 #include <QtCore/QCoreApplication>
-#include <QtCore/QTimer>
 
 namespace Otter
 {
 
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),
+	m_clearTimer(0),
 	m_areImagesEnabled(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"))
 {
-	QTimer::singleShot(1800000, this, &QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation);
+	m_clearTimer = startTimer(1800000);
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebEngineUrlRequestInterceptor::handleOptionChanged);
 	connect(SettingsManager::getInstance(), &SettingsManager::hostOptionChanged, this, &QtWebEngineUrlRequestInterceptor::handleOptionChanged);
+}
+
+void QtWebEngineUrlRequestInterceptor::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_clearTimer)
+	{
+		clearContentBlockingInformation();
+	}
 }
 
 void QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation()
 {
 	m_blockedElements.clear();
 	m_contentBlockingProfiles.clear();
-
-	QTimer::singleShot(1800000, this, &QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation);
 }
 
 void QtWebEngineUrlRequestInterceptor::handleOptionChanged(int identifier)
