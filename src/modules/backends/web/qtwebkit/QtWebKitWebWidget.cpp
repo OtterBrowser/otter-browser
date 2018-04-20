@@ -2907,9 +2907,19 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (keyEvent->modifiers() == Qt::ControlModifier)
 					{
-						if (keyEvent->key() == Qt::Key_Backspace && m_page->currentFrame()->hitTestContent(m_page->inputMethodQuery(Qt::ImCursorRectangle).toRect().center()).isContentEditable())
+						switch (keyEvent->key())
 						{
-							event->accept();
+							case Qt::Key_Backspace:
+							case Qt::Key_Left:
+							case Qt::Key_Right:
+								if (m_page->currentFrame()->hitTestContent(m_page->inputMethodQuery(Qt::ImCursorRectangle).toRect().center()).isContentEditable())
+								{
+									event->accept();
+								}
+
+								break;
+							default:
+								break;
 						}
 
 						return true;
