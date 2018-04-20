@@ -195,6 +195,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 		QStandardItem *item(new QStandardItem(actions.at(i).getText(true)));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(name, IdentifierRole);
+		item->setData(true, HasOptionsRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 		item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
 
