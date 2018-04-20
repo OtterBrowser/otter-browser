@@ -114,6 +114,14 @@ void TabHistoryContentsWidget::updateHistory()
 			item->setData(history.entries.at(i).time, TimeVisitedRole);
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
+			if (i == history.index)
+			{
+				QFont font(item->font());
+				font.setBold(true);
+
+				item->setFont(font);
+			}
+
 			m_ui->historyViewWidget->getSourceModel()->appendRow(item);
 		}
 	}
