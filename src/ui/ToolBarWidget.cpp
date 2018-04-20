@@ -1038,15 +1038,12 @@ bool ToolBarWidget::event(QEvent *event)
 
 		if (position.isNull() || !isDragHandle(position))
 		{
-			QVector<GesturesManager::GesturesContext> contexts;
+			QVector<GesturesManager::GesturesContext> contexts({GesturesManager::ToolBarContext, GesturesManager::GenericContext});
 
 			if (m_identifier == ToolBarsManager::TabBar)
 			{
-				contexts.append(GesturesManager::NoTabHandleContext);
+				contexts.prepend(GesturesManager::NoTabHandleContext);
 			}
-
-			contexts.append(GesturesManager::ToolBarContext);
-			contexts.append(GesturesManager::GenericContext);
 
 			GesturesManager::startGesture(this, event, contexts);
 		}

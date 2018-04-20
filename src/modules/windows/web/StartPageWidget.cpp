@@ -925,14 +925,12 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		QVector<GesturesManager::GesturesContext> contexts;
+		QVector<GesturesManager::GesturesContext> contexts({GesturesManager::GenericContext});
 
 		if (m_currentIndex.isValid())
 		{
-			contexts.append(GesturesManager::LinkContext);
+			contexts.prepend(GesturesManager::LinkContext);
 		}
-
-		contexts.append(GesturesManager::GenericContext);
 
 		if (GesturesManager::startGesture(object, event, contexts))
 		{
