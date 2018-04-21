@@ -154,33 +154,42 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 	if (!index.data(SessionModel::IsTrashedRole).toBool())
 	{
-		if (type == SessionModel::MainWindowEntity)
+		switch (type)
 		{
-			const MainWindowSessionItem *mainWindowItem(static_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+			case SessionModel::MainWindowEntity:
+				{
+					const MainWindowSessionItem *mainWindowItem(static_cast<MainWindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
 
-			if (mainWindowItem)
-			{
-				executor = ActionExecutor::Object(mainWindowItem->getMainWindow(), mainWindowItem->getMainWindow());
+					if (mainWindowItem)
+					{
+						executor = ActionExecutor::Object(mainWindowItem->getMainWindow(), mainWindowItem->getMainWindow());
 
-				menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
-				menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
-				menu.addSeparator();
-				menu.addAction(new Action(ActionsManager::CloseWindowAction, {}, executor, &menu));
-			}
-		}
-		else if (type == SessionModel::WindowEntity)
-		{
-			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
+						menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
+						menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
+						menu.addSeparator();
+						menu.addAction(new Action(ActionsManager::CloseWindowAction, {}, executor, &menu));
+					}
+				}
 
-			if (windowItem)
-			{
-				executor = ActionExecutor::Object(windowItem->getActiveWindow()->getMainWindow(), windowItem->getActiveWindow()->getMainWindow());
+				break;
+			case SessionModel::WindowEntity:
+				{
+					const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(SessionsManager::getModel()->itemFromIndex(index)));
 
-				menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
-				menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
-				menu.addSeparator();
-				menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(windowItem->getActiveWindow(), windowItem->getActiveWindow()), &menu));
-			}
+					if (windowItem)
+					{
+						executor = ActionExecutor::Object(windowItem->getActiveWindow()->getMainWindow(), windowItem->getActiveWindow()->getMainWindow());
+
+						menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
+						menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
+						menu.addSeparator();
+						menu.addAction(new Action(ActionsManager::CloseTabAction, {}, ActionExecutor::Object(windowItem->getActiveWindow(), windowItem->getActiveWindow()), &menu));
+					}
+				}
+
+				break;
+			default:
+				break;
 		}
 	}
 
