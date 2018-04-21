@@ -22,6 +22,8 @@
 
 #include "../../../ui/ContentsWidget.h"
 
+#include <QtWidgets/QStyledItemDelegate>
+
 namespace Otter
 {
 
@@ -31,6 +33,15 @@ namespace Ui
 }
 
 class Window;
+
+
+class EntryItemDelegate final : public QStyledItemDelegate
+{
+public:
+	explicit EntryItemDelegate(QObject *parent = nullptr);
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
 
 class WindowsContentsWidget final : public ContentsWidget
 {

@@ -32,6 +32,25 @@
 namespace Otter
 {
 
+EntryItemDelegate::EntryItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
+{
+}
+
+void EntryItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	if (index.data(SessionModel::IsActiveRole).toBool())
+	{
+		QStyleOptionViewItem mutableOption(option);
+		mutableOption.font.setBold(true);
+
+		QStyledItemDelegate::paint(painter, mutableOption, index);
+	}
+	else
+	{
+		QStyledItemDelegate::paint(painter, option, index);
+	}
+}
+
 WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_ui(new Ui::WindowsContentsWidget)
 {
@@ -39,6 +58,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->windowsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->windowsViewWidget->setModel(SessionsManager::getModel());
+	m_ui->windowsViewWidget->setItemDelegate(new EntryItemDelegate(m_ui->windowsViewWidget));
 	m_ui->windowsViewWidget->setFilterRoles({SessionModel::TitleRole, SessionModel::UrlRole});
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
