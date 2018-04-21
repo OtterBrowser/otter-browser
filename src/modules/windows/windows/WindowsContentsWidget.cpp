@@ -110,9 +110,7 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void WindowsContentsWidget::activateWindow(const QModelIndex &index)
 {
-	const SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
-
-	switch (type)
+	switch (static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()))
 	{
 		case SessionModel::MainWindowEntity:
 			Application::getInstance()->triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), index.data(SessionModel::IdentifierRole).toULongLong()}});
@@ -146,7 +144,6 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QModelIndex index(m_ui->windowsViewWidget->indexAt(position));
-	SessionModel::EntityType type(static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()));
 	ActionExecutor::Object executor(mainWindow, mainWindow);
 	QMenu menu(this);
 	menu.addAction(new Action(ActionsManager::NewWindowAction, {}, executor, &menu));
@@ -154,7 +151,7 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 
 	if (!index.data(SessionModel::IsTrashedRole).toBool())
 	{
-		switch (type)
+		switch (static_cast<SessionModel::EntityType>(index.data(SessionModel::TypeRole).toInt()))
 		{
 			case SessionModel::MainWindowEntity:
 				{
