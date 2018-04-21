@@ -169,6 +169,8 @@ QVariant MainWindowSessionItem::data(int role) const
 			return SessionModel::MainWindowEntity;
 		case SessionModel::IndexRole:
 			return m_mainWindow->getCurrentWindowIndex();
+		case SessionModel::IsActiveRole:
+			return (m_mainWindow == Application::getActiveWindow());
 		case SessionModel::IsPrivateRole:
 			return m_mainWindow->isPrivate();
 		default:
