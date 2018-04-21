@@ -66,6 +66,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->windowsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->windowsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &WindowsContentsWidget::showContextMenu);
 	connect(m_ui->windowsViewWidget, &ItemViewWidget::clicked, this, &WindowsContentsWidget::activateWindow);
+	connect(m_ui->windowsViewWidget->getSourceModel(), &QStandardItemModel::dataChanged, m_ui->windowsViewWidget, static_cast<void(ItemViewWidget::*)()>(&ItemViewWidget::update));
 }
 
 WindowsContentsWidget::~WindowsContentsWidget()
