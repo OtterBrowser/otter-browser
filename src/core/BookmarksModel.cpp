@@ -1239,13 +1239,19 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 QVector<BookmarksModel::Bookmark*> BookmarksModel::getBookmarks(const QUrl &url) const
 {
 	const QUrl normalizedUrl(Utils::normalizeUrl(url));
+	QVector<BookmarksModel::Bookmark*> bookmarks;
 
-	if (m_urls.contains(normalizedUrl))
+	if (m_urls.contains(url))
 	{
-		return m_urls[normalizedUrl];
+		bookmarks = m_urls[url];
 	}
 
-	return {};
+	if (url != normalizedUrl && m_urls.contains(normalizedUrl))
+	{
+		bookmarks.append(m_urls[normalizedUrl]);
+	}
+
+	return bookmarks;
 }
 
 BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
