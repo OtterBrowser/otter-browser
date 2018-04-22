@@ -414,19 +414,21 @@ QString formatElapsedTime(int value)
 
 QString formatDateTime(const QDateTime &dateTime, QString format, bool allowFancy)
 {
-	if (allowFancy && SettingsManager::getOption(SettingsManager::Interface_UseFancyDateTimeFormatOption).toBool() && dateTime.date() > QDate::currentDate().addDays(-7))
+	const QDateTime localDateTime(dateTime.toLocalTime());
+
+	if (allowFancy && SettingsManager::getOption(SettingsManager::Interface_UseFancyDateTimeFormatOption).toBool() && localDateTime.date() > QDate::currentDate().addDays(-7))
 	{
-		if (dateTime.date() == QDate::currentDate())
+		if (localDateTime.date() == QDate::currentDate())
 		{
-			return QCoreApplication::translate("utils", "Today at %1").arg(dateTime.toString(QLatin1String("hh:mm")));
+			return QCoreApplication::translate("utils", "Today at %1").arg(localDateTime.toString(QLatin1String("hh:mm")));
 		}
 
-		if (dateTime.date() == QDate::currentDate().addDays(-1))
+		if (localDateTime.date() == QDate::currentDate().addDays(-1))
 		{
-			return QCoreApplication::translate("utils", "Yesterday at %1").arg(dateTime.toString(QLatin1String("hh:mm")));
+			return QCoreApplication::translate("utils", "Yesterday at %1").arg(localDateTime.toString(QLatin1String("hh:mm")));
 		}
 
-		QString dayOfWeek(dateTime.toString(QLatin1String("dddd")));
+		QString dayOfWeek(localDateTime.toString(QLatin1String("dddd")));
 		dayOfWeek[0] = dayOfWeek.at(0).toUpper();
 
 		return QCoreApplication::translate("utils", "%1 at %2").arg(dayOfWeek, dateTime.toString(QLatin1String("hh:mm")));
@@ -437,7 +439,7 @@ QString formatDateTime(const QDateTime &dateTime, QString format, bool allowFanc
 		format = SettingsManager::getOption(SettingsManager::Interface_DateTimeFormatOption).toString();
 	}
 
-	return (format.isEmpty() ? QLocale().toString(dateTime, QLocale::ShortFormat) : QLocale().toString(dateTime, format));
+	return (format.isEmpty() ? QLocale().toString(localDateTime, QLocale::ShortFormat) : QLocale().toString(localDateTime, format));
 }
 
 QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
