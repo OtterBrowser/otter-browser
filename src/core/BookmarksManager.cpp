@@ -86,11 +86,9 @@ void BookmarksManager::updateVisits(const QUrl &url)
 {
 	ensureInitialized();
 
-	const QUrl normalizedUrl(Utils::normalizeUrl(url));
-
-	if (m_model->hasBookmark(normalizedUrl))
+	if (m_model->hasBookmark(url))
 	{
-		const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(normalizedUrl));
+		const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(url));
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
