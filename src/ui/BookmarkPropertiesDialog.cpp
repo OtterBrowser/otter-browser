@@ -51,7 +51,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 
 	if (isUrlBookmark)
 	{
-		m_ui->lastVisitLabelWidget->setText(m_bookmark->getTimeVisited().isValid() ? m_bookmark->getTimeVisited().toString() : tr("Unknown"));
+		m_ui->lastVisitLabelWidget->setText(m_bookmark->getTimeVisited().isValid() ? Utils::formatDateTime(m_bookmark->getTimeVisited()) : tr("Unknown"));
 		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->getVisits()));
 	}
 	else
