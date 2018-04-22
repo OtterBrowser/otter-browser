@@ -98,6 +98,8 @@ void BookmarksManager::updateVisits(const QUrl &url)
 			bookmark->setData((bookmark->getVisits() + 1), BookmarksModel::VisitsRole);
 			bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeVisitedRole);
 		}
+
+		m_instance->scheduleSave();
 	}
 }
 
