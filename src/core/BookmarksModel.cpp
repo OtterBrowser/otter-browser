@@ -966,7 +966,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 
 		if (!metaData.contains(TimeAddedRole) || !metaData.contains(TimeModifiedRole))
 		{
-			const QDateTime currentDateTime(QDateTime::currentDateTime());
+			const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
 
 			bookmark->setItemData(currentDateTime, TimeAddedRole);
 			bookmark->setItemData(currentDateTime, TimeModifiedRole);
@@ -1113,7 +1113,10 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 
 QDateTime BookmarksModel::readDateTime(QXmlStreamReader *reader, const QString &attribute)
 {
-	return QDateTime::fromString(reader->attributes().value(attribute).toString(), Qt::ISODate);
+	QDateTime dateTime(QDateTime::fromString(reader->attributes().value(attribute).toString(), Qt::ISODate));
+	dateTime.setTimeSpec(Qt::UTC);
+
+	return dateTime;
 }
 
 QStringList BookmarksModel::mimeTypes() const

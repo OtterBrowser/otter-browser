@@ -96,7 +96,7 @@ void BookmarksManager::updateVisits(const QUrl &url)
 		{
 			BookmarksModel::Bookmark *bookmark(bookmarks.at(i));
 			bookmark->setData((bookmark->getVisits() + 1), BookmarksModel::VisitsRole);
-			bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeVisitedRole);
+			bookmark->setData(QDateTime::currentDateTimeUtc(), BookmarksModel::TimeVisitedRole);
 		}
 
 		m_instance->scheduleSave();
