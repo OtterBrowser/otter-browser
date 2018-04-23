@@ -27,7 +27,7 @@ namespace Otter
 {
 
 PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation &password, bool isUpdate, QWidget *parent) : QWidget(parent),
-	m_created(QDateTime::currentDateTime()),
+	m_created(QDateTime::currentDateTimeUtc()),
 	m_password(password),
 	m_isUpdate(isUpdate),
 	m_ui(new Ui::PasswordBarWidget)
@@ -74,7 +74,7 @@ void PasswordBarWidget::handleRejected()
 
 bool PasswordBarWidget::shouldClose(const QUrl &url) const
 {
-	return (url.host() != m_password.url.host() || m_created.secsTo(QDateTime::currentDateTime()) > 10);
+	return (url.host() != m_password.url.host() || m_created.secsTo(QDateTime::currentDateTimeUtc()) > 10);
 }
 
 }

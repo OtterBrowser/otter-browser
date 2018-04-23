@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ void AuthenticationDialog::setup()
 
 		PasswordsManager::PasswordInformation password;
 		password.url = m_url.toString();
-		password.timeAdded = QDateTime::currentDateTime();
+		password.timeAdded = QDateTime::currentDateTimeUtc();
 		password.type = PasswordsManager::AuthPassword;
 		password.fields.append(userField);
 		password.fields.append(passwordField);

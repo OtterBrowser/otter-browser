@@ -71,7 +71,9 @@ void FilePasswordsStorageBackend::initialize()
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::fromString(passwordObject.value(QLatin1String("timeAdded")).toString(), Qt::ISODate);
+			password.timeAdded.setTimeSpec(Qt::UTC);
 			password.timeUsed = QDateTime::fromString(passwordObject.value(QLatin1String("timeUsed")).toString(), Qt::ISODate);
+			password.timeUsed.setTimeSpec(Qt::UTC);
 			password.type = ((passwordObject.value(QLatin1String("type")).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
 
 			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
@@ -220,7 +222,7 @@ void FilePasswordsStorageBackend::clearPasswords(int period)
 
 		for (int i = (passwords.count() - 1); i >= 0; --i)
 		{
-			if (passwords.at(i).timeAdded.secsTo(QDateTime::currentDateTime()) < (period * 3600))
+			if (passwords.at(i).timeAdded.secsTo(QDateTime::currentDateTimeUtc()) < (period * 3600))
 			{
 				passwords.removeAt(i);
 

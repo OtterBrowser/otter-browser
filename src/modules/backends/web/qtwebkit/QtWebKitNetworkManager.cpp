@@ -633,7 +633,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				const QJsonArray fieldsArray(payloadObject.value(QLatin1String("fields")).toArray());
 				PasswordsManager::PasswordInformation password;
 				password.url = QUrl(payloadObject.value(QLatin1String("url")).toString());
-				password.timeAdded = QDateTime::currentDateTime();
+				password.timeAdded = QDateTime::currentDateTimeUtc();
 				password.fields.reserve(fieldsArray.count());
 				password.type = PasswordsManager::FormPassword;
 
