@@ -86,8 +86,7 @@ void AuthenticationDialog::setup()
 		password.url = m_url.toString();
 		password.timeAdded = QDateTime::currentDateTimeUtc();
 		password.type = PasswordsManager::AuthPassword;
-		password.fields.append(userField);
-		password.fields.append(passwordField);
+		password.fields = {userField, passwordField};
 
 		PasswordsManager::addPassword(password);
 	}
