@@ -251,7 +251,7 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 0), profile->getTitle(), Qt::DisplayRole);
 	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 0), profile->getUpdateUrl(), ContentBlockingManager::UpdateUrlRole);
 	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 1), profile->getUpdateInterval(), Qt::DisplayRole);
-	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 2), profile->getLastUpdate(), Qt::DisplayRole);
+	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 }
 
 void ContentBlockingDialog::handleProfileModified(const QString &name)
