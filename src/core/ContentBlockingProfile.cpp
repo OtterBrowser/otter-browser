@@ -126,7 +126,7 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 
 	file.close();
 
-	if (!m_isUpdating && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTime()) > m_updateInterval))
+	if (!m_isUpdating && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
 	{
 		downloadRules();
 	}
@@ -629,7 +629,7 @@ void ContentBlockingProfile::handleReplyFinished()
 	file.write(downloadedData);
 	file.close();
 
-	m_lastUpdate = QDateTime::currentDateTime();
+	m_lastUpdate = QDateTime::currentDateTimeUtc();
 
 	if (file.error() != QFile::NoError)
 	{
