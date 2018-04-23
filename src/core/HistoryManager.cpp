@@ -363,7 +363,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		getBrowsingHistoryModel();
 	}
 
-	const quint64 identifier(m_browsingHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime())->getIdentifier());
+	const quint64 identifier(m_browsingHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTimeUtc())->getIdentifier());
 
 	if (isTypedIn)
 	{
@@ -372,7 +372,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 			getTypedHistoryModel();
 		}
 
-		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime());
+		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTimeUtc());
 	}
 
 	const int limit(SettingsManager::getOption(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());

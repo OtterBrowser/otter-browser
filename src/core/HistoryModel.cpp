@@ -99,8 +99,10 @@ HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *paren
 	for (int i = 0; i < historyArray.count(); ++i)
 	{
 		const QJsonObject entryObject(historyArray.at(i).toObject());
+		QDateTime dateTime(QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
+		dateTime.setTimeSpec(Qt::UTC);
 
-		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), {}, QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), Qt::ISODate));
+		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), {}, dateTime);
 	}
 
 	setSortRole(TimeVisitedRole);
@@ -131,7 +133,7 @@ void HistoryModel::clearRecentEntries(uint period)
 
 	for (int i = (rowCount() - 1); i >= 0; --i)
 	{
-		if (index(i, 0).data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTime()) < (period * 3600))
+		if (index(i, 0).data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTimeUtc()) < (period * 3600))
 		{
 			removeEntry(index(i, 0).data(IdentifierRole).toULongLong());
 		}
@@ -145,7 +147,7 @@ void HistoryModel::clearOldestEntries(int period)
 		return;
 	}
 
-	const QDateTime currentDateTime(QDateTime::currentDateTime());
+	const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
 
 	for (int i = (rowCount() - 1); i >= 0; --i)
 	{
