@@ -77,7 +77,7 @@ public:
 	void clearRecentEntries(uint period);
 	void clearOldestEntries(int period);
 	void removeEntry(quint64 identifier);
-	Entry* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
+	Entry* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTimeUtc(), quint64 identifier = 0);
 	Entry* getEntry(quint64 identifier) const;
 	QVector<HistoryEntryMatch> findEntries(const QString &prefix, bool markAsTypedIn = false) const;
 	HistoryType getType() const;
