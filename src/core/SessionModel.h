@@ -106,6 +106,7 @@ public:
 		ZoomRole,
 		IsActiveRole,
 		IsAudibleRole,
+		IsAudioMutedRole,
 		IsPinnedRole,
 		IsPrivateRole,
 		IsSuspendedRole,
