@@ -83,6 +83,8 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent 
 	m_isSelectingPath(false),
 	m_isArchived(true)
 {
+	m_timeStarted.setTimeSpec(Qt::UTC);
+	m_timeFinished.setTimeSpec(Qt::UTC);
 }
 
 Transfer::Transfer(const QUrl &source, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
@@ -239,7 +241,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 
 	m_device = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + temporaryFileName, this);
-	m_timeStarted = QDateTime::currentDateTime();
+	m_timeStarted = QDateTime::currentDateTimeUtc();
 	m_bytesTotal = m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
 
 	if (m_bytesTotal == 0 && reply->attribute(QNetworkRequest::SourceIsFromCacheAttribute).toBool() && reply->manager()->cache())
@@ -457,12 +459,12 @@ void Transfer::stop()
 
 void Transfer::markAsStarted()
 {
-	m_timeStarted = QDateTime::currentDateTime();
+	m_timeStarted = QDateTime::currentDateTimeUtc();
 }
 
 void Transfer::markAsFinished()
 {
-	m_timeFinished = QDateTime::currentDateTime();
+	m_timeFinished = QDateTime::currentDateTimeUtc();
 }
 
 void Transfer::handleDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -802,7 +804,7 @@ bool Transfer::resume()
 
 	m_state = RunningState;
 	m_device = file;
-	m_timeStarted = QDateTime::currentDateTime();
+	m_timeStarted = QDateTime::currentDateTimeUtc();
 	m_timeFinished = QDateTime();
 	m_bytesStart = file->size();
 
@@ -846,7 +848,7 @@ bool Transfer::restart()
 
 	m_state = RunningState;
 	m_device = file;
-	m_timeStarted = QDateTime::currentDateTime();
+	m_timeStarted = QDateTime::currentDateTimeUtc();
 	m_timeFinished = QDateTime();
 	m_bytesStart = 0;
 
@@ -1065,7 +1067,7 @@ void TransfersManager::save()
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_privateTransfers.contains(m_transfers.at(i)) || (m_transfers.at(i)->getState() == Transfer::FinishedState && m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().daysTo(QDateTime::currentDateTime()) > limit))
+		if (m_privateTransfers.contains(m_transfers.at(i)) || (m_transfers.at(i)->getState() == Transfer::FinishedState && m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().daysTo(QDateTime::currentDateTimeUtc()) > limit))
 		{
 			continue;
 		}
@@ -1073,7 +1075,7 @@ void TransfersManager::save()
 		history.setValue(QStringLiteral("%1/source").arg(entry), m_transfers.at(i)->getSource().toString());
 		history.setValue(QStringLiteral("%1/target").arg(entry), m_transfers.at(i)->getTarget());
 		history.setValue(QStringLiteral("%1/timeStarted").arg(entry), m_transfers.at(i)->getTimeStarted().toString(Qt::ISODate));
-		history.setValue(QStringLiteral("%1/timeFinished").arg(entry), ((m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getState() != Transfer::RunningState) ? m_transfers.at(i)->getTimeFinished() : QDateTime::currentDateTime()).toString(Qt::ISODate));
+		history.setValue(QStringLiteral("%1/timeFinished").arg(entry), ((m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getState() != Transfer::RunningState) ? m_transfers.at(i)->getTimeFinished() : QDateTime::currentDateTimeUtc()).toString(Qt::ISODate));
 		history.setValue(QStringLiteral("%1/bytesTotal").arg(entry), m_transfers.at(i)->getBytesTotal());
 		history.setValue(QStringLiteral("%1/bytesReceived").arg(entry), m_transfers.at(i)->getBytesReceived());
 
@@ -1087,7 +1089,7 @@ void TransfersManager::clearTransfers(int period)
 {
 	for (int i = (m_transfers.count() - 1); i >= 0; --i)
 	{
-		if (m_transfers.at(i)->getState() == Transfer::FinishedState && (period == 0 || (m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().secsTo(QDateTime::currentDateTime()) > (period * 3600))))
+		if (m_transfers.at(i)->getState() == Transfer::FinishedState && (period == 0 || (m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().secsTo(QDateTime::currentDateTimeUtc()) > (period * 3600))))
 		{
 			TransfersManager::removeTransfer(m_transfers.at(i));
 		}
