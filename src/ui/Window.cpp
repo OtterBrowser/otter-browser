@@ -209,42 +209,6 @@ void Window::clear()
 	}
 }
 
-void Window::attachAddressWidget(AddressWidget *widget)
-{
-	if (!m_addressWidgets.contains(widget))
-	{
-		m_addressWidgets.append(widget);
-
-		if (widget->isVisible() && isActive() && Utils::isUrlEmpty(m_contentsWidget->getUrl()))
-		{
-			const AddressWidget *addressWidget(qobject_cast<AddressWidget*>(QApplication::focusWidget()));
-
-			if (!addressWidget)
-			{
-				widget->setFocus();
-			}
-		}
-	}
-}
-
-void Window::detachAddressWidget(AddressWidget *widget)
-{
-	m_addressWidgets.removeAll(widget);
-}
-
-void Window::attachSearchWidget(SearchWidget *widget)
-{
-	if (!m_searchWidgets.contains(widget))
-	{
-		m_searchWidgets.append(widget);
-	}
-}
-
-void Window::detachSearchWidget(SearchWidget *widget)
-{
-	m_searchWidgets.removeAll(widget);
-}
-
 void Window::requestClose()
 {
 	if (!m_contentsWidget || m_contentsWidget->close())

@@ -33,9 +33,7 @@
 namespace Otter
 {
 
-class AddressWidget;
 class ContentsWidget;
-class SearchWidget;
 
 class WindowToolBarWidget final : public ToolBarWidget
 {
@@ -54,10 +52,6 @@ public:
 	explicit Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow);
 
 	void clear();
-	void attachAddressWidget(AddressWidget *widget);
-	void detachAddressWidget(AddressWidget *widget);
-	void attachSearchWidget(SearchWidget *widget);
-	void detachSearchWidget(SearchWidget *widget);
 	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session, bool deferLoading = false);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow) const;
@@ -117,8 +111,6 @@ private:
 	QPointer<ContentsWidget> m_contentsWidget;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;
-	QVector<QPointer<AddressWidget> > m_addressWidgets;
-	QVector<QPointer<SearchWidget> > m_searchWidgets;
 	QVariantMap m_parameters;
 	quint64 m_identifier;
 	int m_suspendTimer;

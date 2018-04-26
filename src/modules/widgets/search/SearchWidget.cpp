@@ -740,8 +740,6 @@ void SearchWidget::setWindow(Window *window)
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
-		m_window->detachSearchWidget(this);
-
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
@@ -755,8 +753,6 @@ void SearchWidget::setWindow(Window *window)
 		{
 			disconnect(this, &SearchWidget::requestedSearch, mainWindow, &MainWindow::search);
 		}
-
-		window->attachSearchWidget(this);
 
 		setSearchEngine(window->getOption(SettingsManager::Search_DefaultSearchEngineOption).toString());
 

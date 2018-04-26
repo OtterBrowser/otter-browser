@@ -43,6 +43,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextDocument>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 
@@ -1292,8 +1293,6 @@ void AddressWidget::setWindow(Window *window)
 
 	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
-		m_window->detachAddressWidget(this);
-
 		disconnect(this, &AddressWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::urlChanged, this, &AddressWidget::setUrl);
 		disconnect(m_window.data(), &Window::iconChanged, this, &AddressWidget::setIcon);
@@ -1311,7 +1310,15 @@ void AddressWidget::setWindow(Window *window)
 			disconnect(this, &AddressWidget::requestedSearch, mainWindow, &MainWindow::search);
 		}
 
-		window->attachAddressWidget(this);
+		if (isVisible() && window->isActive() && Utils::isUrlEmpty(window->getUrl()))
+		{
+			const AddressWidget *addressWidget(qobject_cast<AddressWidget*>(QApplication::focusWidget()));
+
+			if (!addressWidget)
+			{
+				setFocus();
+			}
+		}
 
 		connect(this, &AddressWidget::requestedSearch, window, &Window::requestedSearch);
 		connect(window, &Window::urlChanged, this, &AddressWidget::setUrl);
