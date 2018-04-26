@@ -670,6 +670,11 @@ MainWindow* Window::getMainWindow() const
 	return m_mainWindow;
 }
 
+WindowToolBarWidget* Window::getAddressBar() const
+{
+	return m_addressBar;
+}
+
 ContentsWidget* Window::getContentsWidget()
 {
 	if (!m_contentsWidget)

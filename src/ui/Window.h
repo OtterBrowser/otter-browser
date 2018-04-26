@@ -62,6 +62,7 @@ public:
 	void setSession(const SessionWindow &session, bool deferLoading = false);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow) const;
 	MainWindow* getMainWindow() const;
+	WindowToolBarWidget* getAddressBar() const;
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
 	QString getTitle() const;
