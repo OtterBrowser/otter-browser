@@ -327,14 +327,6 @@ void Window::updateFocus()
 	});
 }
 
-void Window::updateNavigationBar()
-{
-	if (m_addressBar)
-	{
-		m_addressBar->reload();
-	}
-}
-
 void Window::setSession(const SessionWindow &session, bool deferLoading)
 {
 	m_session = session;
@@ -551,7 +543,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, &ContentsWidget::optionChanged, this, &Window::optionChanged);
 	connect(m_contentsWidget, &ContentsWidget::zoomChanged, this, &Window::zoomChanged);
 	connect(m_contentsWidget, &ContentsWidget::canZoomChanged, this, &Window::canZoomChanged);
-	connect(m_contentsWidget, &ContentsWidget::webWidgetChanged, this, &Window::updateNavigationBar);
+	connect(m_contentsWidget, &ContentsWidget::webWidgetChanged, m_addressBar, &WindowToolBarWidget::reload);
 }
 
 Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const

@@ -46,7 +46,6 @@ public:
 	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
 
 	static QMenu* createCustomizationMenu(int identifier, QVector<QAction*> actions = {}, QWidget *parent = nullptr);
-	void reload();
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	void setState(const ToolBarState &state);
 	QString getTitle() const;
@@ -66,6 +65,7 @@ public:
 	bool event(QEvent *event) override;
 
 public slots:
+	void reload();
 	void resetGeometry();
 	void setArea(Qt::ToolBarArea area);
 

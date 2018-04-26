@@ -104,7 +104,6 @@ protected slots:
 	void handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void handleGeometryChangeRequest(const QRect &geometry);
 	void handleToolBarStateChanged(int identifier, const ToolBarState &state);
-	void updateNavigationBar();
 
 private:
 	MainWindow *m_mainWindow;
