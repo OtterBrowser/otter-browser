@@ -481,6 +481,50 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			close();
 
 			return;
+		case ActionsManager::GoAction:
+		case ActionsManager::ActivateAddressFieldAction:
+		case ActionsManager::ActivateSearchFieldAction:
+			{
+				AddressWidget *addressWidget(findAddressField());
+				SearchWidget *searchWidget(findSearchField());
+
+				if (identifier == ActionsManager::ActivateSearchFieldAction && searchWidget)
+				{
+					searchWidget->activate(Qt::ShortcutFocusReason);
+				}
+				else if (addressWidget)
+				{
+					if (identifier == ActionsManager::ActivateAddressFieldAction)
+					{
+						addressWidget->activate(Qt::ShortcutFocusReason);
+					}
+					else if (identifier == ActionsManager::ActivateSearchFieldAction)
+					{
+						addressWidget->setText(QLatin1String("? "));
+						addressWidget->activate(Qt::OtherFocusReason);
+					}
+					else if (identifier == ActionsManager::GoAction)
+					{
+						addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
+					}
+				}
+				else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
+				{
+					OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
+
+					if (identifier == ActionsManager::ActivateSearchFieldAction)
+					{
+						dialog.setText(QLatin1String("? "));
+					}
+
+					if (dialog.exec() == QDialog::Accepted && dialog.getResult().type == InputInterpreter::InterpreterResult::SearchType)
+					{
+						search(dialog.getResult().searchQuery, dialog.getResult().searchEngine, SessionsManager::calculateOpenHints(SessionsManager::CurrentTabOpen));
+					}
+				}
+			}
+
+			break;
 		case ActionsManager::GoToPageAction:
 			{
 				OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
