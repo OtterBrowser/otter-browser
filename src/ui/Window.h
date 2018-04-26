@@ -95,6 +95,7 @@ protected:
 	void timerEvent(QTimerEvent *event) override;
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
+	void updateFocus();
 	void setContentsWidget(ContentsWidget *widget);
 	bool event(QEvent *event) override;
 

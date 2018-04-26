@@ -121,16 +121,7 @@ void Window::focusInEvent(QFocusEvent *event)
 		m_suspendTimer = 0;
 	}
 
-	AddressWidget *addressWidget(m_mainWindow->findAddressField());
-
-	if (Utils::isUrlEmpty(getUrl()) && (!m_contentsWidget || m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState) && addressWidget)
-	{
-		addressWidget->setFocus();
-	}
-	else if (m_contentsWidget)
-	{
-		m_contentsWidget->setFocus();
-	}
+	updateFocus();
 }
 
 void Window::triggerAction(int identifier, const QVariantMap &parameters)
@@ -317,6 +308,23 @@ void Window::handleToolBarStateChanged(int identifier, const ToolBarState &state
 	{
 		m_addressBar->setState(state);
 	}
+}
+
+void Window::updateFocus()
+{
+	QTimer::singleShot(100, this, [&]()
+	{
+		AddressWidget *addressWidget(m_mainWindow->findAddressField());
+
+		if (Utils::isUrlEmpty(getUrl()) && (!m_contentsWidget || m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState) && addressWidget)
+		{
+			addressWidget->setFocus();
+		}
+		else if (m_contentsWidget)
+		{
+			m_contentsWidget->setFocus();
+		}
+	});
 }
 
 void Window::updateNavigationBar()
@@ -510,6 +518,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			}
 		}
 	}
+
+	updateFocus();
 
 	m_session = SessionWindow();
 
