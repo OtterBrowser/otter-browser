@@ -121,7 +121,7 @@ void Window::focusInEvent(QFocusEvent *event)
 		m_suspendTimer = 0;
 	}
 
-	AddressWidget *addressWidget(findAddressWidget());
+	AddressWidget *addressWidget(m_mainWindow->findAddressField());
 
 	if (Utils::isUrlEmpty(getUrl()) && (!m_contentsWidget || m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState) && addressWidget)
 	{
@@ -538,7 +538,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		}
 		else
 		{
-			const AddressWidget *addressWidget(findAddressWidget());
+			const AddressWidget *addressWidget(m_mainWindow->findAddressField());
 
 			if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
 			{
@@ -578,19 +578,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, &ContentsWidget::zoomChanged, this, &Window::zoomChanged);
 	connect(m_contentsWidget, &ContentsWidget::canZoomChanged, this, &Window::canZoomChanged);
 	connect(m_contentsWidget, &ContentsWidget::webWidgetChanged, this, &Window::updateNavigationBar);
-}
-
-AddressWidget* Window::findAddressWidget() const
-{
-	for (int i = 0; i < m_addressWidgets.count(); ++i)
-	{
-		if (m_addressWidgets.at(i) && m_addressWidgets.at(i)->isVisible())
-		{
-			return m_addressWidgets.at(i);
-		}
-	}
-
-	return m_addressWidgets.value(0, nullptr);
 }
 
 Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const
