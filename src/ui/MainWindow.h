@@ -36,8 +36,10 @@ namespace Ui
 	class MainWindow;
 }
 
+class AddressWidget;
 class ContentsWidget;
 class MenuBarWidget;
+class SearchWidget;
 class Shortcut;
 class StatusBarWidget;
 class TabBarWidget;
@@ -59,6 +61,8 @@ public:
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, const QVariantMap &parameters = {});
 	void setActiveEditorExecutor(ActionExecutor::Object executor);
 	static MainWindow* findMainWindow(QObject *parent);
+	AddressWidget* findAddressField() const;
+	SearchWidget* findSearchField() const;
 	Window* getActiveWindow() const;
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
@@ -102,6 +106,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
+	QWidget* findVisibleWidget(const QVector<QPointer<QWidget> > &widgets) const;
 	TabBarWidget* getTabBar() const;
 	QVector<quint64> createOrderedWindowList(bool includeMinimized) const;
 	bool event(QEvent *event) override;

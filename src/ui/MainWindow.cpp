@@ -48,6 +48,8 @@
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
+#include "../modules/widgets/address/AddressWidget.h"
+#include "../modules/widgets/search/SearchWidget.h"
 
 #include "ui_MainWindow.h"
 
@@ -1951,6 +1953,77 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	}
 
 	return mainWindow;
+}
+
+QWidget* MainWindow::findVisibleWidget(const QVector<QPointer<QWidget> > &widgets) const
+{
+	for (int i = 0; i < widgets.count(); ++i)
+	{
+		if (widgets.at(i) && widgets.at(i)->isVisible())
+		{
+			return widgets.at(i);
+		}
+	}
+
+	return nullptr;
+}
+
+AddressWidget* MainWindow::findAddressField() const
+{
+	const Window *activeWindow(m_workspace->getActiveWindow());
+
+	if (activeWindow && activeWindow->getAddressBar())
+	{
+		AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(activeWindow->getAddressBar()->getAddressFields())));
+
+		if (widget)
+		{
+			return widget;
+		}
+	}
+
+	QMap<int, ToolBarWidget*>::const_iterator iterator;
+
+	for (iterator = m_toolBars.constBegin(); iterator != m_toolBars.constEnd(); ++iterator)
+	{
+		AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(iterator.value()->getAddressFields())));
+
+		if (widget)
+		{
+			return widget;
+		}
+	}
+
+	return nullptr;
+}
+
+SearchWidget* MainWindow::findSearchField() const
+{
+	const Window *activeWindow(m_workspace->getActiveWindow());
+
+	if (activeWindow && activeWindow->getAddressBar())
+	{
+		SearchWidget *widget(qobject_cast<SearchWidget*>(findVisibleWidget(activeWindow->getAddressBar()->getSearchFields())));
+
+		if (widget)
+		{
+			return widget;
+		}
+	}
+
+	QMap<int, ToolBarWidget*>::const_iterator iterator;
+
+	for (iterator = m_toolBars.constBegin(); iterator != m_toolBars.constEnd(); ++iterator)
+	{
+		SearchWidget *widget(qobject_cast<SearchWidget*>(findVisibleWidget(iterator.value()->getSearchFields())));
+
+		if (widget)
+		{
+			return widget;
+		}
+	}
+
+	return nullptr;
 }
 
 TabBarWidget* MainWindow::getTabBar() const
