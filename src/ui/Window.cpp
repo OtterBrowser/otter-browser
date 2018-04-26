@@ -219,8 +219,6 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 					else if (identifier == ActionsManager::GoAction)
 					{
 						addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
-
-						return;
 					}
 				}
 				else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
