@@ -1971,10 +1971,11 @@ QWidget* MainWindow::findVisibleWidget(const QVector<QPointer<QWidget> > &widget
 AddressWidget* MainWindow::findAddressField() const
 {
 	const Window *activeWindow(m_workspace->getActiveWindow());
+	const ToolBarWidget *addressToolBar(activeWindow ? activeWindow->getAddressBar() : nullptr);
 
-	if (activeWindow && activeWindow->getAddressBar())
+	if (addressToolBar && !addressToolBar->isCollapsed() && addressToolBar->isVisible())
 	{
-		AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(activeWindow->getAddressBar()->getAddressFields())));
+		AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(addressToolBar->getAddressFields())));
 
 		if (widget)
 		{
@@ -1986,11 +1987,14 @@ AddressWidget* MainWindow::findAddressField() const
 
 	for (iterator = m_toolBars.constBegin(); iterator != m_toolBars.constEnd(); ++iterator)
 	{
-		AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(iterator.value()->getAddressFields())));
-
-		if (widget)
+		if (!iterator.value()->isCollapsed() && iterator.value()->isVisible())
 		{
-			return widget;
+			AddressWidget *widget(qobject_cast<AddressWidget*>(findVisibleWidget(iterator.value()->getAddressFields())));
+
+			if (widget)
+			{
+				return widget;
+			}
 		}
 	}
 
@@ -2000,8 +2004,9 @@ AddressWidget* MainWindow::findAddressField() const
 SearchWidget* MainWindow::findSearchField() const
 {
 	const Window *activeWindow(m_workspace->getActiveWindow());
+	const ToolBarWidget *addressToolBar(activeWindow ? activeWindow->getAddressBar() : nullptr);
 
-	if (activeWindow && activeWindow->getAddressBar())
+	if (addressToolBar && !addressToolBar->isCollapsed() && addressToolBar->isVisible())
 	{
 		SearchWidget *widget(qobject_cast<SearchWidget*>(findVisibleWidget(activeWindow->getAddressBar()->getSearchFields())));
 
@@ -2015,11 +2020,14 @@ SearchWidget* MainWindow::findSearchField() const
 
 	for (iterator = m_toolBars.constBegin(); iterator != m_toolBars.constEnd(); ++iterator)
 	{
-		SearchWidget *widget(qobject_cast<SearchWidget*>(findVisibleWidget(iterator.value()->getSearchFields())));
-
-		if (widget)
+		if (!iterator.value()->isCollapsed() && iterator.value()->isVisible())
 		{
-			return widget;
+			SearchWidget *widget(qobject_cast<SearchWidget*>(findVisibleWidget(iterator.value()->getSearchFields())));
+
+			if (widget)
+			{
+				return widget;
+			}
 		}
 	}
 
