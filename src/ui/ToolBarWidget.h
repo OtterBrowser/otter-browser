@@ -52,6 +52,8 @@ public:
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
 	ToolBarState getState() const;
+	QVector<QPointer<QWidget> > getAddressFields() const;
+	QVector<QPointer<QWidget> > getSearchFields() const;
 	Qt::ToolBarArea getArea() const;
 	Qt::ToolButtonStyle getButtonStyle() const;
 	int getIdentifier() const;
@@ -87,6 +89,8 @@ protected:
 	virtual void populateEntries();
 	void updateDropIndex(const QPoint &position);
 	void updateToggleGeometry();
+	void setAddressFields(QVector<QPointer<QWidget> > addressFields);
+	void setSearchFields(QVector<QPointer<QWidget> > searchFields);
 	MainWindow* getMainWindow() const;
 	Window* getWindow() const;
 	bool isDragHandle(const QPoint &position) const;
@@ -112,6 +116,8 @@ private:
 	BookmarksModel::Bookmark *m_dropBookmark;
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
+	QVector<QPointer<QWidget> > m_addressFields;
+	QVector<QPointer<QWidget> > m_searchFields;
 	ToolBarState m_state;
 	Qt::ToolBarArea m_area;
 	int m_reloadTimer;
