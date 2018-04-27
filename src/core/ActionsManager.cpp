@@ -508,9 +508,23 @@ void ActionsManager::loadProfiles()
 				const KeyboardProfile::Action definition(iterator.value().at(j));
 				QVector<QKeySequence> shortcuts;
 
-				if (m_shortcuts.contains(definition.action))
+				if (definition.parameters.isEmpty() && m_shortcuts.contains(definition.action))
 				{
 					shortcuts = m_shortcuts[definition.action];
+				}
+				else if (!definition.parameters.isEmpty() && m_extraShortcuts.contains(definition.action))
+				{
+					const QList<QPair<QVariantMap, QVector<QKeySequence> > > extraDefinitions(m_extraShortcuts.values(definition.action));
+
+					for (int k = 0; k < extraDefinitions.count(); ++k)
+					{
+						if (extraDefinitions.at(k).first == definition.parameters)
+						{
+							shortcuts = extraDefinitions.at(k).second;
+
+							break;
+						}
+					}
 				}
 
 				for (int k = 0; k < definition.shortcuts.count(); ++k)
