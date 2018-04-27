@@ -492,7 +492,6 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 	m_ui->contentBlockingProfilesViewWidget->setModel(ContentBlockingManager::createModel(this, contentBlockingProfiles));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 	m_ui->contentBlockingProfilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	m_ui->contentBlockingProfilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->contentBlockingProfilesViewWidget->expandAll();
 
 	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingProfiles.contains("custom"));
