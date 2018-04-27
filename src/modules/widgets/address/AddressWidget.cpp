@@ -1412,23 +1412,42 @@ bool AddressWidget::event(QEvent *event)
 
 		if (entry != UnknownEntry && entry != AddressEntry)
 		{
+			QString toolTip;
+			QKeySequence shortcut;
 			const QString title(m_entries[entry].title);
 
 			if (!title.isEmpty())
 			{
-				if (entry == WebsiteInformationEntry)
+				toolTip = tr(title.toUtf8().constData());
+			}
+
+			switch (entry)
+			{
+				case HistoryDropdownEntry:
+					shortcut = ActionsManager::getActionShortcut(ActionsManager::ActivateAddressFieldAction, {{QLatin1String("showTypedHistoryDropdown"), true}});
+
+					break;
+				case WebsiteInformationEntry:
+					shortcut = ActionsManager::getActionShortcut(ActionsManager::WebsiteInformationAction);
+
+					break;
+				default:
+					break;
+			}
+
+			if (!shortcut.isEmpty())
+			{
+				if (!toolTip.isEmpty())
 				{
-					const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::WebsiteInformationAction));
-
-					if (!shortcut.isEmpty())
-					{
-						QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()) + QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
-
-						return true;
-					}
+					toolTip.append(QLatin1Char(' '));
 				}
 
-				QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()));
+				toolTip.append(QLatin1Char('(') + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')'));
+			}
+
+			if (!toolTip.isEmpty())
+			{
+				QToolTip::showText(helpEvent->globalPos(), toolTip);
 
 				return true;
 			}
