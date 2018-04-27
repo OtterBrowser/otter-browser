@@ -276,6 +276,13 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 	QTreeView::showEvent(event);
 }
 
+void ItemViewWidget::resizeEvent(QResizeEvent *event)
+{
+	QTreeView::resizeEvent(event);
+
+	updateSize();
+}
+
 void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 {
 	const int rowCount(getRowCount());
@@ -397,49 +404,7 @@ void ItemViewWidget::ensureInitialized()
 		return;
 	}
 
-	if (m_headerWidget)
-	{
-		int maximumSectionWidth(0);
-		int minimumTotalWidth(0);
-		QVector<int> widestSections;
-
-		for (int i = 0; i < m_headerWidget->count(); ++i)
-		{
-			const QSize size(model()->headerData(i, Qt::Horizontal, Qt::SizeHintRole).toSize());
-
-			if (size.isValid())
-			{
-				m_headerWidget->resizeSection(i, size.width());
-
-				if (size.width() > maximumSectionWidth)
-				{
-					widestSections = {i};
-
-					maximumSectionWidth = size.width();
-				}
-				else if (size.width() == maximumSectionWidth)
-				{
-					widestSections.append(i);
-				}
-
-				minimumTotalWidth += size.width();
-			}
-			else
-			{
-				minimumTotalWidth += m_headerWidget->defaultSectionSize();
-			}
-		}
-
-		if (!widestSections.isEmpty() && minimumTotalWidth < m_headerWidget->width())
-		{
-			const int sectionWidth((m_headerWidget->width() - minimumTotalWidth) / widestSections.count());
-
-			for (int i = 0; i < widestSections.count(); ++i)
-			{
-				m_headerWidget->resizeSection(widestSections.at(i), (m_headerWidget->sectionSize(widestSections.at(i)) + sectionWidth));
-			}
-		}
-	}
+	updateSize();
 
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
 	settings.beginGroup(name);
@@ -671,6 +636,55 @@ void ItemViewWidget::updateFilter()
 	for (int i = 0; i < getRowCount(); ++i)
 	{
 		applyFilter(getIndex(i, 0));
+	}
+}
+
+void ItemViewWidget::updateSize()
+{
+	if (!m_headerWidget)
+	{
+		return;
+	}
+
+	int maximumSectionWidth(0);
+	int minimumTotalWidth(0);
+	QVector<int> widestSections;
+
+	for (int i = 0; i < m_headerWidget->count(); ++i)
+	{
+		const QSize size(model()->headerData(i, Qt::Horizontal, Qt::SizeHintRole).toSize());
+
+		if (size.isValid())
+		{
+			m_headerWidget->resizeSection(i, size.width());
+
+			if (size.width() > maximumSectionWidth)
+			{
+				widestSections = {i};
+
+				maximumSectionWidth = size.width();
+			}
+			else if (size.width() == maximumSectionWidth)
+			{
+				widestSections.append(i);
+			}
+
+			minimumTotalWidth += size.width();
+		}
+		else
+		{
+			minimumTotalWidth += m_headerWidget->defaultSectionSize();
+		}
+	}
+
+	if (!widestSections.isEmpty() && minimumTotalWidth < m_headerWidget->width())
+	{
+		const int sectionWidth((m_headerWidget->width() - minimumTotalWidth) / widestSections.count());
+
+		for (int i = 0; i < widestSections.count(); ++i)
+		{
+			m_headerWidget->resizeSection(widestSections.at(i), (m_headerWidget->sectionSize(widestSections.at(i)) + sectionWidth));
+		}
 	}
 }
 

@@ -116,12 +116,14 @@ public slots:
 
 protected:
 	void showEvent(QShowEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 	void keyPressEvent(QKeyEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
 	void startDrag(Qt::DropActions supportedActions) override;
 	void ensureInitialized();
 	void moveRow(bool up);
 	void selectRow(const QModelIndex &index);
+	void updateSize();
 	bool applyFilter(const QModelIndex &index);
 
 protected slots:
