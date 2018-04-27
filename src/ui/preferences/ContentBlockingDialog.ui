@@ -57,7 +57,7 @@
               <enum>QAbstractScrollArea::AdjustIgnored</enum>
              </property>
              <property name="editTriggers">
-              <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+              <set>QAbstractItemView::NoEditTriggers</set>
              </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
