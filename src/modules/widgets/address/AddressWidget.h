@@ -110,6 +110,7 @@ public:
 
 	explicit AddressWidget(Window *window, QWidget *parent = nullptr);
 
+	void showCompletion(bool isTypedHistory);
 	QUrl getUrl() const;
 	bool event(QEvent *event) override;
 
@@ -129,7 +130,6 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void dragEnterEvent(QDragEnterEvent *event) override;
-	void showCompletion(bool isTypedHistory);
 	EntryIdentifier getEntry(const QPoint &position) const;
 
 protected slots:

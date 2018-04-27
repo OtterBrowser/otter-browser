@@ -273,6 +273,15 @@
 				]
 			},
 			{
+				"action": "ActivateAddressField",
+				"parameters": {
+					"showTypedHistoryDropdown": true
+				},
+				"shortcuts": [
+					"Alt+Down"
+				]
+			},
+			{
 				"action": "ActivateSearchField",
 				"shortcuts": [
 					"Ctrl+K",

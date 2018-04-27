@@ -497,6 +497,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					if (identifier == ActionsManager::ActivateAddressFieldAction)
 					{
 						addressWidget->activate(Qt::ShortcutFocusReason);
+
+						if (parameters.value(QLatin1String("showTypedHistoryDropdown")).toBool())
+						{
+							addressWidget->showCompletion(true);
+						}
 					}
 					else if (identifier == ActionsManager::ActivateSearchFieldAction)
 					{
