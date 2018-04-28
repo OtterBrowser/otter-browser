@@ -21,7 +21,7 @@
 
 #include "WebsitePreferencesDialog.h"
 #include "CookiePropertiesDialog.h"
-#include "preferences/ContentBlockingIntervalDelegate.h"
+#include "preferences/ContentBlockingDialog.h"
 #include "../core/ContentBlockingManager.h"
 #include "../core/ContentBlockingProfile.h"
 #include "../core/NetworkManagerFactory.h"

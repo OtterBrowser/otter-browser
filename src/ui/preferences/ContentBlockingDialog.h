@@ -22,6 +22,7 @@
 #define OTTER_CONTENTBLOCKINGDIALOG_H
 
 #include "../Dialog.h"
+#include "../ItemDelegate.h"
 
 namespace Otter
 {
@@ -32,6 +33,16 @@ namespace Ui
 }
 
 class ContentBlockingProfile;
+
+class ContentBlockingIntervalDelegate final : public ItemDelegate
+{
+public:
+	explicit ContentBlockingIntervalDelegate(QObject *parent = nullptr);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	QString displayText(const QVariant &value, const QLocale &locale) const override;
+};
 
 class ContentBlockingDialog final : public Dialog
 {

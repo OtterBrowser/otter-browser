@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "ContentBlockingDialog.h"
-#include "ContentBlockingIntervalDelegate.h"
 #include "ContentBlockingProfileDialog.h"
 #include "../../core/Console.h"
 #include "../../core/ContentBlockingManager.h"
@@ -31,9 +30,53 @@
 #include "ui_ContentBlockingDialog.h"
 
 #include <QtCore/QDir>
+#include <QtWidgets/QSpinBox>
 
 namespace Otter
 {
+
+ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void ContentBlockingIntervalDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	const QSpinBox *widget(qobject_cast<QSpinBox*>(editor));
+
+	if (widget)
+	{
+		model->setData(index, widget->value(), Qt::DisplayRole);
+	}
+}
+
+QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	QSpinBox *widget(new QSpinBox(parent));
+	widget->setSuffix(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", " day(s)"));
+	widget->setSpecialValueText(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
+	widget->setMinimum(0);
+	widget->setMaximum(365);
+	widget->setValue(index.data(Qt::DisplayRole).toInt());
+	widget->setFocus();
+
+	return widget;
+}
+
+QString ContentBlockingIntervalDelegate::displayText(const QVariant &value, const QLocale &locale) const
+{
+	Q_UNUSED(locale)
+
+	if (value.isNull())
+	{
+		return {};
+	}
+
+	const int updateInterval(value.toInt());
+
+	return ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
+}
 
 ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ContentBlockingDialog)
