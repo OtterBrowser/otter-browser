@@ -48,7 +48,7 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 
 	option->features |= QStyleOptionViewItem::HasDecoration;
 
-	if (profile && profile->getLastUpdate().isNull())
+	if (profile && (profile->getLastUpdate().isNull() || profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7))
 	{
 		option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 	}
