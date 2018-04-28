@@ -39,6 +39,8 @@ class ContentBlockingTitleDelegate final : public ItemDelegate
 public:
 	explicit ContentBlockingTitleDelegate(QObject *parent = nullptr);
 
+	bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
+
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };

@@ -32,6 +32,7 @@
 
 #include <QtCore/QDir>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -52,6 +53,30 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 	{
 		option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 	}
+}
+
+bool ContentBlockingTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+	if (event->type() == QEvent::ToolTip)
+	{
+		const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+
+		if (profile)
+		{
+			if (profile->getLastUpdate().isNull())
+			{
+				QToolTip::showText(event->globalPos(), tr("Profile was never updated"), view);
+			}
+			else if (profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+			{
+				QToolTip::showText(event->globalPos(), tr("Profile was last updated more than one week ago"), view);
+			}
+
+			return true;
+		}
+	}
+
+	return ItemDelegate::helpEvent(event, view, option, index);
 }
 
 ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent) : ItemDelegate(parent)
