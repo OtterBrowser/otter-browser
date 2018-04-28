@@ -25,6 +25,7 @@
 #include "../../core/ContentBlockingProfile.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
+#include "../../core/ThemesManager.h"
 #include "../../core/Utils.h"
 
 #include "ui_ContentBlockingDialog.h"
@@ -43,7 +44,14 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	option->features &= QStyleOptionViewItem::HasDecoration;
+	const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+
+	option->features |= QStyleOptionViewItem::HasDecoration;
+
+	if (profile && profile->getLastUpdate().isNull())
+	{
+		option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
+	}
 }
 
 ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent) : ItemDelegate(parent)
