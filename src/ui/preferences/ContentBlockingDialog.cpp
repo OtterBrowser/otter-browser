@@ -47,11 +47,14 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 
 	const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
 
-	option->features |= QStyleOptionViewItem::HasDecoration;
-
-	if (profile && (profile->getLastUpdate().isNull() || profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7))
+	if (profile)
 	{
-		option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
+		option->features |= QStyleOptionViewItem::HasDecoration;
+
+		if (profile->getLastUpdate().isNull() || profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+		{
+			option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
+		}
 	}
 }
 
