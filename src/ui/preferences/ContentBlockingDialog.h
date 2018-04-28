@@ -34,6 +34,15 @@ namespace Ui
 
 class ContentBlockingProfile;
 
+class ContentBlockingTitleDelegate final : public ItemDelegate
+{
+public:
+	explicit ContentBlockingTitleDelegate(QObject *parent = nullptr);
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
 class ContentBlockingIntervalDelegate final : public ItemDelegate
 {
 public:

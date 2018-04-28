@@ -35,6 +35,17 @@
 namespace Otter
 {
 
+ContentBlockingTitleDelegate::ContentBlockingTitleDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	option->features &= QStyleOptionViewItem::HasDecoration;
+}
+
 ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
@@ -86,6 +97,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	const QStringList globalProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
+	m_ui->profilesViewWidget->setItemDelegateForColumn(0, new ContentBlockingTitleDelegate(this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->profilesViewWidget->expandAll();

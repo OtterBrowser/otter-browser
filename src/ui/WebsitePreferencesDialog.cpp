@@ -490,6 +490,7 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 	const QStringList contentBlockingProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
 
 	m_ui->contentBlockingProfilesViewWidget->setModel(ContentBlockingManager::createModel(this, contentBlockingProfiles));
+	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(0, new ContentBlockingTitleDelegate(this));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 	m_ui->contentBlockingProfilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->contentBlockingProfilesViewWidget->expandAll();
