@@ -20,6 +20,7 @@
 
 #include "ContentBlockingDialog.h"
 #include "ContentBlockingProfileDialog.h"
+#include "../Animation.h"
 #include "../../core/Console.h"
 #include "../../core/ContentBlockingManager.h"
 #include "../../core/ContentBlockingProfile.h"
@@ -51,7 +52,16 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 	{
 		option->features |= QStyleOptionViewItem::HasDecoration;
 
-		if (profile->getError() != ContentBlockingProfile::NoError)
+		if (profile->isUpdating())
+		{
+			const Animation *animation(ContentBlockingDialog::getUpdateAnimation());
+
+			if (animation)
+			{
+				option->icon = QIcon(animation->getCurrentPixmap());
+			}
+		}
+		else if (profile->getError() != ContentBlockingProfile::NoError)
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
 		}
@@ -155,6 +165,8 @@ QString ContentBlockingIntervalDelegate::displayText(const QVariant &value, cons
 
 	return ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
 }
+
+Animation* ContentBlockingDialog::m_updateAnimation = nullptr;
 
 ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ContentBlockingDialog)
@@ -288,6 +300,24 @@ void ContentBlockingDialog::updateProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
 	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+
+	if (!m_updateAnimation)
+	{
+		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
+
+		if (path.isEmpty())
+		{
+			m_updateAnimation = new SpinnerAnimation(this);
+		}
+		else
+		{
+			m_updateAnimation = new GenericAnimation(path, this);
+		}
+
+		m_updateAnimation->start();
+
+		connect(m_updateAnimation, &Animation::frameChanged, m_ui->profilesViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
+	}
 
 	if (profile)
 	{
@@ -488,6 +518,11 @@ void ContentBlockingDialog::save()
 	SettingsManager::setOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, m_ui->cosmeticFiltersComboBox->currentData().toString());
 
 	close();
+}
+
+Animation *ContentBlockingDialog::getUpdateAnimation()
+{
+	return m_updateAnimation;
 }
 
 }

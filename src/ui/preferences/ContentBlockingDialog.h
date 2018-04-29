@@ -32,6 +32,7 @@ namespace Ui
 	class ContentBlockingDialog;
 }
 
+class Animation;
 class ContentBlockingProfile;
 
 class ContentBlockingTitleDelegate final : public ItemDelegate
@@ -63,6 +64,8 @@ public:
 	explicit ContentBlockingDialog(QWidget *parent = nullptr);
 	~ContentBlockingDialog();
 
+	static Animation* getUpdateAnimation();
+
 protected:
 	void changeEvent(QEvent *event) override;
 	void updateModel(ContentBlockingProfile *profile, bool isNewOrMoved);
@@ -82,6 +85,8 @@ protected slots:
 
 private:
 	Ui::ContentBlockingDialog *m_ui;
+
+	static Animation* m_updateAnimation;
 };
 
 }
