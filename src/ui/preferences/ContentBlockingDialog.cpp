@@ -66,16 +66,23 @@ bool ContentBlockingTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemVie
 
 		if (profile)
 		{
+			QString toolTip;
+
 			if (profile->getLastUpdate().isNull())
 			{
-				QToolTip::showText(event->globalPos(), tr("Profile was never updated"), view);
+				toolTip = tr("Profile was never updated");
 			}
 			else if (profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
 			{
-				QToolTip::showText(event->globalPos(), tr("Profile was last updated more than one week ago"), view);
+				toolTip = tr("Profile was last updated more than one week ago");
 			}
 
-			return true;
+			if (!toolTip.isEmpty())
+			{
+				QToolTip::showText(event->globalPos(), toolTip, view);
+
+				return true;
+			}
 		}
 	}
 
