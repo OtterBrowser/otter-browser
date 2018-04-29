@@ -18,13 +18,15 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
+#include "Application.h"
 #include "Console.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
+#include <QtCore/QSaveFile>
 #include <QtCore/QXmlStreamReader>
+#include <QtCore/QXmlStreamWriter>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -92,8 +94,61 @@ FeedsManager* FeedsManager::m_instance(nullptr);
 QVector<Feed*> FeedsManager::m_feeds;
 bool FeedsManager::m_isInitialized(false);
 
-FeedsManager::FeedsManager(QObject *parent) : QObject(parent)
+FeedsManager::FeedsManager(QObject *parent) : QObject(parent),
+	m_saveTimer(0)
 {
+}
+
+void FeedsManager::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_saveTimer)
+	{
+		killTimer(m_saveTimer);
+
+		m_saveTimer = 0;
+
+		const QString path(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
+
+		if (m_feeds.isEmpty())
+		{
+			QFile::remove(path);
+
+			return;
+		}
+
+		QSaveFile file(path);
+
+		if (!file.open(QIODevice::WriteOnly))
+		{
+			return;
+		}
+
+		QXmlStreamWriter writer(&file);
+		writer.setAutoFormatting(true);
+		writer.setAutoFormattingIndent(-1);
+		writer.writeStartDocument();
+		writer.writeStartElement(QLatin1String("xbel"));
+		writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
+		writer.writeStartElement(QLatin1String("head"));
+		writer.writeTextElement(QLatin1String("title"), QLatin1String("Newsfeeds exported from Otter Browser ") + Application::getFullVersion());
+		writer.writeEndElement();
+		writer.writeStartElement(QLatin1String("body"));
+
+		for (int i = 0; i < m_feeds.count(); ++i)
+		{
+			const Feed *feed(m_feeds.at(i));
+
+			writer.writeStartElement(QLatin1String("outline"));
+			writer.writeAttribute(QLatin1String("text"), feed->getTitle());
+			writer.writeAttribute(QLatin1String("title"), feed->getTitle());
+			writer.writeAttribute(QLatin1String("xmlUrl"), feed->getUrl().toString());
+			writer.writeAttribute(QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval()));
+			writer.writeEndElement();
+		}
+
+		writer.writeEndElement();
+		writer.writeEndDocument();
+	}
 }
 
 void FeedsManager::createInstance()
@@ -141,7 +196,11 @@ void FeedsManager::ensureInitialized()
 
 				if (url.isValid())
 				{
-					m_feeds.append(new Feed(reader.attributes().value(QLatin1String("title")).toString(), url, reader.attributes().value(QLatin1String("updateInterval")).toInt(), m_instance));
+					Feed *feed(new Feed(reader.attributes().value(QLatin1String("title")).toString(), url, reader.attributes().value(QLatin1String("updateInterval")).toInt(), m_instance));
+
+					m_feeds.append(feed);
+
+					connect(feed, &Feed::updated, m_instance, &FeedsManager::scheduleSave);
 				}
 			}
 
@@ -162,6 +221,16 @@ void FeedsManager::ensureInitialized()
 	}
 
 	file.close();
+
+	m_instance->scheduleSave();
+}
+
+void FeedsManager::scheduleSave()
+{
+	if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(1000);
+	}
 }
 
 FeedsManager* FeedsManager::getInstance()

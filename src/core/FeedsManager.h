@@ -96,9 +96,15 @@ public:
 protected:
 	explicit FeedsManager(QObject *parent);
 
+	void timerEvent(QTimerEvent *event) override;
 	static void ensureInitialized();
 
+protected slots:
+	void scheduleSave();
+
 private:
+	int m_saveTimer;
+
 	static FeedsManager *m_instance;
 	static QVector<Feed*> m_feeds;
 	static bool m_isInitialized;
