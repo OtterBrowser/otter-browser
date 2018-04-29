@@ -96,7 +96,7 @@ bool ItemDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const Q
 {
 	if (event->type() == QEvent::ToolTip && index.data(Qt::ToolTipRole).isNull())
 	{
-		QToolTip::showText(event->globalPos(), index.data(Qt::DisplayRole).toString(), view);
+		QToolTip::showText(event->globalPos(), displayText(index.data(Qt::DisplayRole), view->locale()), view);
 
 		return true;
 	}
