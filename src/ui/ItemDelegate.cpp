@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,10 @@
 #include "ItemDelegate.h"
 
 #include <QtGui/QPainter>
+#include <QtGui/QHelpEvent>
+#include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -87,6 +90,18 @@ void ItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewI
 	Q_UNUSED(index)
 
 	editor->setGeometry(option.rect);
+}
+
+bool ItemDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+	if (event->type() == QEvent::ToolTip && index.data(Qt::ToolTipRole).isNull())
+	{
+		QToolTip::showText(event->globalPos(), index.data(Qt::DisplayRole).toString(), view);
+
+		return true;
+	}
+
+	return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
