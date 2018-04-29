@@ -69,6 +69,22 @@ private:
 	bool m_isSuccess;
 };
 
+class DataFetchJob final : public FetchJob
+{
+	Q_OBJECT
+
+public:
+	explicit DataFetchJob(const QUrl &url, QObject *parent = nullptr);
+
+	QIODevice* getData() const;
+
+protected:
+	void handleSuccessfulReply(QNetworkReply *reply) override;
+
+private:
+	QIODevice *m_device;
+};
+
 class IconFetchJob final : public FetchJob
 {
 	Q_OBJECT

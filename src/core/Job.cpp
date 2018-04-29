@@ -121,6 +121,23 @@ QUrl FetchJob::getUrl() const
 	return m_reply->request().url();
 }
 
+DataFetchJob::DataFetchJob(const QUrl &url, QObject *parent) : FetchJob(url, parent),
+	m_device(nullptr)
+{
+}
+
+void DataFetchJob::handleSuccessfulReply(QNetworkReply *reply)
+{
+	m_device = reply;
+
+	markAsFinished();
+}
+
+QIODevice* DataFetchJob::getData() const
+{
+	return m_device;
+}
+
 IconFetchJob::IconFetchJob(const QUrl &url, QObject *parent) : FetchJob(url, parent)
 {
 	setSizeLimit(20480);
