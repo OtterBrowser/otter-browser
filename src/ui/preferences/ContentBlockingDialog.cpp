@@ -51,7 +51,11 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 	{
 		option->features |= QStyleOptionViewItem::HasDecoration;
 
-		if (profile->getLastUpdate().isNull() || profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+		if (profile->getError() != ContentBlockingProfile::NoError)
+		{
+			option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
+		}
+		else if (profile->getLastUpdate().isNull() || profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 		}
@@ -68,7 +72,27 @@ bool ContentBlockingTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemVie
 		{
 			QString toolTip;
 
-			if (profile->getLastUpdate().isNull())
+			if (profile->getError() != ContentBlockingProfile::NoError)
+			{
+				switch (profile->getError())
+				{
+					case ContentBlockingProfile::ReadError:
+						toolTip = tr("Failed to read profile file");
+
+						break;
+					case ContentBlockingProfile::DownloadError:
+						toolTip = tr("Failed to download profile rules");
+
+						break;
+					case ContentBlockingProfile::ChecksumError:
+						toolTip = tr("Failed to verify profile rules using checksum");
+
+						break;
+					default:
+						break;
+				}
+			}
+			else if (profile->getLastUpdate().isNull())
 			{
 				toolTip = tr("Profile was never updated");
 			}
