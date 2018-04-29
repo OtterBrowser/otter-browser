@@ -22,6 +22,7 @@
 #include "AddonsManager.h"
 #include "BookmarksManager.h"
 #include "Console.h"
+#include "FeedsManager.h"
 #include "GesturesManager.h"
 #include "HandlersManager.h"
 #include "HistoryManager.h"
@@ -406,6 +407,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 	AddonsManager::createInstance();
 
 	BookmarksManager::createInstance();
+
+	FeedsManager::createInstance();
 
 	GesturesManager::createInstance();
 
