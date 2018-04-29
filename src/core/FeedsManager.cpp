@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -83,6 +84,7 @@ int Feed::getUpdateInterval() const
 }
 
 FeedsManager* FeedsManager::m_instance(nullptr);
+QVector<Feed*> FeedsManager::m_feeds;
 
 FeedsManager::FeedsManager(QObject *parent) : QObject(parent)
 {
@@ -96,10 +98,31 @@ void FeedsManager::createInstance()
 	}
 }
 
-
 FeedsManager* FeedsManager::getInstance()
 {
 	return m_instance;
+}
+
+Feed* FeedsManager::getFeed(const QUrl &url)
+{
+	const QUrl normalizedUrl(Utils::normalizeUrl(url));
+
+	for (int i = 0; i < m_feeds.count(); ++i)
+	{
+		Feed *feed(m_feeds.at(i));
+
+		if (m_feeds.at(i)->getUrl() == url || m_feeds.at(i)->getUrl() == normalizedUrl)
+		{
+			return feed;
+		}
+	}
+
+	return nullptr;
+}
+
+QVector<Feed*> FeedsManager::getFeeds()
+{
+	return m_feeds;
 }
 
 }

@@ -90,12 +90,15 @@ class FeedsManager final : public QObject
 public:
 	static void createInstance();
 	static FeedsManager* getInstance();
+	static Feed* getFeed(const QUrl &url);
+	static QVector<Feed*> getFeeds();
 
 protected:
 	explicit FeedsManager(QObject *parent);
 
 private:
 	static FeedsManager *m_instance;
+	static QVector<Feed*> m_feeds;
 };
 
 }
