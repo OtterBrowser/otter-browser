@@ -362,7 +362,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 		return;
 	}
 
-	QXmlStreamReader reader(file.readAll());
+	QXmlStreamReader reader(&file);
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("xbel") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
 	{

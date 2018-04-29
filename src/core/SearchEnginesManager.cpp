@@ -298,7 +298,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 	SearchEngineDefinition searchEngine;
 	searchEngine.identifier = identifier;
 
-	QXmlStreamReader reader(device->readAll());
+	QXmlStreamReader reader(device);
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("OpenSearchDescription"))
 	{
