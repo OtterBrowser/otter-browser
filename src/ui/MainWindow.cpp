@@ -82,7 +82,6 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	m_ui->setupUi(this);
 
 	setUnifiedTitleAndToolBarOnMac(true);
-	updateShortcuts();
 
 	m_tabBar->hide();
 
@@ -211,6 +210,11 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 			updateWindowTitle();
 		});
 	}
+
+	QTimer::singleShot(100, [=]()
+	{
+		updateShortcuts();
+	});
 }
 
 MainWindow::~MainWindow()
