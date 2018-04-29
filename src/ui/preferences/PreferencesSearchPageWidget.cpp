@@ -23,7 +23,6 @@
 #include "../LineEditWidget.h"
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/ItemModel.h"
-#include "../../core/Job.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"

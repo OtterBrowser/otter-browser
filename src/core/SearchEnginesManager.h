@@ -20,6 +20,8 @@
 #ifndef OTTER_SEARCHENGINESMANAGER_H
 #define OTTER_SEARCHENGINESMANAGER_H
 
+#include "Job.h"
+
 #include <QtCore/QUrlQuery>
 #include <QtGui/QIcon>
 #include <QtGui/QStandardItemModel>
@@ -103,6 +105,23 @@ private:
 signals:
 	void searchEnginesModified();
 	void searchEnginesModelModified();
+};
+
+class SearchEngineFetchJob final : public FetchJob
+{
+	Q_OBJECT
+
+public:
+	explicit SearchEngineFetchJob(const QUrl &url, const QString &identifier = {}, bool saveSearchEngine = true, QObject *parent = nullptr);
+
+	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
+
+protected:
+	void handleSuccessfulReply(QNetworkReply *reply) override;
+
+private:
+	SearchEnginesManager::SearchEngineDefinition m_searchEngine;
+	bool m_needsToSaveSearchEngine;
 };
 
 }
