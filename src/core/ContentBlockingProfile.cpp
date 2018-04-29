@@ -47,6 +47,7 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QStrin
 	m_updateUrl(updateUrl),
 	m_lastUpdate(lastUpdate),
 	m_category(category),
+	m_error(NoError),
 	m_flags(flags),
 	m_updateInterval(updateInterval),
 	m_isUpdating(false),
@@ -98,6 +99,8 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
+		m_error = ReadError;
+
 		Console::addMessage(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 
 		return;
@@ -595,6 +598,8 @@ void ContentBlockingProfile::handleReplyFinished()
 
 	if (m_networkReply->error() != QNetworkReply::NoError)
 	{
+		m_error = DownloadError;
+
 		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(m_networkReply->errorString()), Console::OtherCategory, Console::ErrorLevel, getPath());
 
 		return;
@@ -607,6 +612,8 @@ void ContentBlockingProfile::handleReplyFinished()
 
 		if (verifiedChecksum.toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
 		{
+			m_error = ChecksumError;
+
 			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), Console::OtherCategory, Console::ErrorLevel, getPath());
 
 			return;
@@ -619,6 +626,8 @@ void ContentBlockingProfile::handleReplyFinished()
 
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
 	{
+		m_error = DownloadError;
+
 		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 
 		return;
@@ -782,6 +791,11 @@ ContentBlockingProfile::ProfileCategory ContentBlockingProfile::getCategory() co
 	return m_category;
 }
 
+ContentBlockingProfile::ProfileError ContentBlockingProfile::getError() const
+{
+	return m_error;
+}
+
 ContentBlockingProfile::ProfileFlags ContentBlockingProfile::getFlags() const
 {
 	return m_flags;
@@ -802,6 +816,8 @@ bool ContentBlockingProfile::downloadRules()
 	if (!m_updateUrl.isValid())
 	{
 		const QString path(getPath());
+
+		m_error = DownloadError;
 
 		if (m_updateUrl.isEmpty())
 		{
@@ -853,6 +869,8 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(
 
 bool ContentBlockingProfile::loadRules()
 {
+	m_error = NoError;
+
 	if (m_isEmpty && !m_updateUrl.isEmpty())
 	{
 		downloadRules();
