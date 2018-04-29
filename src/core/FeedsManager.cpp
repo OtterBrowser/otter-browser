@@ -18,9 +18,14 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
+#include "Console.h"
+#include "SessionsManager.h"
 #include "Utils.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QFile>
+#include <QtCore/QXmlStreamReader>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -80,11 +85,12 @@ Feed::FeedError Feed::getError() const
 
 int Feed::getUpdateInterval() const
 {
-	return m_updateInterval;;
+	return m_updateInterval;
 }
 
 FeedsManager* FeedsManager::m_instance(nullptr);
 QVector<Feed*> FeedsManager::m_feeds;
+bool FeedsManager::m_isInitialized(false);
 
 FeedsManager::FeedsManager(QObject *parent) : QObject(parent)
 {
@@ -98,6 +104,66 @@ void FeedsManager::createInstance()
 	}
 }
 
+void FeedsManager::ensureInitialized()
+{
+	if (m_isInitialized)
+	{
+		return;
+	}
+
+	m_isInitialized = true;
+
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
+
+	if (!QFile::exists(path))
+	{
+		return;
+	}
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		Console::addMessage(tr("Failed to open feeds file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+
+		return;
+	}
+
+	QXmlStreamReader reader(&file);
+
+	if (reader.readNextStartElement() && reader.name() == QLatin1String("opml") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
+	{
+		while (reader.readNextStartElement())
+		{
+			if (reader.name() == QLatin1String("outline"))
+			{
+				const QUrl url(Utils::normalizeUrl(QUrl(reader.attributes().value(QLatin1String("xmlUrl")).toString())));
+
+				if (url.isValid())
+				{
+					m_feeds.append(new Feed(reader.attributes().value(QLatin1String("title")).toString(), url, reader.attributes().value(QLatin1String("updateInterval")).toInt(), m_instance));
+				}
+			}
+
+			if (reader.name() != QLatin1String("body"))
+			{
+				reader.skipCurrentElement();
+			}
+
+			if (reader.hasError())
+			{
+				Console::addMessage(tr("Failed to load feeds file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+				QMessageBox::warning(nullptr, tr("Error"), tr("Failed to load feeds file."), QMessageBox::Close);
+
+				return;
+			}
+		}
+	}
+
+	file.close();
+}
+
 FeedsManager* FeedsManager::getInstance()
 {
 	return m_instance;
@@ -105,6 +171,8 @@ FeedsManager* FeedsManager::getInstance()
 
 Feed* FeedsManager::getFeed(const QUrl &url)
 {
+	ensureInitialized();
+
 	const QUrl normalizedUrl(Utils::normalizeUrl(url));
 
 	for (int i = 0; i < m_feeds.count(); ++i)
@@ -122,6 +190,8 @@ Feed* FeedsManager::getFeed(const QUrl &url)
 
 QVector<Feed*> FeedsManager::getFeeds()
 {
+	ensureInitialized();
+
 	return m_feeds;
 }
 

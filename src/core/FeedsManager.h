@@ -96,9 +96,12 @@ public:
 protected:
 	explicit FeedsManager(QObject *parent);
 
+	static void ensureInitialized();
+
 private:
 	static FeedsManager *m_instance;
 	static QVector<Feed*> m_feeds;
+	static bool m_isInitialized;
 };
 
 }
