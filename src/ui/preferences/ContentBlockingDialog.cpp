@@ -79,7 +79,7 @@ bool ContentBlockingTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemVie
 
 			if (!toolTip.isEmpty())
 			{
-				QToolTip::showText(event->globalPos(), toolTip, view);
+				QToolTip::showText(event->globalPos(), displayText(index.data(Qt::DisplayRole), view->locale()) + QLatin1Char('\n') + toolTip, view);
 
 				return true;
 			}
