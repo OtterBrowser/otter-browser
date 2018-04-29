@@ -81,6 +81,7 @@ public:
 	int getUpdateInterval() const;
 	bool downloadRules();
 	bool remove();
+	bool isUpdating() const;
 
 protected:
 	enum RuleOption : quint32

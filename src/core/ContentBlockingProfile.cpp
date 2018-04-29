@@ -936,4 +936,9 @@ bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const Q
 	return false;
 }
 
+bool ContentBlockingProfile::isUpdating() const
+{
+	return m_isUpdating;
+}
+
 }
