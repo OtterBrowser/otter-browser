@@ -105,6 +105,7 @@ QString formatFileTypes(const QStringList &filters = {});
 QString normalizePath(const QString &path);
 QUrl expandUrl(const QUrl &url);
 QUrl normalizeUrl(QUrl url);
+QString filterCharsFromFilename(const QString &name);
 QLocale createLocale(const QString &name);
 QPixmap loadPixmapFromDataUri(const QString &data);
 SaveInformation getSavePath(const QString &fileName, const QString &directory = {}, QStringList filters = {}, bool forceAsk = false);

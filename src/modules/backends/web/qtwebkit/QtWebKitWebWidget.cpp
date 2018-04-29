@@ -48,6 +48,7 @@
 #include "../../../../ui/SearchEnginePropertiesDialog.h"
 #include "../../../../ui/SourceViewerWebWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
+#include "../../../../ui/PageScreenDialog.h"
 
 #include <QtCore/QDataStream>
 #include <QtCore/QFileInfo>
@@ -913,6 +914,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 							break;
 					}
 				}
+			}
+
+			break;
+		case ActionsManager::SavePageScreenAction:
+			{
+				    PageScreenDialog* pageScreen = new PageScreenDialog(m_webView, this);
+				pageScreen->show();
 			}
 
 			break;

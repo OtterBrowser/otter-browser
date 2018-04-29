@@ -105,6 +105,7 @@ public:
 		NewWindowPrivateAction,
 		OpenAction,
 		SaveAction,
+		SavePageScreenAction,
 		CloneTabAction,
 		PeekTabAction,
 		PinTabAction,

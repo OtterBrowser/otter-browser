@@ -45,6 +45,12 @@
 				]
 			},
 			{
+				"action": "SavePageScreen",
+				"shortcuts": [
+					"Ctrl+Shift+S"
+				]
+			},
+			{
 				"action": "CloseTab",
 				"shortcuts": [
 					"Ctrl+W",
