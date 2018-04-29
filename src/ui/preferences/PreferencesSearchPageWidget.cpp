@@ -42,8 +42,6 @@
 namespace Otter
 {
 
-Animation* PreferencesSearchPageWidget::m_updateAnimation = nullptr;
-
 SearchEngineTitleDelegate::SearchEngineTitleDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
@@ -89,6 +87,8 @@ QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyle
 
 	return widget;
 }
+
+Animation* PreferencesSearchPageWidget::m_updateAnimation = nullptr;
 
 PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::PreferencesSearchPageWidget)
