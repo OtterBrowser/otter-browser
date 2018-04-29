@@ -414,6 +414,8 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 		return;
 	}
 
+	m_ui->profilesViewWidget->viewport()->update();
+
 	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
 	{
 		const QModelIndex categoryIndex(m_ui->profilesViewWidget->getIndex(i));
