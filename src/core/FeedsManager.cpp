@@ -200,7 +200,7 @@ void FeedsManager::ensureInitialized()
 
 					m_feeds.append(feed);
 
-					connect(feed, &Feed::updated, m_instance, &FeedsManager::scheduleSave);
+					connect(feed, &Feed::feedModified, m_instance, &FeedsManager::scheduleSave);
 				}
 			}
 

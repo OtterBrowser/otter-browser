@@ -80,7 +80,7 @@ private:
 	int m_updateInterval;
 
 signals:
-	void updated();
+	void feedModified(const QUrl &url);
 };
 
 class FeedsManager final : public QObject
@@ -108,6 +108,11 @@ private:
 	static FeedsManager *m_instance;
 	static QVector<Feed*> m_feeds;
 	static bool m_isInitialized;
+
+signals:
+	void feedAdded(const QUrl &url);
+	void feedModified(const QUrl &url);
+	void feedRemoved(const QUrl &url);
 };
 
 }
