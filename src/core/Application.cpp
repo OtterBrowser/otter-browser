@@ -1279,6 +1279,8 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 	connect(mainWindow, &MainWindow::activated, [=]()
 	{
 		m_activeWindow = mainWindow;
+
+		emit m_instance->currentWindowChanged(mainWindow);
 	});
 
 	return mainWindow;

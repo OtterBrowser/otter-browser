@@ -124,6 +124,7 @@ private:
 signals:
 	void windowAdded(MainWindow *mainWindow);
 	void windowRemoved(MainWindow *mainWindow);
+	void currentWindowChanged(MainWindow *mainWindow);
 	void arbitraryActionsStateChanged(const QVector<int> &identifiers);
 };
 
