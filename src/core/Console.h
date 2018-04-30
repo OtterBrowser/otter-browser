@@ -53,7 +53,7 @@ public:
 
 	struct Message final
 	{
-		QDateTime time = QDateTime::currentDateTime();
+		QDateTime time = QDateTime::currentDateTimeUtc();
 		QString note;
 		QString source;
 		MessageCategory category = OtherCategory;

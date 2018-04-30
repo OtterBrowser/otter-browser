@@ -423,7 +423,7 @@ WindowHistoryInformation QtWebEnginePage::getHistory() const
 		entry.url = url;
 		entry.title = m_widget->getTitle();
 		entry.icon = icon();
-		entry.time = QDateTime::currentDateTime();
+		entry.time = QDateTime::currentDateTimeUtc();
 		entry.position = scrollPosition().toPoint();
 		entry.zoom = static_cast<int>(zoomFactor() * 100);
 
@@ -519,7 +519,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 
 			HistoryEntryInformation entry;
 			entry.icon = icon();
-			entry.timeVisited = QDateTime::currentDateTime();
+			entry.timeVisited = QDateTime::currentDateTimeUtc();
 			entry.position = scrollPosition().toPoint();
 			entry.identifier = HistoryManager::addEntry(url, {}, {});
 			entry.zoom = static_cast<int>(zoomFactor() * 100);

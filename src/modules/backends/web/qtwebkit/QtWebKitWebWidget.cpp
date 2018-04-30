@@ -259,7 +259,7 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 
 		if (state.isEmpty() || state.count() < 4)
 		{
-			state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTime()};
+			state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
 		}
 		else
 		{
@@ -603,7 +603,7 @@ void QtWebKitWebWidget::handleHistory()
 
 	if (identifier == 0)
 	{
-		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0), QDateTime::currentDateTime()}));
+		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0), QDateTime::currentDateTimeUtc()}));
 
 		if (m_isTyped)
 		{
@@ -2333,7 +2333,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 	if (state.isEmpty() || state.count() < 4)
 	{
-		state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTime()};
+		state = {0, getZoom(), m_page->mainFrame()->scrollPosition(), QDateTime::currentDateTimeUtc()};
 	}
 	else
 	{
