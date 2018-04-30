@@ -127,6 +127,9 @@ private:
 	SessionItem *m_rootItem;
 	SessionItem *m_trashItem;
 	QMap<MainWindow*, MainWindowSessionItem*> m_mainWindowItems;
+
+signals:
+	void modelModified();
 };
 
 }

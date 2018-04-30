@@ -263,6 +263,11 @@ SessionModel::SessionModel(QObject *parent) : QStandardItemModel(parent),
 
 	connect(Application::getInstance(), &Application::windowAdded, this, &SessionModel::handleMainWindowAdded);
 	connect(Application::getInstance(), &Application::windowRemoved, this, &SessionModel::handleMainWindowRemoved);
+	connect(Application::getInstance(), &Application::currentWindowChanged, this, &SessionModel::modelModified);
+	connect(this, &SessionModel::itemChanged, this, &SessionModel::modelModified);
+	connect(this, &SessionModel::rowsInserted, this, &SessionModel::modelModified);
+	connect(this, &SessionModel::rowsRemoved, this, &SessionModel::modelModified);
+	connect(this, &SessionModel::rowsMoved, this, &SessionModel::modelModified);
 }
 
 void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
@@ -285,6 +290,8 @@ void SessionModel::handleMainWindowAdded(MainWindow *mainWindow)
 	m_rootItem->appendRow(item);
 
 	m_mainWindowItems[mainWindow] = item;
+
+	connect(mainWindow, &MainWindow::currentWindowChanged, this, &SessionModel::modelModified);
 }
 
 void SessionModel::handleMainWindowRemoved(MainWindow *mainWindow)
