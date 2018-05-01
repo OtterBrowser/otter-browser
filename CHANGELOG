@@ -1,3 +1,11 @@
+0.9.98 (2018-05-01):
+- several enhancements in experimental backend for QtWebEngine (Blink):
+-- initial work on global history support;
+-- added support for alternative stylesheets;
+-- added support for fetching lists of search engines, feeds and links;
+- initial work on Feeds Reader;
+- several bug fixes and some minor optimizations.
+
 0.9.97 (2018-04-01):
 - added initial version of Links panel;
 - some minor optimizations.
