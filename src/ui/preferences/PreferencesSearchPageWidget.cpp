@@ -123,8 +123,9 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
-	const QAction *createSearchEngineAction(addSearchEngineMenu->addAction(tr("New…")));
-	const QAction *importSearchEngineAction(addSearchEngineMenu->addAction(tr("File…")));
+
+	connect(addSearchEngineMenu->addAction(tr("New…")), &QAction::triggered, this, &PreferencesSearchPageWidget::createSearchEngine);
+	connect(addSearchEngineMenu->addAction(tr("File…")), &QAction::triggered, this, &PreferencesSearchPageWidget::importSearchEngine);
 
 	addSearchEngineMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
@@ -145,8 +146,6 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	connect(m_ui->removeSearchButton, &QPushButton::clicked, this, &PreferencesSearchPageWidget::removeSearchEngine);
 	connect(m_ui->moveDownSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveDownRow);
 	connect(m_ui->moveUpSearchButton, &QToolButton::clicked, m_ui->searchViewWidget, &ItemViewWidget::moveUpRow);
-	connect(createSearchEngineAction, &QAction::triggered, this, &PreferencesSearchPageWidget::createSearchEngine);
-	connect(importSearchEngineAction, &QAction::triggered, this, &PreferencesSearchPageWidget::importSearchEngine);
 }
 
 PreferencesSearchPageWidget::~PreferencesSearchPageWidget()
