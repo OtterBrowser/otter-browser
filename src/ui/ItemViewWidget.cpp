@@ -641,7 +641,7 @@ void ItemViewWidget::updateFilter()
 
 void ItemViewWidget::updateSize()
 {
-	if (!m_headerWidget)
+	if (!m_headerWidget || !model())
 	{
 		return;
 	}
