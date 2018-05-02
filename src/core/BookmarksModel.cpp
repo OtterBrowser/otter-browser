@@ -337,10 +337,8 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 	m_mode(mode)
 {
 	m_rootItem->setData(RootBookmark, TypeRole);
-	m_rootItem->setData(((mode == NotesMode) ? tr("Notes") : tr("Bookmarks")), TitleRole);
 	m_rootItem->setDragEnabled(false);
 	m_trashItem->setData(TrashBookmark, TypeRole);
-	m_trashItem->setData(tr("Trash"), TitleRole);
 	m_trashItem->setDragEnabled(false);
 	m_trashItem->setEnabled(false);
 
