@@ -687,7 +687,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				Window *activeWindow(m_workspace->getActiveWindow());
 				const bool isUrlEmpty(activeWindow && activeWindow->getLoadingState() == WebWidget::FinishedLoadingState && Utils::isUrlEmpty(activeWindow->getUrl()));
 
-				if (hints == SessionsManager::NewTabOpen && isUrlEmpty && !url.isEmpty())
+				if (hints == SessionsManager::NewTabOpen && isUrlEmpty && !url.isEmpty() && url != QUrl(QLatin1String("about:start")))
 				{
 					hints = SessionsManager::CurrentTabOpen;
 				}
