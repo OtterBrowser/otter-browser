@@ -341,7 +341,7 @@ MouseProfile::Gesture::Step MouseProfile::Gesture::Step::fromString(const QStrin
 
 bool MouseProfile::Gesture::Step::operator ==(const Step &other) const
 {
-	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers || type == QEvent::MouseMove);
+	return (type == other.type && button == other.button && direction == other.direction && (modifiers == other.modifiers || type == QEvent::MouseMove));
 }
 
 bool MouseProfile::Gesture::Step::operator !=(const Step &other) const
