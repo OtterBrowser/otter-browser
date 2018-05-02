@@ -55,17 +55,17 @@ void HistoryModel::Entry::setItemData(const QVariant &value, int role)
 
 QString HistoryModel::Entry::getTitle() const
 {
-	return (data(HistoryModel::TitleRole).isNull() ? QCoreApplication::translate("Otter::HistoryEntryItem", "(Untitled)") : data(HistoryModel::TitleRole).toString());
+	return (data(TitleRole).isNull() ? QCoreApplication::translate("Otter::HistoryEntryItem", "(Untitled)") : data(TitleRole).toString());
 }
 
 QUrl HistoryModel::Entry::getUrl() const
 {
-	return data(HistoryModel::UrlRole).toUrl();
+	return data(UrlRole).toUrl();
 }
 
 QDateTime HistoryModel::Entry::getTimeVisited() const
 {
-	return data(HistoryModel::TimeVisitedRole).toDateTime();
+	return data(TimeVisitedRole).toDateTime();
 }
 
 QIcon HistoryModel::Entry::getIcon() const
@@ -77,7 +77,7 @@ QIcon HistoryModel::Entry::getIcon() const
 
 quint64 HistoryModel::Entry::getIdentifier() const
 {
-	return data(HistoryModel::IdentifierRole).toULongLong();
+	return data(IdentifierRole).toULongLong();
 }
 
 HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *parent) : QStandardItemModel(parent),
@@ -115,7 +115,7 @@ void HistoryModel::clearExcessEntries(int limit)
 	{
 		for (int i = (rowCount() - 1); i >= limit; --i)
 		{
-			removeEntry(index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
+			removeEntry(index(i, 0).data(IdentifierRole).toULongLong());
 		}
 	}
 }
@@ -245,9 +245,9 @@ HistoryModel::Entry* HistoryModel::getEntry(quint64 identifier) const
 QVector<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &prefix, bool markAsTypedIn) const
 {
 	QVector<Entry*> matchedEntries;
-	QVector<HistoryModel::HistoryEntryMatch> allMatches;
-	QVector<HistoryModel::HistoryEntryMatch> currentMatches;
-	QMultiMap<QDateTime, HistoryModel::HistoryEntryMatch> matchesMap;
+	QVector<HistoryEntryMatch> allMatches;
+	QVector<HistoryEntryMatch> currentMatches;
+	QMultiMap<QDateTime, HistoryEntryMatch> matchesMap;
 	QHash<QUrl, QVector<Entry*> >::const_iterator urlsIterator;
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
