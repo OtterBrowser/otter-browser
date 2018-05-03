@@ -59,6 +59,28 @@ void ItemModel::Item::setup(ItemModel::ItemType type)
 	}
 }
 
+bool ItemModel::Item::isAncestorOf(QStandardItem *child) const
+{
+	if (child == nullptr || child == this)
+	{
+		return false;
+	}
+
+	QStandardItem *parent(child->parent());
+
+	while (parent)
+	{
+		if (parent == this)
+		{
+			return true;
+		}
+
+		parent = parent->parent();
+	}
+
+	return false;
+}
+
 ItemModel::ItemModel(QObject *parent) : QStandardItemModel(parent),
 	m_isExclusive(false),
 	m_isIgnoringCheckStateReset(true)
