@@ -8,6 +8,7 @@
 AppId={{A0517512-5271-465D-AE59-D08F487B5CAF}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+AppPublisher="Otter Browser Team"
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
