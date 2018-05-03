@@ -380,9 +380,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (!passwords.isEmpty())
 				{
+					PasswordsManager::PasswordInformation password;
+
 					if (passwords.count() == 1)
 					{
-						m_webWidget->fillPassword(passwords.first());
+						password = passwords.first();
 					}
 					else
 					{
@@ -390,8 +392,17 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 						if (dialog.exec() == QDialog::Accepted)
 						{
-							m_webWidget->fillPassword(dialog.getPassword());
+							password = dialog.getPassword();
 						}
+					}
+
+					if (password.isValid())
+					{
+						m_webWidget->fillPassword(password);
+
+						password.timeUsed = QDateTime::currentDateTimeUtc();
+
+						PasswordsManager::addPassword(password);
 					}
 				}
 			}
