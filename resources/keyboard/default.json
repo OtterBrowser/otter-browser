@@ -321,6 +321,96 @@
 				]
 			},
 			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 1
+				},
+				"shortcuts": [
+					"Ctrl+1"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 2
+				},
+				"shortcuts": [
+					"Ctrl+2"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 3
+				},
+				"shortcuts": [
+					"Ctrl+3"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 4
+				},
+				"shortcuts": [
+					"Ctrl+4"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 5
+				},
+				"shortcuts": [
+					"Ctrl+5"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 6
+				},
+				"shortcuts": [
+					"Ctrl+6"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 7
+				},
+				"shortcuts": [
+					"Ctrl+7"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 8
+				},
+				"shortcuts": [
+					"Ctrl+8"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 9
+				},
+				"shortcuts": [
+					"Ctrl+9"
+				]
+			},
+			{
+				"action": "OpenBookmark",
+				"parameters": {
+					"startPageTile": 10
+				},
+				"shortcuts": [
+					"Ctrl+0"
+				]
+			},
+			{
 				"action": "QuickBookmarkAccess",
 				"shortcuts": [
 					"Shift+F2"
