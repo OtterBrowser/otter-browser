@@ -804,7 +804,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 					if (startPageBookmark)
 					{
-						bookmark = startPageBookmark->getChild(parameters.value(QLatin1String("startPageTile")).toInt());
+						bookmark = startPageBookmark->getChild(parameters.value(QLatin1String("startPageTile")).toInt() - 1);
 					}
 				}
 
@@ -815,6 +815,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				QVariantMap mutableParameters(parameters);
 				mutableParameters.remove(QLatin1String("bookmark"));
+				mutableParameters.remove(QLatin1String("startPageTile"));
 
 				switch (bookmark->getType())
 				{
