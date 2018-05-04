@@ -626,7 +626,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 								break;
 							case InputInterpreter::InterpreterResult::SearchType:
-								search(result.searchQuery, result.searchEngine, SessionsManager::calculateOpenHints(parameters));
+								search(result.searchQuery, result.searchEngine, SessionsManager::calculateOpenHints(parameters, (trigger == ActionsManager::KeyboardTrigger || trigger == ActionsManager::MouseTrigger)));
 
 								return;
 							default:
@@ -646,7 +646,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 					return;
 				}
 
-				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+				SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters, (trigger == ActionsManager::KeyboardTrigger || trigger == ActionsManager::MouseTrigger)));
 				const int index(parameters.value(QLatin1String("index"), -1).toInt());
 
 				if (m_isPrivate)
