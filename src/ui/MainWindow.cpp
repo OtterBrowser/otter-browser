@@ -439,11 +439,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 				QVariantMap mutableParameters(parameters);
 				mutableParameters[QLatin1String("hints")] = SessionsManager::NewTabOpen;
 
-				if (SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
-				{
-					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("about:start"));
-				}
-
 				triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 			}
 
