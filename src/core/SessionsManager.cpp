@@ -435,11 +435,11 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, 
 	return calculateOpenHints(hints, button, QGuiApplication::keyboardModifiers());
 }
 
-SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap &parameters)
+SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap &parameters, bool ignoreModifiers)
 {
 	if (!parameters.contains(QLatin1String("hints")))
 	{
-		return calculateOpenHints();
+		return calculateOpenHints(DefaultOpen, Qt::LeftButton, (ignoreModifiers ? Qt::NoModifier : QGuiApplication::keyboardModifiers()));
 	}
 
 	const QVariant::Type type(parameters[QLatin1String("hints")].type());
