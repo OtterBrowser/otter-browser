@@ -2723,11 +2723,11 @@ void Shortcut::triggerAction()
 
 	if (definition.scope == ActionsManager::ActionDefinition::ApplicationScope)
 	{
-		Application::getInstance()->triggerAction(m_identifier, parameters);
+		Application::getInstance()->triggerAction(m_identifier, parameters, ActionsManager::KeyboardTrigger);
 	}
 	else
 	{
-		m_mainWindow->triggerAction(m_identifier, parameters);
+		m_mainWindow->triggerAction(m_identifier, parameters, ActionsManager::KeyboardTrigger);
 	}
 }
 

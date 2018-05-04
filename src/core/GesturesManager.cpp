@@ -1071,7 +1071,7 @@ bool GesturesManager::triggerAction(const MouseProfile::Gesture &gesture)
 		QVariantMap parameters(gesture.parameters);
 		parameters.unite(m_paramaters);
 
-		Application::triggerAction(gesture.action, parameters, m_trackedObject);
+		Application::triggerAction(gesture.action, parameters, m_trackedObject, ActionsManager::MouseTrigger);
 	}
 
 	if (m_trackedObject)
