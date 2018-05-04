@@ -59,7 +59,7 @@ public:
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 
 protected:
 	void changeEvent(QEvent *event) override;

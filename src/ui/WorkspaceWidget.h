@@ -20,6 +20,7 @@
 #ifndef OTTER_WORKSPACEWIDGET_H
 #define OTTER_WORKSPACEWIDGET_H
 
+#include "../core/ActionsManager.h"
 #include "../core/SessionsManager.h"
 
 #include <QtCore/QPointer>
@@ -78,7 +79,7 @@ public:
 	int getWindowCount(Qt::WindowState state) const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = {});
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger);
 	void markAsRestored();
 
 protected:

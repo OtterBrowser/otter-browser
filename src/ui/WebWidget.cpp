@@ -90,10 +90,11 @@ void WebWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
-void WebWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void WebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	Q_UNUSED(identifier)
 	Q_UNUSED(parameters)
+	Q_UNUSED(trigger)
 }
 
 void WebWidget::search(const QString &query, const QString &searchEngine)

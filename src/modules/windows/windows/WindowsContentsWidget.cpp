@@ -89,7 +89,7 @@ void WindowsContentsWidget::print(QPrinter *printer)
 	m_ui->windowsViewWidget->render(printer);
 }
 
-void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -102,7 +102,7 @@ void WindowsContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

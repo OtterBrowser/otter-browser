@@ -63,7 +63,7 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	connect(m_sourceViewer, &SourceViewerWidget::cursorPositionChanged, this, &SourceViewerWebWidget::notifyEditingActionsStateChanged);
 }
 
-void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -121,11 +121,11 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 					if (result == QMessageBox::Save)
 					{
-						triggerAction(ActionsManager::SaveAction);
+						triggerAction(ActionsManager::SaveAction, {}, trigger);
 					}
 				}
 
-				triggerAction(ActionsManager::StopAction);
+				triggerAction(ActionsManager::StopAction, {}, trigger);
 
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
@@ -150,17 +150,17 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 		case ActionsManager::ReloadOrStopAction:
 			if (m_isLoading)
 			{
-				triggerAction(ActionsManager::StopAction);
+				triggerAction(ActionsManager::StopAction, {}, trigger);
 			}
 			else
 			{
-				triggerAction(ActionsManager::ReloadAction);
+				triggerAction(ActionsManager::ReloadAction, {}, trigger);
 			}
 
 			break;
 		case ActionsManager::ReloadAndBypassCacheAction:
 			{
-				triggerAction(ActionsManager::StopAction);
+			triggerAction(ActionsManager::StopAction, {}, trigger);
 
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
@@ -213,7 +213,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				if (bookmark)
 				{
-					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}});
+					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}}, trigger);
 				}
 			}
 			else if (parameters.contains(QLatin1String("text")))

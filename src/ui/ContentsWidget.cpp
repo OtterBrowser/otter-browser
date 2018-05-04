@@ -132,9 +132,10 @@ void ContentsWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
-void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	Q_UNUSED(parameters)
+	Q_UNUSED(trigger)
 
 	switch (identifier)
 	{

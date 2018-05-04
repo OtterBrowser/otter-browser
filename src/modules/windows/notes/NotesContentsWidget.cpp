@@ -223,7 +223,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 	menu.exec(m_ui->notesViewWidget->mapToGlobal(position));
 }
 
-void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -267,7 +267,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

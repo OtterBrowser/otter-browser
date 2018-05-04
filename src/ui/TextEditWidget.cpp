@@ -99,8 +99,10 @@ void TextEditWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
-void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void TextEditWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
+	Q_UNUSED(trigger)
+
 	switch (identifier)
 	{
 		case ActionsManager::UndoAction:

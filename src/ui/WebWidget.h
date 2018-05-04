@@ -240,7 +240,7 @@ public:
 	virtual bool isPrivate() const = 0;
 
 public slots:
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	virtual void clearOptions();
 	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
 	virtual void showContextMenu(const QPoint &position = {});

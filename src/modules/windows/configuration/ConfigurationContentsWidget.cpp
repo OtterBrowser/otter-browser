@@ -263,7 +263,7 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -277,7 +277,7 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

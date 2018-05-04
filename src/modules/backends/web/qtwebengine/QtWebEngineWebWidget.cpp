@@ -259,7 +259,7 @@ void QtWebEngineWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -407,7 +407,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::BookmarkLinkAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}}, parentWidget());
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), m_hitResult.linkUrl}, {QLatin1String("title"), m_hitResult.title}}, parentWidget(), trigger);
 			}
 
 			break;
@@ -555,7 +555,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			{
 				if (getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
-					triggerAction(ActionsManager::ReloadAndBypassCacheAction);
+					triggerAction(ActionsManager::ReloadAndBypassCacheAction, {}, trigger);
 				}
 				else
 				{
@@ -713,11 +713,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ReloadOrStopAction:
 			if (m_loadingState == OngoingLoadingState)
 			{
-				triggerAction(ActionsManager::StopAction);
+				triggerAction(ActionsManager::StopAction, {}, trigger);
 			}
 			else
 			{
-				triggerAction(ActionsManager::ReloadAction);
+				triggerAction(ActionsManager::ReloadAction, {}, trigger);
 			}
 
 			break;
@@ -758,7 +758,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::CopyPlainTextAction:
-			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}});
+			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}}, trigger);
 
 			break;
 		case ActionsManager::CopyAddressAction:
@@ -776,7 +776,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (bookmark)
 				{
-					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}});
+					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}}, trigger);
 				}
 			}
 			else if (parameters.contains(QLatin1String("text")))
@@ -814,8 +814,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::ClearAllAction:
-			triggerAction(ActionsManager::SelectAllAction);
-			triggerAction(ActionsManager::DeleteAction);
+			triggerAction(ActionsManager::SelectAllAction, {}, trigger);
+			triggerAction(ActionsManager::DeleteAction, {}, trigger);
 
 			break;
 		case ActionsManager::CreateSearchAction:
@@ -935,7 +935,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::InspectElementAction:
-			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}});
+			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}}, trigger);
 
 			m_page->triggerAction(QWebEnginePage::InspectElement);
 

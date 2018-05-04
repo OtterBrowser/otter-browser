@@ -452,7 +452,7 @@ void AddonsContentsWidget::print(QPrinter *printer)
 	m_ui->addonsViewWidget->render(printer);
 }
 
-void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -474,7 +474,7 @@ void AddonsContentsWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

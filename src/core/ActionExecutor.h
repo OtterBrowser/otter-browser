@@ -40,7 +40,7 @@ public:
 
 		void connectSignals(const QObject *receiver, const QMetaMethod *actionsStateChangedMethod, const QMetaMethod *arbitraryActionsStateChangedMethod, const QMetaMethod *categorizedActionsStateChangedMethod);
 		void disconnectSignals(const QObject *receiver, const QMetaMethod *actionsStateChangedMethod, const QMetaMethod *arbitraryActionsStateChangedMethod, const QMetaMethod *categorizedActionsStateChangedMethod);
-		void triggerAction(int identifier, const QVariantMap &parameters = {});
+		void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger);
 		QObject* getObject() const;
 		Object& operator=(const Object &other);
 		ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const;
@@ -55,7 +55,7 @@ public:
 	virtual ~ActionExecutor();
 
 	virtual ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const = 0;
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) = 0;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) = 0;
 	virtual bool isAboutToClose() const;
 };
 

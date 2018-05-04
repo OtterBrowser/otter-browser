@@ -86,11 +86,11 @@ void ActionExecutor::Object::disconnectSignals(const QObject *receiver, const QM
 	}
 }
 
-void ActionExecutor::Object::triggerAction(int identifier, const QVariantMap &parameters)
+void ActionExecutor::Object::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	if (!m_object.isNull())
 	{
-		m_executor->triggerAction(identifier, parameters);
+		m_executor->triggerAction(identifier, parameters, trigger);
 	}
 }
 

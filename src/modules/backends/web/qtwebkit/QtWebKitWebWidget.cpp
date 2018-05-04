@@ -864,7 +864,7 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 	}
 }
 
-void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -938,7 +938,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::PurgeTabHistoryAction:
-			triggerAction(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}});
+			triggerAction(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, trigger);
 
 			break;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -1044,7 +1044,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 				const QString title(getCurrentHitTestResult().title);
 
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}}, parentWidget());
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}}, parentWidget(), trigger);
 			}
 
 			break;
@@ -1197,7 +1197,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (getUrl().matches(getCurrentHitTestResult().imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
-					triggerAction(ActionsManager::ReloadAndBypassCacheAction);
+					triggerAction(ActionsManager::ReloadAndBypassCacheAction, {}, trigger);
 				}
 				else
 				{
@@ -1365,11 +1365,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ReloadOrStopAction:
 			if (m_loadingState == OngoingLoadingState)
 			{
-				triggerAction(ActionsManager::StopAction);
+				triggerAction(ActionsManager::StopAction, {}, trigger);
 			}
 			else
 			{
-				triggerAction(ActionsManager::ReloadAction);
+				triggerAction(ActionsManager::ReloadAction, {}, trigger);
 			}
 
 			break;
@@ -1438,7 +1438,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::CopyPlainTextAction:
-			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}});
+			triggerAction(ActionsManager::CopyAction, {{QLatin1String("mode"), QLatin1String("plainText")}}, trigger);
 
 			break;
 		case ActionsManager::CopyAddressAction:
@@ -1456,7 +1456,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (bookmark)
 				{
-					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}});
+					triggerAction(ActionsManager::PasteAction, {{QLatin1String("text"), bookmark->getDescription()}}, trigger);
 				}
 			}
 			else if (parameters.contains(QLatin1String("text")))
@@ -1510,8 +1510,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::ClearAllAction:
-			triggerAction(ActionsManager::SelectAllAction);
-			triggerAction(ActionsManager::DeleteAction);
+			triggerAction(ActionsManager::SelectAllAction, {}, trigger);
+			triggerAction(ActionsManager::DeleteAction, {}, trigger);
 
 			break;
 		case ActionsManager::CheckSpellingAction:
@@ -1747,7 +1747,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::InspectElementAction:
-			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}});
+			triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), true}}, trigger);
 
 			m_page->triggerAction(QWebPage::InspectElement);
 

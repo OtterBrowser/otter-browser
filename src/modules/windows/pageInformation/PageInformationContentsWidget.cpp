@@ -114,7 +114,7 @@ void PageInformationContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PageInformationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void PageInformationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	if (identifier == ActionsManager::CopyAction)
 	{
@@ -127,7 +127,7 @@ void PageInformationContentsWidget::triggerAction(int identifier, const QVariant
 	}
 	else
 	{
-		ContentsWidget::triggerAction(identifier, parameters);
+		ContentsWidget::triggerAction(identifier, parameters, trigger);
 	}
 }
 

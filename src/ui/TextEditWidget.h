@@ -44,7 +44,7 @@ public:
 	bool hasSelection() const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters) override;
+	void triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;

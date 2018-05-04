@@ -81,7 +81,7 @@ public:
 	bool isPopupVisible() const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters) override;
+	void triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void setCompletion(const QString &completion);
 
 protected:

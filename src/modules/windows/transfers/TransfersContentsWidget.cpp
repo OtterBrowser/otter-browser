@@ -484,7 +484,7 @@ void TransfersContentsWidget::print(QPrinter *printer)
 	m_ui->transfersViewWidget->render(printer);
 }
 
-void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -524,7 +524,7 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

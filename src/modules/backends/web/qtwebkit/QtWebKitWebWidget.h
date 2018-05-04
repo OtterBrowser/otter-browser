@@ -91,7 +91,7 @@ public:
 public slots:
 	void clearOptions() override;
 	void fillPassword(const PasswordsManager::PasswordInformation &password) override;
-	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void setActiveStyleSheet(const QString &styleSheet) override;
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
 	void setOption(int identifier, const QVariant &value) override;

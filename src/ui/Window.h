@@ -83,7 +83,7 @@ public:
 	bool isPrivate() const;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void requestClose();
 	void search(const QString &query, const QString &searchEngine);
 	void markAsActive(bool updateLastActivity = true);

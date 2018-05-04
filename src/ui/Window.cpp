@@ -124,7 +124,7 @@ void Window::focusInEvent(QFocusEvent *event)
 	updateFocus();
 }
 
-void Window::triggerAction(int identifier, const QVariantMap &parameters)
+void Window::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -154,7 +154,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 				QVariantMap mutableParameters(parameters);
 				mutableParameters[QLatin1String("tab")] = m_identifier;
 
-				m_mainWindow->triggerAction(identifier, mutableParameters);
+				m_mainWindow->triggerAction(identifier, mutableParameters, trigger);
 			}
 
 			break;
@@ -177,12 +177,12 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::FullScreenAction:
 			if (m_contentsWidget)
 			{
-				m_contentsWidget->triggerAction(identifier, parameters);
+				m_contentsWidget->triggerAction(identifier, parameters, trigger);
 			}
 
 			break;
 		default:
-			getContentsWidget()->triggerAction(identifier, parameters);
+			getContentsWidget()->triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

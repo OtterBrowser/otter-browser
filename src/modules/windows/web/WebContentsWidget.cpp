@@ -328,7 +328,7 @@ void WebContentsWidget::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
-void WebContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void WebContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -357,7 +357,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 									if (mainWindow)
 									{
-										mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+										mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}}, trigger);
 									}
 								}
 
@@ -454,7 +454,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 								if (mainWindow)
 								{
-									mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}});
+									mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), result.url}, {QLatin1String("hints"), QVariant(hints)}}, trigger);
 								}
 							}
 
@@ -588,7 +588,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::PrintAction:
 		case ActionsManager::PrintPreviewAction:
 		case ActionsManager::BookmarkPageAction:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 		case ActionsManager::EnableJavaScriptAction:
@@ -663,7 +663,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					case ActionsManager::OpenLinkInNewPrivateWindowAction:
 					case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 					case ActionsManager::ContextMenuAction:
-						m_startPageWidget->triggerAction(identifier, parameters);
+						m_startPageWidget->triggerAction(identifier, parameters, trigger);
 
 						return;
 					default:
@@ -671,7 +671,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 			}
 
-			m_webWidget->triggerAction(identifier, parameters);
+			m_webWidget->triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

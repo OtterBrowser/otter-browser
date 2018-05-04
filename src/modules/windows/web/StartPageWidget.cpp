@@ -467,7 +467,7 @@ void StartPageWidget::dropEvent(QDropEvent *event)
 	}
 }
 
-void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	Q_UNUSED(parameters)
 
@@ -526,7 +526,7 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 	{
 		m_urlOpenTime = QTime::currentTime();
 
-		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget());
+		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(hints)}}, parentWidget(), trigger);
 	}
 }
 

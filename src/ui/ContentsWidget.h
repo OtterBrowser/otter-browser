@@ -63,7 +63,7 @@ public:
 	bool isSidebarPanel() const;
 
 public slots:
-	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}) override;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	virtual void print(QPrinter *printer);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setOption(int identifier, const QVariant &value);

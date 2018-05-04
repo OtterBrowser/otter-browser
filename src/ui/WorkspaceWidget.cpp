@@ -316,7 +316,7 @@ void WorkspaceWidget::createMdi()
 	connect(m_mdi, &MdiWidget::customContextMenuRequested, this, &WorkspaceWidget::showContextMenu);
 }
 
-void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	const bool hasSpecifiedWindow(parameters.contains(QLatin1String("tab")));
 	Window *window(hasSpecifiedWindow ? m_mainWindow->getWindowByIdentifier(parameters[QLatin1String("tab")].toULongLong()) : nullptr);
@@ -384,7 +384,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				}
 				else if (subWindow == m_mdi->currentSubWindow() && activeSubWindows > 1)
 				{
-					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, m_mainWindow);
+					Application::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, {}, m_mainWindow, trigger);
 				}
 
 				subWindow->storeState();
@@ -491,13 +491,13 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 			break;
 		case ActionsManager::CascadeAllAction:
-			triggerAction(ActionsManager::RestoreAllAction);
+			triggerAction(ActionsManager::RestoreAllAction, {}, trigger);
 
 			m_mdi->cascadeSubWindows();
 
 			break;
 		case ActionsManager::TileAllAction:
-			triggerAction(ActionsManager::RestoreAllAction);
+			triggerAction(ActionsManager::RestoreAllAction, {}, trigger);
 
 			m_mdi->tileSubWindows();
 

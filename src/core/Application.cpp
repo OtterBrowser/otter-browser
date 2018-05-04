@@ -517,12 +517,12 @@ Application::~Application()
 	}
 }
 
-void Application::triggerAction(int identifier, const QVariantMap &parameters)
+void Application::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
-	triggerAction(identifier, parameters, nullptr);
+	triggerAction(identifier, parameters, nullptr, trigger);
 }
 
-void Application::triggerAction(int identifier, const QVariantMap &parameters, QObject *target)
+void Application::triggerAction(int identifier, const QVariantMap &parameters, QObject *target, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -549,11 +549,11 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 					if (actionIdentifier.type() == QVariant::Int)
 					{
-						triggerAction(actionIdentifier.toInt(), actionParameters, target);
+						triggerAction(actionIdentifier.toInt(), actionParameters, target, trigger);
 					}
 					else
 					{
-						triggerAction(ActionsManager::getActionIdentifier(actionIdentifier.toString()), actionParameters, target);
+						triggerAction(ActionsManager::getActionIdentifier(actionIdentifier.toString()), actionParameters, target, trigger);
 					}
 				}
 			}
@@ -830,12 +830,12 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			if (window)
 			{
-				window->triggerAction(identifier, parameters);
+				window->triggerAction(identifier, parameters, trigger);
 			}
 		}
 		else if (mainWindow)
 		{
-			mainWindow->triggerAction(identifier, parameters);
+			mainWindow->triggerAction(identifier, parameters, trigger);
 		}
 	}
 }

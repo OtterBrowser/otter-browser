@@ -22,6 +22,7 @@
 #define OTTER_STARTPAGEWIDGET_H
 
 #include "StartPagePreferencesDialog.h"
+#include "../../../core/ActionsManager.h"
 
 #include <QtCore/QTime>
 #include <QtWidgets/QListView>
@@ -93,7 +94,7 @@ public:
 	explicit StartPageWidget(Window *parent);
 	~StartPageWidget();
 
-	void triggerAction(int identifier, const QVariantMap &parameters = {});
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger);
 	void scrollContents(const QPoint &delta);
 	void markForDeletion();
 	static Animation* getLoadingAnimation();

@@ -359,8 +359,10 @@ void LineEditWidget::dropEvent(QDropEvent *event)
 	}
 }
 
-void LineEditWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void LineEditWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
+	Q_UNUSED(trigger)
+
 	switch (identifier)
 	{
 		case ActionsManager::UndoAction:

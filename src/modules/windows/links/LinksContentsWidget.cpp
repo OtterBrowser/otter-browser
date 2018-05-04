@@ -111,7 +111,7 @@ void LinksContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -154,7 +154,7 @@ void LinksContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}

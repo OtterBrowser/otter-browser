@@ -423,7 +423,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 	QMainWindow::mouseReleaseEvent(event);
 }
 
-void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
+void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	if (m_editorExecutor.isValid() && m_editorExecutor.getObject() == Application::getFocusObject(true) && ActionsManager::getActionDefinition(identifier).scope == ActionsManager::ActionDefinition::EditorScope)
 	{
@@ -444,7 +444,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("about:start"));
 				}
 
-				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 			}
 
 			return;
@@ -453,7 +453,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				QVariantMap mutableParameters(parameters);
 				mutableParameters[QLatin1String("hints")] = QVariant(SessionsManager::NewTabOpen | SessionsManager::PrivateOpen);
 
-				triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 			}
 
 			return;
@@ -463,7 +463,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!path.isEmpty())
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl::fromLocalFile(path)}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl::fromLocalFile(path)}}, trigger);
 				}
 			}
 
@@ -478,7 +478,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::RestoreAllAction:
 		case ActionsManager::CascadeAllAction:
 		case ActionsManager::TileAllAction:
-			m_workspace->triggerAction(identifier, parameters);
+			m_workspace->triggerAction(identifier, parameters, trigger);
 
 			return;
 		case ActionsManager::CloseWindowAction:
@@ -553,7 +553,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!homePage.isEmpty())
 				{
-					triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+					triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 				}
 			}
 
@@ -564,7 +564,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -617,7 +617,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 									mutableParameters.remove(QLatin1String("needsInterpretation"));
 									mutableParameters[QLatin1String("bookmark")] = result.bookmark->getIdentifier();
 
-									triggerAction(ActionsManager::OpenBookmarkAction, mutableParameters);
+									triggerAction(ActionsManager::OpenBookmarkAction, mutableParameters, trigger);
 								}
 
 								return;
@@ -731,7 +731,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				{
 					if (iterator.value()->getLoadingState() != WebWidget::DeferredLoadingState)
 					{
-						iterator.value()->triggerAction(ActionsManager::StopAction);
+						iterator.value()->triggerAction(ActionsManager::StopAction, {}, trigger);
 					}
 				}
 			}
@@ -745,7 +745,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				{
 					if (iterator.value()->getLoadingState() != WebWidget::DeferredLoadingState)
 					{
-						iterator.value()->triggerAction(ActionsManager::ReloadAction);
+						iterator.value()->triggerAction(ActionsManager::ReloadAction, {}, trigger);
 					}
 				}
 			}
@@ -822,7 +822,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					case BookmarksModel::UrlBookmark:
 						mutableParameters[QLatin1String("url")] = bookmark->getUrl();
 
-						triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+						triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 
 						break;
 					case BookmarksModel::RootBookmark:
@@ -867,7 +867,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 							mutableParameters[QLatin1String("hints")] = QVariant(hints);
 							mutableParameters[QLatin1String("index")] = index;
 
-							triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+							triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 
 							mutableParameters[QLatin1String("hints")] = QVariant((hints == SessionsManager::DefaultOpen || hints.testFlag(SessionsManager::CurrentTabOpen)) ? SessionsManager::NewTabOpen : hints);
 
@@ -876,7 +876,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 								mutableParameters[QLatin1String("url")] = urls.at(i);
 								mutableParameters[QLatin1String("index")] = (index + i);
 
-								triggerAction(ActionsManager::OpenUrlAction, mutableParameters);
+								triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 							}
 						}
 
@@ -983,19 +983,19 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			return;
 		case ActionsManager::ShowMenuBarAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}}, trigger);
 
 			return;
 		case ActionsManager::ShowTabBarAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::TabBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::TabBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}}, trigger);
 
 			return;
 		case ActionsManager::ShowSidebarAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::SideBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::SideBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}}, trigger);
 
 			return;
 		case ActionsManager::ShowErrorConsoleAction:
-			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}});
+			triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::ErrorConsoleBar}, {QLatin1String("isChecked"), parameters.value(QLatin1String("isChecked"), !getActionState(identifier).isChecked)}}, trigger);
 
 			return;
 		case ActionsManager::ShowPanelAction:
@@ -1010,7 +1010,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 					ToolBarsManager::setToolBar(definition);
 				}
 
-				triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBarIdentifier}, {QLatin1String("isChecked"), true}});
+				triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBarIdentifier}, {QLatin1String("isChecked"), true}}, trigger);
 			}
 
 			return;
@@ -1020,7 +1020,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (definition.isValid() && !definition.currentPanel.isEmpty())
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), SidebarWidget::getPanelUrl(definition.currentPanel)}, {QLatin1String("hints"), SessionsManager::NewTabOpen}}, trigger);
 				}
 			}
 
@@ -1038,7 +1038,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -1056,7 +1056,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -1067,7 +1067,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -1078,7 +1078,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -1089,7 +1089,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -1100,7 +1100,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!SessionsManager::hasUrl(url, true))
 				{
-					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}});
+					triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, trigger);
 				}
 			}
 
@@ -1121,7 +1121,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				for (iterator = m_windows.constBegin(); iterator != m_windows.constEnd(); ++iterator)
 				{
-					iterator.value()->triggerAction(identifier, parameters);
+					iterator.value()->triggerAction(identifier, parameters, trigger);
 				}
 			}
 
@@ -1186,11 +1186,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				addWindow(window, SessionsManager::NewTabOpen);
 
-				window->triggerAction(ActionsManager::PasteAndGoAction);
+				window->triggerAction(ActionsManager::PasteAndGoAction, {}, trigger);
 			}
 			else if (window)
 			{
-				window->triggerAction(identifier, parameters);
+				window->triggerAction(identifier, parameters, trigger);
 			}
 
 			break;

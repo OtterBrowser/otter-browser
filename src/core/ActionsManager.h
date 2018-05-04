@@ -95,6 +95,13 @@ public:
 		GenericContext
 	};
 
+	enum TriggerType
+	{
+		UnknownTrigger = 0,
+		KeyboardTrigger,
+		MouseTrigger
+	};
+
 	enum ActionIdentifier
 	{
 		RunMacroAction = 0,

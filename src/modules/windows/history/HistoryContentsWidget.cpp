@@ -94,7 +94,7 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
+void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
 	switch (identifier)
 	{
@@ -108,7 +108,7 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		default:
-			ContentsWidget::triggerAction(identifier, parameters);
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
 			break;
 	}
