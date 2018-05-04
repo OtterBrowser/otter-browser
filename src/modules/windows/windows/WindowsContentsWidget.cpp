@@ -32,22 +32,17 @@
 namespace Otter
 {
 
-EntryItemDelegate::EntryItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
+EntryItemDelegate::EntryItemDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
 
-void EntryItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void EntryItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
+	ItemDelegate::initStyleOption(option, index);
+
 	if (index.data(SessionModel::IsActiveRole).toBool())
 	{
-		QStyleOptionViewItem mutableOption(option);
-		mutableOption.font.setBold(true);
-
-		QStyledItemDelegate::paint(painter, mutableOption, index);
-	}
-	else
-	{
-		QStyledItemDelegate::paint(painter, option, index);
+		option->font.setBold(true);
 	}
 }
 
