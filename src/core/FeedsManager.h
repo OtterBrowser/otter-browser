@@ -48,6 +48,7 @@ public:
 		QString content;
 		QString author;
 		QString email;
+		QStringList categories;
 		QUrl url;
 		QDateTime publicationTime;
 		QDateTime updateTime;
@@ -61,6 +62,7 @@ public:
 	QIcon getIcon() const;
 	QDateTime getLastUpdateTime() const;
 	QDateTime getLastSynchronizationTime() const;
+	QStringList getCategories() const;
 	QVector<Entry> getEntries();
 	FeedError getError() const;
 	int getUpdateInterval() const;
@@ -75,6 +77,7 @@ private:
 	QIcon m_icon;
 	QDateTime m_lastUpdateTime;
 	QDateTime m_lastSynchronizationTime;
+	QStringList m_categories;
 	QVector<Entry> m_entries;
 	FeedError m_error;
 	int m_updateInterval;

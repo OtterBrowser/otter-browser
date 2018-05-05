@@ -75,6 +75,11 @@ QDateTime Feed::getLastSynchronizationTime() const
 	return m_lastSynchronizationTime;
 }
 
+QStringList Feed::getCategories() const
+{
+	return m_categories;
+}
+
 QVector<Feed::Entry> Feed::getEntries()
 {
 	return m_entries;
