@@ -107,9 +107,9 @@ public:
 		IsActiveRole,
 		IsAudibleRole,
 		IsAudioMutedRole,
+		IsDeferredRole,
 		IsPinnedRole,
 		IsPrivateRole,
-		IsSuspendedRole,
 		IsTrashedRole
 	};
 

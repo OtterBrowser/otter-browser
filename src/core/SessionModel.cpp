@@ -226,12 +226,12 @@ QVariant WindowSessionItem::data(int role) const
 			return ((m_window->getLoadingState() != WebWidget::DeferredLoadingState && m_window->getWebWidget()) ? m_window->getWebWidget()->isAudible() : false);
 		case SessionModel::IsAudioMutedRole:
 			return ((m_window->getLoadingState() != WebWidget::DeferredLoadingState && m_window->getWebWidget()) ? m_window->getWebWidget()->isAudioMuted() : false);
+		case SessionModel::IsDeferredRole:
+			return (m_window->getLoadingState() == WebWidget::DeferredLoadingState);
 		case SessionModel::IsPinnedRole:
 			return m_window->isPinned();
 		case SessionModel::IsPrivateRole:
 			return m_window->isPrivate();
-		case SessionModel::IsSuspendedRole:
-			return (m_window->getLoadingState() == WebWidget::DeferredLoadingState);
 		default:
 			break;
 	}
