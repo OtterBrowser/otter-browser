@@ -121,7 +121,7 @@ void PopupsBarWidget::populateMenu()
 
 	for (int i = 0; i < m_popupUrls.count(); ++i)
 	{
-		QAction *action(popupsMenu->addAction(Utils::elideText(m_popupUrls.at(i).url(), nullptr, 300)));
+		QAction *action(popupsMenu->addAction(Utils::elideText(m_popupUrls.at(i).url(), popupsMenu->fontMetrics(), nullptr, 300)));
 		action->setData(m_popupUrls.at(i).url());
 	}
 

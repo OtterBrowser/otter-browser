@@ -636,7 +636,7 @@ void Menu::populateBookmarksMenu()
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
-			Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, executor, this));
+			Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
 			action->setToolTip(bookmark->getDescription());
 			action->setStatusTip(bookmark->getUrl().toString());
 
@@ -691,7 +691,7 @@ void Menu::populateBookmarkSelectorMenu()
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
-			QAction *action(new QAction(bookmark->getIcon(), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this), this));
+			QAction *action(new QAction(bookmark->getIcon(), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this), this));
 			action->setStatusTip(bookmark->getUrl().toString());
 			action->setData(bookmark->getIdentifier());
 
@@ -855,7 +855,7 @@ void Menu::populateCharacterEncodingMenu()
 				continue;
 			}
 
-			QAction *textCodecAction(addAction(Utils::elideText(codec->name(), this)));
+			QAction *textCodecAction(addAction(Utils::elideText(codec->name(), fontMetrics(), this)));
 			textCodecAction->setData(codec->name().toLower());
 			textCodecAction->setCheckable(true);
 
@@ -912,7 +912,7 @@ void Menu::populateClosedWindowsMenu()
 				parameters[QLatin1String("index")] = i;
 			}
 
-			addAction(new Action(ActionsManager::ReopenWindowAction, parameters, {{QLatin1String("text"), Utils::elideText(tr("Window - %1").arg(windows.at(i)), this)}}, executor, this));
+			addAction(new Action(ActionsManager::ReopenWindowAction, parameters, {{QLatin1String("text"), Utils::elideText(tr("Window - %1").arg(windows.at(i)), fontMetrics(), this)}}, executor, this));
 		}
 
 		addSeparator();
@@ -939,7 +939,7 @@ void Menu::populateClosedWindowsMenu()
 					parameters = {{QLatin1String("index"), i}};
 				}
 
-				Action *action(new Action(ActionsManager::ReopenTabAction, parameters, {{QLatin1String("icon"), (tabs.at(i).isPrivate ? QVariant(QLatin1String("tab-private")) : tabs.at(i).icon)}, {QLatin1String("text"), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, executor, this));
+				Action *action(new Action(ActionsManager::ReopenTabAction, parameters, {{QLatin1String("icon"), (tabs.at(i).isPrivate ? QVariant(QLatin1String("tab-private")) : tabs.at(i).icon)}, {QLatin1String("text"), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
 				action->setStatusTip(tabs.at(i).window.getUrl());
 
 				addAction(action);
@@ -1010,7 +1010,7 @@ void Menu::populateNotesMenu()
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
-			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("icon"), bookmark->getIcon()}, {QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this)}}, getExecutor(), this));
+			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("icon"), bookmark->getIcon()}, {QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, getExecutor(), this));
 			action->setToolTip(bookmark->getDescription());
 			action->setStatusTip(bookmark->getUrl().toString());
 
@@ -1093,7 +1093,7 @@ void Menu::populateProxiesMenu()
 		else
 		{
 			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
-			Action *action(new Action(-1, {}, {{QLatin1String("text"), Utils::elideText(definition.getTitle(), this)}}, ActionExecutor::Object(), this));
+			Action *action(new Action(-1, {}, {{QLatin1String("text"), Utils::elideText(definition.getTitle(), fontMetrics(), this)}}, ActionExecutor::Object(), this));
 			action->setData(proxies.at(i));
 
 			if (definition.isFolder)
@@ -1308,7 +1308,7 @@ void Menu::populateUserAgentMenu()
 		else
 		{
 			const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
-			QAction *action(addAction(Utils::elideText(definition.getTitle(), this)));
+			QAction *action(addAction(Utils::elideText(definition.getTitle(), fontMetrics(), this)));
 			action->setData(userAgents.at(i));
 
 			if (definition.isFolder)
@@ -1382,7 +1382,7 @@ void Menu::populateWindowsMenu()
 			{
 				const Window *window(windowItem->getActiveWindow());
 
-				addAction(new Action(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), window->getIdentifier()}}, {{QLatin1String("icon"), window->getIcon()}, {QLatin1String("text"), Utils::elideText((window->getTitle().isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : window->getTitle()), this)}}, executor, this));
+				addAction(new Action(ActionsManager::ActivateTabAction, {{QLatin1String("tab"), window->getIdentifier()}}, {{QLatin1String("icon"), window->getIcon()}, {QLatin1String("text"), Utils::elideText((window->getTitle().isEmpty() ? QT_TRANSLATE_NOOP("actions", "(Untitled)") : window->getTitle()), fontMetrics(), this)}}, executor, this));
 			}
 		}
 	}

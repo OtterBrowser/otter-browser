@@ -193,7 +193,7 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 				break;
 		}
 
-		QAction *action(m_elementsMenu->addAction(QStringLiteral("%1\t [%2]").arg(Utils::elideText(requests.at(i).url.toString(), m_elementsMenu)).arg(type)));
+		QAction *action(m_elementsMenu->addAction(QStringLiteral("%1\t [%2]").arg(Utils::elideText(requests.at(i).url.toString(), m_elementsMenu->fontMetrics(), m_elementsMenu)).arg(type)));
 		action->setStatusTip(requests.at(i).url.toString());
 	}
 }
@@ -238,7 +238,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 		if (profiles.at(i))
 		{
 			const int amount(amounts.value(profiles.at(i)->getName()));
-			const QString title(Utils::elideText(profiles.at(i)->getTitle(), m_profilesMenu));
+			const QString title(Utils::elideText(profiles.at(i)->getTitle(), m_profilesMenu->fontMetrics(), m_profilesMenu));
 			QAction *profileAction(m_profilesMenu->addAction((amount > 0) ? QStringLiteral("%1 (%2)").arg(title).arg(amount) : title));
 			profileAction->setData(profiles.at(i)->getName());
 			profileAction->setCheckable(true);

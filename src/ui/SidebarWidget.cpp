@@ -119,7 +119,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 							if (panel.startsWith(QLatin1String("web:")))
 							{
-								actions[i]->setText(Utils::elideText(getPanelTitle(panel), nullptr, 300));
+								actions[i]->setText(Utils::elideText(getPanelTitle(panel), m_ui->panelsButton->menu()->fontMetrics(), nullptr, 300));
 							}
 							else
 							{
@@ -439,7 +439,7 @@ void SidebarWidget::updatePanels()
 
 		if (isWebPanel)
 		{
-			QAction *selectPanelMenuAction(menu->addAction(Utils::elideText(title, nullptr, 300)));
+			QAction *selectPanelMenuAction(menu->addAction(Utils::elideText(title, menu->fontMetrics(), nullptr, 300)));
 			selectPanelMenuAction->setCheckable(true);
 			selectPanelMenuAction->setChecked(true);
 			selectPanelMenuAction->setData(panels.at(i));

@@ -361,14 +361,14 @@ QString createErrorPage(const ErrorPageInformation &information)
 	return mainTemplate;
 }
 
-QString elideText(const QString &text, QWidget *widget, int width)
+QString elideText(const QString &text, const QFontMetrics &fontMetrics, QWidget *widget, int width)
 {
-	if (width < 0)
+	if (widget && width < 0)
 	{
 		width = (QApplication::desktop()->screenGeometry(widget).width() / 4);
 	}
 
-	return (widget ? widget->fontMetrics() : QApplication::fontMetrics()).elidedText(text, Qt::ElideRight, qMax(100, width));
+	return fontMetrics.elidedText(text, Qt::ElideRight, qMax(100, width));
 }
 
 QString savePixmapAsDataUri(const QPixmap &pixmap)
