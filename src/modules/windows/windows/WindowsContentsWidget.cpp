@@ -58,6 +58,10 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->windowsViewWidget->expandAll();
 	m_ui->windowsViewWidget->viewport()->setMouseTracking(true);
 
+	connect(SessionsManager::getModel(), &SessionModel::rowsInserted, [&](const QModelIndex &index)
+	{
+		m_ui->windowsViewWidget->setExpanded(index, true);
+	});
 	connect(SessionsManager::getModel(), &SessionModel::modelModified, m_ui->windowsViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->windowsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->windowsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &WindowsContentsWidget::showContextMenu);
