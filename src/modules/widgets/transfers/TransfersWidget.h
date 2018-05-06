@@ -60,6 +60,7 @@ public:
 	explicit TransferActionWidget(Transfer *transfer, QWidget *parent = nullptr);
 
 	Transfer* getTransfer() const;
+	bool event(QEvent *event) override;
 
 protected:
 	void mousePressEvent(QMouseEvent *event) override;
