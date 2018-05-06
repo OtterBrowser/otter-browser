@@ -255,7 +255,7 @@ set(otter_src
 	src/modules/windows/web/PasswordBarWidget.cpp
 	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/PopupsBarWidget.cpp
-	src/modules/windows/web/ProgressBarWidget.cpp
+	src/modules/windows/web/ProgressToolBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
 	src/modules/windows/web/SelectPasswordDialog.cpp
 	src/modules/windows/web/StartPageModel.cpp

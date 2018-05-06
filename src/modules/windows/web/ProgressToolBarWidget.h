@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PROGRESSBARWIDGET_H
-#define OTTER_PROGRESSBARWIDGET_H
+#ifndef OTTER_PROGRESSTOOLBARWIDGET_H
+#define OTTER_PROGRESSTOOLBARWIDGET_H
 
 #include "../../../ui/WebWidget.h"
 
@@ -30,12 +30,12 @@ namespace Otter
 class WebWidget;
 class Window;
 
-class ProgressBarWidget final : public QFrame
+class ProgressToolBarWidget final : public QFrame
 {
 	Q_OBJECT
 
 public:
-	explicit ProgressBarWidget(Window *window, WebWidget *parent);
+	explicit ProgressToolBarWidget(Window *window, WebWidget *parent);
 
 public slots:
 	void scheduleGeometryUpdate();

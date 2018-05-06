@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "ProgressBarWidget.h"
+#include "ProgressToolBarWidget.h"
 #include "WebContentsWidget.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-ProgressBarWidget::ProgressBarWidget(Window *window, WebWidget *parent) : QFrame(parent),
+ProgressToolBarWidget::ProgressToolBarWidget(Window *window, WebWidget *parent) : QFrame(parent),
 	m_webWidget(parent),
 	m_window(window),
 	m_geometryUpdateTimer(0)
@@ -57,13 +57,13 @@ ProgressBarWidget::ProgressBarWidget(Window *window, WebWidget *parent) : QFrame
 
 	if (mainWindow)
 	{
-		connect(mainWindow, &MainWindow::arbitraryActionsStateChanged, this, &ProgressBarWidget::handleActionsStateChanged);
+		connect(mainWindow, &MainWindow::arbitraryActionsStateChanged, this, &ProgressToolBarWidget::handleActionsStateChanged);
 	}
 
-	connect(window, &Window::loadingStateChanged, this, &ProgressBarWidget::updateLoadingState);
+	connect(window, &Window::loadingStateChanged, this, &ProgressToolBarWidget::updateLoadingState);
 }
 
-void ProgressBarWidget::timerEvent(QTimerEvent *event)
+void ProgressToolBarWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_geometryUpdateTimer)
 	{
@@ -75,7 +75,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
-void ProgressBarWidget::handleActionsStateChanged(const QVector<int> &identifiers)
+void ProgressToolBarWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 {
 	if (!m_window || !m_webWidget)
 	{
@@ -92,7 +92,7 @@ void ProgressBarWidget::handleActionsStateChanged(const QVector<int> &identifier
 
 			if (!isVisible())
 			{
-				connect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressBarWidget::scheduleGeometryUpdate);
+				connect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
 			}
 
 			if (!geometry.isValid())
@@ -109,14 +109,14 @@ void ProgressBarWidget::handleActionsStateChanged(const QVector<int> &identifier
 		}
 		else
 		{
-			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressBarWidget::scheduleGeometryUpdate);
+			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
 
 			hide();
 		}
 	}
 }
 
-void ProgressBarWidget::updateLoadingState(WebWidget::LoadingState state)
+void ProgressToolBarWidget::updateLoadingState(WebWidget::LoadingState state)
 {
 	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
@@ -130,12 +130,12 @@ void ProgressBarWidget::updateLoadingState(WebWidget::LoadingState state)
 
 		if (m_window && m_webWidget)
 		{
-			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressBarWidget::scheduleGeometryUpdate);
+			disconnect(m_webWidget, &WebWidget::geometryChanged, this, &ProgressToolBarWidget::scheduleGeometryUpdate);
 		}
 	}
 }
 
-void ProgressBarWidget::scheduleGeometryUpdate()
+void ProgressToolBarWidget::scheduleGeometryUpdate()
 {
 	if (m_geometryUpdateTimer == 0)
 	{
