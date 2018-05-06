@@ -152,6 +152,7 @@ QIcon TransfersWidget::getIcon() const
 
 TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) : QWidget(parent),
 	m_transfer(transfer),
+	m_detailsLabel(new QLabel(this)),
 	m_fileNameLabel(new QLabel(this)),
 	m_iconLabel(new QLabel(this)),
 	m_progressBar(new ProgressBarWidget(this)),
@@ -162,6 +163,7 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	centralLayout->setContentsMargins(0, 0, 0, 0);
 	centralLayout->addWidget(m_fileNameLabel);
 	centralLayout->addWidget(m_progressBar);
+	centralLayout->addWidget(m_detailsLabel);
 
 	QFrame *leftSeparatorFrame(new QFrame(this));
 	leftSeparatorFrame->setFrameShape(QFrame::VLine);
@@ -202,7 +204,7 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 
 				break;
 			default:
-				m_transfer->cancel();
+				m_transfer->stop();
 
 				break;
 		}
@@ -227,10 +229,32 @@ void TransferActionWidget::mouseReleaseEvent(QMouseEvent *event)
 void TransferActionWidget::updateState()
 {
 	const QString iconName(m_transfer->getMimeType().iconName());
+	QString details;
+	QVector<QPair<QString, QString> > detailsValues({{tr("From:"), Utils::extractHost(m_transfer->getSource())}});
 	const bool isIndeterminate(m_transfer->getBytesTotal() <= 0);
 	const bool hasError(m_transfer->getState() == Transfer::UnknownState || m_transfer->getState() == Transfer::ErrorState);
 
+	if (m_transfer->getState() == Transfer::FinishedState)
+	{
+		detailsValues.append({tr("Size:"), tr("%1 (download completed)").arg(Utils::formatUnit(m_transfer->getBytesTotal()))});
+	}
+	else
+	{
+		detailsValues.append({tr("Size:"), tr("%1 (%2% downloaded)").arg(Utils::formatUnit(m_transfer->getBytesTotal())).arg(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal()), 0, 'f', 1)});
+	}
+
+	for (int i = 0; i < detailsValues.count(); ++i)
+	{
+		details.append(detailsValues.at(i).first + QLatin1Char(' ') + detailsValues.at(i).second);
+
+		if (i < (detailsValues.count() - 1))
+		{
+			details.append(QLatin1String("<br>"));
+		}
+	}
+
 	m_fileNameLabel->setText(Utils::elideText(QFileInfo(m_transfer->getTarget()).fileName(), m_fileNameLabel->fontMetrics(), nullptr, 300));
+	m_detailsLabel->setText(QLatin1String("<small>") + details + QLatin1String("</small>"));
 	m_iconLabel->setPixmap(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(32, 32));
 	m_progressBar->setHasError(hasError);
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
@@ -252,7 +276,7 @@ void TransferActionWidget::updateState()
 			break;
 		default:
 			m_toolButton->setIcon(ThemesManager::createIcon(QLatin1String("task-reject")));
-			m_toolButton->setToolTip(tr("Cancel"));
+			m_toolButton->setToolTip(tr("Stop"));
 
 			break;
 	}
