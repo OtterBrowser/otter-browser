@@ -23,6 +23,7 @@
 #include "../../../core/TransfersManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
+#include "../../../ui/ProgressBarWidget.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
@@ -153,7 +154,7 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	m_transfer(transfer),
 	m_fileNameLabel(new QLabel(this)),
 	m_iconLabel(new QLabel(this)),
-	m_progressBar(new QProgressBar(this)),
+	m_progressBar(new ProgressBarWidget(this)),
 	m_toolButton(new QToolButton(this)),
 	m_centralWidget(new QWidget(this))
 {
@@ -179,6 +180,7 @@ TransferActionWidget::TransferActionWidget(Transfer *transfer, QWidget *parent) 
 	updateState();
 
 	m_iconLabel->setFixedSize(32, 32);
+	m_progressBar->setMode(ProgressBarWidget::ThinMode);
 	m_toolButton->setIconSize({16, 16});
 	m_toolButton->setAutoRaise(true);
 
@@ -230,6 +232,7 @@ void TransferActionWidget::updateState()
 
 	m_fileNameLabel->setText(Utils::elideText(QFileInfo(m_transfer->getTarget()).fileName(), m_fileNameLabel->fontMetrics(), nullptr, 300));
 	m_iconLabel->setPixmap(QIcon::fromTheme(iconName, QFileIconProvider().icon(iconName)).pixmap(32, 32));
+	m_progressBar->setHasError(hasError);
 	m_progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 	m_progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : ((m_transfer->getBytesTotal() > 0) ? qFloor(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal())) : -1));
 	m_progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));

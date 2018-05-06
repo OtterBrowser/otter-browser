@@ -23,12 +23,12 @@
 #include "../../../ui/ToolButtonWidget.h"
 
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
+class ProgressBarWidget;
 class Transfer;
 class Window;
 
@@ -72,7 +72,7 @@ private:
 	Transfer *m_transfer;
 	QLabel *m_fileNameLabel;
 	QLabel *m_iconLabel;
-	QProgressBar *m_progressBar;
+	ProgressBarWidget *m_progressBar;
 	QToolButton *m_toolButton;
 	QWidget *m_centralWidget;
 };
