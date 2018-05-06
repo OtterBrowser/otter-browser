@@ -39,8 +39,14 @@ class EntryItemDelegate final : public ItemDelegate
 public:
 	explicit EntryItemDelegate(QObject *parent = nullptr);
 
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+	int calculateDecorationWidth(QStyleOptionViewItem *option, const QModelIndex &index) const;
+
+private:
+	static int m_decorationSize;
 };
 
 class WindowsContentsWidget final : public ContentsWidget

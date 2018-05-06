@@ -27,13 +27,51 @@
 
 #include "ui_WindowsContentsWidget.h"
 
+#include <QtGui/QPainter>
 #include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
+int EntryItemDelegate::m_decorationSize = -1;
+
 EntryItemDelegate::EntryItemDelegate(QObject *parent) : ItemDelegate(parent)
 {
+	connect(ThemesManager::getInstance(), &ThemesManager::widgetStyleChanged, [&]()
+	{
+		m_decorationSize = -1;
+	});
+}
+
+void EntryItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	ItemDelegate::paint(painter, option, index);
+
+	if (index.data(SessionModel::IsAudibleRole).toBool())
+	{
+		QStyleOptionViewItem mutableOption(option);
+		mutableOption.features |= QStyleOptionViewItem::HasDecoration;
+
+		QRect rectangle(QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption));
+		const int availableWidth(rectangle.width());
+		const int decorationWidth(calculateDecorationWidth(&mutableOption, index));
+
+		if (availableWidth > (decorationWidth + 100))
+		{
+			const int offset((decorationWidth - option.decorationSize.width()) / 2);
+
+			if (option.direction == Qt::RightToLeft)
+			{
+				rectangle.setWidth(decorationWidth);
+			}
+			else
+			{
+				rectangle.setLeft(rectangle.right() - decorationWidth);
+			}
+
+			ThemesManager::createIcon(QLatin1String("audio-volume-medium")).paint(painter, rectangle.adjusted(offset, 0, -offset, 0));
+		}
+	}
 }
 
 void EntryItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
@@ -44,6 +82,37 @@ void EntryItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QMod
 	{
 		option->font.setBold(true);
 	}
+
+	if (index.data(SessionModel::IsAudibleRole).toBool())
+	{
+		const int availableWidth(QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, option).width());
+		const int decorationWidth(calculateDecorationWidth(option, index));
+
+		if (availableWidth > (decorationWidth + 100))
+		{
+			option->text = Utils::elideText(option->text, QFontMetrics(option->font), nullptr, (availableWidth - decorationWidth));
+		}
+	}
+}
+
+int EntryItemDelegate::calculateDecorationWidth(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	if (m_decorationSize < 0)
+	{
+		QStyleOptionViewItem mutableOption(*(option));
+
+		ItemDelegate::initStyleOption(&mutableOption, index);
+
+		mutableOption.features &= ~QStyleOptionViewItem::HasDecoration;
+
+		const int width(QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption).width());
+
+		mutableOption.features |= QStyleOptionViewItem::HasDecoration;
+
+		m_decorationSize = (width - QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption).width());
+	}
+
+	return m_decorationSize;
 }
 
 WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
