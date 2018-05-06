@@ -176,7 +176,7 @@ void TransferDialog::setProgress(qint64 bytesReceived, qint64 bytesTotal)
 	}
 	else
 	{
-		m_ui->sizeTextLabelWidget->setText(tr("%1 (%2% downloaded)").arg(Utils::formatUnit(bytesTotal)).arg(Utils::calculatePercent(bytesReceived, bytesTotal)));
+		m_ui->sizeTextLabelWidget->setText(tr("%1 (%2% downloaded)").arg(Utils::formatUnit(bytesTotal)).arg(Utils::calculatePercent(bytesReceived, bytesTotal), 0, 'f', 1));
 	}
 }
 
