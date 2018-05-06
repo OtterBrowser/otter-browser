@@ -176,9 +176,7 @@ void TransferDialog::setProgress(qint64 bytesReceived, qint64 bytesTotal)
 	}
 	else
 	{
-		const int progress((bytesReceived > 0 && bytesTotal > 0) ? qFloor((static_cast<qreal>(bytesReceived) / static_cast<qreal>(bytesTotal)) * 100) : 0);
-
-		m_ui->sizeTextLabelWidget->setText(tr("%1 (%2% downloaded)").arg(Utils::formatUnit(bytesTotal)).arg(progress));
+		m_ui->sizeTextLabelWidget->setText(tr("%1 (%2% downloaded)").arg(Utils::formatUnit(bytesTotal)).arg(Utils::calculatePercent(bytesReceived, bytesTotal)));
 	}
 }
 
