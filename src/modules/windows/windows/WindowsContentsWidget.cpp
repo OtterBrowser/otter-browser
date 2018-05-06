@@ -47,7 +47,7 @@ void EntryItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
 	ItemDelegate::paint(painter, option, index);
 
-	if (index.data(SessionModel::IsAudibleRole).toBool())
+	if (index.data(SessionModel::IsAudibleRole).toBool() || index.data(SessionModel::IsAudioMutedRole).toBool())
 	{
 		QStyleOptionViewItem mutableOption(option);
 		mutableOption.features |= QStyleOptionViewItem::HasDecoration;
@@ -69,7 +69,7 @@ void EntryItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 				rectangle.setLeft(rectangle.right() - decorationWidth);
 			}
 
-			ThemesManager::createIcon(QLatin1String("audio-volume-medium")).paint(painter, rectangle.adjusted(offset, 0, -offset, 0));
+			ThemesManager::createIcon(index.data(SessionModel::IsAudioMutedRole).toBool() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")).paint(painter, rectangle.adjusted(offset, 0, -offset, 0));
 		}
 	}
 }
@@ -83,7 +83,7 @@ void EntryItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QMod
 		option->font.setBold(true);
 	}
 
-	if (index.data(SessionModel::IsAudibleRole).toBool())
+	if (index.data(SessionModel::IsAudibleRole).toBool() || index.data(SessionModel::IsAudioMutedRole).toBool())
 	{
 		const int availableWidth(QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, option).width());
 		const int decorationWidth(calculateDecorationWidth(option, index));
