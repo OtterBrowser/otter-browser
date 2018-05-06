@@ -22,6 +22,7 @@
 #include "../../../core/TransfersManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Menu.h"
+#include "../../../ui/ProgressBarWidget.h"
 
 #include "ui_TransfersContentsWidget.h"
 
@@ -32,7 +33,6 @@
 #include <QtGui/QKeyEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QProgressBar>
 
 namespace Otter
 {
@@ -43,7 +43,7 @@ ProgressBarDelegate::ProgressBarDelegate(QObject *parent) : ItemDelegate(parent)
 
 void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	QProgressBar *progressBar(qobject_cast<QProgressBar*>(editor));
+	ProgressBarWidget *progressBar(qobject_cast<ProgressBarWidget*>(editor));
 
 	if (progressBar)
 	{
@@ -51,6 +51,7 @@ void ProgressBarDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 		const bool isIndeterminate(index.data(TransfersContentsWidget::BytesTotalRole).toLongLong() <= 0);
 		const bool hasError(state == Transfer::UnknownState || state == Transfer::ErrorState);
 
+		progressBar->setHasError(hasError);
 		progressBar->setRange(0, ((isIndeterminate && !hasError) ? 0 : 100));
 		progressBar->setValue(isIndeterminate ? (hasError ? 0 : -1) : index.data(TransfersContentsWidget::ProgressRole).toInt());
 		progressBar->setFormat(isIndeterminate ? tr("Unknown") : QLatin1String("%p%"));
@@ -61,7 +62,7 @@ QWidget* ProgressBarDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 {
 	Q_UNUSED(option)
 
-	QProgressBar *editor(new QProgressBar(parent));
+	ProgressBarWidget *editor(new ProgressBarWidget(parent));
 	editor->setAlignment(Qt::AlignCenter);
 
 	setEditorData(editor, index);

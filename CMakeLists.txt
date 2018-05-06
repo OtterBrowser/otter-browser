@@ -176,6 +176,7 @@ set(otter_src
 	src/ui/OptionWidget.cpp
 	src/ui/PreferencesDialog.cpp
 	src/ui/PreviewWidget.cpp
+	src/ui/ProgressBarWidget.cpp
 	src/ui/ProxyModel.cpp
 	src/ui/ReloadTimeDialog.cpp
 	src/ui/ReportDialog.cpp
