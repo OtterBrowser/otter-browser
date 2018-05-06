@@ -18,15 +18,25 @@
 **************************************************************************/
 
 #include "ProgressBarWidget.h"
+#include "../core/Utils.h"
 
 #include <QtGui/QGuiApplication>
+#include <QtGui/QPainter>
 
 namespace Otter
 {
 
 ProgressBarWidget::ProgressBarWidget(QWidget *parent) : QProgressBar(parent),
+	m_mode(NormalMode),
 	m_hasError(false)
 {
+}
+
+void ProgressBarWidget::setMode(ProgressBarWidget::StyleMode mode)
+{
+	m_mode = mode;
+
+	update();
 }
 
 void ProgressBarWidget::setHasError(bool hasError)
@@ -45,6 +55,53 @@ void ProgressBarWidget::setHasError(bool hasError)
 	setPalette(palette);
 
 	m_hasError = hasError;
+}
+
+void ProgressBarWidget::paintEvent(QPaintEvent *event)
+{
+	if (m_mode == NormalMode)
+	{
+		QProgressBar::paintEvent(event);
+
+		return;
+	}
+
+	QPainter painter(this);
+	QColor background(palette().highlight().color());
+	background.setAlpha(50);
+
+	painter.setBrush(background);
+	painter.setPen(Qt::transparent);
+	painter.drawRoundedRect(rect(), 2, 2);
+	painter.setBrush(palette().highlight());
+
+	if (value() > 0)
+	{
+		painter.drawRoundedRect(0, 0, static_cast<int>(Utils::calculatePercent(value(), maximum(), 1) * width()), height(), 2, 2);
+	}
+}
+
+QSize ProgressBarWidget::minimumSizeHint() const
+{
+	if (m_mode == ThinMode)
+	{
+		return sizeHint();
+	}
+
+	return QProgressBar::minimumSizeHint();
+}
+
+QSize ProgressBarWidget::sizeHint() const
+{
+	if (m_mode == ThinMode)
+	{
+		QSize size(QProgressBar::sizeHint());
+		size.setHeight(5);
+
+		return size;
+	}
+
+	return QProgressBar::sizeHint();
 }
 
 bool ProgressBarWidget::hasError() const

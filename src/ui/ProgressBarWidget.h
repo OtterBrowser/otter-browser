@@ -30,12 +30,25 @@ class ProgressBarWidget final : public QProgressBar
 	Q_OBJECT
 
 public:
+	enum StyleMode
+	{
+		NormalMode = 0,
+		ThinMode
+	};
+
 	explicit ProgressBarWidget(QWidget *parent = nullptr);
 
+	void setMode(StyleMode mode);
 	void setHasError(bool hasError);
+	QSize minimumSizeHint() const override;
+	QSize sizeHint() const override;
 	bool hasError() const;
 
+protected:
+	void paintEvent(QPaintEvent *event) override;
+
 private:
+	StyleMode m_mode;
 	bool m_hasError;
 };
 
