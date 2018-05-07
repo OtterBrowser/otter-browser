@@ -533,16 +533,11 @@ WebWidget::LoadingState AddonsContentsWidget::getLoadingState() const
 
 bool AddonsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->addonsViewWidget && event->type() == QEvent::KeyPress)
+	if (object == m_ui->addonsViewWidget && event->type() == QEvent::KeyPress && static_cast<QKeyEvent*>(event)->key() == Qt::Key_Delete)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		removeAddons();
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
-		{
-			removeAddons();
-
-			return true;
-		}
+		return true;
 	}
 
 	return ContentsWidget::eventFilter(object, event);
