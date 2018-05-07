@@ -4460,7 +4460,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="114"/>
         <source>Downloads</source>
-        <translation>Pobrane pliki</translation>
+        <translation>Pobieranie plików</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="126"/>

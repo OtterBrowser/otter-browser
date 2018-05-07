@@ -251,7 +251,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="370"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>是否继续?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="436"/>
@@ -1729,38 +1729,38 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="14"/>
         <source>Profile Settings</source>
-        <translation type="unfinished"/>
+        <translation>档案配置</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="20"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>标题:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="30"/>
         <source>Update URL:</source>
-        <translation type="unfinished"/>
+        <translation>更新URL:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="40"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>更新间隔:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="50"/>
         <source>Last update:</source>
-        <translation type="unfinished"/>
+        <translation>最近更新:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="74"/>
         <source>Category:</source>
-        <translation type="unfinished"/>
+        <translation>分类:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="40"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="77"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>广告</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="41"/>
@@ -1772,32 +1772,32 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="42"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="79"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>隐私</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="43"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="80"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>社交</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="44"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="81"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>区域</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="45"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="82"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>其他</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="114"/>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="121"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.cpp" line="93"/>
@@ -2313,7 +2313,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="58"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(未命名)</translation>
     </message>
 </context>
 <context>
@@ -2355,7 +2355,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="76"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>图片 (*.png *.jpg *.bmp *.gif *.svg *.svgz *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="86"/>
@@ -2651,7 +2651,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="390"/>
         <source>This shortcut already used by %1</source>
-        <translation type="unfinished"/>
+        <translation>快捷键已被 %1 使用</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="390"/>
@@ -2674,27 +2674,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="234"/>
         <source>Lock Panel</source>
-        <translation type="unfinished"/>
+        <translation>锁定面板</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="267"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>链接</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="317"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>标题： %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="320"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>地址：%1</translation>
     </message>
 </context>
 <context>
@@ -2783,17 +2783,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="370"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="374"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/mac/MacPlatformIntegration.mm" line="378"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>信息</translation>
     </message>
 </context>
 <context>
@@ -3246,12 +3246,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="45"/>
         <source>Remove existing search engines</source>
-        <translation type="unfinished"/>
+        <translation>移除现有搜索引擎</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="54"/>
         <source>Opera search engines</source>
-        <translation type="unfinished"/>
+        <translation>Opera搜索引擎</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="59"/>
@@ -3305,19 +3305,19 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="42"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="110"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="136"/>
@@ -3328,33 +3328,33 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="158"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="164"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="168"/>
         <source>MIME type</source>
-        <translation type="unfinished"/>
+        <translation>MIME 类型</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="169"/>
         <source>Document size</source>
-        <translation type="unfinished"/>
+        <translation>文件大小</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="170"/>
         <source>Total size</source>
-        <translation type="unfinished"/>
+        <translation>总计大小</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="178"/>
         <source>Number of requests</source>
-        <translation type="unfinished"/>
+        <translation>请求数量</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
@@ -3364,42 +3364,42 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
         <source>Downloaded</source>
-        <translation type="unfinished"/>
+        <translation>已下载</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="187"/>
         <source>Headers</source>
-        <translation type="unfinished"/>
+        <translation>头文件</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="202"/>
         <source>Meta</source>
-        <translation type="unfinished"/>
+        <translation>元数据</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="220"/>
         <source>Permissions</source>
-        <translation type="unfinished"/>
+        <translation>权限</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="224"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>安全</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="232"/>
         <source>Cipher protocol</source>
-        <translation type="unfinished"/>
+        <translation>密码协议</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="233"/>
         <source>Cipher authentication method</source>
-        <translation type="unfinished"/>
+        <translation>密码认证方法</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="234"/>
         <source>Cipher encryption method</source>
-        <translation type="unfinished"/>
+        <translation>密码加密方法</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="235"/>
@@ -3409,7 +3409,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="262"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>页面信息</translation>
     </message>
 </context>
 <context>
@@ -3784,12 +3784,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation type="unfinished"/>
+        <translation>站点首选项</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -4855,7 +4855,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.cpp" line="33"/>
         <location filename="../../src/modules/widgets/privateWindowIndicator/PrivateWindowIndicatorWidget.cpp" line="49"/>
         <source>Private Window</source>
-        <translation type="unfinished"/>
+        <translation>隐私窗口</translation>
     </message>
 </context>
 <context>
@@ -5029,20 +5029,20 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="412"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="452"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="120"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="413"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="453"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>禁用 JavaScript 弹出窗口</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="322"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="335"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="322"/>
@@ -5054,13 +5054,13 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="322"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="337"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>是否重新发送数据？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="323"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="341"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>不再弹出此提示</translation>
     </message>
 </context>
 <context>
@@ -5081,22 +5081,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="510"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="521"/>
         <source>Failed to save image: %1</source>
-        <translation type="unfinished"/>
+        <translation>保存图片失败：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1404"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>空白页</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp" line="1417"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(未命名)</translation>
     </message>
 </context>
 <context>
@@ -5651,12 +5651,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="108"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>起始页</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="111"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(未知)</translation>
     </message>
 </context>
 <context>
@@ -5994,7 +5994,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
         <source>Enable plugins</source>
-        <translation type="unfinished"/>
+        <translation>启用插件</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="55"/>
@@ -6025,17 +6025,17 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1164"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>使用鼠标滚轮切换标签页</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1168"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>在标签页显示缩略图</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="1187"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>整理</translation>
     </message>
 </context>
 <context>
@@ -6094,33 +6094,33 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>地址</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>日期</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="142"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>标签历史记录</translation>
     </message>
 </context>
 <context>
@@ -6191,7 +6191,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>添加书签</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6201,7 +6201,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="291"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>新建…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="331"/>
@@ -6257,7 +6257,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="46"/>
         <source>Edit Bookmarks Bar</source>
-        <translation type="unfinished"/>
+        <translation>编辑书签栏…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
@@ -6267,7 +6267,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="55"/>
         <source>Edit Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>编辑侧边栏</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
@@ -6392,7 +6392,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="461"/>
@@ -6646,7 +6646,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="235"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="242"/>
@@ -6656,12 +6656,12 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="247"/>
         <source>Open Folder</source>
-        <translation type="unfinished"/>
+        <translation>打开文件夹</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="252"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -6880,7 +6880,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="545"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>下载</translation>
     </message>
 </context>
 <context>
@@ -6898,12 +6898,12 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="45"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="99"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="121"/>
         <source>Show all Downloads</source>
-        <translation type="unfinished"/>
+        <translation>显示所有下载</translation>
     </message>
 </context>
 <context>
@@ -7167,7 +7167,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1183"/>
         <source>Never Reload</source>
-        <translation type="unfinished"/>
+        <translation>不再重新加载</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/WebWidget.cpp" line="1187"/>
@@ -7793,7 +7793,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
         <source>Expiration Date</source>
-        <translation type="unfinished"/>
+        <translation>失效日期</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
@@ -7811,7 +7811,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="169"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>窗口与标签页</translation>
     </message>
 </context>
 <context>
@@ -7923,7 +7923,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Set Option</source>
-        <translation type="unfinished"/>
+        <translation>设置选项</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
@@ -8250,7 +8250,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Open Frame</source>
-        <translation type="unfinished"/>
+        <translation>打开框架</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
@@ -8292,7 +8292,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>打开图像</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
@@ -8358,7 +8358,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Playback Looping</source>
-        <translation type="unfinished"/>
+        <translation>循环播放</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
@@ -8425,7 +8425,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Go to History Entry</source>
-        <translation type="unfinished"/>
+        <translation>跳转到历史纪录</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
@@ -8837,7 +8837,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Show Panel</source>
-        <translation type="unfinished"/>
+        <translation>显示面板</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="443"/>
@@ -8889,7 +8889,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="452"/>
@@ -9420,7 +9420,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="987"/>
         <source>Open Image in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>在当前标签打开图像</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="991"/>
@@ -9440,7 +9440,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1007"/>
         <source>Open Image in New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>在新建隐私标签页打开图像</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1011"/>
@@ -9450,7 +9450,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1015"/>
         <source>Open Image in New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>在新建隐私窗口打开图像</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1019"/>
@@ -9495,7 +9495,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
         <source>Purge History Entry</source>
-        <translation type="unfinished"/>
+        <translation>清除历史记录</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1277"/>
@@ -9553,7 +9553,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>链接</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
@@ -9563,7 +9563,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="131"/>
         <source>Page Information</source>
-        <translation type="unfinished"/>
+        <translation>页面信息</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="132"/>
@@ -9573,17 +9573,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>标签页历史</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="134"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="135"/>
         <source>Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>窗口与标签页</translation>
     </message>
 </context>
 <context>
@@ -9811,7 +9811,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="363"/>
         <source>Search Engines</source>
-        <translation type="unfinished"/>
+        <translation>搜索引擎</translation>
     </message>
     <message>
         <location filename="../../src/core/Migrator.cpp" line="486"/>
@@ -9824,12 +9824,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Download Completed</source>
-        <translation type="unfinished"/>
+        <translation>下载完成</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>File download was completed</source>
-        <translation type="unfinished"/>
+        <translation>文件下载完成</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
@@ -9943,7 +9943,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>
         <source>Address blocked</source>
-        <translation type="unfinished"/>
+        <translation>地址被封锁</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="220"/>
@@ -9973,7 +9973,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="240"/>
         <source>Unsupported address type</source>
-        <translation type="unfinished"/>
+        <translation>不支持的地址类型</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="244"/>
@@ -10060,7 +10060,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="903"/>
         <source>Load Blocked Page</source>
-        <translation type="unfinished"/>
+        <translation>载入封锁页面</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="919"/>

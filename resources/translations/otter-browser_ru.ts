@@ -2677,27 +2677,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="234"/>
         <source>Lock Panel</source>
-        <translation type="unfinished"/>
+        <translation>Закрепить панель</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="267"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Ссылки</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="317"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Заголовок: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="320"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Адрес: %1</translation>
     </message>
 </context>
 <context>
@@ -3362,7 +3362,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n заблокирован)</numerusform><numerusform>%1 (%n заблокировано)</numerusform><numerusform>%1 (%n заблокировано)</numerusform><numerusform>%1 (%n заблокировано)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -4145,7 +4145,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="585"/>
         <source>Do you really want to remove preferences for this website?</source>
-        <translation type="unfinished"/>
+        <translation>Вы действительно хотите удалить настройки для этого сайта?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="603"/>
@@ -5655,12 +5655,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="108"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Стартовая страница</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="111"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Неизвестно)</translation>
     </message>
 </context>
 <context>
@@ -5998,7 +5998,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
         <source>Enable plugins</source>
-        <translation type="unfinished"/>
+        <translation>Включить плагины</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="55"/>
@@ -6098,33 +6098,33 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Адрес</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Заголовок</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="39"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="97"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="104"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Дата</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="142"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Вкладка истории</translation>
     </message>
 </context>
 <context>
@@ -6195,7 +6195,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Добавить закладку</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6205,7 +6205,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="291"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Новая...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="331"/>
@@ -6650,22 +6650,22 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="235"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Неизвестно</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="242"/>
         <source>Redownload</source>
-        <translation type="unfinished"/>
+        <translation>Перезагрузить</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="247"/>
         <source>Open Folder</source>
-        <translation type="unfinished"/>
+        <translation>Открыть папку</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="252"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -6904,12 +6904,12 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="45"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="99"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Загрузки</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="121"/>
         <source>Show all Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Показать все загрузки</translation>
     </message>
 </context>
 <context>
@@ -7133,22 +7133,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML-файл (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>HTML-файл со всеми ресурсами (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>Web archive (*.mht)</source>
-        <translation type="unfinished"/>
+        <translation>Веб-архив (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>PDF document (*.pdf)</source>
-        <translation type="unfinished"/>
+        <translation>PDF-документ (*.pdf)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1031"/>
@@ -7799,7 +7799,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
         <source>Expiration Date</source>
-        <translation type="unfinished"/>
+        <translation>Дата окончания</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
@@ -8433,7 +8433,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Go to History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Перейти к записи истории</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
@@ -8468,7 +8468,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Remove History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Удалить запись истории</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
@@ -9503,7 +9503,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
         <source>Purge History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Очистить запись истории</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1277"/>
@@ -9561,7 +9561,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Ссылки</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
@@ -9581,7 +9581,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="133"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Вкладка истории</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="134"/>
