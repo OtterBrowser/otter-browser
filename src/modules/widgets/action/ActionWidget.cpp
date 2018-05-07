@@ -257,34 +257,31 @@ bool NavigationActionWidget::event(QEvent *event)
 			{
 				QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
-				if (contextMenuEvent)
+				if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
 				{
-					if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
-					{
-						contextMenuEvent->accept();
-
-						return true;
-					}
-
-					event->accept();
-
-					ActionExecutor::Object executor(m_window, m_window);
-					QMenu menu(this);
-					menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {}, executor, &menu));
-					menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Purge Tab History")}}, executor, &menu));
-
-					const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
-
-					if (toolBar)
-					{
-						menu.addSeparator();
-						menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), {}, &menu)->actions());
-					}
-
-					menu.exec(contextMenuEvent->globalPos());
+					contextMenuEvent->accept();
 
 					return true;
 				}
+
+				event->accept();
+
+				ActionExecutor::Object executor(m_window, m_window);
+				QMenu menu(this);
+				menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {}, executor, &menu));
+				menu.addAction(new Action(ActionsManager::ClearTabHistoryAction, {{QLatin1String("clearGlobalHistory"), true}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Purge Tab History")}}, executor, &menu));
+
+				const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+
+				if (toolBar)
+				{
+					menu.addSeparator();
+					menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), {}, &menu)->actions());
+				}
+
+				menu.exec(contextMenuEvent->globalPos());
+
+				return true;
 			}
 
 			return false;
@@ -296,39 +293,34 @@ bool NavigationActionWidget::event(QEvent *event)
 			break;
 		case QEvent::ToolTip:
 			{
-				const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+				const QKeySequence shortcut(ActionsManager::getActionShortcut(getIdentifier()));
+				QString toolTip(text() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
-				if (helpEvent)
+				if (m_window)
 				{
-					const QKeySequence shortcut(ActionsManager::getActionShortcut(getIdentifier()));
-					QString toolTip(text() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')));
+					const WindowHistoryInformation history(m_window->getContentsWidget()->getHistory());
 
-					if (m_window)
+					if (!history.entries.isEmpty())
 					{
-						const WindowHistoryInformation history(m_window->getContentsWidget()->getHistory());
+						int index(-1);
 
-						if (!history.entries.isEmpty())
+						if (getIdentifier() == ActionsManager::GoBackAction && history.index > 0)
 						{
-							int index(-1);
+							index = (history.index - 1);
+						}
+						else if (getIdentifier() == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
+						{
+							index = (history.index + 1);
+						}
 
-							if (getIdentifier() == ActionsManager::GoBackAction && history.index > 0)
-							{
-								index = (history.index - 1);
-							}
-							else if (getIdentifier() == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
-							{
-								index = (history.index + 1);
-							}
-
-							if (index >= 0)
-							{
-								toolTip = history.entries.at(index).getTitle().replace(QLatin1Char('&'), QLatin1String("&&")) + QLatin1String(" (") + text() + (shortcut.isEmpty() ? QString() : QLatin1String(" - ") + shortcut.toString(QKeySequence::NativeText)) + QLatin1Char(')');
-							}
+						if (index >= 0)
+						{
+							toolTip = history.entries.at(index).getTitle().replace(QLatin1Char('&'), QLatin1String("&&")) + QLatin1String(" (") + text() + (shortcut.isEmpty() ? QString() : QLatin1String(" - ") + shortcut.toString(QKeySequence::NativeText)) + QLatin1Char(')');
 						}
 					}
-
-					QToolTip::showText(helpEvent->globalPos(), toolTip);
 				}
+
+				QToolTip::showText(static_cast<QHelpEvent*>(event)->globalPos(), toolTip);
 			}
 
 			return true;
@@ -343,32 +335,27 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
-		const QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
+		const Action *action(qobject_cast<Action*>(menu()->activeAction()));
 
-		if (contextMenuEvent)
+		if (action && action->getIdentifier() == ActionsManager::GoToHistoryIndexAction)
 		{
-			const Action *action(qobject_cast<Action*>(menu()->activeAction()));
+			ActionExecutor::Object executor(m_window, m_window);
+			const int index(action->getParameters().value(QLatin1String("index")).toInt());
+			QMenu contextMenu(menu());
+			Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Remove Entry")}}, executor, &contextMenu));
+			removeEntryAction->setShortcut(QKeySequence(Qt::Key_Delete));
 
-			if (action && action->getIdentifier() == ActionsManager::GoToHistoryIndexAction)
+			Action *purgeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Purge Entry")}}, executor, &contextMenu));
+			purgeEntryAction->setShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
+
+			contextMenu.addAction(removeEntryAction);
+			contextMenu.addAction(purgeEntryAction);
+
+			const QAction *selectedAction(contextMenu.exec(static_cast<QContextMenuEvent*>(event)->globalPos()));
+
+			if (selectedAction == removeEntryAction || selectedAction == purgeEntryAction)
 			{
-				ActionExecutor::Object executor(m_window, m_window);
-				const int index(action->getParameters().value(QLatin1String("index")).toInt());
-				QMenu contextMenu(menu());
-				Action *removeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Remove Entry")}}, executor, &contextMenu));
-				removeEntryAction->setShortcut(QKeySequence(Qt::Key_Delete));
-
-				Action *purgeEntryAction(new Action(ActionsManager::RemoveHistoryIndexAction, {{QLatin1String("index"), index}}, {{QLatin1String("text"), tr("Purge Entry")}}, executor, &contextMenu));
-				purgeEntryAction->setShortcut(QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
-
-				contextMenu.addAction(removeEntryAction);
-				contextMenu.addAction(purgeEntryAction);
-
-				const QAction *selectedAction(contextMenu.exec(contextMenuEvent->globalPos()));
-
-				if (selectedAction == removeEntryAction || selectedAction == purgeEntryAction)
-				{
-					menu()->close();
-				}
+				menu()->close();
 			}
 		}
 	}
@@ -376,7 +363,7 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete && m_window)
+		if (keyEvent->key() == Qt::Key_Delete && m_window)
 		{
 			const Action *action(qobject_cast<Action*>(menu()->activeAction()));
 
