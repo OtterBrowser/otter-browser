@@ -24,11 +24,11 @@
 #include "../../../ui/WebWidget.h"
 
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QProgressBar>
 
 namespace Otter
 {
 
+class ProgressBarWidget;
 class Window;
 
 class ProgressInformationWidget final : public QWidget
@@ -59,7 +59,7 @@ protected slots:
 private:
 	Window *m_window;
 	QLabel *m_label;
-	QProgressBar *m_progressBar;
+	ProgressBarWidget *m_progressBar;
 	ProgressInformationType m_type;
 };
 

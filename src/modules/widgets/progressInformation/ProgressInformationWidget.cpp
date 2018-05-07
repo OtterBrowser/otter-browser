@@ -20,6 +20,7 @@
 #include "ProgressInformationWidget.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ProgressBarWidget.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
@@ -69,7 +70,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const ToolB
 
 	if (m_type == DocumentProgressType || m_type == TotalProgressType)
 	{
-		m_progressBar = new QProgressBar(this);
+		m_progressBar = new ProgressBarWidget(this);
 		m_progressBar->setRange(0, 100);
 		m_progressBar->setAlignment(Qt::AlignCenter);
 
