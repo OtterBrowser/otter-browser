@@ -1141,9 +1141,10 @@ void TransfersManager::handleTransferChanged()
 
 	if (transfer)
 	{
-		emit transferChanged(transfer);
-
 		scheduleSave();
+		updateRunningTransfersState();
+
+		emit transferChanged(transfer);
 	}
 }
 
