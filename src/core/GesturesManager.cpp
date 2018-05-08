@@ -618,19 +618,19 @@ void GesturesManager::createInstance()
 	{
 		QVector<QVector<MouseProfile::Gesture::Step> > generic;
 		generic.reserve(3);
-		generic.append({MouseProfile::Gesture::Step(QEvent::MouseButtonDblClick, Qt::LeftButton)});
-		generic.append({MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), MouseProfile::Gesture::Step(QEvent::MouseButtonRelease, Qt::LeftButton)});
-		generic.append({MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), MouseProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction)});
+		generic.append({{QEvent::MouseButtonDblClick, Qt::LeftButton}});
+		generic.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}});
+		generic.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}});
 
 		QVector<QVector<MouseProfile::Gesture::Step> > link;
-		link.append({MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), MouseProfile::Gesture::Step(QEvent::MouseButtonRelease, Qt::LeftButton)});
-		link.append({MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), MouseProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction)});
+		link.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}});
+		link.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}});
 
 		QVector<QVector<MouseProfile::Gesture::Step> > contentEditable;
-		contentEditable.append({MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::MiddleButton)});
+		contentEditable.append({{QEvent::MouseButtonPress, Qt::MiddleButton}});
 
 		QVector<QVector<MouseProfile::Gesture::Step> > tabHandle;
-		tabHandle.append({MouseProfile::Gesture::Step(QEvent::MouseButtonPress, Qt::LeftButton), MouseProfile::Gesture::Step(QEvent::MouseMove, MouseGestures::UnknownMouseAction)});
+		tabHandle.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}});
 
 		m_nativeGestures[GesturesManager::GenericContext] = generic;
 		m_nativeGestures[GesturesManager::LinkContext] = link;
