@@ -378,31 +378,26 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->bookmarksViewWidget && event->type() == QEvent::KeyPress)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent)
+		switch (static_cast<QKeyEvent*>(event)->key())
 		{
-			switch (keyEvent->key())
-			{
-				case Qt::Key_Delete:
-					removeBookmark();
+			case Qt::Key_Delete:
+				removeBookmark();
 
-					return true;
-				case Qt::Key_Enter:
-				case Qt::Key_Return:
-					openBookmark();
+				return true;
+			case Qt::Key_Enter:
+			case Qt::Key_Return:
+				openBookmark();
 
-					return true;
-				default:
-					break;
-			}
+				return true;
+			default:
+				break;
 		}
 	}
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton)
 		{
 			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
@@ -417,19 +412,15 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::ToolTip)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(helpEvent->pos()));
+		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index));
 
-		if (helpEvent)
+		if (bookmark)
 		{
-			const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(helpEvent->pos()));
-			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index));
-
-			if (bookmark)
-			{
-				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->bookmarksViewWidget).width() / 2)), m_ui->bookmarksViewWidget, m_ui->bookmarksViewWidget->visualRect(index));
-			}
-
-			return true;
+			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->bookmarksViewWidget).width() / 2)), m_ui->bookmarksViewWidget, m_ui->bookmarksViewWidget->visualRect(index));
 		}
+
+		return true;
 	}
 
 	return ContentsWidget::eventFilter(object, event);
