@@ -563,10 +563,9 @@ bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->configurationViewWidget && event->type() == QEvent::KeyPress)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 		const QModelIndex index(m_ui->configurationViewWidget->currentIndex());
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Right && index.parent().isValid())
+		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Right && index.parent().isValid())
 		{
 			m_ui->configurationViewWidget->setCurrentIndex(index.sibling(index.row(), 2));
 		}
