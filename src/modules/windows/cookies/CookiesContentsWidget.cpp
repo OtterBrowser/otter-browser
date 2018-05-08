@@ -498,16 +498,11 @@ WebWidget::LoadingState CookiesContentsWidget::getLoadingState() const
 
 bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->cookiesViewWidget && event->type() == QEvent::KeyPress)
+	if (object == m_ui->cookiesViewWidget && event->type() == QEvent::KeyPress && static_cast<QKeyEvent*>(event)->key() == Qt::Key_Delete)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		removeCookies();
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
-		{
-			removeCookies();
-
-			return true;
-		}
+		return true;
 	}
 
 	return ContentsWidget::eventFilter(object, event);
