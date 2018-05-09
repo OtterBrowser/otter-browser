@@ -2709,6 +2709,11 @@ bool QtWebKitWebWidget::canInspect() const
 	return !Utils::isUrlEmpty(getUrl());
 }
 
+bool QtWebKitWebWidget::canTakeScreenshot() const
+{
+	return true;
+}
+
 bool QtWebKitWebWidget::canRedo() const
 {
 	return m_page->undoStack()->canRedo();

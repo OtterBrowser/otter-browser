@@ -1272,6 +1272,10 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 			state.isEnabled = m_hitResult.flags.testFlag(HitTestResult::IsFormTest);
 
 			break;
+		case ActionsManager::TakeScreenshotAction:
+			state.isEnabled = canTakeScreenshot();
+
+			break;
 		case ActionsManager::BookmarkPageAction:
 			state.text = (BookmarksManager::hasBookmark(getUrl()) ? QCoreApplication::translate("actions", "Edit Bookmark…") : QCoreApplication::translate("actions", "Add Bookmark…"));
 
@@ -1517,6 +1521,11 @@ bool WebWidget::canFastForward() const
 }
 
 bool WebWidget::canInspect() const
+{
+	return false;
+}
+
+bool WebWidget::canTakeScreenshot() const
 {
 	return false;
 }

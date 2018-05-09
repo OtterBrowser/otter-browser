@@ -142,6 +142,7 @@ protected:
 	bool canGoForward() const override;
 	bool canFastForward() const override;
 	bool canInspect() const override;
+	bool canTakeScreenshot() const override;
 	bool canRedo() const override;
 	bool canUndo() const override;
 	bool canShowContextMenu(const QPoint &position) const override;
