@@ -430,16 +430,11 @@ WebWidget::LoadingState PasswordsContentsWidget::getLoadingState() const
 
 bool PasswordsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->passwordsViewWidget && event->type() == QEvent::KeyPress)
+	if (object == m_ui->passwordsViewWidget && event->type() == QEvent::KeyPress && static_cast<QKeyEvent*>(event)->key() == Qt::Key_Delete)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
+		removePasswords();
 
-		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
-		{
-			removePasswords();
-
-			return true;
-		}
+		return true;
 	}
 
 	return ContentsWidget::eventFilter(object, event);
