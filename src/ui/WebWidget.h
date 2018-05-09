@@ -263,6 +263,7 @@ protected:
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
 	void setClickPosition(const QPoint &position);
+	QString suggestSaveFileName(const QString &extension) const;
 	QString suggestSaveFileName(SaveFormat format) const;
 	QString getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const;
 	QString getOpenActionText(SessionsManager::OpenHints hints) const;
