@@ -1668,6 +1668,27 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_page->mainFrame()->setScrollPosition(QPoint(qMin(m_page->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_page->mainFrame()->scrollPosition().x() + m_webView->width())), m_page->mainFrame()->scrollPosition().y()));
 
 			break;
+		case ActionsManager::TakeScreenshotAction:
+			{
+				const QSize contentsSize(m_page->mainFrame()->contentsSize());
+				const QSize oldViewportSize(m_page->viewportSize());
+				QPixmap pixmap(contentsSize);
+				QPainter painter(&pixmap);
+
+				m_page->setViewportSize(contentsSize);
+				m_page->mainFrame()->render(&painter);
+				m_page->setViewportSize(oldViewportSize);
+
+				const QStringList filters({tr("PNG image (*.png)"), tr("JPEG image (*.jpg *.jpeg)")});
+				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(QLatin1String(".png")), {}, filters));
+
+				if (result.canSave)
+				{
+					pixmap.save(result.path, ((filters.indexOf(result.filter) == 0) ? "PNG" : "JPEG"));
+				}
+			}
+
+			break;
 		case ActionsManager::ActivateContentAction:
 			{
 				m_webView->setFocus();
