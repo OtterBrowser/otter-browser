@@ -230,6 +230,7 @@ public:
 		EndScrollAction,
 		PrintAction,
 		PrintPreviewAction,
+		TakeScreenshotAction,
 		ActivateAddressFieldAction,
 		ActivateSearchFieldAction,
 		ActivateContentAction,

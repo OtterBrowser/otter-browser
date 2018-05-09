@@ -409,6 +409,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(EndScrollAction, QT_TRANSLATE_NOOP("actions", "Exit Scroll Mode"), {}, {}, ActionDefinition::WindowScope);
 	registerAction(PrintAction, QT_TRANSLATE_NOOP("actions", "Print…"), {}, ThemesManager::createIcon(QLatin1String("document-print")), ActionDefinition::WindowScope);
 	registerAction(PrintPreviewAction, QT_TRANSLATE_NOOP("actions", "Print Preview"), {}, ThemesManager::createIcon(QLatin1String("document-print-preview")), ActionDefinition::WindowScope);
+	registerAction(TakeScreenshotAction, QT_TRANSLATE_NOOP("actions", "Take Screenshot"), {}, {}, ActionDefinition::WindowScope, ActionDefinition::NoFlags);
 	registerAction(ActivateAddressFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Address Field"), {}, {}, ActionDefinition::MainWindowScope);
 	registerAction(ActivateSearchFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Search Field"), {}, {}, ActionDefinition::MainWindowScope);
 	registerAction(ActivateContentAction, QT_TRANSLATE_NOOP("actions", "Activate Content"), {}, {}, ActionDefinition::WindowScope);
