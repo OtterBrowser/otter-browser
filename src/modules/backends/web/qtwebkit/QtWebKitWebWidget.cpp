@@ -31,6 +31,7 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
+#include "../../../../core/JsonSettings.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -1672,12 +1673,24 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const QString mode(parameters.value(QLatin1String("mode"), QLatin1String("viewport")).toString());
 				const QSize viewportSize(m_page->viewportSize());
-				const QSize contentsSize((mode == QLatin1String("fullPage")) ? m_page->mainFrame()->contentsSize() : viewportSize);
-				QPixmap pixmap(contentsSize);
+				const QSize contentsSize((mode == QLatin1String("viewport")) ? viewportSize : m_page->mainFrame()->contentsSize());
+				const QRect rectangle((mode == QLatin1String("area")) ? JsonSettings::readRectangle(parameters.value(QLatin1String("geometry"))) : QRect());
+				QPixmap pixmap(rectangle.isValid() ? rectangle.size() : contentsSize);
 				QPainter painter(&pixmap);
 
 				m_page->setViewportSize(contentsSize);
-				m_page->mainFrame()->render(&painter);
+
+				if (rectangle.isValid())
+				{
+					painter.translate(-rectangle.topLeft());
+
+					m_page->mainFrame()->render(&painter, {rectangle});
+				}
+				else
+				{
+					m_page->mainFrame()->render(&painter);
+				}
+
 				m_page->setViewportSize(viewportSize);
 
 				const QStringList filters({tr("PNG image (*.png)"), tr("JPEG image (*.jpg *.jpeg)")});
