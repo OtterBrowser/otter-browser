@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define OTTER_JSONSETTINGS_H
 
 #include <QtCore/QJsonDocument>
+#include <QtCore/QRect>
 
 namespace Otter
 {
@@ -32,6 +33,7 @@ public:
 	explicit JsonSettings(const QString &path);
 
 	void setComment(const QString &comment);
+	static QRect readRectangle(const QJsonValue &value);
 	QString getComment() const;
 	bool save(const QString &path = {}, bool isAtomic = true);
 	bool hasError() const;

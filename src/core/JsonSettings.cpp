@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -92,6 +92,29 @@ JsonSettings::JsonSettings(const QString &path) : QJsonDocument(),
 void JsonSettings::setComment(const QString &comment)
 {
 	m_comment = comment;
+}
+
+QRect JsonSettings::readRectangle(const QJsonValue &value)
+{
+	QRect rectangle;
+
+	if (value.isString())
+	{
+		const QStringList geometry(value.toString().split(QLatin1Char(',')));
+
+		if (geometry.count() == 4)
+		{
+			rectangle = {geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()};
+		}
+	}
+	else if (value.isObject())
+	{
+		const QJsonObject object(value.toObject());
+
+		rectangle = {object.value(QLatin1String("x")).toInt(), object.value(QLatin1String("y")).toInt(), object.value(QLatin1String("width")).toInt(), object.value(QLatin1String("height")).toInt()};
+	}
+
+	return rectangle;
 }
 
 QString JsonSettings::getComment() const
