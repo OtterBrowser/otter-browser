@@ -609,34 +609,24 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->transfersViewWidget && event->type() == QEvent::KeyPress)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent)
+		switch (static_cast<QKeyEvent*>(event)->key())
 		{
-			switch (keyEvent->key())
-			{
-				case Qt::Key_Delete:
-					removeTransfer();
+			case Qt::Key_Delete:
+				removeTransfer();
 
-					return true;
-				case Qt::Key_Enter:
-				case Qt::Key_Return:
-					openTransfer();
+				return true;
+			case Qt::Key_Enter:
+			case Qt::Key_Return:
+				openTransfer();
 
-					return true;
-				default:
-					break;
-			}
+				return true;
+			default:
+				break;
 		}
 	}
-	else if (object == m_ui->downloadLineEditWidget && event->type() == QEvent::KeyPress)
+	else if (object == m_ui->downloadLineEditWidget && event->type() == QEvent::KeyPress && static_cast<QKeyEvent*>(event)->key() == Qt::Key_Escape)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->downloadLineEditWidget->clear();
-		}
+		m_ui->downloadLineEditWidget->clear();
 	}
 
 	return ContentsWidget::eventFilter(object, event);
