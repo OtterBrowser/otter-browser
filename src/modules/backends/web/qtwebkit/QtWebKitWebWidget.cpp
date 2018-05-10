@@ -1670,14 +1670,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::TakeScreenshotAction:
 			{
-				const QSize contentsSize(m_page->mainFrame()->contentsSize());
-				const QSize oldViewportSize(m_page->viewportSize());
+				const QString mode(parameters.value(QLatin1String("mode"), QLatin1String("viewport")).toString());
+				const QSize viewportSize(m_page->viewportSize());
+				const QSize contentsSize((mode == QLatin1String("fullPage")) ? m_page->mainFrame()->contentsSize() : viewportSize);
 				QPixmap pixmap(contentsSize);
 				QPainter painter(&pixmap);
 
 				m_page->setViewportSize(contentsSize);
 				m_page->mainFrame()->render(&painter);
-				m_page->setViewportSize(oldViewportSize);
+				m_page->setViewportSize(viewportSize);
 
 				const QStringList filters({tr("PNG image (*.png)"), tr("JPEG image (*.jpg *.jpeg)")});
 				const SaveInformation result(Utils::getSavePath(suggestSaveFileName(QLatin1String(".png")), {}, filters));
