@@ -94,24 +94,37 @@ void JsonSettings::setComment(const QString &comment)
 	m_comment = comment;
 }
 
-QRect JsonSettings::readRectangle(const QJsonValue &value)
+QRect JsonSettings::readRectangle(const QVariant &value)
 {
 	QRect rectangle;
 
-	if (value.isString())
+	switch (value.type())
 	{
-		const QStringList geometry(value.toString().split(QLatin1Char(',')));
+		case QVariant::String:
+			{
+				const QStringList geometry(value.toString().split(QLatin1Char(',')));
 
-		if (geometry.count() == 4)
-		{
-			rectangle = {geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()};
-		}
-	}
-	else if (value.isObject())
-	{
-		const QJsonObject object(value.toObject());
+				if (geometry.count() == 4)
+				{
+					rectangle = {geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()};
+				}
+			}
 
-		rectangle = {object.value(QLatin1String("x")).toInt(), object.value(QLatin1String("y")).toInt(), object.value(QLatin1String("width")).toInt(), object.value(QLatin1String("height")).toInt()};
+			break;
+		case QVariant::Map:
+			{
+				const QVariantMap map(value.toMap());
+
+				rectangle = {map.value(QLatin1String("x")).toInt(), map.value(QLatin1String("y")).toInt(), map.value(QLatin1String("width")).toInt(), map.value(QLatin1String("height")).toInt()};
+			}
+
+			break;
+		case QVariant::Rect:
+			rectangle = value.toRect();
+
+			break;
+		default:
+			break;
 	}
 
 	return rectangle;

@@ -33,7 +33,7 @@ public:
 	explicit JsonSettings(const QString &path);
 
 	void setComment(const QString &comment);
-	static QRect readRectangle(const QJsonValue &value);
+	static QRect readRectangle(const QVariant &value);
 	QString getComment() const;
 	bool save(const QString &path = {}, bool isAtomic = true);
 	bool hasError() const;
