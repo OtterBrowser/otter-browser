@@ -942,69 +942,66 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
-		if (keyEvent)
+		if (m_isIgnoringEnter)
 		{
-			if (m_isIgnoringEnter)
-			{
-				m_isIgnoringEnter = false;
-
-				if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
-				{
-					return true;
-				}
-			}
-
-			m_currentIndex = m_listView->currentIndex();
+			m_isIgnoringEnter = false;
 
 			if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
 			{
-				switch (static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()))
-				{
-					case BookmarksModel::FolderBookmark:
-						{
-							const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
-
-							if (bookmark && bookmark->rowCount() > 0)
-							{
-								m_isIgnoringEnter = true;
-
-								Menu menu(Menu::BookmarksMenuRole, this);
-								menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
-								menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
-							}
-						}
-
-						break;
-					case BookmarksModel::UrlBookmark:
-						{
-							const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
-
-							if (keyEvent->modifiers() != Qt::NoModifier)
-							{
-								m_urlOpenTime = QTime::currentTime();
-
-								Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
-							}
-							else
-							{
-								m_urlOpenTime = QTime::currentTime();
-
-								m_window->setUrl(url);
-							}
-						}
-
-						break;
-					default:
-						if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
-						{
-							addTile();
-						}
-
-						break;
-				}
-
 				return true;
 			}
+		}
+
+		m_currentIndex = m_listView->currentIndex();
+
+		if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+		{
+			switch (static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()))
+			{
+				case BookmarksModel::FolderBookmark:
+					{
+						const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
+
+						if (bookmark && bookmark->rowCount() > 0)
+						{
+							m_isIgnoringEnter = true;
+
+							Menu menu(Menu::BookmarksMenuRole, this);
+							menu.setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
+							menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
+						}
+					}
+
+					break;
+				case BookmarksModel::UrlBookmark:
+					{
+						const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
+
+						if (keyEvent->modifiers() != Qt::NoModifier)
+						{
+							m_urlOpenTime = QTime::currentTime();
+
+							Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}, {QLatin1String("hints"), QVariant(SessionsManager::calculateOpenHints((m_window->isPrivate() ? SessionsManager::PrivateOpen : SessionsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()))}}, parentWidget());
+						}
+						else
+						{
+							m_urlOpenTime = QTime::currentTime();
+
+							m_window->setUrl(url);
+						}
+					}
+
+					break;
+				default:
+					if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+					{
+						addTile();
+					}
+
+					break;
+			}
+
+			return true;
 		}
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonPress)
