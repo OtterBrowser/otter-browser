@@ -102,11 +102,11 @@ QRect JsonSettings::readRectangle(const QVariant &value)
 	{
 		case QVariant::String:
 			{
-				const QStringList geometry(value.toString().split(QLatin1Char(',')));
+				const QStringList list(value.toString().split(QLatin1Char(',')));
 
-				if (geometry.count() == 4)
+				if (list.count() == 4)
 				{
-					rectangle = {geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()};
+					rectangle = {list.at(0).simplified().toInt(), list.at(1).simplified().toInt(), list.at(2).simplified().toInt(), list.at(3).simplified().toInt()};
 				}
 			}
 
@@ -128,6 +128,78 @@ QRect JsonSettings::readRectangle(const QVariant &value)
 	}
 
 	return rectangle;
+}
+
+QPoint JsonSettings::readPoint(const QVariant &value)
+{
+	QPoint point;
+
+	switch (value.type())
+	{
+		case QVariant::String:
+			{
+				const QStringList list(value.toString().split(QLatin1Char(',')));
+
+				if (list.count() == 2)
+				{
+					point = {list.at(0).simplified().toInt(), list.at(1).simplified().toInt()};
+				}
+			}
+
+			break;
+		case QVariant::Map:
+			{
+				const QVariantMap map(value.toMap());
+
+				point = {map.value(QLatin1String("x")).toInt(), map.value(QLatin1String("y")).toInt()};
+			}
+
+			break;
+		case QVariant::Point:
+			point = value.toPoint();
+
+			break;
+		default:
+			break;
+	}
+
+	return point;
+}
+
+QSize JsonSettings::readSize(const QVariant &value)
+{
+	QSize size;
+
+	switch (value.type())
+	{
+		case QVariant::String:
+			{
+				const QStringList list(value.toString().split(QLatin1Char(',')));
+
+				if (list.count() == 2)
+				{
+					size = {list.at(0).simplified().toInt(), list.at(1).simplified().toInt()};
+				}
+			}
+
+			break;
+		case QVariant::Map:
+			{
+				const QVariantMap map(value.toMap());
+
+				size = {map.value(QLatin1String("width")).toInt(), map.value(QLatin1String("height")).toInt()};
+			}
+
+			break;
+		case QVariant::Size:
+			size = value.toSize();
+
+			break;
+		default:
+			break;
+	}
+
+	return size;
 }
 
 QString JsonSettings::getComment() const

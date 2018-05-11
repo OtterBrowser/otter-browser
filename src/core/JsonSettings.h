@@ -34,6 +34,8 @@ public:
 
 	void setComment(const QString &comment);
 	static QRect readRectangle(const QVariant &value);
+	static QPoint readPoint(const QVariant &value);
+	static QSize readSize(const QVariant &value);
 	QString getComment() const;
 	bool save(const QString &path = {}, bool isAtomic = true);
 	bool hasError() const;
