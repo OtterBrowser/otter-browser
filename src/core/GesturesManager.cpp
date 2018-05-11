@@ -616,26 +616,10 @@ void GesturesManager::createInstance()
 {
 	if (!m_instance)
 	{
-		QVector<QVector<MouseProfile::Gesture::Step> > generic;
-		generic.reserve(3);
-		generic.append({{QEvent::MouseButtonDblClick, Qt::LeftButton}});
-		generic.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}});
-		generic.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}});
-
-		QVector<QVector<MouseProfile::Gesture::Step> > link;
-		link.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}});
-		link.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}});
-
-		QVector<QVector<MouseProfile::Gesture::Step> > contentEditable;
-		contentEditable.append({{QEvent::MouseButtonPress, Qt::MiddleButton}});
-
-		QVector<QVector<MouseProfile::Gesture::Step> > tabHandle;
-		tabHandle.append({{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}});
-
-		m_nativeGestures[GesturesManager::GenericContext] = generic;
-		m_nativeGestures[GesturesManager::LinkContext] = link;
-		m_nativeGestures[GesturesManager::ContentEditableContext] = contentEditable;
-		m_nativeGestures[GesturesManager::TabHandleContext] = tabHandle;
+		m_nativeGestures[GesturesManager::GenericContext] = {{{QEvent::MouseButtonDblClick, Qt::LeftButton}}, {{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}}, {{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
+		m_nativeGestures[GesturesManager::LinkContext] = {{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseButtonRelease, Qt::LeftButton}}, {{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
+		m_nativeGestures[GesturesManager::ContentEditableContext] = {{{QEvent::MouseButtonPress, Qt::MiddleButton}}};
+		m_nativeGestures[GesturesManager::TabHandleContext] = {{{QEvent::MouseButtonPress, Qt::LeftButton}, {QEvent::MouseMove, MouseGestures::UnknownMouseAction}}};
 
 		m_instance = new GesturesManager(QCoreApplication::instance());
 		m_gesturesContextEnumerator = GesturesManager::staticMetaObject.indexOfEnumerator(QLatin1String("GesturesContext").data());
