@@ -1006,21 +1006,11 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonPress)
 	{
-		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent)
-		{
-			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
-		}
+		m_currentIndex = m_listView->indexAt(static_cast<QMouseEvent*>(event)->pos());
 	}
-	else if (object == m_listView->viewport() && event->type() == QEvent::MouseMove)
+	else if (object == m_listView->viewport() && event->type() == QEvent::MouseMove && static_cast<QMouseEvent*>(event)->buttons().testFlag(Qt::LeftButton) && ((m_urlOpenTime.isValid() && m_urlOpenTime.msecsTo(QTime::currentTime()) < 1000) || m_window->getLoadingState() != WebWidget::FinishedLoadingState))
 	{
-		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent && mouseEvent->buttons().testFlag(Qt::LeftButton) && ((m_urlOpenTime.isValid() && m_urlOpenTime.msecsTo(QTime::currentTime()) < 1000) || m_window->getLoadingState() != WebWidget::FinishedLoadingState))
-		{
-			return true;
-		}
+		return true;
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
@@ -1031,7 +1021,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 			m_isIgnoringEnter = false;
 		}
 
-		if (mouseEvent && m_listView->indexAt(mouseEvent->pos()) == m_currentIndex)
+		if (m_listView->indexAt(mouseEvent->pos()) == m_currentIndex)
 		{
 			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
 
