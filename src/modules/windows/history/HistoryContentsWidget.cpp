@@ -481,7 +481,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton)
 		{
 			const QModelIndex entryIndex(m_ui->historyViewWidget->currentIndex());
 
