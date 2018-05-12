@@ -811,29 +811,26 @@ bool SearchWidget::event(QEvent *event)
 	if (isEnabled() && event->type() == QEvent::ToolTip)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		QString toolTip;
 
-		if (helpEvent)
+		if (m_iconRectangle.contains(helpEvent->pos()) || m_dropdownArrowRectangle.contains(helpEvent->pos()))
 		{
-			if (m_iconRectangle.contains(helpEvent->pos()) || m_dropdownArrowRectangle.contains(helpEvent->pos()))
-			{
-				QToolTip::showText(helpEvent->globalPos(), tr("Select Search Engine"));
+			toolTip = tr("Select Search Engine");
+		}
+		else if (m_addButtonRectangle.contains(helpEvent->pos()))
+		{
+			toolTip = tr("Add Search Engine…");
+		}
+		else if (m_searchButtonRectangle.contains(helpEvent->pos()))
+		{
+			toolTip = tr("Search");
+		}
 
-				return true;
-			}
+		if (!toolTip.isEmpty())
+		{
+			QToolTip::showText(helpEvent->globalPos(), toolTip);
 
-			if (m_addButtonRectangle.contains(helpEvent->pos()))
-			{
-				QToolTip::showText(helpEvent->globalPos(), tr("Add Search Engine…"));
-
-				return true;
-			}
-
-			if (m_searchButtonRectangle.contains(helpEvent->pos()))
-			{
-				QToolTip::showText(helpEvent->globalPos(), tr("Search"));
-
-				return true;
-			}
+			return true;
 		}
 	}
 
