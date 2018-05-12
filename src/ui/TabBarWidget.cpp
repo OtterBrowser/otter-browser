@@ -1746,21 +1746,11 @@ bool TabBarWidget::event(QEvent *event)
 
 				if (event->type() == QEvent::Wheel)
 				{
-					const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
-
-					if (wheelEvent)
-					{
-						tab = tabAt(wheelEvent->pos());
-					}
+					tab = tabAt(static_cast<QWheelEvent*>(event)->pos());
 				}
 				else
 				{
-					const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-					if (mouseEvent)
-					{
-						tab = tabAt(mouseEvent->pos());
-					}
+					tab = tabAt(static_cast<QMouseEvent*>(event)->pos());
 				}
 
 				if (tab >= 0)
