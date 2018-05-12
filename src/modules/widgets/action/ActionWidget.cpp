@@ -177,12 +177,7 @@ bool ActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
-
-		if (helpEvent)
-		{
-			QToolTip::showText(helpEvent->globalPos(), text() + (m_action->shortcut().isEmpty() ? QString() : QLatin1String(" (") + m_action->shortcut().toString(QKeySequence::NativeText) + QLatin1Char(')')));
-		}
+		QToolTip::showText(static_cast<QHelpEvent*>(event)->globalPos(), text() + (m_action->shortcut().isEmpty() ? QString() : QLatin1String(" (") + m_action->shortcut().toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
 		return true;
 	}
