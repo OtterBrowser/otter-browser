@@ -229,6 +229,7 @@ void WindowsContentsWidget::showContextMenu(const QPoint &position)
 					{
 						executor = ActionExecutor::Object(mainWindowItem->getMainWindow(), mainWindowItem->getMainWindow());
 
+						menu.addSeparator();
 						menu.addAction(new Action(ActionsManager::NewTabAction, {}, executor, &menu));
 						menu.addAction(new Action(ActionsManager::NewTabPrivateAction, {}, executor, &menu));
 						menu.addSeparator();
