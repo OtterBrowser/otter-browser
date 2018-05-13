@@ -1378,7 +1378,11 @@ QWidget* QtWebEngineWebWidget::getInspector()
 	{
 		m_inspectorView = new QWebEngineView(this);
 		m_inspectorView->setMinimumHeight(200);
-		m_inspectorView->page()->setInspectedPage(m_page);
+
+		QTimer::singleShot(100, this, [&]()
+		{
+			m_inspectorView->page()->setInspectedPage(m_page);
+		});
 	}
 
 	return m_inspectorView;
