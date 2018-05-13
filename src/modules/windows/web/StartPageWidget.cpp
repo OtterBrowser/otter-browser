@@ -908,21 +908,11 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		if (event->type() == QEvent::Wheel)
 		{
-			const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
-
-			if (wheelEvent)
-			{
-				m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(wheelEvent->globalPos()));
-			}
+			m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(static_cast<QWheelEvent*>(event)->globalPos()));
 		}
 		else
 		{
-			const QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-			if (mouseEvent)
-			{
-				m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(mouseEvent->globalPos()));
-			}
+			m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(static_cast<QMouseEvent*>(event)->globalPos()));
 		}
 
 		QVector<GesturesManager::GesturesContext> contexts({GesturesManager::GenericContext});
