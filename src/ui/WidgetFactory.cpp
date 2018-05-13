@@ -198,7 +198,6 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 	}
 
 	return nullptr;
-
 }
 
 ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window, QWidget *parent)
