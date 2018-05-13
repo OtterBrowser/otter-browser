@@ -42,6 +42,7 @@
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
+#include "../modules/windows/feeds/FeedsContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
 #include "../modules/windows/links/LinksContentsWidget.h"
 #include "../modules/windows/notes/NotesContentsWidget.h"
@@ -225,6 +226,11 @@ ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMa
 	if (identifier == QLatin1String("cookies"))
 	{
 		return new CookiesContentsWidget(parameters, window, parent);
+	}
+
+	if (identifier == QLatin1String("feeds"))
+	{
+		return new FeedsContentsWidget(parameters, parent);
 	}
 
 	if (identifier == QLatin1String("history"))
