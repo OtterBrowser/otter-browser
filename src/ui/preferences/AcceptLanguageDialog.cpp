@@ -216,9 +216,7 @@ bool AcceptLanguageDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->languagesComboBox && event->type() == QEvent::KeyPress)
 	{
-		const QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
-
-		switch (keyEvent->key())
+		switch (static_cast<QKeyEvent*>(event)->key())
 		{
 			case Qt::Key_Enter:
 			case Qt::Key_Return:
