@@ -65,7 +65,7 @@ QUrl FeedsContentsWidget::getUrl() const
 
 QIcon FeedsContentsWidget::getIcon() const
 {
-	return ThemesManager::createIcon(QLatin1String("application-rss+xml"), false);
+	return ThemesManager::createIcon(QLatin1String("feeds"), false);
 }
 
 }
