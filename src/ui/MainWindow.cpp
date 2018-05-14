@@ -2569,23 +2569,14 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::StatusTip:
-			{
-				QStatusTipEvent *statusTipEvent(static_cast<QStatusTipEvent*>(event));
-
-				if (statusTipEvent)
-				{
-					emit statusMessageChanged(statusTipEvent->tip());
-				}
-			}
+			emit statusMessageChanged(static_cast<QStatusTipEvent*>(event)->tip());
 
 			break;
 		case QEvent::WindowStateChange:
 			{
-				QWindowStateChangeEvent *stateChangeEvent(static_cast<QWindowStateChangeEvent*>(event));
-
 				SessionsManager::markSessionAsModified();
 
-				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
+				if (windowState().testFlag(Qt::WindowFullScreen) != static_cast<QWindowStateChangeEvent*>(event)->oldState().testFlag(Qt::WindowFullScreen))
 				{
 					const ToolBarsManager::ToolBarsMode mode(windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
 
