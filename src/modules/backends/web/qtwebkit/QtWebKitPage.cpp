@@ -736,14 +736,9 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 
 bool QtWebKitPage::event(QEvent *event)
 {
-	if (event->type() == QEvent::Wheel)
+	if (event->type() == QEvent::Wheel && static_cast<QWheelEvent*>(event)->buttons() == Qt::RightButton)
 	{
-		const QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
-
-		if (wheelEvent->buttons() == Qt::RightButton)
-		{
-			return false;
-		}
+		return false;
 	}
 
 	return QWebPage::event(event);
