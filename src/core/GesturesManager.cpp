@@ -64,32 +64,20 @@ MouseProfile::Gesture::Step::Step(const QInputEvent *event) : type(event->type()
 		case QEvent::MouseButtonPress:
 		case QEvent::MouseButtonRelease:
 		case QEvent::MouseButtonDblClick:
-			{
-				const QMouseEvent *mouseEvent(static_cast<const QMouseEvent*>(event));
-
-				if (mouseEvent)
-				{
-					button = mouseEvent->button();
-				}
-			}
+			button = static_cast<const QMouseEvent*>(event)->button();
 
 			break;
 		case QEvent::Wheel:
 			{
-				const QWheelEvent *wheelEvent(static_cast<const QWheelEvent*>(event));
+				const QPoint delta(static_cast<const QWheelEvent*>(event)->angleDelta());
 
-				if (wheelEvent)
+				if (qAbs(delta.x()) > qAbs(delta.y()))
 				{
-					const QPoint delta(wheelEvent->angleDelta());
-
-					if (qAbs(delta.x()) > qAbs(delta.y()))
-					{
-						direction = (delta.x() > 0) ? MouseGestures::MoveRightMouseAction : MouseGestures::MoveLeftMouseAction;
-					}
-					else if (qAbs(delta.y()) > 0)
-					{
-						direction = (delta.y() > 0) ? MouseGestures::MoveUpMouseAction : MouseGestures::MoveDownMouseAction;
-					}
+					direction = (delta.x() > 0) ? MouseGestures::MoveRightMouseAction : MouseGestures::MoveLeftMouseAction;
+				}
+				else if (qAbs(delta.y()) > 0)
+				{
+					direction = (delta.y() > 0) ? MouseGestures::MoveUpMouseAction : MouseGestures::MoveDownMouseAction;
 				}
 			}
 
