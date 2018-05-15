@@ -104,6 +104,7 @@ set(otter_src
 	src/core/Console.cpp
 	src/core/CookieJar.cpp
 	src/core/FeedsManager.cpp
+	src/core/FeedsModel.cpp
 	src/core/GesturesManager.cpp
 	src/core/HandlersManager.cpp
 	src/core/HistoryManager.cpp
