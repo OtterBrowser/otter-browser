@@ -28,6 +28,8 @@
 namespace Otter
 {
 
+class FeedsModel;
+
 class Feed final : public QObject
 {
 	Q_OBJECT
@@ -93,6 +95,7 @@ class FeedsManager final : public QObject
 public:
 	static void createInstance();
 	static FeedsManager* getInstance();
+	static FeedsModel* getModel();
 	static Feed* getFeed(const QUrl &url);
 	static QVector<Feed*> getFeeds();
 
@@ -109,6 +112,7 @@ private:
 	int m_saveTimer;
 
 	static FeedsManager *m_instance;
+	static FeedsModel *m_model;
 	static QVector<Feed*> m_feeds;
 	static bool m_isInitialized;
 

@@ -20,6 +20,7 @@
 #include "FeedsManager.h"
 #include "Application.h"
 #include "Console.h"
+#include "FeedsModel.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 
@@ -96,6 +97,7 @@ int Feed::getUpdateInterval() const
 }
 
 FeedsManager* FeedsManager::m_instance(nullptr);
+FeedsModel* FeedsManager::m_model(nullptr);
 QVector<Feed*> FeedsManager::m_feeds;
 bool FeedsManager::m_isInitialized(false);
 
@@ -241,6 +243,16 @@ void FeedsManager::scheduleSave()
 FeedsManager* FeedsManager::getInstance()
 {
 	return m_instance;
+}
+
+FeedsModel* FeedsManager::getModel()
+{
+	if (!m_model)
+	{
+		m_model = new FeedsModel(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")), m_instance);
+	}
+
+	return m_model;
 }
 
 Feed* FeedsManager::getFeed(const QUrl &url)
