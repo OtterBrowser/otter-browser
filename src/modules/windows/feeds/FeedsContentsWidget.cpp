@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "FeedsContentsWidget.h"
+#include "../../../core/FeedsManager.h"
 #include "../../../core/ThemesManager.h"
 
 #include "ui_FeedsContentsWidget.h"
@@ -31,6 +32,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
 }
 
 FeedsContentsWidget::~FeedsContentsWidget()

@@ -20,7 +20,6 @@
 #include "FeedsManager.h"
 #include "Application.h"
 #include "Console.h"
-#include "FeedsModel.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 

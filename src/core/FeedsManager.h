@@ -20,15 +20,12 @@
 #ifndef OTTER_FEEDSMANAGER_H
 #define OTTER_FEEDSMANAGER_H
 
+#include "FeedsModel.h"
+
 #include <QtCore/QDateTime>
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
-#include <QtGui/QIcon>
 
 namespace Otter
 {
-
-class FeedsModel;
 
 class Feed final : public QObject
 {
