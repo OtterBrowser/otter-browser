@@ -39,7 +39,7 @@ public:
 		ParseError
 	};
 
-	struct Entry
+	struct Entry final
 	{
 		QString identifier;
 		QString title;
