@@ -252,7 +252,16 @@ FeedsModel* FeedsManager::getModel()
 
 Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, int updateInterval)
 {
-	Feed *feed(new Feed(title, url, updateInterval, m_instance));
+	ensureInitialized();
+
+	Feed *feed(getFeed(url));
+
+	if (feed)
+	{
+		return feed;
+	}
+
+	feed = new Feed(title, url, updateInterval, m_instance);
 
 	m_feeds.append(feed);
 
