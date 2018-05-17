@@ -93,6 +93,7 @@ public:
 	static void createInstance();
 	static FeedsManager* getInstance();
 	static FeedsModel* getModel();
+	static Feed* createFeed(const QString &title, const QUrl &url, int updateInterval);
 	static Feed* getFeed(const QUrl &url);
 	static QVector<Feed*> getFeeds();
 
