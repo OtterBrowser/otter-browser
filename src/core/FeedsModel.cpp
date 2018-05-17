@@ -278,7 +278,47 @@ void FeedsModel::removeEntry(Entry *entry)
 
 void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 {
-///TODO
+	if (reader->attributes().hasAttribute(QLatin1String("xmlUrl")))
+	{
+		const QUrl url(Utils::normalizeUrl(QUrl(reader->attributes().value(QLatin1String("xmlUrl")).toString())));
+
+		if (url.isValid())
+		{
+			Feed *feed(FeedsManager::createFeed(reader->attributes().value(QLatin1String("title")).toString(), url, reader->attributes().value(QLatin1String("updateInterval")).toInt()));
+			Entry *entry(new Entry());
+			entry->setData(FeedEntry, TypeRole);
+			entry->setData(feed->getTitle(), TitleRole);
+
+			parent->appendRow(entry);
+		}
+	}
+	else
+	{
+		Entry *entry(new Entry());
+		entry->setData(FolderEntry, TypeRole);
+		entry->setData(reader->attributes().value(QLatin1String("title")).toString(), TitleRole);
+
+		parent->appendRow(entry);
+
+		while (reader->readNext())
+		{
+			if (reader->isStartElement())
+			{
+				if (reader->name() == QLatin1String("outline"))
+				{
+					readEntry(reader, entry);
+				}
+				else
+				{
+					reader->skipCurrentElement();
+				}
+			}
+			else if (reader->hasError())
+			{
+				return;
+			}
+		}
+	}
 }
 
 void FeedsModel::writeEntry(QXmlStreamWriter *writer, Entry *entry) const
