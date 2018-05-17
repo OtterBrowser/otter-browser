@@ -133,7 +133,7 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 		writer.setAutoFormatting(true);
 		writer.setAutoFormattingIndent(-1);
 		writer.writeStartDocument();
-		writer.writeStartElement(QLatin1String("xbel"));
+		writer.writeStartElement(QLatin1String("opml"));
 		writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
 		writer.writeStartElement(QLatin1String("head"));
 		writer.writeTextElement(QLatin1String("title"), QLatin1String("Newsfeeds exported from Otter Browser ") + Application::getFullVersion());
