@@ -19,14 +19,16 @@
 
 #include "FeedsModel.h"
 #include "Console.h"
+#include "FeedsManager.h"
 #include "SessionsManager.h"
 #include "ThemesManager.h"
 #include "Utils.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
-#include <QtCore/QMimeData>
 #include <QtCore/QSaveFile>
+#include <QtCore/QXmlStreamReader>
+#include <QtCore/QXmlStreamWriter>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -147,14 +149,41 @@ FeedsModel::FeedsModel(const QString &path, QObject *parent) : QStandardItemMode
 
 	QFile file(path);
 
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	if (!file.open(QIODevice::ReadOnly))
 	{
 		Console::addMessage(tr("Failed to open feeds file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
 		return;
 	}
 
-///TODO
+	QXmlStreamReader reader(&file);
+
+	if (reader.readNextStartElement() && reader.name() == QLatin1String("opml") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
+	{
+		while (reader.readNextStartElement())
+		{
+			if (reader.name() == QLatin1String("outline"))
+			{
+				readEntry(&reader, m_rootEntry);
+			}
+
+			if (reader.name() != QLatin1String("body"))
+			{
+				reader.skipCurrentElement();
+			}
+
+			if (reader.hasError())
+			{
+				Console::addMessage(tr("Failed to load feeds file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+
+				QMessageBox::warning(nullptr, tr("Error"), tr("Failed to load feeds file."), QMessageBox::Close);
+
+				return;
+			}
+		}
+	}
+
+	file.close();
 }
 
 void FeedsModel::trashEntry(Entry *entry)
