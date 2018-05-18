@@ -28,6 +28,8 @@
 namespace Otter
 {
 
+class Feed;
+
 class FeedsModel final : public QStandardItemModel
 {
 	Q_OBJECT
@@ -61,7 +63,10 @@ public:
 		bool isAncestorOf(Entry *child) const;
 
 	protected:
-		explicit Entry();
+		explicit Entry(Feed *feed = nullptr);
+
+	private:
+		Feed *m_feed;
 
 	friend class FeedsModel;
 	};

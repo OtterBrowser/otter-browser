@@ -34,7 +34,8 @@
 namespace Otter
 {
 
-FeedsModel::Entry::Entry() : QStandardItem()
+FeedsModel::Entry::Entry(Feed *feed) : QStandardItem(),
+	m_feed(feed)
 {
 }
 
@@ -51,10 +52,16 @@ QVariant FeedsModel::Entry::data(int role) const
 			case TrashEntry:
 				return QCoreApplication::translate("Otter::FeedsModel", "Trash");
 			case FolderEntry:
-			case FeedEntry:
 				if (QStandardItem::data(role).isNull())
 				{
 					return QCoreApplication::translate("Otter::FeedsModel", "(Untitled)");
+				}
+
+				break;
+			case FeedEntry:
+				if (m_feed && !m_feed->getTitle().isEmpty())
+				{
+					return m_feed->getTitle();
 				}
 
 				break;
@@ -72,6 +79,13 @@ QVariant FeedsModel::Entry::data(int role) const
 				return ThemesManager::createIcon(QLatin1String("inode-directory"));
 			case TrashEntry:
 				return ThemesManager::createIcon(QLatin1String("user-trash"));
+			case FeedEntry:
+				if (m_feed && !m_feed->getIcon().isNull())
+				{
+					return m_feed->getIcon();
+				}
+
+				return ThemesManager::createIcon(QLatin1String("application-rss+xml"));
 			default:
 				break;
 		}
@@ -286,10 +300,8 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 
 		if (url.isValid())
 		{
-			Feed *feed(FeedsManager::createFeed(title, url, reader->attributes().value(QLatin1String("updateInterval")).toInt()));
-			Entry *entry(new Entry());
+			Entry *entry(new Entry(FeedsManager::createFeed(title, url, reader->attributes().value(QLatin1String("updateInterval")).toInt())));
 			entry->setData(FeedEntry, TypeRole);
-			entry->setData(feed->getTitle(), TitleRole);
 
 			parent->appendRow(entry);
 		}
