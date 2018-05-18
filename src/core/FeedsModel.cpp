@@ -93,6 +93,11 @@ QVariant FeedsModel::Entry::data(int role) const
 		return {};
 	}
 
+	if (role == UrlRole && m_feed)
+	{
+		return m_feed->getUrl();
+	}
+
 	if (role == IsTrashedRole)
 	{
 		QModelIndex parent(index().parent());
