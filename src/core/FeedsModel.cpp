@@ -302,6 +302,7 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 		{
 			Entry *entry(new Entry(FeedsManager::createFeed(title, url, reader->attributes().value(QLatin1String("updateInterval")).toInt())));
 			entry->setData(FeedEntry, TypeRole);
+			entry->setFlags(entry->flags() | Qt::ItemNeverHasChildren);
 
 			parent->appendRow(entry);
 		}
