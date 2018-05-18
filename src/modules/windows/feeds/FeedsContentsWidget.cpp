@@ -33,6 +33,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
+	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 }
 
