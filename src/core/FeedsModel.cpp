@@ -125,6 +125,11 @@ QVariant FeedsModel::Entry::data(int role) const
 	return QStandardItem::data(role);
 }
 
+QVariant FeedsModel::Entry::getRawData(int role) const
+{
+	return QStandardItem::data(role);
+}
+
 bool FeedsModel::Entry::isAncestorOf(FeedsModel::Entry *child) const
 {
 	if (child == nullptr || child == this)

@@ -60,6 +60,7 @@ public:
 	{
 	public:
 		QVariant data(int role) const override;
+		QVariant getRawData(int role) const;
 		bool isAncestorOf(Entry *child) const;
 
 	protected:
