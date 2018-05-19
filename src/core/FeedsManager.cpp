@@ -203,7 +203,7 @@ void FeedsManager::ensureInitialized()
 
 				if (url.isValid())
 				{
-					createFeed(reader.attributes().value(QLatin1String("title")).toString(), url, reader.attributes().value(QLatin1String("updateInterval")).toInt());
+					createFeed(reader.attributes().value(QLatin1String("title")).toString(), url, Utils::loadPixmapFromDataUri(reader.attributes().value(QLatin1String("icon")).toString()), reader.attributes().value(QLatin1String("updateInterval")).toInt());
 				}
 			}
 
@@ -251,7 +251,7 @@ FeedsModel* FeedsManager::getModel()
 	return m_model;
 }
 
-Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, int updateInterval)
+Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval)
 {
 	ensureInitialized();
 
@@ -262,7 +262,7 @@ Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, int update
 		return feed;
 	}
 
-	feed = new Feed(title, url, {}, updateInterval, m_instance);
+	feed = new Feed(title, url, icon, updateInterval, m_instance);
 
 	m_feeds.append(feed);
 

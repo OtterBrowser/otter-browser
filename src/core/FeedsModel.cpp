@@ -310,7 +310,7 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 
 		if (url.isValid())
 		{
-			Entry *entry(new Entry(FeedsManager::createFeed(title, url, reader->attributes().value(QLatin1String("updateInterval")).toInt())));
+			Entry *entry(new Entry(FeedsManager::createFeed(title, url, Utils::loadPixmapFromDataUri(reader->attributes().value(QLatin1String("icon")).toString()), reader->attributes().value(QLatin1String("updateInterval")).toInt())));
 			entry->setData(FeedEntry, TypeRole);
 			entry->setFlags(entry->flags() | Qt::ItemNeverHasChildren);
 
