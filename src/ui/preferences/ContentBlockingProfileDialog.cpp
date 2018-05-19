@@ -46,8 +46,8 @@ ContentBlockingProfileDialog::ContentBlockingProfileDialog(QWidget *parent, Cont
 
 	if (profile)
 	{
-		m_ui->titleEdit->setText(profile->getTitle());
-		m_ui->updateUrlEdit->setText(profile->getUpdateUrl().url());
+		m_ui->titleLineEdit->setText(profile->getTitle());
+		m_ui->updateUrLineEdit->setText(profile->getUpdateUrl().url());
 		m_ui->categoryComboBox->setCurrentIndex(m_ui->categoryComboBox->findData(profile->getCategory()));
 		m_ui->lastUpdateTextLabel->setText(Utils::formatDateTime(profile->getLastUpdate()));
 		m_ui->updateIntervalSpinBox->setValue(profile->getUpdateInterval());
@@ -86,7 +86,7 @@ void ContentBlockingProfileDialog::changeEvent(QEvent *event)
 void ContentBlockingProfileDialog::save()
 {
 	const ContentBlockingProfile::ProfileCategory category(static_cast<ContentBlockingProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt()));
-	const QUrl url(m_ui->updateUrlEdit->text());
+	const QUrl url(m_ui->updateUrLineEdit->text());
 
 	if (!url.isValid())
 	{
@@ -98,7 +98,7 @@ void ContentBlockingProfileDialog::save()
 	if (m_profile)
 	{
 		m_profile->setCategory(category);
-		m_profile->setTitle(m_ui->titleEdit->text());
+		m_profile->setTitle(m_ui->titleLineEdit->text());
 		m_profile->setUpdateUrl(url);
 		m_profile->setUpdateInterval(m_ui->updateIntervalSpinBox->value());
 	}
@@ -126,7 +126,7 @@ void ContentBlockingProfileDialog::save()
 		file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
 		file.close();
 
-		ContentBlockingProfile *profile(new ContentBlockingProfile(fileName, m_ui->titleEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
+		ContentBlockingProfile *profile(new ContentBlockingProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
 
 		ContentBlockingManager::addProfile(profile);
 
