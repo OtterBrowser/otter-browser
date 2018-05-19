@@ -32,9 +32,10 @@
 namespace Otter
 {
 
-Feed::Feed(const QString &title, const QUrl &url, int updateInterval, QObject *parent) : QObject(parent),
+Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent) : QObject(parent),
 	m_title(title),
 	m_url(url),
+	m_icon(icon),
 	m_error(NoError),
 	m_updateInterval(updateInterval)
 {
@@ -261,7 +262,7 @@ Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, int update
 		return feed;
 	}
 
-	feed = new Feed(title, url, updateInterval, m_instance);
+	feed = new Feed(title, url, {}, updateInterval, m_instance);
 
 	m_feeds.append(feed);
 

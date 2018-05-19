@@ -53,7 +53,7 @@ public:
 		QDateTime updateTime;
 	};
 
-	explicit Feed(const QString &title, const QUrl &url, int updateInterval, QObject *parent = nullptr);
+	explicit Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent = nullptr);
 
 	QString getTitle() const;
 	QString getDescription() const;
