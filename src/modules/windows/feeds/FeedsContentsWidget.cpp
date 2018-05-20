@@ -23,6 +23,9 @@
 
 #include "ui_FeedsContentsWidget.h"
 
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QToolTip>
+
 namespace Otter
 {
 
@@ -34,6 +37,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
 	m_ui->feedsViewWidget->expandAll();
+	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 }
 
@@ -70,6 +74,32 @@ QUrl FeedsContentsWidget::getUrl() const
 QIcon FeedsContentsWidget::getIcon() const
 {
 	return ThemesManager::createIcon(QLatin1String("feeds"), false);
+}
+
+bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->feedsViewWidget->viewport() && event->type() == QEvent::ToolTip)
+	{
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QModelIndex index(m_ui->feedsViewWidget->indexAt(helpEvent->pos()));
+		QString toolTip;
+
+		if (index.isValid())
+		{
+			toolTip = tr("Title: %1").arg(index.data(FeedsModel::TitleRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(FeedsModel::UrlRole).toUrl().toDisplayString());
+
+			if (!index.data(FeedsModel::LastSynchronizationTimeRole).isNull())
+			{
+				toolTip.append(QLatin1Char('\n') + tr("Last update: %1").arg(Utils::formatDateTime(index.data(FeedsModel::LastSynchronizationTimeRole).toDateTime())));
+			}
+		}
+
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->feedsViewWidget).width() / 2)), m_ui->feedsViewWidget, m_ui->feedsViewWidget->visualRect(index));
+
+		return true;
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }
