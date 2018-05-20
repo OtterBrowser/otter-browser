@@ -51,6 +51,8 @@ public:
 		UrlRole = Qt::StatusTipRole,
 		DescriptionRole = Qt::ToolTipRole,
 		IdentifierRole = Qt::UserRole,
+		LastUpdateTimeRole,
+		LastSynchronizationTimeRole,
 		TypeRole,
 		IsTrashedRole,
 		UserRole

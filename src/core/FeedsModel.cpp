@@ -93,9 +93,19 @@ QVariant FeedsModel::Entry::data(int role) const
 		return {};
 	}
 
-	if (role == UrlRole && m_feed)
+	if (m_feed)
 	{
-		return m_feed->getUrl();
+		switch (role)
+		{
+			case LastUpdateTimeRole:
+				return m_feed->getLastUpdateTime();
+			case LastSynchronizationTimeRole:
+				return m_feed->getLastSynchronizationTime();
+			case UrlRole:
+				return m_feed->getUrl();
+			default:
+				break;
+		}
 	}
 
 	if (role == IsTrashedRole)
