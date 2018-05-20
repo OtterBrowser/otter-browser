@@ -82,6 +82,12 @@ bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 		const QModelIndex index(m_ui->feedsViewWidget->indexAt(helpEvent->pos()));
+
+		if (static_cast<FeedsModel::EntryType>(index.data(FeedsModel::TypeRole).toInt()) != FeedsModel::FeedEntry)
+		{
+			return false;
+		}
+
 		QString toolTip;
 
 		if (index.isValid())
