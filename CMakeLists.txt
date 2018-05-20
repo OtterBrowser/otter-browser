@@ -159,6 +159,7 @@ set(otter_src
 	src/ui/ContentsWidget.cpp
 	src/ui/CookiePropertiesDialog.cpp
 	src/ui/Dialog.cpp
+	src/ui/FeedPropertiesDialog.cpp
 	src/ui/FilePathWidget.cpp
 	src/ui/IconWidget.cpp
 	src/ui/ImagePropertiesDialog.cpp
@@ -282,6 +283,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/CertificateDialog.ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/CookiePropertiesDialog.ui
+	src/ui/FeedPropertiesDialog.ui
 	src/ui/ImagePropertiesDialog.ui
 	src/ui/ImportDialog.ui
 	src/ui/LocaleDialog.ui
