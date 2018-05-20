@@ -103,6 +103,8 @@ QVariant FeedsModel::Entry::data(int role) const
 				return m_feed->getLastSynchronizationTime();
 			case UrlRole:
 				return m_feed->getUrl();
+			case UpdateIntervalRole:
+				return m_feed->getUpdateInterval();
 			default:
 				break;
 		}
