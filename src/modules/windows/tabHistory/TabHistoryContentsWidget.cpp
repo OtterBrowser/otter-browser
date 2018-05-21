@@ -168,7 +168,7 @@ QUrl TabHistoryContentsWidget::getUrl() const
 
 QIcon TabHistoryContentsWidget::getIcon() const
 {
-	return ThemesManager::createIcon(QLatin1String("view-history"), false);
+	return ThemesManager::createIcon(QLatin1String("tab-history"), false);
 }
 
 bool TabHistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
