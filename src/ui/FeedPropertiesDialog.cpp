@@ -19,6 +19,7 @@
 
 #include "FeedPropertiesDialog.h"
 #include "../core/FeedsManager.h"
+#include "../core/ThemesManager.h"
 
 #include "ui_FeedPropertiesDialog.h"
 
@@ -31,6 +32,7 @@ FeedPropertiesDialog::FeedPropertiesDialog(Feed *feed, QWidget *parent) : Dialog
 	m_ui->setupUi(this);
 	m_ui->titleLineEditWidget->setText(feed->getTitle());
 	m_ui->iconButton->setIcon(feed->getIcon());
+	m_ui->iconButton->setDefaultIcon(ThemesManager::createIcon(QLatin1String("application-rss+xml")));
 	m_ui->urlLineEditWidget->setText(feed->getUrl().toString());
 	m_ui->updateIntervalSpinBox->setValue(feed->getUpdateInterval());
 }
