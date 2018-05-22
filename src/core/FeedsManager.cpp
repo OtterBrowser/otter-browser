@@ -18,14 +18,8 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
-#include "Console.h"
 #include "SessionsManager.h"
 #include "Utils.h"
-
-#include <QtCore/QFile>
-#include <QtCore/QSaveFile>
-#include <QtCore/QXmlStreamReader>
-#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -136,57 +130,10 @@ void FeedsManager::ensureInitialized()
 
 	m_isInitialized = true;
 
-	const QString path(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
-
-	if (!QFile::exists(path))
+	if (!m_model)
 	{
-		return;
+		m_model = new FeedsModel(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")), m_instance);
 	}
-
-	QFile file(path);
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		Console::addMessage(tr("Failed to open feeds file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
-
-		return;
-	}
-
-	QXmlStreamReader reader(&file);
-
-	if (reader.readNextStartElement() && reader.name() == QLatin1String("opml") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
-	{
-		while (reader.readNextStartElement())
-		{
-			if (reader.name() == QLatin1String("outline"))
-			{
-				const QUrl url(Utils::normalizeUrl(QUrl(reader.attributes().value(QLatin1String("xmlUrl")).toString())));
-
-				if (url.isValid())
-				{
-					createFeed(reader.attributes().value(QLatin1String("title")).toString(), url, Utils::loadPixmapFromDataUri(reader.attributes().value(QLatin1String("icon")).toString()), reader.attributes().value(QLatin1String("updateInterval")).toInt());
-				}
-			}
-
-			if (reader.name() != QLatin1String("body"))
-			{
-				reader.skipCurrentElement();
-			}
-
-			if (reader.hasError())
-			{
-				Console::addMessage(tr("Failed to load feeds file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
-
-				QMessageBox::warning(nullptr, tr("Error"), tr("Failed to load feeds file."), QMessageBox::Close);
-
-				return;
-			}
-		}
-	}
-
-	file.close();
-
-	m_instance->scheduleSave();
 }
 
 void FeedsManager::scheduleSave()
@@ -204,10 +151,7 @@ FeedsManager* FeedsManager::getInstance()
 
 FeedsModel* FeedsManager::getModel()
 {
-	if (!m_model)
-	{
-		m_model = new FeedsModel(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")), m_instance);
-	}
+	ensureInitialized();
 
 	return m_model;
 }
