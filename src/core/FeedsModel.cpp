@@ -366,16 +366,29 @@ void FeedsModel::writeEntry(QXmlStreamWriter *writer, Entry *entry) const
 		return;
 	}
 
+	writer->writeStartElement(QLatin1String("outline"));
+	writer->writeAttribute(QLatin1String("text"), entry->getRawData(TitleRole).toString());
+	writer->writeAttribute(QLatin1String("title"), entry->getRawData(TitleRole).toString());
+
 	switch (static_cast<EntryType>(entry->data(TypeRole).toInt()))
 	{
 		case FolderEntry:
+			for (int i = 0; i < entry->rowCount(); ++i)
+			{
+				writeEntry(writer, static_cast<Entry*>(entry->child(i, 0)));
+			}
+
+			break;
 		case FeedEntry:
-///TODO
+			writer->writeAttribute(QLatin1String("xmlUrl"), entry->getRawData(UrlRole).toUrl().toString());
+			writer->writeAttribute(QLatin1String("updateInterval"), QString::number(entry->getRawData(UpdateIntervalRole).toInt()));
 
 			break;
 		default:
 			break;
 	}
+
+	writer->writeEndElement();
 }
 
 void FeedsModel::removeEntryUrl(Entry *entry)
