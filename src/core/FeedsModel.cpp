@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "FeedsModel.h"
+#include "Application.h"
 #include "Console.h"
 #include "FeedsManager.h"
 #include "SessionsManager.h"
@@ -736,15 +737,19 @@ bool FeedsModel::save(const QString &path) const
 	writer.setAutoFormatting(true);
 	writer.setAutoFormattingIndent(-1);
 	writer.writeStartDocument();
-	writer.writeDTD(QLatin1String("<!DOCTYPE xbel>"));
-	writer.writeStartElement(QLatin1String("xbel"));
+	writer.writeStartElement(QLatin1String("opml"));
 	writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
+	writer.writeStartElement(QLatin1String("head"));
+	writer.writeTextElement(QLatin1String("title"), QLatin1String("Newsfeeds exported from Otter Browser ") + Application::getFullVersion());
+	writer.writeEndElement();
+	writer.writeStartElement(QLatin1String("body"));
 
 	for (int i = 0; i < m_rootEntry->rowCount(); ++i)
 	{
 		writeEntry(&writer, static_cast<Entry*>(m_rootEntry->child(i, 0)));
 	}
 
+	writer.writeEndElement();
 	writer.writeEndDocument();
 
 	return file.commit();
