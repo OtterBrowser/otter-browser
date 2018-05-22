@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
-#include "Application.h"
 #include "Console.h"
 #include "SessionsManager.h"
 #include "Utils.h"
@@ -26,7 +25,6 @@
 #include <QtCore/QFile>
 #include <QtCore/QSaveFile>
 #include <QtCore/QXmlStreamReader>
-#include <QtCore/QXmlStreamWriter>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -114,47 +112,10 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		const QString path(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
-
-		if (m_feeds.isEmpty())
+		if (m_model)
 		{
-			QFile::remove(path);
-
-			return;
+			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
 		}
-
-		QSaveFile file(path);
-
-		if (!file.open(QIODevice::WriteOnly))
-		{
-			return;
-		}
-
-		QXmlStreamWriter writer(&file);
-		writer.setAutoFormatting(true);
-		writer.setAutoFormattingIndent(-1);
-		writer.writeStartDocument();
-		writer.writeStartElement(QLatin1String("opml"));
-		writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
-		writer.writeStartElement(QLatin1String("head"));
-		writer.writeTextElement(QLatin1String("title"), QLatin1String("Newsfeeds exported from Otter Browser ") + Application::getFullVersion());
-		writer.writeEndElement();
-		writer.writeStartElement(QLatin1String("body"));
-
-		for (int i = 0; i < m_feeds.count(); ++i)
-		{
-			const Feed *feed(m_feeds.at(i));
-
-			writer.writeStartElement(QLatin1String("outline"));
-			writer.writeAttribute(QLatin1String("text"), feed->getTitle());
-			writer.writeAttribute(QLatin1String("title"), feed->getTitle());
-			writer.writeAttribute(QLatin1String("xmlUrl"), feed->getUrl().toString());
-			writer.writeAttribute(QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval()));
-			writer.writeEndElement();
-		}
-
-		writer.writeEndElement();
-		writer.writeEndDocument();
 	}
 }
 
