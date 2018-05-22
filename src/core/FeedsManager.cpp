@@ -228,6 +228,8 @@ Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, const QIco
 	m_feeds.append(feed);
 
 	connect(feed, &Feed::feedModified, m_instance, &FeedsManager::scheduleSave);
+
+	return feed;
 }
 
 Feed* FeedsManager::getFeed(const QUrl &url)
