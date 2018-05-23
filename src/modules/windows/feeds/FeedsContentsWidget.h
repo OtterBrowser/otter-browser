@@ -49,6 +49,14 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void addFeed();
+	void addFolder();
+	void removeFeed();
+	void openFeed();
+	void feedProperties();
+	void showContextMenu(const QPoint &position);
+
 private:
 	Ui::FeedsContentsWidget *m_ui;
 };
