@@ -44,6 +44,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 private:
+	Feed *m_feed;
 	Ui::FeedPropertiesDialog *m_ui;
 };
 

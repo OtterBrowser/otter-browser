@@ -27,14 +27,20 @@ namespace Otter
 {
 
 FeedPropertiesDialog::FeedPropertiesDialog(Feed *feed, QWidget *parent) : Dialog(parent),
+	m_feed(feed),
 	m_ui(new Ui::FeedPropertiesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->titleLineEditWidget->setText(feed->getTitle());
-	m_ui->iconButton->setIcon(feed->getIcon());
+
+	if (feed)
+	{
+		m_ui->titleLineEditWidget->setText(feed->getTitle());
+		m_ui->iconButton->setIcon(feed->getIcon());
+		m_ui->urlLineEditWidget->setText(feed->getUrl().toString());
+		m_ui->updateIntervalSpinBox->setValue(feed->getUpdateInterval());
+	}
+
 	m_ui->iconButton->setDefaultIcon(ThemesManager::createIcon(QLatin1String("application-rss+xml")));
-	m_ui->urlLineEditWidget->setText(feed->getUrl().toString());
-	m_ui->updateIntervalSpinBox->setValue(feed->getUpdateInterval());
 }
 
 FeedPropertiesDialog::~FeedPropertiesDialog()
