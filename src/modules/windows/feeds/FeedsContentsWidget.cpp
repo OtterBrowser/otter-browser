@@ -21,6 +21,7 @@
 #include "../../../core/FeedsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
+#include "../../../ui/FeedPropertiesDialog.h"
 
 #include "ui_FeedsContentsWidget.h"
 
@@ -82,7 +83,13 @@ void FeedsContentsWidget::openFeed()
 
 void FeedsContentsWidget::feedProperties()
 {
-///TODO
+	FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
+
+	if (entry)
+	{
+		FeedPropertiesDialog dialog(entry->getFeed(), this);
+		dialog.exec();
+	}
 }
 
 void FeedsContentsWidget::showContextMenu(const QPoint &position)
