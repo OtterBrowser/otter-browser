@@ -40,6 +40,11 @@ FeedsModel::Entry::Entry(Feed *feed) : QStandardItem(),
 {
 }
 
+Feed* FeedsModel::Entry::getFeed() const
+{
+	return m_feed;
+}
+
 QVariant FeedsModel::Entry::data(int role) const
 {
 	if (role == Qt::DisplayRole)

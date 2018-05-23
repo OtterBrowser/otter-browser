@@ -62,6 +62,7 @@ public:
 	class Entry final : public QStandardItem
 	{
 	public:
+		Feed* getFeed() const;
 		QVariant data(int role) const override;
 		QVariant getRawData(int role) const;
 		bool isAncestorOf(Entry *child) const;
