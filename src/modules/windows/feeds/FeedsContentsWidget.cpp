@@ -73,7 +73,7 @@ void FeedsContentsWidget::addFolder()
 
 void FeedsContentsWidget::removeFeed()
 {
-///TODO
+	FeedsManager::getModel()->trashEntry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
 }
 
 void FeedsContentsWidget::openFeed()
