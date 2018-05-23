@@ -89,6 +89,8 @@ void FeedsContentsWidget::feedProperties()
 	{
 		FeedPropertiesDialog dialog(entry->getFeed(), this);
 		dialog.exec();
+
+		updateActions();
 	}
 }
 
@@ -164,6 +166,11 @@ void FeedsContentsWidget::showContextMenu(const QPoint &position)
 	}
 
 	menu.exec(m_ui->feedsViewWidget->mapToGlobal(position));
+}
+
+void FeedsContentsWidget::updateActions()
+{
+///TODO
 }
 
 QString FeedsContentsWidget::getTitle() const

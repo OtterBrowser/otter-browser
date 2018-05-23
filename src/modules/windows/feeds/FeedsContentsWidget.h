@@ -56,6 +56,7 @@ protected slots:
 	void openFeed();
 	void feedProperties();
 	void showContextMenu(const QPoint &position);
+	void updateActions();
 
 private:
 	Ui::FeedsContentsWidget *m_ui;
