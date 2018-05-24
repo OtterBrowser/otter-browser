@@ -39,7 +39,7 @@ void Feed::setTitle(const QString &title)
 	{
 		m_title = title;
 
-		emit feedModified(m_url);
+		emit feedModified(this);
 	}
 }
 
@@ -51,7 +51,7 @@ void Feed::setUrl(const QUrl &url)
 
 		update();
 
-		emit feedModified(m_url);
+		emit feedModified(this);
 	}
 }
 
@@ -59,7 +59,7 @@ void Feed::setIcon(const QIcon &icon)
 {
 	m_icon = icon;
 
-	emit feedModified(m_url);
+	emit feedModified(this);
 }
 
 void Feed::setUpdateInterval(int interval)
@@ -68,7 +68,7 @@ void Feed::setUpdateInterval(int interval)
 	{
 		m_updateInterval = interval;
 
-		emit feedModified(m_url);
+		emit feedModified(this);
 	}
 }
 

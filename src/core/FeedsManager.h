@@ -86,7 +86,7 @@ private:
 	int m_updateInterval;
 
 signals:
-	void feedModified(const QUrl &url);
+	void feedModified(Feed *feed);
 };
 
 class FeedsManager final : public QObject
