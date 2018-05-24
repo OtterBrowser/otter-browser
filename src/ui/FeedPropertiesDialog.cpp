@@ -41,6 +41,9 @@ FeedPropertiesDialog::FeedPropertiesDialog(Feed *feed, QWidget *parent) : Dialog
 	}
 
 	m_ui->iconButton->setDefaultIcon(ThemesManager::createIcon(QLatin1String("application-rss+xml")));
+
+	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &FeedPropertiesDialog::saveFeed);
+	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &FeedPropertiesDialog::close);
 }
 
 FeedPropertiesDialog::~FeedPropertiesDialog()
@@ -55,6 +58,21 @@ void FeedPropertiesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+	}
+}
+
+void FeedPropertiesDialog::saveFeed()
+{
+	if (m_feed)
+	{
+		m_feed->setTitle(m_ui->titleLineEditWidget->text());
+		m_feed->setUrl(QUrl(m_ui->urlLineEditWidget->text()));
+		m_feed->setIcon(m_ui->iconButton->icon());
+		m_feed->setUpdateInterval(m_ui->updateIntervalSpinBox->value());
+	}
+	else
+	{
+		m_feed = FeedsManager::createFeed(m_ui->titleLineEditWidget->text(), QUrl(m_ui->urlLineEditWidget->text()), m_ui->iconButton->icon(), m_ui->updateIntervalSpinBox->value());
 	}
 }
 

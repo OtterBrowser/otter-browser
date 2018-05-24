@@ -45,6 +45,9 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void saveFeed();
+
 private:
 	Feed *m_feed;
 	Ui::FeedPropertiesDialog *m_ui;
