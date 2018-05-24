@@ -40,6 +40,8 @@ public:
 	explicit FeedPropertiesDialog(Feed *feed, QWidget *parent = nullptr);
 	~FeedPropertiesDialog();
 
+	Feed* getFeed() const;
+
 protected:
 	void changeEvent(QEvent *event) override;
 

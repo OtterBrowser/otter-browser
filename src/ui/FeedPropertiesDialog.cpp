@@ -58,4 +58,9 @@ void FeedPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
+Feed* FeedPropertiesDialog::getFeed() const
+{
+	return m_feed;
+}
+
 }
