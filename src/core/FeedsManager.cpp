@@ -33,6 +33,45 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 {
 }
 
+void Feed::setTitle(const QString &title)
+{
+	if (title != m_title)
+	{
+		m_title = title;
+
+		emit feedModified(m_url);
+	}
+}
+
+void Feed::setUrl(const QUrl &url)
+{
+	if (url != m_url)
+	{
+		m_url = url;
+
+		update();
+
+		emit feedModified(m_url);
+	}
+}
+
+void Feed::setIcon(const QIcon &icon)
+{
+	m_icon = icon;
+
+	emit feedModified(m_url);
+}
+
+void Feed::setUpdateInterval(int interval)
+{
+	if (interval != m_updateInterval)
+	{
+		m_updateInterval = interval;
+
+		emit feedModified(m_url);
+	}
+}
+
 void Feed::update()
 {
 // TODO

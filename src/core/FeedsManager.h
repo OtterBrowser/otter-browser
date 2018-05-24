@@ -55,6 +55,10 @@ public:
 
 	explicit Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent = nullptr);
 
+	void setTitle(const QString &title);
+	void setUrl(const QUrl &url);
+	void setIcon(const QIcon &icon);
+	void setUpdateInterval(int interval);
 	QString getTitle() const;
 	QString getDescription() const;
 	QUrl getUrl() const;
