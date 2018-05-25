@@ -82,7 +82,7 @@ public:
 	void restoreEntry(Entry *entry);
 	void removeEntry(Entry *entry);
 	Entry* addEntry(EntryType type, const QMap<int, QVariant> &metaData = {}, Entry *parent = nullptr, int index = -1);
-	Entry* addEntry(Feed *feed, Entry *parent, int index);
+	Entry* addEntry(Feed *feed, Entry *parent = nullptr, int index = -1);
 	Entry* getEntry(const QModelIndex &index) const;
 	Entry* getEntry(quint64 identifier) const;
 	Entry* getRootEntry() const;
