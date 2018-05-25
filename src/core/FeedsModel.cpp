@@ -558,6 +558,38 @@ FeedsModel::Entry* FeedsModel::addEntry(EntryType type, const QMap<int, QVariant
 	return entry;
 }
 
+FeedsModel::Entry* FeedsModel::addEntry(Feed *feed, Entry *parent, int index)
+{
+	if (!parent)
+	{
+		parent = m_rootEntry;
+	}
+
+	const quint64 identifier(m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
+	Entry *entry(new Entry(feed));
+	entry->setData(identifier, IdentifierRole);
+	entry->setData(FeedEntry, TypeRole);
+	entry->setDropEnabled(false);
+
+	m_identifiers[identifier] = entry;
+
+	parent->insertRow(((index < 0) ? parent->rowCount() : index), entry);
+
+	const QUrl url(feed->getUrl());
+
+	if (!url.isEmpty())
+	{
+		handleUrlChanged(entry, url);
+	}
+
+	entry->setFlags(entry->flags() | Qt::ItemNeverHasChildren);
+
+	emit entryAdded(entry);
+	emit modelModified();
+
+	return entry;
+}
+
 FeedsModel::Entry* FeedsModel::getEntry(const QModelIndex &index) const
 {
 	Entry *entry(static_cast<Entry*>(itemFromIndex(index)));
