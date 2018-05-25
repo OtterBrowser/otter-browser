@@ -65,9 +65,9 @@ void FeedPropertiesDialog::changeEvent(QEvent *event)
 
 void FeedPropertiesDialog::saveFeed()
 {
-	if (m_ui->urlLineEditWidget->text().isEmpty())
+	if (m_ui->urlLineEditWidget->text().isEmpty() || !QUrl(m_ui->urlLineEditWidget->text()).isValid())
 	{
-		QMessageBox::critical(this, tr("Error"), tr("Address is required."), QMessageBox::Close);
+		QMessageBox::critical(this, tr("Error"), tr("Valid address is required."), QMessageBox::Close);
 
 		return;
 	}
