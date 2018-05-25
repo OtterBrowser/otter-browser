@@ -63,7 +63,30 @@ void FeedsContentsWidget::changeEvent(QEvent *event)
 
 void FeedsContentsWidget::addFeed()
 {
-///TODO
+	FeedPropertiesDialog dialog(nullptr, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	const QModelIndex index(m_ui->feedsViewWidget->currentIndex());
+	FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(index));
+
+	if (!entry || entry == FeedsManager::getModel()->getRootEntry() || entry == FeedsManager::getModel()->getTrashEntry())
+	{
+		entry = FeedsManager::getModel()->getRootEntry();
+	}
+	else
+	{
+		const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(entry->data(FeedsModel::TypeRole).toInt()));
+
+		entry = ((type == FeedsModel::RootEntry || type == FeedsModel::FolderEntry) ? entry : static_cast<FeedsModel::Entry*>(entry->parent()));
+	}
+
+	FeedsManager::getModel()->addEntry(dialog.getFeed(), entry);
+
+	updateActions();
 }
 
 void FeedsContentsWidget::addFolder()
