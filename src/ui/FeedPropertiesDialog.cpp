@@ -23,6 +23,8 @@
 
 #include "ui_FeedPropertiesDialog.h"
 
+#include <QtWidgets/QMessageBox>
+
 namespace Otter
 {
 
@@ -63,6 +65,13 @@ void FeedPropertiesDialog::changeEvent(QEvent *event)
 
 void FeedPropertiesDialog::saveFeed()
 {
+	if (m_ui->urlLineEditWidget->text().isEmpty())
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Address is required."), QMessageBox::Close);
+
+		return;
+	}
+
 	if (m_feed)
 	{
 		m_feed->setTitle(m_ui->titleLineEditWidget->text());
