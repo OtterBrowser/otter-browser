@@ -390,10 +390,7 @@ void FeedsModel::writeEntry(QXmlStreamWriter *writer, Entry *entry) const
 
 			if (!entry->getRawData(Qt::DisplayRole).isNull())
 			{
-				const QIcon icon(entry->data(Qt::DisplayRole).value<QIcon>());
-				const QSize size(icon.availableSizes().value(0, QSize(16, 16)));
-
-				writer->writeAttribute(QLatin1String("icon"), Utils::savePixmapAsDataUri(icon.pixmap(size)));
+				writer->writeAttribute(QLatin1String("icon"), Utils::savePixmapAsDataUri(entry->icon().pixmap(entry->icon().availableSizes().value(0, QSize(16, 16)))));
 			}
 
 			break;
