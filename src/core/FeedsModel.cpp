@@ -409,7 +409,7 @@ void FeedsModel::writeEntry(QXmlStreamWriter *writer, Entry *entry) const
 			writer->writeAttribute(QLatin1String("xmlUrl"), entry->getRawData(UrlRole).toUrl().toString());
 			writer->writeAttribute(QLatin1String("updateInterval"), QString::number(entry->getRawData(UpdateIntervalRole).toInt()));
 
-			if (!entry->getRawData(Qt::DisplayRole).isNull())
+			if (!entry->getRawData(Qt::DecorationRole).isNull())
 			{
 				writer->writeAttribute(QLatin1String("icon"), Utils::savePixmapAsDataUri(entry->icon().pixmap(entry->icon().availableSizes().value(0, QSize(16, 16)))));
 			}
