@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "FeedsContentsWidget.h"
-#include "../../../core/FeedsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/FeedPropertiesDialog.h"
@@ -26,6 +25,7 @@
 #include "ui_FeedsContentsWidget.h"
 
 #include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 
@@ -70,28 +70,19 @@ void FeedsContentsWidget::addFeed()
 		return;
 	}
 
-	const QModelIndex index(m_ui->feedsViewWidget->currentIndex());
-	FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(index));
-
-	if (!entry || entry == FeedsManager::getModel()->getRootEntry() || entry == FeedsManager::getModel()->getTrashEntry())
-	{
-		entry = FeedsManager::getModel()->getRootEntry();
-	}
-	else
-	{
-		const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(entry->data(FeedsModel::TypeRole).toInt()));
-
-		entry = ((type == FeedsModel::RootEntry || type == FeedsModel::FolderEntry) ? entry : static_cast<FeedsModel::Entry*>(entry->parent()));
-	}
-
-	FeedsManager::getModel()->addEntry(dialog.getFeed(), entry);
+	FeedsManager::getModel()->addEntry(dialog.getFeed(), findFolder(m_ui->feedsViewWidget->currentIndex()));
 
 	updateActions();
 }
 
 void FeedsContentsWidget::addFolder()
 {
-///TODO
+	const QString title(QInputDialog::getText(this, tr("Select Folder Name"), tr("Enter folder name:")));
+
+	if (!title.isEmpty())
+	{
+		m_ui->feedsViewWidget->setCurrentIndex(FeedsManager::getModel()->addEntry(FeedsModel::FolderEntry, {{FeedsModel::TitleRole, title}}, findFolder(m_ui->feedsViewWidget->currentIndex()))->index());
+	}
 }
 
 void FeedsContentsWidget::removeFeed()
@@ -194,6 +185,20 @@ void FeedsContentsWidget::showContextMenu(const QPoint &position)
 void FeedsContentsWidget::updateActions()
 {
 ///TODO
+}
+
+FeedsModel::Entry* FeedsContentsWidget::findFolder(const QModelIndex &index) const
+{
+	FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(index));
+
+	if (!entry || entry == FeedsManager::getModel()->getRootEntry() || entry == FeedsManager::getModel()->getTrashEntry())
+	{
+		return FeedsManager::getModel()->getRootEntry();
+	}
+
+	const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(entry->data(FeedsModel::TypeRole).toInt()));
+
+	return ((type == FeedsModel::RootEntry || type == FeedsModel::FolderEntry) ? entry : static_cast<FeedsModel::Entry*>(entry->parent()));
 }
 
 QString FeedsContentsWidget::getTitle() const

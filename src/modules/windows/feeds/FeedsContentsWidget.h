@@ -20,6 +20,7 @@
 #ifndef OTTER_FEEDSCONTENTSWIDGET_H
 #define OTTER_FEEDSCONTENTSWIDGET_H
 
+#include "../../../core/FeedsManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 namespace Otter
@@ -48,6 +49,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	FeedsModel::Entry* findFolder(const QModelIndex &index) const;
 
 protected slots:
 	void addFeed();
