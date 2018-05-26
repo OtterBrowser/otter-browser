@@ -47,7 +47,7 @@ Feed* FeedsModel::Entry::getFeed() const
 
 QVariant FeedsModel::Entry::data(int role) const
 {
-	if (role == Qt::DisplayRole)
+	if (role == TitleRole)
 	{
 		const EntryType type(static_cast<EntryType>(data(TypeRole).toInt()));
 
@@ -145,6 +145,27 @@ QVariant FeedsModel::Entry::data(int role) const
 
 QVariant FeedsModel::Entry::getRawData(int role) const
 {
+	if (m_feed)
+	{
+		switch (role)
+		{
+			case Qt::DecorationRole:
+				return m_feed->getIcon();
+			case TitleRole:
+				return m_feed->getTitle();
+			case LastUpdateTimeRole:
+				return m_feed->getLastUpdateTime();
+			case LastSynchronizationTimeRole:
+				return m_feed->getLastSynchronizationTime();
+			case UrlRole:
+				return m_feed->getUrl();
+			case UpdateIntervalRole:
+				return m_feed->getUpdateInterval();
+			default:
+				break;
+		}
+	}
+
 	return QStandardItem::data(role);
 }
 
