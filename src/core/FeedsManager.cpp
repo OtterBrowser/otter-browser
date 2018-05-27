@@ -18,6 +18,9 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
+#include "Console.h"
+#include "FeedParser.h"
+#include "Job.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 
@@ -74,7 +77,21 @@ void Feed::setUpdateInterval(int interval)
 
 void Feed::update()
 {
-// TODO
+	DataFetchJob *job(new DataFetchJob(m_url, this));
+
+	connect(job, &DataFetchJob::jobFinished, this, [=]()
+	{
+		FeedParser *parser(FeedParser::createParser(this, job));
+
+		if (!parser || !parser->parse(job))
+		{
+			Console::addMessage(tr("Failed to parse feed: %1").arg(m_url.toDisplayString()), Console::NetworkCategory, Console::ErrorLevel);
+		}
+		else
+		{
+			emit feedModified(this);
+		}
+	});
 }
 
 QString Feed::getTitle() const
