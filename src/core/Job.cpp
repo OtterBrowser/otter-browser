@@ -122,20 +122,33 @@ QUrl FetchJob::getUrl() const
 }
 
 DataFetchJob::DataFetchJob(const QUrl &url, QObject *parent) : FetchJob(url, parent),
-	m_device(nullptr)
+	m_reply(nullptr)
 {
 }
 
 void DataFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 {
-	m_device = reply;
+	m_reply = reply;
 
 	markAsFinished();
 }
 
 QIODevice* DataFetchJob::getData() const
 {
-	return m_device;
+	return m_reply;
+}
+
+QMap<QByteArray, QByteArray> DataFetchJob::getHeaders() const
+{
+	QMap<QByteArray, QByteArray> headers;
+	const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_reply->rawHeaderPairs());
+
+	for (int i = 0; i < rawHeaders.count(); ++i)
+	{
+		headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
+	}
+
+	return headers;
 }
 
 IconFetchJob::IconFetchJob(const QUrl &url, QObject *parent) : FetchJob(url, parent)

@@ -77,12 +77,13 @@ public:
 	explicit DataFetchJob(const QUrl &url, QObject *parent = nullptr);
 
 	QIODevice* getData() const;
+	QMap<QByteArray, QByteArray> getHeaders() const;
 
 protected:
 	void handleSuccessfulReply(QNetworkReply *reply) override;
 
 private:
-	QIODevice *m_device;
+	QNetworkReply *m_reply;
 };
 
 class IconFetchJob final : public FetchJob
