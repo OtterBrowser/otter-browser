@@ -262,7 +262,7 @@ void FeedsModel::trashEntry(Entry *entry)
 	{
 		if (entry->data(IsTrashedRole).toBool())
 		{
-///TODO
+			removeEntry(entry);
 		}
 		else
 		{
