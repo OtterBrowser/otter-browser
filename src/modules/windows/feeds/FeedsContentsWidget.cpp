@@ -85,6 +85,16 @@ void FeedsContentsWidget::addFolder()
 	}
 }
 
+void FeedsContentsWidget::updateFeed()
+{
+	const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
+
+	if (entry && entry->getFeed())
+	{
+		entry->getFeed()->update();
+	}
+}
+
 void FeedsContentsWidget::removeFeed()
 {
 	FeedsManager::getModel()->trashEntry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
@@ -140,6 +150,10 @@ void FeedsContentsWidget::showContextMenu(const QPoint &position)
 				{
 					if (type == FeedsModel::FeedEntry)
 					{
+						connect(menu.addAction(ThemesManager::createIcon(QLatin1String("view-refresh")), QCoreApplication::translate("actions", "Update")), &QAction::triggered, this, &FeedsContentsWidget::updateFeed);
+
+						menu.addSeparator();
+
 						connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &FeedsContentsWidget::openFeed);
 					}
 

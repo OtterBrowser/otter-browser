@@ -54,6 +54,7 @@ protected:
 protected slots:
 	void addFeed();
 	void addFolder();
+	void updateFeed();
 	void removeFeed();
 	void openFeed();
 	void feedProperties();
