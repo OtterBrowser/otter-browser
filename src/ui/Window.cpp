@@ -370,7 +370,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 {
 	ContentsWidget *newWidget(nullptr);
 
-	if (url.scheme() == QLatin1String("about"))
+	if (url.scheme() == QLatin1String("about") || url.scheme() == QLatin1String("view-feed"))
 	{
 		if (m_session.historyIndex < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
 		{
@@ -379,11 +379,16 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 			return;
 		}
 
-		newWidget = WidgetFactory::createContentsWidget(url.path(), {}, this, this);
+		newWidget = WidgetFactory::createContentsWidget(((url.scheme() == QLatin1String("view-feed")) ? QLatin1String("feeds") : url.path()), {}, this, this);
 
-		if (newWidget && !newWidget->canClone())
+		if (newWidget)
 		{
-			SessionsManager::removeStoredUrl(newWidget->getUrl().toString());
+			newWidget->setUrl(url);
+
+			if (!newWidget->canClone())
+			{
+				SessionsManager::removeStoredUrl(newWidget->getUrl().toString());
+			}
 		}
 	}
 

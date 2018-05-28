@@ -38,6 +38,18 @@ class FeedsContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		UrlRole = Qt::StatusTipRole,
+		IdentifierRole = Qt::UserRole,
+		SummaryRole,
+		ContentRole,
+		AuthorRole,
+		EmailRole,
+		UpdateTimeRole,
+		CategoriesRole
+	};
+
 	explicit FeedsContentsWidget(const QVariantMap &parameters, QWidget *parent);
 	~FeedsContentsWidget();
 
@@ -46,6 +58,9 @@ public:
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
 	bool eventFilter(QObject *object, QEvent *event);
+
+public slots:
+	void setUrl(const QUrl &url, bool isTyped = true) override;
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -60,8 +75,12 @@ protected slots:
 	void feedProperties();
 	void showContextMenu(const QPoint &position);
 	void updateActions();
+	void updateEntry();
+	void updateFeedModel();
 
 private:
+	Feed *m_feed;
+	QStandardItemModel *m_feedModel;
 	Ui::FeedsContentsWidget *m_ui;
 };
 

@@ -33,16 +33,20 @@ namespace Otter
 {
 
 FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
+	m_feed(nullptr),
+	m_feedModel(nullptr),
 	m_ui(new Ui::FeedsContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->filterLineEditWidget->setClearOnEscape(true);
+	m_ui->feedsFilterLineEditWidget->setClearOnEscape(true);
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
 	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 
+	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showContextMenu);
 }
 
@@ -198,7 +202,83 @@ void FeedsContentsWidget::showContextMenu(const QPoint &position)
 
 void FeedsContentsWidget::updateActions()
 {
-///TODO
+	///TODO
+}
+
+void FeedsContentsWidget::updateEntry()
+{
+	const QModelIndex index(m_ui->feedViewWidget->currentIndex());
+
+	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
+	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
+	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(UpdateTimeRole).toDateTime()) : QString());
+	m_ui->textBrowser->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());
+}
+
+void FeedsContentsWidget::updateFeedModel()
+{
+	if (!m_feedModel)
+	{
+		return;
+	}
+
+	m_feedModel->clear();
+
+	if (!m_feed)
+	{
+		return;
+	}
+
+	const QVector<Feed::Entry> entries(m_feed->getEntries());
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		const Feed::Entry entry(entries.at(i));
+		QStandardItem *item(new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title));
+		item->setData(entry.url, UrlRole);
+		item->setData(entry.identifier, IdentifierRole);
+		item->setData(entry.summary, SummaryRole);
+		item->setData(entry.content, ContentRole);
+		item->setData(entry.updateTime, UpdateTimeRole);
+		item->setData(entry.author, AuthorRole);
+		item->setData(entry.email, EmailRole);
+		item->setData(entry.categories, CategoriesRole);
+		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+		m_feedModel->appendRow(item);
+	}
+}
+
+void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
+{
+	Q_UNUSED(isTyped)
+
+	if (url.scheme() == QLatin1String("view-feed"))
+	{
+		m_feed = FeedsManager::createFeed(url.toDisplayString().mid(10));
+
+		if (m_feedModel)
+		{
+			m_feedModel->clear();
+		}
+
+		if (m_feed)
+		{
+			if (!m_feedModel)
+			{
+				m_feedModel = new QStandardItemModel(this);
+
+				m_ui->feedViewWidget->setModel(m_feedModel);
+				m_ui->feedViewWidget->setViewMode(ItemViewWidget::ListViewMode);
+			}
+
+			updateFeedModel();
+
+			m_ui->stackedWidget->setCurrentIndex(1);
+
+			connect(m_feed, &Feed::feedModified, this, &FeedsContentsWidget::updateFeedModel);
+		}
+	}
 }
 
 FeedsModel::Entry* FeedsContentsWidget::findFolder(const QModelIndex &index) const
@@ -217,6 +297,13 @@ FeedsModel::Entry* FeedsContentsWidget::findFolder(const QModelIndex &index) con
 
 QString FeedsContentsWidget::getTitle() const
 {
+	if (m_feed)
+	{
+		const QString title(m_feed->getTitle());
+
+		return tr("Feed: %1").arg(title.isEmpty() ? tr("(Untitled)") : title);
+	}
+
 	return tr("Feeds");
 }
 
@@ -227,11 +314,18 @@ QLatin1String FeedsContentsWidget::getType() const
 
 QUrl FeedsContentsWidget::getUrl() const
 {
-	return QUrl(QLatin1String("about:feeds"));
+	return (m_feed ? QUrl(QLatin1String("view-feed:") + m_feed->getUrl().toDisplayString()) : QUrl(QLatin1String("about:feeds")));
 }
 
 QIcon FeedsContentsWidget::getIcon() const
 {
+	if (m_feed)
+	{
+		const QIcon icon(m_feed->getIcon());
+
+		return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("application-rss+xml")) : icon);
+	}
+
 	return ThemesManager::createIcon(QLatin1String("feeds"), false);
 }
 
