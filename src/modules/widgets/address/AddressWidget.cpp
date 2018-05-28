@@ -620,7 +620,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 					if (feeds.count() == 1 && m_window)
 					{
-						m_window->setUrl(feeds.at(0).url);
+						m_window->setUrl(QUrl(QLatin1String("view-feed:") + feeds.first().url.toDisplayString()));
 					}
 					else if (feeds.count() > 1)
 					{
@@ -628,7 +628,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 						for (int i = 0; i < feeds.count(); ++i)
 						{
-							menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(feeds.at(i).url);
+							menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(QUrl(QLatin1String("view-feed:") + feeds.at(i).url.toDisplayString()));
 						}
 
 						connect(&menu, &QMenu::triggered, this, [&](QAction *action)
