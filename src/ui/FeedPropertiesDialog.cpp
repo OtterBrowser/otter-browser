@@ -81,7 +81,7 @@ void FeedPropertiesDialog::saveFeed()
 	}
 	else
 	{
-		m_feed = FeedsManager::createFeed(m_ui->titleLineEditWidget->text(), QUrl(m_ui->urlLineEditWidget->text()), m_ui->iconButton->icon(), m_ui->updateIntervalSpinBox->value());
+		m_feed = FeedsManager::createFeed(QUrl(m_ui->urlLineEditWidget->text()), m_ui->titleLineEditWidget->text(), m_ui->iconButton->icon(), m_ui->updateIntervalSpinBox->value());
 	}
 
 	accept();

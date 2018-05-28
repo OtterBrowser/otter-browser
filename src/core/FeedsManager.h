@@ -104,7 +104,7 @@ public:
 	static void createInstance();
 	static FeedsManager* getInstance();
 	static FeedsModel* getModel();
-	static Feed* createFeed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval);
+	static Feed* createFeed(const QUrl &url, const QString &title = {}, const QIcon &icon = {}, int updateInterval = -1);
 	static Feed* getFeed(const QUrl &url);
 	static QVector<Feed*> getFeeds();
 

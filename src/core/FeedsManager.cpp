@@ -276,7 +276,7 @@ FeedsModel* FeedsManager::getModel()
 	return m_model;
 }
 
-Feed* FeedsManager::createFeed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval)
+Feed* FeedsManager::createFeed(const QUrl &url, const QString &title, const QIcon &icon, int updateInterval)
 {
 	ensureInitialized();
 
