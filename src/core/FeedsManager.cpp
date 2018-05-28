@@ -46,6 +46,16 @@ void Feed::setTitle(const QString &title)
 	}
 }
 
+void Feed::setDescription(const QString &description)
+{
+	if (description != m_description)
+	{
+		m_description = description;
+
+		emit feedModified(this);
+	}
+}
+
 void Feed::setUrl(const QUrl &url)
 {
 	if (url != m_url)
@@ -61,6 +71,50 @@ void Feed::setUrl(const QUrl &url)
 void Feed::setIcon(const QIcon &icon)
 {
 	m_icon = icon;
+
+	emit feedModified(this);
+}
+
+void Feed::setLastUpdateTime(const QDateTime &time)
+{
+	if (time != m_lastUpdateTime)
+	{
+		m_lastUpdateTime = time;
+
+		emit feedModified(this);
+	}
+}
+
+void Feed::setLastSynchronizationTime(const QDateTime &time)
+{
+	if (time != m_lastSynchronizationTime)
+	{
+		m_lastSynchronizationTime = time;
+
+		emit feedModified(this);
+	}
+}
+
+void Feed::setCategories(const QStringList &categories)
+{
+	if (categories != m_categories)
+	{
+		m_categories = categories;
+
+		emit feedModified(this);
+	}
+}
+
+void Feed::setEntries(const QVector<Feed::Entry> &entries)
+{
+	m_entries = entries;
+
+	emit feedModified(this);
+}
+
+void Feed::setError(Feed::FeedError error)
+{
+	m_error = error;
 
 	emit feedModified(this);
 }
@@ -129,7 +183,7 @@ QStringList Feed::getCategories() const
 	return m_categories;
 }
 
-QVector<Feed::Entry> Feed::getEntries()
+QVector<Feed::Entry> Feed::getEntries() const
 {
 	return m_entries;
 }

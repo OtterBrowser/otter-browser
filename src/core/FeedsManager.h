@@ -56,8 +56,14 @@ public:
 	explicit Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent = nullptr);
 
 	void setTitle(const QString &title);
+	void setDescription(const QString &description);
 	void setUrl(const QUrl &url);
 	void setIcon(const QIcon &icon);
+	void setLastUpdateTime(const QDateTime &time);
+	void setLastSynchronizationTime(const QDateTime &time);
+	void setCategories(const QStringList &categories);
+	void setEntries(const QVector<Entry> &entries);
+	void setError(FeedError error);
 	void setUpdateInterval(int interval);
 	QString getTitle() const;
 	QString getDescription() const;
@@ -66,7 +72,7 @@ public:
 	QDateTime getLastUpdateTime() const;
 	QDateTime getLastSynchronizationTime() const;
 	QStringList getCategories() const;
-	QVector<Entry> getEntries();
+	QVector<Entry> getEntries() const;
 	FeedError getError() const;
 	int getUpdateInterval() const;
 
