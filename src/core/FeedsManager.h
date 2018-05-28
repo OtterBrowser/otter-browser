@@ -58,6 +58,7 @@ public:
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);
 	void setUrl(const QUrl &url);
+	void setIcon(const QUrl &url);
 	void setIcon(const QIcon &icon);
 	void setLastUpdateTime(const QDateTime &time);
 	void setLastSynchronizationTime(const QDateTime &time);

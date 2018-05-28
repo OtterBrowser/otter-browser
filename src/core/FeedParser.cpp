@@ -122,6 +122,10 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 
 					reader.skipCurrentElement();
 				}
+				else if (reader.name() == QLatin1String("icon"))
+				{
+					m_feed->setIcon(QUrl(reader.readElementText()));
+				}
 				else if (reader.name() == QLatin1String("title"))
 				{
 					m_feed->setTitle(reader.readElementText());
