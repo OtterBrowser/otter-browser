@@ -272,6 +272,11 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 				m_ui->feedViewWidget->setViewMode(ItemViewWidget::ListViewMode);
 			}
 
+			if (m_feed->getLastSynchronizationTime().isNull())
+			{
+				m_feed->update();
+			}
+
 			updateFeedModel();
 
 			m_ui->stackedWidget->setCurrentIndex(1);
