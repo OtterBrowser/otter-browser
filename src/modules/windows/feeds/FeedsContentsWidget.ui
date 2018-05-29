@@ -106,8 +106,8 @@
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
-          <attribute name="headerVisible">
-           <bool>false</bool>
+          <attribute name="headerDefaultSectionSize">
+           <number>150</number>
           </attribute>
          </widget>
          <widget class="QWidget" name="detailsWidget" native="true">

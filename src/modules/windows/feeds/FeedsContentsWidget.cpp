@@ -63,6 +63,11 @@ void FeedsContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		if (m_feedModel)
+		{
+			m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
+		}
 	}
 }
 
@@ -208,7 +213,7 @@ void FeedsContentsWidget::updateActions()
 
 void FeedsContentsWidget::updateEntry()
 {
-	const QModelIndex index(m_ui->feedViewWidget->currentIndex());
+	const QModelIndex index(m_ui->feedViewWidget->currentIndex().sibling(m_ui->feedViewWidget->currentIndex().row(), 0));
 
 	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
@@ -249,6 +254,8 @@ void FeedsContentsWidget::updateFeedModel()
 	const QString identifier(m_ui->feedViewWidget->currentIndex().data(IdentifierRole).toString());
 
 	m_feedModel->clear();
+	m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
+	m_feedModel->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 
 	if (!m_feed)
 	{
@@ -260,19 +267,21 @@ void FeedsContentsWidget::updateFeedModel()
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		const Feed::Entry entry(entries.at(i));
-		QStandardItem *item(new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title));
-		item->setData(entry.url, UrlRole);
-		item->setData(entry.identifier, IdentifierRole);
-		item->setData(entry.summary, SummaryRole);
-		item->setData(entry.content, ContentRole);
-		item->setData(entry.publicationTime, PublicationTimeRole);
-		item->setData(entry.updateTime, UpdateTimeRole);
-		item->setData(entry.author, AuthorRole);
-		item->setData(entry.email, EmailRole);
-		item->setData(entry.categories, CategoriesRole);
-		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+		QList<QStandardItem*> items({new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title), new QStandardItem(entry.author.isEmpty() ? tr("(Untitled)") : entry.author), new QStandardItem(Utils::formatDateTime(entry.updateTime.isNull() ? entry.publicationTime : entry.updateTime))});
+		items[0]->setData(entry.url, UrlRole);
+		items[0]->setData(entry.identifier, IdentifierRole);
+		items[0]->setData(entry.summary, SummaryRole);
+		items[0]->setData(entry.content, ContentRole);
+		items[0]->setData(entry.publicationTime, PublicationTimeRole);
+		items[0]->setData(entry.updateTime, UpdateTimeRole);
+		items[0]->setData(entry.author, AuthorRole);
+		items[0]->setData(entry.email, EmailRole);
+		items[0]->setData(entry.categories, CategoriesRole);
+		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+		items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 
-		m_feedModel->appendRow(item);
+		m_feedModel->appendRow(items);
 
 		if (entry.identifier == identifier)
 		{
