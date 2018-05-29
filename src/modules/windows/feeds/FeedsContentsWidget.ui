@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>500</width>
     <height>400</height>
    </rect>
   </property>
@@ -85,14 +85,28 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="Otter::LineEditWidget" name="feedFilterLineEditWidget">
-         <property name="placeholderText">
-          <string>Search…</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="headerLayout">
+         <item>
+          <widget class="Otter::LineEditWidget" name="feedFilterLineEditWidget">
+           <property name="placeholderText">
+            <string>Search…</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="categoriesButton">
+           <property name="text">
+            <string>Categories</string>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QSplitter" name="splitter">

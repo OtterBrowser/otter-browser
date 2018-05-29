@@ -128,6 +128,44 @@ void FeedsContentsWidget::feedProperties()
 	}
 }
 
+void FeedsContentsWidget::toggleCategory(QAction *action)
+{
+	QMenu *menu(m_ui->categoriesButton->menu());
+
+	if (action->data().isNull() && action->isChecked())
+	{
+		m_categories.clear();
+	}
+	else if (menu && menu->actions().count() > 0)
+	{
+		QStringList categories;
+		bool hasAllCategories = true;
+
+		m_categories.clear();
+
+		for (int i = 2; i < menu->actions().count(); ++i)
+		{
+			if (menu->actions().at(i)->isChecked())
+			{
+				categories.append(menu->actions().at(i)->data().toString());
+			}
+			else
+			{
+				hasAllCategories = false;
+			}
+		}
+
+		menu->actions().first()->setChecked(hasAllCategories);
+
+		if (!hasAllCategories)
+		{
+			m_categories = categories;
+		}
+	}
+
+	updateFeedModel();
+}
+
 void FeedsContentsWidget::showContextMenu(const QPoint &position)
 {
 	const QModelIndex index(m_ui->feedsViewWidget->indexAt(position));
@@ -257,16 +295,70 @@ void FeedsContentsWidget::updateFeedModel()
 	m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
 	m_feedModel->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 
+	if (m_ui->categoriesButton->menu())
+	{
+		m_ui->categoriesButton->menu()->deleteLater();
+	}
+
+	QMenu *menu(new QMenu(m_ui->categoriesButton));
+
+	m_ui->categoriesButton->setMenu(menu);
+
+	connect(menu, &QMenu::triggered, this, &FeedsContentsWidget::toggleCategory);
+
 	if (!m_feed)
 	{
 		return;
 	}
 
-	const QVector<Feed::Entry> entries(m_feed->getEntries());
+	QAction *allAction(menu->addAction(tr("All (%1)").arg(m_feed->getEntries().count())));
+	allAction->setCheckable(true);
+	allAction->setChecked(m_categories.isEmpty());
+
+	menu->addSeparator();
+
+	const QMap<QString, QString> categories(m_feed->getCategories());
+	QMap<QString, QString>::const_iterator iterator;
+
+	for (iterator = categories.begin(); iterator != categories.end(); ++iterator)
+	{
+		const int amount(m_feed->getEntries({iterator.key()}).count());
+
+		if (amount > 0)
+		{
+			QAction *action(menu->addAction((iterator.value().isEmpty() ? QString(iterator.key()).replace(QLatin1Char('_'), QLatin1Char(' ')) : iterator.value()) + QLatin1String(" (") + QString::number(amount) + QLatin1Char(')')));
+			action->setCheckable(true);
+			action->setChecked(m_categories.isEmpty() || m_categories.contains(iterator.key()));
+			action->setData(iterator.key());
+		}
+	}
+
+	const QVector<Feed::Entry> entries(m_feed->getEntries(m_categories));
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		const Feed::Entry entry(entries.at(i));
+
+		if (!m_categories.isEmpty())
+		{
+			bool hasFound(false);
+
+			for (int j = 0; j < m_categories.count(); ++j)
+			{
+				if (entry.categories.contains(m_categories.at(j)))
+				{
+					hasFound = true;
+
+					break;
+				}
+			}
+
+			if (!hasFound)
+			{
+				continue;
+			}
+		}
+
 		QList<QStandardItem*> items({new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title), new QStandardItem(entry.author.isEmpty() ? tr("(Untitled)") : entry.author), new QStandardItem(Utils::formatDateTime(entry.updateTime.isNull() ? entry.publicationTime : entry.updateTime))});
 		items[0]->setData(entry.url, UrlRole);
 		items[0]->setData(entry.identifier, IdentifierRole);
@@ -310,6 +402,8 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 
 		if (m_feed)
 		{
+			m_categories.clear();
+
 			if (!m_feedModel)
 			{
 				m_feedModel = new QStandardItemModel(this);

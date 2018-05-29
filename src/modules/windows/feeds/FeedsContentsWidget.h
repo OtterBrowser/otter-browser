@@ -74,6 +74,7 @@ protected slots:
 	void removeFeed();
 	void openFeed();
 	void feedProperties();
+	void toggleCategory(QAction *action);
 	void showContextMenu(const QPoint &position);
 	void updateActions();
 	void updateEntry();
@@ -82,6 +83,7 @@ protected slots:
 private:
 	Feed *m_feed;
 	QStandardItemModel *m_feedModel;
+	QStringList m_categories;
 	Ui::FeedsContentsWidget *m_ui;
 };
 
