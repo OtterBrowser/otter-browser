@@ -202,7 +202,7 @@ void FeedsContentsWidget::showContextMenu(const QPoint &position)
 
 void FeedsContentsWidget::updateActions()
 {
-	///TODO
+///TODO
 }
 
 void FeedsContentsWidget::updateEntry()
@@ -211,7 +211,7 @@ void FeedsContentsWidget::updateEntry()
 
 	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
-	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(UpdateTimeRole).toDateTime()) : QString());
+	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(index.data(UpdateTimeRole).isNull() ? PublicationTimeRole : UpdateTimeRole).toDateTime()) : QString());
 	m_ui->textBrowser->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());
 }
 
@@ -241,6 +241,7 @@ void FeedsContentsWidget::updateFeedModel()
 		item->setData(entry.identifier, IdentifierRole);
 		item->setData(entry.summary, SummaryRole);
 		item->setData(entry.content, ContentRole);
+		item->setData(entry.publicationTime, PublicationTimeRole);
 		item->setData(entry.updateTime, UpdateTimeRole);
 		item->setData(entry.author, AuthorRole);
 		item->setData(entry.email, EmailRole);

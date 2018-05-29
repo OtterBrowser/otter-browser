@@ -46,6 +46,7 @@ public:
 		ContentRole,
 		AuthorRole,
 		EmailRole,
+		PublicationTimeRole,
 		UpdateTimeRole,
 		CategoriesRole
 	};

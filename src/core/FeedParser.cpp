@@ -80,6 +80,10 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						{
 							entry.identifier = reader.readElementText();
 						}
+						else if (reader.name() == QLatin1String("published"))
+						{
+							entry.publicationTime = readDateTime(&reader);
+						}
 						else if (reader.name() == QLatin1String("updated"))
 						{
 							entry.updateTime = readDateTime(&reader);
