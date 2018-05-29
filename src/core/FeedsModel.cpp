@@ -235,7 +235,7 @@ FeedsModel::FeedsModel(const QString &path, QObject *parent) : QStandardItemMode
 				reader.skipCurrentElement();
 			}
 
-			if (reader.hasError())
+			if (reader.hasError() && rowCount() == 0)
 			{
 				Console::addMessage(tr("Failed to load feeds file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 
