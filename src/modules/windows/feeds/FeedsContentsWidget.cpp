@@ -27,6 +27,7 @@
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolButton>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
@@ -213,6 +214,27 @@ void FeedsContentsWidget::updateEntry()
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
 	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(index.data(UpdateTimeRole).isNull() ? PublicationTimeRole : UpdateTimeRole).toDateTime()) : QString());
 	m_ui->textBrowser->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());
+
+	for (int i = (m_ui->categoriesLayout->count() - 1); i >= 0; --i)
+	{
+		m_ui->categoriesLayout->takeAt(i)->widget()->deleteLater();
+	}
+
+	const QStringList categories(index.data(CategoriesRole).toStringList());
+
+	for (int i = 0; i < categories.count(); ++i)
+	{
+		if (!categories.at(i).isEmpty())
+		{
+			QToolButton *toolButton(new QToolButton(m_ui->detailsWidget));
+			toolButton->setText(QString(categories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')));
+			toolButton->setObjectName(categories.at(i));
+
+			m_ui->categoriesLayout->addWidget(toolButton);
+		}
+	}
+
+	m_ui->categoriesLayout->addStretch();
 }
 
 void FeedsContentsWidget::updateFeedModel()

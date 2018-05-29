@@ -25,6 +25,9 @@
    </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="feedsPage">
       <layout class="QVBoxLayout" name="feedsLayout">
        <property name="leftMargin">
@@ -133,7 +136,7 @@
             </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,0">
+            <layout class="QHBoxLayout" name="attributesLayout" stretch="1,2,0">
              <item>
               <widget class="Otter::TextLabelWidget" name="authorLabelWidget" native="true"/>
              </item>
@@ -154,6 +157,9 @@
               <widget class="Otter::TextLabelWidget" name="timeLabelWidget" native="true"/>
              </item>
             </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="categoriesLayout"/>
            </item>
            <item>
             <widget class="QTextBrowser" name="textBrowser"/>
