@@ -62,7 +62,7 @@ public:
 	void setIcon(const QIcon &icon);
 	void setLastUpdateTime(const QDateTime &time);
 	void setLastSynchronizationTime(const QDateTime &time);
-	void setCategories(const QStringList &categories);
+	void setCategories(const QMap<QString, QString> &categories);
 	void setEntries(const QVector<Entry> &entries);
 	void setError(FeedError error);
 	void setUpdateInterval(int interval);
@@ -72,7 +72,7 @@ public:
 	QIcon getIcon() const;
 	QDateTime getLastUpdateTime() const;
 	QDateTime getLastSynchronizationTime() const;
-	QStringList getCategories() const;
+	QMap<QString, QString> getCategories() const;
 	QVector<Entry> getEntries() const;
 	FeedError getError() const;
 	int getUpdateInterval() const;
@@ -87,7 +87,7 @@ private:
 	QIcon m_icon;
 	QDateTime m_lastUpdateTime;
 	QDateTime m_lastSynchronizationTime;
-	QStringList m_categories;
+	QMap<QString, QString> m_categories;
 	QVector<Entry> m_entries;
 	FeedError m_error;
 	int m_updateInterval;

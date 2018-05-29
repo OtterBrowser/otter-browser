@@ -44,7 +44,7 @@ AtomFeedParser::AtomFeedParser(Feed *parent) : FeedParser(parent),
 bool AtomFeedParser::parse(DataFetchJob *data)
 {
 	QXmlStreamReader reader(data->getData());
-	QStringList categories;
+	QMap<QString, QString> categories;
 	QVector<Feed::Entry> entries;
 	entries.reserve(10);
 
@@ -121,7 +121,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 			{
 				if (reader.name() == QLatin1String("category"))
 				{
-					categories.append(reader.attributes().value(QLatin1String("term")).toString());
+					categories[reader.attributes().value(QLatin1String("term")).toString()] = reader.attributes().value(QLatin1String("label")).toString();
 
 					reader.skipCurrentElement();
 				}

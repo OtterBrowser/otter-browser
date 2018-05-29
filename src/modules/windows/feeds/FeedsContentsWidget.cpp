@@ -220,15 +220,17 @@ void FeedsContentsWidget::updateEntry()
 		m_ui->categoriesLayout->takeAt(i)->widget()->deleteLater();
 	}
 
-	const QStringList categories(index.data(CategoriesRole).toStringList());
+	const QStringList entryCategories(index.data(CategoriesRole).toStringList());
+	const QMap<QString, QString> feedCategories(m_feed->getCategories());
 
-	for (int i = 0; i < categories.count(); ++i)
+	for (int i = 0; i < entryCategories.count(); ++i)
 	{
-		if (!categories.at(i).isEmpty())
+		if (!entryCategories.at(i).isEmpty())
 		{
+			const QString label(feedCategories.value(entryCategories.at(i)));
 			QToolButton *toolButton(new QToolButton(m_ui->detailsWidget));
-			toolButton->setText(QString(categories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')));
-			toolButton->setObjectName(categories.at(i));
+			toolButton->setText(label.isEmpty() ? QString(entryCategories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
+			toolButton->setObjectName(entryCategories.at(i));
 
 			m_ui->categoriesLayout->addWidget(toolButton);
 		}

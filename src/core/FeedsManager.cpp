@@ -105,7 +105,7 @@ void Feed::setLastSynchronizationTime(const QDateTime &time)
 	}
 }
 
-void Feed::setCategories(const QStringList &categories)
+void Feed::setCategories(const QMap<QString, QString> &categories)
 {
 	if (categories != m_categories)
 	{
@@ -188,7 +188,7 @@ QDateTime Feed::getLastSynchronizationTime() const
 	return m_lastSynchronizationTime;
 }
 
-QStringList Feed::getCategories() const
+QMap<QString, QString> Feed::getCategories() const
 {
 	return m_categories;
 }
