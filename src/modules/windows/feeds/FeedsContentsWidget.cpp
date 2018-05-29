@@ -46,6 +46,8 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
+	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
+	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
 
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
@@ -261,6 +263,10 @@ void FeedsContentsWidget::updateEntry()
 	const QModelIndex index(m_ui->feedViewWidget->currentIndex().sibling(m_ui->feedViewWidget->currentIndex().row(), 0));
 
 	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
+	m_ui->emailButton->setVisible(!index.data(EmailRole).isNull());
+	m_ui->emailButton->setToolTip(tr("Send email to %1").arg(index.data(EmailRole).toString()));
+	m_ui->urlButton->setVisible(!index.data(UrlRole).isNull());
+	m_ui->urlButton->setToolTip(tr("Go to %1").arg(index.data(UrlRole).toUrl().toDisplayString()));
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
 	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(index.data(UpdateTimeRole).isNull() ? PublicationTimeRole : UpdateTimeRole).toDateTime()) : QString());
 	m_ui->textBrowser->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());

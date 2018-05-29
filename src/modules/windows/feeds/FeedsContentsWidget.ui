@@ -139,15 +139,25 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="Otter::TextLabelWidget" name="titleLabelWidget" native="true">
-             <property name="font">
-              <font>
-               <pointsize>18</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="titleLayout">
+             <item>
+              <widget class="Otter::TextLabelWidget" name="titleLabelWidget" native="true">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="urlButton"/>
+             </item>
+             <item>
+              <widget class="QToolButton" name="emailButton"/>
+             </item>
+            </layout>
            </item>
            <item>
             <layout class="QHBoxLayout" name="attributesLayout" stretch="1,2,0">
