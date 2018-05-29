@@ -73,7 +73,7 @@ public:
 	QDateTime getLastUpdateTime() const;
 	QDateTime getLastSynchronizationTime() const;
 	QMap<QString, QString> getCategories() const;
-	QVector<Entry> getEntries() const;
+	QVector<Entry> getEntries(const QStringList &categories = {}) const;
 	FeedError getError() const;
 	int getUpdateInterval() const;
 

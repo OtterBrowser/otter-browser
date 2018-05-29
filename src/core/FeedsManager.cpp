@@ -193,8 +193,33 @@ QMap<QString, QString> Feed::getCategories() const
 	return m_categories;
 }
 
-QVector<Feed::Entry> Feed::getEntries() const
+QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 {
+	if (!categories.isEmpty())
+	{
+		QVector<Entry> entries;
+
+		for (int i = 0; i < m_entries.count(); ++i)
+		{
+			const Feed::Entry entry(m_entries.at(i));
+
+			if (!m_categories.isEmpty())
+			{
+				for (int j = 0; j < categories.count(); ++j)
+				{
+					if (entry.categories.contains(categories.at(j)))
+					{
+						entries.append(entry);
+
+						break;
+					}
+				}
+			}
+		}
+
+		return entries;
+	}
+
 	return m_entries;
 }
 
