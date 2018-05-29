@@ -137,6 +137,18 @@ void FeedsContentsWidget::feedProperties()
 	}
 }
 
+void FeedsContentsWidget::selectCategory()
+{
+	const QToolButton *toolButton(qobject_cast<QToolButton*>(sender()));
+
+	if (toolButton)
+	{
+		m_categories = QStringList({toolButton->objectName()});
+
+		updateFeedModel();
+	}
+}
+
 void FeedsContentsWidget::toggleCategory(QAction *action)
 {
 	QMenu *menu(m_ui->categoriesButton->menu());
@@ -289,6 +301,8 @@ void FeedsContentsWidget::updateEntry()
 			toolButton->setObjectName(entryCategories.at(i));
 
 			m_ui->categoriesLayout->addWidget(toolButton);
+
+			connect(toolButton, &QToolButton::clicked, this, &FeedsContentsWidget::selectCategory);
 		}
 	}
 
