@@ -222,6 +222,8 @@ void FeedsContentsWidget::updateFeedModel()
 		return;
 	}
 
+	const QString identifier(m_ui->feedViewWidget->currentIndex().data(IdentifierRole).toString());
+
 	m_feedModel->clear();
 
 	if (!m_feed)
@@ -246,6 +248,16 @@ void FeedsContentsWidget::updateFeedModel()
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		m_feedModel->appendRow(item);
+
+		if (entry.identifier == identifier)
+		{
+			m_ui->feedViewWidget->setCurrentIndex(m_ui->feedViewWidget->getIndex(i));
+		}
+	}
+
+	if (!m_ui->feedViewWidget->selectionModel()->hasSelection())
+	{
+		m_ui->feedViewWidget->setCurrentIndex(m_ui->feedViewWidget->getIndex(0));
 	}
 }
 
