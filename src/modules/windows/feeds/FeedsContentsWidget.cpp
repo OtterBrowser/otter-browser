@@ -21,6 +21,7 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/FeedPropertiesDialog.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_FeedsContentsWidget.h"
 
@@ -112,7 +113,13 @@ void FeedsContentsWidget::removeFeed()
 
 void FeedsContentsWidget::openFeed()
 {
-///TODO
+	const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow && entry && entry->getFeed())
+	{
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString())}});
+	}
 }
 
 void FeedsContentsWidget::feedProperties()
