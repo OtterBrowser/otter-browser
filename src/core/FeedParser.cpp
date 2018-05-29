@@ -82,8 +82,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("updated"))
 						{
-							entry.updateTime = QDateTime::fromString(reader.readElementText(), Qt::ISODate);
-							entry.updateTime.setTimeSpec(Qt::UTC);
+							entry.updateTime = readDateTime(&reader);
 						}
 						else if (reader.name() == QLatin1String("summary"))
 						{
@@ -136,10 +135,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("updated"))
 				{
-					QDateTime updateTime(QDateTime::fromString(reader.readElementText(), Qt::ISODate));
-					updateTime.setTimeSpec(Qt::UTC);
-
-					m_feed->setLastUpdateTime(updateTime);
+					m_feed->setLastUpdateTime(readDateTime(&reader));
 				}
 				else
 				{
@@ -165,6 +161,14 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
 
 	return true;
+}
+
+QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
+{
+	QDateTime dateTime(QDateTime::fromString(reader->readElementText(), Qt::ISODate));
+	dateTime.setTimeSpec(Qt::UTC);
+
+	return dateTime;
 }
 
 }

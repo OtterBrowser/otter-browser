@@ -20,7 +20,7 @@
 #ifndef OTTER_FEEDPARSER_H
 #define OTTER_FEEDPARSER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QXmlStreamReader>
 
 namespace Otter
 {
@@ -43,6 +43,9 @@ public:
 	explicit AtomFeedParser(Feed *parent = nullptr);
 
 	bool parse(DataFetchJob *data) override;
+
+protected:
+	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
 	Feed *m_feed;
