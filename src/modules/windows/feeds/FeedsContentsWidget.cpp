@@ -48,7 +48,14 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
+	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
 	m_ui->subscribeFeedWidget->hide();
+
+	if (isSidebarPanel())
+	{
+		m_ui->feedWidget->hide();
+		m_ui->entryWidget->hide();
+	}
 
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
@@ -318,7 +325,7 @@ void FeedsContentsWidget::updateEntry()
 		if (!entryCategories.at(i).isEmpty())
 		{
 			const QString label(feedCategories.value(entryCategories.at(i)));
-			QToolButton *toolButton(new QToolButton(m_ui->detailsWidget));
+			QToolButton *toolButton(new QToolButton(m_ui->entryWidget));
 			toolButton->setText(label.isEmpty() ? QString(entryCategories.at(i)).replace(QLatin1Char('_'), QLatin1Char(' ')) : label);
 			toolButton->setObjectName(entryCategories.at(i));
 
@@ -505,8 +512,6 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 			}
 
 			updateFeedModel();
-
-			m_ui->stackedWidget->setCurrentIndex(1);
 
 			connect(m_feed, &Feed::feedModified, this, &FeedsContentsWidget::updateFeedModel);
 		}
