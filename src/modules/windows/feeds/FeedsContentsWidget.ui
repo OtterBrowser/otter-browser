@@ -215,7 +215,7 @@
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="attributesLayout" stretch="1,2,0">
+            <layout class="QHBoxLayout" name="attributesLayout" stretch="0,1,0">
              <item>
               <widget class="Otter::TextLabelWidget" name="authorLabelWidget" native="true"/>
              </item>
