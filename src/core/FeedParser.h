@@ -58,6 +58,20 @@ private:
 	Feed *m_feed;
 };
 
+class RssFeedParser final : public FeedParser
+{
+public:
+	explicit RssFeedParser(Feed *parent = nullptr);
+
+	bool parse(DataFetchJob *data) override;
+
+protected:
+	QDateTime readDateTime(QXmlStreamReader *reader);
+
+private:
+	Feed *m_feed;
+};
+
 }
 
 #endif

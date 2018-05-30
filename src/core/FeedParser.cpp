@@ -23,6 +23,7 @@
 #include "Job.h"
 
 #include <QtCore/QMimeDatabase>
+#include <QtCore/QRegularExpression>
 
 namespace Otter
 {
@@ -48,6 +49,8 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 		{
 			case AtomParser:
 				return new AtomFeedParser(feed);
+			case RssParser:
+				return new RssFeedParser(feed);
 			default:
 				break;
 		}
@@ -194,6 +197,143 @@ QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
 	dateTime.setTimeSpec(Qt::UTC);
 
 	return dateTime;
+}
+
+RssFeedParser::RssFeedParser(Feed *parent) : FeedParser(parent),
+	m_feed(parent)
+{
+	m_feed->setMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("application/rss+xml")));
+}
+
+QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
+{
+	QDateTime dateTime(QDateTime::fromString(reader->readElementText(), Qt::RFC2822Date));
+	dateTime.setTimeSpec(Qt::UTC);
+
+	return dateTime;
+}
+
+bool RssFeedParser::parse(DataFetchJob *data)
+{
+	QXmlStreamReader reader(data->getData());
+	QMap<QString, QString> categories;
+	QVector<Feed::Entry> entries;
+	entries.reserve(10);
+
+	if (reader.readNextStartElement() && reader.name() == QLatin1String("rss"))
+	{
+		while (reader.readNextStartElement())
+		{
+			if (reader.name() == QLatin1String("item"))
+			{
+				Feed::Entry entry;
+
+				while (reader.readNext())
+				{
+					if (reader.isStartElement())
+					{
+						if (reader.name() == QLatin1String("category"))
+						{
+							const QString category(reader.readElementText());
+
+							entry.categories.append(category);
+
+							if (!categories.contains(category))
+							{
+								categories[category] = QString();
+							}
+						}
+						else if (reader.name() == QLatin1String("title"))
+						{
+							entry.title = reader.readElementText();
+						}
+						else if (reader.name() == QLatin1String("link"))
+						{
+							entry.url = QUrl(reader.readElementText());
+						}
+						else if (reader.name() == QLatin1String("guid"))
+						{
+							const bool isLink(reader.attributes().value(QLatin1String("isPermaLink")).toString().toLower() == QLatin1String("true"));
+
+							entry.identifier = reader.readElementText();
+
+							if (isLink)
+							{
+								entry.url = QUrl(entry.identifier);
+							}
+						}
+						else if (reader.name() == QLatin1String("pubDate"))
+						{
+							entry.publicationTime = readDateTime(&reader);
+						}
+						else if (reader.name() == QLatin1String("description"))
+						{
+							entry.summary = reader.readElementText();
+						}
+						else if (reader.name() == QLatin1String("author"))
+						{
+							const QString text(reader.readElementText());
+
+							if (QRegularExpression(QLatin1String("^[a-zA-Z0-9\\._\\-]+@[a-zA-Z0-9\\._\\-]+\\.[a-zA-Z0-9]+$")).match(text).hasMatch())
+							{
+								entry.email = text;
+							}
+							else
+							{
+								entry.author = text;
+							}
+						}
+					}
+					else if (reader.isEndElement() && reader.name() == QLatin1String("item"))
+					{
+						break;
+					}
+				}
+
+				entries.append(entry);
+			}
+			else if (reader.isStartElement())
+			{
+				if (reader.name() == QLatin1String("image"))
+				{
+					m_feed->setIcon(QUrl(reader.readElementText()));
+				}
+				else if (reader.name() == QLatin1String("title"))
+				{
+					m_feed->setTitle(reader.readElementText());
+				}
+				else if (reader.name() == QLatin1String("description"))
+				{
+					m_feed->setDescription(reader.readElementText());
+				}
+				else if (reader.name() == QLatin1String("lastBuildDate"))
+				{
+					m_feed->setLastUpdateTime(readDateTime(&reader));
+				}
+				else if (reader.name() != QLatin1String("channel"))
+				{
+					reader.skipCurrentElement();
+				}
+			}
+			else
+			{
+				reader.skipCurrentElement();
+			}
+
+			if (reader.hasError())
+			{
+				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+			}
+		}
+	}
+
+	entries.squeeze();
+
+	m_feed->setCategories(categories);
+	m_feed->setEntries(entries);
+	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
+
+	return true;
 }
 
 }
