@@ -353,6 +353,8 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 			entry->setData(FeedEntry, TypeRole);
 			entry->setFlags(entry->flags() | Qt::ItemNeverHasChildren);
 
+			handleUrlChanged(entry, url);
+
 			parent->appendRow(entry);
 		}
 	}
