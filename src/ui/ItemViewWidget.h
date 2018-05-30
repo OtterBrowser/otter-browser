@@ -129,7 +129,6 @@ protected:
 	void ensureInitialized();
 	void moveRow(bool up);
 	void selectRow(const QModelIndex &index);
-	void updateSize();
 	bool applyFilter(const QModelIndex &index);
 
 protected slots:
@@ -138,6 +137,7 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void notifySelectionChanged();
 	void updateFilter();
+	void updateSize();
 
 private:
 	HeaderViewWidget *m_headerWidget;

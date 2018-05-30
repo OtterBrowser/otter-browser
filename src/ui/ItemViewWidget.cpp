@@ -847,6 +847,7 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 
 	connect(selectionModel(), &QItemSelectionModel::selectionChanged, this, &ItemViewWidget::notifySelectionChanged);
 	connect(model, &QAbstractItemModel::dataChanged, this, &ItemViewWidget::markAsModified);
+	connect(model, &QAbstractItemModel::headerDataChanged, this, &ItemViewWidget::updateSize);
 	connect(model, &QAbstractItemModel::rowsInserted, this, &ItemViewWidget::markAsModified);
 	connect(model, &QAbstractItemModel::rowsRemoved, this, &ItemViewWidget::markAsModified);
 	connect(model, &QAbstractItemModel::rowsMoved, this, &ItemViewWidget::markAsModified);
