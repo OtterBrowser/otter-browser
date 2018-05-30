@@ -40,6 +40,7 @@ class FeedsContentsWidget final : public ContentsWidget
 public:
 	enum DataRole
 	{
+		TitleRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
 		IdentifierRole = Qt::UserRole,
 		SummaryRole,

@@ -42,14 +42,17 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui(new Ui::FeedsContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->subscribeFeedWidget->hide();
+	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
+	m_ui->feedFilterLineEditWidget->setClearOnEscape(true);
+	m_ui->feedViewWidget->viewport()->installEventFilter(this);
+	m_ui->feedViewWidget->viewport()->setMouseTracking(true);
 	m_ui->feedsFilterLineEditWidget->setClearOnEscape(true);
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
 	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
-	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
-	m_ui->subscribeFeedWidget->hide();
 	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
 	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
 
@@ -59,8 +62,9 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 		m_ui->entryWidget->hide();
 	}
 
-	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->feedFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
+	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showContextMenu);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateActions);
 	connect(m_ui->okButton, &QToolButton::clicked, this, &FeedsContentsWidget::subscribeFeed);
@@ -592,10 +596,11 @@ QIcon FeedsContentsWidget::getIcon() const
 
 bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->feedsViewWidget->viewport() && event->type() == QEvent::ToolTip)
+	if ((object == m_ui->feedViewWidget->viewport() || object == m_ui->feedsViewWidget->viewport()) && event->type() == QEvent::ToolTip)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
-		const QModelIndex index(m_ui->feedsViewWidget->indexAt(helpEvent->pos()));
+		ItemViewWidget *viewWidget(object == m_ui->feedsViewWidget->viewport() ? m_ui->feedsViewWidget : m_ui->feedViewWidget);
+		const QModelIndex index(viewWidget->indexAt(helpEvent->pos()));
 
 		if (static_cast<FeedsModel::EntryType>(index.data(FeedsModel::TypeRole).toInt()) != FeedsModel::FeedEntry)
 		{
@@ -606,15 +611,27 @@ bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (index.isValid())
 		{
-			toolTip = tr("Title: %1").arg(index.data(FeedsModel::TitleRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(FeedsModel::UrlRole).toUrl().toDisplayString());
-
-			if (!index.data(FeedsModel::LastSynchronizationTimeRole).isNull())
+			if (object == m_ui->feedsViewWidget)
 			{
-				toolTip.append(QLatin1Char('\n') + tr("Last update: %1").arg(Utils::formatDateTime(index.data(FeedsModel::LastSynchronizationTimeRole).toDateTime())));
+				toolTip = tr("Title: %1").arg(index.data(FeedsModel::TitleRole).toString()) + QLatin1Char('\n') + tr("Address: %1").arg(index.data(FeedsModel::UrlRole).toUrl().toDisplayString());
+
+				if (!index.data(FeedsModel::LastSynchronizationTimeRole).isNull())
+				{
+					toolTip.append(QLatin1Char('\n') + tr("Last update: %1").arg(Utils::formatDateTime(index.data(FeedsModel::LastSynchronizationTimeRole).toDateTime())));
+				}
+			}
+			else
+			{
+				toolTip = tr("Title: %1").arg(index.data(TitleRole).toString());
+
+				if (!index.data(UrlRole).isNull())
+				{
+					toolTip.append(QLatin1Char('\n') + tr("Address: %1").arg(index.data(UrlRole).toUrl().toDisplayString()));
+				}
 			}
 		}
 
-		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->feedsViewWidget).width() / 2)), m_ui->feedsViewWidget, m_ui->feedsViewWidget->visualRect(index));
+		QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(toolTip, Qt::ElideRight, (QApplication::desktop()->screenGeometry(viewWidget).width() / 2)), viewWidget, viewWidget->visualRect(index));
 
 		return true;
 	}
