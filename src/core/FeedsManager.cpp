@@ -18,9 +18,11 @@
 **************************************************************************/
 
 #include "FeedsManager.h"
+#include "Application.h"
 #include "Console.h"
 #include "FeedParser.h"
 #include "Job.h"
+#include "NotificationsManager.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 
@@ -123,6 +125,11 @@ void Feed::setCategories(const QMap<QString, QString> &categories)
 void Feed::setEntries(const QVector<Feed::Entry> &entries)
 {
 	m_entries = entries;
+
+	connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+	{
+		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
+	});
 
 	emit feedModified(this);
 }

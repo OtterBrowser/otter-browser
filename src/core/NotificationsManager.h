@@ -74,8 +74,9 @@ class NotificationsManager final : public QObject
 public:
 	enum EventIdentifier
 	{
-		TransferCompletedEvent = 0,
-		UpdateAvailableEvent = 1
+		FeedUpdatedEvent = 0,
+		TransferCompletedEvent,
+		UpdateAvailableEvent
 	};
 
 	struct EventDefinition final
