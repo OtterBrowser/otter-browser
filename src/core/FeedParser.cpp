@@ -33,9 +33,27 @@ FeedParser::FeedParser(Feed *parent) : QObject(parent)
 
 FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 {
-	Q_UNUSED(data)
+	const QMimeDatabase mimeDatabase;
+	const QMap<QString, ParserType> parsers({{QLatin1String("application/atom+xml"), AtomParser}, {QLatin1String("application/rss+xml"), RssParser}});
+	QMimeType mimeType(mimeDatabase.mimeTypeForUrl(feed->getUrl()));
 
-	return new AtomFeedParser(feed);
+	if (!mimeType.isValid() || !parsers.contains(mimeType.name()))
+	{
+		mimeType = mimeDatabase.mimeTypeForData(data->getData());
+	}
+
+	if (parsers.contains(mimeType.name()))
+	{
+		switch (parsers.value(mimeType.name()))
+		{
+			case AtomParser:
+				return new AtomFeedParser(feed);
+			default:
+				break;
+		}
+	}
+
+	return nullptr;
 }
 
 AtomFeedParser::AtomFeedParser(Feed *parent) : FeedParser(parent),

@@ -31,6 +31,13 @@ class Feed;
 class FeedParser : public QObject
 {
 public:
+	enum ParserType
+	{
+		UnknownParser = 0,
+		AtomParser,
+		RssParser
+	};
+
 	explicit FeedParser(Feed *parent = nullptr);
 
 	virtual bool parse(DataFetchJob *data) = 0;
