@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyle>
+#include <QtWidgets/QStyleOptionFrame>
 
 namespace Otter
 {
@@ -136,6 +137,7 @@ void TextLabelWidget::setText(const QString &text)
 
 		QLineEdit::setText(m_isEmpty ? tr("<empty>") : text);
 		setCursorPosition(0);
+		updateGeometry();
 	}
 
 	setReadOnly(true);
@@ -147,6 +149,20 @@ void TextLabelWidget::setUrl(const QUrl &url)
 	m_isEmpty = url.isEmpty();
 
 	updateStyle();
+}
+
+QSize TextLabelWidget::sizeHint() const
+{
+	const QMargins margins(textMargins());
+	QSize size(fontMetrics().size(Qt::TextSingleLine, text()));
+	size.setWidth(size.width() + margins.left() + margins.right() + 6);
+	size.setHeight(size.height() + margins.top() + margins.bottom());
+
+	QStyleOptionFrame option;
+
+	initStyleOption(&option);
+
+	return style()->sizeFromContents(QStyle::CT_LineEdit, &option, size, this);
 }
 
 bool TextLabelWidget::event(QEvent *event)
