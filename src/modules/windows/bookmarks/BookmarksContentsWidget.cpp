@@ -52,10 +52,10 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &BookmarksContentsWidget::addSeparator);
 
 	ProxyModel *model(new ProxyModel(BookmarksManager::getModel(), QVector<QPair<QString, int> >({{tr("Title"), BookmarksModel::TitleRole}, {tr("Address"), BookmarksModel::UrlRole}, {tr("Description"), BookmarksModel::DescriptionRole}, {tr("Keyword"), BookmarksModel::KeywordRole}, {tr("Added"), BookmarksModel::TimeAddedRole}, {tr("Modified"), BookmarksModel::TimeModifiedRole}, {tr("Visited"), BookmarksModel::TimeVisitedRole}, {tr("Visits"), BookmarksModel::VisitsRole}}), this));
-	model->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
-	model->setHeaderData(1, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
-	model->setHeaderData(3, Qt::Horizontal, QSize(150, 0), Qt::SizeHintRole);
-	model->setHeaderData(7, Qt::Horizontal, QSize(150, 0), Qt::SizeHintRole);
+	model->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
+	model->setHeaderData(1, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
+	model->setHeaderData(3, Qt::Horizontal, 150, HeaderViewWidget::WidthRole);
+	model->setHeaderData(7, Qt::Horizontal, 150, HeaderViewWidget::WidthRole);
 
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->bookmarksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);

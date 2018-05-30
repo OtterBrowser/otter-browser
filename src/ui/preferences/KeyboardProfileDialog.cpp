@@ -231,7 +231,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	}
 
 	model->setHorizontalHeaderLabels({tr("Status"), tr("Action"), tr("Parameters"), tr("Shortcut")});
-	model->setHeaderData(0, Qt::Horizontal, QSize(28, 0), Qt::SizeHintRole);
+	model->setHeaderData(0, Qt::Horizontal, 28, HeaderViewWidget::WidthRole);
 	model->sort(1);
 
 	m_ui->actionsViewWidget->setModel(model);

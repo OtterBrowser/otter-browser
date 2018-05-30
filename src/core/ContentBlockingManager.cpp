@@ -25,6 +25,7 @@
 #include "SettingsManager.h"
 #include "SessionsManager.h"
 #include "Utils.h"
+#include "../ui/ItemViewWidget.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
@@ -349,7 +350,7 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 	QHash<ContentBlockingProfile::ProfileCategory, QMultiMap<QString, QList<QStandardItem*> > > categoryEntries;
 	QStandardItemModel *model(new QStandardItemModel(parent));
 	model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
-	model->setHeaderData(0, Qt::Horizontal, QSize(250, 0), Qt::SizeHintRole);
+	model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
 
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{

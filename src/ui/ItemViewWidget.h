@@ -36,6 +36,12 @@ class HeaderViewWidget final : public QHeaderView
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		WidthRole = Qt::UserRole,
+		UserRole
+	};
+
 	explicit HeaderViewWidget(Qt::Orientation orientation, QWidget *parent = nullptr);
 
 public slots:

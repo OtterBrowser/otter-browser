@@ -652,24 +652,24 @@ void ItemViewWidget::updateSize()
 
 	for (int i = 0; i < m_headerWidget->count(); ++i)
 	{
-		const QSize size(model()->headerData(i, Qt::Horizontal, Qt::SizeHintRole).toSize());
+		const int width(model()->headerData(i, Qt::Horizontal, HeaderViewWidget::WidthRole).toInt());
 
-		if (size.isValid())
+		if (width > 0)
 		{
-			m_headerWidget->resizeSection(i, size.width());
+			m_headerWidget->resizeSection(i, width);
 
-			if (size.width() > maximumSectionWidth)
+			if (width > maximumSectionWidth)
 			{
 				widestSections = {i};
 
-				maximumSectionWidth = size.width();
+				maximumSectionWidth = width;
 			}
-			else if (size.width() == maximumSectionWidth)
+			else if (width == maximumSectionWidth)
 			{
 				widestSections.append(i);
 			}
 
-			minimumTotalWidth += size.width();
+			minimumTotalWidth += width;
 		}
 		else
 		{

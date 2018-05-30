@@ -361,7 +361,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 	m_feedModel->clear();
 	m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
-	m_feedModel->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
+	m_feedModel->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
 
 	m_ui->applicationComboBox->clear();
 
