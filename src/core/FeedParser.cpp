@@ -92,7 +92,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("title"))
 						{
-							entry.title = reader.readElementText();
+							entry.title = reader.readElementText().simplified();
 						}
 						else if (reader.name() == QLatin1String("link") && reader.attributes().value(QLatin1String("rel")).toString() == QLatin1String("alternate"))
 						{
@@ -122,11 +122,11 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("name"))
 						{
-							entry.author = reader.readElementText();
+							entry.author = reader.readElementText().simplified();
 						}
 						else if (reader.name() == QLatin1String("email"))
 						{
-							entry.email = reader.readElementText();
+							entry.email = reader.readElementText().simplified();
 						}
 						else if (reader.name() != QLatin1String("author"))
 						{
@@ -155,7 +155,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_feed->setTitle(reader.readElementText());
+					m_feed->setTitle(reader.readElementText().simplified());
 				}
 				else if (reader.name() == QLatin1String("summary"))
 				{
@@ -245,7 +245,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("title"))
 						{
-							entry.title = reader.readElementText();
+							entry.title = reader.readElementText().simplified();
 						}
 						else if (reader.name() == QLatin1String("link"))
 						{
@@ -272,7 +272,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("author"))
 						{
-							const QString text(reader.readElementText());
+							const QString text(reader.readElementText().simplified());
 
 							if (QRegularExpression(QLatin1String("^[a-zA-Z0-9\\._\\-]+@[a-zA-Z0-9\\._\\-]+\\.[a-zA-Z0-9]+$")).match(text).hasMatch())
 							{
@@ -300,7 +300,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_feed->setTitle(reader.readElementText());
+					m_feed->setTitle(reader.readElementText().simplified());
 				}
 				else if (reader.name() == QLatin1String("description"))
 				{
