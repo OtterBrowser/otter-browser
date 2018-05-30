@@ -65,6 +65,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event) override;
+	void setFeed(Feed *feed);
 	FeedsModel::Entry* findFolder(const QModelIndex &index) const;
 
 protected slots:

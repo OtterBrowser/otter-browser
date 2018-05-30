@@ -50,6 +50,8 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
 	m_ui->subscribeFeedWidget->hide();
+	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
+	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
 
 	if (isSidebarPanel())
 	{
@@ -60,6 +62,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showContextMenu);
+	connect(m_ui->feedsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateActions);
 	connect(m_ui->okButton, &QToolButton::clicked, this, &FeedsContentsWidget::subscribeFeed);
 	connect(m_ui->cancelButton, &QToolButton::clicked, m_ui->subscribeFeedWidget, &QWidget::hide);
 }
@@ -296,7 +299,12 @@ void FeedsContentsWidget::showContextMenu(const QPoint &position)
 
 void FeedsContentsWidget::updateActions()
 {
-///TODO
+	if (!isSidebarPanel())
+	{
+		const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
+
+		setFeed((entry && entry->getFeed()) ? entry->getFeed() : nullptr);
+	}
 }
 
 void FeedsContentsWidget::updateEntry()
@@ -353,7 +361,7 @@ void FeedsContentsWidget::updateFeedModel()
 
 	m_ui->applicationComboBox->clear();
 
-	if (!FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
+	if (m_feed && !FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
 	{
 		m_ui->applicationComboBox->setItemDelegate(new ItemDelegate(m_ui->applicationComboBox));
 		m_ui->applicationComboBox->addItem(Application::windowIcon(), Application::applicationDisplayName());
@@ -470,51 +478,67 @@ void FeedsContentsWidget::updateFeedModel()
 	}
 }
 
+void FeedsContentsWidget::setFeed(Feed *feed)
+{
+	if (feed == m_feed)
+	{
+		return;
+	}
+
+	if (m_feed)
+	{
+		disconnect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
+	}
+
+	m_feed = feed;
+
+	if (m_feedModel)
+	{
+		m_feedModel->clear();
+	}
+
+	if (m_feed)
+	{
+		m_categories.clear();
+
+		if (!m_feedModel)
+		{
+			m_feedModel = new QStandardItemModel(this);
+
+			m_ui->feedViewWidget->setModel(m_feedModel);
+			m_ui->feedViewWidget->setViewMode(ItemViewWidget::ListViewMode);
+		}
+
+		if (m_feed->getLastSynchronizationTime().isNull())
+		{
+			m_feed->update();
+		}
+
+		if (!FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
+		{
+			m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("application-rss+xml"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("Subscribe to this feed using:"));
+
+			m_ui->subscribeFeedWidget->show();
+		}
+
+		connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
+	}
+
+	updateFeedModel();
+
+	emit titleChanged(getTitle());
+	emit iconChanged(getIcon());
+	emit urlChanged(getUrl());
+}
+
 void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 {
 	Q_UNUSED(isTyped)
 
 	if (url.scheme() == QLatin1String("view-feed"))
 	{
-		m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
-		m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
-
-		m_feed = FeedsManager::createFeed(url.toDisplayString().mid(10));
-
-		if (m_feedModel)
-		{
-			m_feedModel->clear();
-		}
-
-		if (m_feed)
-		{
-			m_categories.clear();
-
-			if (!m_feedModel)
-			{
-				m_feedModel = new QStandardItemModel(this);
-
-				m_ui->feedViewWidget->setModel(m_feedModel);
-				m_ui->feedViewWidget->setViewMode(ItemViewWidget::ListViewMode);
-			}
-
-			if (m_feed->getLastSynchronizationTime().isNull())
-			{
-				m_feed->update();
-			}
-
-			if (!FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
-			{
-				m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("application-rss+xml"), false).pixmap(m_ui->iconLabel->size()));
-				m_ui->messageLabel->setText(tr("Subscribe to this feed using:"));
-
-				m_ui->subscribeFeedWidget->show();
-			}
-
-			updateFeedModel();
-
-			connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
-		}
+		setFeed(FeedsManager::createFeed(url.toDisplayString().mid(10)));
 	}
 }
 
