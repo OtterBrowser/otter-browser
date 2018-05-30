@@ -98,6 +98,7 @@ private:
 
 signals:
 	void feedModified(Feed *feed);
+	void entriesModified(Feed *feed);
 };
 
 class FeedsManager final : public QObject

@@ -513,7 +513,7 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 
 			updateFeedModel();
 
-			connect(m_feed, &Feed::feedModified, this, &FeedsContentsWidget::updateFeedModel);
+			connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
 		}
 	}
 }

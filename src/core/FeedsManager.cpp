@@ -169,6 +169,10 @@ void Feed::update()
 
 				Console::addMessage(tr("Failed to parse feed: %1").arg(m_url.toDisplayString()), Console::NetworkCategory, Console::ErrorLevel);
 			}
+			else
+			{
+				emit entriesModified(this);
+			}
 		}
 		else
 		{
