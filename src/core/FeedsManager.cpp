@@ -153,20 +153,29 @@ void Feed::setUpdateInterval(int interval)
 
 void Feed::update()
 {
+	m_error = NoError;
+
 	DataFetchJob *job(new DataFetchJob(m_url, this));
 
-	connect(job, &DataFetchJob::jobFinished, this, [=]()
+	connect(job, &DataFetchJob::jobFinished, this, [=](bool isSuccess)
 	{
-		FeedParser *parser(FeedParser::createParser(this, job));
-
-		if (!parser || !parser->parse(job))
+		if (isSuccess)
 		{
-			Console::addMessage(tr("Failed to parse feed: %1").arg(m_url.toDisplayString()), Console::NetworkCategory, Console::ErrorLevel);
+			FeedParser *parser(FeedParser::createParser(this, job));
+
+			if (!parser || !parser->parse(job))
+			{
+				m_error = ParseError;
+
+				Console::addMessage(tr("Failed to parse feed: %1").arg(m_url.toDisplayString()), Console::NetworkCategory, Console::ErrorLevel);
+			}
 		}
 		else
 		{
-			emit feedModified(this);
+			m_error = DownloadError;
 		}
+
+		emit feedModified(this);
 	});
 }
 
