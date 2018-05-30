@@ -18,9 +18,11 @@
 **************************************************************************/
 
 #include "FeedsContentsWidget.h"
+#include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/FeedPropertiesDialog.h"
+#include "../../../ui/ItemDelegate.h"
 #include "../../../ui/MainWindow.h"
 
 #include "ui_FeedsContentsWidget.h"
@@ -46,12 +48,13 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
-	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
-	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
+	m_ui->subscribeFeedWidget->hide();
 
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showContextMenu);
+	connect(m_ui->okButton, &QToolButton::clicked, this, &FeedsContentsWidget::subscribeFeed);
+	connect(m_ui->cancelButton, &QToolButton::clicked, m_ui->subscribeFeedWidget, &QWidget::hide);
 }
 
 FeedsContentsWidget::~FeedsContentsWidget()
@@ -122,6 +125,25 @@ void FeedsContentsWidget::openFeed()
 	{
 		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString())}});
 	}
+}
+
+void FeedsContentsWidget::subscribeFeed()
+{
+	if (!m_feed)
+	{
+		return;
+	}
+
+	if (m_ui->applicationComboBox->currentIndex() == 0)
+	{
+		FeedsManager::getModel()->addEntry(m_feed);
+	}
+	else
+	{
+		Utils::runApplication(m_ui->applicationComboBox->currentData(Qt::UserRole).toString(), m_feed->getUrl());
+	}
+
+	m_ui->subscribeFeedWidget->hide();
 }
 
 void FeedsContentsWidget::feedProperties()
@@ -322,6 +344,33 @@ void FeedsContentsWidget::updateFeedModel()
 	m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
 	m_feedModel->setHeaderData(0, Qt::Horizontal, QSize(300, 0), Qt::SizeHintRole);
 
+	m_ui->applicationComboBox->clear();
+
+	if (!FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
+	{
+		m_ui->applicationComboBox->setItemDelegate(new ItemDelegate(m_ui->applicationComboBox));
+		m_ui->applicationComboBox->addItem(Application::windowIcon(), Application::applicationDisplayName());
+
+		const QVector<ApplicationInformation> applications(Utils::getApplicationsForMimeType(m_feed->getMimeType()));
+
+		if (applications.count() > 0)
+		{
+			m_ui->applicationComboBox->addItem({});
+			m_ui->applicationComboBox->setItemData(1, QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+
+			for (int i = 0; i < applications.count(); ++i)
+			{
+				m_ui->applicationComboBox->addItem(applications.at(i).icon, applications.at(i).name);
+				m_ui->applicationComboBox->setItemData((i + 2), applications.at(i).command, Qt::UserRole);
+
+				if (applications.at(i).icon.isNull())
+				{
+					m_ui->applicationComboBox->setItemData((i + 2), QColor(Qt::transparent), Qt::DecorationRole);
+				}
+			}
+		}
+	}
+
 	if (m_ui->categoriesButton->menu())
 	{
 		m_ui->categoriesButton->menu()->deleteLater();
@@ -420,6 +469,9 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 
 	if (url.scheme() == QLatin1String("view-feed"))
 	{
+		m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
+		m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
+
 		m_feed = FeedsManager::createFeed(url.toDisplayString().mid(10));
 
 		if (m_feedModel)
@@ -442,6 +494,14 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 			if (m_feed->getLastSynchronizationTime().isNull())
 			{
 				m_feed->update();
+			}
+
+			if (!FeedsManager::getModel()->hasFeed(m_feed->getUrl()))
+			{
+				m_ui->iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("application-rss+xml"), false).pixmap(m_ui->iconLabel->size()));
+				m_ui->messageLabel->setText(tr("Subscribe to this feed using:"));
+
+				m_ui->subscribeFeedWidget->show();
 			}
 
 			updateFeedModel();

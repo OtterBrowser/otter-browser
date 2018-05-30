@@ -73,6 +73,7 @@ protected slots:
 	void updateFeed();
 	void removeFeed();
 	void openFeed();
+	void subscribeFeed();
 	void feedProperties();
 	void selectCategory();
 	void toggleCategory(QAction *action);
