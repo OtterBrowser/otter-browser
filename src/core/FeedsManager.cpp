@@ -34,7 +34,8 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 	m_url(url),
 	m_icon(icon),
 	m_error(NoError),
-	m_updateInterval(updateInterval)
+	m_updateInterval(updateInterval),
+	m_isUpdating(false)
 {
 }
 
@@ -154,6 +155,9 @@ void Feed::setUpdateInterval(int interval)
 void Feed::update()
 {
 	m_error = NoError;
+	m_isUpdating = true;
+
+	emit feedModified(this);
 
 	DataFetchJob *job(new DataFetchJob(m_url, this));
 
@@ -178,6 +182,8 @@ void Feed::update()
 		{
 			m_error = DownloadError;
 		}
+
+		m_isUpdating = false;
 
 		emit feedModified(this);
 	});
@@ -261,6 +267,11 @@ Feed::FeedError Feed::getError() const
 int Feed::getUpdateInterval() const
 {
 	return m_updateInterval;
+}
+
+bool Feed::isUpdating() const
+{
+	return m_isUpdating;
 }
 
 FeedsManager* FeedsManager::m_instance(nullptr);

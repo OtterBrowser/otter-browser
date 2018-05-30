@@ -79,6 +79,7 @@ public:
 	QVector<Entry> getEntries(const QStringList &categories = {}) const;
 	FeedError getError() const;
 	int getUpdateInterval() const;
+	bool isUpdating() const;
 
 public slots:
 	void update();
@@ -95,6 +96,7 @@ private:
 	QVector<Entry> m_entries;
 	FeedError m_error;
 	int m_updateInterval;
+	bool m_isUpdating;
 
 signals:
 	void feedModified(Feed *feed);
