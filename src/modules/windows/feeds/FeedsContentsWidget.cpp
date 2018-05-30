@@ -44,9 +44,9 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->setupUi(this);
 	m_ui->subscribeFeedWidget->hide();
 	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
-	m_ui->feedFilterLineEditWidget->setClearOnEscape(true);
-	m_ui->feedViewWidget->viewport()->installEventFilter(this);
-	m_ui->feedViewWidget->viewport()->setMouseTracking(true);
+	m_ui->entriesFilterLineEditWidget->setClearOnEscape(true);
+	m_ui->entriesViewWidget->viewport()->installEventFilter(this);
+	m_ui->entriesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->feedsFilterLineEditWidget->setClearOnEscape(true);
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
@@ -58,12 +58,12 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 
 	if (isSidebarPanel())
 	{
-		m_ui->feedWidget->hide();
+		m_ui->entriesWidget->hide();
 		m_ui->entryWidget->hide();
 	}
 
-	connect(m_ui->feedFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->feedViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
+	connect(m_ui->entriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showContextMenu);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateActions);
@@ -313,7 +313,7 @@ void FeedsContentsWidget::updateActions()
 
 void FeedsContentsWidget::updateEntry()
 {
-	const QModelIndex index(m_ui->feedViewWidget->currentIndex().sibling(m_ui->feedViewWidget->currentIndex().row(), 0));
+	const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
 
 	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
 	m_ui->emailButton->setVisible(!index.data(EmailRole).isNull());
@@ -357,7 +357,7 @@ void FeedsContentsWidget::updateFeedModel()
 		return;
 	}
 
-	const QString identifier(m_ui->feedViewWidget->currentIndex().data(IdentifierRole).toString());
+	const QString identifier(m_ui->entriesViewWidget->currentIndex().data(IdentifierRole).toString());
 
 	m_feedModel->clear();
 	m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
@@ -472,13 +472,13 @@ void FeedsContentsWidget::updateFeedModel()
 
 		if (entry.identifier == identifier)
 		{
-			m_ui->feedViewWidget->setCurrentIndex(m_ui->feedViewWidget->getIndex(i));
+			m_ui->entriesViewWidget->setCurrentIndex(m_ui->entriesViewWidget->getIndex(i));
 		}
 	}
 
-	if (!m_ui->feedViewWidget->selectionModel()->hasSelection())
+	if (!m_ui->entriesViewWidget->selectionModel()->hasSelection())
 	{
-		m_ui->feedViewWidget->setCurrentIndex(m_ui->feedViewWidget->getIndex(0));
+		m_ui->entriesViewWidget->setCurrentIndex(m_ui->entriesViewWidget->getIndex(0));
 	}
 }
 
@@ -509,8 +509,8 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 		{
 			m_feedModel = new QStandardItemModel(this);
 
-			m_ui->feedViewWidget->setModel(m_feedModel);
-			m_ui->feedViewWidget->setViewMode(ItemViewWidget::ListViewMode);
+			m_ui->entriesViewWidget->setModel(m_feedModel);
+			m_ui->entriesViewWidget->setViewMode(ItemViewWidget::ListViewMode);
 		}
 
 		if (m_feed->getLastSynchronizationTime().isNull())
@@ -596,10 +596,10 @@ QIcon FeedsContentsWidget::getIcon() const
 
 bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if ((object == m_ui->feedViewWidget->viewport() || object == m_ui->feedsViewWidget->viewport()) && event->type() == QEvent::ToolTip)
+	if ((object == m_ui->entriesViewWidget->viewport() || object == m_ui->feedsViewWidget->viewport()) && event->type() == QEvent::ToolTip)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
-		ItemViewWidget *viewWidget(object == m_ui->feedsViewWidget->viewport() ? m_ui->feedsViewWidget : m_ui->feedViewWidget);
+		ItemViewWidget *viewWidget(object == m_ui->feedsViewWidget->viewport() ? m_ui->feedsViewWidget : m_ui->entriesViewWidget);
 		const QModelIndex index(viewWidget->indexAt(helpEvent->pos()));
 
 		if (static_cast<FeedsModel::EntryType>(index.data(FeedsModel::TypeRole).toInt()) != FeedsModel::FeedEntry)

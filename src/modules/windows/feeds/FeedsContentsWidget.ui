@@ -129,8 +129,8 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="feedWidget" native="true">
-       <layout class="QVBoxLayout" name="feedLayout">
+      <widget class="QWidget" name="entriesWidget" native="true">
+       <layout class="QVBoxLayout" name="entriesLayout">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -146,7 +146,7 @@
         <item>
          <layout class="QHBoxLayout" name="headerLayout">
           <item>
-           <widget class="Otter::LineEditWidget" name="feedFilterLineEditWidget">
+           <widget class="Otter::LineEditWidget" name="entriesFilterLineEditWidget">
             <property name="placeholderText">
              <string>Search…</string>
             </property>
@@ -168,7 +168,7 @@
          </layout>
         </item>
         <item>
-         <widget class="Otter::ItemViewWidget" name="feedViewWidget">
+         <widget class="Otter::ItemViewWidget" name="entriesViewWidget">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
