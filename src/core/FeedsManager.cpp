@@ -105,6 +105,11 @@ void Feed::setLastSynchronizationTime(const QDateTime &time)
 	}
 }
 
+void Feed::setMimeType(const QMimeType &mimeType)
+{
+	m_mimeType = mimeType;
+}
+
 void Feed::setCategories(const QMap<QString, QString> &categories)
 {
 	if (categories != m_categories)
@@ -186,6 +191,11 @@ QDateTime Feed::getLastUpdateTime() const
 QDateTime Feed::getLastSynchronizationTime() const
 {
 	return m_lastSynchronizationTime;
+}
+
+QMimeType Feed::getMimeType() const
+{
+	return m_mimeType;
 }
 
 QMap<QString, QString> Feed::getCategories() const

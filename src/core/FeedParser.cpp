@@ -22,6 +22,8 @@
 #include "FeedsManager.h"
 #include "Job.h"
 
+#include <QtCore/QMimeDatabase>
+
 namespace Otter
 {
 
@@ -39,6 +41,7 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 AtomFeedParser::AtomFeedParser(Feed *parent) : FeedParser(parent),
 	m_feed(parent)
 {
+	m_feed->setMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("application/atom+xml")));
 }
 
 bool AtomFeedParser::parse(DataFetchJob *data)

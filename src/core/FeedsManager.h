@@ -23,6 +23,7 @@
 #include "FeedsModel.h"
 
 #include <QtCore/QDateTime>
+#include <QtCore/QMimeType>
 
 namespace Otter
 {
@@ -62,6 +63,7 @@ public:
 	void setIcon(const QIcon &icon);
 	void setLastUpdateTime(const QDateTime &time);
 	void setLastSynchronizationTime(const QDateTime &time);
+	void setMimeType(const QMimeType &mimeType);
 	void setCategories(const QMap<QString, QString> &categories);
 	void setEntries(const QVector<Entry> &entries);
 	void setError(FeedError error);
@@ -72,6 +74,7 @@ public:
 	QIcon getIcon() const;
 	QDateTime getLastUpdateTime() const;
 	QDateTime getLastSynchronizationTime() const;
+	QMimeType getMimeType() const;
 	QMap<QString, QString> getCategories() const;
 	QVector<Entry> getEntries(const QStringList &categories = {}) const;
 	FeedError getError() const;
@@ -87,6 +90,7 @@ private:
 	QIcon m_icon;
 	QDateTime m_lastUpdateTime;
 	QDateTime m_lastSynchronizationTime;
+	QMimeType m_mimeType;
 	QMap<QString, QString> m_categories;
 	QVector<Entry> m_entries;
 	FeedError m_error;
