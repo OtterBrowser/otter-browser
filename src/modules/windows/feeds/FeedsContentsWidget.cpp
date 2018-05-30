@@ -63,9 +63,10 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	}
 
 	connect(m_ui->entriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->entriesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showEntriesContextMenu);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showContextMenu);
+	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showFeedsContextMenu);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateActions);
 	connect(m_ui->okButton, &QToolButton::clicked, this, &FeedsContentsWidget::subscribeFeed);
 	connect(m_ui->cancelButton, &QToolButton::clicked, m_ui->subscribeFeedWidget, &QWidget::hide);
@@ -223,7 +224,21 @@ void FeedsContentsWidget::toggleCategory(QAction *action)
 	updateFeedModel();
 }
 
-void FeedsContentsWidget::showContextMenu(const QPoint &position)
+void FeedsContentsWidget::showEntriesContextMenu(const QPoint &position)
+{
+	const QModelIndex index(m_ui->entriesViewWidget->indexAt(position).sibling(m_ui->entriesViewWidget->indexAt(position).row(), 0));
+	ActionExecutor::Object executor(this, this);
+	QMenu menu(this);
+	Action *openAction(new Action(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}}, {{QLatin1String("text"), tr("Open")}}, executor, &menu));
+	openAction->setEnabled(!index.data(UrlRole).isNull());
+
+	menu.addAction(openAction);
+	menu.addSeparator();
+	menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
+	menu.exec(m_ui->entriesViewWidget->mapToGlobal(position));
+}
+
+void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 {
 	const QModelIndex index(m_ui->feedsViewWidget->indexAt(position));
 	const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(index.data(FeedsModel::TypeRole).toInt()));

@@ -79,7 +79,8 @@ protected slots:
 	void feedProperties();
 	void selectCategory();
 	void toggleCategory(QAction *action);
-	void showContextMenu(const QPoint &position);
+	void showEntriesContextMenu(const QPoint &position);
+	void showFeedsContextMenu(const QPoint &position);
 	void updateActions();
 	void updateEntry();
 	void updateFeedModel();
