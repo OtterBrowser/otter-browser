@@ -36,11 +36,11 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 {
 	const QMimeDatabase mimeDatabase;
 	const QMap<QString, ParserType> parsers({{QLatin1String("application/atom+xml"), AtomParser}, {QLatin1String("application/rss+xml"), RssParser}});
-	QMimeType mimeType(mimeDatabase.mimeTypeForUrl(feed->getUrl()));
+	QMimeType mimeType(mimeDatabase.mimeTypeForData(data->getData()));
 
 	if (!mimeType.isValid() || !parsers.contains(mimeType.name()))
 	{
-		mimeType = mimeDatabase.mimeTypeForData(data->getData());
+		mimeType = mimeDatabase.mimeTypeForUrl(feed->getUrl());
 	}
 
 	if (parsers.contains(mimeType.name()))
