@@ -398,7 +398,12 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 		{
 			const Feed *feed(m_feeds.at(i));
 			const QMap<QString, QString> categories(feed->getCategories());
-			QJsonObject feedObject({{QLatin1String("title"), feed->getTitle()}, {QLatin1String("url"), feed->getUrl().toString()}, {QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval())}});
+			QJsonObject feedObject({{QLatin1String("title"), feed->getTitle()}, {QLatin1String("url"), feed->getUrl().toString()}, {QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval())}, {QLatin1String("lastSynchronizationTime"), feed->getLastUpdateTime().toString(Qt::ISODate)}, {QLatin1String("lastUpdateTime"), feed->getLastSynchronizationTime().toString(Qt::ISODate)}});
+
+			if (!feed->getDescription().isEmpty())
+			{
+				feedObject.insert(QLatin1String("description"), feed->getDescription());
+			}
 
 			if (!feed->getIcon().isNull())
 			{
@@ -514,6 +519,9 @@ void FeedsManager::ensureInitialized()
 		{
 			const QJsonObject feedObject(feedsArray.at(i).toObject());
 			Feed *feed(createFeed(QUrl(feedObject.value(QLatin1String("url")).toString()), feedObject.value(QLatin1String("title")).toString(), Utils::loadPixmapFromDataUri(feedObject.value(QLatin1String("icon")).toString()), feedObject.value(QLatin1String("updateInterval")).toInt()));
+			feed->setDescription(feedObject.value(QLatin1String("description")).toString());
+			feed->setLastUpdateTime(QDateTime::fromString(feedObject.value(QLatin1String("lastUpdateTime")).toString(), Qt::ISODate));
+			feed->setLastSynchronizationTime(QDateTime::fromString(feedObject.value(QLatin1String("lastSynchronizationTime")).toString(), Qt::ISODate));
 			feed->setRemovedEntries(feedObject.value(QLatin1String("removedEntries")).toVariant().toStringList());
 
 			if (feedObject.contains(QLatin1String("categories")))
