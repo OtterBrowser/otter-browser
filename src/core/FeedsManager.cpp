@@ -330,6 +330,16 @@ void FeedsManager::scheduleSave()
 	}
 }
 
+void FeedsManager::handleFeedModified(Feed *feed)
+{
+	if (feed)
+	{
+		emit feedModified(feed->getUrl());
+	}
+
+	scheduleSave();
+}
+
 FeedsManager* FeedsManager::getInstance()
 {
 	return m_instance;
@@ -357,7 +367,7 @@ Feed* FeedsManager::createFeed(const QUrl &url, const QString &title, const QIco
 
 	m_feeds.append(feed);
 
-	connect(feed, &Feed::feedModified, m_instance, &FeedsManager::scheduleSave);
+	connect(feed, &Feed::feedModified, m_instance, &FeedsManager::handleFeedModified);
 
 	return feed;
 }
