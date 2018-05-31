@@ -388,7 +388,12 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 		{
 			const Feed *feed(m_feeds.at(i));
 			const QMap<QString, QString> categories(feed->getCategories());
-			QJsonObject feedObject({{QLatin1String("url"), feed->getUrl().toString()}});
+			QJsonObject feedObject({{QLatin1String("title"), feed->getTitle()}, {QLatin1String("url"), feed->getUrl().toString()}, {QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval())}});
+
+			if (!feed->getIcon().isNull())
+			{
+				feedObject.insert(QLatin1String("icon"), Utils::savePixmapAsDataUri(feed->getIcon().pixmap(feed->getIcon().availableSizes().value(0, QSize(16, 16)))));
+			}
 
 			if (!categories.isEmpty())
 			{
