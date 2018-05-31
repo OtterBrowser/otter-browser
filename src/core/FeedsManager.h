@@ -56,6 +56,8 @@ public:
 
 	explicit Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent = nullptr);
 
+	void addEntries(const QVector<Entry> &entries);
+	void addRemovedEntry(const QString &identifier);
 	void setTitle(const QString &title);
 	void setDescription(const QString &description);
 	void setUrl(const QUrl &url);

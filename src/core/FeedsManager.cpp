@@ -44,6 +44,64 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 {
 }
 
+void Feed::addEntries(const QVector<Entry> &entries)
+{
+	QStringList existingRemovedEntries;
+
+	for (int i = (entries.count() - 1); i >= 0; --i)
+	{
+		const QString identifier(entries.at(i).identifier);
+
+		if (m_removedEntries.contains(identifier))
+		{
+			existingRemovedEntries.append(identifier);
+		}
+		else
+		{
+			bool hasEntry(false);
+
+			for (int j = 0; j < m_entries.count(); ++j)
+			{
+				if (m_entries.at(j).identifier == identifier)
+				{
+					m_entries[j] = entries.at(i);
+
+					hasEntry = true;
+
+					break;
+				}
+			}
+
+			if (!hasEntry)
+			{
+				m_entries.prepend(entries.at(i));
+			}
+		}
+	}
+
+	m_removedEntries = existingRemovedEntries;
+}
+
+void Feed::addRemovedEntry(const QString &identifier)
+{
+	if (!m_removedEntries.contains(identifier))
+	{
+		for (int i = 0; i < m_entries.count(); ++i)
+		{
+			if (m_entries.at(i).identifier == identifier)
+			{
+				m_entries.removeAt(i);
+
+				m_removedEntries.append(identifier);
+
+				emit feedModified(this);
+
+				break;
+			}
+		}
+	}
+}
+
 void Feed::setTitle(const QString &title)
 {
 	if (title != m_title)

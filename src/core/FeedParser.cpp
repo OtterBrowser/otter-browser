@@ -185,7 +185,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 	entries.squeeze();
 
 	m_feed->setCategories(categories);
-	m_feed->setEntries(entries);
+	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
 
 	return true;
@@ -330,7 +330,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 	entries.squeeze();
 
 	m_feed->setCategories(categories);
-	m_feed->setEntries(entries);
+	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
 
 	return true;
