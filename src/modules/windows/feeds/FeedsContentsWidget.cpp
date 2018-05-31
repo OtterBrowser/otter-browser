@@ -86,7 +86,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	}
 
 	connect(FeedsManager::getInstance(), &FeedsManager::feedModified, this, &FeedsContentsWidget::handleFeedModified);
-	connect(m_ui->entriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->entriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->entriesViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showEntriesContextMenu);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
