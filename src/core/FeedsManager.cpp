@@ -81,6 +81,13 @@ void Feed::addEntries(const QVector<Entry> &entries)
 	}
 
 	m_removedEntries = existingRemovedEntries;
+
+	connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+	{
+		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
+	});
+
+	emit feedModified(this);
 }
 
 void Feed::addRemovedEntry(const QString &identifier)
@@ -195,13 +202,6 @@ void Feed::setRemovedEntries(const QStringList &removedEntries)
 void Feed::setEntries(const QVector<Feed::Entry> &entries)
 {
 	m_entries = entries;
-
-	connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
-	{
-		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
-	});
-
-	emit feedModified(this);
 }
 
 void Feed::setError(Feed::FeedError error)
