@@ -41,6 +41,10 @@ FeedPropertiesDialog::FeedPropertiesDialog(Feed *feed, QWidget *parent) : Dialog
 		m_ui->urlLineEditWidget->setText(feed->getUrl().toString());
 		m_ui->updateIntervalSpinBox->setValue(feed->getUpdateInterval());
 	}
+	else
+	{
+		setWindowTitle(tr("Add Feed"));
+	}
 
 	m_ui->iconButton->setDefaultIcon(ThemesManager::createIcon(QLatin1String("application-rss+xml")));
 

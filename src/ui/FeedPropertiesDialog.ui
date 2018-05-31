@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Edit Search Engine</string>
+   <string>Edit Feed</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
    <item>
@@ -120,14 +120,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::IconWidget</class>
-   <extends>QToolButton</extends>
-   <header>src/ui/IconWidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>Otter::LineEditWidget</class>
    <extends>QLineEdit</extends>
    <header>src/ui/LineEditWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::IconWidget</class>
+   <extends>QToolButton</extends>
+   <header>src/ui/IconWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
