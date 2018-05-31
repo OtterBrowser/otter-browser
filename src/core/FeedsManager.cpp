@@ -26,6 +26,7 @@
 #include "SessionsManager.h"
 #include "Utils.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
@@ -441,11 +442,6 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 					entryObject.insert(QLatin1String("email"), entry.email);
 				}
 
-				if (!entry.categories.isEmpty())
-				{
-					entryObject.insert(QLatin1String("categories"), QJsonArray::fromStringList(entry.categories));
-				}
-
 				if (!entry.url.isEmpty())
 				{
 					entryObject.insert(QLatin1String("url"), entry.url.toString());
@@ -459,6 +455,11 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 				if (entry.updateTime.isValid())
 				{
 					entryObject.insert(QLatin1String("updateTime"), entry.updateTime.toString(Qt::ISODate));
+				}
+
+				if (!entry.categories.isEmpty())
+				{
+					entryObject.insert(QLatin1String("categories"), QJsonArray::fromStringList(entry.categories));
 				}
 
 				entriesArray.append(entryObject);
@@ -493,6 +494,58 @@ void FeedsManager::ensureInitialized()
 	}
 
 	m_isInitialized = true;
+
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("feeds.json")));
+
+	if (file.open(QIODevice::ReadOnly))
+	{
+		const QJsonArray feedsArray(QJsonDocument::fromJson(file.readAll()).array());
+
+		for (int i = 0; i < feedsArray.count(); ++i)
+		{
+			const QJsonObject feedObject(feedsArray.at(i).toObject());
+			Feed *feed(createFeed(QUrl(feedObject.value(QLatin1String("url")).toString()), feedObject.value(QLatin1String("title")).toString(), Utils::loadPixmapFromDataUri(feedObject.value(QLatin1String("icon")).toString()), feedObject.value(QLatin1String("updateInterval")).toInt()));
+			feed->setRemovedEntries(feedObject.value(QLatin1String("removedEntries")).toVariant().toStringList());
+
+			if (feedObject.contains(QLatin1String("categories")))
+			{
+				QMap<QString, QString> categories;
+				const QVariantMap rawCategories(feedObject.value(QLatin1String("categories")).toVariant().toMap());
+				QVariantMap::const_iterator iterator;
+
+				for (iterator = rawCategories.begin(); iterator != rawCategories.end(); ++iterator)
+				{
+					categories[iterator.key()] = iterator.value().toString();
+				}
+
+				feed->setCategories(categories);
+			}
+
+			const QJsonArray entriesArray(feedObject.value(QLatin1String("entries")).toArray());
+			QVector<Feed::Entry> entries;
+			entries.reserve(entriesArray.count());
+
+			for (int j = 0; j < entriesArray.count(); ++j)
+			{
+				const QJsonObject entryObject(entriesArray.at(j).toObject());
+				Feed::Entry entry;
+				entry.identifier = entryObject.value(QLatin1String("identifier")).toString();
+				entry.title = entryObject.value(QLatin1String("title")).toString();
+				entry.summary = entryObject.value(QLatin1String("summary")).toString();
+				entry.content = entryObject.value(QLatin1String("content")).toString();
+				entry.author = entryObject.value(QLatin1String("author")).toString();
+				entry.email = entryObject.value(QLatin1String("email")).toString();
+				entry.url = entryObject.value(QLatin1String("url")).toString();
+				entry.publicationTime = QDateTime::fromString(entryObject.value(QLatin1String("publicationTime")).toString(), Qt::ISODate);
+				entry.updateTime = QDateTime::fromString(entryObject.value(QLatin1String("updateTime")).toString(), Qt::ISODate);
+				entry.categories = entryObject.value(QLatin1String("categories")).toVariant().toStringList();
+
+				entries.append(entry);
+			}
+
+			feed->setEntries(entries);
+		}
+	}
 
 	if (!m_model)
 	{

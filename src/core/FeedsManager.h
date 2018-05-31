@@ -48,10 +48,10 @@ public:
 		QString content;
 		QString author;
 		QString email;
-		QStringList categories;
 		QUrl url;
 		QDateTime publicationTime;
 		QDateTime updateTime;
+		QStringList categories;
 	};
 
 	explicit Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent = nullptr);
