@@ -56,6 +56,8 @@ public:
 		LastSynchronizationTimeRole,
 		UpdateIntervalRole,
 		IsTrashedRole,
+		IsUpdatingRole,
+		HasErrorsRole,
 		UserRole
 	};
 

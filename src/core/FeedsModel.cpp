@@ -119,6 +119,10 @@ QVariant FeedsModel::Entry::data(int role) const
 				return m_feed->getUrl();
 			case UpdateIntervalRole:
 				return m_feed->getUpdateInterval();
+			case IsUpdatingRole:
+				return m_feed->isUpdating();
+			case HasErrorsRole:
+				return (m_feed->getError() != Feed::NoError);
 			default:
 				break;
 		}
