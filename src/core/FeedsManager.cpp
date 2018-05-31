@@ -26,6 +26,11 @@
 #include "SessionsManager.h"
 #include "Utils.h"
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+#include <QtCore/QSaveFile>
+
 namespace Otter
 {
 
@@ -296,6 +301,100 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 		{
 			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")));
 		}
+
+		if (SessionsManager::isReadOnly())
+		{
+			return;
+		}
+
+		QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("feeds.json")));
+
+		if (!file.open(QIODevice::WriteOnly))
+		{
+			return;
+		}
+
+		QJsonArray feedsArray;
+
+		for (int i = 0; i < m_feeds.count(); ++i)
+		{
+			const QMap<QString, QString> categories(m_feeds.at(i)->getCategories());
+			QJsonObject feedObject({{QLatin1String("url"), m_feeds.at(i)->getUrl().toString()}});
+
+			if (!categories.isEmpty())
+			{
+				QMap<QString, QString>::const_iterator iterator;
+				QJsonObject categoriesObject;
+
+				for (iterator = categories.begin(); iterator != categories.end(); ++iterator)
+				{
+					categoriesObject.insert(iterator.key(), iterator.value());
+				}
+
+				feedObject.insert(QLatin1String("categories"), categoriesObject);
+			}
+
+			const QVector<Feed::Entry> entries(m_feeds.at(i)->getEntries());
+			QJsonArray entriesArray;
+
+			for (int j = 0; j < entries.count(); ++j)
+			{
+				const Feed::Entry entry(entries.at(j));
+				QJsonObject entryObject({{QLatin1String("identifier"), entry.identifier}, {QLatin1String("title"), entry.title}});
+
+				if (!entry.summary.isEmpty())
+				{
+					entryObject.insert(QLatin1String("summary"), entry.summary);
+				}
+
+				if (!entry.content.isEmpty())
+				{
+					entryObject.insert(QLatin1String("content"), entry.content);
+				}
+
+				if (!entry.author.isEmpty())
+				{
+					entryObject.insert(QLatin1String("author"), entry.author);
+				}
+
+				if (!entry.email.isEmpty())
+				{
+					entryObject.insert(QLatin1String("email"), entry.email);
+				}
+
+				if (!entry.categories.isEmpty())
+				{
+					entryObject.insert(QLatin1String("categories"), QJsonArray::fromStringList(entry.categories));
+				}
+
+				if (!entry.url.isEmpty())
+				{
+					entryObject.insert(QLatin1String("url"), entry.url.toString());
+				}
+
+				if (entry.publicationTime.isValid())
+				{
+					entryObject.insert(QLatin1String("publicationTime"), entry.publicationTime.toString(Qt::ISODate));
+				}
+
+				if (entry.updateTime.isValid())
+				{
+					entryObject.insert(QLatin1String("updateTime"), entry.updateTime.toString(Qt::ISODate));
+				}
+
+				entriesArray.append(entryObject);
+			}
+
+			feedObject.insert(QLatin1String("entries"), entriesArray);
+
+			feedsArray.append(feedObject);
+		}
+
+		QJsonDocument document;
+		document.setArray(feedsArray);
+
+		file.write(document.toJson());
+		file.commit();
 	}
 }
 
