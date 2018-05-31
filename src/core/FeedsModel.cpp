@@ -86,9 +86,17 @@ QVariant FeedsModel::Entry::data(int role) const
 			case TrashEntry:
 				return ThemesManager::createIcon(QLatin1String("user-trash"));
 			case FeedEntry:
-				if (m_feed && !m_feed->getIcon().isNull())
+				if (m_feed)
 				{
-					return m_feed->getIcon();
+					if (m_feed->getError() != Feed::NoError)
+					{
+						return ThemesManager::createIcon(QLatin1String("dialog-error"));
+					}
+
+					if (!m_feed->getIcon().isNull())
+					{
+						return m_feed->getIcon();
+					}
 				}
 
 				return ThemesManager::createIcon(QLatin1String("application-rss+xml"));
