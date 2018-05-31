@@ -175,6 +175,9 @@
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
           <attribute name="headerDefaultSectionSize">
            <number>150</number>
           </attribute>
