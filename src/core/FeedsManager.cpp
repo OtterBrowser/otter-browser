@@ -48,6 +48,7 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 void Feed::addEntries(const QVector<Entry> &entries)
 {
 	QStringList existingRemovedEntries;
+	int amount(0);
 
 	for (int i = (entries.count() - 1); i >= 0; --i)
 	{
@@ -63,9 +64,12 @@ void Feed::addEntries(const QVector<Entry> &entries)
 
 			for (int j = 0; j < m_entries.count(); ++j)
 			{
+//TODO Check if entries are identical
 				if (m_entries.at(j).identifier == identifier)
 				{
 					m_entries[j] = entries.at(i);
+
+					++amount;
 
 					hasEntry = true;
 
@@ -75,6 +79,8 @@ void Feed::addEntries(const QVector<Entry> &entries)
 
 			if (!hasEntry)
 			{
+				++amount;
+
 				m_entries.prepend(entries.at(i));
 			}
 		}
@@ -82,12 +88,15 @@ void Feed::addEntries(const QVector<Entry> &entries)
 
 	m_removedEntries = existingRemovedEntries;
 
-	connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+	if (amount > 0)
 	{
-		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
-	});
+		connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+		{
+			Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
+		});
 
-	emit feedModified(this);
+		emit feedModified(this);
+	}
 }
 
 void Feed::addRemovedEntry(const QString &identifier)
