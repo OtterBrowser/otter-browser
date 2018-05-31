@@ -27,6 +27,7 @@
 
 #include "ui_FeedsContentsWidget.h"
 
+#include <QtGui/QDesktopServices>
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
@@ -70,6 +71,18 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateActions);
 	connect(m_ui->okButton, &QToolButton::clicked, this, &FeedsContentsWidget::subscribeFeed);
 	connect(m_ui->cancelButton, &QToolButton::clicked, m_ui->subscribeFeedWidget, &QWidget::hide);
+	connect(m_ui->emailButton, &QToolButton::clicked, [&]()
+	{
+		const QModelIndex index(m_ui->entriesViewWidget->currentIndex());
+
+		QDesktopServices::openUrl(QLatin1String("mailto:") + index.sibling(index.row(), 0).data(EmailRole).toString());
+	});
+	connect(m_ui->urlButton, &QToolButton::clicked, [&]()
+	{
+		const QModelIndex index(m_ui->entriesViewWidget->currentIndex());
+
+		Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.sibling(index.row(), 0).data(UrlRole).toString()}}, this);
+	});
 }
 
 FeedsContentsWidget::~FeedsContentsWidget()
