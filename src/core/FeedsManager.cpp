@@ -128,6 +128,11 @@ void Feed::setCategories(const QMap<QString, QString> &categories)
 	}
 }
 
+void Feed::setRemovedEntries(const QStringList &removedEntries)
+{
+	m_removedEntries = removedEntries;
+}
+
 void Feed::setEntries(const QVector<Feed::Entry> &entries)
 {
 	m_entries = entries;
@@ -234,6 +239,11 @@ QMap<QString, QString> Feed::getCategories() const
 	return m_categories;
 }
 
+QStringList Feed::getRemovedEntries() const
+{
+	return m_removedEntries;
+}
+
 QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 {
 	if (!categories.isEmpty())
@@ -318,8 +328,9 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_feeds.count(); ++i)
 		{
-			const QMap<QString, QString> categories(m_feeds.at(i)->getCategories());
-			QJsonObject feedObject({{QLatin1String("url"), m_feeds.at(i)->getUrl().toString()}});
+			const Feed *feed(m_feeds.at(i));
+			const QMap<QString, QString> categories(feed->getCategories());
+			QJsonObject feedObject({{QLatin1String("url"), feed->getUrl().toString()}});
 
 			if (!categories.isEmpty())
 			{
@@ -334,7 +345,12 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 				feedObject.insert(QLatin1String("categories"), categoriesObject);
 			}
 
-			const QVector<Feed::Entry> entries(m_feeds.at(i)->getEntries());
+			if (!feed->getRemovedEntries().isEmpty())
+			{
+				feedObject.insert(QLatin1String("removedEntries"), QJsonArray::fromStringList(feed->getRemovedEntries()));
+			}
+
+			const QVector<Feed::Entry> entries(feed->getEntries());
 			QJsonArray entriesArray;
 
 			for (int j = 0; j < entries.count(); ++j)

@@ -65,6 +65,7 @@ public:
 	void setLastSynchronizationTime(const QDateTime &time);
 	void setMimeType(const QMimeType &mimeType);
 	void setCategories(const QMap<QString, QString> &categories);
+	void setRemovedEntries(const QStringList &removedEntries);
 	void setEntries(const QVector<Entry> &entries);
 	void setError(FeedError error);
 	void setUpdateInterval(int interval);
@@ -76,6 +77,7 @@ public:
 	QDateTime getLastSynchronizationTime() const;
 	QMimeType getMimeType() const;
 	QMap<QString, QString> getCategories() const;
+	QStringList getRemovedEntries() const;
 	QVector<Entry> getEntries(const QStringList &categories = {}) const;
 	FeedError getError() const;
 	int getUpdateInterval() const;
@@ -93,6 +95,7 @@ private:
 	QDateTime m_lastSynchronizationTime;
 	QMimeType m_mimeType;
 	QMap<QString, QString> m_categories;
+	QStringList m_removedEntries;
 	QVector<Entry> m_entries;
 	FeedError m_error;
 	int m_updateInterval;
