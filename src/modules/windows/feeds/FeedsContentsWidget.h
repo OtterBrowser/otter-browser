@@ -22,6 +22,7 @@
 
 #include "../../../core/FeedsManager.h"
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ItemDelegate.h"
 
 namespace Otter
 {
@@ -31,7 +32,16 @@ namespace Ui
 	class FeedsContentsWidget;
 }
 
+class Animation;
 class Window;
+
+class FeedDelegate final : public ItemDelegate
+{
+public:
+	explicit FeedDelegate(QObject *parent);
+
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
 
 class FeedsContentsWidget final : public ContentsWidget
 {
@@ -55,6 +65,7 @@ public:
 	explicit FeedsContentsWidget(const QVariantMap &parameters, QWidget *parent);
 	~FeedsContentsWidget();
 
+	static Animation* getUpdateAnimation();
 	QString getTitle() const override;
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
@@ -79,6 +90,7 @@ protected slots:
 	void feedProperties();
 	void selectCategory();
 	void toggleCategory(QAction *action);
+	void handleFeedModified(const QUrl &url);
 	void showEntriesContextMenu(const QPoint &position);
 	void showFeedsContextMenu(const QPoint &position);
 	void updateActions();
@@ -90,6 +102,8 @@ private:
 	QStandardItemModel *m_feedModel;
 	QStringList m_categories;
 	Ui::FeedsContentsWidget *m_ui;
+
+	static Animation* m_updateAnimation;
 };
 
 }

@@ -21,8 +21,8 @@
 #include "../../../core/Application.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
+#include "../../../ui/Animation.h"
 #include "../../../ui/FeedPropertiesDialog.h"
-#include "../../../ui/ItemDelegate.h"
 #include "../../../ui/MainWindow.h"
 
 #include "ui_FeedsContentsWidget.h"
@@ -36,6 +36,27 @@
 
 namespace Otter
 {
+
+FeedDelegate::FeedDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void FeedDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	if (index.data(FeedsModel::IsUpdatingRole).toBool())
+	{
+		const Animation *animation(FeedsContentsWidget::getUpdateAnimation());
+
+		if (animation)
+		{
+			option->icon = QIcon(animation->getCurrentPixmap());
+		}
+	}
+}
+
+Animation* FeedsContentsWidget::m_updateAnimation = nullptr;
 
 FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget *parent) : ContentsWidget(parameters, nullptr, parent),
 	m_feed(nullptr),
@@ -51,6 +72,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsFilterLineEditWidget->setClearOnEscape(true);
 	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
+	m_ui->feedsViewWidget->setItemDelegate(new FeedDelegate(this));
 	m_ui->feedsViewWidget->expandAll();
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
@@ -63,6 +85,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 		m_ui->entryWidget->hide();
 	}
 
+	connect(FeedsManager::getInstance(), &FeedsManager::feedModified, this, &FeedsContentsWidget::handleFeedModified);
 	connect(m_ui->entriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showEntriesContextMenu);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
@@ -88,6 +111,11 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 FeedsContentsWidget::~FeedsContentsWidget()
 {
 	delete m_ui;
+}
+
+Animation* FeedsContentsWidget::getUpdateAnimation()
+{
+	return m_updateAnimation;
 }
 
 void FeedsContentsWidget::changeEvent(QEvent *event)
@@ -235,6 +263,29 @@ void FeedsContentsWidget::toggleCategory(QAction *action)
 	}
 
 	updateFeedModel();
+}
+
+void FeedsContentsWidget::handleFeedModified(const QUrl &url)
+{
+	const Feed *feed(FeedsManager::getFeed(url));
+
+	if (feed && feed->isUpdating() && FeedsManager::getModel()->hasFeed(url) && !m_updateAnimation)
+	{
+		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
+
+		if (path.isEmpty())
+		{
+			m_updateAnimation = new SpinnerAnimation(this);
+		}
+		else
+		{
+			m_updateAnimation = new GenericAnimation(path, this);
+		}
+
+		m_updateAnimation->start();
+
+		connect(m_updateAnimation, &Animation::frameChanged, m_ui->feedsViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
+	}
 }
 
 void FeedsContentsWidget::showEntriesContextMenu(const QPoint &position)
