@@ -1,3 +1,11 @@
+0.9.99 (2018-06-01):
+- initial version of Feeds Reader:
+-- Atom and RSS 2.0 parsers;
+-- support for categories;
+-- ability to preview feeds before subscribing using view-feed: protocol;
+- added action to take page screenshot;
+- some minor optimizations.
+
 0.9.98 (2018-05-01):
 - several enhancements in experimental backend for QtWebEngine (Blink):
 -- initial work on global history support;
