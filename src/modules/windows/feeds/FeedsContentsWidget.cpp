@@ -193,7 +193,12 @@ void FeedsContentsWidget::subscribeFeed()
 
 	if (m_ui->applicationComboBox->currentIndex() == 0)
 	{
-		FeedsManager::getModel()->addEntry(m_feed);
+		FeedPropertiesDialog dialog(m_feed, this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			FeedsManager::getModel()->addEntry(m_feed);
+		}
 	}
 	else
 	{
