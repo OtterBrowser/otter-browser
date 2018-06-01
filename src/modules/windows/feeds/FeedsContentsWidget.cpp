@@ -78,6 +78,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
 	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
+	m_ui->textBrowser->setOpenExternalLinks(true);
 
 	if (isSidebarPanel())
 	{
