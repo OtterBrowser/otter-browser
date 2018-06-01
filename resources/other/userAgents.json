@@ -7,22 +7,22 @@
 	{
 		"identifier": "chrome",
 		"name": "Google Chrome 63 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
+		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36"
 	},
 	{
 		"identifier": "chromeMobile",
-		"name": "Google Chrome 63 (Android)",
-		"value": "Mozilla/5.0 (Linux; Android 8.1.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
+		"name": "Google Chrome 67 (Android)",
+		"value": "Mozilla/5.0 (Linux; Android 8.1.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.68 Mobile Safari/537.36"
 	},
 	{
 		"identifier": "firefox",
-		"name": "Mozilla Firefox 57 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0; rv:57.0) Gecko/20100101 Firefox/57.0"
+		"name": "Mozilla Firefox 60 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0; rv:60.0) Gecko/20100101 Firefox/60.0"
 	},
 	{
 		"identifier": "edge",
-		"name": "Microsoft Edge 41 (Windows)",
-		"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299"
+		"name": "Microsoft Edge 42 (Windows)",
+		"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134"
 	},
 	{
 		"identifier": "internetExplorer",
@@ -36,7 +36,7 @@
 	},
 	{
 		"identifier": "safari",
-		"name": "Safari 11.0 (macOS)",
-		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Safari/604.1.38"
+		"name": "Safari 11.1 (macOS)",
+		"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1 Safari/605.1.15"
 	}
 ]
