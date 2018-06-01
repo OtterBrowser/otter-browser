@@ -879,7 +879,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation>Αποτυχία φόρτωσης αρχείου σελιδοδεικτών: %1 </translation>
+        <translation>Αποτυχία φόρτωσης αρχείου σελιδοδεικτών: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
@@ -1280,7 +1280,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation>ω</translation>
+        <translation> ω</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
@@ -1652,62 +1652,62 @@ Do you want to save them?</source>
 <context>
     <name>Otter::ContentBlockingManager</name>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="195"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="196"/>
         <source>Custom Rules</source>
         <translation>Προσαρμοσμένοι κανόνες</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="316"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
         <source>Failed to remove content blocking profile file: %1</source>
         <translation>Αποτυχία αφαίρεσης του αρχείου ταυτότητας περιεχομένου φραγής: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="316"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
         <source>Unknown</source>
         <translation>Άγνωστο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="351"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
         <source>Title</source>
         <translation>Τίτλος</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="351"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
         <source>Update Interval</source>
         <translation>Χρονικό διάστημα ενημέρωσης</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="351"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
         <source>Last Update</source>
         <translation>Τελευταία ενημέρωση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Advertisements</source>
         <translation>Διαφημιστικά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Annoyance</source>
         <translation>Ενοχλητικά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Privacy</source>
         <translation>Ιδιωτικό απόρρητο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Social</source>
         <translation>Κοινωνικά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Regional</source>
         <translation>Τοπικό</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Other</source>
         <translation>Άλλο</translation>
     </message>
@@ -1740,7 +1740,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
@@ -1750,12 +1750,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Ποτέ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation type="unfinished"/>
+        <translation> ημέρες</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -1826,27 +1826,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία ανάγνωσης του αρχείου ταυτότητος</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία λήψης των κανόνων ταυτότητας</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία επαλήθευσης των κανόνων ταυτότητας μέσω του αθροίσματος ελέγχου</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>Η ταυτότητα δεν έχει ενημερωθεί ποτέ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>Η τελευταία ενημέρωση της ταυτότητας έλαβε χώρα πριν από πάνω από μια εβδομάδα</translation>
     </message>
 </context>
 <context>
@@ -2149,111 +2149,208 @@ Do you want to save them?</source>
     </message>
 </context>
 <context>
+    <name>Otter::Feed</name>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="130"/>
+        <source>Feed updated:
+%1</source>
+        <translation>Ενημερώθηκε η ροή:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="174"/>
+        <source>Failed to parse feed: %1</source>
+        <translation>Αποτυχία ανάλυσης της ροής: %1</translation>
+    </message>
+</context>
+<context>
     <name>Otter::FeedPropertiesDialog</name>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία της μηχανής αναζήτησης</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Αλλαγή του εικονιδίου...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="58"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="71"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Χρονικό διάστημα ενημέρωσης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="81"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Ποτέ</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
         <source> minutes</source>
-        <translation type="unfinished"/>
+        <translation> λεπτά</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
         <source>Valid address is required.</source>
-        <translation type="unfinished"/>
+        <translation>Απαιτείται μια έγκυρη διεύθυνση.</translation>
     </message>
 </context>
 <context>
     <name>Otter::FeedsContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="29"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
+        <source>OK</source>
+        <translation>Εντάξει</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="130"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
+        <source>Categories</source>
+        <translation>Κατηγορίες</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <source>Title</source>
+        <translation>Τίτλος</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <source>From</source>
+        <translation>Από</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <source>Published</source>
+        <translation>Δημοσίευση</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <source>Select Folder Name</source>
+        <translation>Επιλέξτε όνομα φακέλου</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <source>Enter folder name:</source>
+        <translation>Εισαγάγετε το όνομα του φακέλου:</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
+        <source>Open</source>
+        <translation>Άνοιγμα</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Άδειασμα απορριμμάτων</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="138"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="159"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="297"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη φακέλου…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="139"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="160"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="273"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="298"/>
         <source>Add Feed…</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη ροής...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="295"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη νέας</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="169"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="307"/>
         <source>Restore Feed</source>
-        <translation type="unfinished"/>
+        <translation>Επαναφορά ροής</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="183"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="321"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Ιδιότητες....</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="201"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
+        <source>Send email to %1</source>
+        <translation>Αποστολή ηλ. μηνύματος σε %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
+        <source>Go to %1</source>
+        <translation>Μετάβαση σε %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="437"/>
+        <source>All (%1)</source>
+        <translation>Όλα (%1)</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <source>(Untitled)</source>
+        <translation>(Άτιτλο)</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
+        <source>Subscribe to this feed using:</source>
+        <translation>Συνδρομή στην ροή μέσω:</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <source>Feed: %1</source>
+        <translation>Ροή: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ροές</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="235"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="653"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="235"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="657"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="239"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="648"/>
         <source>Last update: %1</source>
-        <translation type="unfinished"/>
+        <translation>Τελευταία ενημέρωση: %1</translation>
     </message>
 </context>
 <context>
@@ -2261,37 +2358,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="57"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ροές</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="59"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Απορρίμματα</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="63"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="196"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="229"/>
         <source>Failed to open feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία ανοίγματος του αρχείου ροών: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="219"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="252"/>
         <source>Failed to load feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία φόρτωσης του αρχείου ροών: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="221"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="221"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
         <source>Failed to load feeds file.</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία φόρτωσης του αρχείου ροών.</translation>
     </message>
 </context>
 <context>
@@ -2854,27 +2951,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="252"/>
         <source>Lock Panel</source>
-        <translation type="unfinished"/>
+        <translation>Κλείδωμα του πίνακα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="266"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Σύνδεσμοι</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="318"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="321"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση: %1</translation>
     </message>
 </context>
 <context>
@@ -3539,7 +3636,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="174"/>
         <source>%1 (%n blocked)</source>
-        <translation><numerusform>%1 (%n σε φραγή)</numerusform><numerusform>%1 (%2 Σε φραγή)</numerusform></translation>
+        <translation><numerusform>%1 (%n σε φραγή)</numerusform><numerusform>%1 (%n σε φραγή)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/pageInformation/PageInformationContentsWidget.cpp" line="181"/>
@@ -3625,64 +3722,64 @@ Do you want to continue?</source>
         <translation>Αναζήτηση…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="69"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="76"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="77"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="69"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="76"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="77"/>
         <source>Value</source>
         <translation>Τιμή</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="89"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="91"/>
         <source>Set #%1</source>
         <translation>Ορισμός #%1</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="177"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="233"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="252"/>
-        <source>Question</source>
-        <translation>Ερώτηση</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="178"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="234"/>
-        <source>You are about to delete %n password(s).</source>
-        <translation><numerusform>Πρόκειται να διαγράψετε %n κωδικό(ούς) πρόσβασης.</numerusform><numerusform>Πρόκειται να διαγράψετε %n κωδικό(ούς) πρόσβασης.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="179"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="235"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="254"/>
+        <source>Question</source>
+        <translation>Ερώτηση</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="180"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="236"/>
+        <source>You are about to delete %n password(s).</source>
+        <translation><numerusform>Πρόκειται να διαγράψετε %n κωδικό(ούς) πρόσβασης.</numerusform><numerusform>Πρόκειται να διαγράψετε %n κωδικό(ούς) πρόσβασης.</numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="181"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="237"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="256"/>
         <source>Do you want to continue?</source>
         <translation>Θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="253"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="255"/>
         <source>You are about to delete all passwords.</source>
         <translation>Πρόκειται να διαγράψετε όλους τους κωδικούς πρόσβασης.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="275"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="277"/>
         <source>Remove Password</source>
         <translation>Αφαίρεση του κωδικού πρόσβασης</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="278"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="280"/>
         <source>Remove All Passwords from This Domain…</source>
         <translation>Αφαίρεση όλων των κωδικών πρόσβασης από αυτόν τον τομέα…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="281"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="283"/>
         <source>Remove All Passwords…</source>
         <translation>Αφαίρεση όλων των κωδικών πρόσβασης…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="367"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="369"/>
         <source>Passwords</source>
         <translation>Κωδικοί πρόσβασης</translation>
     </message>
@@ -3844,7 +3941,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="82"/>
         <source>Address Field Suggestions</source>
-        <translation>Υποδείξεις του πεδίου διευθύνσεων </translation>
+        <translation>Υποδείξεις του πεδίου διευθύνσεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="91"/>
@@ -3909,7 +4006,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
         <source>Prefer native notifications</source>
-        <translation>Προτίμηση των εγγενών ειδοποιήσεων </translation>
+        <translation>Προτίμηση των εγγενών ειδοποιήσεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="300"/>
@@ -4322,7 +4419,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="585"/>
         <source>Do you really want to remove preferences for this website?</source>
-        <translation type="unfinished"/>
+        <translation>Επιθυμείτε πραγματικά την αφαίρεση των προτιμήσεων της ιστοσελίδας;</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="603"/>
@@ -4732,7 +4829,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="48"/>
         <source>Show start page</source>
-        <translation>Εμφάνιση της σελίδας εκκίνησης </translation>
+        <translation>Εμφάνιση της σελίδας εκκίνησης</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="49"/>
@@ -5490,12 +5587,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>PNG image (*.png)</source>
-        <translation type="unfinished"/>
+        <translation>Εικόνα PNG (*.png)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>JPEG image (*.jpg *.jpeg)</source>
-        <translation type="unfinished"/>
+        <translation>Εικόνα JPEG (*.jpg *.jpeg)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
@@ -5842,12 +5939,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="109"/>
         <source>Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Αρχική σελίδα</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="112"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Άγνωστο)</translation>
     </message>
 </context>
 <context>
@@ -6185,7 +6282,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="134"/>
         <source>Enable plugins</source>
-        <translation type="unfinished"/>
+        <translation>Ενεργοποίηση πρόσθετων</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="55"/>
@@ -6285,51 +6382,51 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="156"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Ιστορικό καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="188"/>
         <source>Date: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ημερομηνία: %1</translation>
     </message>
 </context>
 <context>
     <name>Otter::TextLabelWidget</name>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="41"/>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="97"/>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="137"/>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="166"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="42"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="98"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="138"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="182"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;empty&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="70"/>
         <source>Copy</source>
         <translation>Αντιγραφή</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="75"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="76"/>
         <source>Copy Link Location</source>
         <translation>Αντιγραφή διεύθυνσης δεσμού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="80"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="81"/>
         <source>Select All</source>
         <translation>Επιλογή όλων</translation>
     </message>
@@ -6376,7 +6473,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6396,7 +6493,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="339"/>
         <source>Visibility:</source>
-        <translation>Ορατότητα:  </translation>
+        <translation>Ορατότητα:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="352"/>
@@ -6830,44 +6927,44 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="234"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Από:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 ( λήψη ολοκληρώθηκε)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>%1 (%2% downloaded)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (%2% λήφθηκαν)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="263"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Άγνωστο</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="270"/>
         <source>Redownload</source>
-        <translation type="unfinished"/>
+        <translation>Επανάληψη λήψης</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="275"/>
         <source>Open Folder</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα φακέλου</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Διακοπή</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -6876,7 +6973,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Πηγή: %1
+Προορισμός: %2
+Μέγεθος: %3
+Ειλημμένα: %4
+Πρόοδος: %5&lt;/div&gt;</translation>
     </message>
 </context>
 <context>
@@ -7115,12 +7216,12 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="47"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="101"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Λήψεις</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="123"/>
         <source>Show all Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση όλων των μεταφορτώσεων</translation>
     </message>
 </context>
 <context>
@@ -7188,7 +7289,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="127"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation>Μερικές από τις ενημερώσεις δεν διαθέτουν πακέτα για το πλατύβαθρό σας. Προσπαθήστε να ελέγξετε για ενημερώσεις αργότερα ή επισκεφθείτε την σελίδα λεπτομερειών για περισσότερες πληροφορίες. </translation>
+        <translation>Μερικές από τις ενημερώσεις δεν διαθέτουν πακέτα για το πλατύβαθρό σας. Προσπαθήστε να ελέγξετε για ενημερώσεις αργότερα ή επισκεφθείτε την σελίδα λεπτομερειών για περισσότερες πληροφορίες.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="151"/>
@@ -7344,22 +7445,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="728"/>
         <source>HTML file (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>Αρχείο HTML (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="728"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation type="unfinished"/>
+        <translation>Αρχεία HTML με όλους τους πόρους (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="728"/>
         <source>Web archive (*.mht)</source>
-        <translation type="unfinished"/>
+        <translation>Αρχειοθήκη Ιστού (*.mht)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="728"/>
         <source>PDF document (*.pdf)</source>
-        <translation type="unfinished"/>
+        <translation>Έγγραφο PDF (*.pdf)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1030"/>
@@ -7463,7 +7564,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation>Εμφάνιση ειδοποιήσεων: </translation>
+        <translation>Εμφάνιση ειδοποιήσεων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
@@ -8010,7 +8111,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
         <source>Expiration Date</source>
-        <translation type="unfinished"/>
+        <translation>Ημερομηνία λήξης</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
@@ -8028,7 +8129,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
@@ -8194,7 +8295,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>
-        <location filename="../../src/ui/Window.cpp" line="651"/>
+        <location filename="../../src/ui/Window.cpp" line="656"/>
         <source>Pin Tab</source>
         <translation>Καρφίτσωμα της καρτέλας</translation>
     </message>
@@ -8241,8 +8342,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Clear Tab History</source>
-        <translation>Εκκαθάριση του ιστορικού καρτελών
-</translation>
+        <translation>Εκκαθάριση του ιστορικού καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
@@ -8255,8 +8355,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="150"/>
         <location filename="../../src/ui/WebWidget.cpp" line="917"/>
         <source>Purge Tab History</source>
-        <translation>Εκκαθάριση του ιστορικού καρτελών
-</translation>
+        <translation>Εκκαθάριση του ιστορικού καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
@@ -8360,7 +8459,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="152"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="290"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="222"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
@@ -8651,7 +8750,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="142"/>
         <source>Go to History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση στην καταχώρηση ιστορικού</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
@@ -8686,7 +8785,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Remove History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση της καταχώρησης ιστορικού</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
@@ -8902,7 +9001,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>Λήψη ενός στιγμιότυπου</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
@@ -9288,6 +9387,11 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Αφαίρεση Cookie</translation>
     </message>
     <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="286"/>
+        <source>Update</source>
+        <translation>Ενημέρωση</translation>
+    </message>
+    <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
         <source>Copy address of source page</source>
         <translation>Αντιγραφή της διεύθυνσης της σελίδας από την πηγή</translation>
@@ -9380,7 +9484,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="135"/>
         <source>Import Opera Search Engines…</source>
-        <translation>Εισαγωγή των μηχανών αναζήτησης του Opera... </translation>
+        <translation>Εισαγωγή των μηχανών αναζήτησης του Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="137"/>
@@ -9726,7 +9830,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
         <source>Purge History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση του ιστορικού</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1280"/>
@@ -9739,7 +9843,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Προσθήκη σελιδοδείκτη...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="651"/>
+        <location filename="../../src/ui/Window.cpp" line="656"/>
         <source>Unpin Tab</source>
         <translation>Ξεκαρφίτσωμα καρτέλας</translation>
     </message>
@@ -9779,7 +9883,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="128"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ροές</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
@@ -9789,7 +9893,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="130"/>
         <source>Links</source>
-        <translation type="unfinished"/>
+        <translation>Σύνδεσμοι</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="131"/>
@@ -9809,7 +9913,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="134"/>
         <source>Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Ιστορικό καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="135"/>
@@ -10060,21 +10164,31 @@ Application ID: %2</source>
     <name>notifications</name>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
+        <source>Feed Updated</source>
+        <translation>Η ροή ενημερώθηκε</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
+        <source>Feed update was completed</source>
+        <translation>Η ενημέρωση της ροής ολοκληρώθηκε</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>Download Completed</source>
         <translation>Η λήψη ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>File download was completed</source>
         <translation>Η λήψη του αρχείου ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update Available</source>
         <translation>Ενημέρωση διαθέσιμη</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
         <translation>Μία ενημέρωση είναι διαθέσιμη για λήψη</translation>
     </message>

@@ -1656,62 +1656,62 @@ Do you want to save them?</source>
 <context>
     <name>Otter::ContentBlockingManager</name>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="195"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="196"/>
         <source>Custom Rules</source>
         <translation>Пользовательские правила</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="316"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
         <source>Failed to remove content blocking profile file: %1</source>
         <translation>Не удалось удалить файл профиля блокируемого содержимого: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="316"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
         <source>Unknown</source>
         <translation>Неизвестный</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="351"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
         <source>Title</source>
         <translation>Заголовок</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="351"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
         <source>Update Interval</source>
         <translation>Интервал обновления</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="351"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
         <source>Last Update</source>
         <translation>Последнее обновление</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Advertisements</source>
         <translation>Реклама</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Annoyance</source>
         <translation>Раздражение</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Privacy</source>
         <translation>Конфиденциальность</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Social</source>
         <translation>Социальный</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Regional</source>
         <translation>Региональный</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="397"/>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
         <source>Other</source>
         <translation>Другое</translation>
     </message>
@@ -1744,7 +1744,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
@@ -1754,12 +1754,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Никогда</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation type="unfinished"/>
+        <translation> дн.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -1830,27 +1830,27 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось прочитать файл профиля</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить правила профиля</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось проверить правила профиля с помощью контрольной суммы</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>Профиль никогда не обновлялся</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>Профиль в последний раз обновлялся более недели назад</translation>
     </message>
 </context>
 <context>
@@ -2153,111 +2153,207 @@ Do you want to save them?</source>
     </message>
 </context>
 <context>
+    <name>Otter::Feed</name>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="130"/>
+        <source>Feed updated:
+%1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="174"/>
+        <source>Failed to parse feed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::FeedPropertiesDialog</name>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Изменить поисковую систему</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Название:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Сменить значок…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="58"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="71"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Интервал обновления:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="81"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Никогда</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
         <source> minutes</source>
-        <translation type="unfinished"/>
+        <translation>мин.</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
         <source>Valid address is required.</source>
-        <translation type="unfinished"/>
+        <translation>Требуется корректный адрес.</translation>
     </message>
 </context>
 <context>
     <name>Otter::FeedsContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="29"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
+        <source>Cancel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
+        <translation>Поиск…</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
+        <source>Categories</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="130"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <source>From</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <source>Published</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <source>Select Folder Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <source>Enter folder name:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
+        <source>Open</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Очистить корзину</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="138"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="159"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="297"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Добавить папку…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="139"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="160"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="273"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="298"/>
         <source>Add Feed…</source>
-        <translation type="unfinished"/>
+        <translation>Добавить ленту…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="295"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Добавить новую</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="169"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="307"/>
         <source>Restore Feed</source>
-        <translation type="unfinished"/>
+        <translation>Восстановить ленту</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="183"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="321"/>
         <source>Properties…</source>
+        <translation>Свойства...</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
+        <source>Send email to %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="201"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
+        <source>Go to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="437"/>
+        <source>All (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <source>(Untitled)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
+        <source>Subscribe to this feed using:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <source>Feed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ленты</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="235"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="653"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Заголовок: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="235"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="657"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Адрес: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="239"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="648"/>
         <source>Last update: %1</source>
-        <translation type="unfinished"/>
+        <translation>Последнее обновление: %1</translation>
     </message>
 </context>
 <context>
@@ -2265,37 +2361,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="57"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ленты</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="59"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Корзина</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="63"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без названия)</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="196"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="229"/>
         <source>Failed to open feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть файл лент: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="219"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="252"/>
         <source>Failed to load feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить файл лент: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="221"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="221"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
         <source>Failed to load feeds file.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить файл лент.</translation>
     </message>
 </context>
 <context>
@@ -3629,64 +3725,64 @@ Do you want to continue?</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="69"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="76"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="77"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="69"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="76"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="70"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="77"/>
         <source>Value</source>
         <translation>Значение</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="89"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="91"/>
         <source>Set #%1</source>
         <translation>Установить #%1</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="177"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="233"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="252"/>
-        <source>Question</source>
-        <translation>Вопрос</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="178"/>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="234"/>
-        <source>You are about to delete %n password(s).</source>
-        <translation><numerusform>Вы собираетесь удалить %n пароль.</numerusform><numerusform>Вы собираетесь удалить %n пароля.</numerusform><numerusform>Вы собираетесь удалить %n паролей.</numerusform><numerusform>Вы собираетесь удалить %n паролей.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="179"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="235"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="254"/>
+        <source>Question</source>
+        <translation>Вопрос</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="180"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="236"/>
+        <source>You are about to delete %n password(s).</source>
+        <translation><numerusform>Вы собираетесь удалить %n пароль.</numerusform><numerusform>Вы собираетесь удалить %n пароля.</numerusform><numerusform>Вы собираетесь удалить %n паролей.</numerusform><numerusform>Вы собираетесь удалить %n паролей.</numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="181"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="237"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="256"/>
         <source>Do you want to continue?</source>
         <translation>Хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="253"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="255"/>
         <source>You are about to delete all passwords.</source>
         <translation>Вы собираетесь удалить все пароли.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="275"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="277"/>
         <source>Remove Password</source>
         <translation>Удалить пароль</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="278"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="280"/>
         <source>Remove All Passwords from This Domain…</source>
         <translation>Удалить все пароли от этого домена...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="281"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="283"/>
         <source>Remove All Passwords…</source>
         <translation>Удалить все пароли…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="367"/>
+        <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="369"/>
         <source>Passwords</source>
         <translation>Пароли</translation>
     </message>
@@ -5494,12 +5590,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>PNG image (*.png)</source>
-        <translation type="unfinished"/>
+        <translation>PNG-изображение (*.png)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>JPEG image (*.jpg *.jpeg)</source>
-        <translation type="unfinished"/>
+        <translation>JPEG-изображение (*.jpg *.jpeg)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
@@ -6299,41 +6395,41 @@ Address: %2</source>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Заголовок: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Адрес: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="188"/>
         <source>Date: %1</source>
-        <translation type="unfinished"/>
+        <translation>Дата: %1</translation>
     </message>
 </context>
 <context>
     <name>Otter::TextLabelWidget</name>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="41"/>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="97"/>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="137"/>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="166"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="42"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="98"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="138"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="182"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;пусто&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="70"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="75"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="76"/>
         <source>Copy Link Location</source>
         <translation>Копировать ссылку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TextLabelWidget.cpp" line="80"/>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="81"/>
         <source>Select All</source>
         <translation>Выделить все</translation>
     </message>
@@ -6835,23 +6931,23 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="234"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>От:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Размер:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (загрузка завершена)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>%1 (%2% downloaded)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (%2% загружено)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="263"/>
@@ -6872,7 +6968,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Остановить</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -6881,7 +6977,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Источник: %1
+Сохранён в: %2
+Размер: %3
+Загружено: %4
+Прогресс: %5&lt;/div&gt;</translation>
     </message>
 </context>
 <context>
@@ -8033,7 +8133,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
@@ -8201,7 +8301,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>
-        <location filename="../../src/ui/Window.cpp" line="651"/>
+        <location filename="../../src/ui/Window.cpp" line="656"/>
         <source>Pin Tab</source>
         <translation>Закрепить вкладку</translation>
     </message>
@@ -8365,7 +8465,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="152"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="290"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="222"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
@@ -8907,7 +9007,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>Сделать снимок экрана</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
@@ -9291,6 +9391,11 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="479"/>
         <source>Remove Cookie</source>
         <translation>Удалить cookie</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="286"/>
+        <source>Update</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
@@ -9744,7 +9849,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Создать закладку страницы...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="651"/>
+        <location filename="../../src/ui/Window.cpp" line="656"/>
         <source>Unpin Tab</source>
         <translation>Открепить вкладку</translation>
     </message>
@@ -9784,7 +9889,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="128"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ленты</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
@@ -10066,21 +10171,31 @@ Application ID: %2</source>
     <name>notifications</name>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
+        <source>Feed Updated</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
+        <source>Feed update was completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>Download Completed</source>
         <translation>Загрузка завершена</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>File download was completed</source>
         <translation>Загрузка файла завершена</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update Available</source>
         <translation>Доступно обновление</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
         <translation>Обновление доступно для загрузки</translation>
     </message>
