@@ -90,7 +90,7 @@ void Feed::addEntries(const QVector<Entry> &entries)
 
 	if (amount > 0)
 	{
-		connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+		connect(NotificationsManager::createNotification(NotificationsManager::FeedUpdatedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
 		{
 			Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
 		});
