@@ -39,7 +39,11 @@ FeedPropertiesDialog::FeedPropertiesDialog(Feed *feed, QWidget *parent) : Dialog
 		m_ui->titleLineEditWidget->setText(feed->getTitle());
 		m_ui->iconButton->setIcon(feed->getIcon());
 		m_ui->urlLineEditWidget->setText(feed->getUrl().toString());
-		m_ui->updateIntervalSpinBox->setValue(feed->getUpdateInterval());
+
+		if (feed->getUpdateInterval() > 0 || FeedsManager::getModel()->hasFeed(feed->getUrl()))
+		{
+			m_ui->updateIntervalSpinBox->setValue(feed->getUpdateInterval());
+		}
 	}
 	else
 	{
