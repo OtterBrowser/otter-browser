@@ -331,7 +331,7 @@ void ToolBarsManager::addToolBar(ToolBarsManager::ToolBarType type)
 
 			break;
 		case SideBarType:
-			definition.panels = QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("passwords"), QLatin1String("transfers")});
+			definition.panels = QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("feeds"), QLatin1String("notes"), QLatin1String("passwords"), QLatin1String("transfers")});
 			definition.location = Qt::LeftToolBarArea;
 
 			break;
