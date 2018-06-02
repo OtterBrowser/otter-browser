@@ -401,6 +401,12 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 		for (int i = 0; i < m_feeds.count(); ++i)
 		{
 			const Feed *feed(m_feeds.at(i));
+
+			if (!FeedsManager::getModel()->hasFeed(feed->getUrl()))
+			{
+				continue;
+			}
+
 			const QMap<QString, QString> categories(feed->getCategories());
 			QJsonObject feedObject({{QLatin1String("title"), feed->getTitle()}, {QLatin1String("url"), feed->getUrl().toString()}, {QLatin1String("updateInterval"), QString::number(feed->getUpdateInterval())}, {QLatin1String("lastSynchronizationTime"), feed->getLastUpdateTime().toString(Qt::ISODate)}, {QLatin1String("lastUpdateTime"), feed->getLastSynchronizationTime().toString(Qt::ISODate)}});
 
