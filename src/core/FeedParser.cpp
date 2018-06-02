@@ -296,7 +296,17 @@ bool RssFeedParser::parse(DataFetchJob *data)
 			{
 				if (reader.name() == QLatin1String("image"))
 				{
-					m_feed->setIcon(QUrl(reader.readElementText()));
+					while (reader.readNext())
+					{
+						if (reader.isStartElement() && reader.name() == QLatin1String("url"))
+						{
+							m_feed->setIcon(QUrl(reader.readElementText()));
+						}
+						else if (reader.isEndElement() && reader.name() == QLatin1String("image"))
+						{
+							break;
+						}
+					}
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
