@@ -322,7 +322,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 
 			if (reader.hasError())
 			{
-				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString(), reader.lineNumber());
 			}
 		}
 	}
