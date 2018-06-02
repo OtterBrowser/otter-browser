@@ -52,11 +52,11 @@ void Feed::addEntries(const QVector<Entry> &entries)
 
 	for (int i = (entries.count() - 1); i >= 0; --i)
 	{
-		const QString identifier(entries.at(i).identifier);
+		const Feed::Entry entry(entries.at(i));
 
-		if (m_removedEntries.contains(identifier))
+		if (m_removedEntries.contains(entry.identifier))
 		{
-			existingRemovedEntries.append(identifier);
+			existingRemovedEntries.append(entry.identifier);
 		}
 		else
 		{
@@ -64,12 +64,16 @@ void Feed::addEntries(const QVector<Entry> &entries)
 
 			for (int j = 0; j < m_entries.count(); ++j)
 			{
-//TODO Check if entries are identical
-				if (m_entries.at(j).identifier == identifier)
-				{
-					m_entries[j] = entries.at(i);
+				const Feed::Entry existingEntry(m_entries.at(j));
 
-					++amount;
+				if (existingEntry.identifier == entry.identifier)
+				{
+					m_entries[j] = entry;
+
+					if (existingEntry.publicationTime != entry.publicationTime || existingEntry.updateTime != entry.updateTime)
+					{
+						++amount;
+					}
 
 					hasEntry = true;
 
