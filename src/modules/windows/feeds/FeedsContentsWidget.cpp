@@ -610,6 +610,10 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 
 			m_ui->subscribeFeedWidget->show();
 		}
+		else
+		{
+			m_ui->subscribeFeedWidget->hide();
+		}
 
 		connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
 	}
