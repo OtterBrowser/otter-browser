@@ -39,6 +39,7 @@ public:
 		UnknownBookmark = 0,
 		RootBookmark,
 		TrashBookmark,
+		FeedBookmark,
 		FolderBookmark,
 		UrlBookmark,
 		SeparatorBookmark

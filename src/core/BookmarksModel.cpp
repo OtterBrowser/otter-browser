@@ -158,6 +158,7 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 				return QCoreApplication::translate("Otter::BookmarksModel", "Bookmarks");
 			case TrashBookmark:
 				return QCoreApplication::translate("Otter::BookmarksModel", "Trash");
+			case FeedBookmark:
 			case FolderBookmark:
 			case UrlBookmark:
 				if (QStandardItem::data(role).isNull())
@@ -196,6 +197,8 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 			case RootBookmark:
 			case FolderBookmark:
 				return ThemesManager::createIcon(QLatin1String("inode-directory"));
+			case FeedBookmark:
+				return ThemesManager::createIcon(QLatin1String("application-rss+xml"));
 			case TrashBookmark:
 				return ThemesManager::createIcon(QLatin1String("user-trash"));
 			case UrlBookmark:
