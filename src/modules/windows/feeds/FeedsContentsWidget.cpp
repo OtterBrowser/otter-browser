@@ -31,6 +31,7 @@
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QToolTip>
 
@@ -141,6 +142,22 @@ void FeedsContentsWidget::addFeed()
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
+	}
+
+	if (FeedsManager::getModel()->hasFeed(dialog.getFeed()->getUrl()))
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("Feed with this address already exists."));
+		messageBox.setInformativeText(tr("Do you want to continue?"));
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Yes);
+
+		if (messageBox.exec() == QMessageBox::Cancel)
+		{
+			return;
+		}
 	}
 
 	FeedsManager::getModel()->addEntry(dialog.getFeed(), findFolder(m_ui->feedsViewWidget->currentIndex()));
