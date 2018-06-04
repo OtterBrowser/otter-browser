@@ -710,6 +710,8 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 			if (!m_feeds.contains(normalizedUrl))
 			{
 				m_feeds[normalizedUrl] = {};
+
+				connect(feed, &Feed::feedModified, this, &BookmarksModel::handleFeedModified);
 			}
 
 			m_feeds[normalizedUrl].append(bookmark);
