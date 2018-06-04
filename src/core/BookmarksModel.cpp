@@ -617,7 +617,9 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
-		bookmark = addBookmark((reader->attributes().hasAttribute(QLatin1String("feed")) ? FeedBookmark : UrlBookmark), {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {UrlRole, reader->attributes().value(QLatin1String("href")).toString()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}, {TimeVisitedRole, readDateTime(reader, QLatin1String("visited"))}}, parent);
+		const bool isFeed(reader->attributes().hasAttribute(QLatin1String("feed")));
+
+		bookmark = addBookmark((isFeed ? FeedBookmark : UrlBookmark), {{IdentifierRole, reader->attributes().value(QLatin1String("id")).toULongLong()}, {UrlRole, reader->attributes().value(QLatin1String("href")).toString()}, {TimeAddedRole, readDateTime(reader, QLatin1String("added"))}, {TimeModifiedRole, readDateTime(reader, QLatin1String("modified"))}, {TimeVisitedRole, readDateTime(reader, QLatin1String("visited"))}}, parent);
 
 		while (reader->readNext())
 		{
@@ -693,6 +695,24 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 			{
 				return;
 			}
+		}
+
+		if (isFeed)
+		{
+			const QUrl normalizedUrl(Utils::normalizeUrl(bookmark->getUrl()));
+			Feed *feed(FeedsManager::createFeed(bookmark->getUrl(), bookmark->getTitle()));
+
+			if (feed)
+			{
+				handleFeedModified(feed);
+			}
+
+			if (!m_feeds.contains(normalizedUrl))
+			{
+				m_feeds[normalizedUrl] = {};
+			}
+
+			m_feeds[normalizedUrl].append(bookmark);
 		}
 	}
 	else if (reader->name() == QLatin1String("separator"))
