@@ -19,6 +19,7 @@
 
 #include "FeedsManager.h"
 #include "Application.h"
+#include "BookmarksManager.h"
 #include "Console.h"
 #include "FeedParser.h"
 #include "Job.h"
@@ -402,7 +403,7 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 		{
 			const Feed *feed(m_feeds.at(i));
 
-			if (!FeedsManager::getModel()->hasFeed(feed->getUrl()))
+			if (!FeedsManager::getModel()->hasFeed(feed->getUrl()) && !BookmarksManager::getModel()->hasFeed(feed->getUrl()))
 			{
 				continue;
 			}
