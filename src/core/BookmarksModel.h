@@ -29,6 +29,8 @@
 namespace Otter
 {
 
+class Feed;
+
 class BookmarksModel final : public QStandardItemModel
 {
 	Q_OBJECT
@@ -147,6 +149,7 @@ protected:
 	static QDateTime readDateTime(QXmlStreamReader *reader, const QString &attribute);
 
 protected slots:
+	void handleFeedModified(Feed *feed);
 	void notifyBookmarkModified(const QModelIndex &index);
 
 private:

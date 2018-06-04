@@ -20,6 +20,7 @@
 
 #include "BookmarksModel.h"
 #include "Console.h"
+#include "FeedsManager.h"
 #include "HistoryManager.h"
 #include "SessionsManager.h"
 #include "ThemesManager.h"
@@ -894,6 +895,40 @@ void BookmarksModel::emptyTrash()
 	m_trash.clear();
 
 	emit modelModified();
+}
+
+void BookmarksModel::handleFeedModified(Feed *feed)
+{
+	if (!hasFeed(feed->getUrl()))
+	{
+		return;
+	}
+
+	const QUrl normalizedUrl(Utils::normalizeUrl(feed->getUrl()));
+	QVector<Bookmark*> bookmarks(m_feeds.value(feed->getUrl()));
+
+	if (feed->getUrl() != normalizedUrl)
+	{
+		bookmarks.append(m_feeds.value(normalizedUrl));
+	}
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		Bookmark *bookmark(bookmarks.at(i));
+		bookmark->removeRows(0, bookmark->rowCount());
+
+		const QVector<Feed::Entry> entries(feed->getEntries());
+
+		for (int j = 0; j < entries.count(); ++j)
+		{
+			const Feed::Entry entry(entries.at(j));
+
+			if (entry.url.isValid())
+			{
+				addBookmark(UrlBookmark, {{UrlRole, entry.url}, {TitleRole, entry.title}, {DescriptionRole, entry.summary}}, bookmark);
+			}
+		}
+	}
 }
 
 void BookmarksModel::handleKeywordChanged(Bookmark *bookmark, const QString &newKeyword, const QString &oldKeyword)
