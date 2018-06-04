@@ -1452,6 +1452,11 @@ bool BookmarksModel::hasBookmark(const QUrl &url) const
 	return (m_urls.contains(Utils::normalizeUrl(url)) || m_urls.contains(url));
 }
 
+bool BookmarksModel::hasFeed(const QUrl &url) const
+{
+	return (m_feeds.contains(Utils::normalizeUrl(url)) || m_feeds.contains(url));
+}
+
 bool BookmarksModel::hasKeyword(const QString &keyword) const
 {
 	return m_keywords.contains(keyword);
