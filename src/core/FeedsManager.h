@@ -28,6 +28,8 @@
 namespace Otter
 {
 
+class LongTermTimer;
+
 class Feed final : public QObject
 {
 	Q_OBJECT
@@ -89,6 +91,7 @@ public slots:
 	void update();
 
 private:
+	LongTermTimer *m_updateTimer;
 	QString m_title;
 	QString m_description;
 	QUrl m_url;

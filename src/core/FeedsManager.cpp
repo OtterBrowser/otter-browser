@@ -23,6 +23,7 @@
 #include "Console.h"
 #include "FeedParser.h"
 #include "Job.h"
+#include "LongTermTimer.h"
 #include "NotificationsManager.h"
 #include "SessionsManager.h"
 #include "Utils.h"
@@ -37,13 +38,15 @@ namespace Otter
 {
 
 Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent) : QObject(parent),
+	m_updateTimer(nullptr),
 	m_title(title),
 	m_url(url),
 	m_icon(icon),
 	m_error(NoError),
-	m_updateInterval(updateInterval),
+	m_updateInterval(0),
 	m_isUpdating(false)
 {
+	setUpdateInterval(updateInterval);
 }
 
 void Feed::addEntries(const QVector<Entry> &entries)
@@ -230,6 +233,23 @@ void Feed::setUpdateInterval(int interval)
 	if (interval != m_updateInterval)
 	{
 		m_updateInterval = interval;
+
+		if (interval <= 0 && m_updateTimer)
+		{
+			m_updateTimer->deleteLater();
+			m_updateTimer = nullptr;
+		}
+		else
+		{
+			if (!m_updateTimer)
+			{
+				m_updateTimer = new LongTermTimer(this);
+
+				connect(m_updateTimer, &LongTermTimer::timeout, this, &Feed::update);
+			}
+
+			m_updateTimer->start(static_cast<quint64>(interval) * 60000);
+		}
 
 		emit feedModified(this);
 	}
