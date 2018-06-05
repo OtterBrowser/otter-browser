@@ -19,6 +19,7 @@
 
 #include "FeedsContentsWidget.h"
 #include "../../../core/Application.h"
+#include "../../../core/BookmarksManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/Animation.h"
@@ -144,11 +145,11 @@ void FeedsContentsWidget::addFeed()
 		return;
 	}
 
-	if (FeedsManager::getModel()->hasFeed(dialog.getFeed()->getUrl()))
+	if (BookmarksManager::getModel()->hasFeed(dialog.getFeed()->getUrl()) || FeedsManager::getModel()->hasFeed(dialog.getFeed()->getUrl()))
 	{
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
-		messageBox.setText(tr("Feed with this address already exists."));
+		messageBox.setText(tr("You already subscribed this feed."));
 		messageBox.setInformativeText(tr("Do you want to continue?"));
 		messageBox.setIcon(QMessageBox::Question);
 		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
