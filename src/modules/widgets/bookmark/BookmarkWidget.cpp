@@ -77,7 +77,7 @@ void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 
 	const BookmarksModel::BookmarkType type(m_bookmark->getType());
 
-	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
+	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark)
 	{
 		if (!menu())
 		{
@@ -111,7 +111,7 @@ void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 			toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
 		}
 
-		if (m_bookmark->getTimeVisited().isValid())
+		if (m_bookmark->getTimeVisited().isValid() && type != BookmarksModel::FeedBookmark)
 		{
 			toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
 		}
