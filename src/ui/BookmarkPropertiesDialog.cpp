@@ -36,7 +36,8 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	const bool isUrlBookmark(bookmark->getType() == BookmarksModel::UrlBookmark);
+	const BookmarksModel::BookmarkType type(bookmark->getType());
+	const bool isUrlBookmark(type == BookmarksModel::FeedBookmark || type == BookmarksModel::UrlBookmark);
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder(static_cast<BookmarksModel::Bookmark*>(bookmark->parent()));
@@ -49,7 +50,14 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksModel::Bookmark *boo
 	m_ui->addedLabelWidget->setText(m_bookmark->getTimeAdded().isValid() ? Utils::formatDateTime(m_bookmark->getTimeAdded()) : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->getTimeModified().isValid() ? Utils::formatDateTime(m_bookmark->getTimeModified()) : tr("Unknown"));
 
-	if (isUrlBookmark)
+	if (type == BookmarksModel::FeedBookmark)
+	{
+		m_ui->lastVisitLabel->hide();
+		m_ui->lastVisitLabelWidget->hide();
+		m_ui->visitsLabel->hide();
+		m_ui->visitsLabelWidget->hide();
+	}
+	else if (isUrlBookmark)
 	{
 		m_ui->lastVisitLabelWidget->setText(m_bookmark->getTimeVisited().isValid() ? Utils::formatDateTime(m_bookmark->getTimeVisited()) : tr("Unknown"));
 		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->getVisits()));
