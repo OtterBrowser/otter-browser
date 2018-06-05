@@ -702,11 +702,6 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 			const QUrl normalizedUrl(Utils::normalizeUrl(bookmark->getUrl()));
 			Feed *feed(FeedsManager::createFeed(bookmark->getUrl(), bookmark->getTitle()));
 
-			if (feed)
-			{
-				handleFeedModified(feed);
-			}
-
 			if (!m_feeds.contains(normalizedUrl))
 			{
 				m_feeds[normalizedUrl] = {};
@@ -715,6 +710,11 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 			}
 
 			m_feeds[normalizedUrl].append(bookmark);
+
+			if (feed)
+			{
+				handleFeedModified(feed);
+			}
 		}
 	}
 	else if (reader->name() == QLatin1String("separator"))
@@ -1015,7 +1015,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 		bookmark->setDropEnabled(false);
 	}
 
-	if (type == FolderBookmark || type == UrlBookmark)
+	if (type == FeedBookmark || type == FolderBookmark || type == UrlBookmark)
 	{
 		quint64 identifier(metaData.value(IdentifierRole).toULongLong());
 
@@ -1038,7 +1038,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 			bookmark->setItemData(currentDateTime, TimeModifiedRole);
 		}
 
-		if (type == UrlBookmark)
+		if (type == FeedBookmark || type == UrlBookmark)
 		{
 			const QUrl url(metaData.value(UrlRole).toUrl());
 
@@ -1047,7 +1047,10 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 				handleUrlChanged(bookmark, url);
 			}
 
-			bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
+			if (type == UrlBookmark)
+			{
+				bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
+			}
 		}
 	}
 
