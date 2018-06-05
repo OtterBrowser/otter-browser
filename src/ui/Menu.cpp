@@ -634,7 +634,7 @@ void Menu::populateBookmarksMenu()
 
 		const BookmarksModel::BookmarkType type(bookmark->getType());
 
-		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
+		if (type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
 			Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
 			action->setToolTip(bookmark->getDescription());
