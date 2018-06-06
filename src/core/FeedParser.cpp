@@ -43,7 +43,7 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 		mimeType = mimeDatabase.mimeTypeForUrl(feed->getUrl());
 	}
 
-	if (!mimeType.isValid() || !parsers.contains(mimeType.name()) && data->getHeaders().contains(QByteArrayLiteral("Content-Type")))
+	if ((!mimeType.isValid() || !parsers.contains(mimeType.name())) && data->getHeaders().contains(QByteArrayLiteral("Content-Type")))
 	{
 		QMap<QString, ParserType>::const_iterator iterator;
 		const QString header(data->getHeaders().value(QByteArrayLiteral("Content-Type")));
