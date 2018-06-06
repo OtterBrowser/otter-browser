@@ -284,7 +284,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("description"))
 						{
-							entry.summary = reader.readElementText();
+							entry.summary = reader.readElementText(QXmlStreamReader::IncludeChildElements);
 						}
 						else if (reader.name() == QLatin1String("author"))
 						{
