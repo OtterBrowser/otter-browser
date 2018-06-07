@@ -200,6 +200,11 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 
 	entries.squeeze();
 
+	if (entries.isEmpty())
+	{
+		Console::addMessage(tr("Failed to parse feed: no valid entries found"), Console::NetworkCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+	}
+
 	m_feed->setCategories(categories);
 	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
@@ -354,6 +359,11 @@ bool RssFeedParser::parse(DataFetchJob *data)
 	}
 
 	entries.squeeze();
+
+	if (entries.isEmpty())
+	{
+		Console::addMessage(tr("Failed to parse feed: no valid entries found"), Console::NetworkCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+	}
 
 	m_feed->setCategories(categories);
 	m_feed->addEntries(entries);
