@@ -1742,7 +1742,7 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
@@ -1752,12 +1752,12 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mai</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation type="unfinished"/>
+        <translation>giorni</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -1828,12 +1828,12 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile leggere il file di profilo</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile scaricare le regole del profilo</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
@@ -2156,12 +2156,13 @@ Vuoi salvarli?</translation>
         <location filename="../../src/core/FeedsManager.cpp" line="130"/>
         <source>Feed updated:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Fonte aggiornata:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="174"/>
         <source>Failed to parse feed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare la fonte: %1</translation>
     </message>
 </context>
 <context>
@@ -2169,47 +2170,47 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Modifica motore di ricerca</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Titolo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Modifica icona...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="58"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="71"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Intervallo di aggiornamento:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="81"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mai</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
         <source> minutes</source>
-        <translation type="unfinished"/>
+        <translation>minuti</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
         <source>Valid address is required.</source>
-        <translation type="unfinished"/>
+        <translation>È necessario un indirizzo valido.</translation>
     </message>
 </context>
 <context>
@@ -2217,73 +2218,73 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
         <source>Categories</source>
-        <translation type="unfinished"/>
+        <translation>Categorie</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titolo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
         <source>From</source>
-        <translation type="unfinished"/>
+        <translation>Da</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
         <source>Published</source>
-        <translation type="unfinished"/>
+        <translation>Pubblicato</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona nome della cartella</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Inserisci nome della cartella:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Apri</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Svuota cestino</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="272"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="297"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi cartella...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="273"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="298"/>
         <source>Add Feed…</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi fonte...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="295"/>
@@ -2293,17 +2294,17 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="307"/>
         <source>Restore Feed</source>
-        <translation type="unfinished"/>
+        <translation>Ripristina fonte</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="321"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Proprietà...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
         <source>Send email to %1</source>
-        <translation type="unfinished"/>
+        <translation>Invia email a %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
@@ -2319,7 +2320,7 @@ Vuoi salvarli?</translation>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
@@ -2329,29 +2330,29 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
         <source>Feed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fonte: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Fonti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="653"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Titolo: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="657"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="648"/>
         <source>Last update: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ultimo aggiornamento: %1</translation>
     </message>
 </context>
 <context>
@@ -2359,37 +2360,37 @@ Vuoi salvarli?</translation>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="57"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Fonti</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="59"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Cestino</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="63"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="229"/>
         <source>Failed to open feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire il file delle fonti: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="252"/>
         <source>Failed to load feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file delle fonti: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="254"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="254"/>
         <source>Failed to load feeds file.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file delle fonti.</translation>
     </message>
 </context>
 <context>
@@ -5588,12 +5589,12 @@ Vuoi continuare comunque?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>PNG image (*.png)</source>
-        <translation type="unfinished"/>
+        <translation>Immagine PNG (*.png)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>JPEG image (*.jpg *.jpeg)</source>
-        <translation type="unfinished"/>
+        <translation>Immagine JPG (*.jpg *.jpeg)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
@@ -6393,17 +6394,17 @@ Indirizzo: %2</translation>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Titolo: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo: %1 </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="188"/>
         <source>Date: %1</source>
-        <translation type="unfinished"/>
+        <translation>Data: %1</translation>
     </message>
 </context>
 <context>
@@ -6929,13 +6930,13 @@ Vuoi sovrascriverlo?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="234"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Da:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
@@ -8127,7 +8128,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
@@ -9881,7 +9882,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="128"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Fonti</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
@@ -10163,7 +10164,7 @@ ID Applicazione: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed Updated</source>
-        <translation type="unfinished"/>
+        <translation>Fonte aggiornata</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>

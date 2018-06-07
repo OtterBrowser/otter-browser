@@ -2158,12 +2158,13 @@ Do you want to save them?</source>
         <location filename="../../src/core/FeedsManager.cpp" line="130"/>
         <source>Feed updated:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Лента обновлена:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="174"/>
         <source>Failed to parse feed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось разобрать ленту: %1</translation>
     </message>
 </context>
 <context>
@@ -2219,12 +2220,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
@@ -2235,40 +2236,40 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
         <source>Categories</source>
-        <translation type="unfinished"/>
+        <translation>Категории</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
         <source>From</source>
-        <translation type="unfinished"/>
+        <translation>От</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
         <source>Published</source>
-        <translation type="unfinished"/>
+        <translation>Опубликовано</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя папки</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Введите имя папки:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Открыть</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
@@ -2305,33 +2306,33 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
         <source>Send email to %1</source>
-        <translation type="unfinished"/>
+        <translation>Отправить сообщение %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
         <source>Go to %1</source>
-        <translation type="unfinished"/>
+        <translation>Переход к %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="437"/>
         <source>All (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Все (%1)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без названия)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
         <source>Subscribe to this feed using:</source>
-        <translation type="unfinished"/>
+        <translation>Подписаться на эту ленту с помощью:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
         <source>Feed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Лента: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
@@ -9395,7 +9396,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="286"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
@@ -10172,12 +10173,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed Updated</source>
-        <translation type="unfinished"/>
+        <translation>Лента обновлена</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed update was completed</source>
-        <translation type="unfinished"/>
+        <translation>Обновление ленты завершено</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>

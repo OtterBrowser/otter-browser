@@ -1285,7 +1285,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation>год</translation>
+        <translation> год</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
@@ -1760,7 +1760,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation>днів</translation>
+        <translation> днів</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -2203,7 +2203,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
         <source> minutes</source>
-        <translation>хвилин</translation>
+        <translation> хвилин</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
@@ -3543,7 +3543,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
         <source>Opera search engines files (search.ini)</source>
-        <translation>Файли служб пошуку Opera (search.ini) </translation>
+        <translation>Файли служб пошуку Opera (search.ini)</translation>
     </message>
 </context>
 <context>
@@ -4127,7 +4127,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
         <source>Open with application</source>
-        <translation>Відкрити в іншій програмі </translation>
+        <translation>Відкрити в іншій програмі</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="725"/>
@@ -7064,7 +7064,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="130"/>
         <source>Target:</source>
-        <translation>Збережений в:</translation>
+        <translation>Збережено як:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="140"/>
@@ -10176,7 +10176,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed update was completed</source>
-        <translation>Оновлення  каналу завершено</translation>
+        <translation>Оновлення каналу завершене</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
