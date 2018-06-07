@@ -108,7 +108,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("title"))
 						{
-							entry.title = reader.readElementText().simplified();
+							entry.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 						}
 						else if (reader.name() == QLatin1String("link") && reader.attributes().value(QLatin1String("rel")).toString() == QLatin1String("alternate"))
 						{
@@ -118,7 +118,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("id"))
 						{
-							entry.identifier = reader.readElementText();
+							entry.identifier = reader.readElementText(QXmlStreamReader::IncludeChildElements);
 						}
 						else if (reader.name() == QLatin1String("published"))
 						{
@@ -130,7 +130,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("summary"))
 						{
-							entry.summary = reader.readElementText();
+							entry.summary = reader.readElementText(QXmlStreamReader::IncludeChildElements);
 						}
 						else if (reader.name() == QLatin1String("content"))
 						{
@@ -138,11 +138,11 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("name"))
 						{
-							entry.author = reader.readElementText().simplified();
+							entry.author = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 						}
 						else if (reader.name() == QLatin1String("email"))
 						{
-							entry.email = reader.readElementText().simplified();
+							entry.email = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 						}
 						else if (reader.name() != QLatin1String("author"))
 						{
@@ -167,15 +167,15 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("icon"))
 				{
-					m_feed->setIcon(QUrl(reader.readElementText()));
+					m_feed->setIcon(QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements)));
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_feed->setTitle(reader.readElementText().simplified());
+					m_feed->setTitle(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified());
 				}
 				else if (reader.name() == QLatin1String("summary"))
 				{
-					m_feed->setDescription(reader.readElementText());
+					m_feed->setDescription(reader.readElementText(QXmlStreamReader::IncludeChildElements));
 				}
 				else if (reader.name() == QLatin1String("updated"))
 				{
@@ -209,7 +209,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 
 QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
 {
-	QDateTime dateTime(QDateTime::fromString(reader->readElementText(), Qt::ISODate));
+	QDateTime dateTime(QDateTime::fromString(reader->readElementText(QXmlStreamReader::IncludeChildElements), Qt::ISODate));
 	dateTime.setTimeSpec(Qt::UTC);
 
 	return dateTime;
@@ -223,7 +223,7 @@ RssFeedParser::RssFeedParser(Feed *parent) : FeedParser(parent),
 
 QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
 {
-	QDateTime dateTime(QDateTime::fromString(reader->readElementText(), Qt::RFC2822Date));
+	QDateTime dateTime(QDateTime::fromString(reader->readElementText(QXmlStreamReader::IncludeChildElements), Qt::RFC2822Date));
 	dateTime.setTimeSpec(Qt::UTC);
 
 	return dateTime;
@@ -250,7 +250,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 					{
 						if (reader.name() == QLatin1String("category"))
 						{
-							const QString category(reader.readElementText());
+							const QString category(reader.readElementText(QXmlStreamReader::IncludeChildElements));
 
 							entry.categories.append(category);
 
@@ -261,17 +261,17 @@ bool RssFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("title"))
 						{
-							entry.title = reader.readElementText().simplified();
+							entry.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 						}
 						else if (reader.name() == QLatin1String("link"))
 						{
-							entry.url = QUrl(reader.readElementText());
+							entry.url = QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements));
 						}
 						else if (reader.name() == QLatin1String("guid"))
 						{
 							const bool isLink(reader.attributes().value(QLatin1String("isPermaLink")).toString().toLower() == QLatin1String("true"));
 
-							entry.identifier = reader.readElementText();
+							entry.identifier = reader.readElementText(QXmlStreamReader::IncludeChildElements);
 
 							if (isLink)
 							{
@@ -288,7 +288,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 						}
 						else if (reader.name() == QLatin1String("author"))
 						{
-							const QString text(reader.readElementText().simplified());
+							const QString text(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified());
 
 							if (QRegularExpression(QLatin1String("^[a-zA-Z0-9\\._\\-]+@[a-zA-Z0-9\\._\\-]+\\.[a-zA-Z0-9]+$")).match(text).hasMatch())
 							{
@@ -316,7 +316,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 					{
 						if (reader.isStartElement() && reader.name() == QLatin1String("url"))
 						{
-							m_feed->setIcon(QUrl(reader.readElementText()));
+							m_feed->setIcon(QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements)));
 						}
 						else if (reader.isEndElement() && reader.name() == QLatin1String("image"))
 						{
@@ -326,11 +326,11 @@ bool RssFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_feed->setTitle(reader.readElementText().simplified());
+					m_feed->setTitle(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified());
 				}
 				else if (reader.name() == QLatin1String("description"))
 				{
-					m_feed->setDescription(reader.readElementText());
+					m_feed->setDescription(reader.readElementText(QXmlStreamReader::IncludeChildElements));
 				}
 				else if (reader.name() == QLatin1String("lastBuildDate"))
 				{
