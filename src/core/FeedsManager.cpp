@@ -274,7 +274,10 @@ void Feed::update()
 			{
 				m_error = ParseError;
 
-				Console::addMessage(tr("Failed to parse feed: %1").arg(m_url.toDisplayString()), Console::NetworkCategory, Console::ErrorLevel);
+				if (!parser)
+				{
+					Console::addMessage(tr("Failed to parse feed: invalid feed type"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
+				}
 			}
 			else
 			{
