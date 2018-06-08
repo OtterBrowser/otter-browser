@@ -171,7 +171,7 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_feed->setTitle(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified());
+					m_feed->setTitle(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified(), true);
 				}
 				else if (reader.name() == QLatin1String("summary"))
 				{
@@ -331,7 +331,7 @@ bool RssFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_feed->setTitle(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified());
+					m_feed->setTitle(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified(), true);
 				}
 				else if (reader.name() == QLatin1String("description"))
 				{

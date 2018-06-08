@@ -60,7 +60,7 @@ public:
 
 	void addEntries(const QVector<Entry> &entries);
 	void addRemovedEntry(const QString &identifier);
-	void setTitle(const QString &title);
+	void setTitle(const QString &title, bool isOriginal = false);
 	void setDescription(const QString &description);
 	void setUrl(const QUrl &url);
 	void setIcon(const QUrl &url);

@@ -127,9 +127,9 @@ void Feed::addRemovedEntry(const QString &identifier)
 	}
 }
 
-void Feed::setTitle(const QString &title)
+void Feed::setTitle(const QString &title, bool isOriginal)
 {
-	if (title != m_title)
+	if (title != m_title && (!isOriginal || m_title.isEmpty()))
 	{
 		m_title = title;
 
