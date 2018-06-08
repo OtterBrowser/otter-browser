@@ -161,12 +161,15 @@ void Feed::setUrl(const QUrl &url)
 
 void Feed::setIcon(const QUrl &url)
 {
-	const IconFetchJob *job(new IconFetchJob(url, this));
-
-	connect(job, &IconFetchJob::jobFinished, this, [=]()
+	if (m_icon.isNull())
 	{
-		setIcon(job->getIcon());
-	});
+		const IconFetchJob *job(new IconFetchJob(url, this));
+
+		connect(job, &IconFetchJob::jobFinished, this, [=]()
+		{
+			setIcon(job->getIcon());
+		});
+	}
 }
 
 void Feed::setIcon(const QIcon &icon)
