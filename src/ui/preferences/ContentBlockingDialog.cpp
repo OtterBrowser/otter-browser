@@ -488,11 +488,7 @@ void ContentBlockingDialog::save()
 
 		QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
 
-		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to create a file with custom rules: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
-		}
-		else
+		if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 		{
 			file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
 
@@ -517,6 +513,10 @@ void ContentBlockingDialog::save()
 			}
 
 			profiles.append(QLatin1String("custom"));
+		}
+		else
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to create a file with custom rules: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 		}
 	}
 
