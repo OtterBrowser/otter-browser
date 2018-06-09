@@ -624,7 +624,7 @@ void ContentBlockingProfile::handleReplyFinished()
 
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name));
 
-	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
+	if (!file.open(QIODevice::WriteOnly))
 	{
 		m_error = DownloadError;
 

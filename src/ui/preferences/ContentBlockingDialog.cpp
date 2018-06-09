@@ -488,7 +488,7 @@ void ContentBlockingDialog::save()
 
 		QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
 
-		if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 		{
 			Console::addMessage(QCoreApplication::translate("main", "Failed to create a file with custom rules: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 		}

@@ -116,7 +116,7 @@ void ContentBlockingProfileDialog::save()
 			return;
 		}
 
-		if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 		{
 			QMessageBox::critical(this, tr("Error"), tr("Failed to create profile file: %1.").arg(file.errorString()), QMessageBox::Close);
 
