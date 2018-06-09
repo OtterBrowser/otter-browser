@@ -592,8 +592,8 @@ void ContentBlockingProfile::handleReplyFinished()
 
 	m_networkReply->deleteLater();
 
-	const QByteArray downloadedDataHeader(m_networkReply->readLine());
-	const QByteArray downloadedDataChecksum(m_networkReply->readLine());
+	const QByteArray downloadedHeader(m_networkReply->readLine());
+	const QByteArray downloadedChecksum(m_networkReply->readLine());
 	const QByteArray downloadedData(m_networkReply->readAll());
 
 	if (m_networkReply->error() != QNetworkReply::NoError)
@@ -605,10 +605,10 @@ void ContentBlockingProfile::handleReplyFinished()
 		return;
 	}
 
-	if (downloadedDataChecksum.contains(QByteArray("! Checksum: ")))
+	if (downloadedChecksum.contains(QByteArray("! Checksum: ")))
 	{
-		QByteArray checksum(downloadedDataChecksum);
-		const QByteArray verifiedChecksum(QCryptographicHash::hash(downloadedDataHeader + QString(downloadedData).replace(QRegExp(QLatin1String("^*\n{2,}")), QLatin1String("\n")).toStdString().c_str(), QCryptographicHash::Md5));
+		QByteArray checksum(downloadedChecksum);
+		const QByteArray verifiedChecksum(QCryptographicHash::hash(downloadedHeader + QString(downloadedData).replace(QRegExp(QLatin1String("^*\n{2,}")), QLatin1String("\n")).toStdString().c_str(), QCryptographicHash::Md5));
 
 		if (verifiedChecksum.toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
 		{
@@ -633,8 +633,8 @@ void ContentBlockingProfile::handleReplyFinished()
 		return;
 	}
 
-	file.write(downloadedDataHeader);
-	file.write(downloadedDataChecksum);
+	file.write(downloadedHeader);
+	file.write(downloadedChecksum);
 	file.write(downloadedData);
 	file.close();
 
