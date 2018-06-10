@@ -22,7 +22,7 @@
 #include "ContentBlockingProfileDialog.h"
 #include "../Animation.h"
 #include "../../core/Console.h"
-#include "../../core/ContentBlockingManager.h"
+#include "../../core/ContentFiltersManager.h"
 #include "../../core/ContentBlockingProfile.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
@@ -46,7 +46,7 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+	const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (profile)
 	{
@@ -76,7 +76,7 @@ bool ContentBlockingTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemVie
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+		const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 		if (profile)
 		{
@@ -175,7 +175,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 
 	const QStringList globalProfiles(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
-	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
+	m_ui->profilesViewWidget->setModel(ContentFiltersManager::createModel(this, globalProfiles));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(0, new ContentBlockingTitleDelegate(this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
@@ -217,7 +217,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->customRulesViewWidget->setModel(customRulesModel);
 	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool());
 
-	connect(ContentBlockingManager::getInstance(), &ContentBlockingManager::profileModified, this, &ContentBlockingDialog::handleProfileModified);
+	connect(ContentFiltersManager::getInstance(), &ContentFiltersManager::profileModified, this, &ContentBlockingDialog::handleProfileModified);
 	connect(m_ui->profilesViewWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &ContentBlockingDialog::updateProfilesActions);
 	connect(m_ui->addProfileButton, &QPushButton::clicked, this, &ContentBlockingDialog::addProfile);
 	connect(m_ui->editProfileButton, &QPushButton::clicked, this, &ContentBlockingDialog::editProfile);
@@ -262,7 +262,7 @@ void ContentBlockingDialog::addProfile()
 void ContentBlockingDialog::editProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
-	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+	ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (profile)
 	{
@@ -279,11 +279,11 @@ void ContentBlockingDialog::editProfile()
 void ContentBlockingDialog::removeProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
-	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+	ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (profile)
 	{
-		ContentBlockingManager::removeProfile(profile);
+		ContentFiltersManager::removeProfile(profile);
 
 		m_ui->profilesViewWidget->model()->removeRow(index.row(), index.parent());
 
@@ -299,7 +299,7 @@ void ContentBlockingDialog::removeProfile()
 void ContentBlockingDialog::updateProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
-	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(index.data(ContentBlockingManager::NameRole).toString()));
+	ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (!m_updateAnimation)
 	{
@@ -337,7 +337,7 @@ void ContentBlockingDialog::updateProfilesActions()
 
 	m_ui->editProfileButton->setEnabled(isEditable);
 	m_ui->removeProfileButton->setEnabled(isEditable);
-	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(ContentBlockingManager::UpdateUrlRole).toUrl().isValid());
+	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(ContentFiltersManager::UpdateUrlRole).toUrl().isValid());
 }
 
 void ContentBlockingDialog::addRule()
@@ -374,7 +374,7 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 {
 	if (isNewOrMoved)
 	{
-		const QModelIndexList removeList(m_ui->profilesViewWidget->model()->match(m_ui->profilesViewWidget->model()->index(0, 0), ContentBlockingManager::NameRole, QVariant::fromValue(profile->getName()), 2, Qt::MatchRecursive));
+		const QModelIndexList removeList(m_ui->profilesViewWidget->model()->match(m_ui->profilesViewWidget->model()->index(0, 0), ContentFiltersManager::NameRole, QVariant::fromValue(profile->getName()), 2, Qt::MatchRecursive));
 
 		if (removeList.count() > 0)
 		{
@@ -382,15 +382,15 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 		}
 
 		QList<QStandardItem*> profileItems({new QStandardItem(profile->getTitle()), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
-		profileItems[0]->setData(profile->getName(), ContentBlockingManager::NameRole);
-		profileItems[0]->setData(profile->getUpdateUrl(), ContentBlockingManager::UpdateUrlRole);
+		profileItems[0]->setData(profile->getName(), ContentFiltersManager::NameRole);
+		profileItems[0]->setData(profile->getUpdateUrl(), ContentFiltersManager::UpdateUrlRole);
 		profileItems[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		profileItems[0]->setCheckable(true);
 		profileItems[0]->setCheckState(Qt::Unchecked);
 		profileItems[1]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 		profileItems[2]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		const QModelIndexList indexList(m_ui->profilesViewWidget->model()->match(m_ui->profilesViewWidget->model()->index(0, 0), ContentBlockingManager::NameRole, QVariant::fromValue(static_cast<int>(profile->getCategory()))));
+		const QModelIndexList indexList(m_ui->profilesViewWidget->model()->match(m_ui->profilesViewWidget->model()->index(0, 0), ContentFiltersManager::NameRole, QVariant::fromValue(static_cast<int>(profile->getCategory()))));
 
 		if (indexList.count() > 0)
 		{
@@ -405,14 +405,14 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 	const QModelIndex currentIndex(m_ui->profilesViewWidget->currentIndex());
 
 	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 0), profile->getTitle(), Qt::DisplayRole);
-	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 0), profile->getUpdateUrl(), ContentBlockingManager::UpdateUrlRole);
+	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 0), profile->getUpdateUrl(), ContentFiltersManager::UpdateUrlRole);
 	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 1), profile->getUpdateInterval(), Qt::DisplayRole);
 	m_ui->profilesViewWidget->setData(currentIndex.sibling(currentIndex.row(), 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 }
 
 void ContentBlockingDialog::handleProfileModified(const QString &name)
 {
-	const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+	const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(name));
 
 	if (!profile)
 	{
@@ -429,7 +429,7 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 		{
 			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
 
-			if (entryIndex.data(ContentBlockingManager::NameRole).toString() == name)
+			if (entryIndex.data(ContentFiltersManager::NameRole).toString() == name)
 			{
 				QString title(profile->getTitle());
 
@@ -467,8 +467,8 @@ void ContentBlockingDialog::save()
 		{
 			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
 			const QModelIndex intervalIndex(m_ui->profilesViewWidget->getIndex(j, 1, categoryIndex));
-			const QString name(entryIndex.data(ContentBlockingManager::NameRole).toString());
-			ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
+			const QString name(entryIndex.data(ContentFiltersManager::NameRole).toString());
+			ContentBlockingProfile *profile(ContentFiltersManager::getProfile(name));
 
 			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())
 			{
@@ -499,7 +499,7 @@ void ContentBlockingDialog::save()
 
 			file.close();
 
-			ContentBlockingProfile *profile(ContentBlockingManager::getProfile(QLatin1String("custom")));
+			ContentBlockingProfile *profile(ContentFiltersManager::getProfile(QLatin1String("custom")));
 
 			if (profile)
 			{
@@ -509,7 +509,7 @@ void ContentBlockingDialog::save()
 			{
 				profile = new ContentBlockingProfile(QLatin1String("custom"), tr("Custom Rules"), {}, {}, {}, 0, ContentBlockingProfile::OtherCategory, ContentBlockingProfile::NoFlags);
 
-				ContentBlockingManager::addProfile(profile);
+				ContentFiltersManager::addProfile(profile);
 			}
 
 			profiles.append(QLatin1String("custom"));

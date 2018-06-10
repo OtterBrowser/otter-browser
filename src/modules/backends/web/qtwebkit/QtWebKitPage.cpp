@@ -24,7 +24,7 @@
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/Console.h"
-#include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
@@ -127,7 +127,7 @@ void QtWebKitFrame::handleLoadFinished()
 		return;
 	}
 
-	const ContentBlockingManager::CosmeticFiltersResult cosmeticFilters(ContentBlockingManager::getCosmeticFilters(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), m_widget->getUrl()));
+	const ContentFiltersManager::CosmeticFiltersResult cosmeticFilters(ContentFiltersManager::getCosmeticFilters(ContentFiltersManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), m_widget->getUrl()));
 
 	applyContentBlockingRules(cosmeticFilters.rules, true);
 	applyContentBlockingRules(cosmeticFilters.exceptions, false);
@@ -239,15 +239,15 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 		page->deleteLater();
 	}
 
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
+	const QVector<int> profiles(ContentFiltersManager::getProfileList(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
 
 	if (!profiles.isEmpty())
 	{
-		const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(profiles, mainFrame()->url(), url, NetworkManager::PopupType));
+		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(profiles, mainFrame()->url(), url, NetworkManager::PopupType));
 
 		if (result.isBlocked)
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentBlockingManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 			return;
 		}
@@ -857,7 +857,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 
 					if (blockeckedRequests.at(i).metaData.contains(NetworkManager::ContentBlockingRuleMetaData))
 					{
-						const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
+						const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
 
 						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)")).arg(QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
 					}

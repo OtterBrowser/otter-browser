@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "ContentBlockingManager.h"
+#include "ContentFiltersManager.h"
 #include "Console.h"
 #include "ContentBlockingProfile.h"
 #include "JsonSettings.h"
@@ -35,30 +35,30 @@
 namespace Otter
 {
 
-ContentBlockingManager* ContentBlockingManager::m_instance(nullptr);
-QVector<ContentBlockingProfile*> ContentBlockingManager::m_profiles;
-ContentBlockingManager::CosmeticFiltersMode ContentBlockingManager::m_cosmeticFiltersMode(AllFiltersMode);
-bool ContentBlockingManager::m_areWildcardsEnabled(true);
+ContentFiltersManager* ContentFiltersManager::m_instance(nullptr);
+QVector<ContentBlockingProfile*> ContentFiltersManager::m_profiles;
+ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::m_cosmeticFiltersMode(AllFiltersMode);
+bool ContentFiltersManager::m_areWildcardsEnabled(true);
 
-ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent),
+ContentFiltersManager::ContentFiltersManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
 {
 	m_areWildcardsEnabled = SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
 
 	handleOptionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
 
-	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ContentBlockingManager::handleOptionChanged);
+	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ContentFiltersManager::handleOptionChanged);
 }
 
-void ContentBlockingManager::createInstance()
+void ContentFiltersManager::createInstance()
 {
 	if (!m_instance)
 	{
-		m_instance = new ContentBlockingManager(QCoreApplication::instance());
+		m_instance = new ContentFiltersManager(QCoreApplication::instance());
 	}
 }
 
-void ContentBlockingManager::timerEvent(QTimerEvent *event)
+void ContentFiltersManager::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_saveTimer)
 	{
@@ -143,7 +143,7 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void ContentBlockingManager::ensureInitialized()
+void ContentFiltersManager::ensureInitialized()
 {
 	if (!m_profiles.isEmpty())
 	{
@@ -246,14 +246,14 @@ void ContentBlockingManager::ensureInitialized()
 
 		m_profiles.append(profile);
 
-		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentBlockingManager::profileModified);
-		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentBlockingManager::scheduleSave);
+		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentFiltersManager::profileModified);
+		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 	}
 
 	m_profiles.squeeze();
 }
 
-void ContentBlockingManager::scheduleSave()
+void ContentFiltersManager::scheduleSave()
 {
 	if (m_saveTimer == 0)
 	{
@@ -261,7 +261,7 @@ void ContentBlockingManager::scheduleSave()
 	}
 }
 
-void ContentBlockingManager::addProfile(ContentBlockingProfile *profile)
+void ContentFiltersManager::addProfile(ContentBlockingProfile *profile)
 {
 	if (profile)
 	{
@@ -269,11 +269,11 @@ void ContentBlockingManager::addProfile(ContentBlockingProfile *profile)
 
 		getInstance()->scheduleSave();
 
-		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentBlockingManager::scheduleSave);
+		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 	}
 }
 
-void ContentBlockingManager::handleOptionChanged(int identifier, const QVariant &value)
+void ContentFiltersManager::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
@@ -310,7 +310,7 @@ void ContentBlockingManager::handleOptionChanged(int identifier, const QVariant 
 	}
 }
 
-void ContentBlockingManager::removeProfile(ContentBlockingProfile *profile)
+void ContentFiltersManager::removeProfile(ContentBlockingProfile *profile)
 {
 	if (!profile || !profile->remove())
 	{
@@ -343,7 +343,7 @@ void ContentBlockingManager::removeProfile(ContentBlockingProfile *profile)
 	profile->deleteLater();
 }
 
-QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const QStringList &profiles)
+QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QStringList &profiles)
 {
 	ensureInitialized();
 
@@ -422,12 +422,12 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 	return model;
 }
 
-ContentBlockingManager* ContentBlockingManager::getInstance()
+ContentFiltersManager* ContentFiltersManager::getInstance()
 {
 	return m_instance;
 }
 
-ContentBlockingProfile* ContentBlockingManager::getProfile(const QString &profile)
+ContentBlockingProfile* ContentFiltersManager::getProfile(const QString &profile)
 {
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
@@ -440,12 +440,12 @@ ContentBlockingProfile* ContentBlockingManager::getProfile(const QString &profil
 	return nullptr;
 }
 
-ContentBlockingProfile* ContentBlockingManager::getProfile(int identifier)
+ContentBlockingProfile* ContentFiltersManager::getProfile(int identifier)
 {
 	return m_profiles.value(identifier, nullptr);
 }
 
-ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
+ContentFiltersManager::CheckResult ContentFiltersManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
 {
 	if (profiles.isEmpty())
 	{
@@ -482,7 +482,7 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	return result;
 }
 
-ContentBlockingManager::CosmeticFiltersResult ContentBlockingManager::getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl)
+ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl)
 {
 	if (profiles.isEmpty() || m_cosmeticFiltersMode == NoFiltersMode)
 	{
@@ -491,7 +491,7 @@ ContentBlockingManager::CosmeticFiltersResult ContentBlockingManager::getCosmeti
 
 	const CosmeticFiltersMode mode(checkUrl(profiles, requestUrl, requestUrl, NetworkManager::OtherType).comesticFiltersMode);
 
-	if (mode == ContentBlockingManager::NoFiltersMode)
+	if (mode == ContentFiltersManager::NoFiltersMode)
 	{
 		return {};
 	}
@@ -513,7 +513,7 @@ ContentBlockingManager::CosmeticFiltersResult ContentBlockingManager::getCosmeti
 	return result;
 }
 
-QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
+QStringList ContentFiltersManager::createSubdomainList(const QString &domain)
 {
 	QStringList subdomainList;
 	int dotPosition(domain.lastIndexOf(QLatin1Char('.')));
@@ -531,14 +531,14 @@ QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 	return subdomainList;
 }
 
-QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
+QVector<ContentBlockingProfile*> ContentFiltersManager::getProfiles()
 {
 	ensureInitialized();
 
 	return m_profiles;
 }
 
-QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
+QVector<int> ContentFiltersManager::getProfileList(const QStringList &names)
 {
 	ensureInitialized();
 
@@ -556,12 +556,12 @@ QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
 	return profiles;
 }
 
-ContentBlockingManager::CosmeticFiltersMode ContentBlockingManager::getCosmeticFiltersMode()
+ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::getCosmeticFiltersMode()
 {
 	return m_cosmeticFiltersMode;
 }
 
-bool ContentBlockingManager::areWildcardsEnabled()
+bool ContentFiltersManager::areWildcardsEnabled()
 {
 	return m_areWildcardsEnabled;
 }

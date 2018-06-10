@@ -145,7 +145,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 
 	if (rule.startsWith(QLatin1String("##")))
 	{
-		if (ContentBlockingManager::getCosmeticFiltersMode() == ContentBlockingManager::AllFiltersMode)
+		if (ContentFiltersManager::getCosmeticFiltersMode() == ContentFiltersManager::AllFiltersMode)
 		{
 			m_cosmeticFiltersRules.append(rule.mid(2));
 		}
@@ -155,7 +155,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 
 	if (rule.contains(QLatin1String("##")))
 	{
-		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
+		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFiltersMode)
 		{
 			parseStyleSheetRule(rule.split(QLatin1String("##")), m_cosmeticFiltersDomainRules);
 		}
@@ -165,7 +165,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 
 	if (rule.contains(QLatin1String("#@#")))
 	{
-		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
+		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFiltersMode)
 		{
 			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_cosmeticFiltersDomainExceptions);
 		}
@@ -192,7 +192,7 @@ void ContentBlockingProfile::parseRuleLine(const QString &rule)
 		line = line.mid(1);
 	}
 
-	if (!ContentBlockingManager::areWildcardsEnabled() && line.contains(QLatin1Char('*')))
+	if (!ContentFiltersManager::areWildcardsEnabled() && line.contains(QLatin1Char('*')))
 	{
 		return;
 	}
@@ -346,10 +346,10 @@ void ContentBlockingProfile::deleteNode(Node *node) const
 	delete node;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
+ContentFiltersManager::CheckResult ContentBlockingProfile::checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
 {
-	ContentBlockingManager::CheckResult result;
-	ContentBlockingManager::CheckResult currentResult;
+	ContentFiltersManager::CheckResult result;
+	ContentFiltersManager::CheckResult currentResult;
 
 	for (int i = 0; i < subString.length(); ++i)
 	{
@@ -453,7 +453,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(co
 	return result;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const
+ContentFiltersManager::CheckResult ContentBlockingProfile::checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const
 {
 	switch (rule->ruleMatch)
 	{
@@ -487,7 +487,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 			break;
 	}
 
-	const QStringList requestSubdomainList(ContentBlockingManager::createSubdomainList(m_requestHost));
+	const QStringList requestSubdomainList(ContentFiltersManager::createSubdomainList(m_requestHost));
 
 	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
 	{
@@ -554,7 +554,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 
 	if (isBlocked)
 	{
-		ContentBlockingManager::CheckResult result;
+		ContentFiltersManager::CheckResult result;
 		result.rule = rule->rule;
 
 		if (rule->isException)
@@ -564,11 +564,11 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(const
 
 			if (rule->ruleOptions.testFlag(ElementHideOption))
 			{
-				result.comesticFiltersMode = ContentBlockingManager::NoFiltersMode;
+				result.comesticFiltersMode = ContentFiltersManager::NoFiltersMode;
 			}
 			else if (rule->ruleOptions.testFlag(GenericHideOption))
 			{
-				result.comesticFiltersMode = ContentBlockingManager::DomainOnlyFiltersMode;
+				result.comesticFiltersMode = ContentFiltersManager::DomainOnlyFiltersMode;
 			}
 
 			return result;
@@ -723,9 +723,9 @@ QUrl ContentBlockingProfile::getUpdateUrl() const
 	return m_updateUrl;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
+ContentFiltersManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
 {
-	ContentBlockingManager::CheckResult result;
+	ContentFiltersManager::CheckResult result;
 
 	if (!m_wasLoaded && !loadRules())
 	{
@@ -743,7 +743,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 
 	for (int i = 0; i < m_requestUrl.length(); ++i)
 	{
-		const ContentBlockingManager::CheckResult currentResult(checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), {}, resourceType));
+		const ContentFiltersManager::CheckResult currentResult(checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), {}, resourceType));
 
 		if (currentResult.isBlocked)
 		{
@@ -758,14 +758,14 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 	return result;
 }
 
-ContentBlockingManager::CosmeticFiltersResult ContentBlockingProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
+ContentFiltersManager::CosmeticFiltersResult ContentBlockingProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
 {
 	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
 
-	ContentBlockingManager::CosmeticFiltersResult result;
+	ContentFiltersManager::CosmeticFiltersResult result;
 
 	if (!isDomainOnly)
 	{
@@ -843,15 +843,15 @@ bool ContentBlockingProfile::downloadRules()
 	return true;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const
+ContentFiltersManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const
 {
-	ContentBlockingManager::CheckResult result;
+	ContentFiltersManager::CheckResult result;
 
 	for (int i = 0; i < node->rules.count(); ++i)
 	{
 		if (node->rules.at(i))
 		{
-			ContentBlockingManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, resourceType));
+			ContentFiltersManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, resourceType));
 
 			if (currentResult.isBlocked)
 			{

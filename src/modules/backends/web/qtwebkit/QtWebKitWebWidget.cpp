@@ -28,7 +28,7 @@
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
-#include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/JsonSettings.h"

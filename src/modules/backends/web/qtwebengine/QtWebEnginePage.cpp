@@ -22,7 +22,7 @@
 #include "QtWebEngineWebBackend.h"
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/Console.h"
-#include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/ThemesManager.h"
@@ -70,15 +70,15 @@ void QtWebEnginePage::validatePopup(const QUrl &url)
 		page->deleteLater();
 	}
 
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).toStringList()));
+	const QVector<int> profiles(ContentFiltersManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).toStringList()));
 
 	if (!profiles.isEmpty())
 	{
-		const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(profiles, m_widget->getUrl(), url, NetworkManager::PopupType));
+		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(profiles, m_widget->getUrl(), url, NetworkManager::PopupType));
 
 		if (result.isBlocked)
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentBlockingManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(ContentFiltersManager::getProfile(result.profile)->getTitle()).arg(result.rule), Console::NetworkCategory, Console::LogLevel, url.url(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 			return;
 		}
@@ -171,7 +171,7 @@ void QtWebEnginePage::handleLoadFinished()
 		if (m_widget)
 		{
 			const QUrl url(m_widget->getUrl());
-			const ContentBlockingManager::CosmeticFiltersResult cosmeticFilters(ContentBlockingManager::getCosmeticFilters(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), url));
+			const ContentFiltersManager::CosmeticFiltersResult cosmeticFilters(ContentFiltersManager::getCosmeticFilters(ContentFiltersManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), url));
 
 			if (!cosmeticFilters.rules.isEmpty() || !cosmeticFilters.exceptions.isEmpty())
 			{

@@ -20,7 +20,7 @@
 
 #include "NetworkManagerFactory.h"
 #include "AddonsManager.h"
-#include "ContentBlockingManager.h"
+#include "ContentFiltersManager.h"
 #include "CookieJar.h"
 #include "NetworkCache.h"
 #include "NetworkManager.h"
@@ -229,7 +229,7 @@ void NetworkManagerFactory::createInstance()
 
 		QNetworkProxyFactory::setApplicationProxyFactory(m_proxyFactory);
 
-		ContentBlockingManager::createInstance();
+		ContentFiltersManager::createInstance();
 	}
 }
 

@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "ContentBlockingProfileDialog.h"
-#include "../../core/ContentBlockingManager.h"
+#include "../../core/ContentFiltersManager.h"
 #include "../../core/ContentBlockingProfile.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/Utils.h"
@@ -128,7 +128,7 @@ void ContentBlockingProfileDialog::save()
 
 		ContentBlockingProfile *profile(new ContentBlockingProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
 
-		ContentBlockingManager::addProfile(profile);
+		ContentFiltersManager::addProfile(profile);
 
 		m_profile = profile;
 	}

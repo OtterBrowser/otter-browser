@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_CONTENTBLOCKINGMANAGER_H
-#define OTTER_CONTENTBLOCKINGMANAGER_H
+#ifndef OTTER_CONTENTFILTERSMANAGER_H
+#define OTTER_CONTENTFILTERSMANAGER_H
 
 #include "NetworkManager.h"
 
@@ -31,7 +31,7 @@ namespace Otter
 
 class ContentBlockingProfile;
 
-class ContentBlockingManager final : public QObject
+class ContentFiltersManager final : public QObject
 {
 	Q_OBJECT
 
@@ -68,7 +68,7 @@ public:
 	static void addProfile(ContentBlockingProfile *profile);
 	static void removeProfile(ContentBlockingProfile *profile);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
-	static ContentBlockingManager* getInstance();
+	static ContentFiltersManager* getInstance();
 	static ContentBlockingProfile* getProfile(const QString &profile);
 	static ContentBlockingProfile* getProfile(int identifier);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
@@ -83,7 +83,7 @@ public slots:
 	void scheduleSave();
 
 protected:
-	explicit ContentBlockingManager(QObject *parent);
+	explicit ContentFiltersManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
 	static void ensureInitialized();
@@ -94,7 +94,7 @@ protected slots:
 private:
 	int m_saveTimer;
 
-	static ContentBlockingManager *m_instance;
+	static ContentFiltersManager *m_instance;
 	static QVector<ContentBlockingProfile*> m_profiles;
 	static CosmeticFiltersMode m_cosmeticFiltersMode;
 	static bool m_areWildcardsEnabled;

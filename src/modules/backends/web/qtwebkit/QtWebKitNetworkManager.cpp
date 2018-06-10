@@ -448,7 +448,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
-		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
+		m_contentBlockingProfiles = ContentFiltersManager::getProfileList(getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
 	}
 	else
 	{
@@ -720,11 +720,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				resourceType = NetworkManager::WebSocketType;
 			}
 
-			const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(m_contentBlockingProfiles, baseUrl, request.url(), resourceType));
+			const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(m_contentBlockingProfiles, baseUrl, request.url(), resourceType));
 
 			if (result.isBlocked)
 			{
-				const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(result.profile));
+				const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(result.profile));
 
 				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 

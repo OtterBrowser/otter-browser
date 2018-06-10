@@ -22,7 +22,7 @@
 #ifndef OTTER_CONTENTBLOCKINGPROFILE_H
 #define OTTER_CONTENTBLOCKINGPROFILE_H
 
-#include "ContentBlockingManager.h"
+#include "ContentFiltersManager.h"
 
 #include <QtCore/QRegularExpression>
 
@@ -72,8 +72,8 @@ public:
 	QString getTitle() const;
 	QUrl getUpdateUrl() const;
 	QDateTime getLastUpdate() const;
-	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
-	ContentBlockingManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
+	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
+	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
 	QVector<QLocale::Language> getLanguages() const;
 	ProfileCategory getCategory() const;
 	ProfileError getError() const;
@@ -147,9 +147,9 @@ protected:
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list) const;
 	void addRule(ContentBlockingRule *rule, const QString &ruleString) const;
 	void deleteNode(Node *node) const;
-	ContentBlockingManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
-	ContentBlockingManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
-	ContentBlockingManager::CheckResult evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
+	ContentFiltersManager::CheckResult checkUrlSubstring(const Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
+	ContentFiltersManager::CheckResult checkRuleMatch(const ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
+	ContentFiltersManager::CheckResult evaluateRulesInNode(const Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType) const;
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 

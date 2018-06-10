@@ -20,7 +20,7 @@
 
 #include "ContentBlockingInformationWidget.h"
 #include "../../../core/Application.h"
-#include "../../../core/ContentBlockingManager.h"
+#include "../../../core/ContentFiltersManager.h"
 #include "../../../core/ContentBlockingProfile.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
@@ -230,7 +230,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 		}
 	}
 
-	const QVector<ContentBlockingProfile*> profiles(ContentBlockingManager::getProfiles());
+	const QVector<ContentBlockingProfile*> profiles(ContentFiltersManager::getProfiles());
 	const QStringList enabledProfiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	for (int i = 0; i < profiles.count(); ++i)

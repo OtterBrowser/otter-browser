@@ -20,7 +20,7 @@
 
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "../../../../core/Console.h"
-#include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
@@ -92,7 +92,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 		if (SettingsManager::getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, host).toBool())
 		{
-			m_contentBlockingProfiles[host] = ContentBlockingManager::getProfileList(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
+			m_contentBlockingProfiles[host] = ContentFiltersManager::getProfileList(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
 		}
 		else
 		{
@@ -149,11 +149,11 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 				break;
 		}
 
-		const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(contentBlockingProfiles, request.firstPartyUrl(), request.requestUrl(), resourceType));
+		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(contentBlockingProfiles, request.firstPartyUrl(), request.requestUrl(), resourceType));
 
 		if (result.isBlocked)
 		{
-			const ContentBlockingProfile *profile(ContentBlockingManager::getProfile(result.profile));
+			const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(result.profile));
 
 			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
 
