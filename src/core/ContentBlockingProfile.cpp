@@ -28,6 +28,7 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QSaveFile>
 #include <QtCore/QTextStream>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
@@ -622,7 +623,7 @@ void ContentBlockingProfile::handleReplyFinished()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name));
+	QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -636,13 +637,12 @@ void ContentBlockingProfile::handleReplyFinished()
 	file.write(downloadedHeader);
 	file.write(downloadedChecksum);
 	file.write(downloadedData);
-	file.close();
 
 	m_lastUpdate = QDateTime::currentDateTimeUtc();
 
-	if (file.error() != QFile::NoError)
+	if (!file.commit())
 	{
-// TODO
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
 	}
 
 	clear();
