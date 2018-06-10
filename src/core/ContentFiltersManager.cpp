@@ -19,8 +19,8 @@
 **************************************************************************/
 
 #include "ContentFiltersManager.h"
+#include "AdblockContentFiltersProfile.h"
 #include "Console.h"
-#include "ContentBlockingProfile.h"
 #include "JsonSettings.h"
 #include "SettingsManager.h"
 #include "SessionsManager.h"
@@ -242,7 +242,7 @@ void ContentFiltersManager::ensureInitialized()
 			languages.append(languagesArray.at(j).toString());
 		}
 
-		ContentBlockingProfile *profile(new ContentBlockingProfile(profiles.at(i), title, updateUrl, lastUpdate, languages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
+		ContentBlockingProfile *profile(new AdblockContentFiltersProfile(profiles.at(i), title, updateUrl, lastUpdate, languages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
 
 		m_profiles.append(profile);
 
@@ -564,6 +564,10 @@ ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::getCosmeticFil
 bool ContentFiltersManager::areWildcardsEnabled()
 {
 	return m_areWildcardsEnabled;
+}
+
+ContentBlockingProfile::ContentBlockingProfile(QObject *parent) : QObject(parent)
+{
 }
 
 }

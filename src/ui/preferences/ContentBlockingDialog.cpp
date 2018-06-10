@@ -21,9 +21,9 @@
 #include "ContentBlockingDialog.h"
 #include "ContentBlockingProfileDialog.h"
 #include "../Animation.h"
+#include "../../core/AdblockContentFiltersProfile.h"
 #include "../../core/Console.h"
 #include "../../core/ContentFiltersManager.h"
-#include "../../core/ContentBlockingProfile.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"
@@ -321,7 +321,7 @@ void ContentBlockingDialog::updateProfile()
 
 	if (profile)
 	{
-		profile->downloadRules();
+		profile->update();
 	}
 }
 
@@ -507,7 +507,7 @@ void ContentBlockingDialog::save()
 			}
 			else
 			{
-				profile = new ContentBlockingProfile(QLatin1String("custom"), tr("Custom Rules"), {}, {}, {}, 0, ContentBlockingProfile::OtherCategory, ContentBlockingProfile::NoFlags);
+				profile = new AdblockContentFiltersProfile(QLatin1String("custom"), tr("Custom Rules"), {}, {}, {}, 0, ContentBlockingProfile::OtherCategory, ContentBlockingProfile::NoFlags);
 
 				ContentFiltersManager::addProfile(profile);
 			}

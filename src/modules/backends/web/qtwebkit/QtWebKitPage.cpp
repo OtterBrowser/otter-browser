@@ -25,7 +25,6 @@
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
-#include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"

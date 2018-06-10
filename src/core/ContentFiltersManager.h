@@ -103,6 +103,66 @@ signals:
 	void profileModified(const QString &profile);
 };
 
+class ContentBlockingProfile : public QObject
+{
+	Q_OBJECT
+
+public:
+	enum ProfileError
+	{
+		NoError = 0,
+		ReadError,
+		DownloadError,
+		ChecksumError
+	};
+
+	enum ProfileFlag
+	{
+		NoFlags = 0,
+		HasCustomTitleFlag = 1,
+		HasCustomUpdateUrlFlag = 2
+	};
+
+	Q_DECLARE_FLAGS(ProfileFlags, ProfileFlag)
+
+	enum ProfileCategory
+	{
+		OtherCategory = 0,
+		AdvertisementsCategory = 1,
+		AnnoyanceCategory = 2,
+		PrivacyCategory = 4,
+		SocialCategory = 8,
+		RegionalCategory = 16
+	};
+
+	explicit ContentBlockingProfile(QObject *parent = nullptr);
+
+	virtual void clear() = 0;
+	virtual void setCategory(ProfileCategory category) = 0;
+	virtual void setTitle(const QString &title) = 0;
+	virtual void setUpdateInterval(int interval) = 0;
+	virtual void setUpdateUrl(const QUrl &url) = 0;
+	virtual QString getName() const = 0;
+	virtual QString getTitle() const = 0;
+	virtual QUrl getUpdateUrl() const = 0;
+	virtual QDateTime getLastUpdate() const = 0;
+	virtual ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) = 0;
+	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) = 0;
+	virtual QVector<QLocale::Language> getLanguages() const = 0;
+	virtual ContentBlockingProfile::ProfileCategory getCategory() const = 0;
+	virtual ContentBlockingProfile::ProfileError getError() const = 0;
+	virtual ContentBlockingProfile::ProfileFlags getFlags() const = 0;
+	virtual int getUpdateInterval() const = 0;
+	virtual bool update() = 0;
+	virtual bool remove() = 0;
+	virtual bool isUpdating() const = 0;
+
+signals:
+	void profileModified(const QString &profile);
+};
+
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ContentBlockingProfile::ProfileFlags)
 
 #endif

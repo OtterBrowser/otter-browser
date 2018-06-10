@@ -23,7 +23,6 @@
 #include "CookiePropertiesDialog.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "../core/ContentFiltersManager.h"
-#include "../core/ContentBlockingProfile.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"

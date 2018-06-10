@@ -19,8 +19,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_CONTENTBLOCKINGPROFILE_H
-#define OTTER_CONTENTBLOCKINGPROFILE_H
+#ifndef OTTER_ADBLOCKCONTENTFILTERSPROFILE_H
+#define OTTER_ADBLOCKCONTENTFILTERSPROFILE_H
 
 #include "ContentFiltersManager.h"
 
@@ -29,59 +29,32 @@
 namespace Otter
 {
 
-class ContentBlockingProfile final : public QObject
+class AdblockContentFiltersProfile final : public ContentBlockingProfile
 {
 	Q_OBJECT
 
 public:
-	enum ProfileError
-	{
-		NoError = 0,
-		ReadError,
-		DownloadError,
-		ChecksumError
-	};
+	explicit AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = nullptr);
 
-	enum ProfileFlag
-	{
-		NoFlags = 0,
-		HasCustomTitleFlag = 1,
-		HasCustomUpdateUrlFlag = 2
-	};
-
-	Q_DECLARE_FLAGS(ProfileFlags, ProfileFlag)
-
-	enum ProfileCategory
-	{
-		OtherCategory = 0,
-		AdvertisementsCategory = 1,
-		AnnoyanceCategory = 2,
-		PrivacyCategory = 4,
-		SocialCategory = 8,
-		RegionalCategory = 16
-	};
-
-	explicit ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = nullptr);
-
-	void clear();
-	void setCategory(const ProfileCategory &category);
-	void setTitle(const QString &title);
-	void setUpdateInterval(int interval);
-	void setUpdateUrl(const QUrl &url);
-	QString getName() const;
-	QString getTitle() const;
-	QUrl getUpdateUrl() const;
-	QDateTime getLastUpdate() const;
-	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
-	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
-	QVector<QLocale::Language> getLanguages() const;
-	ProfileCategory getCategory() const;
-	ProfileError getError() const;
-	ProfileFlags getFlags() const;
-	int getUpdateInterval() const;
-	bool downloadRules();
-	bool remove();
-	bool isUpdating() const;
+	void clear() override;
+	void setCategory(ProfileCategory category) override;
+	void setTitle(const QString &title) override;
+	void setUpdateInterval(int interval) override;
+	void setUpdateUrl(const QUrl &url) override;
+	QString getName() const override;
+	QString getTitle() const override;
+	QUrl getUpdateUrl() const override;
+	QDateTime getLastUpdate() const override;
+	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
+	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
+	QVector<QLocale::Language> getLanguages() const override;
+	ContentBlockingProfile::ProfileCategory getCategory() const override;
+	ContentBlockingProfile::ProfileError getError() const override;
+	ContentBlockingProfile::ProfileFlags getFlags() const override;
+	int getUpdateInterval() const override;
+	bool update() override;
+	bool remove() override;
+	bool isUpdating() const override;
 
 protected:
 	enum RuleOption : quint32
@@ -188,7 +161,5 @@ signals:
 };
 
 }
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ContentBlockingProfile::ProfileFlags)
 
 #endif

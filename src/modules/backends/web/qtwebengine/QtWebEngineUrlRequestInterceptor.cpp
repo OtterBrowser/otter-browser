@@ -21,7 +21,6 @@
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
-#include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"

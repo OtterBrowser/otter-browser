@@ -23,7 +23,6 @@
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
-#include "../../../../core/ContentBlockingProfile.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"

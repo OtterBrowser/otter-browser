@@ -93,6 +93,7 @@ set(otter_src
 	src/main.cpp
 	src/core/ActionExecutor.cpp
 	src/core/ActionsManager.cpp
+	src/core/AdblockContentFiltersProfile.cpp
 	src/core/AddonsManager.cpp
 	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
@@ -100,7 +101,6 @@ set(otter_src
 	src/core/BookmarksManager.cpp
 	src/core/BookmarksModel.cpp
 	src/core/ContentFiltersManager.cpp
-	src/core/ContentBlockingProfile.cpp
 	src/core/Console.cpp
 	src/core/CookieJar.cpp
 	src/core/FeedParser.cpp

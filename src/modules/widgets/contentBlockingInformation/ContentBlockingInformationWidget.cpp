@@ -21,7 +21,6 @@
 #include "ContentBlockingInformationWidget.h"
 #include "../../../core/Application.h"
 #include "../../../core/ContentFiltersManager.h"
-#include "../../../core/ContentBlockingProfile.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/ContentsWidget.h"

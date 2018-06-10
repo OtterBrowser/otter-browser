@@ -19,8 +19,8 @@
 **************************************************************************/
 
 #include "ContentBlockingProfileDialog.h"
+#include "../../core/AdblockContentFiltersProfile.h"
 #include "../../core/ContentFiltersManager.h"
-#include "../../core/ContentBlockingProfile.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/Utils.h"
 
@@ -126,7 +126,7 @@ void ContentBlockingProfileDialog::save()
 		file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
 		file.close();
 
-		ContentBlockingProfile *profile(new ContentBlockingProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
+		ContentBlockingProfile *profile(new AdblockContentFiltersProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentBlockingProfile::HasCustomTitleFlag | ContentBlockingProfile::HasCustomUpdateUrlFlag)));
 
 		ContentFiltersManager::addProfile(profile);
 
