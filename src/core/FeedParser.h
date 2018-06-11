@@ -40,7 +40,8 @@ public:
 
 	explicit FeedParser(Feed *parent = nullptr);
 
-	virtual bool parse(DataFetchJob *data) = 0;
+	virtual void parse(DataFetchJob *data) = 0;
+	virtual bool isSuccess() const = 0;
 	static FeedParser* createParser(Feed *feed, DataFetchJob *data);
 };
 
@@ -49,13 +50,15 @@ class AtomFeedParser final : public FeedParser
 public:
 	explicit AtomFeedParser(Feed *parent = nullptr);
 
-	bool parse(DataFetchJob *data) override;
+	void parse(DataFetchJob *data) override;
+	bool isSuccess() const override;
 
 protected:
 	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
 	Feed *m_feed;
+	bool m_isSuccess;
 };
 
 class RssFeedParser final : public FeedParser
@@ -63,13 +66,15 @@ class RssFeedParser final : public FeedParser
 public:
 	explicit RssFeedParser(Feed *parent = nullptr);
 
-	bool parse(DataFetchJob *data) override;
+	void parse(DataFetchJob *data) override;
+	bool isSuccess() const override;
 
 protected:
 	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
 	Feed *m_feed;
+	bool m_isSuccess;
 };
 
 }

@@ -273,7 +273,16 @@ void Feed::update()
 		{
 			FeedParser *parser(FeedParser::createParser(this, job));
 
-			if (!parser || !parser->parse(job))
+			if (parser)
+			{
+				parser->parse(job);
+			}
+
+			if (parser && parser->isSuccess())
+			{
+				emit entriesModified(this);
+			}
+			else
 			{
 				m_error = ParseError;
 
@@ -281,10 +290,6 @@ void Feed::update()
 				{
 					Console::addMessage(tr("Failed to parse feed: invalid feed type"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
 				}
-			}
-			else
-			{
-				emit entriesModified(this);
 			}
 		}
 		else

@@ -76,12 +76,13 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 }
 
 AtomFeedParser::AtomFeedParser(Feed *parent) : FeedParser(parent),
-	m_feed(parent)
+	m_feed(parent),
+	m_isSuccess(true)
 {
 	m_feed->setMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("application/atom+xml")));
 }
 
-bool AtomFeedParser::parse(DataFetchJob *data)
+void AtomFeedParser::parse(DataFetchJob *data)
 {
 	QXmlStreamReader reader(data->getData());
 	QMap<QString, QString> categories;
@@ -194,6 +195,8 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 			if (reader.hasError())
 			{
 				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+
+				m_isSuccess = false;
 			}
 		}
 	}
@@ -203,13 +206,13 @@ bool AtomFeedParser::parse(DataFetchJob *data)
 	if (entries.isEmpty())
 	{
 		Console::addMessage(tr("Failed to parse feed: no valid entries found"), Console::NetworkCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+
+		m_isSuccess = false;
 	}
 
 	m_feed->setCategories(categories);
 	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
-
-	return true;
 }
 
 QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
@@ -220,21 +223,19 @@ QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
 	return dateTime;
 }
 
+bool AtomFeedParser::isSuccess() const
+{
+	return m_isSuccess;
+}
+
 RssFeedParser::RssFeedParser(Feed *parent) : FeedParser(parent),
-	m_feed(parent)
+	m_feed(parent),
+	m_isSuccess(true)
 {
 	m_feed->setMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("application/rss+xml")));
 }
 
-QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
-{
-	QDateTime dateTime(QDateTime::fromString(reader->readElementText(QXmlStreamReader::IncludeChildElements), Qt::RFC2822Date));
-	dateTime.setTimeSpec(Qt::UTC);
-
-	return dateTime;
-}
-
-bool RssFeedParser::parse(DataFetchJob *data)
+void RssFeedParser::parse(DataFetchJob *data)
 {
 	QXmlStreamReader reader(data->getData());
 	QMap<QString, QString> categories;
@@ -354,6 +355,8 @@ bool RssFeedParser::parse(DataFetchJob *data)
 			if (reader.hasError())
 			{
 				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString(), reader.lineNumber());
+
+				m_isSuccess = false;
 			}
 		}
 	}
@@ -363,13 +366,26 @@ bool RssFeedParser::parse(DataFetchJob *data)
 	if (entries.isEmpty())
 	{
 		Console::addMessage(tr("Failed to parse feed: no valid entries found"), Console::NetworkCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
+
+		m_isSuccess = false;
 	}
 
 	m_feed->setCategories(categories);
 	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
+}
 
-	return true;
+QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
+{
+	QDateTime dateTime(QDateTime::fromString(reader->readElementText(QXmlStreamReader::IncludeChildElements), Qt::RFC2822Date));
+	dateTime.setTimeSpec(Qt::UTC);
+
+	return dateTime;
+}
+
+bool RssFeedParser::isSuccess() const
+{
+	return m_isSuccess;
 }
 
 }
