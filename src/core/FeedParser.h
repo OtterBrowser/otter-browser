@@ -38,7 +38,7 @@ public:
 		RssParser
 	};
 
-	explicit FeedParser(Feed *parent = nullptr);
+	explicit FeedParser();
 
 	virtual void parse(DataFetchJob *data) = 0;
 	virtual bool isSuccess() const = 0;
@@ -48,7 +48,7 @@ public:
 class AtomFeedParser final : public FeedParser
 {
 public:
-	explicit AtomFeedParser(Feed *parent = nullptr);
+	explicit AtomFeedParser(Feed *feed);
 
 	void parse(DataFetchJob *data) override;
 	bool isSuccess() const override;
@@ -64,7 +64,7 @@ private:
 class RssFeedParser final : public FeedParser
 {
 public:
-	explicit RssFeedParser(Feed *parent = nullptr);
+	explicit RssFeedParser(Feed *feed);
 
 	void parse(DataFetchJob *data) override;
 	bool isSuccess() const override;

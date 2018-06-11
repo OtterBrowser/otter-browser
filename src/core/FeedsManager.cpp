@@ -291,6 +291,11 @@ void Feed::update()
 					Console::addMessage(tr("Failed to parse feed: invalid feed type"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
 				}
 			}
+
+			if (parser)
+			{
+				parser->deleteLater();
+			}
 		}
 		else
 		{

@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-FeedParser::FeedParser(Feed *parent) : QObject(parent)
+FeedParser::FeedParser() : QObject()
 {
 }
 
@@ -75,8 +75,8 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 	return nullptr;
 }
 
-AtomFeedParser::AtomFeedParser(Feed *parent) : FeedParser(parent),
-	m_feed(parent),
+AtomFeedParser::AtomFeedParser(Feed *feed) : FeedParser(),
+	m_feed(feed),
 	m_isSuccess(true)
 {
 	m_feed->setMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("application/atom+xml")));
@@ -228,8 +228,8 @@ bool AtomFeedParser::isSuccess() const
 	return m_isSuccess;
 }
 
-RssFeedParser::RssFeedParser(Feed *parent) : FeedParser(parent),
-	m_feed(parent),
+RssFeedParser::RssFeedParser(Feed *feed) : FeedParser(),
+	m_feed(feed),
 	m_isSuccess(true)
 {
 	m_feed->setMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("application/rss+xml")));
