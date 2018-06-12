@@ -706,7 +706,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 			{
 				m_feeds[normalizedUrl] = {};
 
-				connect(feed, &Feed::feedModified, this, &BookmarksModel::handleFeedModified);
+				connect(feed, &Feed::entriesModified, this, &BookmarksModel::handleFeedModified);
 			}
 
 			m_feeds[normalizedUrl].append(bookmark);
@@ -934,6 +934,14 @@ void BookmarksModel::handleFeedModified(Feed *feed)
 		bookmarks.append(m_feeds.value(normalizedUrl));
 	}
 
+	if (bookmarks.isEmpty())
+	{
+		return;
+	}
+
+	beginResetModel();
+	blockSignals(true);
+
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{
 		Bookmark *bookmark(bookmarks.at(i));
@@ -951,6 +959,16 @@ void BookmarksModel::handleFeedModified(Feed *feed)
 			}
 		}
 	}
+
+	blockSignals(false);
+	endResetModel();
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		emit bookmarkModified(bookmarks.at(i));
+	}
+
+	emit modelModified();
 }
 
 void BookmarksModel::handleKeywordChanged(Bookmark *bookmark, const QString &newKeyword, const QString &oldKeyword)
