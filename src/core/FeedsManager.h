@@ -24,10 +24,13 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QMimeType>
+#include <QtCore/QThread>
 
 namespace Otter
 {
 
+class FeedsManager;
+class FeedParser;
 class LongTermTimer;
 
 class Feed final : public QObject
@@ -58,20 +61,13 @@ public:
 
 	explicit Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent = nullptr);
 
-	void addEntries(const QVector<Entry> &entries);
 	void addRemovedEntry(const QString &identifier);
-	void setTitle(const QString &title, bool isOriginal = false);
+	void setTitle(const QString &title);
 	void setDescription(const QString &description);
 	void setUrl(const QUrl &url);
-	void setIcon(const QUrl &url);
 	void setIcon(const QIcon &icon);
 	void setLastUpdateTime(const QDateTime &time);
 	void setLastSynchronizationTime(const QDateTime &time);
-	void setMimeType(const QMimeType &mimeType);
-	void setCategories(const QMap<QString, QString> &categories);
-	void setRemovedEntries(const QStringList &removedEntries);
-	void setEntries(const QVector<Entry> &entries);
-	void setError(FeedError error);
 	void setUpdateInterval(int interval);
 	QString getTitle() const;
 	QString getDescription() const;
@@ -90,8 +86,15 @@ public:
 public slots:
 	void update();
 
+protected:
+	void setCategories(const QMap<QString, QString> &categories);
+	void setRemovedEntries(const QStringList &removedEntries);
+	void setEntries(const QVector<Entry> &entries);
+
 private:
 	LongTermTimer *m_updateTimer;
+	FeedParser *m_parser;
+	QThread m_parserThread;
 	QString m_title;
 	QString m_description;
 	QUrl m_url;
@@ -109,6 +112,8 @@ private:
 signals:
 	void feedModified(Feed *feed);
 	void entriesModified(Feed *feed);
+
+friend class FeedsManager;
 };
 
 class FeedsManager final : public QObject

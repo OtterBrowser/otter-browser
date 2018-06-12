@@ -20,13 +20,15 @@
 #ifndef OTTER_FEEDPARSER_H
 #define OTTER_FEEDPARSER_H
 
+#include "FeedsManager.h"
+
+#include <QtCore/QMimeType>
 #include <QtCore/QXmlStreamReader>
 
 namespace Otter
 {
 
 class DataFetchJob;
-class Feed;
 
 class FeedParser : public QObject
 {
@@ -40,10 +42,21 @@ public:
 		RssParser
 	};
 
+	struct FeedInformation
+	{
+		QString title;
+		QString description;
+		QUrl icon;
+		QDateTime lastUpdateTime;
+		QMimeType mimeType;
+		QMap<QString, QString> categories;
+		QVector<Feed::Entry> entries;
+	};
+
 	explicit FeedParser();
 
 	virtual void parse(DataFetchJob *data) = 0;
-	virtual bool isSuccess() const = 0;
+	virtual FeedInformation getInformation() const = 0;
 	static FeedParser* createParser(Feed *feed, DataFetchJob *data);
 
 signals:
@@ -53,33 +66,31 @@ signals:
 class AtomFeedParser final : public FeedParser
 {
 public:
-	explicit AtomFeedParser(Feed *feed);
+	explicit AtomFeedParser();
 
 	void parse(DataFetchJob *data) override;
-	bool isSuccess() const override;
+	FeedInformation getInformation() const override;
 
 protected:
 	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
-	Feed *m_feed;
-	bool m_isSuccess;
+	FeedInformation m_data;
 };
 
 class RssFeedParser final : public FeedParser
 {
 public:
-	explicit RssFeedParser(Feed *feed);
+	explicit RssFeedParser();
 
 	void parse(DataFetchJob *data) override;
-	bool isSuccess() const override;
+	FeedInformation getInformation() const override;
 
 protected:
 	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
-	Feed *m_feed;
-	bool m_isSuccess;
+	FeedInformation m_data;
 };
 
 }

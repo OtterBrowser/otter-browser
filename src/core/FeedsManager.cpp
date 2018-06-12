@@ -39,6 +39,7 @@ namespace Otter
 
 Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateInterval, QObject *parent) : QObject(parent),
 	m_updateTimer(nullptr),
+	m_parser(nullptr),
 	m_title(title),
 	m_url(url),
 	m_icon(icon),
@@ -47,64 +48,6 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 	m_isUpdating(false)
 {
 	setUpdateInterval(updateInterval);
-}
-
-void Feed::addEntries(const QVector<Entry> &entries)
-{
-	QStringList existingRemovedEntries;
-	int amount(0);
-
-	for (int i = (entries.count() - 1); i >= 0; --i)
-	{
-		const Feed::Entry entry(entries.at(i));
-
-		if (m_removedEntries.contains(entry.identifier))
-		{
-			existingRemovedEntries.append(entry.identifier);
-		}
-		else
-		{
-			bool hasEntry(false);
-
-			for (int j = 0; j < m_entries.count(); ++j)
-			{
-				const Feed::Entry existingEntry(m_entries.at(j));
-
-				if (existingEntry.identifier == entry.identifier)
-				{
-					m_entries[j] = entry;
-
-					if (existingEntry.publicationTime != entry.publicationTime || existingEntry.updateTime != entry.updateTime)
-					{
-						++amount;
-					}
-
-					hasEntry = true;
-
-					break;
-				}
-			}
-
-			if (!hasEntry)
-			{
-				++amount;
-
-				m_entries.prepend(entries.at(i));
-			}
-		}
-	}
-
-	m_removedEntries = existingRemovedEntries;
-
-	if (amount > 0)
-	{
-		connect(NotificationsManager::createNotification(NotificationsManager::FeedUpdatedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
-		{
-			Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
-		});
-
-		emit feedModified(this);
-	}
 }
 
 void Feed::addRemovedEntry(const QString &identifier)
@@ -127,9 +70,9 @@ void Feed::addRemovedEntry(const QString &identifier)
 	}
 }
 
-void Feed::setTitle(const QString &title, bool isOriginal)
+void Feed::setTitle(const QString &title)
 {
-	if (title != m_title && (!isOriginal || m_title.isEmpty()))
+	if (title != m_title)
 	{
 		m_title = title;
 
@@ -159,19 +102,6 @@ void Feed::setUrl(const QUrl &url)
 	}
 }
 
-void Feed::setIcon(const QUrl &url)
-{
-	if (m_icon.isNull())
-	{
-		const IconFetchJob *job(new IconFetchJob(url, this));
-
-		connect(job, &IconFetchJob::jobFinished, this, [=]()
-		{
-			setIcon(job->getIcon());
-		});
-	}
-}
-
 void Feed::setIcon(const QIcon &icon)
 {
 	m_icon = icon;
@@ -181,37 +111,17 @@ void Feed::setIcon(const QIcon &icon)
 
 void Feed::setLastUpdateTime(const QDateTime &time)
 {
-	if (time != m_lastUpdateTime)
-	{
-		m_lastUpdateTime = time;
-
-		emit feedModified(this);
-	}
+	m_lastUpdateTime = time;
 }
 
 void Feed::setLastSynchronizationTime(const QDateTime &time)
 {
-	if (time != m_lastSynchronizationTime)
-	{
-		m_lastSynchronizationTime = time;
-
-		emit feedModified(this);
-	}
-}
-
-void Feed::setMimeType(const QMimeType &mimeType)
-{
-	m_mimeType = mimeType;
+	m_lastSynchronizationTime = time;
 }
 
 void Feed::setCategories(const QMap<QString, QString> &categories)
 {
-	if (categories != m_categories)
-	{
-		m_categories = categories;
-
-		emit feedModified(this);
-	}
+	m_categories = categories;
 }
 
 void Feed::setRemovedEntries(const QStringList &removedEntries)
@@ -222,13 +132,6 @@ void Feed::setRemovedEntries(const QStringList &removedEntries)
 void Feed::setEntries(const QVector<Feed::Entry> &entries)
 {
 	m_entries = entries;
-}
-
-void Feed::setError(Feed::FeedError error)
-{
-	m_error = error;
-
-	emit feedModified(this);
 }
 
 void Feed::setUpdateInterval(int interval)
@@ -260,51 +163,152 @@ void Feed::setUpdateInterval(int interval)
 
 void Feed::update()
 {
+	if (m_parser)
+	{
+		return;
+	}
+
 	m_error = NoError;
 	m_isUpdating = true;
 
 	emit feedModified(this);
 
-	DataFetchJob *job(new DataFetchJob(m_url, this));
+	DataFetchJob *dataJob(new DataFetchJob(m_url, this));
 
-	connect(job, &DataFetchJob::jobFinished, this, [=](bool isSuccess)
+	connect(dataJob, &DataFetchJob::jobFinished, this, [=](bool isFetchSuccess)
 	{
-		if (isSuccess)
+		if (isFetchSuccess)
 		{
-			FeedParser *parser(FeedParser::createParser(this, job));
-
-			if (parser)
+			m_parser = FeedParser::createParser(this, dataJob);
+			if (m_parser)
 			{
-				parser->parse(job);
-			}
+				m_parser->moveToThread(&m_parserThread);
 
-			if (parser && parser->isSuccess())
-			{
-				emit entriesModified(this);
+				connect(m_parser, &FeedParser::parsingFinished, [&](bool isParsingSuccess)
+				{
+					const FeedParser::FeedInformation information(m_parser->getInformation());
+
+					if (!isParsingSuccess)
+					{
+						m_error = ParseError;
+					}
+
+					if (m_icon.isNull() && information.icon.isValid())
+					{
+						const IconFetchJob *iconJob(new IconFetchJob(information.icon, this));
+
+						connect(iconJob, &IconFetchJob::jobFinished, this, [=]()
+						{
+							setIcon(iconJob->getIcon());
+						});
+					}
+
+					if (m_title.isEmpty())
+					{
+						m_title = information.title;
+					}
+
+					if (m_description.isEmpty())
+					{
+						m_description = information.description;
+					}
+
+					if (!information.entries.isEmpty())
+					{
+						QStringList existingRemovedEntries;
+						int amount(0);
+
+						for (int i = (information.entries.count() - 1); i >= 0; --i)
+						{
+							const Feed::Entry entry(information.entries.at(i));
+
+							if (m_removedEntries.contains(entry.identifier))
+							{
+								existingRemovedEntries.append(entry.identifier);
+							}
+							else
+							{
+								bool hasEntry(false);
+
+								for (int j = 0; j < m_entries.count(); ++j)
+								{
+									const Feed::Entry existingEntry(m_entries.at(j));
+
+									if (existingEntry.identifier == entry.identifier)
+									{
+										m_entries[j] = entry;
+
+										if (existingEntry.publicationTime != entry.publicationTime || existingEntry.updateTime != entry.updateTime)
+										{
+											++amount;
+										}
+
+										hasEntry = true;
+
+										break;
+									}
+								}
+
+								if (!hasEntry)
+								{
+									++amount;
+
+									m_entries.prepend(information.entries.at(i));
+								}
+							}
+						}
+
+						m_removedEntries = existingRemovedEntries;
+
+						if (amount > 0)
+						{
+							connect(NotificationsManager::createNotification(NotificationsManager::FeedUpdatedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+							{
+								Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
+							});
+						}
+
+						emit entriesModified(this);
+					}
+
+					m_mimeType = information.mimeType;
+					m_lastSynchronizationTime = QDateTime::currentDateTimeUtc();
+					m_lastUpdateTime = information.lastUpdateTime;
+					m_categories = information.categories;
+
+					m_parserThread.exit();
+
+					m_parser->deleteLater();
+					m_parser = nullptr;
+
+					m_isUpdating = false;
+
+					emit feedModified(this);
+				});
+
+				m_parserThread.start();
+
+				m_parser->parse(dataJob);
 			}
 			else
 			{
 				m_error = ParseError;
+				m_isUpdating = false;
 
-				if (!parser)
-				{
-					Console::addMessage(tr("Failed to parse feed: invalid feed type"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
-				}
-			}
+				Console::addMessage(tr("Failed to parse feed: invalid feed type"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
 
-			if (parser)
-			{
-				parser->deleteLater();
+				emit feedModified(this);
 			}
 		}
 		else
 		{
 			m_error = DownloadError;
+			m_isUpdating = false;
+
+			Console::addMessage(tr("Failed to download feed"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
+
+			emit feedModified(this);
 		}
-
-		m_isUpdating = false;
-
-		emit feedModified(this);
 	});
 }
 
