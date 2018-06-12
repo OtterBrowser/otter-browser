@@ -330,7 +330,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(p
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
 	setWindow(window);
-	updateCompletion(false);
+	updateCompletion(true);
 	handleOptionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getOption(SettingsManager::AddressField_CompletionModeOption));
 	handleOptionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getOption(SettingsManager::AddressField_DropActionOption));
 	handleOptionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getOption(SettingsManager::AddressField_LayoutOption));
