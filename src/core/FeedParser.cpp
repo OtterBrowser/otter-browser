@@ -356,7 +356,7 @@ void RssFeedParser::parse(DataFetchJob *data)
 
 			if (reader.hasError())
 			{
-				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString(), reader.lineNumber());
+				Console::addMessage(tr("Failed to parse feed file: %1").arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, data->getUrl().toDisplayString(), static_cast<int>(reader.lineNumber()));
 
 				m_isSuccess = false;
 			}
