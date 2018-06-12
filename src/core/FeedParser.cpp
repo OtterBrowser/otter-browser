@@ -213,6 +213,8 @@ void AtomFeedParser::parse(DataFetchJob *data)
 	m_feed->setCategories(categories);
 	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
+
+	emit parsingFinished(m_isSuccess);
 }
 
 QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
@@ -373,7 +375,8 @@ void RssFeedParser::parse(DataFetchJob *data)
 	m_feed->setCategories(categories);
 	m_feed->addEntries(entries);
 	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
-}
+
+	emit parsingFinished(m_isSuccess);}
 
 QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
 {

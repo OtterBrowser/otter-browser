@@ -30,6 +30,8 @@ class Feed;
 
 class FeedParser : public QObject
 {
+	Q_OBJECT
+
 public:
 	enum ParserType
 	{
@@ -43,6 +45,9 @@ public:
 	virtual void parse(DataFetchJob *data) = 0;
 	virtual bool isSuccess() const = 0;
 	static FeedParser* createParser(Feed *feed, DataFetchJob *data);
+
+signals:
+	void parsingFinished(bool isSuccess);
 };
 
 class AtomFeedParser final : public FeedParser
