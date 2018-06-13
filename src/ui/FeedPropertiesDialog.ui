@@ -7,16 +7,47 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>180</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit Feed</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
+      <widget class="QLabel" name="folderLabel">
+       <property name="text">
+        <string>Folder:</string>
+       </property>
+       <property name="buddy">
+        <cstring>folderComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="folderLayout">
+       <item>
+        <widget class="Otter::FeedsComboBoxWidget" name="folderComboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="newFolderButton">
+         <property name="text">
+          <string>New…</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="titleLabel">
        <property name="text">
         <string>Title:</string>
@@ -26,7 +57,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="1" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="Otter::LineEditWidget" name="titleLineEditWidget"/>
@@ -52,7 +83,7 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="urlLabel">
        <property name="text">
         <string>Address:</string>
@@ -62,10 +93,10 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <widget class="Otter::LineEditWidget" name="urlLineEditWidget"/>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="updateIntervalLabel">
        <property name="text">
         <string>Update interval:</string>
@@ -75,7 +106,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <widget class="QSpinBox" name="updateIntervalSpinBox">
        <property name="specialValueText">
         <string>Never</string>
@@ -95,9 +126,6 @@
    </item>
    <item>
     <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>0</width>
@@ -119,6 +147,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>Otter::FeedsComboBoxWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/FeedsComboBoxWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>Otter::LineEditWidget</class>
    <extends>QLineEdit</extends>

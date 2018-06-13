@@ -138,7 +138,7 @@ void FeedsContentsWidget::changeEvent(QEvent *event)
 
 void FeedsContentsWidget::addFeed()
 {
-	FeedPropertiesDialog dialog(nullptr, this);
+	FeedPropertiesDialog dialog(nullptr, findFolder(m_ui->feedsViewWidget->currentIndex()), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -161,7 +161,7 @@ void FeedsContentsWidget::addFeed()
 		}
 	}
 
-	FeedsManager::getModel()->addEntry(dialog.getFeed(), findFolder(m_ui->feedsViewWidget->currentIndex()));
+	FeedsManager::getModel()->addEntry(dialog.getFeed(), dialog.getFolder());
 
 	updateActions();
 }
@@ -211,7 +211,7 @@ void FeedsContentsWidget::subscribeFeed()
 
 	if (m_ui->applicationComboBox->currentIndex() == 0)
 	{
-		FeedPropertiesDialog dialog(m_feed, this);
+		FeedPropertiesDialog dialog(m_feed, findFolder(m_ui->feedsViewWidget->currentIndex()), this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
@@ -232,7 +232,7 @@ void FeedsContentsWidget::feedProperties()
 
 	if (entry)
 	{
-		FeedPropertiesDialog dialog(entry->getFeed(), this);
+		FeedPropertiesDialog dialog(entry->getFeed(), findFolder(m_ui->feedsViewWidget->currentIndex()), this);
 		dialog.exec();
 
 		updateActions();

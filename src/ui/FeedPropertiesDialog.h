@@ -21,6 +21,7 @@
 #define OTTER_FEEDPROPERTIESDIALOG_H
 
 #include "Dialog.h"
+#include "../core/FeedsModel.h"
 
 namespace Otter
 {
@@ -37,10 +38,11 @@ class FeedPropertiesDialog final : public Dialog
 	Q_OBJECT
 
 public:
-	explicit FeedPropertiesDialog(Feed *feed, QWidget *parent = nullptr);
+	explicit FeedPropertiesDialog(Feed *feed, FeedsModel::Entry *folder = nullptr, QWidget *parent = nullptr);
 	~FeedPropertiesDialog();
 
 	Feed* getFeed() const;
+	FeedsModel::Entry* getFolder() const;
 
 protected:
 	void changeEvent(QEvent *event) override;
