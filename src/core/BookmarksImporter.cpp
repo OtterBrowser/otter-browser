@@ -24,7 +24,7 @@
 namespace Otter
 {
 
-BookmarksImporter::BookmarksImporter(QObject *parent): Importer(parent),
+BookmarksImporter::BookmarksImporter(QObject *parent) : Importer(parent),
 	m_currentFolder(nullptr),
 	m_importFolder(nullptr),
 	m_areDuplicatesAllowed(true)
