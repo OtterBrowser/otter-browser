@@ -205,7 +205,8 @@ bool FeedsModel::Entry::isAncestorOf(FeedsModel::Entry *child) const
 
 FeedsModel::FeedsModel(const QString &path, QObject *parent) : QStandardItemModel(parent),
 	m_rootEntry(new Entry()),
-	m_trashEntry(new Entry())
+	m_trashEntry(new Entry()),
+	m_importTargetEntry(nullptr)
 {
 	m_rootEntry->setData(RootEntry, TypeRole);
 	m_rootEntry->setDragEnabled(false);
@@ -259,6 +260,36 @@ FeedsModel::FeedsModel(const QString &path, QObject *parent) : QStandardItemMode
 	}
 
 	file.close();
+}
+
+void FeedsModel::beginImport(Entry *target, int estimatedUrlsAmount)
+{
+	m_importTargetEntry = target;
+
+	beginResetModel();
+	blockSignals(true);
+
+	if (estimatedUrlsAmount > 0)
+	{
+		m_urls.reserve(m_urls.count() + estimatedUrlsAmount);
+	}
+}
+
+void FeedsModel::endImport()
+{
+	m_urls.squeeze();
+
+	blockSignals(false);
+	endResetModel();
+
+	if (m_importTargetEntry)
+	{
+		emit entryModified(m_importTargetEntry);
+
+		m_importTargetEntry = nullptr;
+	}
+
+	emit modelModified();
 }
 
 void FeedsModel::trashEntry(Entry *entry)

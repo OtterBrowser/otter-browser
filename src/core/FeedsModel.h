@@ -80,6 +80,8 @@ public:
 
 	explicit FeedsModel(const QString &path, QObject *parent = nullptr);
 
+	void beginImport(Entry *target, int estimatedUrlsAmount);
+	void endImport();
 	void trashEntry(Entry *entry);
 	void restoreEntry(Entry *entry);
 	void removeEntry(Entry *entry);
@@ -112,6 +114,7 @@ protected:
 private:
 	Entry *m_rootEntry;
 	Entry *m_trashEntry;
+	Entry *m_importTargetEntry;
 	QHash<Entry*, QPair<QModelIndex, int> > m_trash;
 	QHash<QUrl, QVector<Entry*> > m_urls;
 	QMap<quint64, Entry*> m_identifiers;
