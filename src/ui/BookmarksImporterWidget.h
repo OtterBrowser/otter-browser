@@ -41,7 +41,7 @@ public:
 	explicit BookmarksImporterWidget(QWidget *parent = nullptr);
 	~BookmarksImporterWidget();
 
-	BookmarksModel::Bookmark *getTargetFolder() const;
+	BookmarksModel::Bookmark* getTargetFolder() const;
 	QString getSubfolderName() const;
 	bool areDuplicatesAllowed() const;
 	bool isImportingIntoSubfolder() const;
