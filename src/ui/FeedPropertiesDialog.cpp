@@ -53,6 +53,7 @@ FeedPropertiesDialog::FeedPropertiesDialog(Feed *feed, FeedsModel::Entry *folder
 	m_ui->folderComboBox->setCurrentFolder(folder);
 	m_ui->iconButton->setDefaultIcon(ThemesManager::createIcon(QLatin1String("application-rss+xml")));
 
+	connect(m_ui->newFolderButton, &QPushButton::clicked, m_ui->folderComboBox, &FeedsComboBoxWidget::createFolder);
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &FeedPropertiesDialog::saveFeed);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &FeedPropertiesDialog::close);
 }
