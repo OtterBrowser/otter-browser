@@ -161,6 +161,7 @@ set(otter_src
 	src/ui/CookiePropertiesDialog.cpp
 	src/ui/Dialog.cpp
 	src/ui/FeedPropertiesDialog.cpp
+	src/ui/FeedsComboBoxWidget.cpp
 	src/ui/FilePathWidget.cpp
 	src/ui/IconWidget.cpp
 	src/ui/ImagePropertiesDialog.cpp
