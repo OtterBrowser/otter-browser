@@ -160,13 +160,18 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			break;
 		case ActionsManager::ReloadAndBypassCacheAction:
 			{
-			triggerAction(ActionsManager::StopAction, {}, trigger);
+				triggerAction(ActionsManager::StopAction, {}, trigger);
 
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 				request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
-				m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
+				if (!m_networkManager)
+				{
+					m_networkManager = new NetworkManager(m_isPrivate, this);
+				}
+
+				m_viewSourceReply = m_networkManager->get(request);
 
 				connect(m_viewSourceReply, &QNetworkReply::finished, this, &SourceViewerWebWidget::handleViewSourceReplyFinished);
 
