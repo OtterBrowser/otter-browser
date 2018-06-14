@@ -180,6 +180,7 @@ void Feed::update()
 		if (isFetchSuccess)
 		{
 			m_parser = FeedParser::createParser(this, dataJob);
+
 			if (m_parser)
 			{
 				m_parser->moveToThread(&m_parserThread);
