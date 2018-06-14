@@ -25,6 +25,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtNetwork/QAuthenticator>
+#include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QSslCipher>
 
 namespace Otter
@@ -199,6 +200,7 @@ public:
 	static NetworkManager* getNetworkManager();
 	static NetworkCache* getCache();
 	static CookieJar* getCookieJar();
+	static QNetworkReply* createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, bool isPrivate = false, QIODevice *outgoingData = nullptr);
 	static QString getAcceptLanguage();
 	static QString getUserAgent();
 	static QStringList getProxies();
@@ -225,7 +227,8 @@ protected slots:
 
 private:
 	static NetworkManagerFactory *m_instance;
-	static NetworkManager *m_networkManager;
+	static NetworkManager *m_privateNetworkManager;
+	static NetworkManager *m_standardNetworkManager;
 	static NetworkProxyFactory *m_proxyFactory;
 	static NetworkCache *m_cache;
 	static CookieJar *m_cookieJar;

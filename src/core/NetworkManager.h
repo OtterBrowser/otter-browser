@@ -29,6 +29,7 @@ namespace Otter
 {
 
 class CookieJar;
+class NetworkManagerFactory;
 
 class NetworkManager final : public QNetworkAccessManager
 {
@@ -79,6 +80,8 @@ protected slots:
 
 private:
 	CookieJar *m_cookieJar;
+
+friend class NetworkManagerFactory;
 };
 
 }

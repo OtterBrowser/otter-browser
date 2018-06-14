@@ -41,7 +41,8 @@ namespace Otter
 {
 
 NetworkManagerFactory* NetworkManagerFactory::m_instance(nullptr);
-NetworkManager* NetworkManagerFactory::m_networkManager(nullptr);
+NetworkManager* NetworkManagerFactory::m_privateNetworkManager(nullptr);
+NetworkManager* NetworkManagerFactory::m_standardNetworkManager(nullptr);
 NetworkProxyFactory* NetworkManagerFactory::m_proxyFactory(nullptr);
 NetworkCache* NetworkManagerFactory::m_cache(nullptr);
 CookieJar* NetworkManagerFactory::m_cookieJar(nullptr);
@@ -600,12 +601,12 @@ NetworkManagerFactory* NetworkManagerFactory::getInstance()
 
 NetworkManager* NetworkManagerFactory::getNetworkManager()
 {
-	if (!m_networkManager)
+	if (!m_privateNetworkManager)
 	{
-		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
+		m_privateNetworkManager = new NetworkManager(true, QCoreApplication::instance());
 	}
 
-	return m_networkManager;
+	return m_privateNetworkManager;
 }
 
 NetworkCache* NetworkManagerFactory::getCache()
@@ -626,6 +627,16 @@ CookieJar* NetworkManagerFactory::getCookieJar()
 	}
 
 	return m_cookieJar;
+}
+
+QNetworkReply* NetworkManagerFactory::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, bool isPrivate, QIODevice *outgoingData)
+{
+	if (!isPrivate && !m_standardNetworkManager)
+	{
+		m_standardNetworkManager = new NetworkManager(false, m_instance);
+	}
+
+	return (isPrivate ? getNetworkManager() : m_standardNetworkManager)->createRequest(operation, request, outgoingData);
 }
 
 QString NetworkManagerFactory::getAcceptLanguage()
