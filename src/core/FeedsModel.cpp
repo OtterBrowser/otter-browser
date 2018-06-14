@@ -396,6 +396,7 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 			entry->setData(FeedEntry, TypeRole);
 			entry->setFlags(entry->flags() | Qt::ItemNeverHasChildren);
 
+			createIdentifier(entry);
 			handleUrlChanged(entry, url);
 
 			parent->appendRow(entry);
@@ -406,6 +407,8 @@ void FeedsModel::readEntry(QXmlStreamReader *reader, Entry *parent)
 		Entry *entry(new Entry());
 		entry->setData(FolderEntry, TypeRole);
 		entry->setData(title, TitleRole);
+
+		createIdentifier(entry);
 
 		parent->appendRow(entry);
 
@@ -541,6 +544,15 @@ void FeedsModel::emptyTrash()
 	emit modelModified();
 }
 
+void FeedsModel::createIdentifier(FeedsModel::Entry *entry)
+{
+	const quint64 identifier(m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
+
+	m_identifiers[identifier] = entry;
+
+	entry->setData(identifier, IdentifierRole);
+}
+
 void FeedsModel::handleUrlChanged(Entry *entry, const QUrl &newUrl, const QUrl &oldUrl)
 {
 	if (!oldUrl.isEmpty() && m_urls.contains(oldUrl))
@@ -582,15 +594,6 @@ FeedsModel::Entry* FeedsModel::addEntry(EntryType type, const QMap<int, QVariant
 
 	if (type == FolderEntry || type == FeedEntry)
 	{
-		quint64 identifier(metaData.value(IdentifierRole).toULongLong());
-
-		if (identifier == 0 || m_identifiers.contains(identifier))
-		{
-			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
-		}
-
-		m_identifiers[identifier] = entry;
-
 		QMap<int, QVariant>::const_iterator iterator;
 
 		for (iterator = metaData.begin(); iterator != metaData.end(); ++iterator)
@@ -598,7 +601,7 @@ FeedsModel::Entry* FeedsModel::addEntry(EntryType type, const QMap<int, QVariant
 			setData(entry->index(), iterator.value(), iterator.key());
 		}
 
-		entry->setData(identifier, IdentifierRole);
+		createIdentifier(entry);
 
 		if (type == FeedEntry)
 		{
@@ -628,13 +631,11 @@ FeedsModel::Entry* FeedsModel::addEntry(Feed *feed, Entry *parent, int index)
 		parent = m_rootEntry;
 	}
 
-	const quint64 identifier(m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
 	Entry *entry(new Entry(feed));
-	entry->setData(identifier, IdentifierRole);
 	entry->setData(FeedEntry, TypeRole);
 	entry->setDropEnabled(false);
 
-	m_identifiers[identifier] = entry;
+	createIdentifier(entry);
 
 	parent->insertRow(((index < 0) ? parent->rowCount() : index), entry);
 

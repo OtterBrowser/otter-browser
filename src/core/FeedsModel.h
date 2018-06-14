@@ -109,6 +109,7 @@ protected:
 	void writeEntry(QXmlStreamWriter *writer, Entry *entry) const;
 	void removeEntryUrl(Entry *entry);
 	void readdEntryUrl(Entry *entry);
+	void createIdentifier(Entry *entry);
 	void handleUrlChanged(Entry *entry, const QUrl &newUrl, const QUrl &oldUrl = {});
 
 private:
