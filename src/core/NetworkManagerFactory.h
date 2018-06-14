@@ -200,7 +200,7 @@ public:
 	static NetworkManager* getNetworkManager();
 	static NetworkCache* getCache();
 	static CookieJar* getCookieJar();
-	static QNetworkReply* createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, bool isPrivate = false, QIODevice *outgoingData = nullptr);
+	static QNetworkReply* createRequest(const QUrl &url, QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation, bool isPrivate = false, QIODevice *outgoingData = nullptr);
 	static QString getAcceptLanguage();
 	static QString getUserAgent();
 	static QStringList getProxies();

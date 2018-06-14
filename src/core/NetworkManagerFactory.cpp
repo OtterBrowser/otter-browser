@@ -629,12 +629,15 @@ CookieJar* NetworkManagerFactory::getCookieJar()
 	return m_cookieJar;
 }
 
-QNetworkReply* NetworkManagerFactory::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, bool isPrivate, QIODevice *outgoingData)
+QNetworkReply* NetworkManagerFactory::createRequest(const QUrl &url, QNetworkAccessManager::Operation operation, bool isPrivate, QIODevice *outgoingData)
 {
 	if (!isPrivate && !m_standardNetworkManager)
 	{
 		m_standardNetworkManager = new NetworkManager(false, m_instance);
 	}
+
+	QNetworkRequest request(url);
+	request.setHeader(QNetworkRequest::UserAgentHeader, getUserAgent());
 
 	return (isPrivate ? getNetworkManager() : m_standardNetworkManager)->createRequest(operation, request, outgoingData);
 }
