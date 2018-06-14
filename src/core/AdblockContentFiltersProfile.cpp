@@ -892,10 +892,7 @@ bool AdblockContentFiltersProfile::update()
 		return false;
 	}
 
-	QNetworkRequest request(m_updateUrl);
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
+	m_networkReply = NetworkManagerFactory::createRequest(m_updateUrl);
 
 	connect(m_networkReply, &QNetworkReply::finished, this, &AdblockContentFiltersProfile::handleReplyFinished);
 

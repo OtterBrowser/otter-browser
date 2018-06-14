@@ -48,10 +48,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 		return;
 	}
 
-	QNetworkRequest request(url);
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
+	m_networkReply = NetworkManagerFactory::createRequest(url);
 
 	connect(m_networkReply, &QNetworkReply::finished, this, &UpdateChecker::runUpdateCheck);
 }

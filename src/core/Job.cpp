@@ -35,13 +35,7 @@ FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
 	m_isFinished(false),
 	m_isSuccess(true)
 {
-	QNetworkRequest request(url);
-#if QT_VERSION >= 0x050600
-	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-#endif
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+	m_reply = NetworkManagerFactory::createRequest(url);
 
 	connect(m_reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal)
 	{
