@@ -599,14 +599,18 @@ NetworkManagerFactory* NetworkManagerFactory::getInstance()
 	return m_instance;
 }
 
-NetworkManager* NetworkManagerFactory::getNetworkManager()
+NetworkManager* NetworkManagerFactory::getNetworkManager(bool isPrivate)
 {
-	if (!m_privateNetworkManager)
+	if (isPrivate && !m_privateNetworkManager)
 	{
 		m_privateNetworkManager = new NetworkManager(true, QCoreApplication::instance());
 	}
+	else if (!isPrivate && !m_standardNetworkManager)
+	{
+		m_standardNetworkManager = new NetworkManager(false, QCoreApplication::instance());
+	}
 
-	return m_privateNetworkManager;
+	return (isPrivate ? m_privateNetworkManager : m_standardNetworkManager);
 }
 
 NetworkCache* NetworkManagerFactory::getCache()
@@ -631,18 +635,13 @@ CookieJar* NetworkManagerFactory::getCookieJar()
 
 QNetworkReply* NetworkManagerFactory::createRequest(const QUrl &url, QNetworkAccessManager::Operation operation, bool isPrivate, QIODevice *outgoingData)
 {
-	if (!isPrivate && !m_standardNetworkManager)
-	{
-		m_standardNetworkManager = new NetworkManager(false, m_instance);
-	}
-
 	QNetworkRequest request(url);
 #if QT_VERSION >= 0x050600
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 #endif
 	request.setHeader(QNetworkRequest::UserAgentHeader, getUserAgent());
 
-	return (isPrivate ? getNetworkManager() : m_standardNetworkManager)->createRequest(operation, request, outgoingData);
+	return getNetworkManager(isPrivate)->createRequest(operation, request, outgoingData);
 }
 
 QString NetworkManagerFactory::getAcceptLanguage()

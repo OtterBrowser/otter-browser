@@ -470,7 +470,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
 
-				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager()->get(request));
+				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager(isPrivate())->get(request));
 				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()), false);
 
@@ -902,7 +902,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
 
-				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager()->get(request));
+				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager(isPrivate())->get(request));
 				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()), false);
 

@@ -197,7 +197,7 @@ public:
 	static void loadUserAgents();
 	static void notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted);
 	static NetworkManagerFactory* getInstance();
-	static NetworkManager* getNetworkManager();
+	static NetworkManager* getNetworkManager(bool isPrivate = false);
 	static NetworkCache* getCache();
 	static CookieJar* getCookieJar();
 	static QNetworkReply* createRequest(const QUrl &url, QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation, bool isPrivate = false, QIODevice *outgoingData = nullptr);

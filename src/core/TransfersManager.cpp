@@ -113,7 +113,7 @@ Transfer::Transfer(const QUrl &source, const QString &target, TransferOptions op
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(QUrl(source));
 
-	start(NetworkManagerFactory::getNetworkManager()->get(request), target);
+	start(NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request), target);
 }
 
 Transfer::Transfer(const QNetworkRequest &request, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
@@ -134,7 +134,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, Transf
 	m_isSelectingPath(false),
 	m_isArchived(false)
 {
-	start(NetworkManagerFactory::getNetworkManager()->get(request), target);
+	start(NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request), target);
 }
 
 Transfer::Transfer(QNetworkReply *reply, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
@@ -814,7 +814,7 @@ bool Transfer::resume()
 	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
 	request.setUrl(m_source);
 
-	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+	m_reply = NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request);
 
 	handleDataAvailable();
 
@@ -857,7 +857,7 @@ bool Transfer::restart()
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(m_source);
 
-	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+	m_reply = NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request);
 
 	handleDataAvailable();
 
