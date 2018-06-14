@@ -215,7 +215,7 @@ void FeedsContentsWidget::subscribeFeed()
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
-			FeedsManager::getModel()->addEntry(m_feed);
+			FeedsManager::getModel()->addEntry(m_feed, dialog.getFolder());
 		}
 	}
 	else
@@ -232,8 +232,13 @@ void FeedsContentsWidget::feedProperties()
 
 	if (entry)
 	{
-		FeedPropertiesDialog dialog(entry->getFeed(), findFolder(m_ui->feedsViewWidget->currentIndex()), this);
-		dialog.exec();
+		FeedsModel::Entry *folder(findFolder(m_ui->feedsViewWidget->currentIndex()));
+		FeedPropertiesDialog dialog(entry->getFeed(), folder, this);
+
+		if (dialog.exec() == QDialog::Accepted && dialog.getFolder() != folder)
+		{
+			FeedsManager::getModel()->moveEntry(entry, dialog.getFolder());
+		}
 
 		updateActions();
 	}
