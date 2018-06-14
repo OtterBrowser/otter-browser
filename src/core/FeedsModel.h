@@ -94,7 +94,7 @@ public:
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QStringList mimeTypes() const override;
 	QVector<Entry*> getEntries(const QUrl &url) const;
-	bool moveFeed(Entry *entry, Entry *newParent, int newRow = -1);
+	bool moveEntry(Entry *entry, Entry *newParent, int newRow = -1);
 	bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool save(const QString &path) const;

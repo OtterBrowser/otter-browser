@@ -743,7 +743,7 @@ QVector<FeedsModel::Entry*> FeedsModel::getEntries(const QUrl &url) const
 	return entrys;
 }
 
-bool FeedsModel::moveFeed(Entry *entry, Entry *newParent, int newRow)
+bool FeedsModel::moveEntry(Entry *entry, Entry *newParent, int newRow)
 {
 	if (!entry || !newParent || entry == newParent || entry->isAncestorOf(newParent))
 	{
@@ -820,7 +820,7 @@ bool FeedsModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int 
 
 		if (index.isValid())
 		{
-			return moveFeed(getEntry(index), getEntry(parent), row);
+			return moveEntry(getEntry(index), getEntry(parent), row);
 		}
 
 		if (data->hasUrls())
