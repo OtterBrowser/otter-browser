@@ -619,6 +619,8 @@ void FeedsManager::ensureInitialized()
 	if (!m_model)
 	{
 		m_model = new FeedsModel(SessionsManager::getWritableDataPath(QLatin1String("feeds.opml")), m_instance);
+
+		connect(m_model, &FeedsModel::modelModified, m_instance, &FeedsManager::scheduleSave);
 	}
 }
 
