@@ -35,6 +35,7 @@ FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
 	m_sizeLimit(-1),
 	m_timeoutTimer(0),
 	m_isFinished(false),
+	m_isPrivate(false),
 	m_isSuccess(true)
 {
 }
@@ -62,7 +63,7 @@ void FetchJob::start()
 		return;
 	}
 
-	m_reply = NetworkManagerFactory::createRequest(m_url);
+	m_reply = NetworkManagerFactory::createRequest(m_url, QNetworkAccessManager::GetOperation, m_isPrivate);
 
 	connect(m_reply, &QNetworkReply::downloadProgress, this, [&](qint64 bytesReceived, qint64 bytesTotal)
 	{
@@ -122,6 +123,11 @@ void FetchJob::setTimeout(int seconds)
 void FetchJob::setSizeLimit(qint64 limit)
 {
 	m_sizeLimit = limit;
+}
+
+void FetchJob::setPrivate(bool isPrivate)
+{
+	m_isPrivate = isPrivate;
 }
 
 QUrl FetchJob::getUrl() const

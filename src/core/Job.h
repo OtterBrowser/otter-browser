@@ -53,6 +53,7 @@ public:
 
 	void setTimeout(int seconds);
 	void setSizeLimit(qint64 limit);
+	void setPrivate(bool isPrivate);
 	QUrl getUrl() const;
 	bool isRunning() const override;
 
@@ -72,6 +73,7 @@ private:
 	qint64 m_sizeLimit;
 	int m_timeoutTimer;
 	bool m_isFinished;
+	bool m_isPrivate;
 	bool m_isSuccess;
 };
 
