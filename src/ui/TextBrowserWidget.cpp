@@ -42,7 +42,7 @@ void TextBrowserWidget::setImagesPolicy(TextBrowserWidget::ImagesPolicy policy)
 
 QVariant TextBrowserWidget::loadResource(int type, const QUrl &url)
 {
-	if (type == QTextDocument::ImageResource && m_imagesPolicy == NoImages)
+	if ((type == QTextDocument::ImageResource && m_imagesPolicy == NoImages) || (type != QTextDocument::ImageResource && QTextDocument::StyleSheetResource))
 	{
 		return {};
 	}
