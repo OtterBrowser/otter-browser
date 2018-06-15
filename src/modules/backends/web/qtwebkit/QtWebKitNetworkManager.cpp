@@ -671,55 +671,17 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(request.url())))
 	{
-		if (!m_areImagesEnabled && request.url() != m_mainRequestUrl && (request.rawHeader(QByteArrayLiteral("Accept")).contains(QByteArrayLiteral("image/")) || request.url().path().endsWith(QLatin1String(".png")) || request.url().path().endsWith(QLatin1String(".jpg")) || request.url().path().endsWith(QLatin1String(".gif"))))
+		const QUrl baseUrl(m_widget->isNavigating() ? request.url() : m_widget->getUrl());
+		const bool needsContentBlockingCheck(!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(Utils::extractHost(baseUrl))));
+		const NetworkManager::ResourceType resourceType((needsContentBlockingCheck || !m_areImagesEnabled) ? NetworkManager::getResourceType(request, m_mainRequestUrl) : NetworkManager::OtherType);
+
+		if (!m_areImagesEnabled && request.url() != m_mainRequestUrl && resourceType == NetworkManager::ImageType)
 		{
 			return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 		}
 
-		const QUrl baseUrl(m_widget->isNavigating() ? request.url() : m_widget->getUrl());
-
-		if (!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(Utils::extractHost(baseUrl))))
+		if (needsContentBlockingCheck)
 		{
-			const QByteArray acceptHeader(request.rawHeader(QByteArrayLiteral("Accept")));
-			const QString path(request.url().path());
-			NetworkManager::ResourceType resourceType(NetworkManager::OtherType);
-			bool storeBlockedUrl(true);
-
-			if (request.url() == m_mainRequestUrl)
-			{
-				resourceType = NetworkManager::MainFrameType;
-			}
-			else if (acceptHeader.contains(QByteArrayLiteral("text/html")) || acceptHeader.contains(QByteArrayLiteral("application/xhtml+xml")) || acceptHeader.contains(QByteArrayLiteral("application/xml")) || path.endsWith(QLatin1String(".htm")) || path.endsWith(QLatin1String(".html")))
-			{
-				resourceType = NetworkManager::SubFrameType;
-			}
-			else if (acceptHeader.contains(QByteArrayLiteral("image/")) || path.endsWith(QLatin1String(".png")) || path.endsWith(QLatin1String(".jpg")) || path.endsWith(QLatin1String(".gif")))
-			{
-				resourceType = NetworkManager::ImageType;
-			}
-			else if (acceptHeader.contains(QByteArrayLiteral("script/")) || path.endsWith(QLatin1String(".js")))
-			{
-				resourceType = NetworkManager::ScriptType;
-				storeBlockedUrl = false;
-			}
-			else if (acceptHeader.contains(QByteArrayLiteral("text/css")) || path.endsWith(QLatin1String(".css")))
-			{
-				resourceType = NetworkManager::StyleSheetType;
-				storeBlockedUrl = false;
-			}
-			else if (acceptHeader.contains(QByteArrayLiteral("object")))
-			{
-				resourceType = NetworkManager::ObjectType;
-			}
-			else if (request.rawHeader(QByteArrayLiteral("X-Requested-With")) == QByteArrayLiteral("XMLHttpRequest"))
-			{
-				resourceType = NetworkManager::XmlHttpRequestType;
-			}
-			else if (request.hasRawHeader(QByteArrayLiteral("Sec-WebSocket-Protocol")))
-			{
-				resourceType = NetworkManager::WebSocketType;
-			}
-
 			const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(m_contentBlockingProfiles, baseUrl, request.url(), resourceType));
 
 			if (result.isBlocked)
@@ -728,7 +690,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 				Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
-				if (storeBlockedUrl)
+				if (resourceType != NetworkManager::ScriptType && resourceType != NetworkManager::StyleSheetType)
 				{
 					m_blockedElements.append(request.url().url());
 				}
