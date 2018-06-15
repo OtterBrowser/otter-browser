@@ -67,7 +67,7 @@ GenericName[lt]=Saityno naršyklė
 GenericName[nb]=Nettleser
 GenericName[nl]=Webbrowser
 GenericName[pl]=Przeglądarka internetowa
-GenericName[pt]=Navegador
+GenericName[pt]=Navegador web
 GenericName[pt_BR]=Navegador da Web
 GenericName[ro]=Navigator Web
 GenericName[ru]=Веб-браузер
@@ -102,7 +102,7 @@ Comment[lt]=Naršyti saityną
 Comment[nb]=Surf på nettet
 Comment[nl]=Surfen op het internet
 Comment[pl]=Przeglądaj sieć
-Comment[pt]=Navegar na Web
+Comment[pt]=Navegar na web
 Comment[pt_BR]=Navegue pela Web
 Comment[ro]=Navighează pe internet
 Comment[ru]=Просматривайте веб страницы
@@ -137,6 +137,7 @@ Name[et]=Uus kaart
 Name[fi]=Uusi välilehti
 Name[fr]=Nouvel onglet
 Name[pl]=Nowa karta
+Name[pt]=Novo separador
 Exec=otter-browser --new-tab %u
 
 [Desktop Action NewPrivateTab]
@@ -149,6 +150,7 @@ Name[et]=Uus privaatkaart
 Name[fi]=Uusi yksityinen välilehti
 Name[fr]=Nouvel onglet privé
 Name[pl]=Nowa karta prywatna
+Name[pt]=Novo separador privado
 Exec=otter-browser --new-private-tab %u
 
 [Desktop Action NewWindow]
@@ -161,6 +163,7 @@ Name[et]=Uus aken
 Name[fi]=Uusi ikkuna
 Name[fr]=Nouvelle fenêtre
 Name[pl]=Nowe okno
+Name[pt]=Nova janela
 Exec=otter-browser --new-window %u
 
 [Desktop Action NewPrivateWindow]
@@ -173,4 +176,5 @@ Name[et]=Uus privaataken
 Name[fi]=Uusi yksityinen ikkuna
 Name[fr]=Nouvelle fenêtre privée
 Name[pl]=Nowe okno prywatne
+Name[pt]=Nova janela privada
 Exec=otter-browser --new-private-window %u
