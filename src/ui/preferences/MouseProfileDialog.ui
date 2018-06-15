@@ -110,7 +110,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="stepsLayout">
+        <layout class="QHBoxLayout" name="stepsLayout" stretch="1,0">
          <item>
           <widget class="Otter::ItemViewWidget" name="stepsViewWidget">
            <property name="sizePolicy">
@@ -134,7 +134,7 @@
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="stepsButtonsLayout" stretch="0,0,1">
+          <layout class="QVBoxLayout" name="stepsButtonsLayout" stretch="0,0,1,0">
            <item>
             <widget class="QPushButton" name="addStepButton">
              <property name="enabled">
@@ -156,20 +156,38 @@
             </widget>
            </item>
            <item>
-            <spacer name="stepsSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::MinimumExpanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
+            <spacer name="stepsSpacer"/>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="stepsMoveButtonsLayout">
+             <item>
+              <widget class="QToolButton" name="moveUpStepsButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Up</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QToolButton" name="moveDownStepsButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Down</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>

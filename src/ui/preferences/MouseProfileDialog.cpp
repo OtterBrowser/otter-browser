@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "MouseProfileDialog.h"
 #include "../ActionComboBoxWidget.h"
 #include "../../core/ActionsManager.h"
+#include "../../core/ThemesManager.h"
 
 #include "ui_MouseProfileDialog.h"
 
@@ -147,6 +148,8 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui->gesturesViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});
 	m_ui->gesturesViewWidget->setModified(m_profile.isModified());
 	m_ui->stepsViewWidget->setModel(stepsModel);
+	m_ui->moveDownStepsButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpStepsButton->setIcon(ThemesManager::createIcon(QLatin1String("arrow-up")));
 	m_ui->titleLineEditWidget->setText(m_profile.getTitle());
 	m_ui->descriptionLineEditWidget->setText(m_profile.getDescription());
 	m_ui->versionLineEditWidget->setText(m_profile.getVersion());
@@ -161,8 +164,12 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	connect(m_ui->addGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::addGesture);
 	connect(m_ui->removeGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::removeGesture);
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateStepsActions);
+	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownStepsButton, &QToolButton::setEnabled);
+	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpStepsButton, &QToolButton::setEnabled);
 	connect(m_ui->addStepButton, &QPushButton::clicked, this, &MouseProfileDialog::addStep);
 	connect(m_ui->removeStepButton, &QPushButton::clicked, this, &MouseProfileDialog::removeStep);
+	connect(m_ui->moveDownStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveDownRow);
+	connect(m_ui->moveUpStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveUpRow);
 }
 
 MouseProfileDialog::~MouseProfileDialog()
