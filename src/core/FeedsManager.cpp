@@ -196,12 +196,14 @@ void Feed::update()
 
 					if (m_icon.isNull() && information.icon.isValid())
 					{
-						const IconFetchJob *iconJob(new IconFetchJob(information.icon, this));
+						IconFetchJob *iconJob(new IconFetchJob(information.icon, this));
 
 						connect(iconJob, &IconFetchJob::jobFinished, this, [=]()
 						{
 							setIcon(iconJob->getIcon());
 						});
+
+						iconJob->start();
 					}
 
 					if (m_title.isEmpty())
@@ -311,6 +313,8 @@ void Feed::update()
 			emit feedModified(this);
 		}
 	});
+
+	dataJob->start();
 }
 
 QString Feed::getTitle() const

@@ -659,7 +659,7 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 
 	if (m_searchEngine.iconUrl.isValid())
 	{
-		const IconFetchJob *job(new IconFetchJob(m_searchEngine.iconUrl, this));
+		IconFetchJob *job(new IconFetchJob(m_searchEngine.iconUrl, this));
 
 		connect(job, &IconFetchJob::jobFinished, this, [=]()
 		{
@@ -674,6 +674,8 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 
 			emit jobFinished(true);
 		});
+
+		job->start();
 	}
 	else
 	{

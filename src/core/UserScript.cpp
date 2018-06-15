@@ -219,6 +219,8 @@ void UserScript::reload()
 				emit metaDataChanged();
 			}
 		});
+
+		m_iconFetchJob->start();
 	}
 
 	if (!hasHeader)

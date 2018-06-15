@@ -289,6 +289,8 @@ void PreferencesSearchPageWidget::updateSearchEngine()
 		m_updateJobs[identifier] = job;
 
 		connect(job, &SearchEngineFetchJob::jobFinished, this, &PreferencesSearchPageWidget::handleSearchEngineUpdate);
+
+		job->start();
 	}
 }
 

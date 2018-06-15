@@ -438,6 +438,8 @@ void SearchWidget::addSearchEngine(QAction *action)
 				QMessageBox::warning(this, tr("Error"), tr("Failed to add search engine."), QMessageBox::Close);
 			}
 		});
+
+		job->start();
 	}
 }
 

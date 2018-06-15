@@ -33,7 +33,10 @@ class Job : public QObject
 public:
 	explicit Job(QObject *parent = nullptr);
 
+	virtual bool isRunning() const = 0;
+
 public slots:
+	virtual void start() = 0;
 	virtual void cancel() = 0;
 
 signals:
@@ -51,8 +54,10 @@ public:
 	void setTimeout(int seconds);
 	void setSizeLimit(qint64 limit);
 	QUrl getUrl() const;
+	bool isRunning() const override;
 
 public slots:
+	void start() override;
 	void cancel() override;
 
 protected:
@@ -63,6 +68,7 @@ protected:
 
 private:
 	QNetworkReply *m_reply;
+	QUrl m_url;
 	qint64 m_sizeLimit;
 	int m_timeoutTimer;
 	bool m_isFinished;
