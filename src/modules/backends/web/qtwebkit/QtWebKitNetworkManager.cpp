@@ -590,12 +590,12 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
 	}
 
-	if (m_widget && request.url().path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArray("X-Otter-Token")) && request.hasRawHeader(QByteArray("X-Otter-Data")))
+	if (m_widget && request.url().path() == QLatin1String("/otter-message") && request.hasRawHeader(QByteArrayLiteral("X-Otter-Token")) && request.hasRawHeader(QByteArrayLiteral("X-Otter-Data")))
 	{
-		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getMessageToken())
+		if (QString(request.rawHeader(QByteArrayLiteral("X-Otter-Token"))) == m_widget->getMessageToken())
 		{
-			const QString type(request.rawHeader(QByteArray("X-Otter-Type")));
-			const QJsonObject payloadObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
+			const QString type(request.rawHeader(QByteArrayLiteral("X-Otter-Type")));
+			const QJsonObject payloadObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArrayLiteral("X-Otter-Data")))).object());
 
 			if (type == QLatin1String("add-ssl-error-exception"))
 			{
@@ -671,7 +671,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (m_widget && (m_contentBlockingExceptions.isEmpty() || !m_contentBlockingExceptions.contains(request.url())))
 	{
-		if (!m_areImagesEnabled && request.url() != m_mainRequestUrl && (request.rawHeader(QByteArray("Accept")).contains(QByteArray("image/")) || request.url().path().endsWith(QLatin1String(".png")) || request.url().path().endsWith(QLatin1String(".jpg")) || request.url().path().endsWith(QLatin1String(".gif"))))
+		if (!m_areImagesEnabled && request.url() != m_mainRequestUrl && (request.rawHeader(QByteArrayLiteral("Accept")).contains(QByteArrayLiteral("image/")) || request.url().path().endsWith(QLatin1String(".png")) || request.url().path().endsWith(QLatin1String(".jpg")) || request.url().path().endsWith(QLatin1String(".gif"))))
 		{
 			return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 		}
@@ -680,7 +680,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		if (!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(Utils::extractHost(baseUrl))))
 		{
-			const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
+			const QByteArray acceptHeader(request.rawHeader(QByteArrayLiteral("Accept")));
 			const QString path(request.url().path());
 			NetworkManager::ResourceType resourceType(NetworkManager::OtherType);
 			bool storeBlockedUrl(true);
@@ -689,33 +689,33 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			{
 				resourceType = NetworkManager::MainFrameType;
 			}
-			else if (acceptHeader.contains(QByteArray("text/html")) || acceptHeader.contains(QByteArray("application/xhtml+xml")) || acceptHeader.contains(QByteArray("application/xml")) || path.endsWith(QLatin1String(".htm")) || path.endsWith(QLatin1String(".html")))
+			else if (acceptHeader.contains(QByteArrayLiteral("text/html")) || acceptHeader.contains(QByteArrayLiteral("application/xhtml+xml")) || acceptHeader.contains(QByteArrayLiteral("application/xml")) || path.endsWith(QLatin1String(".htm")) || path.endsWith(QLatin1String(".html")))
 			{
 				resourceType = NetworkManager::SubFrameType;
 			}
-			else if (acceptHeader.contains(QByteArray("image/")) || path.endsWith(QLatin1String(".png")) || path.endsWith(QLatin1String(".jpg")) || path.endsWith(QLatin1String(".gif")))
+			else if (acceptHeader.contains(QByteArrayLiteral("image/")) || path.endsWith(QLatin1String(".png")) || path.endsWith(QLatin1String(".jpg")) || path.endsWith(QLatin1String(".gif")))
 			{
 				resourceType = NetworkManager::ImageType;
 			}
-			else if (acceptHeader.contains(QByteArray("script/")) || path.endsWith(QLatin1String(".js")))
+			else if (acceptHeader.contains(QByteArrayLiteral("script/")) || path.endsWith(QLatin1String(".js")))
 			{
 				resourceType = NetworkManager::ScriptType;
 				storeBlockedUrl = false;
 			}
-			else if (acceptHeader.contains(QByteArray("text/css")) || path.endsWith(QLatin1String(".css")))
+			else if (acceptHeader.contains(QByteArrayLiteral("text/css")) || path.endsWith(QLatin1String(".css")))
 			{
 				resourceType = NetworkManager::StyleSheetType;
 				storeBlockedUrl = false;
 			}
-			else if (acceptHeader.contains(QByteArray("object")))
+			else if (acceptHeader.contains(QByteArrayLiteral("object")))
 			{
 				resourceType = NetworkManager::ObjectType;
 			}
-			else if (request.rawHeader(QByteArray("X-Requested-With")) == QByteArray("XMLHttpRequest"))
+			else if (request.rawHeader(QByteArrayLiteral("X-Requested-With")) == QByteArrayLiteral("XMLHttpRequest"))
 			{
 				resourceType = NetworkManager::XmlHttpRequestType;
 			}
-			else if (request.hasRawHeader(QByteArray("Sec-WebSocket-Protocol")))
+			else if (request.hasRawHeader(QByteArrayLiteral("Sec-WebSocket-Protocol")))
 			{
 				resourceType = NetworkManager::WebSocketType;
 			}
