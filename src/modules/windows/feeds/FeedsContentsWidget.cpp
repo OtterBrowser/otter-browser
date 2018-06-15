@@ -80,7 +80,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
 	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
-	m_ui->textBrowser->setOpenExternalLinks(true);
+	m_ui->textBrowserWidget->setOpenExternalLinks(true);
 
 	if (isSidebarPanel())
 	{
@@ -433,7 +433,7 @@ void FeedsContentsWidget::updateEntry()
 	m_ui->urlButton->setToolTip(tr("Go to %1").arg(index.data(UrlRole).toUrl().toDisplayString()));
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
 	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(index.data(UpdateTimeRole).isNull() ? PublicationTimeRole : UpdateTimeRole).toDateTime()) : QString());
-	m_ui->textBrowser->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());
+	m_ui->textBrowserWidget->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());
 
 	for (int i = (m_ui->categoriesLayout->count() - 1); i >= 0; --i)
 	{

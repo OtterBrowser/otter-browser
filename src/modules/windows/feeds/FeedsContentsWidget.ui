@@ -248,7 +248,7 @@
         <layout class="QHBoxLayout" name="categoriesLayout"/>
        </item>
        <item>
-        <widget class="QTextBrowser" name="textBrowser"/>
+        <widget class="TextBrowserWidget" name="textBrowserWidget"/>
        </item>
       </layout>
      </widget>
@@ -271,6 +271,11 @@
    <class>Otter::TextLabelWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/TextLabelWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TextBrowserWidget</class>
+   <extends>QTextBrowser</extends>
+   <header>src/ui/TextBrowserWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
