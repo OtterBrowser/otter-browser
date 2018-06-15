@@ -22,6 +22,7 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
@@ -385,6 +386,8 @@ QString SettingsManager::createDisplayValue(int identifier, const QVariant &valu
 			}
 
 			break;
+		case PathType:
+			return QDir::toNativeSeparators(value.toString());
 		default:
 			break;
 	}
