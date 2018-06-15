@@ -231,6 +231,8 @@ set(otter_src
 	src/modules/importers/opera/OperaNotesImporter.cpp
 	src/modules/importers/opera/OperaSearchEnginesImporter.cpp
 	src/modules/importers/opera/OperaSessionImporter.cpp
+	src/modules/importers/opml/OpmlImporter.cpp
+	src/modules/importers/opml/OpmlImporterWidget.cpp
 	src/modules/widgets/action/ActionWidget.cpp
 	src/modules/widgets/address/AddressWidget.cpp
 	src/modules/widgets/bookmark/BookmarkWidget.cpp
@@ -320,6 +322,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/PreferencesSearchPageWidget.ui
 	src/ui/preferences/ProxyPropertiesDialog.ui
 	src/ui/preferences/UserAgentPropertiesDialog.ui
+	src/modules/importers/opml/OpmlImporterWidget.ui
 	src/modules/widgets/errorConsole/ErrorConsoleWidget.ui
 	src/modules/windows/addons/AddonsContentsWidget.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui

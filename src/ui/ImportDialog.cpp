@@ -25,6 +25,7 @@
 #include "../modules/importers/opera/OperaNotesImporter.h"
 #include "../modules/importers/opera/OperaSearchEnginesImporter.h"
 #include "../modules/importers/opera/OperaSessionImporter.h"
+#include "../modules/importers/opml/OpmlImporter.h"
 
 #include "ui_ImportDialog.h"
 
@@ -89,7 +90,11 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 {
 	Importer *importer(nullptr);
 
-	if (importerName == QLatin1String("OperaBookmarks"))
+	if (importerName == QLatin1String("HtmlBookmarks"))
+	{
+		importer = new HtmlBookmarksImporter();
+	}
+	else if (importerName == QLatin1String("OperaBookmarks"))
 	{
 		importer = new OperaBookmarksImporter();
 	}
@@ -105,9 +110,9 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 	{
 		importer = new OperaSessionImporter();
 	}
-	else if (importerName == QLatin1String("HtmlBookmarks"))
+	else if (importerName == QLatin1String("OpmlFeeds"))
 	{
-		importer = new HtmlBookmarksImporter();
+		importer = new OpmlImporter();
 	}
 
 	if (importer)
