@@ -116,11 +116,6 @@ FeedsContentsWidget::~FeedsContentsWidget()
 	delete m_ui;
 }
 
-Animation* FeedsContentsWidget::getUpdateAnimation()
-{
-	return m_updateAnimation;
-}
-
 void FeedsContentsWidget::changeEvent(QEvent *event)
 {
 	ContentsWidget::changeEvent(event);
@@ -133,6 +128,24 @@ void FeedsContentsWidget::changeEvent(QEvent *event)
 		{
 			m_feedModel->setHorizontalHeaderLabels({tr("Title"), tr("From"), tr("Published")});
 		}
+	}
+}
+
+void FeedsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
+{
+	switch (identifier)
+	{
+		case ActionsManager::ReloadAction:
+			if (m_feed && !m_feed->isUpdating())
+			{
+				m_feed->update();
+			}
+
+			break;
+		default:
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
+
+			break;
 	}
 }
 
@@ -660,6 +673,7 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 
 	updateFeedModel();
 
+	emit arbitraryActionsStateChanged({ActionsManager::ReloadAction});
 	emit titleChanged(getTitle());
 	emit iconChanged(getIcon());
 	emit urlChanged(getUrl());
@@ -673,6 +687,11 @@ void FeedsContentsWidget::setUrl(const QUrl &url, bool isTyped)
 	{
 		setFeed(FeedsManager::createFeed(url.toDisplayString().mid(10)));
 	}
+}
+
+Animation* FeedsContentsWidget::getUpdateAnimation()
+{
+	return m_updateAnimation;
 }
 
 FeedsModel::Entry* FeedsContentsWidget::findFolder(const QModelIndex &index) const
@@ -721,6 +740,23 @@ QIcon FeedsContentsWidget::getIcon() const
 	}
 
 	return ThemesManager::createIcon(QLatin1String("feeds"), false);
+}
+
+ActionsManager::ActionDefinition::State FeedsContentsWidget::getActionState(int identifier, const QVariantMap &parameters) const
+{
+	ActionsManager::ActionDefinition::State state(ActionsManager::getActionDefinition(identifier).getDefaultState());
+
+	switch (identifier)
+	{
+		case ActionsManager::ReloadAction:
+			state.isEnabled = (m_feed != nullptr);
+
+			return state;
+		default:
+			break;
+	}
+
+	return ContentsWidget::getActionState(identifier, parameters);
 }
 
 bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)

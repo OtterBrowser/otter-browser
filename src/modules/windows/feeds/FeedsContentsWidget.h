@@ -70,9 +70,11 @@ public:
 	QLatin1String getType() const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
+	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
+	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void setUrl(const QUrl &url, bool isTyped = true) override;
 
 protected:
