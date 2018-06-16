@@ -144,6 +144,7 @@ protected:
 	void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark) const;
 	void removeBookmarkUrl(Bookmark *bookmark);
 	void readdBookmarkUrl(Bookmark *bookmark);
+	void setupFeed(Bookmark *bookmark);
 	void handleKeywordChanged(Bookmark *bookmark, const QString &newKeyword, const QString &oldKeyword = {});
 	void handleUrlChanged(Bookmark *bookmark, const QUrl &newUrl, const QUrl &oldUrl = {});
 	static QDateTime readDateTime(QXmlStreamReader *reader, const QString &attribute);

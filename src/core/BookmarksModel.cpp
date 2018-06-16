@@ -699,22 +699,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, Bookmark *parent)
 
 		if (isFeed)
 		{
-			const QUrl normalizedUrl(Utils::normalizeUrl(bookmark->getUrl()));
-			Feed *feed(FeedsManager::createFeed(bookmark->getUrl(), bookmark->getTitle()));
-
-			if (!m_feeds.contains(normalizedUrl))
-			{
-				m_feeds[normalizedUrl] = {};
-
-				connect(feed, &Feed::entriesModified, this, &BookmarksModel::handleFeedModified);
-			}
-
-			m_feeds[normalizedUrl].append(bookmark);
-
-			if (feed)
-			{
-				handleFeedModified(feed);
-			}
+			setupFeed(bookmark);
 		}
 	}
 	else if (reader->name() == QLatin1String("separator"))
@@ -909,6 +894,26 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 	}
 }
 
+void BookmarksModel::setupFeed(BookmarksModel::Bookmark *bookmark)
+{
+	const QUrl normalizedUrl(Utils::normalizeUrl(bookmark->getUrl()));
+	Feed *feed(FeedsManager::createFeed(bookmark->getUrl(), bookmark->getTitle()));
+
+	if (!m_feeds.contains(normalizedUrl))
+	{
+		m_feeds[normalizedUrl] = {};
+
+		connect(feed, &Feed::entriesModified, this, &BookmarksModel::handleFeedModified);
+	}
+
+	m_feeds[normalizedUrl].append(bookmark);
+
+	if (feed)
+	{
+		handleFeedModified(feed);
+	}
+}
+
 void BookmarksModel::emptyTrash()
 {
 	m_trashItem->removeRows(0, m_trashItem->rowCount());
@@ -1070,6 +1075,11 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 				bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
 			}
 		}
+	}
+
+	if (type == FeedBookmark)
+	{
+		setupFeed(bookmark);
 	}
 
 	bookmark->setItemData(type, TypeRole);
