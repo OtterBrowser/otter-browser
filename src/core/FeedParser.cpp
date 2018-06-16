@@ -22,6 +22,7 @@
 #include "FeedsManager.h"
 #include "Job.h"
 
+#include <QtCore/QCryptographicHash>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 
@@ -73,6 +74,20 @@ FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 	}
 
 	return nullptr;
+}
+
+QString FeedParser::createIdentifier(const Feed::Entry &entry)
+{
+	if (entry.publicationTime.isValid())
+	{
+		return QString::number(entry.publicationTime.toMSecsSinceEpoch());
+	}
+
+	QCryptographicHash hash(QCryptographicHash::Md5);
+	hash.addData(entry.summary.toUtf8());
+	hash.addData(entry.content.toUtf8());
+
+	return QString(hash.result());
 }
 
 AtomFeedParser::AtomFeedParser() : FeedParser()
@@ -154,6 +169,11 @@ void AtomFeedParser::parse(DataFetchJob *data)
 					}
 				}
 
+				if (entry.identifier.isEmpty())
+				{
+					entry.identifier = createIdentifier(entry);
+				}
+
 				m_data.entries.append(entry);
 			}
 			else if (reader.isStartElement())
@@ -207,10 +227,6 @@ void AtomFeedParser::parse(DataFetchJob *data)
 
 		isSuccess = false;
 	}
-
-//	m_feed->addEntries(entries);
-///TODO in Feeed
-//	m_feed->setLastSynchronizationTime(QDateTime::currentDateTimeUtc());
 
 	emit parsingFinished(isSuccess);
 }
@@ -308,6 +324,11 @@ void RssFeedParser::parse(DataFetchJob *data)
 					{
 						break;
 					}
+				}
+
+				if (entry.identifier.isEmpty())
+				{
+					entry.identifier = createIdentifier(entry);
 				}
 
 				m_data.entries.append(entry);

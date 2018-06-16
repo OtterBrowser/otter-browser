@@ -59,6 +59,9 @@ public:
 	virtual FeedInformation getInformation() const = 0;
 	static FeedParser* createParser(Feed *feed, DataFetchJob *data);
 
+protected:
+	static QString createIdentifier(const Feed::Entry &entry);
+
 signals:
 	void parsingFinished(bool isSuccess);
 };
