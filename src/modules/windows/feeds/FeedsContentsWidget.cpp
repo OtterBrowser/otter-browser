@@ -641,6 +641,20 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 			m_ui->subscribeFeedWidget->hide();
 		}
 
+		const QString enableImages(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption, Utils::extractHost(m_feed->getUrl())).toString());
+		TextBrowserWidget::ImagesPolicy imagesPolicy(TextBrowserWidget::AllImages);
+
+		if (enableImages == QLatin1String("onlyCached"))
+		{
+			imagesPolicy = TextBrowserWidget::OnlyCachedImages;
+		}
+		else if (enableImages == QLatin1String("disabled"))
+		{
+			imagesPolicy = TextBrowserWidget::NoImages;
+		}
+
+		m_ui->textBrowserWidget->setImagesPolicy(imagesPolicy);
+
 		connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
 	}
 
