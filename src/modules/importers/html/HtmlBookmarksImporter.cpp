@@ -67,7 +67,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 
 				if (!matchedElement.isNull())
 				{
-					type = BookmarksModel::UrlBookmark;
+					type = (matchedElement.hasAttribute(QLatin1String("FEEDURL")) ? BookmarksModel::FeedBookmark : BookmarksModel::UrlBookmark);
 				}
 			}
 			else
@@ -78,8 +78,9 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			if (type != BookmarksModel::UnknownBookmark && !matchedElement.isNull())
 			{
 				QMap<int, QVariant> metaData({{BookmarksModel::TitleRole, matchedElement.toPlainText()}});
+				const bool isUrlBookmark(type == BookmarksModel::UrlBookmark || BookmarksModel::FeedBookmark);
 
-				if (type == BookmarksModel::UrlBookmark)
+				if (isUrlBookmark)
 				{
 					const QUrl url(matchedElement.attribute(QLatin1String("HREF")));
 
@@ -124,7 +125,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 					}
 				}
 
-				if (type == BookmarksModel::UrlBookmark && matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
+				if (isUrlBookmark && matchedElement.hasAttribute(QLatin1String("LAST_VISITED")))
 				{
 					const QDateTime dateTime(getDateTime(matchedElement, QLatin1String("LAST_VISITED")));
 
