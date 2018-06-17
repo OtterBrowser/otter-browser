@@ -45,6 +45,7 @@ public:
 
 		QString openCommand;
 		QString downloadsPath;
+		QMimeType mimeType;
 		TransferMode transferMode = IgnoreTransfer;
 		bool isExplicit = true;
 	};
@@ -53,6 +54,7 @@ public:
 	static void setHandler(const QMimeType &mimeType, const HandlerDefinition &definition);
 	static HandlersManager* getInstance();
 	static HandlerDefinition getHandler(const QMimeType &mimeType);
+	static QVector<HandlerDefinition> getHandlers();
 	static bool handleUrl(const QUrl &url);
 	static bool canHandleUrl(const QUrl &url);
 

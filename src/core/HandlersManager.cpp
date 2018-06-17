@@ -23,6 +23,7 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QMimeDatabase>
 #include <QtGui/QDesktopServices>
 
 namespace Otter
@@ -93,6 +94,7 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &
 {
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	HandlerDefinition definition;
+	definition.mimeType = mimeType;
 	definition.isExplicit = settings.getGroups().contains(mimeType.name());
 
 	if (definition.isExplicit)
@@ -132,6 +134,21 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &
 	}
 
 	return definition;
+}
+
+QVector<HandlersManager::HandlerDefinition> HandlersManager::getHandlers()
+{
+	const QMimeDatabase database;
+	const QStringList mimeTypes(IniSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini"))).getGroups());
+	QVector<HandlersManager::HandlerDefinition> handlers;
+	handlers.reserve(mimeTypes.count());
+
+	for (int i = 0; i < mimeTypes.count(); ++i)
+	{
+		handlers.append(getHandler(database.mimeTypeForName(mimeTypes.at(i))));
+	}
+
+	return handlers;
 }
 
 bool HandlersManager::handleUrl(const QUrl &url)
