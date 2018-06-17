@@ -46,15 +46,15 @@ HandlersManager* HandlersManager::getInstance()
 	return m_instance;
 }
 
-HandlersManager::HandlerDefinition HandlersManager::getHandler(const QString &type)
+HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &mimeType)
 {
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	HandlerDefinition definition;
-	definition.isExplicit = settings.getGroups().contains(type);
+	definition.isExplicit = settings.getGroups().contains(mimeType.name());
 
 	if (definition.isExplicit)
 	{
-		settings.beginGroup(type);
+		settings.beginGroup(mimeType.name());
 	}
 	else
 	{
@@ -91,7 +91,7 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QString &ty
 	return definition;
 }
 
-void HandlersManager::setHandler(const QString &type, const HandlerDefinition &definition)
+void HandlersManager::setHandler(const QMimeType &mimeType, const HandlerDefinition &definition)
 {
 	if (SessionsManager::isReadOnly())
 	{
@@ -126,7 +126,7 @@ void HandlersManager::setHandler(const QString &type, const HandlerDefinition &d
 			break;
 	}
 
-	settings.beginGroup(type);
+	settings.beginGroup(mimeType.name());
 	settings.setValue(QLatin1String("openCommand"), definition.openCommand);
 	settings.setValue(QLatin1String("downloadsPath"), definition.downloadsPath);
 	settings.setValue(QLatin1String("transferMode"), transferMode);

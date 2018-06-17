@@ -20,6 +20,7 @@
 #ifndef OTTER_HANDLERSMANAGER_H
 #define OTTER_HANDLERSMANAGER_H
 
+#include <QtCore/QMimeType>
 #include <QtCore/QObject>
 
 namespace Otter
@@ -49,8 +50,8 @@ public:
 
 	static void createInstance();
 	static HandlersManager* getInstance();
-	static HandlerDefinition getHandler(const QString &type);
-	static void setHandler(const QString &type, const HandlerDefinition &definition);
+	static HandlerDefinition getHandler(const QMimeType &mimeType);
+	static void setHandler(const QMimeType &mimeType, const HandlerDefinition &definition);
 
 protected:
 	explicit HandlersManager(QObject *parent);

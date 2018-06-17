@@ -98,7 +98,7 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 				HandlersManager::HandlerDefinition definition;
 				definition.transferMode = HandlersManager::HandlerDefinition::IgnoreTransfer;
 
-				HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
+				HandlersManager::setHandler(m_transfer->getMimeType(), definition);
 			}
 		}
 
@@ -117,7 +117,7 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 			definition.transferMode = HandlersManager::HandlerDefinition::OpenTransfer;
 			definition.openCommand = m_ui->openWithComboBoxWidget->getCommand();
 
-			HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
+			HandlersManager::setHandler(m_transfer->getMimeType(), definition);
 		}
 	}
 	else if (standardButton == QDialogButtonBox::Save)
@@ -155,7 +155,7 @@ void TransferDialog::handleButtonClicked(QAbstractButton *button)
 			definition.transferMode = HandlersManager::HandlerDefinition::SaveTransfer;
 			definition.downloadsPath = QFileInfo(path).canonicalPath();
 
-			HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
+			HandlersManager::setHandler(m_transfer->getMimeType(), definition);
 		}
 	}
 

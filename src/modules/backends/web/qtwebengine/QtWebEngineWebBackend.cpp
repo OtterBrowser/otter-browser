@@ -70,7 +70,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 		return;
 	}
 
-	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType().name()));
+	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
 
 	switch (handler.transferMode)
 	{
