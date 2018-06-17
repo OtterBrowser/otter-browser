@@ -69,6 +69,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->subscribeFeedWidget->hide();
 	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
 	m_ui->entriesFilterLineEditWidget->setClearOnEscape(true);
+	m_ui->entriesViewWidget->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->feedsFilterLineEditWidget->setClearOnEscape(true);
@@ -148,6 +149,10 @@ void FeedsContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			if (m_ui->feedsViewWidget->hasFocus())
 			{
 				removeFeed();
+			}
+			else if (m_ui->entriesViewWidget->hasFocus())
+			{
+				removeEntry();
 			}
 
 			break;
@@ -263,6 +268,21 @@ void FeedsContentsWidget::feedProperties()
 		}
 
 		updateActions();
+	}
+}
+
+void FeedsContentsWidget::removeEntry()
+{
+	if (m_feed)
+	{
+		const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
+
+		if (index.isValid() && !index.data(IdentifierRole).isNull())
+		{
+			m_feed->addRemovedEntry(index.data(IdentifierRole).toString());
+
+			m_ui->entriesViewWidget->removeRow();
+		}
 	}
 }
 
@@ -481,6 +501,8 @@ void FeedsContentsWidget::updateEntry()
 	}
 
 	m_ui->categoriesLayout->addStretch();
+
+	emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 }
 
 void FeedsContentsWidget::updateFeedModel()
@@ -770,6 +792,10 @@ ActionsManager::ActionDefinition::State FeedsContentsWidget::getActionState(int 
 
 				state.isEnabled = (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry);
 			}
+			else if (m_ui->entriesViewWidget->hasFocus())
+			{
+				state.isEnabled = (m_feed && m_ui->entriesViewWidget->selectionModel()->hasSelection());
+			}
 
 			return state;
 		default:
@@ -786,7 +812,14 @@ bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 		switch (static_cast<QKeyEvent*>(event)->key())
 		{
 			case Qt::Key_Delete:
-				removeFeed();
+				if (m_ui->feedsViewWidget->hasFocus())
+				{
+					removeFeed();
+				}
+				else if (m_ui->entriesViewWidget->hasFocus())
+				{
+					removeEntry();
+				}
 
 				return true;
 			case Qt::Key_Enter:

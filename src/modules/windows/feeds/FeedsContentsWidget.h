@@ -90,6 +90,7 @@ protected slots:
 	void openFeed();
 	void subscribeFeed();
 	void feedProperties();
+	void removeEntry();
 	void selectCategory();
 	void toggleCategory(QAction *action);
 	void handleFeedModified(const QUrl &url);
