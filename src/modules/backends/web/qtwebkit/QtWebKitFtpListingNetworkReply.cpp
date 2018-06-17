@@ -120,7 +120,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				open(ReadOnly | Unbuffered);
 
 				QString entriesHtml;
-				const QMimeDatabase database;
+				const QMimeDatabase mimeDatabase;
 				const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 				QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
 				file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -171,7 +171,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				for (int i = 0; i < entries.count(); ++i)
 				{
-					const QMimeType mimeType(entries.at(i).isDir() ? database.mimeTypeForName(QLatin1String("inode-directory")) : database.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
+					const QMimeType mimeType(entries.at(i).isDir() ? mimeDatabase.mimeTypeForName(QLatin1String("inode-directory")) : mimeDatabase.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
 					QString entryHtml(entryTemplate);
 
 					if (!icons.contains(mimeType.name()))

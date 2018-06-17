@@ -1651,7 +1651,7 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setOption(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setOption(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 
-	const QMimeDatabase database;
+	const QMimeDatabase mimeDatabase;
 
 	QFile::remove(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 
@@ -1668,7 +1668,7 @@ void PreferencesAdvancedPageWidget::save()
 
 		if (index.data(Qt::DisplayRole).toString() != QLatin1String("*"))
 		{
-			definition.mimeType = database.mimeTypeForName(index.data(Qt::DisplayRole).toString());
+			definition.mimeType = mimeDatabase.mimeTypeForName(index.data(Qt::DisplayRole).toString());
 		}
 
 		definition.openCommand = index.data(OpenCommandRole).toString();

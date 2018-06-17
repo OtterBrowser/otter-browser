@@ -139,14 +139,14 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &
 
 QVector<HandlersManager::HandlerDefinition> HandlersManager::getHandlers()
 {
-	const QMimeDatabase database;
+	const QMimeDatabase mimeDatabase;
 	const QStringList mimeTypes(IniSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini"))).getGroups());
 	QVector<HandlersManager::HandlerDefinition> handlers;
 	handlers.reserve(mimeTypes.count());
 
 	for (int i = 0; i < mimeTypes.count(); ++i)
 	{
-		handlers.append(getHandler(database.mimeTypeForName(mimeTypes.at(i))));
+		handlers.append(getHandler(mimeDatabase.mimeTypeForName(mimeTypes.at(i))));
 	}
 
 	return handlers;
