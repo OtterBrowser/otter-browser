@@ -40,7 +40,7 @@ QVector<QChar> AdblockContentFiltersProfile::m_separators({QLatin1Char('_'), QLa
 QHash<QString, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("popup"), PopupOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
 QHash<NetworkManager::ResourceType, AdblockContentFiltersProfile::RuleOption> AdblockContentFiltersProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption},{NetworkManager::PopupType, PopupOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
 
-AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : ContentBlockingProfile(parent),
+AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : ContentFiltersProfile(parent),
 	m_root(nullptr),
 	m_networkReply(nullptr),
 	m_name(name),
@@ -810,17 +810,17 @@ QVector<QLocale::Language> AdblockContentFiltersProfile::getLanguages() const
 	return m_languages;
 }
 
-ContentBlockingProfile::ProfileCategory AdblockContentFiltersProfile::getCategory() const
+ContentFiltersProfile::ProfileCategory AdblockContentFiltersProfile::getCategory() const
 {
 	return m_category;
 }
 
-ContentBlockingProfile::ProfileError AdblockContentFiltersProfile::getError() const
+ContentFiltersProfile::ProfileError AdblockContentFiltersProfile::getError() const
 {
 	return m_error;
 }
 
-ContentBlockingProfile::ProfileFlags AdblockContentFiltersProfile::getFlags() const
+ContentFiltersProfile::ProfileFlags AdblockContentFiltersProfile::getFlags() const
 {
 	return m_flags;
 }

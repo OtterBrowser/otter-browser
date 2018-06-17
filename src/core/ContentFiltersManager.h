@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class ContentBlockingProfile;
+class ContentFiltersProfile;
 
 class ContentFiltersManager final : public QObject
 {
@@ -65,16 +65,16 @@ public:
 	};
 
 	static void createInstance();
-	static void addProfile(ContentBlockingProfile *profile);
-	static void removeProfile(ContentBlockingProfile *profile);
+	static void addProfile(ContentFiltersProfile *profile);
+	static void removeProfile(ContentFiltersProfile *profile);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentFiltersManager* getInstance();
-	static ContentBlockingProfile* getProfile(const QString &profile);
-	static ContentBlockingProfile* getProfile(int identifier);
+	static ContentFiltersProfile* getProfile(const QString &profile);
+	static ContentFiltersProfile* getProfile(int identifier);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	static CosmeticFiltersResult getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl);
 	static QStringList createSubdomainList(const QString &domain);
-	static QVector<ContentBlockingProfile*> getProfiles();
+	static QVector<ContentFiltersProfile*> getProfiles();
 	static QVector<int> getProfileList(const QStringList &names);
 	static CosmeticFiltersMode getCosmeticFiltersMode();
 	static bool areWildcardsEnabled();
@@ -95,7 +95,7 @@ private:
 	int m_saveTimer;
 
 	static ContentFiltersManager *m_instance;
-	static QVector<ContentBlockingProfile*> m_profiles;
+	static QVector<ContentFiltersProfile*> m_profiles;
 	static CosmeticFiltersMode m_cosmeticFiltersMode;
 	static bool m_areWildcardsEnabled;
 
@@ -103,7 +103,7 @@ signals:
 	void profileModified(const QString &profile);
 };
 
-class ContentBlockingProfile : public QObject
+class ContentFiltersProfile : public QObject
 {
 	Q_OBJECT
 
@@ -135,7 +135,7 @@ public:
 		RegionalCategory = 16
 	};
 
-	explicit ContentBlockingProfile(QObject *parent = nullptr);
+	explicit ContentFiltersProfile(QObject *parent = nullptr);
 
 	virtual void clear() = 0;
 	virtual void setCategory(ProfileCategory category) = 0;
@@ -149,9 +149,9 @@ public:
 	virtual ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) = 0;
 	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) = 0;
 	virtual QVector<QLocale::Language> getLanguages() const = 0;
-	virtual ContentBlockingProfile::ProfileCategory getCategory() const = 0;
-	virtual ContentBlockingProfile::ProfileError getError() const = 0;
-	virtual ContentBlockingProfile::ProfileFlags getFlags() const = 0;
+	virtual ProfileCategory getCategory() const = 0;
+	virtual ProfileError getError() const = 0;
+	virtual ProfileFlags getFlags() const = 0;
 	virtual int getUpdateInterval() const = 0;
 	virtual bool update() = 0;
 	virtual bool remove() = 0;
@@ -163,6 +163,6 @@ signals:
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ContentBlockingProfile::ProfileFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ContentFiltersProfile::ProfileFlags)
 
 #endif

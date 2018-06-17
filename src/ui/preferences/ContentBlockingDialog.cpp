@@ -46,7 +46,7 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (profile)
 	{
@@ -61,7 +61,7 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 				option->icon = QIcon(animation->getCurrentPixmap());
 			}
 		}
-		else if (profile->getError() != ContentBlockingProfile::NoError)
+		else if (profile->getError() != ContentFiltersProfile::NoError)
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
 		}
@@ -76,25 +76,25 @@ bool ContentBlockingTitleDelegate::helpEvent(QHelpEvent *event, QAbstractItemVie
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+		const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 		if (profile)
 		{
 			QString toolTip;
 
-			if (profile->getError() != ContentBlockingProfile::NoError)
+			if (profile->getError() != ContentFiltersProfile::NoError)
 			{
 				switch (profile->getError())
 				{
-					case ContentBlockingProfile::ReadError:
+					case ContentFiltersProfile::ReadError:
 						toolTip = tr("Failed to read profile file");
 
 						break;
-					case ContentBlockingProfile::DownloadError:
+					case ContentFiltersProfile::DownloadError:
 						toolTip = tr("Failed to download profile rules");
 
 						break;
-					case ContentBlockingProfile::ChecksumError:
+					case ContentFiltersProfile::ChecksumError:
 						toolTip = tr("Failed to verify profile rules using checksum");
 
 						break;
@@ -262,11 +262,11 @@ void ContentBlockingDialog::addProfile()
 void ContentBlockingDialog::editProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
-	ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (profile)
 	{
-		const ContentBlockingProfile::ProfileCategory category(profile->getCategory());
+		const ContentFiltersProfile::ProfileCategory category(profile->getCategory());
 		ContentBlockingProfileDialog dialog(this, profile);
 
 		if (dialog.exec() == QDialog::Accepted)
@@ -279,7 +279,7 @@ void ContentBlockingDialog::editProfile()
 void ContentBlockingDialog::removeProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
-	ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (profile)
 	{
@@ -299,7 +299,7 @@ void ContentBlockingDialog::removeProfile()
 void ContentBlockingDialog::updateProfile()
 {
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
-	ContentBlockingProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
+	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
 	if (!m_updateAnimation)
 	{
@@ -370,7 +370,7 @@ void ContentBlockingDialog::updateRulesActions()
 	m_ui->removeRuleButton->setEnabled(isEditable);
 }
 
-void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool isNewOrMoved)
+void ContentBlockingDialog::updateModel(ContentFiltersProfile *profile, bool isNewOrMoved)
 {
 	if (isNewOrMoved)
 	{
@@ -412,7 +412,7 @@ void ContentBlockingDialog::updateModel(ContentBlockingProfile *profile, bool is
 
 void ContentBlockingDialog::handleProfileModified(const QString &name)
 {
-	const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(name));
+	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
 
 	if (!profile)
 	{
@@ -433,7 +433,7 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 			{
 				QString title(profile->getTitle());
 
-				if (profile->getCategory() == ContentBlockingProfile::RegionalCategory)
+				if (profile->getCategory() == ContentFiltersProfile::RegionalCategory)
 				{
 					const QVector<QLocale::Language> languages(profile->getLanguages());
 					QStringList languageNames;
@@ -468,7 +468,7 @@ void ContentBlockingDialog::save()
 			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
 			const QModelIndex intervalIndex(m_ui->profilesViewWidget->getIndex(j, 1, categoryIndex));
 			const QString name(entryIndex.data(ContentFiltersManager::NameRole).toString());
-			ContentBlockingProfile *profile(ContentFiltersManager::getProfile(name));
+			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
 
 			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())
 			{
@@ -499,7 +499,7 @@ void ContentBlockingDialog::save()
 
 			file.close();
 
-			ContentBlockingProfile *profile(ContentFiltersManager::getProfile(QLatin1String("custom")));
+			ContentFiltersProfile *profile(ContentFiltersManager::getProfile(QLatin1String("custom")));
 
 			if (profile)
 			{
@@ -507,7 +507,7 @@ void ContentBlockingDialog::save()
 			}
 			else
 			{
-				profile = new AdblockContentFiltersProfile(QLatin1String("custom"), tr("Custom Rules"), {}, {}, {}, 0, ContentBlockingProfile::OtherCategory, ContentBlockingProfile::NoFlags);
+				profile = new AdblockContentFiltersProfile(QLatin1String("custom"), tr("Custom Rules"), {}, {}, {}, 0, ContentFiltersProfile::OtherCategory, ContentFiltersProfile::NoFlags);
 
 				ContentFiltersManager::addProfile(profile);
 			}

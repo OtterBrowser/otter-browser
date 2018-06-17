@@ -36,7 +36,7 @@ namespace Otter
 {
 
 ContentFiltersManager* ContentFiltersManager::m_instance(nullptr);
-QVector<ContentBlockingProfile*> ContentFiltersManager::m_profiles;
+QVector<ContentFiltersProfile*> ContentFiltersManager::m_profiles;
 ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::m_cosmeticFiltersMode(AllFiltersMode);
 bool ContentFiltersManager::m_areWildcardsEnabled(true);
 
@@ -66,7 +66,7 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		const QHash<ContentBlockingProfile::ProfileCategory, QString> categoryTitles({{ContentBlockingProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentBlockingProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentBlockingProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentBlockingProfile::SocialCategory, QLatin1String("social")}, {ContentBlockingProfile::RegionalCategory, QLatin1String("regional")}, {ContentBlockingProfile::OtherCategory, QLatin1String("other")}});
+		const QHash<ContentFiltersProfile::ProfileCategory, QString> categoryTitles({{ContentFiltersProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentFiltersProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentFiltersProfile::SocialCategory, QLatin1String("social")}, {ContentFiltersProfile::RegionalCategory, QLatin1String("regional")}, {ContentFiltersProfile::OtherCategory, QLatin1String("other")}});
 		JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
 		QJsonObject mainObject(settings.object());
 		QJsonObject::iterator iterator(mainObject.begin());
@@ -87,7 +87,7 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_profiles.count(); ++i)
 		{
-			const ContentBlockingProfile *profile(m_profiles.at(i));
+			const ContentFiltersProfile *profile(m_profiles.at(i));
 
 			if (profile == nullptr || profile->getName() == QLatin1String("custom"))
 			{
@@ -109,12 +109,12 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 				profileObject.insert(QLatin1String("lastUpdate"), lastUpdate.toString(Qt::ISODate));
 			}
 
-			if (profile->getFlags().testFlag(ContentBlockingProfile::HasCustomTitleFlag))
+			if (profile->getFlags().testFlag(ContentFiltersProfile::HasCustomTitleFlag))
 			{
 				profileObject.insert(QLatin1String("title"), profile->getTitle());
 			}
 
-			if (profile->getFlags().testFlag(ContentBlockingProfile::HasCustomUpdateUrlFlag))
+			if (profile->getFlags().testFlag(ContentFiltersProfile::HasCustomUpdateUrlFlag))
 			{
 				profileObject.insert(QLatin1String("updateUrl"), profile->getUpdateUrl().url());
 			}
@@ -181,7 +181,7 @@ void ContentFiltersManager::ensureInitialized()
 	m_profiles.reserve(profiles.count());
 
 	QJsonObject localMainObject(JsonSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json"))).object());
-	const QHash<QString, ContentBlockingProfile::ProfileCategory> categoryTitles({{QLatin1String("advertisements"), ContentBlockingProfile::AdvertisementsCategory}, {QLatin1String("annoyance"), ContentBlockingProfile::AnnoyanceCategory}, {QLatin1String("privacy"), ContentBlockingProfile::PrivacyCategory}, {QLatin1String("social"), ContentBlockingProfile::SocialCategory}, {QLatin1String("regional"), ContentBlockingProfile::RegionalCategory}, {QLatin1String("other"), ContentBlockingProfile::OtherCategory}});
+	const QHash<QString, ContentFiltersProfile::ProfileCategory> categoryTitles({{QLatin1String("advertisements"), ContentFiltersProfile::AdvertisementsCategory}, {QLatin1String("annoyance"), ContentFiltersProfile::AnnoyanceCategory}, {QLatin1String("privacy"), ContentFiltersProfile::PrivacyCategory}, {QLatin1String("social"), ContentFiltersProfile::SocialCategory}, {QLatin1String("regional"), ContentFiltersProfile::RegionalCategory}, {QLatin1String("other"), ContentFiltersProfile::OtherCategory}});
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
@@ -189,7 +189,7 @@ void ContentFiltersManager::ensureInitialized()
 		const QJsonObject bundledProfileObject(bundledMainObject.value(profiles.at(i)).toObject());
 		QString title;
 		QUrl updateUrl;
-		ContentBlockingProfile::ProfileFlags flags(ContentBlockingProfile::NoFlags);
+		ContentFiltersProfile::ProfileFlags flags(ContentFiltersProfile::NoFlags);
 
 		if (profiles.at(i) == QLatin1String("custom"))
 		{
@@ -217,7 +217,7 @@ void ContentFiltersManager::ensureInitialized()
 			}
 			else
 			{
-				flags |= ContentBlockingProfile::HasCustomUpdateUrlFlag;
+				flags |= ContentFiltersProfile::HasCustomUpdateUrlFlag;
 			}
 
 			if (title.isEmpty())
@@ -226,7 +226,7 @@ void ContentFiltersManager::ensureInitialized()
 			}
 			else
 			{
-				flags |= ContentBlockingProfile::HasCustomTitleFlag;
+				flags |= ContentFiltersProfile::HasCustomTitleFlag;
 			}
 		}
 
@@ -242,12 +242,12 @@ void ContentFiltersManager::ensureInitialized()
 			languages.append(languagesArray.at(j).toString());
 		}
 
-		ContentBlockingProfile *profile(new AdblockContentFiltersProfile(profiles.at(i), title, updateUrl, lastUpdate, languages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
+		ContentFiltersProfile *profile(new AdblockContentFiltersProfile(profiles.at(i), title, updateUrl, lastUpdate, languages, profileObject.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileObject.value(QLatin1String("category")).toString()), flags, m_instance));
 
 		m_profiles.append(profile);
 
-		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentFiltersManager::profileModified);
-		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
+		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::profileModified);
+		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 	}
 
 	m_profiles.squeeze();
@@ -261,7 +261,7 @@ void ContentFiltersManager::scheduleSave()
 	}
 }
 
-void ContentFiltersManager::addProfile(ContentBlockingProfile *profile)
+void ContentFiltersManager::addProfile(ContentFiltersProfile *profile)
 {
 	if (profile)
 	{
@@ -269,7 +269,7 @@ void ContentFiltersManager::addProfile(ContentBlockingProfile *profile)
 
 		getInstance()->scheduleSave();
 
-		connect(profile, &ContentBlockingProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
+		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
 	}
 }
 
@@ -310,7 +310,7 @@ void ContentFiltersManager::handleOptionChanged(int identifier, const QVariant &
 	}
 }
 
-void ContentFiltersManager::removeProfile(ContentBlockingProfile *profile)
+void ContentFiltersManager::removeProfile(ContentFiltersProfile *profile)
 {
 	if (!profile || !profile->remove())
 	{
@@ -347,7 +347,7 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 {
 	ensureInitialized();
 
-	QHash<ContentBlockingProfile::ProfileCategory, QMultiMap<QString, QList<QStandardItem*> > > categoryEntries;
+	QHash<ContentFiltersProfile::ProfileCategory, QMultiMap<QString, QList<QStandardItem*> > > categoryEntries;
 	QStandardItemModel *model(new QStandardItemModel(parent));
 	model->setHorizontalHeaderLabels({tr("Title"), tr("Update Interval"), tr("Last Update")});
 	model->setHeaderData(0, Qt::Horizontal, 250, HeaderViewWidget::WidthRole);
@@ -361,10 +361,10 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 			continue;
 		}
 
-		const ContentBlockingProfile::ProfileCategory category(m_profiles.at(i)->getCategory());
+		const ContentFiltersProfile::ProfileCategory category(m_profiles.at(i)->getCategory());
 		QString title(m_profiles.at(i)->getTitle());
 
-		if (category == ContentBlockingProfile::RegionalCategory)
+		if (category == ContentFiltersProfile::RegionalCategory)
 		{
 			const QVector<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
 			QStringList languageNames;
@@ -395,7 +395,7 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 		categoryEntries[category].insert(title, profileItems);
 	}
 
-	const QVector<QPair<ContentBlockingProfile::ProfileCategory, QString> > categoryTitles({{ContentBlockingProfile::AdvertisementsCategory, tr("Advertisements")}, {ContentBlockingProfile::AnnoyanceCategory, tr("Annoyance")}, {ContentBlockingProfile::PrivacyCategory, tr("Privacy")}, {ContentBlockingProfile::SocialCategory, tr("Social")}, {ContentBlockingProfile::RegionalCategory, tr("Regional")}, {ContentBlockingProfile::OtherCategory, tr("Other")}});
+	const QVector<QPair<ContentFiltersProfile::ProfileCategory, QString> > categoryTitles({{ContentFiltersProfile::AdvertisementsCategory, tr("Advertisements")}, {ContentFiltersProfile::AnnoyanceCategory, tr("Annoyance")}, {ContentFiltersProfile::PrivacyCategory, tr("Privacy")}, {ContentFiltersProfile::SocialCategory, tr("Social")}, {ContentFiltersProfile::RegionalCategory, tr("Regional")}, {ContentFiltersProfile::OtherCategory, tr("Other")}});
 
 	for (int i = 0; i < categoryTitles.count(); ++i)
 	{
@@ -427,7 +427,7 @@ ContentFiltersManager* ContentFiltersManager::getInstance()
 	return m_instance;
 }
 
-ContentBlockingProfile* ContentFiltersManager::getProfile(const QString &profile)
+ContentFiltersProfile* ContentFiltersManager::getProfile(const QString &profile)
 {
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
@@ -440,7 +440,7 @@ ContentBlockingProfile* ContentFiltersManager::getProfile(const QString &profile
 	return nullptr;
 }
 
-ContentBlockingProfile* ContentFiltersManager::getProfile(int identifier)
+ContentFiltersProfile* ContentFiltersManager::getProfile(int identifier)
 {
 	return m_profiles.value(identifier, nullptr);
 }
@@ -531,7 +531,7 @@ QStringList ContentFiltersManager::createSubdomainList(const QString &domain)
 	return subdomainList;
 }
 
-QVector<ContentBlockingProfile*> ContentFiltersManager::getProfiles()
+QVector<ContentFiltersProfile*> ContentFiltersManager::getProfiles()
 {
 	ensureInitialized();
 
@@ -566,7 +566,7 @@ bool ContentFiltersManager::areWildcardsEnabled()
 	return m_areWildcardsEnabled;
 }
 
-ContentBlockingProfile::ContentBlockingProfile(QObject *parent) : QObject(parent)
+ContentFiltersProfile::ContentFiltersProfile(QObject *parent) : QObject(parent)
 {
 }
 

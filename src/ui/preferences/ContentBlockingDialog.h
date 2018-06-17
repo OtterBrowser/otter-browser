@@ -33,7 +33,7 @@ namespace Ui
 }
 
 class Animation;
-class ContentBlockingProfile;
+class ContentFiltersProfile;
 
 class ContentBlockingTitleDelegate final : public ItemDelegate
 {
@@ -68,7 +68,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event) override;
-	void updateModel(ContentBlockingProfile *profile, bool isNewOrMoved);
+	void updateModel(ContentFiltersProfile *profile, bool isNewOrMoved);
 
 protected slots:
 	void addProfile();

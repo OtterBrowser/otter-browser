@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class AdblockContentFiltersProfile final : public ContentBlockingProfile
+class AdblockContentFiltersProfile final : public ContentFiltersProfile
 {
 	Q_OBJECT
 
@@ -48,9 +48,9 @@ public:
 	ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) override;
 	ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) override;
 	QVector<QLocale::Language> getLanguages() const override;
-	ContentBlockingProfile::ProfileCategory getCategory() const override;
-	ContentBlockingProfile::ProfileError getError() const override;
-	ContentBlockingProfile::ProfileFlags getFlags() const override;
+	ProfileCategory getCategory() const override;
+	ProfileError getError() const override;
+	ProfileFlags getFlags() const override;
 	int getUpdateInterval() const override;
 	bool update() override;
 	bool remove() override;

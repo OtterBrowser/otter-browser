@@ -31,17 +31,17 @@ namespace Ui
 	class ContentBlockingProfileDialog;
 }
 
-class ContentBlockingProfile;
+class ContentFiltersProfile;
 
 class ContentBlockingProfileDialog final : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingProfileDialog(QWidget *parent = nullptr, ContentBlockingProfile *profile = nullptr);
+	explicit ContentBlockingProfileDialog(QWidget *parent = nullptr, ContentFiltersProfile *profile = nullptr);
 	~ContentBlockingProfileDialog();
 
-	ContentBlockingProfile* getProfile();
+	ContentFiltersProfile* getProfile();
 
 protected:
 	void changeEvent(QEvent *event) override;
@@ -50,7 +50,7 @@ protected slots:
 	void save();
 
 private:
-	ContentBlockingProfile *m_profile;
+	ContentFiltersProfile *m_profile;
 	Ui::ContentBlockingProfileDialog *m_ui;
 };
 

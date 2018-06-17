@@ -399,7 +399,7 @@ void WebsitePreferencesDialog::updateCookiesActions()
 
 void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 {
-	const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(name));
+	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(name));
 
 	if (!profile)
 	{

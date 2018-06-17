@@ -329,7 +329,7 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 			break;
 		case ContentBlockerMessageSource:
-			mappedCategory = Console::ContentBlockingCategory;
+			mappedCategory = Console::ContentFiltersCategory;
 
 			break;
 		case SecurityMessageSource:
@@ -854,7 +854,7 @@ bool QtWebKitPage::extension(Extension extension, const ExtensionOption *option,
 
 					if (blockeckedRequests.at(i).metaData.contains(NetworkManager::ContentBlockingRuleMetaData))
 					{
-						const ContentBlockingProfile *profile(ContentFiltersManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
+						const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingProfileMetaData).toInt()));
 
 						information.description.append(tr("Request blocked by rule from profile %1:<br>\n%2").arg(profile ? profile->getTitle() : tr("(Unknown)")).arg(QStringLiteral("<span style=\"font-family:monospace;\">%1</span>").arg(blockeckedRequests.at(i).metaData.value(NetworkManager::ContentBlockingRuleMetaData).toString())));
 					}

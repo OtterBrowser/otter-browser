@@ -36,7 +36,7 @@ public:
 	{
 		OtherCategory = 0,
 		NetworkCategory,
-		ContentBlockingCategory,
+		ContentFiltersCategory,
 		SecurityCategory,
 		CssCategory,
 		JavaScriptCategory
