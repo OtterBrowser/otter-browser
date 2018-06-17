@@ -440,6 +440,24 @@ ContentFiltersProfile* ContentFiltersManager::getProfile(const QString &profile)
 	return nullptr;
 }
 
+ContentFiltersProfile* ContentFiltersManager::getProfile(const QUrl &url)
+{
+	if (!url.isValid())
+	{
+		return nullptr;
+	}
+
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		if (m_profiles.at(i)->getUpdateUrl() == url)
+		{
+			return m_profiles.at(i);
+		}
+	}
+
+	return nullptr;
+}
+
 ContentFiltersProfile* ContentFiltersManager::getProfile(int identifier)
 {
 	return m_profiles.value(identifier, nullptr);
