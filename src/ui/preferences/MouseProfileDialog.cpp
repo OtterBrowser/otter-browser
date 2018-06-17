@@ -221,25 +221,6 @@ void MouseProfileDialog::removeGesture()
 	}
 }
 
-void MouseProfileDialog::saveGesture()
-{
-	QStringList steps;
-
-	for (int i = 0; i < m_ui->stepsViewWidget->getRowCount(); ++i)
-	{
-		const QString step(m_ui->stepsViewWidget->getIndex(i, 0).data().toString());
-
-		if (!step.isEmpty())
-		{
-			steps.append(step);
-		}
-	}
-
-	const QModelIndex index(m_ui->gesturesViewWidget->currentIndex());
-
-	m_ui->gesturesViewWidget->setData(index.sibling(index.row(), 2), steps.join(QLatin1String(", ")), Qt::DisplayRole);
-}
-
 void MouseProfileDialog::addStep()
 {
 	m_ui->stepsViewWidget->insertRow();
@@ -248,14 +229,10 @@ void MouseProfileDialog::addStep()
 void MouseProfileDialog::removeStep()
 {
 	m_ui->stepsViewWidget->removeRow();
-
-	saveGesture();
 }
 
 void MouseProfileDialog::updateGesturesActions()
 {
-	disconnect(m_ui->stepsViewWidget->getSourceModel(), &QStandardItemModel::dataChanged, this, &MouseProfileDialog::saveGesture);
-
 	const QModelIndex index(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 	const bool isGesture(index.flags().testFlag(Qt::ItemNeverHasChildren));
 
@@ -278,8 +255,6 @@ void MouseProfileDialog::updateGesturesActions()
 	}
 
 	updateStepsActions();
-
-	connect(m_ui->stepsViewWidget->getSourceModel(), &QStandardItemModel::dataChanged, this, &MouseProfileDialog::saveGesture);
 }
 
 void MouseProfileDialog::updateStepsActions()
@@ -291,6 +266,23 @@ void MouseProfileDialog::updateStepsActions()
 
 	m_ui->addStepButton->setEnabled(isGesture);
 	m_ui->removeStepButton->setEnabled(isGesture && item);
+
+	if (isGesture && item)
+	{
+		QStringList steps;
+
+		for (int i = 0; i < m_ui->stepsViewWidget->getRowCount(); ++i)
+		{
+			const QString step(m_ui->stepsViewWidget->getIndex(i, 0).data().toString());
+
+			if (!step.isEmpty())
+			{
+				steps.append(step);
+			}
+		}
+
+		m_ui->gesturesViewWidget->setData(item->index().sibling(item->index().row(), 2), steps.join(QLatin1String(", ")), Qt::DisplayRole);
+	}
 }
 
 MouseProfile MouseProfileDialog::getProfile() const
