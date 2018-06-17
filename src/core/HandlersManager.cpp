@@ -93,13 +93,14 @@ HandlersManager* HandlersManager::getInstance()
 HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &mimeType)
 {
 	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	const QString name(mimeType.isValid() ? mimeType.name() : QLatin1String("*"));
 	HandlerDefinition definition;
 	definition.mimeType = mimeType;
-	definition.isExplicit = settings.getGroups().contains(mimeType.name());
+	definition.isExplicit = settings.getGroups().contains(name);
 
 	if (definition.isExplicit)
 	{
-		settings.beginGroup(mimeType.name());
+		settings.beginGroup(name);
 	}
 	else
 	{
