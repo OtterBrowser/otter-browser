@@ -78,7 +78,7 @@ void HandlersManager::setHandler(const QMimeType &mimeType, const HandlerDefinit
 			break;
 	}
 
-	settings.beginGroup(mimeType.name());
+	settings.beginGroup(mimeType.isValid() ? mimeType.name() : QLatin1String("*"));
 	settings.setValue(QLatin1String("openCommand"), definition.openCommand);
 	settings.setValue(QLatin1String("downloadsPath"), definition.downloadsPath);
 	settings.setValue(QLatin1String("transferMode"), transferMode);
