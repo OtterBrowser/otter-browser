@@ -144,6 +144,13 @@ void FeedsContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			}
 
 			break;
+		case ActionsManager::DeleteAction:
+			if (m_ui->feedsViewWidget->hasFocus())
+			{
+				removeFeed();
+			}
+
+			break;
 		default:
 			ContentsWidget::triggerAction(identifier, parameters, trigger);
 
@@ -752,6 +759,17 @@ ActionsManager::ActionDefinition::State FeedsContentsWidget::getActionState(int 
 	{
 		case ActionsManager::ReloadAction:
 			state.isEnabled = (m_feed != nullptr);
+
+			return state;
+		case ActionsManager::DeleteAction:
+			state.isEnabled = false;
+
+			if (m_ui->feedsViewWidget->hasFocus())
+			{
+				const FeedsModel::EntryType type(static_cast<FeedsModel::EntryType>(m_ui->feedsViewWidget->currentIndex().data(FeedsModel::TypeRole).toInt()));
+
+				state.isEnabled = (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry);
+			}
 
 			return state;
 		default:
