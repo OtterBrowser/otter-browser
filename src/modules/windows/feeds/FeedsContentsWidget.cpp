@@ -93,6 +93,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showEntriesContextMenu);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->feedsViewWidget, &ItemViewWidget::doubleClicked, this, &FeedsContentsWidget::openFeed);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showFeedsContextMenu);
 	connect(m_ui->feedsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateActions);
 	connect(m_ui->okButton, &QToolButton::clicked, this, &FeedsContentsWidget::subscribeFeed);
