@@ -23,6 +23,7 @@
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
+#include "../../../../core/HandlersManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"
@@ -32,7 +33,6 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
-#include <QtGui/QDesktopServices>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineScript>
@@ -449,10 +449,8 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		return false;
 	}
 
-	if (url.scheme() == QLatin1String("mailto"))
+	if (HandlersManager::handleUrl(url))
 	{
-		QDesktopServices::openUrl(url);
-
 		return false;
 	}
 

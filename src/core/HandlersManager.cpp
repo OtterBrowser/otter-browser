@@ -23,6 +23,7 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
+#include <QtGui/QDesktopServices>
 
 namespace Otter
 {
@@ -131,6 +132,23 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &
 	}
 
 	return definition;
+}
+
+bool HandlersManager::handleUrl(const QUrl &url)
+{
+	if (url.scheme() == QLatin1String("mailto"))
+	{
+		QDesktopServices::openUrl(url);
+
+		return true;
+	}
+
+	return false;
+}
+
+bool HandlersManager::canHandleUrl(const QUrl &url)
+{
+	return (url.scheme() == QLatin1String("mailto"));
 }
 
 }

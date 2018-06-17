@@ -22,6 +22,7 @@
 
 #include <QtCore/QMimeType>
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 
 namespace Otter
 {
@@ -52,6 +53,8 @@ public:
 	static void setHandler(const QMimeType &mimeType, const HandlerDefinition &definition);
 	static HandlersManager* getInstance();
 	static HandlerDefinition getHandler(const QMimeType &mimeType);
+	static bool handleUrl(const QUrl &url);
+	static bool canHandleUrl(const QUrl &url);
 
 protected:
 	explicit HandlersManager(QObject *parent);

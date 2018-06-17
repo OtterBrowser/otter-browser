@@ -25,6 +25,7 @@
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
+#include "../../../../core/HandlersManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"
@@ -34,7 +35,6 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-#include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QWheelEvent>
 #include <QtWebKit/QWebHistory>
@@ -575,16 +575,14 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		return false;
 	}
 
-	if (frame && request.url().scheme() == QLatin1String("javascript"))
+	if (HandlersManager::handleUrl(request.url()))
 	{
-		frame->documentElement().evaluateJavaScript(request.url().path());
-
 		return false;
 	}
 
-	if (request.url().scheme() == QLatin1String("mailto"))
+	if (frame && request.url().scheme() == QLatin1String("javascript"))
 	{
-		QDesktopServices::openUrl(request.url());
+		frame->documentElement().evaluateJavaScript(request.url().path());
 
 		return false;
 	}
