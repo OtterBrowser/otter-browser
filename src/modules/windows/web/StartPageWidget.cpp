@@ -42,8 +42,10 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmapCache>
+#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -1081,6 +1083,21 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 			return true;
 		}
+	}
+	else if (object == m_listView->viewport() && event->type() == QEvent::ToolTip)
+	{
+		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+		const QModelIndex index(m_listView->indexAt(helpEvent->pos()));
+		const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()));
+
+		if (bookmark)
+		{
+			const QKeySequence shortcut(ActionsManager::getActionShortcut(ActionsManager::OpenBookmarkAction, {{QLatin1String("startPageTile"), (index.row() + 1)}}));
+
+			QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->getTitle() + (shortcut.isEmpty() ? QString() : QLatin1String(" (") + shortcut.toString(QKeySequence::NativeText) + QLatin1Char(')')), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_listView).width() / 2)), m_listView, m_listView->visualRect(index));
+		}
+
+		return true;
 	}
 
 	return QObject::eventFilter(object, event);
