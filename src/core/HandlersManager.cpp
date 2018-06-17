@@ -41,6 +41,48 @@ void HandlersManager::createInstance()
 	}
 }
 
+void HandlersManager::setHandler(const QMimeType &mimeType, const HandlerDefinition &definition)
+{
+	if (SessionsManager::isReadOnly())
+	{
+		return;
+	}
+
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
+	IniSettings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	QString transferMode;
+
+	switch (definition.transferMode)
+	{
+		case HandlerDefinition::IgnoreTransfer:
+			transferMode = QLatin1String("ignore");
+
+			break;
+		case HandlerDefinition::OpenTransfer:
+			transferMode = QLatin1String("open");
+
+			break;
+		case HandlerDefinition::SaveTransfer:
+			transferMode = QLatin1String("save");
+
+			break;
+		case HandlerDefinition::SaveAsTransfer:
+			transferMode = QLatin1String("saveAs");
+
+			break;
+		default:
+			transferMode = QLatin1String("ask");
+
+			break;
+	}
+
+	settings.beginGroup(mimeType.name());
+	settings.setValue(QLatin1String("openCommand"), definition.openCommand);
+	settings.setValue(QLatin1String("downloadsPath"), definition.downloadsPath);
+	settings.setValue(QLatin1String("transferMode"), transferMode);
+	settings.save(path);
+}
+
 HandlersManager* HandlersManager::getInstance()
 {
 	return m_instance;
@@ -89,48 +131,6 @@ HandlersManager::HandlerDefinition HandlersManager::getHandler(const QMimeType &
 	}
 
 	return definition;
-}
-
-void HandlersManager::setHandler(const QMimeType &mimeType, const HandlerDefinition &definition)
-{
-	if (SessionsManager::isReadOnly())
-	{
-		return;
-	}
-
-	const QString path(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
-	IniSettings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
-	QString transferMode;
-
-	switch (definition.transferMode)
-	{
-		case HandlerDefinition::IgnoreTransfer:
-			transferMode = QLatin1String("ignore");
-
-			break;
-		case HandlerDefinition::OpenTransfer:
-			transferMode = QLatin1String("open");
-
-			break;
-		case HandlerDefinition::SaveTransfer:
-			transferMode = QLatin1String("save");
-
-			break;
-		case HandlerDefinition::SaveAsTransfer:
-			transferMode = QLatin1String("saveAs");
-
-			break;
-		default:
-			transferMode = QLatin1String("ask");
-
-			break;
-	}
-
-	settings.beginGroup(mimeType.name());
-	settings.setValue(QLatin1String("openCommand"), definition.openCommand);
-	settings.setValue(QLatin1String("downloadsPath"), definition.downloadsPath);
-	settings.setValue(QLatin1String("transferMode"), transferMode);
-	settings.save(path);
 }
 
 }

@@ -49,9 +49,9 @@ public:
 	};
 
 	static void createInstance();
+	static void setHandler(const QMimeType &mimeType, const HandlerDefinition &definition);
 	static HandlersManager* getInstance();
 	static HandlerDefinition getHandler(const QMimeType &mimeType);
-	static void setHandler(const QMimeType &mimeType, const HandlerDefinition &definition);
 
 protected:
 	explicit HandlersManager(QObject *parent);
