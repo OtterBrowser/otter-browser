@@ -76,6 +76,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
 	m_ui->feedsViewWidget->setItemDelegate(new FeedDelegate(this));
 	m_ui->feedsViewWidget->expandAll();
+	m_ui->feedsViewWidget->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
 	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
@@ -762,7 +763,24 @@ ActionsManager::ActionDefinition::State FeedsContentsWidget::getActionState(int 
 
 bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if ((object == m_ui->entriesViewWidget->viewport() || object == m_ui->feedsViewWidget->viewport()) && event->type() == QEvent::ToolTip)
+	if (object == m_ui->feedsViewWidget && event->type() == QEvent::KeyPress)
+	{
+		switch (static_cast<QKeyEvent*>(event)->key())
+		{
+			case Qt::Key_Delete:
+				removeFeed();
+
+				return true;
+			case Qt::Key_Enter:
+			case Qt::Key_Return:
+				openFeed();
+
+				return true;
+			default:
+				break;
+		}
+	}
+	else if ((object == m_ui->entriesViewWidget->viewport() || object == m_ui->feedsViewWidget->viewport()) && event->type() == QEvent::ToolTip)
 	{
 		const QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 		ItemViewWidget *viewWidget(object == m_ui->feedsViewWidget->viewport() ? m_ui->feedsViewWidget : m_ui->entriesViewWidget);
