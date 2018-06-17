@@ -93,6 +93,29 @@
 
 		return link.href;
 	}
+	else
+	{
+		var url = window.location.href;
+		if (!url.match(/(\d+)(\D*)$/))
+		{
+			return null;
+		}
+		var num = RegExp.$1;
+		var digit = (num.charAt(0) == "0") ? num.length : null;
+		num = parseInt(num) + 1;
+		if (num < 0)
+		{
+			return null;
+		}
+		num = num.toString();
+		// pad with zero
+		digit = digit - num.length;
+		for (var i = 0; i < digit; i++)
+		{
+			num = "0" + num;
+		}
+		return RegExp.leftContext + num + RegExp.$2;	
+	}
 
 	return null;
 })({isSelectingTheBestLink}, {hrefTokens}, {classTokens}, {idTokens}, {textTokens})
