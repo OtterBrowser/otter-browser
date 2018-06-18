@@ -571,22 +571,22 @@ QVector<ContentFiltersProfile*> ContentFiltersManager::getProfiles()
 	return m_profiles;
 }
 
-QVector<int> ContentFiltersManager::getProfileList(const QStringList &names)
+QVector<int> ContentFiltersManager::getProfileIdentifiers(const QStringList &names)
 {
 	ensureInitialized();
 
-	QVector<int> profiles;
-	profiles.reserve(names.count());
+	QVector<int> identifiers;
+	identifiers.reserve(names.count());
 
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
 		if (names.contains(m_profiles.at(i)->getName()))
 		{
-			profiles.append(i);
+			identifiers.append(i);
 		}
 	}
 
-	return profiles;
+	return identifiers;
 }
 
 ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::getCosmeticFiltersMode()

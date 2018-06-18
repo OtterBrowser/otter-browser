@@ -77,7 +77,7 @@ public:
 	static QStringList createSubdomainList(const QString &domain);
 	static QStringList getProfileNames();
 	static QVector<ContentFiltersProfile*> getProfiles();
-	static QVector<int> getProfileList(const QStringList &names);
+	static QVector<int> getProfileIdentifiers(const QStringList &names);
 	static CosmeticFiltersMode getCosmeticFiltersMode();
 	static bool areWildcardsEnabled();
 

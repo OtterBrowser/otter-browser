@@ -69,7 +69,7 @@ void QtWebEnginePage::validatePopup(const QUrl &url)
 		page->deleteLater();
 	}
 
-	const QVector<int> profiles(ContentFiltersManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).toStringList()));
+	const QVector<int> profiles(ContentFiltersManager::getProfileIdentifiers(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).toStringList()));
 
 	if (!profiles.isEmpty())
 	{
@@ -170,7 +170,7 @@ void QtWebEnginePage::handleLoadFinished()
 		if (m_widget)
 		{
 			const QUrl url(m_widget->getUrl());
-			const ContentFiltersManager::CosmeticFiltersResult cosmeticFilters(ContentFiltersManager::getCosmeticFilters(ContentFiltersManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), url));
+			const ContentFiltersManager::CosmeticFiltersResult cosmeticFilters(ContentFiltersManager::getCosmeticFilters(ContentFiltersManager::getProfileIdentifiers(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), url));
 
 			if (!cosmeticFilters.rules.isEmpty() || !cosmeticFilters.exceptions.isEmpty())
 			{

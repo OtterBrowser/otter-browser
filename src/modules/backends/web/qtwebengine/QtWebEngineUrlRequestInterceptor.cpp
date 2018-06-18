@@ -91,7 +91,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 		if (SettingsManager::getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, host).toBool())
 		{
-			m_contentBlockingProfiles[host] = ContentFiltersManager::getProfileList(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
+			m_contentBlockingProfiles[host] = ContentFiltersManager::getProfileIdentifiers(SettingsManager::getOption(SettingsManager::ContentBlocking_ProfilesOption, host).toStringList());
 		}
 		else
 		{

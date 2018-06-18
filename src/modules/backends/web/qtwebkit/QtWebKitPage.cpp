@@ -126,7 +126,7 @@ void QtWebKitFrame::handleLoadFinished()
 		return;
 	}
 
-	const ContentFiltersManager::CosmeticFiltersResult cosmeticFilters(ContentFiltersManager::getCosmeticFilters(ContentFiltersManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), m_widget->getUrl()));
+	const ContentFiltersManager::CosmeticFiltersResult cosmeticFilters(ContentFiltersManager::getCosmeticFilters(ContentFiltersManager::getProfileIdentifiers(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()), m_widget->getUrl()));
 
 	applyContentBlockingRules(cosmeticFilters.rules, true);
 	applyContentBlockingRules(cosmeticFilters.exceptions, false);
@@ -238,7 +238,7 @@ void QtWebKitPage::validatePopup(const QUrl &url)
 		page->deleteLater();
 	}
 
-	const QVector<int> profiles(ContentFiltersManager::getProfileList(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
+	const QVector<int> profiles(ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList()));
 
 	if (!profiles.isEmpty())
 	{
