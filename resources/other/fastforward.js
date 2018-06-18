@@ -105,7 +105,7 @@
 		}
 		
 		var number = results[1];
-		var rightContext = results[2];
+		var suffix = results[2];
 		var digit = ((number.charAt(0) == '0') ? number.length : null);
 		number = (parseInt(number) + 1);
 		
@@ -123,7 +123,7 @@
 			number = '0' + number;
 		}
 		
-		return url.replace(expression, number + rightContext);	
+		return url.replace(expression, number + suffix);	
 	}
 
 	return null;
