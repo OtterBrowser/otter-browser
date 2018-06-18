@@ -94,5 +94,33 @@
 		return link.href;
 	}
 
-	return null;
+	var url = window.location.href;
+	var expression = /(\d+)(\D*)$/;
+	var results = url.match(expression);
+
+	if (!results)
+	{
+		return null;
+	}
+
+	var number = results[1];
+	var suffix = results[2];
+	var digits = ((number.charAt(0) == '0') ? number.length : -1);
+	
+	number = (parseInt(number) + 1);
+
+	if (number < 0)
+	{
+		return null;
+	}
+
+	number = number.toString();
+	digits = (digits - number.length);
+
+	for (var i = 0; i < digits; ++i)
+	{
+		number = '0' + number;
+	}
+
+	return url.replace(expression, number + suffix);
 })({isSelectingTheBestLink}, {hrefTokens}, {classTokens}, {idTokens}, {textTokens})
