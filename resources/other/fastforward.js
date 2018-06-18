@@ -93,38 +93,35 @@
 
 		return link.href;
 	}	
-	else
-	{
-		var url = window.location.href;
-		var expression = /(\d+)(\D*)$/;		
-		var results = url.match(expression);
-		
-		if(!results)		
-		{
-			return null;
-		}
-		
-		var number = results[1];
-		var suffix = results[2];
-		var digit = ((number.charAt(0) == '0') ? number.length : null);
-		number = (parseInt(number) + 1);
-		
-		if (number < 0)
-		{
-			return null;
-		}
-		
-		number = number.toString();
-		// pad with zero
-		digit = digit - number.length;
-		
-		for (var i = 0; i < digit; ++i)
-		{
-			number = '0' + number;
-		}
-		
-		return url.replace(expression, number + suffix);	
-	}
 
-	return null;
+	var url = window.location.href;
+	var expression = /(\d+)(\D*)$/;		
+	var results = url.match(expression);
+	
+	if (!results)
+	{
+		return null;
+	}
+	
+	var number = results[1];
+	var suffix = results[2];
+	var digit = ((number.charAt(0) == '0') ? number.length : null);
+	number = (parseInt(number) + 1);
+	
+	if (number < 0)
+	{
+		return null;
+	}
+	
+	number = number.toString();
+	// pad with zero
+	digit = digit - number.length;
+	
+	for (var i = 0; i < digit; ++i)
+	{
+		number = '0' + number;
+	}
+	
+	return url.replace(expression, number + suffix);	
+
 })({isSelectingTheBestLink}, {hrefTokens}, {classTokens}, {idTokens}, {textTokens})
