@@ -92,18 +92,20 @@
 		link.href = scoredLinks[0].link.href;
 
 		return link.href;
-	}
-	
+	}	
 	else
 	{
 		var url = window.location.href;
+		var expression = /(\d+)(\D*)$/;		
+		var results = url.match(expression);
 		
-		if (!url.match(/(\d+)(\D*)$/))
+		if(!results)		
 		{
 			return null;
 		}
 		
-		var number = RegExp.$1;
+		var number = results[1];
+		var rightContext = results[2];
 		var digit = ((number.charAt(0) == '0') ? number.length : null);
 		number = (parseInt(number) + 1);
 		
@@ -121,7 +123,7 @@
 			number = '0' + number;
 		}
 		
-		return RegExp.leftContext + number + RegExp.$2;	
+		return url.replace(expression, number + rightContext);	
 	}
 
 	return null;
