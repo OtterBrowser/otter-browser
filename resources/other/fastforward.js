@@ -92,7 +92,7 @@
 		link.href = scoredLinks[0].link.href;
 
 		return link.href;
-	}	
+	}
 
 	var url = window.location.href;
 	var expression = /(\d+)(\D*)$/;
