@@ -28,6 +28,13 @@
 				]
 			},
 			{
+				"action": "FastForward",
+				"steps": [
+					"pressLeft+shift",
+					"pressRight"
+				]
+			},
+			{
 				"action": "StartMoveScroll",
 				"steps": [
 					"pressMiddle"
