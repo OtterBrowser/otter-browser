@@ -18,13 +18,19 @@
 **************************************************************************/
 
 #include "HandlersManager.h"
+#include "AdblockContentFiltersProfile.h"
+#include "ContentFiltersManager.h"
 #include "IniSettings.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
+#include <QtCore/QUrlQuery>
 #include <QtGui/QDesktopServices>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -154,6 +160,31 @@ QVector<HandlersManager::HandlerDefinition> HandlersManager::getHandlers()
 
 bool HandlersManager::handleUrl(const QUrl &url)
 {
+	if (url.scheme() == QLatin1String("abp"))
+	{
+		const QUrlQuery query(url.query());
+		const QUrl location(QUrl::fromPercentEncoding(query.queryItemValue(QLatin1String("location")).toUtf8()));
+
+		if (location.isValid())
+		{
+			if (ContentFiltersManager::getProfile(location))
+			{
+				QMessageBox::critical(nullptr, tr("Error"), tr("Profile with this address already exists."), QMessageBox::Close);
+			}
+			else if (QMessageBox::question(nullptr, tr("Question"), tr("Do you want to add this content blocking profile?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+			{
+				ContentFiltersProfile *profile(new AdblockContentFiltersProfile(Utils::createIdentifier(QFileInfo(location.path()).baseName(), ContentFiltersManager::getProfileNames()), QByteArray::fromPercentEncoding(query.queryItemValue(QLatin1String("title")).toUtf8()), location, {}, {}, 0, ContentFiltersProfile::OtherCategory, ContentFiltersProfile::NoFlags));
+
+				ContentFiltersManager::addProfile(profile);
+
+				profile->update();
+///TODO Some sort of passive confirmation that profile was added
+			}
+		}
+
+		return true;
+	}
+
 	if (url.scheme() == QLatin1String("mailto"))
 	{
 		QDesktopServices::openUrl(url);
@@ -166,7 +197,7 @@ bool HandlersManager::handleUrl(const QUrl &url)
 
 bool HandlersManager::canHandleUrl(const QUrl &url)
 {
-	return (url.scheme() == QLatin1String("mailto"));
+	return (url.scheme() == QLatin1String("abp") || url.scheme() == QLatin1String("mailto"));
 }
 
 }
