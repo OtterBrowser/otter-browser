@@ -1,10 +1,4 @@
 {
-	"advertisements.adblock-killer-filters":
-	{
-		"category": "advertisements",
-		"title": "AakList (Anti-Adblock Killer)",
-		"updateUrl": "https://xuhaiyang1234.gitlab.io/AAK-Cont/dist/aak-cont-list-notubo.txt"
-	},
 	"advertisements.antiadblockfilters":
 	{
 		"category": "advertisements",
@@ -284,7 +278,7 @@
 	{
 		"category": "regional",
 		"title": "Fanboy's Swedish",
-		"updateUrl": "https://www.fanboy.co.nz/fanboy-swedish.txt",
+		"updateUrl": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
 		"languages":
 		[
 			"sv"
