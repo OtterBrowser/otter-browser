@@ -95,7 +95,7 @@
 	}	
 
 	var url = window.location.href;
-	var expression = /(\d+)(\D*)$/;		
+	var expression = /(\d+)(\D*)$/;	
 	var results = url.match(expression);
 	
 	if (!results)
@@ -115,13 +115,12 @@
 	
 	number = number.toString();
 	// pad with zero
-	digit = digit - number.length;
+	digit = (digit - number.length);
 	
 	for (var i = 0; i < digit; ++i)
 	{
 		number = '0' + number;
 	}
 	
-	return url.replace(expression, number + suffix);	
-
+	return url.replace(expression, number + suffix);
 })({isSelectingTheBestLink}, {hrefTokens}, {classTokens}, {idTokens}, {textTokens})
