@@ -93,28 +93,35 @@
 
 		return link.href;
 	}
+	
 	else
 	{
 		var url = window.location.href;
+		
 		if (!url.match(/(\d+)(\D*)$/))
 		{
 			return null;
 		}
-		var num = RegExp.$1;
-		var digit = (num.charAt(0) == "0") ? num.length : null;
-		num = parseInt(num) + 1;
-		if (num < 0)
+		
+		var number = RegExp.$1;
+		var digit = ((number.charAt(0) == '0') ? number.length : null);
+		number = (parseInt(number) + 1);
+		
+		if (number < 0)
 		{
 			return null;
 		}
-		num = num.toString();
+		
+		number = number.toString();
 		// pad with zero
-		digit = digit - num.length;
-		for (var i = 0; i < digit; i++)
+		digit = digit - number.length;
+		
+		for (var i = 0; i < digit; ++i)
 		{
-			num = "0" + num;
+			number = '0' + number;
 		}
-		return RegExp.leftContext + num + RegExp.$2;	
+		
+		return RegExp.leftContext + number + RegExp.$2;	
 	}
 
 	return null;
