@@ -126,7 +126,7 @@ void ContentBlockingProfileDialog::save()
 		file.write(QStringLiteral("[AdBlock Plus 2.0]\n").toUtf8());
 		file.close();
 
-		ContentFiltersProfile *profile(new AdblockContentFiltersProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentFiltersProfile::HasCustomTitleFlag | ContentFiltersProfile::HasCustomUpdateUrlFlag)));
+		ContentFiltersProfile *profile(new AdblockContentFiltersProfile(fileName, m_ui->titleLineEdit->text(), url, {}, {}, m_ui->updateIntervalSpinBox->value(), category, (ContentFiltersProfile::HasCustomTitleFlag | ContentFiltersProfile::HasCustomUpdateUrlFlag), ContentFiltersManager::getInstance()));
 
 		ContentFiltersManager::addProfile(profile);
 
