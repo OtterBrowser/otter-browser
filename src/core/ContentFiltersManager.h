@@ -75,6 +75,7 @@ public:
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	static CosmeticFiltersResult getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl);
 	static QStringList createSubdomainList(const QString &domain);
+	static QStringList getProfileNames();
 	static QVector<ContentFiltersProfile*> getProfiles();
 	static QVector<int> getProfileList(const QStringList &names);
 	static CosmeticFiltersMode getCosmeticFiltersMode();

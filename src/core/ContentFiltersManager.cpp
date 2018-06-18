@@ -549,6 +549,21 @@ QStringList ContentFiltersManager::createSubdomainList(const QString &domain)
 	return subdomainList;
 }
 
+QStringList ContentFiltersManager::getProfileNames()
+{
+	ensureInitialized();
+
+	QStringList names;
+	names.reserve(m_profiles.count());
+
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		names.append(m_profiles.at(i)->getName());
+	}
+
+	return names;
+}
+
 QVector<ContentFiltersProfile*> ContentFiltersManager::getProfiles()
 {
 	ensureInitialized();
