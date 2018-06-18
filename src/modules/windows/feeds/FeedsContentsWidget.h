@@ -85,11 +85,12 @@ protected:
 protected slots:
 	void addFeed();
 	void addFolder();
+	void openFeed();
 	void updateFeed();
 	void removeFeed();
-	void openFeed();
 	void subscribeFeed();
 	void feedProperties();
+	void openEntry();
 	void removeEntry();
 	void selectCategory();
 	void toggleCategory(QAction *action);

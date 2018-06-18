@@ -92,6 +92,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 
 	connect(FeedsManager::getInstance(), &FeedsManager::feedModified, this, &FeedsContentsWidget::handleFeedModified);
 	connect(m_ui->entriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->entriesViewWidget, &ItemViewWidget::setFilterString);
+	connect(m_ui->entriesViewWidget, &ItemViewWidget::doubleClicked, this, &FeedsContentsWidget::openEntry);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::customContextMenuRequested, this, &FeedsContentsWidget::showEntriesContextMenu);
 	connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	connect(m_ui->feedsFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->feedsViewWidget, &ItemViewWidget::setFilterString);
@@ -203,6 +204,17 @@ void FeedsContentsWidget::addFolder()
 	}
 }
 
+void FeedsContentsWidget::openFeed()
+{
+	const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow && entry && entry->getFeed())
+	{
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString())}});
+	}
+}
+
 void FeedsContentsWidget::updateFeed()
 {
 	const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
@@ -216,17 +228,6 @@ void FeedsContentsWidget::updateFeed()
 void FeedsContentsWidget::removeFeed()
 {
 	FeedsManager::getModel()->trashEntry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
-}
-
-void FeedsContentsWidget::openFeed()
-{
-	const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-	if (mainWindow && entry && entry->getFeed())
-	{
-		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString())}});
-	}
 }
 
 void FeedsContentsWidget::subscribeFeed()
@@ -268,6 +269,17 @@ void FeedsContentsWidget::feedProperties()
 		}
 
 		updateActions();
+	}
+}
+
+void FeedsContentsWidget::openEntry()
+{
+	const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (index.isValid() && !index.data(UrlRole).isNull())
+	{
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}});
 	}
 }
 
@@ -807,7 +819,7 @@ ActionsManager::ActionDefinition::State FeedsContentsWidget::getActionState(int 
 
 bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->feedsViewWidget && event->type() == QEvent::KeyPress)
+	if ((object == m_ui->entriesViewWidget || object == m_ui->feedsViewWidget ) && event->type() == QEvent::KeyPress)
 	{
 		switch (static_cast<QKeyEvent*>(event)->key())
 		{
@@ -824,7 +836,14 @@ bool FeedsContentsWidget::eventFilter(QObject *object, QEvent *event)
 				return true;
 			case Qt::Key_Enter:
 			case Qt::Key_Return:
-				openFeed();
+				if (m_ui->feedsViewWidget->hasFocus())
+				{
+					openFeed();
+				}
+				else if (m_ui->entriesViewWidget->hasFocus())
+				{
+					openEntry();
+				}
 
 				return true;
 			default:
