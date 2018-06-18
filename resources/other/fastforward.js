@@ -105,7 +105,8 @@
 
 	var number = results[1];
 	var suffix = results[2];
-	var digit = ((number.charAt(0) == '0') ? number.length : null);
+	var digits = ((number.charAt(0) == '0') ? number.length : -1);
+	
 	number = (parseInt(number) + 1);
 
 	if (number < 0)
@@ -114,10 +115,9 @@
 	}
 
 	number = number.toString();
-	// pad with zero
-	digit = (digit - number.length);
+	digits = (digits - number.length);
 
-	for (var i = 0; i < digit; ++i)
+	for (var i = 0; i < digits; ++i)
 	{
 		number = '0' + number;
 	}
