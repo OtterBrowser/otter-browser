@@ -682,6 +682,11 @@ qreal calculatePercent(qint64 amount, qint64 total, int multiplier)
 	return ((static_cast<qreal>(amount) / static_cast<qreal>(total)) * multiplier);
 }
 
+bool isUrl(const QString &text)
+{
+	return QRegularExpression(QLatin1String("^[^\\s]+\\.[^\\s]{2,}$")).match(text).hasMatch();
+}
+
 bool isUrlEmpty(const QUrl &url)
 {
 	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));
