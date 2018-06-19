@@ -321,7 +321,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			{
 				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
 
-				if (hints == SessionsManager::DefaultOpen)
+				if (hints == SessionsManager::DefaultOpen && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
 					m_page->runJavaScript(parsePosition(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element) { element.click(); }"), getClickPosition()));
 
@@ -1548,6 +1548,12 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)
 {
 	m_hitResult = QtWebEngineHitTestResult(m_page->runScriptFile(QLatin1String("hitTest"), {QString::number(position.x() / m_page->zoomFactor()), QString::number(position.y() / m_page->zoomFactor())}));
+
+	if (m_hitResult.flags.testFlag(HitTestResult::IsSelectedTest) && !m_hitResult.linkUrl.isValid() && Utils::isUrl(m_page->selectedText()))
+	{
+		m_hitResult.flags |= HitTestResult::IsLinkFromSelectionTest;
+		m_hitResult.linkUrl = QUrl::fromUserInput(m_page->selectedText());
+	}
 
 	return m_hitResult;
 }
