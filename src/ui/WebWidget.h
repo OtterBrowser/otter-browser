@@ -140,12 +140,13 @@ public:
 			IsContentEditableTest = 1,
 			IsEmptyTest = 2,
 			IsFormTest = 4,
-			IsSelectedTest = 8,
-			IsSpellCheckEnabled = 16,
-			MediaHasControlsTest = 32,
-			MediaIsLoopedTest = 64,
-			MediaIsMutedTest = 128,
-			MediaIsPausedTest = 256
+			IsLinkFromSelectionTest = 8,
+			IsSelectedTest = 16,
+			IsSpellCheckEnabled = 32,
+			MediaHasControlsTest = 64,
+			MediaIsLoopedTest = 128,
+			MediaIsMutedTest = 256,
+			MediaIsPausedTest = 512
 		};
 
 		Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
