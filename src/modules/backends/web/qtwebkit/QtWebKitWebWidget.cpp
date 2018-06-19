@@ -956,7 +956,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
 
-				if (hints == SessionsManager::DefaultOpen)
+				if (hints == SessionsManager::DefaultOpen && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
 					m_page->triggerAction(QWebPage::OpenLink);
 
@@ -2526,6 +2526,12 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 		}
 
 		result.playbackRate = nativeResult.element().evaluateJavaScript(QLatin1String("this.playbackRate")).toReal();
+	}
+
+	if (result.flags.testFlag(HitTestResult::IsSelectedTest) && !result.linkUrl.isValid() && Utils::isUrl(m_page->selectedText()))
+	{
+		result.flags |= HitTestResult::IsLinkFromSelectionTest;
+		result.linkUrl = QUrl::fromUserInput(m_page->selectedText());
 	}
 
 	return result;
