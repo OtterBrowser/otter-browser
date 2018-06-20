@@ -186,6 +186,14 @@
     </message>
 </context>
 <context>
+    <name>Otter::AdblockContentFiltersProfile</name>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
+        <source>(Unknown)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::AddonsContentsWidget</name>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
@@ -520,6 +528,19 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::AtomFeedParser</name>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="195"/>
+        <source>Failed to parse feed file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="206"/>
+        <source>Failed to parse feed: no valid entries found</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::AuthenticationDialog</name>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
@@ -605,34 +626,34 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
         <translation>Schlüsselwort:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="49"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="50"/>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="54"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="62"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="67"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="75"/>
         <source>View Bookmark</source>
         <translation>Lesezeichen ansehen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="87"/>
         <source>Edit Bookmark</source>
         <translation>Lesezeichen bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="116"/>
         <source>Add Bookmark</source>
         <translation>Lesezeichen hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Bookmark with this keyword already exists.</source>
         <translation>Lesezeichen mit diesem Schlüsselwort ist bereits vorhanden.</translation>
     </message>
@@ -844,57 +865,57 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
 <context>
     <name>Otter::BookmarksModel</name>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="154"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="155"/>
         <source>Notes</source>
         <translation>Anmerkungen</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="158"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="159"/>
         <source>Bookmarks</source>
         <translation>Lesezeichen</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="160"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="161"/>
         <source>Trash</source>
         <translation>Papierkorb</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="183"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="185"/>
         <source>(Untitled)</source>
         <translation>(Ohne Titel)</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="358"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
         <translation>Fehler beim Öffnen der Anmerkungsdatei: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="358"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
         <translation>Fehler beim Öffnen der Lesezeichendatei: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
         <translation>Fehler beim Laden der Anmerkungsdatei: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
         <translation>Fehler beim Laden der Lesezeichendatei: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
         <translation>Fehler beim Laden der Anmerkungsdatei.</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
         <translation>Fehler beim Laden der Lesezeichendatei.</translation>
     </message>
@@ -1534,7 +1555,7 @@ Möchten Sie sie speichern?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="170"/>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="514"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="510"/>
         <source>Custom Rules</source>
         <translation>Benutzerdefinierte Regeln</translation>
     </message>
@@ -1557,77 +1578,77 @@ Möchten Sie sie speichern?</translation>
 <context>
     <name>Otter::ContentBlockingInformationWidget</name>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
         <translation>Aktive Profile</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="47"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
         <source>Blocked Elements</source>
         <translation>Blockierte Elemente</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="151"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="150"/>
         <source>main frame</source>
         <translation>Hauptframe</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="155"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="154"/>
         <source>subframe</source>
         <translation>Unterframe</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="159"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="158"/>
         <source>pop-up</source>
         <translation>Pop-up</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="163"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="162"/>
         <source>stylesheet</source>
         <translation>Formatvorlage</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="167"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="166"/>
         <source>script</source>
         <translation>Skript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="171"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="170"/>
         <source>image</source>
         <translation>Bild</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="174"/>
         <source>object</source>
         <translation>Objekt</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="178"/>
         <source>object subrequest</source>
         <translation>Objekt-Subanforderung</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="183"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="182"/>
         <source>XHR</source>
         <translation>XHR</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="187"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="186"/>
         <source>WebSocket</source>
         <translation>WebSocket</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="191"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="190"/>
         <source>other</source>
         <translation>andere</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="210"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="209"/>
         <source>Enable Content Blocking</source>
         <translation>Inhaltsblockierung aktivieren</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="340"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="339"/>
         <source>Blocked Elements: {amount}</source>
         <translation>Blockierte Elemente: {amount}</translation>
     </message>
@@ -1649,77 +1670,6 @@ Möchten Sie sie speichern?</translation>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>%n day(s)</source>
         <translation><numerusform>%n Tag</numerusform><numerusform>%n Tage</numerusform></translation>
-    </message>
-</context>
-<context>
-    <name>Otter::ContentBlockingManager</name>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="196"/>
-        <source>Custom Rules</source>
-        <translation>Benutzerdefinierte Regeln</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
-        <source>Failed to remove content blocking profile file: %1</source>
-        <translation>Fehler beim Entfernen der Inhaltsblockierungsprofildatei: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
-        <source>Unknown</source>
-        <translation>Unbekannt</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Update Interval</source>
-        <translation>Aktualisierungsintervall</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Last Update</source>
-        <translation>Letzte Aktualisierung</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Advertisements</source>
-        <translation>Werbebotschaften</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Annoyance</source>
-        <translation>Beeinträchtigung</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Privacy</source>
-        <translation>Datenschutz</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Social</source>
-        <translation>Sozial</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Regional</source>
-        <translation>Regional</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Other</source>
-        <translation>Andere</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::ContentBlockingProfile</name>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="708"/>
-        <source>(Unknown)</source>
-        <translation>(Unbekannt)</translation>
     </message>
 </context>
 <context>
@@ -1848,6 +1798,69 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Otter::ContentFiltersManager</name>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="196"/>
+        <source>Custom Rules</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
+        <source>Failed to remove content blocking profile file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
+        <source>Unknown</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Update Interval</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Last Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Advertisements</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Annoyance</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Privacy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Social</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Regional</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Other</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2153,14 +2166,19 @@ Möchten Sie sie speichern?</translation>
 <context>
     <name>Otter::Feed</name>
     <message>
-        <location filename="../../src/core/FeedsManager.cpp" line="130"/>
+        <location filename="../../src/core/FeedsManager.cpp" line="268"/>
         <source>Feed updated:
 %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/FeedsManager.cpp" line="174"/>
-        <source>Failed to parse feed: %1</source>
+        <location filename="../../src/core/FeedsManager.cpp" line="301"/>
+        <source>Failed to parse feed: invalid feed type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="311"/>
+        <source>Failed to download feed</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2168,47 +2186,75 @@ Möchten Sie sie speichern?</translation>
     <name>Otter::FeedPropertiesDialog</name>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
-        <source>Edit Search Engine</source>
+        <source>Edit Feed</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
+        <source>Folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
+        <source>New…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="49"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="58"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
         <source>Address:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="71"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="102"/>
         <source>Update interval:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="81"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="112"/>
         <source>Never</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
+        <source>Add Feed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Valid address is required.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Otter::FeedsComboBoxWidget</name>
+    <message>
+        <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
+        <source>Folder Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
+        <source>Select name of new folder:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2236,120 +2282,135 @@ Möchten Sie sie speichern?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>Title</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>From</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>Published</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="151"/>
+        <source>Question</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="152"/>
+        <source>You already subscribed this feed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="153"/>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="171"/>
         <source>Select Folder Name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="171"/>
         <source>Enter folder name:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="328"/>
         <source>Open</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="347"/>
         <source>Empty Trash</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="272"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="297"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="380"/>
         <source>Add Folder…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="298"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="381"/>
         <source>Add Feed…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="295"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="378"/>
         <source>Add New</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="307"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="390"/>
         <source>Restore Feed</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="321"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="404"/>
         <source>Properties…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="431"/>
         <source>Send email to %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="433"/>
         <source>Go to %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="437"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="520"/>
         <source>All (%1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="568"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="684"/>
         <source>(Untitled)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="635"/>
         <source>Subscribe to this feed using:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="684"/>
         <source>Feed: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="687"/>
         <source>Feeds</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="653"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="731"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="740"/>
         <source>Title: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="657"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="731"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="744"/>
         <source>Address: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="648"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="735"/>
         <source>Last update: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -2372,22 +2433,22 @@ Möchten Sie sie speichern?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="229"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="230"/>
         <source>Failed to open feeds file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="252"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="253"/>
         <source>Failed to load feeds file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Error</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Failed to load feeds file.</source>
         <translation type="unfinished"/>
     </message>
@@ -2750,32 +2811,32 @@ Möchten Sie sie speichern?</translation>
         <translation>%p% (%v/%m)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="120"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="120"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Unable to import selected type.</source>
         <translation>Ausgewählter Typ konnte nicht importiert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="153"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
         <source>Processing…</source>
         <translation>Wird verarbeitet…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="181"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="186"/>
         <source>Failed to import data.</source>
         <translation>Fehler beim Importieren der Daten.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="185"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="190"/>
         <source>Import cancelled by the user.</source>
         <translation>Import vom Benutzer abgebrochen.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="189"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="194"/>
         <source>Import finished successfully.</source>
         <translation>Import erfolgreich abgeschlossen.</translation>
     </message>
@@ -3128,24 +3189,24 @@ Möchten Sie sie speichern?</translation>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="489"/>
-        <location filename="../../src/ui/Menu.cpp" line="578"/>
+        <location filename="../../src/ui/Menu.cpp" line="491"/>
+        <location filename="../../src/ui/Menu.cpp" line="580"/>
         <source>Failed to create menu action: %1</source>
         <translation>Erstellen dieser Menüaktion fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="915"/>
+        <location filename="../../src/ui/Menu.cpp" line="917"/>
         <source>Window - %1</source>
         <translation>Fenster - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1171"/>
-        <location filename="../../src/ui/Menu.cpp" line="1186"/>
+        <location filename="../../src/ui/Menu.cpp" line="1173"/>
+        <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>(Untitled)</source>
         <translation>(Ohne Titel)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="1186"/>
+        <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n Tab(s))</numerusform><numerusform>%1 (%n Tab(s))</numerusform></translation>
     </message>
@@ -3217,87 +3278,97 @@ Möchten Sie sie migrieren?</translation>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="182"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
+        <source>Move Up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
+        <source>Move Down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
         <source>Information</source>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="206"/>
         <source>Title:</source>
         <translation>Titel:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="198"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="216"/>
         <source>Description:</source>
         <translation>Beschreibung:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="208"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="226"/>
         <source>Version:</source>
         <translation>Version:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="218"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="236"/>
         <source>Author:</source>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Generic</source>
         <translation>Generisch</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Link</source>
         <translation>Link</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Editable Content</source>
         <translation>Editierbarer Inhalt</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Tab Handle</source>
         <translation>Tab-Handhabung</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Tab Handle of Active Tab</source>
         <translation>Tab-Handhabung des aktiven Tabs</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Empty Area of Tab Bar</source>
         <translation>Leere Fläche der Tab-Leiste</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Any Toolbar</source>
         <translation>Jede Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Context and Action</source>
         <translation>Kontext und Aktion</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Parameters</source>
         <translation>Parameter</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Steps</source>
         <translation>Schritte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="142"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="143"/>
         <source>Step</source>
         <translation>Schritt</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="194"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="201"/>
         <source>Select Action</source>
         <translation>Aktion auswählen</translation>
     </message>
@@ -3324,7 +3395,7 @@ Möchten Sie sie migrieren?</translation>
         <translation>Fehler beim Laden der automatischen Konfiguration des Proxys (PAC): %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="360"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="357"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
         <translation>Fehler beim Laden der automatischen Konfiguration des Proxys (PAC). Ungültige URL: %1</translation>
     </message>
@@ -3353,7 +3424,7 @@ Möchten Sie fortfahren?</translation>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="692"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="708"/>
         <source>Custom</source>
         <translation>Benutzerdefiniert</translation>
     </message>
@@ -3558,6 +3629,42 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="94"/>
         <source>Opera session files (*.win)</source>
         <translation>Opera-Sitzungsdateien (*.win)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpmlImporter</name>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
+        <source>OPML Feeds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
+        <source>Imports feeds from OPML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
+        <source>OPML files (*.opml)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Otter::OpmlImporterWidget</name>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
+        <source>Import into folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
+        <source>New…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
+        <source>Allow to duplicate already existing feeds</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5083,46 +5190,46 @@ Möchten Sie fortfahren?</translation>
         <translation>Offene Suchdateien (*.xml)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="305"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="368"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="307"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="370"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="308"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>Möchten Sie diese Suchmaschine wirklich entfernen?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="315"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="317"/>
         <source>Delete search engine permanently</source>
         <translation>Suchmaschine dauerhaft löschen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="446"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <source>Failed to open Open Search file.</source>
         <translation>Fehler beim Öffnen der Offenen Suchdatei.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="369"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="371"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
         <translation>Schlüsselwort wird bereits verwendet. Möchten Sie trotzdem fortfahren?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="446"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Failed to update search engine.</source>
         <translation>Fehler beim Aktualisieren der Suchmaschine.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="509"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="511"/>
         <source>(Untitled)</source>
         <translation>(Ohne Titel)</translation>
     </message>
@@ -5303,40 +5410,40 @@ Möchten Sie fortfahren?</translation>
 <context>
     <name>Otter::QtWebEnginePage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="585"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="625"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="120"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="584"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="624"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="122"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="586"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="626"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="585"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="625"/>
         <source>Disable JavaScript popups</source>
         <translation>JavaScript-Popups deaktivieren</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="492"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="491"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="493"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="492"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Sollen die Formulardaten wirklich erneut gesendet werden?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="494"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="493"/>
         <source>Do you want to resend data?</source>
         <translation>Möchten Sie die Daten erneut senden?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="480"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="498"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="497"/>
         <source>Do not show this message again</source>
         <translation>Diese Meldung nicht mehr anzeigen</translation>
     </message>
@@ -5447,7 +5554,7 @@ Möchten Sie fortfahren?</translation>
         <translation>Ladevorgang abgeschlossen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="780"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="742"/>
         <source>Sending request to %1…</source>
         <translation>Anfrage wird an %1 gesendet...</translation>
     </message>
@@ -5455,78 +5562,78 @@ Möchten Sie fortfahren?</translation>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="677"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="717"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="423"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="716"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="425"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="678"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="718"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="677"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="717"/>
         <source>Disable JavaScript popups</source>
         <translation>JavaScript-Pop-Ups deaktivieren</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="630"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="629"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="631"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="630"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Sollen die Formulardaten wirklich erneut gesendet werden?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="632"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="631"/>
         <source>Do you want to resend data?</source>
         <translation>Sollen die Daten erneut gesendet werden?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="618"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="636"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="635"/>
         <source>Do not show this message again</source>
         <translation>Diese Nachricht nicht erneut anzeigen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="790"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="789"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 Fehler #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="862"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="861"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
         <translation>Anfrage durch Regel aus Profil %1 blockiert:&lt;br&gt;
 %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="862"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="861"/>
         <source>(Unknown)</source>
         <translation>(Unbekannt)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="880"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="879"/>
         <source>WebKit error %1</source>
         <translation>WebKit-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="884"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="883"/>
         <source>Network error %1</source>
         <translation>Netzwerkfehler %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Das Skript auf dieser Webseite scheint ein Problem zu haben.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>Do you want to stop the script?</source>
         <translation>Möchten Sie das Skript stoppen?</translation>
     </message>
@@ -5635,6 +5742,19 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/ui/ReportDialog.cpp" line="41"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::RssFeedParser</name>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="355"/>
+        <source>Failed to parse feed file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="366"/>
+        <source>Failed to parse feed: no valid entries found</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5825,8 +5945,8 @@ Möchten Sie sie überschrieben?</translation>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="193"/>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="194"/>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="668"/>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="669"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="670"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="671"/>
         <source>Search using %1</source>
         <translation>Mit %1 suchen</translation>
     </message>
@@ -5851,17 +5971,17 @@ Möchten Sie sie überschrieben?</translation>
         <translation>Fehler beim Hinzufügen der Suchmaschine.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="818"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="820"/>
         <source>Select Search Engine</source>
         <translation>Suchmaschine auswählen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="822"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="824"/>
         <source>Add Search Engine…</source>
         <translation>Suchmaschine hinzufügen…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="826"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="828"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -6040,17 +6160,17 @@ Sind Sie sicher, dass Sie die Sitzung trotzdem wiederherstellen möchten?</trans
 <context>
     <name>Otter::SettingsManager</name>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="356"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="357"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="356"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="357"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="361"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="362"/>
         <source>Invalid</source>
         <translation>Ungültig</translation>
     </message>
@@ -6112,17 +6232,17 @@ Do you want to save your changes or discard them?</source>
 Möchten Sie Ihre Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="295"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="300"/>
         <source>Show Line Numbers</source>
         <translation>Zeilennummern anzeigen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="420"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
         <source>Source Viewer: %1</source>
         <translation>Quelltextansicht: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="420"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
         <source>Source Viewer</source>
         <translation>Quelltextansicht</translation>
     </message>
@@ -7968,155 +8088,155 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Benutzerdefinierte Regeln aktivieren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="67"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="66"/>
         <source>Auto Detect</source>
         <translation>Automatisch erkennen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Ask</source>
         <translation>Nachfragen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Block all</source>
         <translation>Alle blockieren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
         <source>Open all</source>
         <translation>Alle öffnen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Open all in background</source>
         <translation>Alle im Hintergrund öffnen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>All images</source>
         <translation>Alle Bilder</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
         <source>Cached images</source>
         <translation>Zwischengespeicherte Bilder</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
         <source>No images</source>
         <translation>Keine Bilder</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Enabled</source>
         <translation>Aktiviert</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
         <source>On demand</source>
         <translation>Auf Abruf</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Always</source>
         <translation>Immer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
         <source>Never</source>
         <translation>Niemals</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>Webseiten mitteilen, dass ich nicht verfolgt werden möchte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
         <source>Inform websites that I allow tracking</source>
         <translation>Webseiten mitteilen, dass ich die Verfolgung erlaube</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="106"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
         <source>Do not inform websites about my preference</source>
         <translation>Webseiten meine Einstellung nicht mitteilen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
         <source>Only existing</source>
         <translation>Nur vorhandene</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="110"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
         <source>Only read existing</source>
         <translation>Nur vorhandene Lesen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Expires</source>
         <translation>Gültig bis</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Current session is closed</source>
         <translation>Aktuelle Sitzung ist geschlossen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
         <source>Always ask</source>
         <translation>Immer nachfragen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Domain</source>
         <translation>Domain</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Path</source>
         <translation>Pfad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Value</source>
         <translation>Wert</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Expiration Date</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="206"/>
         <source>this session only</source>
         <translation>nur diese Sitzung</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="454"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="453"/>
         <source>Style sheets (*.css)</source>
         <translation>Formatvorlagen (*.css)</translation>
     </message>
@@ -8456,12 +8576,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="290"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="373"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="222"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="841"/>
-        <location filename="../../src/ui/Menu.cpp" line="324"/>
+        <location filename="../../src/ui/Menu.cpp" line="326"/>
         <location filename="../../src/ui/WebWidget.cpp" line="796"/>
         <source>Open</source>
         <translation>Öffnen</translation>
@@ -8479,7 +8599,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="224"/>
-        <location filename="../../src/ui/Menu.cpp" line="325"/>
+        <location filename="../../src/ui/Menu.cpp" line="327"/>
         <location filename="../../src/ui/WebWidget.cpp" line="758"/>
         <source>Open in New Tab</source>
         <translation>In neuem Tab öffnen</translation>
@@ -8491,7 +8611,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="375"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="227"/>
-        <location filename="../../src/ui/Menu.cpp" line="326"/>
+        <location filename="../../src/ui/Menu.cpp" line="328"/>
         <location filename="../../src/ui/WebWidget.cpp" line="763"/>
         <source>Open in New Background Tab</source>
         <translation>In neuem Hintergrund-Tab öffnen</translation>
@@ -8502,7 +8622,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="360"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="380"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="232"/>
-        <location filename="../../src/ui/Menu.cpp" line="328"/>
+        <location filename="../../src/ui/Menu.cpp" line="330"/>
         <location filename="../../src/ui/WebWidget.cpp" line="768"/>
         <source>Open in New Window</source>
         <translation>In neuem Fenster öffnen</translation>
@@ -8513,7 +8633,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="363"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="383"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="235"/>
-        <location filename="../../src/ui/Menu.cpp" line="329"/>
+        <location filename="../../src/ui/Menu.cpp" line="331"/>
         <location filename="../../src/ui/WebWidget.cpp" line="773"/>
         <source>Open in New Background Window</source>
         <translation>In neuem Hintergrundfenster öffnen</translation>
@@ -9112,7 +9232,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
-        <location filename="../../src/ui/Menu.cpp" line="414"/>
+        <location filename="../../src/ui/Menu.cpp" line="416"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
@@ -9384,7 +9504,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Cookie entfernen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="286"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="369"/>
         <source>Update</source>
         <translation type="unfinished"/>
     </message>
@@ -9475,272 +9595,277 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
+        <source>Import OPML Feeds…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="135"/>
         <source>Import Opera Notes…</source>
         <translation>Opera-Notizen importieren…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="135"/>
+        <location filename="../../src/ui/Menu.cpp" line="137"/>
         <source>Import Opera Search Engines…</source>
         <translation>Opera-Suchmaschinen importieren…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="137"/>
+        <location filename="../../src/ui/Menu.cpp" line="139"/>
         <source>Import Opera Session…</source>
         <translation>Opera-Sitzung importieren...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="150"/>
+        <location filename="../../src/ui/Menu.cpp" line="152"/>
         <source>Insert Note</source>
         <translation>Anmerkung einfügen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="164"/>
+        <location filename="../../src/ui/Menu.cpp" line="166"/>
         <source>Open with</source>
         <translation>Öffnen mit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="170"/>
+        <location filename="../../src/ui/Menu.cpp" line="172"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="179"/>
+        <location filename="../../src/ui/Menu.cpp" line="181"/>
         <source>Search Using</source>
         <translation>Suche mit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="185"/>
+        <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Sessions</source>
         <translation>Sitzungen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="198"/>
+        <location filename="../../src/ui/Menu.cpp" line="200"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="218"/>
+        <location filename="../../src/ui/Menu.cpp" line="220"/>
         <source>Toolbars</source>
         <translation>Werkzeugleisten</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="224"/>
+        <location filename="../../src/ui/Menu.cpp" line="226"/>
         <source>User Agent</source>
         <translation>Benutzer-Agent</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="233"/>
+        <location filename="../../src/ui/Menu.cpp" line="235"/>
         <source>Validate Using</source>
         <translation>Verifizieren mittels</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="239"/>
+        <location filename="../../src/ui/Menu.cpp" line="241"/>
         <source>Tabs and Windows</source>
         <translation>Tabs und Fenster</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="402"/>
+        <location filename="../../src/ui/Menu.cpp" line="404"/>
         <source>Keep Cookie Until</source>
         <translation>Cookie behalten bis</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="406"/>
+        <location filename="../../src/ui/Menu.cpp" line="408"/>
         <source>Accept Cookies</source>
         <translation>Cookies annehmen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="410"/>
+        <location filename="../../src/ui/Menu.cpp" line="412"/>
         <source>Accept Third-party Cookies</source>
         <translation>Cookies von Dritten annehmen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="418"/>
+        <location filename="../../src/ui/Menu.cpp" line="420"/>
         <source>Geolocation</source>
         <translation>Geolokalisierung</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="422"/>
+        <location filename="../../src/ui/Menu.cpp" line="424"/>
         <source>Images</source>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="426"/>
+        <location filename="../../src/ui/Menu.cpp" line="428"/>
         <source>Capture Audio</source>
         <translation>Audio aufnehmen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="430"/>
+        <location filename="../../src/ui/Menu.cpp" line="432"/>
         <source>Capture Video</source>
         <translation>Video aufnehmen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="434"/>
+        <location filename="../../src/ui/Menu.cpp" line="436"/>
         <source>Playback Audio</source>
         <translation>Audio wiedergeben</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="438"/>
+        <location filename="../../src/ui/Menu.cpp" line="440"/>
         <source>Notifications</source>
         <translation>Benachrichtigungen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="442"/>
+        <location filename="../../src/ui/Menu.cpp" line="444"/>
         <source>Plugins</source>
         <translation>Plugins</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="446"/>
+        <location filename="../../src/ui/Menu.cpp" line="448"/>
         <source>Pointer Lock</source>
         <translation>Mauszeigersperre</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="450"/>
+        <location filename="../../src/ui/Menu.cpp" line="452"/>
         <source>Closing Windows by JavaScript</source>
         <translation>Fenster durch JavaScript schließen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="454"/>
+        <location filename="../../src/ui/Menu.cpp" line="456"/>
         <source>Pop-Ups</source>
         <translation>Pop-Ups</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="622"/>
-        <location filename="../../src/ui/Menu.cpp" line="789"/>
+        <location filename="../../src/ui/Menu.cpp" line="624"/>
+        <location filename="../../src/ui/Menu.cpp" line="791"/>
         <source>Open All</source>
         <translation>Alle öffnen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="675"/>
+        <location filename="../../src/ui/Menu.cpp" line="677"/>
         <source>This Folder</source>
         <translation>Dieser Ordner</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="753"/>
+        <location filename="../../src/ui/Menu.cpp" line="755"/>
         <source>Ask What to Do</source>
         <translation>Nachfragen, was gemacht werden soll</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="757"/>
+        <location filename="../../src/ui/Menu.cpp" line="759"/>
         <source>Always Allow</source>
         <translation>Immer erlauben</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="761"/>
+        <location filename="../../src/ui/Menu.cpp" line="763"/>
         <source>Always Deny</source>
         <translation>Immer ablehnen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="765"/>
+        <location filename="../../src/ui/Menu.cpp" line="767"/>
         <source>Expires</source>
         <translation>Läuft ab</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="769"/>
+        <location filename="../../src/ui/Menu.cpp" line="771"/>
         <source>Current Session is Closed</source>
         <translation>Aktuelle Sitzung ist geschlossen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="773"/>
+        <location filename="../../src/ui/Menu.cpp" line="775"/>
         <source>Always</source>
         <translation>Immer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="777"/>
+        <location filename="../../src/ui/Menu.cpp" line="779"/>
         <source>Only Existing</source>
         <translation>Nur vorhandene</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="781"/>
+        <location filename="../../src/ui/Menu.cpp" line="783"/>
         <source>Only Read Existing</source>
         <translation>Nur vorhandene lesen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="785"/>
+        <location filename="../../src/ui/Menu.cpp" line="787"/>
         <source>Ignore</source>
         <translation>Ignorieren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="793"/>
+        <location filename="../../src/ui/Menu.cpp" line="795"/>
         <source>Open in Background</source>
         <translation>Im Hintergrund öffnen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="797"/>
+        <location filename="../../src/ui/Menu.cpp" line="799"/>
         <source>Block All</source>
         <translation>Alles blockieren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="801"/>
+        <location filename="../../src/ui/Menu.cpp" line="803"/>
         <source>Only Cached</source>
         <translation>Nur zwischengespeichert</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="805"/>
+        <location filename="../../src/ui/Menu.cpp" line="807"/>
         <source>Enabled</source>
         <translation>Aktiviert</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="809"/>
+        <location filename="../../src/ui/Menu.cpp" line="811"/>
         <source>On Demand</source>
         <translation>Auf Abruf</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="813"/>
+        <location filename="../../src/ui/Menu.cpp" line="815"/>
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="840"/>
+        <location filename="../../src/ui/Menu.cpp" line="842"/>
         <source>Auto Detect</source>
         <translation>Automatisch erkennen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="893"/>
+        <location filename="../../src/ui/Menu.cpp" line="895"/>
         <source>Clear</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1051"/>
+        <location filename="../../src/ui/Menu.cpp" line="1053"/>
         <source>Default Application</source>
         <translation>Standardanwendung</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1059"/>
+        <location filename="../../src/ui/Menu.cpp" line="1061"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1200"/>
+        <location filename="../../src/ui/Menu.cpp" line="1202"/>
         <source>Default Style</source>
         <translation>Standardstil</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1254"/>
+        <location filename="../../src/ui/Menu.cpp" line="1256"/>
         <source>Add New</source>
         <translation>Neue hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1257"/>
+        <location filename="../../src/ui/Menu.cpp" line="1259"/>
         <source>Add Toolbar…</source>
         <translation>Werkzeugleiste hinzufügen…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1258"/>
+        <location filename="../../src/ui/Menu.cpp" line="1260"/>
         <source>Add Bookmarks Bar…</source>
         <translation>Lesezeichenleiste hinzufügen…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1259"/>
+        <location filename="../../src/ui/Menu.cpp" line="1261"/>
         <source>Add Sidebar…</source>
         <translation>Seitenleiste hinzufügen…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1341"/>
+        <location filename="../../src/ui/Menu.cpp" line="1343"/>
         <source>Custom User Agent…</source>
         <translation>Angepasster Benutzer-Agent…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1385"/>
+        <location filename="../../src/ui/Menu.cpp" line="1387"/>
         <source>(Untitled)</source>
         <translation>(Ohne Titel)</translation>
     </message>
@@ -9926,6 +10051,33 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="105"/>
+        <source>Failed to open content blocking profile file: %1</source>
+        <translation>Fehler beim Öffnen der Inhaltsblockierungsprofildatei: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="604"/>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="632"/>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="645"/>
+        <source>Failed to update content blocking profile: %1</source>
+        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="618"/>
+        <source>Failed to update content blocking profile: checksum mismatch</source>
+        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils: Prüfsumme stimmt nicht überein</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="885"/>
+        <source>Failed to update content blocking profile, update URL is empty</source>
+        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils, die Aktualisierungs-URL ist leer</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="889"/>
+        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
+        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils, die Aktualisierungs-URL (%1) ist ungültig</translation>
+    </message>
+    <message>
         <location filename="../../src/core/AddonsManager.cpp" line="200"/>
         <source>Failed to find User Script file: %1</source>
         <translation>Fehler beim Finden der Benutzerskriptdatei: %1</translation>
@@ -9996,33 +10148,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Gibt einen Diagnosebericht aus und beendet die Anwendung</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="104"/>
-        <source>Failed to open content blocking profile file: %1</source>
-        <translation>Fehler beim Öffnen der Inhaltsblockierungsprofildatei: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="603"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="631"/>
-        <source>Failed to update content blocking profile: %1</source>
-        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="617"/>
-        <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils: Prüfsumme stimmt nicht überein</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="824"/>
-        <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils, die Aktualisierungs-URL ist leer</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="828"/>
-        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation>Fehler beim Aktualisieren des Inhaltsblockierungsprofils, die Aktualisierungs-URL (%1) ist ungültig</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="417"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="414"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
         <translation>Fehler beim Einlesen des Eintrags der automatischen Konfiguration des Proxys (PAC): %1</translation>
     </message>
@@ -10051,12 +10177,12 @@ Skript: %2</translation>
         <translation>Es kann nicht nach Aktualisierungen gesucht werden. Ungültige URL: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="62"/>
         <source>Unable to check for updates: %1</source>
         <translation>Es kann nicht nach Aktualisierungen gesucht werden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="98"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="95"/>
         <source>Unable to parse version number: %1</source>
         <translation>Versionsnummer kann nicht eingelesen werden: %1</translation>
     </message>
@@ -10081,7 +10207,7 @@ Skript: %2</translation>
         <translation>Ungültige Übereinstimmungsregel für Benutzerskript: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UserScript.cpp" line="226"/>
+        <location filename="../../src/core/UserScript.cpp" line="228"/>
         <source>Failed to locate header of User Script file</source>
         <translation>Fehler beim Ermitteln der Kopfzeilen der Benutzerskriptdatei</translation>
     </message>
@@ -10091,18 +10217,18 @@ Skript: %2</translation>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="81"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="158"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="729"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="250"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="80"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="249"/>
         <source>Request blocked by rule from profile %1:
 %2</source>
         <translation>Anfrage durch Regel in Profil %1 blockiert:
 %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="158"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="729"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
         <source>(Unknown)</source>
         <translation>(Unbekannt)</translation>
     </message>
@@ -10129,7 +10255,7 @@ Anwendungskennung: %2</translation>
         <translation>Fehler beim Laden benutzerdefinierter Regeln: Ungültige Werbeblocker-Kopfdaten</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="493"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="519"/>
         <source>Failed to create a file with custom rules: %1</source>
         <translation>Fehler beim Erstellen einer Datei mit benutzerdefinierten Regeln: %1</translation>
     </message>
@@ -10193,18 +10319,18 @@ Anwendungskennung: %2</translation>
 <context>
     <name>proxies</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="677"/>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="89"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="693"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="90"/>
         <source>System Configuration</source>
         <translation>Systemkonfiguration</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="84"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="85"/>
         <source>No Proxy</source>
         <translation>Kein Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="93"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="94"/>
         <source>(Untitled)</source>
         <translation>(Ohne Titel)</translation>
     </message>
@@ -10212,19 +10338,19 @@ Anwendungskennung: %2</translation>
 <context>
     <name>userAgents</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="581"/>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="707"/>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="117"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="582"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="723"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="118"/>
         <source>Default User Agent</source>
         <translation>Standard-Benutzer-Agent</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="122"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="123"/>
         <source>Mask as {name}</source>
         <translation>Als {name} maskieren</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="126"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="127"/>
         <source>(Untitled)</source>
         <translation>(Ohne Titel)</translation>
     </message>
@@ -10234,7 +10360,7 @@ Anwendungskennung: %2</translation>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="52"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="925"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="924"/>
         <source>Try Again</source>
         <translation>Erneut versuchen</translation>
     </message>
@@ -10400,18 +10526,18 @@ Select another one.</source>
 Bitte wählen Sie einen anderen aus.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="893"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="909"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="892"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="908"/>
         <source>Go Back</source>
         <translation>Zurückgehen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="898"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="897"/>
         <source>Load Blocked Page</source>
         <translation>Blockierte Seite laden</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="914"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="913"/>
         <source>Load Insecure Page</source>
         <translation>Unsichere Seite laden</translation>
     </message>

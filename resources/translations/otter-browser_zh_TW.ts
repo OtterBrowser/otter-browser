@@ -186,6 +186,14 @@
     </message>
 </context>
 <context>
+    <name>Otter::AdblockContentFiltersProfile</name>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
+        <source>(Unknown)</source>
+        <translation>（未知）</translation>
+    </message>
+</context>
+<context>
     <name>Otter::AddonsContentsWidget</name>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
@@ -519,6 +527,19 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
 </context>
 <context>
+    <name>Otter::AtomFeedParser</name>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="195"/>
+        <source>Failed to parse feed file: %1</source>
+        <translation>解析 feed 檔案失敗：%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="206"/>
+        <source>Failed to parse feed: no valid entries found</source>
+        <translation>解析 feed 失敗：找不到有效的項目</translation>
+    </message>
+</context>
+<context>
     <name>Otter::AuthenticationDialog</name>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
@@ -604,34 +625,34 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>關鍵字：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="49"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="50"/>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="54"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="62"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="67"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="75"/>
         <source>View Bookmark</source>
         <translation>檢視書籤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="87"/>
         <source>Edit Bookmark</source>
         <translation>編輯書籤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="116"/>
         <source>Add Bookmark</source>
         <translation>新增書籤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Bookmark with this keyword already exists.</source>
         <translation>包含這個關鍵字的書籤已存在。</translation>
     </message>
@@ -843,57 +864,57 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::BookmarksModel</name>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="154"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="155"/>
         <source>Notes</source>
         <translation>筆記</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="158"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="159"/>
         <source>Bookmarks</source>
         <translation>書籤</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="160"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="161"/>
         <source>Trash</source>
         <translation>回收桶</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="183"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="185"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="358"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
         <translation>開啟筆記檔案失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="358"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
         <translation>開啟書籤檔案失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
         <translation>載入筆記檔案失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
         <translation>載入書籤檔案失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
         <translation>載入筆記檔案失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
         <translation>載入書籤檔案失敗。</translation>
     </message>
@@ -1533,7 +1554,7 @@ Do you want to save them?</source>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="170"/>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="514"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="510"/>
         <source>Custom Rules</source>
         <translation>自訂規則</translation>
     </message>
@@ -1556,77 +1577,77 @@ Do you want to save them?</source>
 <context>
     <name>Otter::ContentBlockingInformationWidget</name>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
         <translation>作用中的設定檔</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="47"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
         <source>Blocked Elements</source>
         <translation>封鎖元素</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="151"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="150"/>
         <source>main frame</source>
         <translation>主框架</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="155"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="154"/>
         <source>subframe</source>
         <translation>子框架</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="159"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="158"/>
         <source>pop-up</source>
         <translation>彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="163"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="162"/>
         <source>stylesheet</source>
         <translation>樣式表</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="167"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="166"/>
         <source>script</source>
         <translation>指令碼</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="171"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="170"/>
         <source>image</source>
         <translation>圖片</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="174"/>
         <source>object</source>
         <translation>物件</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="178"/>
         <source>object subrequest</source>
         <translation>物件子請求</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="183"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="182"/>
         <source>XHR</source>
         <translation>XHR</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="187"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="186"/>
         <source>WebSocket</source>
         <translation>WebSocket</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="191"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="190"/>
         <source>other</source>
         <translation>其他</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="210"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="209"/>
         <source>Enable Content Blocking</source>
         <translation>啟用內容阻擋</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="340"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="339"/>
         <source>Blocked Elements: {amount}</source>
         <translation>已封鎖的元素：{amount}</translation>
     </message>
@@ -1648,77 +1669,6 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>%n day(s)</source>
         <translation><numerusform>%n 天</numerusform></translation>
-    </message>
-</context>
-<context>
-    <name>Otter::ContentBlockingManager</name>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="196"/>
-        <source>Custom Rules</source>
-        <translation>自訂規則</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
-        <source>Failed to remove content blocking profile file: %1</source>
-        <translation>移除內容阻擋設定檔失敗：%1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
-        <source>Unknown</source>
-        <translation>未知</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Title</source>
-        <translation>標題</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Update Interval</source>
-        <translation>更新間隔</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Last Update</source>
-        <translation>最後更新</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Advertisements</source>
-        <translation>廣告</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Annoyance</source>
-        <translation>擾人的事物</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Privacy</source>
-        <translation>隱私</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Social</source>
-        <translation>社交</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Regional</source>
-        <translation>地區性</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Other</source>
-        <translation>其他</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::ContentBlockingProfile</name>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="708"/>
-        <source>(Unknown)</source>
-        <translation>（未知）</translation>
     </message>
 </context>
 <context>
@@ -1848,6 +1798,69 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
         <translation>設定檔最後一次更新在多於一週之前</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ContentFiltersManager</name>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="196"/>
+        <source>Custom Rules</source>
+        <translation>自訂規則</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
+        <source>Failed to remove content blocking profile file: %1</source>
+        <translation>移除內容阻擋設定檔失敗：%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
+        <source>Unknown</source>
+        <translation>未知</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Title</source>
+        <translation>標題</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Update Interval</source>
+        <translation>更新間隔</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Last Update</source>
+        <translation>最後更新</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Advertisements</source>
+        <translation>廣告</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Annoyance</source>
+        <translation>惱人的</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Privacy</source>
+        <translation>隱私</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Social</source>
+        <translation>社交</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Regional</source>
+        <translation>區域</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Other</source>
+        <translation>其他</translation>
     </message>
 </context>
 <context>
@@ -2152,64 +2165,97 @@ Do you want to save them?</source>
 <context>
     <name>Otter::Feed</name>
     <message>
-        <location filename="../../src/core/FeedsManager.cpp" line="130"/>
+        <location filename="../../src/core/FeedsManager.cpp" line="268"/>
         <source>Feed updated:
 %1</source>
         <translation>Feed 已更新：
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsManager.cpp" line="174"/>
-        <source>Failed to parse feed: %1</source>
-        <translation>解析 feed 失敗：%1</translation>
+        <location filename="../../src/core/FeedsManager.cpp" line="301"/>
+        <source>Failed to parse feed: invalid feed type</source>
+        <translation>解析 feed 失敗：無效的 feed 類型</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="311"/>
+        <source>Failed to download feed</source>
+        <translation>下載 feed 失敗</translation>
     </message>
 </context>
 <context>
     <name>Otter::FeedPropertiesDialog</name>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
-        <source>Edit Search Engine</source>
-        <translation>編輯搜尋引擎</translation>
+        <source>Edit Feed</source>
+        <translation>編輯 feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
+        <source>Folder:</source>
+        <translation>資料夾：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
+        <source>New…</source>
+        <translation>新的……</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
         <translation>標題：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="49"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
         <translation>變更圖示……</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="58"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
         <source>Address:</source>
         <translation>地址：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="71"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="102"/>
         <source>Update interval:</source>
         <translation>更新間隔：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="81"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="112"/>
         <source>Never</source>
         <translation>從不</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
+        <source>Add Feed</source>
+        <translation>新增 Feed</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Valid address is required.</source>
         <translation>需要有效的地址。</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::FeedsComboBoxWidget</name>
+    <message>
+        <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
+        <source>Folder Name</source>
+        <translation>資料夾名稱</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
+        <source>Select name of new folder:</source>
+        <translation>選取新資料夾名稱：</translation>
     </message>
 </context>
 <context>
@@ -2236,120 +2282,135 @@ Do you want to save them?</source>
         <translation>分類</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>Title</source>
         <translation>標題</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>From</source>
         <translation>從</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>Published</source>
         <translation>已發佈</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="151"/>
+        <source>Question</source>
+        <translation>問題</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="152"/>
+        <source>You already subscribed this feed.</source>
+        <translation>您已經訂閱此 feed。</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="153"/>
+        <source>Do you want to continue?</source>
+        <translation>您想要繼續嗎？</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="171"/>
         <source>Select Folder Name</source>
         <translation>選取資料夾名稱</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="171"/>
         <source>Enter folder name:</source>
         <translation>輸入資料夾名稱</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="328"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="347"/>
         <source>Empty Trash</source>
         <translation>清空垃圾桶</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="272"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="297"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="380"/>
         <source>Add Folder…</source>
         <translation>新增資料夾……</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="298"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="381"/>
         <source>Add Feed…</source>
         <translation>新增 Feed……</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="295"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="378"/>
         <source>Add New</source>
         <translation>新增新的</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="307"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="390"/>
         <source>Restore Feed</source>
         <translation>復原 Feed</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="321"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="404"/>
         <source>Properties…</source>
         <translation>屬性……</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="431"/>
         <source>Send email to %1</source>
         <translation>傳送電子郵件至 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="433"/>
         <source>Go to %1</source>
         <translation>到 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="437"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="520"/>
         <source>All (%1)</source>
         <translation>全部 (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="568"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="684"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="635"/>
         <source>Subscribe to this feed using:</source>
         <translation>訂閱這個 feed 使用：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="684"/>
         <source>Feed: %1</source>
         <translation>Feed：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="687"/>
         <source>Feeds</source>
         <translation>Feeds</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="653"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="731"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="740"/>
         <source>Title: %1</source>
         <translation>標題：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="657"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="731"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="744"/>
         <source>Address: %1</source>
         <translation>地址：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="648"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="735"/>
         <source>Last update: %1</source>
         <translation>最後更新：%1</translation>
     </message>
@@ -2372,22 +2433,22 @@ Do you want to save them?</source>
         <translation>（無標題）</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="229"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="230"/>
         <source>Failed to open feeds file: %1</source>
         <translation>開啟 feeds 檔案失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="252"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="253"/>
         <source>Failed to load feeds file: %1</source>
         <translation>載入 feeds 檔案失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Failed to load feeds file.</source>
         <translation>載入 feeds 檔案失敗。</translation>
     </message>
@@ -2750,32 +2811,32 @@ Do you want to save them?</source>
         <translation>%p% (%v/%m)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="120"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="120"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Unable to import selected type.</source>
         <translation>無法匯入已選取的類型。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="153"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
         <source>Processing…</source>
         <translation>正在處理…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="181"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="186"/>
         <source>Failed to import data.</source>
         <translation>匯入資料失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="185"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="190"/>
         <source>Import cancelled by the user.</source>
         <translation>使用者已取消匯入。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="189"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="194"/>
         <source>Import finished successfully.</source>
         <translation>匯入已成功結束。</translation>
     </message>
@@ -3128,24 +3189,24 @@ Do you want to save them?</source>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="489"/>
-        <location filename="../../src/ui/Menu.cpp" line="578"/>
+        <location filename="../../src/ui/Menu.cpp" line="491"/>
+        <location filename="../../src/ui/Menu.cpp" line="580"/>
         <source>Failed to create menu action: %1</source>
         <translation>建立選單動作失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="915"/>
+        <location filename="../../src/ui/Menu.cpp" line="917"/>
         <source>Window - %1</source>
         <translation>視窗 - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1171"/>
-        <location filename="../../src/ui/Menu.cpp" line="1186"/>
+        <location filename="../../src/ui/Menu.cpp" line="1173"/>
+        <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="1186"/>
+        <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n 個分頁)</numerusform></translation>
     </message>
@@ -3217,87 +3278,97 @@ Do you want to migrate it?</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="182"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
+        <source>Move Up</source>
+        <translation>向上移動</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
+        <source>Move Down</source>
+        <translation>向下移動</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
         <source>Information</source>
         <translation>資訊</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="206"/>
         <source>Title:</source>
         <translation>標題：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="198"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="216"/>
         <source>Description:</source>
         <translation>描述：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="208"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="226"/>
         <source>Version:</source>
         <translation>版本：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="218"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="236"/>
         <source>Author:</source>
         <translation>作者：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Generic</source>
         <translation>通用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Link</source>
         <translation>連結</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Editable Content</source>
         <translation>可編輯的內容</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Tab Handle</source>
         <translation>處理分頁</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Tab Handle of Active Tab</source>
         <translation>活躍分頁的分頁處理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Empty Area of Tab Bar</source>
         <translation>分頁列的空白區域</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Any Toolbar</source>
         <translation>任何工具列</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Context and Action</source>
         <translation>內容與動作</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Parameters</source>
         <translation>參數</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Steps</source>
         <translation>步驟</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="142"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="143"/>
         <source>Step</source>
         <translation>步驟</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="194"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="201"/>
         <source>Select Action</source>
         <translation>選取動作</translation>
     </message>
@@ -3324,7 +3395,7 @@ Do you want to migrate it?</source>
         <translation>載入代理伺服器自動設定 (PAC) 失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="360"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="357"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
         <translation>載入代理伺服器自動設定 (PAC) 失敗。無效的 URL：%1</translation>
     </message>
@@ -3353,7 +3424,7 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="692"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="708"/>
         <source>Custom</source>
         <translation>自訂</translation>
     </message>
@@ -3558,6 +3629,42 @@ Do you want to continue?</source>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="94"/>
         <source>Opera session files (*.win)</source>
         <translation>Opera 工作階段檔案 (*.win)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpmlImporter</name>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
+        <source>OPML Feeds</source>
+        <translation>OPML Feed</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
+        <source>Imports feeds from OPML file</source>
+        <translation>從 OPML 檔案匯入 feed</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
+        <source>OPML files (*.opml)</source>
+        <translation>OPML 檔案 (*.opml)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpmlImporterWidget</name>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
+        <source>Import into folder:</source>
+        <translation>匯入到資料夾：</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
+        <source>New…</source>
+        <translation>新的……</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
+        <source>Allow to duplicate already existing feeds</source>
+        <translation>允許與既有的 feed 重複</translation>
     </message>
 </context>
 <context>
@@ -5083,46 +5190,46 @@ Do you want to continue?</source>
         <translation>Open Search 檔案 (*.xml)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="305"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="368"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="307"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="370"/>
         <source>Question</source>
         <translation>問題</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="308"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>您真的想要移除這個搜尋引擎嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="315"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="317"/>
         <source>Delete search engine permanently</source>
         <translation>永久刪除搜尋引擎</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="446"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <source>Failed to open Open Search file.</source>
         <translation>開啟 Open Search 檔案失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="369"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="371"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
         <translation>關鍵字已在使用中。您無論如何都想要繼續嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="446"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Failed to update search engine.</source>
         <translation>更新搜尋引擎失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="509"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="511"/>
         <source>(Untitled)</source>
         <translation>（無標題）</translation>
     </message>
@@ -5303,40 +5410,40 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebEnginePage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="585"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="625"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="120"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="584"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="624"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="122"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="586"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="626"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="585"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="625"/>
         <source>Disable JavaScript popups</source>
         <translation>停用 JavaScript 彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="492"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="491"/>
         <source>Question</source>
         <translation>問題</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="493"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="492"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>您確定您想要再次傳送表單資訊嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="494"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="493"/>
         <source>Do you want to resend data?</source>
         <translation>您想要重新傳送資料嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="480"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="498"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="497"/>
         <source>Do not show this message again</source>
         <translation>不要再顯示此訊息</translation>
     </message>
@@ -5447,7 +5554,7 @@ Do you want to continue?</source>
         <translation>載入完成</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="780"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="742"/>
         <source>Sending request to %1…</source>
         <translation>正在送出請求到 %1…</translation>
     </message>
@@ -5455,78 +5562,78 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="677"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="717"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="423"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="716"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="425"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="678"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="718"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="677"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="717"/>
         <source>Disable JavaScript popups</source>
         <translation>停用 JavaScript 彈出視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="630"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="629"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>Question</source>
         <translation>問題</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="631"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="630"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>您確定您想要再度送出表單資料？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="632"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="631"/>
         <source>Do you want to resend data?</source>
         <translation>您想要重新寄送資料嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="618"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="636"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="635"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="790"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="789"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 錯誤 #%2： %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="862"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="861"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
         <translation>被從設定檔 %1 而來的規則阻擋請求：&lt;br&gt;
 %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="862"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="861"/>
         <source>(Unknown)</source>
         <translation>（未知）</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="880"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="879"/>
         <source>WebKit error %1</source>
         <translation>WebKit 錯誤 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="884"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="883"/>
         <source>Network error %1</source>
         <translation>網路錯誤 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>在此頁面上的指令稿看來有點問題。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>Do you want to stop the script?</source>
         <translation>您想要停止這個指令稿嗎？</translation>
     </message>
@@ -5635,6 +5742,19 @@ Do you want to continue?</source>
         <location filename="../../src/ui/ReportDialog.cpp" line="41"/>
         <source>Copy</source>
         <translation>複製</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::RssFeedParser</name>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="355"/>
+        <source>Failed to parse feed file: %1</source>
+        <translation>解析 feed 檔案失敗：%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="366"/>
+        <source>Failed to parse feed: no valid entries found</source>
+        <translation>解析 feed 失敗：找不到有效的項目</translation>
     </message>
 </context>
 <context>
@@ -5825,8 +5945,8 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="193"/>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="194"/>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="668"/>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="669"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="670"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="671"/>
         <source>Search using %1</source>
         <translation>使用 %1 搜尋</translation>
     </message>
@@ -5851,17 +5971,17 @@ Do you want to overwrite it?</source>
         <translation>新增搜尋引擎失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="818"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="820"/>
         <source>Select Search Engine</source>
         <translation>選擇搜尋引擎</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="822"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="824"/>
         <source>Add Search Engine…</source>
         <translation>新增搜尋引擎…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="826"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="828"/>
         <source>Search</source>
         <translation>搜尋</translation>
     </message>
@@ -6040,17 +6160,17 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SettingsManager</name>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="356"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="357"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="356"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="357"/>
         <source>No</source>
         <translation>否</translation>
     </message>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="361"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="362"/>
         <source>Invalid</source>
         <translation>無效</translation>
     </message>
@@ -6112,17 +6232,17 @@ Do you want to save your changes or discard them?</source>
 您想要儲存您的變更或是放棄它們？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="295"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="300"/>
         <source>Show Line Numbers</source>
         <translation>顯示行號</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="420"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
         <source>Source Viewer: %1</source>
         <translation>原始碼檢視器：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="420"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
         <source>Source Viewer</source>
         <translation>原始碼檢視器</translation>
     </message>
@@ -7973,155 +8093,155 @@ Click Install button to restart browser and install the update or close this dia
         <translation>啟用自訂規則</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="67"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="66"/>
         <source>Auto Detect</source>
         <translation>自動偵測</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Ask</source>
         <translation>詢問</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Block all</source>
         <translation>阻擋所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
         <source>Open all</source>
         <translation>開啟所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Open all in background</source>
         <translation>在背景分頁開啟所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>All images</source>
         <translation>所有圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
         <source>Cached images</source>
         <translation>已快取的圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
         <source>No images</source>
         <translation>沒有圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Enabled</source>
         <translation>已啟用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
         <source>On demand</source>
         <translation>一經要求</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Disabled</source>
         <translation>已停用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Always</source>
         <translation>總是</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
         <source>Never</source>
         <translation>從不</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>告訴網站我不想被追蹤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
         <source>Inform websites that I allow tracking</source>
         <translation>告訴網站我想要被追蹤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="106"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
         <source>Do not inform websites about my preference</source>
         <translation>不要告訴網站我的偏好</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
         <source>Only existing</source>
         <translation>只有已存在的</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="110"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
         <source>Only read existing</source>
         <translation>只讀取已存在的</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Expires</source>
         <translation>到期</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Current session is closed</source>
         <translation>目前的工作階段關閉</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
         <source>Always ask</source>
         <translation>總是詢問</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Domain</source>
         <translation>域名</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Name</source>
         <translation>名稱</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Path</source>
         <translation>路徑</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Expiration Date</source>
         <translation>到期日</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="206"/>
         <source>this session only</source>
         <translation>只有此工作階段</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="454"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="453"/>
         <source>Style sheets (*.css)</source>
         <translation>樣式表 (*.css)</translation>
     </message>
@@ -8461,12 +8581,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="290"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="373"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="222"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="841"/>
-        <location filename="../../src/ui/Menu.cpp" line="324"/>
+        <location filename="../../src/ui/Menu.cpp" line="326"/>
         <location filename="../../src/ui/WebWidget.cpp" line="796"/>
         <source>Open</source>
         <translation>開啟</translation>
@@ -8484,7 +8604,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="224"/>
-        <location filename="../../src/ui/Menu.cpp" line="325"/>
+        <location filename="../../src/ui/Menu.cpp" line="327"/>
         <location filename="../../src/ui/WebWidget.cpp" line="758"/>
         <source>Open in New Tab</source>
         <translation>在新分頁中開啟</translation>
@@ -8496,7 +8616,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="375"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="227"/>
-        <location filename="../../src/ui/Menu.cpp" line="326"/>
+        <location filename="../../src/ui/Menu.cpp" line="328"/>
         <location filename="../../src/ui/WebWidget.cpp" line="763"/>
         <source>Open in New Background Tab</source>
         <translation>在新的背景分頁中開啟</translation>
@@ -8507,7 +8627,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="360"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="380"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="232"/>
-        <location filename="../../src/ui/Menu.cpp" line="328"/>
+        <location filename="../../src/ui/Menu.cpp" line="330"/>
         <location filename="../../src/ui/WebWidget.cpp" line="768"/>
         <source>Open in New Window</source>
         <translation>在新視窗中開啟</translation>
@@ -8518,7 +8638,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="363"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="383"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="235"/>
-        <location filename="../../src/ui/Menu.cpp" line="329"/>
+        <location filename="../../src/ui/Menu.cpp" line="331"/>
         <location filename="../../src/ui/WebWidget.cpp" line="773"/>
         <source>Open in New Background Window</source>
         <translation>在新的背景視窗中開啟</translation>
@@ -9117,7 +9237,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
-        <location filename="../../src/ui/Menu.cpp" line="414"/>
+        <location filename="../../src/ui/Menu.cpp" line="416"/>
         <source>Full Screen</source>
         <translation>全螢幕</translation>
     </message>
@@ -9389,7 +9509,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>移除 Cookie</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="286"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="369"/>
         <source>Update</source>
         <translation>更新</translation>
     </message>
@@ -9480,272 +9600,277 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
+        <source>Import OPML Feeds…</source>
+        <translation>匯入 OPML Feed……</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="135"/>
         <source>Import Opera Notes…</source>
         <translation>匯入 Opera 筆記…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="135"/>
+        <location filename="../../src/ui/Menu.cpp" line="137"/>
         <source>Import Opera Search Engines…</source>
         <translation>匯入 Opera 搜尋引擎…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="137"/>
+        <location filename="../../src/ui/Menu.cpp" line="139"/>
         <source>Import Opera Session…</source>
         <translation>匯入 Opera 工作階段…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="150"/>
+        <location filename="../../src/ui/Menu.cpp" line="152"/>
         <source>Insert Note</source>
         <translation>插入筆記</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="164"/>
+        <location filename="../../src/ui/Menu.cpp" line="166"/>
         <source>Open with</source>
         <translation>開啟以</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="170"/>
+        <location filename="../../src/ui/Menu.cpp" line="172"/>
         <source>Proxy</source>
         <translation>代理伺服器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="179"/>
+        <location filename="../../src/ui/Menu.cpp" line="181"/>
         <source>Search Using</source>
         <translation>搜尋使用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="185"/>
+        <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Sessions</source>
         <translation>工作階段</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="198"/>
+        <location filename="../../src/ui/Menu.cpp" line="200"/>
         <source>Style</source>
         <translation>風格</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="218"/>
+        <location filename="../../src/ui/Menu.cpp" line="220"/>
         <source>Toolbars</source>
         <translation>工具列</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="224"/>
+        <location filename="../../src/ui/Menu.cpp" line="226"/>
         <source>User Agent</source>
         <translation>使用者代理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="233"/>
+        <location filename="../../src/ui/Menu.cpp" line="235"/>
         <source>Validate Using</source>
         <translation>驗證使用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="239"/>
+        <location filename="../../src/ui/Menu.cpp" line="241"/>
         <source>Tabs and Windows</source>
         <translation>分頁與視窗</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="402"/>
+        <location filename="../../src/ui/Menu.cpp" line="404"/>
         <source>Keep Cookie Until</source>
         <translation>保留 Cookie 到</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="406"/>
+        <location filename="../../src/ui/Menu.cpp" line="408"/>
         <source>Accept Cookies</source>
         <translation>接受 Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="410"/>
+        <location filename="../../src/ui/Menu.cpp" line="412"/>
         <source>Accept Third-party Cookies</source>
         <translation>接受第三方 Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="418"/>
+        <location filename="../../src/ui/Menu.cpp" line="420"/>
         <source>Geolocation</source>
         <translation>地理定位</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="422"/>
+        <location filename="../../src/ui/Menu.cpp" line="424"/>
         <source>Images</source>
         <translation>圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="426"/>
+        <location filename="../../src/ui/Menu.cpp" line="428"/>
         <source>Capture Audio</source>
         <translation>擷取音訊</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="430"/>
+        <location filename="../../src/ui/Menu.cpp" line="432"/>
         <source>Capture Video</source>
         <translation>擷取視訊</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="434"/>
+        <location filename="../../src/ui/Menu.cpp" line="436"/>
         <source>Playback Audio</source>
         <translation>播放音訊</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="438"/>
+        <location filename="../../src/ui/Menu.cpp" line="440"/>
         <source>Notifications</source>
         <translation>通知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="442"/>
+        <location filename="../../src/ui/Menu.cpp" line="444"/>
         <source>Plugins</source>
         <translation>外掛程式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="446"/>
+        <location filename="../../src/ui/Menu.cpp" line="448"/>
         <source>Pointer Lock</source>
         <translation>游標鎖定</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="450"/>
+        <location filename="../../src/ui/Menu.cpp" line="452"/>
         <source>Closing Windows by JavaScript</source>
         <translation>由 JavaScript 關閉視窗</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="454"/>
+        <location filename="../../src/ui/Menu.cpp" line="456"/>
         <source>Pop-Ups</source>
         <translation>彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="622"/>
-        <location filename="../../src/ui/Menu.cpp" line="789"/>
+        <location filename="../../src/ui/Menu.cpp" line="624"/>
+        <location filename="../../src/ui/Menu.cpp" line="791"/>
         <source>Open All</source>
         <translation>開啟所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="675"/>
+        <location filename="../../src/ui/Menu.cpp" line="677"/>
         <source>This Folder</source>
         <translation>此資料夾</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="753"/>
+        <location filename="../../src/ui/Menu.cpp" line="755"/>
         <source>Ask What to Do</source>
         <translation>詢問要怎麼做</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="757"/>
+        <location filename="../../src/ui/Menu.cpp" line="759"/>
         <source>Always Allow</source>
         <translation>總是允許</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="761"/>
+        <location filename="../../src/ui/Menu.cpp" line="763"/>
         <source>Always Deny</source>
         <translation>總是拒絕</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="765"/>
+        <location filename="../../src/ui/Menu.cpp" line="767"/>
         <source>Expires</source>
         <translation>到期</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="769"/>
+        <location filename="../../src/ui/Menu.cpp" line="771"/>
         <source>Current Session is Closed</source>
         <translation>目前的工作階段已關閉</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="773"/>
+        <location filename="../../src/ui/Menu.cpp" line="775"/>
         <source>Always</source>
         <translation>總是</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="777"/>
+        <location filename="../../src/ui/Menu.cpp" line="779"/>
         <source>Only Existing</source>
         <translation>只有已存在的</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="781"/>
+        <location filename="../../src/ui/Menu.cpp" line="783"/>
         <source>Only Read Existing</source>
         <translation>只讀取已存在的</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="785"/>
+        <location filename="../../src/ui/Menu.cpp" line="787"/>
         <source>Ignore</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="793"/>
+        <location filename="../../src/ui/Menu.cpp" line="795"/>
         <source>Open in Background</source>
         <translation>在背景開啟</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="797"/>
+        <location filename="../../src/ui/Menu.cpp" line="799"/>
         <source>Block All</source>
         <translation>阻擋所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="801"/>
+        <location filename="../../src/ui/Menu.cpp" line="803"/>
         <source>Only Cached</source>
         <translation>僅已快取</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="805"/>
+        <location filename="../../src/ui/Menu.cpp" line="807"/>
         <source>Enabled</source>
         <translation>已啟用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="809"/>
+        <location filename="../../src/ui/Menu.cpp" line="811"/>
         <source>On Demand</source>
         <translation>一經要求</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="813"/>
+        <location filename="../../src/ui/Menu.cpp" line="815"/>
         <source>Disabled</source>
         <translation>已停用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="840"/>
+        <location filename="../../src/ui/Menu.cpp" line="842"/>
         <source>Auto Detect</source>
         <translation>自動偵測</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="893"/>
+        <location filename="../../src/ui/Menu.cpp" line="895"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1051"/>
+        <location filename="../../src/ui/Menu.cpp" line="1053"/>
         <source>Default Application</source>
         <translation>預設應用程式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1059"/>
+        <location filename="../../src/ui/Menu.cpp" line="1061"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1200"/>
+        <location filename="../../src/ui/Menu.cpp" line="1202"/>
         <source>Default Style</source>
         <translation>預設樣式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1254"/>
+        <location filename="../../src/ui/Menu.cpp" line="1256"/>
         <source>Add New</source>
         <translation>加入新的</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1257"/>
+        <location filename="../../src/ui/Menu.cpp" line="1259"/>
         <source>Add Toolbar…</source>
         <translation>新增工具列…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1258"/>
+        <location filename="../../src/ui/Menu.cpp" line="1260"/>
         <source>Add Bookmarks Bar…</source>
         <translation>新增書籤列…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1259"/>
+        <location filename="../../src/ui/Menu.cpp" line="1261"/>
         <source>Add Sidebar…</source>
         <translation>新增側邊欄…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1341"/>
+        <location filename="../../src/ui/Menu.cpp" line="1343"/>
         <source>Custom User Agent…</source>
         <translation>自訂使用者代理…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1385"/>
+        <location filename="../../src/ui/Menu.cpp" line="1387"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
@@ -9931,6 +10056,33 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="105"/>
+        <source>Failed to open content blocking profile file: %1</source>
+        <translation>開啟內容阻擋設定檔失敗：%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="604"/>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="632"/>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="645"/>
+        <source>Failed to update content blocking profile: %1</source>
+        <translation>更新內容阻擋設定檔失敗：%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="618"/>
+        <source>Failed to update content blocking profile: checksum mismatch</source>
+        <translation>更新內容阻擋設定檔失敗：校驗碼不符合</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="885"/>
+        <source>Failed to update content blocking profile, update URL is empty</source>
+        <translation>更新內容阻擋設定檔失敗，更新 URL 是空的</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="889"/>
+        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
+        <translation>更新內容阻擋設定檔失敗，更新 URL (%1) 無效</translation>
+    </message>
+    <message>
         <location filename="../../src/core/AddonsManager.cpp" line="200"/>
         <source>Failed to find User Script file: %1</source>
         <translation>尋找使用者指令稿檔案失敗：%1</translation>
@@ -10001,33 +10153,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>印出診斷報告並離開應用程式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="104"/>
-        <source>Failed to open content blocking profile file: %1</source>
-        <translation>開啟內容阻擋設定檔失敗：%1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="603"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="631"/>
-        <source>Failed to update content blocking profile: %1</source>
-        <translation>更新內容阻擋設定檔失敗：%1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="617"/>
-        <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation>更新內容阻擋設定檔失敗：校驗碼不符合</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="824"/>
-        <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation>更新內容阻擋設定檔失敗，更新 URL 是空的</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="828"/>
-        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation>更新內容阻擋設定檔失敗，更新 URL (%1) 無效</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="417"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="414"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
         <translation>解析代理伺服器自動設定 (PAC) 項目時失敗：%1</translation>
     </message>
@@ -10056,12 +10182,12 @@ Script: %2</source>
         <translation>無法檢查更新。無效的 URL：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="62"/>
         <source>Unable to check for updates: %1</source>
         <translation>無法檢查更新：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="98"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="95"/>
         <source>Unable to parse version number: %1</source>
         <translation>無法解析版本號：%1</translation>
     </message>
@@ -10086,7 +10212,7 @@ Script: %2</source>
         <translation>使用者指令稿無效的配對規則：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UserScript.cpp" line="226"/>
+        <location filename="../../src/core/UserScript.cpp" line="228"/>
         <source>Failed to locate header of User Script file</source>
         <translation>定位使用者指令稿檔案標頭失敗</translation>
     </message>
@@ -10096,18 +10222,18 @@ Script: %2</source>
         <translation>預設值</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="81"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="158"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="729"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="250"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="80"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="249"/>
         <source>Request blocked by rule from profile %1:
 %2</source>
         <translation>被從設定檔 %1 而來的規則阻擋請求：
 %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="158"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="729"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
         <source>(Unknown)</source>
         <translation>（未知）</translation>
     </message>
@@ -10134,7 +10260,7 @@ Application ID: %2</source>
         <translation>載入自訂規則失敗：無效的 adblock 標頭</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="493"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="519"/>
         <source>Failed to create a file with custom rules: %1</source>
         <translation>以自訂規則建立檔案失敗：%1</translation>
     </message>
@@ -10198,18 +10324,18 @@ Application ID: %2</source>
 <context>
     <name>proxies</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="677"/>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="89"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="693"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="90"/>
         <source>System Configuration</source>
         <translation>系統設定</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="84"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="85"/>
         <source>No Proxy</source>
         <translation>無代理伺服器</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="93"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="94"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
@@ -10217,19 +10343,19 @@ Application ID: %2</source>
 <context>
     <name>userAgents</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="581"/>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="707"/>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="117"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="582"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="723"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="118"/>
         <source>Default User Agent</source>
         <translation>預設使用者代理</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="122"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="123"/>
         <source>Mask as {name}</source>
         <translation>標記為 {name}</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="126"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="127"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
@@ -10239,7 +10365,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="52"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="925"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="924"/>
         <source>Try Again</source>
         <translation>再試一次</translation>
     </message>
@@ -10405,18 +10531,18 @@ Select another one.</source>
 選取另一個。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="893"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="909"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="892"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="908"/>
         <source>Go Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="898"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="897"/>
         <source>Load Blocked Page</source>
         <translation>載入被阻擋的頁面</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="914"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="913"/>
         <source>Load Insecure Page</source>
         <translation>載入不安全的頁面</translation>
     </message>

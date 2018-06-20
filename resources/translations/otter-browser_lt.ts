@@ -186,6 +186,14 @@
     </message>
 </context>
 <context>
+    <name>Otter::AdblockContentFiltersProfile</name>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
+        <source>(Unknown)</source>
+        <translation>(Nežinoma)</translation>
+    </message>
+</context>
+<context>
     <name>Otter::AddonsContentsWidget</name>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
@@ -522,6 +530,19 @@ Ar tikrai norite jį atkurti?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::AtomFeedParser</name>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="195"/>
+        <source>Failed to parse feed file: %1</source>
+        <translation>Nepavyko išanalizuoti kanalo failo: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="206"/>
+        <source>Failed to parse feed: no valid entries found</source>
+        <translation>Nepavyko išanalizuoti kanalo: nerasta jokių teisingų įrašų</translation>
+    </message>
+</context>
+<context>
     <name>Otter::AuthenticationDialog</name>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
@@ -607,34 +628,34 @@ Ar tikrai norite jį atkurti?</translation>
         <translation>Raktažodis:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="49"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="50"/>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="54"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="62"/>
         <source>Unknown</source>
         <translation>Nežinoma</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="67"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="75"/>
         <source>View Bookmark</source>
         <translation>Žiūrėti adresyno įrašą</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="87"/>
         <source>Edit Bookmark</source>
         <translation>Redaguoti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="116"/>
         <source>Add Bookmark</source>
         <translation>Įtraukti į adresyną</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Error</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Bookmark with this keyword already exists.</source>
         <translation>Žyma tokiu pačiu raktažodžiu jau yra.</translation>
     </message>
@@ -846,57 +867,57 @@ Ar tikrai norite jį atkurti?</translation>
 <context>
     <name>Otter::BookmarksModel</name>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="154"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="155"/>
         <source>Notes</source>
         <translation>Pastabos</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="158"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="159"/>
         <source>Bookmarks</source>
         <translation>Adresynas</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="160"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="161"/>
         <source>Trash</source>
         <translation>Šiukšlinė</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="183"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="185"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="358"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
         <translation>Nepavyko atverti pastabų failo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="358"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
         <translation>Nepavyko atverti adresyno failo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
         <translation>Nepavyko įkelti pastabų failo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="382"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
         <translation>Nepavyko įkelti adresyno failo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Error</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
         <translation>Nepavyko įkelti pastabų failo.</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="384"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
         <translation>Nepavyko įkelti adresyno failo.</translation>
     </message>
@@ -1536,7 +1557,7 @@ Ar norite juos įrašyti?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="170"/>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="514"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="510"/>
         <source>Custom Rules</source>
         <translation>Tinkintos taisyklės</translation>
     </message>
@@ -1559,77 +1580,77 @@ Ar norite juos įrašyti?</translation>
 <context>
     <name>Otter::ContentBlockingInformationWidget</name>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
         <translation>Aktyvūs profiliai</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="47"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
         <source>Blocked Elements</source>
         <translation>Užblokuoti elementai</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="151"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="150"/>
         <source>main frame</source>
         <translation>pagrindinis rėmelis</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="155"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="154"/>
         <source>subframe</source>
         <translation>po-rėmelis</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="159"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="158"/>
         <source>pop-up</source>
         <translation>iškylantysis langas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="163"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="162"/>
         <source>stylesheet</source>
         <translation>stilių aprašas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="167"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="166"/>
         <source>script</source>
         <translation>scenarijus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="171"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="170"/>
         <source>image</source>
         <translation>paveikslas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="174"/>
         <source>object</source>
         <translation>objektas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="178"/>
         <source>object subrequest</source>
         <translation>objekto po-užklausa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="183"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="182"/>
         <source>XHR</source>
         <translation>XHR</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="187"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="186"/>
         <source>WebSocket</source>
         <translation>WebSocket</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="191"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="190"/>
         <source>other</source>
         <translation>kita</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="210"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="209"/>
         <source>Enable Content Blocking</source>
         <translation>Įjungti turinio blokavimą</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="340"/>
+        <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="339"/>
         <source>Blocked Elements: {amount}</source>
         <translation>Užblokuoti elementai: {amount}</translation>
     </message>
@@ -1654,77 +1675,6 @@ Ar norite juos įrašyti?</translation>
     </message>
 </context>
 <context>
-    <name>Otter::ContentBlockingManager</name>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="196"/>
-        <source>Custom Rules</source>
-        <translation>Tinkintos taisyklės</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
-        <source>Failed to remove content blocking profile file: %1</source>
-        <translation>Nepavyko pašalinti turinio blokavimo profilio failo: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="317"/>
-        <source>Unknown</source>
-        <translation>Nežinoma</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Title</source>
-        <translation>Pavadinimas</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Update Interval</source>
-        <translation>Atnaujinimo intervalas</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="352"/>
-        <source>Last Update</source>
-        <translation>Paskutinis atnaujinimas</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Advertisements</source>
-        <translation>Reklamos</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Annoyance</source>
-        <translation>Erzinimai</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Privacy</source>
-        <translation>Privatumas</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Social</source>
-        <translation>Socialiniai</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Regional</source>
-        <translation>Regioniniai</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingManager.cpp" line="398"/>
-        <source>Other</source>
-        <translation>Kita</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::ContentBlockingProfile</name>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="708"/>
-        <source>(Unknown)</source>
-        <translation>(Nežinoma)</translation>
-    </message>
-</context>
-<context>
     <name>Otter::ContentBlockingProfileDialog</name>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="14"/>
@@ -1744,7 +1694,7 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="55"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adresas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="68"/>
@@ -1754,12 +1704,12 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="78"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Niekada</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="81"/>
         <source> days</source>
-        <translation type="unfinished"/>
+        <translation> dienų</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingProfileDialog.ui" line="91"/>
@@ -1830,27 +1780,90 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="90"/>
         <source>Failed to read profile file</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko perskaityti profilio failo</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko atsisiųsti profilio taisyklių</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko patvirtinti profilio taisyklių, naudojant kontrolinę sumą</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>Profilis nebuvo niekada atnaujintas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation type="unfinished"/>
+        <translation>Profilis paskutinį kartą buvo atnaujintas seniau nei prieš savaitę</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ContentFiltersManager</name>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="196"/>
+        <source>Custom Rules</source>
+        <translation>Tinkintos taisyklės</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
+        <source>Failed to remove content blocking profile file: %1</source>
+        <translation>Nepavyko pašalinti turinio blokavimo profilio failo: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
+        <source>Unknown</source>
+        <translation>Nežinoma</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Title</source>
+        <translation>Pavadinimas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Update Interval</source>
+        <translation>Atnaujinimo intervalas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
+        <source>Last Update</source>
+        <translation>Paskutinis atnaujinimas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Advertisements</source>
+        <translation>Reklamos</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Annoyance</source>
+        <translation>Erzinimai</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Privacy</source>
+        <translation>Privatumas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Social</source>
+        <translation>Socialiniai</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Regional</source>
+        <translation>Regioniniai</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
+        <source>Other</source>
+        <translation>Kita</translation>
     </message>
 </context>
 <context>
@@ -2155,63 +2168,97 @@ Ar norite juos įrašyti?</translation>
 <context>
     <name>Otter::Feed</name>
     <message>
-        <location filename="../../src/core/FeedsManager.cpp" line="130"/>
+        <location filename="../../src/core/FeedsManager.cpp" line="268"/>
         <source>Feed updated:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Kanalas atnaujintas:
+%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsManager.cpp" line="174"/>
-        <source>Failed to parse feed: %1</source>
-        <translation type="unfinished"/>
+        <location filename="../../src/core/FeedsManager.cpp" line="301"/>
+        <source>Failed to parse feed: invalid feed type</source>
+        <translation>Nepavyko išanalizuoti kanalo: neteisingas kanalo tipas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedsManager.cpp" line="311"/>
+        <source>Failed to download feed</source>
+        <translation>Nepavyko atsisiųsti kanalo</translation>
     </message>
 </context>
 <context>
     <name>Otter::FeedPropertiesDialog</name>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
-        <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <source>Edit Feed</source>
+        <translation>Taisyti kanalą</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
+        <source>Folder:</source>
+        <translation>Aplankas:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
+        <source>New…</source>
+        <translation>Naujas…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="49"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Keisti piktogramą…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="58"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adresas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="71"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="102"/>
         <source>Update interval:</source>
-        <translation type="unfinished"/>
+        <translation>Atnaujinimo intervalas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="81"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="112"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Niekada</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="84"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.ui" line="115"/>
         <source> minutes</source>
-        <translation type="unfinished"/>
+        <translation> minučių</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
+        <source>Add Feed</source>
+        <translation>Pridėti kanalą</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
         <source>Valid address is required.</source>
-        <translation type="unfinished"/>
+        <translation>Reikalingas teisingas adresas</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::FeedsComboBoxWidget</name>
+    <message>
+        <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
+        <source>Folder Name</source>
+        <translation>Aplanko pavadinimas</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
+        <source>Select name of new folder:</source>
+        <translation>Pasirinkite naujo aplanko pavadinimą:</translation>
     </message>
 </context>
 <context>
@@ -2219,141 +2266,156 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>Gerai</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="107"/>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="151"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
         <source>Categories</source>
-        <translation type="unfinished"/>
+        <translation>Kategorijos</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>From</source>
-        <translation type="unfinished"/>
+        <translation>Nuo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="103"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="134"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="474"/>
         <source>Published</source>
-        <translation type="unfinished"/>
+        <translation>Paskelbta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="151"/>
+        <source>Question</source>
+        <translation>Klausimas</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="152"/>
+        <source>You already subscribed this feed.</source>
+        <translation>Jūs jau esate užsiprenumeravę šį kanalą.</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="153"/>
+        <source>Do you want to continue?</source>
+        <translation>Ar norite tęsti?</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="171"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Pasirinkite aplanko pavadinimą</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="124"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="171"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Įveskite aplanko pavadinimą:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="245"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="328"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Atverti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="264"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="347"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Išvalyti šiukšlinę</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="272"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="297"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="380"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti aplanką…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="298"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="381"/>
         <source>Add Feed…</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti kanalą…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="295"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="378"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti naują</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="307"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="390"/>
         <source>Restore Feed</source>
-        <translation type="unfinished"/>
+        <translation>Atkurti kanalą</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="321"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="404"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Savybės…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="348"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="431"/>
         <source>Send email to %1</source>
-        <translation type="unfinished"/>
+        <translation>Siųsti el. laišką į %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="350"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="433"/>
         <source>Go to %1</source>
-        <translation type="unfinished"/>
+        <translation>Pereiti į %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="437"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="520"/>
         <source>All (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Visi (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="485"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="568"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="684"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Be pavadinimo)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="552"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="635"/>
         <source>Subscribe to this feed using:</source>
-        <translation type="unfinished"/>
+        <translation>Prenumeruoti šį kanalą, naudojant:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="597"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="684"/>
         <source>Feed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kanalas: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="600"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="687"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Kanalai</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="653"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="731"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="740"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Pavadinimas: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="644"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="657"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="731"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="744"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresas: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="648"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="735"/>
         <source>Last update: %1</source>
-        <translation type="unfinished"/>
+        <translation>Paskutinis atnaujinimas: %1</translation>
     </message>
 </context>
 <context>
@@ -2361,37 +2423,37 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="57"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Kanalai</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="59"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Šiukšlinė</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsModel.cpp" line="63"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Be pavadinimo)</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="229"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="230"/>
         <source>Failed to open feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko atverti kanalų failo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="252"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="253"/>
         <source>Failed to load feeds file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įkelti kanalų failo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../../src/core/FeedsModel.cpp" line="254"/>
+        <location filename="../../src/core/FeedsModel.cpp" line="255"/>
         <source>Failed to load feeds file.</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įkelti kanalų failo</translation>
     </message>
 </context>
 <context>
@@ -2752,32 +2814,32 @@ Ar norite juos įrašyti?</translation>
         <translation>%p% (%v/%m)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="120"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Error</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="120"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Unable to import selected type.</source>
         <translation>Negalima importuoti pasirinkto tipo.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="153"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
         <source>Processing…</source>
         <translation>Apdorojama…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="181"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="186"/>
         <source>Failed to import data.</source>
         <translation>Nepavyko importuoti duomenų.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="185"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="190"/>
         <source>Import cancelled by the user.</source>
         <translation>Naudotojas atsisakė importavimo.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="189"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="194"/>
         <source>Import finished successfully.</source>
         <translation>Importavimas sėkmingai užbaigtas.</translation>
     </message>
@@ -3130,24 +3192,24 @@ Ar norite juos įrašyti?</translation>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="489"/>
-        <location filename="../../src/ui/Menu.cpp" line="578"/>
+        <location filename="../../src/ui/Menu.cpp" line="491"/>
+        <location filename="../../src/ui/Menu.cpp" line="580"/>
         <source>Failed to create menu action: %1</source>
         <translation>Nepavyko sukurti meniu veiksmo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="915"/>
+        <location filename="../../src/ui/Menu.cpp" line="917"/>
         <source>Window - %1</source>
         <translation>Langas - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1171"/>
-        <location filename="../../src/ui/Menu.cpp" line="1186"/>
+        <location filename="../../src/ui/Menu.cpp" line="1173"/>
+        <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="1186"/>
+        <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n kortelė)</numerusform><numerusform>%1 (%n kortelės)</numerusform><numerusform>%1 (%n kortelių)</numerusform><numerusform>%1 (%n kortelių)</numerusform></translation>
     </message>
@@ -3219,87 +3281,97 @@ Ar norite perkelti konfigūraciją?</translation>
         <translation>Šalinti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="182"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
+        <source>Move Up</source>
+        <translation>Pakelti</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
+        <source>Move Down</source>
+        <translation>Nuleisti</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
         <source>Information</source>
         <translation>Informacija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="206"/>
         <source>Title:</source>
         <translation>Pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="198"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="216"/>
         <source>Description:</source>
         <translation>Aprašas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="208"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="226"/>
         <source>Version:</source>
         <translation>Versija:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="218"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="236"/>
         <source>Author:</source>
         <translation>Autorius:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Generic</source>
         <translation>Bendri</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Link</source>
         <translation>Nuorodos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Editable Content</source>
         <translation>Redaguojamas turinys</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Tab Handle</source>
         <translation>Kortelės ąselė</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Tab Handle of Active Tab</source>
         <translation>Aktyvios kortelės ąselė</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Empty Area of Tab Bar</source>
         <translation>Tuščias kortelės plotas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="81"/>
         <source>Any Toolbar</source>
         <translation>Bet kuri įrankių juosta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Context and Action</source>
         <translation>Kontekstas ir veiksmas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Parameters</source>
         <translation>Parametrai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="139"/>
         <source>Steps</source>
         <translation>Žingsniai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="142"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="143"/>
         <source>Step</source>
         <translation>Žingsnis</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="194"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="201"/>
         <source>Select Action</source>
         <translation>Pasirinkite veiksmą</translation>
     </message>
@@ -3326,7 +3398,7 @@ Ar norite perkelti konfigūraciją?</translation>
         <translation>Nepavyko įkelti įgaliotojo serverio automatinės konfigūracijos (PAC): %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="360"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="357"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
         <translation>Nepavyko įkelti įgaliotojo serverio automatinės konfigūracijos (PAC). Neteisingas URL: %1</translation>
     </message>
@@ -3355,7 +3427,7 @@ Ar norite tęsti?</translation>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="692"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="708"/>
         <source>Custom</source>
         <translation>Tinkintas</translation>
     </message>
@@ -3560,6 +3632,42 @@ Ar norite tęsti?</translation>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="94"/>
         <source>Opera session files (*.win)</source>
         <translation>Opera seanso failai (*.win)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpmlImporter</name>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
+        <source>OPML Feeds</source>
+        <translation>OPML kanalai</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
+        <source>Imports feeds from OPML file</source>
+        <translation>Importuoti kanalus iš OPML failo</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
+        <source>OPML files (*.opml)</source>
+        <translation>OPML failai (*.opml)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpmlImporterWidget</name>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
+        <source>Import into folder:</source>
+        <translation>Importuoti į aplanką:</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
+        <source>New…</source>
+        <translation>Naujas…</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
+        <source>Allow to duplicate already existing feeds</source>
+        <translation>Leisti dubliuoti jau esamus kanalus</translation>
     </message>
 </context>
 <context>
@@ -5085,46 +5193,46 @@ Ar norite tęsti?</translation>
         <translation>Open Search failai (*.xml)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="305"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="368"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="307"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="370"/>
         <source>Question</source>
         <translation>Klausimas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="308"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>Ar tikrai norite pašalinti šią paieškos sistemą?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="315"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="317"/>
         <source>Delete search engine permanently</source>
         <translation>Ištrinti paieškos sistemą visam laikui</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="446"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Error</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="347"/>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="358"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="349"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="360"/>
         <source>Failed to open Open Search file.</source>
         <translation>Nepavyko atverti Open Search failo.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="369"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="371"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
         <translation>Raktažodis jau naudojamas. Ar vis tiek norite tęsti?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="446"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="448"/>
         <source>Failed to update search engine.</source>
         <translation>Nepavyko atnaujinti paieškos sistemos.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="509"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="511"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
@@ -5305,40 +5413,40 @@ Ar norite tęsti?</translation>
 <context>
     <name>Otter::QtWebEnginePage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="585"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="625"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="120"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="584"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="624"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="122"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="586"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="626"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="121"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="585"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="625"/>
         <source>Disable JavaScript popups</source>
         <translation>Išjungti JavaScript iškylančiuosius langus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="492"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="491"/>
         <source>Question</source>
         <translation>Klausimas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="493"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="492"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Ar tikrai norite siųsti formos duomenis dar kartą?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="494"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="478"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="493"/>
         <source>Do you want to resend data?</source>
         <translation>Ar norite iš naujo persiųsti duomenis?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="480"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="498"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="497"/>
         <source>Do not show this message again</source>
         <translation>Daugiau neberodyti šio pranešimo</translation>
     </message>
@@ -5449,7 +5557,7 @@ Ar norite tęsti?</translation>
         <translation>Įkėlimas užbaigtas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="780"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="742"/>
         <source>Sending request to %1…</source>
         <translation>Siunčima užklausa į %1…</translation>
     </message>
@@ -5457,78 +5565,78 @@ Ar norite tęsti?</translation>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="677"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="717"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="423"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="716"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="425"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="678"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="718"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="677"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="717"/>
         <source>Disable JavaScript popups</source>
         <translation>Išjungti JavaScript iškylančiuosius langus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="630"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="629"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>Question</source>
         <translation>Klausimas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="631"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="630"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Ar tikrai norite siųsti formos duomenis dar kartą?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="632"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="616"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="631"/>
         <source>Do you want to resend data?</source>
         <translation>Ar norite iš naujo persiųsti duomenis?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="618"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="636"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="617"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="635"/>
         <source>Do not show this message again</source>
         <translation>Daugiau neberodyti šio pranešimo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="790"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="789"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 klaida #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="862"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="861"/>
         <source>Request blocked by rule from profile %1:&lt;br&gt;
 %2</source>
         <translation>Užklausa užblokuota pagal taisyklę iš profilio %1:&lt;br&gt;
 %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="862"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="861"/>
         <source>(Unknown)</source>
         <translation>(Nežinoma)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="880"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="879"/>
         <source>WebKit error %1</source>
         <translation>WebKit klaida %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="884"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="883"/>
         <source>Network error %1</source>
         <translation>Tinklo klaida %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Atrodo, kad scenarijus šiame puslapyje susidūrė su problemomis.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="951"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="950"/>
         <source>Do you want to stop the script?</source>
         <translation>Ar norite stabdyti scenarijų?</translation>
     </message>
@@ -5590,12 +5698,12 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>PNG image (*.png)</source>
-        <translation type="unfinished"/>
+        <translation>PNG paveikslas (*.png)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>JPEG image (*.jpg *.jpeg)</source>
-        <translation type="unfinished"/>
+        <translation>JPEG paveikslas (*.jpg *.jpeg)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
@@ -5637,6 +5745,19 @@ Ar norite tęsti?</translation>
         <location filename="../../src/ui/ReportDialog.cpp" line="41"/>
         <source>Copy</source>
         <translation>Kopijuoti</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::RssFeedParser</name>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="355"/>
+        <source>Failed to parse feed file: %1</source>
+        <translation>Nepavyko išanalizuoti kanalo failo: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/FeedParser.cpp" line="366"/>
+        <source>Failed to parse feed: no valid entries found</source>
+        <translation>Nepavyko išanalizuoti kanalo: nerasta jokių teisingų įrašų</translation>
     </message>
 </context>
 <context>
@@ -5827,8 +5948,8 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="193"/>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="194"/>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="668"/>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="669"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="670"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="671"/>
         <source>Search using %1</source>
         <translation>Ieškoti, naudojant %1</translation>
     </message>
@@ -5853,17 +5974,17 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
         <translation>Nepavyko pridėti paieškos sistemos.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="818"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="820"/>
         <source>Select Search Engine</source>
         <translation>Pasirinkti paieškos sistemą</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="822"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="824"/>
         <source>Add Search Engine…</source>
         <translation>Pridėti paieškos sistemą…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="826"/>
+        <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="828"/>
         <source>Search</source>
         <translation>Ieškoti</translation>
     </message>
@@ -6042,17 +6163,17 @@ Ar tikrai norite jį atkurti?</translation>
 <context>
     <name>Otter::SettingsManager</name>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="356"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="357"/>
         <source>Yes</source>
         <translation>Taip</translation>
     </message>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="356"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="357"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
     <message>
-        <location filename="../../src/core/SettingsManager.cpp" line="361"/>
+        <location filename="../../src/core/SettingsManager.cpp" line="362"/>
         <source>Invalid</source>
         <translation>Neteisinga</translation>
     </message>
@@ -6114,17 +6235,17 @@ Do you want to save your changes or discard them?</source>
 Norite įrašyti pakeitimus ar juos atmesti?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="295"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="300"/>
         <source>Show Line Numbers</source>
         <translation>Rodyti eilučių numerius</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="420"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
         <source>Source Viewer: %1</source>
         <translation>Šaltinio žiūryklė: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="420"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
         <source>Source Viewer</source>
         <translation>Šaltinio žiūryklė</translation>
     </message>
@@ -6395,17 +6516,17 @@ Adresas: %2</translation>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Pavadinimas: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="184"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresas: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="188"/>
         <source>Date: %1</source>
-        <translation type="unfinished"/>
+        <translation>Data: %1</translation>
     </message>
 </context>
 <context>
@@ -6476,7 +6597,7 @@ Adresas: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti adresyno įrašą</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
@@ -6931,23 +7052,23 @@ Ar norite jį perrašyti?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="234"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Iš:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Dydis:</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="240"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (atsiuntimas užbaigtas)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="244"/>
         <source>%1 (%2% downloaded)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (%2% atsiųsta)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="263"/>
@@ -6968,7 +7089,7 @@ Ar norite jį perrašyti?
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="280"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Stabdyti</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/transfers/TransfersWidget.cpp" line="297"/>
@@ -6977,7 +7098,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Šaltinis: %1
+Paskirtis: %2
+Dydis: %3
+Atsiųsta: %4
+Eiga: %5&lt;/div&gt;</translation>
     </message>
 </context>
 <context>
@@ -7971,155 +8096,155 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <translation>Įjungti tinkintas taisykles</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="67"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="66"/>
         <source>Auto Detect</source>
         <translation>Aptikti automatiškai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Ask</source>
         <translation>Klausti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Block all</source>
         <translation>Visus blokuoti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
         <source>Open all</source>
         <translation>Visus atverti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Open all in background</source>
         <translation>Visus atverti fone</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>All images</source>
         <translation>Visi paveikslai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
         <source>Cached images</source>
         <translation>Podėlio paveikslai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
         <source>No images</source>
         <translation>Be paveikslų</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Enabled</source>
         <translation>Įjungta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
         <source>On demand</source>
         <translation>Pareikalavus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Disabled</source>
         <translation>Išjungta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Always</source>
         <translation>Visada</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
         <source>Never</source>
         <translation>Niekada</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>Nurodyti svetainėms, kad jos manęs nesektų</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
         <source>Inform websites that I allow tracking</source>
         <translation>Nurodyti svetainėms, kad jos mane sektų</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="106"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
         <source>Do not inform websites about my preference</source>
         <translation>Neinformuoti svetainių apie mano požiūrį į stebėjimą</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="116"/>
         <source>Only existing</source>
         <translation>Tik jau egzistuojančius</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="110"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
         <source>Only read existing</source>
         <translation>Skaityti tik esamus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Expires</source>
         <translation>Galiojimo pabaigos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Current session is closed</source>
         <translation>Seanso pabaigos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
         <source>Always ask</source>
         <translation>Visada klausti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Domain</source>
         <translation>Domenas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Path</source>
         <translation>Kelias</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Value</source>
         <translation>Reikšmė</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="201"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="200"/>
         <source>Expiration Date</source>
         <translation>Galioja iki</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="207"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="206"/>
         <source>this session only</source>
         <translation>tik šiam seansui</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="454"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="453"/>
         <source>Style sheets (*.css)</source>
         <translation>Stilių aprašai (*.css)</translation>
     </message>
@@ -8129,7 +8254,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
@@ -8459,12 +8584,12 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="290"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="373"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="222"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="841"/>
-        <location filename="../../src/ui/Menu.cpp" line="324"/>
+        <location filename="../../src/ui/Menu.cpp" line="326"/>
         <location filename="../../src/ui/WebWidget.cpp" line="796"/>
         <source>Open</source>
         <translation>Atverti</translation>
@@ -8482,7 +8607,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="224"/>
-        <location filename="../../src/ui/Menu.cpp" line="325"/>
+        <location filename="../../src/ui/Menu.cpp" line="327"/>
         <location filename="../../src/ui/WebWidget.cpp" line="758"/>
         <source>Open in New Tab</source>
         <translation>Atverti naujoje kortelėje</translation>
@@ -8494,7 +8619,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="375"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="227"/>
-        <location filename="../../src/ui/Menu.cpp" line="326"/>
+        <location filename="../../src/ui/Menu.cpp" line="328"/>
         <location filename="../../src/ui/WebWidget.cpp" line="763"/>
         <source>Open in New Background Tab</source>
         <translation>Atverti foninėje kortelėje</translation>
@@ -8505,7 +8630,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="360"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="380"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="232"/>
-        <location filename="../../src/ui/Menu.cpp" line="328"/>
+        <location filename="../../src/ui/Menu.cpp" line="330"/>
         <location filename="../../src/ui/WebWidget.cpp" line="768"/>
         <source>Open in New Window</source>
         <translation>Atverti naujame lange</translation>
@@ -8516,7 +8641,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="363"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="383"/>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="235"/>
-        <location filename="../../src/ui/Menu.cpp" line="329"/>
+        <location filename="../../src/ui/Menu.cpp" line="331"/>
         <location filename="../../src/ui/WebWidget.cpp" line="773"/>
         <source>Open in New Background Window</source>
         <translation>Atverti naujame foniniame lange</translation>
@@ -9001,7 +9126,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>Padaryti ekrano kopiją</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
@@ -9115,7 +9240,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
-        <location filename="../../src/ui/Menu.cpp" line="414"/>
+        <location filename="../../src/ui/Menu.cpp" line="416"/>
         <source>Full Screen</source>
         <translation>Visas ekranas</translation>
     </message>
@@ -9387,9 +9512,9 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <translation>Šalinti slapuką</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="286"/>
+        <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="369"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Atnaujinti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="365"/>
@@ -9478,272 +9603,277 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
+        <source>Import OPML Feeds…</source>
+        <translation>Importuoti OPML kanalus…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="135"/>
         <source>Import Opera Notes…</source>
         <translation>Importuoti Opera pastabas...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="135"/>
+        <location filename="../../src/ui/Menu.cpp" line="137"/>
         <source>Import Opera Search Engines…</source>
         <translation>Importuoti Opera paieškos sistemas...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="137"/>
+        <location filename="../../src/ui/Menu.cpp" line="139"/>
         <source>Import Opera Session…</source>
         <translation>Importuoti Opera seansą…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="150"/>
+        <location filename="../../src/ui/Menu.cpp" line="152"/>
         <source>Insert Note</source>
         <translation>Įterpti pastabą</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="164"/>
+        <location filename="../../src/ui/Menu.cpp" line="166"/>
         <source>Open with</source>
         <translation>Atverti naudojant</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="170"/>
+        <location filename="../../src/ui/Menu.cpp" line="172"/>
         <source>Proxy</source>
         <translation>Įgaliotasis serveris</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="179"/>
+        <location filename="../../src/ui/Menu.cpp" line="181"/>
         <source>Search Using</source>
         <translation>Ieškoti naudojant</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="185"/>
+        <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Sessions</source>
         <translation>Seansai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="198"/>
+        <location filename="../../src/ui/Menu.cpp" line="200"/>
         <source>Style</source>
         <translation>Stilius</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="218"/>
+        <location filename="../../src/ui/Menu.cpp" line="220"/>
         <source>Toolbars</source>
         <translation>Įrankių juostos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="224"/>
+        <location filename="../../src/ui/Menu.cpp" line="226"/>
         <source>User Agent</source>
         <translation>Naršyklės identifikavimas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="233"/>
+        <location filename="../../src/ui/Menu.cpp" line="235"/>
         <source>Validate Using</source>
         <translation>Patikrinti naudojant</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="239"/>
+        <location filename="../../src/ui/Menu.cpp" line="241"/>
         <source>Tabs and Windows</source>
         <translation>Kortelės ir langai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="402"/>
+        <location filename="../../src/ui/Menu.cpp" line="404"/>
         <source>Keep Cookie Until</source>
         <translation>Laikyti slapuką iki</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="406"/>
+        <location filename="../../src/ui/Menu.cpp" line="408"/>
         <source>Accept Cookies</source>
         <translation>Priimti slapukus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="410"/>
+        <location filename="../../src/ui/Menu.cpp" line="412"/>
         <source>Accept Third-party Cookies</source>
         <translation>Priimti trečiųjų šalių slapukus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="418"/>
+        <location filename="../../src/ui/Menu.cpp" line="420"/>
         <source>Geolocation</source>
         <translation>Buvimo vietos nustatymas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="422"/>
+        <location filename="../../src/ui/Menu.cpp" line="424"/>
         <source>Images</source>
         <translation>Paveikslai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="426"/>
+        <location filename="../../src/ui/Menu.cpp" line="428"/>
         <source>Capture Audio</source>
         <translation>Paimti garsą</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="430"/>
+        <location filename="../../src/ui/Menu.cpp" line="432"/>
         <source>Capture Video</source>
         <translation>Paimti vaizdą</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="434"/>
+        <location filename="../../src/ui/Menu.cpp" line="436"/>
         <source>Playback Audio</source>
         <translation>Groti garsą</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="438"/>
+        <location filename="../../src/ui/Menu.cpp" line="440"/>
         <source>Notifications</source>
         <translation>Pranešimai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="442"/>
+        <location filename="../../src/ui/Menu.cpp" line="444"/>
         <source>Plugins</source>
         <translation>Papildiniai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="446"/>
+        <location filename="../../src/ui/Menu.cpp" line="448"/>
         <source>Pointer Lock</source>
         <translation>Rodyklės užrakinimas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="450"/>
+        <location filename="../../src/ui/Menu.cpp" line="452"/>
         <source>Closing Windows by JavaScript</source>
         <translation>JavaScript langų užvėrimas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="454"/>
+        <location filename="../../src/ui/Menu.cpp" line="456"/>
         <source>Pop-Ups</source>
         <translation>Iškylantieji langai</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="622"/>
-        <location filename="../../src/ui/Menu.cpp" line="789"/>
+        <location filename="../../src/ui/Menu.cpp" line="624"/>
+        <location filename="../../src/ui/Menu.cpp" line="791"/>
         <source>Open All</source>
         <translation>Atverti visus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="675"/>
+        <location filename="../../src/ui/Menu.cpp" line="677"/>
         <source>This Folder</source>
         <translation>Šis aplankas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="753"/>
+        <location filename="../../src/ui/Menu.cpp" line="755"/>
         <source>Ask What to Do</source>
         <translation>Klausti ką daryti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="757"/>
+        <location filename="../../src/ui/Menu.cpp" line="759"/>
         <source>Always Allow</source>
         <translation>Visada leisti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="761"/>
+        <location filename="../../src/ui/Menu.cpp" line="763"/>
         <source>Always Deny</source>
         <translation>Visada drausti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="765"/>
+        <location filename="../../src/ui/Menu.cpp" line="767"/>
         <source>Expires</source>
         <translation>Galiojimo pabaigos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="769"/>
+        <location filename="../../src/ui/Menu.cpp" line="771"/>
         <source>Current Session is Closed</source>
         <translation>Dabartinis seansas yra užvertas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="773"/>
+        <location filename="../../src/ui/Menu.cpp" line="775"/>
         <source>Always</source>
         <translation>Visada</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="777"/>
+        <location filename="../../src/ui/Menu.cpp" line="779"/>
         <source>Only Existing</source>
         <translation>Tik esamus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="781"/>
+        <location filename="../../src/ui/Menu.cpp" line="783"/>
         <source>Only Read Existing</source>
         <translation>Skaityti tik esamus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="785"/>
+        <location filename="../../src/ui/Menu.cpp" line="787"/>
         <source>Ignore</source>
         <translation>Nepaisyti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="793"/>
+        <location filename="../../src/ui/Menu.cpp" line="795"/>
         <source>Open in Background</source>
         <translation>Atverti fone</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="797"/>
+        <location filename="../../src/ui/Menu.cpp" line="799"/>
         <source>Block All</source>
         <translation>Blokuoti visus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="801"/>
+        <location filename="../../src/ui/Menu.cpp" line="803"/>
         <source>Only Cached</source>
         <translation>Tik iš podėlio</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="805"/>
+        <location filename="../../src/ui/Menu.cpp" line="807"/>
         <source>Enabled</source>
         <translation>Įjungta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="809"/>
+        <location filename="../../src/ui/Menu.cpp" line="811"/>
         <source>On Demand</source>
         <translation>Pareikalavus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="813"/>
+        <location filename="../../src/ui/Menu.cpp" line="815"/>
         <source>Disabled</source>
         <translation>Išjungta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="840"/>
+        <location filename="../../src/ui/Menu.cpp" line="842"/>
         <source>Auto Detect</source>
         <translation>Automatiškai aptikti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="893"/>
+        <location filename="../../src/ui/Menu.cpp" line="895"/>
         <source>Clear</source>
         <translation>Išvalyti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1051"/>
+        <location filename="../../src/ui/Menu.cpp" line="1053"/>
         <source>Default Application</source>
         <translation>Numatytoji programa</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1059"/>
+        <location filename="../../src/ui/Menu.cpp" line="1061"/>
         <source>Unknown</source>
         <translation>Nežinoma</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1200"/>
+        <location filename="../../src/ui/Menu.cpp" line="1202"/>
         <source>Default Style</source>
         <translation>Numatytasis stilius</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1254"/>
+        <location filename="../../src/ui/Menu.cpp" line="1256"/>
         <source>Add New</source>
         <translation>Pridėti naują</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1257"/>
+        <location filename="../../src/ui/Menu.cpp" line="1259"/>
         <source>Add Toolbar…</source>
         <translation>Pridėti įrankių juostą...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1258"/>
+        <location filename="../../src/ui/Menu.cpp" line="1260"/>
         <source>Add Bookmarks Bar…</source>
         <translation>Pridėti adresyno juostą...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1259"/>
+        <location filename="../../src/ui/Menu.cpp" line="1261"/>
         <source>Add Sidebar…</source>
         <translation>Pridėti šoninę juostą…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1341"/>
+        <location filename="../../src/ui/Menu.cpp" line="1343"/>
         <source>Custom User Agent…</source>
         <translation>Tinkintas naršyklės identifikavimas...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="1385"/>
+        <location filename="../../src/ui/Menu.cpp" line="1387"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
@@ -9883,7 +10013,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="128"/>
         <source>Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Kanalai</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="129"/>
@@ -9928,6 +10058,33 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
 </context>
 <context>
     <name>main</name>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="105"/>
+        <source>Failed to open content blocking profile file: %1</source>
+        <translation>Nepavyko atverti turinio blokavimo profilio failo: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="604"/>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="632"/>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="645"/>
+        <source>Failed to update content blocking profile: %1</source>
+        <translation>Nepavyko atnaujinti turinio blokavimo profilio: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="618"/>
+        <source>Failed to update content blocking profile: checksum mismatch</source>
+        <translation>Nepavyko atnaujinti turinio blokavimo profilio: kontrolinės sumos neatitikimas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="885"/>
+        <source>Failed to update content blocking profile, update URL is empty</source>
+        <translation>Nepavyko atnaujinti turinio blokavimo profilio, atnaujinimo URL yra tuščias</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="889"/>
+        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
+        <translation>Nepavyko atnaujinti turinio blokavimo profilio, atnaujinimo URL (%1) yra neteisingas</translation>
+    </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="200"/>
         <source>Failed to find User Script file: %1</source>
@@ -9999,35 +10156,9 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
         <translation>Parodyti diagnostinius duomenis ir išjungti programą</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="104"/>
-        <source>Failed to open content blocking profile file: %1</source>
-        <translation>Nepavyko atverti turinio blokavimo profilio failo: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="603"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="631"/>
-        <source>Failed to update content blocking profile: %1</source>
-        <translation>Nepavyko atnaujinti turinio blokavimo profilio: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="617"/>
-        <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation>Nepavyko atnaujinti turinio blokavimo profilio: kontrolinės sumos neatitikimas</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="824"/>
-        <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation>Nepavyko atnaujinti turinio blokavimo profilio, atnaujinimo URL yra tuščias</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="828"/>
-        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation>Nepavyko atnaujinti turinio blokavimo profilio, atnaujinimo URL (%1) yra neteisingas</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="417"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="414"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
-        <translation>Nepavyko analizuoti įgaliotojo serverio automatinės konfigūracijos (PAC) įrašo: %1</translation>
+        <translation>Nepavyko išanalizuoti įgaliotojo serverio automatinės konfigūracijos (PAC) įrašo: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="135"/>
@@ -10054,14 +10185,14 @@ Skriptas: %2</translation>
         <translation>Nepavyko patikrinti atnaujinimų. Neteisingas URL: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="62"/>
         <source>Unable to check for updates: %1</source>
         <translation>Nepavyko patikrinti atnaujinimų: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="98"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="95"/>
         <source>Unable to parse version number: %1</source>
-        <translation>Nepavyko gauti versijos numerio: %1</translation>
+        <translation>Nepavyko išanalizuoti versijos numerio: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Updater.cpp" line="84"/>
@@ -10084,7 +10215,7 @@ Skriptas: %2</translation>
         <translation>Neteisinga naudotojo scenarijaus atitikimo taisyklė: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UserScript.cpp" line="226"/>
+        <location filename="../../src/core/UserScript.cpp" line="228"/>
         <source>Failed to locate header of User Script file</source>
         <translation>Nepavyko nustatyti naudotojo scenarijaus failo antraštės vietos</translation>
     </message>
@@ -10094,18 +10225,18 @@ Skriptas: %2</translation>
         <translation>Įprastas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="81"/>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="158"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="729"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="250"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="80"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="249"/>
         <source>Request blocked by rule from profile %1:
 %2</source>
         <translation>Užklausa užblokuota pagal taisyklę iš profilio %1:
 %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="158"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="729"/>
+        <location filename="../../src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp" line="157"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="691"/>
         <source>(Unknown)</source>
         <translation>(Nežinoma)</translation>
     </message>
@@ -10132,7 +10263,7 @@ Programos ID: %2</translation>
         <translation>Nepavyko įkelti tinkintų taisyklių: neteisinga reklamos blokavimo antraštė</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="493"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="519"/>
         <source>Failed to create a file with custom rules: %1</source>
         <translation>Nepavyko sukurti failo su tinkintomis taisyklėmis: %1</translation>
     </message>
@@ -10165,12 +10296,12 @@ Programos ID: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed Updated</source>
-        <translation type="unfinished"/>
+        <translation>Kanalas atnaujintas</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="87"/>
         <source>Feed update was completed</source>
-        <translation type="unfinished"/>
+        <translation>Kanalo atnaujinimas buvo užbaigtas</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
@@ -10196,18 +10327,18 @@ Programos ID: %2</translation>
 <context>
     <name>proxies</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="677"/>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="89"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="693"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="90"/>
         <source>System Configuration</source>
         <translation>Sistemos konfigūracija</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="84"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="85"/>
         <source>No Proxy</source>
         <translation>Jokio įgaliotojo serverio</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="93"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="94"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
@@ -10215,19 +10346,19 @@ Programos ID: %2</translation>
 <context>
     <name>userAgents</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="581"/>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="707"/>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="117"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="582"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="723"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="118"/>
         <source>Default User Agent</source>
         <translation>Numatytasis naršyklės identifikavimas</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="122"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="123"/>
         <source>Mask as {name}</source>
         <translation>Maskuoti kaip {name}</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.h" line="126"/>
+        <location filename="../../src/core/NetworkManagerFactory.h" line="127"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
@@ -10237,7 +10368,7 @@ Programos ID: %2</translation>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="52"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="925"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="924"/>
         <source>Try Again</source>
         <translation>Bandyti dar kartą</translation>
     </message>
@@ -10403,18 +10534,18 @@ Select another one.</source>
 Pasirinkite kitą.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="893"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="909"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="892"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="908"/>
         <source>Go Back</source>
         <translation>Grįžti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="898"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="897"/>
         <source>Load Blocked Page</source>
         <translation>Įkelti užblokuotą puslapį</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="914"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="913"/>
         <source>Load Insecure Page</source>
         <translation>Įkelti nesaugų puslapį</translation>
     </message>
