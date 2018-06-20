@@ -20,16 +20,68 @@
 #ifndef OTTER_THEMESMANAGER_H
 #define OTTER_THEMESMANAGER_H
 
-#include <QtCore/QObject>
 #ifdef Q_OS_WIN32
 #include <QtCore/QAbstractNativeEventFilter>
 #endif
+#include <QtCore/QMap>
 #include <QtWidgets/QStyle>
 
 namespace Otter
 {
 
 class Style;
+
+class Palette final : public QObject
+{
+	Q_OBJECT
+	Q_ENUMS(ColorRole)
+
+public:
+	enum ColorRole
+	{
+		NoRole = 0,
+		WindowRole,
+		WindowTextRole,
+		BaseRole,
+		AlternateBaseRole,
+		ToolTipBaseRole,
+		ToolTipTextRole,
+		TextRole,
+		ButtonRole,
+		ButtonTextRole,
+		BrightTextRole,
+		LightRole,
+		MidlightRole,
+		DarkRole,
+		MidRole,
+		ShadowRole,
+		HighlightRole,
+		HighlightedTextRole,
+		LinkRole,
+		LinkVisitedRole
+	};
+
+	struct ColorRoleInformation final
+	{
+		QColor active;
+		QColor disabled;
+		QColor inactive;
+
+		bool isValid() const
+		{
+			return (active.isValid() && disabled.isValid() && inactive.isValid());
+		}
+	};
+
+	explicit Palette(const QString &path = {}, QObject *parent = nullptr);
+
+	ColorRoleInformation getColor(ColorRole role) const;
+
+private:
+	QMap<ColorRole, ColorRoleInformation> m_colors;
+
+	static int m_colorRoleEnumerator;
+};
 
 #ifdef Q_OS_WIN32
 class ThemesManager final : public QObject, public QAbstractNativeEventFilter
@@ -42,6 +94,7 @@ class ThemesManager final : public QObject
 public:
 	static void createInstance();
 	static ThemesManager* getInstance();
+	static Palette* getPalette();
 	static Style* createStyle(const QString &name);
 	static QString getAnimationPath(const QString &name);
 	static QIcon createIcon(const QString &name, bool fromTheme = true);
@@ -59,6 +112,7 @@ protected slots:
 
 private:
 	static ThemesManager *m_instance;
+	static Palette *m_palette;
 	static QWidget *m_probeWidget;
 	static QString m_iconThemePath;
 	static bool m_useSystemIconTheme;

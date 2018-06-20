@@ -28,6 +28,9 @@
 #endif
 #include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtGui/QIcon>
 #include <QtWidgets/QWidget>
 
@@ -38,7 +41,48 @@
 namespace Otter
 {
 
+int Palette::m_colorRoleEnumerator(-1);
+
+Palette::Palette(const QString &path, QObject *parent) : QObject(parent)
+{
+	if (m_colorRoleEnumerator < 0)
+	{
+		m_colorRoleEnumerator = Palette::staticMetaObject.indexOfEnumerator(QLatin1String("ColorRole").data());
+	}
+
+	if (path.isEmpty() || !QFile::exists(path))
+	{
+		return;
+	}
+
+	QFile file(path);
+
+	if (file.open(QIODevice::ReadOnly))
+	{
+		const QJsonArray colorsArray(QJsonDocument::fromJson(file.readAll()).array());
+
+		for (int i = 0; i < colorsArray.count(); ++i)
+		{
+			const QJsonObject colorRoleObject(colorsArray.at(i).toObject());
+			ColorRoleInformation colorRoleInformation;
+			colorRoleInformation.active = QColor(colorRoleObject.value(QLatin1String("active")).toString());
+			colorRoleInformation.disabled = QColor(colorRoleObject.value(QLatin1String("disabled")).toString());
+			colorRoleInformation.inactive = QColor(colorRoleObject.value(QLatin1String("inactive")).toString());
+
+			m_colors[static_cast<ColorRole>(Palette::staticMetaObject.enumerator(m_colorRoleEnumerator).keyToValue(colorRoleObject.value(QLatin1String("role")).toString().toLatin1()))] = colorRoleInformation;
+		}
+
+		file.close();
+	}
+}
+
+Palette::ColorRoleInformation Palette::getColor(ColorRole role) const
+{
+	return m_colors.value(role);
+}
+
 ThemesManager* ThemesManager::m_instance(nullptr);
+Palette* ThemesManager::m_palette(nullptr);
 QWidget* ThemesManager::m_probeWidget(nullptr);
 QString ThemesManager::m_iconThemePath(QLatin1String(":/icons/theme/"));
 bool ThemesManager::m_useSystemIconTheme(false);
@@ -57,6 +101,7 @@ void ThemesManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ThemesManager(QCoreApplication::instance());
+		m_palette = new Palette(SessionsManager::getWritableDataPath(QLatin1String("colors.json")), m_instance);
 		m_probeWidget = new QWidget();
 		m_probeWidget->hide();
 		m_probeWidget->setAttribute(Qt::WA_DontShowOnScreen, true);
@@ -109,6 +154,11 @@ void ThemesManager::handleOptionChanged(int identifier, const QVariant &value)
 ThemesManager* ThemesManager::getInstance()
 {
 	return m_instance;
+}
+
+Palette* ThemesManager::getPalette()
+{
+	return m_palette;
 }
 
 Style* ThemesManager::createStyle(const QString &name)
