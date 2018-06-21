@@ -73,9 +73,10 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
-	void appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor);
+	void appendAction(const QJsonValue &definition, const QStringList &sections, ActionExecutor::Object executor);
 	ActionExecutor::Object getExecutor() const;
-	bool canInclude(const QJsonObject &definition, const QStringList &includeSections);
+	bool canInclude(const QJsonObject &definition, const QStringList &sections);
+	bool hasIncludeMatch(const QJsonObject &definition, const QString &key, const QStringList &sections);
 
 protected slots:
 	void hideMenu();

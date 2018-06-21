@@ -466,13 +466,13 @@ void Menu::load(int option)
 	connect(this, &Menu::triggered, this, &Menu::selectOption);
 }
 
-void Menu::appendAction(const QJsonValue &definition, const QStringList &includeSections, ActionExecutor::Object executor)
+void Menu::appendAction(const QJsonValue &definition, const QStringList &sections, ActionExecutor::Object executor)
 {
 	if (definition.isObject())
 	{
 		const QJsonObject object(definition.toObject());
 
-		if (!canInclude(object, includeSections))
+		if (!canInclude(object, sections))
 		{
 			return;
 		}
@@ -533,7 +533,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 			for (int i = 0; i < actions.count(); ++i)
 			{
-				appendAction(actions.at(i), includeSections, executor);
+				appendAction(actions.at(i), sections, executor);
 			}
 		}
 		else if (type == QLatin1String("menu"))
@@ -545,7 +545,7 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &include
 
 			if (object.contains(QLatin1String("actions")))
 			{
-				menu->load(object, includeSections, executor);
+				menu->load(object, sections, executor);
 			}
 			else if (options.contains(QLatin1String("option")))
 			{
@@ -1506,19 +1506,40 @@ int Menu::getMenuRoleIdentifier(const QString &name)
 	return Menu::staticMetaObject.enumerator(m_menuRoleIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
-bool Menu::canInclude(const QJsonObject &definition, const QStringList &includeSections)
+bool Menu::canInclude(const QJsonObject &definition, const QStringList &sections)
 {
-	if (definition.contains(QLatin1String("excludeFrom")) && includeSections.contains(definition.value(QLatin1String("excludeFrom")).toString()))
+	if (definition.contains(QLatin1String("excludeFrom")) && hasIncludeMatch(definition, QLatin1String("excludeFrom"), sections))
 	{
 		return false;
 	}
 
-	if (definition.contains(QLatin1String("includeIn")) && !includeSections.contains(definition.value(QLatin1String("includeIn")).toString()))
+	if (definition.contains(QLatin1String("includeIn")) && !hasIncludeMatch(definition, QLatin1String("includeIn"), sections))
 	{
 		return false;
 	}
 
 	return true;
+}
+
+bool Menu::hasIncludeMatch(const QJsonObject &definition, const QString &key, const QStringList &sections)
+{
+	if (!definition.contains(key))
+	{
+		return false;
+	}
+
+	const QJsonValue value(definition.value(key));
+	const QStringList values((value.type() == QJsonValue::Array) ? value.toVariant().toStringList() : QStringList(value.toString()));
+
+	for (int i = 0; i < values.count(); ++i)
+	{
+		if (sections.contains(values.at(i)))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 }
