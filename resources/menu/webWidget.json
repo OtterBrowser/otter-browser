@@ -219,11 +219,22 @@
 				},
 				{
 					"type": "include",
-					"excludeFrom": "source",
+					"excludeFrom":
+					[
+						"link",
+						"source"
+					],
 					"actions":
 					[
 						"InspectElement",
-						"separator",
+						"separator"
+					]
+				},
+				{
+					"type": "include",
+					"excludeFrom": "source",
+					"actions":
+					[
 						"CheckSpelling",
 						"DictionariesMenu",
 						"separator"
