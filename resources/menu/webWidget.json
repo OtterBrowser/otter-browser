@@ -200,7 +200,11 @@
 						"Search",
 						"SearchMenu",
 						"separator",
-						"OpenSelectionAsLink"
+						{
+							"type": "action",
+							"identifier": "OpenSelectionAsLink",
+							"excludeFrom": "link"
+						}
 					]
 				},
 				"separator",
@@ -239,8 +243,15 @@
 				"Copy",
 				"CopyToNote",
 				"separator",
-				"OpenSelectionAsLink",
-				"separator"
+				{
+					"type": "include",
+					"excludeFrom": "link",
+					"actions":
+					[
+						"OpenSelectionAsLink",
+						"separator"
+					]
+				}
 			]
 		},
 		{
