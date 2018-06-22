@@ -54,6 +54,7 @@ public:
 		QString author;
 		QString email;
 		QUrl url;
+		QDateTime lastReadTime;
 		QDateTime publicationTime;
 		QDateTime updateTime;
 		QStringList categories;

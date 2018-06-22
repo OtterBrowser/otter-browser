@@ -517,6 +517,11 @@ void FeedsManager::timerEvent(QTimerEvent *event)
 					entryObject.insert(QLatin1String("url"), entry.url.toString());
 				}
 
+				if (entry.lastReadTime.isValid())
+				{
+					entryObject.insert(QLatin1String("lastReadTime"), entry.lastReadTime.toString(Qt::ISODate));
+				}
+
 				if (entry.publicationTime.isValid())
 				{
 					entryObject.insert(QLatin1String("publicationTime"), entry.publicationTime.toString(Qt::ISODate));
@@ -609,6 +614,7 @@ void FeedsManager::ensureInitialized()
 				entry.author = entryObject.value(QLatin1String("author")).toString();
 				entry.email = entryObject.value(QLatin1String("email")).toString();
 				entry.url = entryObject.value(QLatin1String("url")).toString();
+				entry.lastReadTime = QDateTime::fromString(entryObject.value(QLatin1String("lastReadTime")).toString(), Qt::ISODate);
 				entry.publicationTime = QDateTime::fromString(entryObject.value(QLatin1String("publicationTime")).toString(), Qt::ISODate);
 				entry.updateTime = QDateTime::fromString(entryObject.value(QLatin1String("updateTime")).toString(), Qt::ISODate);
 				entry.categories = entryObject.value(QLatin1String("categories")).toVariant().toStringList();
