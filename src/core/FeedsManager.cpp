@@ -50,6 +50,21 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 	setUpdateInterval(updateInterval);
 }
 
+void Feed::markEntryAsRead(const QString &identifier)
+{
+	for (int i = 0; i < m_entries.count(); ++i)
+	{
+		if (m_entries.at(i).identifier == identifier)
+		{
+			m_entries[i].lastReadTime = QDateTime::currentDateTimeUtc();
+
+			emit feedModified(this);
+
+			break;
+		}
+	}
+}
+
 void Feed::markEntryAsRemoved(const QString &identifier)
 {
 	if (!m_removedEntries.contains(identifier))
