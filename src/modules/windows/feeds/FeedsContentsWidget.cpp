@@ -495,7 +495,7 @@ void FeedsContentsWidget::updateEntry()
 	}
 
 	const QStringList entryCategories(index.data(CategoriesRole).toStringList());
-	const QMap<QString, QString> feedCategories(m_feed->getCategories());
+	const QMap<QString, QString> feedCategories(m_feed ? m_feed->getCategories() : QMap<QString, QString>());
 
 	for (int i = 0; i < entryCategories.count(); ++i)
 	{
@@ -513,6 +513,11 @@ void FeedsContentsWidget::updateEntry()
 	}
 
 	m_ui->categoriesLayout->addStretch();
+
+	if (index.isValid() && m_feed)
+	{
+		m_feed->markEntryAsRead(index.data(IdentifierRole).toString());
+	}
 
 	emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 }
