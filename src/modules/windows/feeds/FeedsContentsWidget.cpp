@@ -291,7 +291,7 @@ void FeedsContentsWidget::removeEntry()
 
 		if (index.isValid() && !index.data(IdentifierRole).isNull())
 		{
-			m_feed->addRemovedEntry(index.data(IdentifierRole).toString());
+			m_feed->markEntryAsRemoved(index.data(IdentifierRole).toString());
 
 			m_ui->entriesViewWidget->removeRow();
 		}

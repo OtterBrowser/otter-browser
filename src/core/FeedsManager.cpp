@@ -50,7 +50,7 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 	setUpdateInterval(updateInterval);
 }
 
-void Feed::addRemovedEntry(const QString &identifier)
+void Feed::markEntryAsRemoved(const QString &identifier)
 {
 	if (!m_removedEntries.contains(identifier))
 	{
