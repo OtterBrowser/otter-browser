@@ -271,7 +271,7 @@ void Feed::update()
 								{
 									++amount;
 
-									m_entries.prepend(information.entries.at(i));
+									m_entries.prepend(entry);
 								}
 							}
 						}
