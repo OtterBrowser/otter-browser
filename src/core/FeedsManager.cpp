@@ -238,7 +238,7 @@ void Feed::update()
 
 						for (int i = (information.entries.count() - 1); i >= 0; --i)
 						{
-							const Feed::Entry entry(information.entries.at(i));
+							Feed::Entry entry(information.entries.at(i));
 
 							if (m_removedEntries.contains(entry.identifier))
 							{
@@ -254,12 +254,15 @@ void Feed::update()
 
 									if (existingEntry.identifier == entry.identifier)
 									{
-										m_entries[j] = entry;
-
 										if (existingEntry.publicationTime != entry.publicationTime || existingEntry.updateTime != entry.updateTime)
 										{
 											++amount;
 										}
+
+										entry.publicationTime = normalizeTime(entry.publicationTime);
+										entry.updateTime = normalizeTime(entry.updateTime);
+
+										m_entries[j] = entry;
 
 										hasEntry = true;
 
@@ -270,6 +273,9 @@ void Feed::update()
 								if (!hasEntry)
 								{
 									++amount;
+
+									entry.publicationTime = normalizeTime(entry.publicationTime);
+									entry.updateTime = normalizeTime(entry.updateTime);
 
 									m_entries.prepend(entry);
 								}
@@ -360,6 +366,11 @@ QDateTime Feed::getLastUpdateTime() const
 QDateTime Feed::getLastSynchronizationTime() const
 {
 	return m_lastSynchronizationTime;
+}
+
+QDateTime Feed::normalizeTime(const QDateTime &time) const
+{
+	return ((time.isValid() && time < QDateTime::currentDateTimeUtc()) ? time : QDateTime::currentDateTimeUtc());
 }
 
 QMimeType Feed::getMimeType() const

@@ -92,6 +92,7 @@ protected:
 	void setCategories(const QMap<QString, QString> &categories);
 	void setRemovedEntries(const QStringList &removedEntries);
 	void setEntries(const QVector<Entry> &entries);
+	QDateTime normalizeTime(const QDateTime &time) const;
 
 private:
 	LongTermTimer *m_updateTimer;
