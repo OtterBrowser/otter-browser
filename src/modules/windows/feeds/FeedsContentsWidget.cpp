@@ -529,9 +529,17 @@ void FeedsContentsWidget::updateEntry()
 
 	m_ui->categoriesLayout->addStretch();
 
-	if (index.isValid() && m_feed)
+	if (index.isValid() && m_feed && m_feedModel)
 	{
+		disconnect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
+
 		m_feed->markEntryAsRead(index.data(IdentifierRole).toString());
+
+		m_feedModel->setData(index, QDateTime::currentDateTimeUtc(), LastReadTimeRole);
+
+		m_ui->entriesViewWidget->update();
+
+		connect(m_ui->entriesViewWidget, &ItemViewWidget::needsActionsUpdate, this, &FeedsContentsWidget::updateEntry);
 	}
 
 	emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
