@@ -35,6 +35,14 @@ namespace Ui
 class Animation;
 class Window;
 
+class EntryDelegate final : public ItemDelegate
+{
+public:
+	explicit EntryDelegate(QObject *parent);
+
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
 class FeedDelegate final : public ItemDelegate
 {
 public:
@@ -57,6 +65,7 @@ public:
 		ContentRole,
 		AuthorRole,
 		EmailRole,
+		LastReadTimeRole,
 		PublicationTimeRole,
 		UpdateTimeRole,
 		CategoriesRole

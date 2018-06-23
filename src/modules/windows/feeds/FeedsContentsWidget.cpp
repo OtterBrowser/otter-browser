@@ -39,6 +39,20 @@
 namespace Otter
 {
 
+EntryDelegate::EntryDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void EntryDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	if (index.sibling(index.row(), 0).data(FeedsContentsWidget::LastReadTimeRole).isNull())
+	{
+		option->font.setBold(true);
+	}
+}
+
 FeedDelegate::FeedDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
@@ -69,6 +83,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->subscribeFeedWidget->hide();
 	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
 	m_ui->entriesFilterLineEditWidget->setClearOnEscape(true);
+	m_ui->entriesViewWidget->setItemDelegate(new EntryDelegate(this));
 	m_ui->entriesViewWidget->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->setMouseTracking(true);
@@ -635,6 +650,7 @@ void FeedsContentsWidget::updateFeedModel()
 		items[0]->setData(entry.updateTime, UpdateTimeRole);
 		items[0]->setData(entry.author, AuthorRole);
 		items[0]->setData(entry.email, EmailRole);
+		items[0]->setData(entry.lastReadTime, LastReadTimeRole);
 		items[0]->setData(entry.categories, CategoriesRole);
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
