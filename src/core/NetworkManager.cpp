@@ -218,6 +218,8 @@ NetworkManager::ResourceType NetworkManager::getResourceType(const QNetworkReque
 	{
 		return WebSocketType;
 	}
+
+	return OtherType;
 }
 
 }
