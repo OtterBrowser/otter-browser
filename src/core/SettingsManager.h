@@ -180,6 +180,7 @@ public:
 		Search_SearchEnginesSuggestionsOption,
 		Security_AllowMixedContentOption,
 		Security_CiphersOption,
+		Security_EnableFraudCheckingOption,
 		Security_IgnoreSslErrorsOption,
 		Sessions_DeferTabsLoadingOption,
 		Sessions_OpenInExistingWindowOption,

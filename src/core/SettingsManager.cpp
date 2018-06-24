@@ -202,6 +202,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Search_SearchEnginesSuggestionsOption, BooleanType, false);
 	registerOption(Security_AllowMixedContentOption, BooleanType, false);
 	registerOption(Security_CiphersOption, ListType, QStringList(QLatin1String("default")));
+	registerOption(Security_EnableFraudCheckingOption, BooleanType, true);
 	registerOption(Security_IgnoreSslErrorsOption, ListType, QStringList());
 	registerOption(Sessions_DeferTabsLoadingOption, BooleanType, true);
 	registerOption(Sessions_OpenInExistingWindowOption, BooleanType, false);
