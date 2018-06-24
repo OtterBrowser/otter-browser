@@ -494,6 +494,21 @@ void FeedsContentsWidget::updateActions()
 void FeedsContentsWidget::updateEntry()
 {
 	const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
+	QString content(index.data(ContentRole).toString());
+
+	if (!index.data(SummaryRole).isNull())
+	{
+		QString summary(index.data(SummaryRole).toString());
+
+		if (!summary.contains(QLatin1Char('<')))
+		{
+			summary = QLatin1String("<p>") + summary + QLatin1String("</p>");
+		}
+
+		summary.append(QLatin1Char('\n'));
+
+		content.prepend(summary);
+	}
 
 	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
 	m_ui->emailButton->setVisible(!index.data(EmailRole).isNull());
@@ -502,7 +517,7 @@ void FeedsContentsWidget::updateEntry()
 	m_ui->urlButton->setToolTip(tr("Go to %1").arg(index.data(UrlRole).toUrl().toDisplayString()));
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
 	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(index.data(UpdateTimeRole).isNull() ? PublicationTimeRole : UpdateTimeRole).toDateTime()) : QString());
-	m_ui->textBrowserWidget->setText(index.data(SummaryRole).toString() + QLatin1Char('\n') + index.data(ContentRole).toString());
+	m_ui->textBrowserWidget->setText(content);
 
 	for (int i = (m_ui->categoriesLayout->count() - 1); i >= 0; --i)
 	{
