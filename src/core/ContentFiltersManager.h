@@ -80,6 +80,7 @@ public:
 	static QVector<int> getProfileIdentifiers(const QStringList &names);
 	static CosmeticFiltersMode getCosmeticFiltersMode();
 	static bool areWildcardsEnabled();
+	static bool isFraud(const QUrl &url);
 
 public slots:
 	void scheduleSave();
@@ -97,7 +98,8 @@ private:
 	int m_saveTimer;
 
 	static ContentFiltersManager *m_instance;
-	static QVector<ContentFiltersProfile*> m_profiles;
+	static QVector<ContentFiltersProfile*> m_contentBlockingProfiles;
+	static QVector<ContentFiltersProfile*> m_fraudCheckingProfiles;
 	static CosmeticFiltersMode m_cosmeticFiltersMode;
 	static bool m_areWildcardsEnabled;
 
@@ -158,6 +160,7 @@ public:
 	virtual bool update() = 0;
 	virtual bool remove() = 0;
 	virtual bool isUpdating() const = 0;
+	virtual bool isFraud(const QUrl &url);
 
 signals:
 	void profileModified(const QString &profile);
