@@ -617,6 +617,33 @@ ContentFiltersProfile::ContentFiltersProfile(QObject *parent) : QObject(parent)
 {
 }
 
+ContentFiltersManager::CheckResult ContentFiltersProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
+{
+	Q_UNUSED(baseUrl)
+	Q_UNUSED(requestUrl)
+	Q_UNUSED(resourceType)
+
+	return {};
+}
+
+ContentFiltersManager::CosmeticFiltersResult ContentFiltersProfile::getCosmeticFilters(const QStringList &domains, bool isDomainOnly)
+{
+	Q_UNUSED(domains)
+	Q_UNUSED(isDomainOnly)
+
+	return {};
+}
+
+ContentFiltersProfile::ProfileCategory ContentFiltersProfile::getCategory() const
+{
+	return OtherCategory;
+}
+
+QVector<QLocale::Language> ContentFiltersProfile::getLanguages() const
+{
+	return {};
+}
+
 bool ContentFiltersProfile::isFraud(const QUrl &url)
 {
 	Q_UNUSED(url)

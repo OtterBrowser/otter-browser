@@ -151,9 +151,9 @@ public:
 	virtual QUrl getUpdateUrl() const = 0;
 	virtual QDateTime getLastUpdate() const = 0;
 	virtual ContentFiltersManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType) = 0;
-	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly) = 0;
-	virtual QVector<QLocale::Language> getLanguages() const = 0;
-	virtual ProfileCategory getCategory() const = 0;
+	virtual ContentFiltersManager::CosmeticFiltersResult getCosmeticFilters(const QStringList &domains, bool isDomainOnly);
+	virtual QVector<QLocale::Language> getLanguages() const;
+	virtual ProfileCategory getCategory() const;
 	virtual ProfileError getError() const = 0;
 	virtual ProfileFlags getFlags() const = 0;
 	virtual int getUpdateInterval() const = 0;
