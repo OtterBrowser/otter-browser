@@ -479,6 +479,7 @@ ContentFiltersManager::CheckResult ContentFiltersManager::checkUrl(const QVector
 	}
 
 	CheckResult result;
+	result.isFraud = ((resourceType == NetworkManager::MainFrameType || resourceType == NetworkManager::SubFrameType) ? isFraud(requestUrl) : false);
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
@@ -486,6 +487,7 @@ ContentFiltersManager::CheckResult ContentFiltersManager::checkUrl(const QVector
 		{
 			CheckResult currentResult(m_contentBlockingProfiles.at(profiles.at(i))->checkUrl(baseUrl, requestUrl, resourceType));
 			currentResult.profile = profiles.at(i);
+			currentResult.isFraud = result.isFraud;
 
 			if (currentResult.isBlocked)
 			{

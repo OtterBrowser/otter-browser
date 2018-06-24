@@ -56,6 +56,7 @@ public:
 		int profile = -1;
 		bool isBlocked = false;
 		bool isException = false;
+		bool isFraud = false;
 	};
 
 	struct CosmeticFiltersResult final
