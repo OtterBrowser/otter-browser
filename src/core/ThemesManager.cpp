@@ -78,6 +78,25 @@ Palette::Palette(const QString &path, QObject *parent) : QObject(parent)
 
 Palette::ColorRoleInformation Palette::getColor(ColorRole role) const
 {
+	if (!m_colors.contains(role))
+	{
+		switch (role)
+		{
+			case SidebarRole:
+			case TabRole:
+				role = WindowRole;
+
+				break;
+			case SidebarTextRole:
+			case TabTextRole:
+				role = WindowTextRole;
+
+				break;
+			default:
+				break;
+		}
+	}
+
 	return m_colors.value(role);
 }
 
