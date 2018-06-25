@@ -2653,7 +2653,14 @@ WebWidget::ContentStates QtWebKitWebWidget::getContentState() const
 		return LocalContentState;
 	}
 
-	return (m_networkManager->getContentState() | RemoteContentState);
+	ContentStates state(m_networkManager->getContentState() | RemoteContentState);
+
+	if (getOption(SettingsManager::Security_EnableFraudCheckingOption, url).toBool() && ContentFiltersManager::isFraud(url))
+	{
+		state |= FraudContentState;
+	}
+
+	return state;
 }
 
 WebWidget::LoadingState QtWebKitWebWidget::getLoadingState() const

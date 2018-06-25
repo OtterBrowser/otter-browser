@@ -28,6 +28,7 @@
 #include "Window.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
+#include "../core/ContentFiltersManager.h"
 #include "../core/HandlersManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/IniSettings.h"
@@ -1416,7 +1417,14 @@ WebWidget::ContentStates WebWidget::getContentState() const
 		return LocalContentState;
 	}
 
-	return RemoteContentState;
+	ContentStates state(RemoteContentState);
+
+	if (getOption(SettingsManager::Security_EnableFraudCheckingOption, url).toBool() && ContentFiltersManager::isFraud(url))
+	{
+		state |= FraudContentState;
+	}
+
+	return state;
 }
 
 WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, const QUrl &url) const
