@@ -532,12 +532,12 @@ Tem a certeza de que deseja restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="195"/>
         <source>Failed to parse feed file: %1</source>
-        <translation>Falha ao processar o ficheiro: %1</translation>
+        <translation>A análise do ficheiro de feed falhou: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="206"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation>Falha ao processar a fonte: nenhuma entrada válida</translation>
+        <translation>A análise de feed falhou: não foram encontradas entradas válidas</translation>
     </message>
 </context>
 <context>
@@ -1806,12 +1806,12 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="196"/>
         <source>Custom Rules</source>
-        <translation>Regras personalizadas</translation>
+        <translation>Regras Personalizadas</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation>Falha ao remover o ficheiro de bloqueio de conteúdo: %1</translation>
+        <translation>A remoção do ficheiro de perfil de bloqueio de conteúdo falhou: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="317"/>
@@ -1826,12 +1826,12 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
         <source>Update Interval</source>
-        <translation>Intervalo de atualização</translation>
+        <translation>Intervalo de Atualização</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="352"/>
         <source>Last Update</source>
-        <translation>Última atualização</translation>
+        <translation>Última Atualização</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
@@ -1841,7 +1841,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
         <source>Annoyance</source>
-        <translation>Invasão</translation>
+        <translation>Incómodo</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
@@ -1861,7 +1861,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="398"/>
         <source>Other</source>
-        <translation>Outras</translation>
+        <translation>Outros</translation>
     </message>
 </context>
 <context>
@@ -2175,12 +2175,12 @@ Guardar?</translation>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="301"/>
         <source>Failed to parse feed: invalid feed type</source>
-        <translation>Falha ao processar a fonte: tipo de fonte inválido</translation>
+        <translation>A análise de feed falhou: tipo de feed inválida</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="311"/>
         <source>Failed to download feed</source>
-        <translation>Falha ao descarregar a fonte</translation>
+        <translation>A transferência da feed falhou</translation>
     </message>
 </context>
 <context>
@@ -2188,7 +2188,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Feed</source>
-        <translation>Editar fonte</translation>
+        <translation>Editar Feeed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
@@ -2233,7 +2233,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
         <source>Add Feed</source>
-        <translation>Adicionar fonte</translation>
+        <translation>Adicionar Feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
@@ -2251,7 +2251,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation>Nome da pasta</translation>
+        <translation>Nome da Pasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
@@ -2308,7 +2308,7 @@ Guardar?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="152"/>
         <source>You already subscribed this feed.</source>
-        <translation>Esta fonte já existe nas subscrições.</translation>
+        <translation>Já subscreveu esta feed.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="153"/>
@@ -3281,12 +3281,12 @@ Migrar?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation>Para cima</translation>
+        <translation>Mover para Cima</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation>Para baixo</translation>
+        <translation>Mover para Baixo</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
@@ -3637,12 +3637,12 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
         <source>OPML Feeds</source>
-        <translation>Fontes OPML</translation>
+        <translation>Feeds OPML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
         <source>Imports feeds from OPML file</source>
-        <translation>Importar de ficheiro OPML</translation>
+        <translation>Importar feeds do ficheiro OPML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
@@ -3665,7 +3665,7 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
         <source>Allow to duplicate already existing feeds</source>
-        <translation>Permitir duplicação de fontes existentes</translation>
+        <translation>Permitir duplicação das feeds já existentes</translation>
     </message>
 </context>
 <context>
@@ -5750,12 +5750,12 @@ Deseja continuar?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="355"/>
         <source>Failed to parse feed file: %1</source>
-        <translation>Falha ao processar o ficheiro: %1</translation>
+        <translation>Análise do ficheiro de feed falhou: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="366"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation>Falha ao processar a fonte: nenhuma entrada válida</translation>
+        <translation>A análise da feed falhou: não foram encontradas entradas válidas</translation>
     </message>
 </context>
 <context>
@@ -9602,7 +9602,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
         <source>Import OPML Feeds…</source>
-        <translation>Importar fontes OPML</translation>
+        <translation>Importar Feeds OPML...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="135"/>
