@@ -567,7 +567,7 @@ QStringList ContentFiltersManager::getProfileNames()
 	return names;
 }
 
-QVector<ContentFiltersProfile*> ContentFiltersManager::getProfiles()
+QVector<ContentFiltersProfile*> ContentFiltersManager::getContentBlockingProfiles()
 {
 	ensureInitialized();
 

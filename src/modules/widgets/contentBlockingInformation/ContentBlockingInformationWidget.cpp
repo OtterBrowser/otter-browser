@@ -229,7 +229,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 		}
 	}
 
-	const QVector<ContentFiltersProfile*> profiles(ContentFiltersManager::getProfiles());
+	const QVector<ContentFiltersProfile*> profiles(ContentFiltersManager::getContentBlockingProfiles());
 	const QStringList enabledProfiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	for (int i = 0; i < profiles.count(); ++i)
