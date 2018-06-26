@@ -945,35 +945,39 @@ void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission fea
 
 void WebContentsWidget::handleInspectorVisibilityChangeRequest(bool isVisible)
 {
-	if (m_webWidget)
+	if (!m_webWidget)
 	{
-		QWidget *inspector(m_webWidget->getInspector());
+		return;
+	}
 
-		if (inspector)
+	QWidget *inspector(m_webWidget->getInspector());
+
+	if (!inspector)
+	{
+		return;
+	}
+
+	if (isVisible)
+	{
+		if (m_splitter->indexOf(inspector) < 0)
 		{
-			if (isVisible)
+			m_splitter->addWidget(inspector);
+
+			if (height() > 500)
 			{
-				if (m_splitter->indexOf(inspector) < 0)
-				{
-					m_splitter->addWidget(inspector);
-
-					if (height() > 500)
-					{
-						m_splitter->setSizes({(height() - 300), 300});
-					}
-					else
-					{
-						m_splitter->setSizes({(height() / 2), (height() / 2)});
-					}
-				}
-
-				inspector->show();
+				m_splitter->setSizes({(height() - 300), 300});
 			}
 			else
 			{
-				inspector->hide();
+				m_splitter->setSizes({(height() / 2), (height() / 2)});
 			}
 		}
+
+		inspector->show();
+	}
+	else
+	{
+		inspector->hide();
 	}
 }
 
