@@ -574,6 +574,13 @@ QVector<ContentFiltersProfile*> ContentFiltersManager::getContentBlockingProfile
 	return m_contentBlockingProfiles;
 }
 
+QVector<ContentFiltersProfile*> ContentFiltersManager::getFraudCheckingProfiles()
+{
+	ensureInitialized();
+
+	return m_fraudCheckingProfiles;
+}
+
 QVector<int> ContentFiltersManager::getProfileIdentifiers(const QStringList &names)
 {
 	ensureInitialized();
