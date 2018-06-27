@@ -145,7 +145,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	if (rule.startsWith(QLatin1String("##")))
 	{
-		if (ContentFiltersManager::getCosmeticFiltersMode() == ContentFiltersManager::AllFiltersMode)
+		if (ContentFiltersManager::getCosmeticFiltersMode() == ContentFiltersManager::AllFilters)
 		{
 			m_cosmeticFiltersRules.append(rule.mid(2));
 		}
@@ -155,7 +155,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	if (rule.contains(QLatin1String("##")))
 	{
-		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFiltersMode)
+		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFilters)
 		{
 			parseStyleSheetRule(rule.split(QLatin1String("##")), m_cosmeticFiltersDomainRules);
 		}
@@ -165,7 +165,7 @@ void AdblockContentFiltersProfile::parseRuleLine(const QString &rule)
 
 	if (rule.contains(QLatin1String("#@#")))
 	{
-		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFiltersMode)
+		if (ContentFiltersManager::getCosmeticFiltersMode() != ContentFiltersManager::NoFilters)
 		{
 			parseStyleSheetRule(rule.split(QLatin1String("#@#")), m_cosmeticFiltersDomainExceptions);
 		}
@@ -564,11 +564,11 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 
 			if (rule->ruleOptions.testFlag(ElementHideOption))
 			{
-				result.comesticFiltersMode = ContentFiltersManager::NoFiltersMode;
+				result.comesticFiltersMode = ContentFiltersManager::NoFilters;
 			}
 			else if (rule->ruleOptions.testFlag(GenericHideOption))
 			{
-				result.comesticFiltersMode = ContentFiltersManager::DomainOnlyFiltersMode;
+				result.comesticFiltersMode = ContentFiltersManager::DomainOnlyFilters;
 			}
 
 			return result;

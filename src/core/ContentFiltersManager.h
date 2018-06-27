@@ -44,15 +44,15 @@ public:
 
 	enum CosmeticFiltersMode
 	{
-		NoFiltersMode = 0,
-		DomainOnlyFiltersMode,
-		AllFiltersMode
+		NoFilters = 0,
+		DomainOnlyFilters,
+		AllFilters
 	};
 
 	struct CheckResult final
 	{
 		QString rule;
-		CosmeticFiltersMode comesticFiltersMode = AllFiltersMode;
+		CosmeticFiltersMode comesticFiltersMode = AllFilters;
 		int profile = -1;
 		bool isBlocked = false;
 		bool isException = false;

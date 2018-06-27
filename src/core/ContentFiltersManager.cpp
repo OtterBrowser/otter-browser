@@ -38,7 +38,7 @@ namespace Otter
 ContentFiltersManager* ContentFiltersManager::m_instance(nullptr);
 QVector<ContentFiltersProfile*> ContentFiltersManager::m_contentBlockingProfiles;
 QVector<ContentFiltersProfile*> ContentFiltersManager::m_fraudCheckingProfiles;
-ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::m_cosmeticFiltersMode(AllFiltersMode);
+ContentFiltersManager::CosmeticFiltersMode ContentFiltersManager::m_cosmeticFiltersMode(AllFilters);
 bool ContentFiltersManager::m_areWildcardsEnabled(true);
 
 ContentFiltersManager::ContentFiltersManager(QObject *parent) : QObject(parent),
@@ -288,15 +288,15 @@ void ContentFiltersManager::handleOptionChanged(int identifier, const QVariant &
 
 				if (cosmeticFiltersMode == QLatin1String("none"))
 				{
-					m_cosmeticFiltersMode = NoFiltersMode;
+					m_cosmeticFiltersMode = NoFilters;
 				}
 				else if (cosmeticFiltersMode == QLatin1String("domainOnly"))
 				{
-					m_cosmeticFiltersMode = DomainOnlyFiltersMode;
+					m_cosmeticFiltersMode = DomainOnlyFilters;
 				}
 				else
 				{
-					m_cosmeticFiltersMode = AllFiltersMode;
+					m_cosmeticFiltersMode = AllFilters;
 				}
 			}
 
@@ -505,14 +505,14 @@ ContentFiltersManager::CheckResult ContentFiltersManager::checkUrl(const QVector
 
 ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticFilters(const QVector<int> &profiles, const QUrl &requestUrl)
 {
-	if (profiles.isEmpty() || m_cosmeticFiltersMode == NoFiltersMode)
+	if (profiles.isEmpty() || m_cosmeticFiltersMode == NoFilters)
 	{
 		return {};
 	}
 
 	const CosmeticFiltersMode mode(checkUrl(profiles, requestUrl, requestUrl, NetworkManager::OtherType).comesticFiltersMode);
 
-	if (mode == ContentFiltersManager::NoFiltersMode)
+	if (mode == ContentFiltersManager::NoFilters)
 	{
 		return {};
 	}
@@ -524,7 +524,7 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 	{
 		if (profiles.at(i) >= 0 && profiles.at(i) < m_contentBlockingProfiles.count())
 		{
-			const CosmeticFiltersResult profileResult(m_contentBlockingProfiles.at(profiles.at(i))->getCosmeticFilters(domains, (mode == DomainOnlyFiltersMode)));
+			const CosmeticFiltersResult profileResult(m_contentBlockingProfiles.at(profiles.at(i))->getCosmeticFilters(domains, (mode == DomainOnlyFilters)));
 
 			result.rules.append(profileResult.rules);
 			result.exceptions.append(profileResult.exceptions);
