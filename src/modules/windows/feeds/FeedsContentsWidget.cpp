@@ -634,6 +634,8 @@ void FeedsContentsWidget::updateFeedModel()
 		}
 	}
 
+	m_ui->categoriesButton->setEnabled(!categories.isEmpty());
+
 	const QVector<Feed::Entry> entries(m_feed->getEntries(m_categories));
 
 	for (int i = 0; i < entries.count(); ++i)
