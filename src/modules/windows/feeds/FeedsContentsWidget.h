@@ -102,7 +102,6 @@ protected slots:
 	void openEntry();
 	void removeEntry();
 	void selectCategory();
-	void toggleCategory(QAction *action);
 	void handleFeedModified(const QUrl &url);
 	void showEntriesContextMenu(const QPoint &position);
 	void showFeedsContextMenu(const QPoint &position);

@@ -325,44 +325,6 @@ void FeedsContentsWidget::selectCategory()
 	}
 }
 
-void FeedsContentsWidget::toggleCategory(QAction *action)
-{
-	QMenu *menu(m_ui->categoriesButton->menu());
-
-	if (action->data().isNull() && action->isChecked())
-	{
-		m_categories.clear();
-	}
-	else if (menu && menu->actions().count() > 0)
-	{
-		QStringList categories;
-		bool hasAllCategories = true;
-
-		m_categories.clear();
-
-		for (int i = 2; i < menu->actions().count(); ++i)
-		{
-			if (menu->actions().at(i)->isChecked())
-			{
-				categories.append(menu->actions().at(i)->data().toString());
-			}
-			else
-			{
-				hasAllCategories = false;
-			}
-		}
-
-		menu->actions().first()->setChecked(hasAllCategories);
-
-		if (!hasAllCategories)
-		{
-			m_categories = categories;
-		}
-	}
-
-	updateFeedModel();
-}
-
 void FeedsContentsWidget::handleFeedModified(const QUrl &url)
 {
 	const Feed *feed(FeedsManager::getFeed(url));
@@ -609,7 +571,41 @@ void FeedsContentsWidget::updateFeedModel()
 
 	m_ui->categoriesButton->setMenu(menu);
 
-	connect(menu, &QMenu::triggered, this, &FeedsContentsWidget::toggleCategory);
+	connect(menu, &QMenu::triggered, [=](QAction *action)
+	{
+		if (action->data().isNull() && action->isChecked())
+		{
+			m_categories.clear();
+		}
+		else if (menu && menu->actions().count() > 0)
+		{
+			QStringList categories;
+			bool hasAllCategories = true;
+
+			m_categories.clear();
+
+			for (int i = 2; i < menu->actions().count(); ++i)
+			{
+				if (menu->actions().at(i)->isChecked())
+				{
+					categories.append(menu->actions().at(i)->data().toString());
+				}
+				else
+				{
+					hasAllCategories = false;
+				}
+			}
+
+			menu->actions().first()->setChecked(hasAllCategories);
+
+			if (!hasAllCategories)
+			{
+				m_categories = categories;
+			}
+		}
+
+		updateFeedModel();
+	});
 
 	if (!m_feed)
 	{
