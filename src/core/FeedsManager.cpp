@@ -720,7 +720,7 @@ Feed* FeedsManager::getFeed(const QUrl &url)
 	{
 		Feed *feed(m_feeds.at(i));
 
-		if (m_feeds.at(i)->getUrl() == url || m_feeds.at(i)->getUrl() == normalizedUrl)
+		if (feed->getUrl() == url || feed->getUrl() == normalizedUrl)
 		{
 			return feed;
 		}
