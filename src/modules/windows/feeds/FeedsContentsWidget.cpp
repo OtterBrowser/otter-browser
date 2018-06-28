@@ -292,7 +292,7 @@ void FeedsContentsWidget::openEntry()
 	const QModelIndex index(m_ui->entriesViewWidget->currentIndex().sibling(m_ui->entriesViewWidget->currentIndex().row(), 0));
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (index.isValid() && !index.data(UrlRole).isNull())
+	if (mainWindow && index.isValid() && !index.data(UrlRole).isNull())
 	{
 		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), index.data(UrlRole)}});
 	}
