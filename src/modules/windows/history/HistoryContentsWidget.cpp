@@ -54,7 +54,7 @@ HistoryContentsWidget::HistoryContentsWidget(const QVariantMap &parameters, Wind
 	m_model->setHeaderData(1, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
 	m_model->setSortRole(Qt::DisplayRole);
 
-	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->historyViewWidget->setModel(m_model, true);
 	m_ui->historyViewWidget->setSortRoleMapping({{2, TimeVisitedRole}});
 	m_ui->historyViewWidget->installEventFilter(this);

@@ -178,7 +178,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->profilesViewWidget->setModel(ContentFiltersManager::createModel(this, globalProfiles));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(0, new ContentBlockingTitleDelegate(this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
-	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->profilesViewWidget->expandAll();
 	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), QLatin1String("all"));
 	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));

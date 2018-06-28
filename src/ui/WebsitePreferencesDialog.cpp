@@ -491,7 +491,7 @@ void WebsitePreferencesDialog::updateValues(bool isChecked)
 	m_ui->contentBlockingProfilesViewWidget->setModel(ContentFiltersManager::createModel(this, contentBlockingProfiles));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(0, new ContentBlockingTitleDelegate(this));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
-	m_ui->contentBlockingProfilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->contentBlockingProfilesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->contentBlockingProfilesViewWidget->expandAll();
 
 	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingProfiles.contains("custom"));

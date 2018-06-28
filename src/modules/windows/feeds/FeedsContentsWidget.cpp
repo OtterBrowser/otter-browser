@@ -88,7 +88,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->entriesViewWidget->viewport()->installEventFilter(this);
 	m_ui->entriesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->feedsFilterLineEditWidget->setClearOnEscape(true);
-	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->feedsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->feedsViewWidget->setModel(FeedsManager::getModel());
 	m_ui->feedsViewWidget->setItemDelegate(new FeedDelegate(this));
 	m_ui->feedsViewWidget->expandAll();
@@ -719,7 +719,7 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 			m_feedModel = new QStandardItemModel(this);
 
 			m_ui->entriesViewWidget->setModel(m_feedModel);
-			m_ui->entriesViewWidget->setViewMode(ItemViewWidget::ListViewMode);
+			m_ui->entriesViewWidget->setViewMode(ItemViewWidget::ListView);
 		}
 
 		if (m_feed->getLastSynchronizationTime().isNull())

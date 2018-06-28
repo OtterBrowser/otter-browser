@@ -212,7 +212,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_ui->availableEntriesItemView->viewport()->installEventFilter(this);
 	m_ui->currentEntriesItemView->setModel(new QStandardItemModel(this));
 	m_ui->currentEntriesItemView->setFilterRoles({Qt::DisplayRole, IdentifierRole});
-	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeView);
 	m_ui->currentEntriesItemView->setRootIsDecorated(false);
 
 	for (int i = 0; i < m_definition.entries.count(); ++i)

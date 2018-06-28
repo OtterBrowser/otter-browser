@@ -142,7 +142,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	QStandardItemModel *stepsModel(new QStandardItemModel(this));
 	stepsModel->setHorizontalHeaderLabels({tr("Step")});
 
-	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->gesturesViewWidget->setModel(gesturesModel);
 	m_ui->gesturesViewWidget->setItemDelegateForColumn(0, new GestureActionDelegate(this));
 	m_ui->gesturesViewWidget->setFilterRoles({Qt::DisplayRole, NameRole});

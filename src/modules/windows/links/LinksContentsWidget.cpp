@@ -42,7 +42,7 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->linksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->linksViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->linksViewWidget->setModel(new QStandardItemModel(this));
 	m_ui->linksViewWidget->setFilterRoles({Qt::DisplayRole, Qt::StatusTipRole});
 	m_ui->linksViewWidget->viewport()->installEventFilter(this);

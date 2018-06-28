@@ -50,7 +50,7 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
 
 	m_ui->addButton->setMenu(addMenu);
-	m_ui->notesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->notesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->notesViewWidget->setModel(NotesManager::getModel());
 	m_ui->notesViewWidget->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
 	m_ui->notesViewWidget->setFilterRoles({BookmarksModel::UrlRole, BookmarksModel::TitleRole, BookmarksModel::DescriptionRole, BookmarksModel::KeywordRole});

@@ -87,7 +87,7 @@ void CookiesContentsWidget::populateCookies()
 
 	m_model->sort(0);
 
-	m_ui->cookiesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->cookiesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->cookiesViewWidget->setModel(m_model);
 	m_ui->cookiesViewWidget->setLayoutDirection(Qt::LeftToRight);
 

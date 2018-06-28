@@ -45,7 +45,7 @@ CacheContentsWidget::CacheContentsWidget(const QVariantMap &parameters, Window *
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->cacheViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->cacheViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->cacheViewWidget->installEventFilter(this);
 	m_ui->cacheViewWidget->viewport()->installEventFilter(this);
 	m_ui->previewLabel->hide();

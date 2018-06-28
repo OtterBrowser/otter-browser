@@ -120,7 +120,7 @@ WindowsContentsWidget::WindowsContentsWidget(const QVariantMap &parameters, Wind
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->windowsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->windowsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->windowsViewWidget->setModel(SessionsManager::getModel());
 	m_ui->windowsViewWidget->setItemDelegate(new EntryItemDelegate(m_ui->windowsViewWidget));
 	m_ui->windowsViewWidget->setFilterRoles({SessionModel::TitleRole, SessionModel::UrlRole});

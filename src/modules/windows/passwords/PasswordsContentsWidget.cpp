@@ -43,7 +43,7 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->passwordsViewWidget->installEventFilter(this);
-	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->passwordsViewWidget->setModel(m_model);
 
 	m_model->setHeaderData(0, Qt::Horizontal, 500, HeaderViewWidget::WidthRole);

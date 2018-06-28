@@ -209,7 +209,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	userAgentsModel->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
 
 	m_ui->userAgentsViewWidget->setModel(userAgentsModel);
-	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->userAgentsViewWidget->setExclusive(true);
 	m_ui->userAgentsViewWidget->expandAll();
 
@@ -224,7 +224,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	proxiesModel->setHorizontalHeaderLabels({tr("Title")});
 
 	m_ui->proxiesViewWidget->setModel(proxiesModel);
-	m_ui->proxiesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->proxiesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->proxiesViewWidget->setExclusive(true);
 	m_ui->proxiesViewWidget->expandAll();
 

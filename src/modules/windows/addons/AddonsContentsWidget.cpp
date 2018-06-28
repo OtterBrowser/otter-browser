@@ -47,7 +47,7 @@ AddonsContentsWidget::AddonsContentsWidget(const QVariantMap &parameters, Window
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
-	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->addonsViewWidget->installEventFilter(this);
 
 	QTimer::singleShot(100, this, &AddonsContentsWidget::populateAddons);

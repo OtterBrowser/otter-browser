@@ -212,7 +212,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(const QVariantMap &para
 	m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Value")});
 	m_model->sort(0);
 
-	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new ConfigurationOptionDelegate(this));

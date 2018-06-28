@@ -49,7 +49,7 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 		model->appendRow({item, new QStandardItem()});
 	}
 
-	m_ui->informationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->informationViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->informationViewWidget->setModel(model);
 	m_ui->informationViewWidget->expandAll();
 

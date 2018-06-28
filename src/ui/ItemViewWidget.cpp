@@ -244,7 +244,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_headerWidget(new HeaderViewWidget(Qt::Horizontal, this)),
 	m_sourceModel(nullptr),
 	m_proxyModel(nullptr),
-	m_viewMode(ListViewMode),
+	m_viewMode(ListView),
 	m_sortOrder(Qt::AscendingOrder),
 	m_sortColumn(-1),
 	m_dragRow(-1),
@@ -345,7 +345,7 @@ void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 
 void ItemViewWidget::dropEvent(QDropEvent *event)
 {
-	if (m_viewMode == TreeViewMode)
+	if (m_viewMode == TreeView)
 	{
 		QTreeView::dropEvent(event);
 
@@ -862,7 +862,7 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 {
 	m_viewMode = mode;
 
-	setIndentation((mode == TreeViewMode) ? style()->pixelMetric(QStyle::PM_TreeViewIndentation) : 0);
+	setIndentation((mode == TreeView) ? style()->pixelMetric(QStyle::PM_TreeViewIndentation) : 0);
 }
 
 void ItemViewWidget::setModified(bool isModified)

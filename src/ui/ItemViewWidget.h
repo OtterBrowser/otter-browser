@@ -76,8 +76,8 @@ class ItemViewWidget : public QTreeView
 public:
 	enum ViewMode
 	{
-		ListViewMode = 0,
-		TreeViewMode
+		ListView = 0,
+		TreeView
 	};
 
 	explicit ItemViewWidget(QWidget *parent = nullptr);

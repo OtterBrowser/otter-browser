@@ -72,11 +72,11 @@ CertificateDialog::CertificateDialog(QVector<QSslCertificate> certificates, QWid
 		}
 	}
 
-	m_ui->chainItemView->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->chainItemView->setViewMode(ItemViewWidget::TreeView);
 	m_ui->chainItemView->setModel(chainModel);
 	m_ui->chainItemView->expandAll();
 	m_ui->chainItemView->setCurrentIndex(chainModel->index(0, 0));
-	m_ui->detailsItemView->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->detailsItemView->setViewMode(ItemViewWidget::TreeView);
 	m_ui->detailsItemView->setModel(new QStandardItemModel(this));
 
 	updateCertificate();
