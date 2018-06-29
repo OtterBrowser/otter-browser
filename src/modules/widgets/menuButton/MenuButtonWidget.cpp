@@ -28,7 +28,7 @@ namespace Otter
 {
 
 MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_menu(new Menu(Menu::NoMenuRole, this)),
+	m_menu(new Menu(Menu::UnknownMenu, this)),
 	m_isHidden(false)
 {
 	setIcon(ThemesManager::createIcon(QLatin1String("otter-browser"), false));

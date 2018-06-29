@@ -929,7 +929,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 	removeAction->setData(identifier);
 	removeAction->setEnabled(!definition.canReset);
 
-	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu));
+	menu->addMenu(new Menu(Menu::ToolBarsMenu, menu));
 
 	connect(configureAction, &QAction::triggered, configureAction, [=]()
 	{

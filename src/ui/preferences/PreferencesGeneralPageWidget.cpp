@@ -53,7 +53,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
 	m_ui->homePageLineEditWidget->setText(SettingsManager::getOption(SettingsManager::Browser_HomePageOption).toString());
 
-	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->useBookmarkAsHomePageButton));
+	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenu, m_ui->useBookmarkAsHomePageButton));
 
 	m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
 	m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);

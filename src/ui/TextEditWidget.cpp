@@ -92,7 +92,7 @@ void TextEditWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addSeparator();
 	menu.addAction(new Action(ActionsManager::CheckSpellingAction, {}, executor, &menu));
 
-	Menu *dictionariesMenu(new Menu(Menu::DictionariesMenuRole, &menu));
+	Menu *dictionariesMenu(new Menu(Menu::DictionariesMenu, &menu));
 	dictionariesMenu->setExecutor(executor);
 
 	menu.addMenu(dictionariesMenu);

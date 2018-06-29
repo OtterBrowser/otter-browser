@@ -81,7 +81,7 @@ void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 	{
 		if (!menu())
 		{
-			Menu *menu(new Menu(Menu::BookmarksMenuRole, this));
+			Menu *menu(new Menu(Menu::BookmarksMenu, this));
 			menu->setMenuOptions({{QLatin1String("bookmark"), m_bookmark->getIdentifier()}});
 
 			setMenu(menu);

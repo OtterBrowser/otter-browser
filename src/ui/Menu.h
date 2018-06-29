@@ -36,26 +36,26 @@ class Menu : public QMenu
 public:
 	enum MenuRole
 	{
-		NoMenuRole = 0,
-		BookmarksMenuRole,
-		BookmarkSelectorMenuRole,
-		NotesMenuRole,
-		CharacterEncodingMenuRole,
-		ClosedWindowsMenuRole,
-		DictionariesMenuRole,
-		ImportExportMenuRole,
-		OpenInApplicationMenuRole,
-		ProxyMenuRole,
-		SearchMenuRole,
-		SessionsMenuRole,
-		StyleSheetsMenuRole,
-		ToolBarsMenuRole,
-		UserAgentMenuRole,
-		ValidateMenuRole,
-		WindowsMenuRole
+		UnknownMenu = 0,
+		BookmarksMenu,
+		BookmarkSelectorMenu,
+		NotesMenu,
+		CharacterEncodingMenu,
+		ClosedWindowsMenu,
+		DictionariesMenu,
+		ImportExportMenu,
+		OpenInApplicationMenu,
+		ProxyMenu,
+		SearchMenu,
+		SessionsMenu,
+		StyleSheetsMenu,
+		ToolBarsMenu,
+		UserAgentMenu,
+		ValidateMenu,
+		WindowsMenu
 	};
 
-	explicit Menu(int role = NoMenuRole, QWidget *parent = nullptr);
+	explicit Menu(int role = UnknownMenu, QWidget *parent = nullptr);
 
 	void load(const QString &path, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());
 	void load(const QJsonObject &definition, const QStringList &includeSections = {}, ActionExecutor::Object executor = ActionExecutor::Object());

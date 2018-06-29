@@ -409,7 +409,7 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 		return;
 	}
 
-	Menu menu(Menu::ToolBarsMenuRole, this);
+	Menu menu(Menu::ToolBarsMenu, this);
 	menu.exec(event->globalPos());
 }
 

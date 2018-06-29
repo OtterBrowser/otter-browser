@@ -67,8 +67,8 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 
 	switch (role)
 	{
-		case BookmarksMenuRole:
-		case BookmarkSelectorMenuRole:
+		case BookmarksMenu:
+		case BookmarkSelectorMenu:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 				installEventFilter(this);
@@ -80,7 +80,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 					connect(BookmarksManager::getModel(), &BookmarksModel::modelModified, this, &Menu::clearBookmarksMenu);
 				}
 
-				if (role == BookmarksMenuRole)
+				if (role == BookmarksMenu)
 				{
 					connect(this, &Menu::aboutToShow, this, &Menu::populateBookmarksMenu);
 				}
@@ -91,7 +91,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			}
 
 			break;
-		case CharacterEncodingMenuRole:
+		case CharacterEncodingMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Character Encoding"));
 
 			m_option = SettingsManager::Content_DefaultCharacterEncodingOption;
@@ -100,7 +100,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			connect(this, &Menu::triggered, this, &Menu::selectOption);
 
 			break;
-		case ClosedWindowsMenuRole:
+		case ClosedWindowsMenu:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Closed Tabs and Windows"));
 				setIcon(ThemesManager::createIcon(QLatin1String("user-trash")));
@@ -119,13 +119,13 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			}
 
 			break;
-		case DictionariesMenuRole:
+		case DictionariesMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Dictionaries"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateDictionariesMenu);
 
 			break;
-		case ImportExportMenuRole:
+		case ImportExportMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
 			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…")}}, ActionExecutor::Object(), this));
 			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("HtmlBookmarks")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import HTML Bookmarks…")}}, ActionExecutor::Object(), this));
@@ -147,7 +147,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			});
 
 			break;
-		case NotesMenuRole:
+		case NotesMenu:
 			{
 				setTitle(QT_TRANSLATE_NOOP("actions", "Insert Note"));
 
@@ -162,13 +162,13 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			}
 
 			break;
-		case OpenInApplicationMenuRole:
+		case OpenInApplicationMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Open with"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateOpenInApplicationMenu);
 
 			break;
-		case ProxyMenuRole:
+		case ProxyMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Proxy"));
 
 			m_option = SettingsManager::Network_ProxyOption;
@@ -177,13 +177,13 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			connect(this, &Menu::triggered, this, &Menu::selectOption);
 
 			break;
-		case SearchMenuRole:
+		case SearchMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Search Using"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchMenu);
 
 			break;
-		case SessionsMenuRole:
+		case SessionsMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Sessions"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateSessionsMenu);
@@ -196,7 +196,7 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			});
 
 			break;
-		case StyleSheetsMenuRole:
+		case StyleSheetsMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Style"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateStyleSheetsMenu);
@@ -216,13 +216,13 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			});
 
 			break;
-		case ToolBarsMenuRole:
+		case ToolBarsMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Toolbars"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateToolBarsMenu);
 
 			break;
-		case UserAgentMenuRole:
+		case UserAgentMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "User Agent"));
 
 			m_option = SettingsManager::Network_UserAgentOption;
@@ -231,13 +231,13 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			connect(this, &Menu::triggered, this, &Menu::selectOption);
 
 			break;
-		case ValidateMenuRole:
+		case ValidateMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Validate Using"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateSearchMenu);
 
 			break;
-		case WindowsMenuRole:
+		case WindowsMenu:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateWindowsMenu);
@@ -274,7 +274,7 @@ void Menu::mousePressEvent(QMouseEvent *event)
 
 void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_role == BookmarksMenuRole && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
+	if (m_role == BookmarksMenu && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
 	{
 		const QAction *action(actionAt(event->pos()));
 
@@ -313,7 +313,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
 {
-	if (m_role == BookmarksMenuRole)
+	if (m_role == BookmarksMenu)
 	{
 		const Action *action(qobject_cast<Action*>(actionAt(event->pos())));
 
@@ -357,7 +357,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &includeSection
 {
 	const QString identifier(definition.value(QLatin1String("identifier")).toString());
 
-	if (m_role == NoMenuRole)
+	if (m_role == UnknownMenu)
 	{
 		clear();
 	}
@@ -565,9 +565,9 @@ void Menu::appendAction(const QJsonValue &definition, const QStringList &section
 		}
 		else
 		{
-			const int role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : NoMenuRole);
+			const int role(rawIdentifier.endsWith(QLatin1String("Menu")) ? getMenuRoleIdentifier(rawIdentifier) : UnknownMenu);
 
-			if (role == NoMenuRole)
+			if (role == UnknownMenu)
 			{
 				const int identifier(ActionsManager::getActionIdentifier(rawIdentifier));
 
@@ -646,7 +646,7 @@ void Menu::populateBookmarksMenu()
 			{
 				if (bookmark->rowCount() > 0)
 				{
-					Menu *menu(new Menu(BookmarksMenuRole, this));
+					Menu *menu(new Menu(BookmarksMenu, this));
 					menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
 					action->setMenu(menu);
@@ -699,7 +699,7 @@ void Menu::populateBookmarkSelectorMenu()
 
 			if (type != BookmarksModel::UrlBookmark)
 			{
-				Menu *menu(new Menu(BookmarkSelectorMenuRole, this));
+				Menu *menu(new Menu(BookmarkSelectorMenu, this));
 				menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
 				action->setMenu(menu);
@@ -1020,7 +1020,7 @@ void Menu::populateNotesMenu()
 			{
 				if (bookmark->rowCount() > 0)
 				{
-					Menu *menu(new Menu(NotesMenuRole, this));
+					Menu *menu(new Menu(NotesMenu, this));
 					menu->setMenuOptions({{QLatin1String("bookmark"), bookmark->getIdentifier()}});
 
 					action->setMenu(menu);
@@ -1128,7 +1128,7 @@ void Menu::populateSearchMenu()
 {
 	clear();
 
-	const QStringList searchEngines((m_role == ValidateMenuRole) ? SettingsManager::getOption(SettingsManager::Browser_ValidatorsOrderOption).toStringList() : SearchEnginesManager::getSearchEngines());
+	const QStringList searchEngines((m_role == ValidateMenu) ? SettingsManager::getOption(SettingsManager::Browser_ValidatorsOrderOption).toStringList() : SearchEnginesManager::getSearchEngines());
 	ActionExecutor::Object executor(getExecutor());
 
 	for (int i = 0; i < searchEngines.count(); ++i)
@@ -1137,7 +1137,7 @@ void Menu::populateSearchMenu()
 
 		if (searchEngine.isValid())
 		{
-			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenuRole) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, {{QLatin1String("icon"), searchEngine.icon}, {QLatin1String("text"), searchEngine.title}}, executor, this));
+			Action *action(new Action(ActionsManager::SearchAction, {{QLatin1String("searchEngine"), searchEngine.identifier}, {QLatin1String("queryPlaceholder"), ((m_role == ValidateMenu) ? QLatin1String("{pageUrl}") : QLatin1String("{selection}"))}}, {{QLatin1String("icon"), searchEngine.icon}, {QLatin1String("text"), searchEngine.title}}, executor, this));
 			action->setToolTip(searchEngine.description);
 
 			addAction(action);
@@ -1252,7 +1252,7 @@ void Menu::populateToolBarsMenu()
 
 	addSeparator();
 
-	Menu *addNewMenu(new Menu(NoMenuRole, this));
+	Menu *addNewMenu(new Menu(UnknownMenu, this));
 	Action *addNewAction(new Action(-1, {}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Add New")}}, ActionExecutor::Object(), this));
 	addNewAction->setMenu(addNewMenu);
 

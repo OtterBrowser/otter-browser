@@ -222,7 +222,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	m_definition.entries.clear();
 
-	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addBookmarkButton));
+	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenu, m_ui->addBookmarkButton));
 
 	m_ui->addBookmarkButton->setMenu(bookmarksMenu);
 	m_ui->addBookmarkButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);

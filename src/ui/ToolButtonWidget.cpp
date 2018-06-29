@@ -44,14 +44,14 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 
 	if (!definition.entries.isEmpty())
 	{
-		menu = new Menu(Menu::NoMenuRole, this);
+		menu = new Menu(Menu::UnknownMenu, this);
 
 		addMenu(menu, definition.entries);
 		setMenu(menu);
 	}
 	else if (definition.action == QLatin1String("OptionMenu") && definition.options.contains(QLatin1String("option")))
 	{
-		menu = new Menu(Menu::NoMenuRole, this);
+		menu = new Menu(Menu::UnknownMenu, this);
 		menu->load(SettingsManager::getOptionIdentifier(definition.options[QLatin1String("option")].toString()));
 
 		setDefaultAction(menu->menuAction());

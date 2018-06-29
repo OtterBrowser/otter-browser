@@ -389,7 +389,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		QAction *openAction(menu.addAction(QCoreApplication::translate("actions", "Open")));
 		openAction->setEnabled(canOpen);
 
-		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenuRole, this));
+		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenu, this));
 		openWithMenu->setEnabled(canOpen);
 		openWithMenu->setExecutor(ActionExecutor::Object(this, this));
 		openWithMenu->setActionParameters({{QLatin1String("url"), transfer->getTarget()}});

@@ -652,7 +652,7 @@ void WorkspaceWidget::showContextMenu(const QPoint &position)
 	arrangeMenu->addAction(new Action(ActionsManager::CascadeAllAction, {}, executor, arrangeMenu));
 	arrangeMenu->addAction(new Action(ActionsManager::TileAllAction, {}, executor, arrangeMenu));
 
-	menu.addMenu(new Menu(Menu::ToolBarsMenuRole, &menu));
+	menu.addMenu(new Menu(Menu::ToolBarsMenu, &menu));
 	menu.exec(m_mdi->mapToGlobal(position));
 }
 
