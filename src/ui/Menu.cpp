@@ -617,7 +617,7 @@ void Menu::populateBookmarksMenu()
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	ActionExecutor::Object executor(mainWindow, mainWindow);;
+	ActionExecutor::Object executor(mainWindow, mainWindow);
 
 	if (folderBookmark->rowCount() > 1)
 	{

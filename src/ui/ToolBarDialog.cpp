@@ -817,7 +817,7 @@ bool ToolBarDialog::eventFilter(QObject *object, QEvent *event)
 		return true;
 	}
 
-	return Dialog::eventFilter(object, event);;
+	return Dialog::eventFilter(object, event);
 }
 
 }

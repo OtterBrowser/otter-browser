@@ -183,7 +183,7 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 			}
 			else
 			{
-				actionWidget = new ActionWidget(identifier, window, definition, parent);;
+				actionWidget = new ActionWidget(identifier, window, definition, parent);
 			}
 
 			actionWidget->setOptions(definition.options);
