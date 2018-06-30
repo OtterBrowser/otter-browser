@@ -1865,7 +1865,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	qint64 itemSequence(0);
 	QByteArray byteArray;
 	QDataStream stream(&byteArray, QIODevice::ReadWrite);
-	stream << int(2) << history.entries.count() << index;
+	stream << static_cast<int>(2) << history.entries.count() << index;
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
