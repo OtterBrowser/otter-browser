@@ -136,7 +136,7 @@ public:
 	{
 		enum HitTestFlag
 		{
-			NoFlagsTest = 0,
+			NoTest = 0,
 			IsContentEditableTest = 1,
 			IsEmptyTest = 2,
 			IsFormTest = 4,
@@ -163,7 +163,7 @@ public:
 		QPoint hitPosition;
 		QRect elementGeometry;
 		qreal playbackRate = 1;
-		HitTestFlags flags = NoFlagsTest;
+		HitTestFlags flags = NoTest;
 	};
 
 	struct LinkUrl final
