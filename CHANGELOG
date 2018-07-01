@@ -1,4 +1,10 @@
-0.9.99 (2018-06-01):
+0.9.99 RC 10 (2018-07-01):
+- added importer for OPML files;
+- added support for abp: protocol for adding new content filtering profiles;
+- added ability to open selection as link if it macthes URL format;
+- various fixes and minor improvements for Feeds reader.
+
+0.9.99 RC 9 (2018-06-01):
 - initial version of Feeds Reader:
 -- Atom and RSS 2.0 parsers;
 -- support for categories;
@@ -6,7 +12,7 @@
 - added action to take page screenshot;
 - some minor optimizations.
 
-0.9.98 (2018-05-01):
+0.9.98 RC 8 (2018-05-01):
 - several enhancements in experimental backend for QtWebEngine (Blink):
 -- initial work on global history support;
 -- added support for alternative stylesheets;
@@ -14,37 +20,37 @@
 - initial work on Feeds Reader;
 - several bug fixes and some minor optimizations.
 
-0.9.97 (2018-04-01):
+0.9.97 RC 7 (2018-04-01):
 - added initial version of Links panel;
 - some minor optimizations.
 
-0.9.96 (2018-03-01):
+0.9.96 RC 6 (2018-03-01):
 - added initial version of Tab History panel;
 - some minor optimizations.
 
-0.9.95 (2018-02-01):
+0.9.95 RC 5 (2018-02-01):
 - added initial version of toolbar widget for viewing downloads from current session;
 - added some new keyboard shortcuts;
 - some minor fixes.
 
-0.9.94 (2018-01-01):
+0.9.94 RC 4 (2018-01-01):
 - added new default style for Start Page by Kamil Nęcek;
 - added interface allowing to manage list of hosts using customized website overrides;
 - several bug fixes and some optimizations.
 
-0.9.93 (2017-12-01):
+0.9.93 RC 3 (2017-12-01):
 - added Page Information panel;
 - added support for external icons for User Scripts;
 - some minor fixes and optimizations.
 
-0.9.92 (2017-11-01):
+0.9.92 RC 2 (2017-11-01):
 - improved support for styling tab bar text;
 - added support for deleting User Scripts in Addons Manager;
 - restored inline URLs completion;
 - added action for peeking tab contents;
 - multiple bug fixes and stability improvements.
 
-0.9.91 (2017-10-01):
+0.9.91 RC 1 (2017-10-01):
 - reworked toolbars:
 -- added support for visibility toggle button (collapsing contents);
 -- fixed unified toolbar and titlebar style under macOS;
@@ -74,7 +80,7 @@
 - added support for configurable Fast Forward rules;
 - lots of various fixes.
 
-0.9.12 (2017-01-01):
+0.9.12 Beta 12 (2017-01-01):
 - greatly improved tab bar:
 -- allow to detach tabs by dragging them away;
 -- allow to drop URLs and tabs from other windows;
@@ -98,7 +104,7 @@
 - improved RTL support in address and search fields;
 - many other fixes and improvements.
 
-0.9.11 (2016-10-01):
+0.9.11 Beta 11 (2016-10-01):
 - added initial support for storing passwords:
 -- support for multiple credential sets per host;
 -- basic passwords management;
@@ -117,7 +123,7 @@
 -- profiles are now grouped by type;
 - various minor fixes and improvements.
 
-0.9.10 (2016-05-01):
+0.9.10 Beta 10 (2016-05-01):
 - added initial support for User Scripts;
 - added Addons Manager;
 - added alternative display mode and support for optional headers for URL completion in address field;
@@ -130,7 +136,7 @@
 - added new backend for storing browsing history;
 - many other fixes and improvements.
 
-0.9.09 (2016-01-01):
+0.9.09 Beta 9 (2016-01-01):
 - added initial support for spell checking;
 - added support for selecting allowed and rejected domains for third-party cookies;
 - added support for customizing visible columns and their order in most of views;
@@ -138,7 +144,7 @@
 - added support for adding arbitrary menus to toolbars;
 - some other fixes and minor improvements.
 
-0.9.08 (2015-12-01):
+0.9.08 Beta 8 (2015-12-01):
 - enhanced URL completion in address field:
 -- suggest bookmarks by URL and keyword;
 -- suggest URLs from history;
@@ -156,7 +162,7 @@
 - updated style of error pages and directory listings;
 - many other fixes and improvements.
 
-0.9.07 (2015-09-01):
+0.9.07 Beta 7 (2015-09-01):
 - added support for customizing context menu;
 - added Opera notes import;
 - added initial support for auto updates;
@@ -166,7 +172,7 @@
 - allow to specify default arguments using arguments.txt;
 - various minor fixes and improvements.
 
-0.9.06 (2015-06-01):
+0.9.06 Beta 6 (2015-06-01):
 - multiple enhancements in experimental backend for QtWebEngine (Blink):
 -- added support for restoring tab history;
 -- added support for storing cookies;
@@ -183,7 +189,7 @@
 - added support for freedesktop.org notifications;
 - lots of other fixes and improvements.
 
-0.9.05 (2015-04-01):
+0.9.05 Beta 5 (2015-04-01):
 - experimental backend for QtWebEngine (Blink), disabled by default;
 - added advanced options for cookies;
 - added interface for configuring toolbars;
@@ -195,7 +201,7 @@
 - tabs are now drawn horizontally in vertical toolbars;
 - many other fixes and improvements.
 
-0.9.04 (2015-01-01):
+0.9.04 Beta 4 (2015-01-01):
 - added support for mouse gestures;
 - added initial support for customizing toolbars;
 - allow to load plugins on demand;
@@ -204,7 +210,7 @@
 - allow to customize menu button (JSON file);
 - lots of other fixes and improvements.
 
-0.9.03 (2014-11-01):
+0.9.03 Beta 3 (2014-11-01):
 - initial version of sidebar;
 - added possibility to set Otter Browser as default under Windows;
 - added initial versions of Website Preferences and Quick Preferences (F12);
@@ -215,7 +221,7 @@
 - allow to customize menu bar (JSON file);
 - various minor fixes and improvements.
 
-0.9.02 (2014-08-01):
+0.9.02 Beta 2 (2014-08-01):
 - added initial support for content blocking (Adblock Plus compatible);
 - added Opera and HTML (Netscape) bookmarks import;
 - added rocker navigation;
@@ -225,7 +231,7 @@
 - translation related improvements;
 - some other fixes and minor improvements.
 
-0.9.01 (2014-06-01):
+0.9.01 Beta 1 (2014-06-01):
 - added application icon by Walerian Walawski;
 - added error console;
 - added support for additional attributes for bookmarks;
