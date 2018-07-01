@@ -2531,22 +2531,22 @@ Ar norite juos įrašyti?</translation>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Klaida</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Profilis su šiuo adresu jau yra.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Klausimas</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>Ar norite pridėti šį turinio blokavimo profilį?</translation>
     </message>
 </context>
 <context>

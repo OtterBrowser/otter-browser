@@ -2528,22 +2528,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>這個地址的設定檔已存在。</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>問題</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>您想要新增這個內容阻擋設定檔？</translation>
     </message>
 </context>
 <context>

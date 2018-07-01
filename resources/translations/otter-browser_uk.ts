@@ -2532,22 +2532,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Профіль з цією адресою вже існує.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Питання</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>Бажаєте додати цей профіль блокування вмісту?</translation>
     </message>
 </context>
 <context>
