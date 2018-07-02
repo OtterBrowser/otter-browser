@@ -1,7 +1,7 @@
 0.9.99 RC 10 (2018-07-01):
 - added importer for OPML files;
 - added support for abp: protocol for adding new content filtering profiles;
-- added ability to open selection as link if it macthes URL format;
+- added ability to open selection as link if it matches URL format;
 - various fixes and minor improvements for Feeds reader.
 
 0.9.99 RC 9 (2018-06-01):
