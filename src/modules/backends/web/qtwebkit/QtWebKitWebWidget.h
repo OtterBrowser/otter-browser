@@ -80,10 +80,8 @@ public:
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	bool isAudible() const override;
 	bool isAudioMuted() const override;
-#endif
 	bool isFullScreen() const override;
 	bool isPrivate() const override;
 	bool eventFilter(QObject *object, QEvent *event) override;
@@ -117,19 +115,13 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void clearPluginToken();
 	void resetSpellCheck(QWebElement element);
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void muteAudio(QWebFrame *frame, bool isMuted);
-#endif
 	void openRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QNetworkRequest &request, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
 	void handleNavigationRequest(const QUrl &url, QWebPage::NavigationType type);
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	void setHistory(QDataStream &stream);
-#else
 	void setHistory(const QVariantMap &history);
-#endif
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QtWebKitPage* getPage() const;
 	QString getMessageToken() const;
@@ -163,9 +155,7 @@ protected slots:
 	void handleLoadFinished(bool result);
 	void handleViewSourceReplyFinished();
 	void handlePrintRequest(QWebFrame *frame);
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleFullScreenRequest(QWebFullScreenRequest request);
-#endif
 	void handlePermissionRequest(QWebFrame *frame, QWebPage::Feature feature);
 	void handlePermissionCancel(QWebFrame *frame, QWebPage::Feature feature);
 	void notifyTitleChanged();

@@ -174,9 +174,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &QtWebKitPage::handleOptionChanged);
 	connect(this, &QtWebKitPage::frameCreated, this, &QtWebKitPage::handleFrameCreation);
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, &QtWebKitPage::consoleMessageReceived, this, &QtWebKitPage::handleConsoleMessage);
-#endif
 	connect(mainFrame(), &QWebFrame::loadStarted, this, [&]()
 	{
 		updateStyleSheets();
@@ -295,7 +293,6 @@ void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 	connect(this, &QtWebKitPage::isDisplayingErrorPageChanged, frameWrapper, &QtWebKitFrame::handleIsDisplayingErrorPageChanged);
 }
 
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source)
 {
 	Console::MessageLevel mappedLevel(Console::UnknownLevel);
@@ -352,7 +349,6 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 	Console::addMessage(message, mappedCategory, mappedLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
 }
-#endif
 
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
@@ -432,13 +428,6 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 		m_isIgnoringJavaScriptPopups = true;
 	}
 }
-
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
-{
-	Console::addMessage(note, Console::JavaScriptCategory, Console::ErrorLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
-}
-#endif
 
 void QtWebKitPage::triggerAction(WebAction action, bool isChecked)
 {

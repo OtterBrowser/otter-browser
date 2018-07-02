@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,13 @@
 
 #include "QtWebKitInspector.h"
 #include "QtWebKitWebWidget.h"
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-#include "../../../../core/ActionsManager.h"
-#include "../../../../core/ThemesManager.h"
-#endif
 
 namespace Otter
 {
 
 QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(parent)
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	, m_widget(parent),
-	m_closeButton(new QToolButton(this))
-#endif
 {
 	setMinimumHeight(200);
-
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	m_closeButton->setAutoFillBackground(false);
-	m_closeButton->setAutoRaise(true);
-	m_closeButton->setIcon(ThemesManager::createIcon(QLatin1String("window-close")));
-	m_closeButton->setToolTip(tr("Close"));
-	m_closeButton->setFixedSize(16, 16);
-	m_closeButton->show();
-	m_closeButton->raise();
-	m_closeButton->move(QPoint((width() - 19), 3));
-
-	connect(m_closeButton, &QToolButton::clicked, this, &QtWebKitInspector::hideInspector);
-#endif
 }
 
 void QtWebKitInspector::childEvent(QChildEvent *event)
@@ -59,36 +38,9 @@ void QtWebKitInspector::childEvent(QChildEvent *event)
 
 		if (webView)
 		{
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-			webView->setContextMenuPolicy(Qt::NoContextMenu);
-#endif
-
 			webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 		}
 	}
 }
-
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-void QtWebKitInspector::showEvent(QShowEvent *event)
-{
-	QWebInspector::showEvent(event);
-
-	m_closeButton->move(QPoint((width() - 19), 3));
-	m_closeButton->raise();
-}
-
-void QtWebKitInspector::resizeEvent(QResizeEvent *event)
-{
-	QWebInspector::resizeEvent(event);
-
-	m_closeButton->move(QPoint((width() - 19), 3));
-	m_closeButton->raise();
-}
-
-void QtWebKitInspector::hideInspector()
-{
-	m_widget->triggerAction(ActionsManager::InspectPageAction, {{QLatin1String("isChecked"), false}});
-}
-#endif
 
 }

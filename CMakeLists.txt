@@ -80,7 +80,7 @@ option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official b
 
 find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
 find_package(Qt5WebEngineWidgets 5.9.0 QUIET)
-find_package(Qt5WebKitWidgets 5.4.0 QUIET)
+find_package(Qt5WebKitWidgets 5.212.0 QUIET)
 find_package(Hunspell 1.3.0 QUIET)
 
 set_package_properties(Qt5WebEngineCore PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
@@ -368,16 +368,6 @@ endif (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 
 if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
-
-	if (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
-		list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
-	else (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
-		add_definitions(-DOTTER_ENABLE_QTWEBKIT_LEGACY)
-
-		list(APPEND OTTER_BACKENDS_WEB "QtWebKit (legacy)")
-
-		message(WARNING "Detected QtWebKit version is outdated and insecure, please update to version 5.212 or newer.")
-	endif (${Qt5WebKitWidgets_VERSION_MINOR} GREATER 200)
 
 	set(otter_src
 		${otter_src}

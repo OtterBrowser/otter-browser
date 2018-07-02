@@ -41,21 +41,17 @@ QtWebKitWebBackend* QtWebKitWebBackend::m_instance(nullptr);
 QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget(nullptr);
 QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 int QtWebKitWebBackend::m_enableMediaOption(-1);
 int QtWebKitWebBackend::m_enableMediaSourceOption(-1);
 int QtWebKitWebBackend::m_enableWebSecurityOption(-1);
-#endif
 
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
 	m_instance = this;
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	m_enableMediaOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMedia"), SettingsManager::BooleanType, true);
 	m_enableMediaSourceOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMediaSource"), SettingsManager::BooleanType, false);
 	m_enableWebSecurityOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableWebSecurity"), SettingsManager::BooleanType, true);
-#endif
 
 	const QString cachePath(SessionsManager::getCachePath());
 
@@ -150,17 +146,13 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 
 		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
 
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QStringList pluginSearchPaths(QWebSettings::pluginSearchPaths());
 		pluginSearchPaths.append(QDir::toNativeSeparators(QCoreApplication::applicationDirPath()));
 
 		QWebSettings::setPluginSearchPaths(pluginSearchPaths);
-#endif
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getOption(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::FullScreenSupportEnabled, true);
-#endif
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::PrintElementBackgrounds, SettingsManager::getOption(SettingsManager::Browser_PrintElementBackgroundsOption).toBool());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
@@ -192,11 +184,7 @@ QString QtWebKitWebBackend::getName() const
 
 QString QtWebKitWebBackend::getTitle() const
 {
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	return tr("WebKit Backend (legacy)");
-#else
 	return tr("WebKit Backend");
-#endif
 }
 
 QString QtWebKitWebBackend::getDescription() const
@@ -270,9 +258,6 @@ WebBackend::BackendCapabilities QtWebKitWebBackend::getCapabilities() const
 
 int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier identifier)
 {
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	Q_UNUSED(identifier)
-#else
 	switch (identifier)
 	{
 		case QtWebKitBackend_EnableMediaOption:
@@ -284,7 +269,6 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 		default:
 			return -1;
 	}
-#endif
 
 	return -1;
 }
