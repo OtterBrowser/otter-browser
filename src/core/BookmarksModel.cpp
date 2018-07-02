@@ -270,11 +270,7 @@ QVector<QUrl> BookmarksModel::Bookmark::getUrls() const
 
 		if (type == FolderBookmark)
 		{
-#if QT_VERSION >= 0x050500
 			urls.append(bookmark->getUrls());
-#else
-			urls += bookmark->getUrls();
-#endif
 		}
 		else if (type == UrlBookmark)
 		{
@@ -1310,11 +1306,7 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 			switch (bookmark->getType())
 			{
 				case FolderBookmark:
-#if QT_VERSION >= 0x050500
 					bookmarks.append(findUrls(url, bookmark));
-#else
-					bookmarks += findUrls(url, bookmark);
-#endif
 
 					break;
 				case UrlBookmark:

@@ -636,9 +636,7 @@ CookieJar* NetworkManagerFactory::getCookieJar()
 QNetworkReply* NetworkManagerFactory::createRequest(const QUrl &url, QNetworkAccessManager::Operation operation, bool isPrivate, QIODevice *outgoingData)
 {
 	QNetworkRequest request(url);
-#if QT_VERSION >= 0x050600
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-#endif
 	request.setHeader(QNetworkRequest::UserAgentHeader, getUserAgent());
 
 	return getNetworkManager(isPrivate)->createRequest(operation, request, outgoingData);
