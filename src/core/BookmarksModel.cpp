@@ -266,15 +266,18 @@ QVector<QUrl> BookmarksModel::Bookmark::getUrls() const
 			continue;
 		}
 
-		const BookmarkType type(bookmark->getType());
+		switch (bookmark->getType())
+		{
+			case FolderBookmark:
+				urls.append(bookmark->getUrls());
 
-		if (type == FolderBookmark)
-		{
-			urls.append(bookmark->getUrls());
-		}
-		else if (type == UrlBookmark)
-		{
-			urls.append(bookmark->getUrl());
+				break;
+			case UrlBookmark:
+				urls.append(bookmark->getUrl());
+
+				break;
+			default:
+				break;
 		}
 	}
 
