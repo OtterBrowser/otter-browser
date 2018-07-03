@@ -142,7 +142,7 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 {
 	if (role == Qt::DisplayRole)
 	{
-		const BookmarkType type(static_cast<BookmarkType>(data(TypeRole).toInt()));
+		const BookmarkType type(getType());
 
 		switch (type)
 		{
@@ -193,7 +193,7 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 
 	if (role == Qt::DecorationRole)
 	{
-		switch (static_cast<BookmarkType>(data(TypeRole).toInt()))
+		switch (getType())
 		{
 			case RootBookmark:
 			case FolderBookmark:
@@ -211,7 +211,7 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 		return {};
 	}
 
-	if (role == Qt::AccessibleDescriptionRole && static_cast<BookmarkType>(data(TypeRole).toInt()) == SeparatorBookmark)
+	if (role == Qt::AccessibleDescriptionRole && getType() == SeparatorBookmark)
 	{
 		return QLatin1String("separator");
 	}
@@ -252,7 +252,7 @@ QVector<QUrl> BookmarksModel::Bookmark::getUrls() const
 {
 	QVector<QUrl> urls;
 
-	if (static_cast<BookmarkType>(data(TypeRole).toInt()) == UrlBookmark)
+	if (getType() == UrlBookmark)
 	{
 		urls.append(data(UrlRole).toUrl());
 	}
@@ -323,7 +323,7 @@ bool BookmarksModel::Bookmark::isAncestorOf(Bookmark *child) const
 
 bool BookmarksModel::Bookmark::operator<(const QStandardItem &other) const
 {
-	const BookmarkType type(static_cast<BookmarkType>(data(TypeRole).toInt()));
+	const BookmarkType type(getType());
 
 	if (type == RootBookmark || type == TrashBookmark)
 	{
