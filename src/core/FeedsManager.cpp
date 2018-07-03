@@ -260,7 +260,11 @@ void Feed::update()
 										}
 
 										entry.publicationTime = normalizeTime(entry.publicationTime);
-										entry.updateTime = normalizeTime(entry.updateTime);
+
+										if (entry.updateTime.isValid())
+										{
+											entry.updateTime = normalizeTime(entry.updateTime);
+										}
 
 										m_entries[j] = entry;
 
