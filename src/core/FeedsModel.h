@@ -67,6 +67,7 @@ public:
 		Feed* getFeed() const;
 		QVariant data(int role) const override;
 		QVariant getRawData(int role) const;
+		EntryType getType() const;
 		bool isAncestorOf(Entry *child) const;
 
 	protected:

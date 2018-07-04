@@ -49,7 +49,7 @@ QVariant FeedsModel::Entry::data(int role) const
 {
 	if (role == TitleRole)
 	{
-		const EntryType type(static_cast<EntryType>(data(TypeRole).toInt()));
+		const EntryType type(getType());
 
 		switch (type)
 		{
@@ -78,7 +78,7 @@ QVariant FeedsModel::Entry::data(int role) const
 
 	if (role == Qt::DecorationRole)
 	{
-		switch (static_cast<EntryType>(data(TypeRole).toInt()))
+		switch (getType())
 		{
 			case RootEntry:
 			case FolderEntry:
@@ -179,6 +179,11 @@ QVariant FeedsModel::Entry::getRawData(int role) const
 	}
 
 	return QStandardItem::data(role);
+}
+
+FeedsModel::EntryType FeedsModel::Entry::getType() const
+{
+	return static_cast<EntryType>(data(TypeRole).toInt());
 }
 
 bool FeedsModel::Entry::isAncestorOf(FeedsModel::Entry *child) const
@@ -299,7 +304,7 @@ void FeedsModel::trashEntry(Entry *entry)
 		return;
 	}
 
-	const EntryType type(static_cast<EntryType>(entry->data(TypeRole).toInt()));
+	const EntryType type(entry->getType());
 
 	if (type != RootEntry && type != TrashEntry)
 	{
@@ -334,7 +339,7 @@ void FeedsModel::restoreEntry(Entry *entry)
 
 	Entry *formerParent(m_trash.contains(entry) ? getEntry(m_trash[entry].first) : m_rootEntry);
 
-	if (!formerParent || static_cast<EntryType>(formerParent->data(TypeRole).toInt()) != FolderEntry)
+	if (!formerParent || formerParent->getType() != FolderEntry)
 	{
 		formerParent = m_rootEntry;
 	}
@@ -444,7 +449,7 @@ void FeedsModel::writeEntry(QXmlStreamWriter *writer, Entry *entry) const
 	writer->writeAttribute(QLatin1String("text"), entry->getRawData(TitleRole).toString());
 	writer->writeAttribute(QLatin1String("title"), entry->getRawData(TitleRole).toString());
 
-	switch (static_cast<EntryType>(entry->data(TypeRole).toInt()))
+	switch (entry->getType())
 	{
 		case FolderEntry:
 			for (int i = 0; i < entry->rowCount(); ++i)
@@ -477,7 +482,7 @@ void FeedsModel::removeEntryUrl(Entry *entry)
 		return;
 	}
 
-	const EntryType type(static_cast<EntryType>(entry->data(TypeRole).toInt()));
+	const EntryType type(entry->getType());
 
 	if (type == FeedEntry)
 	{
@@ -509,7 +514,7 @@ void FeedsModel::readdEntryUrl(Entry *entry)
 		return;
 	}
 
-	const EntryType type(static_cast<EntryType>(entry->data(TypeRole).toInt()));
+	const EntryType type(entry->getType());
 
 	if (type == FeedEntry)
 	{
