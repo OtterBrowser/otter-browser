@@ -397,6 +397,7 @@ QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 	if (!categories.isEmpty())
 	{
 		QVector<Entry> entries;
+		entries.reserve(entries.count() / 2);
 
 		for (int i = 0; i < m_entries.count(); ++i)
 		{
@@ -415,6 +416,8 @@ QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 				}
 			}
 		}
+
+		entries.squeeze();
 
 		return entries;
 	}
