@@ -403,7 +403,7 @@ QVector<Feed::Entry> Feed::getEntries(const QStringList &categories) const
 		{
 			const Feed::Entry entry(m_entries.at(i));
 
-			if (!m_categories.isEmpty())
+			if (!entry.categories.isEmpty())
 			{
 				for (int j = 0; j < categories.count(); ++j)
 				{
