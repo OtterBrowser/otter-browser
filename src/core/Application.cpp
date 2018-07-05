@@ -122,19 +122,19 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	m_commandLineParser.addHelpOption();
 	m_commandLineParser.addVersionOption();
-	m_commandLineParser.addPositionalArgument(QLatin1String("url"), QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), {}));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), {}));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), {}));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("private-session"), QCoreApplication::translate("main", "Starts private session")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session-chooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-tab"), QCoreApplication::translate("main", "Loads URL in new tab")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-private-tab"), QCoreApplication::translate("main", "Loads URL in new private tab")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-window"), QCoreApplication::translate("main", "Loads URL in new window")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-private-window"), QCoreApplication::translate("main", "Loads URL in new private window")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), QCoreApplication::translate("main", "Tells application to avoid writing data to disk")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
+	m_commandLineParser.addPositionalArgument(QLatin1String("url"), translate("main", "URL to open"), QLatin1String("[url]"));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("cache"), translate("main", "Uses <path> as cache directory"), QLatin1String("path"), {}));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("profile"), translate("main", "Uses <path> as profile directory"), QLatin1String("path"), {}));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session"), translate("main", "Restores session <session> if it exists"), QLatin1String("session"), {}));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("private-session"), translate("main", "Starts private session")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session-chooser"), translate("main", "Forces session chooser dialog")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-tab"), translate("main", "Loads URL in new tab")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-private-tab"), translate("main", "Loads URL in new private tab")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-window"), translate("main", "Loads URL in new window")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-private-window"), translate("main", "Loads URL in new private window")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), translate("main", "Tells application to avoid writing data to disk")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), translate("main", "Prints out diagnostic report and exits application")));
 
 	QStringList arguments(this->arguments());
 	QString argumentsPath(QDir::current().filePath(QLatin1String("arguments.txt")));
@@ -156,7 +156,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 			{
 				if (arguments.isEmpty())
 				{
-					temporaryArguments.prepend(QFileInfo(QCoreApplication::applicationFilePath()).fileName());
+					temporaryArguments.prepend(QFileInfo(applicationFilePath()).fileName());
 				}
 				else
 				{
@@ -1529,22 +1529,22 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 				{
 					if (host.isEmpty())
 					{
-						state.text = QCoreApplication::translate("actions", "Set %1").arg(name);
+						state.text = translate("actions", "Set %1").arg(name);
 					}
 					else
 					{
-						state.text = QCoreApplication::translate("actions", "Set %1 for %2").arg(name).arg(host);
+						state.text = translate("actions", "Set %1 for %2").arg(name).arg(host);
 					}
 				}
 				else if (mode == QLatin1String("reset"))
 				{
 					if (host.isEmpty())
 					{
-						state.text = QCoreApplication::translate("actions", "Reset %1").arg(name);
+						state.text = translate("actions", "Reset %1").arg(name);
 					}
 					else
 					{
-						state.text = QCoreApplication::translate("actions", "Reset %1 for %2").arg(name).arg(host);
+						state.text = translate("actions", "Reset %1 for %2").arg(name).arg(host);
 					}
 				}
 				else if (mode == QLatin1String("toggle"))
@@ -1553,11 +1553,11 @@ ActionsManager::ActionDefinition::State Application::getActionState(int identifi
 					{
 						if (host.isEmpty())
 						{
-							state.text = QCoreApplication::translate("actions", "Toggle %1").arg(name);
+							state.text = translate("actions", "Toggle %1").arg(name);
 						}
 						else
 						{
-							state.text = QCoreApplication::translate("actions", "Toggle %1 for %2").arg(name).arg(host);
+							state.text = translate("actions", "Toggle %1 for %2").arg(name).arg(host);
 						}
 					}
 					else
