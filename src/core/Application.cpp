@@ -1722,7 +1722,7 @@ bool Application::canClose()
 
 bool Application::isAboutToQuit()
 {
-	return m_isAboutToQuit;
+	return (m_isAboutToQuit || closingDown());
 }
 
 bool Application::isHidden()
