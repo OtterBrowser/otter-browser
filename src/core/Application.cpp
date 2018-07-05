@@ -312,10 +312,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		m_localServer->listen(server);
 	}
 
-	if (!isReadOnly && !QFile::exists(profilePath))
-	{
-		QDir().mkpath(profilePath);
-	}
+	Console::createInstance();
+
+	SettingsManager::createInstance(profilePath);
 
 	if (!isReadOnly && !QFileInfo(profilePath).isWritable())
 	{
@@ -324,12 +323,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		isReadOnly = true;
 	}
 
-	Console::createInstance();
-
-	SettingsManager::createInstance(profilePath);
-
 	if (!isReadOnly)
 	{
+		if (!QFile::exists(profilePath))
+		{
+			QDir().mkpath(profilePath);
+		}
+
 		const QStorageInfo storageInformation(profilePath);
 
 		if (storageInformation.bytesAvailable() > -1 && storageInformation.bytesAvailable() < 10000000)
