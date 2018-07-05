@@ -369,6 +369,8 @@ endif (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
 
+	list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
+
 	set(otter_src
 		${otter_src}
 		src/modules/backends/web/qtwebkit/QtWebKitCookieJar.cpp
