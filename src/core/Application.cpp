@@ -234,22 +234,22 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		}
 		else
 		{
-			if (rawReportOptions.contains("environment"))
+			if (rawReportOptions.contains(QLatin1String("environment")))
 			{
 				reportOptions |= EnvironmentReport;
 			}
 
-			if (rawReportOptions.contains("keyboardShortcuts"))
+			if (rawReportOptions.contains(QLatin1String("keyboardShortcuts")))
 			{
 				reportOptions |= KeyboardShortcutsReport;
 			}
 
-			if (rawReportOptions.contains("paths"))
+			if (rawReportOptions.contains(QLatin1String("paths")))
 			{
 				reportOptions |= PathsReport;
 			}
 
-			if (rawReportOptions.contains("settings"))
+			if (rawReportOptions.contains(QLatin1String("settings")))
 			{
 				reportOptions |= SettingsReport;
 			}
