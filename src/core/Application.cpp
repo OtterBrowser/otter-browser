@@ -146,11 +146,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	if (QFile::exists(argumentsPath))
 	{
-		QFile argumentsFile(argumentsPath);
+		QFile file(argumentsPath);
 
-		if (argumentsFile.open(QIODevice::ReadOnly))
+		if (file.open(QIODevice::ReadOnly))
 		{
-			QStringList temporaryArguments(QString(argumentsFile.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts));
+			QStringList temporaryArguments(QString(file.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 			if (!temporaryArguments.isEmpty())
 			{
@@ -171,7 +171,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 				arguments = temporaryArguments;
 			}
 
-			argumentsFile.close();
+			file.close();
 		}
 	}
 
