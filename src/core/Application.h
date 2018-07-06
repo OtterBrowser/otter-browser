@@ -23,7 +23,6 @@
 
 #include "ActionExecutor.h"
 #include "UpdateChecker.h"
-#include "SessionsManager.h"
 
 #include <QtCore/QCommandLineParser>
 #include <QtCore/QUrl>
