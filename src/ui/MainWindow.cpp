@@ -1938,6 +1938,11 @@ void MainWindow::setActiveWindowByIndex(int index, bool updateLastActivity)
 
 void MainWindow::setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity)
 {
+	if (identifier == 0)
+	{
+		return;
+	}
+
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		const Window *window(getWindowByIndex(i));
