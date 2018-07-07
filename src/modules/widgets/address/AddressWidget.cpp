@@ -982,7 +982,7 @@ void AddressWidget::updateGeometries()
 	int availableWidth(width() - margins.left() - margins.right());
 	const bool hasValidWindow(m_window && !m_window->isAboutToClose() && m_window->getLoadingState() == WebWidget::FinishedLoadingState);
 	bool isLeading(true);
-	bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
+	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
 	if (m_layout.contains(WebsiteInformationEntry))
 	{
