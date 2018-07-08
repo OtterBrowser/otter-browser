@@ -163,7 +163,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 
 			if (mainWindow)
 			{
-				mainWindow->setActiveWindowByIndex(-1);
+				mainWindow->setActiveWindowByIdentifier(0);
 			}
 			else
 			{
@@ -380,7 +380,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				if (activeSubWindows == 1)
 				{
-					m_mainWindow->setActiveWindowByIndex(-1);
+					m_mainWindow->setActiveWindowByIdentifier(0);
 				}
 				else if (subWindow == m_mdi->currentSubWindow() && activeSubWindows > 1)
 				{
@@ -462,7 +462,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				connect(m_mdi, &MdiWidget::subWindowActivated, this, &WorkspaceWidget::handleActiveSubWindowChanged);
 
-				m_mainWindow->setActiveWindowByIndex(-1);
+				m_mainWindow->setActiveWindowByIdentifier(0);
 			}
 
 			break;
