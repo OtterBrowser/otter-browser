@@ -1355,7 +1355,7 @@ void TabBarWidget::hidePreview()
 		m_previewWidget->hide();
 	}
 
-	if (m_previewTimer > 0)
+	if (m_previewTimer != 0)
 	{
 		killTimer(m_previewTimer);
 

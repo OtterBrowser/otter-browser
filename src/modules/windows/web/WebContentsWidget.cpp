@@ -1111,7 +1111,7 @@ void WebContentsWidget::setScrollMode(ScrollMode mode)
 		m_beginCursorPosition = {};
 		m_lastCursorPosition = {};
 
-		if (m_scrollTimer > 0)
+		if (m_scrollTimer != 0)
 		{
 			killTimer(m_scrollTimer);
 
