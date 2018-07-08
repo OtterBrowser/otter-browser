@@ -104,7 +104,7 @@ void Window::hideEvent(QHideEvent *event)
 
 	const int suspendTime(SettingsManager::getOption(SettingsManager::Browser_InactiveTabTimeUntilSuspendOption).toInt());
 
-	if (suspendTime >= 0)
+	if (m_suspendTimer == 0 && suspendTime >= 0)
 	{
 		m_suspendTimer = startTimer(suspendTime * 1000);
 	}
