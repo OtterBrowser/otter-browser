@@ -114,7 +114,7 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	if (m_suspendTimer > 0)
+	if (m_suspendTimer != 0)
 	{
 		killTimer(m_suspendTimer);
 
@@ -245,7 +245,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 
 void Window::markAsActive(bool updateLastActivity)
 {
-	if (m_suspendTimer > 0)
+	if (m_suspendTimer != 0)
 	{
 		killTimer(m_suspendTimer);
 
