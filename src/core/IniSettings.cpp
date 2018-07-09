@@ -77,7 +77,7 @@ IniSettings::IniSettings(const QString &path, QObject *parent) : QObject(parent)
 			{
 				if (!m_data.contains(group))
 				{
-					m_data[group] = QVariantMap();
+					m_data[group] = {};
 				}
 
 				m_data[group][key] = value;
@@ -142,7 +142,7 @@ void IniSettings::setValue(const QString &key, const QVariant &value)
 		{
 			if (!m_data.contains(m_group))
 			{
-				m_data[m_group] = QVariantMap();
+				m_data[m_group] = {};
 			}
 
 			m_data[m_group][key] = value;
