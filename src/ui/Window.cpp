@@ -62,7 +62,7 @@ void WindowToolBarWidget::paintEvent(QPaintEvent *event)
 
 Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow *mainWindow) : QWidget(mainWindow->centralWidget()), ActionExecutor(),
 	m_mainWindow(mainWindow),
-	m_addressBar(nullptr),
+	m_addressBarWidget(nullptr),
 	m_contentsWidget(nullptr),
 	m_parameters(parameters),
 	m_identifier(++m_identifierCounter),
@@ -304,9 +304,9 @@ void Window::handleGeometryChangeRequest(const QRect &geometry)
 
 void Window::handleToolBarStateChanged(int identifier, const ToolBarState &state)
 {
-	if (m_addressBar && identifier == ToolBarsManager::AddressBar)
+	if (m_addressBarWidget && identifier == ToolBarsManager::AddressBar)
 	{
-		m_addressBar->setState(state);
+		m_addressBarWidget->setState(state);
 	}
 }
 
@@ -459,12 +459,12 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (!m_contentsWidget)
 	{
-		if (m_addressBar)
+		if (m_addressBarWidget)
 		{
-			layout()->removeWidget(m_addressBar);
+			layout()->removeWidget(m_addressBarWidget);
 
-			m_addressBar->deleteLater();
-			m_addressBar = nullptr;
+			m_addressBarWidget->deleteLater();
+			m_addressBarWidget = nullptr;
 		}
 
 		emit actionsStateChanged();
@@ -474,13 +474,13 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	m_contentsWidget->setParent(this);
 
-	if (!m_addressBar)
+	if (!m_addressBarWidget)
 	{
-		m_addressBar = new WindowToolBarWidget(ToolBarsManager::AddressBar, this);
-		m_addressBar->setState(m_mainWindow->getToolBarState(ToolBarsManager::AddressBar));
+		m_addressBarWidget = new WindowToolBarWidget(ToolBarsManager::AddressBar, this);
+		m_addressBarWidget->setState(m_mainWindow->getToolBarState(ToolBarsManager::AddressBar));
 
-		layout()->addWidget(m_addressBar);
-		layout()->setAlignment(m_addressBar, Qt::AlignTop);
+		layout()->addWidget(m_addressBarWidget);
+		layout()->setAlignment(m_addressBarWidget, Qt::AlignTop);
 	}
 
 	layout()->addWidget(m_contentsWidget);
@@ -548,7 +548,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, &ContentsWidget::optionChanged, this, &Window::optionChanged);
 	connect(m_contentsWidget, &ContentsWidget::zoomChanged, this, &Window::zoomChanged);
 	connect(m_contentsWidget, &ContentsWidget::canZoomChanged, this, &Window::canZoomChanged);
-	connect(m_contentsWidget, &ContentsWidget::webWidgetChanged, m_addressBar, &WindowToolBarWidget::reload);
+	connect(m_contentsWidget, &ContentsWidget::webWidgetChanged, m_addressBarWidget, &WindowToolBarWidget::reload);
 }
 
 Window* Window::clone(bool cloneHistory, MainWindow *mainWindow) const
@@ -575,7 +575,7 @@ MainWindow* Window::getMainWindow() const
 
 WindowToolBarWidget* Window::getAddressBar() const
 {
-	return m_addressBar;
+	return m_addressBarWidget;
 }
 
 ContentsWidget* Window::getContentsWidget()
