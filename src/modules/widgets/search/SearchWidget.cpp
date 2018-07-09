@@ -665,10 +665,10 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 			m_window->setOption(SettingsManager::Search_DefaultSearchEngineOption, m_searchEngine);
 		}
 
-		const QString title(index.data(SearchEnginesManager::TitleRole).toString());
+		const QString title(tr("Search using %1").arg(index.data(SearchEnginesManager::TitleRole).toString()));
 
-		setToolTip(tr("Search using %1").arg(title));
-		setPlaceholderText(tr("Search using %1").arg(title));
+		setToolTip(title);
+		setPlaceholderText(title);
 		setText(m_query);
 
 		if (m_suggester)
