@@ -85,6 +85,7 @@ public:
 	void setModel(QAbstractItemModel *model, bool useSortProxy);
 	void setSortRoleMapping(const QMap<int, int> &mapping);
 	void setViewMode(ViewMode mode);
+	void setModified(bool isModified);
 	QStandardItemModel* getSourceModel() const;
 	QSortFilterProxyModel* getProxyModel() const;
 	QStandardItem* getItem(const QModelIndex &index) const;
@@ -116,7 +117,6 @@ public slots:
 	void setExclusive(bool isExclusive);
 	void setFilterString(const QString &filter);
 	void setFilterRoles(const QSet<int> &roles);
-	void setModified(bool isModified);
 
 protected:
 	void showEvent(QShowEvent *event) override;
