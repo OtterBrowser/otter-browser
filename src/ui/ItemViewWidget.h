@@ -44,9 +44,6 @@ public:
 
 	explicit HeaderViewWidget(Qt::Orientation orientation, QWidget *parent = nullptr);
 
-public slots:
-	void setSort(int column, Qt::SortOrder order);
-
 protected:
 	enum SortOrder
 	{
@@ -63,6 +60,7 @@ protected slots:
 	void toggleColumnVisibility(QAction *action);
 	void toggleSort(QAction *action);
 	void handleSectionClicked(int column);
+	void setSort(int column, Qt::SortOrder order);
 
 signals:
 	void sortChanged(int column, Qt::SortOrder order);
