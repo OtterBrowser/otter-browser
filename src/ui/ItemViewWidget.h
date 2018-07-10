@@ -125,7 +125,7 @@ protected:
 	void dropEvent(QDropEvent *event) override;
 	void startDrag(Qt::DropActions supportedActions) override;
 	void ensureInitialized();
-	void moveRow(bool up);
+	void moveRow(bool moveUp);
 	void selectRow(const QModelIndex &index);
 	bool applyFilter(const QModelIndex &index);
 

@@ -467,7 +467,7 @@ void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelInde
 	}
 }
 
-void ItemViewWidget::moveRow(bool up)
+void ItemViewWidget::moveRow(bool moveUp)
 {
 	if (!m_sourceModel)
 	{
@@ -475,9 +475,9 @@ void ItemViewWidget::moveRow(bool up)
 	}
 
 	const int sourceRow(currentIndex().row());
-	const int destinationRow(up ? (sourceRow - 1) : (sourceRow + 1));
+	const int destinationRow(moveUp ? (sourceRow - 1) : (sourceRow + 1));
 
-	if ((up && sourceRow > 0) || (!up && sourceRow < (m_sourceModel->rowCount() - 1)))
+	if ((moveUp && sourceRow > 0) || (!moveUp && sourceRow < (m_sourceModel->rowCount() - 1)))
 	{
 		m_sourceModel->insertRow(sourceRow, m_sourceModel->takeRow(destinationRow));
 
