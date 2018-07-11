@@ -90,7 +90,7 @@ void ContentFiltersManager::timerEvent(QTimerEvent *event)
 		{
 			const ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
 
-			if (profile == nullptr || profile->getName() == QLatin1String("custom"))
+			if (!profile || profile->getName() == QLatin1String("custom"))
 			{
 				continue;
 			}
