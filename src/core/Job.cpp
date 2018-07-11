@@ -20,7 +20,6 @@
 #include "Job.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
-#include "Utils.h"
 
 namespace Otter
 {

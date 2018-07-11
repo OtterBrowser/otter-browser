@@ -24,7 +24,6 @@
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
-#include "../../../../core/Utils.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
