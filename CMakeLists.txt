@@ -259,6 +259,7 @@ set(otter_src
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/pageInformation/PageInformationContentsWidget.cpp
 	src/modules/windows/passwords/PasswordsContentsWidget.cpp
+	src/modules/windows/preferences/PreferencesContentsWidget.cpp
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
 	src/modules/windows/web/PasswordBarWidget.cpp
@@ -336,6 +337,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/notes/NotesContentsWidget.ui
 	src/modules/windows/pageInformation/PageInformationContentsWidget.ui
 	src/modules/windows/passwords/PasswordsContentsWidget.ui
+	src/modules/windows/preferences/PreferencesContentsWidget.ui
 	src/modules/windows/tabHistory/TabHistoryContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
 	src/modules/windows/web/PasswordBarWidget.ui
