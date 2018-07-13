@@ -442,7 +442,7 @@ void BookmarksModel::trashBookmark(Bookmark *bookmark)
 		return;
 	}
 
-	const BookmarkType type(static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()));
+	const BookmarkType type(bookmark->getType());
 
 	if (type != RootBookmark && type != TrashBookmark)
 	{
@@ -716,7 +716,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 		return;
 	}
 
-	const BookmarkType type(static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()));
+	const BookmarkType type(bookmark->getType());
 
 	switch (type)
 	{
@@ -836,7 +836,7 @@ void BookmarksModel::removeBookmarkUrl(Bookmark *bookmark)
 		return;
 	}
 
-	switch (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()))
+	switch (bookmark->getType())
 	{
 		case FolderBookmark:
 			for (int i = 0; i < bookmark->rowCount(); ++i)
@@ -873,7 +873,7 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 		return;
 	}
 
-	switch (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()))
+	switch (bookmark->getType())
 	{
 		case FolderBookmark:
 			for (int i = 0; i < bookmark->rowCount(); ++i)
