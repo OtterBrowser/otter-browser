@@ -482,28 +482,33 @@ void FeedsModel::removeEntryUrl(Entry *entry)
 		return;
 	}
 
-	const EntryType type(entry->getType());
-
-	if (type == FeedEntry)
+	switch (entry->getType())
 	{
-		const QUrl url(Utils::normalizeUrl(entry->data(UrlRole).toUrl()));
-
-		if (!url.isEmpty() && m_urls.contains(url))
-		{
-			m_urls[url].removeAll(entry);
-
-			if (m_urls[url].isEmpty())
+		case FeedEntry:
 			{
-				m_urls.remove(url);
+				const QUrl url(Utils::normalizeUrl(entry->data(UrlRole).toUrl()));
+
+				if (!url.isEmpty() && m_urls.contains(url))
+				{
+					m_urls[url].removeAll(entry);
+
+					if (m_urls[url].isEmpty())
+					{
+						m_urls.remove(url);
+					}
+				}
 			}
-		}
-	}
-	else if (type == FolderEntry)
-	{
-		for (int i = 0; i < entry->rowCount(); ++i)
-		{
-			removeEntryUrl(static_cast<Entry*>(entry->child(i, 0)));
-		}
+
+			break;
+		case FolderEntry:
+			for (int i = 0; i < entry->rowCount(); ++i)
+			{
+				removeEntryUrl(static_cast<Entry*>(entry->child(i, 0)));
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -514,28 +519,33 @@ void FeedsModel::readdEntryUrl(Entry *entry)
 		return;
 	}
 
-	const EntryType type(entry->getType());
-
-	if (type == FeedEntry)
+	switch (entry->getType())
 	{
-		const QUrl url(Utils::normalizeUrl(entry->data(UrlRole).toUrl()));
-
-		if (!url.isEmpty())
-		{
-			if (!m_urls.contains(url))
+		case FeedEntry:
 			{
-				m_urls[url] = QVector<Entry*>();
+				const QUrl url(Utils::normalizeUrl(entry->data(UrlRole).toUrl()));
+
+				if (!url.isEmpty())
+				{
+					if (!m_urls.contains(url))
+					{
+						m_urls[url] = QVector<Entry*>();
+					}
+
+					m_urls[url].append(entry);
+				}
 			}
 
-			m_urls[url].append(entry);
-		}
-	}
-	else if (type == FolderEntry)
-	{
-		for (int i = 0; i < entry->rowCount(); ++i)
-		{
-			readdEntryUrl(static_cast<Entry*>(entry->child(i, 0)));
-		}
+			break;
+		case FolderEntry:
+			for (int i = 0; i < entry->rowCount(); ++i)
+			{
+				readdEntryUrl(static_cast<Entry*>(entry->child(i, 0)));
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
