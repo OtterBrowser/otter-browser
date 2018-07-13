@@ -836,28 +836,33 @@ void BookmarksModel::removeBookmarkUrl(Bookmark *bookmark)
 		return;
 	}
 
-	const BookmarkType type(static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()));
-
-	if (type == UrlBookmark)
+	switch (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()))
 	{
-		const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
-
-		if (!url.isEmpty() && m_urls.contains(url))
-		{
-			m_urls[url].removeAll(bookmark);
-
-			if (m_urls[url].isEmpty())
+		case FolderBookmark:
+			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				m_urls.remove(url);
+				removeBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
 			}
-		}
-	}
-	else if (type == FolderBookmark)
-	{
-		for (int i = 0; i < bookmark->rowCount(); ++i)
-		{
-			removeBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
-		}
+
+			break;
+		case UrlBookmark:
+			{
+				const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
+
+				if (!url.isEmpty() && m_urls.contains(url))
+				{
+					m_urls[url].removeAll(bookmark);
+
+					if (m_urls[url].isEmpty())
+					{
+						m_urls.remove(url);
+					}
+				}
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -868,28 +873,33 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 		return;
 	}
 
-	const BookmarkType type(static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()));
-
-	if (type == UrlBookmark)
+	switch (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()))
 	{
-		const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
-
-		if (!url.isEmpty())
-		{
-			if (!m_urls.contains(url))
+		case FolderBookmark:
+			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				m_urls[url] = QVector<Bookmark*>();
+				readdBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
 			}
 
-			m_urls[url].append(bookmark);
-		}
-	}
-	else if (type == FolderBookmark)
-	{
-		for (int i = 0; i < bookmark->rowCount(); ++i)
-		{
-			readdBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
-		}
+			break;
+		case UrlBookmark:
+			{
+				const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
+
+				if (!url.isEmpty())
+				{
+					if (!m_urls.contains(url))
+					{
+						m_urls[url] = QVector<Bookmark*>();
+					}
+
+					m_urls[url].append(bookmark);
+				}
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
