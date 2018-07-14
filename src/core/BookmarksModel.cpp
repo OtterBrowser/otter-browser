@@ -1500,19 +1500,33 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 		return QStandardItemModel::setData(index, value, role);
 	}
 
-	if (role == UrlRole && value.toUrl() != index.data(UrlRole).toUrl())
+	switch (role)
 	{
-		handleUrlChanged(bookmark, Utils::normalizeUrl(value.toUrl()), Utils::normalizeUrl(index.data(UrlRole).toUrl()));
-	}
-	else if (role == KeywordRole && value.toString() != index.data(KeywordRole).toString())
-	{
-		handleKeywordChanged(bookmark, value.toString(), index.data(KeywordRole).toString());
-	}
-	else if (m_mode == NotesMode && role == DescriptionRole)
-	{
-		const QString title(value.toString().section(QLatin1Char('\n'), 0, 0).left(100));
+		case DescriptionRole:
+			if (m_mode == NotesMode)
+			{
+				const QString title(value.toString().section(QLatin1Char('\n'), 0, 0).left(100));
 
-		setData(index, ((title == value.toString().trimmed()) ? title : title + QStringLiteral("…")), TitleRole);
+				setData(index, ((title == value.toString().trimmed()) ? title : title + QStringLiteral("…")), TitleRole);
+			}
+
+			break;
+		case KeywordRole:
+			if (value.toString() != index.data(KeywordRole).toString())
+			{
+				handleKeywordChanged(bookmark, value.toString(), index.data(KeywordRole).toString());
+			}
+
+			break;
+		case UrlRole:
+			if (value.toUrl() != index.data(UrlRole).toUrl())
+			{
+				handleUrlChanged(bookmark, Utils::normalizeUrl(value.toUrl()), Utils::normalizeUrl(index.data(UrlRole).toUrl()));
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	bookmark->setItemData(value, role);
