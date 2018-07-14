@@ -286,7 +286,7 @@ QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSub
 	{
 		const QChar character(urlSubString.at(i));
 
-		if (rule[position] == QLatin1Char('*'))
+		if (rule.at(position) == QLatin1Char('*'))
 		{
 			const QString wildcardString(urlSubString.mid(i));
 
@@ -300,7 +300,7 @@ QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSub
 				}
 			}
 		}
-		else if (character != rule[position])
+		else if (rule.at(position) != character)
 		{
 			return {};
 		}
