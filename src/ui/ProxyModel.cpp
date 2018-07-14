@@ -81,7 +81,8 @@ QVariant ProxyModel::headerData(int section, Qt::Orientation orientation, int ro
 		{
 			return QCoreApplication::translate("views", m_mapping[section].first.toUtf8().constData());
 		}
-		else if (m_headerData.contains(section) && m_headerData[section].contains(role))
+
+		if (m_headerData.contains(section) && m_headerData[section].contains(role))
 		{
 			return m_headerData[section][role];
 		}
