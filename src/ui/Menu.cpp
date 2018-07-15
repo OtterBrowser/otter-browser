@@ -276,9 +276,9 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_role == BookmarksMenu && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
 	{
-		const QAction *action(actionAt(event->pos()));
+		const Action *action(qobject_cast<Action*>(actionAt(event->pos())));
 
-		if (action && action == m_clickedAction && action->isEnabled() && action->data().type() == QVariant::ULongLong)
+		if (action && action == m_clickedAction && action->isEnabled() && action->getIdentifier() == ActionsManager::OpenBookmarkAction)
 		{
 			QWidget *menu(this);
 
@@ -293,7 +293,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->data().toULongLong()));
+			const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(action->getParameters().value(QLatin1String("bookmark")).toULongLong()));
 
 			if (bookmark)
 			{
