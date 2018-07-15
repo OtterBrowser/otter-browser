@@ -816,7 +816,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 
 			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				writeBookmark(writer, static_cast<Bookmark*>(bookmark->child(i, 0)));
+				writeBookmark(writer, bookmark->getChild(i));
 			}
 
 			writer->writeEndElement();
@@ -841,7 +841,7 @@ void BookmarksModel::removeBookmarkUrl(Bookmark *bookmark)
 		case FolderBookmark:
 			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				removeBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
+				removeBookmarkUrl(bookmark->getChild(i));
 			}
 
 			break;
@@ -878,7 +878,7 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 		case FolderBookmark:
 			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				readdBookmarkUrl(static_cast<Bookmark*>(bookmark->child(i, 0)));
+				readdBookmarkUrl(bookmark->getChild(i));
 			}
 
 			break;
@@ -1130,7 +1130,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path)
 
 		for (int j = 0; j < bookmark->rowCount(); ++j)
 		{
-			Bookmark *childBookmark(static_cast<Bookmark*>(bookmark->child(j)));
+			Bookmark *childBookmark(bookmark->getChild(j));
 
 			if (childBookmark && childBookmark->data(Qt::DisplayRole) == directories.at(i))
 			{
@@ -1483,7 +1483,7 @@ bool BookmarksModel::save(const QString &path) const
 
 	for (int i = 0; i < m_rootItem->rowCount(); ++i)
 	{
-		writeBookmark(&writer, static_cast<Bookmark*>(m_rootItem->child(i, 0)));
+		writeBookmark(&writer, m_rootItem->getChild(i));
 	}
 
 	writer.writeEndDocument();
