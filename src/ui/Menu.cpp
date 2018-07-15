@@ -1422,7 +1422,7 @@ void Menu::clearNotesMenu()
 
 	if (menuAction())
 	{
-		const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(menuAction()->data().toULongLong()));
+		const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(m_menuOptions.value(QLatin1String("bookmark")).toULongLong()));
 
 		menuAction()->setEnabled(bookmark && bookmark->rowCount() > 0);
 	}
