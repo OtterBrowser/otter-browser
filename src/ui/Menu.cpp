@@ -1392,7 +1392,7 @@ void Menu::populateWindowsMenu()
 
 void Menu::clearBookmarksMenu()
 {
-	const int offset((menuAction() && menuAction()->data().toULongLong() == 0) ? 3 : 0);
+	const int offset((m_menuOptions.value(QLatin1String("bookmark")).toULongLong() == 0) ? 3 : 0);
 
 	for (int i = (actions().count() - 1); i >= offset; --i)
 	{
