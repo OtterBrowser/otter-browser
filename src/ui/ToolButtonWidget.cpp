@@ -65,6 +65,9 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 
 	if (menu)
 	{
+		menu->setActionParameters(definition.parameters);
+		menu->setMenuOptions(definition.options);
+
 		setPopupMode(QToolButton::InstantPopup);
 		setText(definition.options.value(QLatin1String("text")).toString());
 	}
