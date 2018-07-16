@@ -81,7 +81,7 @@ option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official b
 find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
 find_package(Qt5WebEngineWidgets 5.9.0 QUIET)
 find_package(Qt5WebKitWidgets 5.212.0 QUIET)
-find_package(Hunspell 1.3.0 QUIET)
+find_package(Hunspell 1.5.0 QUIET)
 
 set_package_properties(Qt5WebEngineCore PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
 set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
