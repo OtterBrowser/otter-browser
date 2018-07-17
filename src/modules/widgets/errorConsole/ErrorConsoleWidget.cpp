@@ -257,9 +257,9 @@ void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &f
 	}
 	else
 	{
-		const quint64 window(index.data(WindowRole).toULongLong());
+		const quint64 identifier(index.data(WindowRole).toULongLong());
 
-		hasMatch = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
+		hasMatch = (((identifier == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (identifier > 0 && ((identifier == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(index.data(CategoryRole).toInt())));
 	}
 
 	m_ui->consoleView->setRowHidden(index.row(), m_ui->consoleView->rootIndex(), !hasMatch);
