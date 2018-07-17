@@ -323,6 +323,13 @@ public:
 			ApplicationScope
 		};
 
+		struct Parameter final
+		{
+			QString name;
+			QString title;
+			bool isRequired;
+		};
+
 		struct State final
 		{
 			QString text;
@@ -333,6 +340,7 @@ public:
 
 		QString description;
 		State defaultState;
+		QVector<Parameter> parameters;
 		ActionFlags flags = IsEnabledFlag;
 		ActionCategory category = OtherCategory;
 		ActionScope scope = OtherScope;
