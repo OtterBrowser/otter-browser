@@ -135,6 +135,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	{
 		const Qt::ToolBarArea area(areas.at(i));
 		QVector<ToolBarState> states(toolBarStates.value(area));
+		int row(0);
 
 		std::sort(states.begin(), states.end(), [&](const ToolBarState &first, const ToolBarState &second)
 		{
@@ -152,10 +153,12 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 			toolBar->setArea(area);
 			toolBar->setState(states.at(j));
 
-			if (j > 0)
+			if (row > 0)
 			{
 				addToolBarBreak(area);
 			}
+
+			++row;
 
 			addToolBar(area, toolBar);
 
