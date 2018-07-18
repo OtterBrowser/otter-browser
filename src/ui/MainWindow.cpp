@@ -261,10 +261,12 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 			for (int j = 0; j < toolBars.count(); ++j)
 			{
-				if (toolBars.at(j)->getDefinition().fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
+				ToolBarWidget *toolBar(toolBars.at(j));
+
+				if (toolBar->getDefinition().fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
 				{
-					toolBars.at(j)->show();
-					toolBars.at(j)->installEventFilter(this);
+					toolBar->show();
+					toolBar->installEventFilter(this);
 				}
 			}
 		}
@@ -1561,12 +1563,13 @@ void MainWindow::beginToolBarDragging(bool isSidebar)
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		const Qt::ToolBarArea area(toolBarArea(toolBars.at(i)));
+		ToolBarWidget *toolBar(toolBars.at(i));
+		const Qt::ToolBarArea area(toolBarArea(toolBar));
 
-		if (toolBars.at(i)->isVisible() && (!isSidebar || area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea))
+		if (toolBar->isVisible() && (!isSidebar || area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea))
 		{
-			insertToolBar(toolBars.at(i), new ToolBarDropZoneWidget(this));
-			insertToolBarBreak(toolBars.at(i));
+			insertToolBar(toolBar, new ToolBarDropZoneWidget(this));
+			insertToolBarBreak(toolBar);
 		}
 	}
 
@@ -2618,14 +2621,16 @@ bool MainWindow::event(QEvent *event)
 
 					for (int i = 0; i < toolBars.count(); ++i)
 					{
-						if (toolBars.at(i)->shouldBeVisible(mode))
+						ToolBarWidget *toolBar(toolBars.at(i));
+
+						if (toolBar->shouldBeVisible(mode))
 						{
-							toolBars.at(i)->removeEventFilter(this);
-							toolBars.at(i)->show();
+							toolBar->removeEventFilter(this);
+							toolBar->show();
 						}
 						else
 						{
-							toolBars.at(i)->hide();
+							toolBar->hide();
 						}
 					}
 
