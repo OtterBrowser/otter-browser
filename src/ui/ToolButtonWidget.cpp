@@ -115,27 +115,29 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 {
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		if (entries.at(i).entries.isEmpty())
+		const ToolBarsManager::ToolBarDefinition::Entry entry(entries.at(i));
+
+		if (entry.entries.isEmpty())
 		{
-			if (entries.at(i).action.isEmpty() || entries.at(i).action == QLatin1String("separator"))
+			if (entry.action.isEmpty() || entry.action == QLatin1String("separator"))
 			{
 				menu->addSeparator();
 			}
 			else
 			{
-				menu->addAction(new Action(ActionsManager::getActionIdentifier(entries.at(i).action), {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), menu));
+				menu->addAction(new Action(ActionsManager::getActionIdentifier(entry.action), {}, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), menu));
 			}
 		}
 		else
 		{
 			Menu *subMenu(new Menu());
 			QAction *subMenuAction(new QAction(menu));
-			subMenuAction->setText(entries.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
+			subMenuAction->setText(entry.options.value(QLatin1String("text"), tr("Menu")).toString());
 			subMenuAction->setMenu(subMenu);
 
 			menu->addAction(subMenuAction);
 
-			addMenu(subMenu, entries.at(i).entries);
+			addMenu(subMenu, entry.entries);
 		}
 	}
 }
