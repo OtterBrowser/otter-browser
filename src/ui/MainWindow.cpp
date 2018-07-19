@@ -112,12 +112,14 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	{
 		for (int i = 0; i < session.toolBars.count(); ++i)
 		{
-			if (!toolBarStates.contains(session.toolBars.at(i).location))
+			const ToolBarState state(session.toolBars.at(i));
+
+			if (!toolBarStates.contains(state.location))
 			{
-				toolBarStates[session.toolBars.at(i).location] = {};
+				toolBarStates[state.location] = {};
 			}
 
-			toolBarStates[session.toolBars.at(i).location].append(session.toolBars.at(i));
+			toolBarStates[state.location].append(state);
 		}
 	}
 
