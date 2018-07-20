@@ -69,13 +69,23 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 	m_isAboutToClose(false),
 	m_isPinned(false)
 {
-	QStyleOptionTitleBar options;
-	options.initFrom(this);
-
-	const int border(style()->pixelMetric(QStyle::PM_MdiSubWindowFrameWidth, 0, this));
 	QBoxLayout *layout(new QBoxLayout(QBoxLayout::TopToBottom, this));
-	layout->setContentsMargins(border, (style()->pixelMetric(QStyle::PM_TitleBarHeight, &options, this) + border), border, border);
 	layout->setSpacing(0);
+
+//TODO setup from session and listen to QWindowStateChangeEvent
+	if (isMaximized())
+	{
+		layout->setContentsMargins(0, 0, 0, 0);
+	}
+	else
+	{
+		QStyleOptionTitleBar options;
+		options.initFrom(this);
+
+		const int border(style()->pixelMetric(QStyle::PM_MdiSubWindowFrameWidth, 0, this));
+
+		layout->setContentsMargins(border, (style()->pixelMetric(QStyle::PM_TitleBarHeight, &options, this) + border), border, border);
+	}
 
 	setLayout(layout);
 
@@ -115,6 +125,11 @@ void Window::hideEvent(QHideEvent *event)
 void Window::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
+
+	if (isMaximized())
+	{
+		return;
+	}
 
 	const bool isActive(this->isActive());
 	const int border(style()->pixelMetric(QStyle::PM_MdiSubWindowFrameWidth, 0, this));
