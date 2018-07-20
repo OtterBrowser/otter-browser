@@ -98,7 +98,6 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void updateFocus();
 	void setContentsWidget(ContentsWidget *widget);
-	bool event(QEvent *event) override;
 
 protected slots:
 	void handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
