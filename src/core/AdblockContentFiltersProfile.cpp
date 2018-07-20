@@ -122,7 +122,7 @@ void AdblockContentFiltersProfile::loadHeader()
 			break;
 		}
 
-		if (line.startsWith(QLatin1String("! Title: ")) && !m_flags.testFlag(HasCustomTitleFlag))
+		if (!m_flags.testFlag(HasCustomTitleFlag) && line.startsWith(QLatin1String("! Title: ")))
 		{
 			m_title = line.remove(QLatin1String("! Title: "));
 
