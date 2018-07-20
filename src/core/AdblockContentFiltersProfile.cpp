@@ -609,7 +609,7 @@ void AdblockContentFiltersProfile::handleReplyFinished()
 	if (downloadedChecksum.contains(QByteArrayLiteral("! Checksum: ")))
 	{
 		QByteArray checksum(downloadedChecksum);
-		const QByteArray verifiedChecksum(QCryptographicHash::hash(downloadedHeader + QString(downloadedData).replace(QRegularExpression(QLatin1String("^*\n{2,}")), QLatin1String("\n")).toStdString().c_str(), QCryptographicHash::Md5));
+		const QByteArray verifiedChecksum(QCryptographicHash::hash(downloadedHeader + QString(downloadedData).replace(QRegularExpression(QLatin1String("^.*\n{2,}")), QLatin1String("\n")).toStdString().c_str(), QCryptographicHash::Md5));
 
 		if (verifiedChecksum.toBase64().replace(QByteArrayLiteral("="), QByteArray()) != checksum.replace(QByteArrayLiteral("! Checksum: "), QByteArray()).replace(QByteArrayLiteral("\n"), QByteArray()))
 		{
