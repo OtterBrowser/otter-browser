@@ -92,6 +92,7 @@ public slots:
 	void setPinned(bool isPinned);
 
 protected:
+	void paintEvent(QPaintEvent *event) override;
 	void timerEvent(QTimerEvent *event) override;
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
@@ -100,7 +101,6 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void handleIconChanged(const QIcon &icon);
 	void handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void handleGeometryChangeRequest(const QRect &geometry);
 	void handleToolBarStateChanged(int identifier, const ToolBarState &state);

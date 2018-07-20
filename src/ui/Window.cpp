@@ -31,7 +31,7 @@
 #include "../modules/windows/web/WebContentsWidget.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QPainter>
+#include <QtGui/QStylePainter>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QMdiSubWindow>
 
@@ -70,8 +70,12 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 	m_isAboutToClose(false),
 	m_isPinned(false)
 {
+	QStyleOptionTitleBar options;
+	options.initFrom(this);
+
+	const int border(style()->pixelMetric(QStyle::PM_MdiSubWindowFrameWidth, 0, this));
 	QBoxLayout *layout(new QBoxLayout(QBoxLayout::TopToBottom, this));
-	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setContentsMargins(border, (style()->pixelMetric(QStyle::PM_TitleBarHeight, &options, this) + border), border, border);
 	layout->setSpacing(0);
 
 	setLayout(layout);
@@ -82,7 +86,6 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 	}
 
 	connect(this, &Window::titleChanged, this, &Window::setWindowTitle);
-	connect(this, &Window::iconChanged, this, &Window::handleIconChanged);
 	connect(mainWindow, &MainWindow::toolBarStateChanged, this, &Window::handleToolBarStateChanged);
 }
 
@@ -107,6 +110,55 @@ void Window::hideEvent(QHideEvent *event)
 	if (m_suspendTimer == 0 && suspendTime >= 0)
 	{
 		m_suspendTimer = startTimer(suspendTime * 1000);
+	}
+}
+
+void Window::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	const bool isActive(this->isActive());
+	const int border(style()->pixelMetric(QStyle::PM_MdiSubWindowFrameWidth, 0, this));
+	QStyleOptionTitleBar titleBarOptions;
+	titleBarOptions.initFrom(this);
+	titleBarOptions.rect.setHeight(style()->pixelMetric(QStyle::PM_TitleBarHeight, &titleBarOptions, this));
+	titleBarOptions.titleBarFlags = windowFlags();
+	titleBarOptions.titleBarState = static_cast<int>(windowState());
+	titleBarOptions.icon = getIcon();
+	titleBarOptions.text = titleBarOptions.fontMetrics.elidedText(getTitle(), Qt::ElideRight, style()->subControlRect(QStyle::CC_TitleBar, &titleBarOptions, QStyle::SC_TitleBarLabel, this).width());
+
+	if (isActive)
+	{
+		titleBarOptions.state |= QStyle::State_Active;
+		titleBarOptions.titleBarState |= QStyle::State_Active;
+		titleBarOptions.palette.setCurrentColorGroup(QPalette::Active);
+	}
+	else
+	{
+		titleBarOptions.state &= ~QStyle::State_Active;
+		titleBarOptions.palette.setCurrentColorGroup(QPalette::Inactive);
+	}
+
+	QStylePainter painter(this);
+	painter.drawComplexControl(QStyle::CC_TitleBar, titleBarOptions);
+
+	if (border > 0)
+	{
+		QStyleOptionFrame frameOptions;
+		frameOptions.initFrom(this);
+		frameOptions.lineWidth = border;
+
+		if (isActive)
+		{
+			frameOptions.state |= QStyle::State_Active;
+		}
+		else
+		{
+			frameOptions.state &= ~QStyle::State_Active;
+		}
+
+		painter.setClipRect(rect().adjusted(0, titleBarOptions.rect.height(), 0, 0));
+		painter.drawPrimitive(QStyle::PE_FrameWindow, frameOptions);
 	}
 }
 
@@ -263,16 +315,6 @@ void Window::markAsActive(bool updateLastActivity)
 	}
 
 	emit activated();
-}
-
-void Window::handleIconChanged(const QIcon &icon)
-{
-	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
-
-	if (subWindow)
-	{
-		subWindow->setWindowIcon(icon);
-	}
 }
 
 void Window::handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
@@ -467,6 +509,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			m_addressBarWidget = nullptr;
 		}
 
+		update();
+
 		emit actionsStateChanged();
 
 		return;
@@ -516,6 +560,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		}
 	}
 
+	update();
 	updateFocus();
 
 	m_session = SessionWindow();
@@ -533,12 +578,14 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, &ContentsWidget::requestedSearch, this, &Window::requestedSearch);
 	connect(m_contentsWidget, &ContentsWidget::requestedGeometryChange, this, &Window::handleGeometryChangeRequest);
 	connect(m_contentsWidget, &ContentsWidget::statusMessageChanged, this, &Window::statusMessageChanged);
+	connect(m_contentsWidget, &ContentsWidget::statusMessageChanged, this, static_cast<void(Window::*)()>(&Window::update));
 	connect(m_contentsWidget, &ContentsWidget::titleChanged, this, &Window::titleChanged);
 	connect(m_contentsWidget, &ContentsWidget::urlChanged, this, [&](const QUrl &url)
 	{
 		emit urlChanged(url, false);
 	});
 	connect(m_contentsWidget, &ContentsWidget::iconChanged, this, &Window::iconChanged);
+	connect(m_contentsWidget, &ContentsWidget::iconChanged, this, static_cast<void(Window::*)()>(&Window::update));
 	connect(m_contentsWidget, &ContentsWidget::requestBlocked, this, &Window::requestBlocked);
 	connect(m_contentsWidget, &ContentsWidget::arbitraryActionsStateChanged, this, &Window::arbitraryActionsStateChanged);
 	connect(m_contentsWidget, &ContentsWidget::categorizedActionsStateChanged, this, &Window::categorizedActionsStateChanged);
