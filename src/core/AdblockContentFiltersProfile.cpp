@@ -67,7 +67,7 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, 
 		}
 	}
 
-	loadHeader(getPath());
+	loadHeader();
 }
 
 void AdblockContentFiltersProfile::clear()
@@ -89,8 +89,10 @@ void AdblockContentFiltersProfile::clear()
 	m_wasLoaded = false;
 }
 
-void AdblockContentFiltersProfile::loadHeader(const QString &path)
+void AdblockContentFiltersProfile::loadHeader()
 {
+	const QString &path(getPath());
+
 	if (!QFile::exists(path))
 	{
 		return;
@@ -646,7 +648,7 @@ void AdblockContentFiltersProfile::handleReplyFinished()
 	}
 
 	clear();
-	loadHeader(getPath());
+	loadHeader();
 
 	if (m_wasLoaded)
 	{
