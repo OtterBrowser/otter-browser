@@ -605,7 +605,10 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 		window->move(0, 0);
 	}
 
-	notifyActionsStateChanged();
+	if (m_isRestored)
+	{
+		notifyActionsStateChanged();
+	}
 }
 
 void WorkspaceWidget::handleActiveSubWindowChanged(QMdiSubWindow *subWindow)
