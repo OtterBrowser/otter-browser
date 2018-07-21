@@ -228,10 +228,12 @@ void Action::setExecutor(ActionExecutor::Object executor)
 {
 	const ActionsManager::ActionDefinition definition(getDefinition());
 	const QMetaMethod updateStateMethod(metaObject()->method(metaObject()->indexOfMethod("updateState()")));
+	const QMetaMethod handleArbitraryActionsStateChangedMethod(metaObject()->method(metaObject()->indexOfMethod("handleArbitraryActionsStateChanged(QVector<int>)")));
+	const QMetaMethod handleCategorizedActionsStateChangeddMethod(metaObject()->method(metaObject()->indexOfMethod("handleCategorizedActionsStateChanged(QVector<int>)")));
 
 	if (m_executor.isValid())
 	{
-		m_executor.disconnectSignals(this, &updateStateMethod, &updateStateMethod, &updateStateMethod);
+		m_executor.disconnectSignals(this, &updateStateMethod, &handleArbitraryActionsStateChangedMethod, &handleCategorizedActionsStateChangeddMethod);
 	}
 
 	if (executor.isValid())
@@ -272,7 +274,7 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 	if (executor.isValid())
 	{
-		m_executor.connectSignals(this, &updateStateMethod, &updateStateMethod, &updateStateMethod);
+		m_executor.connectSignals(this, &updateStateMethod, &handleArbitraryActionsStateChangedMethod, &handleCategorizedActionsStateChangeddMethod);
 	}
 }
 
