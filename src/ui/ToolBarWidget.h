@@ -48,6 +48,8 @@ public:
 	static QMenu* createCustomizationMenu(int identifier, QVector<QAction*> actions = {}, QWidget *parent = nullptr);
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	void setState(const ToolBarState &state);
+	MainWindow* getMainWindow() const;
+	Window* getWindow() const;
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
 	ToolBarState getState() const;
@@ -91,8 +93,6 @@ protected:
 	void updateToggleGeometry();
 	void setAddressFields(QVector<QPointer<QWidget> > addressFields);
 	void setSearchFields(QVector<QPointer<QWidget> > searchFields);
-	MainWindow* getMainWindow() const;
-	Window* getWindow() const;
 	bool isDragHandle(const QPoint &position) const;
 
 protected slots:
