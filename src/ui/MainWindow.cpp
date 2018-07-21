@@ -1283,6 +1283,8 @@ void MainWindow::restoreSession(const SessionMainWindow &session)
 
 			addWindow(window, SessionsManager::DefaultOpen, -1, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
 		}
+
+		emit arbitraryActionsStateChanged({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction});
 	}
 
 	m_isSessionRestored = true;
