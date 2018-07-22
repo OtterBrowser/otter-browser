@@ -70,7 +70,8 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 		menu->setMenuOptions(definition.options);
 
 		setPopupMode(QToolButton::InstantPopup);
-		setText(definition.options.value(QLatin1String("text")).toString());
+		setText(getText());
+		setIcon(getIcon());
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
