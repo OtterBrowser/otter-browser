@@ -596,7 +596,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 		if (QFile::exists(path))
 		{
-			int i(1);
+			int i(2);
 
 			do
 			{
