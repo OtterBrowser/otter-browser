@@ -19,6 +19,7 @@
 
 #include "ToolButtonWidget.h"
 #include "Action.h"
+#include "MainWindow.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
 #include "../core/Application.h"
@@ -113,6 +114,14 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 
 void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBarDefinition::Entry> &entries)
 {
+	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+	ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
+
+	if (toolBar && toolBar->getMainWindow())
+	{
+		executor = ActionExecutor::Object(toolBar->getMainWindow(), toolBar->getMainWindow());
+	}
+
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		const ToolBarsManager::ToolBarDefinition::Entry entry(entries.at(i));
@@ -125,7 +134,7 @@ void ToolButtonWidget::addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBa
 			}
 			else
 			{
-				menu->addAction(new Action(ActionsManager::getActionIdentifier(entry.action), entry.parameters, entry.options, ActionExecutor::Object(Application::getInstance(), Application::getInstance()), menu));
+				menu->addAction(new Action(ActionsManager::getActionIdentifier(entry.action), entry.parameters, entry.options, executor, menu));
 			}
 		}
 		else
