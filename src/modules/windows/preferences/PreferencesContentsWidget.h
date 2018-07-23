@@ -44,7 +44,7 @@ public:
 	QIcon getIcon() const override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 private:
 	Ui::PreferencesContentsWidget *m_ui;
