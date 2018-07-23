@@ -36,11 +36,6 @@ PlatformIntegration::PlatformIntegration(Application *parent) : QObject(parent)
 {
 }
 
-void PlatformIntegration::runApplication(const QString &command, const QUrl &url) const
-{
-	Q_UNUSED(command)
-	Q_UNUSED(url)
-}
 
 void PlatformIntegration::startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent) const
 {
@@ -59,20 +54,6 @@ void PlatformIntegration::startLinkDrag(const QUrl &url, const QString &title, c
 	drag->setMimeData(mimeData);
 	drag->setPixmap(pixmap);
 	drag->exec(Qt::CopyAction);
-}
-
-Style* PlatformIntegration::createStyle(const QString &name) const
-{
-	Q_UNUSED(name)
-
-	return nullptr;
-}
-
-QVector<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
-{
-	Q_UNUSED(mimeType)
-
-	return {};
 }
 
 QString PlatformIntegration::getPreferredPasswordsBackend() const
