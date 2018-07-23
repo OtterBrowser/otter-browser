@@ -45,7 +45,7 @@ class MacPlatformIntegration final : public PlatformIntegration
 	Q_OBJECT
 
 public:
-	explicit MacPlatformIntegration(Application *parent);
+	explicit MacPlatformIntegration(QObject *parent);
 
 	void markNotificationClicked(quint64 identifier);
 	void runApplication(const QString &command, const QUrl &url = {}) const override;

@@ -90,7 +90,7 @@ class WindowsPlatformIntegration final : public PlatformIntegration
 	Q_OBJECT
 
 public:
-	explicit WindowsPlatformIntegration(Application *parent);
+	explicit WindowsPlatformIntegration(QObject *parent);
 
 	void runApplication(const QString &command, const QUrl &url = {}) const override;
 	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;

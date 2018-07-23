@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-PlatformIntegration::PlatformIntegration(Application *parent) : QObject(parent)
+PlatformIntegration::PlatformIntegration(QObject *parent) : QObject(parent)
 {
 }
 

@@ -173,7 +173,7 @@ QString MacPlatformLinkDrag::getPath() const
 	return m_directory.path();
 }
 
-MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIntegration(parent),
+MacPlatformIntegration::MacPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
 	m_notificationIdentifier(0),
 	m_notificationsWatcherTimer(0)
 {

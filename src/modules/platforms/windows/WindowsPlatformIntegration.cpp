@@ -47,7 +47,7 @@ namespace Otter
 
 QProcessEnvironment WindowsPlatformIntegration::m_environment;
 
-WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : PlatformIntegration(parent),
+WindowsPlatformIntegration::WindowsPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
 	m_registrationIdentifier(QLatin1String("OtterBrowser")),
 	m_applicationFilePath(QDir::toNativeSeparators(QCoreApplication::applicationFilePath())),
 	m_applicationRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\RegisteredApplications"), QSettings::NativeFormat),

@@ -39,7 +39,7 @@ class FreeDesktopOrgPlatformIntegration final : public PlatformIntegration
 	Q_OBJECT
 
 public:
-	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
+	explicit FreeDesktopOrgPlatformIntegration(QObject *parent);
 	~FreeDesktopOrgPlatformIntegration();
 
 	void runApplication(const QString &command, const QUrl &url = {}) const override;

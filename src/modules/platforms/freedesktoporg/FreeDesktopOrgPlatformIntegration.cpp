@@ -98,7 +98,7 @@ const QDBusArgument& operator>>(const QDBusArgument &argument, QImage &image)
 namespace Otter
 {
 
-FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application *parent) : PlatformIntegration(parent),
+FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
 	m_notificationsInterface(new QDBusInterface(QLatin1String("org.freedesktop.Notifications"), QLatin1String("/org/freedesktop/Notifications"), QLatin1String("org.freedesktop.Notifications"), QDBusConnection::sessionBus(), this))
 {
 #if QT_VERSION >= 0x050700
