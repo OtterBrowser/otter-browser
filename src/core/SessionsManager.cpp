@@ -448,7 +448,7 @@ SessionsManager::OpenHints SessionsManager::calculateOpenHints(const QVariantMap
 		return static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
 	}
 
-	if (type != QVariant::StringList)
+	if (type != QVariant::List && type != QVariant::StringList)
 	{
 		return DefaultOpen;
 	}
