@@ -459,6 +459,7 @@ void SearchWidget::restoreCurrentSearchEngine()
 		m_searchEngine.clear();
 	}
 
+	handleLoadingStateChanged();
 	updateGeometries();
 	setText(m_query);
 
