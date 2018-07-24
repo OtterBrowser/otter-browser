@@ -652,11 +652,6 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 		m_searchEngine.selfUrl = reply->request().url();
 	}
 
-	if (m_needsToSaveSearchEngine)
-	{
-		SearchEnginesManager::addSearchEngine(m_searchEngine);
-	}
-
 	if (m_searchEngine.iconUrl.isValid())
 	{
 		IconFetchJob *job(new IconFetchJob(m_searchEngine.iconUrl, this));
@@ -670,6 +665,7 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 				SearchEnginesManager::addSearchEngine(m_searchEngine);
 			}
 
+			markAsFinished();
 			deleteLater();
 
 			emit jobFinished(true);
@@ -679,7 +675,15 @@ void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 	}
 	else
 	{
+		if (m_needsToSaveSearchEngine)
+		{
+			SearchEnginesManager::addSearchEngine(m_searchEngine);
+		}
+
 		markAsFinished();
+		deleteLater();
+
+		emit jobFinished(true);
 	}
 }
 
