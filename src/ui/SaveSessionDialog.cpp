@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "SaveSessionDialog.h"
 #include "MainWindow.h"
 #include "../core/SessionsManager.h"
+#include "../core/Utils.h"
 
 #include "ui_SaveSessionDialog.h"
 
@@ -32,9 +33,16 @@ namespace Otter
 SaveSessionDialog::SaveSessionDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::SaveSessionDialog)
 {
+	QString identifier(SessionsManager::getCurrentSession());
+
+	if (identifier == QLatin1String("default"))
+	{
+		identifier = Utils::createIdentifier(QLatin1String("default"), SessionsManager::getSessions());
+	}
+
 	m_ui->setupUi(this);
 	m_ui->titleLineEditWidget->setText(SessionsManager::getSession(SessionsManager::getCurrentSession()).title);
-	m_ui->identifierLineEditWidget->setText(SessionsManager::getCurrentSession());
+	m_ui->identifierLineEditWidget->setText(identifier);
 	m_ui->identifierLineEditWidget->setValidator(new QRegularExpressionValidator(QRegularExpression(QLatin1String("[a-z0-9\\-_]+")), this));
 
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &SaveSessionDialog::saveSession);
