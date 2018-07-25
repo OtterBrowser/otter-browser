@@ -49,9 +49,7 @@ QVariant FeedsModel::Entry::data(int role) const
 {
 	if (role == TitleRole)
 	{
-		const EntryType type(getType());
-
-		switch (type)
+		switch (getType())
 		{
 			case RootEntry:
 				return QCoreApplication::translate("Otter::FeedsModel", "Feeds");
