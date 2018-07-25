@@ -69,6 +69,7 @@ public:
 		QVariant getRawData(int role) const;
 		EntryType getType() const;
 		bool isAncestorOf(Entry *child) const;
+		bool operator<(const QStandardItem &other) const override;
 
 	protected:
 		explicit Entry(Feed *feed = nullptr);
