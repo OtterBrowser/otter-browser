@@ -206,6 +206,18 @@ bool FeedsModel::Entry::isAncestorOf(FeedsModel::Entry *child) const
 	return false;
 }
 
+bool FeedsModel::Entry::operator<(const QStandardItem &other) const
+{
+	const EntryType type(getType());
+
+	if (type == RootEntry || type == TrashEntry)
+	{
+		return false;
+	}
+
+	return QStandardItem::operator<(other);
+}
+
 FeedsModel::FeedsModel(const QString &path, QObject *parent) : QStandardItemModel(parent),
 	m_rootEntry(new Entry()),
 	m_trashEntry(new Entry()),
