@@ -192,6 +192,11 @@ struct SessionInformation final
 	QVector<SessionMainWindow> windows;
 	int index = -1;
 	bool isClean = true;
+
+	bool isValid() const
+	{
+		return !windows.isEmpty();
+	}
 };
 
 struct ClosedWindow final
