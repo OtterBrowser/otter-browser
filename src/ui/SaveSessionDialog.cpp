@@ -66,21 +66,23 @@ void SaveSessionDialog::changeEvent(QEvent *event)
 
 void SaveSessionDialog::saveSession()
 {
-	if (m_ui->identifierLineEditWidget->text().isEmpty())
+	const QString identifier(m_ui->identifierLineEditWidget->text());
+
+	if (identifier.isEmpty())
 	{
 		show();
 
 		return;
 	}
 
-	if (m_ui->identifierLineEditWidget->text() != SessionsManager::getCurrentSession() && SessionsManager::getSession(m_ui->identifierLineEditWidget->text()).windows.count() > 0 && QMessageBox::question(this, tr("Question"), tr("Session with specified indentifier already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+	if (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).windows.count() > 0 && QMessageBox::question(this, tr("Question"), tr("Session with specified indentifier already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 	{
 		show();
 
 		return;
 	}
 
-	if (SessionsManager::saveSession(m_ui->identifierLineEditWidget->text(), m_ui->titleLineEditWidget->text(), (m_ui->onlyCurrentWindowCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : nullptr)))
+	if (SessionsManager::saveSession(identifier, m_ui->titleLineEditWidget->text(), (m_ui->onlyCurrentWindowCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : nullptr)))
 	{
 		close();
 	}
