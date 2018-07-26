@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 
 		SessionMainWindow window;
 
-		if (!sessionData.windows.isEmpty())
+		if (sessionData.isValid())
 		{
 			window.geometry = sessionData.windows.first().geometry;
 		}

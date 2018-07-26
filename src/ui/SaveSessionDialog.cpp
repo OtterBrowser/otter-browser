@@ -75,7 +75,7 @@ void SaveSessionDialog::saveSession()
 		return;
 	}
 
-	if (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).windows.count() > 0 && QMessageBox::question(this, tr("Question"), tr("Session with specified indentifier already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+	if (SessionsManager::getCurrentSession() != identifier && SessionsManager::getSession(identifier).isValid() && QMessageBox::question(this, tr("Question"), tr("Session with specified indentifier already exists.\nDo you want to overwrite it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 	{
 		show();
 
