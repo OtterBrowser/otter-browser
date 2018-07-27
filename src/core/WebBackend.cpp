@@ -22,6 +22,22 @@
 namespace Otter
 {
 
+WebPageThumbnailJob::WebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent) : Job(parent)
+{
+	Q_UNUSED(url)
+	Q_UNUSED(size)
+}
+
+QString WebPageThumbnailJob::getTitle()
+{
+	return {};
+}
+
+QPixmap WebPageThumbnailJob::getThumbnail()
+{
+	return {};
+}
+
 WebBackend::WebBackend(QObject *parent) : QObject(parent), Addon()
 {
 }

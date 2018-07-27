@@ -21,6 +21,7 @@
 #define OTTER_WEBBACKEND_H
 
 #include "AddonsManager.h"
+#include "Job.h"
 #include "SpellCheckManager.h"
 
 namespace Otter
@@ -28,6 +29,17 @@ namespace Otter
 
 class ContentsWidget;
 class WebWidget;
+
+class WebPageThumbnailJob : public Job
+{
+	Q_OBJECT
+
+public:
+	explicit WebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
+
+	virtual QString getTitle();
+	virtual QPixmap getThumbnail();
+};
 
 class WebBackend : public QObject, public Addon
 {
