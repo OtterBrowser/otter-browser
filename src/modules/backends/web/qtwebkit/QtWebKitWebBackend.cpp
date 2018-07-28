@@ -275,28 +275,51 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 
 bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 {
-	connect(new QtWebKitThumbnailFetchJob(url, size, this), &QtWebKitThumbnailFetchJob::thumbnailAvailable, this, &QtWebKitWebBackend::thumbnailAvailable);
+	QtWebKitWebPageThumbnailJob *job(new QtWebKitWebPageThumbnailJob(url, size, this));
+
+	connect(job, &QtWebKitWebPageThumbnailJob::thumbnailAvailable, this, &QtWebKitWebBackend::thumbnailAvailable);
+
+	job->start();
 
 	return true;
 }
 
-QtWebKitThumbnailFetchJob::QtWebKitThumbnailFetchJob(const QUrl &url, const QSize &size, QObject *parent) : QObject(parent),
-	m_page(new QtWebKitPage(url)),
+QtWebKitWebPageThumbnailJob::QtWebKitWebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent) : WebPageThumbnailJob(url, size, parent),
+	m_page(nullptr),
 	m_url(url),
 	m_size(size)
 {
-	m_page->setParent(this);
-
-	connect(m_page, &QtWebKitPage::loadFinished, this, &QtWebKitThumbnailFetchJob::handlePageLoadFinished);
 }
 
-void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
+void QtWebKitWebPageThumbnailJob::start()
+{
+	if (!m_page)
+	{
+		m_page = new QtWebKitPage(m_url);
+		m_page->setParent(this);
+
+		connect(m_page, &QtWebKitPage::loadFinished, this, &QtWebKitWebPageThumbnailJob::handlePageLoadFinished);
+	}
+}
+
+void QtWebKitWebPageThumbnailJob::cancel()
+{
+	if (m_page)
+	{
+		m_page->triggerAction(QWebPage::Stop);
+	}
+
+	deleteLater();
+}
+
+void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 {
 	if (!result)
 	{
 		deleteLater();
 
 		emit thumbnailAvailable(m_url, {}, {});
+		emit jobFinished(false);
 
 		return;
 	}
@@ -347,6 +370,12 @@ void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
 	deleteLater();
 
 	emit thumbnailAvailable(m_url, pixmap, m_page->mainFrame()->title());
+	emit jobFinished(true);
+}
+
+bool QtWebKitWebPageThumbnailJob::isRunning() const
+{
+	return (m_page != nullptr);
 }
 
 }

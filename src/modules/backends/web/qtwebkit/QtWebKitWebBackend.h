@@ -80,19 +80,25 @@ signals:
 friend class QtWebKitSpellChecker;
 };
 
-class QtWebKitThumbnailFetchJob final : public QObject
+class QtWebKitWebPageThumbnailJob final : public WebPageThumbnailJob
 {
 	Q_OBJECT
 
 public:
-	explicit QtWebKitThumbnailFetchJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
+	explicit QtWebKitWebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
+
+	bool isRunning() const;
+
+public slots:
+	void start();
+	void cancel();
 
 protected slots:
 	void handlePageLoadFinished(bool result);
 
 private:
 	QtWebKitPage *m_page;
-	const QUrl m_url;
+	QUrl m_url;
 	QSize m_size;
 
 signals:

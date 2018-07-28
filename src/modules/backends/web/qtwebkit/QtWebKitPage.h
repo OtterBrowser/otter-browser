@@ -120,7 +120,7 @@ signals:
 	void isDisplayingErrorPageChanged(QWebFrame *frame, bool isVisible);
 	void viewingMediaChanged(bool isViewingMedia);
 
-friend class QtWebKitThumbnailFetchJob;
+friend class QtWebKitWebPageThumbnailJob;
 friend class QtWebKitWebBackend;
 };
 
