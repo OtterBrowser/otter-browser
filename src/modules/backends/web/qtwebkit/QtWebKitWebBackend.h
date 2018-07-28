@@ -98,8 +98,10 @@ protected slots:
 
 private:
 	QtWebKitPage *m_page;
+	QString m_title;
 	QUrl m_url;
 	QSize m_size;
+	QPixmap m_pixmap;
 };
 
 }

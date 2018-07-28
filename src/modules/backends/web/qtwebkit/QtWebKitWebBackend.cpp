@@ -328,7 +328,6 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 		return;
 	}
 
-	QPixmap pixmap;
 	QSize contentsSize(m_page->mainFrame()->contentsSize());
 
 	if (contentsSize.isNull())
@@ -355,21 +354,23 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 
 		if (!contentsSize.isNull())
 		{
-			pixmap = QPixmap(contentsSize);
-			pixmap.fill(Qt::white);
+			m_pixmap = QPixmap(contentsSize);
+			m_pixmap.fill(Qt::white);
 
-			QPainter painter(&pixmap);
+			QPainter painter(&m_pixmap);
 
 			m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
 
 			painter.end();
 
-			if (pixmap.size() != m_size)
+			if (m_pixmap.size() != m_size)
 			{
-				pixmap = pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+				m_pixmap = m_pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 			}
 		}
 	}
+
+	m_title = m_page->mainFrame()->title();
 
 	deleteLater();
 
