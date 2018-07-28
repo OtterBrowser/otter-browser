@@ -277,7 +277,12 @@ bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 {
 	QtWebKitWebPageThumbnailJob *job(new QtWebKitWebPageThumbnailJob(url, size, this));
 
-	connect(job, &QtWebKitWebPageThumbnailJob::thumbnailAvailable, this, &QtWebKitWebBackend::thumbnailAvailable);
+	connect(job, &QtWebKitWebPageThumbnailJob::jobFinished, [=](bool isSuccess)
+	{
+		Q_UNUSED(isSuccess)
+
+		emit thumbnailAvailable(url, job->getThumbnail(), job->getTitle());
+	});
 
 	job->start();
 
@@ -318,7 +323,6 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 	{
 		deleteLater();
 
-		emit thumbnailAvailable(m_url, {}, {});
 		emit jobFinished(false);
 
 		return;
@@ -369,7 +373,6 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 
 	deleteLater();
 
-	emit thumbnailAvailable(m_url, pixmap, m_page->mainFrame()->title());
 	emit jobFinished(true);
 }
 

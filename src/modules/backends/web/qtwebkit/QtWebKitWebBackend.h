@@ -100,9 +100,6 @@ private:
 	QtWebKitPage *m_page;
 	QUrl m_url;
 	QSize m_size;
-
-signals:
-	void thumbnailAvailable(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 };
 
 }
