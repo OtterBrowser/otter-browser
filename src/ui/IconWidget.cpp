@@ -118,13 +118,15 @@ void IconWidget::populateMenu()
 
 void IconWidget::setIcon(const QString &icon)
 {
-	m_icon = icon;
-
 	setIcon(ThemesManager::createIcon(icon));
+
+	m_icon = icon;
 }
 
 void IconWidget::setIcon(const QIcon &icon)
 {
+	m_icon = Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, QSize(16, 16))));
+
 	QToolButton::setIcon(icon);
 
 	emit iconChanged(icon);
