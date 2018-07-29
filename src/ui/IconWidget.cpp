@@ -63,7 +63,7 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 
 void IconWidget::clear()
 {
-	setIcon({});
+	setIcon(QString());
 }
 
 void IconWidget::reset()
@@ -116,6 +116,13 @@ void IconWidget::populateMenu()
 	connect(clearAction, &QAction::triggered, this, &IconWidget::clear);
 }
 
+void IconWidget::setIcon(const QString &icon)
+{
+	m_icon = icon;
+
+	setIcon(ThemesManager::createIcon(icon));
+}
+
 void IconWidget::setIcon(const QIcon &icon)
 {
 	QToolButton::setIcon(icon);
@@ -131,6 +138,11 @@ void IconWidget::setDefaultIcon(const QString &icon)
 	{
 		setIcon(ThemesManager::createIcon(icon));
 	}
+}
+
+QString IconWidget::getIcon() const
+{
+	return m_icon;
 }
 
 int IconWidget::heightForWidth(int width) const
