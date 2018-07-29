@@ -24,6 +24,7 @@
 #include "LineEditWidget.h"
 #include "FilePathWidget.h"
 #include "../core/ThemesManager.h"
+#include "../core/Utils.h"
 
 #include <QtWidgets/QHBoxLayout>
 
@@ -181,11 +182,13 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 	{
 		if (value.type() == QVariant::Icon)
 		{
-			m_iconWidget->setDefaultIcon(value.value<QIcon>());
+			const QIcon icon(value.value<QIcon>());
+
+			m_iconWidget->setDefaultIcon(Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, QSize(16, 16)))));
 		}
 		else
 		{
-			m_iconWidget->setDefaultIcon(ThemesManager::createIcon(value.toString()));
+			m_iconWidget->setDefaultIcon(value.toString());
 		}
 	}
 

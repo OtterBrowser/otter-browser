@@ -37,7 +37,7 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 {
 	m_ui->setupUi(this);
 	m_ui->iconButton->setIcon(searchEngine.icon);
-	m_ui->iconButton->setDefaultIcon(ThemesManager::createIcon(QLatin1String("edit-find")));
+	m_ui->iconButton->setDefaultIcon(QLatin1String("edit-find"));
 	m_ui->titleLineEditWidget->setText(searchEngine.title);
 	m_ui->descriptionLineEditWidget->setText(searchEngine.description);
 	m_ui->keywordLineEditWidget->setText(searchEngine.keyword);

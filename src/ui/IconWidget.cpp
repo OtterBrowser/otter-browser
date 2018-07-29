@@ -68,7 +68,7 @@ void IconWidget::clear()
 
 void IconWidget::reset()
 {
-	setIcon(m_defaultIcon);
+	setIcon(ThemesManager::createIcon(m_defaultIcon));
 }
 
 void IconWidget::selectFromFile()
@@ -98,12 +98,12 @@ void IconWidget::populateMenu()
 	connect(menu()->addAction(tr("Select From File…")), &QAction::triggered, this, &IconWidget::selectFromFile);
 	connect(menu()->addAction(tr("Select From Theme…")), &QAction::triggered, this, &IconWidget::selectFromTheme);
 
-	if (!m_defaultIcon.isNull())
+	if (!m_defaultIcon.isEmpty())
 	{
 		menu()->addSeparator();
 
 		QAction *resetAction(menu()->addAction(tr("Reset")));
-		resetAction->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != Utils::savePixmapAsDataUri(m_defaultIcon.pixmap(16, 16)));
+		resetAction->setEnabled(Utils::savePixmapAsDataUri(icon().pixmap(16, 16)) != m_defaultIcon);
 
 		connect(resetAction, &QAction::triggered, this, &IconWidget::reset);
 	}
@@ -123,13 +123,13 @@ void IconWidget::setIcon(const QIcon &icon)
 	emit iconChanged(icon);
 }
 
-void IconWidget::setDefaultIcon(const QIcon &icon)
+void IconWidget::setDefaultIcon(const QString &icon)
 {
 	m_defaultIcon = icon;
 
-	if (icon.isNull())
+	if (icon.isEmpty())
 	{
-		setIcon(icon);
+		setIcon(ThemesManager::createIcon(icon));
 	}
 }
 
