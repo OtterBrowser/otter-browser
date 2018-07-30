@@ -118,9 +118,11 @@ void IconWidget::populateMenu()
 
 void IconWidget::setIcon(const QString &icon)
 {
-	setIcon(ThemesManager::createIcon(icon));
-
 	m_icon = icon;
+
+	QToolButton::setIcon(ThemesManager::createIcon(icon));
+
+	emit iconChanged(m_icon);
 }
 
 void IconWidget::setIcon(const QIcon &icon)
@@ -129,7 +131,7 @@ void IconWidget::setIcon(const QIcon &icon)
 
 	QToolButton::setIcon(icon);
 
-	emit iconChanged(icon);
+	emit iconChanged(m_icon);
 }
 
 void IconWidget::setDefaultIcon(const QString &icon)

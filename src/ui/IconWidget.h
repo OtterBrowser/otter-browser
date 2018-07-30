@@ -56,7 +56,7 @@ private:
 	QString m_defaultIcon;
 
 signals:
-	void iconChanged(const QIcon &icon);
+	void iconChanged(const QString &icon);
 };
 
 }
