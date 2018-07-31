@@ -87,7 +87,7 @@ void IconWidget::selectFromTheme()
 
 	if (!name.isEmpty())
 	{
-		setIcon(ThemesManager::createIcon(name));
+		setIcon(name);
 	}
 }
 
