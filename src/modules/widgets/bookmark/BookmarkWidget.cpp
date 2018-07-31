@@ -21,6 +21,7 @@
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/SessionsManager.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/Menu.h"
 
@@ -136,7 +137,19 @@ QIcon BookmarkWidget::getIcon() const
 {
 	const QVariantMap options(getOptions());
 
-	return ((isCustomized() && options.contains(QLatin1String("icon"))) ? options[QLatin1String("icon")].value<QIcon>() : m_bookmark->getIcon());
+	if (isCustomized() && options.contains(QLatin1String("icon")))
+	{
+		const QVariant iconData(options[QLatin1String("icon")]);
+
+		if (iconData.type() == QVariant::Icon)
+		{
+			return iconData.value<QIcon>();
+		}
+
+		return ThemesManager::createIcon(iconData.toString());
+	}
+
+	return m_bookmark->getIcon();
 }
 
 }
