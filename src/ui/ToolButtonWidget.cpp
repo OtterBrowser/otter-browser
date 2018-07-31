@@ -240,7 +240,14 @@ QIcon ToolButtonWidget::getIcon() const
 {
 	if (m_isCustomized && m_options.contains(QLatin1String("icon")))
 	{
-		return ThemesManager::createIcon(m_options[QLatin1String("icon")].toString());
+		const QVariant iconData(m_options[QLatin1String("icon")]);
+
+		if (iconData.type() == QVariant::Icon)
+		{
+			return iconData.value<QIcon>();
+		}
+
+		return ThemesManager::createIcon(iconData.toString());
 	}
 
 	return (defaultAction() ? defaultAction()->icon() : icon());
