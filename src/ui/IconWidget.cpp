@@ -68,7 +68,7 @@ void IconWidget::clear()
 
 void IconWidget::reset()
 {
-	setIcon(ThemesManager::createIcon(m_defaultIcon));
+	setIcon(m_defaultIcon);
 }
 
 void IconWidget::selectFromFile()
