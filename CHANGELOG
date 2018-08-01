@@ -1,3 +1,7 @@
+0.9.99 RC 11 (2018-08-01):
+- reworked handling of custom icons for toolbar entries;
+- some other fixes.
+
 0.9.99 RC 10 (2018-07-01):
 - added importer for OPML files;
 - added support for abp: protocol for adding new content filtering profiles;
