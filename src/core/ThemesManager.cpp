@@ -237,13 +237,19 @@ QIcon ThemesManager::createIcon(const QString &name, bool fromTheme)
 
 	const QString iconPath((!fromTheme && name == QLatin1String("otter-browser")) ? QLatin1String(":/icons/otter-browser") : m_iconThemePath + name);
 	const QString svgPath(iconPath + QLatin1String(".svg"));
+	const QString rasterPath(iconPath + QLatin1String(".png"));
 
 	if (QFile::exists(svgPath))
 	{
 		return QIcon(svgPath);
 	}
 
-	return QIcon(iconPath + QLatin1String(".png"));
+	if (QFile::exists(rasterPath))
+	{
+		return QIcon(rasterPath);
+	}
+
+	return {};
 }
 
 bool ThemesManager::eventFilter(QObject *object, QEvent *event)

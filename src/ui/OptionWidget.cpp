@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include "LineEditWidget.h"
 #include "FilePathWidget.h"
 #include "../core/ThemesManager.h"
+#include "../core/Utils.h"
 
 #include <QtWidgets/QHBoxLayout>
 
@@ -181,11 +182,13 @@ void OptionWidget::setDefaultValue(const QVariant &value)
 	{
 		if (value.type() == QVariant::Icon)
 		{
-			m_iconWidget->setDefaultIcon(value.value<QIcon>());
+			const QIcon icon(value.value<QIcon>());
+
+			m_iconWidget->setDefaultIcon(Utils::savePixmapAsDataUri(icon.pixmap(icon.availableSizes().value(0, QSize(16, 16)))));
 		}
 		else
 		{
-			m_iconWidget->setDefaultIcon(ThemesManager::createIcon(value.toString()));
+			m_iconWidget->setDefaultIcon(value.toString());
 		}
 	}
 
@@ -350,7 +353,7 @@ QVariant OptionWidget::getValue() const
 
 	if (m_iconWidget)
 	{
-		return m_iconWidget->icon();
+		return m_iconWidget->getIcon();
 	}
 
 	if (m_lineEditWidget)

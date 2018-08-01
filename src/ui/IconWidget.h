@@ -33,8 +33,10 @@ class IconWidget final : public QToolButton
 public:
 	explicit IconWidget(QWidget *parent = nullptr);
 
+	void setIcon(const QString &icon);
 	void setIcon(const QIcon &icon);
-	void setDefaultIcon(const QIcon &icon);
+	void setDefaultIcon(const QString &icon);
+	QString getIcon() const;
 	int heightForWidth(int width) const override;
 	bool hasHeightForWidth() const override;
 
@@ -50,10 +52,11 @@ protected slots:
 	void populateMenu();
 
 private:
-	QIcon m_defaultIcon;
+	QString m_icon;
+	QString m_defaultIcon;
 
 signals:
-	void iconChanged(const QIcon &icon);
+	void iconChanged(const QString &icon);
 };
 
 }

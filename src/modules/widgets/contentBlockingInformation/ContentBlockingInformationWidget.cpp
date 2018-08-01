@@ -257,7 +257,25 @@ void ContentBlockingInformationWidget::handleRequest()
 
 void ContentBlockingInformationWidget::updateState()
 {
-	m_icon = (isCustomized() ? getOptions().value(QLatin1String("icon")).value<QIcon>() : QIcon());
+	const QVariantMap options(getOptions());
+
+	if (isCustomized() && options.contains(QLatin1String("icon")))
+	{
+		const QVariant iconData(options[QLatin1String("icon")]);
+
+		if (iconData.type() == QVariant::Icon)
+		{
+			m_icon = iconData.value<QIcon>();
+		}
+		else
+		{
+			m_icon = ThemesManager::createIcon(iconData.toString());
+		}
+	}
+	else
+	{
+		m_icon = QIcon();
+	}
 
 	if (m_icon.isNull())
 	{

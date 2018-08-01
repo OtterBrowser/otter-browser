@@ -70,7 +70,8 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 		menu->setMenuOptions(definition.options);
 
 		setPopupMode(QToolButton::InstantPopup);
-		setText(definition.options.value(QLatin1String("text")).toString());
+		setText(getText());
+		setIcon(getIcon());
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
@@ -240,7 +241,14 @@ QIcon ToolButtonWidget::getIcon() const
 {
 	if (m_isCustomized && m_options.contains(QLatin1String("icon")))
 	{
-		return ThemesManager::createIcon(m_options[QLatin1String("icon")].toString());
+		const QVariant iconData(m_options[QLatin1String("icon")]);
+
+		if (iconData.type() == QVariant::Icon)
+		{
+			return iconData.value<QIcon>();
+		}
+
+		return ThemesManager::createIcon(iconData.toString());
 	}
 
 	return (defaultAction() ? defaultAction()->icon() : icon());
