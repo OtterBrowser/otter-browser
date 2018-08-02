@@ -392,20 +392,20 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="322"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation>プロファイル階層(%1)は書き込み可能ではありません。アプリケーションは読み取り専用モードになっています。</translation>
+        <translation>プロファイル(%1)は書き込み可能ではありません。アプリケーションは読み取り専用モードになっています。</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation>あなたのプロファイル階層(%1)は、ディスク領域をがありません。
+        <translation>あなたのプロファイル(%1)があるディスクには、空き領域がありません。
 誤動作や、データ消失の恐れがあります。</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="349"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation>あなたのプロファイル階層(%1)は空き容量が少ない状況です。(残り%2)。
+        <translation>あなたのプロファイル(%1)があるディスクは空き容量が少ない状況です。(残り%2)。
 誤動作や、データ消失の恐れがあります。</translation>
     </message>
     <message>
@@ -843,7 +843,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation>既に既存のブックマークを複製することは許可されています。</translation>
+        <translation>既存のブックマークの複製を許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -916,7 +916,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation>ブックマークファイルの読み込めませんでした。</translation>
+        <translation>ブックマークファイルを読み込めませんでした。</translation>
     </message>
 </context>
 <context>
@@ -1194,7 +1194,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="349"/>
         <source>Not Critical</source>
-        <translation>クリティカルではありません</translation>
+        <translation>クリティカルではない</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="350"/>
@@ -1274,12 +1274,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="464"/>
         <source>SHA-1 Fingerprint</source>
-        <translation>SHA-1 指紋</translation>
+        <translation>SHA-1 フィンガープリント</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="468"/>
         <source>SHA-256 Fingerprint</source>
-        <translation>SHA-256 指紋</translation>
+        <translation>SHA-256 フィンガープリント</translation>
     </message>
 </context>
 <context>
@@ -1348,7 +1348,7 @@ Exponent: %2</source>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="54"/>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="85"/>
         <source>Clear Now</source>
-        <translation>削除しています</translation>
+        <translation>削除</translation>
     </message>
 </context>
 <context>
@@ -1441,7 +1441,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="363"/>
         <source>Do you really want to restore default values of all options?</source>
-        <translation>本当にすべてのオプションのデフォルト値を復元しますか？</translation>
+        <translation>本当にすべてのオプションをデフォルト値に復元しますか？</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="500"/>
@@ -1663,7 +1663,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="146"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>Never</source>
-        <translation>決して</translation>
+        <translation>常に拒否</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
@@ -1797,7 +1797,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
         <source>Profile was last updated more than one week ago</source>
-        <translation>プロフィールが最後に更新されたのは1週間以上前です</translation>
+        <translation>プロフィールが最後に更新されてから一週間以上経過しています</translation>
     </message>
 </context>
 <context>
@@ -1925,7 +1925,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="112"/>
         <source>Send only for secure connections</source>
-        <translation>安全な接続の場合み送信</translation>
+        <translation>安全な接続の場合のみ送信</translation>
     </message>
     <message>
         <location filename="../../src/ui/CookiePropertiesDialog.ui" line="119"/>
@@ -2792,13 +2792,13 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation><numerusform>%1 x %2 pixels @ %3 bits per pixel in %n frames(s)</numerusform></translation>
+        <translation><numerusform>%1 x %2 ピクセル @ ピクセル当たり %3 ビット in %n フレーム(s)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="81"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation>%1 x %2 pixels @ %3 bits per pixel</translation>
+        <translation>%1 x %2 ピクセル @ ピクセル当たり %3 ビット</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="85"/>
@@ -2841,7 +2841,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="125"/>
         <source>Unable to import selected type.</source>
-        <translation>インポート出来る種類ではありません。</translation>
+        <translation>選択された種類のインポートに失敗しました</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="158"/>
@@ -2916,13 +2916,13 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="38"/>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="41"/>
         <source>Always</source>
-        <translation>常に</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="39"/>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="42"/>
         <source>Never</source>
-        <translation>決して</translation>
+        <translation>常に拒否</translation>
     </message>
 </context>
 <context>
@@ -3220,7 +3220,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="917"/>
         <source>Window - %1</source>
-        <translation>Window - %1</translation>
+        <translation>ウィンドウ - %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="1173"/>
@@ -3231,7 +3231,7 @@ Do you want to save them?</source>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="1188"/>
         <source>%1 (%n tab(s))</source>
-        <translation><numerusform>%1 (%n tab(s))</numerusform></translation>
+        <translation><numerusform>%1 (%n タブ(s))</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3628,7 +3628,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="59"/>
         <source>Imports search engines from Opera Browser version 12 or earlier</source>
-        <translation>Operaブラウザー12以前から、検索エンジンの設定をインポートする</translation>
+        <translation>Ver.12以前のOperaブラウザーから、検索エンジンの設定をインポートする</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSearchEnginesImporter.cpp" line="105"/>
@@ -3687,7 +3687,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
         <source>Allow to duplicate already existing feeds</source>
-        <translation>既存のフィードを複製することを許可する</translation>
+        <translation>既存のフィードの複製を許可</translation>
     </message>
 </context>
 <context>
@@ -3925,7 +3925,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>Always allow</source>
-        <translation>常に許可する</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="72"/>
@@ -4022,12 +4022,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="104"/>
         <source>Open All Pop-Ups from This Website</source>
-        <translation>このウェブサイトから全てのポップアップを開きます。</translation>
+        <translation>このウェブサイトから全てのポップアップを開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="104"/>
         <source>Open Pop-Ups from This Website in Background</source>
-        <translation>背景にこのサイトのポップアップを開きます。</translation>
+        <translation>バックグラウンドにこのサイトのポップアップを開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="104"/>
@@ -4162,7 +4162,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="350"/>
         <source>Show tray icon</source>
-        <translation>通知領域アイコンに表示</translation>
+        <translation>通知領域アイコンを表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
@@ -4248,7 +4248,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="664"/>
         <source>Do not ask for folder, save directly to</source>
-        <translation>フォルダー要求せず、ディレクトリに保存</translation>
+        <translation>フォルダー要求せず、直接保存</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
@@ -4258,7 +4258,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="725"/>
         <source>Pass web address directly to application</source>
-        <translation>アプリケーションに直接ウェブアドレスを渡します。</translation>
+        <translation>アプリケーションに直接ウェブアドレスを渡す</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="775"/>
@@ -4304,7 +4304,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1107"/>
         <source>Select channels from which you want to receive updates:</source>
-        <translation>アップデートを受信する元のチャンネルを選択します:</translation>
+        <translation>更新を受信する元のチャンネルを選択してください:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1149"/>
@@ -4468,7 +4468,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="161"/>
         <source>Enabled</source>
-        <translation>有効です</translation>
+        <translation>有効</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="162"/>
@@ -4870,7 +4870,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="126"/>
         <source>Save files to:</source>
-        <translation>ファイルを次の場所に保存します。:</translation>
+        <translation>ファイルを次の場所に保存:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="141"/>
@@ -4885,7 +4885,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Open new windows in new tabs instead</source>
-        <translation>新しいウィンドウを新しいタブで代わりに開く</translation>
+        <translation>新しいウィンドウの代わりに新しいタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
@@ -5088,13 +5088,13 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="42"/>
         <source>Do not inform websites about my preference</source>
-        <translation>好みのウェブサイトを通知しない(Do not inform websites about my preference)</translation>
+        <translation>何も通知しない(Do not inform websites about my preference)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="53"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="67"/>
         <source>Always</source>
-        <translation>常に</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="54"/>
@@ -5110,12 +5110,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="60"/>
         <source>Expires</source>
-        <translation>有効期限</translation>
+        <translation>クッキーの期限まで</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="61"/>
         <source>Current session is closed</source>
-        <translation>現在のセッションが閉じられました。</translation>
+        <translation>現在のセッションが閉じられた時まで</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="62"/>
@@ -5125,7 +5125,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="69"/>
         <source>Never</source>
-        <translation>決して</translation>
+        <translation>常に拒否</translation>
     </message>
 </context>
 <context>
@@ -5357,7 +5357,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="172"/>
         <source>SOCKS5</source>
-        <translation>接続5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ProxyPropertiesDialog.ui" line="179"/>
@@ -5444,7 +5444,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="583"/>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="623"/>
         <source>Disable JavaScript popups</source>
-        <translation>JavaScriptのポップアップを無効に</translation>
+        <translation>JavaScriptのポップアップを無効にする</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp" line="476"/>
@@ -5596,7 +5596,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="675"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="715"/>
         <source>Disable JavaScript popups</source>
-        <translation>JavaScriptのポップアップを無効に</translation>
+        <translation>JavaScriptのポップアップを無効にする</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="614"/>
@@ -5811,8 +5811,8 @@ Do you want to continue?</source>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation>指定された処理とのセッションは既に存在します。
-あなたは、それを上書きしますか？</translation>
+        <translation>指定された処理のセッションは既に存在します。
+上書きしますか？</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
@@ -6111,7 +6111,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
-        <translation>現在のウィンドウで開くセッション</translation>
+        <translation>現在のウィンドウでセッションを開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
@@ -6135,12 +6135,12 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="98"/>
         <source>Windows</source>
-        <translation>Window</translation>
+        <translation>ウィンドウ</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation><numerusform>%n window(s) (%1)</numerusform></translation>
+        <translation><numerusform>%n つのウィンドウ(s) (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
@@ -6157,7 +6157,7 @@ Do you want to overwrite it?</source>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>残念ながらこのセッションは正しく保存されませんでした。
-セッションを復元しますか？</translation>
+復元しますか？</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="123"/>
@@ -6252,12 +6252,12 @@ Are you sure that you want to restore this session anyway?</source>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>ドキュメントが変更されました。
-変更を保存するか、それらを破棄しますか？</translation>
+変更を保存するか、破棄しますか？</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="300"/>
         <source>Show Line Numbers</source>
-        <translation>行のナンバーを表示</translation>
+        <translation>行の番号を表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="425"/>
@@ -6437,7 +6437,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="122"/>
         <source>Window %1</source>
-        <translation>Window %1</translation>
+        <translation>ウィンドウ %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="132"/>
@@ -7160,7 +7160,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
-        <translation>この種類のファイルを開くときの選択を記憶する</translation>
+        <translation>この種類のファイルでの選択を記憶</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="45"/>
@@ -7322,7 +7322,7 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="447"/>
         <source>Resume</source>
-        <translation>レジュメ</translation>
+        <translation>再開</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="412"/>
@@ -7882,7 +7882,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="190"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="205"/>
         <source>Always</source>
-        <translation>常に</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="136"/>
@@ -8078,7 +8078,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="745"/>
         <source>Allow to enter full screen mode:</source>
-        <translation>フルスクリーンモードを有効に:</translation>
+        <translation>フルスクリーンモードに入ることを許可:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="758"/>
@@ -8160,7 +8160,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Enabled</source>
-        <translation>有効です</translation>
+        <translation>有効</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
@@ -8178,14 +8178,14 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Always</source>
-        <translation>常に</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="117"/>
         <source>Never</source>
-        <translation>決して</translation>
+        <translation>常に拒否</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
@@ -8200,7 +8200,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
         <source>Do not inform websites about my preference</source>
-        <translation>任意のウェブサイトを通知しない(Do not inform websites about my preference)</translation>
+        <translation>何も通知しない(Do not inform websites about my preference)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
@@ -8221,7 +8221,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Current session is closed</source>
-        <translation>現在のセッションが閉じられる</translation>
+        <translation>現在のセッションが閉じられた時まで</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="113"/>
@@ -8483,7 +8483,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="301"/>
         <source>Stay on Top</source>
-        <translation>上に滞在</translation>
+        <translation>上に固定</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
@@ -8705,7 +8705,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Save Link Target As…</source>
-        <translation>リンク対象をファイルに保存...</translation>
+        <translation>リンクをファイルに保存...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="334"/>
@@ -8901,7 +8901,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Go to Page or Search</source>
-        <translation>ページへ移動するか、検索するか</translation>
+        <translation>ページへ移動もしくは検索</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="364"/>
@@ -8911,7 +8911,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Go to Parent Directory</source>
-        <translation>親階層へ移動</translation>
+        <translation>一つ上の階層へ移動</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="366"/>
@@ -8951,7 +8951,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Reload or Stop</source>
-        <translation>読み込むか、停止するか</translation>
+        <translation>読み込むもしくは停止</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="374"/>
@@ -9127,7 +9127,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Enter Move Scroll Mode</source>
-        <translation>動くスクロールモードに入る</translation>
+        <translation>移動スクロールモードに入る</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="409"/>
@@ -9750,7 +9750,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="452"/>
         <source>Closing Windows by JavaScript</source>
-        <translation>JavaScriptでWindowsを閉じています</translation>
+        <translation>JavaScriptでウィンドウを閉じています</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="456"/>
@@ -9776,7 +9776,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="759"/>
         <source>Always Allow</source>
-        <translation>常に許可する</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="763"/>
@@ -9796,7 +9796,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="775"/>
         <source>Always</source>
-        <translation>常に</translation>
+        <translation>常に許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="779"/>
@@ -9831,7 +9831,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="807"/>
         <source>Enabled</source>
-        <translation>有効です</translation>
+        <translation>有効</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="811"/>
@@ -10333,7 +10333,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>File download was completed</source>
-        <translation>ファイルダウンロードが完了した</translation>
+        <translation>ファイルダウンロードが完了しました</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
@@ -10343,7 +10343,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
-        <translation>更新することが可能です</translation>
+        <translation>更新が利用可能です</translation>
     </message>
 </context>
 <context>
@@ -10412,7 +10412,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="197"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation>あなたがアクセスしようとした&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;のアドレスは、現在使用できません。本当に現在のウェブアドレス(URL)が正しいか、スペルチェックするか中断し、ページを再読み込みしてください。</translation>
+        <translation>あなたがアクセスしようとした&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;のアドレスは、現在使用できません。本当に現在のウェブアドレス(URL)が正しいか、スペルをチェックするか中断し、ページを再読み込みしてください。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="201"/>
@@ -10437,12 +10437,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation>任意のインターネットセキュリティソフトウェアのセットアップが正しく、通常のウェブブラウジングに干渉しないことを確認してください。</translation>
+        <translation>インターネットセキュリティソフトウェアのセットアップが正しく、通常のウェブブラウジングに干渉しないことを確認してください。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="205"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation>あなたは、インターネットに接続するためにプロキシを使用し、ページをリロードする必要がある場合は、プロキシサーバーをキーボードのF12キーを押して無効にしてみてください。</translation>
+        <translation>インターネットに接続するためにプロキシを使用し、ページをリロードする必要がある場合は、キーボードのF12キーを押してプロキシサーバーを無効にしてみてください。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="216"/>
