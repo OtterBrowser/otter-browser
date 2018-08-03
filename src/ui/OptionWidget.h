@@ -51,6 +51,7 @@ public:
 	void setSizePolicy(QSizePolicy policy);
 	QVariant getDefaultValue() const;
 	QVariant getValue() const;
+	bool isDefault() const;
 
 protected:
 	void focusInEvent(QFocusEvent *event) override;

@@ -158,7 +158,7 @@ void OptionWidget::markAsModified()
 {
 	if (m_resetButton)
 	{
-		m_resetButton->setEnabled(m_defaultValue != getValue());
+		m_resetButton->setEnabled(!isDefault());
 	}
 
 	emit commitData(this);
@@ -377,6 +377,11 @@ QVariant OptionWidget::getValue() const
 	}
 
 	return {};
+}
+
+bool OptionWidget::isDefault() const
+{
+	return (m_defaultValue == getValue());
 }
 
 }
