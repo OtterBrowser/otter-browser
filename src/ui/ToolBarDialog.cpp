@@ -416,11 +416,11 @@ void ToolBarDialog::editEntry()
 
 		if (identifier == QLatin1String("ClosedWindowsMenu"))
 		{
-			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("user-trash")));
+			iconWidget->setDefaultValue(QLatin1String("user-trash"));
 		}
 		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 		{
-			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("content-blocking")));
+			iconWidget->setDefaultValue(QLatin1String("content-blocking"));
 			textWidget->setDefaultValue(tr("Blocked Elements: {amount}"));
 		}
 		else if (identifier == QLatin1String("MenuButtonWidget"))
@@ -430,7 +430,7 @@ void ToolBarDialog::editEntry()
 		}
 		else if (identifier == QLatin1String("TransfersWidget"))
 		{
-			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("transfers")));
+			iconWidget->setDefaultValue(QLatin1String("transfers"));
 			textWidget->setDefaultValue(tr("Downloads"));
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
