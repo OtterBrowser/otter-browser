@@ -396,7 +396,7 @@ void ToolBarDialog::editEntry()
 
 		connect(optionNameWidget, &OptionWidget::commitData, [&]()
 		{
-			const bool needsReset(textWidget->getDefaultValue() == textWidget->getValue());
+			const bool needsReset(textWidget->isDefault());
 
 			textWidget->setDefaultValue(optionNameWidget->getValue().toString().section(QLatin1Char('/'), -1));
 
