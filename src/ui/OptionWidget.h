@@ -53,6 +53,7 @@ public:
 	bool isDefault() const;
 
 protected:
+	void changeEvent(QEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 
 protected slots:

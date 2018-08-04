@@ -144,6 +144,16 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 	m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
+void OptionWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && m_resetButton)
+	{
+		m_resetButton->setText(tr("Defaults"));
+	}
+}
+
 void OptionWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
