@@ -48,7 +48,6 @@ public:
 	void setChoices(const QStringList &choices);
 	void setChoices(const QVector<SettingsManager::OptionDefinition::Choice> &choices);
 	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
-	void setSizePolicy(QSizePolicy policy);
 	QVariant getDefaultValue() const;
 	QVariant getValue() const;
 	bool isDefault() const;

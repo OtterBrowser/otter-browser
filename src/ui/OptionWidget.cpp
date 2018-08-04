@@ -317,13 +317,6 @@ void OptionWidget::setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Po
 	m_widget->setSizePolicy(horizontal, vertical);
 }
 
-void OptionWidget::setSizePolicy(QSizePolicy policy)
-{
-	QWidget::setSizePolicy(policy);
-
-	m_widget->setSizePolicy(policy);
-}
-
 QVariant OptionWidget::getDefaultValue() const
 {
 	return m_defaultValue;
