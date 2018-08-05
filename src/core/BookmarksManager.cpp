@@ -161,6 +161,15 @@ BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QString &text)
 	return m_model->getBookmarkByKeyword(text);
 }
 
+BookmarksModel::Bookmark* BookmarksManager::getBookmark(const QUrl &url)
+{
+	ensureInitialized();
+
+	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->getBookmarks(url));
+
+	return (bookmarks.isEmpty() ? nullptr : bookmarks.first());
+}
+
 BookmarksModel::Bookmark* BookmarksManager::getBookmark(quint64 identifier)
 {
 	ensureInitialized();

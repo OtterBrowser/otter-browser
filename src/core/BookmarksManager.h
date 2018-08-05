@@ -41,6 +41,7 @@ public:
 	static BookmarksModel* getModel();
 	static BookmarksModel::Bookmark* addBookmark(BookmarksModel::BookmarkType type, const QMap<int, QVariant> &metaData = {}, BookmarksModel::Bookmark *parent = nullptr, int index = -1);
 	static BookmarksModel::Bookmark* getBookmark(const QString &text);
+	static BookmarksModel::Bookmark* getBookmark(const QUrl &url);
 	static BookmarksModel::Bookmark* getBookmark(quint64 identifier);
 	static BookmarksModel::Bookmark* getLastUsedFolder();
 	static QStringList getKeywords();
