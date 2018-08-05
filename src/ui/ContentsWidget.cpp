@@ -185,16 +185,14 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 					break;
 				}
 
-				const QVector<BookmarksModel::Bookmark*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
-
-				if (bookmarks.isEmpty())
+				if (BookmarksManager::hasBookmark(url))
 				{
-					BookmarkPropertiesDialog dialog(url, parameters.value(QLatin1String("title"), getTitle()).toString(), parameters.value(QLatin1String("description"), getDescription()).toString(), nullptr, -1, true, this);
+					BookmarkPropertiesDialog dialog(BookmarksManager::getBookmark(url), this);
 					dialog.exec();
 				}
 				else
 				{
-					BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
+					BookmarkPropertiesDialog dialog(url, parameters.value(QLatin1String("title"), getTitle()).toString(), parameters.value(QLatin1String("description"), getDescription()).toString(), nullptr, -1, true, this);
 					dialog.exec();
 				}
 			}
