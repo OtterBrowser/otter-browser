@@ -147,12 +147,10 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 				QPrintDialog printDialog(&printer, this);
 				printDialog.setWindowTitle(tr("Print Page"));
 
-				if (printDialog.exec() != QDialog::Accepted)
+				if (printDialog.exec() == QDialog::Accepted)
 				{
-					break;
+					print(&printer);
 				}
-
-				print(&printer);
 			}
 
 			break;
