@@ -192,7 +192,7 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 				}
 				else if (!parameters.value(QLatin1String("showDialog"), true).toBool())
 				{
-					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}, {BookmarksModel::TitleRole, parameters.value(QLatin1String("title"), getTitle()).toString()}, {BookmarksModel::DescriptionRole, parameters.value(QLatin1String("description"), getDescription()).toString()}});
+					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, url}, {BookmarksModel::TitleRole, parameters.value(QLatin1String("title"), getTitle()).toString()}, {BookmarksModel::DescriptionRole, parameters.value(QLatin1String("description"), getDescription()).toString()}}, BookmarksManager::getLastUsedFolder());
 				}
 				else
 				{
