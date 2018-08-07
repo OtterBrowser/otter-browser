@@ -84,9 +84,6 @@ public:
 	static bool areWildcardsEnabled();
 	static bool isFraud(const QUrl &url);
 
-public slots:
-	void scheduleSave();
-
 protected:
 	explicit ContentFiltersManager(QObject *parent);
 
@@ -94,6 +91,7 @@ protected:
 	static void ensureInitialized();
 
 protected slots:
+	void scheduleSave();
 	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
