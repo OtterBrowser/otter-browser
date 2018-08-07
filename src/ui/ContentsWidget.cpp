@@ -20,6 +20,7 @@
 #include "ContentsWidget.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ContentsDialog.h"
+#include "MainWindow.h"
 #include "Window.h"
 #include "../core/Application.h"
 
@@ -162,9 +163,9 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 				printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 				printPreviewDialog.setWindowTitle(tr("Print Preview"));
 
-				if (QApplication::activeWindow())
+				if (Application::getActiveWindow())
 				{
-					printPreviewDialog.resize(QApplication::activeWindow()->size());
+					printPreviewDialog.resize(Application::getActiveWindow()->size());
 				}
 
 				connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, this, &ContentsWidget::print);

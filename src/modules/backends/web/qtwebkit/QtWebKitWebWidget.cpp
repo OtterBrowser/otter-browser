@@ -572,9 +572,9 @@ void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
 	printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 	printPreviewDialog.setWindowTitle(tr("Print Preview"));
 
-	if (Application::activeWindow())
+	if (Application::getActiveWindow())
 	{
-		printPreviewDialog.resize(Application::activeWindow()->size());
+		printPreviewDialog.resize(Application::getActiveWindow()->size());
 	}
 
 	connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, frame, &QWebFrame::print);
