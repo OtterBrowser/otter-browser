@@ -523,9 +523,11 @@ ContentFiltersManager::CosmeticFiltersResult ContentFiltersManager::getCosmeticF
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		if (profiles.at(i) >= 0 && profiles.at(i) < m_contentBlockingProfiles.count())
+		const int index(profiles.at(i));
+
+		if (index >= 0 && index < m_contentBlockingProfiles.count())
 		{
-			const CosmeticFiltersResult profileResult(m_contentBlockingProfiles.at(profiles.at(i))->getCosmeticFilters(domains, (mode == DomainOnlyFilters)));
+			const CosmeticFiltersResult profileResult(m_contentBlockingProfiles.at(index)->getCosmeticFilters(domains, (mode == DomainOnlyFilters)));
 
 			result.rules.append(profileResult.rules);
 			result.exceptions.append(profileResult.exceptions);
