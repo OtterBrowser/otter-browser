@@ -70,6 +70,7 @@ protected slots:
 	void updateActions();
 
 private:
+	QStandardItemModel *m_currentEntriesModel;
 	ToolBarsManager::ToolBarDefinition m_definition;
 	Ui::ToolBarDialog *m_ui;
 };

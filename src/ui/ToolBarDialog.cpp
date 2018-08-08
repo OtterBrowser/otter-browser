@@ -35,6 +35,7 @@ namespace Otter
 {
 
 ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition, QWidget *parent) : Dialog(parent),
+	m_currentEntriesModel(new QStandardItemModel(this)),
 	m_definition(definition),
 	m_ui(new Ui::ToolBarDialog)
 {
@@ -210,7 +211,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_ui->availableEntriesItemView->setModel(availableEntriesModel);
 	m_ui->availableEntriesItemView->setFilterRoles({Qt::DisplayRole, IdentifierRole});
 	m_ui->availableEntriesItemView->viewport()->installEventFilter(this);
-	m_ui->currentEntriesItemView->setModel(new QStandardItemModel(this));
+	m_ui->currentEntriesItemView->setModel(m_currentEntriesModel);
 	m_ui->currentEntriesItemView->setFilterRoles({Qt::DisplayRole, IdentifierRole});
 	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeView);
 	m_ui->currentEntriesItemView->setRootIsDecorated(false);
@@ -497,14 +498,7 @@ void ToolBarDialog::editEntry()
 		}
 	}
 
-	QStandardItem *item(createEntry(identifier, options));
-
-	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::DisplayRole);
-	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::ToolTipRole);
-	m_ui->currentEntriesItemView->setData(index, item->data(Qt::DecorationRole), Qt::DecorationRole);
-	m_ui->currentEntriesItemView->setData(index, options, OptionsRole);
-
-	delete item;
+	m_currentEntriesModel->setItemData(index, createEntryData(identifier, options, index.data(ParametersRole).toMap()));
 }
 
 void ToolBarDialog::addBookmark(QAction *action)
