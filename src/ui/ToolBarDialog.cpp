@@ -406,7 +406,7 @@ void ToolBarDialog::editEntry()
 			}
 		});
 	}
-	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier == QLatin1String("TransfersWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
+	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier == QLatin1String("PrivateWindowIndicatorWidget") || identifier == QLatin1String("TransfersWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
 		OptionWidget *iconWidget(new OptionWidget({}, SettingsManager::IconType, &dialog));
 		iconWidget->setObjectName(QLatin1String("icon"));
@@ -427,6 +427,11 @@ void ToolBarDialog::editEntry()
 		{
 			iconWidget->setDefaultValue(ThemesManager::createIcon(QLatin1String("otter-browser"), false));
 			textWidget->setDefaultValue(tr("Menu"));
+		}
+		else if (identifier == QLatin1String("PrivateWindowIndicatorWidget"))
+		{
+			iconWidget->setDefaultValue(QLatin1String("window-private"));
+			textWidget->setDefaultValue(tr("Private Window"));
 		}
 		else if (identifier == QLatin1String("TransfersWidget"))
 		{
@@ -695,6 +700,7 @@ QMap<int, QVariant> ToolBarDialog::createEntryData(const QString &identifier, co
 	}
 	else if (identifier == QLatin1String("PrivateWindowIndicatorWidget"))
 	{
+		entryData[HasOptionsRole] = true;
 		entryData[Qt::DisplayRole] = tr("Private Window Indicator");
 		entryData[Qt::DecorationRole] = ThemesManager::createIcon(QLatin1String("window-private"));
 	}
