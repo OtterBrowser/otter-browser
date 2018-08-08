@@ -478,7 +478,16 @@ void ToolBarDialog::editEntry()
 
 			if (widget)
 			{
-				options[widget->objectName()] = widget->getValue();
+				const QString option(widget->objectName());
+
+				if (widget->isDefault())
+				{
+					options.remove(option);
+				}
+				else
+				{
+					options[option] = widget->getValue();
+				}
 			}
 		}
 	}
