@@ -60,6 +60,7 @@ protected:
 	void addEntry(const ToolBarsManager::ToolBarDefinition::Entry &entry, QStandardItem *parent = nullptr);
 	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = {}, const QVariantMap &parameters = {}) const;
 	ToolBarsManager::ToolBarDefinition::Entry getEntry(QStandardItem *item) const;
+	QMap<int, QVariant> createEntryData(const QString &identifier, const QVariantMap &options = {}, const QVariantMap &parameters = {}) const;
 
 protected slots:
 	void addNewEntry();
