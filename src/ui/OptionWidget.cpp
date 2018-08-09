@@ -137,6 +137,11 @@ OptionWidget::OptionWidget(const QVariant &value, SettingsManager::OptionType ty
 	layout->setMargin(0);
 	layout->addWidget(m_widget);
 
+	if (type == SettingsManager::IconType)
+	{
+		layout->addStretch();
+	}
+
 	setLayout(layout);
 
 	m_widget->setAutoFillBackground(false);
