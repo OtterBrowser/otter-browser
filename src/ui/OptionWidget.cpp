@@ -250,6 +250,7 @@ void OptionWidget::setValue(const QVariant &value)
 	else if (m_lineEditWidget)
 	{
 		m_lineEditWidget->setText((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString());
+		m_lineEditWidget->setCursorPosition(0);
 	}
 	else if (m_spinBox)
 	{
