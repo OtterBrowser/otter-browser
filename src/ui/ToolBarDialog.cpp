@@ -520,11 +520,16 @@ void ToolBarDialog::restoreDefaults()
 
 void ToolBarDialog::showAvailableEntriesContextMenu(const QPoint &position)
 {
-	QMenu menu(this);
+	const QModelIndex index(m_ui->availableEntriesItemView->indexAt(position));
 
-	connect(menu.addAction(tr("Add")), &QAction::triggered, this, &ToolBarDialog::addNewEntry);
+	if (index.isValid())
+	{
+		QMenu menu(this);
 
-	menu.exec(m_ui->availableEntriesItemView->mapToGlobal(position));
+		connect(menu.addAction(tr("Add")), &QAction::triggered, this, &ToolBarDialog::addNewEntry);
+
+		menu.exec(m_ui->availableEntriesItemView->mapToGlobal(position));
+	}
 }
 
 void ToolBarDialog::showCurrentEntriesContextMenu(const QPoint &position)
