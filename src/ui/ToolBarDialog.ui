@@ -227,6 +227,9 @@
             <layout class="QVBoxLayout" name="availableEntriesLayout">
              <item>
               <widget class="Otter::ItemViewWidget" name="availableEntriesItemView">
+               <property name="contextMenuPolicy">
+                <enum>Qt::CustomContextMenu</enum>
+               </property>
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
                </property>

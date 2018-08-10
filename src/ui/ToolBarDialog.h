@@ -67,6 +67,7 @@ protected slots:
 	void editEntry();
 	void addBookmark(QAction *action);
 	void restoreDefaults();
+	void showAvailableEntriesContextMenu(const QPoint &position);
 	void updateActions();
 
 private:
