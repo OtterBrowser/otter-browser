@@ -235,6 +235,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	connect(m_ui->moveUpButton, &QToolButton::clicked, m_ui->currentEntriesItemView, &ItemViewWidget::moveUpRow);
 	connect(m_ui->availableEntriesItemView, &ItemViewWidget::customContextMenuRequested, this, &ToolBarDialog::showAvailableEntriesContextMenu);
 	connect(m_ui->availableEntriesItemView, &ItemViewWidget::needsActionsUpdate, this, &ToolBarDialog::updateActions);
+	connect(m_ui->currentEntriesItemView, &ItemViewWidget::customContextMenuRequested, this, &ToolBarDialog::showCurrentEntriesContextMenu);
 	connect(m_ui->currentEntriesItemView, &ItemViewWidget::needsActionsUpdate, this, &ToolBarDialog::updateActions);
 	connect(m_ui->currentEntriesItemView, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownButton, &QToolButton::setEnabled);
 	connect(m_ui->currentEntriesItemView, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpButton, &QToolButton::setEnabled);
@@ -524,6 +525,15 @@ void ToolBarDialog::showAvailableEntriesContextMenu(const QPoint &position)
 	connect(menu.addAction(tr("Add")), &QAction::triggered, this, &ToolBarDialog::addNewEntry);
 
 	menu.exec(m_ui->availableEntriesItemView->mapToGlobal(position));
+}
+
+void ToolBarDialog::showCurrentEntriesContextMenu(const QPoint &position)
+{
+	QMenu menu(this);
+
+	connect(menu.addAction(tr("Remove")), &QAction::triggered, m_ui->currentEntriesItemView, &ItemViewWidget::removeRow);
+
+	menu.exec(m_ui->currentEntriesItemView->mapToGlobal(position));
 }
 
 void ToolBarDialog::updateActions()

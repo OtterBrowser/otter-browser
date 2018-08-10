@@ -80,6 +80,9 @@
             <layout class="QVBoxLayout" name="currentEntriesLayout">
              <item>
               <widget class="Otter::ItemViewWidget" name="currentEntriesItemView">
+               <property name="contextMenuPolicy">
+                <enum>Qt::CustomContextMenu</enum>
+               </property>
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
                </property>
