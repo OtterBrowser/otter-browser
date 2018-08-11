@@ -535,8 +535,10 @@ void ToolBarDialog::showAvailableEntriesContextMenu(const QPoint &position)
 void ToolBarDialog::showCurrentEntriesContextMenu(const QPoint &position)
 {
 	QMenu menu(this);
+	QAction *removeAction(menu.addAction(tr("Remove")));
+	removeAction->setEnabled(m_ui->removeButton->isEnabled());
 
-	connect(menu.addAction(tr("Remove")), &QAction::triggered, m_ui->currentEntriesItemView, &ItemViewWidget::removeRow);
+	connect(removeAction, &QAction::triggered, m_ui->currentEntriesItemView, &ItemViewWidget::removeRow);
 
 	menu.exec(m_ui->currentEntriesItemView->mapToGlobal(position));
 }
