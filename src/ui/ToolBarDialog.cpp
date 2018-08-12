@@ -125,11 +125,10 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 				for (int i = 0; i < specialPages.count(); ++i)
 				{
-					QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
+					ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(specialPages.at(i))));
 					item->setCheckable(true);
 					item->setCheckState(definition.panels.contains(specialPages.at(i)) ? Qt::Checked : Qt::Unchecked);
 					item->setData(specialPages.at(i), ItemModel::UserRole);
-					item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 					panelsModel->insertRow(item);
 				}
@@ -138,11 +137,10 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 				{
 					if (!specialPages.contains(definition.panels.at(i)))
 					{
-						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(definition.panels.at(i))));
+						ItemModel::Item *item(new ItemModel::Item(SidebarWidget::getPanelTitle(definition.panels.at(i))));
 						item->setCheckable(true);
 						item->setCheckState(Qt::Checked);
 						item->setData(definition.panels.at(i), ItemModel::UserRole);
-						item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 						panelsModel->insertRow(item);
 					}
