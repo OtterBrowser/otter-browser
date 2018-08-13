@@ -537,10 +537,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addSeparator();
 		}
 
-		QAction *removeEntryAction(menu.addAction(tr("Remove this Icon")));
-		removeEntryAction->setData(entry);
-
-		connect(removeEntryAction, &QAction::triggered, this, &AddressWidget::removeEntry);
+		menu.addAction(tr("Remove this Icon"), this, &AddressWidget::removeEntry)->setData(entry);
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
@@ -659,19 +656,18 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						else
 						{
 							QMenu menu;
-							QAction *addBookmarkAction(menu.addAction(tr("Add to Bookmarks")));
-							addBookmarkAction->setShortcut(ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction));
-							addBookmarkAction->setShortcutContext(Qt::WidgetShortcut);
-
-							connect(addBookmarkAction, &QAction::triggered, [&]()
+							QAction *addBookmarkAction(menu.addAction(tr("Add to Bookmarks"), [&]()
 							{
 								if (m_window)
 								{
 									BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), (m_window->getContentsWidget() ? m_window->getContentsWidget()->getDescription() : QString()), nullptr, -1, true, this);
 									dialog.exec();
 								}
-							});
-							connect(menu.addAction(tr("Add to Start Page")), &QAction::triggered, [&]()
+							}));
+							addBookmarkAction->setShortcut(ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction));
+							addBookmarkAction->setShortcutContext(Qt::WidgetShortcut);
+
+							menu.addAction(tr("Add to Start Page"), [&]()
 							{
 								if (m_window)
 								{
