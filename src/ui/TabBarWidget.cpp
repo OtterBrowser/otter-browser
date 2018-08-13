@@ -1639,23 +1639,23 @@ QSize TabBarWidget::tabSizeHint(int index) const
 
 		if (window && window->isPinned())
 		{
-			return QSize(m_minimumTabSize.width(), tabHeight);
+			return {m_minimumTabSize.width(), tabHeight};
 		}
 
 		if (m_tabWidth > 0)
 		{
-			return QSize(m_tabWidth, tabHeight);
+			return {m_tabWidth, tabHeight};
 		}
 
-		return QSize(qBound(m_minimumTabSize.width(), qFloor((rect().width() - (m_pinnedTabsAmount * m_minimumTabSize.width())) / qMax(1, (count() - m_pinnedTabsAmount))), m_maximumTabSize.width()), tabHeight);
+		return {qBound(m_minimumTabSize.width(), qFloor((rect().width() - (m_pinnedTabsAmount * m_minimumTabSize.width())) / qMax(1, (count() - m_pinnedTabsAmount))), m_maximumTabSize.width()), tabHeight};
 	}
 
-	return QSize(m_maximumTabSize.width(), (m_areThumbnailsEnabled ? 200 : m_minimumTabSize.height()));
+	return {m_maximumTabSize.width(), (m_areThumbnailsEnabled ? 200 : m_minimumTabSize.height())};
 }
 
 QSize TabBarWidget::minimumSizeHint() const
 {
-	return QSize(0, 0);
+	return {0, 0};
 }
 
 QSize TabBarWidget::sizeHint() const
@@ -1676,10 +1676,10 @@ QSize TabBarWidget::sizeHint() const
 			size = parentWidget()->width();
 		}
 
-		return QSize(size, tabSizeHint(0).height());
+		return {size, tabSizeHint(0).height()};
 	}
 
-	return QSize(QTabBar::sizeHint().width(), (tabSizeHint(0).height() * count()));
+	return {QTabBar::sizeHint().width(), (tabSizeHint(0).height() * count())};
 }
 
 int TabBarWidget::getDropIndex() const
