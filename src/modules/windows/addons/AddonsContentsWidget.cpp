@@ -429,19 +429,15 @@ void AddonsContentsWidget::showContextMenu(const QPoint &position)
 {
 	const QVector<Addon*> addons(getSelectedAddons());
 	QMenu menu(this);
-
-	connect(menu.addAction(tr("Add Addon…")), &QAction::triggered, this, static_cast<void(AddonsContentsWidget::*)()>(&AddonsContentsWidget::addAddon));
+	menu.addAction(tr("Add Addon…"), this, static_cast<void(AddonsContentsWidget::*)()>(&AddonsContentsWidget::addAddon));
 
 	if (!addons.isEmpty())
 	{
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Open Addon File")), &QAction::triggered, this, &AddonsContentsWidget::openAddon);
-		connect(menu.addAction(tr("Reload Addon")), &QAction::triggered, this, &AddonsContentsWidget::reloadAddon);
-
+		menu.addAction(tr("Open Addon File"), this, &AddonsContentsWidget::openAddon);
+		menu.addAction(tr("Reload Addon"), this, &AddonsContentsWidget::reloadAddon);
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Remove Addon…")), &QAction::triggered, this, &AddonsContentsWidget::removeAddons);
+		menu.addAction(tr("Remove Addon…"), this, &AddonsContentsWidget::removeAddons);
 	}
 
 	menu.exec(m_ui->addonsViewWidget->mapToGlobal(position));
