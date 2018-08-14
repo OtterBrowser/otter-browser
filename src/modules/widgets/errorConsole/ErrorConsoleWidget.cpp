@@ -268,17 +268,12 @@ void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &f
 void ErrorConsoleWidget::showContextMenu(const QPoint &position)
 {
 	QMenu menu(m_ui->consoleView);
-
-	connect(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy")), &QAction::triggered, this, [&]()
+	menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, [&]()
 	{
 		QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
 	});
-
 	menu.addSeparator();
-
-	connect(menu.addAction(tr("Expand All")), &QAction::triggered, m_ui->consoleView, &QTreeView::expandAll);
-	connect(menu.addAction(tr("Collapse All")), &QAction::triggered, m_ui->consoleView, &QTreeView::collapseAll);
-
+	menu.addAction(tr("Expand All"), m_ui->consoleView, &QTreeView::expandAll);	menu.addAction(tr("Collapse All"), m_ui->consoleView, &QTreeView::collapseAll);
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
