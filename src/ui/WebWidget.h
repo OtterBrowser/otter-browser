@@ -49,6 +49,15 @@ class WebWidget : public QWidget, public ActionExecutor
 	Q_OBJECT
 
 public:
+	enum ChangeWatcher
+	{
+		UnknownWatcher,
+		FeedsWatcher,
+		LinksWatcher,
+		SearchEnginesWatcher,
+		StylesheetsWatcher
+	};
+
 	enum ContentState
 	{
 		UnknownContentState = 0,
