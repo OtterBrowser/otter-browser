@@ -51,7 +51,7 @@ class WebWidget : public QWidget, public ActionExecutor
 public:
 	enum ChangeWatcher
 	{
-		UnknownWatcher,
+		UnknownWatcher = 0,
 		FeedsWatcher,
 		LinksWatcher,
 		SearchEnginesWatcher,
