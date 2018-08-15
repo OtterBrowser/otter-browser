@@ -1587,6 +1587,13 @@ bool WebWidget::hasSelection() const
 	return false;
 }
 
+bool WebWidget::hasWatchedData(ChangeWatcher watcher) const
+{
+	Q_UNUSED(watcher)
+
+	return false;
+}
+
 bool WebWidget::isAudible() const
 {
 	return false;
@@ -1599,6 +1606,13 @@ bool WebWidget::isAudioMuted() const
 
 bool WebWidget::isFullScreen() const
 {
+	return false;
+}
+
+bool WebWidget::isWatchingChanges(ChangeWatcher watcher) const
+{
+	Q_UNUSED(watcher)
+
 	return false;
 }
 

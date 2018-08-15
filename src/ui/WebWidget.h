@@ -244,10 +244,12 @@ public:
 	virtual int findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
+	virtual bool hasWatchedData(ChangeWatcher watcher) const;
 	virtual bool isAudible() const;
 	virtual bool isAudioMuted() const;
 	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
+	virtual bool isWatchingChanges(ChangeWatcher watcher) const;
 
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
@@ -341,6 +343,7 @@ signals:
 	void loadingStateChanged(WebWidget::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
+	void watchedDataChanged(ChangeWatcher watcher);
 	void zoomChanged(int zoom);
 	void isAudibleChanged(bool isAudible);
 	void isFullScreenChanged(bool isFullScreen);
