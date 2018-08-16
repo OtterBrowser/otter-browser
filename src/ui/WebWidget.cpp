@@ -104,6 +104,18 @@ void WebWidget::search(const QString &query, const QString &searchEngine)
 	Q_UNUSED(searchEngine)
 }
 
+void WebWidget::startWatchingData(QObject *object, ChangeWatcher watcher)
+{
+	Q_UNUSED(object)
+	Q_UNUSED(watcher)
+}
+
+void WebWidget::stopWatchingData(QObject *object, ChangeWatcher watcher)
+{
+	Q_UNUSED(object)
+	Q_UNUSED(watcher)
+}
+
 void WebWidget::startReloadTimer()
 {
 	const int reloadTime(getOption(SettingsManager::Content_PageReloadTimeOption).toInt());
@@ -472,6 +484,12 @@ void WebWidget::setActiveStyleSheet(const QString &styleSheet)
 void WebWidget::setClickPosition(const QPoint &position)
 {
 	m_clickPosition = position;
+}
+
+void WebWidget::setDataWatchingEnabled(ChangeWatcher watcher, bool isEnabled)
+{
+	Q_UNUSED(watcher)
+	Q_UNUSED(isEnabled)
 }
 
 void WebWidget::setStatusMessage(const QString &message)
