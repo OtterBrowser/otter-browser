@@ -104,13 +104,13 @@ void WebWidget::search(const QString &query, const QString &searchEngine)
 	Q_UNUSED(searchEngine)
 }
 
-void WebWidget::startWatchingData(QObject *object, ChangeWatcher watcher)
+void WebWidget::startWatchingChanges(QObject *object, ChangeWatcher watcher)
 {
 	Q_UNUSED(object)
 	Q_UNUSED(watcher)
 }
 
-void WebWidget::stopWatchingData(QObject *object, ChangeWatcher watcher)
+void WebWidget::stopWatchingChanges(QObject *object, ChangeWatcher watcher)
 {
 	Q_UNUSED(object)
 	Q_UNUSED(watcher)
@@ -486,7 +486,7 @@ void WebWidget::setClickPosition(const QPoint &position)
 	m_clickPosition = position;
 }
 
-void WebWidget::setDataWatchingEnabled(ChangeWatcher watcher, bool isEnabled)
+void WebWidget::setChangesWatchingEnabled(ChangeWatcher watcher, bool isEnabled)
 {
 	Q_UNUSED(watcher)
 	Q_UNUSED(isEnabled)
@@ -1605,7 +1605,7 @@ bool WebWidget::hasSelection() const
 	return false;
 }
 
-bool WebWidget::hasWatchedData(ChangeWatcher watcher) const
+bool WebWidget::hasWatchedChanges(ChangeWatcher watcher) const
 {
 	Q_UNUSED(watcher)
 

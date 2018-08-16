@@ -197,8 +197,8 @@ public:
 
 	virtual void search(const QString &query, const QString &searchEngine);
 	virtual void print(QPrinter *printer) = 0;
-	void startWatchingData(QObject *object, ChangeWatcher watcher);
-	void stopWatchingData(QObject *object, ChangeWatcher watcher);
+	void startWatchingChanges(QObject *object, ChangeWatcher watcher);
+	void stopWatchingChanges(QObject *object, ChangeWatcher watcher);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	void setParent(QWidget *parent);
 	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {});
@@ -246,7 +246,7 @@ public:
 	virtual int findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
-	virtual bool hasWatchedData(ChangeWatcher watcher) const;
+	virtual bool hasWatchedChanges(ChangeWatcher watcher) const;
 	virtual bool isAudible() const;
 	virtual bool isAudioMuted() const;
 	virtual bool isFullScreen() const;
@@ -277,7 +277,7 @@ protected:
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
 	void setClickPosition(const QPoint &position);
-	virtual void setDataWatchingEnabled(ChangeWatcher watcher, bool isEnabled);
+	virtual void setChangesWatchingEnabled(ChangeWatcher watcher, bool isEnabled);
 	QString suggestSaveFileName(const QString &extension) const;
 	QString suggestSaveFileName(SaveFormat format) const;
 	QString getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const;
