@@ -315,6 +315,7 @@ private:
 	QString m_overridingStatusMessage;
 	QPoint m_clickPosition;
 	QHash<int, QVariant> m_options;
+	QHash<ChangeWatcher, QVector<QObject*> > m_changeWatchers;
 	HitTestResult m_hitResult;
 	quint64 m_windowIdentifier;
 	int m_loadingTime;
