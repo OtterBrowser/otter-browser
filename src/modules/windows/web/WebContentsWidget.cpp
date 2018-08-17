@@ -497,7 +497,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					m_quickFindTimer = startTimer(2000);
 				}
 
-				if (SettingsManager::getOption(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
+				if (identifier == ActionsManager::FindAction && m_webWidget->hasSelection())
+				{
+					m_searchBarWidget->setQuery(m_webWidget->getSelectedText());
+				}
+				else if (SettingsManager::getOption(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 				{
 					m_searchBarWidget->setQuery(m_sharedQuickFindQuery);
 				}
