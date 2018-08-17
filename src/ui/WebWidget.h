@@ -251,7 +251,7 @@ public:
 	virtual bool isAudioMuted() const;
 	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
-	virtual bool isWatchingChanges(ChangeWatcher watcher) const;
+	bool isWatchingChanges(ChangeWatcher watcher) const;
 
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;

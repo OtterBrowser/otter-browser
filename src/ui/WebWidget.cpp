@@ -1629,9 +1629,7 @@ bool WebWidget::isFullScreen() const
 
 bool WebWidget::isWatchingChanges(ChangeWatcher watcher) const
 {
-	Q_UNUSED(watcher)
-
-	return false;
+	return m_changeWatchers.contains(watcher);
 }
 
 }
