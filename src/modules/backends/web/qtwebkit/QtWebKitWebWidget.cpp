@@ -2702,6 +2702,13 @@ bool QtWebKitWebWidget::hasSelection() const
 	return (m_page->hasSelection() && !m_page->selectedText().isEmpty());
 }
 
+bool QtWebKitWebWidget::hasWatchedChanges(ChangeWatcher watcher) const
+{
+	Q_UNUSED(watcher)
+
+	return true;
+}
+
 bool QtWebKitWebWidget::isAudible() const
 {
 	return m_page->recentlyAudible();
