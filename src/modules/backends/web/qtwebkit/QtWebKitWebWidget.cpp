@@ -547,6 +547,10 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
+	emit watchedDataChanged(FeedsWatcher);
+	emit watchedDataChanged(LinksWatcher);
+	emit watchedDataChanged(SearchEnginesWatcher);
+	emit watchedDataChanged(StylesheetsWatcher);
 }
 
 void QtWebKitWebWidget::handleViewSourceReplyFinished()
