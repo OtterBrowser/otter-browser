@@ -1563,35 +1563,28 @@ QStringList QtWebEngineWebWidget::getStyleSheets() const
 	return m_styleSheets;
 }
 
-QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::processLinks(const QVariantList &rawLinks) const
 {
-	return m_feeds;
-}
-
-QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query) const
-{
-	const QVariant result(m_page->runScriptFile(QLatin1String("getLinks"), {query}));
 	QVector<LinkUrl> links;
+	links.reserve(rawLinks.count());
 
-	if (result.isValid())
+	for (int i = 0; i < rawLinks.count(); ++i)
 	{
-		const QVariantList rawLinks(result.toList());
+		const QVariantHash rawLink(rawLinks.at(i).toHash());
+		LinkUrl link;
+		link.title = rawLink.value(QLatin1String("title")).toString();
+		link.mimeType = rawLink.value(QLatin1String("mimeType")).toString();
+		link.url = QUrl(rawLink.value(QLatin1String("url")).toString());
 
-		links.reserve(rawLinks.count());
-
-		for (int i = 0; i < rawLinks.count(); ++i)
-		{
-			const QVariantHash rawLink(rawLinks.at(i).toHash());
-			LinkUrl link;
-			link.title = rawLink.value(QLatin1String("title")).toString();
-			link.mimeType = rawLink.value(QLatin1String("mimeType")).toString();
-			link.url = QUrl(rawLink.value(QLatin1String("url")).toString());
-
-			links.append(link);
-		}
+		links.append(link);
 	}
 
 	return links;
+}
+
+QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
+{
+	return m_feeds;
 }
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
