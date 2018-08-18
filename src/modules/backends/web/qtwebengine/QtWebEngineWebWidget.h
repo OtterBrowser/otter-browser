@@ -162,6 +162,10 @@ private:
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
+	QStringList m_styleSheets;
+	QVector<LinkUrl> m_feeds;
+	QVector<LinkUrl> m_links;
+	QVector<LinkUrl> m_searchEngines;
 	LoadingState m_loadingState;
 	TrileanValue m_canGoForwardValue;
 	int m_documentLoadingProgress;

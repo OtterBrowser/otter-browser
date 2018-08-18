@@ -1560,12 +1560,12 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 QStringList QtWebEngineWebWidget::getStyleSheets() const
 {
-	return m_page->runScriptFile(QLatin1String("getStyleSheets")).toStringList();
+	return m_styleSheets;
 }
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getFeeds() const
 {
-	return getLinks(QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']"));
+	return m_feeds;
 }
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query) const
@@ -1596,12 +1596,12 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks(const QString &query)
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getLinks() const
 {
-	return getLinks(QLatin1String("a[href]"));
+	return m_links;
 }
 
 QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getSearchEngines() const
 {
-	return getLinks(QLatin1String("link[type=\\'application/opensearchdescription+xml\\']"));
+	return m_searchEngines;
 }
 
 QMultiMap<QString, QString> QtWebEngineWebWidget::getMetaData() const
