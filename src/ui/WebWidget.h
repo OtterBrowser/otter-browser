@@ -54,6 +54,7 @@ public:
 		UnknownWatcher = 0,
 		FeedsWatcher,
 		LinksWatcher,
+		MetaDataWatcher,
 		SearchEnginesWatcher,
 		StylesheetsWatcher
 	};
