@@ -248,6 +248,46 @@ void QtWebEngineWebWidget::pageLoadFinished()
 		emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
 	});
 
+	if (isWatchingChanges(FeedsWatcher))
+	{
+		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']")}), [&](const QVariant &result)
+		{
+			m_feeds = processLinks(result.toList());
+
+			emit watchedDataChanged(FeedsWatcher);
+		});
+	}
+
+	if (isWatchingChanges(LinksWatcher))
+	{
+		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[href]")}), [&](const QVariant &result)
+		{
+			m_links = processLinks(result.toList());
+
+			emit watchedDataChanged(LinksWatcher);
+		});
+	}
+
+	if (isWatchingChanges(SearchEnginesWatcher))
+	{
+		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("link[type=\\'application/opensearchdescription+xml\\']")}), [&](const QVariant &result)
+		{
+			m_searchEngines = processLinks(result.toList());
+
+			emit watchedDataChanged(SearchEnginesWatcher);
+		});
+	}
+
+	if (isWatchingChanges(StylesheetsWatcher))
+	{
+		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getStyleSheets")), [&](const QVariant &result)
+		{
+			m_styleSheets = result.toStringList();
+
+			emit watchedDataChanged(StylesheetsWatcher);
+		});
+	}
+
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
 }
