@@ -268,6 +268,26 @@ void QtWebEngineWebWidget::pageLoadFinished()
 		});
 	}
 
+	if (isWatchingChanges(MetaDataWatcher))
+	{
+		m_page->runJavaScript(QLatin1String("var elements = document.querySelectorAll('meta'); var metaData = []; for (var i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;"), [&](const QVariant &result)
+		{
+			QMultiMap<QString, QString> metaData;
+			const QVariantList rawMetaData(result.toList());
+
+			for (int i = 0; i < rawMetaData.count(); ++i)
+			{
+				const QVariantHash entry(rawMetaData.at(i).toHash());
+
+				metaData.insertMulti(entry.value(QLatin1String("key")).toString(), entry.value(QLatin1String("value")).toString());
+			}
+
+			m_metaData = metaData;
+
+			emit watchedDataChanged(MetaDataWatcher);
+		});
+	}
+
 	if (isWatchingChanges(SearchEnginesWatcher))
 	{
 		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("link[type=\\'application/opensearchdescription+xml\\']")}), [&](const QVariant &result)
@@ -1639,17 +1659,7 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getSearchEngines() const
 
 QMultiMap<QString, QString> QtWebEngineWebWidget::getMetaData() const
 {
-	QMultiMap<QString, QString> metaData;
-	const QVariantList rawMetaData(m_page->runScriptSource(QLatin1String("var elements = document.querySelectorAll('meta'); var metaData = []; for (var i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;")).toList());
-
-	for (int i = 0; i < rawMetaData.count(); ++i)
-	{
-		const QVariantHash metaDataEntry(rawMetaData.at(i).toHash());
-
-		metaData.insertMulti(metaDataEntry.value(QLatin1String("key")).toString(), metaDataEntry.value(QLatin1String("value")).toString());
-	}
-
-	return metaData;
+	return m_metaData;
 }
 
 WebWidget::LoadingState QtWebEngineWebWidget::getLoadingState() const

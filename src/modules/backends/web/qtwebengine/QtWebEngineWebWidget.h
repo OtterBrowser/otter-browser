@@ -162,6 +162,7 @@ private:
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
+	QMultiMap<QString, QString> m_metaData;
 	QStringList m_styleSheets;
 	QVector<LinkUrl> m_feeds;
 	QVector<LinkUrl> m_links;
