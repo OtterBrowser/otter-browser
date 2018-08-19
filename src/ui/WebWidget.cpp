@@ -359,6 +359,12 @@ void WebWidget::updateHitTestResult(const QPoint &position)
 	m_hitResult = getHitTestResult(position);
 }
 
+void WebWidget::updateWatchedData(ChangeWatcher watcher, bool isEnabled)
+{
+	Q_UNUSED(watcher)
+	Q_UNUSED(isEnabled)
+}
+
 void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
 	if (m_parent)
@@ -484,12 +490,6 @@ void WebWidget::setActiveStyleSheet(const QString &styleSheet)
 void WebWidget::setClickPosition(const QPoint &position)
 {
 	m_clickPosition = position;
-}
-
-void WebWidget::setChangesWatchingEnabled(ChangeWatcher watcher, bool isEnabled)
-{
-	Q_UNUSED(watcher)
-	Q_UNUSED(isEnabled)
 }
 
 void WebWidget::setStatusMessage(const QString &message)

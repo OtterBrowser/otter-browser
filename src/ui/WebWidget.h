@@ -277,8 +277,8 @@ protected:
 	void startTransfer(Transfer *transfer);
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
+	virtual void updateWatchedData(ChangeWatcher watcher, bool isEnabled);
 	void setClickPosition(const QPoint &position);
-	virtual void setChangesWatchingEnabled(ChangeWatcher watcher, bool isEnabled);
 	QString suggestSaveFileName(const QString &extension) const;
 	QString suggestSaveFileName(SaveFormat format) const;
 	QString getSavePath(const QVector<SaveFormat> &allowedFormats, SaveFormat *selectedFormat) const;
