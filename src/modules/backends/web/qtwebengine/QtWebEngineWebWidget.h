@@ -141,8 +141,8 @@ protected:
 	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:
-	void pageLoadStarted();
-	void pageLoadFinished();
+	void handleLoadStarted();
+	void handleLoadFinished();
 	void handleViewSourceReplyFinished();
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);

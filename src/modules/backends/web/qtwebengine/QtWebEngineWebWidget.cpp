@@ -82,8 +82,8 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 
 		emit pageInformationChanged(DocumentLoadingProgressInformation, progress);
 	});
-	connect(m_page, &QtWebEnginePage::loadStarted, this, &QtWebEngineWebWidget::pageLoadStarted);
-	connect(m_page, &QtWebEnginePage::loadFinished, this, &QtWebEngineWebWidget::pageLoadFinished);
+	connect(m_page, &QtWebEnginePage::loadStarted, this, &QtWebEngineWebWidget::handleLoadStarted);
+	connect(m_page, &QtWebEnginePage::loadFinished, this, &QtWebEngineWebWidget::handleLoadFinished);
 	connect(m_page, &QtWebEnginePage::linkHovered, this, &QtWebEngineWebWidget::setStatusMessageOverride);
 	connect(m_page, &QtWebEnginePage::iconChanged, this, &QtWebEngineWebWidget::notifyIconChanged);
 	connect(m_page, &QtWebEnginePage::requestedPopupWindow, this, &QtWebEngineWebWidget::requestedPopupWindow);
@@ -217,49 +217,6 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 	});
 
 	eventLoop.exec();
-}
-
-void QtWebEngineWebWidget::pageLoadStarted()
-{
-	m_lastUrlClickTime = QDateTime();
-	m_loadingState = OngoingLoadingState;
-	m_documentLoadingProgress = 0;
-
-	setStatusMessage({});
-	setStatusMessageOverride({});
-
-	emit geometryChanged();
-	emit loadingStateChanged(OngoingLoadingState);
-	emit pageInformationChanged(DocumentLoadingProgressInformation, 0);
-}
-
-void QtWebEngineWebWidget::pageLoadFinished()
-{
-	m_loadingState = FinishedLoadingState;
-	m_canGoForwardValue = UnknownValue;
-
-	notifyNavigationActionsChanged();
-	startReloadTimer();
-
-	m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
-	{
-		m_canGoForwardValue = (result.toBool() ? TrueValue : FalseValue);
-
-		emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
-	});
-
-	const QVector<ChangeWatcher> watchers({FeedsWatcher, LinksWatcher, MetaDataWatcher, SearchEnginesWatcher, StylesheetsWatcher});
-
-	for (int i = 0; i < watchers.count(); ++i)
-	{
-		if (isWatchingChanges(watchers.at(i)))
-		{
-			updateWatchedData(watchers.at(i));
-		}
-	}
-
-	emit contentStateChanged(getContentState());
-	emit loadingStateChanged(FinishedLoadingState);
 }
 
 void QtWebEngineWebWidget::clearOptions()
@@ -991,6 +948,49 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		default:
 			break;
 	}
+}
+
+void QtWebEngineWebWidget::handleLoadStarted()
+{
+	m_lastUrlClickTime = QDateTime();
+	m_loadingState = OngoingLoadingState;
+	m_documentLoadingProgress = 0;
+
+	setStatusMessage({});
+	setStatusMessageOverride({});
+
+	emit geometryChanged();
+	emit loadingStateChanged(OngoingLoadingState);
+	emit pageInformationChanged(DocumentLoadingProgressInformation, 0);
+}
+
+void QtWebEngineWebWidget::handleLoadFinished()
+{
+	m_loadingState = FinishedLoadingState;
+	m_canGoForwardValue = UnknownValue;
+
+	notifyNavigationActionsChanged();
+	startReloadTimer();
+
+	m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
+	{
+		m_canGoForwardValue = (result.toBool() ? TrueValue : FalseValue);
+
+		emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
+	});
+
+	const QVector<ChangeWatcher> watchers({FeedsWatcher, LinksWatcher, MetaDataWatcher, SearchEnginesWatcher, StylesheetsWatcher});
+
+	for (int i = 0; i < watchers.count(); ++i)
+	{
+		if (isWatchingChanges(watchers.at(i)))
+		{
+			updateWatchedData(watchers.at(i));
+		}
+	}
+
+	emit contentStateChanged(getContentState());
+	emit loadingStateChanged(FinishedLoadingState);
 }
 
 void QtWebEngineWebWidget::handleViewSourceReplyFinished()

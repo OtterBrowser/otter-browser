@@ -321,7 +321,7 @@ QtWebEngineWebWidget* QtWebEnginePage::createWidget(SessionsManager::OpenHints h
 		widget = new QtWebEngineWebWidget({}, nullptr, nullptr);
 	}
 
-	widget->pageLoadStarted();
+	widget->handleLoadStarted();
 
 	emit requestedNewWindow(widget, hints, {});
 
