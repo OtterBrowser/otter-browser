@@ -120,8 +120,10 @@ void WebWidget::startWatchingChanges(QObject *object, ChangeWatcher watcher)
 
 void WebWidget::stopWatchingChanges(QObject *object, ChangeWatcher watcher)
 {
-	Q_UNUSED(object)
-	Q_UNUSED(watcher)
+	if (m_changeWatchers.contains(watcher))
+	{
+		m_changeWatchers[watcher].removeAll(object);
+	}
 }
 
 void WebWidget::startReloadTimer()
