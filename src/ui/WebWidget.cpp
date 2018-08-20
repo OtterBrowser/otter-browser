@@ -359,10 +359,9 @@ void WebWidget::updateHitTestResult(const QPoint &position)
 	m_hitResult = getHitTestResult(position);
 }
 
-void WebWidget::updateWatchedData(ChangeWatcher watcher, bool isEnabled)
+void WebWidget::updateWatchedData(ChangeWatcher watcher)
 {
 	Q_UNUSED(watcher)
-	Q_UNUSED(isEnabled)
 }
 
 void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
