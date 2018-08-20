@@ -117,6 +117,7 @@ protected:
 	void focusInEvent(QFocusEvent *event) override;
 	void ensureInitialized();
 	void updateOptions(const QUrl &url);
+	void updateWatchedData(ChangeWatcher watcher) override;
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QWebEnginePage* getPage() const;

@@ -248,64 +248,14 @@ void QtWebEngineWebWidget::pageLoadFinished()
 		emit arbitraryActionsStateChanged({ActionsManager::FastForwardAction});
 	});
 
-	if (isWatchingChanges(FeedsWatcher))
+	const QVector<ChangeWatcher> watchers({FeedsWatcher, LinksWatcher, MetaDataWatcher, SearchEnginesWatcher, StylesheetsWatcher});
+
+	for (int i = 0; i < watchers.count(); ++i)
 	{
-		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']")}), [&](const QVariant &result)
+		if (isWatchingChanges(watchers.at(i)))
 		{
-			m_feeds = processLinks(result.toList());
-
-			emit watchedDataChanged(FeedsWatcher);
-		});
-	}
-
-	if (isWatchingChanges(LinksWatcher))
-	{
-		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[href]")}), [&](const QVariant &result)
-		{
-			m_links = processLinks(result.toList());
-
-			emit watchedDataChanged(LinksWatcher);
-		});
-	}
-
-	if (isWatchingChanges(MetaDataWatcher))
-	{
-		m_page->runJavaScript(QLatin1String("var elements = document.querySelectorAll('meta'); var metaData = []; for (var i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;"), [&](const QVariant &result)
-		{
-			QMultiMap<QString, QString> metaData;
-			const QVariantList rawMetaData(result.toList());
-
-			for (int i = 0; i < rawMetaData.count(); ++i)
-			{
-				const QVariantHash entry(rawMetaData.at(i).toHash());
-
-				metaData.insertMulti(entry.value(QLatin1String("key")).toString(), entry.value(QLatin1String("value")).toString());
-			}
-
-			m_metaData = metaData;
-
-			emit watchedDataChanged(MetaDataWatcher);
-		});
-	}
-
-	if (isWatchingChanges(SearchEnginesWatcher))
-	{
-		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("link[type=\\'application/opensearchdescription+xml\\']")}), [&](const QVariant &result)
-		{
-			m_searchEngines = processLinks(result.toList());
-
-			emit watchedDataChanged(SearchEnginesWatcher);
-		});
-	}
-
-	if (isWatchingChanges(StylesheetsWatcher))
-	{
-		m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getStyleSheets")), [&](const QVariant &result)
-		{
-			m_styleSheets = result.toStringList();
-
-			emit watchedDataChanged(StylesheetsWatcher);
-		});
+			updateWatchedData(watchers.at(i));
+		}
 	}
 
 	emit contentStateChanged(getContentState());
@@ -1248,6 +1198,70 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
 	{
 		connect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
+	}
+}
+
+void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
+{
+	switch (watcher)
+	{
+		case FeedsWatcher:
+			m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[type=\\'application/atom+xml\\'], a[type=\\'application/rss+xml\\'], link[type=\\'application/atom+xml\\'], link[type=\\'application/rss+xml\\']")}), [&](const QVariant &result)
+			{
+				m_feeds = processLinks(result.toList());
+
+				emit watchedDataChanged(FeedsWatcher);
+			});
+
+			break;
+		case LinksWatcher:
+			m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("a[href]")}), [&](const QVariant &result)
+			{
+				m_links = processLinks(result.toList());
+
+				emit watchedDataChanged(LinksWatcher);
+			});
+
+			break;
+		case MetaDataWatcher:
+			m_page->runJavaScript(QLatin1String("var elements = document.querySelectorAll('meta'); var metaData = []; for (var i = 0; i < elements.length; ++i) { if (elements[i].name !== '') { metaData.push({key: elements[i].name, value: elements[i].content}); } } metaData;"), [&](const QVariant &result)
+			{
+				QMultiMap<QString, QString> metaData;
+				const QVariantList rawMetaData(result.toList());
+
+				for (int i = 0; i < rawMetaData.count(); ++i)
+				{
+					const QVariantHash entry(rawMetaData.at(i).toHash());
+
+					metaData.insertMulti(entry.value(QLatin1String("key")).toString(), entry.value(QLatin1String("value")).toString());
+				}
+
+				m_metaData = metaData;
+
+				emit watchedDataChanged(MetaDataWatcher);
+			});
+
+			break;
+		case SearchEnginesWatcher:
+			m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getLinks"), {QLatin1String("link[type=\\'application/opensearchdescription+xml\\']")}), [&](const QVariant &result)
+			{
+				m_searchEngines = processLinks(result.toList());
+
+				emit watchedDataChanged(SearchEnginesWatcher);
+			});
+
+			break;
+		case StylesheetsWatcher:
+			m_page->runJavaScript(m_page->createScriptSource(QLatin1String("getStyleSheets")), [&](const QVariant &result)
+			{
+				m_styleSheets = result.toStringList();
+
+				emit watchedDataChanged(StylesheetsWatcher);
+			});
+
+			break;
+		default:
+			break;
 	}
 }
 
