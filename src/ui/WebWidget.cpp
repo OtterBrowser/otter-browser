@@ -116,6 +116,15 @@ void WebWidget::startWatchingChanges(QObject *object, ChangeWatcher watcher)
 	{
 		m_changeWatchers[watcher].append(object);
 	}
+	else
+	{
+		return;
+	}
+
+	connect(object, &QObject::destroyed, this, [=]()
+	{
+		stopWatchingChanges(object, watcher);
+	});
 }
 
 void WebWidget::stopWatchingChanges(QObject *object, ChangeWatcher watcher)
