@@ -106,8 +106,16 @@ void WebWidget::search(const QString &query, const QString &searchEngine)
 
 void WebWidget::startWatchingChanges(QObject *object, ChangeWatcher watcher)
 {
-	Q_UNUSED(object)
-	Q_UNUSED(watcher)
+	if (!m_changeWatchers.contains(watcher))
+	{
+		m_changeWatchers[watcher] = {object};
+
+		updateWatchedData(watcher);
+	}
+	else if (!m_changeWatchers[watcher].contains(object))
+	{
+		m_changeWatchers[watcher].append(object);
+	}
 }
 
 void WebWidget::stopWatchingChanges(QObject *object, ChangeWatcher watcher)
