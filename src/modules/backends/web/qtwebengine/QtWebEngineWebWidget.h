@@ -117,6 +117,7 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 	void ensureInitialized();
+	void notifyWatchedDataChanged(ChangeWatcher watcher);
 	void updateOptions(const QUrl &url);
 	void updateWatchedData(ChangeWatcher watcher) override;
 	void setHistory(QDataStream &stream);

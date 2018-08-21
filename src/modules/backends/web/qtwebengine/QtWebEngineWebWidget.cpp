@@ -1181,6 +1181,18 @@ void QtWebEngineWebWidget::notifyNavigationActionsChanged()
 	}
 }
 
+void QtWebEngineWebWidget::notifyWatchedDataChanged(ChangeWatcher watcher)
+{
+	if (watcher >= m_watchedChanges.count())
+	{
+		m_watchedChanges.resize(watcher + 1);
+	}
+
+	m_watchedChanges[watcher] = true;
+
+	emit watchedDataChanged(watcher);
+}
+
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
@@ -1216,7 +1228,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 			{
 				m_feeds = processLinks(result.toList());
 
-				emit watchedDataChanged(FeedsWatcher);
+				notifyWatchedDataChanged(FeedsWatcher);
 			});
 
 			break;
@@ -1225,7 +1237,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 			{
 				m_links = processLinks(result.toList());
 
-				emit watchedDataChanged(LinksWatcher);
+				notifyWatchedDataChanged(LinksWatcher);
 			});
 
 			break;
@@ -1244,7 +1256,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 
 				m_metaData = metaData;
 
-				emit watchedDataChanged(MetaDataWatcher);
+				notifyWatchedDataChanged(MetaDataWatcher);
 			});
 
 			break;
@@ -1253,7 +1265,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 			{
 				m_searchEngines = processLinks(result.toList());
 
-				emit watchedDataChanged(SearchEnginesWatcher);
+				notifyWatchedDataChanged(SearchEnginesWatcher);
 			});
 
 			break;
@@ -1262,7 +1274,7 @@ void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
 			{
 				m_styleSheets = result.toStringList();
 
-				emit watchedDataChanged(StylesheetsWatcher);
+				notifyWatchedDataChanged(StylesheetsWatcher);
 			});
 
 			break;
