@@ -953,6 +953,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 void QtWebEngineWebWidget::handleLoadStarted()
 {
 	m_lastUrlClickTime = QDateTime();
+	m_metaData.clear();
+	m_styleSheets.clear();
+	m_feeds.clear();
+	m_links.clear();
+	m_searchEngines.clear();
 	m_loadingState = OngoingLoadingState;
 	m_documentLoadingProgress = 0;
 
