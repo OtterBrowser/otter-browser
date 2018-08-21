@@ -958,6 +958,7 @@ void QtWebEngineWebWidget::handleLoadStarted()
 	m_feeds.clear();
 	m_links.clear();
 	m_searchEngines.clear();
+	m_watchedChanges.clear();
 	m_loadingState = OngoingLoadingState;
 	m_documentLoadingProgress = 0;
 
@@ -1777,6 +1778,11 @@ bool QtWebEngineWebWidget::canViewSource() const
 bool QtWebEngineWebWidget::hasSelection() const
 {
 	return (m_page->hasSelection() && !m_page->selectedText().isEmpty());
+}
+
+bool QtWebEngineWebWidget::hasWatchedChanges(WebWidget::ChangeWatcher watcher) const
+{
+	return m_watchedChanges.value(watcher, false);
 }
 
 bool QtWebEngineWebWidget::isAudible() const

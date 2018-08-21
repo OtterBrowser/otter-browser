@@ -91,6 +91,7 @@ public:
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
+	bool hasWatchedChanges(ChangeWatcher watcher) const override;
 	bool isAudible() const override;
 	bool isAudioMuted() const override;
 	bool isFullScreen() const override;
@@ -168,6 +169,7 @@ private:
 	QVector<LinkUrl> m_feeds;
 	QVector<LinkUrl> m_links;
 	QVector<LinkUrl> m_searchEngines;
+	QVector<bool> m_watchedChanges;
 	LoadingState m_loadingState;
 	TrileanValue m_canGoForwardValue;
 	int m_documentLoadingProgress;
