@@ -523,6 +523,14 @@ void SearchWidget::handleWindowOptionChanged(int identifier, const QVariant &val
 	}
 }
 
+void SearchWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
+{
+	if (watcher == WebWidget::SearchEnginesWatcher)
+	{
+		handleLoadingStateChanged();
+	}
+}
+
 void SearchWidget::handleLoadingStateChanged()
 {
 	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
@@ -745,6 +753,11 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
+
+		if (m_window->getWebWidget())
+		{
+			connect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
+		}
 	}
 
 	m_window = window;
@@ -768,6 +781,11 @@ void SearchWidget::setWindow(Window *window)
 				setWindow(nullptr);
 			}
 		});
+
+		if (window->getWebWidget())
+		{
+			connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
+		}
 
 		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
