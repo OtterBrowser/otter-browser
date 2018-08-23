@@ -912,6 +912,16 @@ void AddressWidget::handleActionsStateChanged(const QVector<int> &identifiers)
 	}
 }
 
+void AddressWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
+{
+	if (watcher == WebWidget::FeedsWatcher)
+	{
+		m_hasFeeds = (m_window && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty());
+
+		updateGeometries();
+	}
+}
+
 void AddressWidget::handleLoadingStateChanged()
 {
 	m_hasFeeds = (m_window && m_window->getWebWidget() && !m_window->getWebWidget()->getFeeds().isEmpty());
@@ -1295,6 +1305,11 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), &Window::arbitraryActionsStateChanged, this, &AddressWidget::handleActionsStateChanged);
 		disconnect(m_window.data(), &Window::contentStateChanged, this, &AddressWidget::updateGeometries);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &AddressWidget::handleLoadingStateChanged);
+
+		if (m_window->getWebWidget())
+		{
+			disconnect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &AddressWidget::handleWatchedDataChanged);
+		}
 	}
 
 	m_window = window;
@@ -1329,6 +1344,11 @@ void AddressWidget::setWindow(Window *window)
 				setWindow(nullptr);
 			}
 		});
+
+		if (window->getWebWidget())
+		{
+			connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &AddressWidget::handleWatchedDataChanged);
+		}
 
 		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 

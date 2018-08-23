@@ -24,6 +24,7 @@
 
 #include "../../../core/SessionsManager.h"
 #include "../../../ui/LineEditWidget.h"
+#include "../../../ui/WebWidget.h"
 
 #include <QtCore/QPointer>
 #include <QtCore/QUrl>
@@ -137,6 +138,7 @@ protected slots:
 	void removeEntry();
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleActionsStateChanged(const QVector<int> &identifiers);
+	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
 	void handleLoadingStateChanged();
 	void updateGeometries();
 	void updateCompletion(bool isTypedHistory);
