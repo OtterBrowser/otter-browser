@@ -756,6 +756,8 @@ void SearchWidget::setWindow(Window *window)
 
 		if (m_window->getWebWidget())
 		{
+			m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::SearchEnginesWatcher);
+
 			connect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
 		}
 	}
@@ -784,6 +786,8 @@ void SearchWidget::setWindow(Window *window)
 
 		if (window->getWebWidget())
 		{
+			window->getWebWidget()->startWatchingChanges(this, WebWidget::SearchEnginesWatcher);
+
 			connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
 		}
 
