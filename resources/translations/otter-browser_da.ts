@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(ukendt)</translation>
     </message>
 </context>
 <context>
@@ -1806,12 +1806,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ukendt</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
@@ -1821,37 +1821,37 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Sidste opdatering</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Reklamer</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Gener</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Privatliv</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Socialt</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Regionalt</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Andet</translation>
     </message>
 </context>
 <context>
@@ -2182,12 +2182,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Mappe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nyt…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
@@ -2240,7 +2240,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Mappenavn</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
@@ -2292,7 +2292,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="194"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Spørgsmål</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
@@ -2302,7 +2302,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vil du fortsætte?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
@@ -2518,7 +2518,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
@@ -2528,7 +2528,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Spørgsmål</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
@@ -3292,12 +3292,12 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Flyt op</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Flyt ned</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
@@ -3654,7 +3654,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
         <source>OPML files (*.opml)</source>
-        <translation type="unfinished"/>
+        <translation>OPML-filer (*.opml)</translation>
     </message>
 </context>
 <context>
@@ -3667,7 +3667,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Ny…</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
