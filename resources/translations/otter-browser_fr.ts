@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Inconnu)</translation>
     </message>
 </context>
 <context>
@@ -532,12 +532,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="215"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>N&apos;a pas réussi à comprendre le fichier du flux : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="226"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>N&apos;a pas réussi à comprendre le fichier du flux : pas d&apos;entrée valide trouvé</translation>
     </message>
 </context>
 <context>
@@ -1806,62 +1806,62 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="197"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Règles personnalisées</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Failed to remove content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Erreur lors de la suppression du fichier de profile du bloqueur de contenu : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="318"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Inconnu</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titre</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervalle de mise à jour</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Dernière mise à jour</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Publicités</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Gêne</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Vie privée</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Social</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Régional</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Autre</translation>
     </message>
 </context>
 <context>
@@ -2175,12 +2175,12 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="322"/>
         <source>Failed to parse feed: invalid feed type</source>
-        <translation type="unfinished"/>
+        <translation>N&apos;a pas réussi à comprendre le fichier du flux : type de flux invalide</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedsManager.cpp" line="332"/>
         <source>Failed to download feed</source>
-        <translation type="unfinished"/>
+        <translation>N&apos;a pas réussi à télécharger le flux</translation>
     </message>
 </context>
 <context>
@@ -2188,17 +2188,17 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="14"/>
         <source>Edit Feed</source>
-        <translation type="unfinished"/>
+        <translation>Modifier le flux</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Dossier :</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="44"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nouveau…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="53"/>
@@ -2233,7 +2233,7 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="50"/>
         <source>Add Feed</source>
-        <translation type="unfinished"/>
+        <translation>Ajouter un flux</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.cpp" line="80"/>
@@ -2251,12 +2251,12 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nom du dossier</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedsComboBoxWidget.cpp" line="41"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Choisir le nom du nouveau dossier :</translation>
     </message>
 </context>
 <context>
@@ -2303,17 +2303,17 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="194"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Question</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="195"/>
         <source>You already subscribed this feed.</source>
-        <translation type="unfinished"/>
+        <translation>Vous êtes déjà abonné à ce flux</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="196"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous continuer ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
@@ -2529,22 +2529,22 @@ Voulez-vous les enregistrer ?</translation>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Un profile avec cette adresse existe déjà.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Question</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous ajouter ce profile de blocage de contenu ?</translation>
     </message>
 </context>
 <context>
@@ -3304,12 +3304,12 @@ Voulez-vous effectuer cette migration ?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Monter</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Descendre</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
@@ -3660,17 +3660,17 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="84"/>
         <source>OPML Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Flux OPML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="89"/>
         <source>Imports feeds from OPML file</source>
-        <translation type="unfinished"/>
+        <translation>Importer les flux d&apos;un fichier OPML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
         <source>OPML files (*.opml)</source>
-        <translation type="unfinished"/>
+        <translation>Fichiers OPML (*.opml)</translation>
     </message>
 </context>
 <context>
@@ -3678,17 +3678,17 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="22"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importer dans le dossier :</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="41"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nouveau…</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporterWidget.ui" line="52"/>
         <source>Allow to duplicate already existing feeds</source>
-        <translation type="unfinished"/>
+        <translation>Autoriser les doublons de flux</translation>
     </message>
 </context>
 <context>
@@ -5773,12 +5773,12 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="376"/>
         <source>Failed to parse feed file: %1</source>
-        <translation type="unfinished"/>
+        <translation>N&apos;a pas réussi à comprendre le fichier du flux : %1</translation>
     </message>
     <message>
         <location filename="../../src/core/FeedParser.cpp" line="387"/>
         <source>Failed to parse feed: no valid entries found</source>
-        <translation type="unfinished"/>
+        <translation>N&apos;a pas réussi à comprendre le flux : pas d&apos;entrée valide trouvé</translation>
     </message>
 </context>
 <context>
@@ -9625,7 +9625,7 @@ Cliquez sur le bouton &quot;installer&quot; pour redémarrer le navigateur et in
     <message>
         <location filename="../../src/ui/Menu.cpp" line="133"/>
         <source>Import OPML Feeds…</source>
-        <translation type="unfinished"/>
+        <translation>Importer des flux OPML…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="135"/>
