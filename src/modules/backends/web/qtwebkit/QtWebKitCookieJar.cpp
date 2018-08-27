@@ -98,7 +98,7 @@ bool QtWebKitCookieJar::insertCookie(const QNetworkCookie &cookie)
 	if (m_keepMode == CookieJar::KeepUntilExitMode)
 	{
 		QNetworkCookie mutableCookie(cookie);
-		mutableCookie.setExpirationDate(QDateTime());
+		mutableCookie.setExpirationDate({});
 
 		return m_cookieJar->forceInsertCookie(mutableCookie);
 	}
@@ -192,7 +192,7 @@ bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieLis
 			{
 				if (m_keepMode == CookieJar::KeepUntilExitMode)
 				{
-					cookie.setExpirationDate(QDateTime());
+					cookie.setExpirationDate({});
 				}
 
 				m_cookieJar->forceInsertCookie(cookie);

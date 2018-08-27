@@ -803,7 +803,7 @@ bool Transfer::resume()
 	m_state = RunningState;
 	m_device = file;
 	m_timeStarted = QDateTime::currentDateTimeUtc();
-	m_timeFinished = QDateTime();
+	m_timeFinished = {};
 	m_bytesStart = file->size();
 
 	QNetworkRequest request;
@@ -847,7 +847,7 @@ bool Transfer::restart()
 	m_state = RunningState;
 	m_device = file;
 	m_timeStarted = QDateTime::currentDateTimeUtc();
-	m_timeFinished = QDateTime();
+	m_timeFinished = {};
 	m_bytesStart = 0;
 
 	QNetworkRequest request;

@@ -97,7 +97,7 @@ void AcceptCookieDialog::handleButtonClicked(QAbstractButton *button)
 	{
 		if (result == AcceptCookieDialog::AcceptAsSessionCookie)
 		{
-			m_cookie.setExpirationDate(QDateTime());
+			m_cookie.setExpirationDate({});
 
 			m_cookieJar->forceInsertCookie(m_cookie);
 		}
@@ -110,7 +110,7 @@ void AcceptCookieDialog::handleButtonClicked(QAbstractButton *button)
 	{
 		if (result == AcceptCookieDialog::AcceptAsSessionCookie)
 		{
-			m_cookie.setExpirationDate(QDateTime());
+			m_cookie.setExpirationDate({});
 
 			m_cookieJar->forceUpdateCookie(m_cookie);
 		}

@@ -526,7 +526,7 @@ qint64 QUrlInfo::size() const
 QDateTime QUrlInfo::lastModified() const
 {
     if (!d)
-        return QDateTime();
+        return {};
     return d->lastModified;
 }
 
@@ -539,7 +539,7 @@ QDateTime QUrlInfo::lastModified() const
 QDateTime QUrlInfo::lastRead() const
 {
     if (!d)
-        return QDateTime();
+        return {};
     return d->lastRead;
 }
 
