@@ -549,6 +549,7 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	emit loadingStateChanged(FinishedLoadingState);
 	emit watchedDataChanged(FeedsWatcher);
 	emit watchedDataChanged(LinksWatcher);
+	emit watchedDataChanged(MetaDataWatcher);
 	emit watchedDataChanged(SearchEnginesWatcher);
 	emit watchedDataChanged(StylesheetsWatcher);
 }
