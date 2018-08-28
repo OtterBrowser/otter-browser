@@ -23,6 +23,8 @@
 
 #include "../../../ui/WebWidget.h"
 
+#include <QtWidgets/QActionGroup>
+
 namespace Otter
 {
 
@@ -49,6 +51,7 @@ protected slots:
 	void populateMenu();
 
 private:
+	QActionGroup *m_actionGroup;
 	QUrl m_parentUrl;
 	QVector<QUrl> m_popupUrls;
 	bool m_isPrivate;
