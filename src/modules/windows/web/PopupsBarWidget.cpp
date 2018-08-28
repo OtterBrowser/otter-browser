@@ -30,6 +30,7 @@ namespace Otter
 {
 
 PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget *parent) : QWidget(parent),
+	m_actionGroup(nullptr),
 	m_parentUrl(parentUrl),
 	m_isPrivate(isPrivate),
 	m_ui(new Ui::PopupsBarWidget)
@@ -44,7 +45,6 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, bool isPrivate, QWidget 
 
 	connect(m_ui->closeButton, &QToolButton::clicked, this, &PopupsBarWidget::requestedClose);
 	connect(menu, &QMenu::aboutToShow, this, &PopupsBarWidget::populateMenu);
-	connect(menu, &QMenu::aboutToHide, menu, &QMenu::clear);
 }
 
 PopupsBarWidget::~PopupsBarWidget()
@@ -97,8 +97,21 @@ void PopupsBarWidget::openUrl(QAction *action)
 void PopupsBarWidget::populateMenu()
 {
 	QMenu *menu(m_ui->detailsButton->menu());
-	QActionGroup *actionGroup(new QActionGroup(this));
-	actionGroup->setExclusive(true);
+	menu->clear();
+
+	if (!m_actionGroup)
+	{
+		m_actionGroup = new QActionGroup(menu);
+		m_actionGroup->setExclusive(true);
+
+		connect(m_actionGroup, &QActionGroup::triggered, [&](QAction *action)
+		{
+			if (action)
+			{
+				SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), Utils::extractHost(m_parentUrl));
+			}
+		});
+	}
 
 	const QString popupsPolicy(SettingsManager::getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, Utils::extractHost(m_parentUrl)).toString());
 	const QVector<QPair<QString, QString> > policies({{QLatin1String("openAll"), tr("Open All Pop-Ups from This Website")}, {QLatin1String("openAllInBackground"), tr("Open Pop-Ups from This Website in Background")}, {QLatin1String("blockAll"), tr("Block All Pop-Ups from This Website")}, {QLatin1String("ask"), tr("Always Ask What to Do for This Website")}});
@@ -110,7 +123,7 @@ void PopupsBarWidget::populateMenu()
 		action->setChecked(popupsPolicy == policies.at(i).first);
 		action->setData(policies.at(i).first);
 
-		actionGroup->addAction(action);
+		m_actionGroup->addAction(action);
 	}
 
 	menu->addSeparator();
@@ -125,15 +138,7 @@ void PopupsBarWidget::populateMenu()
 		action->setData(m_popupUrls.at(i).url());
 	}
 
-	connect(menu, &QMenu::aboutToHide, actionGroup, &QActionGroup::deleteLater);
 	connect(popupsMenu, &QMenu::triggered, this, &PopupsBarWidget::openUrl);
-	connect(actionGroup, &QActionGroup::triggered, [&](QAction *action)
-	{
-		if (action)
-		{
-			SettingsManager::setOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), Utils::extractHost(m_parentUrl));
-		}
-	});
 }
 
 }
