@@ -1841,7 +1841,6 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	switch (event->type())
 	{
 		case QEvent::ChildAdded:
-
 			if (object == m_webView)
 			{
 				const QChildEvent *childEvent(static_cast<QChildEvent*>(event));
