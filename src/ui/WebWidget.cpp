@@ -1500,14 +1500,14 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 			break;
 		case CaptureAudioVideoFeature:
 			{
-				const QString valueCaptureAudio(getOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, url).toString());
-				const QString valueCaptureVideo(getOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, url).toString());
+				const QString captureAudioValue(getOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, url).toString());
+				const QString captureVideoValue(getOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, url).toString());
 
-				if (valueCaptureAudio == QLatin1String("allow") && valueCaptureVideo == QLatin1String("allow"))
+				if (captureAudioValue == QLatin1String("allow") && captureVideoValue == QLatin1String("allow"))
 				{
 					value = QLatin1String("allow");
 				}
-				else if (valueCaptureAudio == QLatin1String("disallow") || valueCaptureVideo == QLatin1String("disallow"))
+				else if (captureAudioValue == QLatin1String("disallow") || captureVideoValue == QLatin1String("disallow"))
 				{
 					value = QLatin1String("disallow");
 				}
