@@ -312,8 +312,8 @@ private:
 	ContentsWidget *m_parent;
 	WebBackend *m_backend;
 	QUrl m_requestedUrl;
-	QString m_javaScriptStatusMessage;
-	QString m_overridingStatusMessage;
+	QString m_statusMessage;
+	QString m_statusMessageOverride;
 	QPoint m_clickPosition;
 	QHash<int, QVariant> m_options;
 	QHash<ChangeWatcher, QVector<QObject*> > m_changeWatchers;

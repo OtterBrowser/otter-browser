@@ -514,7 +514,7 @@ void WebWidget::setStatusMessage(const QString &message)
 {
 	const QString previousMessage(getStatusMessage());
 
-	m_javaScriptStatusMessage = message;
+	m_statusMessage = message;
 
 	const QString currentMessage(getStatusMessage());
 
@@ -528,7 +528,7 @@ void WebWidget::setStatusMessageOverride(const QString &message)
 {
 	const QString previousMessage(getStatusMessage());
 
-	m_overridingStatusMessage = message;
+	m_statusMessageOverride = message;
 
 	const QString currentMessage(getStatusMessage());
 
@@ -893,7 +893,7 @@ QString WebWidget::getSelectedText() const
 
 QString WebWidget::getStatusMessage() const
 {
-	return (m_overridingStatusMessage.isEmpty() ? m_javaScriptStatusMessage : m_overridingStatusMessage);
+	return (m_statusMessageOverride.isEmpty() ? m_statusMessage : m_statusMessageOverride);
 }
 
 QVariant WebWidget::getOption(int identifier, const QUrl &url) const
