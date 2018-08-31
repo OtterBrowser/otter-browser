@@ -73,7 +73,7 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (m_url.isValid())
 	{
-		connect(menu.addAction(tr("Copy Link Location")), &QAction::triggered, this, &TextLabelWidget::copyUrl);
+		menu.addAction(tr("Copy Link Location"), this, &TextLabelWidget::copyUrl);
 	}
 
 	menu.addSeparator();
