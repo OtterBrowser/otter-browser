@@ -101,16 +101,13 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 	if (event->button() == Qt::LeftButton && m_buttonRectangle.contains(event->pos()))
 	{
 		QMenu menu(this);
-
-		connect(menu.addAction(tr("Select Color…")), &QAction::triggered, this, &ColorWidget::selectColor);
-		connect(menu.addAction(tr("Copy Color")), &QAction::triggered, this, [&]()
+		menu.addAction(tr("Select Color…"), this, &ColorWidget::selectColor);
+		menu.addAction(tr("Copy Color"), this, [&]()
 		{
 			QApplication::clipboard()->setText(m_color.name((m_color.alpha() < 255) ? QColor::HexArgb : QColor::HexRgb).toUpper());
 		});
-
 		menu.addSeparator();
-
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear")), &QAction::triggered, this, [&]()
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-clear")), tr("Clear"), this, [&]()
 		{
 			setColor(QColor());
 		});
