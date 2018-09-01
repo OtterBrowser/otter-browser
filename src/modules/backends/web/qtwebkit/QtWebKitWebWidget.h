@@ -80,6 +80,7 @@ public:
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
+	bool hasWatchedChanges(ChangeWatcher watcher) const override;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	bool isAudible() const override;
 	bool isAudioMuted() const override;

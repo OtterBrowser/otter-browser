@@ -49,6 +49,7 @@ public:
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
 	void setHistory(const WindowHistoryInformation &history);
+	QString createScriptSource(const QString &path, const QStringList &parameters = {}) const;
 	QVariant runScriptSource(const QString &script);
 	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
 	WindowHistoryInformation getHistory() const;

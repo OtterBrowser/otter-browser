@@ -91,6 +91,7 @@ public:
 	int getZoom() const override;
 	int findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 	bool hasSelection() const override;
+	bool hasWatchedChanges(ChangeWatcher watcher) const override;
 	bool isAudible() const override;
 	bool isAudioMuted() const override;
 	bool isFullScreen() const override;
@@ -116,13 +117,15 @@ protected:
 	void hideEvent(QHideEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
 	void ensureInitialized();
+	void notifyWatchedDataChanged(ChangeWatcher watcher);
 	void updateOptions(const QUrl &url);
+	void updateWatchedData(ChangeWatcher watcher) override;
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {}) override;
 	QWebEnginePage* getPage() const;
 	QString parsePosition(const QString &script, const QPoint &position) const;
 	QDateTime getLastUrlClickTime() const;
-	QVector<LinkUrl> getLinks(const QString &query) const;
+	QVector<LinkUrl> processLinks(const QVariantList &rawLinks) const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;
 	bool canFastForward() const override;
@@ -140,8 +143,8 @@ protected:
 	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:
-	void pageLoadStarted();
-	void pageLoadFinished();
+	void handleLoadStarted();
+	void handleLoadFinished();
 	void handleViewSourceReplyFinished();
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
@@ -162,6 +165,12 @@ private:
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
+	QMultiMap<QString, QString> m_metaData;
+	QStringList m_styleSheets;
+	QVector<LinkUrl> m_feeds;
+	QVector<LinkUrl> m_links;
+	QVector<LinkUrl> m_searchEngines;
+	QVector<bool> m_watchedChanges;
 	LoadingState m_loadingState;
 	TrileanValue m_canGoForwardValue;
 	int m_documentLoadingProgress;

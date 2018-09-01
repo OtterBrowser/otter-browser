@@ -557,6 +557,11 @@ void QtWebKitWebWidget::handleLoadFinished(bool result)
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::NavigationCategory});
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(FinishedLoadingState);
+	emit watchedDataChanged(FeedsWatcher);
+	emit watchedDataChanged(LinksWatcher);
+	emit watchedDataChanged(MetaDataWatcher);
+	emit watchedDataChanged(SearchEnginesWatcher);
+	emit watchedDataChanged(StylesheetsWatcher);
 }
 
 void QtWebKitWebWidget::handleViewSourceReplyFinished()
@@ -2771,6 +2776,13 @@ bool QtWebKitWebWidget::canViewSource() const
 bool QtWebKitWebWidget::hasSelection() const
 {
 	return (m_page->hasSelection() && !m_page->selectedText().isEmpty());
+}
+
+bool QtWebKitWebWidget::hasWatchedChanges(ChangeWatcher watcher) const
+{
+	Q_UNUSED(watcher)
+
+	return true;
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

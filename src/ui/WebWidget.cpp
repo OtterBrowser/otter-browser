@@ -104,6 +104,37 @@ void WebWidget::search(const QString &query, const QString &searchEngine)
 	Q_UNUSED(searchEngine)
 }
 
+void WebWidget::startWatchingChanges(QObject *object, ChangeWatcher watcher)
+{
+	if (!m_changeWatchers.contains(watcher))
+	{
+		m_changeWatchers[watcher] = {object};
+
+		updateWatchedData(watcher);
+	}
+	else if (!m_changeWatchers[watcher].contains(object))
+	{
+		m_changeWatchers[watcher].append(object);
+	}
+	else
+	{
+		return;
+	}
+
+	connect(object, &QObject::destroyed, this, [=]()
+	{
+		stopWatchingChanges(object, watcher);
+	});
+}
+
+void WebWidget::stopWatchingChanges(QObject *object, ChangeWatcher watcher)
+{
+	if (m_changeWatchers.contains(watcher))
+	{
+		m_changeWatchers[watcher].removeAll(object);
+	}
+}
+
 void WebWidget::startReloadTimer()
 {
 	const int reloadTime(getOption(SettingsManager::Content_PageReloadTimeOption).toInt());
@@ -347,6 +378,11 @@ void WebWidget::updateHitTestResult(const QPoint &position)
 	m_hitResult = getHitTestResult(position);
 }
 
+void WebWidget::updateWatchedData(ChangeWatcher watcher)
+{
+	Q_UNUSED(watcher)
+}
+
 void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
 	if (m_parent)
@@ -478,7 +514,7 @@ void WebWidget::setStatusMessage(const QString &message)
 {
 	const QString previousMessage(getStatusMessage());
 
-	m_javaScriptStatusMessage = message;
+	m_statusMessage = message;
 
 	const QString currentMessage(getStatusMessage());
 
@@ -492,7 +528,7 @@ void WebWidget::setStatusMessageOverride(const QString &message)
 {
 	const QString previousMessage(getStatusMessage());
 
-	m_overridingStatusMessage = message;
+	m_statusMessageOverride = message;
 
 	const QString currentMessage(getStatusMessage());
 
@@ -857,7 +893,7 @@ QString WebWidget::getSelectedText() const
 
 QString WebWidget::getStatusMessage() const
 {
-	return (m_overridingStatusMessage.isEmpty() ? m_javaScriptStatusMessage : m_overridingStatusMessage);
+	return (m_statusMessageOverride.isEmpty() ? m_statusMessage : m_statusMessageOverride);
 }
 
 QVariant WebWidget::getOption(int identifier, const QUrl &url) const
@@ -1464,14 +1500,14 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 			break;
 		case CaptureAudioVideoFeature:
 			{
-				const QString valueCaptureAudio(getOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, url).toString());
-				const QString valueCaptureVideo(getOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, url).toString());
+				const QString captureAudioValue(getOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, url).toString());
+				const QString captureVideoValue(getOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, url).toString());
 
-				if (valueCaptureAudio == QLatin1String("allow") && valueCaptureVideo == QLatin1String("allow"))
+				if (captureAudioValue == QLatin1String("allow") && captureVideoValue == QLatin1String("allow"))
 				{
 					value = QLatin1String("allow");
 				}
-				else if (valueCaptureAudio == QLatin1String("disallow") || valueCaptureVideo == QLatin1String("disallow"))
+				else if (captureAudioValue == QLatin1String("disallow") || captureVideoValue == QLatin1String("disallow"))
 				{
 					value = QLatin1String("disallow");
 				}
@@ -1587,6 +1623,13 @@ bool WebWidget::hasSelection() const
 	return false;
 }
 
+bool WebWidget::hasWatchedChanges(ChangeWatcher watcher) const
+{
+	Q_UNUSED(watcher)
+
+	return false;
+}
+
 bool WebWidget::isAudible() const
 {
 	return false;
@@ -1600,6 +1643,11 @@ bool WebWidget::isAudioMuted() const
 bool WebWidget::isFullScreen() const
 {
 	return false;
+}
+
+bool WebWidget::isWatchingChanges(ChangeWatcher watcher) const
+{
+	return m_changeWatchers.contains(watcher);
 }
 
 }

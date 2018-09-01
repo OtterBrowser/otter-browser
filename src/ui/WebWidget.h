@@ -49,6 +49,16 @@ class WebWidget : public QWidget, public ActionExecutor
 	Q_OBJECT
 
 public:
+	enum ChangeWatcher
+	{
+		UnknownWatcher = 0,
+		FeedsWatcher,
+		LinksWatcher,
+		MetaDataWatcher,
+		SearchEnginesWatcher,
+		StylesheetsWatcher
+	};
+
 	enum ContentState
 	{
 		UnknownContentState = 0,
@@ -188,6 +198,8 @@ public:
 
 	virtual void search(const QString &query, const QString &searchEngine);
 	virtual void print(QPrinter *printer) = 0;
+	void startWatchingChanges(QObject *object, ChangeWatcher watcher);
+	void stopWatchingChanges(QObject *object, ChangeWatcher watcher);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	void setParent(QWidget *parent);
 	virtual void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = {});
@@ -235,10 +247,12 @@ public:
 	virtual int findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
+	virtual bool hasWatchedChanges(ChangeWatcher watcher) const;
 	virtual bool isAudible() const;
 	virtual bool isAudioMuted() const;
 	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
+	bool isWatchingChanges(ChangeWatcher watcher) const;
 
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
@@ -263,6 +277,7 @@ protected:
 	void startTransfer(Transfer *transfer);
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
+	virtual void updateWatchedData(ChangeWatcher watcher);
 	void setClickPosition(const QPoint &position);
 	QString suggestSaveFileName(const QString &extension) const;
 	QString suggestSaveFileName(SaveFormat format) const;
@@ -297,10 +312,11 @@ private:
 	ContentsWidget *m_parent;
 	WebBackend *m_backend;
 	QUrl m_requestedUrl;
-	QString m_javaScriptStatusMessage;
-	QString m_overridingStatusMessage;
+	QString m_statusMessage;
+	QString m_statusMessageOverride;
 	QPoint m_clickPosition;
 	QHash<int, QVariant> m_options;
+	QHash<ChangeWatcher, QVector<QObject*> > m_changeWatchers;
 	HitTestResult m_hitResult;
 	quint64 m_windowIdentifier;
 	int m_loadingTime;
@@ -332,6 +348,7 @@ signals:
 	void loadingStateChanged(WebWidget::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void optionChanged(int identifier, const QVariant &value);
+	void watchedDataChanged(ChangeWatcher watcher);
 	void zoomChanged(int zoom);
 	void isAudibleChanged(bool isAudible);
 	void isFullScreenChanged(bool isFullScreen);
