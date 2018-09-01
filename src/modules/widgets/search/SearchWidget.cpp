@@ -523,6 +523,14 @@ void SearchWidget::handleWindowOptionChanged(int identifier, const QVariant &val
 	}
 }
 
+void SearchWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
+{
+	if (watcher == WebWidget::SearchEnginesWatcher)
+	{
+		handleLoadingStateChanged();
+	}
+}
+
 void SearchWidget::handleLoadingStateChanged()
 {
 	const QVector<WebWidget::LinkUrl> searchEngines((m_window && m_window->getWebWidget()) ? m_window->getWebWidget()->getSearchEngines() : QVector<WebWidget::LinkUrl>());
@@ -666,10 +674,10 @@ void SearchWidget::setSearchEngine(const QModelIndex &index, bool canSendRequest
 			m_window->setOption(SettingsManager::Search_DefaultSearchEngineOption, m_searchEngine);
 		}
 
-		const QString title(index.data(SearchEnginesManager::TitleRole).toString());
+		const QString title(tr("Search using %1").arg(index.data(SearchEnginesManager::TitleRole).toString()));
 
-		setToolTip(tr("Search using %1").arg(title));
-		setPlaceholderText(tr("Search using %1").arg(title));
+		setToolTip(title);
+		setPlaceholderText(title);
 		setText(m_query);
 
 		if (m_suggester)
@@ -745,6 +753,13 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, &SearchWidget::requestedSearch, m_window.data(), &Window::requestedSearch);
 		disconnect(m_window.data(), &Window::loadingStateChanged, this, &SearchWidget::handleLoadingStateChanged);
 		disconnect(m_window.data(), &Window::optionChanged, this, &SearchWidget::handleWindowOptionChanged);
+
+		if (m_window->getWebWidget())
+		{
+			m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::SearchEnginesWatcher);
+
+			connect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
+		}
 	}
 
 	m_window = window;
@@ -768,6 +783,13 @@ void SearchWidget::setWindow(Window *window)
 				setWindow(nullptr);
 			}
 		});
+
+		if (window->getWebWidget())
+		{
+			window->getWebWidget()->startWatchingChanges(this, WebWidget::SearchEnginesWatcher);
+
+			connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &SearchWidget::handleWatchedDataChanged);
+		}
 
 		const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 

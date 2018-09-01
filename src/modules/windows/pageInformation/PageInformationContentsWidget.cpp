@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -68,6 +68,13 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 				if (m_window)
 				{
 					disconnect(m_window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
+
+					if (m_window->getWebWidget())
+					{
+						m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+
+						disconnect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
+					}
 				}
 
 				m_window = window;
@@ -75,6 +82,13 @@ PageInformationContentsWidget::PageInformationContentsWidget(const QVariantMap &
 				if (window)
 				{
 					connect(window, &Window::loadingStateChanged, this, &PageInformationContentsWidget::updateSections);
+
+					if (window->getWebWidget())
+					{
+						window->getWebWidget()->stopWatchingChanges(this, WebWidget::MetaDataWatcher);
+
+						connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &PageInformationContentsWidget::handleWatchedDataChanged);
+					}
 				}
 			}
 
@@ -242,6 +256,14 @@ void PageInformationContentsWidget::updateSections()
 		}
 
 		m_ui->informationViewWidget->setRowHidden(i, model->invisibleRootItem()->index(), (model->rowCount(index) == 0));
+	}
+}
+
+void PageInformationContentsWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
+{
+	if (watcher == WebWidget::MetaDataWatcher)
+	{
+		updateSections();
 	}
 }
 

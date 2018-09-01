@@ -59,6 +59,7 @@ protected:
 
 protected slots:
 	void openLink();
+	void handleWatchedDataChanged(WebWidget::ChangeWatcher watcher);
 	void showContextMenu(const QPoint &position);
 
 private:

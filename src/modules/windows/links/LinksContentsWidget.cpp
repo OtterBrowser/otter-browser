@@ -63,6 +63,13 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 				if (m_window)
 				{
 					disconnect(m_window, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
+
+					if (m_window->getWebWidget())
+					{
+						m_window->getWebWidget()->stopWatchingChanges(this, WebWidget::LinksWatcher);
+
+						disconnect(m_window->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
+					}
 				}
 
 				m_window = window;
@@ -70,6 +77,13 @@ LinksContentsWidget::LinksContentsWidget(const QVariantMap &parameters, QWidget 
 				if (window)
 				{
 					connect(window, &Window::loadingStateChanged, this, &LinksContentsWidget::updateLinks);
+
+					if (window->getWebWidget())
+					{
+						window->getWebWidget()->startWatchingChanges(this, WebWidget::LinksWatcher);
+
+						connect(window->getWebWidget(), &WebWidget::watchedDataChanged, this, &LinksContentsWidget::handleWatchedDataChanged);
+					}
 				}
 			}
 
@@ -180,6 +194,14 @@ void LinksContentsWidget::openLink()
 		{
 			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), indexes.at(i).data(Qt::StatusTipRole)}, {QLatin1String("hints"), QVariant((action ? static_cast<SessionsManager::OpenHints>(action->data().toInt()) : SessionsManager::DefaultOpen))}}, parentWidget());
 		}
+	}
+}
+
+void LinksContentsWidget::handleWatchedDataChanged(WebWidget::ChangeWatcher watcher)
+{
+	if (watcher == WebWidget::LinksWatcher)
+	{
+		updateLinks();
 	}
 }
 
