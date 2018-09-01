@@ -1,3 +1,7 @@
+0.9.99 RC 12 (2018-09-01):
+- QtWebEngine backend no longer uses locks for fetching feeds, links or search engines;
+- some other fixes.
+
 0.9.99 RC 11 (2018-08-01):
 - reworked handling of custom icons for toolbar entries;
 - some other fixes.
