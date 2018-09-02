@@ -241,7 +241,7 @@ void LinksContentsWidget::showContextMenu(const QPoint &position)
 
 	if (!m_ui->linksViewWidget->selectionModel()->selectedIndexes().isEmpty())
 	{
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &LinksContentsWidget::openLink);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &LinksContentsWidget::openLink);
 
 		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
 		openInNewTabAction->setData(SessionsManager::NewTabOpen);
