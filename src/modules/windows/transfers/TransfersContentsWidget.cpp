@@ -386,8 +386,8 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 	if (transfer)
 	{
 		const bool canOpen(QFile::exists(transfer->getTarget()));
-		QAction *openAction(menu.addAction(QCoreApplication::translate("actions", "Open")));
-		openAction->setEnabled(canOpen);
+
+		menu.addAction(QCoreApplication::translate("actions", "Open"), this, &TransfersContentsWidget::openTransfer)->setEnabled(canOpen);
 
 		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenu, this));
 		openWithMenu->setEnabled(canOpen);
@@ -396,27 +396,14 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		openWithMenu->setMenuOptions({{QLatin1String("mimeType"), transfer->getMimeType().name()}});
 
 		menu.addMenu(openWithMenu);
-
-		QAction *openFolderAction(menu.addAction(tr("Open Folder")));
-		openFolderAction->setEnabled(canOpen || QFileInfo(transfer->getTarget()).dir().exists());
-
+		menu.addAction(tr("Open Folder"), this, &TransfersContentsWidget::openTransferFolder)->setEnabled(canOpen || QFileInfo(transfer->getTarget()).dir().exists());
 		menu.addSeparator();
-
-		QAction *stopResumeAction(menu.addAction((transfer->getState() == Transfer::ErrorState) ? tr("Resume") : tr("Stop")));
-		stopResumeAction->setEnabled(transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState);
-
-		connect(menu.addAction(tr("Redownload")), &QAction::triggered, this, &TransfersContentsWidget::redownloadTransfer);
-
+		menu.addAction(((transfer->getState() == Transfer::ErrorState) ? tr("Resume") : tr("Stop")), this, &TransfersContentsWidget::stopResumeTransfer)->setEnabled(transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState);
+		menu.addAction(tr("Redownload"), this, &TransfersContentsWidget::redownloadTransfer);
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Copy Transfer Information")), &QAction::triggered, this, &TransfersContentsWidget::copyTransferInformation);
-
+		menu.addAction(tr("Copy Transfer Information"), this, &TransfersContentsWidget::copyTransferInformation);
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Remove")), &QAction::triggered, this, &TransfersContentsWidget::removeTransfer);
-		connect(openAction, &QAction::triggered, this, &TransfersContentsWidget::openTransfer);
-		connect(openFolderAction, &QAction::triggered, this, &TransfersContentsWidget::openTransferFolder);
-		connect(stopResumeAction, &QAction::triggered, this, &TransfersContentsWidget::stopResumeTransfer);
+		menu.addAction(tr("Remove"), this, &TransfersContentsWidget::removeTransfer);
 	}
 
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
