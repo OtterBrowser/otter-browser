@@ -161,9 +161,9 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 			break;
 		case BookmarksModel::UnknownBookmark:
-			connect(menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
-			connect(menu.addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
-			connect(menu.addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
+			menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &NotesContentsWidget::addFolder);
+			menu.addAction(tr("Add Note"), this, &NotesContentsWidget::addNote);
+			menu.addAction(tr("Add Separator"), this, &NotesContentsWidget::addSeparator);
 
 			break;
 		default:
@@ -178,8 +178,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 					menu.addSeparator();
 				}
 
-				QAction *openAction(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open source page")));
-				openAction->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
+				menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open source page"), this, &NotesContentsWidget::openUrl)->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
 
 				if (type != BookmarksModel::RootBookmark)
 				{
@@ -203,7 +202,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 
 					if (isInTrash)
 					{
-						connect(menu.addAction(tr("Restore Note")), &QAction::triggered, [&]()
+						menu.addAction(tr("Restore Note"), this, [&]()
 						{
 							NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
 						});
@@ -213,8 +212,6 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 						menu.addAction(new Action(ActionsManager::DeleteAction, {}, executor, &menu));
 					}
 				}
-
-				connect(openAction, &QAction::triggered, this, &NotesContentsWidget::openUrl);
 			}
 
 			break;
