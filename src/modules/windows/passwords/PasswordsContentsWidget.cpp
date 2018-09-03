@@ -274,10 +274,10 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 	{
 		if (index.parent() != m_model->invisibleRootItem()->index())
 		{
-			connect(menu.addAction(tr("Remove Password")), &QAction::triggered , this, &PasswordsContentsWidget::removePasswords);
+			menu.addAction(tr("Remove Password"), this, &PasswordsContentsWidget::removePasswords);
 		}
 
-		connect(menu.addAction(tr("Remove All Passwords from This Domain…")), &QAction::triggered, this, &PasswordsContentsWidget::removeHostPasswords);
+		menu.addAction(tr("Remove All Passwords from This Domain…"), this, &PasswordsContentsWidget::removeHostPasswords);
 	}
 
 	QAction *removeAllPasswordsAction(menu.addAction(tr("Remove All Passwords…")));
