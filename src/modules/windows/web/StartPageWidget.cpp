@@ -840,31 +840,23 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 	if (index.isValid() && index.data(Qt::AccessibleDescriptionRole).toString() != QLatin1String("add"))
 	{
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &StartPageWidget::openTile);
-
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &StartPageWidget::openTile);
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Edit…")), &QAction::triggered, this, &StartPageWidget::editTile);
+		menu.addAction(tr("Edit…"), this, &StartPageWidget::editTile);
 
 		if (SettingsManager::getOption(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
 		{
-			QAction *reloadAction(menu.addAction(tr("Reload")));
-			reloadAction->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
-
-			connect(reloadAction, &QAction::triggered, this, &StartPageWidget::reloadTile);
+			menu.addAction(tr("Reload"), this, &StartPageWidget::reloadTile)->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
 		}
 
 		menu.addSeparator();
-
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete")), &QAction::triggered, this, &StartPageWidget::removeTile);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Delete"), this, &StartPageWidget::removeTile);
 	}
 	else
 	{
-		connect(menu.addAction(tr("Configure…")), &QAction::triggered, this, &StartPageWidget::configure);
-
+		menu.addAction(tr("Configure…"), this, &StartPageWidget::configure);
 		menu.addSeparator();
-
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("list-add")), tr("Add Tile…")), &QAction::triggered, this, &StartPageWidget::addTile);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("list-add")), tr("Add Tile…"), this, &StartPageWidget::addTile);
 	}
 
 	menu.exec(hitPosition);
