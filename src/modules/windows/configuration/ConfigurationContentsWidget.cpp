@@ -497,26 +497,16 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &position)
 
 	if (index.isValid() && index.parent() != m_ui->configurationViewWidget->rootIndex())
 	{
-		connect(menu.addAction(tr("Copy Option Name")), &QAction::triggered, this, &ConfigurationContentsWidget::copyOptionName);
-		connect(menu.addAction(tr("Copy Option Value")), &QAction::triggered, this, &ConfigurationContentsWidget::copyOptionValue);
-
+		menu.addAction(tr("Copy Option Name"), this, &ConfigurationContentsWidget::copyOptionName);
+		menu.addAction(tr("Copy Option Value"), this, &ConfigurationContentsWidget::copyOptionValue);
 		menu.addSeparator();
-
-		QAction *saveAction(menu.addAction(tr("Save Value")));
-		saveAction->setEnabled(index.sibling(index.row(), 0).data(IsModifiedRole).toBool());
-
-		QAction *resetAction(menu.addAction(tr("Restore Default Value")));
-		resetAction->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);
-
+		menu.addAction(tr("Save Value"), this, &ConfigurationContentsWidget::saveOption)->setEnabled(index.sibling(index.row(), 0).data(IsModifiedRole).toBool());
+		menu.addAction(tr("Restore Default Value"), this, &ConfigurationContentsWidget::resetOption)->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(index.sibling(index.row(), 2).data(IdentifierRole).toInt()).defaultValue);
 		menu.addSeparator();
-
-		connect(saveAction, &QAction::triggered, this, &ConfigurationContentsWidget::saveOption);
-		connect(resetAction, &QAction::triggered, this, &ConfigurationContentsWidget::resetOption);
 	}
 
-	connect(menu.addAction(tr("Expand All")), &QAction::triggered, m_ui->configurationViewWidget, &ItemViewWidget::expandAll);
-	connect(menu.addAction(tr("Collapse All")), &QAction::triggered, m_ui->configurationViewWidget, &ItemViewWidget::collapseAll);
-
+	menu.addAction(tr("Expand All"), m_ui->configurationViewWidget, &ItemViewWidget::expandAll);
+	menu.addAction(tr("Collapse All"), m_ui->configurationViewWidget, &ItemViewWidget::collapseAll);
 	menu.exec(m_ui->configurationViewWidget->mapToGlobal(position));
 }
 
