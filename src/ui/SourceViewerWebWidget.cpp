@@ -297,14 +297,12 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
 	{
 		QMenu menu(this);
-		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers")));
-		showLineNumbersAction->setCheckable(true);
-		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
-
-		connect(showLineNumbersAction, &QAction::triggered, [&](bool show)
+		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers"), [&](bool show)
 		{
 			SettingsManager::setOption(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
-		});
+		}));
+		showLineNumbersAction->setCheckable(true);
+		showLineNumbersAction->setChecked(SettingsManager::getOption(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
 
 		menu.exec(menuPosition);
 	}
