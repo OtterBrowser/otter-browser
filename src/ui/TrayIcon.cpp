@@ -37,8 +37,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	const QVector<int> actions({-1, ActionsManager::NewTabAction, ActionsManager::NewTabPrivateAction, -1, ActionsManager::BookmarksAction, ActionsManager::TransfersAction, ActionsManager::HistoryAction, ActionsManager::NotesAction, -1, ActionsManager::ExitAction});
 	ActionExecutor::Object executor(Application::getInstance(), Application::getInstance());
 	Menu *menu(new Menu());
-
-	connect(menu->addAction(tr("Show Windows")), &QAction::triggered, this, &TrayIcon::toggleWindowsVisibility);
+	menu->addAction(tr("Show Windows"), this, &TrayIcon::toggleWindowsVisibility);
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
