@@ -367,36 +367,18 @@ void HistoryContentsWidget::showContextMenu(const QPoint &position)
 
 	if (entry > 0)
 	{
-		connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &HistoryContentsWidget::openEntry);
-
-		QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
-		openInNewTabAction->setData(SessionsManager::NewTabOpen);
-
-		QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
-		openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
-
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &HistoryContentsWidget::openEntry);
+		menu.addAction(QCoreApplication::translate("actions", "Open in New Tab"), this, &HistoryContentsWidget::openEntry)->setData(SessionsManager::NewTabOpen);
+		menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab"), this, &HistoryContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
-
-		QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
-		openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
-
-		QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
-		openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
-
+		menu.addAction(QCoreApplication::translate("actions", "Open in New Window"), this, &HistoryContentsWidget::openEntry)->setData(SessionsManager::NewWindowOpen);
+		menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &HistoryContentsWidget::openEntry)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Add to Bookmarks…")), &QAction::triggered, this, &HistoryContentsWidget::bookmarkEntry);
-		connect(menu.addAction(tr("Copy Link to Clipboard")), &QAction::triggered, this, &HistoryContentsWidget::copyEntryLink);
-
+		menu.addAction(tr("Add to Bookmarks…"), this, &HistoryContentsWidget::bookmarkEntry);
+		menu.addAction(tr("Copy Link to Clipboard"), this, &HistoryContentsWidget::copyEntryLink);
 		menu.addSeparator();
-
-		connect(menu.addAction(tr("Remove Entry")), &QAction::triggered, this, &HistoryContentsWidget::removeEntry);
-		connect(menu.addAction(tr("Remove All Entries from This Domain")), &QAction::triggered, this, &HistoryContentsWidget::removeDomainEntries);
-
-		connect(openInNewTabAction, &QAction::triggered, this, &HistoryContentsWidget::openEntry);
-		connect(openInNewBackgroundTabAction, &QAction::triggered, this, &HistoryContentsWidget::openEntry);
-		connect(openInNewWindowAction, &QAction::triggered, this, &HistoryContentsWidget::openEntry);
-		connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &HistoryContentsWidget::openEntry);
+		menu.addAction(tr("Remove Entry"), this, &HistoryContentsWidget::removeEntry);
+		menu.addAction(tr("Remove All Entries from This Domain"), this, &HistoryContentsWidget::removeDomainEntries);
 	}
 
 	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
