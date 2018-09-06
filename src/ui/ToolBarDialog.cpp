@@ -716,6 +716,10 @@ QMap<int, QVariant> ToolBarDialog::createEntryData(const QString &identifier, co
 		entryData[HasOptionsRole] = true;
 		entryData[Qt::DisplayRole] = tr("Menu Button");
 	}
+	else if (identifier == QLatin1String("OpenInApplicationMenu"))
+	{
+		entryData[Qt::DisplayRole] = tr("Open with");
+	}
 	else if (identifier == QLatin1String("PanelChooserWidget"))
 	{
 		entryData[Qt::DisplayRole] = tr("Sidebar Panel Chooser");
