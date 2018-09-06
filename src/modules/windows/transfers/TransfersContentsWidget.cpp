@@ -417,11 +417,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	QAction *clearFinishedAction(menu.addAction(tr("Clear Finished Transfers")));
-	clearFinishedAction->setEnabled(finishedTransfers > 0);
-
-	connect(clearFinishedAction, &QAction::triggered, this, &TransfersContentsWidget::clearFinishedTransfers);
-
+	menu.addAction(tr("Clear Finished Transfers"), this, &TransfersContentsWidget::clearFinishedTransfers)->setEnabled(finishedTransfers > 0);
 	menu.exec(m_ui->transfersViewWidget->mapToGlobal(position));
 }
 
