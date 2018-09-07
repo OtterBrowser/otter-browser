@@ -67,7 +67,7 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QMenu menu(this);
-	QAction *copyAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy")));
+	QAction *copyAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-copy")), tr("Copy"), this, &TextLabelWidget::copy));
 	copyAction->setEnabled(hasSelectedText());
 	copyAction->setShortcut(QKeySequence(QKeySequence::Copy));
 
@@ -78,12 +78,9 @@ void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	menu.addSeparator();
 
-	QAction *selectAllAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All")));
+	QAction *selectAllAction(menu.addAction(ThemesManager::createIcon(QLatin1String("edit-select-all")), tr("Select All"), this, &TextLabelWidget::selectAll));
 	selectAllAction->setEnabled(!text().isEmpty());
 	selectAllAction->setShortcut(QKeySequence(QKeySequence::SelectAll));
-
-	connect(copyAction, &QAction::triggered, this, &TextLabelWidget::copy);
-	connect(selectAllAction, &QAction::triggered, this, &TextLabelWidget::selectAll);
 
 	menu.exec(event->globalPos());
 }
