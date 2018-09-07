@@ -523,11 +523,7 @@ void ToolBarDialog::showAvailableEntriesContextMenu(const QPoint &position)
 	if (index.isValid())
 	{
 		QMenu menu(this);
-		QAction *addAction(menu.addAction(tr("Add")));
-		addAction->setShortcut(QKeySequence(Qt::Key_Enter));
-
-		connect(addAction, &QAction::triggered, this, &ToolBarDialog::addNewEntry);
-
+		menu.addAction(tr("Add"), this, &ToolBarDialog::addNewEntry)->setShortcut(QKeySequence(Qt::Key_Enter));
 		menu.exec(m_ui->availableEntriesItemView->mapToGlobal(position));
 	}
 }
@@ -535,11 +531,9 @@ void ToolBarDialog::showAvailableEntriesContextMenu(const QPoint &position)
 void ToolBarDialog::showCurrentEntriesContextMenu(const QPoint &position)
 {
 	QMenu menu(this);
-	QAction *removeAction(menu.addAction(tr("Remove")));
+	QAction *removeAction(menu.addAction(tr("Remove"), m_ui->currentEntriesItemView, &ItemViewWidget::removeRow));
 	removeAction->setShortcut(QKeySequence(Qt::Key_Delete));
 	removeAction->setEnabled(m_ui->removeButton->isEnabled());
-
-	connect(removeAction, &QAction::triggered, m_ui->currentEntriesItemView, &ItemViewWidget::removeRow);
 
 	menu.exec(m_ui->currentEntriesItemView->mapToGlobal(position));
 }
