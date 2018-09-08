@@ -31,10 +31,10 @@ IniSettings::IniSettings(QObject *parent) : QObject(parent),
 {
 }
 
-IniSettings::IniSettings(const QString &path, QObject *parent) : QObject(parent)
+IniSettings::IniSettings(const QString &path, QObject *parent) : QObject(parent),
+  m_path(path),
+  m_hasError(false)
 {
-	m_path = path;
-
 	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly))
