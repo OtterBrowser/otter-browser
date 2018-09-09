@@ -905,12 +905,14 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 	menu->setTitle(tr("Customize"));
 
 	QMenu *toolBarMenu(menu->addMenu(definition.getTitle().isEmpty() ? tr("(Untitled)") : definition.getTitle()));
-	QAction *configureAction(toolBarMenu->addAction(tr("Configure…")));
-	configureAction->setData(identifier);
-
-	QAction *resetAction(toolBarMenu->addAction(tr("Reset to Defaults…")));
-	resetAction->setData(identifier);
-	resetAction->setEnabled(definition.canReset);
+	toolBarMenu->addAction(tr("Configure…"), menu, [=]()
+	{
+		ToolBarsManager::configureToolBar(identifier);
+	});
+	toolBarMenu->addAction(tr("Reset to Defaults…"), menu, [=]()
+	{
+		ToolBarsManager::resetToolBar(identifier);
+	})->setEnabled(definition.canReset);
 
 	if (!actions.isEmpty())
 	{
@@ -924,25 +926,12 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 	}
 
 	toolBarMenu->addSeparator();
-
-	QAction *removeAction(toolBarMenu->addAction(ThemesManager::createIcon(QLatin1String("list-remove")), tr("Remove…")));
-	removeAction->setData(identifier);
-	removeAction->setEnabled(!definition.canReset);
-
-	menu->addMenu(new Menu(Menu::ToolBarsMenu, menu));
-
-	connect(configureAction, &QAction::triggered, configureAction, [=]()
-	{
-		ToolBarsManager::configureToolBar(identifier);
-	});
-	connect(resetAction, &QAction::triggered, resetAction, [=]()
-	{
-		ToolBarsManager::resetToolBar(identifier);
-	});
-	connect(removeAction, &QAction::triggered, removeAction, [=]()
+	toolBarMenu->addAction(ThemesManager::createIcon(QLatin1String("list-remove")), tr("Remove…"), menu, [=]()
 	{
 		ToolBarsManager::removeToolBar(identifier);
-	});
+	})->setEnabled(!definition.canReset);
+
+	menu->addMenu(new Menu(Menu::ToolBarsMenu, menu));
 
 	return menu;
 }
