@@ -123,10 +123,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchEngineMenu(new QMenu(m_ui->addSearchButton));
-
-	connect(addSearchEngineMenu->addAction(tr("New…")), &QAction::triggered, this, &PreferencesSearchPageWidget::createSearchEngine);
-	connect(addSearchEngineMenu->addAction(tr("File…")), &QAction::triggered, this, &PreferencesSearchPageWidget::importSearchEngine);
-
+	addSearchEngineMenu->addAction(tr("New…"), this, &PreferencesSearchPageWidget::createSearchEngine);
+	addSearchEngineMenu->addAction(tr("File…"), this, &PreferencesSearchPageWidget::importSearchEngine);
 	addSearchEngineMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
 	m_ui->addSearchButton->setMenu(addSearchEngineMenu);
