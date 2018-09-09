@@ -44,10 +44,9 @@ NotesContentsWidget::NotesContentsWidget(const QVariantMap &parameters, Window *
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
-
-	connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
-	connect(addMenu->addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
-	connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
+	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &NotesContentsWidget::addFolder);
+	addMenu->addAction(tr("Add Note"), this, &NotesContentsWidget::addNote);
+	addMenu->addAction(tr("Add Separator"), this, &NotesContentsWidget::addSeparator);
 
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->notesViewWidget->setViewMode(ItemViewWidget::TreeView);
@@ -152,12 +151,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 	switch (type)
 	{
 		case BookmarksModel::TrashBookmark:
-			{
-				QAction *emptyTrashAction(menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash")));
-				emptyTrashAction->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
-
-				connect(emptyTrashAction, &QAction::triggered, NotesManager::getModel(), &BookmarksModel::emptyTrash);
-			}
+			menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), NotesManager::getModel(), &BookmarksModel::emptyTrash)->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
 
 			break;
 		case BookmarksModel::UnknownBookmark:
@@ -190,10 +184,9 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 					menu.addSeparator();
 
 					QMenu *addMenu(menu.addMenu(tr("Add Note")));
-
-					connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &NotesContentsWidget::addFolder);
-					connect(addMenu->addAction(tr("Add Note")), &QAction::triggered, this, &NotesContentsWidget::addNote);
-					connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &NotesContentsWidget::addSeparator);
+					addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &NotesContentsWidget::addFolder);
+					addMenu->addAction(tr("Add Note"), this, &NotesContentsWidget::addNote);
+					addMenu->addAction(tr("Add Separator"), this, &NotesContentsWidget::addSeparator);
 				}
 
 				if (type != BookmarksModel::RootBookmark)
