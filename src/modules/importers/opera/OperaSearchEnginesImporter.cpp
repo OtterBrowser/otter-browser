@@ -43,7 +43,6 @@ QWidget* OperaSearchEnginesImporter::createOptionsWidget(QWidget *parent)
 	if (!m_optionsWidget)
 	{
 		m_optionsWidget = new QCheckBox(tr("Remove existing search engines"), parent);
-		m_optionsWidget->setChecked(true);
 	}
 
 	return m_optionsWidget;
