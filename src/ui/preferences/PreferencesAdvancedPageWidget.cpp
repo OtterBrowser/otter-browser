@@ -1225,7 +1225,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 		return;
 	}
 
-	const QString newIdentifier(createProfileIdentifier(m_ui->mouseViewWidget->getSourceModel(), identifier));
+	const QString newIdentifier(createProfileIdentifier(m_ui->keyboardViewWidget->getSourceModel(), identifier));
 
 	if (newIdentifier.isEmpty())
 	{
