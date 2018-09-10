@@ -584,7 +584,7 @@ MouseGestures::Recognizer* GesturesManager::m_recognizer(nullptr);
 QPointer<QObject> GesturesManager::m_trackedObject(nullptr);
 QPoint GesturesManager::m_lastClick;
 QPoint GesturesManager::m_lastPosition;
-QVariantMap GesturesManager::m_paramaters;
+QVariantMap GesturesManager::m_parameters;
 QHash<GesturesManager::GesturesContext, QVector<MouseProfile::Gesture> > GesturesManager::m_gestures;
 QHash<GesturesManager::GesturesContext, QVector<QVector<MouseProfile::Gesture::Step> > > GesturesManager::m_nativeGestures;
 QVector<QInputEvent*> GesturesManager::m_events;
@@ -963,7 +963,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, QVector<Gestu
 		return false;
 	}
 
-	m_paramaters = parameters;
+	m_parameters = parameters;
 
 	if (!m_trackedObject)
 	{
@@ -1041,7 +1041,7 @@ bool GesturesManager::triggerAction(const MouseProfile::Gesture &gesture)
 	else
 	{
 		QVariantMap parameters(gesture.parameters);
-		parameters.unite(m_paramaters);
+		parameters.unite(m_parameters);
 
 		Application::triggerAction(gesture.action, parameters, m_trackedObject, ActionsManager::MouseTrigger);
 	}
