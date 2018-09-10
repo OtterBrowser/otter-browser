@@ -374,17 +374,12 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 	switch (type)
 	{
 		case FeedsModel::TrashEntry:
-			{
-				QAction *emptyTrashAction(menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash")));
-				emptyTrashAction->setEnabled(FeedsManager::getModel()->getTrashEntry()->rowCount() > 0);
-
-				connect(emptyTrashAction, &QAction::triggered, FeedsManager::getModel(), &FeedsModel::emptyTrash);
-			}
+			menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), FeedsManager::getModel(), &FeedsModel::emptyTrash)->setEnabled(FeedsManager::getModel()->getTrashEntry()->rowCount() > 0);
 
 			break;
 		case FeedsModel::UnknownEntry:
-			connect(menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &FeedsContentsWidget::addFolder);
-			connect(menu.addAction(tr("Add Feed…")), &QAction::triggered, this, &FeedsContentsWidget::addFeed);
+			menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &FeedsContentsWidget::addFolder);
+			menu.addAction(tr("Add Feed…"), this, &FeedsContentsWidget::addFeed);
 
 			break;
 		default:
@@ -397,19 +392,16 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 				{
 					if (type == FeedsModel::FeedEntry)
 					{
-						connect(menu.addAction(ThemesManager::createIcon(QLatin1String("view-refresh")), QCoreApplication::translate("actions", "Update")), &QAction::triggered, this, &FeedsContentsWidget::updateFeed);
-
+						menu.addAction(ThemesManager::createIcon(QLatin1String("view-refresh")), QCoreApplication::translate("actions", "Update"), this, &FeedsContentsWidget::updateFeed);
 						menu.addSeparator();
-
-						connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &FeedsContentsWidget::openFeed);
+						menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &FeedsContentsWidget::openFeed);
 					}
 
 					menu.addSeparator();
 
 					QMenu *addMenu(menu.addMenu(tr("Add New")));
-
-					connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &FeedsContentsWidget::addFolder);
-					connect(addMenu->addAction(tr("Add Feed…")), &QAction::triggered, this, &FeedsContentsWidget::addFeed);
+					addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &FeedsContentsWidget::addFolder);
+					addMenu->addAction(tr("Add Feed…"), this, &FeedsContentsWidget::addFeed);
 				}
 
 				if (type != FeedsModel::RootEntry)
@@ -418,7 +410,7 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 
 					if (isInTrash)
 					{
-						connect(menu.addAction(tr("Restore Feed")), &QAction::triggered, [&]()
+						menu.addAction(tr("Restore Feed"), &menu, [&]()
 						{
 							FeedsManager::getModel()->restoreEntry(FeedsManager::getModel()->getEntry(m_ui->feedsViewWidget->currentIndex()));
 						});
@@ -431,8 +423,7 @@ void FeedsContentsWidget::showFeedsContextMenu(const QPoint &position)
 					if (type == FeedsModel::FeedEntry)
 					{
 						menu.addSeparator();
-
-						connect(menu.addAction(tr("Properties…")), &QAction::triggered, this, &FeedsContentsWidget::feedProperties);
+						menu.addAction(tr("Properties…"), this, &FeedsContentsWidget::feedProperties);
 					}
 				}
 			}
