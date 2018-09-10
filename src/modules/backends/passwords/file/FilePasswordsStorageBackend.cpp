@@ -265,6 +265,11 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
+			if (comparePasswords(password, passwords.at(i)) == PasswordsManager::FullMatch)
+			{
+				return;
+			}
+
 			if (comparePasswords(password, passwords.at(i)) == PasswordsManager::PartialMatch)
 			{
 				m_passwords[host].replace(i, password);
