@@ -71,6 +71,7 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 
 		setPopupMode(QToolButton::InstantPopup);
 		setText(getText());
+		setToolTip(getText());
 		setIcon(getIcon());
 	}
 
