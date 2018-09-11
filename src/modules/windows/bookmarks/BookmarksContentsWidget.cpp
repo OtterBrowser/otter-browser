@@ -46,10 +46,9 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
-
-	connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &BookmarksContentsWidget::addFolder);
-	connect(addMenu->addAction(tr("Add Bookmark…")), &QAction::triggered, this, &BookmarksContentsWidget::addBookmark);
-	connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &BookmarksContentsWidget::addSeparator);
+	addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &BookmarksContentsWidget::addFolder);
+	addMenu->addAction(tr("Add Bookmark…"), this, &BookmarksContentsWidget::addBookmark);
+	addMenu->addAction(tr("Add Separator"), this, &BookmarksContentsWidget::addSeparator);
 
 	ProxyModel *model(new ProxyModel(BookmarksManager::getModel(), QVector<QPair<QString, int> >({{tr("Title"), BookmarksModel::TitleRole}, {tr("Address"), BookmarksModel::UrlRole}, {tr("Description"), BookmarksModel::DescriptionRole}, {tr("Keyword"), BookmarksModel::KeywordRole}, {tr("Added"), BookmarksModel::TimeAddedRole}, {tr("Modified"), BookmarksModel::TimeModifiedRole}, {tr("Visited"), BookmarksModel::TimeVisitedRole}, {tr("Visits"), BookmarksModel::VisitsRole}}), this));
 	model->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
@@ -156,39 +155,25 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 	switch (type)
 	{
 		case BookmarksModel::TrashBookmark:
-			{
-				QAction *emptyTrashAction(menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash")));
-				emptyTrashAction->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
-
-				connect(emptyTrashAction, &QAction::triggered, BookmarksManager::getModel(), &BookmarksModel::emptyTrash);
-			}
+			 menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), &BookmarksModel::emptyTrash)->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 
 			break;
 		case BookmarksModel::UnknownBookmark:
-			connect(menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &BookmarksContentsWidget::addFolder);
-			connect(menu.addAction(tr("Add Bookmark…")), &QAction::triggered, this, &BookmarksContentsWidget::addBookmark);
-			connect(menu.addAction(tr("Add Separator")), &QAction::triggered, this, &BookmarksContentsWidget::addSeparator);
+			menu.addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &BookmarksContentsWidget::addFolder);
+			menu.addAction(tr("Add Bookmark…"), this, &BookmarksContentsWidget::addBookmark);
+			menu.addAction(tr("Add Separator"), this, &BookmarksContentsWidget::addSeparator);
 
 			break;
 		default:
 			{
 				const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
 
-				connect(menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open")), &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
-
-				QAction *openInNewTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Tab")));
-				openInNewTabAction->setData(SessionsManager::NewTabOpen);
-
-				QAction *openInNewBackgroundTabAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab")));
-				openInNewBackgroundTabAction->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
-
+				menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &BookmarksContentsWidget::openBookmark);
+				menu.addAction(QCoreApplication::translate("actions", "Open in New Tab"), this, &BookmarksContentsWidget::openBookmark)->setData(SessionsManager::NewTabOpen);
+				menu.addAction(QCoreApplication::translate("actions", "Open in New Background Tab"), this, &BookmarksContentsWidget::openBookmark)->setData(static_cast<int>(SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
 				menu.addSeparator();
-
-				QAction *openInNewWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Window")));
-				openInNewWindowAction->setData(SessionsManager::NewWindowOpen);
-
-				QAction *openInNewBackgroundWindowAction(menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window")));
-				openInNewBackgroundWindowAction->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
+				menu.addAction(QCoreApplication::translate("actions", "Open in New Window"), this, &BookmarksContentsWidget::openBookmark)->setData(SessionsManager::NewWindowOpen);
+				menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &BookmarksContentsWidget::openBookmark)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
 				if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && index.child(0, 0).data(BookmarksModel::TypeRole).toInt() == 0))
 				{
@@ -217,10 +202,9 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					menu.addSeparator();
 
 					QMenu *addMenu(menu.addMenu(tr("Add Bookmark")));
-
-					connect(addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…")), &QAction::triggered, this, &BookmarksContentsWidget::addFolder);
-					connect(addMenu->addAction(tr("Add Bookmark…")), &QAction::triggered, this, &BookmarksContentsWidget::addBookmark);
-					connect(addMenu->addAction(tr("Add Separator")), &QAction::triggered, this, &BookmarksContentsWidget::addSeparator);
+					addMenu->addAction(ThemesManager::createIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, &BookmarksContentsWidget::addFolder);
+					addMenu->addAction(tr("Add Bookmark…"), this, &BookmarksContentsWidget::addBookmark);
+					addMenu->addAction(tr("Add Separator"), this, &BookmarksContentsWidget::addSeparator);
 				}
 
 				if (type != BookmarksModel::RootBookmark)
@@ -229,7 +213,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 
 					if (isInTrash)
 					{
-						connect(menu.addAction(tr("Restore Bookmark")), &QAction::triggered, [&]()
+						menu.addAction(tr("Restore Bookmark"), &menu, [&]()
 						{
 							BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 						});
@@ -242,15 +226,9 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					if (type != BookmarksModel::SeparatorBookmark)
 					{
 						menu.addSeparator();
-
-						connect(menu.addAction(tr("Properties…")), &QAction::triggered, this, &BookmarksContentsWidget::bookmarkProperties);
+						menu.addAction(tr("Properties…"), this, &BookmarksContentsWidget::bookmarkProperties);
 					}
 				}
-
-				connect(openInNewTabAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
-				connect(openInNewBackgroundTabAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
-				connect(openInNewWindowAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
-				connect(openInNewBackgroundWindowAction, &QAction::triggered, this, &BookmarksContentsWidget::openBookmark);
 			}
 
 			break;
