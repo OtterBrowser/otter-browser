@@ -463,8 +463,7 @@ void SidebarWidget::updatePanels()
 	}
 
 	menu->addSeparator();
-
-	connect(menu->addAction(tr("Add Web Panel…")), &QAction::triggered, this, &SidebarWidget::addWebPanel);
+	menu->addAction(tr("Add Web Panel…"), this, &SidebarWidget::addWebPanel);
 
 	selectPanel(definition.currentPanel);
 }
