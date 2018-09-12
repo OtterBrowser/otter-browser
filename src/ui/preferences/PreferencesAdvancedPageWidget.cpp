@@ -336,7 +336,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardViewWidget->setModel(keyboardProfilesModel);
 
 	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
-	addKeyboardProfileMenu->addAction(tr("New…"));
+	addKeyboardProfileMenu->addAction(tr("New…"), this, &PreferencesAdvancedPageWidget::addKeyboardProfile);
 	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
 	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
@@ -372,7 +372,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseViewWidget->setModel(mouseProfilesModel);
 
 	QMenu *addMouseProfileMenu(new QMenu(m_ui->mouseAddButton));
-	addMouseProfileMenu->addAction(tr("New…"));
+	addMouseProfileMenu->addAction(tr("New…"), this, &PreferencesAdvancedPageWidget::addMouseProfile);
 	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
 
 	m_ui->mouseAddButton->setMenu(addMouseProfileMenu);
@@ -419,7 +419,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->keyboardViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->keyboardMoveUpButton, &QToolButton::setEnabled);
 	connect(m_ui->keyboardViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateKeyboardProfileActions);
 	connect(m_ui->keyboardViewWidget, &ItemViewWidget::doubleClicked, this, &PreferencesAdvancedPageWidget::editKeyboardProfile);
-	connect(m_ui->keyboardAddButton->menu()->actions().at(0), &QAction::triggered, this, &PreferencesAdvancedPageWidget::addKeyboardProfile);
 	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::readdKeyboardProfile);
 	connect(m_ui->keyboardEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editKeyboardProfile);
 	connect(m_ui->keyboardCloneButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::cloneKeyboardProfile);
@@ -430,7 +429,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->mouseMoveUpButton, &QToolButton::setEnabled);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesAdvancedPageWidget::updateMouseProfileActions);
 	connect(m_ui->mouseViewWidget, &ItemViewWidget::doubleClicked, this, &PreferencesAdvancedPageWidget::editMouseProfile);
-	connect(m_ui->mouseAddButton->menu()->actions().at(0), &QAction::triggered, this, &PreferencesAdvancedPageWidget::addMouseProfile);
 	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), &QMenu::triggered, this, &PreferencesAdvancedPageWidget::readdMouseProfile);
 	connect(m_ui->mouseEditButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::editMouseProfile);
 	connect(m_ui->mouseCloneButton, &QPushButton::clicked, this, &PreferencesAdvancedPageWidget::cloneMouseProfile);
