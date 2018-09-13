@@ -1326,12 +1326,13 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 		}
 	}
 
-	m_ui->keyboardAddButton->menu()->actions().at(1)->menu()->clear();
-	m_ui->keyboardAddButton->menu()->actions().at(1)->menu()->setEnabled(!availableKeyboardProfiles.isEmpty());
+	QMenu *readdMenu(m_ui->keyboardAddButton->menu()->actions().at(1)->menu());
+	readdMenu->clear();
+	readdMenu->setEnabled(!availableKeyboardProfiles.isEmpty());
 
 	for (int i = 0; i < availableKeyboardProfiles.count(); ++i)
 	{
-		m_ui->keyboardAddButton->menu()->actions().at(1)->menu()->addAction(availableKeyboardProfiles.at(i).getTitle())->setData(availableKeyboardProfiles.at(i).getName());
+		readdMenu->addAction(availableKeyboardProfiles.at(i).getTitle())->setData(availableKeyboardProfiles.at(i).getName());
 	}
 }
 
@@ -1521,12 +1522,13 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 		}
 	}
 
-	m_ui->mouseAddButton->menu()->actions().at(1)->menu()->clear();
-	m_ui->mouseAddButton->menu()->actions().at(1)->menu()->setEnabled(!availableMouseProfiles.isEmpty());
+	QMenu *readdMenu(m_ui->mouseAddButton->menu()->actions().at(1)->menu());
+	readdMenu->clear();
+	readdMenu->setEnabled(!availableMouseProfiles.isEmpty());
 
 	for (int i = 0; i < availableMouseProfiles.count(); ++i)
 	{
-		m_ui->mouseAddButton->menu()->actions().at(1)->menu()->addAction((availableMouseProfiles.at(i).getTitle()))->setData(availableMouseProfiles.at(i).getName());
+		readdMenu->addAction((availableMouseProfiles.at(i).getTitle()))->setData(availableMouseProfiles.at(i).getName());
 	}
 }
 
