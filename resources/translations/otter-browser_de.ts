@@ -1245,7 +1245,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="436"/>
         <source>Subject</source>
-        <translation type="unfinished"/>
+        <translation>Betreff</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="440"/>
@@ -1793,7 +1793,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
         <source>Profile was never updated</source>
-        <translation type="unfinished"/>
+        <translation>Profil wurde nie aktualisiert</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="111"/>
@@ -2386,7 +2386,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="733"/>
         <source>Subscribe to this feed using:</source>
-        <translation type="unfinished"/>
+        <translation>Feed abonnieren mit:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="802"/>
@@ -3042,7 +3042,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="252"/>
         <source>Lock Panel</source>
-        <translation type="unfinished"/>
+        <translation>Leiste blockieren</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="266"/>
@@ -8895,7 +8895,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="142"/>
         <source>Go to History Entry</source>
-        <translation type="unfinished"/>
+        <translation>Gehe zum Verlaufeintrag</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="363"/>

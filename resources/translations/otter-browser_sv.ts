@@ -2529,22 +2529,22 @@ Vill du spara dem?</translation>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="172"/>
         <source>Profile with this address already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Profilen med denna adressen finns redan.</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../../src/core/HandlersManager.cpp" line="174"/>
         <source>Do you want to add this content blocking profile?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du lägga till denna profilen för innehållsblockering?</translation>
     </message>
 </context>
 <context>
