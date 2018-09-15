@@ -214,14 +214,14 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 	}
 	else
 	{
-		QTimer::singleShot(0, [=]()
+		QTimer::singleShot(0, this, [=]()
 		{
 			restoreSession(session);
 			updateWindowTitle();
 		});
 	}
 
-	QTimer::singleShot(100, [=]()
+	QTimer::singleShot(100, this, [=]()
 	{
 		updateShortcuts();
 	});
