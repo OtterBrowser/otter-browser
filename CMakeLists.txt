@@ -79,7 +79,7 @@ option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
 option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
 
-find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
+find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
 find_package(Qt5WebEngineWidgets 5.9.0 QUIET)
 find_package(Qt5WebKitWidgets 5.212.0 QUIET)
 find_package(Hunspell 1.5.0 QUIET)
@@ -508,6 +508,12 @@ elseif (APPLE)
 
 	set_source_files_properties(resources/icons/otter-browser.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 elseif (UNIX)
+	find_package(Qt5DBus 5.6.0 QUIET)
+
+	if (Qt5DBus_FOUND AND ENABLE_DBUS)
+		add_definitions(-DOTTER_ENABLE_DBUS)
+	endif (Qt5DBus_FOUND AND ENABLE_DBUS)
+
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
@@ -547,7 +553,9 @@ elseif (APPLE)
 
 	target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
-	target_link_libraries(otter-browser Qt5::DBus)
+	if (Qt5DBus_FOUND AND ENABLE_DBUS)
+		target_link_libraries(otter-browser Qt5::DBus)
+	endif (Qt5DBus_FOUND AND ENABLE_DBUS)
 
 	if (ENABLE_CRASHREPORTS)
 		target_link_libraries(otter-browser -lpthread)
