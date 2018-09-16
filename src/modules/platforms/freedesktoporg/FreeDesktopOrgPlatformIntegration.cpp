@@ -30,10 +30,13 @@
 #include "../../../../3rdparty/libmimeapps/Index.h"
 
 #include <QtConcurrent/QtConcurrent>
+#ifdef OTTER_ENABLE_DBUS
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
+#endif
 #include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
+#ifdef OTTER_ENABLE_DBUS
 #include <QtGui/QRgb>
 
 QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
@@ -94,23 +97,28 @@ const QDBusArgument& operator>>(const QDBusArgument &argument, QImage &image)
 
 	return argument;
 }
+#endif
 
 namespace Otter
 {
 
-FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *parent) : PlatformIntegration(parent),
-	m_notificationsInterface(new QDBusInterface(QLatin1String("org.freedesktop.Notifications"), QLatin1String("/org/freedesktop/Notifications"), QLatin1String("org.freedesktop.Notifications"), QDBusConnection::sessionBus(), this))
+FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *parent) : PlatformIntegration(parent)
+#ifdef OTTER_ENABLE_DBUS
+	, m_notificationsInterface(new QDBusInterface(QLatin1String("org.freedesktop.Notifications"), QLatin1String("/org/freedesktop/Notifications"), QLatin1String("org.freedesktop.Notifications"), QDBusConnection::sessionBus(), this))
+#endif
 {
 #if QT_VERSION >= 0x050700
 	QGuiApplication::setDesktopFileName(QLatin1String("otter-browser.desktop"));
 #endif
 
+#ifdef OTTER_ENABLE_DBUS
 	qDBusRegisterMetaType<QImage>();
 
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(handleNotificationIgnored(quint32,quint32)));
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("ActionInvoked"), this, SLOT(handleNotificationClicked(quint32,QString)));
 
 	updateTransfersProgress();
+#endif
 
 	QTimer::singleShot(250, this, [&]()
 	{
@@ -120,17 +128,21 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(QObject *pa
 		});
 	});
 
+#ifdef OTTER_ENABLE_DBUS
 	connect(TransfersManager::getInstance(), &TransfersManager::transferChanged, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStarted, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferFinished, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferRemoved, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
 	connect(TransfersManager::getInstance(), &TransfersManager::transferStopped, this, &FreeDesktopOrgPlatformIntegration::updateTransfersProgress);
+#endif
 }
 
+#ifdef OTTER_ENABLE_DBUS
 FreeDesktopOrgPlatformIntegration::~FreeDesktopOrgPlatformIntegration()
 {
 	setTransfersProgress(0, 0, 0);
 }
+#endif
 
 void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QUrl &url) const
 {
@@ -160,6 +172,7 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 	QProcess::startDetached(QString::fromStdString(parsed.at(0)), arguments);
 }
 
+#ifdef OTTER_ENABLE_DBUS
 void FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished(QDBusPendingCallWatcher *watcher)
 {
 	Notification *notification(m_notificationWatchers.value(watcher, nullptr));
@@ -281,6 +294,7 @@ void FreeDesktopOrgPlatformIntegration::setTransfersProgress(qint64 bytesTotal, 
 
 	QDBusConnection::sessionBus().send(message);
 }
+#endif
 
 Style* FreeDesktopOrgPlatformIntegration::createStyle(const QString &name) const
 {
@@ -319,9 +333,11 @@ QVector<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicatio
 	return result;
 }
 
+#ifdef OTTER_ENABLE_DBUS
 bool FreeDesktopOrgPlatformIntegration::canShowNotifications() const
 {
 	return m_notificationsInterface->isValid();
 }
+#endif
 
 }

@@ -24,12 +24,14 @@
 
 #include "../../../core/PlatformIntegration.h"
 
+#ifdef OTTER_ENABLE_DBUS
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusPendingCallWatcher>
 
 QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image);
 const QDBusArgument& operator>>(const QDBusArgument &argument, QImage &image);
+#endif
 
 namespace Otter
 {
@@ -40,11 +42,14 @@ class FreeDesktopOrgPlatformIntegration final : public PlatformIntegration
 
 public:
 	explicit FreeDesktopOrgPlatformIntegration(QObject *parent);
+#ifdef OTTER_ENABLE_DBUS
 	~FreeDesktopOrgPlatformIntegration();
+#endif
 
 	void runApplication(const QString &command, const QUrl &url = {}) const override;
 	Style* createStyle(const QString &name) const override;
 	QVector<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
+#ifdef OTTER_ENABLE_DBUS
 	bool canShowNotifications() const override;
 
 public slots:
@@ -58,11 +63,14 @@ protected slots:
 	void handleNotificationIgnored(quint32 identifier, quint32 reason);
 	void handleNotificationClicked(quint32 identifier, const QString &action);
 	void updateTransfersProgress();
+#endif
 
 private:
+#ifdef OTTER_ENABLE_DBUS
 	QDBusInterface *m_notificationsInterface;
 	QHash<QDBusPendingCallWatcher*, Notification*> m_notificationWatchers;
 	QHash<quint32, Notification*> m_notifications;
+#endif
 	QHash<QString, QVector<ApplicationInformation> > m_applicationsCache;
 };
 
