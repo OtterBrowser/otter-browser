@@ -78,6 +78,7 @@ option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.9)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
 option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
+option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
 find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
 find_package(Qt5WebEngineWidgets 5.9.0 QUIET)
@@ -390,14 +391,14 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
 	)
 
-	if (HUNSPELL_FOUND)
+	if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 		set(otter_src
 			${otter_src}
 			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
 			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
 		)
-	endif (HUNSPELL_FOUND)
+	endif (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
@@ -444,7 +445,7 @@ if (ENABLE_CRASHREPORTS)
 	endif (WIN32)
 endif (ENABLE_CRASHREPORTS)
 
-if (HUNSPELL_FOUND)
+if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK -DQT_STATICPLUGIN)
 	include_directories(${HUNSPELL_INCLUDE_DIR})
 
@@ -462,7 +463,7 @@ if (HUNSPELL_FOUND)
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldebug.cpp
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
 	)
-endif (HUNSPELL_FOUND)
+endif (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
@@ -539,9 +540,9 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
 endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
-if (HUNSPELL_FOUND)
+if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
-endif (HUNSPELL_FOUND)
+endif (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 
 if (WIN32)
 	target_link_libraries(otter-browser Qt5::WinExtras ole32 shell32 advapi32 user32)
