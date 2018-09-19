@@ -1018,8 +1018,38 @@ bool ItemViewWidget::isExclusive() const
 
 bool ItemViewWidget::applyFilter(const QModelIndex &index)
 {
+	const int columnCount(index.parent().isValid() ? getRowCount(index.parent()) : getColumnCount());
 	bool hasMatch(m_filterString.isEmpty());
 	const bool isFolder(!index.flags().testFlag(Qt::ItemNeverHasChildren));
+
+	for (int i = 0; i < columnCount; ++i)
+	{
+		const QModelIndex childIndex(index.sibling(index.row(), i));
+
+		if (!childIndex.isValid())
+		{
+			continue;
+		}
+
+		QSet<int>::iterator iterator;
+
+		for (iterator = m_filterRoles.begin(); iterator != m_filterRoles.end(); ++iterator)
+		{
+			const QVariant roleData(childIndex.data(*iterator));
+
+			if (!roleData.isNull() && roleData.toString().contains(m_filterString, Qt::CaseInsensitive))
+			{
+				hasMatch = true;
+
+				break;
+			}
+		}
+
+		if (hasMatch)
+		{
+			break;
+		}
+	}
 
 	if (isFolder)
 	{
@@ -1035,39 +1065,6 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index)
 			if (applyFilter(index.child(i, 0)))
 			{
 				hasMatch = true;
-			}
-		}
-	}
-	else
-	{
-		const int columnCount(index.parent().isValid() ? getRowCount(index.parent()) : getColumnCount());
-
-		for (int i = 0; i < columnCount; ++i)
-		{
-			const QModelIndex childIndex(index.sibling(index.row(), i));
-
-			if (!childIndex.isValid())
-			{
-				continue;
-			}
-
-			QSet<int>::iterator iterator;
-
-			for (iterator = m_filterRoles.begin(); iterator != m_filterRoles.end(); ++iterator)
-			{
-				const QVariant roleData(childIndex.data(*iterator));
-
-				if (!roleData.isNull() && roleData.toString().contains(m_filterString, Qt::CaseInsensitive))
-				{
-					hasMatch = true;
-
-					break;
-				}
-			}
-
-			if (hasMatch)
-			{
-				break;
 			}
 		}
 	}
