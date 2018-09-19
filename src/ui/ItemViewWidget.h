@@ -129,7 +129,7 @@ protected:
 	void ensureInitialized();
 	void moveRow(bool up);
 	void selectRow(const QModelIndex &index);
-	bool applyFilter(const QModelIndex &index);
+	bool applyFilter(const QModelIndex &index, bool parentHasMatch = false);
 
 protected slots:
 	void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
