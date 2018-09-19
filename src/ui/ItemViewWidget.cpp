@@ -1016,7 +1016,7 @@ bool ItemViewWidget::isExclusive() const
 	return m_isExclusive;
 }
 
-bool ItemViewWidget::applyFilter(const QModelIndex &index)
+bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 {
 	const int columnCount(index.parent().isValid() ? getRowCount(index.parent()) : getColumnCount());
 	bool hasMatch(m_filterString.isEmpty());
@@ -1059,17 +1059,23 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index)
 		}
 
 		const int rowCount(getRowCount(index));
+		bool folderHasMatch(false);
 
 		for (int i = 0; i < rowCount; ++i)
 		{
-			if (applyFilter(index.child(i, 0)))
+			if (applyFilter(index.child(i, 0), hasMatch))
 			{
-				hasMatch = true;
+				folderHasMatch = true;
 			}
+		}
+
+		if (!hasMatch)
+		{
+			hasMatch = folderHasMatch;
 		}
 	}
 
-	setRowHidden(index.row(), index.parent(), (!hasMatch || (isFolder && getRowCount(index) == 0)));
+	setRowHidden(index.row(), index.parent(), (!(hasMatch || parentHasMatch) || (isFolder && getRowCount(index) == 0)));
 
 	if (isFolder)
 	{
