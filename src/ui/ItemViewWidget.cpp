@@ -1018,13 +1018,12 @@ bool ItemViewWidget::isExclusive() const
 
 bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 {
-	const int columnCount(index.parent().isValid() ? getRowCount(index.parent()) : getColumnCount());
 	const bool isFolder(!index.flags().testFlag(Qt::ItemNeverHasChildren));
 	bool hasMatch(m_filterString.isEmpty() || (isFolder && parentHasMatch));
 
 	if (!hasMatch)
 	{
-		for (int i = 0; i < columnCount; ++i)
+		for (int i = 0; i < getColumnCount(index.parent()); ++i)
 		{
 			const QModelIndex childIndex(index.sibling(index.row(), i));
 
