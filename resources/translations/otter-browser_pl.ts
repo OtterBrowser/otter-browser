@@ -8503,7 +8503,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="150"/>
         <location filename="../../src/ui/WebWidget.cpp" line="918"/>
         <source>Purge Tab History</source>
-        <translation>Wyczyść historię z karty</translation>
+        <translation>Wyczyść całkowicie historię karty</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
