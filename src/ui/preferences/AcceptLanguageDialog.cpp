@@ -70,7 +70,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	QCollator collator;
 	collator.setCaseSensitivity(Qt::CaseInsensitive);
 
-	qSort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
+	std::sort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
 	{
 		return (collator.compare(first.first, second.first) < 0);
 	});
