@@ -136,8 +136,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	updateReaddSearchEngineMenu();
 
 	connect(m_ui->searchFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->searchViewWidget, &ItemViewWidget::setFilterString);
-	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownSearchButton, &QToolButton::setEnabled);
-	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpSearchButton, &QToolButton::setEnabled);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownSearchButton, &QToolButton::setEnabled);
+	connect(m_ui->searchViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpSearchButton, &QToolButton::setEnabled);
 	connect(m_ui->searchViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PreferencesSearchPageWidget::updateSearchEngineActions);
 	connect(m_ui->searchViewWidget, &ItemViewWidget::modified, this, &PreferencesSearchPageWidget::settingsModified);
 	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), &QMenu::triggered, this, &PreferencesSearchPageWidget::readdSearchEngine);

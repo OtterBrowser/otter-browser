@@ -102,8 +102,8 @@ public:
 	int getCurrentRow() const;
 	int getRowCount(const QModelIndex &parent = {}) const;
 	int getColumnCount(const QModelIndex &parent = {}) const;
-	bool canMoveUp() const;
-	bool canMoveDown() const;
+	bool canMoveRowUp() const;
+	bool canMoveRowDown() const;
 	bool isExclusive() const;
 	bool isModified() const;
 
@@ -157,8 +157,8 @@ private:
 	bool m_isInitialized;
 
 signals:
-	void canMoveUpChanged(bool isAllowed);
-	void canMoveDownChanged(bool isAllowed);
+	void canMoveRowUpChanged(bool isAllowed);
+	void canMoveRowDownChanged(bool isAllowed);
 	void needsActionsUpdate();
 	void modified();
 	void sortChanged(int column, Qt::SortOrder order);
