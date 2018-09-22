@@ -164,8 +164,8 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	connect(m_ui->addGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::addGesture);
 	connect(m_ui->removeGestureButton, &QPushButton::clicked, this, &MouseProfileDialog::removeGesture);
 	connect(m_ui->stepsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &MouseProfileDialog::updateStepsActions);
-	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownStepsButton, &QToolButton::setEnabled);
-	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpStepsButton, &QToolButton::setEnabled);
+	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownStepsButton, &QToolButton::setEnabled);
+	connect(m_ui->stepsViewWidget, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpStepsButton, &QToolButton::setEnabled);
 	connect(m_ui->addStepButton, &QPushButton::clicked, this, &MouseProfileDialog::addStep);
 	connect(m_ui->removeStepButton, &QPushButton::clicked, this, &MouseProfileDialog::removeStep);
 	connect(m_ui->moveDownStepsButton, &QToolButton::clicked, m_ui->stepsViewWidget, &ItemViewWidget::moveDownRow);

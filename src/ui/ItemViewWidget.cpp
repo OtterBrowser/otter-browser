@@ -459,8 +459,8 @@ void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelInde
 	{
 		if (m_sourceModel)
 		{
-			emit canMoveUpChanged(canMoveUp());
-			emit canMoveDownChanged(canMoveDown());
+			emit canMoveRowUpChanged(canMoveRowUp());
+			emit canMoveRowDownChanged(canMoveRowDown());
 		}
 
 		emit needsActionsUpdate();
@@ -624,8 +624,8 @@ void ItemViewWidget::notifySelectionChanged()
 {
 	if (m_sourceModel)
 	{
-		emit canMoveUpChanged(canMoveUp());
-		emit canMoveDownChanged(canMoveDown());
+		emit canMoveRowUpChanged(canMoveRowUp());
+		emit canMoveRowDownChanged(canMoveRowDown());
 	}
 
 	emit needsActionsUpdate();
@@ -998,12 +998,12 @@ int ItemViewWidget::getColumnCount(const QModelIndex &parent) const
 	return (model() ? model()->columnCount(parent) : 0);
 }
 
-bool ItemViewWidget::canMoveUp() const
+bool ItemViewWidget::canMoveRowUp() const
 {
 	return (currentIndex().row() > 0 && getRowCount() > 1);
 }
 
-bool ItemViewWidget::canMoveDown() const
+bool ItemViewWidget::canMoveRowDown() const
 {
 	const int currentRow(currentIndex().row());
 	const int rowCount(getRowCount());

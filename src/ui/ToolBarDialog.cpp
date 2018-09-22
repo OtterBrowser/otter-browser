@@ -235,8 +235,8 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	connect(m_ui->availableEntriesItemView, &ItemViewWidget::needsActionsUpdate, this, &ToolBarDialog::updateActions);
 	connect(m_ui->currentEntriesItemView, &ItemViewWidget::customContextMenuRequested, this, &ToolBarDialog::showCurrentEntriesContextMenu);
 	connect(m_ui->currentEntriesItemView, &ItemViewWidget::needsActionsUpdate, this, &ToolBarDialog::updateActions);
-	connect(m_ui->currentEntriesItemView, &ItemViewWidget::canMoveDownChanged, m_ui->moveDownButton, &QToolButton::setEnabled);
-	connect(m_ui->currentEntriesItemView, &ItemViewWidget::canMoveUpChanged, m_ui->moveUpButton, &QToolButton::setEnabled);
+	connect(m_ui->currentEntriesItemView, &ItemViewWidget::canMoveRowDownChanged, m_ui->moveDownButton, &QToolButton::setEnabled);
+	connect(m_ui->currentEntriesItemView, &ItemViewWidget::canMoveRowUpChanged, m_ui->moveUpButton, &QToolButton::setEnabled);
 	connect(m_ui->availableEntriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->availableEntriesItemView, &ItemViewWidget::setFilterString);
 	connect(m_ui->currentEntriesFilterLineEditWidget, &LineEditWidget::textChanged, m_ui->currentEntriesItemView, &ItemViewWidget::setFilterString);
 	connect(m_ui->editEntryButton, &QPushButton::clicked, this, &ToolBarDialog::editEntry);
