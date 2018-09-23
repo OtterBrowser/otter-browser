@@ -504,14 +504,21 @@ bool SearchEnginesManager::hasSearchEngine(const QUrl &url)
 
 bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &searchEngine)
 {
-	if (SessionsManager::isReadOnly() || !searchEngine.isValid())
+	if (SessionsManager::isReadOnly())
 	{
 		return false;
 	}
 
+	QString identifier(searchEngine.identifier);
+
+	if (identifier.isEmpty())
+	{
+		identifier = Utils::createIdentifier(QUrl(searchEngine.resultsUrl.url).host(), getSearchEngines());
+	}
+
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searchEngines/") + searchEngine.identifier + QLatin1String(".xml")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searchEngines/") + identifier + QLatin1String(".xml")));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
