@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -137,6 +137,19 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaSearchEngines")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Search Engines…")}}, ActionExecutor::Object(), this));
 			addSeparator();
 			addAction(new Action(-1, {{QLatin1String("importer"), QLatin1String("OperaSession")}}, {{QLatin1String("text"), QT_TRANSLATE_NOOP("actions", "Import Opera Session…")}}, ActionExecutor::Object(), this));
+
+			if (SessionsManager::isReadOnly())
+			{
+				for (int i = 0; i < actions().count(); ++i)
+				{
+					QAction *action(actions().at(i));
+
+					if (action && !action->isSeparator())
+					{
+						action->setEnabled(false);
+					}
+				}
+			}
 
 			connect(this, &Menu::triggered, this, [&](QAction *action)
 			{
