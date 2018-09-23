@@ -804,7 +804,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					const QIcon icon(getIcon());
 					const QUrl url(result.toMap().value(QLatin1String("url")).toString());
 					SearchEnginesManager::SearchEngineDefinition searchEngine;
-					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), SearchEnginesManager::getSearchEngines());
 					searchEngine.title = getTitle();
 					searchEngine.formUrl = getUrl();
 					searchEngine.icon = (icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : icon);
