@@ -79,11 +79,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QSplitter" name="verticalSplitter">
+    <widget class="SplitterWidget" name="verticalSplitterWidget">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QSplitter" name="horizontalSplitter">
+     <widget class="SplitterWidget" name="horizontalSplitterWidget">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -276,6 +276,12 @@
    <class>TextBrowserWidget</class>
    <extends>QTextBrowser</extends>
    <header>src/ui/TextBrowserWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SplitterWidget</class>
+   <extends>QSplitter</extends>
+   <header>src/ui/SplitterWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

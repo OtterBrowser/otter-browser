@@ -81,7 +81,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 {
 	m_ui->setupUi(this);
 	m_ui->subscribeFeedWidget->hide();
-	m_ui->horizontalSplitter->setSizes({300, qMax(500, (width() - 300))});
+	m_ui->horizontalSplitterWidget->setSizes({300, qMax(500, (width() - 300))});
 	m_ui->entriesFilterLineEditWidget->setClearOnEscape(true);
 	m_ui->entriesViewWidget->setItemDelegate(new EntryDelegate(this));
 	m_ui->entriesViewWidget->installEventFilter(this);

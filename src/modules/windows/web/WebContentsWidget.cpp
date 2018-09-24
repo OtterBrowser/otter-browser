@@ -61,7 +61,7 @@ QMap<WebContentsWidget::ScrollDirections, QPixmap> WebContentsWidget::m_scrollCu
 WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, const QHash<int, QVariant> &options, WebWidget *widget, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_websiteInformationDialog(nullptr),
 	m_layout(new QVBoxLayout(this)),
-	m_splitter(new QSplitter(Qt::Vertical, this)),
+	m_splitter(new SplitterWidget(Qt::Vertical, this)),
 	m_webWidget(nullptr),
 	m_window(window),
 	m_startPageWidget(nullptr),
@@ -1172,7 +1172,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, const QVariantMap &paramete
 			m_createStartPageTimer = startTimer(50);
 		}
 
-		connect(m_splitter, &QSplitter::splitterMoved, widget, &WebWidget::geometryChanged);
+		connect(m_splitter, &SplitterWidget::splitterMoved, widget, &WebWidget::geometryChanged);
 	}
 
 	const bool isHidden(m_isStartPageEnabled && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
