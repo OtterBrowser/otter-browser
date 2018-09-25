@@ -79,11 +79,11 @@
     </widget>
    </item>
    <item>
-    <widget class="SplitterWidget" name="verticalSplitterWidget">
+    <widget class="SplitterWidget" name="feedsVerticalSplitterWidget">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="SplitterWidget" name="horizontalSplitterWidget">
+     <widget class="SplitterWidget" name="feedsHorizontalSplitterWidget">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>

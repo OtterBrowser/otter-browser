@@ -77,6 +77,7 @@ WebContentsWidget::WebContentsWidget(const QVariantMap &parameters, const QHash<
 	m_isStartPageEnabled(!isSidebarPanel() && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool()),
 	m_isIgnoringMouseRelease(false)
 {
+	m_splitter->setObjectName(QLatin1String("web"));
 	m_splitter->hide();
 
 	m_layout->setContentsMargins(0, 0, 0, 0);

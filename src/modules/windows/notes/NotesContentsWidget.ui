@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="SplitterWidget" name="splitterWidget">
+    <widget class="SplitterWidget" name="notesSplitterWidget">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
