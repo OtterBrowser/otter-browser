@@ -178,6 +178,7 @@ struct SessionWindow final
 
 struct SessionMainWindow final
 {
+	QMap<QString, QVector<int> > splitters;
 	QVector<SessionWindow> windows;
 	QVector<ToolBarState> toolBars;
 	QByteArray geometry;
