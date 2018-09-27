@@ -764,6 +764,27 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 			mainWindowObject.insert(QLatin1String("toolBars"), toolBarsArray);
 		}
 
+		if (!sessionEntry.splitters.isEmpty())
+		{
+			QJsonArray splittersArray;
+			QMap<QString, QVector<int> >::const_iterator iterator;
+
+			for (iterator = sessionEntry.splitters.begin(); iterator != sessionEntry.splitters.end(); ++iterator)
+			{
+				QJsonArray sizesArray;
+				const QVector<int> sizes(iterator.value());
+
+				for (int j = 0; j < sizes.count(); ++j)
+				{
+					sizesArray.append(sizes.at(i));
+				}
+
+				splittersArray.append(QJsonObject({{QLatin1String("identifier"), iterator.key()}, {QLatin1String("sizes"), sizesArray}}));
+			}
+
+			mainWindowObject.insert(QLatin1String("splitters"), splittersArray);
+		}
+
 		mainWindowsArray.append(mainWindowObject);
 	}
 
