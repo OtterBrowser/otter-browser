@@ -1523,6 +1523,16 @@ void MainWindow::setActiveEditorExecutor(ActionExecutor::Object executor)
 	emit categorizedActionsStateChanged({ActionsManager::ActionDefinition::EditingCategory});
 }
 
+void MainWindow::setSplitterSizes(const QString &identifier, const QVector<int> &sizes)
+{
+	if (sizes != m_splitters.value(identifier))
+	{
+		m_splitters[identifier] = sizes;
+
+		SessionsManager::markSessionAsModified();
+	}
+}
+
 void MainWindow::storeWindowState()
 {
 	m_previousState = windowState();
@@ -2485,6 +2495,11 @@ QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area) const
 QVector<ClosedWindow> MainWindow::getClosedWindows() const
 {
 	return m_closedWindows;
+}
+
+QVector<int> MainWindow::getSplitterSizes(const QString &identifier)
+{
+	return m_splitters.value(identifier);
 }
 
 QVector<quint64> MainWindow::createOrderedWindowList(bool includeMinimized) const
