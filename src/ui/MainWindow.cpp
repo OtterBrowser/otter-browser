@@ -168,6 +168,8 @@ MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &s
 		}
 	}
 
+	m_splitters = session.splitters;
+
 	if (getActionState(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), ToolBarsManager::MenuBar}}).isChecked)
 	{
 		m_menuBar = new MenuBarWidget(this);
@@ -2386,6 +2388,7 @@ SessionMainWindow MainWindow::getSession() const
 	SessionMainWindow session;
 	session.geometry = saveGeometry();
 	session.index = getCurrentWindowIndex();
+	session.splitters = m_splitters;
 	session.hasToolBarsState = true;
 	session.toolBars.reserve(m_toolBarStates.count() + m_toolBars.count());
 	session.toolBars = m_toolBarStates.values().toVector();

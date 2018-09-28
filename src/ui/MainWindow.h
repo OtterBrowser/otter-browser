@@ -139,6 +139,7 @@ private:
 	QVector<ClosedWindow> m_closedWindows;
 	QVector<quint64> m_tabSwitchingOrderList;
 	QHash<quint64, Window*> m_windows;
+	QMap<QString, QVector<int> > m_splitters;
 	QMap<int, ToolBarWidget*> m_toolBars;
 	QMap<int, ToolBarState> m_toolBarStates;
 	Qt::WindowStates m_previousState;
