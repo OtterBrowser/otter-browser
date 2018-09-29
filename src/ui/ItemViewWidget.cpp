@@ -1019,7 +1019,8 @@ bool ItemViewWidget::isExclusive() const
 bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 {
 	const bool isFolder(!index.flags().testFlag(Qt::ItemNeverHasChildren));
-	bool hasMatch(m_filterString.isEmpty() || (isFolder && parentHasMatch));
+	const bool hasFilter(!m_filterString.isEmpty());
+	bool hasMatch(!hasFilter || (isFolder && parentHasMatch));
 
 	if (!hasMatch)
 	{
@@ -1077,11 +1078,11 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 		}
 	}
 
-	setRowHidden(index.row(), index.parent(), (!(hasMatch || parentHasMatch) || (isFolder && getRowCount(index) == 0)));
+	setRowHidden(index.row(), index.parent(), (hasFilter ? (!(hasMatch || parentHasMatch) || (isFolder && getRowCount(index) == 0)) : false));
 
 	if (isFolder)
 	{
-		setExpanded(index, ((hasMatch && !m_filterString.isEmpty()) || (m_filterString.isEmpty() && m_expandedBranches.contains(index))));
+		setExpanded(index, ((hasMatch && hasFilter) || (!hasFilter && m_expandedBranches.contains(index))));
 	}
 
 	return hasMatch;
