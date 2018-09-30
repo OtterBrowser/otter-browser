@@ -30,6 +30,13 @@ class SplitterWidget final : public QSplitter
 public:
 	explicit SplitterWidget(QWidget *parent = nullptr);
 	SplitterWidget(Qt::Orientation orientation, QWidget *parent = nullptr);
+
+protected:
+	void showEvent(QShowEvent *event) override;
+	static QString normalizeSplitterName(QString name);
+
+private:
+	bool m_isInitialized;
 };
 
 }

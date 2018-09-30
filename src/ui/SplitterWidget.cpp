@@ -18,16 +18,60 @@
 **************************************************************************/
 
 #include "SplitterWidget.h"
+#include "MainWindow.h"
 
 namespace Otter
 {
 
-SplitterWidget::SplitterWidget(QWidget *parent) : QSplitter(parent)
+SplitterWidget::SplitterWidget(QWidget *parent) : QSplitter(parent),
+	m_isInitialized(false)
 {
 }
 
-SplitterWidget::SplitterWidget(Qt::Orientation orientation, QWidget *parent) : QSplitter(orientation, parent)
+SplitterWidget::SplitterWidget(Qt::Orientation orientation, QWidget *parent) : QSplitter(orientation, parent),
+	m_isInitialized(false)
 {
+}
+
+void SplitterWidget::showEvent(QShowEvent *event)
+{
+	QSplitter::showEvent(event);
+
+	if (!m_isInitialized)
+	{
+		const QString name(normalizeSplitterName(objectName()));
+
+		if (name.isEmpty())
+		{
+			return;
+		}
+
+		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			const QVector<int> sizes(mainWindow->getSplitterSizes(name));
+
+			if (!sizes.isEmpty())
+			{
+				setSizes(sizes.toList());
+			}
+		}
+
+		m_isInitialized = true;
+	}
+}
+
+QString SplitterWidget::normalizeSplitterName(QString name)
+{
+	name.remove(QLatin1String("Otter__"));
+
+	if (name.endsWith(QLatin1String("SplitterWidget")))
+	{
+		name.remove((name.length() - 14), 14);
+	}
+
+	return name;
 }
 
 }
