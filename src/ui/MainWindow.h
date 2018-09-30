@@ -75,7 +75,7 @@ public:
 	ToolBarState getToolBarState(int identifier) const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
-	QVector<int> getSplitterSizes(const QString &identifier);
+	QVector<int> getSplitterSizes(const QString &identifier) const;
 	quint64 getIdentifier() const;
 	int getCurrentWindowIndex() const;
 	int getWindowCount() const;

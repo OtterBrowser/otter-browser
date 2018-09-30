@@ -2497,7 +2497,7 @@ QVector<ClosedWindow> MainWindow::getClosedWindows() const
 	return m_closedWindows;
 }
 
-QVector<int> MainWindow::getSplitterSizes(const QString &identifier)
+QVector<int> MainWindow::getSplitterSizes(const QString &identifier) const
 {
 	return m_splitters.value(identifier);
 }
