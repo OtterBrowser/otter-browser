@@ -63,6 +63,19 @@ void SplitterWidget::showEvent(QShowEvent *event)
 			}
 		}
 
+		connect(this, &SplitterWidget::splitterMoved, this, [=]()
+		{
+			if (!m_mainWindow)
+			{
+				m_mainWindow = MainWindow::findMainWindow(this);
+			}
+
+			if (m_mainWindow)
+			{
+				m_mainWindow->setSplitterSizes(name, sizes().toVector());
+			}
+		});
+
 		m_isInitialized = true;
 	}
 }
