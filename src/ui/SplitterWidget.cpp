@@ -24,11 +24,13 @@ namespace Otter
 {
 
 SplitterWidget::SplitterWidget(QWidget *parent) : QSplitter(parent),
+	m_mainWindow(nullptr),
 	m_isInitialized(false)
 {
 }
 
 SplitterWidget::SplitterWidget(Qt::Orientation orientation, QWidget *parent) : QSplitter(orientation, parent),
+	m_mainWindow(nullptr),
 	m_isInitialized(false)
 {
 }
@@ -46,11 +48,14 @@ void SplitterWidget::showEvent(QShowEvent *event)
 			return;
 		}
 
-		const MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-		if (mainWindow)
+		if (!m_mainWindow)
 		{
-			const QVector<int> sizes(mainWindow->getSplitterSizes(name));
+			m_mainWindow = MainWindow::findMainWindow(this);
+		}
+
+		if (m_mainWindow)
+		{
+			const QVector<int> sizes(m_mainWindow->getSplitterSizes(name));
 
 			if (!sizes.isEmpty())
 			{

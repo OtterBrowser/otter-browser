@@ -25,6 +25,8 @@
 namespace Otter
 {
 
+class MainWindow;
+
 class SplitterWidget final : public QSplitter
 {
 public:
@@ -36,6 +38,7 @@ protected:
 	static QString normalizeSplitterName(QString name);
 
 private:
+	MainWindow *m_mainWindow;
 	bool m_isInitialized;
 };
 
