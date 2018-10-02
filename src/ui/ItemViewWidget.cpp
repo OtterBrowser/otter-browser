@@ -397,7 +397,7 @@ void ItemViewWidget::ensureInitialized()
 		return;
 	}
 
-	const QString name(normalizeViewName(objectName()));
+	const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("ViewWidget")));
 
 	if (name.isEmpty())
 	{
@@ -583,7 +583,7 @@ void ItemViewWidget::saveState()
 		return;
 	}
 
-	const QString name(normalizeViewName(objectName()));
+	const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("ViewWidget")));
 
 	if (name.isEmpty())
 	{
@@ -895,18 +895,6 @@ QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
 QStandardItem* ItemViewWidget::getItem(int row, int column, const QModelIndex &parent) const
 {
 	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
-}
-
-QString ItemViewWidget::normalizeViewName(QString name)
-{
-	name.remove(QLatin1String("Otter__"));
-
-	if (name.endsWith(QLatin1String("ViewWidget")))
-	{
-		name.remove((name.length() - 10), 10);
-	}
-
-	return name;
 }
 
 QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const

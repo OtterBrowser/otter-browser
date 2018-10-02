@@ -126,7 +126,6 @@ protected:
 	void ensureInitialized();
 	void moveRow(bool moveUp);
 	void selectRow(const QModelIndex &index);
-	static QString normalizeViewName(QString name);
 	bool applyFilter(const QModelIndex &index, bool parentHasMatch = false);
 
 protected slots:

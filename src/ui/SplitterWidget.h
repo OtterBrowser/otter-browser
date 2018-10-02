@@ -35,7 +35,6 @@ public:
 
 protected:
 	void showEvent(QShowEvent *event) override;
-	static QString normalizeSplitterName(QString name);
 
 private:
 	MainWindow *m_mainWindow;

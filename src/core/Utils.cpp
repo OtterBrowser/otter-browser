@@ -484,6 +484,18 @@ QString formatFileTypes(const QStringList &filters)
 	return result;
 }
 
+QString normalizeObjectName(QString name, const QString &suffix)
+{
+	name.remove(QLatin1String("Otter__"));
+
+	if (!suffix.isEmpty() && name.endsWith(suffix))
+	{
+		name.remove((name.length() - suffix.length()), suffix.length());
+	}
+
+	return name;
+}
+
 QString normalizePath(const QString &path)
 {
 	if (path == QString(QLatin1Char('~')) || QDir::toNativeSeparators(path).startsWith(QLatin1Char('~') + QDir::separator()))

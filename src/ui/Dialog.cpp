@@ -45,7 +45,7 @@ void Dialog::showEvent(QShowEvent *event)
 		}
 		else
 		{
-			const QString name(normalizeDialogName(objectName()));
+			const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("Dialog")));
 			const QJsonObject settingsObject(QJsonDocument::fromJson(file.readAll()).object());
 
 			file.close();
@@ -78,7 +78,7 @@ void Dialog::resizeEvent(QResizeEvent *event)
 
 	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
 	QJsonObject settingsObject(settings.object());
-	const QString name(normalizeDialogName(objectName()));
+	const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("Dialog")));
 	QJsonObject dialogObject(settingsObject.value(name).toObject());
 	dialogObject.insert(QLatin1String("size"), QJsonObject({{QLatin1String("width"), width()}, {QLatin1String("height"), height()}}));
 
@@ -86,18 +86,6 @@ void Dialog::resizeEvent(QResizeEvent *event)
 
 	settings.setObject(settingsObject);
 	settings.save();
-}
-
-QString Dialog::normalizeDialogName(QString name)
-{
-	name.remove(QLatin1String("Otter__"));
-
-	if (name.endsWith(QLatin1String("Dialog")))
-	{
-		name.remove((name.length() - 6), 6);
-	}
-
-	return name;
 }
 
 }

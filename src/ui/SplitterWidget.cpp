@@ -19,6 +19,7 @@
 
 #include "SplitterWidget.h"
 #include "MainWindow.h"
+#include "../core/Utils.h"
 
 namespace Otter
 {
@@ -41,7 +42,7 @@ void SplitterWidget::showEvent(QShowEvent *event)
 
 	if (!m_isInitialized)
 	{
-		const QString name(normalizeSplitterName(objectName()));
+		const QString name(Utils::normalizeObjectName(objectName(), QLatin1String("SplitterWidget")));
 
 		if (name.isEmpty())
 		{
@@ -78,18 +79,6 @@ void SplitterWidget::showEvent(QShowEvent *event)
 
 		m_isInitialized = true;
 	}
-}
-
-QString SplitterWidget::normalizeSplitterName(QString name)
-{
-	name.remove(QLatin1String("Otter__"));
-
-	if (name.endsWith(QLatin1String("SplitterWidget")))
-	{
-		name.remove((name.length() - 14), 14);
-	}
-
-	return name;
 }
 
 }

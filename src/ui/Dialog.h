@@ -35,7 +35,6 @@ public:
 protected:
 	void showEvent(QShowEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
-	QString normalizeDialogName(QString name);
 
 private:
 	bool m_wasRestored;

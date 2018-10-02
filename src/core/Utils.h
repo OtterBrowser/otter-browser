@@ -102,6 +102,7 @@ QString formatElapsedTime(int value);
 QString formatDateTime(const QDateTime &dateTime, QString format = {}, bool allowFancy = true);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
 QString formatFileTypes(const QStringList &filters = {});
+QString normalizeObjectName(QString name, const QString &suffix = {});
 QString normalizePath(const QString &path);
 QUrl expandUrl(const QUrl &url);
 QUrl normalizeUrl(QUrl url);
