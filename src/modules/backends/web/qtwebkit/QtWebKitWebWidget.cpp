@@ -595,9 +595,18 @@ void QtWebKitWebWidget::handleHistory()
 	}
 
 	const QUrl url(m_page->history()->currentItem().url());
-	const quint64 identifier(m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toULongLong());
+	const QVariant state(m_page->history()->currentItem().userData());
 
-	if (identifier == 0)
+	if (state.isValid())
+	{
+		const quint64 identifier(state.toList().value(IdentifierEntryData).toULongLong());
+
+		if (identifier > 0)
+		{
+			HistoryManager::updateEntry(identifier, url, getTitle(), m_page->mainFrame()->icon());
+		}
+	}
+	else
 	{
 		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0), QDateTime::currentDateTimeUtc()}));
 
@@ -608,10 +617,6 @@ void QtWebKitWebWidget::handleHistory()
 
 		SessionsManager::markSessionAsModified();
 		BookmarksManager::updateVisits(url.toString());
-	}
-	else if (identifier > 0)
-	{
-		HistoryManager::updateEntry(identifier, url, getTitle(), m_page->mainFrame()->icon());
 	}
 }
 
