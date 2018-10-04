@@ -621,6 +621,9 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 				if (m_activeWindow)
 				{
+					const SessionMainWindow activeSession(m_activeWindow->getSession());
+
+					session.splitters = activeSession.splitters;
 					session.hasToolBarsState = true;
 
 					if (parameters.value(QLatin1String("minimalInterface")).toBool())
@@ -629,7 +632,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 					}
 					else
 					{
-						session.toolBars = m_activeWindow->getSession().toolBars;
+						session.toolBars = activeSession.toolBars;
 					}
 				}
 
