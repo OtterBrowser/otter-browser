@@ -776,7 +776,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 				for (int j = 0; j < sizes.count(); ++j)
 				{
-					sizesArray.append(sizes.at(i));
+					sizesArray.append(sizes.at(j));
 				}
 
 				splittersArray.append(QJsonObject({{QLatin1String("identifier"), iterator.key()}, {QLatin1String("sizes"), sizesArray}}));
