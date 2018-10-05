@@ -288,6 +288,26 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			sessionMainWindow.index = (sessionMainWindow.windows.count() - 1);
 		}
 
+		if (mainWindowObject.contains(QLatin1String("splitters")))
+		{
+			const QJsonArray splittersArray(mainWindowObject.value(QLatin1String("splitters")).toArray());
+
+			for (int j = 0; j < splittersArray.count(); ++j)
+			{
+				const QJsonObject splitterObject(splittersArray.at(j).toObject());
+				const QVariantList rawSizes(splitterObject.value(QLatin1String("sizes")).toVariant().toList());
+				QVector<int> sizes;
+				sizes.reserve(rawSizes.count());
+
+				for (int k = 0; k < rawSizes.count(); ++k)
+				{
+					sizes.append(rawSizes.at(k).toInt());
+				}
+
+				sessionMainWindow.splitters[splitterObject.value(QLatin1String("identifier")).toString()] = sizes;
+			}
+		}
+
 		if (mainWindowObject.contains(QLatin1String("toolBars")))
 		{
 			const QJsonArray toolBarsArray(mainWindowObject.value(QLatin1String("toolBars")).toArray());
