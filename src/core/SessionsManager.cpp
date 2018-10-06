@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "SessionsManager.h"
-#include "ActionsManager.h"
 #include "Application.h"
 #include "JsonSettings.h"
 #include "SessionModel.h"
