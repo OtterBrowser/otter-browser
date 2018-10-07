@@ -179,6 +179,42 @@ QVariant FeedsModel::Entry::getRawData(int role) const
 	return QStandardItem::data(role);
 }
 
+QVector<Feed*> FeedsModel::Entry::getFeeds() const
+{
+	QVector<Feed*> feeds;
+
+	if (getType() == FeedEntry)
+	{
+		feeds.append(m_feed);
+	}
+
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		const Entry *entry(static_cast<Entry*>(child(i, 0)));
+
+		if (!entry)
+		{
+			continue;
+		}
+
+		switch (entry->getType())
+		{
+			case FeedEntry:
+				feeds.append(entry->getFeed());
+
+				break;
+			case FolderEntry:
+				feeds.append(entry->getFeeds());
+
+				break;
+			default:
+				break;
+		}
+	}
+
+	return feeds;
+}
+
 FeedsModel::EntryType FeedsModel::Entry::getType() const
 {
 	return static_cast<EntryType>(data(TypeRole).toInt());
