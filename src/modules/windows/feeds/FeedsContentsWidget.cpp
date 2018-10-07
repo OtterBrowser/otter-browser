@@ -463,6 +463,18 @@ void FeedsContentsWidget::updateEntry()
 		content.prepend(summary);
 	}
 
+	const QString enableImages(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption, Utils::extractHost(m_feed->getUrl())).toString());
+	TextBrowserWidget::ImagesPolicy imagesPolicy(TextBrowserWidget::AllImages);
+
+	if (enableImages == QLatin1String("onlyCached"))
+	{
+		imagesPolicy = TextBrowserWidget::OnlyCachedImages;
+	}
+	else if (enableImages == QLatin1String("disabled"))
+	{
+		imagesPolicy = TextBrowserWidget::NoImages;
+	}
+
 	m_ui->titleLabelWidget->setText(index.isValid() ? index.data(Qt::DisplayRole).toString() : QString());
 	m_ui->emailButton->setVisible(!index.data(EmailRole).isNull());
 	m_ui->emailButton->setToolTip(tr("Send email to %1").arg(index.data(EmailRole).toString()));
@@ -470,6 +482,7 @@ void FeedsContentsWidget::updateEntry()
 	m_ui->urlButton->setToolTip(tr("Go to %1").arg(index.data(UrlRole).toUrl().toDisplayString()));
 	m_ui->authorLabelWidget->setText(index.isValid() ? index.data(AuthorRole).toString() : QString());
 	m_ui->timeLabelWidget->setText(index.isValid() ? Utils::formatDateTime(index.data(index.data(UpdateTimeRole).isNull() ? PublicationTimeRole : UpdateTimeRole).toDateTime()) : QString());
+	m_ui->textBrowserWidget->setImagesPolicy(imagesPolicy);
 	m_ui->textBrowserWidget->setText(content);
 
 	for (int i = (m_ui->categoriesLayout->count() - 1); i >= 0; --i)
@@ -729,20 +742,6 @@ void FeedsContentsWidget::setFeed(Feed *feed)
 		{
 			m_ui->subscribeFeedWidget->hide();
 		}
-
-		const QString enableImages(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption, Utils::extractHost(m_feed->getUrl())).toString());
-		TextBrowserWidget::ImagesPolicy imagesPolicy(TextBrowserWidget::AllImages);
-
-		if (enableImages == QLatin1String("onlyCached"))
-		{
-			imagesPolicy = TextBrowserWidget::OnlyCachedImages;
-		}
-		else if (enableImages == QLatin1String("disabled"))
-		{
-			imagesPolicy = TextBrowserWidget::NoImages;
-		}
-
-		m_ui->textBrowserWidget->setImagesPolicy(imagesPolicy);
 
 		connect(m_feed, &Feed::entriesModified, this, &FeedsContentsWidget::updateFeedModel);
 	}
