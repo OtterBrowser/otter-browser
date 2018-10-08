@@ -210,7 +210,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 	}
 
 	QString urlString(searchUrl.url);
-	const QHash<QString, QString> values({{QLatin1String("searchTerms"), query}, {QLatin1String("count"), QString()}, {QLatin1String("startIndex"), QString()}, {QLatin1String("startPage"), QString()}, {QLatin1String("language"), QLocale::system().name()}, {QLatin1String("inputEncoding"), QLatin1String("UTF-8")}, {QLatin1String("outputEncoding"), QLatin1String("UTF-8")}});
+	const QHash<QString, QString> values({{QLatin1String("searchTerms"), query}, {QLatin1String("count"), QString()}, {QLatin1String("startIndex"), QString()}, {QLatin1String("startPage"), QString()}, {QLatin1String("language"), QLocale::system().name().replace(QLatin1Char('_'), QLatin1Char('-'))}, {QLatin1String("inputEncoding"), QLatin1String("UTF-8")}, {QLatin1String("outputEncoding"), QLatin1String("UTF-8")}});
 	QHash<QString, QString>::const_iterator iterator;
 
 	for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
