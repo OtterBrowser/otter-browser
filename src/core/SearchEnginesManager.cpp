@@ -310,19 +310,21 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 
 			if (reader.isStartElement())
 			{
+				const QXmlStreamAttributes attributes(reader.attributes());
+
 				if (reader.name() == QLatin1String("Url"))
 				{
-					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/opensearchdescription+xml"))
+					if (attributes.value(QLatin1String("rel")) == QLatin1String("self") || attributes.value(QLatin1String("type")) == QLatin1String("application/opensearchdescription+xml"))
 					{
-						searchEngine.selfUrl = QUrl(reader.attributes().value(QLatin1String("template")).toString());
+						searchEngine.selfUrl = QUrl(attributes.value(QLatin1String("template")).toString());
 
 						currentUrl = nullptr;
 					}
-					else if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("suggestions") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
+					else if (attributes.value(QLatin1String("rel")) == QLatin1String("suggestions") || attributes.value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
 					{
 						currentUrl = &searchEngine.suggestionsUrl;
 					}
-					else if (!reader.attributes().hasAttribute(QLatin1String("rel")) || reader.attributes().value(QLatin1String("rel")) == QLatin1String("results"))
+					else if (!attributes.hasAttribute(QLatin1String("rel")) || attributes.value(QLatin1String("rel")) == QLatin1String("results"))
 					{
 						currentUrl = &searchEngine.resultsUrl;
 					}
@@ -333,14 +335,14 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 
 					if (currentUrl)
 					{
-						currentUrl->url = reader.attributes().value(QLatin1String("template")).toString();
-						currentUrl->enctype = reader.attributes().value(QLatin1String("enctype")).toString().toLower();
-						currentUrl->method = reader.attributes().value(QLatin1String("method")).toString().toLower();
+						currentUrl->url = attributes.value(QLatin1String("template")).toString();
+						currentUrl->enctype = attributes.value(QLatin1String("enctype")).toString().toLower();
+						currentUrl->method = attributes.value(QLatin1String("method")).toString().toLower();
 					}
 				}
 				else if (currentUrl && (reader.name() == QLatin1String("Param") || reader.name() == QLatin1String("Parameter")))
 				{
-					currentUrl->parameters.addQueryItem(reader.attributes().value(QLatin1String("name")).toString(), reader.attributes().value(QLatin1String("value")).toString());
+					currentUrl->parameters.addQueryItem(attributes.value(QLatin1String("name")).toString(), attributes.value(QLatin1String("value")).toString());
 				}
 				else if (reader.name() == QLatin1String("Shortcut"))
 				{
