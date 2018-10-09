@@ -314,17 +314,20 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 
 				if (reader.name() == QLatin1String("Url"))
 				{
-					if (attributes.value(QLatin1String("rel")) == QLatin1String("self") || attributes.value(QLatin1String("type")) == QLatin1String("application/opensearchdescription+xml"))
+					const QString rel(attributes.value(QLatin1String("rel")).toString());
+					const QString type(attributes.value(QLatin1String("type")).toString());
+
+					if (rel == QLatin1String("self") || type == QLatin1String("application/opensearchdescription+xml"))
 					{
 						searchEngine.selfUrl = QUrl(attributes.value(QLatin1String("template")).toString());
 
 						currentUrl = nullptr;
 					}
-					else if (attributes.value(QLatin1String("rel")) == QLatin1String("suggestions") || attributes.value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
+					else if ((rel == QLatin1String("suggestions") && type != QLatin1String("x-suggestions+xm")) || type == QLatin1String("application/x-suggestions+json"))
 					{
 						currentUrl = &searchEngine.suggestionsUrl;
 					}
-					else if (!attributes.hasAttribute(QLatin1String("rel")) || attributes.value(QLatin1String("rel")) == QLatin1String("results"))
+					else if ((rel.isEmpty() || rel == QLatin1String("results")) && !type.contains(QLatin1String("suggestions")))
 					{
 						currentUrl = &searchEngine.resultsUrl;
 					}
