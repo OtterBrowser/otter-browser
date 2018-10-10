@@ -114,9 +114,11 @@ void AtomFeedParser::parse(DataFetchJob *data)
 				{
 					if (reader.isStartElement())
 					{
+						const QXmlStreamAttributes attributes(reader.attributes());
+
 						if (reader.name() == QLatin1String("category"))
 						{
-							entry.categories.append(reader.attributes().value(QLatin1String("term")).toString());
+							entry.categories.append(attributes.value(QLatin1String("term")).toString());
 
 							reader.skipCurrentElement();
 						}
@@ -124,9 +126,9 @@ void AtomFeedParser::parse(DataFetchJob *data)
 						{
 							entry.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 						}
-						else if (reader.name() == QLatin1String("link") && reader.attributes().value(QLatin1String("rel")).toString() == QLatin1String("alternate"))
+						else if (reader.name() == QLatin1String("link") && attributes.value(QLatin1String("rel")).toString() == QLatin1String("alternate"))
 						{
-							entry.url = QUrl(reader.attributes().value(QLatin1String("href")).toString());
+							entry.url = QUrl(attributes.value(QLatin1String("href")).toString());
 
 							reader.skipCurrentElement();
 						}
@@ -180,7 +182,9 @@ void AtomFeedParser::parse(DataFetchJob *data)
 			{
 				if (reader.name() == QLatin1String("category"))
 				{
-					m_data.categories[reader.attributes().value(QLatin1String("term")).toString()] = reader.attributes().value(QLatin1String("label")).toString();
+					const QXmlStreamAttributes attributes(reader.attributes());
+
+					m_data.categories[attributes.value(QLatin1String("term")).toString()] = attributes.value(QLatin1String("label")).toString();
 
 					reader.skipCurrentElement();
 				}
