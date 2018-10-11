@@ -138,12 +138,13 @@ bool OpmlImporter::import(const QString &path)
 	emit importStarted(FeedsImport, -1);
 
 	FeedsModel *model(new FeedsModel(path, this));
-	FeedsModel::Entry *importFolderEntry(m_optionsWidget->getTargetFolder());
 	const int estimatedAmount((file.size() > 0) ? static_cast<int>(file.size() / 250) : 0);
 	int totalAmount(0);
 
 	if (model->getRootEntry()->rowCount() > 0)
 	{
+		FeedsModel::Entry *importFolderEntry(m_optionsWidget->getTargetFolder());
+
 		FeedsManager::getModel()->beginImport(importFolderEntry, estimatedAmount);
 
 		importFolder(model->getRootEntry(), importFolderEntry, (m_optionsWidget ? m_optionsWidget->areDuplicatesAllowed() : true));
