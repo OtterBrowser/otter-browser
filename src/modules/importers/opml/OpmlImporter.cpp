@@ -130,7 +130,7 @@ bool OpmlImporter::import(const QString &path)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		emit importFinished(BookmarksImport, FailedImport, 0);
+		emit importFinished(FeedsImport, FailedImport, 0);
 
 		return false;
 	}
