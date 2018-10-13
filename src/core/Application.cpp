@@ -1622,8 +1622,6 @@ QVector<MainWindow*> Application::getWindows()
 
 bool Application::canClose()
 {
-	bool transfersDialog(false);
-
 	if (TransfersManager::hasRunningTransfers() && SettingsManager::getOption(SettingsManager::Choices_WarnQuitTransfersOption).toBool())
 	{
 		const QVector<Transfer*> transfers(TransfersManager::getTransfers());
@@ -1651,69 +1649,65 @@ bool Application::canClose()
 
 		SettingsManager::setOption(SettingsManager::Choices_WarnQuitTransfersOption, !messageBox.checkBox()->isChecked());
 
+		if (result == QMessageBox::Yes)
+		{
+			return true;
+		}
+
+		if (messageBox.clickedButton() == hideButton)
+		{
+			setHidden(true);
+		}
+
+		return false;
+	}
+
+	const QString warnQuitMode(SettingsManager::getOption(SettingsManager::Choices_WarnQuitOption).toString());
+
+	if (warnQuitMode == QLatin1String("noWarn"))
+	{
+		return true;
+	}
+
+	int tabsAmount(0);
+
+	for (int i = 0; i < m_windows.count(); ++i)
+	{
+		if (m_windows.at(i))
+		{
+			tabsAmount += m_windows.at(i)->getWindowCount();
+		}
+	}
+
+	if (warnQuitMode == QLatin1String("alwaysWarn") || (tabsAmount > 1 && warnQuitMode == QLatin1String("warnOpenTabs")))
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("You are about to quit the current Otter Browser session."));
+		messageBox.setInformativeText(tr("Do you want to continue?"));
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Yes);
+		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+		const QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
+		const int result(messageBox.exec());
+
+		if (messageBox.checkBox()->isChecked())
+		{
+			SettingsManager::setOption(SettingsManager::Choices_WarnQuitOption, QLatin1String("noWarn"));
+		}
+
+		if (result == QMessageBox::Cancel)
+		{
+			return false;
+		}
+
 		if (messageBox.clickedButton() == hideButton)
 		{
 			setHidden(true);
 
 			return false;
-		}
-
-		if (result == QMessageBox::Yes)
-		{
-			runningTransfers = 0;
-			transfersDialog = true;
-		}
-
-		if (runningTransfers > 0)
-		{
-			return false;
-		}
-	}
-
-	const QString warnQuitMode(SettingsManager::getOption(SettingsManager::Choices_WarnQuitOption).toString());
-
-	if (!transfersDialog && warnQuitMode != QLatin1String("noWarn"))
-	{
-		int tabsAmount(0);
-
-		for (int i = 0; i < m_windows.count(); ++i)
-		{
-			if (m_windows.at(i))
-			{
-				tabsAmount += m_windows.at(i)->getWindowCount();
-			}
-		}
-
-		if (warnQuitMode == QLatin1String("alwaysWarn") || (tabsAmount > 1 && warnQuitMode == QLatin1String("warnOpenTabs")))
-		{
-			QMessageBox messageBox;
-			messageBox.setWindowTitle(tr("Question"));
-			messageBox.setText(tr("You are about to quit the current Otter Browser session."));
-			messageBox.setInformativeText(tr("Do you want to continue?"));
-			messageBox.setIcon(QMessageBox::Question);
-			messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-			messageBox.setDefaultButton(QMessageBox::Yes);
-			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
-
-			const QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
-			const int result(messageBox.exec());
-
-			if (messageBox.checkBox()->isChecked())
-			{
-				SettingsManager::setOption(SettingsManager::Choices_WarnQuitOption, QLatin1String("noWarn"));
-			}
-
-			if (result == QMessageBox::Cancel)
-			{
-				return false;
-			}
-
-			if (messageBox.clickedButton() == hideButton)
-			{
-				setHidden(true);
-
-				return false;
-			}
 		}
 	}
 
