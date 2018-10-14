@@ -1701,17 +1701,17 @@ bool Application::canClose()
 			SettingsManager::setOption(SettingsManager::Choices_WarnQuitOption, QLatin1String("noWarn"));
 		}
 
-		if (result == QMessageBox::Cancel)
+		if (result == QMessageBox::Yes)
 		{
-			return false;
+			return true;
 		}
 
 		if (messageBox.clickedButton() == hideButton)
 		{
 			setHidden(true);
-
-			return false;
 		}
+
+		return false;
 	}
 
 	return true;
