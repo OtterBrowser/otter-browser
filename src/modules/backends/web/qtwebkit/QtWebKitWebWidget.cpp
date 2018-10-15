@@ -1819,13 +1819,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					updateOptions(url);
 
 					const QVector<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
+					const QVector<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
 
 					for (int i = 0; i < cookiesToDelete.count(); ++i)
 					{
 						m_networkManager->getCookieJar()->forceDeleteCookie(cookiesToDelete.at(i));
 					}
-
-					const QVector<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
 
 					for (int i = 0; i < cookiesToInsert.count(); ++i)
 					{
