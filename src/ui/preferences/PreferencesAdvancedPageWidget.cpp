@@ -1307,7 +1307,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 	QStringList availableIdentifiers;
 	QVector<KeyboardProfile> availableKeyboardProfiles;
-	const QList<QFileInfo> allKeyboardProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
+	const QList<QFileInfo> allKeyboardProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList({QLatin1String("*.json")}, QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList({QLatin1String("*.json")}, QDir::Files));
 
 	for (int i = 0; i < allKeyboardProfiles.count(); ++i)
 	{
@@ -1503,7 +1503,7 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 
 	QStringList availableIdentifiers;
 	QVector<MouseProfile> availableMouseProfiles;
-	const QList<QFileInfo> allMouseProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList(QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList(QDir::Files));
+	const QList<QFileInfo> allMouseProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList({QLatin1String("*.json")}, QDir::Files) + QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList({QLatin1String("*.json")}, QDir::Files));
 
 	for (int i = 0; i < allMouseProfiles.count(); ++i)
 	{
