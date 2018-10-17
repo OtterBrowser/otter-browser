@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #include "ActionComboBoxWidget.h"
 #include "ItemViewWidget.h"
 #include "LineEditWidget.h"
-#include "../core/ActionsManager.h"
 
 #include <QtCore/QTimer>
 #include <QtWidgets/QStylePainter>
@@ -30,6 +29,7 @@ namespace Otter
 
 ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(parent),
 	m_filterLineEditWidget(nullptr),
+	m_model(new QStandardItemModel(this)),
 	m_wasPopupVisible(false)
 {
 	setEditable(true);
@@ -38,33 +38,17 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(par
 
 	getView()->viewport()->parentWidget()->installEventFilter(this);
 
-	QStandardItemModel *model(new QStandardItemModel(this));
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
+		if (!definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) && !definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
-			continue;
+			addDefinition(definitions.at(i));
 		}
-
-		const QString name(ActionsManager::getActionName(definitions.at(i).identifier));
-		QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
-		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(definitions.at(i).identifier, IdentifierRole);
-		item->setData(name, NameRole);
-		item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
-		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-		if (!definitions.at(i).defaultState.icon.isNull())
-		{
-			item->setIcon(definitions.at(i).defaultState.icon);
-		}
-
-		model->appendRow(item);
 	}
 
-	setModel(model);
+	setModel(m_model);
 	setCurrentIndex(-1);
 }
 
@@ -119,6 +103,24 @@ void ActionComboBoxWidget::mouseReleaseEvent(QMouseEvent *event)
 	QWidget::mouseReleaseEvent(event);
 }
 
+void ActionComboBoxWidget::addDefinition(const ActionsManager::ActionDefinition &definition)
+{
+	const QString name(ActionsManager::getActionName(definition.identifier));
+	QStandardItem *item(new QStandardItem(definition.getText(true)));
+	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
+	item->setData(definition.identifier, IdentifierRole);
+	item->setData(name, NameRole);
+	item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(name));
+	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+	if (!definition.defaultState.icon.isNull())
+	{
+		item->setIcon(definition.defaultState.icon);
+	}
+
+	m_model->appendRow(item);
+}
+
 void ActionComboBoxWidget::setActionIdentifier(int action)
 {
 	const int index(findData(action));
@@ -126,6 +128,16 @@ void ActionComboBoxWidget::setActionIdentifier(int action)
 	if (index >= 0)
 	{
 		setCurrentIndex(index);
+	}
+	else
+	{
+		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(action));
+
+		if (definition.isValid())
+		{
+			addDefinition(definition);
+			setCurrentIndex(count() - 1);
+		}
 	}
 }
 
