@@ -1326,6 +1326,11 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 		}
 	}
 
+	if (!availableIdentifiers.contains(QLatin1String("default")))
+	{
+		availableKeyboardProfiles.prepend(KeyboardProfile(QLatin1String("default"), KeyboardProfile::MetaDataOnlyMode));
+	}
+
 	QMenu *readdMenu(m_ui->keyboardAddButton->menu()->actions().at(1)->menu());
 	readdMenu->clear();
 	readdMenu->setEnabled(!availableKeyboardProfiles.isEmpty());
@@ -1520,6 +1525,11 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 				availableMouseProfiles.append(profile);
 			}
 		}
+	}
+
+	if (!availableIdentifiers.contains(QLatin1String("default")))
+	{
+		availableMouseProfiles.prepend(MouseProfile(QLatin1String("default"), MouseProfile::MetaDataOnlyMode));
 	}
 
 	QMenu *readdMenu(m_ui->mouseAddButton->menu()->actions().at(1)->menu());
