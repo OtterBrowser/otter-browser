@@ -48,6 +48,8 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(par
 		}
 	}
 
+	m_model->setSortRole(IdentifierRole);
+
 	setModel(m_model);
 	setCurrentIndex(-1);
 }
@@ -137,6 +139,8 @@ void ActionComboBoxWidget::setActionIdentifier(int action)
 		{
 			addDefinition(definition);
 			setCurrentIndex(count() - 1);
+
+			m_model->sort(0);
 		}
 	}
 }
