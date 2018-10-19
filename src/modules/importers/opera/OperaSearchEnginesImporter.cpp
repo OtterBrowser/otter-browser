@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -147,14 +147,12 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		if (groups.at(i).startsWith(QLatin1String("Search Engine ")))
-		{
-			settings.beginGroup(groups.at(i));
-		}
-		else
+		if (!groups.at(i).startsWith(QLatin1String("Search Engine ")))
 		{
 			continue;
 		}
+
+		settings.beginGroup(groups.at(i));
 
 		if (settings.getValue(QLatin1String("Deleted")).toInt())
 		{
