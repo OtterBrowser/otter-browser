@@ -72,7 +72,6 @@ public:
 
 	static void createInstance();
 	static void loadSearchEngines();
-	static void addSearchEngine(const SearchEngineDefinition &searchEngine);
 	static void setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 	static SearchEngineDefinition loadSearchEngine(QIODevice *device, const QString &identifier, bool checkKeyword = true);
 	static SearchEnginesManager* getInstance();
@@ -81,6 +80,7 @@ public:
 	static QStringList getSearchEngines();
 	static QStringList getSearchKeywords();
 	static bool hasSearchEngine(const QUrl &url);
+	static bool addSearchEngine(const SearchEngineDefinition &searchEngine);
 	static bool saveSearchEngine(const SearchEngineDefinition &searchEngine);
 	static bool setupSearchQuery(const QString &query, const QString &identifier, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 

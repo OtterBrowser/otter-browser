@@ -109,28 +109,6 @@ void SearchEnginesManager::loadSearchEngines()
 	updateSearchEnginesOptions();
 }
 
-void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchEngine)
-{
-	if (!saveSearchEngine(searchEngine))
-	{
-		return;
-	}
-
-	if (m_searchEnginesOrder.contains(searchEngine.identifier))
-	{
-		emit m_instance->searchEnginesModified();
-
-		updateSearchEnginesModel();
-		updateSearchEnginesOptions();
-	}
-	else
-	{
-		m_searchEnginesOrder.append(searchEngine.identifier);
-
-		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
-	}
-}
-
 void SearchEnginesManager::handleOptionChanged(int identifier)
 {
 	if (identifier == SettingsManager::Search_SearchEnginesOrderOption)
@@ -505,6 +483,30 @@ bool SearchEnginesManager::hasSearchEngine(const QUrl &url)
 	}
 
 	return false;
+}
+
+bool SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchEngine)
+{
+	if (!saveSearchEngine(searchEngine))
+	{
+		return false;
+	}
+
+	if (m_searchEnginesOrder.contains(searchEngine.identifier))
+	{
+		emit m_instance->searchEnginesModified();
+
+		updateSearchEnginesModel();
+		updateSearchEnginesOptions();
+	}
+	else
+	{
+		m_searchEnginesOrder.append(searchEngine.identifier);
+
+		SettingsManager::setOption(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
+	}
+
+	return true;
 }
 
 bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &searchEngine)
