@@ -175,17 +175,18 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 			searchEngine.suggestionsUrl.method = QLatin1String("get");
 		}
 
-		SearchEnginesManager::addSearchEngine(searchEngine);
-
-		if (settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine)
+		if (SearchEnginesManager::addSearchEngine(searchEngine))
 		{
-			SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultEngine);
+			if (settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine)
+			{
+				SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultEngine);
+			}
+
+			identifiers.append(searchEngine.identifier);
+			keywords.append(searchEngine.keyword);
+
+			++totalAmount;
 		}
-
-		identifiers.append(searchEngine.identifier);
-		keywords.append(searchEngine.keyword);
-
-		++totalAmount;
 	}
 
 	emit importFinished(SearchEnginesImport, SuccessfullImport, totalAmount);
