@@ -47,9 +47,9 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 void Style::drawDropZone(const QLine &line, QPainter *painter) const
 {
 	painter->save();
-	painter->setPen(QPen(QGuiApplication::palette().text(), 3, Qt::DotLine));
+	painter->setPen(QPen(QGuiApplication::palette().highlight(), 3, Qt::DotLine));
 	painter->drawLine(line);
-	painter->setPen(QPen(QGuiApplication::palette().text(), 9, Qt::SolidLine, Qt::RoundCap));
+	painter->setPen(QPen(QGuiApplication::palette().highlight(), 9, Qt::SolidLine, Qt::RoundCap));
 	painter->drawPoint(line.p1());
 	painter->drawPoint(line.p2());
 	painter->restore();
