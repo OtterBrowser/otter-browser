@@ -151,12 +151,13 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 			continue;
 		}
 
+		const QString resultsUrl(settings.getValue(QLatin1String("URL")).toString().replace(QLatin1String("%s"), QLatin1String("{searchTerms}")));
 		SearchEnginesManager::SearchEngineDefinition searchEngine;
-		searchEngine.identifier = Utils::createIdentifier(settings.getValue(QLatin1String("UNIQUEID")).toString(), identifiers);
+		searchEngine.identifier = Utils::createIdentifier(QUrl(resultsUrl).host(), identifiers);
 		searchEngine.title = settings.getValue(QLatin1String("Name")).toString();
 		searchEngine.keyword = Utils::createIdentifier(settings.getValue(QLatin1String("Key")).toString(), keywords);
 		searchEngine.encoding = settings.getValue(QLatin1String("Encoding")).toString();
-		searchEngine.resultsUrl.url = settings.getValue(QLatin1String("URL")).toString().replace(QLatin1String("%s"), QLatin1String("{searchTerms}"));
+		searchEngine.resultsUrl.url = resultsUrl;
 
 		if (settings.getValue(QLatin1String("Is post")).toInt())
 		{
@@ -179,7 +180,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 		{
 			if (settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine)
 			{
-				SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, defaultEngine);
+				SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
 			}
 
 			identifiers.append(searchEngine.identifier);
