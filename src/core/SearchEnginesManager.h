@@ -21,6 +21,7 @@
 #define OTTER_SEARCHENGINESMANAGER_H
 
 #include "Job.h"
+#include "Utils.h"
 
 #include <QtCore/QUrlQuery>
 #include <QtGui/QIcon>
@@ -63,6 +64,11 @@ public:
 		SearchUrl resultsUrl;
 		SearchUrl suggestionsUrl;
 		QIcon icon;
+
+		QString createIdentifier() const
+		{
+			return Utils::createIdentifier(QUrl(resultsUrl.url).host(), SearchEnginesManager::getSearchEngines());
+		}
 
 		bool isValid() const
 		{

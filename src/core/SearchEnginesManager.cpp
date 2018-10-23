@@ -22,7 +22,6 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
-#include "Utils.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -520,7 +519,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 	if (identifier.isEmpty())
 	{
-		identifier = Utils::createIdentifier(QUrl(searchEngine.resultsUrl.url).host(), getSearchEngines());
+		identifier = searchEngine.createIdentifier();
 	}
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searchEngines")));

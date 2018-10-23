@@ -134,7 +134,6 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 	settings.beginGroup(QLatin1String("Options"));
 
 	const QVariant defaultEngine(settings.getValue(QLatin1String("Default Search")));
-	QStringList identifiers(SearchEnginesManager::getSearchEngines());
 	int totalAmount(0);
 
 	for (int i = 0; i < groups.count(); ++i)
@@ -151,13 +150,12 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 			continue;
 		}
 
-		const QString resultsUrl(settings.getValue(QLatin1String("URL")).toString().replace(QLatin1String("%s"), QLatin1String("{searchTerms}")));
 		SearchEnginesManager::SearchEngineDefinition searchEngine;
-		searchEngine.identifier = Utils::createIdentifier(QUrl(resultsUrl).host(), identifiers);
 		searchEngine.title = settings.getValue(QLatin1String("Name")).toString();
 		searchEngine.keyword = Utils::createIdentifier(settings.getValue(QLatin1String("Key")).toString(), keywords);
 		searchEngine.encoding = settings.getValue(QLatin1String("Encoding")).toString();
-		searchEngine.resultsUrl.url = resultsUrl;
+		searchEngine.resultsUrl.url = settings.getValue(QLatin1String("URL")).toString().replace(QLatin1String("%s"), QLatin1String("{searchTerms}"));
+		searchEngine.identifier = searchEngine.createIdentifier();
 
 		if (settings.getValue(QLatin1String("Is post")).toInt())
 		{
@@ -183,7 +181,6 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 				SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
 			}
 
-			identifiers.append(searchEngine.identifier);
 			keywords.append(searchEngine.keyword);
 
 			++totalAmount;
