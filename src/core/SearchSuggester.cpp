@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -104,43 +104,45 @@ void SearchSuggester::setSearchEngine(const QString &searchEngine)
 
 void SearchSuggester::setQuery(const QString &query)
 {
-	if (query != m_query)
+	if (query == m_query)
 	{
-		m_query = query;
-
-		if (m_networkReply)
-		{
-			m_networkReply->abort();
-			m_networkReply->deleteLater();
-			m_networkReply = nullptr;
-		}
-
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_searchEngine));
-
-		if (!searchEngine.isValid() || searchEngine.suggestionsUrl.url.isEmpty())
-		{
-			return;
-		}
-
-		QNetworkRequest request;
-		request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-		QNetworkAccessManager::Operation method;
-		QByteArray body;
-
-		SearchEnginesManager::setupQuery(query, searchEngine.suggestionsUrl, &request, &method, &body);
-
-		if (method == QNetworkAccessManager::PostOperation)
-		{
-			m_networkReply = NetworkManagerFactory::getNetworkManager()->post(request, body);
-		}
-		else
-		{
-			m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
-		}
-
-		connect(m_networkReply, &QNetworkReply::finished, this, &SearchSuggester::handleReplyFinished);
+		return;
 	}
+
+	m_query = query;
+
+	if (m_networkReply)
+	{
+		m_networkReply->abort();
+		m_networkReply->deleteLater();
+		m_networkReply = nullptr;
+	}
+
+	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_searchEngine));
+
+	if (!searchEngine.isValid() || searchEngine.suggestionsUrl.url.isEmpty())
+	{
+		return;
+	}
+
+	QNetworkRequest request;
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
+	QNetworkAccessManager::Operation method;
+	QByteArray body;
+
+	SearchEnginesManager::setupQuery(query, searchEngine.suggestionsUrl, &request, &method, &body);
+
+	if (method == QNetworkAccessManager::PostOperation)
+	{
+		m_networkReply = NetworkManagerFactory::getNetworkManager()->post(request, body);
+	}
+	else
+	{
+		m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
+	}
+
+	connect(m_networkReply, &QNetworkReply::finished, this, &SearchSuggester::handleReplyFinished);
 }
 
 QStandardItemModel* SearchSuggester::getModel()
