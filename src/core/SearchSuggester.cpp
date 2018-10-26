@@ -47,10 +47,6 @@ void SearchSuggester::handleReplyFinished()
 	{
 		m_model->clear();
 	}
-	else
-	{
-		m_model = new QStandardItemModel(this);
-	}
 
 	m_networkReply->deleteLater();
 
@@ -68,8 +64,8 @@ void SearchSuggester::handleReplyFinished()
 		const QJsonArray completionsArray(document.array().at(1).toArray());
 		const QJsonArray descriptionsArray(document.array().at(2).toArray());
 		const QJsonArray urlsArray(document.array().at(3).toArray());
-		QVector<SearchSuggestion> suggestions;
-		suggestions.reserve(completionsArray.count());
+
+		m_suggestions.reserve(completionsArray.count());
 
 		for (int i = 0; i < completionsArray.count(); ++i)
 		{
@@ -78,15 +74,15 @@ void SearchSuggester::handleReplyFinished()
 			suggestion.description = descriptionsArray.at(i).toString();
 			suggestion.url = urlsArray.at(i).toString();
 
+			m_suggestions.append(suggestion);
+
 			if (m_model)
 			{
 				m_model->appendRow(new QStandardItem(suggestion.completion));
 			}
-
-			suggestions.append(suggestion);
 		}
 
-		emit suggestionsChanged(suggestions);
+		emit suggestionsChanged(m_suggestions);
 	}
 
 	m_networkReply = nullptr;
@@ -110,6 +106,7 @@ void SearchSuggester::setQuery(const QString &query)
 	}
 
 	m_query = query;
+	m_suggestions.clear();
 
 	if (m_networkReply)
 	{
@@ -150,9 +147,19 @@ QStandardItemModel* SearchSuggester::getModel()
 	if (!m_model)
 	{
 		m_model = new QStandardItemModel(this);
+
+		for (int i = 0; i < m_suggestions.count(); ++i)
+		{
+			m_model->appendRow(new QStandardItem(m_suggestions.at(i).completion));
+		}
 	}
 
 	return m_model;
+}
+
+QVector<SearchSuggester::SearchSuggestion> SearchSuggester::getSuggestions() const
+{
+	return m_suggestions;
 }
 
 }

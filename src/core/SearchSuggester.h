@@ -43,6 +43,7 @@ public:
 	explicit SearchSuggester(const QString &searchEngine, QObject *parent = nullptr);
 
 	QStandardItemModel* getModel();
+	QVector<SearchSuggestion> getSuggestions() const;
 
 public slots:
 	void setSearchEngine(const QString &searchEngine);
@@ -56,6 +57,7 @@ private:
 	QStandardItemModel *m_model;
 	QString m_searchEngine;
 	QString m_query;
+	QVector<SearchSuggestion> m_suggestions;
 
 signals:
 	void suggestionsChanged(const QVector<SearchSuggester::SearchSuggestion> &suggestions);
