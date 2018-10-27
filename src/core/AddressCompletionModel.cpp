@@ -131,6 +131,7 @@ void AddressCompletionModel::updateModel()
 		const QString prefix(m_filter.contains(QDir::separator()) ? m_filter.section(QDir::separator(), -1, -1) : QString());
 		const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
 		const QFileIconProvider iconProvider;
+		const QMimeDatabase mimeDatabase;
 		bool wasAdded(!m_showCompletionCategories);
 
 		for (int i = 0; i < entries.count(); ++i)
@@ -138,7 +139,6 @@ void AddressCompletionModel::updateModel()
 			if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
 			{
 				const QString path(directory + entries.at(i).fileName());
-				const QMimeType type(QMimeDatabase().mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension));
 
 				if (!wasAdded)
 				{
@@ -147,7 +147,7 @@ void AddressCompletionModel::updateModel()
 					wasAdded = true;
 				}
 
-				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), {}, CompletionEntry::LocalPathType));
+				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(mimeDatabase.mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension).iconName(), iconProvider.icon(entries.at(i))), {}, CompletionEntry::LocalPathType));
 			}
 		}
 	}
@@ -204,6 +204,8 @@ void AddressCompletionModel::updateModel()
 			}
 		}
 	}
+
+	completions.squeeze();
 
 	beginResetModel();
 
