@@ -27,7 +27,6 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
-#include <QtCore/QVector>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
