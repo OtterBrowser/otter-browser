@@ -608,73 +608,73 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		const QString identifier(toolBarObject.value(QLatin1String("identifier")).toString());
 		const QString location(toolBarObject.value(QLatin1String("location")).toString());
 		const QString buttonStyle(toolBarObject.value(QLatin1String("buttonStyle")).toString());
-		ToolBarDefinition toolBar;
-		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
-		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
-		toolBar.currentPanel = toolBarObject.value(QLatin1String("currentPanel")).toString();
-		toolBar.panels = toolBarObject.value(QLatin1String("panels")).toVariant().toStringList();
-		toolBar.type = (toolBarObject.contains(QLatin1String("bookmarksPath")) ? BookmarksBarType : (toolBarObject.contains(QLatin1String("currentPanel")) ? SideBarType : ActionsBarType));
-		toolBar.normalVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("normalVisibility")).toString(), AlwaysVisibleToolBar);
-		toolBar.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), AlwaysHiddenToolBar);
-		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
-		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
-		toolBar.panelSize = toolBarObject.value(QLatin1String("panelSize")).toInt();
-		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
-		toolBar.hasToggle = toolBarObject.value(QLatin1String("hasToggle")).toBool();
-		toolBar.isDefault = isDefault;
+		ToolBarDefinition definition;
+		definition.title = toolBarObject.value(QLatin1String("title")).toString();
+		definition.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
+		definition.currentPanel = toolBarObject.value(QLatin1String("currentPanel")).toString();
+		definition.panels = toolBarObject.value(QLatin1String("panels")).toVariant().toStringList();
+		definition.type = (toolBarObject.contains(QLatin1String("bookmarksPath")) ? BookmarksBarType : (toolBarObject.contains(QLatin1String("currentPanel")) ? SideBarType : ActionsBarType));
+		definition.normalVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("normalVisibility")).toString(), AlwaysVisibleToolBar);
+		definition.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), AlwaysHiddenToolBar);
+		definition.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
+		definition.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
+		definition.panelSize = toolBarObject.value(QLatin1String("panelSize")).toInt();
+		definition.row = toolBarObject.value(QLatin1String("row")).toInt();
+		definition.hasToggle = toolBarObject.value(QLatin1String("hasToggle")).toBool();
+		definition.isDefault = isDefault;
 
 		if (isDefault)
 		{
-			toolBar.identifier = getToolBarIdentifier(identifier);
+			definition.identifier = getToolBarIdentifier(identifier);
 		}
 
-		if (toolBar.normalVisibility == OnHoverVisibleToolBar)
+		if (definition.normalVisibility == OnHoverVisibleToolBar)
 		{
-			toolBar.normalVisibility = AlwaysVisibleToolBar;
+			definition.normalVisibility = AlwaysVisibleToolBar;
 		}
 
 		if (location == QLatin1String("top"))
 		{
-			toolBar.location = Qt::TopToolBarArea;
+			definition.location = Qt::TopToolBarArea;
 		}
 		else if (location == QLatin1String("bottom"))
 		{
-			toolBar.location = Qt::BottomToolBarArea;
+			definition.location = Qt::BottomToolBarArea;
 		}
 		else if (location == QLatin1String("left"))
 		{
-			toolBar.location = Qt::LeftToolBarArea;
+			definition.location = Qt::LeftToolBarArea;
 		}
 		else if (location == QLatin1String("right"))
 		{
-			toolBar.location = Qt::RightToolBarArea;
+			definition.location = Qt::RightToolBarArea;
 		}
 
 		if (buttonStyle == QLatin1String("auto"))
 		{
-			toolBar.buttonStyle = Qt::ToolButtonFollowStyle;
+			definition.buttonStyle = Qt::ToolButtonFollowStyle;
 		}
 		else if (buttonStyle == QLatin1String("textOnly"))
 		{
-			toolBar.buttonStyle = Qt::ToolButtonTextOnly;
+			definition.buttonStyle = Qt::ToolButtonTextOnly;
 		}
 		else if (buttonStyle == QLatin1String("textBesideIcon"))
 		{
-			toolBar.buttonStyle = Qt::ToolButtonTextBesideIcon;
+			definition.buttonStyle = Qt::ToolButtonTextBesideIcon;
 		}
 		else if (buttonStyle == QLatin1String("textUnderIcon"))
 		{
-			toolBar.buttonStyle = Qt::ToolButtonTextUnderIcon;
+			definition.buttonStyle = Qt::ToolButtonTextUnderIcon;
 		}
 
-		toolBar.entries.reserve(actionsArray.count());
+		definition.entries.reserve(actionsArray.count());
 
 		for (int j = 0; j < actionsArray.count(); ++j)
 		{
-			toolBar.entries.append(decodeEntry(actionsArray.at(j)));
+			definition.entries.append(decodeEntry(actionsArray.at(j)));
 		}
 
-		definitions[identifier] = toolBar;
+		definitions[identifier] = definition;
 	}
 
 	return definitions;
