@@ -75,6 +75,11 @@ public:
 			QVariantMap options;
 			QVariantMap parameters;
 			QVector<Entry> entries;
+
+			bool operator ==(const Entry &other) const
+			{
+				return (action == other.action && options == other.options && parameters == other.parameters && entries == other.entries);
+			}
 		};
 
 		QString title;
@@ -121,6 +126,11 @@ public:
 		ToolBarVisibility getVisibility(ToolBarsMode mode) const
 		{
 			return ((mode == FullScreenMode) ? fullScreenVisibility : normalVisibility);
+		}
+
+		bool operator ==(const ToolBarDefinition &other) const
+		{
+			return (title == other.title && bookmarksPath == other.bookmarksPath && currentPanel == other.currentPanel && panels == other.panels && entries == other.entries && type == other.type && normalVisibility == other.normalVisibility && fullScreenVisibility == other.fullScreenVisibility && location == other.location && buttonStyle == other.buttonStyle && identifier == other.identifier && iconSize == other.iconSize && maximumButtonSize == other.maximumButtonSize && panelSize == other.panelSize && row == other.row && hasToggle == other.hasToggle);
 		}
 
 		bool canReset() const
