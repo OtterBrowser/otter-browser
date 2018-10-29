@@ -135,7 +135,7 @@ public:
 
 		bool canReset() const
 		{
-			return (!isDefault || identifier < OtherToolBar);
+			return (!isDefault && identifier < OtherToolBar);
 		}
 
 		bool isGlobal() const
