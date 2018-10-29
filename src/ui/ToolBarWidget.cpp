@@ -912,7 +912,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 	toolBarMenu->addAction(tr("Reset to Defaults…"), menu, [=]()
 	{
 		ToolBarsManager::resetToolBar(identifier);
-	})->setEnabled(definition.canReset);
+	})->setEnabled(definition.canReset());
 
 	if (!actions.isEmpty())
 	{
@@ -929,7 +929,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QVector<QAction*> 
 	toolBarMenu->addAction(ThemesManager::createIcon(QLatin1String("list-remove")), tr("Remove…"), menu, [=]()
 	{
 		ToolBarsManager::removeToolBar(identifier);
-	})->setEnabled(!definition.canReset);
+	})->setEnabled(!definition.canReset());
 
 	menu->addMenu(new Menu(Menu::ToolBarsMenu, menu));
 

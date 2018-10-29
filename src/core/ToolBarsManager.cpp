@@ -83,7 +83,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_definitions.count(); ++i)
 		{
-			if ((m_definitions.at(i).isDefault && !m_definitions.at(i).canReset) || m_definitions.at(i).wasRemoved)
+			if ((m_definitions.at(i).isDefault && !m_definitions.at(i).canReset()) || m_definitions.at(i).wasRemoved)
 			{
 				continue;
 			}
@@ -252,7 +252,6 @@ void ToolBarsManager::ensureInitialized()
 				if (identifier >= 0)
 				{
 					m_definitions[identifier] = iterator.value();
-					m_definitions[identifier].canReset = true;
 				}
 				else
 				{
@@ -460,11 +459,6 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 	}
 	else
 	{
-		if (identifier < OtherToolBar)
-		{
-			definition.canReset = true;
-		}
-
 		const bool wasMoved(definition.location != m_definitions[identifier].location || definition.row != m_definitions[identifier].row);
 
 		m_definitions[identifier] = definition;

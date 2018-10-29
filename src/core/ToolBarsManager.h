@@ -92,7 +92,6 @@ public:
 		int maximumButtonSize = -1;
 		int panelSize = -1;
 		int row = -1;
-		bool canReset = false;
 		bool hasToggle = false;
 		bool isDefault = false;
 		bool wasRemoved = false;
@@ -122,6 +121,11 @@ public:
 		ToolBarVisibility getVisibility(ToolBarsMode mode) const
 		{
 			return ((mode == FullScreenMode) ? fullScreenVisibility : normalVisibility);
+		}
+
+		bool canReset() const
+		{
+			return (!isDefault || identifier < OtherToolBar);
 		}
 
 		bool isGlobal() const
