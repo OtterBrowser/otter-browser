@@ -438,6 +438,13 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 	int identifier(definition.identifier);
 
+	if (definition.isValid() && identifier < OtherToolBar)
+	{
+		const ToolBarsManager::ToolBarDefinition defaultDefinition(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true).value(getToolBarName(identifier)));
+
+		definition.isDefault = (defaultDefinition.isValid() && definition == defaultDefinition);
+	}
+
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
 		QStringList toolBars;
