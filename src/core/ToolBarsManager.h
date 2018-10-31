@@ -103,18 +103,13 @@ public:
 
 		void setVisibility(ToolBarsMode mode, ToolBarVisibility visibility)
 		{
-			switch (mode)
+			if (mode == FullScreenMode)
 			{
-				case NormalMode:
-					normalVisibility = visibility;
-
-					break;
-				case FullScreenMode:
-					fullScreenVisibility = visibility;
-
-					break;
-				default:
-					break;
+				fullScreenVisibility = visibility;
+			}
+			else
+			{
+				normalVisibility = visibility;
 			}
 		}
 
