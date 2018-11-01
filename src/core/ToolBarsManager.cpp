@@ -231,7 +231,7 @@ void ToolBarsManager::ensureInitialized()
 
 	const QString localToolBarsPath(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json")));
 
-	if (QFile::exists(localToolBarsPath) && bundledToolBarsPath != localToolBarsPath)
+	if (localToolBarsPath != bundledToolBarsPath && QFile::exists(localToolBarsPath))
 	{
 		const QHash<QString, ToolBarDefinition> localDefinitions(loadToolBars(localToolBarsPath, false));
 
