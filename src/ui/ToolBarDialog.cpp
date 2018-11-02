@@ -40,38 +40,6 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_ui(new Ui::ToolBarDialog)
 {
 	m_ui->setupUi(this);
-
-	switch (definition.type)
-	{
-		case ToolBarsManager::BookmarksBarType:
-			setWindowTitle(tr("Edit Bookmarks Bar"));
-
-			if (definition.title.isEmpty())
-			{
-				m_definition.title = tr("Bookmarks Bar");
-			}
-
-			break;
-		case ToolBarsManager::SideBarType:
-			setWindowTitle(tr("Edit Sidebar"));
-
-			if (definition.title.isEmpty())
-			{
-				m_definition.title = tr("Sidebar");
-			}
-
-			break;
-		default:
-			setWindowTitle(tr("Edit Toolbar"));
-
-			if (definition.title.isEmpty())
-			{
-				m_definition.title = tr("Toolbar");
-			}
-
-			break;
-	}
-
 	m_ui->stackedWidget->setCurrentIndex(definition.type);
 	m_ui->titleLineEditWidget->setText(m_definition.getTitle());
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
@@ -113,6 +81,13 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	switch (definition.type)
 	{
 		case ToolBarsManager::BookmarksBarType:
+			setWindowTitle(tr("Edit Bookmarks Bar"));
+
+			if (definition.title.isEmpty())
+			{
+				m_definition.title = tr("Bookmarks Bar");
+			}
+
 			m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getBookmarkByPath(definition.bookmarksPath));
 
 			connect(m_ui->newFolderButton, &QPushButton::clicked, m_ui->folderComboBox, &BookmarksComboBoxWidget::createFolder);
@@ -120,6 +95,13 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 			return;
 		case ToolBarsManager::SideBarType:
 			{
+				setWindowTitle(tr("Edit Sidebar"));
+
+				if (definition.title.isEmpty())
+				{
+					m_definition.title = tr("Sidebar");
+				}
+
 				ItemModel *panelsModel(new ItemModel(this));
 				const QStringList specialPages(AddonsManager::getSpecialPages(AddonsManager::SpecialPageInformation::SidebarPanelType));
 
@@ -151,6 +133,13 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 			return;
 		default:
+			setWindowTitle(tr("Edit Toolbar"));
+
+			if (definition.title.isEmpty())
+			{
+				m_definition.title = tr("Toolbar");
+			}
+
 			break;
 	}
 
