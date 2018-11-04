@@ -673,7 +673,6 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 									BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {{BookmarksModel::UrlRole, getUrl().adjusted(QUrl::RemovePassword)}, {BookmarksModel::TitleRole, m_window->getTitle()}}, BookmarksManager::getModel()->getBookmarkByPath(SettingsManager::getOption(SettingsManager::StartPage_BookmarksFolderOption).toString()));
 								}
 							});
-
 							menu.exec(mapToGlobal(m_entries.value(BookmarkEntry).rectangle.bottomLeft()));
 						}
 
