@@ -663,8 +663,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 									BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), (m_window->getContentsWidget() ? m_window->getContentsWidget()->getDescription() : QString()), nullptr, -1, true, this);
 									dialog.exec();
 								}
-							}));
-							addBookmarkAction->setShortcut(ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction));
+							}, ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction)));
 							addBookmarkAction->setShortcutContext(Qt::WidgetShortcut);
 
 							menu.addAction(tr("Add to Start Page"), [&]()
