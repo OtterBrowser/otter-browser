@@ -311,7 +311,7 @@ void SidebarWidget::updateLayout()
 
 	m_resizerWidget->setDirection((area == Qt::RightToolBarArea) ? ResizerWidget::RightToLeftDirection : ResizerWidget::LeftToRightDirection);
 
-	if (QGuiApplication::isRightToLeft())
+	if (isRightToLeft())
 	{
 		direction = ((direction == QBoxLayout::LeftToRight) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 	}
@@ -329,7 +329,7 @@ void SidebarWidget::updateLayout()
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{
-		widgets[i]->setLayoutDirection(QGuiApplication::isLeftToRight() ? Qt::LeftToRight : Qt::RightToLeft);
+		widgets[i]->setLayoutDirection(isLeftToRight() ? Qt::LeftToRight : Qt::RightToLeft);
 
 		ActionWidget *widget(qobject_cast<ActionWidget*>(widgets.at(i)));
 

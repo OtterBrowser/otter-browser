@@ -143,8 +143,8 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 			break;
 	}
 
-	m_ui->removeButton->setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
-	m_ui->addButton->setIcon(ThemesManager::createIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
+	m_ui->removeButton->setIcon(ThemesManager::createIcon(isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+	m_ui->addButton->setIcon(ThemesManager::createIcon(isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
 	m_ui->moveUpButton->setIcon(ThemesManager::createIcon(QLatin1String("go-up")));
 	m_ui->moveDownButton->setIcon(ThemesManager::createIcon(QLatin1String("go-down")));
 	m_ui->addBookmarkButton->setMenu(new QMenu(m_ui->addBookmarkButton));

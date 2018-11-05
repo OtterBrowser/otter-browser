@@ -75,13 +75,13 @@ void ColorWidget::resizeEvent(QResizeEvent *event)
 
 	m_buttonRectangle = rect();
 
-	if (isRightToLeft())
+	if (isLeftToRight())
 	{
-		m_buttonRectangle.setLeft(m_buttonRectangle.right() - m_lineEditWidget->height());
+		m_buttonRectangle.setRight(m_lineEditWidget->height());
 	}
 	else
 	{
-		m_buttonRectangle.setRight(m_lineEditWidget->height());
+		m_buttonRectangle.setLeft(m_buttonRectangle.right() - m_lineEditWidget->height());
 	}
 
 	m_buttonRectangle.adjust(2, 2, -2, -2);
@@ -112,7 +112,7 @@ void ColorWidget::mouseReleaseEvent(QMouseEvent *event)
 			setColor(QColor());
 		});
 
-		menu.exec(mapToGlobal(isRightToLeft() ? m_buttonRectangle.bottomRight() : m_buttonRectangle.bottomLeft()));
+		menu.exec(mapToGlobal(isLeftToRight() ? m_buttonRectangle.bottomLeft() : m_buttonRectangle.bottomRight()));
 	}
 }
 
