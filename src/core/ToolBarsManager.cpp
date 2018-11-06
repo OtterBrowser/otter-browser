@@ -88,7 +88,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 				continue;
 			}
 
-			QString identifier(getToolBarName(m_definitions.at(i).identifier));
+			const QString identifier(getToolBarName(m_definitions.at(i).identifier));
 
 			if (identifier.isEmpty())
 			{
