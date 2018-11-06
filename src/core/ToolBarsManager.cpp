@@ -83,7 +83,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 		for (int i = 0; i < m_definitions.count(); ++i)
 		{
-			if ((m_definitions.at(i).isDefault && !m_definitions.at(i).canReset()) || m_definitions.at(i).wasRemoved)
+			if (m_definitions.at(i).isDefault || m_definitions.at(i).wasRemoved)
 			{
 				continue;
 			}
