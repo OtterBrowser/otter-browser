@@ -112,60 +112,51 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 					break;
 			}
 
-			if (m_definitions.at(i).location != Qt::NoToolBarArea)
+			switch (m_definitions.at(i).location)
 			{
-				QString location;
-
-				switch (m_definitions.at(i).location)
-				{
-					case Qt::BottomToolBarArea:
-						location = QLatin1String("bottom");
-
-						break;
-					case Qt::LeftToolBarArea:
-						location = QLatin1String("left");
-
-						break;
-					case Qt::RightToolBarArea:
-						location = QLatin1String("right");
-
-						break;
-					default:
-						location = QLatin1String("top");
-
-						break;
-				}
-
-				definitionObject.insert(QLatin1String("location"), QJsonValue(location));
-			}
-
-			QString buttonStyle;
-
-			switch (m_definitions.at(i).buttonStyle)
-			{
-				case Qt::ToolButtonFollowStyle:
-					buttonStyle = QLatin1String("auto");
+				case Qt::LeftToolBarArea:
+					definitionObject.insert(QLatin1String("location"), QJsonValue(QLatin1String("left")));
 
 					break;
-				case Qt::ToolButtonTextOnly:
-					buttonStyle = QLatin1String("textOnly");
+				case Qt::RightToolBarArea:
+					definitionObject.insert(QLatin1String("location"), QJsonValue(QLatin1String("right")));
 
 					break;
-				case Qt::ToolButtonTextBesideIcon:
-					buttonStyle = QLatin1String("textBesideIcon");
+				case Qt::TopToolBarArea:
+					definitionObject.insert(QLatin1String("location"), QJsonValue(QLatin1String("top")));
 
 					break;
-				case Qt::ToolButtonTextUnderIcon:
-					buttonStyle = QLatin1String("textUnderIcon");
+				case Qt::BottomToolBarArea:
+					definitionObject.insert(QLatin1String("location"), QJsonValue(QLatin1String("bottom")));
 
 					break;
 				default:
-					buttonStyle = QLatin1String("iconOnly");
-
 					break;
 			}
 
-			definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(buttonStyle));
+			switch (m_definitions.at(i).buttonStyle)
+			{
+				case Qt::ToolButtonTextOnly:
+					definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(QLatin1String("textOnly")));
+
+					break;
+				case Qt::ToolButtonTextBesideIcon:
+					definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(QLatin1String("textBesideIcon")));
+
+					break;
+				case Qt::ToolButtonTextUnderIcon:
+					definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(QLatin1String("textUnderIcon")));
+
+					break;
+				case Qt::ToolButtonFollowStyle:
+					definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(QLatin1String("auto")));
+
+					break;
+				default:
+					definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(QLatin1String("iconOnly")));
+
+					break;
+			}
 
 			if (m_definitions.at(i).iconSize > 0)
 			{
