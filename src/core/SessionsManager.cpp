@@ -733,7 +733,14 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 			for (int j = 0; j < sessionEntry.toolBars.count(); ++j)
 			{
-				QJsonObject toolBarObject({{QLatin1String("identifier"), ToolBarsManager::getToolBarName(sessionEntry.toolBars.at(j).identifier)}});
+				const QString identifier(ToolBarsManager::getToolBarName(sessionEntry.toolBars.at(j).identifier));
+
+				if (identifier.isEmpty())
+				{
+					continue;
+				}
+
+				QJsonObject toolBarObject({{QLatin1String("identifier"), identifier}});
 
 				switch (sessionEntry.toolBars.at(j).location)
 				{
