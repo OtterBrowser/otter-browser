@@ -735,31 +735,26 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 			{
 				QJsonObject toolBarObject({{QLatin1String("identifier"), ToolBarsManager::getToolBarName(sessionEntry.toolBars.at(j).identifier)}});
 
-				if (sessionEntry.toolBars.at(j).location != Qt::NoToolBarArea)
+				switch (sessionEntry.toolBars.at(j).location)
 				{
-					QString location;
+					case Qt::LeftToolBarArea:
+						toolBarObject.insert(QLatin1String("location"), QLatin1String("left"));
 
-					switch (sessionEntry.toolBars.at(j).location)
-					{
-						case Qt::BottomToolBarArea:
-							location = QLatin1String("bottom");
+						break;
+					case Qt::RightToolBarArea:
+						toolBarObject.insert(QLatin1String("location"), QLatin1String("right"));
 
-							break;
-						case Qt::LeftToolBarArea:
-							location = QLatin1String("left");
+						break;
+					case Qt::TopToolBarArea:
+						toolBarObject.insert(QLatin1String("location"), QLatin1String("top"));
 
-							break;
-						case Qt::RightToolBarArea:
-							location = QLatin1String("right");
+						break;
+					case Qt::BottomToolBarArea:
+						toolBarObject.insert(QLatin1String("location"), QLatin1String("bottom"));
 
-							break;
-						default:
-							location = QLatin1String("top");
-
-							break;
-					}
-
-					toolBarObject.insert(QLatin1String("location"), location);
+						break;
+					default:
+						break;
 				}
 
 				if (sessionEntry.toolBars.at(j).normalVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
