@@ -1783,12 +1783,12 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="94"/>
         <source>Failed to download profile rules</source>
-        <translation type="unfinished"/>
+        <translation>Profilregeln konnten nicht heruntergeladen werden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="98"/>
         <source>Failed to verify profile rules using checksum</source>
-        <translation type="unfinished"/>
+        <translation>Profilregeln konnten nicht mit der Prüfsumme überprüft werden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="107"/>
@@ -1841,7 +1841,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Belästigung</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
@@ -1851,7 +1851,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Sozial</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
