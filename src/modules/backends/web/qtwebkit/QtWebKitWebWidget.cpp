@@ -158,7 +158,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	connect(m_page->undoStack(), &QUndoStack::undoTextChanged, this, &QtWebKitWebWidget::notifyUndoActionStateChanged);
 	connect(m_networkManager, &QtWebKitNetworkManager::pageInformationChanged, this, &QtWebKitWebWidget::pageInformationChanged);
 	connect(m_networkManager, &QtWebKitNetworkManager::requestBlocked, this, &QtWebKitWebWidget::requestBlocked);
-	connect(m_networkManager, &QtWebKitNetworkManager::contentStateChanged, this, &QtWebKitWebWidget::notifyContentStateChanged);
+	connect(m_networkManager, &QtWebKitNetworkManager::contentStateChanged, this, [&]()
+	{
+		emit contentStateChanged(getContentState());
+	});
 	connect(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), &QShortcut::activated, [&]()
 	{
 		triggerAction(ActionsManager::SelectAllAction);
@@ -758,11 +761,6 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 void QtWebKitWebWidget::notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate)
 {
 	emit requestedSavePassword(password, isUpdate);
-}
-
-void QtWebKitWebWidget::notifyContentStateChanged()
-{
-	emit contentStateChanged(getContentState());
 }
 
 void QtWebKitWebWidget::updateAmountOfDeferredPlugins()

@@ -164,7 +164,6 @@ protected slots:
 	void notifyIconChanged();
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature nativeFeature, bool cancel);
 	void notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate);
-	void notifyContentStateChanged();
 	void updateAmountOfDeferredPlugins();
 	void updateOptions(const QUrl &url);
 
