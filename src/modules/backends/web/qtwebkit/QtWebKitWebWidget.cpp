@@ -769,9 +769,14 @@ void QtWebKitWebWidget::updateAmountOfDeferredPlugins()
 
 	if (amountOfDeferredPlugins != m_amountOfDeferredPlugins)
 	{
+		const bool needsActionUpdate(amountOfDeferredPlugins == 0 || m_amountOfDeferredPlugins == 0);
+
 		m_amountOfDeferredPlugins = amountOfDeferredPlugins;
 
-		emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
+		if (needsActionUpdate)
+		{
+			emit arbitraryActionsStateChanged({ActionsManager::LoadPluginsAction});
+		}
 	}
 }
 
