@@ -1491,8 +1491,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::ClearAllAction:
-			triggerAction(ActionsManager::SelectAllAction, {}, trigger);
-			triggerAction(ActionsManager::DeleteAction, {}, trigger);
+			m_page->triggerAction(QWebPage::SelectAll);
+			m_page->triggerAction(QWebPage::DeleteEndOfWord);
 
 			break;
 		case ActionsManager::CheckSpellingAction:
