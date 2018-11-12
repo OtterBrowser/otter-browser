@@ -1039,10 +1039,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::BookmarkLinkAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
 				const QString title(getCurrentHitTestResult().title);
 
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? hitResult.element().toPlainText() : title)}}, parentWidget(), trigger);
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element().toPlainText() : title)}}, parentWidget(), trigger);
 			}
 
 			break;
