@@ -1523,9 +1523,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					parentElement = parentElement.parent();
 				}
 
+				if (!parentElement.hasAttribute(QLatin1String("action")))
+				{
+					break;
+				}
+
 				QList<QWebElement> inputElements(parentElement.findAll(QLatin1String("button:not([disabled])[name][type='submit'], input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")).toList());
 
-				if (!parentElement.hasAttribute(QLatin1String("action")) || inputElements.count() == 0)
+				if (inputElements.isEmpty())
 				{
 					break;
 				}
