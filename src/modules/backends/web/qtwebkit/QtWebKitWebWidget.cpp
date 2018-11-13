@@ -1824,7 +1824,7 @@ void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
-	if (history.entries.count() == 0)
+	if (history.entries.isEmpty())
 	{
 		m_page->history()->clear();
 

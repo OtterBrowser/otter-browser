@@ -233,7 +233,7 @@ void QtWebEnginePage::setHistory(const WindowHistoryInformation &history)
 {
 	m_history.clear();
 
-	if (history.entries.count() == 0)
+	if (history.entries.isEmpty())
 	{
 		this->history()->clear();
 

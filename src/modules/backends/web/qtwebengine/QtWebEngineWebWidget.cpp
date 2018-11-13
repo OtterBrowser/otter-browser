@@ -1291,7 +1291,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	m_page->setHistory(history);
 
-	if (history.entries.count() == 0)
+	if (history.entries.isEmpty())
 	{
 		updateOptions({});
 	}
