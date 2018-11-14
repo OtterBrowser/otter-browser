@@ -1785,7 +1785,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
-				WebsitePreferencesDialog dialog(Utils::extractHost(url), (url.host().isEmpty() ? QVector<QNetworkCookie>() : m_networkManager->getCookieJar()->getCookies(url.host())), this);
+				CookieJar *cookieJar(m_networkManager->getCookieJar());
+				WebsitePreferencesDialog dialog(Utils::extractHost(url), (url.host().isEmpty() ? QVector<QNetworkCookie>() : cookieJar->getCookies(url.host())), this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
@@ -1796,12 +1797,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					for (int i = 0; i < cookiesToDelete.count(); ++i)
 					{
-						m_networkManager->getCookieJar()->forceDeleteCookie(cookiesToDelete.at(i));
+						cookieJar->forceDeleteCookie(cookiesToDelete.at(i));
 					}
 
 					for (int i = 0; i < cookiesToInsert.count(); ++i)
 					{
-						m_networkManager->getCookieJar()->forceInsertCookie(cookiesToInsert.at(i));
+						cookieJar->forceInsertCookie(cookiesToInsert.at(i));
 					}
 				}
 			}
