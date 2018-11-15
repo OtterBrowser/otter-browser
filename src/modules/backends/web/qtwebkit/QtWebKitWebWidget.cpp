@@ -2320,7 +2320,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	m_page->history()->currentItem().setUserData(state);
 
 	const QWebHistory *history(m_page->history());
-	const QString requestedUrl(m_page->mainFrame()->requestedUrl().toString());
+	const QUrl requestedUrl(m_page->mainFrame()->requestedUrl());
 	const int historyCount(history->count());
 	WindowHistoryInformation information;
 	information.entries.reserve(historyCount);
@@ -2352,10 +2352,10 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		information.entries.append(entry);
 	}
 
-	if (m_loadingState == OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
+	if (m_loadingState == OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url())
 	{
 		WindowHistoryEntry entry;
-		entry.url = requestedUrl;
+		entry.url = requestedUrl.toString();
 		entry.title = getTitle();
 		entry.position = state.value(PositionEntryData, QPoint(0, 0)).toPoint();
 		entry.zoom = state.value(ZoomEntryData).toInt();
