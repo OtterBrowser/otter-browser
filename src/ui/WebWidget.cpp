@@ -720,7 +720,7 @@ QString WebWidget::suggestSaveFileName(const QString &extension) const
 	const QUrl url(getUrl());
 	QString fileName(url.fileName());
 
-	if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1String("/"))
+	if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1Char('/'))
 	{
 		fileName = QDir(url.path()).dirName();
 	}

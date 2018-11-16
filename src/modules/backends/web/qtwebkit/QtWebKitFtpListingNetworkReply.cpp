@@ -140,7 +140,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				while (true)
 				{
-					const bool isRoot(url.path() == QLatin1String("/"));
+					const bool isRoot(url.path() == QLatin1Char('/'));
 
 					url = url.adjusted(QUrl::StripTrailingSlash);
 
@@ -156,7 +156,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				QHash<QString, QString> icons;
 				QHash<QString, QString> variables;
-				variables[QLatin1String("title")] = request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QString() : QLatin1String("/"));
+				variables[QLatin1String("title")] = request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QChar() : QLatin1Char('/'));
 				variables[QLatin1String("description")] = tr("Directory Contents");
 				variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
 				variables[QLatin1String("navigation")] = navigation.join(QLatin1String("&shy;"));
