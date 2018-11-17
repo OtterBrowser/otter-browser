@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,13 @@ MdiWidget::MdiWidget(QWidget *parent) : QMdiArea(parent)
 
 bool MdiWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease)
+	switch (event->type())
 	{
-		return QAbstractScrollArea::eventFilter(object, event);
+		case QEvent::KeyPress:
+		case QEvent::KeyRelease:
+			return QAbstractScrollArea::eventFilter(object, event);
+		default:
+			break;
 	}
 
 	return QMdiArea::eventFilter(object, event);
