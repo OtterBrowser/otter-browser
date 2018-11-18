@@ -316,7 +316,7 @@ void Window::updateFocus()
 	{
 		AddressWidget *addressWidget(m_mainWindow->findAddressField());
 
-		if (Utils::isUrlEmpty(getUrl()) && (!m_contentsWidget || m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState) && addressWidget)
+		if (addressWidget && Utils::isUrlEmpty(getUrl()) && (!m_contentsWidget || m_contentsWidget->getLoadingState() != WebWidget::OngoingLoadingState))
 		{
 			addressWidget->setFocus();
 		}
@@ -509,7 +509,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		{
 			const AddressWidget *addressWidget(m_mainWindow->findAddressField());
 
-			if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
+			if (addressWidget && Utils::isUrlEmpty(m_contentsWidget->getUrl()))
 			{
 				QTimer::singleShot(100, addressWidget, static_cast<void(AddressWidget::*)()>(&AddressWidget::setFocus));
 			}
