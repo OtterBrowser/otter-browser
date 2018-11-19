@@ -2,8 +2,9 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
 	<Shortcut>yt</Shortcut>
 	<ShortName>YouTube</ShortName>
-	<Description>Search Youtube</Description>
+	<Description>Search for videos on YouTube</Description>
 	<InputEncoding>UTF-8</InputEncoding>
-	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gECFyMLQ5st2AAAAVFJREFUOMvFkz9LA0EQxX93t4kJQSEHgmAIGhFRjE0a/QCpxEbUwsIPYWFpEQQRBRH/oODnMIFoE0UstBIUwSpgJ7GInsdmL2thlGQjESsXHrvDvPd2Bmbgv4915caiwDEwAqSB8C+aW0ACd5OVtyWhNKvA4h8+TTfuzEU89mQrdFahaUYQDjG0d0golcLMGcjaNUjWgGYEkQju3AITpyXis/OY+SYkbalxpYZmvNfB932kbTO4vcvA1g6qK4LJkxpXSHDa29R4nvcddU/PkAgCHleWTaIjalq3y+utBi/lMqWDfRI/cIWEAKMKjcb3fQDuC3nO19cYlT7Sskx9IKSmAvS2GKg6XrXK2eYGz/kTxoWNg4VsL6BiHfVEr4FMiy1wKRXDwqHPtjrNxI1Q6KJpADAV/uxKoTsZFIXS5IB+YOxrwjoIHoDXxrsA5P59GfkAI5Kg4Uip8kcAAAAASUVORK5CYII=</Image>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeElEQVQ4y2P4//8/AyWYgXoGMDAIALEDFDfgwDB5AVQDGBgSwEzScALEAAYGAzI0w7AByIAACgxIYID6DbuCBw/+/3dwwGdAA34DYGDDhv//FRQoMODAATINAHkhIICgF3AHooAAUYFIYTRSnJCwJ+UC0pLyQOZGAD5ePee5zL+3AAAAAElFTkSuQmCC</Image>
 	<Url rel="results" type="text/html" method="get" template="https://www.youtube.com/results?search_query={searchTerms}&amp;sourceid=otter" />
+	<Url rel="self" type="application/opensearchdescription+xml" template="https://www.youtube.com/opensearch" />
 </OpenSearchDescription>

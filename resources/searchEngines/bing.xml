@@ -4,7 +4,7 @@
 	<ShortName>Bing</ShortName>
 	<Description>Bing. Search by Microsoft.</Description>
 	<InputEncoding>UTF-8</InputEncoding>
-	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAnUlEQVQoz2PgaWkhCTHAWRqTJpnOnEmChvp9+x59+DDn7Fnpnh5iNfz//x+oB2gV7TXg0YNFA9Drq65cAXomYtUqTJ3YbYCwgeDCixd9x44ha8PppMMPHvyHAaAUYU8DHQbXQ0ADUGnGpk1Ax8BtAHJxavj08yeyY4BsoNfxeRoOgFYBRfCFEiRwgOqACC1ksGuAIKAH8CdBBlKTNwBSZoBFsgTbZgAAAABJRU5ErkJggg==</Image>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAALVBMVEUMhIQbjIwokpI1mZlYqqposrJ/vr6Oxsaczc2q1NTD4ODQ6Oji8PDy+fn///9KNMtJAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAAd0SU1FB+IKCA0hKzCnX5cAAABJSURBVAjXY2CAAyYDKIPthACU8UYBg6EEY1i2KEAYau+2K0Ck1r1LgCi2gjJM970LADHernu3BKz43btjYF1MOcehJjIbMCADAEkRGUUONSWgAAAAAElFTkSuQmCC</Image>
 	<Url rel="results" type="text/html" method="get" template="https://www.bing.com/search?q={searchTerms}&amp;sourceid=otter" />
 	<Url rel="suggestions" type="application/x-suggestions+json" method="get" template="https://www.bing.com/osjson.aspx?query={searchTerms}" />
 </OpenSearchDescription>

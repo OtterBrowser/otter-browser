@@ -4,8 +4,9 @@
 	<ShortName>Wikipedia (en)</ShortName>
 	<Description>Wikipedia, the free encyclopedia</Description>
 	<InputEncoding>UTF-8</InputEncoding>
-	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAQVJREFUOI3Fk9ENgkAQRImhCOmAGgz/0gG2gCXgpxRBCVICNiAlYAfSA+bI22TMQS7GRBM/NrBzc7NzcxBNz8l9U9H/Bbpr54pD4fJ97ngHbC+t9dWpcsN9MIx3ePRUeSytNwf1uXZpmr4EKATAII+P0ThN09gaPQL0JgAp2SYGsgjGIhhu+ltvaxKXwCID7LABskTlgukIiYtT9ZEPIgBZGC7iTWzi/nQ4Ou7iFphIKTie2S4zTBwwAg1eI8pMlD0J+AHjSmEGvwPIWMYqQoSFiEJjiIIOCkBgAzYRkGWEmexnFBRgE2RKR8G+MN3S2095HSbFERD46F9g4noSYv6X+rOfaQaWL1wAZLls+QAAAABJRU5ErkJggg==</Image>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiklEQVQ4y6WTsYrCQBCGl7PXRgQrEd9AELRMIygixMJCQa19gbQWYqlF8AUU4Sorg9haWAh2gprCJpIYCxtRUMT/nMXs4eU4OB34YWbDfjM7mWG32+3zLvxT+l21uz7Y+XzGCwBHNXa9Xt8B6AxvGjNNE6lUCn6/H+FwGJ1OB9VqlcexWAyj0QjZbBahUAj1eh39fh/BYBCZTAa2bUNUkEwmUSqVBDmfz6NQKHC/0Wig2+1y/3Q6QZbl7wroLWSTyQSMMRwOBx4vl0sez2azJ/B0OoWmadynu8xpCJHpCcViUXyMx+O89Pl8LgCKomC324lGCgBZs9mE1+vFdrvl8XA45FUsFgseW5aFcrksEjwBHIjH4+GNJKtUKkin0+JSLpfD8Xj8G9ButxEIBGAYBnq9HlarFa9iPB5DVdWnyy4AabPZwOfzQZIk7Pd7XC4XRKNRRCIRrNdr1zC5AGT0j1utlmjcYDBAIpFwZXcA+k8AdZkyO2c07jRwvwB09tiq15eJVvIB0V9Z5y/HzX8Yy6T+ewAAAABJRU5ErkJggg==</Image>
 	<Url rel="results" type="text/html" method="get" template="https://en.wikipedia.org/wiki/Special:Search?search={searchTerms}&amp;sourceid=otter" />
 	<Url rel="suggestions" type="application/x-suggestions+json" method="get" template="https://en.wikipedia.org/w/api.php?action=opensearch&amp;search={searchTerms}" />
 	<Url rel="self" type="application/opensearchdescription+xml" template="https://en.wikipedia.org/w/opensearch_desc.php" />
+	<moz:SearchForm>https://en.wikipedia.org/wiki/Special:Search</moz:SearchForm>
 </OpenSearchDescription>
