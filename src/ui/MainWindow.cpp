@@ -2255,6 +2255,26 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 		case ActionsManager::OpenUrlAction:
 			state.isEnabled = !parameters.isEmpty();
 
+			if (parameters.contains(QLatin1String("url")))
+			{
+				const QUrl url(parameters[QLatin1String("url")].toUrl());
+
+				if (url.scheme() == QLatin1String("about") && AddonsManager::getSpecialPages().contains(url.path()))
+				{
+					const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
+
+					if (!parameters.contains(QLatin1String("icon")) && !information.icon.isNull())
+					{
+						state.icon = information.icon;
+					}
+
+					if (!parameters.contains(QLatin1String("text")))
+					{
+						state.text = information.title;
+					}
+				}
+			}
+
 			break;
 		case ActionsManager::ReopenTabAction:
 			if (!m_closedWindows.isEmpty())
