@@ -805,7 +805,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 				if (parameters.contains(QLatin1String("bookmark")))
 				{
-					bookmark = BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong());
+					const QVariant bookmarkData(parameters[QLatin1String("bookmark")]);
+
+					bookmark = ((bookmarkData.type() == QVariant::String) ? BookmarksManager::getBookmark(bookmarkData.toString()) : BookmarksManager::getBookmark(bookmarkData.toULongLong()));
 				}
 				else if (parameters.contains(QLatin1String("startPageTile")))
 				{
@@ -2330,7 +2332,8 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			break;
 		case ActionsManager::OpenBookmarkAction:
 			{
-				const BookmarksModel::Bookmark *bookmark(BookmarksManager::getBookmark(parameters[QLatin1String("bookmark")].toULongLong()));
+				const QVariant bookmarkData(parameters.value(QLatin1String("bookmark")));
+				const BookmarksModel::Bookmark *bookmark((bookmarkData.type() == QVariant::String) ? BookmarksManager::getBookmark(bookmarkData.toString()) : BookmarksManager::getBookmark(bookmarkData.toULongLong()));
 
 				if (bookmark)
 				{
