@@ -2331,8 +2331,9 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 			break;
 		case ActionsManager::OpenBookmarkAction:
+			if (parameters.contains(QLatin1String("bookmark")))
 			{
-				const QVariant bookmarkData(parameters.value(QLatin1String("bookmark")));
+				const QVariant bookmarkData(parameters[QLatin1String("bookmark")]);
 				const BookmarksModel::Bookmark *bookmark((bookmarkData.type() == QVariant::String) ? BookmarksManager::getBookmark(bookmarkData.toString()) : BookmarksManager::getBookmark(bookmarkData.toULongLong()));
 
 				if (bookmark)
@@ -2340,10 +2341,6 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 					state.text = bookmark->getTitle();
 					state.icon = bookmark->getIcon();
 					state.isEnabled = true;
-				}
-				else
-				{
-					state.isEnabled = false;
 				}
 			}
 
