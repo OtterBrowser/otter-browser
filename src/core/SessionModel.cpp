@@ -21,7 +21,6 @@
 #include "Application.h"
 #include "ThemesManager.h"
 #include "../ui/MainWindow.h"
-#include "../ui/TabBarWidget.h"
 #include "../ui/Window.h"
 
 namespace Otter
@@ -91,9 +90,9 @@ QVariant SessionItem::data(int role) const
 MainWindowSessionItem::MainWindowSessionItem(MainWindow *mainWindow) : SessionItem(),
 	m_mainWindow(mainWindow)
 {
-	for (int i = 0; i < mainWindow->getTabBar()->count(); ++i)
+	for (int i = 0; i < mainWindow->getWindowCount(); ++i)
 	{
-		const Window *window(mainWindow->getTabBar()->getWindow(i));
+		const Window *window(mainWindow->getWindowByIndex(i));
 
 		if (window)
 		{
