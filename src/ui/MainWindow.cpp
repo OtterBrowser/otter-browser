@@ -494,7 +494,6 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 			close();
 
 			return;
-		case ActionsManager::GoAction:
 		case ActionsManager::ActivateAddressFieldAction:
 		case ActionsManager::ActivateSearchFieldAction:
 			{
@@ -507,7 +506,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 				}
 				else if (addressWidget)
 				{
-					if (identifier == ActionsManager::ActivateAddressFieldAction)
+					if (identifier ==  ActionsManager::ActivateAddressFieldAction)
 					{
 						addressWidget->activate(Qt::ShortcutFocusReason);
 
@@ -516,17 +515,13 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 							addressWidget->showCompletion(true);
 						}
 					}
-					else if (identifier == ActionsManager::ActivateSearchFieldAction)
+					else
 					{
 						addressWidget->setText(QLatin1String("? "));
 						addressWidget->activate(Qt::OtherFocusReason);
 					}
-					else if (identifier == ActionsManager::GoAction)
-					{
-						addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
-					}
 				}
-				else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
+				else
 				{
 					OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
 
@@ -543,6 +538,17 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 			}
 
 			break;
+		case ActionsManager::GoAction:
+			{
+				AddressWidget *addressWidget(findAddressField());
+
+				if (addressWidget)
+				{
+					addressWidget->handleUserInput(addressWidget->text(), SessionsManager::CurrentTabOpen);
+				}
+			}
+
+			return;
 		case ActionsManager::GoToPageAction:
 			{
 				OpenAddressDialog dialog(ActionExecutor::Object(this, this), this);
