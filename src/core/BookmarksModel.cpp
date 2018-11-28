@@ -1132,7 +1132,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path)
 		{
 			Bookmark *childBookmark(bookmark->getChild(j));
 
-			if (childBookmark && childBookmark->data(Qt::DisplayRole) == directories.at(i))
+			if (childBookmark && childBookmark->getTitle() == directories.at(i))
 			{
 				bookmark = childBookmark;
 
