@@ -642,7 +642,10 @@ void WorkspaceWidget::handleOptionChanged(int identifier, const QVariant &value)
 
 void WorkspaceWidget::notifyActionsStateChanged()
 {
-	emit arbitraryActionsStateChanged({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction});
+	if (!m_mainWindow->isAboutToClose())
+	{
+		emit arbitraryActionsStateChanged({ActionsManager::MaximizeAllAction, ActionsManager::MinimizeAllAction, ActionsManager::RestoreAllAction, ActionsManager::CascadeAllAction, ActionsManager::TileAllAction});
+	}
 }
 
 void WorkspaceWidget::showContextMenu(const QPoint &position)
