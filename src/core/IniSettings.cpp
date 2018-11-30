@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@ IniSettings::IniSettings(QObject *parent) : QObject(parent),
 }
 
 IniSettings::IniSettings(const QString &path, QObject *parent) : QObject(parent),
-  m_path(path),
-  m_hasError(false)
+	m_path(path),
+	m_hasError(false)
 {
 	QFile file(path);
 

@@ -506,7 +506,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 				}
 				else if (addressWidget)
 				{
-					if (identifier ==  ActionsManager::ActivateAddressFieldAction)
+					if (identifier == ActionsManager::ActivateAddressFieldAction)
 					{
 						addressWidget->activate(Qt::ShortcutFocusReason);
 
