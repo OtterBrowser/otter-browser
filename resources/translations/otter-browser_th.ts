@@ -4,7 +4,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation type="unfinished"/>
+        <translation>ยอมรับคุกกี้</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
@@ -19,7 +19,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="55"/>
         <source>Expiration date:</source>
-        <translation type="unfinished"/>
+        <translation>วันหมดอายุ</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="83"/>
         <source>Accessible using JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>เข้าถึงได้โดยใช้จาวาสคริปต์</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="100"/>
@@ -39,22 +39,22 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation type="unfinished"/>
+        <translation>เว็บไซต์ %1 ต้องการที่จะเพิ่มคุกกี้ใหม่</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>เว็บไซต์ %1 ต้องการที่จะปรับปรุงคุกกี้ที่มีอยู่แล้ว</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>เว็บไซต์ %1 ต้องการที่จะนำคุกกี้ที่มีอยู่แล้วออก</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation type="unfinished"/>
+        <translation>วาระนี้เท่านั้น</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -69,27 +69,27 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>ใช่</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>ไม่ใช่</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="64"/>
         <source>Accept</source>
-        <translation type="unfinished"/>
+        <translation>ยอมรับ</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="68"/>
         <source>Accept For This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>ยอมรับสำหรับวาระนี้เท่านั้น</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="71"/>
         <source>Discard</source>
-        <translation type="unfinished"/>
+        <translation>ละทิ้ง</translation>
     </message>
 </context>
 <context>
@@ -107,34 +107,34 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>เพิ่ม</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="82"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>เอาออก</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="107"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>ย้ายขึ้น</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="133"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>ย้ายลง</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="113"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="113"/>
         <source>Code</source>
-        <translation type="unfinished"/>
+        <translation>รหัส</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="61"/>
@@ -151,17 +151,17 @@
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="79"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="146"/>
         <source>System language (%1 - %2)</source>
-        <translation type="unfinished"/>
+        <translation>ภาษาของระบบ (%1 - %2)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>กำหนดเอง</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="158"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>ไม่รู้จัก</translation>
     </message>
 </context>
 <context>
@@ -177,12 +177,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="84"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>เลือกการกระทำ</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="155"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>ค้นหา...</translation>
     </message>
 </context>
 <context>
@@ -220,7 +220,7 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="183"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="365"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>คำถาม</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="184"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>ข้อผิดพลาด</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
@@ -257,32 +257,32 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="367"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>คุณต้องการดำเนินการต่อหรือไม่?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="433"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>เพิ่มส่วนเสริม</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="439"/>
         <source>Open Addon File</source>
-        <translation type="unfinished"/>
+        <translation>เปิดแฟ้มส่วนเสริม</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="440"/>
         <source>Reload Addon</source>
-        <translation type="unfinished"/>
+        <translation>โหลดส่วนเสริมซ้ำ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="444"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>เอาส่วนเสริมออก...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="485"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>ส่วนเสริม</translation>
     </message>
 </context>
 <context>
@@ -295,17 +295,17 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="111"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>ที่คั่นหน้า</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="145"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>แฟ้มท้องถิ่น</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="161"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>ประวัติ</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="198"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>หน้าพิเศษ</translation>
     </message>
 </context>
 <context>
@@ -324,57 +324,57 @@
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="341"/>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="372"/>
         <source>Enter address or search…</source>
-        <translation type="unfinished"/>
+        <translation>ป้อนที่อยู่หรือคำค้นหา</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="540"/>
         <source>Remove this Icon</source>
-        <translation type="unfinished"/>
+        <translation>เอาไอคอนนี้ออก</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="631"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(ไม่มีชื่อ)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="662"/>
         <source>Add to Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>เพิ่มเข้าที่คั่นหน้า</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="674"/>
         <source>Add to Start Page</source>
-        <translation type="unfinished"/>
+        <translation>เพิ่มเข้าหน้าเริ่มต้น</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1045"/>
         <source>Show website information</source>
-        <translation type="unfinished"/>
+        <translation>แสดงข้อมูลเว็บไซต์</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1059"/>
         <source>Show feed list</source>
-        <translation type="unfinished"/>
+        <translation>แสดงรายการฟีด</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1071"/>
         <source>Remove bookmark</source>
-        <translation type="unfinished"/>
+        <translation>เอาที่คั่นหน้าออก</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1076"/>
         <source>Add bookmark</source>
-        <translation type="unfinished"/>
+        <translation>เพิ่มที่คั่นหน้า</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1085"/>
         <source>Load all plugins on the page</source>
-        <translation type="unfinished"/>
+        <translation>โหลดปลั๊กอินทั้งหมดในหน้านี้</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1093"/>
         <source>Log in</source>
-        <translation type="unfinished"/>
+        <translation>เข้าสู่ระบบ</translation>
     </message>
 </context>
 <context>
@@ -385,7 +385,7 @@
         <location filename="../../src/core/Application.cpp" line="442"/>
         <location filename="../../src/core/Application.cpp" line="1017"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="322"/>
@@ -409,14 +409,14 @@ This may lead to malfunctions or even data loss.</source>
         <location filename="../../src/core/Application.cpp" line="1643"/>
         <location filename="../../src/core/Application.cpp" line="1692"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>คุณต้องการดำเนินการต่อหรือไม่?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="357"/>
         <location filename="../../src/core/Application.cpp" line="1647"/>
         <location filename="../../src/core/Application.cpp" line="1696"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>ไม่ต้องแสดงข้อความนี้อีก</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="358"/>
@@ -426,12 +426,12 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>เพิกเฉย</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="361"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>ออก</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="442"/>
@@ -474,7 +474,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/Application.cpp" line="1641"/>
         <location filename="../../src/core/Application.cpp" line="1690"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>คำถาม</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1642"/>
@@ -485,12 +485,12 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/Application.cpp" line="1649"/>
         <location filename="../../src/core/Application.cpp" line="1698"/>
         <source>Hide</source>
-        <translation type="unfinished"/>
+        <translation>ซ่อน</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1691"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>คุณกำลังจะออกจากวาระปัจจุบันของ Otter Browser</translation>
     </message>
 </context>
 <context>
@@ -500,7 +500,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>แอพพลิเคชั่นเริ่มต้น</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
@@ -512,12 +512,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
         <source>Select Application</source>
-        <translation type="unfinished"/>
+        <translation>เลือกแอพพลิเคชั่น</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>ไม่รู้จัก</translation>
     </message>
 </context>
 <context>
@@ -538,32 +538,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
         <source>Authentication Required</source>
-        <translation type="unfinished"/>
+        <translation>ต้องการการยืนยันตัวตน</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="22"/>
         <source>Server:</source>
-        <translation type="unfinished"/>
+        <translation>เซิรฟ์เวอร์:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="42"/>
         <source>Message:</source>
-        <translation type="unfinished"/>
+        <translation>ข้อความ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="62"/>
         <source>User:</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อผู้ใช้:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="72"/>
         <source>Password:</source>
-        <translation type="unfinished"/>
+        <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation type="unfinished"/>
+        <translation>จดจำรหัสผ่าน</translation>
     </message>
 </context>
 <context>
@@ -571,47 +571,47 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อเรื่อง:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="29"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>คำบรรยาย:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="39"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>ที่อยู่:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="49"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>โฟลเดอร์:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>ใหม่...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>เยี่ยมชม:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation type="unfinished"/>
+        <translation>เยี่ยมชมล่าสุด</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation type="unfinished"/>
+        <translation>สร้างเมื่อ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation type="unfinished"/>
+        <translation>แก้ไขเมื่อ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
@@ -643,7 +643,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>ข้อผิดพลาด</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="159"/>
@@ -697,22 +697,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>ค้นหา...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>ที่อยู่:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="92"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อเรื่อง:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="99"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>คำบรรยาย:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
@@ -910,7 +910,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>การโหลดแฟ้มที่คั่นหน้าล้มเหลว</translation>
     </message>
 </context>
 <context>
@@ -3256,7 +3256,7 @@ Do you want to migrate it?</source>
         <location filename="../../src/core/GesturesManager.cpp" line="493"/>
         <location filename="../../src/core/GesturesManager.cpp" line="532"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(ไม่มีชื่อ)</translation>
     </message>
 </context>
 <context>
@@ -3269,44 +3269,44 @@ Do you want to migrate it?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>การกระทำ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>ค้นหา...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="144"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>เพิ่ม</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="88"/>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="154"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>เอาออก</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>ย้ายขึ้น</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>ย้ายลง</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>ข้อมูล</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="206"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>ชื่อเรื่อง:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="216"/>
@@ -9534,7 +9534,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="62"/>
         <source>Help</source>
-        <translation>ช่วยเหลือ</translation>
+        <translation>วิธีใช้</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="63"/>
@@ -9740,7 +9740,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="759"/>
         <source>Always Allow</source>
-        <translation>อนุญาติเสมอ</translation>
+        <translation>อนุญาตเสมอ</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="763"/>
@@ -9988,7 +9988,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="126"/>
         <source>Advanced Configuration</source>
-        <translation>การปรับตั้งค่าขั้นสูง</translation>
+        <translation>การตั้งค่าขั้นสูง</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="127"/>
