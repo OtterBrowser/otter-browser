@@ -1025,9 +1025,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 				if (definition.isValid())
 				{
 					ToolBarsManager::setToolBar(definition);
-				}
 
-				triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBarIdentifier}, {QLatin1String("isChecked"), true}}, trigger);
+					triggerAction(ActionsManager::ShowToolBarAction, {{QLatin1String("toolBar"), toolBarIdentifier}, {QLatin1String("isChecked"), true}}, trigger);
+				}
 			}
 
 			return;
