@@ -77,6 +77,11 @@ void TextEditWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	ActionExecutor::Object executor(this, this);
 	QMenu menu(this);
+	Menu *notesMenu(new Menu(Menu::NotesMenu, &menu));
+	notesMenu->setExecutor(executor);
+
+	menu.addMenu(notesMenu);
+	menu.addSeparator();
 	menu.addAction(new Action(ActionsManager::UndoAction, {}, executor, &menu));
 	menu.addAction(new Action(ActionsManager::RedoAction, {}, executor, &menu));
 	menu.addSeparator();
