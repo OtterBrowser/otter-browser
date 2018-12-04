@@ -175,7 +175,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 		if (SearchEnginesManager::addSearchEngine(searchEngine))
 		{
-			if (settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine && m_optionsWidget->isChecked())
+			if (m_optionsWidget->isChecked() && settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine)
 			{
 				SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
 				SettingsManager::setOption(SettingsManager::Search_DefaultQuickSearchEngineOption, searchEngine.identifier);
