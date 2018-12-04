@@ -148,7 +148,7 @@ private:
 	static QPointer<QObject> m_trackedObject;
 	static QPoint m_lastClick;
 	static QPoint m_lastPosition;
-	static QVariantMap m_paramaters;
+	static QVariantMap m_parameters;
 	static QHash<GesturesContext, QVector<MouseProfile::Gesture> > m_gestures;
 	static QHash<GesturesContext, QVector<QVector<MouseProfile::Gesture::Step> > > m_nativeGestures;
 	static QVector<MouseProfile::Gesture::Step> m_steps;
