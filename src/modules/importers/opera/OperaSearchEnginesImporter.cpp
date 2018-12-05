@@ -132,7 +132,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 	settings.beginGroup(QLatin1String("Options"));
 
-	const QVariant defaultEngine(settings.getValue(QLatin1String("Default Search")));
+	const QVariant defaultSearchEngine(settings.getValue(QLatin1String("Default Search")));
 	int totalAmount(0);
 
 	for (int i = 0; i < groups.count(); ++i)
@@ -175,7 +175,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 		if (SearchEnginesManager::addSearchEngine(searchEngine))
 		{
-			if (m_optionsWidget->isChecked() && settings.getValue(QLatin1String("UNIQUEID")) == defaultEngine)
+			if (m_optionsWidget->isChecked() && settings.getValue(QLatin1String("UNIQUEID")) == defaultSearchEngine)
 			{
 				SettingsManager::setOption(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
 				SettingsManager::setOption(SettingsManager::Search_DefaultQuickSearchEngineOption, searchEngine.identifier);
