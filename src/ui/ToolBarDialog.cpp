@@ -407,6 +407,7 @@ void ToolBarDialog::editEntry()
 		if (identifier == QLatin1String("ClosedWindowsMenu"))
 		{
 			iconWidget->setDefaultValue(QLatin1String("user-trash"));
+			textWidget->setDefaultValue(tr("Closed Tabs and Windows"));
 		}
 		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 		{
