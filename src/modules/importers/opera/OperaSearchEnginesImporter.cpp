@@ -71,10 +71,8 @@ QString OperaSearchEnginesImporter::getSuggestedPath(const QString &path) const
 		{
 			return QDir(path).filePath(QLatin1String("search.ini"));
 		}
-		else
-		{
-			return path;
-		}
+
+		return path;
 	}
 
 #if !defined(Q_OS_MAC) && defined(Q_OS_UNIX)
