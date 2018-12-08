@@ -168,46 +168,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 		isHeader = false;
 
-		if (line.startsWith(QLatin1String("#NOTE")))
-		{
-			note = NotesManager::addNote(BookmarksModel::UrlBookmark, {}, m_currentFolder);
-			type = NoteEntry;
-
-			++totalAmount;
-		}
-		else if (line.startsWith(QLatin1String("#FOLDER")))
-		{
-			note = NotesManager::addNote(BookmarksModel::FolderBookmark, {}, m_currentFolder);
-			type = FolderStartEntry;
-
-			++totalAmount;
-		}
-		else if (line.startsWith(QLatin1String("#SEPERATOR")))
-		{
-			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, m_currentFolder);
-			type = SeparatorEntry;
-
-			++totalAmount;
-		}
-		else if (line == QLatin1String("-"))
-		{
-			type = FolderEndEntry;
-		}
-		else if (line.startsWith(QLatin1String("\tURL=")) && note)
-		{
-			const QUrl url(line.section(QLatin1Char('='), 1, -1));
-
-			note->setData(url, BookmarksModel::UrlRole);
-		}
-		else if (line.startsWith(QLatin1String("\tNAME=")) && note)
-		{
-			note->setData(line.section(QLatin1Char('='), 1, -1).replace(QLatin1String("\x02\x02"), QLatin1String("\n")), BookmarksModel::DescriptionRole);
-		}
-		else if (line.startsWith(QLatin1String("\tCREATED=")) && note)
-		{
-			note->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
-		}
-		else if (line.isEmpty())
+		if (line.isEmpty())
 		{
 			if (note)
 			{
@@ -232,6 +193,48 @@ bool OperaNotesImporter::import(const QString &path)
 			}
 
 			type = NoEntry;
+		}
+		else if (line.startsWith(QLatin1String("#NOTE")))
+		{
+			note = NotesManager::addNote(BookmarksModel::UrlBookmark, {}, m_currentFolder);
+			type = NoteEntry;
+
+			++totalAmount;
+		}
+		else if (line.startsWith(QLatin1String("#FOLDER")))
+		{
+			note = NotesManager::addNote(BookmarksModel::FolderBookmark, {}, m_currentFolder);
+			type = FolderStartEntry;
+
+			++totalAmount;
+		}
+		else if (line.startsWith(QLatin1String("#SEPERATOR")))
+		{
+			note = NotesManager::addNote(BookmarksModel::SeparatorBookmark, {}, m_currentFolder);
+			type = SeparatorEntry;
+
+			++totalAmount;
+		}
+		else if (line == QLatin1String("-"))
+		{
+			type = FolderEndEntry;
+		}
+		else if (note)
+		{
+			if (line.startsWith(QLatin1String("\tURL=")))
+			{
+				const QUrl url(line.section(QLatin1Char('='), 1, -1));
+
+				note->setData(url, BookmarksModel::UrlRole);
+			}
+			else if (line.startsWith(QLatin1String("\tNAME=")))
+			{
+				note->setData(line.section(QLatin1Char('='), 1, -1).replace(QLatin1String("\x02\x02"), QLatin1String("\n")), BookmarksModel::DescriptionRole);
+			}
+			else if (line.startsWith(QLatin1String("\tCREATED=")))
+			{
+				note->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
+			}
 		}
 	}
 
