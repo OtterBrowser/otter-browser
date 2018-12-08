@@ -166,7 +166,25 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 		isHeader = false;
 
-		if (line.startsWith(QLatin1String("#URL")))
+		if (line.isEmpty())
+		{
+			if (bookmark)
+			{
+				if (type == FolderStartEntry)
+				{
+					setCurrentFolder(bookmark);
+				}
+
+				bookmark = nullptr;
+			}
+			else if (type == FolderEndEntry)
+			{
+				goToParent();
+			}
+
+			type = NoEntry;
+		}
+		else if (line.startsWith(QLatin1String("#URL")))
 		{
 			bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, {}, getCurrentFolder());
 			type = UrlEntry;
@@ -191,62 +209,47 @@ bool OperaBookmarksImporter::import(const QString &path)
 		{
 			type = FolderEndEntry;
 		}
-		else if (line.startsWith(QLatin1String("\tURL=")) && bookmark)
+		else if (bookmark)
 		{
-			const QUrl url(line.section(QLatin1Char('='), 1, -1));
+			if (line.startsWith(QLatin1String("\tURL=")))
+			{
+				const QUrl url(line.section(QLatin1Char('='), 1, -1));
 
-			if (!areDuplicatesAllowed() && BookmarksManager::hasBookmark(url))
-			{
-				bookmark->remove();
-				bookmark = nullptr;
-			}
-			else
-			{
-				bookmark->setData(url, BookmarksModel::UrlRole);
-			}
-		}
-		else if (line.startsWith(QLatin1String("\tNAME=")) && bookmark)
-		{
-			bookmark->setData(line.section(QLatin1Char('='), 1, -1), BookmarksModel::TitleRole);
-		}
-		else if (line.startsWith(QLatin1String("\tDESCRIPTION=")) && bookmark)
-		{
-			bookmark->setData(line.section(QLatin1Char('='), 1, -1).replace(QLatin1String("\x02\x02"), QLatin1String("\n")), BookmarksModel::DescriptionRole);
-		}
-		else if (line.startsWith(QLatin1String("\tSHORT NAME=")) && bookmark)
-		{
-			const QString keyword(line.section(QLatin1Char('='), 1, -1));
-
-			if (!BookmarksManager::hasKeyword(keyword))
-			{
-				bookmark->setData(keyword, BookmarksModel::KeywordRole);
-			}
-		}
-		else if (line.startsWith(QLatin1String("\tCREATED=")) && bookmark)
-		{
-			bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
-		}
-		else if (line.startsWith(QLatin1String("\tVISITED=")) && bookmark)
-		{
-			bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeVisitedRole);
-		}
-		else if (line.isEmpty())
-		{
-			if (bookmark)
-			{
-				if (type == FolderStartEntry)
+				if (!areDuplicatesAllowed() && BookmarksManager::hasBookmark(url))
 				{
-					setCurrentFolder(bookmark);
+					bookmark->remove();
+					bookmark = nullptr;
 				}
-
-				bookmark = nullptr;
+				else
+				{
+					bookmark->setData(url, BookmarksModel::UrlRole);
+				}
 			}
-			else if (type == FolderEndEntry)
+			else if (line.startsWith(QLatin1String("\tNAME=")))
 			{
-				goToParent();
+				bookmark->setData(line.section(QLatin1Char('='), 1, -1), BookmarksModel::TitleRole);
 			}
+			else if (line.startsWith(QLatin1String("\tDESCRIPTION=")))
+			{
+				bookmark->setData(line.section(QLatin1Char('='), 1, -1).replace(QLatin1String("\x02\x02"), QLatin1String("\n")), BookmarksModel::DescriptionRole);
+			}
+			else if (line.startsWith(QLatin1String("\tSHORT NAME=")))
+			{
+				const QString keyword(line.section(QLatin1Char('='), 1, -1));
 
-			type = NoEntry;
+				if (!BookmarksManager::hasKeyword(keyword))
+				{
+					bookmark->setData(keyword, BookmarksModel::KeywordRole);
+				}
+			}
+			else if (line.startsWith(QLatin1String("\tCREATED=")))
+			{
+				bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
+			}
+			else if (line.startsWith(QLatin1String("\tVISITED=")))
+			{
+				bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeVisitedRole);
+			}
 		}
 	}
 
