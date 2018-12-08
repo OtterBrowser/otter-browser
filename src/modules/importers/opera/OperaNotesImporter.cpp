@@ -215,7 +215,7 @@ bool OperaNotesImporter::import(const QString &path)
 
 			++totalAmount;
 		}
-		else if (line == QLatin1String("-"))
+		else if (line == QLatin1Char('-'))
 		{
 			type = FolderEndEntry;
 		}
