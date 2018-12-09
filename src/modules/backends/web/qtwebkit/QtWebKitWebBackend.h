@@ -87,11 +87,11 @@ class QtWebKitWebPageThumbnailJob final : public WebPageThumbnailJob
 public:
 	explicit QtWebKitWebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
 
-	bool isRunning() const;
+	bool isRunning() const override;
 
 public slots:
-	void start();
-	void cancel();
+	void start() override;
+	void cancel() override;
 
 protected slots:
 	void handlePageLoadFinished(bool result);
