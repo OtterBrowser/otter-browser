@@ -81,6 +81,7 @@ public:
 	static QVector<MainWindow*> getWindows();
 	static bool canClose();
 	static bool isAboutToQuit();
+	static bool isFirstRun();
 	static bool isHidden();
 	static bool isUpdating();
 	static bool isRunning();
@@ -117,6 +118,7 @@ private:
 	static QCommandLineParser m_commandLineParser;
 	static QVector<MainWindow*> m_windows;
 	static bool m_isAboutToQuit;
+	static bool m_isFirstRun;
 	static bool m_isHidden;
 	static bool m_isUpdating;
 

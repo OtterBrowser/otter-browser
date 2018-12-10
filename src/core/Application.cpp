@@ -91,6 +91,7 @@ QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
 QVector<MainWindow*> Application::m_windows;
 bool Application::m_isAboutToQuit(false);
+bool Application::m_isFirstRun(false);
 bool Application::m_isHidden(false);
 bool Application::m_isUpdating(false);
 
@@ -312,6 +313,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 		m_localServer->listen(server);
 	}
 
+	m_isFirstRun = !QFile::exists(profilePath);
+
 	Console::createInstance();
 
 	SettingsManager::createInstance(profilePath);
@@ -325,7 +328,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	if (!isReadOnly)
 	{
-		if (!QFile::exists(profilePath))
+		if (m_isFirstRun)
 		{
 			QDir().mkpath(profilePath);
 		}
@@ -1720,6 +1723,11 @@ bool Application::canClose()
 bool Application::isAboutToQuit()
 {
 	return (m_isAboutToQuit || closingDown());
+}
+
+bool Application::isFirstRun()
+{
+	return m_isFirstRun;
 }
 
 bool Application::isHidden()
