@@ -389,7 +389,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly);
 
-	if (!isReadOnly && !m_isFirstRun && !Migrator::run())
+	if (!isReadOnly && !Migrator::run())
 	{
 		m_isAboutToQuit = true;
 

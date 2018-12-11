@@ -20,6 +20,7 @@
 
 #include "Migrator.h"
 #include "ActionsManager.h"
+#include "Application.h"
 #include "IniSettings.h"
 #include "JsonSettings.h"
 #include "SessionsManager.h"
@@ -564,13 +565,13 @@ bool Migrator::run()
 	{
 		if (!processedMigrations.contains(availableMigrations.at(i)->getName()))
 		{
-			if (availableMigrations.at(i)->needsMigration())
+			if (Application::isFirstRun() || !availableMigrations.at(i)->needsMigration())
 			{
-				possibleMigrations.append(availableMigrations.at(i));
+				processedMigrations.append(availableMigrations.at(i)->getName());
 			}
 			else
 			{
-				processedMigrations.append(availableMigrations.at(i)->getName());
+				possibleMigrations.append(availableMigrations.at(i));
 			}
 		}
 	}
