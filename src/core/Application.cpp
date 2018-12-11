@@ -319,7 +319,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	SettingsManager::createInstance(profilePath);
 
-	if (!isReadOnly && !QFileInfo(profilePath).isWritable())
+	if (!isReadOnly && !m_isFirstRun && !QFileInfo(profilePath).isWritable())
 	{
 		QMessageBox::warning(nullptr, tr("Warning"), tr("Profile directory (%1) is not writable, application will be running in read-only mode.").arg(profilePath), QMessageBox::Close);
 
