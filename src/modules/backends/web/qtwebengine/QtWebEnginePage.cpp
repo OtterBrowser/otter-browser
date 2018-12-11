@@ -471,6 +471,11 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 		return false;
 	}
 
+	if (m_widget && requestedUrl().isEmpty())
+	{
+		m_widget->setRequestedUrl(url, false, true);
+	}
+
 	if (type == NavigationTypeReload && m_previousNavigationType == NavigationTypeFormSubmitted && SettingsManager::getOption(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool shouldCancelRequest(false);

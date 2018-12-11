@@ -684,7 +684,11 @@ void WebWidget::setRequestedUrl(const QUrl &url, bool isTyped, bool onlyUpdate)
 {
 	m_requestedUrl = url;
 
-	if (!onlyUpdate)
+	if (onlyUpdate)
+	{
+		emit urlChanged(url);
+	}
+	else
 	{
 		setUrl(url, isTyped);
 	}

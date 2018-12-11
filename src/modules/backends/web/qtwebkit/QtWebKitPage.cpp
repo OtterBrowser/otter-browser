@@ -582,6 +582,11 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 	{
 		if (m_widget && !isAnchorNavigation)
 		{
+			if (frame->url().isEmpty())
+			{
+				m_widget->setRequestedUrl(request.url(), false, true);
+			}
+
 			m_widget->handleNavigationRequest(request.url(), type);
 		}
 
