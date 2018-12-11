@@ -330,15 +330,7 @@ public:
 
 	bool needsMigration() const override
 	{
-		const QStringList sessions(SessionsManager::getSessions());
-		bool needsRename(QFile::exists(SettingsManager::getGlobalPath()) || QFile::exists(SettingsManager::getOverridePath()));
-
-		for (int i = 0; i < sessions.count(); ++i)
-		{
-			needsRename |= QFile::exists(SessionsManager::getSessionPath(sessions.at(i)));
-		}
-
-		return needsRename;
+		return (QFile::exists(SettingsManager::getGlobalPath()) || QFile::exists(SettingsManager::getOverridePath()));
 	}
 };
 
