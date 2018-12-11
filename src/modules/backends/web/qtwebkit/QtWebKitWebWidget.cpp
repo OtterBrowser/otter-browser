@@ -2876,7 +2876,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				break;
 			case QEvent::MouseButtonRelease:
-				if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
+				if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && !isScrollBar(mouseEvent->pos()) && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
 				{
 					return true;
 				}
