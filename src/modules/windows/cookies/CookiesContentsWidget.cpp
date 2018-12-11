@@ -392,7 +392,7 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void CookiesContentsWidget::updateActions()
 {
-	const QModelIndexList indexes(m_ui->cookiesViewWidget->selectionModel()->selectedIndexes());
+	const QModelIndexList indexes(m_ui->cookiesViewWidget->selectionModel() ? m_ui->cookiesViewWidget->selectionModel()->selectedIndexes() : QList<QModelIndex>());
 
 	m_ui->propertiesButton->setEnabled(false);
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
