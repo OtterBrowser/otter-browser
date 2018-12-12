@@ -111,7 +111,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 			break;
 		case QFtp::List:
-			if (m_files.count() == 1 && m_directories.isEmpty() && request().url().path().endsWith(m_files.first().name()))
+			if (m_directories.isEmpty() && ((m_files.count() == 1 && m_symlinks.isEmpty() && request().url().path().endsWith(m_files.first().name())) || (m_symlinks.count() == 1 && m_files.isEmpty() && request().url().path().endsWith(m_symlinks.first().name()))))
 			{
 				m_ftp->get(Utils::normalizeUrl(request().url()).path());
 			}
@@ -167,12 +167,24 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				const int iconSize(16 * qCeil(Application::getInstance()->devicePixelRatio()));
 				const QFileIconProvider iconProvider;
-				const QVector<QUrlInfo> entries(m_directories + m_files);
+				const QVector<QUrlInfo> entries(m_symlinks + m_directories + m_files);
 
 				for (int i = 0; i < entries.count(); ++i)
 				{
-					const QMimeType mimeType(entries.at(i).isDir() ? mimeDatabase.mimeTypeForName(QLatin1String("inode-directory")) : mimeDatabase.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
-					QString entryHtml(entryTemplate);
+					QMimeType mimeType;
+
+					if (entries.at(i).isSymLink())
+					{
+						mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
+					}
+					else if (entries.at(i).isDir())
+					{
+						mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode-directory"));
+					}
+					else
+					{
+						mimeType = mimeDatabase.mimeTypeForUrl(request().url().url() + entries.at(i).name());
+					}
 
 					if (!icons.contains(mimeType.name()))
 					{
@@ -182,7 +194,18 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 						if (icon.isNull())
 						{
-							icon = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
+							if (entries.at(i).isSymLink())
+							{
+								icon = ThemesManager::createIcon(QLatin1String("link"), false);
+							}
+							else if (entries.at(i).isDir())
+							{
+								icon = ThemesManager::createIcon(QLatin1String("inode-directory"), false);
+							}
+							else
+							{
+								icon = ThemesManager::createIcon(QLatin1String("unknown"), false);
+							}
 						}
 
 						icon.pixmap(iconSize, iconSize).save(&buffer, "PNG");
@@ -190,14 +213,29 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 						icons[mimeType.name()] = QString(byteArray.toBase64());
 					}
 
+					QString entryHtml(entryTemplate);
 					QHash<QString, QString> entryVariables;
 					entryVariables[QLatin1String("url")] = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + entries.at(i).name();
 					entryVariables[QLatin1String("icon")] = QStringLiteral("data:image/png;base64,%1").arg(icons[mimeType.name()]);
 					entryVariables[QLatin1String("mimeType")] = mimeType.name();
 					entryVariables[QLatin1String("name")] = entries.at(i).name();
 					entryVariables[QLatin1String("comment")] = mimeType.comment();
-					entryVariables[QLatin1String("size")] = (entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2));
+					entryVariables[QLatin1String("size")] = QString();
 					entryVariables[QLatin1String("lastModified")] = Utils::formatDateTime(entries.at(i).lastModified());
+
+					if (entries.at(i).isSymLink())
+					{
+						entryVariables[QLatin1String("class")] = QLatin1String("link");
+					}
+					else if (entries.at(i).isDir())
+					{
+						entryVariables[QLatin1String("class")] = QLatin1String("directory");
+					}
+					else
+					{
+						entryVariables[QLatin1String("class")] = QLatin1String("file");
+						entryVariables[QLatin1String("size")] = Utils::formatUnit(entries.at(i).size(), false, 2);
+					}
 
 					QHash<QString, QString>::iterator iterator;
 
@@ -247,7 +285,11 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 void QtWebKitFtpListingNetworkReply::addEntry(const QUrlInfo &entry)
 {
-	if (entry.isDir())
+	if (entry.isSymLink())
+	{
+		m_symlinks.append(entry);
+	}
+	else if (entry.isDir())
 	{
 		m_directories.append(entry);
 	}

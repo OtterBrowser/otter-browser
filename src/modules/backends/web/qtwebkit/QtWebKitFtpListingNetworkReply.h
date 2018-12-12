@@ -54,6 +54,7 @@ private:
 	QByteArray m_content;
 	QVector<QUrlInfo> m_directories;
 	QVector<QUrlInfo> m_files;
+	QVector<QUrlInfo> m_symlinks;
 	qint64 m_offset;
 
 signals:
