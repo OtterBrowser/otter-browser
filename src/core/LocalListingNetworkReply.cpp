@@ -144,8 +144,21 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		entryVariables[QLatin1String("mimeType")] = mimeType.name();
 		entryVariables[QLatin1String("name")] = entries.at(i).fileName();
 		entryVariables[QLatin1String("comment")] = mimeType.comment();
-		entryVariables[QLatin1String("size")] = (entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2));
 		entryVariables[QLatin1String("lastModified")] = Utils::formatDateTime(entries.at(i).lastModified());
+
+		if (entries.at(i).isSymLink())
+		{
+			entryVariables[QLatin1String("class")] = QLatin1String("link");
+		}
+		else if (entries.at(i).isDir())
+		{
+			entryVariables[QLatin1String("class")] = QLatin1String("directory");
+		}
+		else
+		{
+			entryVariables[QLatin1String("class")] = QLatin1String("file");
+			entryVariables[QLatin1String("size")] = Utils::formatUnit(entries.at(i).size(), false, 2);
+		}
 
 		QHash<QString, QString>::iterator iterator;
 
