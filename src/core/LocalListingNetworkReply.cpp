@@ -144,6 +144,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		entryVariables[QLatin1String("mimeType")] = mimeType.name();
 		entryVariables[QLatin1String("name")] = entries.at(i).fileName();
 		entryVariables[QLatin1String("comment")] = mimeType.comment();
+		entryVariables[QLatin1String("size")] = QString();
 		entryVariables[QLatin1String("lastModified")] = Utils::formatDateTime(entries.at(i).lastModified());
 
 		if (entries.at(i).isSymLink())
