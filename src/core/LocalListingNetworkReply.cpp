@@ -85,6 +85,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	QString entriesHtml;
 	QString specialEntriesHtml;
+	const QMimeDatabase mimeDatabase;
 	const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -119,7 +120,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		const QMimeType mimeType(QMimeDatabase().mimeTypeForFile(entries.at(i).canonicalFilePath()));
+		const QMimeType mimeType(mimeDatabase.mimeTypeForFile(entries.at(i).canonicalFilePath()));
 		QString entryHtml(entryTemplate);
 
 		if (!icons.contains(mimeType.name()))
