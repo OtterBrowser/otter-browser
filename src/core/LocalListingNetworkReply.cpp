@@ -169,7 +169,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 			entryHtml.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
 		}
 
-		if (entries.at(i).fileName() == QLatin1String("."))
+		if (entries.at(i).fileName() == QLatin1Char('.'))
 		{
 			specialEntriesHtml.prepend(entryHtml);
 		}
