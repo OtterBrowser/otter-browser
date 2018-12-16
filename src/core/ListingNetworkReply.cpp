@@ -34,7 +34,6 @@ namespace Otter
 ListingNetworkReply::ListingNetworkReply(const QNetworkRequest &request, QObject *parent) : QNetworkReply(parent)
 {
 	setRequest(request);
-	open(QIODevice::ReadOnly | QIODevice::Unbuffered);
 }
 
 QString ListingNetworkReply::parseTemplate(QString text, const QHash<QString, QString> &variables) const
@@ -79,27 +78,46 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 
 		if (!icons.contains(entry.mimeType.name()))
 		{
-			QFileIconProvider::IconType iconType(QFileIconProvider::File);
+			QIcon icon;
 
 			switch (entry.type)
 			{
 				case ListingEntry::DirectoryType:
-					iconType = QFileIconProvider::Folder;
+					icon = iconProvider.icon(QFileIconProvider::Folder);
 
 					break;
 				case ListingEntry::DriveType:
-					iconType = QFileIconProvider::Drive;
+					icon = iconProvider.icon(QFileIconProvider::Drive);
+
+					break;
+				case ListingEntry::FileType:
+					icon = iconProvider.icon(QFileIconProvider::File);
 
 					break;
 				default:
 					break;
 			}
 
-			QIcon icon(QIcon::fromTheme(entry.mimeType.iconName(), iconProvider.icon(iconType)));
+			icon = QIcon::fromTheme(entry.mimeType.iconName(), icon);
 
 			if (icon.isNull())
 			{
-				icon = ThemesManager::createIcon(((entry.type == ListingEntry::DirectoryType) ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
+				switch (entry.type)
+				{
+					case ListingEntry::DriveType:
+					case ListingEntry::DirectoryType:
+						icon = ThemesManager::createIcon(QLatin1String("inode-directory"), false);
+
+						break;
+					case ListingEntry::FileType:
+						icon = ThemesManager::createIcon(QLatin1String("unknown"), false);
+
+						break;
+					default:
+						icon = ThemesManager::createIcon((entry.isSymlink ? QLatin1String("link") : QLatin1String("unknown")), false);
+
+						break;
+				}
 			}
 
 			icons[entry.mimeType.name()] = icon;
