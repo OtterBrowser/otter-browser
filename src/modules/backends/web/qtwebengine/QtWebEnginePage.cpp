@@ -274,6 +274,11 @@ void QtWebEnginePage::setHistory(const WindowHistoryInformation &history)
 	this->history()->goToItem(this->history()->itemAt(history.index));
 }
 
+QtWebEngineWebWidget* QtWebEnginePage::getWebWidget() const
+{
+	return m_widget;
+}
+
 QWebEnginePage* QtWebEnginePage::createWindow(WebWindowType type)
 {
 	if (type != WebDialog)

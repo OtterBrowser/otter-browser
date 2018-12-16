@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebEngineWebBackend.h"
+#include "QtWebEnginePage.h"
 #include "QtWebEngineTransfer.h"
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "QtWebEngineWebWidget.h"
@@ -70,6 +71,17 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 		return;
 	}
 
+#if QTWEBENGINECORE_VERSION >= 0x050C00
+	QtWebEnginePage *page(qobject_cast<QtWebEnginePage*>(item->page()));
+
+	if (page && page->getWebWidget())
+	{
+		page->getWebWidget()->startTransfer(transfer);
+
+		return;
+	}
+#endif
+
 	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
 
 	switch (handler.transferMode)
@@ -104,7 +116,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 			break;
 		case HandlersManager::HandlerDefinition::SaveAsTransfer:
 			{
-			const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
+				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, {}, true).path);
 
 				if (path.isEmpty())
 				{
