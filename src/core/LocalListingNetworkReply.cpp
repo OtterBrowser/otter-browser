@@ -77,7 +77,6 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	QMimeDatabase mimeDatabase;
 	QVector<ListingEntry> entries;
-	QVector<ListingEntry> specialEntries;
 	QVector<NavigationEntry> navigation;
 #ifdef Q_OS_WIN32
 	const bool isListingDevices(request.url().toLocalFile() == QLatin1Char('/'));
@@ -115,6 +114,11 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	for (int i = 0; i < rawEntries.count(); ++i)
 	{
+		if (rawEntries.at(i).fileName() == QLatin1Char('.') || rawEntries.at(i).fileName() == QLatin1String(".."))
+		{
+			continue;
+		}
+
 		ListingEntry entry;
 		entry.name = rawEntries.at(i).fileName();
 		entry.url = QUrl::fromUserInput(rawEntries.at(i).filePath());
@@ -131,21 +135,10 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		}
 #endif
 
-		if (rawEntries.at(i).fileName() == QLatin1Char('.'))
-		{
-			specialEntries.prepend(entry);
-		}
-		else if (rawEntries.at(i).fileName() == QLatin1String(".."))
-		{
-			specialEntries.append(entry);
-		}
-		else
-		{
-			entries.append(entry);
-		}
+		entries.append(entry);
 	}
 
-	m_content = createListing(QFileInfo(request.url().toLocalFile()).canonicalFilePath(), navigation, (specialEntries + entries));
+	m_content = createListing(QFileInfo(request.url().toLocalFile()).canonicalFilePath(), navigation, entries);
 
 	setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 	setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
