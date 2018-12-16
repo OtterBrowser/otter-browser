@@ -21,16 +21,14 @@
 #ifndef OTTER_QTWEBKITFTPLISTINGNETWORKREPLY_H
 #define OTTER_QTWEBKITFTPLISTINGNETWORKREPLY_H
 
+#include "../../../../core/ListingNetworkReply.h"
 #include "3rdparty/qtftp/qftp.h"
 #include "3rdparty/qtftp/qurlinfo.h"
-
-#include <QtCore/QUrl>
-#include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {
 
-class QtWebKitFtpListingNetworkReply final : public QNetworkReply
+class QtWebKitFtpListingNetworkReply final : public ListingNetworkReply
 {
 	Q_OBJECT
 

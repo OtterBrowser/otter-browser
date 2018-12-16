@@ -19,27 +19,18 @@
 **************************************************************************/
 
 #include "QtWebKitFtpListingNetworkReply.h"
-#include "../../../../core/Application.h"
-#include "../../../../core/SessionsManager.h"
-#include "../../../../core/ThemesManager.h"
 #include "../../../../core/Utils.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QFile>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QtMath>
-#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
 
-QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkRequest &request, QObject *parent) : QNetworkReply(parent),
+QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkRequest &request, QObject *parent) : ListingNetworkReply(request, parent),
 	m_ftp(new QFtp(this)),
 	m_offset(0)
 {
-	setRequest(request);
-
 	connect(m_ftp, &QFtp::listInfo, this, &QtWebKitFtpListingNetworkReply::addEntry);
 	connect(m_ftp, &QFtp::readyRead, this, &QtWebKitFtpListingNetworkReply::processData);
 	connect(m_ftp, &QFtp::commandFinished, this, &QtWebKitFtpListingNetworkReply::processCommand);
@@ -119,19 +110,11 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 			{
 				open(ReadOnly | Unbuffered);
 
-				QString entriesHtml;
-				const QMimeDatabase mimeDatabase;
-				const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-				QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
-				file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-				QTextStream stream(&file);
-				stream.setCodec("UTF-8");
-
-				QString mainTemplate(stream.readAll());
-				const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
 				QUrl url(request().url());
-				QStringList navigation;
+				QMimeDatabase mimeDatabase;
+				QVector<ListingEntry> entries;
+				QVector<NavigationEntry> navigation;
+				const QVector<QUrlInfo> rawEntries(m_symlinks + m_directories + m_files);
 
 				if (url.path().isEmpty())
 				{
@@ -144,7 +127,11 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 					url = url.adjusted(QUrl::StripTrailingSlash);
 
-					navigation.prepend(QStringLiteral("<a href=\"%1\">%2</a>").arg(url.url()).arg(isRoot ? url.toString() : url.fileName() + QLatin1Char('/')));
+					NavigationEntry entry;
+					entry.name = (isRoot ? url.toString() : url.fileName() + QLatin1Char('/'));
+					entry.url = url.url();
+
+					navigation.prepend(entry);
 
 					if (isRoot)
 					{
@@ -154,109 +141,33 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 					url = url.adjusted(QUrl::RemoveFilename);
 				}
 
-				QHash<QString, QString> icons;
-				QHash<QString, QString> variables;
-				variables[QLatin1String("title")] = request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QChar() : QLatin1Char('/'));
-				variables[QLatin1String("description")] = tr("Directory Contents");
-				variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-				variables[QLatin1String("navigation")] = navigation.join(QLatin1String("&shy;"));
-				variables[QLatin1String("headerName")] = tr("Name");
-				variables[QLatin1String("headerType")] = tr("Type");
-				variables[QLatin1String("headerSize")] = tr("Size");
-				variables[QLatin1String("headerDate")] = tr("Date");
-
-				const int iconSize(16 * qCeil(Application::getInstance()->devicePixelRatio()));
-				const QFileIconProvider iconProvider;
-				const QVector<QUrlInfo> entries(m_symlinks + m_directories + m_files);
-
-				for (int i = 0; i < entries.count(); ++i)
+				for (int i = 0; i < rawEntries.count(); ++i)
 				{
-					QMimeType mimeType;
+					ListingEntry entry;
+					entry.name = rawEntries.at(i).name();
+					entry.url = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + rawEntries.at(i).name();
+					entry.timeModified = rawEntries.at(i).lastModified();
+					entry.type = (rawEntries.at(i).isSymLink() ? ListingEntry::UnknownType : (rawEntries.at(i).isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
+					entry.size = rawEntries.at(i).size();
+					entry.isSymlink = rawEntries.at(i).isSymLink();
 
-					if (entries.at(i).isSymLink())
+					if (rawEntries.at(i).isSymLink())
 					{
-						mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
+						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("text/uri-list"));
 					}
-					else if (entries.at(i).isDir())
+					else if (rawEntries.at(i).isDir())
 					{
-						mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode-directory"));
+						entry.mimeType = mimeDatabase.mimeTypeForName(QLatin1String("inode/directory"));
 					}
 					else
 					{
-						mimeType = mimeDatabase.mimeTypeForUrl(request().url().url() + entries.at(i).name());
+						entry.mimeType = mimeDatabase.mimeTypeForUrl(request().url().url() + rawEntries.at(i).name());
 					}
 
-					if (!icons.contains(mimeType.name()))
-					{
-						QByteArray byteArray;
-						QBuffer buffer(&byteArray);
-						QIcon icon(QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i).isDir() ? QFileIconProvider::Folder : QFileIconProvider::File)));
-
-						if (icon.isNull())
-						{
-							if (entries.at(i).isSymLink())
-							{
-								icon = ThemesManager::createIcon(QLatin1String("link"), false);
-							}
-							else if (entries.at(i).isDir())
-							{
-								icon = ThemesManager::createIcon(QLatin1String("inode-directory"), false);
-							}
-							else
-							{
-								icon = ThemesManager::createIcon(QLatin1String("unknown"), false);
-							}
-						}
-
-						icon.pixmap(iconSize, iconSize).save(&buffer, "PNG");
-
-						icons[mimeType.name()] = QString(byteArray.toBase64());
-					}
-
-					QString entryHtml(entryTemplate);
-					QHash<QString, QString> entryVariables;
-					entryVariables[QLatin1String("url")] = Utils::normalizeUrl(request().url()).url() + QLatin1Char('/') + entries.at(i).name();
-					entryVariables[QLatin1String("icon")] = QStringLiteral("data:image/png;base64,%1").arg(icons[mimeType.name()]);
-					entryVariables[QLatin1String("mimeType")] = mimeType.name();
-					entryVariables[QLatin1String("name")] = entries.at(i).name();
-					entryVariables[QLatin1String("comment")] = mimeType.comment();
-					entryVariables[QLatin1String("size")] = QString();
-					entryVariables[QLatin1String("lastModified")] = Utils::formatDateTime(entries.at(i).lastModified());
-
-					if (entries.at(i).isSymLink())
-					{
-						entryVariables[QLatin1String("class")] = QLatin1String("link");
-					}
-					else if (entries.at(i).isDir())
-					{
-						entryVariables[QLatin1String("class")] = QLatin1String("directory");
-					}
-					else
-					{
-						entryVariables[QLatin1String("class")] = QLatin1String("file");
-						entryVariables[QLatin1String("size")] = Utils::formatUnit(entries.at(i).size(), false, 2);
-					}
-
-					QHash<QString, QString>::iterator iterator;
-
-					for (iterator = entryVariables.begin(); iterator != entryVariables.end(); ++iterator)
-					{
-						entryHtml.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-					}
-
-					entriesHtml.append(entryHtml);
+					entries.append(entry);
 				}
 
-				mainTemplate.replace(entryExpression, entriesHtml);
-
-				QHash<QString, QString>::iterator iterator;
-
-				for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-				{
-					mainTemplate.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-				}
-
-				m_content = mainTemplate.toUtf8();
+				m_content = createListing(request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QChar() : QLatin1Char('/')), navigation, entries);
 
 				setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 				setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
