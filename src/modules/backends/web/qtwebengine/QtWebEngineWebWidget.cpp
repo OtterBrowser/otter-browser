@@ -48,6 +48,9 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
+#if QTWEBENGINECORE_VERSION >= 0x050C00
+#include <QtPrintSupport/QPrintPreviewDialog>
+#endif
 #include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
@@ -91,6 +94,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::requestedNewWindow, this, &QtWebEngineWebWidget::requestedNewWindow);
 	connect(m_page, &QtWebEnginePage::authenticationRequired, this, &QtWebEngineWebWidget::handleAuthenticationRequired);
 	connect(m_page, &QtWebEnginePage::proxyAuthenticationRequired, this, &QtWebEngineWebWidget::handleProxyAuthenticationRequired);
+#if QTWEBENGINECORE_VERSION >= 0x050C00
+	connect(m_page, &QtWebEnginePage::printRequested, this, &QtWebEngineWebWidget::handlePrintRequest);
+#endif
 	connect(m_page, &QtWebEnginePage::windowCloseRequested, this, &QtWebEngineWebWidget::handleWindowCloseRequest);
 	connect(m_page, &QtWebEnginePage::fullScreenRequested, this, &QtWebEngineWebWidget::handleFullScreenRequest);
 	connect(m_page, &QtWebEnginePage::featurePermissionRequested, [&](const QUrl &url, QWebEnginePage::Feature feature)
@@ -1014,6 +1020,34 @@ void QtWebEngineWebWidget::handleViewSourceReplyFinished()
 		reply->deleteLater();
 	}
 }
+
+#if QTWEBENGINECORE_VERSION >= 0x050C00
+void QtWebEngineWebWidget::handlePrintRequest()
+{
+	QPrintPreviewDialog printPreviewDialog(this);
+	printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+	printPreviewDialog.setWindowTitle(tr("Print Preview"));
+
+	if (Application::getActiveWindow())
+	{
+		printPreviewDialog.resize(Application::getActiveWindow()->size());
+	}
+
+	connect(&printPreviewDialog, &QPrintPreviewDialog::paintRequested, this, [&](QPrinter *printer)
+	{
+		QEventLoop eventLoop;
+
+		m_page->print(printer, [&](bool)
+		{
+			eventLoop.quit();
+		});
+
+		eventLoop.exec();
+	});
+
+	printPreviewDialog.exec();
+}
+#endif
 
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {

@@ -146,6 +146,9 @@ protected slots:
 	void handleLoadStarted();
 	void handleLoadFinished();
 	void handleViewSourceReplyFinished();
+#if QTWEBENGINECORE_VERSION >= 0x050C00
+	void handlePrintRequest();
+#endif
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
 	void handleFullScreenRequest(QWebEngineFullScreenRequest request);
