@@ -522,7 +522,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 
 		if (type != NavigationTypeBackForward)
 		{
-			m_history.resize(history()->currentItemIndex());
+			m_history.resize(qMax(0, history()->currentItemIndex()));
 
 			HistoryEntryInformation entry;
 			entry.icon = icon();
