@@ -19,25 +19,17 @@
 **************************************************************************/
 
 #include "LocalListingNetworkReply.h"
-#include "Application.h"
-#include "SessionsManager.h"
-#include "ThemesManager.h"
 #include "Utils.h"
 
-#include <QtCore/QBuffer>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
-#include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
-#include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
-#include <QtCore/QtMath>
-#include <QtGui/QIcon>
-#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
 
-LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &request, QObject *parent) : QNetworkReply(parent),
+LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &request, QObject *parent) : ListingNetworkReply(request, parent),
 	m_offset(0)
 {
 	setRequest(request);
@@ -83,118 +75,48 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		return;
 	}
 
-	QString entriesHtml;
-	QString specialEntriesHtml;
-	const QMimeDatabase mimeDatabase;
-	const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
-	file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-
-	QString mainTemplate(stream.readAll());
-	const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
-	const QFileInfoList entries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
-	QStringList navigation;
+	QMimeDatabase mimeDatabase;
+	QVector<ListingEntry> entries;
+	QVector<ListingEntry> specialEntries;
+	QVector<NavigationEntry> navigation;
+	const QFileInfoList rawEntries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
 
 	do
 	{
-		navigation.prepend(QStringLiteral("<a href=\"%1\">%2</a>").arg(QUrl::fromUserInput(directory.canonicalPath()).toString()).arg((directory.isRoot() ? QLatin1String("file://") : QString()) + directory.dirName() + QLatin1Char('/')));
+		NavigationEntry entry;
+		entry.name = ((directory.isRoot() ? QLatin1String("file://") : QString()) + directory.dirName() + QLatin1Char('/'));
+		entry.url = QUrl::fromUserInput(directory.canonicalPath()).toString();
+
+		navigation.prepend(entry);
 	}
 	while (directory.cdUp());
 
-	QHash<QString, QString> icons;
-	QHash<QString, QString> variables;
-	variables[QLatin1String("title")] = QFileInfo(request.url().toLocalFile()).canonicalFilePath();
-	variables[QLatin1String("description")] = tr("Directory Contents");
-	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-	variables[QLatin1String("navigation")] = navigation.join(QLatin1String("&shy;"));
-	variables[QLatin1String("headerName")] = tr("Name");
-	variables[QLatin1String("headerType")] = tr("Type");
-	variables[QLatin1String("headerSize")] = tr("Size");
-	variables[QLatin1String("headerDate")] = tr("Date");
-
-	const int iconSize(16 * qCeil(Application::getInstance()->devicePixelRatio()));
-	const QFileIconProvider iconProvider;
-
-	for (int i = 0; i < entries.count(); ++i)
+	for (int i = 0; i < rawEntries.count(); ++i)
 	{
-		const QMimeType mimeType(mimeDatabase.mimeTypeForFile(entries.at(i).canonicalFilePath()));
-		QString entryHtml(entryTemplate);
+		ListingEntry entry;
+		entry.name = rawEntries.at(i).fileName();
+		entry.url = QUrl::fromUserInput(rawEntries.at(i).filePath());
+		entry.timeModified = rawEntries.at(i).lastModified();
+		entry.mimeType = mimeDatabase.mimeTypeForFile(rawEntries.at(i).filePath());
+		entry.type = (rawEntries.at(i).isRoot() ? ListingEntry::DriveType : (rawEntries.at(i).isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
+		entry.size = rawEntries.at(i).size();
+		entry.isSymlink = rawEntries.at(i).isSymLink();
 
-		if (!icons.contains(mimeType.name()))
+		if (rawEntries.at(i).fileName() == QLatin1Char('.'))
 		{
-			QByteArray byteArray;
-			QBuffer buffer(&byteArray);
-			QIcon icon(QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))));
-
-			if (icon.isNull())
-			{
-				icon = ThemesManager::createIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
-			}
-
-			icon.pixmap(iconSize, iconSize).save(&buffer, "PNG");
-
-			icons[mimeType.name()] = QString(byteArray.toBase64());
+			specialEntries.prepend(entry);
 		}
-
-		QHash<QString, QString> entryVariables;
-		entryVariables[QLatin1String("url")] = QUrl::fromUserInput(entries.at(i).filePath()).toString();
-		entryVariables[QLatin1String("icon")] = QStringLiteral("data:image/png;base64,%1").arg(icons[mimeType.name()]);
-		entryVariables[QLatin1String("mimeType")] = mimeType.name();
-		entryVariables[QLatin1String("name")] = entries.at(i).fileName();
-		entryVariables[QLatin1String("comment")] = mimeType.comment();
-		entryVariables[QLatin1String("size")] = QString();
-		entryVariables[QLatin1String("lastModified")] = Utils::formatDateTime(entries.at(i).lastModified());
-
-		if (entries.at(i).isSymLink())
+		else if (rawEntries.at(i).fileName() == QLatin1String(".."))
 		{
-			entryVariables[QLatin1String("class")] = QLatin1String("link");
-		}
-		else if (entries.at(i).isDir())
-		{
-			entryVariables[QLatin1String("class")] = QLatin1String("directory");
+			specialEntries.append(entry);
 		}
 		else
 		{
-			entryVariables[QLatin1String("class")] = QLatin1String("file");
-			entryVariables[QLatin1String("size")] = Utils::formatUnit(entries.at(i).size(), false, 2);
-		}
-
-		QHash<QString, QString>::iterator iterator;
-
-		for (iterator = entryVariables.begin(); iterator != entryVariables.end(); ++iterator)
-		{
-			entryHtml.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-		}
-
-		if (entries.at(i).fileName() == QLatin1Char('.'))
-		{
-			specialEntriesHtml.prepend(entryHtml);
-		}
-		else if (entries.at(i).fileName() == QLatin1String(".."))
-		{
-			specialEntriesHtml.append(entryHtml);
-		}
-		else
-		{
-			entriesHtml.append(entryHtml);
+			entries.append(entry);
 		}
 	}
 
-	entriesHtml.prepend(specialEntriesHtml);
-
-	mainTemplate.replace(entryExpression, entriesHtml);
-
-	QHash<QString, QString>::iterator iterator;
-
-	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-	{
-		mainTemplate.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-	}
-
-	m_content = mainTemplate.toUtf8();
+	m_content = createListing(QFileInfo(request.url().toLocalFile()).canonicalFilePath(), navigation, (specialEntries + entries));
 
 	setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 	setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));

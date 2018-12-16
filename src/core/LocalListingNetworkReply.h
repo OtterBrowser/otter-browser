@@ -21,13 +21,12 @@
 #ifndef OTTER_LOCALLISTINGNETWORKREPLY_H
 #define OTTER_LOCALLISTINGNETWORKREPLY_H
 
-#include <QtCore/QUrl>
-#include <QtNetwork/QNetworkReply>
+#include "ListingNetworkReply.h"
 
 namespace Otter
 {
 
-class LocalListingNetworkReply final : public QNetworkReply
+class LocalListingNetworkReply final : public ListingNetworkReply
 {
 	Q_OBJECT
 
