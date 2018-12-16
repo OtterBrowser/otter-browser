@@ -412,7 +412,7 @@ WindowHistoryInformation QtWebEnginePage::getHistory() const
 		const QWebEngineHistoryItem item(history()->itemAt(i));
 		const HistoryEntryInformation entryInformation(m_history.value(i));
 		WindowHistoryEntry entry;
-		entry.url = item.url().toString();
+		entry.url = ((item.url().toString() == QLatin1String("about:blank")) ? item.originalUrl() : item.url()).toString();
 		entry.title = item.title();
 
 		if (entryInformation.isValid)
