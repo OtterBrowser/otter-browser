@@ -79,17 +79,39 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 	QVector<ListingEntry> entries;
 	QVector<ListingEntry> specialEntries;
 	QVector<NavigationEntry> navigation;
+#ifdef Q_OS_WIN32
+	const bool isListingDevices(request.url().toLocalFile() == QLatin1Char('/'));
+	const QFileInfoList rawEntries(isListingDevices ? QDir::drives() : directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
+#else
 	const QFileInfoList rawEntries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
+#endif
 
 	do
 	{
 		NavigationEntry entry;
+#ifdef Q_OS_WIN32
+		entry.name = (directory.isRoot() ? directory.canonicalPath() : directory.dirName() + QLatin1Char('/'));
+#else
 		entry.name = ((directory.isRoot() ? QLatin1String("file://") : QString()) + directory.dirName() + QLatin1Char('/'));
+#endif
 		entry.url = QUrl::fromUserInput(directory.canonicalPath()).toString();
 
 		navigation.prepend(entry);
 	}
 	while (directory.cdUp());
+
+#ifdef Q_OS_WIN32
+	if (isListingDevices)
+	{
+		navigation.clear();
+	}
+
+	NavigationEntry entry;
+	entry.name = QLatin1String("file:///");
+	entry.url = QUrl::fromUserInput(QLatin1String("/"));
+
+	navigation.prepend(entry);
+#endif
 
 	for (int i = 0; i < rawEntries.count(); ++i)
 	{
@@ -101,6 +123,13 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		entry.type = (rawEntries.at(i).isRoot() ? ListingEntry::DriveType : (rawEntries.at(i).isDir() ? ListingEntry::DirectoryType : ListingEntry::FileType));
 		entry.size = rawEntries.at(i).size();
 		entry.isSymlink = rawEntries.at(i).isSymLink();
+
+#ifdef Q_OS_WIN32
+		if (isListingDevices)
+		{
+			entry.name = rawEntries.at(i).filePath().remove(QLatin1Char('/'));
+		}
+#endif
 
 		if (rawEntries.at(i).fileName() == QLatin1Char('.'))
 		{
