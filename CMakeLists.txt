@@ -118,6 +118,7 @@ set(otter_src
 	src/core/ItemModel.cpp
 	src/core/Job.cpp
 	src/core/JsonSettings.cpp
+	src/core/ListingNetworkReply.cpp
 	src/core/LocalListingNetworkReply.cpp
 	src/core/LongTermTimer.cpp
 	src/core/Migrator.cpp

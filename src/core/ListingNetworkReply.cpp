@@ -1,0 +1,167 @@
+/**************************************************************************
+* Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+**************************************************************************/
+
+#include "ListingNetworkReply.h"
+#include "Application.h"
+#include "SessionsManager.h"
+#include "ThemesManager.h"
+#include "Utils.h"
+
+#include <QtCore/QBuffer>
+#include <QtCore/QRegularExpression>
+#include <QtCore/QtMath>
+#include <QtWidgets/QFileIconProvider>
+
+namespace Otter
+{
+
+ListingNetworkReply::ListingNetworkReply(const QNetworkRequest &request, QObject *parent) : QNetworkReply(parent)
+{
+	setRequest(request);
+	open(QIODevice::ReadOnly | QIODevice::Unbuffered);
+}
+
+QString ListingNetworkReply::parseTemplate(QString text, const QHash<QString, QString> &variables) const
+{
+	QHash<QString, QString>::const_iterator iterator;
+
+	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
+	{
+		text.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
+	}
+
+	return text;
+}
+
+QByteArray ListingNetworkReply::createListing(const QString &title, const QVector<ListingNetworkReply::NavigationEntry> &navigation, const QVector<ListingNetworkReply::ListingEntry> &entries)
+{
+	const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
+	file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
+
+	QString navigationHtml;
+	QString entriesHtml;
+	QString listingTemplate(stream.readAll());
+	const QString entryTemplate(entryExpression.match(listingTemplate).captured(1));
+
+	listingTemplate.replace(entryExpression, QLatin1String("{entries}"));
+
+	for (int i = 0; i < navigation.count(); ++i)
+	{
+		navigationHtml.append(QStringLiteral("<a href=\"%1\">%2</a>").arg(navigation[i].url.toString()).arg(navigation[i].name) + ((i < (navigation.count() - 1)) ? QLatin1String("&shy;") : QString()));
+	}
+
+	QHash<QString, QIcon> icons;
+	const QFileIconProvider iconProvider;
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		const ListingEntry entry(entries.at(i));
+
+		if (!icons.contains(entry.mimeType.name()))
+		{
+			QFileIconProvider::IconType iconType(QFileIconProvider::File);
+
+			switch (entry.type)
+			{
+				case ListingEntry::DirectoryType:
+					iconType = QFileIconProvider::Folder;
+
+					break;
+				case ListingEntry::DriveType:
+					iconType = QFileIconProvider::Drive;
+
+					break;
+				default:
+					break;
+			}
+
+			QIcon icon(QIcon::fromTheme(entry.mimeType.iconName(), iconProvider.icon(iconType)));
+
+			if (icon.isNull())
+			{
+				icon = ThemesManager::createIcon(((entry.type == ListingEntry::DirectoryType) ? QLatin1String("inode-directory") : QLatin1String("unknown")), false);
+			}
+
+			icons[entry.mimeType.name()] = icon;
+		}
+
+		QStringList classes;
+
+		if (entry.type == ListingEntry::DirectoryType || entry.type == ListingEntry::FileType)
+		{
+			classes.append(QLatin1String("directory"));
+		}
+		else
+		{
+			classes.append(QLatin1String("file"));
+		}
+
+		if (entry.isSymlink)
+		{
+			classes.append(QLatin1String("link"));
+		}
+
+		classes.append(QLatin1String("icon_") + Utils::createIdentifier(entry.mimeType.name()));
+
+		QHash<QString, QString> variables;
+		variables[QLatin1String("class")] = classes.join(QLatin1Char(' '));
+		variables[QLatin1String("url")] = entry.url.toString().toHtmlEscaped();
+		variables[QLatin1String("mimeType")] = entry.mimeType.name().toHtmlEscaped();
+		variables[QLatin1String("name")] = entry.name.toHtmlEscaped();
+		variables[QLatin1String("comment")] = entry.mimeType.comment().toHtmlEscaped();
+		variables[QLatin1String("size")] = ((entry.type == ListingEntry::FileType) ? Utils::formatUnit(entry.size, false, 2) : QString());
+		variables[QLatin1String("lastModified")] = Utils::formatDateTime(entry.timeModified).toHtmlEscaped();
+
+		entriesHtml.append(parseTemplate(entryTemplate, variables));
+	}
+
+	QString styleHtml;
+	const int iconSize(16 * qCeil(Application::getInstance()->devicePixelRatio()));
+	QHash<QString, QIcon>::iterator iterator;
+
+	for (iterator = icons.begin(); iterator != icons.end(); ++iterator)
+	{
+		QByteArray byteArray;
+		QBuffer buffer(&byteArray);
+
+		iterator.value().pixmap(iconSize, iconSize).save(&buffer, "PNG");
+
+		styleHtml.append(QStringLiteral("tr td:first-child.icon_%1\n{\n\tbackground-image:url(\"data:image/png;base64,%2\");\n}\n").arg(Utils::createIdentifier(iterator.key())).arg(QString(byteArray.toBase64())));
+	}
+
+	QHash<QString, QString> variables;
+	variables[QLatin1String("title")] = title.toHtmlEscaped();
+	variables[QLatin1String("description")] = tr("Directory Contents").toHtmlEscaped();
+	variables[QLatin1String("dir")] = (Application::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
+	variables[QLatin1String("style")] = styleHtml;
+	variables[QLatin1String("navigation")] = navigationHtml;
+	variables[QLatin1String("entries")] = entriesHtml;
+	variables[QLatin1String("headerName")] = tr("Name").toHtmlEscaped();
+	variables[QLatin1String("headerType")] = tr("Type").toHtmlEscaped();
+	variables[QLatin1String("headerSize")] = tr("Size").toHtmlEscaped();
+	variables[QLatin1String("headerDate")] = tr("Date").toHtmlEscaped();
+
+	return parseTemplate(listingTemplate, variables).toUtf8();
+}
+
+}
