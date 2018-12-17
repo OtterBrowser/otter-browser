@@ -291,6 +291,8 @@ void NetworkManagerFactory::loadProxies()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
+		m_proxyFactory->setProxy(SettingsManager::getOption(SettingsManager::Network_ProxyOption).toString());
+
 		return;
 	}
 
@@ -307,6 +309,8 @@ void NetworkManagerFactory::loadProxies()
 	m_proxies[QLatin1String("root")] = root;
 
 	updateProxiesOption();
+
+	m_proxyFactory->setProxy(SettingsManager::getOption(SettingsManager::Network_ProxyOption).toString());
 }
 
 void NetworkManagerFactory::loadUserAgents()
