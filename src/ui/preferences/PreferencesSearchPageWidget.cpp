@@ -164,15 +164,7 @@ void PreferencesSearchPageWidget::changeEvent(QEvent *event)
 
 void PreferencesSearchPageWidget::createSearchEngine()
 {
-	const QString identifier(Utils::createIdentifier(QString(), m_searchEngines.keys()));
-
-	if (identifier.isEmpty())
-	{
-		return;
-	}
-
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
-	searchEngine.identifier = identifier;
 	searchEngine.title = tr("New Search Engine");
 	searchEngine.icon = ThemesManager::createIcon(QLatin1String("edit-find"));
 
@@ -184,8 +176,9 @@ void PreferencesSearchPageWidget::createSearchEngine()
 	}
 
 	searchEngine = dialog.getSearchEngine();
+	searchEngine.identifier = searchEngine.createIdentifier(m_searchEngines.keys());
 
-	m_searchEngines[identifier] = {true, searchEngine};
+	m_searchEngines[searchEngine.identifier] = {true, searchEngine};
 
 	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
