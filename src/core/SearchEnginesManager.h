@@ -65,9 +65,9 @@ public:
 		SearchUrl suggestionsUrl;
 		QIcon icon;
 
-		QString createIdentifier() const
+		QString createIdentifier(const QStringList &exclude = {}) const
 		{
-			return Utils::createIdentifier(QUrl(resultsUrl.url).host(), SearchEnginesManager::getSearchEngines());
+			return Utils::createIdentifier(QUrl(resultsUrl.url).host(), (exclude.isEmpty() ? SearchEnginesManager::getSearchEngines() : exclude));
 		}
 
 		bool isValid() const
