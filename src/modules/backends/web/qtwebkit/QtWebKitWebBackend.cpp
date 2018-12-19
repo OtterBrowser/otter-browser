@@ -38,7 +38,7 @@ namespace Otter
 
 QtWebKitWebBackend* QtWebKitWebBackend::m_instance(nullptr);
 QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget(nullptr);
-QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
+QHash<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 int QtWebKitWebBackend::m_enableMediaOption(-1);
 int QtWebKitWebBackend::m_enableMediaSourceOption(-1);
@@ -216,13 +216,7 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 			return (m_userAgents[pattern].isEmpty() ? pattern : m_userAgents[pattern]);
 		}
 
-		QString userAgent(pattern);
-		QMap<QString, QString>::iterator iterator;
-
-		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
-		{
-			userAgent = userAgent.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-		}
+		const QString userAgent(Utils::substitutePlaceholders(pattern, m_userAgentComponents));
 
 		m_userAgents[pattern] = ((pattern == userAgent) ? QString() : userAgent);
 

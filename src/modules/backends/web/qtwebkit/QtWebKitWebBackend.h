@@ -68,7 +68,7 @@ private:
 
 	static QtWebKitWebBackend* m_instance;
 	static QPointer<WebWidget> m_activeWidget;
-	static QMap<QString, QString> m_userAgentComponents;
+	static QHash<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
 	static int m_enableMediaOption;
 	static int m_enableMediaSourceOption;

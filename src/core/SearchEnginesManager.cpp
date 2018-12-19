@@ -204,12 +204,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 
 	for (int i = 0; i < parameters.count(); ++i)
 	{
-		QString value(parameters.at(i).second);
-
-		for (iterator = values.constBegin(); iterator != values.constEnd(); ++iterator)
-		{
-			value = value.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-		}
+		const QString value(Utils::substitutePlaceholders(parameters.at(i).second, values));
 
 		if (*method == QNetworkAccessManager::GetOperation)
 		{

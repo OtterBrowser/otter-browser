@@ -60,7 +60,7 @@ private:
 	bool m_isInitialized;
 
 	static QString m_engineVersion;
-	static QMap<QString, QString> m_userAgentComponents;
+	static QHash<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
 
 friend class QtWebEnginePage;
