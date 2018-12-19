@@ -36,18 +36,6 @@ ListingNetworkReply::ListingNetworkReply(const QNetworkRequest &request, QObject
 	setRequest(request);
 }
 
-QString ListingNetworkReply::parseTemplate(QString text, const QHash<QString, QString> &variables) const
-{
-	QHash<QString, QString>::const_iterator iterator;
-
-	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-	{
-		text.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
-	}
-
-	return text;
-}
-
 QByteArray ListingNetworkReply::createListing(const QString &title, const QVector<ListingNetworkReply::NavigationEntry> &navigation, const QVector<ListingNetworkReply::ListingEntry> &entries)
 {
 	const QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
@@ -150,7 +138,7 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 		variables[QLatin1String("size")] = ((entry.type == ListingEntry::FileType) ? Utils::formatUnit(entry.size, false, 2) : QString());
 		variables[QLatin1String("lastModified")] = Utils::formatDateTime(entry.timeModified).toHtmlEscaped();
 
-		entriesHtml.append(parseTemplate(entryTemplate, variables));
+		entriesHtml.append(Utils::substitutePlaceholders(entryTemplate, variables));
 	}
 
 	QString styleHtml;
@@ -179,7 +167,7 @@ QByteArray ListingNetworkReply::createListing(const QString &title, const QVecto
 	variables[QLatin1String("headerSize")] = tr("Size").toHtmlEscaped();
 	variables[QLatin1String("headerDate")] = tr("Date").toHtmlEscaped();
 
-	return parseTemplate(listingTemplate, variables).toUtf8();
+	return Utils::substitutePlaceholders(listingTemplate, variables).toUtf8();
 }
 
 }

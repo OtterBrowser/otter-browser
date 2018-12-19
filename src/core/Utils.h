@@ -96,6 +96,7 @@ QString matchUrl(const QUrl &url, const QString &prefix);
 QString createIdentifier(const QString &source, const QStringList &exclude = {}, bool toLowerCase = true);
 QString createErrorPage(const ErrorPageInformation &information);
 QString elideText(const QString &text, const QFontMetrics &fontMetrics, QWidget *widget = nullptr, int maximumWidth = -1, int minimumWidth = 100);
+QString substitutePlaceholders(QString text, const QHash<QString, QString> &placeholders);
 QString savePixmapAsDataUri(const QPixmap &pixmap);
 QString extractHost(const QUrl &url);
 QString formatElapsedTime(int value);

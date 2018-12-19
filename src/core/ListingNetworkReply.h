@@ -60,7 +60,6 @@ protected:
 		bool isSymlink = false;
 	};
 
-	QString parseTemplate(QString text, const QHash<QString, QString> &variables) const;
 	QByteArray createListing(const QString &title, const QVector<NavigationEntry> &navigation, const QVector<ListingEntry> &entries);
 
 signals:

@@ -371,6 +371,18 @@ QString elideText(const QString &text, const QFontMetrics &fontMetrics, QWidget 
 	return fontMetrics.elidedText(text, Qt::ElideRight, qMax(minimumWidth, maximumWidth));
 }
 
+QString substitutePlaceholders(QString text, const QHash<QString, QString> &placeholders)
+{
+	QHash<QString, QString>::const_iterator iterator;
+
+	for (iterator = placeholders.begin(); iterator != placeholders.end(); ++iterator)
+	{
+		text.replace(QLatin1Char('{') + iterator.key() + QLatin1Char('}'), iterator.value());
+	}
+
+	return text;
+}
+
 QString savePixmapAsDataUri(const QPixmap &pixmap)
 {
 	QByteArray data;
