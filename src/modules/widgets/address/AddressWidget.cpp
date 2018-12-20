@@ -1068,17 +1068,15 @@ void AddressWidget::updateGeometries()
 			case BookmarkEntry:
 				if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
 				{
-					definition.icon = ThemesManager::createIcon(QLatin1String("bookmarks"), false);
-
 					if (BookmarksManager::hasBookmark(url))
 					{
 						definition.title = QT_TR_NOOP("Remove bookmark");
-						definition.mode = QIcon::Normal;
+						definition.icon = ThemesManager::createIcon(QLatin1String("bookmark-page-remove"), false);
 					}
 					else
 					{
 						definition.title = QT_TR_NOOP("Add bookmark");
-						definition.mode = QIcon::Disabled;
+						definition.icon = ThemesManager::createIcon(QLatin1String("bookmark-page-new"), false);
 					}
 				}
 

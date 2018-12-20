@@ -39,6 +39,8 @@
         <file>icons/theme/badge-unknown.png</file>
         <file>icons/theme/bookmark-new.png</file>
         <file>icons/theme/bookmarks-organize.png</file>
+        <file>icons/theme/bookmark-page-new.png</file>
+        <file>icons/theme/bookmark-page-remove.png</file>
         <file>icons/theme/bookmarks.png</file>
         <file>icons/theme/cache.png</file>
         <file>icons/theme/configuration.png</file>
