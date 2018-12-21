@@ -105,14 +105,12 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 {
 	ensureInitialized();
 
-	const QUrl normalizedUrl(Utils::normalizeUrl(url));
-
-	if (!hasBookmark(normalizedUrl))
+	if (!hasBookmark(url))
 	{
 		return;
 	}
 
-	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->findUrls(normalizedUrl));
+	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->findUrls(url));
 
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{

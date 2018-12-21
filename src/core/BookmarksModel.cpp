@@ -1308,6 +1308,7 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 		branch = m_rootItem;
 	}
 
+	const QUrl normalizedUrl(Utils::normalizeUrl(url));
 	QVector<Bookmark*> bookmarks;
 
 	for (int i = 0; i < branch->rowCount(); ++i)
@@ -1323,7 +1324,7 @@ QVector<BookmarksModel::Bookmark*> BookmarksModel::findUrls(const QUrl &url, QSt
 
 					break;
 				case UrlBookmark:
-					if (url == Utils::normalizeUrl(bookmark->getUrl()))
+					if (normalizedUrl == Utils::normalizeUrl(bookmark->getUrl()))
 					{
 						bookmarks.append(bookmark);
 					}
