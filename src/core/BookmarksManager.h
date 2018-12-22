@@ -35,7 +35,6 @@ class BookmarksManager final : public QObject
 public:
 	static void createInstance();
 	static void updateVisits(const QUrl &url);
-	static void removeBookmark(const QUrl &url);
 	static void setLastUsedFolder(BookmarksModel::Bookmark *folder);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();

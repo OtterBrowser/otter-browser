@@ -101,23 +101,6 @@ void BookmarksManager::updateVisits(const QUrl &url)
 	}
 }
 
-void BookmarksManager::removeBookmark(const QUrl &url)
-{
-	ensureInitialized();
-
-	if (!hasBookmark(url))
-	{
-		return;
-	}
-
-	const QVector<BookmarksModel::Bookmark*> bookmarks(m_model->findUrls(url));
-
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		bookmarks.at(i)->remove();
-	}
-}
-
 void BookmarksManager::setLastUsedFolder(BookmarksModel::Bookmark *folder)
 {
 	m_lastUsedFolder = (folder ? folder->getIdentifier() : 0);
