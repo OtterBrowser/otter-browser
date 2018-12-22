@@ -1076,7 +1076,7 @@ BookmarksModel::Bookmark* BookmarksModel::addBookmark(BookmarkType type, const Q
 
 			if (!url.isEmpty())
 			{
-				handleUrlChanged(bookmark, url);
+				handleUrlChanged(bookmark, Utils::normalizeUrl(url));
 			}
 
 			if (type == UrlBookmark)
