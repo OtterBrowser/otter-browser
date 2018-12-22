@@ -651,7 +651,12 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 					{
 						if (BookmarksManager::hasBookmark(url))
 						{
-							BookmarksManager::removeBookmark(url);
+							const QVector<BookmarksModel::Bookmark*> bookmarks(BookmarksManager::getModel()->findUrls(url));
+
+							for (int i = 0; i < bookmarks.count(); ++i)
+							{
+								BookmarksManager::getModel()->trashBookmark(bookmarks.at(i));
+							}
 						}
 						else
 						{
