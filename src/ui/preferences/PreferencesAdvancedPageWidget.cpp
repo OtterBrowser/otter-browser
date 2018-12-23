@@ -1326,7 +1326,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 		}
 	}
 
-	if (!availableIdentifiers.contains(QLatin1String("default")))
+	if (!availableIdentifiers.contains(QLatin1String("default")) && !m_keyboardProfiles.contains(QLatin1String("default")))
 	{
 		availableKeyboardProfiles.prepend(KeyboardProfile(QLatin1String("default"), KeyboardProfile::MetaDataOnlyMode));
 	}
@@ -1527,7 +1527,7 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 		}
 	}
 
-	if (!availableIdentifiers.contains(QLatin1String("default")))
+	if (!availableIdentifiers.contains(QLatin1String("default")) && !m_mouseProfiles.contains(QLatin1String("default")))
 	{
 		availableMouseProfiles.prepend(MouseProfile(QLatin1String("default"), MouseProfile::MetaDataOnlyMode));
 	}
