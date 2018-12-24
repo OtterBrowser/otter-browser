@@ -1111,7 +1111,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByKeyword(const QString &ke
 
 BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path) const
 {
-	if (path == QLatin1Char('/'))
+	if (path == QLatin1String("/"))
 	{
 		return m_rootItem;
 	}

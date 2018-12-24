@@ -123,7 +123,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				while (true)
 				{
-					const bool isRoot(url.path() == QLatin1Char('/'));
+					const bool isRoot(url.path() == QLatin1String("/"));
 
 					url = url.adjusted(QUrl::StripTrailingSlash);
 

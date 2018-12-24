@@ -79,7 +79,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 	QVector<ListingEntry> entries;
 	QVector<NavigationEntry> navigation;
 #ifdef Q_OS_WIN32
-	const bool isListingDevices(request.url().toLocalFile() == QLatin1Char('/'));
+	const bool isListingDevices(request.url().toLocalFile() == QLatin1String("/"));
 	const QFileInfoList rawEntries(isListingDevices ? QDir::drives() : directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
 #else
 	const QFileInfoList rawEntries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
@@ -114,7 +114,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 
 	for (int i = 0; i < rawEntries.count(); ++i)
 	{
-		if (rawEntries.at(i).fileName() == QLatin1Char('.') || rawEntries.at(i).fileName() == QLatin1String(".."))
+		if (rawEntries.at(i).fileName() == QLatin1String(".") || rawEntries.at(i).fileName() == QLatin1String(".."))
 		{
 			continue;
 		}

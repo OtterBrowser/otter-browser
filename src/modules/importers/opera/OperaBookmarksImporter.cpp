@@ -205,7 +205,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 
 			++totalAmount;
 		}
-		else if (line == QLatin1Char('-'))
+		else if (line == QLatin1String("-"))
 		{
 			type = FolderEndEntry;
 		}
