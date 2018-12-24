@@ -636,7 +636,7 @@ bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString 
 SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : FetchJob(url, parent),
 	m_needsToSaveSearchEngine(saveSearchEngine)
 {
-	m_searchEngine.identifier = (identifier.isEmpty() ? Utils::createIdentifier({}, SearchEnginesManager::getSearchEngines()) : identifier);
+	m_searchEngine.identifier = identifier;
 }
 
 SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
@@ -647,6 +647,11 @@ SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngi
 void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 {
 	m_searchEngine = SearchEnginesManager::loadSearchEngine(reply, m_searchEngine.identifier);
+
+	if (m_searchEngine.identifier.isEmpty())
+	{
+		m_searchEngine.identifier = m_searchEngine.createIdentifier();
+	}
 
 	if (!m_searchEngine.isValid())
 	{
