@@ -413,7 +413,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	{
 		if (!iterator.value().icon.isNull())
 		{
-			iterator.value().icon.paint(&painter, iterator.value().rectangle, Qt::AlignCenter, iterator.value().mode);
+			iterator.value().icon.paint(&painter, iterator.value().rectangle, Qt::AlignCenter, QIcon::Normal);
 		}
 	}
 }

@@ -105,7 +105,6 @@ public:
 		QString title;
 		QIcon icon;
 		QRect rectangle;
-		QIcon::Mode mode = QIcon::Normal;
 		EntryIdentifier identifier = UnknownEntry;
 	};
 
