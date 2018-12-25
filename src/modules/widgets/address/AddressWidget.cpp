@@ -413,7 +413,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	{
 		if (!iterator.value().icon.isNull())
 		{
-			iterator.value().icon.paint(&painter, iterator.value().rectangle, Qt::AlignCenter, QIcon::Normal);
+			iterator.value().icon.paint(&painter, iterator.value().rectangle, Qt::AlignCenter, ((iterator.key() == m_hoveredEntry) ? QIcon::Active : QIcon::Normal));
 		}
 	}
 }
@@ -584,6 +584,8 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 		}
 
 		m_hoveredEntry = entry;
+
+		update();
 	}
 
 	if (event->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (event->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance() && url.isValid())
