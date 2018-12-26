@@ -1663,7 +1663,7 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="146"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>Never</source>
-        <translation>常に拒否</translation>
+        <translation>更新しない</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
