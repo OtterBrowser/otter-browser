@@ -646,12 +646,12 @@ SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngi
 
 void SearchEngineFetchJob::handleSuccessfulReply(QNetworkReply *reply)
 {
-	m_searchEngine = SearchEnginesManager::loadSearchEngine(reply, m_searchEngine.identifier);
-
 	if (m_searchEngine.identifier.isEmpty())
 	{
 		m_searchEngine.identifier = m_searchEngine.createIdentifier();
 	}
+
+	m_searchEngine = SearchEnginesManager::loadSearchEngine(reply, m_searchEngine.identifier);
 
 	if (!m_searchEngine.isValid())
 	{
