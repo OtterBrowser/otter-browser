@@ -53,8 +53,8 @@ void SettingsManager::createInstance(const QString &path)
 	}
 
 	m_instance = new SettingsManager(QCoreApplication::instance());
-	m_globalPath = path + QLatin1String("/otter.conf");
-	m_overridePath = path + QLatin1String("/override.ini");
+	m_globalPath = QDir::toNativeSeparators(path + QLatin1String("/otter.conf"));
+	m_overridePath = QDir::toNativeSeparators(path + QLatin1String("/override.ini"));
 	m_optionIdentifierEnumerator = SettingsManager::staticMetaObject.indexOfEnumerator(QLatin1String("OptionIdentifier").data());
 	m_identifierCounter = SettingsManager::staticMetaObject.enumerator(m_optionIdentifierEnumerator).keyCount();
 
