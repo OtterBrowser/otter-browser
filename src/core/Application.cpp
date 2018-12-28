@@ -1439,13 +1439,13 @@ QString Application::createReport(ReportOptions options)
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);
-		stream << QLatin1String("Session");
-		stream << SessionsManager::getSessionPath(SessionsManager::getCurrentSession());
+		stream << QLatin1String("Overrides");
+		stream << SettingsManager::getOverridePath();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);
-		stream << QLatin1String("Overrides");
-		stream << SettingsManager::getOverridePath();
+		stream << QLatin1String("Session");
+		stream << SessionsManager::getSessionPath(SessionsManager::getCurrentSession());
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
 		stream.setFieldWidth(20);
