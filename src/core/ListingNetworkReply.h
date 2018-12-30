@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-class ListingNetworkReply  : public QNetworkReply
+class ListingNetworkReply : public QNetworkReply
 {
 	Q_OBJECT
 
