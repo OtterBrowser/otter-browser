@@ -1238,16 +1238,16 @@ QStringList BookmarksModel::getKeywords() const
 QVector<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString &prefix) const
 {
 	QVector<Bookmark*> matchedBookmarks;
-	QVector<BookmarksModel::BookmarkMatch> allMatches;
-	QVector<BookmarksModel::BookmarkMatch> currentMatches;
-	QMultiMap<QDateTime, BookmarksModel::BookmarkMatch> matchesMap;
+	QVector<BookmarkMatch> allMatches;
+	QVector<BookmarkMatch> currentMatches;
+	QMultiMap<QDateTime, BookmarkMatch> matchesMap;
 	QHash<QString, Bookmark*>::const_iterator keywordsIterator;
 
 	for (keywordsIterator = m_keywords.constBegin(); keywordsIterator != m_keywords.constEnd(); ++keywordsIterator)
 	{
 		if (keywordsIterator.key().startsWith(prefix, Qt::CaseInsensitive))
 		{
-			BookmarksModel::BookmarkMatch match;
+			BookmarkMatch match;
 			match.bookmark = keywordsIterator.value();
 			match.match = keywordsIterator.key();
 
