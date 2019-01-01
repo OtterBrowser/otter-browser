@@ -12,16 +12,10 @@ project(otter-browser)
 
 set(MAJOR_VERSION "1")
 set(MINOR_VERSION "0")
-set(PATCH_VERSION "81")
+set(PATCH_VERSION "01")
 set(WEEKLY_VERSION "" CACHE STRING "")
 
-add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}" -DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
-
-if ("${WEEKLY_VERSION}" STREQUAL "")
-	add_definitions(-DOTTER_VERSION_CONTEXT="-dev" -DOTTER_VERSION_WEEKLY=" ")
-else ()
-	add_definitions(-DOTTER_VERSION_CONTEXT=" weekly ${WEEKLY_VERSION}" -DOTTER_VERSION_WEEKLY="${WEEKLY_VERSION}")
-endif ()
+add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}" -DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}" -DOTTER_VERSION_CONTEXT=" " -DOTTER_VERSION_WEEKLY=" ")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
@@ -501,7 +495,7 @@ elseif (APPLE)
 	set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 	set(MACOSX_BUNDLE_ICON_FILE otter-browser.icns)
 	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.otter-browser.otter-browser")
-	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2018 Otter Browser Team. All rights reserved.")
+	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2019 Otter Browser Team. All rights reserved.")
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/mac/MacPlatformIntegration.mm
