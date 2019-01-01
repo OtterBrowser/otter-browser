@@ -1126,6 +1126,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 			{
 				if (isFullScreen())
 				{
+					showNormal();
 					restoreWindowState();
 				}
 				else
