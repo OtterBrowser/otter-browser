@@ -592,7 +592,19 @@ void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool i
 
 		if (activeWindow)
 		{
+			const bool wasMinimized(mdiWindow->isMinimized());
+
+			if (wasMinimized)
+			{
+				mdiWindow->showNormal();
+			}
+
 			m_mdi->setActiveSubWindow(activeWindow);
+
+			if (wasMinimized)
+			{
+				mdiWindow->showMinimized();
+			}
 		}
 
 		if (m_isRestored)
