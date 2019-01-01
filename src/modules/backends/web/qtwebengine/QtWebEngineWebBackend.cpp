@@ -71,6 +71,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 		return;
 	}
 
+#if QTWEBENGINECORE_VERSION >= 0x050C00
 	QtWebEnginePage *page(qobject_cast<QtWebEnginePage*>(item->page()));
 
 	if (page && page->getWebWidget())
@@ -79,6 +80,7 @@ void QtWebEngineWebBackend::handleDownloadRequested(QWebEngineDownloadItem *item
 
 		return;
 	}
+#endif
 
 	const HandlersManager::HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType()));
 

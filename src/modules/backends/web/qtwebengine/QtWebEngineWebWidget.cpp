@@ -48,7 +48,9 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
+#if QTWEBENGINECORE_VERSION >= 0x050C00
 #include <QtPrintSupport/QPrintPreviewDialog>
+#endif
 #include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
@@ -62,7 +64,9 @@ namespace Otter
 
 QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBackend *backend, ContentsWidget *parent) : WebWidget(parameters, backend, parent),
 	m_webView(nullptr),
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 	m_inspectorView(nullptr),
+#endif
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
 	m_loadingState(FinishedLoadingState),
 	m_canGoForwardValue(UnknownValue),
@@ -90,7 +94,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::requestedNewWindow, this, &QtWebEngineWebWidget::requestedNewWindow);
 	connect(m_page, &QtWebEnginePage::authenticationRequired, this, &QtWebEngineWebWidget::handleAuthenticationRequired);
 	connect(m_page, &QtWebEnginePage::proxyAuthenticationRequired, this, &QtWebEngineWebWidget::handleProxyAuthenticationRequired);
+#if QTWEBENGINECORE_VERSION >= 0x050C00
 	connect(m_page, &QtWebEnginePage::printRequested, this, &QtWebEngineWebWidget::handlePrintRequest);
+#endif
 	connect(m_page, &QtWebEnginePage::windowCloseRequested, this, &QtWebEngineWebWidget::handleWindowCloseRequest);
 	connect(m_page, &QtWebEnginePage::fullScreenRequested, this, &QtWebEngineWebWidget::handleFullScreenRequest);
 	connect(m_page, &QtWebEnginePage::featurePermissionRequested, [&](const QUrl &url, QWebEnginePage::Feature feature)
@@ -885,6 +891,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			break;
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 		case ActionsManager::InspectPageAction:
 			{
 				const bool showInspector(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool());
@@ -905,6 +912,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			m_page->triggerAction(QWebEnginePage::InspectElement);
 
 			break;
+#endif
 		case ActionsManager::FullScreenAction:
 			{
 				const MainWindow *mainWindow(MainWindow::findMainWindow(this));
@@ -1013,6 +1021,7 @@ void QtWebEngineWebWidget::handleViewSourceReplyFinished()
 	}
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050C00
 void QtWebEngineWebWidget::handlePrintRequest()
 {
 	QPrintPreviewDialog printPreviewDialog(this);
@@ -1038,6 +1047,7 @@ void QtWebEngineWebWidget::handlePrintRequest()
 
 	printPreviewDialog.exec();
 }
+#endif
 
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {
@@ -1226,7 +1236,9 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toString() != QLatin1String("blockAll")));
 	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(SettingsManager::Permissions_EnableLocalStorageOption, url).toBool());
+#if QTWEBENGINECORE_VERSION >= 0x050A00
 	settings->setAttribute(QWebEngineSettings::ShowScrollBars, getOption(SettingsManager::Interface_ShowScrollBarsOption, url).toBool());
+#endif
 	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
 	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 
@@ -1484,6 +1496,7 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const 
 	return widget;
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 QWidget* QtWebEngineWebWidget::getInspector()
 {
 	if (!m_inspectorView)
@@ -1499,6 +1512,7 @@ QWidget* QtWebEngineWebWidget::getInspector()
 
 	return m_inspectorView;
 }
+#endif
 
 QWidget* QtWebEngineWebWidget::getViewport()
 {
@@ -1777,10 +1791,12 @@ bool QtWebEngineWebWidget::canFastForward() const
 	return (m_canGoForwardValue == TrueValue || canGoForward());
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 bool QtWebEngineWebWidget::canInspect() const
 {
 	return !Utils::isUrlEmpty(getUrl());
 }
+#endif
 
 bool QtWebEngineWebWidget::canRedo() const
 {
@@ -1829,10 +1845,12 @@ bool QtWebEngineWebWidget::isFullScreen() const
 	return m_isFullScreen;
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 bool QtWebEngineWebWidget::isInspecting() const
 {
 	return (m_inspectorView && m_inspectorView->isVisible());
 }
+#endif
 
 bool QtWebEngineWebWidget::isPopup() const
 {

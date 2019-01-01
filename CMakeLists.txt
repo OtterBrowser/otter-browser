@@ -74,14 +74,14 @@ set(CMAKE_CXX_STANDARD 11)
 include(FeatureSummary)
 include(GNUInstallDirs)
 
-option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.12)" ON)
+option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.9)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires QtWebKit 5.212)" ON)
 option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
 option(ENABLE_DBUS "Enable D-Bus based integration for notifications (only freedesktop.org compatible platforms)" ON)
 option(ENABLE_SPELLCHECK "Enable Hunspell based spell checking" ON)
 
 find_package(Qt5 5.6.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Qml Svg Widgets XmlPatterns)
-find_package(Qt5WebEngineWidgets 5.12.0 QUIET)
+find_package(Qt5WebEngineWidgets 5.9.0 QUIET)
 find_package(Qt5WebKitWidgets 5.212.0 QUIET)
 find_package(Hunspell 1.5.0 QUIET)
 

@@ -23,6 +23,7 @@
 #include "../../../../ui/WebWidget.h"
 
 #include <QtNetwork/QNetworkReply>
+#include <QtWebEngineCore/QtWebEngineCoreVersion>
 #include <QtWebEngineWidgets/QWebEngineFullScreenRequest>
 #include <QtWebEngineWidgets/QWebEngineView>
 
@@ -63,7 +64,9 @@ public:
 	void search(const QString &query, const QString &searchEngine) override;
 	void print(QPrinter *printer) override;
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 	QWidget* getInspector();
+#endif
 	QWidget* getViewport() override;
 	QString getTitle() const override;
 	QString getDescription() const override;
@@ -126,12 +129,16 @@ protected:
 	bool canGoBack() const override;
 	bool canGoForward() const override;
 	bool canFastForward() const override;
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 	bool canInspect() const;
+#endif
 	bool canRedo() const override;
 	bool canUndo() const override;
 	bool canShowContextMenu(const QPoint &position) const override;
 	bool canViewSource() const override;
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 	bool isInspecting() const;
+#endif
 	bool isPopup() const override;
 	bool isScrollBar(const QPoint &position) const override;
 
@@ -139,7 +146,9 @@ protected slots:
 	void handleLoadStarted();
 	void handleLoadFinished();
 	void handleViewSourceReplyFinished();
+#if QTWEBENGINECORE_VERSION >= 0x050C00
 	void handlePrintRequest();
+#endif
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
 	void handleFullScreenRequest(QWebEngineFullScreenRequest request);
@@ -152,7 +161,9 @@ protected slots:
 
 private:
 	QWebEngineView *m_webView;
+#if QTWEBENGINECORE_VERSION >= 0x050B00
 	QWebEngineView *m_inspectorView;
+#endif
 	QtWebEnginePage *m_page;
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
