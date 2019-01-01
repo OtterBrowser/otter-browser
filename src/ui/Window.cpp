@@ -33,6 +33,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
 #include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QMdiSubWindow>
 
 namespace Otter
 {
@@ -81,6 +82,7 @@ Window::Window(const QVariantMap &parameters, ContentsWidget *widget, MainWindow
 	}
 
 	connect(this, &Window::titleChanged, this, &Window::setWindowTitle);
+	connect(this, &Window::iconChanged, this, &Window::handleIconChanged);
 	connect(mainWindow, &MainWindow::toolBarStateChanged, this, &Window::handleToolBarStateChanged);
 }
 
@@ -263,6 +265,16 @@ void Window::markAsActive(bool updateLastActivity)
 	emit activated();
 }
 
+void Window::handleIconChanged(const QIcon &icon)
+{
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+	if (subWindow)
+	{
+		subWindow->setWindowIcon(icon);
+	}
+}
+
 void Window::handleSearchRequest(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints)
 {
 	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == SessionsManager::DefaultOpen || hints == SessionsManager::CurrentTabOpen))
@@ -277,10 +289,17 @@ void Window::handleSearchRequest(const QString &query, const QString &searchEngi
 
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
-	setWindowFlags(Qt::SubWindow);
-	showNormal();
-	resize(geometry.size() + (this->geometry().size() - m_contentsWidget->size()));
-	move(geometry.topLeft());
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+	if (subWindow)
+	{
+		Application::triggerAction(ActionsManager::RestoreTabAction, {{QLatin1String("tab"), getIdentifier()}}, m_mainWindow);
+
+		subWindow->setWindowFlags(Qt::SubWindow);
+		subWindow->showNormal();
+		subWindow->resize(geometry.size() + (subWindow->geometry().size() - m_contentsWidget->size()));
+		subWindow->move(geometry.topLeft());
+	}
 }
 
 void Window::handleToolBarStateChanged(int identifier, const ToolBarState &state)
@@ -658,7 +677,14 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::AlwaysOnTopTabAction:
-			state.isEnabled = windowFlags().testFlag(Qt::WindowStaysOnTopHint);
+			{
+				const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+				if (subWindow)
+				{
+					state.isEnabled = subWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint);
+				}
+			}
 
 			break;
 		default:
@@ -689,6 +715,7 @@ WindowHistoryInformation Window::getHistory() const
 
 SessionWindow Window::getSession() const
 {
+	const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 	SessionWindow session;
 
 	if (m_contentsWidget)
@@ -716,25 +743,26 @@ SessionWindow Window::getSession() const
 	}
 
 	session.state = getWindowState();
-	session.isAlwaysOnTop = windowFlags().testFlag(Qt::WindowStaysOnTopHint);
+	session.isAlwaysOnTop = (subWindow && subWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 
 	return session;
 }
 
 WindowState Window::getWindowState() const
 {
+	const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 	WindowState windowState;
 	windowState.state = Qt::WindowMaximized;
 
-	if (!isMaximized())
+	if (subWindow && !subWindow->isMaximized())
 	{
-		if (isMinimized())
+		if (subWindow->isMinimized())
 		{
 			windowState.state = Qt::WindowMinimized;
 		}
 		else
 		{
-			windowState.geometry = geometry();
+			windowState.geometry = subWindow->geometry();
 			windowState.state = Qt::WindowNoState;
 		}
 	}
@@ -795,6 +823,24 @@ bool Window::isPinned() const
 bool Window::isPrivate() const
 {
 	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->isPrivate() : SessionsManager::calculateOpenHints(m_parameters).testFlag(SessionsManager::PrivateOpen));
+}
+
+bool Window::event(QEvent *event)
+{
+	if (event->type() == QEvent::ParentChange)
+	{
+		const QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
+
+		if (subWindow)
+		{
+			connect(subWindow, &QMdiSubWindow::windowStateChanged, [&]()
+			{
+				emit arbitraryActionsStateChanged({ActionsManager::MaximizeTabAction, ActionsManager::MinimizeTabAction, ActionsManager::RestoreTabAction});
+			});
+		}
+	}
+
+	return QWidget::event(event);
 }
 
 }
