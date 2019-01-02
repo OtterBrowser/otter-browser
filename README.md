@@ -17,7 +17,7 @@ You can either compile Otter Browser from source or use pre-compiled binaries.
 
 ### From source
 
-To build Otter Browser, you will need the following dependencies: **Qt 5.6.0** (or newer), **OpenSSL 1.0** (or newer, but not 1.1), **GStreamer 1.0** (or newer) and codecs, and **CMake 3.1.0** (or newer). At the root of the directory where the source code is stored, execute these commands:
+To build Otter Browser, you will need the following dependencies: **Qt 5.6.0** (or newer), **OpenSSL 1.0** (or newer), **GStreamer 1.0** (or newer) and codecs, and **CMake 3.1.0** (or newer). At the root of the directory where the source code is stored, execute these commands:
 
     mkdir build
     cd build
@@ -47,11 +47,10 @@ The browser is written primarily in C++ and leverages powerful features offered 
 
 We also use JavaScript for interacting with rendering engines (when native APIs are not available) and Python 3 is our preferred language for creating tools to ease development.
 
-Have a look at the [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that resonates with you.
+Have a look at the [open issues](https://github.com/OtterBrowser/otter-browser/issues) to find a mission that resonates with you.
 
 We use [Transifex](https://www.transifex.com/otter-browser/otter-browser/) to translate Otter Browser.
 
 To stay informed of Otter development, bug fixes and new features, you can join [the official forum](http://thedndsanctuary.eu/index.php?board=9.0). We also have two IRC channels on Freenode: [#otter-browser](http://irc.lc/freenode/otter-browser) (international) and [#otter-browser-pl](http://irc.lc/freenode/otter-browser-pl) (polski / Polish).
 
 Read *CONTRIBUTING.md* and don’t hesitate!
-
