@@ -28,6 +28,9 @@ if (element)
 	var anchorElement = element.closest('a[href]');
 	var titledElement = element.closest('[title]');
 
+	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
+	result.tagName = element.tagName.toLowerCase();
+
 	if (anchorElement)
 	{
 		result.linkUrl = anchorElement.href;
@@ -38,14 +41,10 @@ if (element)
 		result.title = titledElement.title;
 	}
 
-	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
-
 	if (window.getSelection().containsNode(element, true))
 	{
 		result.flags |= 8;
 	}
-
-	result.tagName = element.tagName.toLowerCase();
 
 	if (result.tagName == 'frame' || result.tagName == 'iframe')
 	{
