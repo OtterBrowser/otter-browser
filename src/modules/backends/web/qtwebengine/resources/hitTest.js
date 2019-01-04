@@ -1,4 +1,3 @@
-var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement);
 var result = {
 	alternateText: '',
 	flags: 0,
@@ -14,14 +13,19 @@ var result = {
 	title: ''
 };
 
-if (element)
+function createUrl(url)
 {
-	function createUrl(url)
-	{
-		var element = document.createElement('a');
-		element.href = url;
+	var element = document.createElement('a');
+	element.href = url;
 
-		return element.href;
+	return element.href;
+}
+
+function createHitTest(element, result)
+{
+	if (!element)
+	{
+		return result;
 	}
 
 	var geometry = element.getBoundingClientRect();
@@ -124,6 +128,8 @@ if (element)
 			}
 		}
 	}
+
+	return result;
 }
 
-result;
+createHitTest(((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement), result);
