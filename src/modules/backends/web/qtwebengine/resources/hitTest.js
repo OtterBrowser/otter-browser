@@ -8,6 +8,7 @@ var result = {
 	linkUrl: '',
 	longDescription: '',
 	mediaUrl: '',
+	offset: [0, 0],
 	position: [%1, %2],
 	tagName: '',
 	title: ''
@@ -21,7 +22,7 @@ function createUrl(url)
 	return element.href;
 }
 
-function createHitTest(element, result)
+function createHitTest(window, element, result)
 {
 	if (!element)
 	{
@@ -29,11 +30,21 @@ function createHitTest(element, result)
 	}
 
 	var geometry = element.getBoundingClientRect();
-	var anchorElement = element.closest('a[href]');
-	var titledElement = element.closest('[title]');
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
 	result.tagName = element.tagName.toLowerCase();
+
+	if (result.tagName == 'frame' || result.tagName == 'iframe')
+	{
+		result.frameUrl = createUrl(element.src);
+		result.title = element.contentDocument.title;
+		result.offset = [(result.offset[0] + geometry.left), (result.offset[1] + geometry.top)];
+
+		return createHitTest(element.contentWindow, ((%1 >= 0) ? element.contentWindow.document.elementFromPoint((%1 - result.offset[0]), (%2 - result.offset[1])) : element.contentWindow.document.activeElement), result);
+	}
+
+	var anchorElement = element.closest('a[href]');
+	var titledElement = element.closest('[title]');
 
 	if (anchorElement)
 	{
@@ -50,12 +61,7 @@ function createHitTest(element, result)
 		result.flags |= 8;
 	}
 
-	if (result.tagName == 'frame' || result.tagName == 'iframe')
-	{
-		result.frameUrl = createUrl(element.src);
-		result.title = element.contentDocument.title;
-	}
-	else if (result.tagName == 'img')
+	if (result.tagName == 'img')
 	{
 		result.alternateText = element.alt;
 		result.imageUrl = createUrl(element.src);
@@ -132,4 +138,4 @@ function createHitTest(element, result)
 	return result;
 }
 
-createHitTest(((%1 >= 0) ? document.elementFromPoint(%1, %2) : document.activeElement), result);
+createHitTest(window, ((%1 >= 0) ? document.elementFromPoint(%1, %2) : document.activeElement), result);
