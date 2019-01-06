@@ -132,4 +132,4 @@ function createHitTest(element, result)
 	return result;
 }
 
-createHitTest(((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement), result);
+createHitTest(((%1 >= 0) ? document.elementFromPoint(%1, %2) : document.activeElement), result);
