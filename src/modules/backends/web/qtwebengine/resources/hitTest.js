@@ -36,11 +36,13 @@ function createHitTest(window, element, result)
 
 	if (result.tagName == 'frame' || result.tagName == 'iframe')
 	{
+		var frameDocument = element.contentWindow.document;
+
 		result.frameUrl = createUrl(element.src);
-		result.title = element.contentDocument.title;
+		result.title = frameDocument.title;
 		result.offset = [(result.offset[0] + geometry.left), (result.offset[1] + geometry.top)];
 
-		return createHitTest(element.contentWindow, ((%1 >= 0) ? element.contentWindow.document.elementFromPoint((%1 - result.offset[0]), (%2 - result.offset[1])) : element.contentWindow.document.activeElement), result);
+		return createHitTest(element.contentWindow, ((%1 >= 0) ? frameDocument.elementFromPoint((%1 - result.offset[0]), (%2 - result.offset[1])) : frameDocument.activeElement), result);
 	}
 
 	var anchorElement = element.closest('a[href]');
