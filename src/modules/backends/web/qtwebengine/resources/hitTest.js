@@ -14,12 +14,20 @@ var result = {
 	title: ''
 };
 
-function createUrl(url)
+function normalizeUrl(url)
 {
 	var element = document.createElement('a');
 	element.href = url;
 
 	return element.href;
+}
+
+function getOrigin(url)
+{
+	var element = document.createElement('a');
+	element.href = url;
+
+	return element.origin;
 }
 
 function createHitTest(window, element, result)
@@ -36,13 +44,19 @@ function createHitTest(window, element, result)
 
 	if (result.tagName == 'frame' || result.tagName == 'iframe')
 	{
-		var frameDocument = element.contentWindow.document;
+		result.frameUrl = normalizeUrl(element.src);
 
-		result.frameUrl = createUrl(element.src);
-		result.title = frameDocument.title;
-		result.offset = [(result.offset[0] + geometry.left), (result.offset[1] + geometry.top)];
+		if (getOrigin(document.location.href) == getOrigin(element.src))
+		{
+			var frameDocument = element.contentWindow.document;
 
-		return createHitTest(element.contentWindow, ((%1 >= 0) ? frameDocument.elementFromPoint((%1 - result.offset[0]), (%2 - result.offset[1])) : frameDocument.activeElement), result);
+			result.title = frameDocument.title;
+			result.offset = [(result.offset[0] + geometry.left), (result.offset[1] + geometry.top)];
+
+			return createHitTest(element.contentWindow, ((%1 >= 0) ? frameDocument.elementFromPoint((%1 - result.offset[0]), (%2 - result.offset[1])) : frameDocument.activeElement), result);
+		}
+
+		return result;
 	}
 
 	var anchorElement = element.closest('a[href]');
@@ -66,7 +80,7 @@ function createHitTest(window, element, result)
 	if (result.tagName == 'img')
 	{
 		result.alternateText = element.alt;
-		result.imageUrl = createUrl(element.src);
+		result.imageUrl = normalizeUrl(element.src);
 		result.longDescription = element.longDesc;
 	}
 	else if (result.tagName == 'audio' || result.tagName == 'video')
@@ -91,7 +105,7 @@ function createHitTest(window, element, result)
 			result.flags |= 128;
 		}
 
-		result.mediaUrl = createUrl(element.src);
+		result.mediaUrl = normalizeUrl(element.src);
 		result.playbackRate = element.playbackRate;
 	}
 
@@ -127,7 +141,7 @@ function createHitTest(window, element, result)
 
 			if ((result.tagName == 'button'|| result.tagName == 'input') && (type == 'image' || type == 'submit'))
 			{
-				result.formUrl = createUrl(element.hasAttribute('formaction') ? element.getAttribute('formaction') : formElement.action);
+				result.formUrl = normalizeUrl(element.hasAttribute('formaction') ? element.getAttribute('formaction') : formElement.action);
 			}
 
 			if (formElement.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]').length > 0)
