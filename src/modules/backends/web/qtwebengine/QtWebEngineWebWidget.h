@@ -141,6 +141,7 @@ protected:
 #endif
 	bool isPopup() const override;
 	bool isScrollBar(const QPoint &position) const override;
+	bool isTypedIn() const;
 
 protected slots:
 	void handleLoadStarted();
@@ -181,7 +182,7 @@ private:
 	int m_updateNavigationActionsTimer;
 	bool m_isEditing;
 	bool m_isFullScreen;
-	bool m_isTyped;
+	bool m_isTypedIn;
 
 friend class QtWebEnginePage;
 friend class QtWebEngineWebBackend;
