@@ -86,7 +86,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(const QVariantMap &parameters, WebBackend *
 	m_canLoadPlugins(false),
 	m_isAudioMuted(false),
 	m_isFullScreen(false),
-	m_isTyped(false),
+	m_isTypedIn(false),
 	m_isNavigating(false)
 {
 	const bool isPrivate(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen));
@@ -611,11 +611,11 @@ void QtWebKitWebWidget::handleHistory()
 	}
 	else
 	{
-		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTyped)), getZoom(), QPoint(0, 0), QDateTime::currentDateTimeUtc()}));
+		m_page->history()->currentItem().setUserData(QVariantList({(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_page->mainFrame()->icon(), m_isTypedIn)), getZoom(), QPoint(0, 0), QDateTime::currentDateTimeUtc()}));
 
-		if (m_isTyped)
+		if (m_isTypedIn)
 		{
-			m_isTyped = false;
+			m_isTypedIn = false;
 		}
 
 		SessionsManager::markSessionAsModified();
@@ -1914,7 +1914,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 	}
 	else
 	{
-		m_isTyped = isTyped;
+		m_isTypedIn = isTyped;
 
 		const QUrl targetUrl(Utils::expandUrl(url));
 

@@ -186,7 +186,7 @@ private:
 	bool m_canLoadPlugins;
 	bool m_isAudioMuted;
 	bool m_isFullScreen;
-	bool m_isTyped;
+	bool m_isTypedIn;
 	bool m_isNavigating;
 
 signals:
