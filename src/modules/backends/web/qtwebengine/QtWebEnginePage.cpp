@@ -538,7 +538,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 
 			if (!profile()->isOffTheRecord())
 			{
-				entry.identifier = HistoryManager::addEntry(url, {}, {});
+				entry.identifier = HistoryManager::addEntry(url, {}, {}, (m_widget ? m_widget->isTypedIn() : false));
 			}
 
 			m_history.append(entry);

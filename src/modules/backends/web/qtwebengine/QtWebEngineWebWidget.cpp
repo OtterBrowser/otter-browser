@@ -71,7 +71,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	m_updateNavigationActionsTimer(0),
 	m_isEditing(false),
 	m_isFullScreen(false),
-	m_isTyped(false)
+	m_isTypedIn(false)
 {
 	setFocusPolicy(Qt::StrongFocus);
 
@@ -1374,7 +1374,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 	}
 	else
 	{
-		m_isTyped = isTyped;
+		m_isTypedIn = isTyped;
 
 		const QUrl targetUrl(Utils::expandUrl(url));
 
@@ -1849,6 +1849,11 @@ bool QtWebEngineWebWidget::isScrollBar(const QPoint &position) const
 	Q_UNUSED(position)
 
 	return false;
+}
+
+bool QtWebEngineWebWidget::isTypedIn() const
+{
+	return m_isTypedIn;
 }
 
 bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
