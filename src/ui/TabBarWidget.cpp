@@ -543,6 +543,8 @@ void TabHandleWidget::updateTitle()
 				m_titleRectangle.setLeft(m_titleRectangle.right() - length);
 			}
 		}
+
+		title.replace(QLatin1Char('&'), QLatin1String("&&"));
 	}
 
 	if (title != m_title)
