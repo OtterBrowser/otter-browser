@@ -744,7 +744,7 @@ WindowState Window::getWindowState() const
 
 QSize Window::sizeHint() const
 {
-	return QSize(800, 600);
+	return {800, 600};
 }
 
 WebWidget::LoadingState Window::getLoadingState() const
