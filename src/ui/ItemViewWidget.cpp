@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -950,7 +950,7 @@ QSize ItemViewWidget::sizeHint() const
 
 	if (m_sourceModel && m_sourceModel->columnCount() == 1)
 	{
-		return QSize((sizeHintForColumn(0) + (frameWidth() * 2)), size.height());
+		return {(sizeHintForColumn(0) + (frameWidth() * 2)), size.height()};
 	}
 
 	return size;
