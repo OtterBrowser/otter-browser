@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -663,16 +663,14 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 						else
 						{
 							QMenu menu;
-							QAction *addBookmarkAction(menu.addAction(tr("Add to Bookmarks"), [&]()
+							menu.addAction(tr("Add to Bookmarks"), [&]()
 							{
 								if (m_window)
 								{
 									BookmarkPropertiesDialog dialog(getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle(), (m_window->getContentsWidget() ? m_window->getContentsWidget()->getDescription() : QString()), nullptr, -1, true, this);
 									dialog.exec();
 								}
-							}, ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction)));
-							addBookmarkAction->setShortcutContext(Qt::WidgetShortcut);
-
+							}, ActionsManager::getActionShortcut(ActionsManager::BookmarkPageAction))->setShortcutContext(Qt::WidgetShortcut);
 							menu.addAction(tr("Add to Start Page"), [&]()
 							{
 								if (m_window)
