@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "ProgressBarWidget.h"
-#include "../core/Utils.h"
+#include "Style.h"
+#include "../core/Application.h"
 
-#include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
 
 namespace Otter
@@ -66,19 +66,12 @@ void ProgressBarWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
+	QStyleOptionProgressBar option;
 	QPainter painter(this);
-	QColor background(palette().highlight().color());
-	background.setAlpha(50);
 
-	painter.setBrush(background);
-	painter.setPen(Qt::transparent);
-	painter.drawRoundedRect(rect(), 2, 2);
-	painter.setBrush(palette().highlight());
+	initStyleOption(&option);
 
-	if (value() > 0)
-	{
-		painter.drawRoundedRect(0, 0, static_cast<int>(Utils::calculatePercent(value(), maximum(), 1) * width()), height(), 2, 2);
-	}
+	Application::getStyle()->drawThinProgressBar(&option, &painter);
 }
 
 QSize ProgressBarWidget::minimumSizeHint() const

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define OTTER_STYLE_H
 
 #include <QtWidgets/QProxyStyle>
+#include <QtWidgets/QStyleOptionProgressBar>
 
 namespace Otter
 {
@@ -48,6 +49,7 @@ public:
 
 	void drawDropZone(const QLine &line, QPainter *painter) const;
 	void drawToolBarEdge(const QStyleOption *option, QPainter *painter) const;
+	void drawThinProgressBar(const QStyleOptionProgressBar *option, QPainter *painter) const;
 	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 	void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 	virtual QString getName() const;

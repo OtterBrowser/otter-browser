@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,22 @@ void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
 	}
 
 	painter->restore();
+}
+
+void Style::drawThinProgressBar(const QStyleOptionProgressBar *option, QPainter *painter) const
+{
+	QColor background(option->palette.highlight().color());
+	background.setAlpha(50);
+
+	painter->setBrush(background);
+	painter->setPen(Qt::transparent);
+	painter->drawRoundedRect(option->rect, 2, 2);
+	painter->setBrush(option->palette.highlight());
+
+	if (option->progress > 0)
+	{
+		painter->drawRoundedRect(0, 0, static_cast<int>(Utils::calculatePercent(option->progress, option->maximum, 1) * option->rect.width()), option->rect.height(), 2, 2);
+	}
 }
 
 void Style::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
