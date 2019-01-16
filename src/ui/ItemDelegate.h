@@ -28,12 +28,22 @@ namespace Otter
 class ItemDelegate : public QStyledItemDelegate
 {
 public:
+	enum DataRole
+	{
+		NoRole = 0,
+		ProgressValueRole
+	};
+
 	explicit ItemDelegate(QObject *parent = nullptr);
+	explicit ItemDelegate(QMap<DataRole, int> mapping, QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+private:
+	QMap<DataRole, int> m_mapping;
 };
 
 }

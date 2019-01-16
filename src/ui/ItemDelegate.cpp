@@ -18,6 +18,8 @@
 **************************************************************************/
 
 #include "ItemDelegate.h"
+#include "Style.h"
+#include "../core/Application.h"
 
 #include <QtGui/QPainter>
 #include <QtGui/QHelpEvent>
@@ -29,6 +31,11 @@ namespace Otter
 {
 
 ItemDelegate::ItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
+{
+}
+
+ItemDelegate::ItemDelegate(QMap<DataRole, int> mapping, QObject *parent) : QStyledItemDelegate(parent),
+	m_mapping(mapping)
 {
 }
 
@@ -80,6 +87,32 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	}
 
 	QStyledItemDelegate::paint(painter, mutableOption, index);
+
+	if (m_mapping.contains(ProgressValueRole))
+	{
+		const int updateProgress(index.data(m_mapping[ProgressValueRole]).toInt());
+
+		if (updateProgress >= 0)
+		{
+			initStyleOption(&mutableOption, index);
+
+			QStyleOptionProgressBar progressBarOption;
+			progressBarOption.palette = option.palette;
+			progressBarOption.minimum = 0;
+			progressBarOption.maximum = 100;
+			progressBarOption.progress = updateProgress;
+			progressBarOption.rect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption);
+			progressBarOption.rect.setTop(progressBarOption.rect.bottom() - 3);
+			progressBarOption.rect.setBottom(progressBarOption.rect.bottom() - 1);
+
+			if (option.state.testFlag(QStyle::State_Selected))
+			{
+				progressBarOption.palette.setColor(QPalette::Highlight, progressBarOption.palette.highlightedText().color());
+			}
+
+			Application::getStyle()->drawThinProgressBar(&progressBarOption, painter);
+		}
+	}
 }
 
 void ItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
