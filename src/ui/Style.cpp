@@ -102,7 +102,7 @@ void Style::drawThinProgressBar(const QStyleOptionProgressBar *option, QPainter 
 
 	if (option->progress > 0)
 	{
-		painter->drawRoundedRect(option->rect.left(), option->rect.top(), static_cast<int>(Utils::calculatePercent(option->progress, option->maximum, 1) * option->rect.width()), option->rect.height(), 2, 2);
+		painter->drawRoundedRect(option->rect.left(), option->rect.top(), static_cast<int>(Utils::calculatePercent(qMin(option->maximum, option->progress), option->maximum, 1) * option->rect.width()), option->rect.height(), 2, 2);
 	}
 }
 
