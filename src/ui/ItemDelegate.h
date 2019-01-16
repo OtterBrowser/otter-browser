@@ -31,6 +31,7 @@ public:
 	enum DataRole
 	{
 		NoRole = 0,
+		ProgressHasErrorRole,
 		ProgressValueRole
 	};
 
