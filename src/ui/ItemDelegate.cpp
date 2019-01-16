@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -72,17 +72,14 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
+	QStyleOptionViewItem mutableOption(option);
+
 	if (index.data(Qt::FontRole).isValid())
 	{
-		QStyleOptionViewItem mutableOption(option);
 		mutableOption.font = index.data(Qt::FontRole).value<QFont>();
-
-		QStyledItemDelegate::paint(painter, mutableOption, index);
-
-		return;
 	}
 
-	QStyledItemDelegate::paint(painter, option, index);
+	QStyledItemDelegate::paint(painter, mutableOption, index);
 }
 
 void ItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
