@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,24 @@
 #include "Job.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
+#include "Utils.h"
 
 namespace Otter
 {
 
-Job::Job(QObject *parent) : QObject(parent)
+Job::Job(QObject *parent) : QObject(parent),
+	m_progress(-1)
 {
+}
+
+void Job::setProgress(int progress)
+{
+	if (progress != m_progress)
+	{
+		m_progress = progress;
+
+		emit progressChanged(progress);
+	}
 }
 
 FetchJob::FetchJob(const QUrl &url, QObject *parent) : Job(parent),
@@ -69,6 +81,11 @@ void FetchJob::start()
 		if (m_sizeLimit >= 0 && ((bytesReceived > m_sizeLimit) || (bytesTotal > m_sizeLimit)))
 		{
 			cancel();
+		}
+
+		if (bytesTotal > 0)
+		{
+			setProgress(Utils::calculatePercent(bytesReceived, bytesTotal));
 		}
 	});
 	connect(m_reply, &QNetworkReply::finished, this, [&]()
