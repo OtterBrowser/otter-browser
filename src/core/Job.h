@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,14 +33,22 @@ class Job : public QObject
 public:
 	explicit Job(QObject *parent = nullptr);
 
+	int getProgress() const;
 	virtual bool isRunning() const = 0;
 
 public slots:
 	virtual void start() = 0;
 	virtual void cancel() = 0;
 
+protected:
+	void setProgress(int progress);
+
+private:
+	int m_progress;
+
 signals:
 	void jobFinished(bool isSuccess);
+	void progressChanged(int progress);
 };
 
 class FetchJob : public Job
