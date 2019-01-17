@@ -30,6 +30,11 @@ Job::Job(QObject *parent) : QObject(parent),
 {
 }
 
+int Job::getProgress() const
+{
+	return m_progress;
+}
+
 void Job::setProgress(int progress)
 {
 	if (progress != m_progress)
