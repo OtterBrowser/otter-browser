@@ -919,6 +919,8 @@ bool AdblockContentFiltersProfile::update()
 
 	m_isUpdating = true;
 
+	emit profileModified();
+
 	return true;
 }
 
