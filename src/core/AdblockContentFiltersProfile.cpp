@@ -48,7 +48,6 @@ AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, 
 	m_error(NoError),
 	m_flags(flags),
 	m_updateInterval(updateInterval),
-	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
 {
@@ -129,7 +128,7 @@ void AdblockContentFiltersProfile::loadHeader()
 
 	file.close();
 
-	if (!m_isUpdating && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
+	if (!m_dataFetchJob && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_updateInterval))
 	{
 		update();
 	}
@@ -583,16 +582,15 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 
 void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 {
-	m_isUpdating = false;
-
 	if (!m_dataFetchJob)
 	{
 		return;
 	}
 
-	m_dataFetchJob->deleteLater();
-
 	QIODevice *device(m_dataFetchJob->getData());
+
+	m_dataFetchJob->deleteLater();
+	m_dataFetchJob = nullptr;
 
 	if (!isSuccess)
 	{
@@ -886,7 +884,7 @@ bool AdblockContentFiltersProfile::loadRules()
 
 bool AdblockContentFiltersProfile::update()
 {
-	if (m_isUpdating)
+	if (m_dataFetchJob)
 	{
 		return false;
 	}
@@ -915,8 +913,6 @@ bool AdblockContentFiltersProfile::update()
 	connect(m_dataFetchJob, &Job::progressChanged, this, &AdblockContentFiltersProfile::updateProgressChanged);
 
 	m_dataFetchJob->start();
-
-	m_isUpdating = true;
 
 	emit profileModified();
 
@@ -957,7 +953,7 @@ bool AdblockContentFiltersProfile::resolveDomainExceptions(const QString &url, c
 
 bool AdblockContentFiltersProfile::isUpdating() const
 {
-	return m_isUpdating;
+	return (m_dataFetchJob != nullptr);
 }
 
 }
