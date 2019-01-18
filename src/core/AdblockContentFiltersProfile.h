@@ -158,9 +158,6 @@ private:
 	static QVector<QChar> m_separators;
 	static QHash<QString, RuleOption> m_options;
 	static QHash<NetworkManager::ResourceType, RuleOption> m_resourceTypes;
-
-signals:
-	void profileModified(const QString &profile);
 };
 
 }
