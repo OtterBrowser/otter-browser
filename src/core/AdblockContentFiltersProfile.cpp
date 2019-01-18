@@ -593,9 +593,6 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 	m_dataFetchJob->deleteLater();
 
 	QIODevice *device(m_dataFetchJob->getData());
-	const QByteArray downloadedHeader(device->readLine());
-	const QByteArray downloadedChecksum(device->readLine());
-	const QByteArray downloadedData(device->readAll());
 
 	if (!isSuccess)
 	{
@@ -606,19 +603,37 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	if (downloadedChecksum.contains(QByteArrayLiteral("! Checksum: ")))
+	const QByteArray rawData(device->readAll());
+	QTextStream stream(rawData);
+	stream.setCodec("UTF-8");
+
+	QByteArray parsedData(stream.readLine().toUtf8());
+	QByteArray checksum;
+
+	while (!stream.atEnd())
 	{
-		QByteArray checksum(downloadedChecksum);
-		const QByteArray verifiedChecksum(QCryptographicHash::hash(downloadedHeader + QString(downloadedData).replace(QRegularExpression(QLatin1String("^.*\n{2,}")), QLatin1String("\n")).toStdString().c_str(), QCryptographicHash::Md5));
+		QString line(stream.readLine());
 
-		if (verifiedChecksum.toBase64().replace(QByteArrayLiteral("="), QByteArray()) != checksum.replace(QByteArrayLiteral("! Checksum: "), QByteArray()).replace(QByteArrayLiteral("\n"), QByteArray()))
+		if (!line.isEmpty())
 		{
-			m_error = ChecksumError;
-
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), Console::OtherCategory, Console::ErrorLevel, getPath());
-
-			return;
+			if (checksum.isEmpty() && line.startsWith(QLatin1String("! Checksum:")))
+			{
+				checksum = line.remove(0, 11).trimmed().toUtf8();
+			}
+			else
+			{
+				parsedData.append(QLatin1Char('\n') + line);
+			}
 		}
+	}
+
+	if (!checksum.isEmpty() && QCryptographicHash::hash(parsedData, QCryptographicHash::Md5).toBase64().remove(22, 2) != checksum)
+	{
+		m_error = ChecksumError;
+
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), Console::OtherCategory, Console::ErrorLevel, getPath());
+
+		return;
 	}
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
@@ -634,9 +649,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	file.write(downloadedHeader);
-	file.write(downloadedChecksum);
-	file.write(downloadedData);
+	file.write(rawData);
 
 	m_lastUpdate = QDateTime::currentDateTimeUtc();
 
