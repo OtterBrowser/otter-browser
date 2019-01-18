@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@
 namespace Otter
 {
 
+class DataFetchJob;
+
 class AdblockContentFiltersProfile final : public ContentFiltersProfile
 {
 	Q_OBJECT
@@ -52,6 +54,7 @@ public:
 	ProfileError getError() const override;
 	ProfileFlags getFlags() const override;
 	int getUpdateInterval() const override;
+	int getUpdateProgress() const override;
 	bool update() override;
 	bool remove() override;
 	bool isUpdating() const override;
@@ -127,11 +130,11 @@ protected:
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 
 protected slots:
-	void handleReplyFinished();
+	void handleJobFinished(bool isSuccess);
 
 private:
 	Node *m_root;
-	QNetworkReply *m_networkReply;
+	DataFetchJob *m_dataFetchJob;
 	QString m_requestUrl;
 	QString m_requestHost;
 	QString m_baseUrlHost;
