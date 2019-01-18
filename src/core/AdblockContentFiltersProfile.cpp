@@ -603,11 +603,10 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	const QByteArray rawData(device->readAll());
-	QTextStream stream(rawData);
+	QTextStream stream(device);
 	stream.setCodec("UTF-8");
 
-	QByteArray parsedData(stream.readLine().toUtf8());
+	QByteArray data(stream.readLine().toUtf8());
 	QByteArray checksum;
 
 	while (!stream.atEnd())
@@ -622,12 +621,12 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 			}
 			else
 			{
-				parsedData.append(QLatin1Char('\n') + line);
+				data.append(QLatin1Char('\n') + line);
 			}
 		}
 	}
 
-	if (!checksum.isEmpty() && QCryptographicHash::hash(parsedData, QCryptographicHash::Md5).toBase64().remove(22, 2) != checksum)
+	if (!checksum.isEmpty() && QCryptographicHash::hash(data, QCryptographicHash::Md5).toBase64().remove(22, 2) != checksum)
 	{
 		m_error = ChecksumError;
 
@@ -649,7 +648,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		return;
 	}
 
-	file.write(rawData);
+	file.write(data);
 
 	m_lastUpdate = QDateTime::currentDateTimeUtc();
 
