@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -157,6 +157,7 @@ public:
 	virtual ProfileError getError() const = 0;
 	virtual ProfileFlags getFlags() const = 0;
 	virtual int getUpdateInterval() const = 0;
+	virtual int getUpdateProgress() const = 0;
 	virtual bool update() = 0;
 	virtual bool remove() = 0;
 	virtual bool isUpdating() const = 0;
@@ -164,6 +165,7 @@ public:
 
 signals:
 	void profileModified(const QString &profile);
+	void updateProgressChanged(int progress);
 };
 
 }

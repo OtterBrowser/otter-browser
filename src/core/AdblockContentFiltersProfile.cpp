@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@
 
 #include "AdblockContentFiltersProfile.h"
 #include "Console.h"
-#include "NetworkManager.h"
-#include "NetworkManagerFactory.h"
+#include "Job.h"
 #include "SessionsManager.h"
 
 #include <QtConcurrent/QtConcurrentRun>
@@ -30,8 +29,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QSaveFile>
 #include <QtCore/QTextStream>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkRequest>
 
 namespace Otter
 {
@@ -42,7 +39,7 @@ QHash<NetworkManager::ResourceType, AdblockContentFiltersProfile::RuleOption> Ad
 
 AdblockContentFiltersProfile::AdblockContentFiltersProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime &lastUpdate, const QStringList &languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : ContentFiltersProfile(parent),
 	m_root(nullptr),
-	m_networkReply(nullptr),
+	m_dataFetchJob(nullptr),
 	m_name(name),
 	m_title(title),
 	m_updateUrl(updateUrl),
@@ -584,26 +581,27 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 	return {};
 }
 
-void AdblockContentFiltersProfile::handleReplyFinished()
+void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 {
 	m_isUpdating = false;
 
-	if (!m_networkReply)
+	if (!m_dataFetchJob)
 	{
 		return;
 	}
 
-	m_networkReply->deleteLater();
+	m_dataFetchJob->deleteLater();
 
-	const QByteArray downloadedHeader(m_networkReply->readLine());
-	const QByteArray downloadedChecksum(m_networkReply->readLine());
-	const QByteArray downloadedData(m_networkReply->readAll());
+	QIODevice *device(m_dataFetchJob->getData());
+	const QByteArray downloadedHeader(device->readLine());
+	const QByteArray downloadedChecksum(device->readLine());
+	const QByteArray downloadedData(device->readAll());
 
-	if (m_networkReply->error() != QNetworkReply::NoError)
+	if (!isSuccess)
 	{
 		m_error = DownloadError;
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(m_networkReply->errorString()), Console::OtherCategory, Console::ErrorLevel, getPath());
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(device->errorString()), Console::OtherCategory, Console::ErrorLevel, getPath());
 
 		return;
 	}
@@ -832,6 +830,11 @@ int AdblockContentFiltersProfile::getUpdateInterval() const
 	return m_updateInterval;
 }
 
+int AdblockContentFiltersProfile::getUpdateProgress() const
+{
+	return (m_dataFetchJob ? m_dataFetchJob->getProgress() : -1);
+}
+
 bool AdblockContentFiltersProfile::loadRules()
 {
 	m_error = NoError;
@@ -894,9 +897,12 @@ bool AdblockContentFiltersProfile::update()
 		return false;
 	}
 
-	m_networkReply = NetworkManagerFactory::createRequest(m_updateUrl);
+	m_dataFetchJob = new DataFetchJob(m_updateUrl, this);
 
-	connect(m_networkReply, &QNetworkReply::finished, this, &AdblockContentFiltersProfile::handleReplyFinished);
+	connect(m_dataFetchJob, &Job::jobFinished, this, &AdblockContentFiltersProfile::handleJobFinished);
+	connect(m_dataFetchJob, &Job::progressChanged, this, &AdblockContentFiltersProfile::updateProgressChanged);
+
+	m_dataFetchJob->start();
 
 	m_isUpdating = true;
 
@@ -907,11 +913,11 @@ bool AdblockContentFiltersProfile::remove()
 {
 	const QString path(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name));
 
-	if (m_networkReply)
+	if (m_dataFetchJob)
 	{
-		m_networkReply->abort();
-		m_networkReply->deleteLater();
-		m_networkReply = nullptr;
+		m_dataFetchJob->cancel();
+		m_dataFetchJob->deleteLater();
+		m_dataFetchJob = nullptr;
 	}
 
 	if (QFile::exists(path))
