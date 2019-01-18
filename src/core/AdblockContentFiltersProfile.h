@@ -151,7 +151,6 @@ private:
 	ProfileError m_error;
 	ProfileFlags m_flags;
 	int m_updateInterval;
-	bool m_isUpdating;
 	bool m_isEmpty;
 	bool m_wasLoaded;
 
