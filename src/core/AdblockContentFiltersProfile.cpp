@@ -665,7 +665,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 		loadRules();
 	}
 
-	emit profileModified(m_name);
+	emit profileModified();
 }
 
 void AdblockContentFiltersProfile::setUpdateInterval(int interval)
@@ -674,7 +674,7 @@ void AdblockContentFiltersProfile::setUpdateInterval(int interval)
 	{
 		m_updateInterval = interval;
 
-		emit profileModified(m_name);
+		emit profileModified();
 	}
 }
 
@@ -685,7 +685,7 @@ void AdblockContentFiltersProfile::setUpdateUrl(const QUrl &url)
 		m_updateUrl = url;
 		m_flags |= HasCustomUpdateUrlFlag;
 
-		emit profileModified(m_name);
+		emit profileModified();
 	}
 }
 
@@ -695,7 +695,7 @@ void AdblockContentFiltersProfile::setCategory(ProfileCategory category)
 	{
 		m_category = category;
 
-		emit profileModified(m_name);
+		emit profileModified();
 	}
 }
 
@@ -706,7 +706,7 @@ void AdblockContentFiltersProfile::setTitle(const QString &title)
 		m_title = title;
 		m_flags |= HasCustomTitleFlag;
 
-		emit profileModified(m_name);
+		emit profileModified();
 	}
 }
 

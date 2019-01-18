@@ -248,8 +248,12 @@ void ContentFiltersManager::ensureInitialized()
 
 		m_contentBlockingProfiles.append(profile);
 
-		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::profileModified);
-		connect(profile, &ContentFiltersProfile::profileModified, m_instance, &ContentFiltersManager::scheduleSave);
+		connect(profile, &ContentFiltersProfile::profileModified, profile, [=]()
+		{
+			m_instance->scheduleSave();
+
+			emit m_instance->profileModified(profile->getName());
+		});
 	}
 
 	m_contentBlockingProfiles.squeeze();

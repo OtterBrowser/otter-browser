@@ -164,7 +164,7 @@ public:
 	virtual bool isFraud(const QUrl &url);
 
 signals:
-	void profileModified(const QString &profile);
+	void profileModified();
 	void updateProgressChanged(int progress);
 };
 
