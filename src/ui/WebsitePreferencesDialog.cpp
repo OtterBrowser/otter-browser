@@ -414,7 +414,7 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 		{
 			const QModelIndex entryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(j, 0, categoryIndex));
 
-			if (entryIndex.data(Qt::UserRole).toString() == name)
+			if (entryIndex.data(ContentFiltersManager::NameRole).toString() == name)
 			{
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
