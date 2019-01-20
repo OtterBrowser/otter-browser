@@ -88,34 +88,29 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	QStyledItemDelegate::paint(painter, mutableOption, index);
 
-	if (m_mapping.contains(ProgressValueRole))
+	if (m_mapping.contains(ProgressHasIndicatorRole) && index.data(m_mapping[ProgressHasIndicatorRole]).toBool() && m_mapping.contains(ProgressValueRole))
 	{
-		const int updateProgress(index.data(m_mapping[ProgressValueRole]).toInt());
+		initStyleOption(&mutableOption, index);
 
-		if (updateProgress >= 0)
+		QStyleOptionProgressBar progressBarOption;
+		progressBarOption.palette = option.palette;
+		progressBarOption.minimum = 0;
+		progressBarOption.maximum = 100;
+		progressBarOption.progress = index.data(m_mapping[ProgressValueRole]).toInt();
+		progressBarOption.rect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption);
+		progressBarOption.rect.setTop(progressBarOption.rect.bottom() - 3);
+		progressBarOption.rect.setBottom(progressBarOption.rect.bottom() - 1);
+
+		if (m_mapping.contains(ProgressHasErrorRole) && index.data(m_mapping[ProgressHasErrorRole]).toBool())
 		{
-			initStyleOption(&mutableOption, index);
-
-			QStyleOptionProgressBar progressBarOption;
-			progressBarOption.palette = option.palette;
-			progressBarOption.minimum = 0;
-			progressBarOption.maximum = 100;
-			progressBarOption.progress = updateProgress;
-			progressBarOption.rect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &mutableOption);
-			progressBarOption.rect.setTop(progressBarOption.rect.bottom() - 3);
-			progressBarOption.rect.setBottom(progressBarOption.rect.bottom() - 1);
-
-			if (m_mapping.contains(ProgressHasErrorRole) && index.data(m_mapping[ProgressHasErrorRole]).toBool())
-			{
-				progressBarOption.palette.setColor(QPalette::Highlight, QColor(Qt::red));
-			}
-			else if (option.state.testFlag(QStyle::State_Selected))
-			{
-				progressBarOption.palette.setColor(QPalette::Highlight, progressBarOption.palette.highlightedText().color());
-			}
-
-			Application::getStyle()->drawThinProgressBar(&progressBarOption, painter);
+			progressBarOption.palette.setColor(QPalette::Highlight, QColor(Qt::red));
 		}
+		else if (option.state.testFlag(QStyle::State_Selected))
+		{
+			progressBarOption.palette.setColor(QPalette::Highlight, progressBarOption.palette.highlightedText().color());
+		}
+
+		Application::getStyle()->drawThinProgressBar(&progressBarOption, painter);
 	}
 }
 

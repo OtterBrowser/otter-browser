@@ -32,6 +32,7 @@ public:
 	{
 		NoRole = 0,
 		ProgressHasErrorRole,
+		ProgressHasIndicatorRole,
 		ProgressValueRole
 	};
 
