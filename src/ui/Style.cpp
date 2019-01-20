@@ -22,6 +22,7 @@
 #include "ToolBarWidget.h"
 #include "../core/SettingsManager.h"
 
+#include <QtCore/QDateTime>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
 #include <QtWidgets/QStyleFactory>
@@ -100,7 +101,14 @@ void Style::drawThinProgressBar(const QStyleOptionProgressBar *option, QPainter 
 	painter->drawRoundedRect(option->rect, 2, 2);
 	painter->setBrush(option->palette.highlight());
 
-	if (option->progress > 0)
+	if (option->progress < 0)
+	{
+		const int position(static_cast<int>(Utils::calculatePercent(((QDateTime::currentDateTime().toMSecsSinceEpoch() / 25) % 120), 100, 1) * option->rect.width()));
+		const int size(option->rect.width() / 5);
+
+		painter->drawRoundedRect(qMax(option->rect.left(), (option->rect.left() + position - size)), option->rect.top(), (size + ((position < size) ? (position - size) : 0)), option->rect.height(), 2, 2);
+	}
+	else if (option->progress > 0)
 	{
 		painter->drawRoundedRect(option->rect.left(), option->rect.top(), static_cast<int>(Utils::calculatePercent(qMin(option->maximum, option->progress), option->maximum, 1) * option->rect.width()), option->rect.height(), 2, 2);
 	}
