@@ -418,7 +418,6 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 
 		const QList<QList<QStandardItem*> > profileItems(categoryEntries[categoryTitles.at(i).first].values());
 		QList<QStandardItem*> categoryItems({new QStandardItem(categoryTitles.at(i).second), new QStandardItem(), new QStandardItem()});
-		categoryItems[0]->setData(categoryTitles.at(i).first, Qt::UserRole);
 		categoryItems[0]->setData(false, IsShowingProgressIndicatorRole);
 		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
