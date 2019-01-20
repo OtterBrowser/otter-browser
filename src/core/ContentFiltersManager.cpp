@@ -360,19 +360,20 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 
 	for (int i = 0; i < m_contentBlockingProfiles.count(); ++i)
 	{
-		const QString name(m_contentBlockingProfiles.at(i)->getName());
+		const ContentFiltersProfile *profile(m_contentBlockingProfiles.at(i));
+		const QString name(profile->getName());
 
 		if (name == QLatin1String("custom"))
 		{
 			continue;
 		}
 
-		const ContentFiltersProfile::ProfileCategory category(m_contentBlockingProfiles.at(i)->getCategory());
-		QString title(m_contentBlockingProfiles.at(i)->getTitle());
+		const ContentFiltersProfile::ProfileCategory category(profile->getCategory());
+		QString title(profile->getTitle());
 
 		if (category == ContentFiltersProfile::RegionalCategory)
 		{
-			const QVector<QLocale::Language> languages(m_contentBlockingProfiles.at(i)->getLanguages());
+			const QVector<QLocale::Language> languages(profile->getLanguages());
 			QStringList languageNames;
 			languageNames.reserve(languages.count());
 
@@ -384,13 +385,14 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 			title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
 		}
 
-		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(m_contentBlockingProfiles.at(i)->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(m_contentBlockingProfiles.at(i)->getLastUpdate()))});
+		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(profile->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(profile->getLastUpdate()))});
 		profileItems[0]->setData(name, NameRole);
 		profileItems[0]->setData(false, HasErrorRole);
 		profileItems[0]->setData(false, IsShowingProgressIndicatorRole);
 		profileItems[0]->setData(false, IsUpdatingRole);
 		profileItems[0]->setData(-1, UpdateProgressValueRole);
-		profileItems[0]->setData(m_contentBlockingProfiles.at(i)->getUpdateUrl(), UpdateUrlRole);
+		profileItems[0]->setData(profile->getLastUpdate(), UpdateTimeRole);
+		profileItems[0]->setData(profile->getUpdateUrl(), UpdateUrlRole);
 		profileItems[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		profileItems[0]->setCheckable(true);
 		profileItems[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);

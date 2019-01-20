@@ -47,13 +47,11 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
-
-	if (profile)
+	if (index.parent().isValid())
 	{
 		option->features |= QStyleOptionViewItem::HasDecoration;
 
-		if (profile->isUpdating())
+		if (index.data(ContentFiltersManager::IsUpdatingRole).toBool())
 		{
 			const Animation *animation(ContentBlockingDialog::getUpdateAnimation());
 
@@ -62,11 +60,11 @@ void ContentBlockingTitleDelegate::initStyleOption(QStyleOptionViewItem *option,
 				option->icon = QIcon(animation->getCurrentPixmap());
 			}
 		}
-		else if (profile->getError() != ContentFiltersProfile::NoError)
+		else if (index.data(ContentFiltersManager::HasErrorRole).toBool())
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-error"));
 		}
-		else if (profile->getLastUpdate().isNull() || profile->getLastUpdate().daysTo(QDateTime::currentDateTimeUtc()) > 7)
+		else if (index.data(ContentFiltersManager::UpdateTimeRole).isNull() || index.data(ContentFiltersManager::UpdateTimeRole).toDateTime().daysTo(QDateTime::currentDateTimeUtc()) > 7)
 		{
 			option->icon = ThemesManager::createIcon(QLatin1String("dialog-warning"));
 		}
@@ -466,6 +464,7 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 		const bool hasError(profile->getError() != ContentFiltersProfile::NoError);
 
 		entryItem->setData(hasError, ContentFiltersManager::HasErrorRole);
+		entryItem->setData(profile->getLastUpdate(), ContentFiltersManager::UpdateTimeRole);
 
 		if (profile->isUpdating() != entryItem->data(ContentFiltersManager::IsUpdatingRole).toBool())
 		{

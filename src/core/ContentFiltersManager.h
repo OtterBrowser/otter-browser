@@ -43,6 +43,7 @@ public:
 		IsUpdatingRole,
 		NameRole,
 		UpdateProgressValueRole,
+		UpdateTimeRole,
 		UpdateUrlRole
 	};
 
