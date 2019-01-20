@@ -386,6 +386,10 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 
 		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(m_contentBlockingProfiles.at(i)->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(m_contentBlockingProfiles.at(i)->getLastUpdate()))});
 		profileItems[0]->setData(name, NameRole);
+		profileItems[0]->setData(false, HasErrorRole);
+		profileItems[0]->setData(false, IsShowingProgressIndicatorRole);
+		profileItems[0]->setData(false, IsUpdatingRole);
+		profileItems[0]->setData(-1, UpdateProgressValueRole);
 		profileItems[0]->setData(m_contentBlockingProfiles.at(i)->getUpdateUrl(), UpdateUrlRole);
 		profileItems[0]->setFlags(Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		profileItems[0]->setCheckable(true);
@@ -413,6 +417,7 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 		const QList<QList<QStandardItem*> > profileItems(categoryEntries[categoryTitles.at(i).first].values());
 		QList<QStandardItem*> categoryItems({new QStandardItem(categoryTitles.at(i).second), new QStandardItem(), new QStandardItem()});
 		categoryItems[0]->setData(categoryTitles.at(i).first, Qt::UserRole);
+		categoryItems[0]->setData(false, IsShowingProgressIndicatorRole);
 		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		categoryItems[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

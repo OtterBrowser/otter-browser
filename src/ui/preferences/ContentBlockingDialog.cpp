@@ -32,13 +32,14 @@
 #include "ui_ContentBlockingDialog.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QTimer>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
 {
 
-ContentBlockingTitleDelegate::ContentBlockingTitleDelegate(QObject *parent) : ItemDelegate(parent)
+ContentBlockingTitleDelegate::ContentBlockingTitleDelegate(QObject *parent) : ItemDelegate({{ItemDelegate::ProgressHasErrorRole, ContentFiltersManager::HasErrorRole}, {ItemDelegate::ProgressHasIndicatorRole, ContentFiltersManager::IsShowingProgressIndicatorRole}, {ItemDelegate::ProgressValueRole, ContentFiltersManager::UpdateProgressValueRole}}, parent)
 {
 }
 
@@ -301,6 +302,11 @@ void ContentBlockingDialog::updateProfile()
 	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
 	ContentFiltersProfile *profile(ContentFiltersManager::getProfile(index.data(ContentFiltersManager::NameRole).toString()));
 
+	if (!profile)
+	{
+		return;
+	}
+
 	if (!m_updateAnimation)
 	{
 		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
@@ -319,10 +325,7 @@ void ContentBlockingDialog::updateProfile()
 		connect(m_updateAnimation, &Animation::frameChanged, m_ui->profilesViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
 	}
 
-	if (profile)
-	{
-		profile->update();
-	}
+	profile->update();
 }
 
 void ContentBlockingDialog::updateProfilesActions()
@@ -419,7 +422,8 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 		return;
 	}
 
-	m_ui->profilesViewWidget->viewport()->update();
+	QStandardItem *entryItem(nullptr);
+	bool hasFound(false);
 
 	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
 	{
@@ -432,6 +436,9 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 			if (entryIndex.data(ContentFiltersManager::NameRole).toString() == name)
 			{
 				QString title(profile->getTitle());
+
+				entryItem = m_ui->profilesViewWidget->getSourceModel()->itemFromIndex(entryIndex);
+				hasFound = true;
 
 				if (profile->getCategory() == ContentFiltersProfile::RegionalCategory)
 				{
@@ -449,10 +456,49 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
 				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
-				return;
+				break;
 			}
 		}
 	}
+
+	if (entryItem)
+	{
+		const bool hasError(profile->getError() != ContentFiltersProfile::NoError);
+
+		entryItem->setData(hasError, ContentFiltersManager::HasErrorRole);
+
+		if (profile->isUpdating() != entryItem->data(ContentFiltersManager::IsUpdatingRole).toBool())
+		{
+			entryItem->setData(profile->isUpdating(), ContentFiltersManager::IsUpdatingRole);
+
+			if (profile->isUpdating())
+			{
+				entryItem->setData(true, ContentFiltersManager::IsShowingProgressIndicatorRole);
+
+				connect(profile, &ContentFiltersProfile::updateProgressChanged, profile, [=](int progress)
+				{
+					entryItem->setData(((progress < 0 && entryItem->data(ContentFiltersManager::HasErrorRole).toBool()) ? 0 : progress), ContentFiltersManager::UpdateProgressValueRole);
+				});
+			}
+			else
+			{
+				if (entryItem->data(ContentFiltersManager::UpdateProgressValueRole).toInt() < 0)
+				{
+					entryItem->setData((hasError ? 0 : 100), ContentFiltersManager::UpdateProgressValueRole);
+				}
+
+				QTimer::singleShot(2500, this, [=]()
+				{
+					if (!profile->isUpdating())
+					{
+						entryItem->setData(false, ContentFiltersManager::IsShowingProgressIndicatorRole);
+					}
+				});
+			}
+		}
+	}
+
+	m_ui->profilesViewWidget->viewport()->update();
 }
 
 void ContentBlockingDialog::save()

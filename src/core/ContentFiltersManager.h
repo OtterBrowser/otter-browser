@@ -38,7 +38,11 @@ class ContentFiltersManager final : public QObject
 public:
 	enum DataRole
 	{
-		NameRole = Qt::UserRole,
+		HasErrorRole = Qt::UserRole,
+		IsShowingProgressIndicatorRole,
+		IsUpdatingRole,
+		NameRole,
+		UpdateProgressValueRole,
 		UpdateUrlRole
 	};
 
