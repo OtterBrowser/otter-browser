@@ -98,9 +98,7 @@ void AdblockContentFiltersProfile::loadHeader()
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		m_error = ReadError;
-
-		Console::addMessage(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+		raiseError(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), m_error);
 
 		return;
 	}
@@ -580,6 +578,15 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 	return {};
 }
 
+void AdblockContentFiltersProfile::raiseError(const QString &message, ContentFiltersProfile::ProfileError error)
+{
+	m_error = error;
+
+	Console::addMessage(message, Console::OtherCategory, Console::ErrorLevel, getPath());
+
+	emit profileModified();
+}
+
 void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 {
 	if (!m_dataFetchJob)
@@ -594,11 +601,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	if (!isSuccess)
 	{
-		m_error = DownloadError;
-
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(device->errorString()), Console::OtherCategory, Console::ErrorLevel, getPath());
-
-		emit profileModified();
+		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(device->errorString()), DownloadError);
 
 		return;
 	}
@@ -628,9 +631,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	if (!checksum.isEmpty() && QCryptographicHash::hash(data, QCryptographicHash::Md5).toBase64().remove(22, 2) != checksum)
 	{
-		m_error = ChecksumError;
-
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), Console::OtherCategory, Console::ErrorLevel, getPath());
+		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), ChecksumError);
 
 		return;
 	}
@@ -641,9 +642,7 @@ void AdblockContentFiltersProfile::handleJobFinished(bool isSuccess)
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
-		m_error = DownloadError;
-
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, file.fileName());
+		raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), DownloadError);
 
 		return;
 	}
@@ -893,17 +892,13 @@ bool AdblockContentFiltersProfile::update()
 
 	if (!m_updateUrl.isValid())
 	{
-		const QString path(getPath());
-
-		m_error = DownloadError;
-
 		if (m_updateUrl.isEmpty())
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Console::OtherCategory, Console::ErrorLevel, path);
+			raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), DownloadError);
 		}
 		else
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.toString()), Console::OtherCategory, Console::ErrorLevel, path);
+			raiseError(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.toString()), DownloadError);
 		}
 
 		return false;

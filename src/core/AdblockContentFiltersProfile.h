@@ -130,6 +130,7 @@ protected:
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList) const;
 
 protected slots:
+	void raiseError(const QString &message, ProfileError error);
 	void handleJobFinished(bool isSuccess);
 
 private:
