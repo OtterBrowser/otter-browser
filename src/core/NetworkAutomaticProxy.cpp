@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2014 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@
 
 #include "NetworkAutomaticProxy.h"
 #include "Console.h"
-#include "NetworkManager.h"
-#include "NetworkManagerFactory.h"
+#include "Job.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDate>
@@ -292,7 +291,6 @@ bool PacUtils::isInRange(const QVariant &valueOne, const QVariant &valueTwo, con
 }
 
 NetworkAutomaticProxy::NetworkAutomaticProxy(const QString &path, QObject *parent) : QObject(parent),
-	m_reply(nullptr),
 	m_path(path),
 	m_isValid(false)
 {
@@ -309,20 +307,6 @@ NetworkAutomaticProxy::NetworkAutomaticProxy(const QString &path, QObject *paren
 	m_proxies.insert(QLatin1String("DIRECT"), QVector<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)}));
 
 	setPath(path);
-}
-
-void NetworkAutomaticProxy::handleReplyFinished()
-{
-	if (m_reply->error() == QNetworkReply::NoError && setup(m_reply->readAll()))
-	{
-		m_isValid = true;
-	}
-	else
-	{
-		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_reply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_reply->url().url());
-	}
-
-	m_reply->deleteLater();
 }
 
 void NetworkAutomaticProxy::setPath(const QString &path)
@@ -348,9 +332,23 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 
 		if (url.isValid())
 		{
-			m_reply = NetworkManagerFactory::createRequest(url);
+			DataFetchJob *job(new DataFetchJob(url, this));
 
-			connect(m_reply, &QNetworkReply::finished, this, &NetworkAutomaticProxy::handleReplyFinished);
+			connect(job, &Job::jobFinished, this, [=](bool isSuccess)
+			{
+				QIODevice *device(job->getData());
+
+				if (isSuccess && setup(device->readAll()))
+				{
+					m_isValid = true;
+				}
+				else
+				{
+					Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(device->errorString()), Console::NetworkCategory, Console::ErrorLevel, url.url());
+				}
+			});
+
+			job->start();
 		}
 		else
 		{
