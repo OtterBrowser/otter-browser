@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@
 #include "UpdateChecker.h"
 #include "Application.h"
 #include "Console.h"
-#include "NetworkManager.h"
-#include "NetworkManagerFactory.h"
+#include "Job.h"
 #include "PlatformIntegration.h"
 #include "SettingsManager.h"
 
@@ -33,9 +32,7 @@
 namespace Otter
 {
 
-UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(parent),
-	m_networkReply(nullptr),
-	m_isInBackground(inBackground)
+UpdateChecker::UpdateChecker(QObject *parent, bool isInBackground) : QObject(parent)
 {
 	const QUrl url(SettingsManager::getOption(SettingsManager::Updates_ServerUrlOption).toString());
 
@@ -48,89 +45,89 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 		return;
 	}
 
-	m_networkReply = NetworkManagerFactory::createRequest(url);
+	DataFetchJob *job(new DataFetchJob(url, this));
 
-	connect(m_networkReply, &QNetworkReply::finished, this, &UpdateChecker::runUpdateCheck);
-}
-
-void UpdateChecker::runUpdateCheck()
-{
-	m_networkReply->deleteLater();
-
-	if (m_networkReply->error() != QNetworkReply::NoError)
+	connect(job, &Job::jobFinished, this, [=](bool isSuccess)
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates: %1").arg(m_networkReply->errorString()), Console::OtherCategory, Console::ErrorLevel);
+		QIODevice *device(job->getData());
 
-		deleteLater();
-
-		return;
-	}
-
-	QStringList activeChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
-	activeChannels.removeAll({});
-
-	const PlatformIntegration *integration(Application::getPlatformIntegration());
-	const QJsonArray channelsArray(QJsonDocument::fromJson(m_networkReply->readAll()).object().value(QLatin1String("channels")).toArray());
-	const QString platform(integration ? integration->getPlatformName() : QString());
-	const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
-	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
-	int latestVersion(0);
-	int latestVersionIndex(0);
-	QVector<UpdateInformation> availableUpdates;
-
-	for (int i = 0; i < channelsArray.count(); ++i)
-	{
-		if (channelsArray.at(i).isObject())
+		if (!isSuccess)
 		{
-			const QJsonObject channelObject(channelsArray.at(i).toObject());
-			const QString identifier(channelObject.value(QLatin1String("identifier")).toString());
-			const QString channelVersion(channelObject.value(QLatin1String("version")).toString());
+			Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates: %1").arg(device->errorString()), Console::OtherCategory, Console::ErrorLevel);
 
-			if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!m_isInBackground && activeChannels.isEmpty()))
+			deleteLater();
+
+			return;
+		}
+
+		QStringList activeChannels(SettingsManager::getOption(SettingsManager::Updates_ActiveChannelsOption).toStringList());
+		activeChannels.removeAll({});
+
+		const PlatformIntegration *integration(Application::getPlatformIntegration());
+		const QJsonArray channelsArray(QJsonDocument::fromJson(device->readAll()).object().value(QLatin1String("channels")).toArray());
+		const QString platform(integration ? integration->getPlatformName() : QString());
+		const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
+		const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
+		int latestVersion(0);
+		int latestVersionIndex(0);
+		QVector<UpdateInformation> availableUpdates;
+
+		for (int i = 0; i < channelsArray.count(); ++i)
+		{
+			if (channelsArray.at(i).isObject())
 			{
-				const int channelMainVersion(channelVersion.trimmed().remove(QLatin1Char('.')).toInt());
+				const QJsonObject channelObject(channelsArray.at(i).toObject());
+				const QString identifier(channelObject.value(QLatin1String("identifier")).toString());
+				const QString channelVersion(channelObject.value(QLatin1String("version")).toString());
 
-				if (channelMainVersion == 0)
+				if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!isInBackground && activeChannels.isEmpty()))
 				{
-					Console::addMessage(QCoreApplication::translate("main", "Unable to parse version number: %1").arg(channelVersion), Console::OtherCategory, Console::ErrorLevel);
+					const int channelMainVersion(channelVersion.trimmed().remove(QLatin1Char('.')).toInt());
 
-					continue;
-				}
-
-				const int channelSubVersion(channelObject.value(QLatin1String("subVersion")).toString().toInt());
-
-				if (mainVersion < channelMainVersion || (subVersion > 0 && subVersion < channelSubVersion))
-				{
-					UpdateInformation information;
-					information.channel = identifier;
-					information.version = channelVersion;
-					information.isAvailable = channelObject.value(QLatin1String("availablePlatforms")).toArray().contains(QJsonValue(platform));
-					information.detailsUrl = QUrl(channelObject.value(QLatin1String("detailsUrl")).toString());
-					information.scriptUrl = QUrl(channelObject.value(QLatin1String("scriptUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
-					information.fileUrl = QUrl(channelObject.value(QLatin1String("fileUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000)));
-
-					if (!channelObject.value(QLatin1String("subVersion")).toString().isEmpty())
+					if (channelMainVersion == 0)
 					{
-						information.version.append(QLatin1Char('#') + channelObject.value(QLatin1String("subVersion")).toString());
+						Console::addMessage(QCoreApplication::translate("main", "Unable to parse version number: %1").arg(channelVersion), Console::OtherCategory, Console::ErrorLevel);
+
+						continue;
 					}
 
-					if (mainVersion < channelMainVersion && latestVersion < channelMainVersion)
-					{
-						latestVersion = channelMainVersion;
-						latestVersionIndex = availableUpdates.count();
-					}
+					const int channelSubVersion(channelObject.value(QLatin1String("subVersion")).toString().toInt());
 
-					availableUpdates.append(information);
+					if (mainVersion < channelMainVersion || (subVersion > 0 && subVersion < channelSubVersion))
+					{
+						UpdateInformation information;
+						information.channel = identifier;
+						information.version = channelVersion;
+						information.isAvailable = channelObject.value(QLatin1String("availablePlatforms")).toArray().contains(QJsonValue(platform));
+						information.detailsUrl = QUrl(channelObject.value(QLatin1String("detailsUrl")).toString());
+						information.scriptUrl = QUrl(channelObject.value(QLatin1String("scriptUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
+						information.fileUrl = QUrl(channelObject.value(QLatin1String("fileUrl")).toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000)));
+
+						if (!channelObject.value(QLatin1String("subVersion")).toString().isEmpty())
+						{
+							information.version.append(QLatin1Char('#') + channelObject.value(QLatin1String("subVersion")).toString());
+						}
+
+						if (mainVersion < channelMainVersion && latestVersion < channelMainVersion)
+						{
+							latestVersion = channelMainVersion;
+							latestVersionIndex = availableUpdates.count();
+						}
+
+						availableUpdates.append(information);
+					}
 				}
 			}
 		}
-	}
 
-	SettingsManager::setOption(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
+		SettingsManager::setOption(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
 
-	emit finished(availableUpdates, latestVersionIndex);
+		emit finished(availableUpdates, latestVersionIndex);
 
-	deleteLater();
+		deleteLater();
+	});
+
+	job->start();
 }
 
 }

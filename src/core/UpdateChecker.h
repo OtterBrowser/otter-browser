@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@
 
 #include "SessionsManager.h"
 
-#include <QtNetwork/QNetworkReply>
-
 namespace Otter
 {
 
@@ -43,14 +41,7 @@ public:
 		bool isAvailable = false;
 	};
 
-	explicit UpdateChecker(QObject *parent = nullptr, bool inBackground = true);
-
-protected slots:
-	void runUpdateCheck();
-
-private:
-	QNetworkReply *m_networkReply;
-	bool m_isInBackground;
+	explicit UpdateChecker(QObject *parent = nullptr, bool isInBackground = true);
 
 signals:
 	void finished(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex);
