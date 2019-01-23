@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,13 @@
 #include "../../../core/Utils.h"
 #include "../../../ui/Action.h"
 #include "../../../ui/ProgressBarWidget.h"
+#include "../../../ui/Style.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QFrame>
@@ -143,7 +145,27 @@ void TransfersWidget::updateState()
 		}
 	}
 
-	setIcon(getIcon());
+	m_icon = ThemesManager::createIcon(QLatin1String("transfers"));
+
+	if (transferAmount > 0)
+	{
+		const int iconSize(this->iconSize().width());
+		QPixmap pixmap(m_icon.pixmap(iconSize, iconSize));
+		QPainter painter(&pixmap);
+		QStyleOptionProgressBar progressBarOption;
+		progressBarOption.palette = palette();
+		progressBarOption.minimum = 0;
+		progressBarOption.maximum = 100;
+		progressBarOption.progress = static_cast<int>(Utils::calculatePercent(bytesReceived, bytesTotal));
+		progressBarOption.rect = pixmap.rect();
+		progressBarOption.rect.setTop(progressBarOption.rect.bottom() - (iconSize / 8));
+
+		Application::getStyle()->drawThinProgressBar(&progressBarOption, &painter);
+
+		m_icon = QIcon(pixmap);
+	}
+
+	setIcon(m_icon);
 }
 
 QIcon TransfersWidget::getIcon() const
