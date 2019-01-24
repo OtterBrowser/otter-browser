@@ -45,10 +45,12 @@ public:
 	bool hasError() const;
 
 protected:
+	void timerEvent(QTimerEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 
 private:
 	StyleMode m_mode;
+	int m_updateTimer;
 	bool m_hasError;
 };
 
