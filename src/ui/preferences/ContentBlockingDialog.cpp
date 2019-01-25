@@ -421,11 +421,11 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 	}
 
 	QStandardItem *entryItem(nullptr);
-	bool hasFound(false);
 
 	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
 	{
 		const QModelIndex categoryIndex(m_ui->profilesViewWidget->getIndex(i));
+		bool hasFound(false);
 
 		for (int j = 0; j < m_ui->profilesViewWidget->getRowCount(categoryIndex); ++j)
 		{
@@ -456,6 +456,11 @@ void ContentBlockingDialog::handleProfileModified(const QString &name)
 
 				break;
 			}
+		}
+
+		if (hasFound)
+		{
+			break;
 		}
 	}
 
