@@ -577,7 +577,7 @@ void ContentBlockingDialog::save()
 	close();
 }
 
-Animation *ContentBlockingDialog::getUpdateAnimation()
+Animation* ContentBlockingDialog::getUpdateAnimation()
 {
 	return m_updateAnimation;
 }
