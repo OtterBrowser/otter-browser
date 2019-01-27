@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "QtWebEngineTransfer.h"
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "QtWebEngineWebWidget.h"
+#include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/HandlersManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
@@ -188,6 +189,9 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 	if (!m_isInitialized)
 	{
 		m_isInitialized = true;
+
+		ContentFiltersManager::initialize();
+
 		m_requestInterceptor = new QtWebEngineUrlRequestInterceptor(this);
 
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
