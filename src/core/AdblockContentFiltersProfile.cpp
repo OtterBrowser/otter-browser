@@ -885,7 +885,7 @@ bool AdblockContentFiltersProfile::loadRules()
 
 bool AdblockContentFiltersProfile::update()
 {
-	if (m_dataFetchJob)
+	if (m_dataFetchJob || thread() != QThread::currentThread())
 	{
 		return false;
 	}
