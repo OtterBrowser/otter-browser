@@ -30,6 +30,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
+#include <QtCore/QTimer>
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
@@ -47,6 +48,11 @@ ContentFiltersManager::ContentFiltersManager(QObject *parent) : QObject(parent),
 	m_areWildcardsEnabled = SettingsManager::getOption(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
 
 	handleOptionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getOption(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
+
+	QTimer::singleShot(1000, this, [&]()
+	{
+		ensureInitialized();
+	});
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ContentFiltersManager::handleOptionChanged);
 }
