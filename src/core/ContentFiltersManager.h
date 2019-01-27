@@ -71,6 +71,7 @@ public:
 	};
 
 	static void createInstance();
+	static void initialize();
 	static void addProfile(ContentFiltersProfile *profile);
 	static void removeProfile(ContentFiltersProfile *profile);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
@@ -93,7 +94,6 @@ protected:
 	explicit ContentFiltersManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event) override;
-	static void ensureInitialized();
 
 protected slots:
 	void scheduleSave();
