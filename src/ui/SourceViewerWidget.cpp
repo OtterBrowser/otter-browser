@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -271,7 +271,9 @@ void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 
 	if (currentLine != m_lastClickedLine)
 	{
-		textCursor.movePosition(((currentLine > m_lastClickedLine) ? QTextCursor::Up : QTextCursor::Down), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine));
+		const bool isMovingUp(currentLine < m_lastClickedLine);
+
+		textCursor.movePosition((isMovingUp ? QTextCursor::Down : QTextCursor::Up), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine - (isMovingUp ? 0 : 1)));
 
 		m_sourceViewer->setTextCursor(textCursor);
 	}
