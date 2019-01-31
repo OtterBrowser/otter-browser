@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 	switch (type)
 	{
 		case BookmarksModel::TrashBookmark:
-			 menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), &BookmarksModel::emptyTrash)->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
+			menu.addAction(ThemesManager::createIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), &BookmarksModel::emptyTrash)->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 
 			break;
 		case BookmarksModel::UnknownBookmark:
