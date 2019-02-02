@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -214,11 +214,11 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 	{
 		painter.drawPixmap(m_iconRectangle, SearchEnginesManager::getSearchEngine(m_searchEngine).icon.pixmap(m_iconRectangle.size()));
 
-		QStyleOption arrow;
-		arrow.initFrom(this);
-		arrow.rect = m_dropdownArrowRectangle;
+		QStyleOption dropdownArrowOption;
+		dropdownArrowOption.initFrom(this);
+		dropdownArrowOption.rect = m_dropdownArrowRectangle;
 
-		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
+		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &dropdownArrowOption, &painter, this);
 	}
 
 	if (m_addButtonRectangle.isValid())
@@ -556,10 +556,10 @@ void SearchWidget::handleLoadingStateChanged()
 
 void SearchWidget::updateGeometries()
 {
-	QStyleOptionFrame panel;
-	panel.initFrom(this);
-	panel.rect = rect();
-	panel.lineWidth = 1;
+	QStyleOptionFrame panelOption;
+	panelOption.initFrom(this);
+	panelOption.rect = rect();
+	panelOption.lineWidth = 1;
 
 	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
 	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);

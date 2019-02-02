@@ -390,16 +390,16 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	if (m_entries.contains(HistoryDropdownEntry))
 	{
-		QStyleOption arrowOption;
-		arrowOption.initFrom(this);
-		arrowOption.rect = m_entries[HistoryDropdownEntry].rectangle;
+		QStyleOption dropdownArrowOption;
+		dropdownArrowOption.initFrom(this);
+		dropdownArrowOption.rect = m_entries[HistoryDropdownEntry].rectangle;
 
 		if (HistoryManager::getTypedHistoryModel()->rowCount() == 0)
 		{
-			arrowOption.palette.setCurrentColorGroup(QPalette::Disabled);
+			dropdownArrowOption.palette.setCurrentColorGroup(QPalette::Disabled);
 		}
 
-		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrowOption, &painter, this);
+		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &dropdownArrowOption, &painter, this);
 	}
 
 	if (m_isUsingSimpleMode)
