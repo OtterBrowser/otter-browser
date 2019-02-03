@@ -1216,16 +1216,18 @@ void Application::setHidden(bool isHidden)
 
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
+		MainWindow *mainWindow(m_windows.at(i));
+
 		if (m_isHidden)
 		{
-			m_windows.at(i)->storeWindowState();
-			m_windows.at(i)->hide();
+			mainWindow->storeWindowState();
+			mainWindow->hide();
 		}
 		else
 		{
-			m_windows.at(i)->show();
-			m_windows.at(i)->activateWindow();
-			m_windows.at(i)->restoreWindowState();
+			mainWindow->show();
+			mainWindow->activateWindow();
+			mainWindow->restoreWindowState();
 		}
 	}
 }
