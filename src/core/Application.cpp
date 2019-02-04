@@ -1002,7 +1002,7 @@ void Application::handleNewConnection()
 
 	if (session.isEmpty())
 	{
-		const MainWindow *mainWindow(getWindows().isEmpty() ? nullptr : getWindow());
+		const MainWindow *mainWindow(m_windows.value(0));
 
 		if (!mainWindow || !SettingsManager::getOption(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !mainWindow->isPrivate()))
 		{
