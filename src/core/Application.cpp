@@ -1109,9 +1109,23 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 	{
 		mainWindow = (m_windows.isEmpty() ? createWindow() : m_windows.first());
 
-		if (mainWindow)
+		if (mainWindow->isSessionRestored())
 		{
-			if (mainWindow->isSessionRestored())
+			if (urls.isEmpty())
+			{
+				mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
+			}
+			else
+			{
+				for (int i = 0; i < urls.count(); ++i)
+				{
+					mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
+				}
+			}
+		}
+		else
+		{
+			connect(mainWindow, &MainWindow::sessionRestored, [=]()
 			{
 				if (urls.isEmpty())
 				{
@@ -1124,24 +1138,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
 					}
 				}
-			}
-			else
-			{
-				connect(mainWindow, &MainWindow::sessionRestored, [=]()
-				{
-					if (urls.isEmpty())
-					{
-						mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("hints"), QVariant(openHints)}});
-					}
-					else
-					{
-						for (int i = 0; i < urls.count(); ++i)
-						{
-							mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), urls.at(i)}, {QLatin1String("needsInterpretation"), true}, {QLatin1String("hints"), QVariant(openHints)}});
-						}
-					}
-				});
-			}
+			});
 		}
 	}
 
