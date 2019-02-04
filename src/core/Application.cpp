@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1107,7 +1107,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser, bool for
 	}
 	else
 	{
-		mainWindow = getWindow();
+		mainWindow = (m_windows.isEmpty() ? createWindow() : m_windows.first());
 
 		if (mainWindow)
 		{
@@ -1297,16 +1297,6 @@ MainWindow* Application::createWindow(const QVariantMap &parameters, const Sessi
 Application* Application::getInstance()
 {
 	return m_instance;
-}
-
-MainWindow* Application::getWindow()
-{
-	if (m_windows.isEmpty())
-	{
-		return createWindow();
-	}
-
-	return m_windows[0];
 }
 
 MainWindow* Application::getActiveWindow()

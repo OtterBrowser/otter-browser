@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,6 @@ public:
 	static void setHidden(bool isHidden);
 	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = {});
 	static Application* getInstance();
-	static MainWindow* getWindow();
 	static MainWindow* getActiveWindow();
 	static QObject* getFocusObject(bool ignoreMenus);
 	static Style* getStyle();
