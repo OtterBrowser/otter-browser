@@ -653,7 +653,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 		case ActionsManager::ClosePrivateTabsPanicAction:
 			if (SessionsManager::isPrivate())
 			{
-				m_instance->close();
+				close();
 			}
 			else
 			{
@@ -771,7 +771,7 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 
 			return;
 		case ActionsManager::ExitAction:
-			m_instance->close();
+			close();
 
 			return;
 		default:
