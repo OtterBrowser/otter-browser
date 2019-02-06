@@ -509,7 +509,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &Application::handleOptionChanged);
 	connect(this, &Application::aboutToQuit, this, &Application::handleAboutToQuit);
-	connect(this, &Application::focusObjectChanged, this, &Application::handleFocusObjectChanged);
+	connect(this, &Application::focusObjectChanged, this, [&](QObject *object)
+	{
+		if (!object || (object && !object->inherits("QMenu")))
+		{
+			m_nonMenuFocusObject = object;
+		}
+	});
 }
 
 Application::~Application()
@@ -1041,14 +1047,6 @@ void Application::handleNewConnection()
 	delete socket;
 }
 
-void Application::handleFocusObjectChanged(QObject *object)
-{
-	if (!object || (object && !object->inherits("QMenu")))
-	{
-		m_nonMenuFocusObject = object;
-	}
-}
-
 void Application::handlePositionalArguments(QCommandLineParser *parser, bool forceOpen)
 {
 	SessionsManager::OpenHints openHints(SessionsManager::DefaultOpen);
@@ -1174,7 +1172,11 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version).arg(availableUpdates.at(latestVersionIndex).channel)));
 		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
 
-		connect(notification, &Notification::clicked, this, &Application::showUpdateDetails);
+		connect(notification, &Notification::clicked, notification, [&]()
+		{
+			UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QVector<UpdateChecker::UpdateInformation> >()));
+			dialog->show();
+		});
 	}
 }
 
@@ -1187,17 +1189,6 @@ void Application::showNotification(Notification *notification)
 	else
 	{
 		NotificationDialog *dialog(new NotificationDialog(notification));
-		dialog->show();
-	}
-}
-
-void Application::showUpdateDetails()
-{
-	const Notification *notification(static_cast<Notification*>(sender()));
-
-	if (notification)
-	{
-		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QVector<UpdateChecker::UpdateInformation> >()));
 		dialog->show();
 	}
 }

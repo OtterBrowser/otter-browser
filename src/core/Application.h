@@ -98,9 +98,7 @@ protected slots:
 	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleAboutToQuit();
 	void handleNewConnection();
-	void handleFocusObjectChanged(QObject *object);
 	void handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex);
-	void showUpdateDetails();
 
 private:
 	LongTermTimer *m_updateCheckTimer;
