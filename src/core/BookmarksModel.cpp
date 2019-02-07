@@ -189,6 +189,8 @@ QVariant BookmarksModel::Bookmark::data(int role) const
 			default:
 				break;
 		}
+
+		return QStandardItem::data(Qt::DisplayRole);
 	}
 
 	if (role == Qt::DecorationRole)
