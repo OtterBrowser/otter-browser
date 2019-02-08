@@ -73,15 +73,15 @@ void BookmarksModel::Bookmark::setItemData(const QVariant &value, int role)
 QStandardItem* BookmarksModel::Bookmark::clone() const
 {
 	Bookmark *bookmark(new Bookmark());
-	bookmark->setData(data(TypeRole), TypeRole);
-	bookmark->setData(data(UrlRole), UrlRole);
-	bookmark->setData(data(TitleRole), TitleRole);
-	bookmark->setData(data(DescriptionRole), DescriptionRole);
-	bookmark->setData(data(KeywordRole), KeywordRole);
-	bookmark->setData(data(TimeAddedRole), TimeAddedRole);
-	bookmark->setData(data(TimeModifiedRole), TimeModifiedRole);
-	bookmark->setData(data(TimeVisitedRole), TimeVisitedRole);
-	bookmark->setData(data(VisitsRole), VisitsRole);
+	bookmark->setData(getRawData(TypeRole), TypeRole);
+	bookmark->setData(getRawData(UrlRole), UrlRole);
+	bookmark->setData(getRawData(TitleRole), TitleRole);
+	bookmark->setData(getRawData(DescriptionRole), DescriptionRole);
+	bookmark->setData(getRawData(KeywordRole), KeywordRole);
+	bookmark->setData(getRawData(TimeAddedRole), TimeAddedRole);
+	bookmark->setData(getRawData(TimeModifiedRole), TimeModifiedRole);
+	bookmark->setData(getRawData(TimeVisitedRole), TimeVisitedRole);
+	bookmark->setData(getRawData(VisitsRole), VisitsRole);
 
 	return bookmark;
 }
