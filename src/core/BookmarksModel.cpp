@@ -76,7 +76,10 @@ QStandardItem* BookmarksModel::Bookmark::clone() const
 
 	for (int i = TitleRole; i < UserRole; ++i)
 	{
-		bookmark->setData(getRawData(i), i);
+		if (i != IdentifierRole && i != IsTrashedRole)
+		{
+			bookmark->setData(getRawData(i), i);
+		}
 	}
 
 	return bookmark;
