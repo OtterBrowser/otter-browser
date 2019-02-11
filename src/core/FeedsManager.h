@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -83,6 +83,7 @@ public:
 	QVector<Entry> getEntries(const QStringList &categories = {}) const;
 	FeedError getError() const;
 	int getUpdateInterval() const;
+	int getUpdateProgress() const;
 	bool isUpdating() const;
 
 public slots:
@@ -110,11 +111,13 @@ private:
 	QVector<Entry> m_entries;
 	FeedError m_error;
 	int m_updateInterval;
+	int m_updateProgress;
 	bool m_isUpdating;
 
 signals:
 	void feedModified(Feed *feed);
 	void entriesModified(Feed *feed);
+	void updateProgressChanged(int progress);
 
 friend class FeedsManager;
 };

@@ -45,6 +45,7 @@ Feed::Feed(const QString &title, const QUrl &url, const QIcon &icon, int updateI
 	m_icon(icon),
 	m_error(NoError),
 	m_updateInterval(0),
+	m_updateProgress(-1),
 	m_isUpdating(false)
 {
 	setUpdateInterval(updateInterval);
@@ -190,6 +191,12 @@ void Feed::update()
 
 	DataFetchJob *dataJob(new DataFetchJob(m_url, this));
 
+	connect(dataJob, &DataFetchJob::progressChanged, this, [&](int progress)
+	{
+		m_updateProgress = progress;
+
+		emit updateProgressChanged(progress);
+	});
 	connect(dataJob, &DataFetchJob::jobFinished, this, [=](bool isFetchSuccess)
 	{
 		if (isFetchSuccess)
@@ -317,6 +324,10 @@ void Feed::update()
 				m_parserThread.start();
 
 				m_parser->parse(dataJob);
+
+				m_updateProgress = -1;
+
+				emit updateProgressChanged(-1);
 			}
 			else
 			{
@@ -433,6 +444,11 @@ Feed::FeedError Feed::getError() const
 int Feed::getUpdateInterval() const
 {
 	return m_updateInterval;
+}
+
+int Feed::getUpdateProgress() const
+{
+	return m_updateProgress;
 }
 
 bool Feed::isUpdating() const
