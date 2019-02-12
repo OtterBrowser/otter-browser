@@ -118,7 +118,9 @@ QVariant FeedsModel::Entry::data(int role) const
 			case UpdateIntervalRole:
 				return m_feed->getUpdateInterval();
 			case UpdateProgressValueRole:
-				return m_feed->getUpdateProgress();
+				return (m_feed->isUpdating() ? m_feed->getUpdateProgress() : 100);
+			case IsShowingProgressIndicatorRole:
+				return (m_feed->isUpdating() || (m_feed->getLastSynchronizationTime().isValid() && m_feed->getLastSynchronizationTime().msecsTo(QDateTime::currentDateTimeUtc()) < 2500));
 			case IsUpdatingRole:
 				return m_feed->isUpdating();
 			case HasErrorsRole:

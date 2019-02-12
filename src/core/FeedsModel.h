@@ -56,6 +56,7 @@ public:
 		LastSynchronizationTimeRole,
 		UpdateIntervalRole,
 		UpdateProgressValueRole,
+		IsShowingProgressIndicatorRole,
 		IsTrashedRole,
 		IsUpdatingRole,
 		HasErrorsRole,
