@@ -123,7 +123,7 @@ QVariant FeedsModel::Entry::data(int role) const
 				return (m_feed->isUpdating() || (m_feed->getLastSynchronizationTime().isValid() && m_feed->getLastSynchronizationTime().msecsTo(QDateTime::currentDateTimeUtc()) < 2500));
 			case IsUpdatingRole:
 				return m_feed->isUpdating();
-			case HasErrorsRole:
+			case HasErrorRole:
 				return (m_feed->getError() != Feed::NoError);
 			default:
 				break;

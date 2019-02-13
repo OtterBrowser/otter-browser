@@ -59,7 +59,7 @@ public:
 		IsShowingProgressIndicatorRole,
 		IsTrashedRole,
 		IsUpdatingRole,
-		HasErrorsRole,
+		HasErrorRole,
 		UserRole
 	};
 
