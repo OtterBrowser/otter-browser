@@ -329,25 +329,22 @@ void FeedsContentsWidget::handleFeedModified(const QUrl &url)
 {
 	const Feed *feed(FeedsManager::getFeed(url));
 
-	if (feed && feed->isUpdating() && FeedsManager::getModel()->hasFeed(url))
+	if (!m_updateAnimation && feed && feed->isUpdating() && FeedsManager::getModel()->hasFeed(url))
 	{
-		if (!m_updateAnimation)
+		const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
+
+		if (path.isEmpty())
 		{
-			const QString path(ThemesManager::getAnimationPath(QLatin1String("spinner")));
-
-			if (path.isEmpty())
-			{
-				m_updateAnimation = new SpinnerAnimation(QCoreApplication::instance());
-			}
-			else
-			{
-				m_updateAnimation = new GenericAnimation(path, QCoreApplication::instance());
-			}
-
-			m_updateAnimation->start();
+			m_updateAnimation = new SpinnerAnimation(QCoreApplication::instance());
+		}
+		else
+		{
+			m_updateAnimation = new GenericAnimation(path, QCoreApplication::instance());
 		}
 
-		connect(m_updateAnimation, &Animation::frameChanged, m_ui->feedsViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update), Qt::UniqueConnection);
+		m_updateAnimation->start();
+
+		connect(m_updateAnimation, &Animation::frameChanged, m_ui->feedsViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
 	}
 }
 
