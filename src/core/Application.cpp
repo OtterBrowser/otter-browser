@@ -1659,10 +1659,7 @@ bool Application::canClose()
 
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		if (m_windows.at(i))
-		{
-			tabsAmount += m_windows.at(i)->getWindowCount();
-		}
+		tabsAmount += m_windows.at(i)->getWindowCount();
 	}
 
 	if (warnQuitMode == QLatin1String("alwaysWarn") || (tabsAmount > 1 && warnQuitMode == QLatin1String("warnOpenTabs")))
