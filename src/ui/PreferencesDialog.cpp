@@ -72,7 +72,15 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &PreferencesDialog::save);
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::save);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::close);
-	connect(m_ui->allSettingsButton, &QPushButton::clicked, this, &PreferencesDialog::openConfigurationManager);
+	connect(m_ui->allSettingsButton, &QPushButton::clicked, this,[&]()
+	{
+		const QUrl url(QLatin1String("about:config"));
+
+		if (!SessionsManager::hasUrl(url, true))
+		{
+			Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
+		}
+	});
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -198,16 +206,6 @@ void PreferencesDialog::showTab(int tab)
 void PreferencesDialog::markAsModified()
 {
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
-}
-
-void PreferencesDialog::openConfigurationManager()
-{
-	const QUrl url(QLatin1String("about:config"));
-
-	if (!SessionsManager::hasUrl(url, true))
-	{
-		Application::triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), url}}, this);
-	}
 }
 
 void PreferencesDialog::save()

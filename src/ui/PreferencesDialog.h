@@ -44,7 +44,6 @@ protected:
 
 protected slots:
 	void showTab(int tab);
-	void openConfigurationManager();
 	void markAsModified();
 	void save();
 
