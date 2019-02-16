@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -63,12 +63,12 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 		tab = 4;
 	}
 
-	currentTabChanged(tab);
+	showTab(tab);
 
 	m_ui->tabWidget->setCurrentIndex(tab);
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
-	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesDialog::currentTabChanged);
+	connect(m_ui->tabWidget, &QTabWidget::currentChanged, this, &PreferencesDialog::showTab);
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &PreferencesDialog::save);
 	connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::save);
 	connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::close);
@@ -90,7 +90,7 @@ void PreferencesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesDialog::currentTabChanged(int tab)
+void PreferencesDialog::showTab(int tab)
 {
 	if (m_loadedTabs[tab])
 	{

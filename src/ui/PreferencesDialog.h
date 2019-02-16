@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void currentTabChanged(int tab);
+	void showTab(int tab);
 	void openConfigurationManager();
 	void markAsModified();
 	void save();
