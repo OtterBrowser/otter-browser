@@ -32,7 +32,6 @@
 #include "../../core/Application.h"
 #include "../../core/GesturesManager.h"
 #include "../../core/HandlersManager.h"
-#include "../../core/IniSettings.h"
 #include "../../core/JsonSettings.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
