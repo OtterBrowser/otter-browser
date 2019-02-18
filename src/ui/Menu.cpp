@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -123,6 +123,12 @@ Menu::Menu(int role, QWidget *parent) : QMenu(parent),
 			setTitle(QT_TRANSLATE_NOOP("actions", "Dictionaries"));
 
 			connect(this, &Menu::aboutToShow, this, &Menu::populateDictionariesMenu);
+
+			break;
+		case FeedsMenu:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Feeds"));
+
+			connect(this, &Menu::aboutToShow, this, &Menu::populateFeedsMenu);
 
 			break;
 		case ImportExportMenu:
@@ -1001,6 +1007,11 @@ void Menu::populateDictionariesMenu()
 
 		m_actionGroup->addAction(action);
 	}
+}
+
+void Menu::populateFeedsMenu()
+{
+///TODO
 }
 
 void Menu::populateNotesMenu()
