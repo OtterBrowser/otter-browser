@@ -26,6 +26,7 @@
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/Console.h"
+#include "../core/FeedsManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
@@ -1011,7 +1012,56 @@ void Menu::populateDictionariesMenu()
 
 void Menu::populateFeedsMenu()
 {
-///TODO
+	const FeedsModel::Entry *folderEntry(FeedsManager::getModel()->getEntry(m_menuOptions.value(QLatin1String("entry")).toULongLong()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+	if (!actions().isEmpty())
+	{
+		return;
+	}
+
+	ActionExecutor::Object executor(mainWindow, mainWindow);
+
+	for (int i = 0; i < folderEntry->rowCount(); ++i)
+	{
+		const FeedsModel::Entry *entry(folderEntry->getChild(i));
+
+		if (!entry)
+		{
+			continue;
+		}
+
+		const FeedsModel::EntryType type(entry->getType());
+
+		if (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry || type == FeedsModel::RootEntry)
+		{
+			const QUrl url(entry->data(FeedsModel::UrlRole).toUrl());
+			Action *action(new Action(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + url.toDisplayString())}}, {{QLatin1String("icon"), entry->data(Qt::DecorationRole).value<QIcon>()}, {QLatin1String("text"), Utils::elideText(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
+			action->setToolTip(entry->data(FeedsModel::DescriptionRole).toString());
+			action->setStatusTip(url.toString());
+
+			if (type != FeedsModel::FeedEntry)
+			{
+				if (entry->rowCount() > 0)
+				{
+					Menu *menu(new Menu(FeedsMenu, this));
+					menu->setMenuOptions({{QLatin1String("entry"), entry->data(FeedsModel::IdentifierRole).toULongLong()}});
+
+					action->setMenu(menu);
+				}
+				else
+				{
+					action->setEnabled(false);
+				}
+			}
+
+			addAction(action);
+		}
+		else
+		{
+			addSeparator();
+		}
+	}
 }
 
 void Menu::populateNotesMenu()
