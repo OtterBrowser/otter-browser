@@ -66,6 +66,7 @@ public:
 	class Entry final : public QStandardItem
 	{
 	public:
+		Entry* getChild(int index) const;
 		Feed* getFeed() const;
 		QVariant data(int role) const override;
 		QVariant getRawData(int role) const;

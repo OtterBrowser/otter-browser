@@ -40,6 +40,18 @@ FeedsModel::Entry::Entry(Feed *feed) : QStandardItem(),
 {
 }
 
+FeedsModel::Entry* FeedsModel::Entry::getChild(int index) const
+{
+	FeedsModel *model(qobject_cast<FeedsModel*>(this->model()));
+
+	if (model)
+	{
+		return model->getEntry(model->index(index, 0, this->index()));
+	}
+
+	return nullptr;
+}
+
 Feed* FeedsModel::Entry::getFeed() const
 {
 	return m_feed;
