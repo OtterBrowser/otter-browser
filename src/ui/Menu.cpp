@@ -1012,14 +1012,13 @@ void Menu::populateDictionariesMenu()
 
 void Menu::populateFeedsMenu()
 {
-	const FeedsModel::Entry *folderEntry(FeedsManager::getModel()->getEntry(m_menuOptions.value(QLatin1String("entry")).toULongLong()));
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
 	if (!actions().isEmpty())
 	{
 		return;
 	}
 
+	const FeedsModel::Entry *folderEntry(FeedsManager::getModel()->getEntry(m_menuOptions.value(QLatin1String("entry")).toULongLong()));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	ActionExecutor::Object executor(mainWindow, mainWindow);
 
 	for (int i = 0; i < folderEntry->rowCount(); ++i)
