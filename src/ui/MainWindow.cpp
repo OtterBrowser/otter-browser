@@ -40,6 +40,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
+#include "../core/FeedsManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/InputInterpreter.h"
 #include "../core/SessionModel.h"
@@ -901,6 +902,35 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 					default:
 						break;
 				}
+			}
+
+			return;
+		case ActionsManager::OpenFeedAction:
+			{
+				QVariantMap mutableParameters(parameters);
+				mutableParameters.remove(QLatin1String("entry"));
+
+				if (parameters.contains(QLatin1String("entry")))
+				{
+					const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(parameters[QLatin1String("entry")].toULongLong()));
+
+					if (!entry || entry->getType() != FeedsModel::FeedEntry || !entry->getFeed())
+					{
+						return;
+					}
+
+					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString());
+				}
+				else if (parameters.contains(QLatin1String("url")))
+				{
+					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("view-feed:") + parameters[QLatin1String("url")].toUrl().toDisplayString());
+				}
+				else
+				{
+					return;
+				}
+
+				triggerAction(ActionsManager::OpenUrlAction, mutableParameters, trigger);
 			}
 
 			return;
