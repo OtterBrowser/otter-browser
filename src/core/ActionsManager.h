@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -245,6 +245,7 @@ public:
 		BookmarkAllOpenPagesAction,
 		OpenBookmarkAction,
 		QuickBookmarkAccessAction,
+		OpenFeedAction,
 		CookiesAction,
 		LoadPluginsAction,
 		EnableJavaScriptAction,
