@@ -2382,6 +2382,33 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 			}
 
 			break;
+		case ActionsManager::OpenFeedAction:
+			{
+				Feed *feed(nullptr);
+
+				if (parameters.contains(QLatin1String("entry")))
+				{
+					const FeedsModel::Entry *entry(FeedsManager::getModel()->getEntry(parameters[QLatin1String("entry")].toULongLong()));
+
+					if (entry && entry->getType() == FeedsModel::FeedEntry)
+					{
+						feed = entry->getFeed();
+					}
+				}
+				else if (parameters.contains(QLatin1String("url")))
+				{
+					feed = FeedsManager::getFeed(parameters[QLatin1String("url")].toUrl());
+				}
+
+				if (feed)
+				{
+					state.text = feed->getTitle();
+					state.icon = feed->getIcon();
+					state.isEnabled = true;
+				}
+			}
+
+			break;
 		case ActionsManager::FullScreenAction:
 			state.icon = ThemesManager::createIcon(isFullScreen() ? QLatin1String("view-restore") : QLatin1String("view-fullscreen"));
 
