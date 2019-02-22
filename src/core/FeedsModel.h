@@ -71,6 +71,7 @@ public:
 		QVariant data(int role) const override;
 		QVariant getRawData(int role) const;
 		QVector<Feed*> getFeeds() const;
+		quint64 getIdentifier() const;
 		EntryType getType() const;
 		bool isAncestorOf(Entry *child) const;
 		bool operator<(const QStandardItem &other) const override;

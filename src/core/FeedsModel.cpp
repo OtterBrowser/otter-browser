@@ -231,6 +231,11 @@ QVector<Feed*> FeedsModel::Entry::getFeeds() const
 	return feeds;
 }
 
+quint64 FeedsModel::Entry::getIdentifier() const
+{
+	return QStandardItem::data(IdentifierRole).toULongLong();
+}
+
 FeedsModel::EntryType FeedsModel::Entry::getType() const
 {
 	return static_cast<EntryType>(data(TypeRole).toInt());

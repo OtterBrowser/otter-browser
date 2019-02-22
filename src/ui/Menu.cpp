@@ -1035,7 +1035,7 @@ void Menu::populateFeedsMenu()
 		if (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry || type == FeedsModel::RootEntry)
 		{
 			const QUrl url(entry->data(FeedsModel::UrlRole).toUrl());
-			Action *action(new Action(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + url.toDisplayString())}}, {{QLatin1String("icon"), entry->data(Qt::DecorationRole).value<QIcon>()}, {QLatin1String("text"), Utils::elideText(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
+			Action *action(new Action(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
 			action->setToolTip(entry->data(FeedsModel::DescriptionRole).toString());
 			action->setStatusTip(url.toString());
 
@@ -1044,7 +1044,7 @@ void Menu::populateFeedsMenu()
 				if (entry->rowCount() > 0)
 				{
 					Menu *menu(new Menu(FeedsMenu, this));
-					menu->setMenuOptions({{QLatin1String("entry"), entry->data(FeedsModel::IdentifierRole).toULongLong()}});
+					menu->setMenuOptions({{QLatin1String("entry"), entry->getIdentifier()}});
 
 					action->setMenu(menu);
 				}
