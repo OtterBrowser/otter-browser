@@ -82,6 +82,7 @@ public:
 	QStringList getRemovedEntries() const;
 	QVector<Entry> getEntries(const QStringList &categories = {}) const;
 	FeedError getError() const;
+	int getUnreadEntriesAmount() const;
 	int getUpdateInterval() const;
 	int getUpdateProgress() const;
 	bool isUpdating() const;
