@@ -810,19 +810,19 @@ QStringList FeedsModel::mimeTypes() const
 QVector<FeedsModel::Entry*> FeedsModel::getEntries(const QUrl &url) const
 {
 	const QUrl normalizedUrl(Utils::normalizeUrl(url));
-	QVector<FeedsModel::Entry*> entrys;
+	QVector<FeedsModel::Entry*> entries;
 
 	if (m_urls.contains(url))
 	{
-		entrys = m_urls[url];
+		entries = m_urls[url];
 	}
 
 	if (url != normalizedUrl && m_urls.contains(normalizedUrl))
 	{
-		entrys.append(m_urls[normalizedUrl]);
+		entries.append(m_urls[normalizedUrl]);
 	}
 
-	return entrys;
+	return entries;
 }
 
 bool FeedsModel::moveEntry(Entry *entry, Entry *newParent, int newRow)
