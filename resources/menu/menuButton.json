@@ -113,6 +113,15 @@
 				"separator"
 			]
 		},
+		{
+			"identifier": "FeedsMenu",
+			"type": "menu",
+			"title": "Feeds",
+			"actions":
+			[
+			]
+		},
+		"separator",
 		"History",
 		"Addons",
 		"Transfers",
