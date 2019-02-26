@@ -18,18 +18,12 @@
 				{
 					"identifier": "ClosedWindowsMenu",
 					"type": "menu",
-					"title": "Closed Tabs and Windows",
-					"actions":
-					[
-					]
+					"title": "Closed Tabs and Windows"
 				},
 				{
 					"identifier": "SessionsMenu",
 					"type": "menu",
-					"title": "Sessions",
-					"actions":
-					[
-					]
+					"title": "Sessions"
 				}
 			]
 		},
@@ -67,27 +61,18 @@
 				{
 					"identifier": "UserAgentMenu",
 					"type": "menu",
-					"title": "User Agent",
-					"actions":
-					[
-					]
+					"title": "User Agent"
 				},
 				"separator",
 				{
 					"identifier": "StyleSheetsMenu",
 					"type": "menu",
-					"title": "Style",
-					"actions":
-					[
-					]
+					"title": "Style"
 				},
 				{
 					"identifier": "CharacterEncodingMenu",
 					"type": "menu",
-					"title": "Character Encoding",
-					"actions":
-					[
-					]
+					"title": "Character Encoding"
 				}
 			]
 		},
@@ -116,10 +101,7 @@
 		{
 			"identifier": "FeedsMenu",
 			"type": "menu",
-			"title": "Feeds",
-			"actions":
-			[
-			]
+			"title": "Feeds"
 		},
 		"separator",
 		"History",
@@ -131,10 +113,7 @@
 		{
 			"identifier": "ToolBarsMenu",
 			"type": "menu",
-			"title": "Toolbars",
-			"actions":
-			[
-			]
+			"title": "Toolbars"
 		},
 		{
 			"identifier": "SettingsMenu",
@@ -150,10 +129,7 @@
 				{
 					"identifier": "ImportExportMenu",
 					"type": "menu",
-					"title": "Import and Export",
-					"actions":
-					[
-					]
+					"title": "Import and Export"
 				}
 			]
 		},

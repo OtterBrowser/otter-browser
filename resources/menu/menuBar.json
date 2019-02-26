@@ -17,18 +17,12 @@
 			{
 				"identifier": "SessionsMenu",
 				"type": "menu",
-				"title": "Sessions",
-				"actions":
-				[
-				]
+				"title": "Sessions"
 			},
 			{
 				"identifier": "ImportExportMenu",
 				"type": "menu",
-				"title": "Import and Export",
-				"actions":
-				[
-				]
+				"title": "Import and Export"
 			},
 			"separator",
 			"Print",
@@ -79,10 +73,7 @@
 			{
 				"identifier": "ToolBarsMenu",
 				"type": "menu",
-				"title": "Toolbars",
-				"actions":
-				[
-				]
+				"title": "Toolbars"
 			},
 			"separator",
 			"Reload",
@@ -99,27 +90,18 @@
 			{
 				"identifier": "UserAgentMenu",
 				"type": "menu",
-				"title": "User Agent",
-				"actions":
-				[
-				]
+				"title": "User Agent"
 			},
 			"separator",
 			{
 				"identifier": "StyleSheetsMenu",
 				"type": "menu",
-				"title": "Style",
-				"actions":
-				[
-				]
+				"title": "Style"
 			},
 			{
 				"identifier": "CharacterEncodingMenu",
 				"type": "menu",
-				"title": "Character Encoding",
-				"actions":
-				[
-				]
+				"title": "Character Encoding"
 			}
 		]
 	},
@@ -137,10 +119,7 @@
 			{
 				"identifier": "ClosedWindowsMenu",
 				"type": "menu",
-				"title": "Closed Tabs and Windows",
-				"actions":
-				[
-				]
+				"title": "Closed Tabs and Windows"
 			},
 			"separator",
 			"History",
@@ -162,10 +141,7 @@
 	{
 		"identifier": "FeedsMenu",
 		"type": "menu",
-		"title": "Feeds",
-		"actions":
-		[
-		]
+		"title": "Feeds"
 	},
 	{
 		"identifier": "ToolsMenu",
