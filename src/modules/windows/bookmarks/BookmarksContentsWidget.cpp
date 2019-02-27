@@ -40,6 +40,7 @@ namespace Otter
 {
 
 BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+	m_model(nullptr),
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -50,15 +51,15 @@ BookmarksContentsWidget::BookmarksContentsWidget(const QVariantMap &parameters, 
 	addMenu->addAction(tr("Add Bookmark…"), this, &BookmarksContentsWidget::addBookmark);
 	addMenu->addAction(tr("Add Separator"), this, &BookmarksContentsWidget::addSeparator);
 
-	ProxyModel *model(new ProxyModel(BookmarksManager::getModel(), QVector<QPair<QString, int> >({{tr("Title"), BookmarksModel::TitleRole}, {tr("Address"), BookmarksModel::UrlRole}, {tr("Description"), BookmarksModel::DescriptionRole}, {tr("Keyword"), BookmarksModel::KeywordRole}, {tr("Added"), BookmarksModel::TimeAddedRole}, {tr("Modified"), BookmarksModel::TimeModifiedRole}, {tr("Visited"), BookmarksModel::TimeVisitedRole}, {tr("Visits"), BookmarksModel::VisitsRole}}), this));
-	model->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
-	model->setHeaderData(1, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
-	model->setHeaderData(3, Qt::Horizontal, 150, HeaderViewWidget::WidthRole);
-	model->setHeaderData(7, Qt::Horizontal, 150, HeaderViewWidget::WidthRole);
+	m_model = new ProxyModel(BookmarksManager::getModel(), QVector<QPair<QString, int> >({{tr("Title"), BookmarksModel::TitleRole}, {tr("Address"), BookmarksModel::UrlRole}, {tr("Description"), BookmarksModel::DescriptionRole}, {tr("Keyword"), BookmarksModel::KeywordRole}, {tr("Added"), BookmarksModel::TimeAddedRole}, {tr("Modified"), BookmarksModel::TimeModifiedRole}, {tr("Visited"), BookmarksModel::TimeVisitedRole}, {tr("Visits"), BookmarksModel::VisitsRole}}), this);
+	m_model->setHeaderData(0, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
+	m_model->setHeaderData(1, Qt::Horizontal, 300, HeaderViewWidget::WidthRole);
+	m_model->setHeaderData(3, Qt::Horizontal, 150, HeaderViewWidget::WidthRole);
+	m_model->setHeaderData(7, Qt::Horizontal, 150, HeaderViewWidget::WidthRole);
 
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->bookmarksViewWidget->setViewMode(ItemViewWidget::TreeView);
-	m_ui->bookmarksViewWidget->setModel(model);
+	m_ui->bookmarksViewWidget->setModel(m_model);
 	m_ui->bookmarksViewWidget->setExpanded(m_ui->bookmarksViewWidget->model()->index(0, 0), true);
 	m_ui->bookmarksViewWidget->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->installEventFilter(this);
@@ -117,12 +118,12 @@ void BookmarksContentsWidget::addSeparator()
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
 }
 
 void BookmarksContentsWidget::openBookmark()
 {
-	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
 
 	if (bookmark)
 	{
@@ -134,7 +135,7 @@ void BookmarksContentsWidget::openBookmark()
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
 
 	if (bookmark)
 	{
@@ -214,7 +215,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					{
 						menu.addAction(tr("Restore Bookmark"), &menu, [&]()
 						{
-							BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
+							BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
 						});
 					}
 					else
@@ -290,7 +291,7 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 
 BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCreationLocation()
 {
-	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
+	const QModelIndex index(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex()));
 	BookmarksModel::Bookmark *item(BookmarksManager::getModel()->getBookmark(index));
 	BookmarkLocation location;
 

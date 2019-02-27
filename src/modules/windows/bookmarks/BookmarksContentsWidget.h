@@ -33,6 +33,7 @@ namespace Ui
 	class BookmarksContentsWidget;
 }
 
+class ProxyModel;
 class Window;
 
 class BookmarksContentsWidget final : public ContentsWidget
@@ -75,6 +76,7 @@ protected slots:
 	void updateActions();
 
 private:
+	ProxyModel *m_model;
 	Ui::BookmarksContentsWidget *m_ui;
 };
 
