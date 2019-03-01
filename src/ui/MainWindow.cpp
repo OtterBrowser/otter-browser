@@ -2402,9 +2402,16 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 				if (feed)
 				{
+					const int unreadEntriesAmount(feed->getUnreadEntriesAmount());
+
 					state.text = feed->getTitle();
 					state.icon = feed->getIcon();
 					state.isEnabled = true;
+
+					if (unreadEntriesAmount > 0)
+					{
+						state.text.append(QStringLiteral(" (%1)").arg(unreadEntriesAmount));
+					}
 				}
 			}
 
