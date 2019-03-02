@@ -54,6 +54,7 @@ public:
 		TypeRole,
 		LastUpdateTimeRole,
 		LastSynchronizationTimeRole,
+		UnreadEntriesAmountRole,
 		UpdateIntervalRole,
 		UpdateProgressValueRole,
 		IsShowingProgressIndicatorRole,

@@ -125,6 +125,8 @@ QVariant FeedsModel::Entry::data(int role) const
 				return m_feed->getLastUpdateTime();
 			case LastSynchronizationTimeRole:
 				return m_feed->getLastSynchronizationTime();
+			case UnreadEntriesAmountRole:
+				return m_feed->getUnreadEntriesAmount();
 			case UrlRole:
 				return m_feed->getUrl();
 			case UpdateIntervalRole:
