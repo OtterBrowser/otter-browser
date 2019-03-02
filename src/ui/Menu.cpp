@@ -1034,8 +1034,16 @@ void Menu::populateFeedsMenu()
 
 		if (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry || type == FeedsModel::RootEntry)
 		{
+			QString text(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")));
 			const QUrl url(entry->data(FeedsModel::UrlRole).toUrl());
-			Action *action(new Action(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
+			const int unreadEntriesAmount(entry->data(FeedsModel::UnreadEntriesAmountRole).toInt());
+
+			if (unreadEntriesAmount > 0)
+			{
+				text.append(QStringLiteral(" (%1)").arg(unreadEntriesAmount));
+			}
+
+			Action *action(new Action(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(text, fontMetrics(), this)}}, executor, this));
 			action->setToolTip(entry->data(FeedsModel::DescriptionRole).toString());
 			action->setStatusTip(url.toString());
 
