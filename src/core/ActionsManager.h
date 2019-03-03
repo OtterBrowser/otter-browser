@@ -333,6 +333,8 @@ public:
 
 		struct State final
 		{
+			QString statusTip;
+			QString toolTip;
 			QString text;
 			QIcon icon;
 			bool isEnabled = true;
