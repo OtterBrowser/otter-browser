@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -280,6 +280,8 @@ void Action::setExecutor(ActionExecutor::Object executor)
 
 void Action::setState(const ActionsManager::ActionDefinition::State &state)
 {
+	setStatusTip(state.statusTip);
+	setToolTip(state.toolTip);
 	setText(state.text);
 	setEnabled(state.isEnabled);
 	setChecked(state.isChecked);
