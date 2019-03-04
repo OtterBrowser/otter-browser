@@ -300,6 +300,8 @@ ActionsManager::ActionDefinition Action::getDefinition() const
 ActionsManager::ActionDefinition::State Action::getState() const
 {
 	ActionsManager::ActionDefinition::State state;
+	state.statusTip = statusTip();
+	state.toolTip = toolTip();
 	state.text = (m_flags.testFlag(IsOverridingTextFlag) ? QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()) : getDefinition().getText());
 	state.icon = icon();
 	state.isEnabled = isEnabled();
