@@ -659,8 +659,6 @@ void Menu::populateBookmarksMenu()
 		if (type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
 			Action *action(new Action(ActionsManager::OpenBookmarkAction, {{QLatin1String("bookmark"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
-			action->setToolTip(bookmark->getDescription());
-			action->setStatusTip(bookmark->getUrl().toString());
 
 			if (type != BookmarksModel::UrlBookmark)
 			{
@@ -961,10 +959,7 @@ void Menu::populateClosedWindowsMenu()
 					parameters = {{QLatin1String("index"), i}};
 				}
 
-				Action *action(new Action(ActionsManager::ReopenTabAction, parameters, {{QLatin1String("icon"), (tabs.at(i).isPrivate ? QVariant(QLatin1String("tab-private")) : tabs.at(i).icon)}, {QLatin1String("text"), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
-				action->setStatusTip(tabs.at(i).window.getUrl());
-
-				addAction(action);
+				addAction(new Action(ActionsManager::ReopenTabAction, parameters, {{QLatin1String("icon"), (tabs.at(i).isPrivate ? QVariant(QLatin1String("tab-private")) : tabs.at(i).icon)}, {QLatin1String("text"), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, executor, this));
 			}
 
 			clearAction->setEnabled(true);
@@ -1035,7 +1030,6 @@ void Menu::populateFeedsMenu()
 		if (type == FeedsModel::FeedEntry || type == FeedsModel::FolderEntry || type == FeedsModel::RootEntry)
 		{
 			QString text(entry->data(FeedsModel::TitleRole).toString().replace(QLatin1Char('&'), QLatin1String("&&")));
-			const QUrl url(entry->data(FeedsModel::UrlRole).toUrl());
 			const int unreadEntriesAmount(entry->data(FeedsModel::UnreadEntriesAmountRole).toInt());
 
 			if (unreadEntriesAmount > 0)
@@ -1044,8 +1038,6 @@ void Menu::populateFeedsMenu()
 			}
 
 			Action *action(new Action(ActionsManager::OpenFeedAction, {{QLatin1String("entry"), entry->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(text, fontMetrics(), this)}}, executor, this));
-			action->setToolTip(entry->data(FeedsModel::DescriptionRole).toString());
-			action->setStatusTip(url.toString());
 
 			if (type != FeedsModel::FeedEntry)
 			{

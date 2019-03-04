@@ -2318,15 +2318,13 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 		case ActionsManager::ReopenTabAction:
 			if (!m_closedWindows.isEmpty())
 			{
-				if (parameters.contains(QLatin1String("index")))
-				{
-					const int index(parameters[QLatin1String("index")].toInt());
+				const int index(parameters.value(QLatin1String("index"), 0).toInt());
 
-					state.isEnabled = (index >= 0 && index < m_closedWindows.count());
-				}
-				else
+				state.isEnabled = (index >= 0 && index < m_closedWindows.count());
+
+				if (state.isEnabled)
 				{
-					state.isEnabled = true;
+					state.statusTip = m_closedWindows.at(index).window.getUrl();
 				}
 			}
 
@@ -2375,6 +2373,8 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 
 				if (bookmark)
 				{
+					state.statusTip = bookmark->getUrl().toString();
+					state.toolTip = bookmark->getDescription();
 					state.text = bookmark->getTitle();
 					state.icon = bookmark->getIcon();
 					state.isEnabled = true;
@@ -2404,6 +2404,8 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 				{
 					const int unreadEntriesAmount(feed->getUnreadEntriesAmount());
 
+					state.statusTip = feed->getUrl().toString();
+					state.toolTip = feed->getDescription();
 					state.text = feed->getTitle();
 					state.icon = feed->getIcon();
 					state.isEnabled = true;
