@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
@@ -32,6 +32,7 @@
 #include "../core/HandlersManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/IniSettings.h"
+#include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
@@ -1250,7 +1251,26 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 
 			break;
 		case ActionsManager::PasteAction:
-			state.isEnabled = (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && (parameters.contains(QLatin1String("note")) || parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText())));
+			if (m_hitResult.flags.testFlag(HitTestResult::IsContentEditableTest))
+			{
+				if (parameters.contains(QLatin1String("note")))
+				{
+					const BookmarksModel::Bookmark *bookmark(NotesManager::getModel()->getBookmark(parameters[QLatin1String("note")].toULongLong()));
+
+					if (bookmark)
+					{
+						state.statusTip = bookmark->getUrl().toString();
+						state.toolTip = bookmark->getDescription();
+						state.text = bookmark->getTitle();
+						state.icon = bookmark->getIcon();
+						state.isEnabled = true;
+					}
+				}
+				else
+				{
+					state.isEnabled = (parameters.contains(QLatin1String("text")) || (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText()));
+				}
+			}
 
 			break;
 		case ActionsManager::PasteAndGoAction:

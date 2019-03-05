@@ -1085,9 +1085,7 @@ void Menu::populateNotesMenu()
 
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark || type == BookmarksModel::RootBookmark)
 		{
-			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("icon"), bookmark->getIcon()}, {QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, getExecutor(), this));
-			action->setToolTip(bookmark->getDescription());
-			action->setStatusTip(bookmark->getUrl().toString());
+			Action *action(new Action(ActionsManager::PasteAction, {{QLatin1String("note"), bookmark->getIdentifier()}}, {{QLatin1String("text"), Utils::elideText(bookmark->getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), fontMetrics(), this)}}, getExecutor(), this));
 
 			if (type == BookmarksModel::FolderBookmark)
 			{
