@@ -31,6 +31,16 @@
 namespace Otter
 {
 
+class ItemViewWidget;
+
+class ViewportWidget final : public QWidget
+{
+	Q_OBJECT
+
+public:
+	explicit ViewportWidget(ItemViewWidget *parent);
+};
+
 class HeaderViewWidget final : public QHeaderView
 {
 	Q_OBJECT

@@ -32,6 +32,13 @@
 namespace Otter
 {
 
+ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent)
+{
+	setAcceptDrops(true);
+	setAutoFillBackground(true);
+	setBackgroundRole(QPalette::Base);
+}
+
 HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)
 {
 	setMinimumSectionSize(0);
@@ -258,10 +265,9 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	setItemDelegate(new ItemDelegate(this));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
+	setViewport(new ViewportWidget(this));
 
 	m_filterRoles.insert(Qt::DisplayRole);
-
-	viewport()->setAcceptDrops(true);
 
 	connect(SettingsManager::getInstance(), &SettingsManager::optionChanged, this, &ItemViewWidget::handleOptionChanged);
 	connect(m_headerWidget, &HeaderViewWidget::sortChanged, this, &ItemViewWidget::setSort);
