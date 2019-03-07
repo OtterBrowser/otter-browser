@@ -32,11 +32,20 @@
 namespace Otter
 {
 
-ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent)
+ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent),
+	m_updateTimer(0)
 {
 	setAcceptDrops(true);
 	setAutoFillBackground(true);
 	setBackgroundRole(QPalette::Base);
+}
+
+void ViewportWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_updateTimer)
+	{
+		update();
+	}
 }
 
 HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)

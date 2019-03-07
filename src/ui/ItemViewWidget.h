@@ -39,6 +39,12 @@ class ViewportWidget final : public QWidget
 
 public:
 	explicit ViewportWidget(ItemViewWidget *parent);
+
+protected:
+	void timerEvent(QTimerEvent *event) override;
+
+private:
+	int m_updateTimer;
 };
 
 class HeaderViewWidget final : public QHeaderView
