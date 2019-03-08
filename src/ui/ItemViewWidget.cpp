@@ -33,6 +33,7 @@ namespace Otter
 {
 
 ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent),
+	m_view(parent),
 	m_updateTimer(0)
 {
 	setAcceptDrops(true);
@@ -44,7 +45,14 @@ void ViewportWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_updateTimer)
 	{
-		update();
+		QRegion region;
+
+		for (int i = 0; i < m_dirtyIndexes.count(); ++i)
+		{
+			region += m_view->visualRect(m_dirtyIndexes.at(i));
+		}
+
+		update(region);
 	}
 }
 

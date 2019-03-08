@@ -44,6 +44,8 @@ protected:
 	void timerEvent(QTimerEvent *event) override;
 
 private:
+	ItemViewWidget *m_view;
+	QVector<QModelIndex> m_dirtyIndexes;
 	int m_updateTimer;
 };
 
