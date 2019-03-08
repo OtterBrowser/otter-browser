@@ -52,7 +52,10 @@ void ViewportWidget::timerEvent(QTimerEvent *event)
 			region += m_view->visualRect(m_dirtyIndexes.at(i));
 		}
 
-		update(region);
+		if (!region.isEmpty())
+		{
+			update(region);
+		}
 	}
 }
 
