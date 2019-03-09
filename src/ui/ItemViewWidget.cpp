@@ -60,6 +60,29 @@ void ViewportWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
+void ViewportWidget::updateDirtyIndexesList()
+{
+	const QVector<QModelIndex> previousDirtyIndexes(m_dirtyIndexes);
+
+	m_dirtyIndexes = m_view->model()->match(m_view->model()->index(0, 0), m_updateDataRole, true, -1).toVector();
+
+	if (previousDirtyIndexes != m_dirtyIndexes)
+	{
+		update();
+
+		if (m_dirtyIndexes.isEmpty() && m_updateTimer > 0)
+		{
+			killTimer(m_updateTimer);
+
+			m_updateTimer = 0;
+		}
+		else if (previousDirtyIndexes.isEmpty() && m_updateTimer == 0)
+		{
+			m_updateTimer = startTimer(15);
+		}
+	}
+}
+
 void ViewportWidget::setUpdateDataRole(int updateDataRole)
 {
 	m_updateDataRole = updateDataRole;

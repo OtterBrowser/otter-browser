@@ -42,6 +42,9 @@ public:
 
 	void setUpdateDataRole(int updateDataRole);
 
+public slots:
+	void updateDirtyIndexesList();
+
 protected:
 	void timerEvent(QTimerEvent *event) override;
 
