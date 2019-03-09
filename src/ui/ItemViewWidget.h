@@ -40,12 +40,15 @@ class ViewportWidget final : public QWidget
 public:
 	explicit ViewportWidget(ItemViewWidget *parent);
 
+	void setUpdateDataRole(int updateDataRole);
+
 protected:
 	void timerEvent(QTimerEvent *event) override;
 
 private:
 	ItemViewWidget *m_view;
 	QVector<QModelIndex> m_dirtyIndexes;
+	int m_updateDataRole;
 	int m_updateTimer;
 };
 

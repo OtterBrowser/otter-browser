@@ -34,6 +34,7 @@ namespace Otter
 
 ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent),
 	m_view(parent),
+	m_updateDataRole(-1),
 	m_updateTimer(0)
 {
 	setAcceptDrops(true);
@@ -57,6 +58,11 @@ void ViewportWidget::timerEvent(QTimerEvent *event)
 			update(region);
 		}
 	}
+}
+
+void ViewportWidget::setUpdateDataRole(int updateDataRole)
+{
+	m_updateDataRole = updateDataRole;
 }
 
 HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)
