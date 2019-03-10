@@ -110,6 +110,7 @@ public:
 	void setSortRoleMapping(const QMap<int, int> &mapping);
 	void setViewMode(ViewMode mode);
 	void setModified(bool isModified);
+	ViewportWidget* getViewportWidget() const;
 	QStandardItemModel* getSourceModel() const;
 	QSortFilterProxyModel* getProxyModel() const;
 	QStandardItem* getItem(const QModelIndex &index) const;
@@ -162,6 +163,7 @@ protected slots:
 
 private:
 	HeaderViewWidget *m_headerWidget;
+	ViewportWidget *m_viewportWidget;
 	QStandardItemModel *m_sourceModel;
 	QSortFilterProxyModel *m_proxyModel;
 	QString m_filterString;

@@ -298,6 +298,7 @@ bool HeaderViewWidget::viewportEvent(QEvent *event)
 
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_headerWidget(new HeaderViewWidget(Qt::Horizontal, this)),
+	m_viewportWidget(new ViewportWidget(this)),
 	m_sourceModel(nullptr),
 	m_proxyModel(nullptr),
 	m_viewMode(ListView),
@@ -314,7 +315,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	setItemDelegate(new ItemDelegate(this));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
-	setViewport(new ViewportWidget(this));
+	setViewport(m_viewportWidget);
 
 	m_filterRoles.insert(Qt::DisplayRole);
 
@@ -930,6 +931,11 @@ void ItemViewWidget::setModified(bool isModified)
 	}
 
 	emit needsActionsUpdate();
+}
+
+ViewportWidget* ItemViewWidget::getViewportWidget() const
+{
+	return m_viewportWidget;
 }
 
 QStandardItemModel* ItemViewWidget::getSourceModel() const
