@@ -35,6 +35,7 @@ namespace Otter
 ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent),
 	m_view(parent),
 	m_updateDataRole(-1),
+	m_recheckTimer(0),
 	m_updateTimer(0)
 {
 	setAcceptDrops(true);
@@ -44,7 +45,11 @@ ViewportWidget::ViewportWidget(ItemViewWidget *parent) : QWidget(parent),
 
 void ViewportWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_updateTimer)
+	if (event->timerId() == m_recheckTimer)
+	{
+		updateDirtyIndexesList();
+	}
+	else if (event->timerId() == m_updateTimer)
 	{
 		QRegion region;
 
@@ -72,12 +77,15 @@ void ViewportWidget::updateDirtyIndexesList()
 
 		if (m_dirtyIndexes.isEmpty() && m_updateTimer > 0)
 		{
+			killTimer(m_recheckTimer);
 			killTimer(m_updateTimer);
 
+			m_recheckTimer = 0;
 			m_updateTimer = 0;
 		}
 		else if (previousDirtyIndexes.isEmpty() && m_updateTimer == 0)
 		{
+			m_recheckTimer = startTimer(1000);
 			m_updateTimer = startTimer(15);
 		}
 	}

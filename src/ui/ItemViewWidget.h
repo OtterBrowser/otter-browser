@@ -52,6 +52,7 @@ private:
 	ItemViewWidget *m_view;
 	QVector<QModelIndex> m_dirtyIndexes;
 	int m_updateDataRole;
+	int m_recheckTimer;
 	int m_updateTimer;
 };
 
