@@ -64,7 +64,7 @@ void ViewportWidget::updateDirtyIndexesList()
 {
 	const QVector<QModelIndex> previousDirtyIndexes(m_dirtyIndexes);
 
-	m_dirtyIndexes = m_view->model()->match(m_view->model()->index(0, 0), m_updateDataRole, true, -1).toVector();
+	m_dirtyIndexes = m_view->model()->match(m_view->model()->index(0, 0), m_updateDataRole, true, -1, (Qt::MatchExactly | Qt::MatchRecursive)).toVector();
 
 	if (previousDirtyIndexes != m_dirtyIndexes)
 	{
