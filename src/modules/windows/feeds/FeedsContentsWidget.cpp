@@ -95,6 +95,7 @@ FeedsContentsWidget::FeedsContentsWidget(const QVariantMap &parameters, QWidget 
 	m_ui->feedsViewWidget->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->installEventFilter(this);
 	m_ui->feedsViewWidget->viewport()->setMouseTracking(true);
+	m_ui->feedsViewWidget->getViewportWidget()->setUpdateDataRole(FeedsModel::IsShowingProgressIndicatorRole);
 	m_ui->emailButton->setIcon(ThemesManager::createIcon(QLatin1String("mail-send")));
 	m_ui->urlButton->setIcon(ThemesManager::createIcon(QLatin1String("text-html")));
 	m_ui->textBrowserWidget->setOpenExternalLinks(true);
@@ -343,9 +344,9 @@ void FeedsContentsWidget::handleFeedModified(const QUrl &url)
 		}
 
 		m_updateAnimation->start();
-
-		connect(m_updateAnimation, &Animation::frameChanged, m_ui->feedsViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
 	}
+
+	m_ui->feedsViewWidget->getViewportWidget()->updateDirtyIndexesList();
 }
 
 void FeedsContentsWidget::showEntriesContextMenu(const QPoint &position)
