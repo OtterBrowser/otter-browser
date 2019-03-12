@@ -179,6 +179,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->profilesViewWidget->expandAll();
+	m_ui->profilesViewWidget->getViewportWidget()->setUpdateDataRole(ContentFiltersManager::IsShowingProgressIndicatorRole);
 	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), QLatin1String("all"));
 	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));
 	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), QLatin1String("none"));
@@ -320,7 +321,7 @@ void ContentBlockingDialog::updateProfile()
 
 		m_updateAnimation->start();
 
-		connect(m_updateAnimation, &Animation::frameChanged, m_ui->profilesViewWidget->viewport(), static_cast<void(QWidget::*)()>(&QWidget::update));
+		m_ui->profilesViewWidget->getViewportWidget()->updateDirtyIndexesList();
 	}
 
 	profile->update();
