@@ -6,13 +6,13 @@ List of major planned features
 - fine-tune UI (sizes, margins and other details)
 
 2.0:
+- Opera Link like solution
 - shared contacts database
 - mail client (as module)
 - extensions (Chrome APIs support)
 
 Later / unspecified:
 - form auto completion
-- Opera Link like solution
 - support for Opera skins (through custom QStyle)
 - IM client module (at least IRC, possibly libpurple based)
 - BitTorrent module
