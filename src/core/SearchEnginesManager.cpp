@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -226,7 +226,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 				{
 					const char character(plainValue.at(j));
 
-					if (character == 32 || (character >= 33 && character <= 126 && character != 61))
+					if (character >= 32 && character <= 126 && character != 61)
 					{
 						encodedValue.append(character);
 					}
