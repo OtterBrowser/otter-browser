@@ -129,14 +129,14 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 	for (int i = 0; i < searchEngines.count(); ++i)
 	{
-		const SearchEngineDefinition search(getSearchEngine(searchEngines.at(i)));
+		const SearchEngineDefinition searchEngine(getSearchEngine(searchEngines.at(i)));
 
-		if (search.isValid())
+		if (searchEngine.isValid())
 		{
-			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : search.icon), {}));
-			item->setData(search.title, TitleRole);
-			item->setData(search.identifier, IdentifierRole);
-			item->setData(search.keyword, KeywordRole);
+			QStandardItem *item(new QStandardItem((searchEngine.icon.isNull() ? ThemesManager::createIcon(QLatin1String("edit-find")) : searchEngine.icon), {}));
+			item->setData(searchEngine.title, TitleRole);
+			item->setData(searchEngine.identifier, IdentifierRole);
+			item->setData(searchEngine.keyword, KeywordRole);
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 			m_searchEnginesModel->appendRow(item);
