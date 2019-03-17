@@ -337,6 +337,7 @@ public:
 			QString toolTip;
 			QString text;
 			QIcon icon;
+			int counter = -1;
 			bool isEnabled = true;
 			bool isChecked = false;
 		};
