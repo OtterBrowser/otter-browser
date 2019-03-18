@@ -2413,6 +2413,7 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 					if (unreadEntriesAmount > 0)
 					{
 						state.text.append(QStringLiteral(" (%1)").arg(unreadEntriesAmount));
+						state.counter = unreadEntriesAmount;
 					}
 				}
 			}
