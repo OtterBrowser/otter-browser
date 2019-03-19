@@ -19,7 +19,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="55"/>
         <source>Expiration date:</source>
-        <translation type="unfinished"/>
+        <translation>Geçerlilik bitim zamanı:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="69"/>
@@ -54,17 +54,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This session only</source>
-        <translation type="unfinished"/>
+        <translation>Sadece bu oturum</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Secure connections only</source>
-        <translation type="unfinished"/>
+        <translation>Sadece korumalı bağlantılar</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Any type of connection</source>
-        <translation type="unfinished"/>
+        <translation>Her türlü bağlantı</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
@@ -139,7 +139,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="61"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Bilinmeyen [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="78"/>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="158"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Bilinmeyen</translation>
     </message>
 </context>
 <context>
@@ -177,12 +177,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="84"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>Eylem Seç</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="155"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ara...</translation>
     </message>
 </context>
 <context>
@@ -190,7 +190,7 @@
     <message>
         <location filename="../../src/core/AdblockContentFiltersProfile.cpp" line="708"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Bilinmeyen)</translation>
     </message>
 </context>
 <context>
@@ -198,50 +198,51 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ara...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="79"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="119"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Kullanıcı Betikleri</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="147"/>
         <source>Select Files</source>
-        <translation type="unfinished"/>
+        <translation>Dosya Seç</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="147"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Kullanıcı Betik dosyaları (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="183"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="365"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Soru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="184"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Bu adla Kullanıcı Betiği zaten var:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="185"/>
         <source>Do you want to replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Değiştirmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="192"/>
         <source>Apply to all</source>
-        <translation type="unfinished"/>
+        <translation>Tümüne uygula</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hata</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
@@ -257,32 +258,32 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="367"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="433"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Eklenti Ekle...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="439"/>
         <source>Open Addon File</source>
-        <translation type="unfinished"/>
+        <translation>Eklenti Dosyası Aç</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="440"/>
         <source>Reload Addon</source>
-        <translation type="unfinished"/>
+        <translation>Eklentiyi Tekrar yükle</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="444"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Eklentiyi Kaldır...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="485"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Eklentiler</translation>
     </message>
 </context>
 <context>
@@ -290,32 +291,32 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="93"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 ile ara</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="111"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Yer imleri</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="145"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Yerel Dosyalar</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="161"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Geçmiş</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Typed history</source>
-        <translation type="unfinished"/>
+        <translation>Yazılan geçmiş</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="198"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Özel sayfalar</translation>
     </message>
 </context>
 <context>
@@ -324,12 +325,12 @@
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="341"/>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="372"/>
         <source>Enter address or search…</source>
-        <translation type="unfinished"/>
+        <translation>Bir adres girin yada arayın...</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="540"/>
         <source>Remove this Icon</source>
-        <translation type="unfinished"/>
+        <translation>Bu Simgeyi kaldır</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="631"/>
@@ -339,32 +340,32 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="662"/>
         <source>Add to Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Yer imlerine Ekle</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="674"/>
         <source>Add to Start Page</source>
-        <translation type="unfinished"/>
+        <translation>Başlangıç Sayfasına Ekle</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1045"/>
         <source>Show website information</source>
-        <translation type="unfinished"/>
+        <translation>Website bilgilerini göster</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1059"/>
         <source>Show feed list</source>
-        <translation type="unfinished"/>
+        <translation>Besleme listesini göster</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1071"/>
         <source>Remove bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Yer imini sil</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1076"/>
         <source>Add bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Yer imi ekle</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1085"/>
@@ -374,7 +375,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1093"/>
         <source>Log in</source>
-        <translation type="unfinished"/>
+        <translation>Oturum aç</translation>
     </message>
 </context>
 <context>
@@ -431,7 +432,7 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="361"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="442"/>
@@ -452,12 +453,12 @@ Some websites may work incorrectly or do not work at all.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="751"/>
         <source>SSL library not available.</source>
-        <translation type="unfinished"/>
+        <translation>SSL kütüphanesi mevcut değil.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="755"/>
         <source>SSL library version: %1.</source>
-        <translation type="unfinished"/>
+        <translation>SSL kütüphane sürümü: %1.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1017"/>
@@ -501,19 +502,19 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Öntanımlı Uygulama</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="144"/>
         <source>Other…</source>
-        <translation type="unfinished"/>
+        <translation>Diğer...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
         <source>Select Application</source>
-        <translation type="unfinished"/>
+        <translation>Uygulama Seç</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
@@ -564,7 +565,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation type="unfinished"/>
+        <translation>Parolayı hatırla</translation>
     </message>
 </context>
 <context>
@@ -592,7 +593,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Yeni...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -602,7 +603,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation type="unfinished"/>
+        <translation>Son ziyaret:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -657,27 +658,27 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="97"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Başlık: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="101"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adres: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="106"/>
         <source>Description: %1</source>
-        <translation type="unfinished"/>
+        <translation>Açıklama: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="111"/>
         <source>Created: %1</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulma: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="116"/>
         <source>Visited: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ziyaret Edilme: %1</translation>
     </message>
 </context>
 <context>
@@ -698,7 +699,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ara...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -729,7 +730,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="140"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="246"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Özellikler...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="150"/>
@@ -741,14 +742,14 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="221"/>
         <source>Add Folder…</source>
-        <translation type="unfinished"/>
+        <translation>Dizin Ekle...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Yer İmi Ekle...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="52"/>
@@ -760,42 +761,42 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Başlık</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adres</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Açıklama</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar Sözcük</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Eklendi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Değiştirildi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Ziyaret Edildi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="54"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Ziyaretler</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="160"/>
@@ -815,7 +816,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="337"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Yer İmleri</translation>
     </message>
 </context>
 <context>
@@ -833,7 +834,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Yeni...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -861,7 +862,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="155"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Notlar</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="159"/>
@@ -876,27 +877,27 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="185"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Başlıksız)</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Not dosyası açılamadı: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="362"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Yer imleri dosyası açılamadı: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Not dosyası yüklenemedi: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="386"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Yer imleri dosyası yüklenemedi: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
@@ -906,12 +907,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load notes file.</source>
-        <translation type="unfinished"/>
+        <translation>Not dosyası yüklenemedi.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="388"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>Yer imleri dosyası yüklenemedi.</translation>
     </message>
 </context>
 <context>
@@ -919,7 +920,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ara...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="97"/>
@@ -1022,27 +1023,27 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
         <source>Certificate chain:</source>
-        <translation type="unfinished"/>
+        <translation>Sertifika dizisi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation type="unfinished"/>
+        <translation>Sertifika alanları:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation type="unfinished"/>
+        <translation>Alan değeri:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
         <source>Export…</source>
-        <translation type="unfinished"/>
+        <translation>Dışa aktar...</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
         <source>Invalid Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz sertifika</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
@@ -1053,12 +1054,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
         <location filename="../../src/ui/CertificateDialog.cpp" line="456"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Bilinmeyen</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Dosya Seç</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
@@ -1073,12 +1074,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="116"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Metin dosyaları (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="124"/>
@@ -1181,12 +1182,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="349"/>
         <source>Critical</source>
-        <translation type="unfinished"/>
+        <translation>Ciddi</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="349"/>
         <source>Not Critical</source>
-        <translation type="unfinished"/>
+        <translation>Ciddi değil</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="350"/>
@@ -1196,22 +1197,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="354"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Değer:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="408"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Sürüm</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="412"/>
         <source>Serial Number</source>
-        <translation type="unfinished"/>
+        <translation>Seri Numarası</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="416"/>
         <source>Certificate Signature Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Sertifika İmza Algoritması</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="420"/>
@@ -1221,12 +1222,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="424"/>
         <source>Validity</source>
-        <translation type="unfinished"/>
+        <translation>Geçerlilik</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="428"/>
         <source>Not Before</source>
-        <translation type="unfinished"/>
+        <translation>Öncesinde değil</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="432"/>
@@ -1246,7 +1247,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="444"/>
         <source>Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Algoritma</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="448"/>
@@ -1256,22 +1257,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="452"/>
         <source>Extensions</source>
-        <translation type="unfinished"/>
+        <translation>Eklentiler</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="460"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Parmakizi</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="464"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-1 Parmakizi</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="468"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-256 Parmakizi</translation>
     </message>
 </context>
 <context>
@@ -1349,22 +1350,22 @@ Exponent: %2</source>
         <location filename="../../src/ui/ColorWidget.cpp" line="56"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="177"/>
         <source>Invalid</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="105"/>
         <source>Select Color…</source>
-        <translation type="unfinished"/>
+        <translation>Renk Seç...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="106"/>
         <source>Copy Color</source>
-        <translation type="unfinished"/>
+        <translation>Renk Kopyala</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="113"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Temizle</translation>
     </message>
 </context>
 <context>
@@ -1372,32 +1373,32 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ara...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="69"/>
         <source>Option Name:</source>
-        <translation type="unfinished"/>
+        <translation>Seçenek Adı:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="76"/>
         <source>Current Value:</source>
-        <translation type="unfinished"/>
+        <translation>Mevcut Değer:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="83"/>
         <source>Default Value:</source>
-        <translation type="unfinished"/>
+        <translation>Öntanımlı Değer:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="106"/>
         <source>Save All</source>
-        <translation type="unfinished"/>
+        <translation>Tümünü Kaydet</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="116"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Varsayılana Sıfırla</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="212"/>
@@ -1421,7 +1422,7 @@ Exponent: %2</source>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="290"/>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="363"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Soru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="290"/>
@@ -1437,22 +1438,22 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="500"/>
         <source>Copy Option Name</source>
-        <translation type="unfinished"/>
+        <translation>Seçenek Adını Kopyala</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="501"/>
         <source>Copy Option Value</source>
-        <translation type="unfinished"/>
+        <translation>Seçenek Değerini Kopyala</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="505"/>
         <source>Save Value</source>
-        <translation type="unfinished"/>
+        <translation>Değeri Kaydet</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="508"/>
         <source>Restore Default Value</source>
-        <translation type="unfinished"/>
+        <translation>Öntanımlı Değere Sıfırla</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="517"/>
@@ -1467,7 +1468,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="544"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Gelişmiş Yapılandırma</translation>
     </message>
 </context>
 <context>
@@ -1475,7 +1476,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/configurationOption/ConfigurationOptionWidget.cpp" line="46"/>
         <source>Choose option</source>
-        <translation type="unfinished"/>
+        <translation>Seçenek seç</translation>
     </message>
 </context>
 <context>
@@ -1488,12 +1489,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Profiller</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
@@ -1503,7 +1504,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="76"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="85"/>
@@ -1547,12 +1548,12 @@ Do you want to save them?</source>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="170"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="510"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Özel Kurallar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="183"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Tümü</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="184"/>
@@ -1562,7 +1563,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="185"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Hiçbiri</translation>
     </message>
 </context>
 <context>
@@ -1570,12 +1571,12 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Etkin Profiller</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="46"/>
         <source>Blocked Elements</source>
-        <translation type="unfinished"/>
+        <translation>Engellenmiş Ögeler</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="150"/>
@@ -1600,17 +1601,17 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="166"/>
         <source>script</source>
-        <translation type="unfinished"/>
+        <translation>betik</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="170"/>
         <source>image</source>
-        <translation type="unfinished"/>
+        <translation>resim</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="174"/>
         <source>object</source>
-        <translation type="unfinished"/>
+        <translation>nesne</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="178"/>
@@ -1630,7 +1631,7 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="190"/>
         <source>other</source>
-        <translation type="unfinished"/>
+        <translation>diğer</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="209"/>
@@ -1648,13 +1649,13 @@ Do you want to save them?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="145"/>
         <source> day(s)</source>
-        <translation type="unfinished"/>
+        <translation>gün(ler)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="146"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>asla</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="166"/>

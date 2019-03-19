@@ -1831,12 +1831,12 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="353"/>
         <source>Last Update</source>
-        <translation>Letztes Update</translation>
+        <translation>Letzte Aktualisierung</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
         <source>Advertisements</source>
-        <translation>Werbung</translation>
+        <translation>Werbebotschaften</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentFiltersManager.cpp" line="399"/>
@@ -2208,7 +2208,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="80"/>
         <source>Change Icon…</source>
-        <translation>Symbolbild ändern...</translation>
+        <translation>Symbol ändern…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FeedPropertiesDialog.ui" line="89"/>
@@ -2264,7 +2264,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="67"/>
         <source>OK</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="74"/>
@@ -2280,7 +2280,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.ui" line="161"/>
         <source>Categories</source>
-        <translation>Kategorien:</translation>
+        <translation>Kategorien</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="148"/>
@@ -2318,7 +2318,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
         <source>Select Folder Name</source>
-        <translation>Ordnername eingeben:</translation>
+        <translation>Ordnername auswählen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="214"/>
@@ -2365,7 +2365,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="477"/>
         <source>Send email to %1</source>
-        <translation>Email senden an %1</translation>
+        <translation>E-Mail an %1 senden</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/feeds/FeedsContentsWidget.cpp" line="479"/>
@@ -3042,7 +3042,7 @@ Möchten Sie sie speichern?</translation>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="252"/>
         <source>Lock Panel</source>
-        <translation>Leiste blockieren</translation>
+        <translation>Leiste sperren</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/links/LinksContentsWidget.cpp" line="266"/>
@@ -3304,12 +3304,12 @@ Möchten Sie sie migrieren?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="169"/>
         <source>Move Up</source>
-        <translation>hoch schieben</translation>
+        <translation>Nach oben</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="186"/>
         <source>Move Down</source>
-        <translation>runter schieben</translation>
+        <translation>Nach unten</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
@@ -3670,7 +3670,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/importers/opml/OpmlImporter.cpp" line="119"/>
         <source>OPML files (*.opml)</source>
-        <translation>OPML files (*.opml)</translation>
+        <translation>OPML-Dateien (*.opml)</translation>
     </message>
 </context>
 <context>
@@ -4193,12 +4193,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="443"/>
         <source>Website Preferences</source>
-        <translation>Seiteneinstellungen</translation>
+        <translation>Webseiteneinstellungen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="454"/>
         <source>Search…</source>
-        <translation>Suche ...</translation>
+        <translation>Suche…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
@@ -5719,12 +5719,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>PNG image (*.png)</source>
-        <translation>PNG Bild (*.png)</translation>
+        <translation>PNG-Bild (*.png)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1696"/>
         <source>JPEG image (*.jpg *.jpeg)</source>
-        <translation>JPEG Bild (*.jpg *.jpeg)</translation>
+        <translation>JPEG-Bild (*.jpg *.jpeg)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2127"/>
@@ -6527,7 +6527,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Suchen...</translation>
+        <translation>Suche…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/tabHistory/TabHistoryContentsWidget.cpp" line="156"/>
@@ -6628,7 +6628,7 @@ Adresse: %2</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="291"/>
         <source>New…</source>
-        <translation>Neu ...</translation>
+        <translation>Neu…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="331"/>
@@ -7122,7 +7122,7 @@ Progress: %5&lt;/div&gt;</source>
         <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Quelle: %1
 Ziel: %2
 Größe: %3
-Übertragen: %4
+Heruntergeladen: %4
 Fortschritt: %5&lt;/div&gt;</translation>
     </message>
 </context>
@@ -7595,7 +7595,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>HTML file with all resources (*.html *.htm)</source>
-        <translation>HTML-Datei inklusive Ressourcen (*.html *.htm)</translation>
+        <translation>HTML-Datei mit allen Ressourcen (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
@@ -7605,7 +7605,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="729"/>
         <source>PDF document (*.pdf)</source>
-        <translation>PDF Dokument (*.pdf)</translation>
+        <translation>PDF-Dokument (*.pdf)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1031"/>
@@ -8274,7 +8274,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation>Suchen...</translation>
+        <translation>Suche…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/windows/WindowsContentsWidget.cpp" line="267"/>
