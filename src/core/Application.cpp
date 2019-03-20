@@ -36,6 +36,7 @@
 #include "SearchEnginesManager.h"
 #include "SettingsManager.h"
 #include "SpellCheckManager.h"
+#include "TasksManager.h"
 #include "ToolBarsManager.h"
 #include "ThemesManager.h"
 #include "TransfersManager.h"
@@ -402,6 +403,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 		return;
 	}
+
+	TasksManager::createInstance();
 
 	ThemesManager::createInstance();
 

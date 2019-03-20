@@ -138,6 +138,7 @@ set(otter_src
 	src/core/SessionsManager.cpp
 	src/core/SettingsManager.cpp
 	src/core/SpellCheckManager.cpp
+	src/core/TasksManager.cpp
 	src/core/ThemesManager.cpp
 	src/core/ToolBarsManager.cpp
 	src/core/TransfersManager.cpp
