@@ -62,6 +62,7 @@ public:
 		Browser_InactiveTabTimeUntilSuspendOption,
 		Browser_KeyboardShortcutsProfilesOrderOption,
 		Browser_LocaleOption,
+		Browser_MessagesOption,
 		Browser_MigrationsOption,
 		Browser_MouseProfilesOrderOption,
 		Browser_OfflineStorageLimitOption,
