@@ -77,6 +77,9 @@
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
 
+#define MESSAGE_IDENTIFIER ""
+#define MESSAGE_URL ""
+
 namespace Otter
 {
 
@@ -1246,6 +1249,20 @@ void Application::setLocale(const QString &locale)
 MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &session)
 {
 	MainWindow *mainWindow(new MainWindow(parameters, session));
+
+	if (m_windows.isEmpty() && !QString(MESSAGE_IDENTIFIER).isEmpty())
+	{
+		QStringList identifiers(SettingsManager::getOption(SettingsManager::Browser_MessagesOption).toStringList());
+
+		if (!identifiers.contains(QString(MESSAGE_IDENTIFIER)))
+		{
+			mainWindow->triggerAction(ActionsManager::NewTabAction, {{QLatin1String("url"), QString(MESSAGE_URL)}});
+
+			identifiers.append(QString(MESSAGE_IDENTIFIER));
+
+			SettingsManager::setOption(SettingsManager::Browser_MessagesOption, identifiers);
+		}
+	}
 
 	m_windows.prepend(mainWindow);
 
