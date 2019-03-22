@@ -23,6 +23,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QMap>
 #include <QtCore/QObject>
+#include <QtCore/QPointer>
 #include <QtCore/QVector>
 
 #include <functional>
@@ -37,7 +38,7 @@ class TasksManager final : public QObject
 public:
 	struct Task final
 	{
-		QObject *object = nullptr;
+		QPointer<QObject> object = nullptr;
 		std::function<void()> function = nullptr;
 		QDateTime nextRun;
 		quint64 identifier = 0;
