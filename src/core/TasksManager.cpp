@@ -26,7 +26,7 @@ namespace Otter
 
 TasksManager* TasksManager::m_instance = nullptr;
 QMap<quint64, TasksManager::Task> TasksManager::m_tasks;
-QVector<quint64> TasksManager::m_queue;
+QQueue<quint64> TasksManager::m_queue;
 
 TasksManager::TasksManager(QObject *parent) : QObject(parent),
 	m_tasksTimer(startTimer(60000))
@@ -45,7 +45,41 @@ void TasksManager::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_tasksTimer)
 	{
-///TODO
+		const QDateTime currentDateTime(QDateTime::currentDateTimeUtc());
+
+		if (m_queue.isEmpty() || !m_tasks.contains(m_queue[0]) || m_tasks[m_queue[0]].nextRun > currentDateTime)
+		{
+			return;
+		}
+
+		while (!m_queue.isEmpty())
+		{
+			if (!m_tasks.contains(m_queue[0]))
+			{
+				m_queue.dequeue();
+
+				continue;
+			}
+
+			if (m_tasks[m_queue[0]].nextRun > currentDateTime)
+			{
+				break;
+			}
+
+			const quint64 identifier(m_queue.dequeue());
+			const Task definition(m_tasks[identifier]);
+
+			if (definition.function && definition.object)
+			{
+				definition.function();
+			}
+			else
+			{
+				emit timeout(identifier);
+			}
+		}
+
+		updateQueue();
 	}
 }
 
@@ -84,7 +118,7 @@ TasksManager* TasksManager::getInstance()
 	return m_instance;
 }
 
-quint64 TasksManager::registerTask(int interval, bool isRepeating, const std::function<void ()> &function, QObject *object)
+quint64 TasksManager::registerTask(int interval, bool isRepeating, const std::function<void()> &function, QObject *object)
 {
 	const quint64 identifier(m_tasks.isEmpty() ? 1 : (m_tasks.keys().last() + 1));
 	Task definition;

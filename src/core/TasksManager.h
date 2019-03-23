@@ -24,7 +24,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QPointer>
-#include <QtCore/QVector>
+#include <QtCore/QQueue>
 
 #include <functional>
 
@@ -63,7 +63,7 @@ private:
 
 	static TasksManager *m_instance;
 	static QMap<quint64, Task> m_tasks;
-	static QVector<quint64> m_queue;
+	static QQueue<quint64> m_queue;
 
 signals:
 	void timeout(quint64 identifier);
