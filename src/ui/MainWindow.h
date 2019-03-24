@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -93,7 +93,7 @@ public slots:
 	void raiseWindow();
 	void search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void clearClosedWindows();
-	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const WindowState &state = WindowState(), bool isAlwaysOnTop = false);
+	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const SessionWindow::State &state = SessionWindow::State(), bool isAlwaysOnTop = false);
 	void setActiveWindowByIndex(int index, bool updateLastActivity = true);
 	void setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity = true);
 	void setOption(int identifier, const QVariant &value);

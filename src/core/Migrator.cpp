@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -418,7 +418,7 @@ public:
 					const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), {}).toString().split(QLatin1Char(',')));
 					const int historyAmount(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(j).arg(k), 0).toInt());
 					const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(j).arg(k), -1).toInt());
-					WindowState windowState;
+					SessionWindow::State windowState;
 					windowState.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
 					windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
 

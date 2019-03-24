@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -235,7 +235,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			const QJsonObject windowObject(windowsArray.at(j).toObject());
 			const QJsonArray windowHistoryArray(windowObject.value(QLatin1String("history")).toArray());
 			const QString state(windowObject.value(QLatin1String("state")).toString());
-			WindowState windowState;
+			SessionWindow::State windowState;
 			windowState.geometry = JsonSettings::readRectangle(windowObject.value(QLatin1String("geometry")).toVariant());
 			windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
 

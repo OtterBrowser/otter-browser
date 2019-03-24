@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ class WorkspaceWidget final : public QWidget
 public:
 	explicit WorkspaceWidget(MainWindow *parent);
 
-	void addWindow(Window *window, const WindowState &state = WindowState(), bool isAlwaysOnTop = false);
+	void addWindow(Window *window, const SessionWindow::State &state = SessionWindow::State(), bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window, bool force = false);
 	Window* getActiveWindow() const;
 	int getWindowCount(Qt::WindowState state) const;

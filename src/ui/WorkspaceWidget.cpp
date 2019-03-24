@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -523,7 +523,7 @@ void WorkspaceWidget::markAsRestored()
 	}
 }
 
-void WorkspaceWidget::addWindow(Window *window, const WindowState &state, bool isAlwaysOnTop)
+void WorkspaceWidget::addWindow(Window *window, const SessionWindow::State &state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{

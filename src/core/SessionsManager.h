@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -85,12 +85,6 @@ struct ToolBarState final
 	}
 };
 
-struct WindowState final
-{
-	QRect geometry;
-	Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
-};
-
 struct WindowHistoryEntry final
 {
 	QString url;
@@ -129,7 +123,13 @@ struct WindowHistoryInformation final
 
 struct SessionWindow final
 {
-	WindowState state;
+	struct State final
+	{
+		QRect geometry;
+		Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
+	};
+
+	State state;
 	QHash<int, QVariant> options;
 	QVector<WindowHistoryEntry> history;
 	int parentGroup = 0;
