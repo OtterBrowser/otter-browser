@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -48,12 +48,12 @@ public:
 
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
-	void setHistory(const WindowHistoryInformation &history);
+	void setHistory(const SessionWindow::History &history);
 	QtWebEngineWebWidget* getWebWidget() const;
 	QString createScriptSource(const QString &path, const QStringList &parameters = {}) const;
 	QVariant runScriptSource(const QString &script);
 	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
-	WindowHistoryInformation getHistory() const;
+	SessionWindow::History getHistory() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
 

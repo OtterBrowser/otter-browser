@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -313,7 +313,7 @@ void ContentsWidget::setOption(int identifier, const QVariant &value)
 	Q_UNUSED(value)
 }
 
-void ContentsWidget::setHistory(const WindowHistoryInformation &history)
+void ContentsWidget::setHistory(const SessionWindow::History &history)
 {
 	Q_UNUSED(history)
 }
@@ -405,19 +405,19 @@ ActionsManager::ActionDefinition::State ContentsWidget::getActionState(int ident
 	return state;
 }
 
-WindowHistoryInformation ContentsWidget::getHistory() const
+SessionWindow::History ContentsWidget::getHistory() const
 {
-	WindowHistoryEntry entry;
+	SessionWindow::History::Entry entry;
 	entry.url = getUrl().toString(QUrl::RemovePassword);
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;
 
-	WindowHistoryInformation information;
-	information.index = 0;
-	information.entries.append(entry);
+	SessionWindow::History history;
+	history.entries = {entry};
+	history.index = 0;
 
-	return information;
+	return history;
 }
 
 WebWidget::ContentStates ContentsWidget::getContentState() const

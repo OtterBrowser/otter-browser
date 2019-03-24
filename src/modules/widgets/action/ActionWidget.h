@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -65,7 +65,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void addMenuEntry(int index, const WindowHistoryEntry &entry);
+	void addMenuEntry(int index, const SessionWindow::History::Entry &entry);
 	bool event(QEvent *event) override;
 
 protected slots:

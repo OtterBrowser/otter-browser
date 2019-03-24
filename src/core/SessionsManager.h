@@ -85,63 +85,62 @@ struct ToolBarState final
 	}
 };
 
-struct WindowHistoryEntry final
-{
-	QString url;
-	QString title;
-	QIcon icon;
-	QDateTime time;
-	QPoint position;
-	int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
-
-	QString getTitle() const
-	{
-		if (title.isEmpty())
-		{
-			if (url == QLatin1String("about:start"))
-			{
-				return QCoreApplication::translate("Otter::SessionsManager", "Start Page");
-			}
-
-			return QCoreApplication::translate("Otter::SessionsManager", "(Unknown)");
-		}
-
-		return title;
-	}
-};
-
-struct WindowHistoryInformation final
-{
-	QVector<WindowHistoryEntry> entries;
-	int index = -1;
-
-	bool isEmpty() const
-	{
-		return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.first().url))));
-	}
-};
-
 struct SessionWindow final
 {
+	struct History final
+	{
+		struct Entry final
+		{
+			QString url;
+			QString title;
+			QIcon icon;
+			QDateTime time;
+			QPoint position;
+			int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
+
+			QString getTitle() const
+			{
+				if (title.isEmpty())
+				{
+					if (url == QLatin1String("about:start"))
+					{
+						return QCoreApplication::translate("Otter::SessionsManager", "Start Page");
+					}
+
+					return QCoreApplication::translate("Otter::SessionsManager", "(Unknown)");
+				}
+
+				return title;
+			}
+		};
+
+		QVector<Entry> entries;
+		int index = -1;
+
+		bool isEmpty() const
+		{
+			return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.first().url))));
+		}
+	};
+
 	struct State final
 	{
 		QRect geometry;
 		Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
 	};
 
+	History history;
 	State state;
 	QHash<int, QVariant> options;
-	QVector<WindowHistoryEntry> history;
 	int parentGroup = 0;
-	int historyIndex = -1;
 	bool isAlwaysOnTop = false;
 	bool isPinned = false;
 
 	QString getUrl() const
 	{
-		if (historyIndex >= 0 && historyIndex < history.count())
+		if (history.index >= 0 && history.index < history.entries.count())
 		{
-			return history.at(historyIndex).url;
+			return history.entries.at(history.index).url;
 		}
 
 		return {};
@@ -149,14 +148,14 @@ struct SessionWindow final
 
 	QString getTitle() const
 	{
-		if (historyIndex >= 0 && historyIndex < history.count())
+		if (history.index >= 0 && history.index < history.entries.count())
 		{
-			if (!history.at(historyIndex).title.isEmpty())
+			if (!history.entries.at(history.index).title.isEmpty())
 			{
-				return history.at(historyIndex).title;
+				return history.entries.at(history.index).title;
 			}
 
-			if (history.at(historyIndex).url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
+			if (history.entries.at(history.index).url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
 			{
 				return QCoreApplication::translate("main", "Start Page");
 			}
@@ -167,9 +166,9 @@ struct SessionWindow final
 
 	int getZoom() const
 	{
-		if (historyIndex >= 0 && historyIndex < history.count())
+		if (history.index >= 0 && history.index < history.entries.count())
 		{
-			return history.at(historyIndex).zoom;
+			return history.entries.at(history.index).zoom;
 		}
 
 		return SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();

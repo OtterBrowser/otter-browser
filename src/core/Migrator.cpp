@@ -425,7 +425,6 @@ public:
 					SessionWindow sessionWindow;
 					sessionWindow.state = windowState;
 					sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(j).arg(k), 0).toInt();
-					sessionWindow.historyIndex = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(j).arg(k), 1).toInt() - 1);
 					sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(j).arg(k), false).toBool();
 					sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(j).arg(k), false).toBool();
 
@@ -444,17 +443,22 @@ public:
 						sessionWindow.options[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
 					}
 
+					SessionWindow::History history;
+					history.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(j).arg(k), 1).toInt() - 1);
+
 					for (int l = 1; l <= historyAmount; ++l)
 					{
 						const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(j).arg(k).arg(l), 1).toStringList());
-						WindowHistoryEntry historyEntry;
+						SessionWindow::History::Entry historyEntry;
 						historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), {}).toString();
 						historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), {}).toString();
 						historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
 						historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(j).arg(k).arg(l), defaultZoom).toInt();
 
-						sessionWindow.history.append(historyEntry);
+						history.entries.append(historyEntry);
 					}
+
+					sessionWindow.history = history;
 
 					sessionEntry.windows.append(sessionWindow);
 				}

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -342,7 +342,7 @@ void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
 	m_sourceViewer->verticalScrollBar()->setValue(position.y());
 }
 
-void SourceViewerWebWidget::setHistory(const WindowHistoryInformation &history)
+void SourceViewerWebWidget::setHistory(const SessionWindow::History &history)
 {
 	Q_UNUSED(history)
 }
@@ -484,18 +484,18 @@ ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(in
 	return state;
 }
 
-WindowHistoryInformation SourceViewerWebWidget::getHistory() const
+SessionWindow::History SourceViewerWebWidget::getHistory() const
 {
-	WindowHistoryEntry entry;
+	SessionWindow::History::Entry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
 	entry.zoom = getZoom();
 
-	WindowHistoryInformation information;
-	information.entries.append(entry);
-	information.index = 0;
+	SessionWindow::History history;
+	history.entries = {entry};
+	history.index = 0;
 
-	return information;
+	return history;
 }
 
 WebWidget::HitTestResult SourceViewerWebWidget::getHitTestResult(const QPoint &position)

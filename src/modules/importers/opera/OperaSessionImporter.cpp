@@ -151,7 +151,6 @@ bool OperaSessionImporter::import(const QString &path)
 		}
 
 		window.state = windowState;
-		window.historyIndex = (originalSession.getValue(QLatin1String("current history")).toInt() - 1);
 		window.isPinned = originalSession.getValue(QLatin1String("locked")).toInt();
 
 		if (originalSession.getValue(QLatin1String("user auto reload enable")).toInt() == 1)
@@ -163,11 +162,14 @@ bool OperaSessionImporter::import(const QString &path)
 
 		originalSession.beginGroup(QString::number(i) + QLatin1String("history url"));
 
+		SessionWindow::History history;
+		history.index = (originalSession.getValue(QLatin1String("current history")).toInt() - 1);
+
 		const int historyCount(originalSession.getValue(QLatin1String("count")).toInt());
 
 		for (int j = 0; j < historyCount; ++j)
 		{
-			WindowHistoryEntry entry;
+			SessionWindow::History::Entry entry;
 			entry.url = originalSession.getValue(QString::number(j)).toString();
 
 			QUrl url(entry.url);
@@ -186,8 +188,10 @@ bool OperaSessionImporter::import(const QString &path)
 
 			entry.zoom = zoom;
 
-			window.history.append(entry);
+			history.entries.append(entry);
 		}
+
+		window.history = history;
 
 		if (historyCount == 0)
 		{
@@ -197,12 +201,11 @@ bool OperaSessionImporter::import(const QString &path)
 
 			if (!panel.isEmpty())
 			{
-				WindowHistoryEntry entry;
+				SessionWindow::History::Entry entry;
 				entry.url = QLatin1String("about:") + panel.toLower();
 
-				window.history.append(entry);
-
-				window.historyIndex = 0;
+				window.history.entries.append(entry);
+				window.history.index = 0;
 			}
 		}
 
@@ -210,29 +213,23 @@ bool OperaSessionImporter::import(const QString &path)
 
 		for (int j = 0; j < historyCount; ++j)
 		{
-			WindowHistoryEntry entry = window.history.at(j);
-			entry.title = originalSession.getValue(QString::number(j)).toString();
-
-			window.history.replace(j, entry);
+			window.history.entries[j].title = originalSession.getValue(QString::number(j)).toString();
 		}
 
 		originalSession.beginGroup(QString::number(i) + QLatin1String("history scrollpos list"));
 
 		for (int j = 0; j < historyCount; ++j)
 		{
-			WindowHistoryEntry entry = window.history.at(j);
-			entry.position.setY(originalSession.getValue(QString::number(j)).toInt());
-
-			window.history.replace(j, entry);
+			window.history.entries[j].position.setY(originalSession.getValue(QString::number(j)).toInt());
 		}
 
 		originalSession.beginGroup(QString::number(i));
 
 		if (originalSession.getValue(QLatin1String("has speeddial in history")).toInt())
 		{
-			window.history.prepend(WindowHistoryEntry());
+			window.history.entries.prepend(SessionWindow::History::Entry());
 
-			window.historyIndex = (window.historyIndex + 1);
+			window.history.index = (window.history.index + 1);
 		}
 
 		const int parent(originalSession.getValue(QLatin1String("parent")).toInt());

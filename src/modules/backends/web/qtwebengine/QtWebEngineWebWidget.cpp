@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -653,7 +653,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (index >= 0 && index < m_page->history()->count())
 				{
-					WindowHistoryInformation history(getHistory());
+					SessionWindow::History history(getHistory());
 					history.entries.removeAt(index);
 
 					if (history.index >= index)
@@ -1309,7 +1309,7 @@ void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 	m_page->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()));
 }
 
-void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
+void QtWebEngineWebWidget::setHistory(const SessionWindow::History &history)
 {
 	m_page->setHistory(history);
 
@@ -1651,7 +1651,7 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
 	return link;
 }
 
-WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
+SessionWindow::History QtWebEngineWebWidget::getHistory() const
 {
 	return m_page->getHistory();
 }

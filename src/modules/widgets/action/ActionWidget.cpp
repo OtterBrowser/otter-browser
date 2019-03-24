@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -204,7 +204,7 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 	connect(menu(), &QMenu::aboutToShow, this, &NavigationActionWidget::updateMenu);
 }
 
-void NavigationActionWidget::addMenuEntry(int index, const WindowHistoryEntry &entry)
+void NavigationActionWidget::addMenuEntry(int index, const SessionWindow::History::Entry &entry)
 {
 	Action *action(new Action(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index}}, ActionExecutor::Object(m_window, m_window), this));
 	action->setStatusTip(entry.url);
@@ -221,7 +221,7 @@ void NavigationActionWidget::updateMenu()
 
 	menu()->clear();
 
-	const WindowHistoryInformation history(m_window->getContentsWidget()->getHistory());
+	const SessionWindow::History history(m_window->getContentsWidget()->getHistory());
 
 	if (getIdentifier() == ActionsManager::GoBackAction)
 	{
@@ -293,7 +293,7 @@ bool NavigationActionWidget::event(QEvent *event)
 
 				if (m_window)
 				{
-					const WindowHistoryInformation history(m_window->getContentsWidget()->getHistory());
+					const SessionWindow::History history(m_window->getContentsWidget()->getHistory());
 
 					if (!history.entries.isEmpty())
 					{

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1331,7 +1331,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 						}
 					}
 
-					WindowHistoryInformation history(getHistory());
+					SessionWindow::History history(getHistory());
 					history.entries.removeAt(index);
 
 					if (history.index >= index)
@@ -1823,7 +1823,7 @@ void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 	}
 }
 
-void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
+void QtWebKitWebWidget::setHistory(const SessionWindow::History &history)
 {
 	if (history.entries.isEmpty())
 	{
@@ -2303,7 +2303,7 @@ WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
 	return m_networkManager->getSslInformation();
 }
 
-WindowHistoryInformation QtWebKitWebWidget::getHistory() const
+SessionWindow::History QtWebKitWebWidget::getHistory() const
 {
 	QVariantList state(m_page->history()->currentItem().userData().toList());
 
@@ -2319,18 +2319,18 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 	m_page->history()->currentItem().setUserData(state);
 
-	const QWebHistory *history(m_page->history());
+	const QWebHistory *pageHistory(m_page->history());
 	const QUrl requestedUrl(m_page->mainFrame()->requestedUrl());
-	const int historyCount(history->count());
-	WindowHistoryInformation information;
-	information.entries.reserve(historyCount);
-	information.index = history->currentItemIndex();
+	const int historyCount(pageHistory->count());
+	SessionWindow::History history;
+	history.entries.reserve(historyCount);
+	history.index = pageHistory->currentItemIndex();
 
 	for (int i = 0; i < historyCount; ++i)
 	{
-		const QWebHistoryItem item(history->itemAt(i));
+		const QWebHistoryItem item(pageHistory->itemAt(i));
 		const QVariantList itemState(item.userData().toList());
-		WindowHistoryEntry entry;
+		SessionWindow::History::Entry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
 		entry.time = itemState.value(VisitTimeEntryData).toDateTime();
@@ -2349,22 +2349,22 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 			}
 		}
 
-		information.entries.append(entry);
+		history.entries.append(entry);
 	}
 
-	if (m_loadingState == OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url())
+	if (m_loadingState == OngoingLoadingState && requestedUrl != pageHistory->itemAt(pageHistory->currentItemIndex()).url())
 	{
-		WindowHistoryEntry entry;
+		SessionWindow::History::Entry entry;
 		entry.url = requestedUrl.toString();
 		entry.title = getTitle();
 		entry.position = state.value(PositionEntryData, QPoint(0, 0)).toPoint();
 		entry.zoom = state.value(ZoomEntryData).toInt();
 
-		information.index = historyCount;
-		information.entries.append(entry);
+		history.entries.append(entry);
+		history.index = historyCount;
 	}
 
-	return information;
+	return history;
 }
 
 WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &position)

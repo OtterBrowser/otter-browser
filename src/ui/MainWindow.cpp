@@ -1674,7 +1674,7 @@ void MainWindow::handleRequestedCloseWindow(Window *window)
 
 	if (!m_isAboutToClose && (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool()))
 	{
-		const WindowHistoryInformation history(window->getHistory());
+		const SessionWindow::History history(window->getHistory());
 
 		if (!history.isEmpty())
 		{

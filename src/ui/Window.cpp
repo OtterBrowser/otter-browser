@@ -353,7 +353,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 	if (url.scheme() == QLatin1String("about") || url.scheme() == QLatin1String("view-feed"))
 	{
-		if (m_session.historyIndex < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
+		if (m_session.history.index < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
 		{
 			emit urlChanged(url, true);
 
@@ -373,7 +373,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 		}
 	}
 
-	const bool isRestoring(!m_contentsWidget && m_session.historyIndex >= 0);
+	const bool isRestoring(!m_contentsWidget && m_session.history.index >= 0);
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
@@ -410,9 +410,9 @@ void Window::setZoom(int zoom)
 	{
 		m_contentsWidget->setZoom(zoom);
 	}
-	else if (m_session.historyIndex >= 0 && m_session.historyIndex < m_session.history.count())
+	else if (m_session.history.index >= 0 && m_session.history.index < m_session.history.entries.count())
 	{
-		m_session.history[m_session.historyIndex].zoom = zoom;
+		m_session.history.entries[m_session.history.index].zoom = zoom;
 	}
 }
 
@@ -466,23 +466,15 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	if (m_session.historyIndex >= 0 || !m_contentsWidget->getWebWidget() || m_contentsWidget->getWebWidget()->getRequestedUrl().isEmpty())
+	if (m_session.history.index >= 0 || !m_contentsWidget->getWebWidget() || m_contentsWidget->getWebWidget()->getRequestedUrl().isEmpty())
 	{
-		WindowHistoryInformation history;
-
-		if (m_session.historyIndex >= 0)
-		{
-			history.index = m_session.historyIndex;
-			history.entries = m_session.history;
-		}
-
-		m_contentsWidget->setHistory(history);
+		m_contentsWidget->setHistory(m_session.history);
 		m_contentsWidget->setZoom(m_session.getZoom());
 	}
 
 	if (isActive())
 	{
-		if (m_session.historyIndex >= 0)
+		if (m_session.history.index >= 0)
 		{
 			m_contentsWidget->setFocus();
 		}
@@ -673,18 +665,14 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 	return state;
 }
 
-WindowHistoryInformation Window::getHistory() const
+SessionWindow::History Window::getHistory() const
 {
 	if (m_contentsWidget)
 	{
 		return m_contentsWidget->getHistory();
 	}
 
-	WindowHistoryInformation history;
-	history.entries = m_session.history;
-	history.index = m_session.historyIndex;
-
-	return history;
+	return m_session.history;
 }
 
 SessionWindow Window::getSession() const
@@ -693,7 +681,9 @@ SessionWindow Window::getSession() const
 
 	if (m_contentsWidget)
 	{
-		const WindowHistoryInformation history(m_contentsWidget->getHistory());
+		session.history = m_contentsWidget->getHistory();
+		session.parentGroup = 0;
+		session.isPinned = isPinned();
 
 		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{
@@ -704,11 +694,6 @@ SessionWindow Window::getSession() const
 				session.options = webWidget->getOptions();
 			}
 		}
-
-		session.history = history.entries;
-		session.parentGroup = 0;
-		session.historyIndex = history.index;
-		session.isPinned = isPinned();
 	}
 	else
 	{

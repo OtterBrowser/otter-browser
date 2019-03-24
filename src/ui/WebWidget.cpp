@@ -1156,7 +1156,7 @@ ActionsManager::ActionDefinition::State WebWidget::getActionState(int identifier
 		case ActionsManager::GoToHistoryIndexAction:
 			if (parameters.contains(QLatin1String("index")))
 			{
-				const WindowHistoryInformation history(getHistory());
+				const SessionWindow::History history(getHistory());
 				const int index(parameters[QLatin1String("index")].toInt());
 
 				if (index >= 0 && index < history.entries.count())

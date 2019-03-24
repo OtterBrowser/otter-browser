@@ -241,7 +241,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 			SessionWindow sessionWindow;
 			sessionWindow.state = windowState;
-			sessionWindow.historyIndex = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
+			sessionWindow.history.index = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
 			sessionWindow.isPinned = windowObject.value(QLatin1String("isPinned")).toBool(false);
 
@@ -261,24 +261,27 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				}
 			}
 
+			SessionWindow::History history;
+
 			for (int k = 0; k < windowHistoryArray.count(); ++k)
 			{
 				const QJsonObject historyEntryObject(windowHistoryArray.at(k).toObject());
 				const QStringList position(historyEntryObject.value(QLatin1String("position")).toString().split(QLatin1Char(',')));
-				WindowHistoryEntry historyEntry;
+				SessionWindow::History::Entry historyEntry;
 				historyEntry.url = historyEntryObject.value(QLatin1String("url")).toString();
 				historyEntry.title = historyEntryObject.value(QLatin1String("title")).toString();
 				historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
 				historyEntry.zoom = historyEntryObject.value(QLatin1String("zoom")).toInt(defaultZoom);
 
-				sessionWindow.history.append(historyEntry);
+				history.entries.append(historyEntry);
 			}
 
-			if (sessionWindow.historyIndex < 0 || sessionWindow.historyIndex >= sessionWindow.history.count())
+			if (history.index < 0 || history.index >= history.entries.count())
 			{
-				sessionWindow.historyIndex = (sessionWindow.history.count() - 1);
+				history.index = (history.entries.count() - 1);
 			}
 
+			sessionWindow.history = history;
 			sessionMainWindow.windows.append(sessionWindow);
 		}
 
@@ -649,7 +652,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
-			QJsonObject windowObject({{QLatin1String("currentIndex"), (sessionEntry.windows.at(j).historyIndex + 1)}});
+			QJsonObject windowObject({{QLatin1String("currentIndex"), (sessionEntry.windows.at(j).history.index + 1)}});
 
 			if (!sessionEntry.windows.at(j).options.isEmpty())
 			{
@@ -705,12 +708,13 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				windowObject.insert(QLatin1String("isPinned"), true);
 			}
 
+			const SessionWindow::History windowHistory(sessionEntry.windows.at(j).history);
 			QJsonArray windowHistoryArray;
 
-			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
+			for (int k = 0; k < windowHistory.entries.count(); ++k)
 			{
-				const QPoint position(sessionEntry.windows.at(j).history.at(k).position);
-				QJsonObject historyEntryObject({{QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url}, {QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title}, {QLatin1String("zoom"), sessionEntry.windows.at(j).history.at(k).zoom}});
+				const QPoint position(windowHistory.entries.at(k).position);
+				QJsonObject historyEntryObject({{QLatin1String("url"), windowHistory.entries.at(k).url}, {QLatin1String("title"), windowHistory.entries.at(k).title}, {QLatin1String("zoom"), windowHistory.entries.at(k).zoom}});
 
 				if (!position.isNull())
 				{

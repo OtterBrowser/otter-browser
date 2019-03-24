@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 
 		if (startupBehavior != QLatin1String("startEmpty"))
 		{
-			WindowHistoryEntry entry;
+			SessionWindow::History::Entry entry;
 
 			if (startupBehavior == QLatin1String("startHomePage"))
 			{
@@ -186,9 +186,12 @@ int main(int argc, char *argv[])
 				entry.url = QLatin1String("about:blank");
 			}
 
+			SessionWindow::History history;
+			history.entries = {entry};
+			history.index = 0;
+
 			SessionWindow tab;
-			tab.history = {entry};
-			tab.historyIndex = 0;
+			tab.history = history;
 
 			window.windows = {tab};
 			window.index = 0;

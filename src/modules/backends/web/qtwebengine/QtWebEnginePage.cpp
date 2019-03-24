@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -229,7 +229,7 @@ void QtWebEnginePage::handleLoadFinished()
 	});
 }
 
-void QtWebEnginePage::setHistory(const WindowHistoryInformation &history)
+void QtWebEnginePage::setHistory(const SessionWindow::History &history)
 {
 	m_history.clear();
 
@@ -255,7 +255,7 @@ void QtWebEnginePage::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		const WindowHistoryEntry entry(history.entries.at(i));
+		const SessionWindow::History::Entry entry(history.entries.at(i));
 
 		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << static_cast<int>(200);
 
@@ -398,20 +398,21 @@ QVariant QtWebEnginePage::runScriptFile(const QString &path, const QStringList &
 	return runScriptSource(createScriptSource(path, parameters));
 }
 
-WindowHistoryInformation QtWebEnginePage::getHistory() const
+SessionWindow::History QtWebEnginePage::getHistory() const
 {
-	const int historyCount(history()->count());
-	WindowHistoryInformation information;
-	information.entries.reserve(historyCount);
-	information.index = history()->currentItemIndex();
+	QWebEngineHistory *pageHistory(history());
+	const int historyCount(pageHistory->count());
+	SessionWindow::History history;
+	history.entries.reserve(historyCount);
+	history.index = pageHistory->currentItemIndex();
 
 	const QString url(requestedUrl().toString());
 
 	for (int i = 0; i < historyCount; ++i)
 	{
-		const QWebEngineHistoryItem item(history()->itemAt(i));
+		const QWebEngineHistoryItem item(pageHistory->itemAt(i));
 		const HistoryEntryInformation entryInformation(m_history.value(i));
-		WindowHistoryEntry entry;
+		SessionWindow::History::Entry entry;
 		entry.url = ((item.url().toString() == QLatin1String("about:blank")) ? item.originalUrl() : item.url()).toString();
 		entry.title = item.title();
 
@@ -423,12 +424,12 @@ WindowHistoryInformation QtWebEnginePage::getHistory() const
 			entry.zoom = entryInformation.zoom;
 		}
 
-		information.entries.append(entry);
+		history.entries.append(entry);
 	}
 
-	if (m_widget && m_widget->getLoadingState() == WebWidget::OngoingLoadingState && url != history()->itemAt(history()->currentItemIndex()).url().toString())
+	if (m_widget && m_widget->getLoadingState() == WebWidget::OngoingLoadingState && url != pageHistory->itemAt(pageHistory->currentItemIndex()).url().toString())
 	{
-		WindowHistoryEntry entry;
+		SessionWindow::History::Entry entry;
 		entry.url = url;
 		entry.title = m_widget->getTitle();
 		entry.icon = icon();
@@ -436,11 +437,11 @@ WindowHistoryInformation QtWebEnginePage::getHistory() const
 		entry.position = scrollPosition().toPoint();
 		entry.zoom = static_cast<int>(zoomFactor() * 100);
 
-		information.index = historyCount;
-		information.entries.append(entry);
+		history.entries.append(entry);
+		history.index = historyCount;
 	}
 
-	return information;
+	return history;
 }
 
 QStringList QtWebEnginePage::chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)

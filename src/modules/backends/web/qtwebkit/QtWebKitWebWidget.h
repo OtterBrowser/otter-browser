@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -66,7 +66,7 @@ public:
 	LinkUrl getActiveLink() const override;
 	LinkUrl getActiveMedia() const override;
 	SslInformation getSslInformation() const override;
-	WindowHistoryInformation getHistory() const override;
+	SessionWindow::History getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QStringList getStyleSheets() const override;
 	QVector<LinkUrl> getFeeds() const override;
@@ -95,7 +95,7 @@ public slots:
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
 	void setOption(int identifier, const QVariant &value) override;
 	void setScrollPosition(const QPoint &position) override;
-	void setHistory(const WindowHistoryInformation &history) override;
+	void setHistory(const SessionWindow::History &history) override;
 	void setZoom(int zoom) override;
 	void setUrl(const QUrl &url, bool isTyped = true) override;
 

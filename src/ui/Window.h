@@ -67,7 +67,7 @@ public:
 	QPixmap createThumbnail() const;
 	QDateTime getLastActivity() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
-	WindowHistoryInformation getHistory() const;
+	SessionWindow::History getHistory() const;
 	SessionWindow getSession() const;
 	SessionWindow::State getWindowState() const;
 	QSize sizeHint() const override;
