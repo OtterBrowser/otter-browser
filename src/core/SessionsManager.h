@@ -150,15 +150,7 @@ struct SessionWindow final
 	{
 		if (history.index >= 0 && history.index < history.entries.count())
 		{
-			if (!history.entries.at(history.index).title.isEmpty())
-			{
-				return history.entries.at(history.index).title;
-			}
-
-			if (history.entries.at(history.index).url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
-			{
-				return QCoreApplication::translate("main", "Start Page");
-			}
+			return history.entries.at(history.index).getTitle();
 		}
 
 		return QCoreApplication::translate("main", "(Untitled)");
