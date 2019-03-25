@@ -102,7 +102,7 @@ struct SessionWindow final
 			{
 				if (title.isEmpty())
 				{
-					if (url == QLatin1String("about:start"))
+					if (url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
 					{
 						return QCoreApplication::translate("Otter::SessionsManager", "Start Page");
 					}
