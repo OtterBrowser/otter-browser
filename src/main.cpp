@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 		sessionData.path = QLatin1String("default");
 		sessionData.title = QCoreApplication::translate("main", "Default");
 
-		SessionMainWindow window;
+		Session::MainWindow window;
 
 		if (sessionData.isValid())
 		{
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 
 		if (startupBehavior != QLatin1String("startEmpty"))
 		{
-			SessionWindow::History::Entry entry;
+			Session::Window::History::Entry entry;
 
 			if (startupBehavior == QLatin1String("startHomePage"))
 			{
@@ -186,11 +186,11 @@ int main(int argc, char *argv[])
 				entry.url = QLatin1String("about:blank");
 			}
 
-			SessionWindow::History history;
+			Session::Window::History history;
 			history.entries = {entry};
 			history.index = 0;
 
-			SessionWindow tab;
+			Session::Window tab;
 			tab.history = history;
 
 			window.windows = {tab};

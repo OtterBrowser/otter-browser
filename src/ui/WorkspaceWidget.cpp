@@ -523,7 +523,7 @@ void WorkspaceWidget::markAsRestored()
 	}
 }
 
-void WorkspaceWidget::addWindow(Window *window, const SessionWindow::State &state, bool isAlwaysOnTop)
+void WorkspaceWidget::addWindow(Window *window, const Session::Window::State &state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{

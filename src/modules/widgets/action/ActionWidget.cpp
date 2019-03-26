@@ -204,7 +204,7 @@ NavigationActionWidget::NavigationActionWidget(Window *window, const ToolBarsMan
 	connect(menu(), &QMenu::aboutToShow, this, &NavigationActionWidget::updateMenu);
 }
 
-void NavigationActionWidget::addMenuEntry(int index, const SessionWindow::History::Entry &entry)
+void NavigationActionWidget::addMenuEntry(int index, const Session::Window::History::Entry &entry)
 {
 	Action *action(new Action(ActionsManager::GoToHistoryIndexAction, {{QLatin1String("index"), index}}, ActionExecutor::Object(m_window, m_window), this));
 	action->setStatusTip(entry.url);
@@ -221,7 +221,7 @@ void NavigationActionWidget::updateMenu()
 
 	menu()->clear();
 
-	const SessionWindow::History history(m_window->getContentsWidget()->getHistory());
+	const Session::Window::History history(m_window->getContentsWidget()->getHistory());
 
 	if (getIdentifier() == ActionsManager::GoBackAction)
 	{
@@ -293,7 +293,7 @@ bool NavigationActionWidget::event(QEvent *event)
 
 				if (m_window)
 				{
-					const SessionWindow::History history(m_window->getContentsWidget()->getHistory());
+					const Session::Window::History history(m_window->getContentsWidget()->getHistory());
 
 					if (!history.entries.isEmpty())
 					{

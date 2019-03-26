@@ -65,7 +65,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void addMenuEntry(int index, const SessionWindow::History::Entry &entry);
+	void addMenuEntry(int index, const Session::Window::History::Entry &entry);
 	bool event(QEvent *event) override;
 
 protected slots:

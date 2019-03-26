@@ -77,7 +77,7 @@ public:
 	LinkUrl getActiveImage() const override;
 	LinkUrl getActiveLink() const override;
 	LinkUrl getActiveMedia() const override;
-	SessionWindow::History getHistory() const override;
+	Session::Window::History getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	QStringList getStyleSheets() const override;
 	QVector<LinkUrl> getFeeds() const override;
@@ -102,7 +102,7 @@ public slots:
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
 	void setOption(int identifier, const QVariant &value) override;
 	void setScrollPosition(const QPoint &position) override;
-	void setHistory(const SessionWindow::History &history) override;
+	void setHistory(const Session::Window::History &history) override;
 	void setZoom(int zoom) override;
 	void setUrl(const QUrl &url, bool isTyped = true) override;
 

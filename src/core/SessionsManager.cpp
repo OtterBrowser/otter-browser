@@ -31,13 +31,17 @@
 namespace Otter
 {
 
+Session::Session(QObject *parent) : QObject(parent)
+{
+}
+
 SessionsManager* SessionsManager::m_instance(nullptr);
 SessionModel* SessionsManager::m_model(nullptr);
 QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
-QVector<SessionMainWindow> SessionsManager::m_closedWindows;
+QVector<Session::MainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_isDirty(false);
 bool SessionsManager::m_isPrivate(false);
 bool SessionsManager::m_isReadOnly(false);
@@ -98,7 +102,7 @@ void SessionsManager::storeClosedWindow(MainWindow *mainWindow)
 		return;
 	}
 
-	SessionMainWindow session(mainWindow->getSession());
+	Session::MainWindow session(mainWindow->getSession());
 	session.geometry = mainWindow->saveGeometry();
 
 	if (!session.windows.isEmpty())
@@ -226,7 +230,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	{
 		const QJsonObject mainWindowObject(mainWindowsArray.at(i).toObject());
 		const QJsonArray windowsArray(mainWindowObject.value(QLatin1String("windows")).toArray());
-		SessionMainWindow sessionMainWindow;
+		Session::MainWindow sessionMainWindow;
 		sessionMainWindow.geometry = QByteArray::fromBase64(mainWindowObject.value(QLatin1String("geometry")).toString().toLatin1());
 		sessionMainWindow.index = (mainWindowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 
@@ -235,11 +239,11 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			const QJsonObject windowObject(windowsArray.at(j).toObject());
 			const QJsonArray windowHistoryArray(windowObject.value(QLatin1String("history")).toArray());
 			const QString state(windowObject.value(QLatin1String("state")).toString());
-			SessionWindow::State windowState;
+			Session::Window::State windowState;
 			windowState.geometry = JsonSettings::readRectangle(windowObject.value(QLatin1String("geometry")).toVariant());
 			windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
 
-			SessionWindow sessionWindow;
+			Session::Window sessionWindow;
 			sessionWindow.state = windowState;
 			sessionWindow.history.index = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
@@ -261,13 +265,13 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				}
 			}
 
-			SessionWindow::History history;
+			Session::Window::History history;
 
 			for (int k = 0; k < windowHistoryArray.count(); ++k)
 			{
 				const QJsonObject historyEntryObject(windowHistoryArray.at(k).toObject());
 				const QStringList position(historyEntryObject.value(QLatin1String("position")).toString().split(QLatin1Char(',')));
-				SessionWindow::History::Entry historyEntry;
+				Session::Window::History::Entry historyEntry;
 				historyEntry.url = historyEntryObject.value(QLatin1String("url")).toString();
 				historyEntry.title = historyEntryObject.value(QLatin1String("title")).toString();
 				historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
@@ -384,8 +388,8 @@ QStringList SessionsManager::getClosedWindows()
 
 	for (int i = 0; i < m_closedWindows.count(); ++i)
 	{
-		const SessionMainWindow window(m_closedWindows.at(i));
-		const QString title(window.windows.value(window.index, SessionWindow()).getTitle());
+		const Session::MainWindow window(m_closedWindows.at(i));
+		const QString title(window.windows.value(window.index, Session::Window()).getTitle());
 
 		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
 	}
@@ -646,7 +650,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		const SessionMainWindow sessionEntry(session.windows.at(i));
+		const Session::MainWindow sessionEntry(session.windows.at(i));
 		QJsonObject mainWindowObject({{QLatin1String("currentIndex"), (sessionEntry.index + 1)}, {QLatin1String("geometry"), QString(sessionEntry.geometry.toBase64())}});
 		QJsonArray windowsArray;
 
@@ -708,7 +712,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				windowObject.insert(QLatin1String("isPinned"), true);
 			}
 
-			const SessionWindow::History windowHistory(sessionEntry.windows.at(j).history);
+			const Session::Window::History windowHistory(sessionEntry.windows.at(j).history);
 			QJsonArray windowHistoryArray;
 
 			for (int k = 0; k < windowHistory.entries.count(); ++k)

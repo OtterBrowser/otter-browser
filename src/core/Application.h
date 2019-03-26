@@ -66,7 +66,7 @@ public:
 	static void showNotification(Notification *notification);
 	static void handlePositionalArguments(QCommandLineParser *parser, bool forceOpen = false);
 	static void setHidden(bool isHidden);
-	static MainWindow* createWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = {});
+	static MainWindow* createWindow(const QVariantMap &parameters = {}, const Session::MainWindow &session = {});
 	static Application* getInstance();
 	static MainWindow* getActiveWindow();
 	static QObject* getFocusObject(bool ignoreMenus);

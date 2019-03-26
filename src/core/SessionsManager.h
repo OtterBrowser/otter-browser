@@ -85,103 +85,112 @@ struct ToolBarState final
 	}
 };
 
-struct SessionWindow final
-{
-	struct History final
-	{
-		struct Entry final
-		{
-			QString url;
-			QString title;
-			QIcon icon;
-			QDateTime time;
-			QPoint position;
-			int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
+class MainWindow;
+class SessionModel;
 
-			QString getTitle() const
+class Session final : public QObject
+{
+public:
+	struct Window final
+	{
+		struct History final
+		{
+			struct Entry final
 			{
-				if (title.isEmpty())
+				QString url;
+				QString title;
+				QIcon icon;
+				QDateTime time;
+				QPoint position;
+				int zoom = SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
+
+				QString getTitle() const
 				{
-					if (url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
+					if (title.isEmpty())
 					{
-						return QCoreApplication::translate("Otter::SessionsManager", "Start Page");
+						if (url == QLatin1String("about:start") && SettingsManager::getOption(SettingsManager::StartPage_EnableStartPageOption).toBool())
+						{
+							return QCoreApplication::translate("Otter::SessionsManager", "Start Page");
+						}
+
+						return QCoreApplication::translate("Otter::SessionsManager", "(Unknown)");
 					}
 
-					return QCoreApplication::translate("Otter::SessionsManager", "(Unknown)");
+					return title;
 				}
+			};
 
-				return title;
+			QVector<Entry> entries;
+			int index = -1;
+
+			bool isEmpty() const
+			{
+				return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.first().url))));
 			}
 		};
 
-		QVector<Entry> entries;
+		struct State final
+		{
+			QRect geometry;
+			Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
+		};
+
+		History history;
+		State state;
+		QHash<int, QVariant> options;
+		int parentGroup = 0;
+		bool isAlwaysOnTop = false;
+		bool isPinned = false;
+
+		QString getUrl() const
+		{
+			if (history.index >= 0 && history.index < history.entries.count())
+			{
+				return history.entries.at(history.index).url;
+			}
+
+			return {};
+		}
+
+		QString getTitle() const
+		{
+			if (history.index >= 0 && history.index < history.entries.count())
+			{
+				return history.entries.at(history.index).getTitle();
+			}
+
+			return QCoreApplication::translate("main", "(Untitled)");
+		}
+
+		int getZoom() const
+		{
+			if (history.index >= 0 && history.index < history.entries.count())
+			{
+				return history.entries.at(history.index).zoom;
+			}
+
+			return SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
+		}
+	};
+
+	struct MainWindow final
+	{
+		QMap<QString, QVector<int> > splitters;
+		QVector<Window> windows;
+		QVector<ToolBarState> toolBars;
+		QByteArray geometry;
 		int index = -1;
-
-		bool isEmpty() const
-		{
-			return (entries.isEmpty() || (entries.count() == 1 && Utils::isUrlEmpty(QUrl(entries.first().url))));
-		}
+		bool hasToolBarsState = false;
 	};
 
-	struct State final
-	{
-		QRect geometry;
-		Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
-	};
-
-	History history;
-	State state;
-	QHash<int, QVariant> options;
-	int parentGroup = 0;
-	bool isAlwaysOnTop = false;
-	bool isPinned = false;
-
-	QString getUrl() const
-	{
-		if (history.index >= 0 && history.index < history.entries.count())
-		{
-			return history.entries.at(history.index).url;
-		}
-
-		return {};
-	}
-
-	QString getTitle() const
-	{
-		if (history.index >= 0 && history.index < history.entries.count())
-		{
-			return history.entries.at(history.index).getTitle();
-		}
-
-		return QCoreApplication::translate("main", "(Untitled)");
-	}
-
-	int getZoom() const
-	{
-		if (history.index >= 0 && history.index < history.entries.count())
-		{
-			return history.entries.at(history.index).zoom;
-		}
-
-		return SettingsManager::getOption(SettingsManager::Content_DefaultZoomOption).toInt();
-	}
-};
-
-struct SessionMainWindow final
-{
-	QMap<QString, QVector<int> > splitters;
-	QVector<SessionWindow> windows;
-	QVector<ToolBarState> toolBars;
-	QByteArray geometry;
-	int index = -1;
-	bool hasToolBarsState = false;
+	explicit Session(QObject *parent = nullptr);
 };
 
 struct SessionInformation final
 {
 	QString path;
 	QString title;
-	QVector<SessionMainWindow> windows;
+	QVector<Session::MainWindow> windows;
 	int index = -1;
 	bool isClean = true;
 
@@ -193,15 +202,12 @@ struct SessionInformation final
 
 struct ClosedWindow final
 {
-	SessionWindow window;
+	Session::Window window;
 	QIcon icon;
 	quint64 nextWindow = 0;
 	quint64 previousWindow = 0;
 	bool isPrivate = false;
 };
-
-class MainWindow;
-class SessionModel;
 
 class SessionsManager final : public QObject
 {
@@ -264,7 +270,7 @@ private:
 	static QString m_sessionTitle;
 	static QString m_cachePath;
 	static QString m_profilePath;
-	static QVector<SessionMainWindow> m_closedWindows;
+	static QVector<Session::MainWindow> m_closedWindows;
 	static bool m_isDirty;
 	static bool m_isPrivate;
 	static bool m_isReadOnly;

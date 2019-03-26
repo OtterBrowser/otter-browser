@@ -1331,7 +1331,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 						}
 					}
 
-					SessionWindow::History history(getHistory());
+					Session::Window::History history(getHistory());
 					history.entries.removeAt(index);
 
 					if (history.index >= index)
@@ -1823,7 +1823,7 @@ void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
 	}
 }
 
-void QtWebKitWebWidget::setHistory(const SessionWindow::History &history)
+void QtWebKitWebWidget::setHistory(const Session::Window::History &history)
 {
 	if (history.entries.isEmpty())
 	{
@@ -2303,7 +2303,7 @@ WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
 	return m_networkManager->getSslInformation();
 }
 
-SessionWindow::History QtWebKitWebWidget::getHistory() const
+Session::Window::History QtWebKitWebWidget::getHistory() const
 {
 	QVariantList state(m_page->history()->currentItem().userData().toList());
 
@@ -2322,7 +2322,7 @@ SessionWindow::History QtWebKitWebWidget::getHistory() const
 	const QWebHistory *pageHistory(m_page->history());
 	const QUrl requestedUrl(m_page->mainFrame()->requestedUrl());
 	const int historyCount(pageHistory->count());
-	SessionWindow::History history;
+	Session::Window::History history;
 	history.entries.reserve(historyCount);
 	history.index = pageHistory->currentItemIndex();
 
@@ -2330,7 +2330,7 @@ SessionWindow::History QtWebKitWebWidget::getHistory() const
 	{
 		const QWebHistoryItem item(pageHistory->itemAt(i));
 		const QVariantList itemState(item.userData().toList());
-		SessionWindow::History::Entry entry;
+		Session::Window::History::Entry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
 		entry.time = itemState.value(VisitTimeEntryData).toDateTime();
@@ -2354,7 +2354,7 @@ SessionWindow::History QtWebKitWebWidget::getHistory() const
 
 	if (m_loadingState == OngoingLoadingState && requestedUrl != pageHistory->itemAt(pageHistory->currentItemIndex()).url())
 	{
-		SessionWindow::History::Entry entry;
+		Session::Window::History::Entry entry;
 		entry.url = requestedUrl.toString();
 		entry.title = getTitle();
 		entry.position = state.value(PositionEntryData, QPoint(0, 0)).toPoint();

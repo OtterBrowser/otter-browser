@@ -52,7 +52,7 @@ public:
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap createThumbnail();
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
-	virtual SessionWindow::History getHistory() const;
+	virtual Session::Window::History getHistory() const;
 	virtual WebWidget::ContentStates getContentState() const;
 	virtual WebWidget::LoadingState getLoadingState() const;
 	int getSidebar() const;
@@ -67,7 +67,7 @@ public slots:
 	virtual void print(QPrinter *printer);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setOption(int identifier, const QVariant &value);
-	virtual void setHistory(const SessionWindow::History &history);
+	virtual void setHistory(const Session::Window::History &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool isTyped = true);
 

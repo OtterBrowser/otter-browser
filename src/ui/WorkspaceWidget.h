@@ -73,7 +73,7 @@ class WorkspaceWidget final : public QWidget
 public:
 	explicit WorkspaceWidget(MainWindow *parent);
 
-	void addWindow(Window *window, const SessionWindow::State &state = SessionWindow::State(), bool isAlwaysOnTop = false);
+	void addWindow(Window *window, const Session::Window::State &state = Session::Window::State(), bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window, bool force = false);
 	Window* getActiveWindow() const;
 	int getWindowCount(Qt::WindowState state) const;

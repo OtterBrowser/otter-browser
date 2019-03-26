@@ -48,12 +48,12 @@ public:
 
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
-	void setHistory(const SessionWindow::History &history);
+	void setHistory(const Session::Window::History &history);
 	QtWebEngineWebWidget* getWebWidget() const;
 	QString createScriptSource(const QString &path, const QStringList &parameters = {}) const;
 	QVariant runScriptSource(const QString &script);
 	QVariant runScriptFile(const QString &path, const QStringList &parameters = {});
-	SessionWindow::History getHistory() const;
+	Session::Window::History getHistory() const;
 	bool isPopup() const;
 	bool isViewingMedia() const;
 

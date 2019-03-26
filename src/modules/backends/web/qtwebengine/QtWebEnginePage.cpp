@@ -229,7 +229,7 @@ void QtWebEnginePage::handleLoadFinished()
 	});
 }
 
-void QtWebEnginePage::setHistory(const SessionWindow::History &history)
+void QtWebEnginePage::setHistory(const Session::Window::History &history)
 {
 	m_history.clear();
 
@@ -255,7 +255,7 @@ void QtWebEnginePage::setHistory(const SessionWindow::History &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		const SessionWindow::History::Entry entry(history.entries.at(i));
+		const Session::Window::History::Entry entry(history.entries.at(i));
 
 		stream << QUrl(entry.url) << entry.title << QByteArray() << static_cast<qint32>(0) << false << QUrl() << static_cast<qint32>(0) << QUrl(entry.url) << false << QDateTime::currentDateTime().toSecsSinceEpoch() << static_cast<int>(200);
 
@@ -398,11 +398,11 @@ QVariant QtWebEnginePage::runScriptFile(const QString &path, const QStringList &
 	return runScriptSource(createScriptSource(path, parameters));
 }
 
-SessionWindow::History QtWebEnginePage::getHistory() const
+Session::Window::History QtWebEnginePage::getHistory() const
 {
 	QWebEngineHistory *pageHistory(history());
 	const int historyCount(pageHistory->count());
-	SessionWindow::History history;
+	Session::Window::History history;
 	history.entries.reserve(historyCount);
 	history.index = pageHistory->currentItemIndex();
 
@@ -412,7 +412,7 @@ SessionWindow::History QtWebEnginePage::getHistory() const
 	{
 		const QWebEngineHistoryItem item(pageHistory->itemAt(i));
 		const HistoryEntryInformation entryInformation(m_history.value(i));
-		SessionWindow::History::Entry entry;
+		Session::Window::History::Entry entry;
 		entry.url = ((item.url().toString() == QLatin1String("about:blank")) ? item.originalUrl() : item.url()).toString();
 		entry.title = item.title();
 
@@ -429,7 +429,7 @@ SessionWindow::History QtWebEnginePage::getHistory() const
 
 	if (m_widget && m_widget->getLoadingState() == WebWidget::OngoingLoadingState && url != pageHistory->itemAt(pageHistory->currentItemIndex()).url().toString())
 	{
-		SessionWindow::History::Entry entry;
+		Session::Window::History::Entry entry;
 		entry.url = url;
 		entry.title = m_widget->getTitle();
 		entry.icon = icon();

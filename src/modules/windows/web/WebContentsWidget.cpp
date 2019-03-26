@@ -1257,7 +1257,7 @@ void WebContentsWidget::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void WebContentsWidget::setHistory(const SessionWindow::History &history)
+void WebContentsWidget::setHistory(const Session::Window::History &history)
 {
 	if (history.entries.count() == 1 && QUrl(history.entries.at(0).url).scheme() == QLatin1String("view-source"))
 	{
@@ -1444,7 +1444,7 @@ ActionsManager::ActionDefinition::State WebContentsWidget::getActionState(int id
 	return m_webWidget->getActionState(identifier, parameters);
 }
 
-SessionWindow::History WebContentsWidget::getHistory() const
+Session::Window::History WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
 }

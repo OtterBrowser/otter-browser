@@ -632,11 +632,11 @@ void Application::triggerAction(int identifier, const QVariantMap &parameters, Q
 		case ActionsManager::NewWindowAction:
 		case ActionsManager::NewWindowPrivateAction:
 			{
-				SessionMainWindow session;
+				Session::MainWindow session;
 
 				if (m_activeWindow)
 				{
-					const SessionMainWindow activeSession(m_activeWindow->getSession());
+					const Session::MainWindow activeSession(m_activeWindow->getSession());
 
 					session.splitters = activeSession.splitters;
 					session.hasToolBarsState = true;
@@ -1246,7 +1246,7 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(Utils::createLocale(identifier));
 }
 
-MainWindow* Application::createWindow(const QVariantMap &parameters, const SessionMainWindow &session)
+MainWindow* Application::createWindow(const QVariantMap &parameters, const Session::MainWindow &session)
 {
 	MainWindow *mainWindow(new MainWindow(parameters, session));
 

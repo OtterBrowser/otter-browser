@@ -53,7 +53,7 @@ public:
 
 	void clear();
 	void setOption(int identifier, const QVariant &value);
-	void setSession(const SessionWindow &session, bool deferLoading = false);
+	void setSession(const Session::Window &session, bool deferLoading = false);
 	Window* clone(bool cloneHistory, MainWindow *mainWindow) const;
 	MainWindow* getMainWindow() const;
 	WindowToolBarWidget* getAddressBar() const;
@@ -67,9 +67,9 @@ public:
 	QPixmap createThumbnail() const;
 	QDateTime getLastActivity() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
-	SessionWindow::History getHistory() const;
-	SessionWindow getSession() const;
-	SessionWindow::State getWindowState() const;
+	Session::Window::History getHistory() const;
+	Session::Window getSession() const;
+	Session::Window::State getWindowState() const;
 	QSize sizeHint() const override;
 	WebWidget::LoadingState getLoadingState() const;
 	WebWidget::ContentStates getContentState() const;
@@ -108,7 +108,7 @@ private:
 	WindowToolBarWidget *m_addressBarWidget;
 	QPointer<ContentsWidget> m_contentsWidget;
 	QDateTime m_lastActivity;
-	SessionWindow m_session;
+	Session::Window m_session;
 	QVariantMap m_parameters;
 	quint64 m_identifier;
 	int m_suspendTimer;

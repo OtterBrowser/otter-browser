@@ -53,10 +53,10 @@ class MainWindow final : public QMainWindow, public ActionExecutor
 	Q_OBJECT
 
 public:
-	explicit MainWindow(const QVariantMap &parameters = {}, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = nullptr);
+	explicit MainWindow(const QVariantMap &parameters = {}, const Session::MainWindow &session = Session::MainWindow(), QWidget *parent = nullptr);
 	~MainWindow();
 
-	void restoreSession(const SessionMainWindow &session);
+	void restoreSession(const Session::MainWindow &session);
 	void restoreClosedWindow(int index = 0);
 	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, const QVariantMap &parameters = {});
 	void setActiveEditorExecutor(ActionExecutor::Object executor);
@@ -71,7 +71,7 @@ public:
 	QString getTitle() const;
 	QUrl getUrl() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
-	SessionMainWindow getSession() const;
+	Session::MainWindow getSession() const;
 	ToolBarState getToolBarState(int identifier) const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
@@ -93,7 +93,7 @@ public slots:
 	void raiseWindow();
 	void search(const QString &query, const QString &searchEngine, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen);
 	void clearClosedWindows();
-	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const SessionWindow::State &state = SessionWindow::State(), bool isAlwaysOnTop = false);
+	void addWindow(Window *window, SessionsManager::OpenHints hints = SessionsManager::DefaultOpen, int index = -1, const Session::Window::State &state = Session::Window::State(), bool isAlwaysOnTop = false);
 	void setActiveWindowByIndex(int index, bool updateLastActivity = true);
 	void setActiveWindowByIdentifier(quint64 identifier, bool updateLastActivity = true);
 	void setOption(int identifier, const QVariant &value);

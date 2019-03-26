@@ -313,7 +313,7 @@ void ContentsWidget::setOption(int identifier, const QVariant &value)
 	Q_UNUSED(value)
 }
 
-void ContentsWidget::setHistory(const SessionWindow::History &history)
+void ContentsWidget::setHistory(const Session::Window::History &history)
 {
 	Q_UNUSED(history)
 }
@@ -405,15 +405,15 @@ ActionsManager::ActionDefinition::State ContentsWidget::getActionState(int ident
 	return state;
 }
 
-SessionWindow::History ContentsWidget::getHistory() const
+Session::Window::History ContentsWidget::getHistory() const
 {
-	SessionWindow::History::Entry entry;
+	Session::Window::History::Entry entry;
 	entry.url = getUrl().toString(QUrl::RemovePassword);
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;
 
-	SessionWindow::History history;
+	Session::Window::History history;
 	history.entries = {entry};
 	history.index = 0;
 

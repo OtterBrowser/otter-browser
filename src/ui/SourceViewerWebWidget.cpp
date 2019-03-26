@@ -342,7 +342,7 @@ void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
 	m_sourceViewer->verticalScrollBar()->setValue(position.y());
 }
 
-void SourceViewerWebWidget::setHistory(const SessionWindow::History &history)
+void SourceViewerWebWidget::setHistory(const Session::Window::History &history)
 {
 	Q_UNUSED(history)
 }
@@ -484,14 +484,14 @@ ActionsManager::ActionDefinition::State SourceViewerWebWidget::getActionState(in
 	return state;
 }
 
-SessionWindow::History SourceViewerWebWidget::getHistory() const
+Session::Window::History SourceViewerWebWidget::getHistory() const
 {
-	SessionWindow::History::Entry entry;
+	Session::Window::History::Entry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
 	entry.zoom = getZoom();
 
-	SessionWindow::History history;
+	Session::Window::History history;
 	history.entries = {entry};
 	history.index = 0;
 

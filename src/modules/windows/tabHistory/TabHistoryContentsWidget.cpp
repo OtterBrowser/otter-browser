@@ -102,7 +102,7 @@ void TabHistoryContentsWidget::updateHistory()
 {
 	if (m_window)
 	{
-		const SessionWindow::History history(m_window->getHistory());
+		const Session::Window::History history(m_window->getHistory());
 
 		m_ui->historyViewWidget->getSourceModel()->clear();
 

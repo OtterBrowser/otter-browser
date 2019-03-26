@@ -308,7 +308,7 @@ void Window::updateFocus()
 	});
 }
 
-void Window::setSession(const SessionWindow &session, bool deferLoading)
+void Window::setSession(const Session::Window &session, bool deferLoading)
 {
 	m_session = session;
 
@@ -491,7 +491,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	updateFocus();
 
-	m_session = SessionWindow();
+	m_session = Session::Window();
 
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit urlChanged(m_contentsWidget->getUrl(), false);
@@ -665,7 +665,7 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 	return state;
 }
 
-SessionWindow::History Window::getHistory() const
+Session::Window::History Window::getHistory() const
 {
 	if (m_contentsWidget)
 	{
@@ -675,9 +675,9 @@ SessionWindow::History Window::getHistory() const
 	return m_session.history;
 }
 
-SessionWindow Window::getSession() const
+Session::Window Window::getSession() const
 {
-	SessionWindow session;
+	Session::Window session;
 
 	if (m_contentsWidget)
 	{
@@ -706,9 +706,9 @@ SessionWindow Window::getSession() const
 	return session;
 }
 
-SessionWindow::State Window::getWindowState() const
+Session::Window::State Window::getWindowState() const
 {
-	SessionWindow::State windowState;
+	Session::Window::State windowState;
 	windowState.state = Qt::WindowMaximized;
 
 	if (!isMaximized())

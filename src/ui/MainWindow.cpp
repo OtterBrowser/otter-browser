@@ -64,7 +64,7 @@ namespace Otter
 
 quint64 MainWindow::m_identifierCounter(0);
 
-MainWindow::MainWindow(const QVariantMap &parameters, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent), ActionExecutor(),
+MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow &session, QWidget *parent) : QMainWindow(parent), ActionExecutor(),
 	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
 	m_tabBar(new TabBarWidget(this)),
@@ -680,7 +680,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 
 				if (hints.testFlag(SessionsManager::NewWindowOpen))
 				{
-					SessionMainWindow session;
+					Session::MainWindow session;
 					session.toolBars = getSession().toolBars;
 					session.hasToolBarsState = true;
 
@@ -1281,7 +1281,7 @@ void MainWindow::search(const QString &query, const QString &searchEngine, Sessi
 	}
 }
 
-void MainWindow::restoreSession(const SessionMainWindow &session)
+void MainWindow::restoreSession(const Session::MainWindow &session)
 {
 	int index(session.index);
 
@@ -1402,7 +1402,7 @@ void MainWindow::clearClosedWindows()
 	}
 }
 
-void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const SessionWindow::State &state, bool isAlwaysOnTop)
+void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int index, const Session::Window::State &state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{
@@ -1674,7 +1674,7 @@ void MainWindow::handleRequestedCloseWindow(Window *window)
 
 	if (!m_isAboutToClose && (!window->isPrivate() || SettingsManager::getOption(SettingsManager::History_RememberClosedPrivateTabsOption).toBool()))
 	{
-		const SessionWindow::History history(window->getHistory());
+		const Session::Window::History history(window->getHistory());
 
 		if (!history.isEmpty())
 		{
@@ -2203,7 +2203,7 @@ Window* MainWindow::openWindow(ContentsWidget *widget, SessionsManager::OpenHint
 
 	if (hints.testFlag(SessionsManager::NewWindowOpen))
 	{
-		SessionMainWindow session;
+		Session::MainWindow session;
 		session.hasToolBarsState = true;
 
 		if (parameters.value(QLatin1String("minimalInterface")).toBool())
@@ -2486,10 +2486,10 @@ ActionsManager::ActionDefinition::State MainWindow::getActionState(int identifie
 	return state;
 }
 
-SessionMainWindow MainWindow::getSession() const
+Session::MainWindow MainWindow::getSession() const
 {
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea});
-	SessionMainWindow session;
+	Session::MainWindow session;
 	session.geometry = saveGeometry();
 	session.index = getCurrentWindowIndex();
 	session.splitters = m_splitters;

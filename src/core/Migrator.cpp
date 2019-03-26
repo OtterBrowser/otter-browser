@@ -406,7 +406,7 @@ public:
 			for (int j = 1; j <= windowsAmount; ++j)
 			{
 				const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(j), 0).toInt());
-				SessionMainWindow sessionEntry;
+				Session::MainWindow sessionEntry;
 				sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(j), {}).toString().toLatin1());
 				sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(j), 1).toInt() - 1);
 
@@ -418,11 +418,11 @@ public:
 					const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), {}).toString().split(QLatin1Char(',')));
 					const int historyAmount(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(j).arg(k), 0).toInt());
 					const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(j).arg(k), -1).toInt());
-					SessionWindow::State windowState;
+					Session::Window::State windowState;
 					windowState.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
 					windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
 
-					SessionWindow sessionWindow;
+					Session::Window sessionWindow;
 					sessionWindow.state = windowState;
 					sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(j).arg(k), 0).toInt();
 					sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(j).arg(k), false).toBool();
@@ -443,13 +443,13 @@ public:
 						sessionWindow.options[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
 					}
 
-					SessionWindow::History history;
+					Session::Window::History history;
 					history.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(j).arg(k), 1).toInt() - 1);
 
 					for (int l = 1; l <= historyAmount; ++l)
 					{
 						const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(j).arg(k).arg(l), 1).toStringList());
-						SessionWindow::History::Entry historyEntry;
+						Session::Window::History::Entry historyEntry;
 						historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), {}).toString();
 						historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), {}).toString();
 						historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));

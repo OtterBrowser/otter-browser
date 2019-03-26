@@ -45,7 +45,7 @@ public:
 	QIcon getIcon() const override;
 	QPoint getScrollPosition() const override;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
-	SessionWindow::History getHistory() const override;
+	Session::Window::History getHistory() const override;
 	HitTestResult getHitTestResult(const QPoint &position) override;
 	WebWidget::LoadingState getLoadingState() const override;
 	int getZoom() const override;
@@ -59,7 +59,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = {}, ActionsManager::TriggerType trigger = ActionsManager::UnknownTrigger) override;
 	void setOption(int identifier, const QVariant &value) override;
 	void setScrollPosition(const QPoint &position) override;
-	void setHistory(const SessionWindow::History &history) override;
+	void setHistory(const Session::Window::History &history) override;
 	void setZoom(int zoom) override;
 	void setUrl(const QUrl &url, bool isTyped = true) override;
 	void setContents(const QByteArray &contents, const QString &contentType);

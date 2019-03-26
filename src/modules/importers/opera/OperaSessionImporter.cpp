@@ -99,7 +99,7 @@ Importer::ImportType OperaSessionImporter::getImportType() const
 
 bool OperaSessionImporter::import(const QString &path)
 {
-	QHash<int, SessionMainWindow*> mainWindows;
+	QHash<int, Session::MainWindow*> mainWindows;
 	IniSettings originalSession(getSuggestedPath(path));
 	originalSession.beginGroup(QLatin1String("session"));
 
@@ -123,15 +123,15 @@ bool OperaSessionImporter::import(const QString &path)
 
 		if (originalSession.getValue(QLatin1String("type")).toInt() == 0)
 		{
-			SessionMainWindow *mainWindow(new SessionMainWindow());
+			Session::MainWindow *mainWindow(new Session::MainWindow());
 
 			mainWindows.insert(originalSession.getValue(QLatin1String("id")).toInt(), mainWindow);
 
 			continue;
 		}
 
-		SessionWindow window;
-		SessionWindow::State windowState;
+		Session::Window window;
+		Session::Window::State windowState;
 		windowState.geometry = QRect(originalSession.getValue(QLatin1String("x")).toInt(), originalSession.getValue(QLatin1String("y")).toInt(), originalSession.getValue(QLatin1String("w")).toInt(), originalSession.getValue(QLatin1String("h")).toInt());
 
 		switch (originalSession.getValue(QLatin1String("state")).toInt())
@@ -162,14 +162,14 @@ bool OperaSessionImporter::import(const QString &path)
 
 		originalSession.beginGroup(QString::number(i) + QLatin1String("history url"));
 
-		SessionWindow::History history;
+		Session::Window::History history;
 		history.index = (originalSession.getValue(QLatin1String("current history")).toInt() - 1);
 
 		const int historyCount(originalSession.getValue(QLatin1String("count")).toInt());
 
 		for (int j = 0; j < historyCount; ++j)
 		{
-			SessionWindow::History::Entry entry;
+			Session::Window::History::Entry entry;
 			entry.url = originalSession.getValue(QString::number(j)).toString();
 
 			QUrl url(entry.url);
@@ -201,7 +201,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 			if (!panel.isEmpty())
 			{
-				SessionWindow::History::Entry entry;
+				Session::Window::History::Entry entry;
 				entry.url = QLatin1String("about:") + panel.toLower();
 
 				window.history.entries.append(entry);
@@ -227,7 +227,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 		if (originalSession.getValue(QLatin1String("has speeddial in history")).toInt())
 		{
-			window.history.entries.prepend(SessionWindow::History::Entry());
+			window.history.entries.prepend(Session::Window::History::Entry());
 
 			window.history.index = (window.history.index + 1);
 		}
@@ -245,7 +245,7 @@ bool OperaSessionImporter::import(const QString &path)
 		}
 	}
 
-	QHash<int, SessionMainWindow*>::iterator iterator;
+	QHash<int, Session::MainWindow*>::iterator iterator;
 
 	for (iterator = mainWindows.begin(); iterator != mainWindows.end(); ++iterator)
 	{

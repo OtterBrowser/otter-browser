@@ -229,7 +229,7 @@ public:
 	virtual LinkUrl getActiveLink() const;
 	virtual LinkUrl getActiveMedia() const;
 	virtual SslInformation getSslInformation() const;
-	virtual SessionWindow::History getHistory() const = 0;
+	virtual Session::Window::History getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
 	virtual QStringList getStyleSheets() const;
 	virtual QVector<SpellCheckManager::DictionaryInformation> getDictionaries() const;
@@ -263,7 +263,7 @@ public slots:
 	virtual void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(int identifier, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
-	virtual void setHistory(const SessionWindow::History &history) = 0;
+	virtual void setHistory(const Session::Window::History &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool isTyped = true) = 0;
 	void setRequestedUrl(const QUrl &url, bool isTyped = true, bool onlyUpdate = false);

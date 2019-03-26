@@ -191,7 +191,7 @@ SessionInformation StartupDialog::getSession() const
 	}
 	else
 	{
-		SessionWindow::History::Entry entry;
+		Session::Window::History::Entry entry;
 
 		if (m_ui->homePageButton->isChecked())
 		{
@@ -206,19 +206,19 @@ SessionInformation StartupDialog::getSession() const
 			entry.url = QLatin1String("about:blank");
 		}
 
-		SessionWindow::History history;
+		Session::Window::History history;
 		history.entries = {entry};
 		history.index = 0;
 
-		SessionWindow window;
+		Session::Window window;
 		window.history = history;
 
-		SessionMainWindow mainWindow;
+		Session::MainWindow mainWindow;
 		mainWindow.windows.append(window);
 
 		if (!originalSession.windows.isEmpty())
 		{
-			const SessionMainWindow originalMainWindow(originalSession.windows.first());
+			const Session::MainWindow originalMainWindow(originalSession.windows.first());
 
 			mainWindow.toolBars = originalMainWindow.toolBars;
 			mainWindow.hasToolBarsState = originalMainWindow.hasToolBarsState;

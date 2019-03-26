@@ -653,7 +653,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (index >= 0 && index < m_page->history()->count())
 				{
-					SessionWindow::History history(getHistory());
+					Session::Window::History history(getHistory());
 					history.entries.removeAt(index);
 
 					if (history.index >= index)
@@ -1309,7 +1309,7 @@ void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 	m_page->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()));
 }
 
-void QtWebEngineWebWidget::setHistory(const SessionWindow::History &history)
+void QtWebEngineWebWidget::setHistory(const Session::Window::History &history)
 {
 	m_page->setHistory(history);
 
@@ -1651,7 +1651,7 @@ WebWidget::LinkUrl QtWebEngineWebWidget::getActiveMedia() const
 	return link;
 }
 
-SessionWindow::History QtWebEngineWebWidget::getHistory() const
+Session::Window::History QtWebEngineWebWidget::getHistory() const
 {
 	return m_page->getHistory();
 }
