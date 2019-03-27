@@ -324,7 +324,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			for (int j = 0; j < toolBarsArray.count(); ++j)
 			{
 				const QJsonObject toolBarObject(toolBarsArray.at(j).toObject());
-				ToolBarState toolBarState;
+				Session::MainWindow::ToolBarState toolBarState;
 				toolBarState.identifier = ToolBarsManager::getToolBarIdentifier(toolBarObject.value(QLatin1String("identifier")).toString());
 
 				if (toolBarObject.contains(QLatin1String("location")))
@@ -351,12 +351,12 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 				if (toolBarObject.contains(QLatin1String("normalVisibility")))
 				{
-					toolBarState.normalVisibility = ((toolBarObject.value(QLatin1String("normalVisibility")).toString() == QLatin1String("hidden")) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+					toolBarState.normalVisibility = ((toolBarObject.value(QLatin1String("normalVisibility")).toString() == QLatin1String("hidden")) ? Session::MainWindow::ToolBarState::AlwaysHiddenToolBar : Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
 				}
 
 				if (toolBarObject.contains(QLatin1String("fullScreenVisibility")))
 				{
-					toolBarState.fullScreenVisibility = ((toolBarObject.value(QLatin1String("fullScreenVisibility")).toString() == QLatin1String("hidden")) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar);
+					toolBarState.fullScreenVisibility = ((toolBarObject.value(QLatin1String("fullScreenVisibility")).toString() == QLatin1String("hidden")) ? Session::MainWindow::ToolBarState::AlwaysHiddenToolBar : Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
 				}
 
 				if (toolBarObject.contains(QLatin1String("row")))
@@ -772,14 +772,14 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 						break;
 				}
 
-				if (sessionEntry.toolBars.at(j).normalVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
+				if (sessionEntry.toolBars.at(j).normalVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 				{
-					toolBarObject.insert(QLatin1String("normalVisibility"), ((sessionEntry.toolBars.at(j).normalVisibility == ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
+					toolBarObject.insert(QLatin1String("normalVisibility"), ((sessionEntry.toolBars.at(j).normalVisibility == Session::MainWindow::ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
 				}
 
-				if (sessionEntry.toolBars.at(j).fullScreenVisibility != ToolBarState::UnspecifiedVisibilityToolBar)
+				if (sessionEntry.toolBars.at(j).fullScreenVisibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 				{
-					toolBarObject.insert(QLatin1String("fullScreenVisibility"), ((sessionEntry.toolBars.at(j).fullScreenVisibility == ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
+					toolBarObject.insert(QLatin1String("fullScreenVisibility"), ((sessionEntry.toolBars.at(j).fullScreenVisibility == Session::MainWindow::ToolBarState::AlwaysHiddenToolBar) ? QLatin1String("hidden") : QLatin1String("visible")));
 				}
 
 				if (sessionEntry.toolBars.at(j).row >= 0)

@@ -72,7 +72,7 @@ public:
 	QUrl getUrl() const;
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	Session::MainWindow getSession() const;
-	ToolBarState getToolBarState(int identifier) const;
+	Session::MainWindow::ToolBarState getToolBarState(int identifier) const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
 	QVector<ClosedWindow> getClosedWindows() const;
 	QVector<int> getSplitterSizes(const QString &identifier) const;
@@ -143,7 +143,7 @@ private:
 	QHash<quint64, Window*> m_windows;
 	QMap<QString, QVector<int> > m_splitters;
 	QMap<int, ToolBarWidget*> m_toolBars;
-	QMap<int, ToolBarState> m_toolBarStates;
+	QMap<int, Session::MainWindow::ToolBarState> m_toolBarStates;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	quint64 m_identifier;
@@ -161,7 +161,7 @@ signals:
 	void activated();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
-	void toolBarStateChanged(int identifier, const ToolBarState &state);
+	void toolBarStateChanged(int identifier, const Session::MainWindow::ToolBarState &state);
 	void windowAdded(quint64 identifier);
 	void windowRemoved(quint64 identifier);
 	void currentWindowChanged(quint64 identifier);

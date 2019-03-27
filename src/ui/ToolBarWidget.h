@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -47,12 +47,12 @@ public:
 
 	static QMenu* createCustomizationMenu(int identifier, QVector<QAction*> actions = {}, QWidget *parent = nullptr);
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
-	void setState(const ToolBarState &state);
+	void setState(const Session::MainWindow::ToolBarState &state);
 	MainWindow* getMainWindow() const;
 	Window* getWindow() const;
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
-	ToolBarState getState() const;
+	Session::MainWindow::ToolBarState getState() const;
 	QVector<QPointer<QWidget> > getAddressFields() const;
 	QVector<QPointer<QWidget> > getSearchFields() const;
 	Qt::ToolBarArea getArea() const;
@@ -60,7 +60,7 @@ public:
 	int getIdentifier() const;
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
-	static bool calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const ToolBarState &state, ToolBarsManager::ToolBarsMode mode);
+	static bool calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const Session::MainWindow::ToolBarState &state, ToolBarsManager::ToolBarsMode mode);
 	bool canDrop(QDropEvent *event) const;
 	bool isCollapsed() const;
 	virtual bool shouldBeVisible(ToolBarsManager::ToolBarsMode mode) const;
@@ -118,7 +118,7 @@ private:
 	QPoint m_dragStartPosition;
 	QVector<QPointer<QWidget> > m_addressFields;
 	QVector<QPointer<QWidget> > m_searchFields;
-	ToolBarState m_state;
+	Session::MainWindow::ToolBarState m_state;
 	Qt::ToolBarArea m_area;
 	int m_reloadTimer;
 	int m_identifier;

@@ -87,7 +87,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	m_tabBar->hide();
 
 	const QVector<Qt::ToolBarArea> areas({Qt::LeftToolBarArea, Qt::RightToolBarArea, Qt::TopToolBarArea, Qt::BottomToolBarArea, Qt::NoToolBarArea});
-	QMap<Qt::ToolBarArea, QVector<ToolBarState> > toolBarStates;
+	QMap<Qt::ToolBarArea, QVector<Session::MainWindow::ToolBarState> > toolBarStates;
 
 	if (!session.hasToolBarsState)
 	{
@@ -97,12 +97,12 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 			if (!definitions.isEmpty())
 			{
-				QVector<ToolBarState> states;
+				QVector<Session::MainWindow::ToolBarState> states;
 				states.reserve(definitions.length());
 
 				for (int j = 0; j < definitions.count(); ++j)
 				{
-					states.append(ToolBarState(definitions.at(j).identifier, ToolBarsManager::getToolBarDefinition(definitions.at(j).identifier)));
+					states.append(Session::MainWindow::ToolBarState(definitions.at(j).identifier, ToolBarsManager::getToolBarDefinition(definitions.at(j).identifier)));
 				}
 
 				toolBarStates[areas.at(i)] = states;
@@ -113,7 +113,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	{
 		for (int i = 0; i < session.toolBars.count(); ++i)
 		{
-			const ToolBarState state(session.toolBars.at(i));
+			const Session::MainWindow::ToolBarState state(session.toolBars.at(i));
 
 			if (!toolBarStates.contains(state.location))
 			{
@@ -126,7 +126,7 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 
 	if (toolBarStates.contains(Qt::NoToolBarArea))
 	{
-		const QVector<ToolBarState> states(toolBarStates[Qt::NoToolBarArea]);
+		const QVector<Session::MainWindow::ToolBarState> states(toolBarStates[Qt::NoToolBarArea]);
 
 		for (int i = 0; i < states.count(); ++i)
 		{
@@ -137,10 +137,10 @@ MainWindow::MainWindow(const QVariantMap &parameters, const Session::MainWindow 
 	for (int i = 0; i < 4; ++i)
 	{
 		const Qt::ToolBarArea area(areas.at(i));
-		QVector<ToolBarState> states(toolBarStates.value(area));
+		QVector<Session::MainWindow::ToolBarState> states(toolBarStates.value(area));
 		int row(0);
 
-		std::sort(states.begin(), states.end(), [&](const ToolBarState &first, const ToolBarState &second)
+		std::sort(states.begin(), states.end(), [&](const Session::MainWindow::ToolBarState &first, const Session::MainWindow::ToolBarState &second)
 		{
 			return (first.row > second.row);
 		});
@@ -964,8 +964,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 				}
 
 				const bool isChecked(parameters.value(QLatin1String("isChecked"), !getActionState(toolBarIdentifier, parameters).isChecked).toBool());
-				ToolBarState state(getToolBarState(toolBarIdentifier));
-				state.setVisibility((windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode), (isChecked ? ToolBarState::AlwaysVisibleToolBar : ToolBarState::AlwaysHiddenToolBar));
+				Session::MainWindow::ToolBarState state(getToolBarState(toolBarIdentifier));
+				state.setVisibility((windowState().testFlag(Qt::WindowFullScreen) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode), (isChecked ? Session::MainWindow::ToolBarState::AlwaysVisibleToolBar : Session::MainWindow::ToolBarState::AlwaysHiddenToolBar));
 
 				if (definition.location == Qt::NoToolBarArea)
 				{
@@ -2503,7 +2503,7 @@ Session::MainWindow MainWindow::getSession() const
 
 		for (int j = 0; j < toolBars.count(); ++j)
 		{
-			ToolBarState state(toolBars.at(j)->getState());
+			Session::MainWindow::ToolBarState state(toolBars.at(j)->getState());
 			state.location = areas.at(i);
 			state.identifier = toolBars.at(j)->getIdentifier();
 			state.row = j;
@@ -2531,7 +2531,7 @@ Session::MainWindow MainWindow::getSession() const
 	return session;
 }
 
-ToolBarState MainWindow::getToolBarState(int identifier) const
+Session::MainWindow::ToolBarState MainWindow::getToolBarState(int identifier) const
 {
 	if (m_toolBarStates.contains(identifier))
 	{
@@ -2543,10 +2543,10 @@ ToolBarState MainWindow::getToolBarState(int identifier) const
 		return m_toolBars[identifier]->getState();
 	}
 
-	ToolBarState state;
+	Session::MainWindow::ToolBarState state;
 	state.identifier = identifier;
-	state.normalVisibility = ToolBarState::AlwaysHiddenToolBar;
-	state.fullScreenVisibility = ToolBarState::AlwaysHiddenToolBar;
+	state.normalVisibility = Session::MainWindow::ToolBarState::AlwaysHiddenToolBar;
+	state.fullScreenVisibility = Session::MainWindow::ToolBarState::AlwaysHiddenToolBar;
 
 	return state;
 }

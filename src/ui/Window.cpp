@@ -283,7 +283,7 @@ void Window::handleGeometryChangeRequest(const QRect &geometry)
 	move(geometry.topLeft());
 }
 
-void Window::handleToolBarStateChanged(int identifier, const ToolBarState &state)
+void Window::handleToolBarStateChanged(int identifier, const Session::MainWindow::ToolBarState &state)
 {
 	if (m_addressBarWidget && identifier == ToolBarsManager::AddressBar)
 	{

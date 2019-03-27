@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
 
-	m_state = ToolBarState(identifier, definition);
+	m_state = Session::MainWindow::ToolBarState(identifier, definition);
 	m_area = definition.location;
 
 	if (definition.isValid() && identifier != ToolBarsManager::MenuBar)
@@ -690,8 +690,8 @@ void ToolBarWidget::loadBookmarks()
 void ToolBarWidget::toggleVisibility()
 {
 	const ToolBarsManager::ToolBarsMode mode((m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false) ? ToolBarsManager::FullScreenMode : ToolBarsManager::NormalMode);
-	ToolBarState state(m_state);
-	state.setVisibility(mode, (calculateShouldBeVisible(getDefinition(), m_state, mode) ? ToolBarState::AlwaysHiddenToolBar : ToolBarState::AlwaysVisibleToolBar));
+	Session::MainWindow::ToolBarState state(m_state);
+	state.setVisibility(mode, (calculateShouldBeVisible(getDefinition(), m_state, mode) ? Session::MainWindow::ToolBarState::AlwaysHiddenToolBar : Session::MainWindow::ToolBarState::AlwaysVisibleToolBar));
 
 	setState(state);
 }
@@ -876,7 +876,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	populateEntries();
 }
 
-void ToolBarWidget::setState(const ToolBarState &state)
+void ToolBarWidget::setState(const Session::MainWindow::ToolBarState &state)
 {
 	m_state = state;
 
@@ -946,7 +946,7 @@ ToolBarsManager::ToolBarDefinition ToolBarWidget::getDefinition() const
 	return ToolBarsManager::getToolBarDefinition(m_identifier);
 }
 
-ToolBarState ToolBarWidget::getState() const
+Session::MainWindow::ToolBarState ToolBarWidget::getState() const
 {
 	return m_state;
 }
@@ -993,13 +993,13 @@ int ToolBarWidget::getMaximumButtonSize() const
 	return getDefinition().maximumButtonSize;
 }
 
-bool ToolBarWidget::calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const ToolBarState &state, ToolBarsManager::ToolBarsMode mode)
+bool ToolBarWidget::calculateShouldBeVisible(const ToolBarsManager::ToolBarDefinition &definition, const Session::MainWindow::ToolBarState &state, ToolBarsManager::ToolBarsMode mode)
 {
-	const ToolBarState::ToolBarVisibility visibility(state.getVisibility(mode));
+	const Session::MainWindow::ToolBarState::ToolBarVisibility visibility(state.getVisibility(mode));
 
-	if (visibility != ToolBarState::UnspecifiedVisibilityToolBar)
+	if (visibility != Session::MainWindow::ToolBarState::UnspecifiedVisibilityToolBar)
 	{
-		return (visibility == ToolBarState::AlwaysVisibleToolBar);
+		return (visibility == Session::MainWindow::ToolBarState::AlwaysVisibleToolBar);
 	}
 
 	return (definition.getVisibility(mode) == ToolBarsManager::AlwaysVisibleToolBar);

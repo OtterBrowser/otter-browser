@@ -32,59 +32,6 @@
 namespace Otter
 {
 
-struct ToolBarState final
-{
-	enum ToolBarVisibility
-	{
-		UnspecifiedVisibilityToolBar = 0,
-		AlwaysVisibleToolBar,
-		AlwaysHiddenToolBar
-	};
-
-	Qt::ToolBarArea location = Qt::NoToolBarArea;
-	int identifier = -1;
-	int row = -1;
-	ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
-	ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
-
-	explicit ToolBarState()
-	{
-	}
-
-	explicit ToolBarState(int identifierValue, const ToolBarsManager::ToolBarDefinition &definition) : identifier(identifierValue)
-	{
-		normalVisibility = ((definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
-		fullScreenVisibility = ((definition.fullScreenVisibility != ToolBarsManager::AlwaysHiddenToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
-	}
-
-	void setVisibility(ToolBarsManager::ToolBarsMode mode, ToolBarVisibility visibility)
-	{
-		switch (mode)
-		{
-			case ToolBarsManager::NormalMode:
-				normalVisibility = visibility;
-
-				break;
-			case ToolBarsManager::FullScreenMode:
-				fullScreenVisibility = visibility;
-
-				break;
-			default:
-				break;
-		}
-	}
-
-	ToolBarVisibility getVisibility(ToolBarsManager::ToolBarsMode mode) const
-	{
-		return ((mode == ToolBarsManager::FullScreenMode) ? fullScreenVisibility : normalVisibility);
-	}
-
-	bool isValid() const
-	{
-		return (identifier >= 0);
-	}
-};
-
 class MainWindow;
 class SessionModel;
 
@@ -175,6 +122,59 @@ public:
 
 	struct MainWindow final
 	{
+		struct ToolBarState final
+		{
+			enum ToolBarVisibility
+			{
+				UnspecifiedVisibilityToolBar = 0,
+				AlwaysVisibleToolBar,
+				AlwaysHiddenToolBar
+			};
+
+			Qt::ToolBarArea location = Qt::NoToolBarArea;
+			int identifier = -1;
+			int row = -1;
+			ToolBarVisibility normalVisibility = UnspecifiedVisibilityToolBar;
+			ToolBarVisibility fullScreenVisibility = UnspecifiedVisibilityToolBar;
+
+			explicit ToolBarState()
+			{
+			}
+
+			explicit ToolBarState(int identifierValue, const ToolBarsManager::ToolBarDefinition &definition) : identifier(identifierValue)
+			{
+				normalVisibility = ((definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+				fullScreenVisibility = ((definition.fullScreenVisibility != ToolBarsManager::AlwaysHiddenToolBar) ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+			}
+
+			void setVisibility(ToolBarsManager::ToolBarsMode mode, ToolBarVisibility visibility)
+			{
+				switch (mode)
+				{
+					case ToolBarsManager::NormalMode:
+						normalVisibility = visibility;
+
+						break;
+					case ToolBarsManager::FullScreenMode:
+						fullScreenVisibility = visibility;
+
+						break;
+					default:
+						break;
+				}
+			}
+
+			ToolBarVisibility getVisibility(ToolBarsManager::ToolBarsMode mode) const
+			{
+				return ((mode == ToolBarsManager::FullScreenMode) ? fullScreenVisibility : normalVisibility);
+			}
+
+			bool isValid() const
+			{
+				return (identifier >= 0);
+			}
+		};
+
 		QMap<QString, QVector<int> > splitters;
 		QVector<Window> windows;
 		QVector<ToolBarState> toolBars;
