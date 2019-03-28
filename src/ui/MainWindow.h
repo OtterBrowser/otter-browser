@@ -74,7 +74,7 @@ public:
 	Session::MainWindow getSession() const;
 	Session::MainWindow::ToolBarState getToolBarState(int identifier) const;
 	QVector<ToolBarWidget*> getToolBars(Qt::ToolBarArea area) const;
-	QVector<ClosedWindow> getClosedWindows() const;
+	QVector<Session::ClosedWindow> getClosedWindows() const;
 	QVector<int> getSplitterSizes(const QString &identifier) const;
 	quint64 getIdentifier() const;
 	int getCurrentWindowIndex() const;
@@ -138,7 +138,7 @@ private:
 	ActionExecutor::Object m_editorExecutor;
 	QVector<Shortcut*> m_shortcuts;
 	QVector<Window*> m_privateWindows;
-	QVector<ClosedWindow> m_closedWindows;
+	QVector<Session::ClosedWindow> m_closedWindows;
 	QVector<quint64> m_tabSwitchingOrderList;
 	QHash<quint64, Window*> m_windows;
 	QMap<QString, QVector<int> > m_splitters;

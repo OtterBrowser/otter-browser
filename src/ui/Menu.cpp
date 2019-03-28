@@ -944,7 +944,7 @@ void Menu::populateClosedWindowsMenu()
 
 	if (mainWindow)
 	{
-		const QVector<ClosedWindow> tabs(mainWindow->getClosedWindows());
+		const QVector<Session::ClosedWindow> tabs(mainWindow->getClosedWindows());
 
 		if (!tabs.isEmpty())
 		{

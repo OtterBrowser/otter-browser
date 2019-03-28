@@ -183,6 +183,15 @@ public:
 		bool hasToolBarsState = false;
 	};
 
+	struct ClosedWindow final
+	{
+		Window window;
+		QIcon icon;
+		quint64 nextWindow = 0;
+		quint64 previousWindow = 0;
+		bool isPrivate = false;
+	};
+
 	explicit Session(QObject *parent = nullptr);
 };
 
@@ -198,15 +207,6 @@ struct SessionInformation final
 	{
 		return !windows.isEmpty();
 	}
-};
-
-struct ClosedWindow final
-{
-	Session::Window window;
-	QIcon icon;
-	quint64 nextWindow = 0;
-	quint64 previousWindow = 0;
-	bool isPrivate = false;
 };
 
 class SessionsManager final : public QObject

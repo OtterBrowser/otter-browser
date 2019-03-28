@@ -1344,7 +1344,7 @@ void MainWindow::restoreClosedWindow(int index)
 		return;
 	}
 
-	const ClosedWindow closedWindow(m_closedWindows.takeAt(index));
+	const Session::ClosedWindow closedWindow(m_closedWindows.takeAt(index));
 	int windowIndex(-1);
 
 	if (closedWindow.previousWindow == 0)
@@ -1681,7 +1681,7 @@ void MainWindow::handleRequestedCloseWindow(Window *window)
 			const Window *nextWindow(getWindowByIndex(index + 1));
 			const Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
 			const int limit(SettingsManager::getOption(SettingsManager::History_ClosedTabsLimitAmountOption).toInt());
-			ClosedWindow closedWindow;
+			Session::ClosedWindow closedWindow;
 			closedWindow.window = window->getSession();
 			closedWindow.icon = window->getIcon();
 			closedWindow.nextWindow = (nextWindow ? nextWindow->getIdentifier() : 0);
@@ -2586,7 +2586,7 @@ QVector<ToolBarWidget*> MainWindow::getToolBars(Qt::ToolBarArea area) const
 	return toolBars;
 }
 
-QVector<ClosedWindow> MainWindow::getClosedWindows() const
+QVector<Session::ClosedWindow> MainWindow::getClosedWindows() const
 {
 	return m_closedWindows;
 }
