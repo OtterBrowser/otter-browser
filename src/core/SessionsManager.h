@@ -38,6 +38,16 @@ class SessionModel;
 class Session final : public QObject
 {
 public:
+	struct Identity final
+	{
+		QString name;
+		QString title;
+		QString description;
+		QColor color;
+		QIcon icon;
+		bool isEphemeral = true;
+	};
+
 	struct Window final
 	{
 		struct History final
