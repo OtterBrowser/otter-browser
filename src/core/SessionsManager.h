@@ -92,6 +92,7 @@ public:
 			Qt::WindowState state = ((SettingsManager::getOption(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? Qt::WindowMaximized : Qt::WindowNoState);
 		};
 
+		QString identity;
 		History history;
 		State state;
 		QHash<int, QVariant> options;

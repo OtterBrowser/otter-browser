@@ -244,6 +244,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
 
 			Session::Window sessionWindow;
+			sessionWindow.identity = windowObject.value(QLatin1String("identity")).toString();
 			sessionWindow.state = windowState;
 			sessionWindow.history.index = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
@@ -657,6 +658,11 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
 			QJsonObject windowObject({{QLatin1String("currentIndex"), (sessionEntry.windows.at(j).history.index + 1)}});
+
+			if (!sessionEntry.windows.at(j).identity.isEmpty())
+			{
+				windowObject.insert(QLatin1String("identity"), sessionEntry.windows.at(j).identity);
+			}
 
 			if (!sessionEntry.windows.at(j).options.isEmpty())
 			{
