@@ -60,6 +60,7 @@ public:
 	ContentsWidget* getContentsWidget();
 	WebWidget* getWebWidget();
 	QString getTitle() const;
+	QString getIdentity() const;
 	QLatin1String getType() const;
 	QVariant getOption(int identifier) const;
 	QUrl getUrl() const;

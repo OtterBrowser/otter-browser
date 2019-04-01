@@ -576,6 +576,11 @@ QString Window::getTitle() const
 	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getTitle() : m_session.getTitle());
 }
 
+QString Window::getIdentity() const
+{
+	return m_session.identity;
+}
+
 QLatin1String Window::getType() const
 {
 	return ((m_contentsWidget && !m_isAboutToClose) ? m_contentsWidget->getType() : QLatin1String("unknown"));
