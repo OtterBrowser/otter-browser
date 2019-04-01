@@ -207,6 +207,8 @@ QVariant WindowSessionItem::data(int role) const
 			return m_window->getIcon();
 		case SessionModel::IdentifierRole:
 			return m_window->getIdentifier();
+		case SessionModel::IdentityRole:
+			return m_window->getIdentity();
 		case SessionModel::TypeRole:
 			return SessionModel::WindowEntity;
 		case SessionModel::IndexRole:
