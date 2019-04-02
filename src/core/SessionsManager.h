@@ -254,6 +254,7 @@ public:
 	static SessionInformation getSession(const QString &path);
 	static QStringList getClosedWindows();
 	static QStringList getSessions();
+	static QVector<Session::Identity> getIdentities();
 	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints, Qt::MouseButton button, Qt::KeyboardModifiers modifiers);
 	static SessionsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton);
 	static SessionsManager::OpenHints calculateOpenHints(const QVariantMap &parameters, bool ignoreModifiers = false);
@@ -281,6 +282,7 @@ private:
 	static QString m_sessionTitle;
 	static QString m_cachePath;
 	static QString m_profilePath;
+	static QHash<QString, Session::Identity> m_identities;
 	static QVector<Session::MainWindow> m_closedWindows;
 	static bool m_isDirty;
 	static bool m_isPrivate;

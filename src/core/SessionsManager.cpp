@@ -41,6 +41,7 @@ QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
+QHash<QString, Session::Identity> SessionsManager::m_identities;
 QVector<Session::MainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_isDirty(false);
 bool SessionsManager::m_isPrivate(false);
@@ -422,6 +423,11 @@ QStringList SessionsManager::getSessions()
 	sessions.sort();
 
 	return sessions;
+}
+
+QVector<Session::Identity> SessionsManager::getIdentities()
+{
+	return m_identities.values().toVector();
 }
 
 SessionsManager::OpenHints SessionsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, Qt::KeyboardModifiers modifiers)
