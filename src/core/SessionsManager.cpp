@@ -207,6 +207,11 @@ QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 	return QDir::toNativeSeparators(m_profilePath + QLatin1String("/sessions/") + cleanPath);
 }
 
+Session::Identity SessionsManager::getIdentity(const QString &name)
+{
+	return m_identities.value(name);
+}
+
 SessionInformation SessionsManager::getSession(const QString &path)
 {
 	SessionInformation session;

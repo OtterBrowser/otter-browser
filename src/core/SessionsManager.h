@@ -251,6 +251,7 @@ public:
 	static QString getReadableDataPath(const QString &path, bool forceBundled = false);
 	static QString getWritableDataPath(const QString &path);
 	static QString getSessionPath(const QString &path, bool isBound = false);
+	static Session::Identity getIdentity(const QString &name);
 	static SessionInformation getSession(const QString &path);
 	static QStringList getClosedWindows();
 	static QStringList getSessions();
