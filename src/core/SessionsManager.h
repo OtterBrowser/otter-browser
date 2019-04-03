@@ -46,6 +46,11 @@ public:
 		QColor color;
 		QIcon icon;
 		bool isEphemeral = true;
+
+		bool isValid() const
+		{
+			return !name.isEmpty();
+		}
 	};
 
 	struct Window final
