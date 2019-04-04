@@ -245,13 +245,10 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			const QJsonObject windowObject(windowsArray.at(j).toObject());
 			const QJsonArray windowHistoryArray(windowObject.value(QLatin1String("history")).toArray());
 			const QString state(windowObject.value(QLatin1String("state")).toString());
-			Session::Window::State windowState;
-			windowState.geometry = JsonSettings::readRectangle(windowObject.value(QLatin1String("geometry")).toVariant());
-			windowState.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
-
 			Session::Window sessionWindow;
 			sessionWindow.identity = windowObject.value(QLatin1String("identity")).toString();
-			sessionWindow.state = windowState;
+			sessionWindow.state.geometry = JsonSettings::readRectangle(windowObject.value(QLatin1String("geometry")).toVariant());
+			sessionWindow.state.state = ((state == QLatin1String("maximized")) ? Qt::WindowMaximized : ((state == QLatin1String("minimized")) ? Qt::WindowMinimized : Qt::WindowNoState));
 			sessionWindow.history.index = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
 			sessionWindow.isPinned = windowObject.value(QLatin1String("isPinned")).toBool(false);

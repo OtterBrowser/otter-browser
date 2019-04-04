@@ -131,26 +131,24 @@ bool OperaSessionImporter::import(const QString &path)
 		}
 
 		Session::Window window;
-		Session::Window::State windowState;
-		windowState.geometry = QRect(originalSession.getValue(QLatin1String("x")).toInt(), originalSession.getValue(QLatin1String("y")).toInt(), originalSession.getValue(QLatin1String("w")).toInt(), originalSession.getValue(QLatin1String("h")).toInt());
+		window.state.geometry = QRect(originalSession.getValue(QLatin1String("x")).toInt(), originalSession.getValue(QLatin1String("y")).toInt(), originalSession.getValue(QLatin1String("w")).toInt(), originalSession.getValue(QLatin1String("h")).toInt());
 
 		switch (originalSession.getValue(QLatin1String("state")).toInt())
 		{
 			case 0:
-				windowState.state = Qt::WindowNoState;
+				window.state.state = Qt::WindowNoState;
 
 				break;
 			case 1:
-				windowState.state = Qt::WindowMinimized;
+				window.state.state = Qt::WindowMinimized;
 
 				break;
 			default:
-				windowState.state = Qt::WindowMaximized;
+				window.state.state = Qt::WindowMaximized;
 
 				break;
 		}
 
-		window.state = windowState;
 		window.isPinned = originalSession.getValue(QLatin1String("locked")).toInt();
 
 		if (originalSession.getValue(QLatin1String("user auto reload enable")).toInt() == 1)
