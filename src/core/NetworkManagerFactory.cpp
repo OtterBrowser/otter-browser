@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtNetwork/QNetworkConfigurationManager>
-#include <QtNetwork/QSslSocket>
+#include <QtNetwork/QSslConfiguration>
 
 namespace Otter
 {
@@ -242,7 +242,7 @@ void NetworkManagerFactory::initialize()
 	}
 
 	m_isInitialized = true;
-	m_defaultCiphers = QSslSocket::defaultCiphers();
+	m_defaultCiphers = QSslConfiguration::defaultConfiguration().ciphers();
 
 	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)
 	{
@@ -528,7 +528,7 @@ void NetworkManagerFactory::handleOptionChanged(int identifier, const QVariant &
 		case SettingsManager::Security_CiphersOption:
 			if (value.toString() == QLatin1String("default"))
 			{
-				QSslSocket::setDefaultCiphers(m_defaultCiphers);
+				QSslConfiguration::defaultConfiguration().setCiphers(m_defaultCiphers);
 			}
 			else
 			{
@@ -545,7 +545,7 @@ void NetworkManagerFactory::handleOptionChanged(int identifier, const QVariant &
 					}
 				}
 
-				QSslSocket::setDefaultCiphers(ciphers);
+				QSslConfiguration::defaultConfiguration().setCiphers(ciphers);
 			}
 
 			break;
