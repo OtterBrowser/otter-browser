@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@
 #include <QtCore/QTimer>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
-#include <QtWidgets/QApplication>
+#include <QtGui/QScreen>
+#include <QtGui/QWindow>
 #include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QStyleOption>
 
 namespace Otter
@@ -148,11 +148,16 @@ void NotificationDialog::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
 
-	QRect geometry(QApplication::desktop()->availableGeometry());
-	geometry.setRight(geometry.right() - 20);
-	geometry.setBottom(geometry.bottom() - 20);
+	const QScreen *screen(window()->windowHandle()->screen());
 
-	setGeometry(QStyle::alignedRect(Qt::LeftToRight, (Qt::AlignBottom | Qt::AlignRight), size(), geometry));
+	if (screen)
+	{
+		QRect geometry(screen->availableGeometry());
+		geometry.setRight(geometry.right() - 20);
+		geometry.setBottom(geometry.bottom() - 20);
+
+		setGeometry(QStyle::alignedRect(Qt::LeftToRight, (Qt::AlignBottom | Qt::AlignRight), size(), geometry));
+	}
 }
 
 bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
