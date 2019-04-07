@@ -23,7 +23,6 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "../core/Application.h"
-#include "../core/NotificationsManager.h"
 
 #include <QtCore/QTimer>
 
@@ -148,22 +147,37 @@ void TrayIcon::updateMenu()
 	}
 }
 
-void TrayIcon::showNotification(Notification *notification)
+void TrayIcon::showMessage(const Notification::Message &message)
 {
-	m_notification = notification;
-
-	connect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
-
-	const Notification::Message message(notification->getMessage());
-
 	m_trayIcon->showMessage(message.getTitle(), message.message, message.getIcon());
 
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 
 	if (visibilityDuration > 0)
 	{
+		if (m_autoHideTimer > 0)
+		{
+			killTimer(m_autoHideTimer);
+		}
+
 		m_autoHideTimer = startTimer(visibilityDuration * 1000);
 	}
+}
+
+void TrayIcon::showNotification(Notification *notification)
+{
+	m_notification = notification;
+
+	connect(notification, &Notification::modified, this, [&]()
+	{
+		if (notification == m_notification)
+		{
+			showMessage(m_notification->getMessage());
+		}
+	});
+	connect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
+
+	showMessage(notification->getMessage());
 }
 
 }

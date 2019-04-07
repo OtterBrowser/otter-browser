@@ -21,13 +21,14 @@
 #ifndef OTTER_TRAYICON_H
 #define OTTER_TRAYICON_H
 
+#include "../core/NotificationsManager.h"
+
 #include <QtWidgets/QSystemTrayIcon>
 
 namespace Otter
 {
 
 class Application;
-class Notification;
 
 class TrayIcon final : public QObject
 {
@@ -40,6 +41,9 @@ public:
 
 public slots:
 	void hide();
+
+protected:
+	void showMessage(const Notification::Message &message);
 
 protected slots:
 	void timerEvent(QTimerEvent *event) override;
