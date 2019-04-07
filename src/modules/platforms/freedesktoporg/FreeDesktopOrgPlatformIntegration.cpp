@@ -21,7 +21,6 @@
 
 #include "FreeDesktopOrgPlatformIntegration.h"
 #include "FreeDesktopOrgPlatformStyle.h"
-#include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/TransfersManager.h"
@@ -38,6 +37,7 @@
 #include <QtGui/QIcon>
 #ifdef OTTER_ENABLE_DBUS
 #include <QtGui/QRgb>
+#include <QtWidgets/QApplication>
 
 QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 {
@@ -220,7 +220,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	const Notification::Message message(notification->getMessage());
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 	QVariantList arguments;
-	arguments << Application::applicationName();
+	arguments << QApplication::applicationName();
 	arguments << uint(0);
 	arguments << QString();
 	arguments << message.getTitle();
