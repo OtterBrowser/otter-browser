@@ -217,30 +217,12 @@ void FreeDesktopOrgPlatformIntegration::handleNotificationClicked(quint32 identi
 
 void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notification)
 {
-	QString title;
-
-	switch (notification->getMessage().level)
-	{
-		case Notification::Message::ErrorLevel:
-			title = tr("Error");
-
-			break;
-		case Notification::Message::WarningLevel:
-			title = tr("Warning");
-
-			break;
-		default:
-			title = tr("Information");
-
-			break;
-	}
-
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 	QVariantList arguments;
 	arguments << Application::applicationName();
 	arguments << uint(0);
 	arguments << QString();
-	arguments << tr("Notification");
+	arguments << notification->getMessage().getTitle();
 	arguments << notification->getMessage().message;
 	arguments << QStringList();
 	arguments << QVariantMap({{QLatin1String("image_data"), Application::windowIcon().pixmap(128, 128).toImage()}});

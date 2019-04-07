@@ -362,30 +362,12 @@ void MacPlatformIntegration::updateTransfersProgress()
 
 void MacPlatformIntegration::showNotification(Notification *notification)
 {
-	QString title;
-
-	switch (notification->getMessage().level)
-	{
-		case Notification::Message::ErrorLevel:
-			title = tr("Error");
-
-			break;
-		case Notification::Message::WarningLevel:
-			title = tr("Warning");
-
-			break;
-		default:
-			title = tr("Information");
-
-			break;
-	}
-
 	const quint64 identifier(++m_notificationIdentifier);
 
 	m_notifications[identifier] = notification;
 
 	NSUserNotification *nativeNotification = [[NSUserNotification alloc] init];
-	nativeNotification.title = [NSString stringWithUTF8String:title.toUtf8().data()];
+	nativeNotification.title = [NSString stringWithUTF8String:notification->getMessage().getTitle().toUtf8().data()];
 	nativeNotification.informativeText = [NSString stringWithUTF8String:notification->getMessage().message.toUtf8().data()];
 	nativeNotification.identifier = [NSString stringWithUTF8String:QString::number(identifier).toUtf8().data()];
 

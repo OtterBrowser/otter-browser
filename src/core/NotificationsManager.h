@@ -20,8 +20,8 @@
 #ifndef OTTER_NOTIFICATIONSMANAGER_H
 #define OTTER_NOTIFICATIONSMANAGER_H
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
-#include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 
@@ -50,6 +50,26 @@ public:
 		QDateTime creationTime = QDateTime::currentDateTime();
 		Level level = InformationLevel;
 		int event = -1;
+
+		QString getTitle() const
+		{
+			if (!title.isEmpty())
+			{
+				return title;
+			}
+
+			switch (level)
+			{
+				case ErrorLevel:
+					return QCoreApplication::translate("Otter::NotificationsManager", "Error");
+				case Notification::Message::WarningLevel:
+					return QCoreApplication::translate("Otter::NotificationsManager", "Warning");
+				default:
+					break;
+			}
+
+			return QCoreApplication::translate("Otter::NotificationsManager", "Information");;
+		}
 	};
 
 	void markAsClicked();

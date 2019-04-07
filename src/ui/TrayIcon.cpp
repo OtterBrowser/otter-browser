@@ -172,7 +172,7 @@ void TrayIcon::showMessage(Notification *notification)
 			break;
 	}
 
-	m_trayIcon->showMessage(tr("Otter Browser"), notification->getMessage().message, icon);
+	m_trayIcon->showMessage(notification->getMessage().getTitle(), notification->getMessage().message, icon);
 
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 
