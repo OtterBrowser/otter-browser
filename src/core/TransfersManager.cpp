@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1121,7 +1121,11 @@ void TransfersManager::handleTransferFinished()
 	{
 		if (transfer->getState() == Transfer::FinishedState)
 		{
-			connect(NotificationsManager::createNotification(NotificationsManager::TransferCompletedEvent, tr("Download completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationLevel, this), &Notification::clicked, transfer, &Transfer::openTarget);
+			Notification::Message message;
+			message.message = tr("Download completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName());
+			message.event = NotificationsManager::TransferCompletedEvent;
+
+			connect(NotificationsManager::createNotification(message,  this), &Notification::clicked, transfer, &Transfer::openTarget);
 		}
 
 		emit transferFinished(transfer);

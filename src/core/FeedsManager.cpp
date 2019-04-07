@@ -297,7 +297,11 @@ void Feed::update()
 
 						if (amount > 0)
 						{
-							connect(NotificationsManager::createNotification(NotificationsManager::FeedUpdatedEvent, tr("Feed updated:\n%1").arg(getTitle()), Notification::InformationLevel, this), &Notification::clicked, [&]()
+							Notification::Message message;
+							message.message = tr("Feed updated:\n%1").arg(getTitle());
+							message.event = NotificationsManager::FeedUpdatedEvent;
+
+							connect(NotificationsManager::createNotification(message, this), &Notification::clicked, [&]()
 							{
 								Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
 							});

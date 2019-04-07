@@ -1175,7 +1175,11 @@ void Application::handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInf
 	}
 	else
 	{
-		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version).arg(availableUpdates.at(latestVersionIndex).channel)));
+		Notification::Message message;
+		message.message = tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersionIndex).version).arg(availableUpdates.at(latestVersionIndex).channel);
+		message.event = NotificationsManager::UpdateAvailableEvent;
+
+		Notification *notification(NotificationsManager::createNotification(message));
 		notification->setData(QVariant::fromValue<QVector<UpdateChecker::UpdateInformation> >(availableUpdates));
 
 		connect(notification, &Notification::clicked, notification, [&]()

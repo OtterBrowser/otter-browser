@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,11 +35,8 @@ QMap<int, QString> NotificationsManager::m_identifiers;
 QVector<NotificationsManager::EventDefinition> NotificationsManager::m_definitions;
 int NotificationsManager::m_eventIdentifierEnumerator(0);
 
-Notification::Notification(const QString &message, NotificationLevel level, int event, QObject *parent) : QObject(parent),
-	m_message(message),
-	m_creationTime(QDateTime::currentDateTime()),
-	m_level(level),
-	m_event(event)
+Notification::Notification(const Message &message, QObject *parent) : QObject(parent),
+	m_message(message)
 {
 }
 
@@ -64,12 +61,12 @@ void Notification::setData(const QVariant &data)
 
 QString Notification::getMessage() const
 {
-	return m_message;
+	return m_message.message;
 }
 
 QDateTime Notification::getCreationTime() const
 {
-	return m_creationTime;
+	return m_message.creationTime;
 }
 
 QVariant Notification::getData() const
@@ -77,9 +74,9 @@ QVariant Notification::getData() const
 	return m_data;
 }
 
-Notification::NotificationLevel Notification::getLevel() const
+Notification::Message::Level Notification::getLevel() const
 {
-	return m_level;
+	return m_message.level;
 }
 
 NotificationsManager::NotificationsManager(QObject *parent) : QObject(parent)
@@ -98,10 +95,10 @@ void NotificationsManager::createInstance()
 	}
 }
 
-Notification* NotificationsManager::createNotification(int event, const QString &message, Notification::NotificationLevel level, QObject *parent)
+Notification* NotificationsManager::createNotification(const Notification::Message &message, QObject *parent)
 {
-	Notification *notification(new Notification(message, level, event, Application::getInstance()));
-	const EventDefinition definition(getEventDefinition(event));
+	Notification *notification(new Notification(message, Application::getInstance()));
+	const EventDefinition definition(getEventDefinition(message.event));
 
 	if (!definition.playSound.isEmpty())
 	{

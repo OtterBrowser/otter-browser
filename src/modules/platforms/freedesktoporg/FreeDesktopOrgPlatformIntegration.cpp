@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -221,11 +221,11 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 
 	switch (notification->getLevel())
 	{
-		case Notification::ErrorLevel:
+		case Notification::Message::ErrorLevel:
 			title = tr("Error");
 
 			break;
-		case Notification::WarningLevel:
+		case Notification::Message::WarningLevel:
 			title = tr("Warning");
 
 			break;

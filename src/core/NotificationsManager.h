@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,11 +34,19 @@ class Notification final : public QObject
 	Q_OBJECT
 
 public:
-	enum NotificationLevel
+	struct Message final
 	{
-		InformationLevel = 0,
-		WarningLevel,
-		ErrorLevel
+		enum Level
+		{
+			InformationLevel = 0,
+			WarningLevel,
+			ErrorLevel
+		};
+
+		QString message;
+		QDateTime creationTime = QDateTime::currentDateTime();
+		Level level = InformationLevel;
+		int event = -1;
 	};
 
 	void markAsClicked();
@@ -47,17 +55,15 @@ public:
 	QString getMessage() const;
 	QDateTime getCreationTime() const;
 	QVariant getData() const;
-	NotificationLevel getLevel() const;
+	Message::Level getLevel() const;
 
 protected:
-	explicit Notification(const QString &message, NotificationLevel level, int event, QObject *parent);
+	explicit Notification(const Message &message, QObject *parent);
 
 private:
-	QString m_message;
+	Message m_message;
 	QDateTime m_creationTime;
 	QVariant m_data;
-	NotificationLevel m_level;
-	int m_event;
 
 signals:
 	void clicked();
@@ -91,7 +97,7 @@ public:
 
 	static void createInstance();
 	static NotificationsManager* getInstance();
-	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationLevel, QObject *parent = nullptr);
+	static Notification* createNotification(const Notification::Message &message, QObject *parent = nullptr);
 	static QString getEventName(int identifier);
 	static EventDefinition getEventDefinition(int identifier);
 	static QVector<EventDefinition> getEventDefinitions();
