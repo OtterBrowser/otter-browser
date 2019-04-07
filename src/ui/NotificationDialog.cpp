@@ -145,6 +145,30 @@ void NotificationDialog::resizeEvent(QResizeEvent *event)
 
 		setGeometry(QStyle::alignedRect(Qt::LeftToRight, (Qt::AlignBottom | Qt::AlignRight), size(), geometry));
 	}
+
+	const int radius(8);
+	const int cornerSize(radius * 2);
+	const QRect rectangle(rect());
+	QRect corner(rectangle.topLeft(), QSize(cornerSize, cornerSize));
+	QRegion region;
+	region += rectangle.adjusted(radius, 0, -radius, 0);
+	region += rectangle.adjusted(0, radius, 0, -radius);
+	region += QRegion(corner, QRegion::Ellipse);
+
+	corner.moveRight(rectangle.right() - 1);
+
+	region += QRegion(corner, QRegion::Ellipse);
+
+	corner.moveBottom(rectangle.bottom() - 1);
+	corner.moveLeft(rectangle.left());
+
+	region += QRegion(corner, QRegion::Ellipse);
+
+	corner.moveRight(rectangle.right() - 1);
+
+	region += QRegion(corner, QRegion::Ellipse);
+
+	setMask(region);
 }
 
 void NotificationDialog::mouseReleaseEvent(QMouseEvent *event)
