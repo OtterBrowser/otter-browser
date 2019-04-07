@@ -24,8 +24,6 @@
 #include "Menu.h"
 #include "../core/Application.h"
 
-#include <QtCore/QTimer>
-
 namespace Otter
 {
 
