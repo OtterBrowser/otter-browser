@@ -30,19 +30,18 @@ namespace Otter
 
 class Notification;
 
-class NotificationDialog final : public QDialog
+class NotificationDialog final : public QFrame
 {
 	Q_OBJECT
 
 public:
 	explicit NotificationDialog(Notification *notification, QWidget *parent = nullptr);
 
-	bool eventFilter(QObject *object, QEvent *event) override;
-
 protected:
 	void changeEvent(QEvent *event) override;
 	void timerEvent(QTimerEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
 	Notification *m_notification;

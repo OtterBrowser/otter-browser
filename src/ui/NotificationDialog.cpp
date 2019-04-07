@@ -23,7 +23,6 @@
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 
-#include <QtCore/QTimer>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QScreen>
@@ -34,23 +33,11 @@
 namespace Otter
 {
 
-NotificationDialog::NotificationDialog(Notification *notification, QWidget *parent) : QDialog(parent),
+NotificationDialog::NotificationDialog(Notification *notification, QWidget *parent) : QFrame(parent),
 	m_notification(notification),
 	m_closeLabel(nullptr),
 	m_closeTimer(0)
 {
-	QFrame *notificationFrame(new QFrame(this));
-	notificationFrame->setObjectName(QLatin1String("notificationFrame"));
-	notificationFrame->setStyleSheet(QLatin1String("#notificationFrame {padding:5px;border:1px solid #CCC;border-radius:10px;background:#F0F0f0;}"));
-	notificationFrame->setCursor(QCursor(Qt::PointingHandCursor));
-	notificationFrame->installEventFilter(this);
-
-	QBoxLayout *mainLayout(new QBoxLayout(QBoxLayout::LeftToRight));
-	mainLayout->setContentsMargins(0, 0, 0, 0);
-	mainLayout->setSpacing(0);
-	mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
-	mainLayout->addWidget(notificationFrame);
-
 	QLabel *iconLabel(new QLabel(this));
 	iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("otter-browser-32")).pixmap(32, 32));
 	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
@@ -70,24 +57,25 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 	style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
 
-	m_closeLabel = new QLabel(notificationFrame);
+	m_closeLabel = new QLabel(this);
 	m_closeLabel->setToolTip(tr("Close"));
 	m_closeLabel->setPixmap(pixmap);
 	m_closeLabel->setAlignment(Qt::AlignTop);
 	m_closeLabel->setMargin(5);
 	m_closeLabel->installEventFilter(this);
 
-	QBoxLayout *notificationLayout(new QBoxLayout(QBoxLayout::LeftToRight));
-	notificationLayout->setContentsMargins(0, 0, 0, 0);
-	notificationLayout->setSpacing(0);
-	notificationLayout->setSizeConstraint(QLayout::SetMinimumSize);
-	notificationLayout->addWidget(iconLabel);
-	notificationLayout->addWidget(messageLabel);
-	notificationLayout->addWidget(m_closeLabel);
+	QBoxLayout *layout(new QBoxLayout(QBoxLayout::LeftToRight));
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSpacing(0);
+	layout->setSizeConstraint(QLayout::SetMinimumSize);
+	layout->addWidget(iconLabel);
+	layout->addWidget(messageLabel);
+	layout->addWidget(m_closeLabel);
 
-	notificationFrame->setLayout(notificationLayout);
-
-	setLayout(mainLayout);
+	setLayout(layout);
+	setObjectName(QLatin1String("notificationFrame"));
+	setStyleSheet(QLatin1String("#notificationFrame {padding:5px;border:1px solid #CCC;border-radius:10px;background:#F0F0f0;}"));
+	setCursor(QCursor(Qt::PointingHandCursor));
 	setFixedWidth(400);
 	setMinimumHeight(50);
 	setMaximumHeight(150);
@@ -96,7 +84,6 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	setFocusPolicy(Qt::NoFocus);
 	setAttribute(Qt::WA_DeleteOnClose, true);
 	setAttribute(Qt::WA_ShowWithoutActivating, true);
-	setAttribute(Qt::WA_TranslucentBackground, true);
 	adjustSize();
 
 	m_animation = new QPropertyAnimation(this, QStringLiteral("windowOpacity").toLatin1());
@@ -115,7 +102,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 void NotificationDialog::changeEvent(QEvent *event)
 {
-	QDialog::changeEvent(event);
+	QFrame::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange)
 	{
@@ -160,27 +147,25 @@ void NotificationDialog::resizeEvent(QResizeEvent *event)
 	}
 }
 
-bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
+void NotificationDialog::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonPress && static_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton)
 	{
 		m_animation->stop();
 
-		if (object == m_closeLabel)
+		if (m_closeLabel->geometry().contains(event->pos()))
 		{
 			m_notification->markAsIgnored();
 
 			close();
 
-			return true;
+			return;
 		}
 
 		m_notification->markAsClicked();
 
 		close();
 	}
-
-	return QWidget::eventFilter(object, event);
 }
 
 }
