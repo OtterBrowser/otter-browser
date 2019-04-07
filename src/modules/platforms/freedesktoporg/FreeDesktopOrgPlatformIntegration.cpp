@@ -84,7 +84,11 @@ QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 
 	argument << (target.depth() / channels);
 	argument << channels;
+#if QT_VERSION >= 0x050A00
+	argument << QByteArray(reinterpret_cast<const char*>(target.bits()), target.sizeInBytes());
+#else
 	argument << QByteArray(reinterpret_cast<const char*>(target.bits()), target.byteCount());
+#endif
 	argument.endStructure();
 
 	return argument;
