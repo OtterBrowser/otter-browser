@@ -148,7 +148,7 @@ void TrayIcon::updateMenu()
 	}
 }
 
-void TrayIcon::showMessage(Notification *notification)
+void TrayIcon::showNotification(Notification *notification)
 {
 	m_notification = notification;
 

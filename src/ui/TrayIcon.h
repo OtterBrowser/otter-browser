@@ -36,7 +36,7 @@ class TrayIcon final : public QObject
 public:
 	explicit TrayIcon(Application *parent);
 
-	void showMessage(Notification *notification);
+	void showNotification(Notification *notification);
 
 public slots:
 	void hide();
