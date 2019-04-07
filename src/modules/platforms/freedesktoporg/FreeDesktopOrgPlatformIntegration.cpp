@@ -217,15 +217,16 @@ void FreeDesktopOrgPlatformIntegration::handleNotificationClicked(quint32 identi
 
 void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notification)
 {
+	const Notification::Message message(notification->getMessage());
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 	QVariantList arguments;
 	arguments << Application::applicationName();
 	arguments << uint(0);
 	arguments << QString();
-	arguments << notification->getMessage().getTitle();
-	arguments << notification->getMessage().message;
+	arguments << message.getTitle();
+	arguments << message.message;
 	arguments << QStringList();
-	arguments << QVariantMap({{QLatin1String("image_data"), Application::windowIcon().pixmap(128, 128).toImage()}});
+	arguments << QVariantMap({{QLatin1String("image_data"), message.getIcon().pixmap(128, 128).toImage()}});
 	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));
 
 	QDBusPendingCallWatcher *watcher(new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this));

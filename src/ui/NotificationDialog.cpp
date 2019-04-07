@@ -27,7 +27,6 @@
 #include <QtGui/QPainter>
 #include <QtGui/QScreen>
 #include <QtGui/QWindow>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QStyleOption>
 
@@ -39,12 +38,13 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_closeLabel(nullptr),
 	m_closeTimer(0)
 {
+	const Notification::Message message(notification->getMessage());
 	QLabel *iconLabel(new QLabel(this));
-	iconLabel->setPixmap(QApplication::windowIcon().pixmap(32, 32));
+	iconLabel->setPixmap(message.getIcon().pixmap(32, 32));
 	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
 
 	QLabel *messageLabel(new QLabel(this));
-	messageLabel->setText(QLatin1String("<strong>") + m_notification->getMessage().getTitle() + QLatin1String("</strong><br>") + m_notification->getMessage().message);
+	messageLabel->setText(QLatin1String("<strong>") + message.getTitle() + QLatin1String("</strong><br>") + message.message);
 	messageLabel->setStyleSheet(QLatin1String("padding:5px;font-size:13px;"));
 	messageLabel->setWordWrap(true);
 

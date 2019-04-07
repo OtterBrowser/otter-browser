@@ -20,6 +20,8 @@
 #ifndef OTTER_NOTIFICATIONSMANAGER_H
 #define OTTER_NOTIFICATIONSMANAGER_H
 
+#include "../core/ThemesManager.h"
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
 #include <QtCore/QVariant>
@@ -68,7 +70,27 @@ public:
 					break;
 			}
 
-			return QCoreApplication::translate("Otter::NotificationsManager", "Information");;
+			return QCoreApplication::translate("Otter::NotificationsManager", "Information");
+		}
+
+		QIcon getIcon() const
+		{
+			if (!icon.isNull())
+			{
+				return icon;
+			}
+
+			switch (level)
+			{
+				case ErrorLevel:
+					return ThemesManager::createIcon(QLatin1String("dialog-error"));
+				case Notification::Message::WarningLevel:
+					return ThemesManager::createIcon(QLatin1String("dialog-warning"));
+				default:
+					break;
+			}
+
+			return ThemesManager::createIcon(QLatin1String("dialog-information"));
 		}
 	};
 

@@ -154,25 +154,9 @@ void TrayIcon::showMessage(Notification *notification)
 
 	connect(m_trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayIcon::handleMessageClicked);
 
-	QSystemTrayIcon::MessageIcon icon(QSystemTrayIcon::NoIcon);
+	const Notification::Message message(notification->getMessage());
 
-	switch (notification->getMessage().level)
-	{
-		case Notification::Message::ErrorLevel:
-			icon = QSystemTrayIcon::Critical;
-
-			break;
-		case Notification::Message::WarningLevel:
-			icon = QSystemTrayIcon::Warning;
-
-			break;
-		default:
-			icon = QSystemTrayIcon::Information;
-
-			break;
-	}
-
-	m_trayIcon->showMessage(notification->getMessage().getTitle(), notification->getMessage().message, icon);
+	m_trayIcon->showMessage(message.getTitle(), message.message, message.getIcon());
 
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 
