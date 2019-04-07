@@ -219,7 +219,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 {
 	QString title;
 
-	switch (notification->getLevel())
+	switch (notification->getMessage().level)
 	{
 		case Notification::Message::ErrorLevel:
 			title = tr("Error");
@@ -241,7 +241,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	arguments << uint(0);
 	arguments << QString();
 	arguments << tr("Notification");
-	arguments << notification->getMessage();
+	arguments << notification->getMessage().message;
 	arguments << QStringList();
 	arguments << QVariantMap({{QLatin1String("image_data"), Application::windowIcon().pixmap(128, 128).toImage()}});
 	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));

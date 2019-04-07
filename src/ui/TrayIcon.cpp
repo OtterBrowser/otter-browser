@@ -156,7 +156,7 @@ void TrayIcon::showMessage(Notification *notification)
 
 	QSystemTrayIcon::MessageIcon icon(QSystemTrayIcon::NoIcon);
 
-	switch (notification->getLevel())
+	switch (notification->getMessage().level)
 	{
 		case Notification::Message::ErrorLevel:
 			icon = QSystemTrayIcon::Critical;
@@ -172,7 +172,7 @@ void TrayIcon::showMessage(Notification *notification)
 			break;
 	}
 
-	m_trayIcon->showMessage(tr("Otter Browser"), notification->getMessage(), icon);
+	m_trayIcon->showMessage(tr("Otter Browser"), notification->getMessage().message, icon);
 
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 

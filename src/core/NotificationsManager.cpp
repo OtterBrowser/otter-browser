@@ -59,24 +59,14 @@ void Notification::setData(const QVariant &data)
 	m_data = data;
 }
 
-QString Notification::getMessage() const
+Notification::Message Notification::getMessage() const
 {
-	return m_message.message;
-}
-
-QDateTime Notification::getCreationTime() const
-{
-	return m_message.creationTime;
+	return m_message;
 }
 
 QVariant Notification::getData() const
 {
 	return m_data;
-}
-
-Notification::Message::Level Notification::getLevel() const
-{
-	return m_message.level;
 }
 
 NotificationsManager::NotificationsManager(QObject *parent) : QObject(parent)

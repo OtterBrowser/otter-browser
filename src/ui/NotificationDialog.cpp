@@ -43,7 +43,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
 
 	QLabel *messageLabel(new QLabel(this));
-	messageLabel->setText(m_notification->getMessage());
+	messageLabel->setText(m_notification->getMessage().message);
 	messageLabel->setStyleSheet(QLatin1String("padding:5px;font-size:13px;"));
 	messageLabel->setWordWrap(true);
 

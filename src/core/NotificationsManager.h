@@ -23,6 +23,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
@@ -43,7 +44,9 @@ public:
 			ErrorLevel
 		};
 
+		QString title;
 		QString message;
+		QIcon icon;
 		QDateTime creationTime = QDateTime::currentDateTime();
 		Level level = InformationLevel;
 		int event = -1;
@@ -52,17 +55,14 @@ public:
 	void markAsClicked();
 	void markAsIgnored();
 	void setData(const QVariant &data);
-	QString getMessage() const;
-	QDateTime getCreationTime() const;
+	Message getMessage() const;
 	QVariant getData() const;
-	Message::Level getLevel() const;
 
 protected:
 	explicit Notification(const Message &message, QObject *parent);
 
 private:
 	Message m_message;
-	QDateTime m_creationTime;
 	QVariant m_data;
 
 signals:

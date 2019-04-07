@@ -364,7 +364,7 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 {
 	QString title;
 
-	switch (notification->getLevel())
+	switch (notification->getMessage().level)
 	{
 		case Notification::Message::ErrorLevel:
 			title = tr("Error");
@@ -386,7 +386,7 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 
 	NSUserNotification *nativeNotification = [[NSUserNotification alloc] init];
 	nativeNotification.title = [NSString stringWithUTF8String:title.toUtf8().data()];
-	nativeNotification.informativeText = [NSString stringWithUTF8String:notification->getMessage().toUtf8().data()];
+	nativeNotification.informativeText = [NSString stringWithUTF8String:notification->getMessage().message.toUtf8().data()];
 	nativeNotification.identifier = [NSString stringWithUTF8String:QString::number(identifier).toUtf8().data()];
 
 	[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:nativeNotification];
