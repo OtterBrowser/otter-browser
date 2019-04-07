@@ -249,11 +249,11 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		case BestFitBackground:
 			{
 				const QString key(QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
-				const QPixmap *cachedBackground(QPixmapCache::find(key));
+				QPixmap cachedBackground;
 
-				if (cachedBackground)
+				if (QPixmapCache::find(key, &cachedBackground))
 				{
-					painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect().translated(((cachedBackground->width() - width()) / 2), ((cachedBackground->height() - height()) / 2)));
+					painter.drawPixmap(contentsRect(), cachedBackground, contentsRect().translated(((cachedBackground.width() - width()) / 2), ((cachedBackground.height() - height()) / 2)));
 				}
 				else
 				{
@@ -284,11 +284,11 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 		case StretchBackground:
 			{
 				const QString key(QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
-				const QPixmap *cachedBackground(QPixmapCache::find(key));
+				QPixmap cachedBackground;
 
-				if (cachedBackground)
+				if (QPixmapCache::find(key, &cachedBackground))
 				{
-					painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
+					painter.drawPixmap(contentsRect(), cachedBackground, contentsRect());
 				}
 				else
 				{
