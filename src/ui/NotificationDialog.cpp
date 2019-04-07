@@ -27,6 +27,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QScreen>
 #include <QtGui/QWindow>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QStyleOption>
 
@@ -39,7 +40,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_closeTimer(0)
 {
 	QLabel *iconLabel(new QLabel(this));
-	iconLabel->setPixmap(ThemesManager::createIcon(QLatin1String("otter-browser-32")).pixmap(32, 32));
+	iconLabel->setPixmap(QApplication::windowIcon().pixmap(32, 32));
 	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
 
 	QLabel *messageLabel(new QLabel(this));
