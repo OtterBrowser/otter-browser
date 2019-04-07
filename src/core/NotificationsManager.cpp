@@ -59,6 +59,13 @@ void Notification::setData(const QVariant &data)
 	m_data = data;
 }
 
+void Notification::setMessage(const Notification::Message &message)
+{
+	m_message = message;
+
+	emit modified();
+}
+
 Notification::Message Notification::getMessage() const
 {
 	return m_message;

@@ -97,6 +97,7 @@ public:
 	void markAsClicked();
 	void markAsIgnored();
 	void setData(const QVariant &data);
+	void setMessage(const Message &message);
 	Message getMessage() const;
 	QVariant getData() const;
 
@@ -110,6 +111,7 @@ private:
 signals:
 	void clicked();
 	void ignored();
+	void modified();
 
 friend class NotificationsManager;
 };
