@@ -158,22 +158,22 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 	std::vector<std::string> fileNames;
 	fileNames.push_back((url.isLocalFile() ? QDir::toNativeSeparators(url.toLocalFile()) : url.url()).toStdString());
 
-	const std::vector<std::string> parsed(LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames, LibMimeApps::DesktopEntry::ParseOptions::NecessarilyUseUrl));
+	const std::vector<std::string> rawArguments(LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames, LibMimeApps::DesktopEntry::ParseOptions::NecessarilyUseUrl));
 
-	if (parsed.size() < 1)
+	if (rawArguments.size() < 1)
 	{
 		return;
 	}
 
 	QStringList arguments;
-	arguments.reserve(static_cast<int>(parsed.size()));
+	arguments.reserve(static_cast<int>(rawArguments.size()) - 1);
 
-	for (std::vector<std::string>::size_type i = 1; i < parsed.size(); ++i)
+	for (std::vector<std::string>::size_type i = 1; i < rawArguments.size(); ++i)
 	{
-		arguments.append(QString::fromStdString(parsed.at(i)));
+		arguments.append(QString::fromStdString(rawArguments.at(i)));
 	}
 
-	QProcess::startDetached(QString::fromStdString(parsed.at(0)), arguments);
+	QProcess::startDetached(QString::fromStdString(rawArguments.at(0)), arguments);
 }
 
 #ifdef OTTER_ENABLE_DBUS
