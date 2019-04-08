@@ -162,12 +162,20 @@ NotificationsManager::EventDefinition NotificationsManager::getEventDefinition(i
 		return {};
 	}
 
-	const QSettings notificationsSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
+	const QSettings bundledSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini"), true), QSettings::IniFormat);
+	const QSettings localSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
+	const QSettings *settings(&localSettings);
 	const QString eventName(getEventName(identifier));
+
+	if (!localSettings.childGroups().contains(eventName))
+	{
+		settings = &bundledSettings;
+	}
+
 	EventDefinition definition(m_definitions.at(identifier));
-	definition.playSound = notificationsSettings.value(eventName + QLatin1String("/playSound"), {}).toString();
-	definition.showAlert = notificationsSettings.value(eventName + QLatin1String("/showAlert"), false).toBool();
-	definition.showNotification = notificationsSettings.value(eventName + QLatin1String("/showNotification"), false).toBool();
+	definition.playSound = settings->value(eventName + QLatin1String("/playSound"), {}).toString();
+	definition.showAlert = settings->value(eventName + QLatin1String("/showAlert"), false).toBool();
+	definition.showNotification = settings->value(eventName + QLatin1String("/showNotification"), false).toBool();
 
 	return definition;
 }
