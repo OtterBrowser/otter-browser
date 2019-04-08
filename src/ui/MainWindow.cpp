@@ -2644,15 +2644,17 @@ int MainWindow::getWindowIndex(quint64 identifier) const
 
 bool MainWindow::hasUrl(const QUrl &url, bool activate)
 {
-	for (int i = 0; i < m_windows.count(); ++i)
+	const QVector<quint64> windows(createOrderedWindowList(true));
+
+	for (int i = (windows.count() - 1); i >= 0; --i)
 	{
-		const Window *window(getWindowByIndex(i));
+		const Window *window(getWindowByIdentifier(windows.at(i)));
 
 		if (window && window->getUrl() == url)
 		{
 			if (activate)
 			{
-				setActiveWindowByIndex(i);
+				setActiveWindowByIdentifier(windows.at(i));
 			}
 
 			return true;
