@@ -221,11 +221,12 @@ void FreeDesktopOrgPlatformIntegration::handleNotificationClicked(quint32 identi
 
 void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notification)
 {
+	const uint replacedIdentifier(m_notifications.key(notification, 0));
 	const Notification::Message message(notification->getMessage());
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 	QVariantList arguments;
 	arguments << QApplication::applicationName();
-	arguments << uint(0);
+	arguments << replacedIdentifier;
 	arguments << QString();
 	arguments << message.getTitle();
 	arguments << message.message;
@@ -236,6 +237,14 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	QDBusPendingCallWatcher *watcher(new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this));
 
 	m_notificationWatchers[watcher] = notification;
+
+	if (replacedIdentifier == 0)
+	{
+		connect(notification, &Notification::modified, this, [=]()
+		{
+			showNotification(notification);
+		});
+	}
 
 	connect(watcher, &QDBusPendingCallWatcher::finished, this, &FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished);
 }
