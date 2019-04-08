@@ -230,7 +230,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	arguments << QString();
 	arguments << message.getTitle();
 	arguments << message.message;
-	arguments << QStringList();
+	arguments << QStringList({QLatin1String("default"), QString()});
 	arguments << QVariantMap({{QLatin1String("image_data"), message.getIcon().pixmap(128, 128).toImage()}});
 	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));
 
