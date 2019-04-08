@@ -374,18 +374,21 @@ if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 endif ()
 
 if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
-	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
+	add_definitions(-DOTTER_ENABLE_QTWEBKIT -DQT_STATICPLUGIN)
 
 	list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
 
 	set(otter_src
 		${otter_src}
+		src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
 		src/modules/backends/web/qtwebkit/QtWebKitCookieJar.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitNotificationPresenter.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitPage.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
@@ -397,8 +400,6 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
 		set(otter_src
 			${otter_src}
-			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
-			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
 		)
 	endif ()
@@ -449,7 +450,7 @@ if (ENABLE_CRASHREPORTS)
 endif ()
 
 if (HUNSPELL_FOUND AND ENABLE_SPELLCHECK)
-	add_definitions(-DOTTER_ENABLE_SPELLCHECK -DQT_STATICPLUGIN)
+	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
 	include_directories(${HUNSPELL_INCLUDE_DIR})
 
 	set(otter_src

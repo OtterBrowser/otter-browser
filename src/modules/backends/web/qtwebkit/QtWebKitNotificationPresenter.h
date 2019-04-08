@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,24 @@
 *
 **************************************************************************/
 
-#ifndef QTWEBKITPLUGIN_H
-#define QTWEBKITPLUGIN_H
+#ifndef QTWEBKITNOTIFICATIONPRESENTER_H
+#define QTWEBKITNOTIFICATIONPRESENTER_H
 
 #include "qwebkitplatformplugin.h"
+#include "../../../../core/NotificationsManager.h"
 
 namespace Otter
 {
 
-class QtWebKitPlugin final : public QObject, public QWebKitPlatformPlugin
+class QtWebKitNotificationPresenter final : public QWebNotificationPresenter
 {
-	Q_OBJECT
-	Q_INTERFACES(QWebKitPlatformPlugin)
-	Q_PLUGIN_METADATA(IID "org.qtwebkit.QtWebKit.QtWebKitPlugin")
-
 public:
-	explicit QtWebKitPlugin();
+	explicit QtWebKitNotificationPresenter();
 
-	QObject* createExtension(Extension extension) const override;
-	bool supportsExtension(Extension extension) const override;
+	void showNotification(const QWebNotificationData *data) override;
+
+protected:
+	void showMessage(const Notification::Message &message);
 };
 
 }
