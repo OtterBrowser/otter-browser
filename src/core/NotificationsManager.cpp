@@ -81,6 +81,7 @@ NotificationsManager::NotificationsManager(QObject *parent) : QObject(parent)
 	registerEvent(QT_TRANSLATE_NOOP("notifications", "Feed Updated"), QT_TRANSLATE_NOOP("notifications", "Feed update was completed"));
 	registerEvent(QT_TRANSLATE_NOOP("notifications", "Download Completed"), QT_TRANSLATE_NOOP("notifications", "File download was completed"));
 	registerEvent(QT_TRANSLATE_NOOP("notifications", "Update Available"), QT_TRANSLATE_NOOP("notifications", "Update is available to be downloaded"));
+	registerEvent(QT_TRANSLATE_NOOP("notifications", "Webpage Notification"), QT_TRANSLATE_NOOP("notifications", "Webpage wants to show a notification"));
 }
 
 void NotificationsManager::createInstance()

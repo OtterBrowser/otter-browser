@@ -126,7 +126,8 @@ public:
 	{
 		FeedUpdatedEvent = 0,
 		TransferCompletedEvent,
-		UpdateAvailableEvent
+		UpdateAvailableEvent,
+		WebPageNotificationEvent
 	};
 
 	struct EventDefinition final
