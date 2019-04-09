@@ -298,7 +298,7 @@ void Feed::update()
 						if (amount > 0)
 						{
 							Notification::Message message;
-							message.message = tr("Feed updated:\n%1").arg(getTitle());
+							message.message = getTitle();
 							message.event = NotificationsManager::FeedUpdatedEvent;
 							message.icon = getIcon();
 
