@@ -148,6 +148,11 @@ public:
 		{
 			return QCoreApplication::translate("notifications", description.toUtf8());
 		}
+
+		bool isValid() const
+		{
+			return (identifier >= 0);
+		}
 	};
 
 	static void createInstance();

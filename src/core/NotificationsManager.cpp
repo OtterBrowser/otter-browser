@@ -65,7 +65,12 @@ void Notification::setMessage(const Notification::Message &message)
 
 	if (m_message.title.isEmpty() && m_message.event >= 0)
 	{
-		m_message.title = NotificationsManager::getEventDefinition(m_message.event).getTitle();
+		const NotificationsManager::EventDefinition definition(NotificationsManager::getEventDefinition(m_message.event));
+
+		if (definition.isValid())
+		{
+			m_message.title = definition.getTitle();
+		}
 	}
 
 	emit modified();
