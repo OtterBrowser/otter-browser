@@ -299,8 +299,8 @@ void Feed::update()
 						{
 							Notification::Message message;
 							message.message = getTitle();
-							message.event = NotificationsManager::FeedUpdatedEvent;
 							message.icon = getIcon();
+							message.event = NotificationsManager::FeedUpdatedEvent;
 
 							if (message.icon.isNull())
 							{
