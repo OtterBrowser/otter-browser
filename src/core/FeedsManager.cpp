@@ -300,6 +300,12 @@ void Feed::update()
 							Notification::Message message;
 							message.message = tr("Feed updated:\n%1").arg(getTitle());
 							message.event = NotificationsManager::FeedUpdatedEvent;
+							message.icon = getIcon();
+
+							if (message.icon.isNull())
+							{
+								message.icon = ThemesManager::createIcon(QLatin1String("application-rss+xml"));
+							}
 
 							connect(NotificationsManager::createNotification(message, this), &Notification::clicked, [&]()
 							{
