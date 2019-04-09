@@ -881,13 +881,7 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 	{
 		if (sortedWindows.at(i)->hasUrl(url, activate))
 		{
-			QWidget *window(qobject_cast<QWidget*>(sortedWindows.at(i)->parent()));
-
-			if (window)
-			{
-				window->raise();
-				window->activateWindow();
-			}
+			Application::triggerAction(ActionsManager::ActivateWindowAction, {{QLatin1String("window"), sortedWindows.at(i)->getIdentifier()}}, m_instance);
 
 			return true;
 		}
