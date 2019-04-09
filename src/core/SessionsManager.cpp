@@ -23,6 +23,7 @@
 #include "JsonSettings.h"
 #include "SessionModel.h"
 #include "../ui/MainWindow.h"
+#include "../ui/Window.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
@@ -864,12 +865,23 @@ bool SessionsManager::isReadOnly()
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
 	const QVector<MainWindow*> windows(Application::getWindows());
+	QMultiMap<qint64, MainWindow*> map;
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		if (windows.at(i)->hasUrl(url, activate))
+		if (windows.at(i)->getActiveWindow())
 		{
-			QWidget *window(qobject_cast<QWidget*>(windows.at(i)->parent()));
+			map.insert(windows.at(i)->getActiveWindow()->getLastActivity().toMSecsSinceEpoch(), windows.at(i));
+		}
+	}
+
+	const QVector<MainWindow*> sortedWindows(map.values().toVector());
+
+	for (int i = (sortedWindows.count() - 1); i >= 0; --i)
+	{
+		if (sortedWindows.at(i)->hasUrl(url, activate))
+		{
+			QWidget *window(qobject_cast<QWidget*>(sortedWindows.at(i)->parent()));
 
 			if (window)
 			{
