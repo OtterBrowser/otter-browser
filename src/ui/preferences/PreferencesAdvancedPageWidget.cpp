@@ -120,7 +120,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	for (int i = 0; i < events.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(QCoreApplication::translate("notifications", events.at(i).title.toUtf8())), new QStandardItem(QCoreApplication::translate("notifications", events.at(i).description.toUtf8()))});
+		QList<QStandardItem*> items({new QStandardItem(events.at(i).getTitle()), new QStandardItem(events.at(i).getDescription())});
 		items[0]->setData(events.at(i).identifier, IdentifierRole);
 		items[0]->setData(events.at(i).playSound, SoundPathRole);
 		items[0]->setData(events.at(i).showAlert, ShouldShowAlertRole);

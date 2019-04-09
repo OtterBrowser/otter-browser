@@ -138,6 +138,16 @@ public:
 		int identifier = -1;
 		bool showAlert = false;
 		bool showNotification = false;
+
+		QString getTitle() const
+		{
+			return QCoreApplication::translate("notifications", title.toUtf8());
+		}
+
+		QString getDescription() const
+		{
+			return QCoreApplication::translate("notifications", description.toUtf8());
+		}
 	};
 
 	static void createInstance();
