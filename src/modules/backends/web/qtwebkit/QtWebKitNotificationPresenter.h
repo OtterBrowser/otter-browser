@@ -35,6 +35,9 @@ public:
 
 protected:
 	void showMessage(const Notification::Message &message);
+
+private:
+	QUrl m_openerUrl;
 };
 
 }

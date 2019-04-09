@@ -19,6 +19,7 @@
 
 #include "QtWebKitNotificationPresenter.h"
 #include "../../../../core/Job.h"
+#include "../../../../core/SessionsManager.h"
 
 namespace Otter
 {
@@ -31,12 +32,22 @@ void QtWebKitNotificationPresenter::showMessage(const Notification::Message &mes
 {
 	const Notification *notification(NotificationsManager::createNotification(message));
 
-	connect(notification, &Notification::clicked, this, &QtWebKitNotificationPresenter::notificationClicked);
+	connect(notification, &Notification::clicked, this, [&]()
+	{
+		if (m_openerUrl.isValid())
+		{
+			SessionsManager::hasUrl(m_openerUrl, true);
+		}
+
+		emit notificationClicked();
+	});
 	connect(notification, &Notification::ignored, this, &QtWebKitNotificationPresenter::notificationClosed);
 }
 
 void QtWebKitNotificationPresenter::showNotification(const QWebNotificationData *data)
 {
+	m_openerUrl = data->openerPageUrl();
+
 	Notification::Message message;
 	message.title = data->title();
 	message.message = data->message();
