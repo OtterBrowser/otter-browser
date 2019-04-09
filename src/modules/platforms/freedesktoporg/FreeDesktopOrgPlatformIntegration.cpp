@@ -37,8 +37,10 @@
 #include <QtGui/QIcon>
 #ifdef OTTER_ENABLE_DBUS
 #include <QtGui/QRgb>
+#endif
 #include <QtWidgets/QApplication>
 
+#ifdef OTTER_ENABLE_DBUS
 QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 {
 	if (image.isNull())
