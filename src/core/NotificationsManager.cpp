@@ -35,9 +35,9 @@ QMap<int, QString> NotificationsManager::m_identifiers;
 QVector<NotificationsManager::EventDefinition> NotificationsManager::m_definitions;
 int NotificationsManager::m_eventIdentifierEnumerator(0);
 
-Notification::Notification(const Message &message, QObject *parent) : QObject(parent),
-	m_message(message)
+Notification::Notification(const Message &message, QObject *parent) : QObject(parent)
 {
+	setMessage(message);
 }
 
 void Notification::markAsClicked()
@@ -62,6 +62,11 @@ void Notification::setData(const QVariant &data)
 void Notification::setMessage(const Notification::Message &message)
 {
 	m_message = message;
+
+	if (m_message.title.isEmpty() && m_message.event >= 0)
+	{
+		m_message.title = NotificationsManager::getEventDefinition(m_message.event).getTitle();
+	}
 
 	emit modified();
 }
