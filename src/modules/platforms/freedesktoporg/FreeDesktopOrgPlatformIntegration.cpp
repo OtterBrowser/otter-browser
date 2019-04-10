@@ -242,6 +242,8 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 
 	if (replacedIdentifier == 0)
 	{
+		notification->markAsShown();
+
 		connect(notification, &Notification::modified, this, [=]()
 		{
 			showNotification(notification);
