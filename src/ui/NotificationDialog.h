@@ -44,9 +44,14 @@ protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
+protected slots:
+	void updateMessage();
+
 private:
 	Notification *m_notification;
 	QLabel *m_closeLabel;
+	QLabel *m_iconLabel;
+	QLabel *m_messageLabel;
 	QPropertyAnimation *m_animation;
 	int m_closeTimer;
 };

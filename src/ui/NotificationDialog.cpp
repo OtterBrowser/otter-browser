@@ -35,20 +35,17 @@ namespace Otter
 
 NotificationDialog::NotificationDialog(Notification *notification, QWidget *parent) : QFrame(parent),
 	m_notification(notification),
-	m_closeLabel(nullptr),
+	m_closeLabel(new QLabel(this)),
+	m_iconLabel(new QLabel(this)),
+	m_messageLabel(new QLabel(this)),
 	m_closeTimer(0)
 {
-	const Notification::Message message(notification->getMessage());
-	QLabel *iconLabel(new QLabel(this));
-	iconLabel->setPixmap(message.getIcon().pixmap(32, 32));
-	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
-	iconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+	m_iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
+	m_iconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-	QLabel *messageLabel(new QLabel(this));
-	messageLabel->setText(QLatin1String("<strong>") + message.getTitle() + QLatin1String("</strong><br>") + message.message);
-	messageLabel->setStyleSheet(QLatin1String("padding:5px;font-size:13px;"));
-	messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
-	messageLabel->setWordWrap(true);
+	m_messageLabel->setStyleSheet(QLatin1String("padding:5px;font-size:13px;"));
+	m_messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+	m_messageLabel->setWordWrap(true);
 
 	QStyleOption option;
 	option.rect = QRect(0, 0, 16, 16);
@@ -61,7 +58,6 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 	style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
 
-	m_closeLabel = new QLabel(this);
 	m_closeLabel->setToolTip(tr("Close"));
 	m_closeLabel->setPixmap(pixmap);
 	m_closeLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -72,8 +68,8 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 	layout->setSizeConstraint(QLayout::SetMinimumSize);
-	layout->addWidget(iconLabel);
-	layout->addWidget(messageLabel);
+	layout->addWidget(m_iconLabel);
+	layout->addWidget(m_messageLabel);
 	layout->addWidget(m_closeLabel);
 
 	setLayout(layout);
@@ -88,6 +84,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	setFocusPolicy(Qt::NoFocus);
 	setAttribute(Qt::WA_DeleteOnClose, true);
 	setAttribute(Qt::WA_ShowWithoutActivating, true);
+	updateMessage();
 	adjustSize();
 
 	m_animation = new QPropertyAnimation(this, QStringLiteral("windowOpacity").toLatin1());
@@ -102,6 +99,8 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	{
 		m_closeTimer = startTimer(visibilityDuration * 1000);
 	}
+
+	connect(notification, &Notification::modified, this, &NotificationDialog::updateMessage);
 }
 
 void NotificationDialog::changeEvent(QEvent *event)
@@ -111,6 +110,8 @@ void NotificationDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_closeLabel->setToolTip(tr("Close"));
+
+		updateMessage();
 	}
 }
 
@@ -201,6 +202,15 @@ void NotificationDialog::mouseReleaseEvent(QMouseEvent *event)
 
 		close();
 	}
+}
+
+void NotificationDialog::updateMessage()
+{
+	const Notification::Message message(m_notification->getMessage());
+
+	m_iconLabel->setPixmap(message.getIcon().pixmap(32, 32));
+
+	m_messageLabel->setText(QLatin1String("<strong>") + message.getTitle() + QLatin1String("</strong><br>") + message.message);
 }
 
 }
