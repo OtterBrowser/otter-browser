@@ -23,6 +23,10 @@
 
 #include "../../../../core/WebBackend.h"
 
+#include <QtWebEngineCore/QtWebEngineCoreVersion>
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+#include <QtWebEngineCore/QWebEngineNotification>
+#endif
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 
 namespace Otter
@@ -50,6 +54,11 @@ public:
 	QUrl getHomePage() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
 	bool requestThumbnail(const QUrl &url, const QSize &size) override;
+
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+protected:
+	static void showNotification(const QWebEngineNotification &nativeNotification);
+#endif
 
 protected slots:
 	void handleDownloadRequested(QWebEngineDownloadItem *item);

@@ -26,6 +26,9 @@
 #include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/HandlersManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+#include "../../../../core/NotificationsManager.h"
+#endif
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
@@ -184,6 +187,31 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 	}
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+void QtWebEngineWebBackend::showNotification(const QWebEngineNotification &nativeNotification)
+{
+	Notification::Message message;
+	message.title = nativeNotification.title();
+	message.message = nativeNotification.message();
+	message.icon = nativeNotification.icon();
+	message.event = NotificationsManager::WebPageNotificationEvent;
+
+	const Notification *notification(NotificationsManager::createNotification(message));
+
+	connect(notification, &Notification::shown, &nativeNotification, &QWebEngineNotification::show);
+	connect(notification, &Notification::clicked, [=]()
+	{
+		if (nativeNotification.origin().isValid())
+		{
+			SessionsManager::hasUrl(nativeNotification.origin(), true);
+		}
+
+		nativeNotification.click();
+	});
+	connect(notification, &Notification::ignored, &nativeNotification, &QWebEngineNotification::close);
+}
+#endif
+
 WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
@@ -197,6 +225,9 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+		QWebEngineProfile::defaultProfile()->setNotificationPresenter(&QtWebEngineWebBackend::showNotification);
+#endif
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
