@@ -52,6 +52,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 
 	QStyleOption option;
 	option.rect = QRect(0, 0, 16, 16);
+	option.state = (QStyle::State_Enabled | QStyle::State_AutoRaise);
 
 	QPixmap pixmap(16, 16);
 	pixmap.fill(Qt::transparent);
