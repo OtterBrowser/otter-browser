@@ -22,7 +22,7 @@
 #define OTTER_NOTIFICATIONDIALOG_H
 
 #include <QtCore/QPropertyAnimation>
-#include <QtWidgets/QDialog>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
 
 namespace Otter
