@@ -71,6 +71,7 @@ public:
 	virtual QUrl getSource() const;
 	virtual QString getSuggestedFileName();
 	virtual QString getTarget() const;
+	QIcon getIcon() const;
 	virtual QDateTime getTimeStarted() const;
 	virtual QDateTime getTimeFinished() const;
 	virtual QMimeType getMimeType() const;
