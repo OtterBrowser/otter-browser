@@ -1131,7 +1131,13 @@ void TransfersManager::handleTransferFinished()
 		{
 			Notification::Message message;
 			message.message = QFileInfo(transfer->getTarget()).fileName();
+			message.icon = transfer->getIcon();
 			message.event = NotificationsManager::TransferCompletedEvent;
+
+			if (message.icon.isNull())
+			{
+				message.icon = ThemesManager::createIcon(QLatin1String("download"));
+			}
 
 			connect(NotificationsManager::createNotification(message,  this), &Notification::clicked, transfer, &Transfer::openTarget);
 		}
