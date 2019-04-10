@@ -132,9 +132,16 @@ void NotificationDialog::timerEvent(QTimerEvent *event)
 	}
 }
 
+void NotificationDialog::showEvent(QShowEvent *event)
+{
+	QFrame::showEvent(event);
+
+	m_notification->markAsShown();
+}
+
 void NotificationDialog::resizeEvent(QResizeEvent *event)
 {
-	QWidget::resizeEvent(event);
+	QFrame::resizeEvent(event);
 
 	const QScreen *screen(window()->windowHandle()->screen());
 
