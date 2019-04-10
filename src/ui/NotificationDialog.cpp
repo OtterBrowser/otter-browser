@@ -42,10 +42,12 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	QLabel *iconLabel(new QLabel(this));
 	iconLabel->setPixmap(message.getIcon().pixmap(32, 32));
 	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
+	iconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
 	QLabel *messageLabel(new QLabel(this));
 	messageLabel->setText(QLatin1String("<strong>") + message.getTitle() + QLatin1String("</strong><br>") + message.message);
 	messageLabel->setStyleSheet(QLatin1String("padding:5px;font-size:13px;"));
+	messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 	messageLabel->setWordWrap(true);
 
 	QStyleOption option;
@@ -61,6 +63,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_closeLabel = new QLabel(this);
 	m_closeLabel->setToolTip(tr("Close"));
 	m_closeLabel->setPixmap(pixmap);
+	m_closeLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 	m_closeLabel->setAlignment(Qt::AlignTop);
 	m_closeLabel->setMargin(5);
 	m_closeLabel->installEventFilter(this);
