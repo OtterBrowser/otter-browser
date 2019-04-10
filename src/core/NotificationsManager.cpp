@@ -59,6 +59,11 @@ void Notification::markAsIgnored()
 	deleteLater();
 }
 
+void Notification::requestClose()
+{
+	emit requestedClose();
+}
+
 void Notification::setData(const QVariant &data)
 {
 	m_data = data;

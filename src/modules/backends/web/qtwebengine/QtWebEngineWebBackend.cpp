@@ -209,6 +209,7 @@ void QtWebEngineWebBackend::showNotification(const QWebEngineNotification &nativ
 		nativeNotification.click();
 	});
 	connect(notification, &Notification::ignored, &nativeNotification, &QWebEngineNotification::close);
+	connect(&nativeNotification, &QWebEngineNotification::closed, notification, &Notification::requestClose);
 }
 #endif
 

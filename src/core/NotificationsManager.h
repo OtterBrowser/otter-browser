@@ -103,6 +103,7 @@ public slots:
 	void markAsShown();
 	void markAsClicked();
 	void markAsIgnored();
+	void requestClose();
 
 protected:
 	explicit Notification(const Message &message, QObject *parent);
@@ -116,6 +117,7 @@ signals:
 	void clicked();
 	void ignored();
 	void modified();
+	void requestedClose();
 
 friend class NotificationsManager;
 };
