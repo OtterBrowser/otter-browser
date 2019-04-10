@@ -40,6 +40,11 @@ Notification::Notification(const Message &message, QObject *parent) : QObject(pa
 	setMessage(message);
 }
 
+void Notification::markAsShown()
+{
+	emit shown();
+}
+
 void Notification::markAsClicked()
 {
 	emit clicked();

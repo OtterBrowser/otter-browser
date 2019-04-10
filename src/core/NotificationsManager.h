@@ -94,12 +94,15 @@ public:
 		}
 	};
 
-	void markAsClicked();
-	void markAsIgnored();
 	void setData(const QVariant &data);
 	void setMessage(const Message &message);
 	Message getMessage() const;
 	QVariant getData() const;
+
+public slots:
+	void markAsShown();
+	void markAsClicked();
+	void markAsIgnored();
 
 protected:
 	explicit Notification(const Message &message, QObject *parent);
@@ -109,6 +112,7 @@ private:
 	QVariant m_data;
 
 signals:
+	void shown();
 	void clicked();
 	void ignored();
 	void modified();
