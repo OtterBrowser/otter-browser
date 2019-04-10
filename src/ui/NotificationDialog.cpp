@@ -101,6 +101,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	}
 
 	connect(notification, &Notification::modified, this, &NotificationDialog::updateMessage);
+	connect(notification, &Notification::requestedClose, this, &NotificationDialog::close);
 }
 
 void NotificationDialog::changeEvent(QEvent *event)
