@@ -166,6 +166,8 @@ void TrayIcon::showNotification(Notification *notification)
 {
 	m_notification = notification;
 
+	notification->markAsShown();
+
 	connect(notification, &Notification::modified, this, [&]()
 	{
 		if (notification == m_notification)
