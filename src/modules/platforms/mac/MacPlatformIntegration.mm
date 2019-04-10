@@ -366,6 +366,8 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 
 	m_notifications[identifier] = notification;
 
+	notification->markAsShown();
+
 	NSUserNotification *nativeNotification = [[NSUserNotification alloc] init];
 	nativeNotification.title = [NSString stringWithUTF8String:notification->getMessage().getTitle().toUtf8().data()];
 	nativeNotification.informativeText = [NSString stringWithUTF8String:notification->getMessage().message.toUtf8().data()];
