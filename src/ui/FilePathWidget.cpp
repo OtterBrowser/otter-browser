@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -124,7 +124,9 @@ void FilePathWidget::setSelectFile(bool mode)
 
 void FilePathWidget::setPath(const QString &path)
 {
+	m_lineEditWidget->blockSignals(true);
 	m_lineEditWidget->setText(path);
+	m_lineEditWidget->blockSignals(false);
 }
 
 QString FilePathWidget::getPath() const
