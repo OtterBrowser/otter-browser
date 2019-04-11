@@ -124,9 +124,14 @@ void FilePathWidget::setSelectFile(bool mode)
 
 void FilePathWidget::setPath(const QString &path)
 {
-	m_lineEditWidget->blockSignals(true);
-	m_lineEditWidget->setText(path);
-	m_lineEditWidget->blockSignals(false);
+	if (path != m_lineEditWidget->text())
+	{
+		m_lineEditWidget->blockSignals(true);
+		m_lineEditWidget->setText(path);
+		m_lineEditWidget->blockSignals(false);
+
+		emit pathChanged(path);
+	}
 }
 
 QString FilePathWidget::getPath() const
