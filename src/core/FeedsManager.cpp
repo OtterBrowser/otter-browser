@@ -298,7 +298,7 @@ void Feed::update()
 						if (amount > 0)
 						{
 							Notification::Message message;
-							message.message = getTitle();
+							message.message = getTitle() + QLatin1Char('\n') + tr("%n new message(s)", nullptr, amount);
 							message.icon = getIcon();
 							message.event = NotificationsManager::FeedUpdatedEvent;
 
