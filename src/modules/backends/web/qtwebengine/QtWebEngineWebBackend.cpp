@@ -227,6 +227,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 #if QTWEBENGINECORE_VERSION >= 0x050D00
+		QWebEngineProfile::defaultProfile()->setDownloadPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
 		QWebEngineProfile::defaultProfile()->setNotificationPresenter(&QtWebEngineWebBackend::showNotification);
 #endif
 
