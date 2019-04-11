@@ -225,10 +225,12 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
-		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 #if QTWEBENGINECORE_VERSION >= 0x050D00
 		QWebEngineProfile::defaultProfile()->setDownloadPath(SettingsManager::getOption(SettingsManager::Paths_DownloadsOption).toString());
 		QWebEngineProfile::defaultProfile()->setNotificationPresenter(&QtWebEngineWebBackend::showNotification);
+		QWebEngineProfile::defaultProfile()->setUrlRequestInterceptor(m_requestInterceptor);
+#else
+		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 #endif
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
