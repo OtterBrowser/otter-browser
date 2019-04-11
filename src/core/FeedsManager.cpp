@@ -261,7 +261,7 @@ void Feed::update()
 
 									if (existingEntry.identifier == entry.identifier)
 									{
-										if (existingEntry.publicationTime != entry.publicationTime || existingEntry.updateTime != entry.updateTime)
+										if ((entry.publicationTime.isValid() && existingEntry.publicationTime != entry.publicationTime) || (entry.updateTime.isValid() && existingEntry.updateTime != entry.updateTime))
 										{
 											++amount;
 										}
