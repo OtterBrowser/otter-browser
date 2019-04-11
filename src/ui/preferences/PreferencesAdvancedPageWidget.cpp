@@ -497,9 +497,9 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 
 void PreferencesAdvancedPageWidget::updateNotificationsActions()
 {
-	disconnect(m_ui->notificationsPlaySoundFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
-	disconnect(m_ui->notificationsShowAlertCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
-	disconnect(m_ui->notificationsShowNotificationCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
+	m_ui->notificationsPlaySoundFilePathWidget->blockSignals(true);
+	m_ui->notificationsShowAlertCheckBox->blockSignals(true);
+	m_ui->notificationsShowNotificationCheckBox->blockSignals(true);
 
 	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
 	const QString path(index.data(SoundPathRole).toString());
@@ -510,9 +510,9 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(ShouldShowAlertRole).toBool());
 	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(ShouldShowNotificationRole).toBool());
 
-	connect(m_ui->notificationsPlaySoundFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
-	connect(m_ui->notificationsShowAlertCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
-	connect(m_ui->notificationsShowNotificationCheckBox, &QCheckBox::clicked, this, &PreferencesAdvancedPageWidget::updateNotificationsOptions);
+	m_ui->notificationsPlaySoundFilePathWidget->blockSignals(false);
+	m_ui->notificationsShowAlertCheckBox->blockSignals(false);
+	m_ui->notificationsShowNotificationCheckBox->blockSignals(false);
 }
 
 void PreferencesAdvancedPageWidget::updateNotificationsOptions()
@@ -625,11 +625,11 @@ void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
 
 void PreferencesAdvancedPageWidget::updateDownloadsActions()
 {
-	disconnect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	disconnect(m_ui->downloadsSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	disconnect(m_ui->downloadsFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	disconnect(m_ui->downloadsPassUrlCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	disconnect(m_ui->downloadsApplicationComboBoxWidget, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	m_ui->downloadsButtonGroup->blockSignals(true);
+	m_ui->downloadsSaveDirectlyCheckBox->blockSignals(true);
+	m_ui->downloadsFilePathWidget->blockSignals(true);
+	m_ui->downloadsPassUrlCheckBox->blockSignals(true);
+	m_ui->downloadsApplicationComboBoxWidget->blockSignals(true);
 
 	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
 	const HandlersManager::HandlerDefinition::TransferMode mode(static_cast<HandlersManager::HandlerDefinition::TransferMode>(index.data(TransferModeRole).toInt()));
@@ -658,11 +658,11 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
 	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(OpenCommandRole).toString());
 
-	connect(m_ui->downloadsButtonGroup, static_cast<void(QButtonGroup::*)(int, bool)>(&QButtonGroup::buttonToggled), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->downloadsSaveDirectlyCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->downloadsFilePathWidget, &FilePathWidget::pathChanged, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->downloadsPassUrlCheckBox, &QCheckBox::toggled, this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
-	connect(m_ui->downloadsApplicationComboBoxWidget, static_cast<void(ApplicationComboBoxWidget::*)(int)>(&ApplicationComboBoxWidget::currentIndexChanged), this, &PreferencesAdvancedPageWidget::updateDownloadsOptions);
+	m_ui->downloadsButtonGroup->blockSignals(false);
+	m_ui->downloadsSaveDirectlyCheckBox->blockSignals(false);
+	m_ui->downloadsFilePathWidget->blockSignals(false);
+	m_ui->downloadsPassUrlCheckBox->blockSignals(false);
+	m_ui->downloadsApplicationComboBoxWidget->blockSignals(false);
 }
 
 void PreferencesAdvancedPageWidget::updateDownloadsOptions()
