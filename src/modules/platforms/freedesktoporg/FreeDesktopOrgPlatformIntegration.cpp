@@ -248,6 +248,15 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 		{
 			showNotification(notification);
 		});
+		connect(notification, &Notification::requestedClose, this, [=]()
+		{
+			const uint identifier(m_notifications.key(notification, 0));
+
+			if (identifier > 0)
+			{
+				m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("CloseNotification"), {identifier});
+			}
+		});
 	}
 
 	connect(watcher, &QDBusPendingCallWatcher::finished, this, &FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished);
