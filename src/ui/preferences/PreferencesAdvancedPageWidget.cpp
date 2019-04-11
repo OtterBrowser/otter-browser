@@ -626,6 +626,9 @@ void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
 void PreferencesAdvancedPageWidget::updateDownloadsActions()
 {
 	m_ui->downloadsButtonGroup->blockSignals(true);
+	m_ui->downloadsAskButton->blockSignals(true);
+	m_ui->downloadsSaveButton->blockSignals(true);
+	m_ui->downloadsOpenButton->blockSignals(true);
 	m_ui->downloadsSaveDirectlyCheckBox->blockSignals(true);
 	m_ui->downloadsFilePathWidget->blockSignals(true);
 	m_ui->downloadsPassUrlCheckBox->blockSignals(true);
@@ -659,6 +662,9 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(OpenCommandRole).toString());
 
 	m_ui->downloadsButtonGroup->blockSignals(false);
+	m_ui->downloadsAskButton->blockSignals(false);
+	m_ui->downloadsSaveButton->blockSignals(false);
+	m_ui->downloadsOpenButton->blockSignals(false);
 	m_ui->downloadsSaveDirectlyCheckBox->blockSignals(false);
 	m_ui->downloadsFilePathWidget->blockSignals(false);
 	m_ui->downloadsPassUrlCheckBox->blockSignals(false);
