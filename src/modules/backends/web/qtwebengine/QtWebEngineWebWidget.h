@@ -85,6 +85,9 @@ public:
 	QVector<LinkUrl> getFeeds() const override;
 	QVector<LinkUrl> getLinks() const override;
 	QVector<LinkUrl> getSearchEngines() const override;
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const override;
+#endif
 	QMultiMap<QString, QString> getMetaData() const override;
 	LoadingState getLoadingState() const override;
 	int getZoom() const override;

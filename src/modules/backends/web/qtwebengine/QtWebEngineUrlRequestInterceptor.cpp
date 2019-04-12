@@ -108,6 +108,16 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 				m_blockedElements.append(request.requestUrl().url());
 			}
 
+			NetworkManager::ResourceInformation resource;
+			resource.url = request.requestUrl();
+			resource.resourceType = resourceType;
+			resource.metaData[NetworkManager::ContentBlockingProfileMetaData] = result.profile;
+			resource.metaData[NetworkManager::ContentBlockingRuleMetaData] = result.rule;
+
+			m_blockedRequests.append(resource);
+
+			emit requestBlocked(resource);
+
 			request.block(true);
 
 			return;
@@ -127,6 +137,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 {
+	m_blockedRequests.clear();
 	m_blockedElements.clear();
 
 	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
@@ -167,6 +178,11 @@ QVariant QtWebEngineUrlRequestInterceptor::getOption(int identifier, const QUrl 
 QStringList QtWebEngineUrlRequestInterceptor::getBlockedElements() const
 {
 	return m_blockedElements;
+}
+
+QVector<NetworkManager::ResourceInformation> QtWebEngineUrlRequestInterceptor::getBlockedRequests() const
+{
+	return m_blockedRequests;
 }
 #else
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),

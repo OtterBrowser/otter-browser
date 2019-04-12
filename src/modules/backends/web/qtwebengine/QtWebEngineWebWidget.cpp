@@ -118,6 +118,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page, &QtWebEnginePage::renderProcessTerminated, this, &QtWebEngineWebWidget::notifyRenderProcessTerminated);
 	connect(m_page->action(QWebEnginePage::Redo), &QAction::changed, this, &QtWebEngineWebWidget::notifyRedoActionStateChanged);
 	connect(m_page->action(QWebEnginePage::Undo), &QAction::changed, this, &QtWebEngineWebWidget::notifyUndoActionStateChanged);
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::requestBlocked, this, &QtWebEngineWebWidget::requestBlocked);
+#endif
 }
 
 void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
@@ -1728,6 +1731,13 @@ QVector<WebWidget::LinkUrl> QtWebEngineWebWidget::getSearchEngines() const
 {
 	return m_searchEngines;
 }
+
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+QVector<NetworkManager::ResourceInformation> QtWebEngineWebWidget::getBlockedRequests() const
+{
+	return m_requestInterceptor->getBlockedRequests();
+}
+#endif
 
 QMultiMap<QString, QString> QtWebEngineWebWidget::getMetaData() const
 {

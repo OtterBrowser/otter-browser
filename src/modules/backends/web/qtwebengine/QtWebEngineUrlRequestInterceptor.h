@@ -21,6 +21,7 @@
 #ifndef OTTER_QTWEBENGINEURLREQUESTINTERCEPTOR_H
 #define OTTER_QTWEBENGINEURLREQUESTINTERCEPTOR_H
 
+#include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 
 #if QTWEBENGINECORE_VERSION < 0x050D00
@@ -45,6 +46,7 @@ public:
 
 	void interceptRequest(QWebEngineUrlRequestInfo &request) override;
 	QStringList getBlockedElements() const;
+	QVector<NetworkManager::ResourceInformation> getBlockedRequests() const;
 
 protected:
 	void updateOptions(const QUrl &url);
@@ -54,10 +56,14 @@ private:
 	QtWebEngineWebWidget *m_widget;
 	QStringList m_blockedElements;
 	QStringList m_unblockedHosts;
+	QVector<NetworkManager::ResourceInformation> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
+
+signals:
+	void requestBlocked(const NetworkManager::ResourceInformation &request);
 
 friend class QtWebEngineWebWidget;
 };
