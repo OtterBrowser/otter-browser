@@ -44,6 +44,7 @@ public:
 	explicit QtWebEngineUrlRequestInterceptor(QtWebEngineWebWidget *parent);
 
 	void interceptRequest(QWebEngineUrlRequestInfo &request) override;
+	QStringList getBlockedElements() const;
 
 protected:
 	void updateOptions(const QUrl &url);
@@ -51,6 +52,7 @@ protected:
 
 private:
 	QtWebEngineWebWidget *m_widget;
+	QStringList m_blockedElements;
 	QStringList m_unblockedHosts;
 	QVector<int> m_contentBlockingProfiles;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;

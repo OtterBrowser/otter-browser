@@ -124,6 +124,9 @@ protected:
 	QWebEnginePage* getPage() const;
 	QString parsePosition(const QString &script, const QPoint &position) const;
 	QDateTime getLastUrlClickTime() const;
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	QStringList getBlockedElements() const;
+#endif
 	QVector<LinkUrl> processLinks(const QVariantList &rawLinks) const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;

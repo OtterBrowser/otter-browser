@@ -184,8 +184,11 @@ void QtWebEnginePage::handleLoadFinished()
 				}
 			}
 
-#if QTWEBENGINECORE_VERSION < 0x050D00
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+			const QStringList blockedRequests(m_widget->getBlockedElements());
+#else
 			const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url.host()));
+#endif
 
 			if (!blockedRequests.isEmpty())
 			{
@@ -198,7 +201,6 @@ void QtWebEnginePage::handleLoadFinished()
 					file.close();
 				}
 			}
-#endif
 		}
 
 		QString string(url().toString());
