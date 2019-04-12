@@ -31,6 +31,7 @@ namespace Otter
 {
 
 class QtWebEnginePage;
+class QtWebEngineUrlRequestInterceptor;
 class SourceViewerWebWidget;
 
 class QtWebEngineWebWidget final : public WebWidget
@@ -166,6 +167,9 @@ private:
 	QWebEngineView *m_inspectorView;
 #endif
 	QtWebEnginePage *m_page;
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
+#endif
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;

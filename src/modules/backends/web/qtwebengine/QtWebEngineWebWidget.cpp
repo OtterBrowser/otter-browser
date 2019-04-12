@@ -19,6 +19,9 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+#include "QtWebEngineUrlRequestInterceptor.h"
+#endif
 #include "../../../../core/Application.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
@@ -68,6 +71,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	m_inspectorView(nullptr),
 #endif
 	m_page(new QtWebEnginePage(SessionsManager::calculateOpenHints(parameters).testFlag(SessionsManager::PrivateOpen), this)),
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	m_requestInterceptor(new QtWebEngineUrlRequestInterceptor(this)),
+#endif
 	m_loadingState(FinishedLoadingState),
 	m_canGoForwardValue(UnknownValue),
 	m_documentLoadingProgress(0),
@@ -78,6 +84,10 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	m_isTypedIn(false)
 {
 	setFocusPolicy(Qt::StrongFocus);
+
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	m_page->setUrlRequestInterceptor(m_requestInterceptor);
+#endif
 
 	connect(m_page, &QtWebEnginePage::loadProgress, [&](int progress)
 	{
@@ -1252,6 +1262,10 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	{
 		connect(m_page, &QtWebEnginePage::geometryChangeRequested, this, &QtWebEngineWebWidget::requestedGeometryChange);
 	}
+
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+	m_requestInterceptor->updateOptions(url);
+#endif
 }
 
 void QtWebEngineWebWidget::updateWatchedData(ChangeWatcher watcher)
