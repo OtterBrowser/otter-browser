@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 **************************************************************************/
 
 #include "QtWebEngineUrlRequestInterceptor.h"
+#include "QtWebEngineWebWidget.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
-#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
 
@@ -30,6 +30,133 @@
 namespace Otter
 {
 
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QtWebEngineWebWidget *parent) : QWebEngineUrlRequestInterceptor(parent),
+	m_widget(parent),
+	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
+	m_areImagesEnabled(true),
+	m_canSendReferrer(true)
+{
+}
+
+void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo &request)
+{
+	if (!m_areImagesEnabled && request.resourceType() == QWebEngineUrlRequestInfo::ResourceTypeImage)
+	{
+		request.block(true);
+
+		return;
+	}
+
+	if (!m_contentBlockingProfiles.isEmpty() && (m_unblockedHosts.isEmpty() || !m_unblockedHosts.contains(Utils::extractHost(request.firstPartyUrl()))))
+	{
+		NetworkManager::ResourceType resourceType(NetworkManager::OtherType);
+		bool storeBlockedUrl(true);
+
+		switch (request.resourceType())
+		{
+			case QWebEngineUrlRequestInfo::ResourceTypeMainFrame:
+				resourceType = NetworkManager::MainFrameType;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypeSubFrame:
+				resourceType = NetworkManager::SubFrameType;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypeStylesheet:
+				resourceType = NetworkManager::StyleSheetType;
+				storeBlockedUrl = false;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypeScript:
+				resourceType = NetworkManager::ScriptType;
+				storeBlockedUrl = false;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypeImage:
+				resourceType = NetworkManager::ImageType;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypeObject:
+			case QWebEngineUrlRequestInfo::ResourceTypeMedia:
+				resourceType = NetworkManager::ObjectType;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypePluginResource:
+				resourceType = NetworkManager::ObjectSubrequestType;
+				storeBlockedUrl = false;
+
+				break;
+			case QWebEngineUrlRequestInfo::ResourceTypeXhr:
+				resourceType = NetworkManager::XmlHttpRequestType;
+
+				break;
+			default:
+				break;
+		}
+
+		const ContentFiltersManager::CheckResult result(ContentFiltersManager::checkUrl(m_contentBlockingProfiles, request.firstPartyUrl(), request.requestUrl(), resourceType));
+
+		if (result.isBlocked)
+		{
+			const ContentFiltersProfile *profile(ContentFiltersManager::getProfile(result.profile));
+
+			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
+
+			request.block(true);
+
+			return;
+		}
+	}
+
+	if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
+	{
+		request.setHttpHeader(QStringLiteral("DNT").toLatin1(), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
+	}
+
+	if (!m_canSendReferrer)
+	{
+		request.setHttpHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+	}
+}
+
+void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
+{
+	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
+	{
+		m_contentBlockingProfiles = ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
+	}
+	else
+	{
+		m_contentBlockingProfiles.clear();
+	}
+
+	m_unblockedHosts = getOption(SettingsManager::ContentBlocking_IgnoreHostsOption, url).toStringList();
+
+	const QString doNotTrackPolicyValue(getOption(SettingsManager::Network_DoNotTrackPolicyOption, url).toString());
+
+	if (doNotTrackPolicyValue == QLatin1String("allow"))
+	{
+		m_doNotTrackPolicy = NetworkManagerFactory::AllowToTrackPolicy;
+	}
+	else if (doNotTrackPolicyValue == QLatin1String("doNotAllow"))
+	{
+		m_doNotTrackPolicy = NetworkManagerFactory::DoNotAllowToTrackPolicy;
+	}
+	else
+	{
+		m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
+	}
+
+	m_areImagesEnabled = (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("disabled"));
+	m_canSendReferrer = getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
+}
+
+QVariant QtWebEngineUrlRequestInterceptor::getOption(int identifier, const QUrl &url) const
+{
+	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, Utils::extractHost(url)));
+}
+#else
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),
 	m_clearTimer(0),
 	m_areImagesEnabled(SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"))
@@ -179,5 +306,6 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 		request.setHttpHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
 	}
 }
+#endif
 
 }
