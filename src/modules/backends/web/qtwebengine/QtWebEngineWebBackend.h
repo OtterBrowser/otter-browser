@@ -50,7 +50,9 @@ public:
 	QString getEngineVersion() const override;
 	QString getSslVersion() const override;
 	QString getUserAgent(const QString &pattern = {}) const override;
+#if QTWEBENGINECORE_VERSION < 0x050D00
 	QStringList getBlockedElements(const QString &domain) const;
+#endif
 	QUrl getHomePage() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
 	bool requestThumbnail(const QUrl &url, const QSize &size) override;
@@ -65,7 +67,9 @@ protected slots:
 	void handleOptionChanged(int identifier);
 
 private:
+#if QTWEBENGINECORE_VERSION < 0x050D00
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
+#endif
 	bool m_isInitialized;
 
 	static QString m_engineVersion;
