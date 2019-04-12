@@ -45,7 +45,9 @@ QHash<QString, QString> QtWebEngineWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebEngineWebBackend::m_userAgents;
 
 QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(parent),
+#if QTWEBENGINECORE_VERSION < 0x050D00
 	m_requestInterceptor(nullptr),
+#endif
 	m_isInitialized(false)
 {
 	const QString userAgent(QWebEngineProfile::defaultProfile()->httpUserAgent());
@@ -194,7 +196,9 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 
 		ContentFiltersManager::initialize();
 
+#if QTWEBENGINECORE_VERSION < 0x050D00
 		m_requestInterceptor = new QtWebEngineUrlRequestInterceptor(this);
+#endif
 
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
@@ -283,10 +287,12 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }
 
+#if QTWEBENGINECORE_VERSION < 0x050D00
 QStringList QtWebEngineWebBackend::getBlockedElements(const QString &domain) const
 {
 	return (m_requestInterceptor ? m_requestInterceptor->getBlockedElements(domain) : QStringList());
 }
+#endif
 
 QUrl QtWebEngineWebBackend::getHomePage() const
 {
