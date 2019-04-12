@@ -1623,6 +1623,13 @@ QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
 	return m_lastUrlClickTime;
 }
 
+#if QTWEBENGINECORE_VERSION >= 0x050D00
+QStringList QtWebEngineWebWidget::getBlockedElements() const
+{
+	return m_requestInterceptor->getBlockedElements();
+}
+#endif
+
 QPoint QtWebEngineWebWidget::getScrollPosition() const
 {
 	return m_page->scrollPosition().toPoint();

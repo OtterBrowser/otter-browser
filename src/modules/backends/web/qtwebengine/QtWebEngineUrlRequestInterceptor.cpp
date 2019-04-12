@@ -103,6 +103,11 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 			Console::addMessage(QCoreApplication::translate("main", "Request blocked by rule from profile %1:\n%2").arg(profile ? profile->getTitle() : QCoreApplication::translate("main", "(Unknown)")).arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
 
+			if (storeBlockedUrl && !m_blockedElements.contains(request.requestUrl().url()))
+			{
+				m_blockedElements.append(request.requestUrl().url());
+			}
+
 			request.block(true);
 
 			return;
@@ -122,6 +127,8 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 {
+	m_blockedElements.clear();
+
 	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
 		m_contentBlockingProfiles = ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
@@ -155,6 +162,11 @@ void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 QVariant QtWebEngineUrlRequestInterceptor::getOption(int identifier, const QUrl &url) const
 {
 	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, Utils::extractHost(url)));
+}
+
+QStringList QtWebEngineUrlRequestInterceptor::getBlockedElements() const
+{
+	return m_blockedElements;
 }
 #else
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),
