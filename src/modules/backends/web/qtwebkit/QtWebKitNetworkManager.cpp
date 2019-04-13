@@ -812,6 +812,16 @@ CookieJar* QtWebKitNetworkManager::getCookieJar() const
 	return m_cookieJar;
 }
 
+QString QtWebKitNetworkManager::getUserAgent() const
+{
+	return m_userAgent;
+}
+
+QVariant QtWebKitNetworkManager::getOption(int identifier, const QUrl &url) const
+{
+	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, Utils::extractHost(url)));
+}
+
 QVariant QtWebKitNetworkManager::getPageInformation(WebWidget::PageInformation key) const
 {
 	if (key == WebWidget::RequestsBlockedInformation)
@@ -825,16 +835,6 @@ QVariant QtWebKitNetworkManager::getPageInformation(WebWidget::PageInformation k
 WebWidget::SslInformation QtWebKitNetworkManager::getSslInformation() const
 {
 	return m_sslInformation;
-}
-
-QString QtWebKitNetworkManager::getUserAgent() const
-{
-	return m_userAgent;
-}
-
-QVariant QtWebKitNetworkManager::getOption(int identifier, const QUrl &url) const
-{
-	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, Utils::extractHost(url)));
 }
 
 QStringList QtWebKitNetworkManager::getBlockedElements() const
