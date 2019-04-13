@@ -786,6 +786,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	const bool arePluginsEnabled(getOption(SettingsManager::Permissions_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
 	QWebSettings *settings(m_page->settings());
 	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
+	settings->setAttribute(QWebSettings::DnsPrefetchEnabled, getOption(SettingsManager::Network_EnableDnsPrefetchOption, url).toBool());
 	settings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
 	settings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
 	settings->setAttribute(QWebSettings::JavascriptEnabled, (m_page->isDisplayingErrorPage() || m_page->isViewingMedia() || getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool()));

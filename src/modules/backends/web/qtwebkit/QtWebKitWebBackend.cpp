@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -95,6 +95,11 @@ void QtWebKitWebBackend::handleOptionChanged(int identifier)
 			QWebSettings::globalSettings()->setAttribute(QWebSettings::ScrollAnimatorEnabled, SettingsManager::getOption(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 
 			return;
+
+		case SettingsManager::Network_EnableDnsPrefetchOption:
+			QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
+
+			return;
 		default:
 			break;
 	}
@@ -116,7 +121,6 @@ void QtWebKitWebBackend::handleOptionChanged(int identifier)
 	{
 		const bool arePluginsEnabled(SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
 
-		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
@@ -150,7 +154,7 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 
 		QWebSettings::setPluginSearchPaths(pluginSearchPaths);
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getOption(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
-		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::FullScreenSupportEnabled, true);
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::XSSAuditingEnabled, true);
