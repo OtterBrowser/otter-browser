@@ -157,6 +157,10 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 			QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 
 			return;
+		case SettingsManager::Network_EnableDnsPrefetchOption:
+			QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
+
+			return;
 		case SettingsManager::Network_UserAgentOption:
 			QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 
@@ -236,6 +240,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(const QVariantMap &parameters, Co
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 #endif
 
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, SettingsManager::getOption(SettingsManager::Network_EnableDnsPrefetchOption).toBool());
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::XSSAuditingEnabled, true);

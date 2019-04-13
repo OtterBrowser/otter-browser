@@ -1235,6 +1235,7 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	QWebEngineSettings *settings(m_page->settings());
 	settings->setAttribute(QWebEngineSettings::AllowRunningInsecureContent, getOption(SettingsManager::Security_AllowMixedContentOption, url).toBool());
 	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
+	settings->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, getOption(SettingsManager::Network_EnableDnsPrefetchOption, url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toString() != QLatin1String("blockAll")));
