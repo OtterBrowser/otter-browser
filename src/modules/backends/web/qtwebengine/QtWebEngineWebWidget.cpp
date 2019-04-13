@@ -1579,9 +1579,14 @@ QString QtWebEngineWebWidget::getSelectedText() const
 
 QVariant QtWebEngineWebWidget::getPageInformation(PageInformation key) const
 {
-	if (key == DocumentLoadingProgressInformation || key == TotalLoadingProgressInformation)
+	switch (key)
 	{
-		return m_documentLoadingProgress;
+		case DocumentLoadingProgressInformation:
+		case TotalLoadingProgressInformation:
+			return m_documentLoadingProgress;
+		case RequestsBlockedInformation:
+		case RequestsStartedInformation:
+			return m_requestInterceptor->getPageInformation(key);
 	}
 
 	return WebWidget::getPageInformation(key);

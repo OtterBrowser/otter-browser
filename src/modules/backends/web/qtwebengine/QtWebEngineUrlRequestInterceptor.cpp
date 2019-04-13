@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "QtWebEngineUrlRequestInterceptor.h"
-#include "QtWebEngineWebWidget.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentFiltersManager.h"
 #include "../../../../core/SettingsManager.h"
@@ -124,6 +123,8 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 		}
 	}
 
+	++m_startedRequestsAmount;
+
 	if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
 	{
 		request.setHttpHeader(QStringLiteral("DNT").toLatin1(), ((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
@@ -139,6 +140,7 @@ void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 {
 	m_blockedRequests.clear();
 	m_blockedElements.clear();
+	m_startedRequestsAmount = 0;
 
 	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
@@ -173,6 +175,20 @@ void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
 QVariant QtWebEngineUrlRequestInterceptor::getOption(int identifier, const QUrl &url) const
 {
 	return (m_widget ? m_widget->getOption(identifier, url) : SettingsManager::getOption(identifier, Utils::extractHost(url)));
+}
+
+QVariant QtWebEngineUrlRequestInterceptor::getPageInformation(WebWidget::PageInformation key) const
+{
+	switch (key)
+	{
+		case WebWidget::RequestsBlockedInformation:
+			return m_blockedRequests.count();
+
+		case WebWidget::RequestsStartedInformation:
+			return m_startedRequestsAmount;
+	}
+
+	return {};
 }
 
 QStringList QtWebEngineUrlRequestInterceptor::getBlockedElements() const

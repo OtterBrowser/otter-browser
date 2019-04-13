@@ -21,6 +21,7 @@
 #ifndef OTTER_QTWEBENGINEURLREQUESTINTERCEPTOR_H
 #define OTTER_QTWEBENGINEURLREQUESTINTERCEPTOR_H
 
+#include "QtWebEngineWebWidget.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 
@@ -35,8 +36,6 @@ namespace Otter
 {
 
 #if QTWEBENGINECORE_VERSION >= 0x050D00
-class QtWebEngineWebWidget;
-
 class QtWebEngineUrlRequestInterceptor final : public QWebEngineUrlRequestInterceptor
 {
 	Q_OBJECT
@@ -51,6 +50,7 @@ public:
 protected:
 	void updateOptions(const QUrl &url);
 	QVariant getOption(int identifier, const QUrl &url) const;
+	QVariant getPageInformation(WebWidget::PageInformation key) const;
 
 private:
 	QtWebEngineWebWidget *m_widget;
@@ -59,6 +59,7 @@ private:
 	QVector<NetworkManager::ResourceInformation> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
+	quint64 m_startedRequestsAmount;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
 
