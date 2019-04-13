@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -163,6 +163,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(Network_CookiesKeepModeOption, EnumerationType, QLatin1String("keepUntilExpires"), {QLatin1String("keepUntilExpires"), QLatin1String("keepUntilExit"), QLatin1String("ask")});
 	registerOption(Network_CookiesPolicyOption, EnumerationType, QLatin1String("acceptAll"), {QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("readOnly"), QLatin1String("ignore")});
 	registerOption(Network_DoNotTrackPolicyOption, EnumerationType, QLatin1String("skip"), {QLatin1String("skip"), QLatin1String("allow"), QLatin1String("doNotAllow")});
+	registerOption(Network_EnableDnsPrefetchOption, BooleanType, true);
 	registerOption(Network_EnableReferrerOption, BooleanType, true);
 	registerOption(Network_ProxyOption, EnumerationType, QLatin1String("system"), {QLatin1String("system")});
 	registerOption(Network_ThirdPartyCookiesAcceptedHostsOption, ListType, QStringList());

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -141,6 +141,7 @@ public:
 		Network_CookiesKeepModeOption,
 		Network_CookiesPolicyOption,
 		Network_DoNotTrackPolicyOption,
+		Network_EnableDnsPrefetchOption,
 		Network_EnableReferrerOption,
 		Network_ProxyOption,
 		Network_ThirdPartyCookiesAcceptedHostsOption,
