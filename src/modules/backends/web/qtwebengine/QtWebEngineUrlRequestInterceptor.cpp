@@ -115,6 +115,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 			m_blockedRequests.append(resource);
 
+			emit pageInformationChanged(WebWidget::RequestsBlockedInformation, m_blockedRequests.count());
 			emit requestBlocked(resource);
 
 			request.block(true);
@@ -134,6 +135,8 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 	{
 		request.setHttpHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
 	}
+
+	emit pageInformationChanged(WebWidget::RequestsStartedInformation, m_startedRequestsAmount);
 }
 
 void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)

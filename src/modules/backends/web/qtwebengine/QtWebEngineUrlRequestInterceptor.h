@@ -64,6 +64,7 @@ private:
 	bool m_canSendReferrer;
 
 signals:
+	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
 
 friend class QtWebEngineWebWidget;
