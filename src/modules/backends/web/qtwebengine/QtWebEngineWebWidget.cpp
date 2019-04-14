@@ -1589,6 +1589,8 @@ QVariant QtWebEngineWebWidget::getPageInformation(PageInformation key) const
 		case RequestsBlockedInformation:
 		case RequestsStartedInformation:
 			return m_requestInterceptor->getPageInformation(key);
+		default:
+			break;
 	}
 
 	return WebWidget::getPageInformation(key);

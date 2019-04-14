@@ -192,6 +192,8 @@ QVariant QtWebEngineUrlRequestInterceptor::getPageInformation(WebWidget::PageInf
 
 		case WebWidget::RequestsStartedInformation:
 			return m_startedRequestsAmount;
+		default:
+			break;
 	}
 
 	return {};
