@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -132,6 +132,10 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 			if (key == WebWidget::RequestsFinishedInformation)
 			{
 				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg((m_window && !m_window->isAboutToClose() && m_window->getWebWidget()) ? m_window->getWebWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
+			}
+			else if (key == WebWidget::RequestsStartedInformation)
+			{
+				m_label->setText(tr("Elements: %1/%2").arg((m_window && !m_window->isAboutToClose() && m_window->getWebWidget()) ? m_window->getWebWidget()->getPageInformation(WebWidget::RequestsFinishedInformation).toInt() : 0).arg(value.toInt()));
 			}
 
 			break;
