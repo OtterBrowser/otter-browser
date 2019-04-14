@@ -52,6 +52,9 @@ protected:
 	QVariant getOption(int identifier, const QUrl &url) const;
 	QVariant getPageInformation(WebWidget::PageInformation key) const;
 
+protected slots:
+	void resetStatistics();
+
 private:
 	QtWebEngineWebWidget *m_widget;
 	QStringList m_blockedElements;

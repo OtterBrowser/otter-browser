@@ -119,6 +119,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(const QVariantMap &parameters, WebBac
 	connect(m_page->action(QWebEnginePage::Redo), &QAction::changed, this, &QtWebEngineWebWidget::notifyRedoActionStateChanged);
 	connect(m_page->action(QWebEnginePage::Undo), &QAction::changed, this, &QtWebEngineWebWidget::notifyUndoActionStateChanged);
 #if QTWEBENGINECORE_VERSION >= 0x050D00
+	connect(m_page, &QtWebEnginePage::aboutToNavigate, m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::resetStatistics);
 	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::pageInformationChanged, this, &QtWebEngineWebWidget::pageInformationChanged);
 	connect(m_requestInterceptor, &QtWebEngineUrlRequestInterceptor::requestBlocked, this, &QtWebEngineWebWidget::requestBlocked);
 #endif

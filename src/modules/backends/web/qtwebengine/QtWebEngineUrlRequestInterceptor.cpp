@@ -139,12 +139,15 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 	emit pageInformationChanged(WebWidget::RequestsStartedInformation, m_startedRequestsAmount);
 }
 
-void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
+void QtWebEngineUrlRequestInterceptor::resetStatistics()
 {
 	m_blockedRequests.clear();
 	m_blockedElements.clear();
 	m_startedRequestsAmount = 0;
+}
 
+void QtWebEngineUrlRequestInterceptor::updateOptions(const QUrl &url)
+{
 	if (getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
 		m_contentBlockingProfiles = ContentFiltersManager::getProfileIdentifiers(getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
