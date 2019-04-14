@@ -132,15 +132,10 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 			if (key == WebWidget::RequestsFinishedInformation || key == WebWidget::RequestsStartedInformation)
 			{
 				const WebWidget *webWidget((m_window && !m_window->isAboutToClose()) ? m_window->getWebWidget() : nullptr);
+				const QVariant requestsFinishedAmount((key == WebWidget::RequestsFinishedInformation) ? value : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsFinishedInformation) : QVariant()));
+				const QVariant requestsStartedAmount((key == WebWidget::RequestsStartedInformation) ? value : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsStartedInformation) : QVariant()));
 
-				if (key == WebWidget::RequestsFinishedInformation)
-				{
-					m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg(webWidget ? webWidget->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
-				}
-				else if (key == WebWidget::RequestsStartedInformation)
-				{
-					m_label->setText(tr("Elements: %1/%2").arg(webWidget ? webWidget->getPageInformation(WebWidget::RequestsFinishedInformation).toInt() : 0).arg(value.toInt()));
-				}
+				m_label->setText(tr("Elements: %1/%2").arg(requestsFinishedAmount.toInt()).arg(requestsStartedAmount.toInt()));
 			}
 
 			break;
