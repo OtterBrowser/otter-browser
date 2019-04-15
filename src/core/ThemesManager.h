@@ -20,7 +20,9 @@
 #ifndef OTTER_THEMESMANAGER_H
 #define OTTER_THEMESMANAGER_H
 
+#ifdef Q_OS_WIN32
 #include <QtCore/QAbstractNativeEventFilter>
+#endif
 #include <QtCore/QMap>
 #include <QtWidgets/QStyle>
 
