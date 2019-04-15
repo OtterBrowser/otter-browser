@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace Otter
 
 class Style;
 
-class Palette final : public QObject
+class ColorScheme final : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(ColorRole)
@@ -75,7 +75,7 @@ public:
 		}
 	};
 
-	explicit Palette(const QString &path = {}, QObject *parent = nullptr);
+	explicit ColorScheme(const QString &path = {}, QObject *parent = nullptr);
 
 	ColorRoleInformation getColor(ColorRole role) const;
 
@@ -96,7 +96,7 @@ class ThemesManager final : public QObject
 public:
 	static void createInstance();
 	static ThemesManager* getInstance();
-	static Palette* getPalette();
+	static ColorScheme* getColorScheme();
 	static Style* createStyle(const QString &name);
 	static QString getAnimationPath(const QString &name);
 	static QIcon createIcon(const QString &name, bool fromTheme = true);
@@ -114,7 +114,7 @@ protected slots:
 
 private:
 	static ThemesManager *m_instance;
-	static Palette *m_palette;
+	static ColorScheme *m_colorScheme;
 	static QWidget *m_probeWidget;
 	static QString m_iconThemePath;
 	static bool m_useSystemIconTheme;

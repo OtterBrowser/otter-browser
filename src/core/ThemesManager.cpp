@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,13 +41,13 @@
 namespace Otter
 {
 
-int Palette::m_colorRoleEnumerator(-1);
+int ColorScheme::m_colorRoleEnumerator(-1);
 
-Palette::Palette(const QString &path, QObject *parent) : QObject(parent)
+ColorScheme::ColorScheme(const QString &path, QObject *parent) : QObject(parent)
 {
 	if (m_colorRoleEnumerator < 0)
 	{
-		m_colorRoleEnumerator = Palette::staticMetaObject.indexOfEnumerator(QLatin1String("ColorRole").data());
+		m_colorRoleEnumerator = ColorScheme::staticMetaObject.indexOfEnumerator(QLatin1String("ColorRole").data());
 	}
 
 	if (path.isEmpty() || !QFile::exists(path))
@@ -69,14 +69,14 @@ Palette::Palette(const QString &path, QObject *parent) : QObject(parent)
 			colorRoleInformation.disabled = QColor(colorRoleObject.value(QLatin1String("disabled")).toString());
 			colorRoleInformation.inactive = QColor(colorRoleObject.value(QLatin1String("inactive")).toString());
 
-			m_colors[static_cast<ColorRole>(Palette::staticMetaObject.enumerator(m_colorRoleEnumerator).keyToValue(colorRoleObject.value(QLatin1String("role")).toString().toLatin1()))] = colorRoleInformation;
+			m_colors[static_cast<ColorRole>(ColorScheme::staticMetaObject.enumerator(m_colorRoleEnumerator).keyToValue(colorRoleObject.value(QLatin1String("role")).toString().toLatin1()))] = colorRoleInformation;
 		}
 
 		file.close();
 	}
 }
 
-Palette::ColorRoleInformation Palette::getColor(ColorRole role) const
+ColorScheme::ColorRoleInformation ColorScheme::getColor(ColorRole role) const
 {
 	if (!m_colors.contains(role))
 	{
@@ -101,7 +101,7 @@ Palette::ColorRoleInformation Palette::getColor(ColorRole role) const
 }
 
 ThemesManager* ThemesManager::m_instance(nullptr);
-Palette* ThemesManager::m_palette(nullptr);
+ColorScheme* ThemesManager::m_colorScheme(nullptr);
 QWidget* ThemesManager::m_probeWidget(nullptr);
 QString ThemesManager::m_iconThemePath(QLatin1String(":/icons/theme/"));
 bool ThemesManager::m_useSystemIconTheme(false);
@@ -120,7 +120,7 @@ void ThemesManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ThemesManager(QCoreApplication::instance());
-		m_palette = new Palette(SessionsManager::getWritableDataPath(QLatin1String("colors.json")), m_instance);
+		m_colorScheme = new ColorScheme(SessionsManager::getWritableDataPath(QLatin1String("colors.json")), m_instance);
 		m_probeWidget = new QWidget();
 		m_probeWidget->hide();
 		m_probeWidget->setAttribute(Qt::WA_DontShowOnScreen, true);
@@ -175,9 +175,9 @@ ThemesManager* ThemesManager::getInstance()
 	return m_instance;
 }
 
-Palette* ThemesManager::getPalette()
+ColorScheme* ThemesManager::getColorScheme()
 {
-	return m_palette;
+	return m_colorScheme;
 }
 
 Style* ThemesManager::createStyle(const QString &name)
