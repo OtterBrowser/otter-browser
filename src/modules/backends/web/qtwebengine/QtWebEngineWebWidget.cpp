@@ -1587,10 +1587,12 @@ QVariant QtWebEngineWebWidget::getPageInformation(PageInformation key) const
 		case TotalLoadingProgressInformation:
 			return m_documentLoadingProgress;
 		case RequestsBlockedInformation:
-#if QTWEBENGINECORE_VERSION >= 0x050D00
 		case RequestsStartedInformation:
+#if QTWEBENGINECORE_VERSION >= 0x050D00
 			return m_requestInterceptor->getPageInformation(key);
 #endif
+		case RequestsFinishedInformation:
+			return -1;
 		default:
 			break;
 	}
