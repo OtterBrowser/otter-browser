@@ -132,10 +132,10 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 			if (key == WebWidget::RequestsFinishedInformation || key == WebWidget::RequestsStartedInformation)
 			{
 				const WebWidget *webWidget((m_window && !m_window->isAboutToClose()) ? m_window->getWebWidget() : nullptr);
-				const QVariant requestsFinishedAmount((key == WebWidget::RequestsFinishedInformation) ? value : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsFinishedInformation) : QVariant()));
-				const QVariant requestsStartedAmount((key == WebWidget::RequestsStartedInformation) ? value : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsStartedInformation) : QVariant()));
+				const int requestsFinishedAmount((key == WebWidget::RequestsFinishedInformation) ? value.toInt() : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsFinishedInformation).toInt() : -1));
+				const int requestsStartedAmount((key == WebWidget::RequestsStartedInformation) ? value.toInt() : (webWidget ? webWidget->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : -1));
 
-				m_label->setText(tr("Elements: %1/%2").arg(requestsFinishedAmount.toInt()).arg(requestsStartedAmount.toInt()));
+				m_label->setText(tr("Elements: %1/%2").arg((requestsFinishedAmount < 0) ? QLatin1String("?") : QString::number(requestsFinishedAmount)).arg((requestsStartedAmount < 0) ? QLatin1String("?") : QString::number(requestsStartedAmount)));
 			}
 
 			break;
