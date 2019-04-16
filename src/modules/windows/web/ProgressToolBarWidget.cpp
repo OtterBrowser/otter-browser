@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 #include "../../../ui/WebWidget.h"
 #include "../../../ui/Window.h"
 
-#include <QtGui/QPalette>
 #include <QtWidgets/QHBoxLayout>
 
 namespace Otter
@@ -40,18 +39,12 @@ ProgressToolBarWidget::ProgressToolBarWidget(Window *window, WebWidget *parent) 
 	layout->setSpacing(0);
 	layout->addWidget(new ToolBarWidget(ToolBarsManager::ProgressBar, window, this));
 
-	QPalette palette(this->palette());
-	palette.setColor(QPalette::Background, palette.color(QPalette::Base));
-
-	setPalette(palette);
 	setFrameStyle(QFrame::StyledPanel);
 	setLineWidth(1);
-
-	palette.setColor(QPalette::Background, palette.color(QPalette::AlternateBase));
-
-	hide();
-	updateLoadingState(window->getLoadingState());
+	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(true);
+	updateLoadingState(window->getLoadingState());
+	hide();
 
 	const MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
