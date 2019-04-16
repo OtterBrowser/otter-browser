@@ -29,6 +29,8 @@
 #endif
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 
+#include <memory>
+
 namespace Otter
 {
 
@@ -59,7 +61,7 @@ public:
 
 #if QTWEBENGINECORE_VERSION >= 0x050D00
 protected:
-	static void showNotification(const QWebEngineNotification &nativeNotification);
+	static void showNotification(std::unique_ptr<QWebEngineNotification> nativeNotification);
 #endif
 
 protected slots:

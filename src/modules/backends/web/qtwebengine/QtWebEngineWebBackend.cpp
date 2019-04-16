@@ -194,28 +194,29 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 }
 
 #if QTWEBENGINECORE_VERSION >= 0x050D00
-void QtWebEngineWebBackend::showNotification(const QWebEngineNotification &nativeNotification)
+void QtWebEngineWebBackend::showNotification(std::unique_ptr<QWebEngineNotification> nativeNotification)
 {
 	Notification::Message message;
-	message.title = nativeNotification.title();
-	message.message = nativeNotification.message();
-	message.icon = nativeNotification.icon();
+	message.title = nativeNotification.get()->title();
+	message.message = nativeNotification.get()->message();
+	message.icon = QIcon(QPixmap::fromImage(nativeNotification.get()->icon()));
 	message.event = NotificationsManager::WebPageNotificationEvent;
 
 	const Notification *notification(NotificationsManager::createNotification(message));
+	const QUrl origin(nativeNotification.get()->origin());
 
-	connect(notification, &Notification::shown, &nativeNotification, &QWebEngineNotification::show);
-	connect(notification, &Notification::clicked, [=]()
+	if (origin.isValid())
 	{
-		if (nativeNotification.origin().isValid())
+		connect(notification, &Notification::clicked, [=]()
 		{
-			SessionsManager::hasUrl(nativeNotification.origin(), true);
-		}
+			SessionsManager::hasUrl(origin, true);
+		});
+	}
 
-		nativeNotification.click();
-	});
-	connect(notification, &Notification::ignored, &nativeNotification, &QWebEngineNotification::close);
-	connect(&nativeNotification, &QWebEngineNotification::closed, notification, &Notification::requestClose);
+	connect(notification, &Notification::shown, nativeNotification.get(), &QWebEngineNotification::show);
+	connect(notification, &Notification::clicked, nativeNotification.get(), &QWebEngineNotification::click);
+	connect(notification, &Notification::ignored, nativeNotification.get(), &QWebEngineNotification::close);
+	connect(nativeNotification.get(), &QWebEngineNotification::closed, notification, &Notification::requestClose);
 }
 #endif
 
