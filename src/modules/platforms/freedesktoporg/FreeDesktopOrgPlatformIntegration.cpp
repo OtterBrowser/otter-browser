@@ -233,7 +233,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	arguments << message.getTitle();
 	arguments << message.message;
 	arguments << QStringList({QLatin1String("default"), QString()});
-	arguments << QVariantMap({{QLatin1String("desktop-entry"), QLatin1String("otter-browser")}, {QLatin1String("image-data"), message.getIcon().pixmap(128, 128).toImage()}});
+	arguments << QVariantMap({{QLatin1String("desktop-entry"), QLatin1String("otter-browser")}, {QLatin1String("image-data"), (message.image.isNull() ? message.getIcon().pixmap(128, 128).toImage() : message.image)}});
 	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));
 
 	QDBusPendingCallWatcher *watcher(new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this));
