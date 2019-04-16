@@ -65,8 +65,11 @@ void Style::drawToolBarEdge(const QStyleOption *option, QPainter *painter) const
 		return;
 	}
 
+	QColor color(option->palette.color(QPalette::WindowText));
+	color.setAlpha(50);
+
 	painter->save();
-	painter->setPen(QPen(Qt::lightGray, 1));
+	painter->setPen(QPen(color, 1));
 
 	switch (toolBarOption->toolBarArea)
 	{
