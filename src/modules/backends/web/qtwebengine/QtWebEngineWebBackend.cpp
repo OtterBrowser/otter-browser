@@ -199,7 +199,7 @@ void QtWebEngineWebBackend::showNotification(std::unique_ptr<QWebEngineNotificat
 	Notification::Message message;
 	message.title = nativeNotification.get()->title();
 	message.message = nativeNotification.get()->message();
-	message.icon = QIcon(QPixmap::fromImage(nativeNotification.get()->icon()));
+	message.image = nativeNotification.get()->icon();
 	message.event = NotificationsManager::WebPageNotificationEvent;
 
 	const Notification *notification(NotificationsManager::createNotification(message));

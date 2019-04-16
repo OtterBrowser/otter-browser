@@ -49,6 +49,7 @@ public:
 		QString title;
 		QString message;
 		QIcon icon;
+		QImage image;
 		QDateTime creationTime = QDateTime::currentDateTime();
 		Level level = InformationLevel;
 		int event = -1;
@@ -78,6 +79,11 @@ public:
 			if (!icon.isNull())
 			{
 				return icon;
+			}
+
+			if (!image.isNull())
+			{
+				return QIcon(QPixmap::fromImage(image));
 			}
 
 			switch (level)

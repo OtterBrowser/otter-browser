@@ -59,12 +59,12 @@ void QtWebKitNotificationPresenter::showNotification(const QWebNotificationData 
 	}
 	else
 	{
-		IconFetchJob *job(new IconFetchJob(data->iconUrl(), this));
+		DataFetchJob *job(new DataFetchJob(data->iconUrl(), this));
 
-		connect(job, &IconFetchJob::jobFinished, [=]()
+		connect(job, &DataFetchJob::jobFinished, [=]()
 		{
 			Notification::Message mutableMessage(message);
-			mutableMessage.icon = job->getIcon();
+			mutableMessage.image = QImage::fromData(job->getData()->readAll());
 
 			showMessage(mutableMessage);
 		});
