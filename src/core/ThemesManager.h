@@ -79,9 +79,13 @@ public:
 
 	explicit ColorScheme(const QString &path = {}, QObject *parent = nullptr);
 
+	QString getName() const;
+	QString getTitle() const;
 	ColorRoleInformation getColor(ColorRole role) const;
 
 private:
+	QString m_name;
+	QString m_title;
 	QMap<ColorRole, ColorRoleInformation> m_colors;
 
 	static int m_colorRoleEnumerator;

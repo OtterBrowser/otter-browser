@@ -76,6 +76,16 @@ ColorScheme::ColorScheme(const QString &path, QObject *parent) : QObject(parent)
 	}
 }
 
+QString ColorScheme::getName() const
+{
+	return m_name;
+}
+
+QString ColorScheme::getTitle() const
+{
+	return m_title;
+}
+
 ColorScheme::ColorRoleInformation ColorScheme::getColor(ColorRole role) const
 {
 	if (!m_colors.contains(role))
