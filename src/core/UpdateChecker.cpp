@@ -53,7 +53,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool isInBackground) : QObject(par
 
 		if (!isSuccess)
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates: %1").arg(device->errorString()), Console::OtherCategory, Console::ErrorLevel);
+			Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates: %1").arg(device ? device->errorString() : tr("Download failure")), Console::OtherCategory, Console::ErrorLevel);
 
 			deleteLater();
 

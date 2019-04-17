@@ -344,7 +344,7 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 				}
 				else
 				{
-					Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(device->errorString()), Console::NetworkCategory, Console::ErrorLevel, url.url());
+					Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(device ? device->errorString() : tr("Download failure")), Console::NetworkCategory, Console::ErrorLevel, url.url());
 				}
 			});
 
