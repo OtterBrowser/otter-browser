@@ -20,6 +20,8 @@
 #ifndef OTTER_THEMESMANAGER_H
 #define OTTER_THEMESMANAGER_H
 
+#include "AddonsManager.h"
+
 #ifdef Q_OS_WIN32
 #include <QtCore/QAbstractNativeEventFilter>
 #endif
@@ -31,7 +33,7 @@ namespace Otter
 
 class Style;
 
-class ColorScheme final : public QObject
+class ColorScheme final : public QObject, public Addon
 {
 	Q_OBJECT
 	Q_ENUMS(ColorRole)
