@@ -175,6 +175,8 @@ void ThemesManager::handleOptionChanged(int identifier, const QVariant &value)
 
 				emit iconThemeChanged();
 			}
+
+			break;
 		default:
 			break;
 	}
