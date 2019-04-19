@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,11 @@ QWidget* OperaSearchEnginesImporter::createOptionsWidget(QWidget *parent)
 	}
 
 	return m_optionsWidget;
+}
+
+QString OperaSearchEnginesImporter::getName() const
+{
+	return QLatin1String("opera-search-engines");
 }
 
 QString OperaSearchEnginesImporter::getTitle() const

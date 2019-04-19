@@ -52,10 +52,10 @@ public:
 	explicit Addon();
 	virtual ~Addon();
 
-	virtual QString getName() const;
+	virtual QString getName() const = 0;
 	virtual QString getTitle() const = 0;
-	virtual QString getDescription() const = 0;
-	virtual QString getVersion() const = 0;
+	virtual QString getDescription() const;
+	virtual QString getVersion() const;
 	virtual QUrl getHomePage() const;
 	virtual QUrl getUpdateUrl() const;
 	virtual QIcon getIcon() const;

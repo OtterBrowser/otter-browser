@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -323,6 +323,11 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 			return;
 		}
 	}
+}
+
+QString FilePasswordsStorageBackend::getName() const
+{
+	return QLatin1String("file");
 }
 
 QString FilePasswordsStorageBackend::getTitle() const

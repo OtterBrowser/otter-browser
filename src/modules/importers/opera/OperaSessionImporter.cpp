@@ -39,6 +39,11 @@ QWidget* OperaSessionImporter::createOptionsWidget(QWidget *parent)
 	return nullptr;
 }
 
+QString OperaSessionImporter::getName() const
+{
+	return QLatin1String("opera-session");
+}
+
 QString OperaSessionImporter::getTitle() const
 {
 	return tr("Opera Session");

@@ -52,7 +52,12 @@ void Addon::setEnabled(bool isEnabled)
 	m_isEnabled = isEnabled;
 }
 
-QString Addon::getName() const
+QString Addon::getDescription() const
+{
+	return {};
+}
+
+QString Addon::getVersion() const
 {
 	return {};
 }

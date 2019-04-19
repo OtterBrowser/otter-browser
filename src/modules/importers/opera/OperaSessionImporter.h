@@ -34,6 +34,7 @@ public:
 	explicit OperaSessionImporter(QObject *parent = nullptr);
 
 	QWidget* createOptionsWidget(QWidget *parent) override;
+	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
 	QString getVersion() const override;
