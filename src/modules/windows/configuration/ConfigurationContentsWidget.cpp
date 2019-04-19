@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -377,12 +377,12 @@ void ConfigurationContentsWidget::saveAll(bool reset)
 
 		for (int j = 0; j < optionAmount; ++j)
 		{
-			const QModelIndex optionIndex(groupIndex.child(j, 0));
+			const QModelIndex optionIndex(m_model->index(j, 0, groupIndex));
 			const bool isModified(optionIndex.data(IsModifiedRole).toBool());
 
 			if (reset || isModified)
 			{
-				const QModelIndex valueIndex(groupIndex.child(j, 2));
+				const QModelIndex valueIndex(m_model->index(j, 2, groupIndex));
 				const int identifier(valueIndex.data(IdentifierRole).toInt());
 				const QVariant defaultValue(SettingsManager::getOptionDefinition(identifier).defaultValue);
 
@@ -441,11 +441,11 @@ void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVar
 
 		for (int j = 0; j < optionAmount; ++j)
 		{
-			const QModelIndex valueIndex(groupIndex.child(j, 2));
+			const QModelIndex valueIndex(m_model->index(j, 2, groupIndex));
 
 			if (valueIndex.data(IdentifierRole).toInt() == identifier)
 			{
-				const QModelIndex optionIndex(groupIndex.child(j, 0));
+				const QModelIndex optionIndex(m_model->index(j, 0, groupIndex));
 
 				if (!optionIndex.data(IsModifiedRole).toBool())
 				{
