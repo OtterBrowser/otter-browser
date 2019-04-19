@@ -279,15 +279,15 @@ int AddressDelegate::calculateLength(const QStyleOptionViewItem &option, const Q
 
 	if (m_highlight.isEmpty() || index < 0)
 	{
-		return (length + option.fontMetrics.width(text));
+		return (length + Utils::calculateTextWidth(text, option.fontMetrics));
 	}
 
-	length += option.fontMetrics.width(text.left(index));
+	length += Utils::calculateTextWidth(text.left(index), option.fontMetrics);
 
 	QStyleOptionViewItem highlightedOption(option);
 	highlightedOption.font.setBold(true);
 
-	length += highlightedOption.fontMetrics.width(text.mid(index, m_highlight.length()));
+	length += Utils::calculateTextWidth(text.mid(index, m_highlight.length()), highlightedOption.fontMetrics);
 
 	return calculateLength(option, text.mid(index + m_highlight.length()), length);
 }

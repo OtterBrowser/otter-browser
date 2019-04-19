@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -522,12 +522,12 @@ void TabHandleWidget::updateTitle()
 	}
 	else
 	{
-		int length(fontMetrics().width(title));
+		int length(Utils::calculateTextWidth(title, fontMetrics()));
 
 		if (length > m_labelRectangle.width())
 		{
 			title = fontMetrics().elidedText(title, Qt::ElideRight, m_labelRectangle.width());
-			length = fontMetrics().width(title);
+			length = Utils::calculateTextWidth(title, fontMetrics());
 		}
 
 		m_titleRectangle = m_labelRectangle;

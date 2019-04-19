@@ -310,7 +310,7 @@ void MarginWidget::updateWidth()
 		++digits;
 	}
 
-	setFixedWidth(6 + (fontMetrics().width(QLatin1Char('9')) * digits));
+	setFixedWidth(6 + (Utils::calculateCharacterWidth(QLatin1Char('9'), fontMetrics()) * digits));
 
 	m_sourceViewer->setViewportMargins(width(), 0, 0, 0);
 }

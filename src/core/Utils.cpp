@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -704,6 +704,24 @@ SaveInformation getSavePath(const QString &fileName, const QString &directory, Q
 qreal calculatePercent(qint64 amount, qint64 total, int multiplier)
 {
 	return ((static_cast<qreal>(amount) / static_cast<qreal>(total)) * multiplier);
+}
+
+int calculateCharacterWidth(const QChar &character, const QFontMetrics &fontMetrics)
+{
+#if QT_VERSION >= 0x050B00
+	return fontMetrics.horizontalAdvance(character);
+#else
+	return fontMetrics.width(character);
+#endif
+}
+
+int calculateTextWidth(const QString &text, const QFontMetrics &fontMetrics)
+{
+#if QT_VERSION >= 0x050B00
+	return fontMetrics.horizontalAdvance(text);
+#else
+	return fontMetrics.width(text);
+#endif
 }
 
 bool isUrl(const QString &text)
