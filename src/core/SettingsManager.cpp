@@ -145,6 +145,7 @@ void SettingsManager::createInstance(const QString &path)
 	registerOption(History_RememberClosedPrivateTabsOption, BooleanType, false);
 	registerOption(History_RememberDownloadsOption, BooleanType, true);
 	registerOption(History_StoreFaviconsOption, BooleanType, true);
+	registerOption(Interface_ColorSchemeOption, ListType, QStringList(QLatin1String("default")));
 	registerOption(Interface_DateTimeFormatOption, StringType, QString());
 	registerOption(Interface_EnableSmoothScrollingOption, BooleanType, false);
 	registerOption(Interface_IconThemePathOption, PathType, QString());

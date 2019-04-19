@@ -79,7 +79,7 @@ public:
 		}
 	};
 
-	explicit ColorScheme(const QString &path = {}, QObject *parent = nullptr);
+	explicit ColorScheme(const QString &name, QObject *parent = nullptr);
 
 	QString getName() const;
 	QString getTitle() const;

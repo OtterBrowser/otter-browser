@@ -123,6 +123,7 @@ public:
 		History_RememberClosedPrivateTabsOption,
 		History_RememberDownloadsOption,
 		History_StoreFaviconsOption,
+		Interface_ColorSchemeOption,
 		Interface_DateTimeFormatOption,
 		Interface_EnableSmoothScrollingOption,
 		Interface_IconThemePathOption,

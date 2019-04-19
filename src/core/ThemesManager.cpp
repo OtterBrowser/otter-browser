@@ -43,14 +43,17 @@ namespace Otter
 
 int ColorScheme::m_colorRoleEnumerator(-1);
 
-ColorScheme::ColorScheme(const QString &path, QObject *parent) : QObject(parent), Addon()
+ColorScheme::ColorScheme(const QString &name, QObject *parent) : QObject(parent), Addon(),
+	m_name(name)
 {
 	if (m_colorRoleEnumerator < 0)
 	{
 		m_colorRoleEnumerator = ColorScheme::staticMetaObject.indexOfEnumerator(QLatin1String("ColorRole").data());
 	}
 
-	if (path.isEmpty() || !QFile::exists(path))
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("colors/") + name + QLatin1String(".json")));
+
+	if (!QFile::exists(path))
 	{
 		return;
 	}
@@ -130,7 +133,7 @@ void ThemesManager::createInstance()
 	if (!m_instance)
 	{
 		m_instance = new ThemesManager(QCoreApplication::instance());
-		m_colorScheme = new ColorScheme(SessionsManager::getWritableDataPath(QLatin1String("colors.json")), m_instance);
+		m_colorScheme = new ColorScheme(SettingsManager::getOption(SettingsManager::Interface_ColorSchemeOption).toString(), m_instance);
 		m_probeWidget = new QWidget();
 		m_probeWidget->hide();
 		m_probeWidget->setAttribute(Qt::WA_DontShowOnScreen, true);
