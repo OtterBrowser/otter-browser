@@ -1075,6 +1075,11 @@ bool ItemViewWidget::isExclusive() const
 
 bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 {
+	if (!model())
+	{
+		return false;
+	}
+
 	const bool isFolder(!index.flags().testFlag(Qt::ItemNeverHasChildren));
 	const bool hasFilter(!m_filterString.isEmpty());
 	bool hasMatch(!hasFilter || (isFolder && parentHasMatch));
@@ -1123,7 +1128,7 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index, bool parentHasMatch)
 
 		for (int i = 0; i < rowCount; ++i)
 		{
-			if (applyFilter(index.child(i, 0), hasMatch))
+			if (applyFilter(model()->index(i, 0, index), hasMatch))
 			{
 				folderHasMatch = true;
 			}
