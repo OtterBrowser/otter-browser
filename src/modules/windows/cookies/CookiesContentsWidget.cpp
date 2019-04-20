@@ -299,7 +299,12 @@ void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 		{
 			if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole))))
 			{
-				point = m_ui->cookiesViewWidget->visualRect(domainItem->index().child(j, 0)).center();
+				const QStandardItem *cookieItem(domainItem->child(j, 0));
+
+				if (cookieItem)
+				{
+					point = m_ui->cookiesViewWidget->visualRect(cookieItem->index()).center();
+				}
 
 				domainItem->removeRow(j);
 
