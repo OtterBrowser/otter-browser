@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -169,7 +169,7 @@ void CacheContentsWidget::removeDomainEntries()
 
 	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
 	{
-		cache->remove(domainItem->index().child(i, 0).data(Qt::UserRole).toUrl());
+		cache->remove(ItemModel::getItemData(domainItem->child(i, 0), Qt::UserRole).toUrl());
 	}
 }
 
@@ -229,7 +229,7 @@ void CacheContentsWidget::handleEntryAdded(const QUrl &entry)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			if (domainItem->index().child(i, 0).data(Qt::UserRole).toUrl() == entry)
+			if (ItemModel::getItemData(domainItem->child(i, 0), Qt::UserRole).toUrl() == entry)
 			{
 				return;
 			}
@@ -312,7 +312,7 @@ void CacheContentsWidget::handleEntryRemoved(const QUrl &entry)
 
 		if (entryItem && entryItem->data(Qt::UserRole).toUrl() == entry)
 		{
-			const qint64 size(domainItem->index().child(entryItem->row(), 2).data(Qt::UserRole).toLongLong());
+			const qint64 size(ItemModel::getItemData(domainItem->child(entryItem->row(), 2), Qt::UserRole).toLongLong());
 
 			m_model->removeRow(entryItem->row(), domainItem->index());
 
