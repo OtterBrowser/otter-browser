@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -142,7 +142,7 @@ void CookiesContentsWidget::removeCookies()
 
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				cookies.append(getCookie(domainItem->index().child(j, 0)));
+				cookies.append(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole)));
 			}
 		}
 		else
@@ -182,7 +182,7 @@ void CookiesContentsWidget::removeDomainCookies()
 		{
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				const QNetworkCookie cookie(getCookie(domainItem->index().child(j, 0)));
+				const QNetworkCookie cookie(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole)));
 
 				if (!cookies.contains(cookie))
 				{
@@ -297,7 +297,7 @@ void CookiesContentsWidget::handleCookieRemoved(const QNetworkCookie &cookie)
 
 		for (int j = 0; j < domainItem->rowCount(); ++j)
 		{
-			if (cookie.hasSameIdentifier(getCookie(domainItem->index().child(j, 0))))
+			if (cookie.hasSameIdentifier(getCookie(ItemModel::getItemData(domainItem->child(j, 0), Qt::UserRole))))
 			{
 				point = m_ui->cookiesViewWidget->visualRect(domainItem->index().child(j, 0)).center();
 
@@ -455,9 +455,9 @@ QIcon CookiesContentsWidget::getIcon() const
 	return ThemesManager::createIcon(QLatin1String("cookies"), false);
 }
 
-QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
+QNetworkCookie CookiesContentsWidget::getCookie(const QVariant &data) const
 {
-	const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(index.data(Qt::UserRole).toByteArray()));
+	const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(data.toByteArray()));
 
 	return (cookies.isEmpty() ? QNetworkCookie() : cookies.first());
 }
