@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ public:
 	void setExclusive(bool isExclusive);
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QVariant data(const QModelIndex &index, int role) const override;
+	static QVariant getItemData(QStandardItem *item, int role);
 	QVariantList getAllData(int role, int column = -1, const QModelIndex &parent = {}) const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 	bool isExclusive() const;
