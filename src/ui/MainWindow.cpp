@@ -22,7 +22,6 @@
 #include "MainWindow.h"
 #include "ClearHistoryDialog.h"
 #include "ContentsWidget.h"
-#include "WorkspaceWidget.h"
 #include "Menu.h"
 #include "MenuBarWidget.h"
 #include "OpenAddressDialog.h"
@@ -36,6 +35,7 @@
 #include "ToolBarWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
+#include "WorkspaceWidget.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
@@ -43,6 +43,7 @@
 #include "../core/FeedsManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/InputInterpreter.h"
+#include "../core/ItemModel.h"
 #include "../core/SessionModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
@@ -1431,7 +1432,7 @@ void MainWindow::addWindow(Window *window, SessionsManager::OpenHints hints, int
 		{
 			for (int i = 0; i < mainWindowItem->rowCount(); ++i)
 			{
-				if (!mainWindowItem->index().child(i, 0).data(SessionModel::IsPinnedRole).toBool())
+				if (!ItemModel::getItemData(mainWindowItem->child(i, 0), SessionModel::IsPinnedRole).toBool())
 				{
 					if (index < i)
 					{
