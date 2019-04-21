@@ -516,7 +516,8 @@ void ToolBarWidget::updateDropIndex(const QPoint &position)
 
 		if (dropIndex >= 0 && dropIndex < m_bookmark->rowCount())
 		{
-			BookmarksModel::Bookmark *dropBookmark(BookmarksManager::getModel()->getBookmark(m_bookmark->index().child(dropIndex, 0)));
+			const BookmarksModel *model(BookmarksManager::getModel());
+			BookmarksModel::Bookmark *dropBookmark(model->getBookmark(model->index(dropIndex, 0, m_bookmark->index())));
 
 			if (dropBookmark && dropBookmark->getType() == BookmarksModel::FolderBookmark)
 			{
