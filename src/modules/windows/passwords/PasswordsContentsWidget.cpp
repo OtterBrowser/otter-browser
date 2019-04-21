@@ -156,7 +156,7 @@ void PasswordsContentsWidget::removePasswords()
 
 			for (int j = 0; j < m_model->rowCount(hostIndex); ++j)
 			{
-				passwords.append(getPassword(hostIndex.child(j, 0)));
+				passwords.append(getPassword(m_model->index(j, 0, hostIndex)));
 			}
 		}
 		else
@@ -329,14 +329,14 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 
 		for (int j = 0; j < m_model->rowCount(domainIndex); ++j)
 		{
-			const QModelIndex setIndex(domainIndex.child(j, 0));
+			const QModelIndex setIndex(m_model->index(j, 0, domainIndex));
 			bool hasFieldMatch(hasDomainMatch || setIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
 
 			if (!hasFieldMatch)
 			{
 				for (int k = 0; k < m_model->rowCount(setIndex); ++k)
 				{
-					const QModelIndex fieldIndex(setIndex.child(k, 0));
+					const QModelIndex fieldIndex(m_model->index(k, 0, setIndex));
 
 					if (fieldIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive) || (fieldIndex.data(FieldTypeRole).toInt() != PasswordsManager::PasswordField && fieldIndex.sibling(fieldIndex.row(), 1).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
 					{
@@ -408,10 +408,10 @@ PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const
 
 	for (int i = 0; i < m_model->rowCount(index); ++i)
 	{
-		const QModelIndex nameIndex(index.child(i, 0));
+		const QModelIndex nameIndex(m_model->index(i, 0, index));
 		PasswordsManager::PasswordInformation::Field field;
 		field.name = nameIndex.data(Qt::DisplayRole).toString();
-		field.value = ((nameIndex.data(FieldTypeRole).toInt() == PasswordsManager::PasswordField) ? QString() : index.child(i, 1).data(Qt::DisplayRole).toString());
+		field.value = ((nameIndex.data(FieldTypeRole).toInt() == PasswordsManager::PasswordField) ? QString() : m_model->index(i, 1, index).data(Qt::DisplayRole).toString());
 		field.type = static_cast<PasswordsManager::FieldType>(nameIndex.data(FieldTypeRole).toInt());
 
 		password.fields.append(field);
