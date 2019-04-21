@@ -93,6 +93,19 @@
            <property name="fieldGrowthPolicy">
             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
            </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="domainLabel">
+             <property name="text">
+              <string>Domain:</string>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::NoTextInteraction</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="Otter::TextLabelWidget" name="domainLabelWidget" native="true"/>
+           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="nameLabel">
              <property name="text">
@@ -103,6 +116,9 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="1">
+            <widget class="Otter::TextLabelWidget" name="nameLabelWidget" native="true"/>
+           </item>
            <item row="2" column="0">
             <widget class="QLabel" name="valueLabel">
              <property name="text">
@@ -110,7 +126,20 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item row="2" column="1">
+            <widget class="Otter::TextLabelWidget" name="valueLabelWidget" native="true"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="pathLabel">
+             <property name="text">
+              <string>Path:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="Otter::TextLabelWidget" name="pathLabelWidget" native="true"/>
+           </item>
+           <item row="4" column="0">
             <widget class="QLabel" name="expiresLabel">
              <property name="text">
               <string>Expires:</string>
@@ -120,37 +149,8 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="domainLabel">
-             <property name="text">
-              <string>Domain:</string>
-             </property>
-             <property name="textInteractionFlags">
-              <set>Qt::NoTextInteraction</set>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="Otter::TextLabelWidget" name="valueLabelWidget" native="true"/>
-           </item>
-           <item row="3" column="1">
-            <widget class="Otter::TextLabelWidget" name="domainLabelWidget" native="true"/>
-           </item>
-           <item row="5" column="1">
-            <widget class="Otter::TextLabelWidget" name="expiresLabelWidget" native="true"/>
-           </item>
-           <item row="1" column="1">
-            <widget class="Otter::TextLabelWidget" name="nameLabelWidget" native="true"/>
-           </item>
            <item row="4" column="1">
-            <widget class="Otter::TextLabelWidget" name="pathLabelWidget" native="true"/>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="pathLabel">
-             <property name="text">
-              <string>Path:</string>
-             </property>
-            </widget>
+            <widget class="Otter::TextLabelWidget" name="expiresLabelWidget" native="true"/>
            </item>
           </layout>
          </item>
@@ -226,6 +226,8 @@
  <tabstops>
   <tabstop>filterLineEditWidget</tabstop>
   <tabstop>cookiesViewWidget</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>propertiesButton</tabstop>
   <tabstop>deleteButton</tabstop>
  </tabstops>
  <resources/>
