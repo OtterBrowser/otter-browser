@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -307,7 +307,7 @@ MouseProfile MouseProfileDialog::getProfile() const
 
 			for (int j = 0; j < gestureAmount; ++j)
 			{
-				const QModelIndex actionIndex(contextIndex.child(j, 0));
+				const QModelIndex actionIndex(m_ui->gesturesViewWidget->getIndex(j, 0, contextIndex));
 				const QStringList steps(actionIndex.sibling(actionIndex.row(), 2).data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts));
 				const int action(actionIndex.data(IdentifierRole).toInt());
 
