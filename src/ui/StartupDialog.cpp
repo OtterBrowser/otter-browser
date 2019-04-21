@@ -180,7 +180,7 @@ SessionInformation StartupDialog::getSession() const
 
 			for (int j = (amount - 1); j >= 0; --j)
 			{
-				const QModelIndex windowIndex(mainWindowIndex.child(j, 0));
+				const QModelIndex windowIndex(m_windowsModel->index(j, 0, mainWindowIndex));
 
 				if (windowIndex.isValid() && windowIndex.flags().testFlag(Qt::ItemIsUserCheckable) && windowIndex.data(Qt::CheckStateRole).toInt() == Qt::Unchecked && j < session.windows.at(i).windows.count())
 				{
