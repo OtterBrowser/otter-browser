@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ void PasswordsContentsWidget::populatePasswords()
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
-				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem((passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField) ? QLatin1String("*****") : passwords.at(j).fields.at(k).value)});
+				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem((passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField) ? QString(QChar(8226)).repeated(5) : passwords.at(j).fields.at(k).value)});
 				fieldItems[0]->setData(passwords.at(j).fields.at(k).type, FieldTypeRole);
 				fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
 				fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
