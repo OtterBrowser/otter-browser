@@ -175,7 +175,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 				menu.addAction(QCoreApplication::translate("actions", "Open in New Window"), this, &BookmarksContentsWidget::openBookmark)->setData(SessionsManager::NewWindowOpen);
 				menu.addAction(QCoreApplication::translate("actions", "Open in New Background Window"), this, &BookmarksContentsWidget::openBookmark)->setData(static_cast<int>(SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
 
-				if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && index.child(0, 0).data(BookmarksModel::TypeRole).toInt() == 0))
+				if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && m_model->rowCount(index) == 0))
 				{
 					for (int i = 0; i < menu.actions().count(); ++i)
 					{
