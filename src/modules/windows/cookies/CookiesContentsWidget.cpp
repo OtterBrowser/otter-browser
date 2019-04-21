@@ -151,7 +151,7 @@ void CookiesContentsWidget::removeCookies()
 
 			if (cookieItem)
 			{
-				cookies.append(getCookie(cookieItem->index()));
+				cookies.append(getCookie(cookieItem->index().data(Qt::UserRole)));
 			}
 		}
 	}
@@ -234,7 +234,7 @@ void CookiesContentsWidget::removeAllCookies()
 
 void CookiesContentsWidget::cookieProperties()
 {
-	CookiePropertiesDialog dialog(getCookie(m_ui->cookiesViewWidget->currentIndex()), this);
+	CookiePropertiesDialog dialog(getCookie(m_ui->cookiesViewWidget->currentIndex().data(Qt::UserRole)), this);
 
 	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
 	{
@@ -254,7 +254,7 @@ void CookiesContentsWidget::handleCookieAdded(const QNetworkCookie &cookie)
 		{
 			QStandardItem *childItem(domainItem->child(i, 0));
 
-			if (childItem && cookie.hasSameIdentifier(getCookie(childItem->index())))
+			if (childItem && cookie.hasSameIdentifier(getCookie(childItem->index().data(Qt::UserRole))))
 			{
 				childItem->setData(cookie.toRawForm());
 
@@ -409,7 +409,7 @@ void CookiesContentsWidget::updateActions()
 
 	if (indexes.count() == 1)
 	{
-		const QNetworkCookie cookie(getCookie(indexes.first()));
+		const QNetworkCookie cookie(getCookie(indexes.first().data(Qt::UserRole)));
 
 		if (!cookie.name().isEmpty())
 		{
