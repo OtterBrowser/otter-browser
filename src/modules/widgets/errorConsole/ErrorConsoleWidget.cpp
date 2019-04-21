@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -251,7 +251,7 @@ void ErrorConsoleWidget::applyFilters(const QModelIndex &index, const QString &f
 {
 	bool hasMatch(true);
 
-	if (!filter.isEmpty() && !(index.data(SourceRole).toString().contains(filter, Qt::CaseInsensitive) || index.child(0, 0).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
+	if (!filter.isEmpty() && !(index.data(SourceRole).toString().contains(filter, Qt::CaseInsensitive) || m_model->index(0, 0, index).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
 	{
 		hasMatch = false;
 	}
