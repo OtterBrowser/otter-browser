@@ -19,6 +19,7 @@
 
 #include "SessionModel.h"
 #include "Application.h"
+#include "ItemModel.h"
 #include "ThemesManager.h"
 #include "../ui/MainWindow.h"
 #include "../ui/Window.h"
@@ -110,7 +111,7 @@ void MainWindowSessionItem::handleWindowAdded(quint64 identifier)
 {
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		if (index().child(i, 0).data(SessionModel::IdentifierRole).toULongLong() == identifier)
+		if (ItemModel::getItemData(child(i, 0), SessionModel::IdentifierRole).toULongLong() == identifier)
 		{
 			return;
 		}
@@ -123,7 +124,7 @@ void MainWindowSessionItem::handleWindowRemoved(quint64 identifier)
 {
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		if (index().child(i, 0).data(SessionModel::IdentifierRole).toULongLong() == identifier)
+		if (ItemModel::getItemData(child(i, 0), SessionModel::IdentifierRole).toULongLong() == identifier)
 		{
 			removeRow(i);
 
