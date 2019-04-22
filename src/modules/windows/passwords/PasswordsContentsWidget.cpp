@@ -35,6 +35,20 @@
 namespace Otter
 {
 
+PasswordFieldDelegate::PasswordFieldDelegate(QObject *parent) : ItemDelegate (parent)
+{
+}
+
+void PasswordFieldDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	if (index.sibling(index.row(), 0).data(PasswordsContentsWidget::FieldTypeRole).toInt() == PasswordsManager::PasswordField)
+	{
+		option->text = QString(QChar(8226)).repeated(5);
+	}
+}
+
 PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
 	m_isLoading(true),
@@ -45,6 +59,7 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 	m_ui->passwordsViewWidget->installEventFilter(this);
 	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->passwordsViewWidget->setModel(m_model);
+	m_ui->passwordsViewWidget->setItemDelegateForColumn(1, new PasswordFieldDelegate(m_ui->passwordsViewWidget));
 
 	m_model->setHeaderData(0, Qt::Horizontal, 500, HeaderViewWidget::WidthRole);
 
@@ -94,7 +109,7 @@ void PasswordsContentsWidget::populatePasswords()
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
-				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem((passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField) ? QString(QChar(8226)).repeated(5) : passwords.at(j).fields.at(k).value)});
+				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(passwords.at(j).fields.at(k).value)});
 				fieldItems[0]->setData(passwords.at(j).fields.at(k).type, FieldTypeRole);
 				fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
 				fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);

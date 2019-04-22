@@ -21,6 +21,7 @@
 #define OTTER_PASSWORDSCONTENTSWIDGET_H
 
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ItemDelegate.h"
 
 #include <QtGui/QStandardItemModel>
 
@@ -33,6 +34,15 @@ namespace Ui
 }
 
 class Window;
+
+class PasswordFieldDelegate final : public ItemDelegate
+{
+public:
+	explicit PasswordFieldDelegate(QObject *parent = nullptr);
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
 
 class PasswordsContentsWidget final : public ContentsWidget
 {
