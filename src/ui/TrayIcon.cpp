@@ -147,7 +147,11 @@ void TrayIcon::updateMenu()
 
 void TrayIcon::showMessage(const Notification::Message &message)
 {
+#if QT_VERSION >= 0x050900
 	m_trayIcon->showMessage(message.getTitle(), message.message, message.getIcon());
+#else
+	m_trayIcon->showMessage(message.getTitle(), message.message);
+#endif
 
 	const int visibilityDuration(SettingsManager::getOption(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 
