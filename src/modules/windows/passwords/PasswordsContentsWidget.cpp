@@ -78,6 +78,7 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &PasswordsContentsWidget::filterPasswords);
 	connect(m_ui->passwordsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PasswordsContentsWidget::showContextMenu);
 	connect(m_ui->showPasswordsButton, &QPushButton::toggled, this, &PasswordsContentsWidget::togglePasswordsVisibility);
+	connect(m_ui->deleteButton, &QPushButton::clicked, this, &PasswordsContentsWidget::removePasswords);
 }
 
 PasswordsContentsWidget::~PasswordsContentsWidget()
