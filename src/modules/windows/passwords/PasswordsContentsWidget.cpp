@@ -35,15 +35,21 @@
 namespace Otter
 {
 
-PasswordFieldDelegate::PasswordFieldDelegate(QObject *parent) : ItemDelegate (parent)
+PasswordFieldDelegate::PasswordFieldDelegate(QObject *parent) : ItemDelegate (parent),
+	m_arePasswordsVisible(false)
 {
+}
+
+void PasswordFieldDelegate::setPasswordsVisibility(bool areVisible)
+{
+	m_arePasswordsVisible = areVisible;
 }
 
 void PasswordFieldDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
 	ItemDelegate::initStyleOption(option, index);
 
-	if (index.sibling(index.row(), 0).data(PasswordsContentsWidget::FieldTypeRole).toInt() == PasswordsManager::PasswordField)
+	if (!m_arePasswordsVisible && index.sibling(index.row(), 0).data(PasswordsContentsWidget::FieldTypeRole).toInt() == PasswordsManager::PasswordField)
 	{
 		option->text = QString(QChar(8226)).repeated(5);
 	}
@@ -51,15 +57,19 @@ void PasswordFieldDelegate::initStyleOption(QStyleOptionViewItem *option, const 
 
 PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
 	m_model(new QStandardItemModel(this)),
+	m_delegate(nullptr),
 	m_isLoading(true),
 	m_ui(new Ui::PasswordsContentsWidget)
 {
 	m_ui->setupUi(this);
+
+	m_delegate = new PasswordFieldDelegate(m_ui->passwordsViewWidget);
+
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->passwordsViewWidget->installEventFilter(this);
 	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->passwordsViewWidget->setModel(m_model);
-	m_ui->passwordsViewWidget->setItemDelegateForColumn(1, new PasswordFieldDelegate(m_ui->passwordsViewWidget));
+	m_ui->passwordsViewWidget->setItemDelegateForColumn(1, m_delegate);
 
 	m_model->setHeaderData(0, Qt::Horizontal, 500, HeaderViewWidget::WidthRole);
 
@@ -67,6 +77,7 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &PasswordsContentsWidget::filterPasswords);
 	connect(m_ui->passwordsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PasswordsContentsWidget::showContextMenu);
+	connect(m_ui->showPasswordsButton, &QPushButton::toggled, this, &PasswordsContentsWidget::togglePasswordsVisibility);
 }
 
 PasswordsContentsWidget::~PasswordsContentsWidget()
@@ -277,6 +288,13 @@ void PasswordsContentsWidget::removeAllPasswords()
 	{
 		PasswordsManager::clearPasswords();
 	}
+}
+
+void PasswordsContentsWidget::togglePasswordsVisibility(bool areVisible)
+{
+	m_delegate->setPasswordsVisibility(areVisible);
+
+	m_ui->passwordsViewWidget->viewport()->update();
 }
 
 void PasswordsContentsWidget::showContextMenu(const QPoint &position)

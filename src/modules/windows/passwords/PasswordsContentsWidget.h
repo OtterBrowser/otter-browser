@@ -40,8 +40,13 @@ class PasswordFieldDelegate final : public ItemDelegate
 public:
 	explicit PasswordFieldDelegate(QObject *parent = nullptr);
 
+	void setPasswordsVisibility(bool areVisible);
+
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+
+private:
+	bool m_arePasswordsVisible;
 };
 
 class PasswordsContentsWidget final : public ContentsWidget
@@ -82,10 +87,12 @@ protected slots:
 	void removePasswords();
 	void removeHostPasswords();
 	void removeAllPasswords();
+	void togglePasswordsVisibility(bool areVisible);
 	void showContextMenu(const QPoint &position);
 
 private:
 	QStandardItemModel *m_model;
+	PasswordFieldDelegate *m_delegate;
 	bool m_isLoading;
 	Ui::PasswordsContentsWidget *m_ui;
 };
