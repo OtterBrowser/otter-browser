@@ -77,6 +77,7 @@ PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, 
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, this, &PasswordsContentsWidget::filterPasswords);
 	connect(m_ui->passwordsViewWidget, &ItemViewWidget::customContextMenuRequested, this, &PasswordsContentsWidget::showContextMenu);
+	connect(m_ui->passwordsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &PasswordsContentsWidget::updateActions);
 	connect(m_ui->showPasswordsButton, &QPushButton::toggled, this, &PasswordsContentsWidget::togglePasswordsVisibility);
 	connect(m_ui->deleteButton, &QPushButton::clicked, this, &PasswordsContentsWidget::removePasswords);
 }
@@ -318,6 +319,13 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 	menu.addSeparator();
 	menu.addAction(new Action(ActionsManager::ClearHistoryAction, {}, ActionExecutor::Object(mainWindow, mainWindow), &menu));
 	menu.exec(m_ui->passwordsViewWidget->mapToGlobal(position));
+}
+
+void PasswordsContentsWidget::updateActions()
+{
+	const QModelIndex index(m_ui->passwordsViewWidget->getCurrentIndex());
+
+	m_ui->deleteButton->setEnabled(index.isValid() && index.parent() != m_model->invisibleRootItem()->index());
 }
 
 void PasswordsContentsWidget::print(QPrinter *printer)

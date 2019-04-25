@@ -89,6 +89,7 @@ protected slots:
 	void removeAllPasswords();
 	void togglePasswordsVisibility(bool areVisible);
 	void showContextMenu(const QPoint &position);
+	void updateActions();
 
 private:
 	QStandardItemModel *m_model;
