@@ -294,6 +294,24 @@ void PasswordsContentsWidget::removeAllPasswords()
 
 void PasswordsContentsWidget::togglePasswordsVisibility(bool areVisible)
 {
+	if (areVisible)
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("You are about to show all passwords."));
+		messageBox.setInformativeText(tr("Do you want to continue?"));
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Yes);
+
+		if (messageBox.exec() != QMessageBox::Yes)
+		{
+			m_ui->showPasswordsButton->setChecked(false);
+
+			return;
+		}
+	}
+
 	m_delegate->setPasswordsVisibility(areVisible);
 
 	m_ui->passwordsViewWidget->viewport()->update();
