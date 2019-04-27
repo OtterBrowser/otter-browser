@@ -100,6 +100,39 @@ void PasswordsContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
+void PasswordsContentsWidget::print(QPrinter *printer)
+{
+	m_ui->passwordsViewWidget->render(printer);
+}
+
+void PasswordsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
+{
+	switch (identifier)
+	{
+		case ActionsManager::SelectAllAction:
+			m_ui->passwordsViewWidget->selectAll();
+
+			break;
+		case ActionsManager::DeleteAction:
+			removePasswords();
+
+			break;
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+			m_ui->filterLineEditWidget->setFocus();
+
+			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->passwordsViewWidget->setFocus();
+
+			break;
+		default:
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
+
+			break;
+	}
+}
+
 void PasswordsContentsWidget::populatePasswords()
 {
 	m_model->clear();
@@ -152,6 +185,46 @@ void PasswordsContentsWidget::populatePasswords()
 		{
 			emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 		});
+	}
+}
+
+void PasswordsContentsWidget::filterPasswords(const QString &filter)
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		const QModelIndex domainIndex(m_model->index(i, 0, m_model->invisibleRootItem()->index()));
+		int foundSets(0);
+		bool hasDomainMatch(filter.isEmpty() || domainIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
+
+		for (int j = 0; j < m_model->rowCount(domainIndex); ++j)
+		{
+			const QModelIndex setIndex(m_model->index(j, 0, domainIndex));
+			bool hasFieldMatch(hasDomainMatch || setIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
+
+			if (!hasFieldMatch)
+			{
+				for (int k = 0; k < m_model->rowCount(setIndex); ++k)
+				{
+					const QModelIndex fieldIndex(m_model->index(k, 0, setIndex));
+
+					if (fieldIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive) || (fieldIndex.data(FieldTypeRole).toInt() != PasswordsManager::PasswordField && fieldIndex.sibling(fieldIndex.row(), 1).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
+					{
+						hasFieldMatch = true;
+
+						break;
+					}
+				}
+
+				if (hasFieldMatch)
+				{
+					++foundSets;
+				}
+			}
+
+			m_ui->passwordsViewWidget->setRowHidden(j, domainIndex, (!filter.isEmpty() && !hasFieldMatch));
+		}
+
+		m_ui->passwordsViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (foundSets == 0 && !hasDomainMatch));
 	}
 }
 
@@ -372,79 +445,6 @@ void PasswordsContentsWidget::updateActions()
 	const QModelIndex index(m_ui->passwordsViewWidget->getCurrentIndex());
 
 	m_ui->deleteButton->setEnabled(index.isValid() && index.parent() != m_model->invisibleRootItem()->index());
-}
-
-void PasswordsContentsWidget::print(QPrinter *printer)
-{
-	m_ui->passwordsViewWidget->render(printer);
-}
-
-void PasswordsContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
-{
-	switch (identifier)
-	{
-		case ActionsManager::SelectAllAction:
-			m_ui->passwordsViewWidget->selectAll();
-
-			break;
-		case ActionsManager::DeleteAction:
-			removePasswords();
-
-			break;
-		case ActionsManager::FindAction:
-		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEditWidget->setFocus();
-
-			break;
-		case ActionsManager::ActivateContentAction:
-			m_ui->passwordsViewWidget->setFocus();
-
-			break;
-		default:
-			ContentsWidget::triggerAction(identifier, parameters, trigger);
-
-			break;
-	}
-}
-
-void PasswordsContentsWidget::filterPasswords(const QString &filter)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		const QModelIndex domainIndex(m_model->index(i, 0, m_model->invisibleRootItem()->index()));
-		int foundSets(0);
-		bool hasDomainMatch(filter.isEmpty() || domainIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
-
-		for (int j = 0; j < m_model->rowCount(domainIndex); ++j)
-		{
-			const QModelIndex setIndex(m_model->index(j, 0, domainIndex));
-			bool hasFieldMatch(hasDomainMatch || setIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
-
-			if (!hasFieldMatch)
-			{
-				for (int k = 0; k < m_model->rowCount(setIndex); ++k)
-				{
-					const QModelIndex fieldIndex(m_model->index(k, 0, setIndex));
-
-					if (fieldIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive) || (fieldIndex.data(FieldTypeRole).toInt() != PasswordsManager::PasswordField && fieldIndex.sibling(fieldIndex.row(), 1).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
-					{
-						hasFieldMatch = true;
-
-						break;
-					}
-				}
-
-				if (hasFieldMatch)
-				{
-					++foundSets;
-				}
-			}
-
-			m_ui->passwordsViewWidget->setRowHidden(j, domainIndex, (!filter.isEmpty() && !hasFieldMatch));
-		}
-
-		m_ui->passwordsViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (foundSets == 0 && !hasDomainMatch));
-	}
 }
 
 QString PasswordsContentsWidget::getTitle() const
