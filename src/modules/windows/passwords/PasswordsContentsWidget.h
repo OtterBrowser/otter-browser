@@ -84,6 +84,8 @@ protected:
 protected slots:
 	void populatePasswords();
 	void filterPasswords(const QString &filter);
+	void copyFieldName();
+	void copyFieldValue();
 	void removePasswords();
 	void removeHostPasswords();
 	void removeAllPasswords();

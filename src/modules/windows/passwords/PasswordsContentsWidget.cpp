@@ -28,6 +28,7 @@
 #include "ui_PasswordsContentsWidget.h"
 
 #include <QtCore/QTimer>
+#include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
@@ -151,6 +152,26 @@ void PasswordsContentsWidget::populatePasswords()
 		{
 			emit arbitraryActionsStateChanged({ActionsManager::DeleteAction});
 		});
+	}
+}
+
+void PasswordsContentsWidget::copyFieldName()
+{
+	const QModelIndex index(m_ui->passwordsViewWidget->currentIndex().sibling(m_ui->passwordsViewWidget->currentIndex().row(), 0));
+
+	if (index.isValid())
+	{
+		QApplication::clipboard()->setText(index.data(Qt::DisplayRole).toString());
+	}
+}
+
+void PasswordsContentsWidget::copyFieldValue()
+{
+	const QModelIndex index(m_ui->passwordsViewWidget->currentIndex().sibling(m_ui->passwordsViewWidget->currentIndex().row(), 1));
+
+	if (index.isValid())
+	{
+		QApplication::clipboard()->setText(index.data(Qt::DisplayRole).toString());
 	}
 }
 
@@ -327,6 +348,13 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 	{
 		if (index.parent() != m_model->invisibleRootItem()->index())
 		{
+			if (index.parent().parent().isValid() && index.parent().parent().parent() == m_model->invisibleRootItem()->index())
+			{
+				menu.addAction(tr("Copy Field Name"), this, &PasswordsContentsWidget::copyFieldName);
+				menu.addAction(tr("Copy Field Value"), this, &PasswordsContentsWidget::copyFieldValue);
+				menu.addSeparator();
+			}
+
 			menu.addAction(tr("Remove Password"), this, &PasswordsContentsWidget::removePasswords);
 		}
 
