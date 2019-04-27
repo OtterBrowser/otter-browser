@@ -251,38 +251,6 @@ ConfigurationContentsWidget::~ConfigurationContentsWidget()
 	delete m_ui;
 }
 
-void ConfigurationContentsWidget::changeEvent(QEvent *event)
-{
-	ContentsWidget::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
-
-		m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Value")});
-	}
-}
-
-void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
-{
-	switch (identifier)
-	{
-		case ActionsManager::FindAction:
-		case ActionsManager::QuickFindAction:
-			m_ui->filterLineEditWidget->setFocus();
-
-			break;
-		case ActionsManager::ActivateContentAction:
-			m_ui->configurationViewWidget->setFocus();
-
-			break;
-		default:
-			ContentsWidget::triggerAction(identifier, parameters, trigger);
-
-			break;
-	}
-}
-
 void ConfigurationContentsWidget::closeEvent(QCloseEvent *event)
 {
 	if (m_ui->configurationViewWidget->isModified())
@@ -305,9 +273,41 @@ void ConfigurationContentsWidget::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
+void ConfigurationContentsWidget::changeEvent(QEvent *event)
+{
+	ContentsWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+
+		m_model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Value")});
+	}
+}
+
 void ConfigurationContentsWidget::print(QPrinter *printer)
 {
 	m_ui->configurationViewWidget->render(printer);
+}
+
+void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
+{
+	switch (identifier)
+	{
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+			m_ui->filterLineEditWidget->setFocus();
+
+			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->configurationViewWidget->setFocus();
+
+			break;
+		default:
+			ContentsWidget::triggerAction(identifier, parameters, trigger);
+
+			break;
+	}
 }
 
 void ConfigurationContentsWidget::copyOptionName()
