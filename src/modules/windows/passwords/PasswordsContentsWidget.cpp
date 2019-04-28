@@ -170,6 +170,16 @@ void PasswordsContentsWidget::populatePasswords()
 		hostItem->setText(QStringLiteral("%1 (%2)").arg(hosts.at(i)).arg(hostItem->rowCount()));
 
 		m_model->appendRow(hostItem);
+
+		for (int j = 0; j < hostItem->rowCount(); ++j)
+		{
+			const QStandardItem *setItem(hostItem->child(j));
+
+			if (setItem)
+			{
+				m_ui->passwordsViewWidget->expand(setItem->index());
+			}
+		}
 	}
 
 	m_model->sort(0);
