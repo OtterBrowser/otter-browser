@@ -283,6 +283,8 @@ bool HtmlBookmarksImporter::import(const QString &path)
 
 	return true;
 #else
+	Q_UNUSED(path)
+
 	return false;
 #endif
 }
