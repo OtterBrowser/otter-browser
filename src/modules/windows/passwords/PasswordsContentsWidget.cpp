@@ -453,6 +453,17 @@ void PasswordsContentsWidget::showContextMenu(const QPoint &position)
 void PasswordsContentsWidget::updateActions()
 {
 	const QModelIndex index(m_ui->passwordsViewWidget->getCurrentIndex());
+	QModelIndex hostIndex(index);
+
+	while (hostIndex.parent().isValid() && hostIndex.parent() != m_model->invisibleRootItem()->index())
+	{
+		hostIndex = hostIndex.parent();
+	}
+
+	if (hostIndex.isValid())
+	{
+		m_ui->domainLabelWidget->setText(hostIndex.data(HostRole).toString());
+	}
 
 	m_ui->deleteButton->setEnabled(index.isValid() && index.parent() != m_model->invisibleRootItem()->index());
 }
