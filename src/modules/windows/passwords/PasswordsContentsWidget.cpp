@@ -41,11 +41,6 @@ PasswordFieldDelegate::PasswordFieldDelegate(QObject *parent) : ItemDelegate (pa
 {
 }
 
-void PasswordFieldDelegate::setPasswordsVisibility(bool areVisible)
-{
-	m_arePasswordsVisible = areVisible;
-}
-
 void PasswordFieldDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
 	ItemDelegate::initStyleOption(option, index);
@@ -54,6 +49,33 @@ void PasswordFieldDelegate::initStyleOption(QStyleOptionViewItem *option, const 
 	{
 		option->text = QString(QChar(8226)).repeated(5);
 	}
+}
+
+void PasswordFieldDelegate::setPasswordsVisibility(bool areVisible)
+{
+	m_arePasswordsVisible = areVisible;
+}
+
+void PasswordFieldDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+	Q_UNUSED(editor)
+	Q_UNUSED(index)
+}
+
+QWidget* PasswordFieldDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	LineEditWidget *widget(new LineEditWidget(index.data(Qt::DisplayRole).toString(), parent));
+	widget->setReadOnly(true);
+
+	if (!m_arePasswordsVisible && index.sibling(index.row(), 0).data(PasswordsContentsWidget::FieldTypeRole).toInt() == PasswordsManager::PasswordField)
+	{
+		widget->setEchoMode(QLineEdit::Password);
+		widget->setText(QString(QChar(8226)).repeated(5));
+	}
+
+	return widget;
 }
 
 PasswordsContentsWidget::PasswordsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),

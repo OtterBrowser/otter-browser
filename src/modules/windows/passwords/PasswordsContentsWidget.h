@@ -41,6 +41,8 @@ public:
 	explicit PasswordFieldDelegate(QObject *parent = nullptr);
 
 	void setPasswordsVisibility(bool areVisible);
+	void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
