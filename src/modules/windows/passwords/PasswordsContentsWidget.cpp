@@ -147,19 +147,21 @@ void PasswordsContentsWidget::populatePasswords()
 		const QVector<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
 		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), hosts.at(i)));
 		hostItem->setData(hosts.at(i), HostRole);
+		hostItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		for (int j = 0; j < passwords.count(); ++j)
 		{
 			QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(j + 1)));
 			setItem->setData(passwords.at(j).url, UrlRole);
 			setItem->setData(((passwords.at(j).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), AuthTypeRole);
+			setItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
 				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(passwords.at(j).fields.at(k).value)});
 				fieldItems[0]->setData(passwords.at(j).fields.at(k).type, FieldTypeRole);
-				fieldItems[0]->setFlags(fieldItems[0]->flags() | Qt::ItemNeverHasChildren);
-				fieldItems[1]->setFlags(fieldItems[1]->flags() | Qt::ItemNeverHasChildren);
+				fieldItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+				fieldItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
 
 				setItem->appendRow(fieldItems);
 			}
