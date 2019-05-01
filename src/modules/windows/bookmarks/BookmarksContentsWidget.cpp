@@ -118,12 +118,12 @@ void BookmarksContentsWidget::addSeparator()
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
+	BookmarksManager::getModel()->trashBookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
 void BookmarksContentsWidget::openBookmark()
 {
-	const BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
+	const BookmarksModel::Bookmark *bookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
@@ -135,7 +135,7 @@ void BookmarksContentsWidget::openBookmark()
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksModel::Bookmark *bookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
+	BookmarksModel::Bookmark *bookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
@@ -215,7 +215,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &position)
 					{
 						menu.addAction(tr("Restore Bookmark"), &menu, [&]()
 						{
-							BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_model->mapToSource(m_ui->bookmarksViewWidget->currentIndex())));
+							BookmarksManager::getModel()->restoreBookmark(getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 						});
 					}
 					else
@@ -287,6 +287,13 @@ void BookmarksContentsWidget::updateActions()
 void BookmarksContentsWidget::print(QPrinter *printer)
 {
 	m_ui->bookmarksViewWidget->render(printer);
+}
+
+BookmarksModel::Bookmark* BookmarksContentsWidget::getBookmark(const QModelIndex &index) const
+{
+	const QModelIndex mappedIndex(m_model->mapToSource(index));
+
+	return BookmarksManager::getModel()->getBookmark(mappedIndex.sibling(mappedIndex.row(), 0));
 }
 
 BookmarksContentsWidget::BookmarkLocation BookmarksContentsWidget::getBookmarkCreationLocation()
