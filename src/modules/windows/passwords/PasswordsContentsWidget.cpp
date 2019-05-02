@@ -62,6 +62,13 @@ void PasswordFieldDelegate::setEditorData(QWidget *editor, const QModelIndex &in
 	Q_UNUSED(index)
 }
 
+void PasswordFieldDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	Q_UNUSED(editor)
+	Q_UNUSED(model)
+	Q_UNUSED(index)
+}
+
 QWidget* PasswordFieldDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
