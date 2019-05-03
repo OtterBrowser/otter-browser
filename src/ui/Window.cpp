@@ -643,15 +643,15 @@ ActionsManager::ActionDefinition::State Window::getActionState(int identifier, c
 
 			break;
 		case ActionsManager::MaximizeTabAction:
-			state.isEnabled = (getWindowState().state != Qt::WindowMaximized);
+			state.isEnabled = !isMaximized();
 
 			break;
 		case ActionsManager::MinimizeTabAction:
-			state.isEnabled = (getWindowState().state != Qt::WindowMinimized);
+			state.isEnabled = !isMinimized();
 
 			break;
 		case ActionsManager::RestoreTabAction:
-			state.isEnabled = (getWindowState().state != Qt::WindowNoState);
+			state.isEnabled = (isMaximized() || isMinimized());
 
 			break;
 		case ActionsManager::AlwaysOnTopTabAction:
@@ -705,31 +705,23 @@ Session::Window Window::getSession() const
 		session = m_session;
 	}
 
-	session.state = getWindowState();
 	session.isAlwaysOnTop = windowFlags().testFlag(Qt::WindowStaysOnTopHint);
-
-	return session;
-}
-
-Session::Window::State Window::getWindowState() const
-{
-	Session::Window::State windowState;
-	windowState.state = Qt::WindowMaximized;
+	session.state.state = Qt::WindowMaximized;
 
 	if (!isMaximized())
 	{
 		if (isMinimized())
 		{
-			windowState.state = Qt::WindowMinimized;
+			session.state.state = Qt::WindowMinimized;
 		}
 		else
 		{
-			windowState.geometry = geometry();
-			windowState.state = Qt::WindowNoState;
+			session.state.geometry = geometry();
+			session.state.state = Qt::WindowNoState;
 		}
 	}
 
-	return windowState;
+	return session;
 }
 
 QSize Window::sizeHint() const

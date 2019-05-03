@@ -70,7 +70,6 @@ public:
 	ActionsManager::ActionDefinition::State getActionState(int identifier, const QVariantMap &parameters = {}) const override;
 	Session::Window::History getHistory() const;
 	Session::Window getSession() const;
-	Session::Window::State getWindowState() const;
 	QSize sizeHint() const override;
 	WebWidget::LoadingState getLoadingState() const;
 	WebWidget::ContentStates getContentState() const;
