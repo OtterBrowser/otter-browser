@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 		{
 			const WindowSessionItem *windowItem(static_cast<WindowSessionItem*>(mainWindowItem->child(i, 0)));
 
-			if (windowItem && (!m_isIgnoringMinimizedTabs || (windowItem->getActiveWindow() && windowItem->getActiveWindow()->getWindowState().state != Qt::WindowMinimized)))
+			if (windowItem && (!m_isIgnoringMinimizedTabs || (windowItem->getActiveWindow() && !windowItem->getActiveWindow()->isMinimized())))
 			{
 				m_model->appendRow(createRow(windowItem->getActiveWindow(), (useSorting ? QVariant(windowItem->getActiveWindow()->getLastActivity()) : QVariant(i))));
 			}
@@ -241,7 +241,7 @@ void TabSwitcherWidget::handleWindowAdded(quint64 identifier)
 {
 	Window *window(m_mainWindow->getWindowByIdentifier(identifier));
 
-	if (window && (!m_isIgnoringMinimizedTabs || window->getWindowState().state != Qt::WindowMinimized))
+	if (window && (!m_isIgnoringMinimizedTabs || !window->isMinimized()))
 	{
 		m_model->insertRow(0, createRow(window, (SettingsManager::getOption(SettingsManager::TabSwitcher_OrderByLastActivityOption).toBool() ? QVariant(window->getLastActivity()) : QVariant(-1))));
 	}
