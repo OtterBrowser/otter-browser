@@ -407,7 +407,7 @@ QStandardItemModel* ContentFiltersManager::createModel(QObject *parent, const QS
 
 		if (!categoryEntries.contains(category))
 		{
-			categoryEntries[category] = QMultiMap<QString, QList<QStandardItem*> >();
+			categoryEntries[category] = {};
 		}
 
 		categoryEntries[category].insert(title, profileItems);
