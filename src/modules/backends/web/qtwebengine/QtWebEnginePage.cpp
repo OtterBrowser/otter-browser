@@ -556,26 +556,25 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, NavigationType ty
 
 	for (int i = 0; i < userScripts.count(); ++i)
 	{
-		QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
+		QWebEngineScript script;
+		script.setSourceCode(userScripts.at(i)->getSource());
+		script.setRunsOnSubFrames(userScripts.at(i)->shouldRunOnSubFrames());
 
 		switch (userScripts.at(i)->getInjectionTime())
 		{
 			case UserScript::DeferredTime:
-				injectionPoint = QWebEngineScript::Deferred;
+				script.setInjectionPoint(QWebEngineScript::Deferred);
 
 				break;
 			case UserScript::DocumentCreationTime:
-				injectionPoint = QWebEngineScript::DocumentCreation;
+				script.setInjectionPoint(QWebEngineScript::DocumentCreation);
 
 				break;
 			default:
+				script.setInjectionPoint(QWebEngineScript::DocumentReady);
+
 				break;
 		}
-
-		QWebEngineScript script;
-		script.setSourceCode(userScripts.at(i)->getSource());
-		script.setRunsOnSubFrames(userScripts.at(i)->shouldRunOnSubFrames());
-		script.setInjectionPoint(injectionPoint);
 
 		scripts().insert(script);
 	}
