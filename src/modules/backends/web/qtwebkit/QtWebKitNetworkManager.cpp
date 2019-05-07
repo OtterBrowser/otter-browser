@@ -134,13 +134,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_blockedRequests.clear();
 	m_replies.clear();
 	m_headers.clear();
-	m_pageInformation.clear();
-	m_pageInformation[WebWidget::DocumentBytesReceivedInformation] = quint64(0);
-	m_pageInformation[WebWidget::DocumentBytesTotalInformation] = quint64(0);
-	m_pageInformation[WebWidget::TotalBytesReceivedInformation] = quint64(0);
-	m_pageInformation[WebWidget::TotalBytesTotalInformation] = quint64(0);
-	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
-	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
+	m_pageInformation = {{WebWidget::DocumentBytesReceivedInformation, quint64(0)}, {WebWidget::DocumentBytesTotalInformation, quint64(0)}, {WebWidget::TotalBytesReceivedInformation, quint64(0)}, {WebWidget::TotalBytesTotalInformation, quint64(0)}, {WebWidget::RequestsFinishedInformation, 0}, {WebWidget::RequestsStartedInformation, 0}};
 	m_baseReply = nullptr;
 	m_contentState = WebWidget::UnknownContentState;
 	m_isSecureValue = UnknownValue;
