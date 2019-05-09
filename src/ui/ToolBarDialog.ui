@@ -477,14 +477,27 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>titleLineEditWidget</tabstop>
+  <tabstop>tabWidget</tabstop>
   <tabstop>availableEntriesFilterLineEditWidget</tabstop>
-  <tabstop>currentEntriesFilterLineEditWidget</tabstop>
-  <tabstop>currentEntriesItemView</tabstop>
+  <tabstop>availableEntriesItemView</tabstop>
+  <tabstop>addBookmarkButton</tabstop>
   <tabstop>moveUpButton</tabstop>
   <tabstop>addButton</tabstop>
   <tabstop>moveDownButton</tabstop>
   <tabstop>removeButton</tabstop>
+  <tabstop>currentEntriesFilterLineEditWidget</tabstop>
+  <tabstop>currentEntriesItemView</tabstop>
   <tabstop>editEntryButton</tabstop>
+  <tabstop>folderComboBox</tabstop>
+  <tabstop>newFolderButton</tabstop>
+  <tabstop>panelsViewWidget</tabstop>
+  <tabstop>normalVisibilityComboBox</tabstop>
+  <tabstop>fullScreenVisibilityComboBox</tabstop>
+  <tabstop>buttonStyleComboBox</tabstop>
+  <tabstop>iconSizeSpinBox</tabstop>
+  <tabstop>maximumButtonSizeSpinBox</tabstop>
+  <tabstop>hasToggleCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections>
