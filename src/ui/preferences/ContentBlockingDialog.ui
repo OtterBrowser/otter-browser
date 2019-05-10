@@ -245,6 +245,21 @@
    <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>profilesViewWidget</tabstop>
+  <tabstop>addProfileButton</tabstop>
+  <tabstop>editProfileButton</tabstop>
+  <tabstop>updateProfileButton</tabstop>
+  <tabstop>removeProfileButton</tabstop>
+  <tabstop>cosmeticFiltersComboBox</tabstop>
+  <tabstop>enableWildcardsCheckBox</tabstop>
+  <tabstop>enableCustomRulesCheckBox</tabstop>
+  <tabstop>customRulesViewWidget</tabstop>
+  <tabstop>addRuleButton</tabstop>
+  <tabstop>editRuleButton</tabstop>
+  <tabstop>removeRuleButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
