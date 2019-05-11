@@ -130,6 +130,10 @@
    <header>src/ui/ApplicationComboBoxWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>openWithComboBoxWidget</tabstop>
+  <tabstop>rememberChoiceCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
