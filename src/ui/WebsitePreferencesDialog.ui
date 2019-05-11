@@ -946,9 +946,22 @@
   <tabstop>popupsPolicyOverrideCheckBox</tabstop>
   <tabstop>popupsPolicyComboBox</tabstop>
   <tabstop>enableImagesOverrideCheckBox</tabstop>
+  <tabstop>enableImagesComboBox</tabstop>
   <tabstop>enablePluginsOverrideCheckBox</tabstop>
   <tabstop>enablePluginsComboBox</tabstop>
   <tabstop>userStyleSheetOverrideCheckBox</tabstop>
+  <tabstop>doNotTrackOverrideCheckBox</tabstop>
+  <tabstop>doNotTrackComboBox</tabstop>
+  <tabstop>rememberBrowsingHistoryOverrideCheckBox</tabstop>
+  <tabstop>rememberBrowsingHistoryCheckBox</tabstop>
+  <tabstop>enableCookiesOverrideCheckBox</tabstop>
+  <tabstop>enableCookiesCheckBox</tabstop>
+  <tabstop>cookiesPolicyOverrideCheckBox</tabstop>
+  <tabstop>cookiesPolicyComboBox</tabstop>
+  <tabstop>keepCookiesModeOverrideCheckBox</tabstop>
+  <tabstop>keepCookiesModeComboBox</tabstop>
+  <tabstop>thirdPartyCookiesPolicyOverrideCheckBox</tabstop>
+  <tabstop>thirdPartyCookiesPolicyComboBox</tabstop>
   <tabstop>cookiesViewWidget</tabstop>
   <tabstop>cookiesAddButton</tabstop>
   <tabstop>cookiesPropertiesButton</tabstop>
@@ -963,11 +976,21 @@
   <tabstop>canHideAddressBarCheckBox</tabstop>
   <tabstop>canAccessClipboardOverrideCheckBox</tabstop>
   <tabstop>canAccessClipboardCheckBox</tabstop>
+  <tabstop>canReceiveRightClicksOverrideCheckBox</tabstop>
+  <tabstop>canReceiveRightClicksCheckBox</tabstop>
+  <tabstop>canCloseWindowsOverrideCheckBox</tabstop>
+  <tabstop>canCloseWindowsComboBox</tabstop>
+  <tabstop>enableFullScreenOverrideCheckBox</tabstop>
+  <tabstop>enableFullScreenComboBox</tabstop>
   <tabstop>sendReferrerOverrideCheckBox</tabstop>
+  <tabstop>sendReferrerCheckBox</tabstop>
   <tabstop>userAgentOverrideCheckBox</tabstop>
   <tabstop>userAgentComboBox</tabstop>
   <tabstop>proxyOverrideCheckBox</tabstop>
   <tabstop>proxyComboBox</tabstop>
+  <tabstop>contentBlockingProfilesOverrideCheckBox</tabstop>
+  <tabstop>contentBlockingProfilesViewWidget</tabstop>
+  <tabstop>enableCustomRulesCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
