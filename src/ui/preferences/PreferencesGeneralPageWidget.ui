@@ -62,12 +62,6 @@
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
         </spacer>
        </item>
        <item>
@@ -293,12 +287,6 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
       </spacer>
      </item>
     </layout>
@@ -307,12 +295,6 @@
     <spacer name="spacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
      </property>
     </spacer>
    </item>
@@ -331,6 +313,21 @@
    <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>startupBehaviorComboBox</tabstop>
+  <tabstop>delayTabsLoadingCheckBox</tabstop>
+  <tabstop>homePageLineEditWidget</tabstop>
+  <tabstop>useCurrentAsHomePageButton</tabstop>
+  <tabstop>useBookmarkAsHomePageButton</tabstop>
+  <tabstop>restoreHomePageButton</tabstop>
+  <tabstop>alwaysAskCheckBox</tabstop>
+  <tabstop>tabsInsteadOfWindowsCheckBox</tabstop>
+  <tabstop>reuseCurrentTabCheckBox</tabstop>
+  <tabstop>openNextToActiveheckBox</tabstop>
+  <tabstop>closingTabComboBox</tabstop>
+  <tabstop>acceptLanguageButton</tabstop>
+  <tabstop>setDefaultButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

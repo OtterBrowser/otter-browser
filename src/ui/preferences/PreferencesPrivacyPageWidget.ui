@@ -403,6 +403,26 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>doNotTrackComboBox</tabstop>
+  <tabstop>privateModeCheckBox</tabstop>
+  <tabstop>rememberBrowsingHistoryCheckBox</tabstop>
+  <tabstop>rememberDownloadsHistoryCheckBox</tabstop>
+  <tabstop>rememberSearchHistoryCheckBox</tabstop>
+  <tabstop>rememberFormsHistoryCheckBox</tabstop>
+  <tabstop>rememberFormsHistoryButton</tabstop>
+  <tabstop>enableCookiesCheckBox</tabstop>
+  <tabstop>cookiesPolicyComboBox</tabstop>
+  <tabstop>keepCookiesModeComboBox</tabstop>
+  <tabstop>thirdPartyCookiesPolicyComboBox</tabstop>
+  <tabstop>thirdPartyCookiesExceptionsButton</tabstop>
+  <tabstop>clearHistoryCheckBox</tabstop>
+  <tabstop>clearHistoryButton</tabstop>
+  <tabstop>rememberPasswordsCheckBox</tabstop>
+  <tabstop>managePasswordsButton</tabstop>
+  <tabstop>masterPasswordCheckBox</tabstop>
+  <tabstop>masterPasswordButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

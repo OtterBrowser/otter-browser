@@ -169,6 +169,17 @@
    <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>searchFilterLineEditWidget</tabstop>
+  <tabstop>searchViewWidget</tabstop>
+  <tabstop>addSearchButton</tabstop>
+  <tabstop>editSearchButton</tabstop>
+  <tabstop>updateSearchButton</tabstop>
+  <tabstop>removeSearchButton</tabstop>
+  <tabstop>moveUpSearchButton</tabstop>
+  <tabstop>moveDownSearchButton</tabstop>
+  <tabstop>searchSuggestionsCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
