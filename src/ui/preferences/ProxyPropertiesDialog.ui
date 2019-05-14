@@ -407,6 +407,32 @@
    <header>src/ui/LineEditWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>titleLineEditWidget</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>manualConfigurationCheckBox</tabstop>
+  <tabstop>allCheckBox</tabstop>
+  <tabstop>allServersLineEditWidget</tabstop>
+  <tabstop>allPortSpinBox</tabstop>
+  <tabstop>httpCheckBox</tabstop>
+  <tabstop>httpServersLineEditWidget</tabstop>
+  <tabstop>httpPortSpinBox</tabstop>
+  <tabstop>httpsCheckBox</tabstop>
+  <tabstop>httpsServersLineEditWidget</tabstop>
+  <tabstop>httpsPortSpinBox</tabstop>
+  <tabstop>ftpCheckBox</tabstop>
+  <tabstop>ftpServersLineEditWidget</tabstop>
+  <tabstop>ftpPortSpinBox</tabstop>
+  <tabstop>socksCheckBox</tabstop>
+  <tabstop>socksServersLineEditWidget</tabstop>
+  <tabstop>socksPortSpinBox</tabstop>
+  <tabstop>automaticConfigurationCheckBox</tabstop>
+  <tabstop>usesSystemAuthenticationCheckBox</tabstop>
+  <tabstop>exceptionsItemViewWidget</tabstop>
+  <tabstop>addExceptionButton</tabstop>
+  <tabstop>editExceptionButton</tabstop>
+  <tabstop>removeExceptionButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
