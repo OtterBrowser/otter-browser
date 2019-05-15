@@ -145,6 +145,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>periodSpinBox</tabstop>
+  <tabstop>clearBrowsingHistoryCheckBox</tabstop>
+  <tabstop>clearCookiesCheckBox</tabstop>
+  <tabstop>clearFormsHistoryCheckBox</tabstop>
+  <tabstop>clearDownloadsHistoryCheckBox</tabstop>
+  <tabstop>clearSearchHistoryCheckBox</tabstop>
+  <tabstop>clearCachesCheckBox</tabstop>
+  <tabstop>clearStorageCheckBox</tabstop>
+  <tabstop>clearPasswordsCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
