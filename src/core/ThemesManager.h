@@ -81,8 +81,8 @@ public:
 
 	explicit ColorScheme(const QString &name, QObject *parent = nullptr);
 
-	QString getName() const;
-	QString getTitle() const;
+	QString getName() const override;
+	QString getTitle() const override;
 	ColorRoleInformation getColor(ColorRole role) const;
 
 private:
