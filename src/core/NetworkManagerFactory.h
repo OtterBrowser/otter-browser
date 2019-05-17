@@ -55,10 +55,8 @@ struct ProxyDefinition final
 		QString hostName;
 		quint16 port = 8080;
 
-		explicit ProxyServer(const QString &hostNameValue, quint16 portValue)
+		explicit ProxyServer(const QString &hostNameValue, quint16 portValue) : hostName(hostNameValue), port(portValue)
 		{
-			hostName = hostNameValue;
-			port = portValue;
 		}
 
 		ProxyServer()
