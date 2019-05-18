@@ -105,11 +105,11 @@ LocalListingNetworkReply::LocalListingNetworkReply(const QNetworkRequest &reques
 		navigation.clear();
 	}
 
-	NavigationEntry entry;
-	entry.name = QLatin1String("file:///");
-	entry.url = QUrl::fromUserInput(QLatin1String("/"));
+	NavigationEntry rootEntry;
+	rootEntry.name = QLatin1String("file:///");
+	rootEntry.url = QUrl::fromUserInput(QLatin1String("/"));
 
-	navigation.prepend(entry);
+	navigation.prepend(rootEntry);
 #endif
 
 	for (int i = 0; i < rawEntries.count(); ++i)
