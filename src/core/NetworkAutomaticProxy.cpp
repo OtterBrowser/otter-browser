@@ -338,7 +338,7 @@ void NetworkAutomaticProxy::setPath(const QString &path)
 			{
 				QIODevice *device(job->getData());
 
-				if (isSuccess && setup(device->readAll()))
+				if (isSuccess && device && setup(device->readAll()))
 				{
 					m_isValid = true;
 				}
