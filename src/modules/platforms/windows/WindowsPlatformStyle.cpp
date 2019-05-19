@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -178,14 +178,16 @@ void WindowsPlatformStyle::drawPrimitive(PrimitiveElement element, const QStyleO
 				}
 
 				return;
-		case PE_PanelStatusBar:
-			painter->save();
-			painter->fillRect(option->rect, Qt::white);
-			painter->setPen(QPen(Qt::lightGray, 1));
-			painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
-			painter->restore();
+			case PE_PanelStatusBar:
+				painter->save();
+				painter->fillRect(option->rect, Qt::white);
+				painter->setPen(QPen(Qt::lightGray, 1));
+				painter->drawLine(option->rect.left(), option->rect.top(), option->rect.right(), option->rect.top());
+				painter->restore();
 
-			return;
+				return;
+			default:
+				break;
 		}
 	}
 
@@ -196,7 +198,7 @@ void WindowsPlatformStyle::checkForModernStyle()
 {
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 	{
-		HIGHCONTRAST information = {0};
+		HIGHCONTRAST information;
 		information.cbSize = sizeof(HIGHCONTRAST);
 
 		BOOL isSuccess(SystemParametersInfoW(SPI_GETHIGHCONTRAST, 0, &information, 0));
