@@ -190,12 +190,7 @@ QVariant ItemModel::data(const QModelIndex &index, int role) const
 
 QVariant ItemModel::getItemData(QStandardItem *item, int role)
 {
-	if (!item)
-	{
-		return {};
-	}
-
-	return item->data(role);
+	return (item ? item->data(role) : QVariant());
 }
 
 QVariantList ItemModel::getAllData(int role, int column, const QModelIndex &parent) const
