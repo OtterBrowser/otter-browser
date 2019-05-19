@@ -35,7 +35,7 @@ Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyl
 	m_areToolTipsEnabled(SettingsManager::getOption(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled")),
 	m_canAlignTabBarLabel(false)
 {
-	const QString styleName(getName());
+	const QString styleName(Style::getName());
 
 	if (styleName == QLatin1String("fusion") || styleName == QLatin1String("breeze") || styleName == QLatin1String("oxygen"))
 	{
