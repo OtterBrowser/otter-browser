@@ -311,15 +311,12 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 	}
 
 	// Vista+ applications
-	const QSettings defaultAssociation(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix, QSettings::NativeFormat);
-	QString defaultApplication(defaultAssociation.value(QLatin1String("."), {}).toString());
+	QString defaultApplication(QSettings(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix, QSettings::NativeFormat).value(QLatin1String("."), {}).toString());
 	QStringList associations;
 
 	if (defaultApplication.isEmpty())
 	{
-		const QSettings defaultAssociation(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\.") + suffix, QSettings::NativeFormat);
-
-		defaultApplication = defaultAssociation.value(QLatin1String("."), {}).toString();
+		defaultApplication = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\.") + suffix, QSettings::NativeFormat).value(QLatin1String("."), {}).toString();
 	}
 
 	if (!defaultApplication.isEmpty())
