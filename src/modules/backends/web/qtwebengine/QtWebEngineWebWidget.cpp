@@ -394,11 +394,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::SaveLinkToDiskAction:
-			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			startTransfer(TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::addTransfer(new Transfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::OpenFrameAction:
@@ -516,7 +516,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					QNetworkRequest request(m_hitResult.imageUrl);
 					request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
 
-					new Transfer(request, {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+					TransfersManager::startTransfer(request, {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 				}
 			}
 
@@ -590,7 +590,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QNetworkRequest request(m_hitResult.mediaUrl);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_page->profile()->httpUserAgent());
 
-				new Transfer(request, {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+				TransfersManager::startTransfer(request, {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 			}
 
 			break;

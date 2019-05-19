@@ -451,11 +451,11 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 		QNetworkRequest mutableRequest(request);
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-		new Transfer(m_networkManager->get(mutableRequest), {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
+		TransfersManager::startTransfer(m_networkManager->get(mutableRequest), {}, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 	}
 	else
 	{
-		startDelayedTransfer(new Transfer(request, {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+		startDelayedTransfer(TransfersManager::startTransfer(request, {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 	}
 }
 
@@ -463,7 +463,7 @@ void QtWebKitWebWidget::handleUnsupportedContent(QNetworkReply *reply)
 {
 	m_networkManager->registerTransfer(reply);
 
-	startDelayedTransfer(new Transfer(reply, {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+	startDelayedTransfer(TransfersManager::startTransfer(reply, {}, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &value)
@@ -879,7 +879,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					QNetworkRequest request(getUrl());
 					request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-					new Transfer(m_networkManager->get(request), information.path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
+					TransfersManager::startTransfer(m_networkManager->get(request), information.path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 				}
 			}
 			else
@@ -908,7 +908,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 								QNetworkRequest request(getUrl());
 								request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-								new Transfer(m_networkManager->get(request), path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
+								TransfersManager::startTransfer(m_networkManager->get(request), path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 							}
 
 							break;
@@ -1058,7 +1058,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::addTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(TransfersManager::startTransfer(getCurrentHitTestResult().linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::OpenFrameAction:

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -141,7 +142,8 @@ void Updater::clearUpdate()
 Transfer* Updater::downloadFile(const QUrl &url, const QString &path)
 {
 	const QString urlString(url.path());
-	Transfer *transfer(new Transfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption), this));
+	Transfer *transfer(TransfersManager::startTransfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption)));
+	transfer->setParent(this);
 
 	connect(transfer, &Transfer::finished, this, &Updater::handleTransferFinished);
 
