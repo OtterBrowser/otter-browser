@@ -340,9 +340,7 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 		}
 
 		ApplicationInformation information;
-		const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
-
-		information.command = applicationPath.value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
+		information.command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
 		if (information.command.contains(QLatin1String("explorer.exe"), Qt::CaseInsensitive))
 		{
@@ -380,21 +378,15 @@ QVector<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMi
 			continue;
 		}
 
-		const QSettings applicationPath(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
-
-		information.command = applicationPath.value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
+		information.command = QSettings(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
 		if (information.command.isEmpty())
 		{
-			const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
-
-			information.command = applicationPath.value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
+			information.command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat).value(QLatin1String("."), {}).toString().remove(QLatin1Char('"'));
 
 			if (information.command.isEmpty())
 			{
-				const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + value, QSettings::NativeFormat);
-
-				information.command = applicationPath.value(QLatin1String("."), {}).toString();
+				information.command = QSettings(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + value, QSettings::NativeFormat).value(QLatin1String("."), {}).toString();
 
 				if (!information.command.isEmpty())
 				{
