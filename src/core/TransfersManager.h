@@ -90,9 +90,6 @@ public slots:
 protected:
 	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 	Transfer(const QSettings &settings, QObject *parent = nullptr);
-	Transfer(const QUrl &source, const QString &target = {}, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
-	Transfer(const QNetworkRequest &request, const QString &target = {}, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
-	Transfer(QNetworkReply *reply, const QString &target = {}, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event) override;
 	void start(QNetworkReply *reply, const QString &target);

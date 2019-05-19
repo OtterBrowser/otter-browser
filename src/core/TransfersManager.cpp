@@ -88,74 +88,6 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent 
 	m_timeFinished.setTimeSpec(Qt::UTC);
 }
 
-Transfer::Transfer(const QUrl &source, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
-	m_reply(nullptr),
-	m_device(nullptr),
-	m_source(source),
-	m_target(target),
-	m_speed(0),
-	m_bytesStart(0),
-	m_bytesReceivedDifference(0),
-	m_bytesReceived(0),
-	m_bytesTotal(0),
-	m_options(options),
-	m_state(UnknownState),
-	m_updateTimer(0),
-	m_updateInterval(0),
-	m_remainingTime(-1),
-	m_isSelectingPath(false),
-	m_isArchived(false)
-{
-	QNetworkRequest request;
-	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-	request.setUrl(QUrl(source));
-
-	start(NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request), target);
-}
-
-Transfer::Transfer(const QNetworkRequest &request, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
-	m_reply(nullptr),
-	m_device(nullptr),
-	m_source(request.url()),
-	m_target(target),
-	m_speed(0),
-	m_bytesStart(0),
-	m_bytesReceivedDifference(0),
-	m_bytesReceived(0),
-	m_bytesTotal(0),
-	m_options(options),
-	m_state(UnknownState),
-	m_updateTimer(0),
-	m_updateInterval(0),
-	m_remainingTime(-1),
-	m_isSelectingPath(false),
-	m_isArchived(false)
-{
-	start(NetworkManagerFactory::getNetworkManager(m_options.testFlag(IsPrivateOption))->get(request), target);
-}
-
-Transfer::Transfer(QNetworkReply *reply, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
-	m_reply(reply),
-	m_source((m_reply->url().isValid() ? m_reply->url() : m_reply->request().url()).adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
-	m_target(target),
-	m_speed(0),
-	m_bytesStart(0),
-	m_bytesReceivedDifference(0),
-	m_bytesReceived(0),
-	m_bytesTotal(0),
-	m_options(options),
-	m_state(UnknownState),
-	m_updateTimer(0),
-	m_updateInterval(0),
-	m_remainingTime(-1),
-	m_isSelectingPath(false),
-	m_isArchived(false)
-{
-	start(reply, target);
-}
-
 Transfer::~Transfer()
 {
 	if (m_options.testFlag(HasToOpenAfterFinishOption) && QFile::exists(m_target))
@@ -218,6 +150,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	const QMimeDatabase mimeDatabase;
 
 	m_reply = reply;
+	m_source = reply->request().url().adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	m_mimeType = mimeDatabase.mimeTypeForName(m_reply->header(QNetworkRequest::ContentTypeHeader).toString());
 
 	QString temporaryFileName(getSuggestedFileName());
@@ -1185,7 +1118,14 @@ TransfersManager* TransfersManager::getInstance()
 
 Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer(new Transfer(source, target, options, m_instance));
+	QNetworkRequest request;
+	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+	request.setUrl(QUrl(source));
+
+	Transfer *transfer(new Transfer(options, m_instance));
+	transfer->start(NetworkManagerFactory::getNetworkManager(options.testFlag(Transfer::IsPrivateOption))->get(request), target);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -1201,7 +1141,8 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 
 Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer(new Transfer(request, target, options, m_instance));
+	Transfer *transfer(new Transfer(options, m_instance));
+	transfer->start(NetworkManagerFactory::getNetworkManager(options.testFlag(Transfer::IsPrivateOption))->get(request), target);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -1217,7 +1158,8 @@ Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const 
 
 Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer(new Transfer(reply, target, options, m_instance));
+	Transfer *transfer(new Transfer(options, m_instance));
+	transfer->start(reply, target);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
