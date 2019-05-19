@@ -79,7 +79,7 @@ public:
         CsConnectionRefused
     };
 
-    QFtpDTP(QFtpPI *p, QObject *parent = 0);
+    QFtpDTP(QFtpPI *p, QObject *parent = nullptr);
 
     void setData(QByteArray *);
     void setDevice(QIODevice *);
@@ -156,7 +156,7 @@ class QFtpPI : public QObject
     Q_OBJECT
 
 public:
-    explicit QFtpPI(QObject *parent = 0);
+    explicit QFtpPI(QObject *parent = nullptr);
 
     void connectToHost(const QString &host, quint16 port);
 
@@ -236,8 +236,8 @@ private:
 class QFtpCommand
 {
 public:
-    QFtpCommand(QFtp::Command cmd, QStringList raw, const QByteArray &ba);
-    QFtpCommand(QFtp::Command cmd, QStringList raw, QIODevice *dev = 0);
+    QFtpCommand(QFtp::Command cmd, const QStringList &raw, const QByteArray &ba);
+    QFtpCommand(QFtp::Command cmd, const QStringList &raw, QIODevice *dev = nullptr);
     ~QFtpCommand();
 
     int id;
@@ -257,14 +257,14 @@ public:
 
 QBasicAtomicInt QFtpCommand::idCounter = Q_BASIC_ATOMIC_INITIALIZER(1);
 
-QFtpCommand::QFtpCommand(QFtp::Command cmd, QStringList raw, const QByteArray &ba)
+QFtpCommand::QFtpCommand(QFtp::Command cmd, const QStringList &raw, const QByteArray &ba)
     : command(cmd), rawCmds(raw), is_ba(true)
 {
     id = idCounter.fetchAndAddRelaxed(1);
     data.ba = new QByteArray(ba);
 }
 
-QFtpCommand::QFtpCommand(QFtp::Command cmd, QStringList raw, QIODevice *dev)
+QFtpCommand::QFtpCommand(QFtp::Command cmd, const QStringList &raw, QIODevice *dev)
     : command(cmd), rawCmds(raw), is_ba(false)
 {
     id = idCounter.fetchAndAddRelaxed(1);
@@ -284,7 +284,7 @@ QFtpCommand::~QFtpCommand()
  *********************************************************************/
 QFtpDTP::QFtpDTP(QFtpPI *p, QObject *parent) :
     QObject(parent),
-    socket(0),
+    socket(nullptr),
     listener(this),
     pi(p),
     callWriteData(false)
@@ -319,7 +319,7 @@ void QFtpDTP::connectToHost(const QString & host, quint16 port)
 
     if (socket) {
         delete socket;
-        socket = 0;
+        socket = nullptr;
     }
     socket = new QTcpSocket(this);
 #ifndef QT_NO_BEARERMANAGEMENT
@@ -432,7 +432,7 @@ void QFtpDTP::writeData()
         }
 
         // do we continue uploading?
-        callWriteData = data.dev != 0;
+        callWriteData = data.dev != nullptr;
     }
 }
 
@@ -784,7 +784,7 @@ void QFtpDTP::setupSocket()
 void QFtpDTP::clearData()
 {
     is_ba = false;
-    data.dev = 0;
+    data.dev = nullptr;
 }
 
 /**********************************************************************
@@ -797,7 +797,7 @@ QFtpPI::QFtpPI(QObject *parent) :
     rawCommand(false),
     transferConnectionExtended(true),
     dtp(this),
-    commandSocket(0),
+    commandSocket(nullptr),
     state(Begin), abortState(None),
     currentCmd(QString()),
     waitForDtpToConnect(false),
@@ -941,10 +941,10 @@ void QFtpPI::readyRead()
             }
         }
         QString endOfMultiLine;
-        endOfMultiLine[0] = '0' + replyCode[0];
-        endOfMultiLine[1] = '0' + replyCode[1];
-        endOfMultiLine[2] = '0' + replyCode[2];
-        endOfMultiLine[3] = QLatin1Char(' ');
+        endOfMultiLine.append('0' + replyCode[0]);
+        endOfMultiLine.append('0' + replyCode[1]);
+        endOfMultiLine.append('0' + replyCode[2]);
+        endOfMultiLine.append(QLatin1Char(' '));
         QString lineCont(endOfMultiLine);
         lineCont[3] = QLatin1Char('-');
         QString lineLeft4 = line.left(4);
@@ -2100,10 +2100,10 @@ QFtp::Command QFtp::currentCommand() const
 QIODevice* QFtp::currentDevice() const
 {
     if (d->pending.isEmpty())
-        return 0;
+        return nullptr;
     QFtpCommand *c = d->pending.first();
     if (c->is_ba)
-        return 0;
+        return nullptr;
     return c->data.dev;
 }
 
