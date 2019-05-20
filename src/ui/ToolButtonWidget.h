@@ -49,6 +49,7 @@ public slots:
 
 protected:
 	void actionEvent(QActionEvent *event) override;
+	void showEvent(QShowEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void addMenu(Menu *menu, const QVector<ToolBarsManager::ToolBarDefinition::Entry> &entries);
 	bool event(QEvent *event) override;

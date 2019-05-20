@@ -70,9 +70,6 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 		menu->setMenuOptions(definition.options);
 
 		setPopupMode(QToolButton::InstantPopup);
-		setText(getText());
-		setToolTip(getToolTip());
-		setIcon(getIcon());
 	}
 
 	const ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
@@ -98,6 +95,15 @@ void ToolButtonWidget::actionEvent(QActionEvent *event)
 		setText(getText());
 		setIcon(getIcon());
 	}
+}
+
+void ToolButtonWidget::showEvent(QShowEvent *event)
+{
+	setText(getText());
+	setToolTip(getToolTip());
+	setIcon(getIcon());
+
+	QToolButton::showEvent(event);
 }
 
 void ToolButtonWidget::paintEvent(QPaintEvent *event)
