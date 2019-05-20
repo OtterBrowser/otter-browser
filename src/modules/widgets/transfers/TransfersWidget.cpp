@@ -168,6 +168,11 @@ void TransfersWidget::updateState()
 	setIcon(m_icon);
 }
 
+QString TransfersWidget::getToolTip() const
+{
+	return tr("Downloads");
+}
+
 QIcon TransfersWidget::getIcon() const
 {
 	return m_icon;

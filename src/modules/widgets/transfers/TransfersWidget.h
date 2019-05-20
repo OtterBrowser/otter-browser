@@ -39,6 +39,7 @@ class TransfersWidget final : public ToolButtonWidget
 public:
 	explicit TransfersWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
+	QString getToolTip() const override;
 	QIcon getIcon() const override;
 
 protected:
