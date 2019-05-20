@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -89,41 +89,17 @@ void BookmarkWidget::updateBookmark(BookmarksModel::Bookmark *bookmark)
 		}
 
 		setPopupMode(QToolButton::InstantPopup);
-		setToolTip(m_bookmark->getTitle());
 		setEnabled(m_bookmark->rowCount() > 0);
 	}
 	else
 	{
-		QStringList toolTip;
-		toolTip.append(tr("Title: %1").arg(m_bookmark->getTitle()));
-
-		if (!m_bookmark->getUrl().isEmpty())
-		{
-			toolTip.append(tr("Address: %1").arg(m_bookmark->getUrl().toDisplayString()));
-		}
-
-		if (!m_bookmark->getDescription().isEmpty())
-		{
-			toolTip.append(tr("Description: %1").arg(m_bookmark->getDescription()));
-		}
-
-		if (m_bookmark->getTimeAdded().isValid())
-		{
-			toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
-		}
-
-		if (m_bookmark->getTimeVisited().isValid() && type != BookmarksModel::FeedBookmark)
-		{
-			toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
-		}
-
-		setToolTip(QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>"));
 		setMenu(nullptr);
 	}
 
 	setIcon(getIcon());
 	setStatusTip(m_bookmark->getUrl().toDisplayString());
 	setText(getText().replace(QLatin1Char('&'), QLatin1String("&&")));
+	setToolTip(getToolTip());
 }
 
 QString BookmarkWidget::getText() const
@@ -131,6 +107,41 @@ QString BookmarkWidget::getText() const
 	const QVariantMap options(getOptions());
 
 	return ((isCustomized() && options.contains(QLatin1String("text"))) ? options[QLatin1String("text")].toString() : m_bookmark->getTitle());
+}
+
+QString BookmarkWidget::getToolTip() const
+{
+	const BookmarksModel::BookmarkType type(m_bookmark->getType());
+
+	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FeedBookmark || type == BookmarksModel::FolderBookmark)
+	{
+		return m_bookmark->getTitle();
+	}
+
+	QStringList toolTip;
+	toolTip.append(tr("Title: %1").arg(m_bookmark->getTitle()));
+
+	if (!m_bookmark->getUrl().isEmpty())
+	{
+		toolTip.append(tr("Address: %1").arg(m_bookmark->getUrl().toDisplayString()));
+	}
+
+	if (!m_bookmark->getDescription().isEmpty())
+	{
+		toolTip.append(tr("Description: %1").arg(m_bookmark->getDescription()));
+	}
+
+	if (m_bookmark->getTimeAdded().isValid())
+	{
+		toolTip.append(tr("Created: %1").arg(Utils::formatDateTime(m_bookmark->getTimeAdded())));
+	}
+
+	if (m_bookmark->getTimeVisited().isValid() && type != BookmarksModel::FeedBookmark)
+	{
+		toolTip.append(tr("Visited: %1").arg(Utils::formatDateTime(m_bookmark->getTimeVisited())));
+	}
+
+	return QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>");
 }
 
 QIcon BookmarkWidget::getIcon() const

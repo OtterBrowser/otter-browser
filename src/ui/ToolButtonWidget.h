@@ -38,6 +38,7 @@ public:
 	explicit ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Entry &definition, QWidget *parent = nullptr);
 
 	virtual QString getText() const;
+	virtual QString getToolTip() const;
 	virtual QIcon getIcon() const;
 	QVariantMap getOptions() const;
 	QVariantMap getParameters() const;

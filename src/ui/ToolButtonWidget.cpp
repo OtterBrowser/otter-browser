@@ -71,7 +71,7 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarDefinition::Ent
 
 		setPopupMode(QToolButton::InstantPopup);
 		setText(getText());
-		setToolTip(getText());
+		setToolTip(getToolTip());
 		setIcon(getIcon());
 	}
 
@@ -236,6 +236,11 @@ QString ToolButtonWidget::getText() const
 	}
 
 	return text();
+}
+
+QString ToolButtonWidget::getToolTip() const
+{
+	return getText();
 }
 
 QIcon ToolButtonWidget::getIcon() const
