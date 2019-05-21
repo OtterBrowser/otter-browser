@@ -79,7 +79,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 			{
 				if (definition.entries.at(i).action == QLatin1String("AddressWidget") || definition.entries.at(i).action == QLatin1String("SearchWidget"))
 				{
-					reload();
+					QTimer::singleShot(0, this, &ToolBarWidget::reload);
 
 					break;
 				}
