@@ -101,6 +101,8 @@ protected slots:
 	void handleUpdateCheckResult(const QVector<UpdateChecker::UpdateInformation> &availableUpdates, int latestVersionIndex);
 
 private:
+	Q_DISABLE_COPY(Application)
+
 	LongTermTimer *m_updateCheckTimer;
 
 	static Application *m_instance;

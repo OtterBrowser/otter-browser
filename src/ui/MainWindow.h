@@ -127,6 +127,8 @@ protected slots:
 	void updateShortcuts();
 
 private:
+	Q_DISABLE_COPY(MainWindow)
+
 	TabSwitcherWidget *m_tabSwitcher;
 	WorkspaceWidget *m_workspace;
 	TabBarWidget *m_tabBar;
