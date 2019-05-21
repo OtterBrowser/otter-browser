@@ -79,11 +79,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 			{
 				if (definition.entries.at(i).action == QLatin1String("AddressWidget") || definition.entries.at(i).action == QLatin1String("SearchWidget"))
 				{
-					m_isInitialized = true;
-
-					setDefinition(definition);
-
-					connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
+					reload();
 
 					break;
 				}
@@ -224,11 +220,7 @@ void ToolBarWidget::showEvent(QShowEvent *event)
 {
 	if (!m_isInitialized)
 	{
-		m_isInitialized = true;
-
 		reload();
-
-		connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
 	}
 
 	QToolBar::showEvent(event);
@@ -621,6 +613,13 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void ToolBarWidget::reload()
 {
+	if (!m_isInitialized)
+	{
+		m_isInitialized = true;
+
+		connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, this, &ToolBarWidget::handleToolBarModified);
+	}
+
 	setDefinition(getDefinition());
 }
 
