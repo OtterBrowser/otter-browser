@@ -64,11 +64,11 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
 
-	m_state = Session::MainWindow::ToolBarState(identifier, definition);
-	m_area = definition.location;
-
 	if (definition.isValid() && identifier != ToolBarsManager::MenuBar)
 	{
+		m_state = Session::MainWindow::ToolBarState(identifier, definition);
+		m_area = definition.location;
+
 		if (identifier == ToolBarsManager::TabBar)
 		{
 			m_isInitialized = true;
