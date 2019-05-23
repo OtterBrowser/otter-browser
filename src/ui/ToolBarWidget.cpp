@@ -64,7 +64,12 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
 
-	if (definition.isValid() && identifier != ToolBarsManager::MenuBar)
+	if (!definition.isValid())
+	{
+		return;
+	}
+
+	if (identifier != ToolBarsManager::MenuBar)
 	{
 		m_state = Session::MainWindow::ToolBarState(identifier, definition);
 		m_area = definition.location;
