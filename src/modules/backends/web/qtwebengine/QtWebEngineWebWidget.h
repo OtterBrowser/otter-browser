@@ -134,12 +134,12 @@ protected:
 	bool canGoBack() const override;
 	bool canGoForward() const override;
 	bool canFastForward() const override;
-	bool canInspect() const;
+	bool canInspect() const override;
 	bool canRedo() const override;
 	bool canUndo() const override;
 	bool canShowContextMenu(const QPoint &position) const override;
 	bool canViewSource() const override;
-	bool isInspecting() const;
+	bool isInspecting() const override;
 	bool isPopup() const override;
 	bool isScrollBar(const QPoint &position) const override;
 	bool isTypedIn() const;
