@@ -65,7 +65,7 @@ public:
 	void search(const QString &query, const QString &searchEngine) override;
 	void print(QPrinter *printer) override;
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = {}) const override;
-	QWidget* getInspector();
+	QWidget* getInspector() override;
 	QWidget* getViewport() override;
 	QString getTitle() const override;
 	QString getDescription() const override;
