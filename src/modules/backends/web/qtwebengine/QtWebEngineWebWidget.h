@@ -130,14 +130,14 @@ protected:
 	bool canGoForward() const override;
 	bool canFastForward() const override;
 #if QTWEBENGINECORE_VERSION >= 0x050B00
-	bool canInspect() const;
+	bool canInspect() const override;
 #endif
 	bool canRedo() const override;
 	bool canUndo() const override;
 	bool canShowContextMenu(const QPoint &position) const override;
 	bool canViewSource() const override;
 #if QTWEBENGINECORE_VERSION >= 0x050B00
-	bool isInspecting() const;
+	bool isInspecting() const override;
 #endif
 	bool isPopup() const override;
 	bool isScrollBar(const QPoint &position) const override;
