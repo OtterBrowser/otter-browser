@@ -74,6 +74,7 @@ public:
 	QVariant getPageInformation(PageInformation key) const override;
 	QUrl getUrl() const override;
 	QIcon getIcon() const override;
+	QPixmap createThumbnail(const QSize &size = {}) override;
 	QPoint getScrollPosition() const override;
 	LinkUrl getActiveFrame() const override;
 	LinkUrl getActiveImage() const override;
@@ -167,6 +168,7 @@ private:
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
 #endif
 	QDateTime m_lastUrlClickTime;
+	QPixmap m_thumbnail;
 	HitTestResult m_hitResult;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QMultiMap<QString, QString> m_metaData;

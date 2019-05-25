@@ -48,6 +48,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
+#include <QtCore/QtMath>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
@@ -1617,6 +1618,44 @@ QIcon QtWebEngineWebWidget::getIcon() const
 	const QIcon icon(m_page->icon());
 
 	return (icon.isNull() ? ThemesManager::createIcon(QLatin1String("tab")) : icon);
+}
+
+QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
+{
+	if ((size.isNull() || size == m_thumbnail.size()) && ((!m_thumbnail.isNull() && qFuzzyCompare(m_thumbnail.devicePixelRatio(), devicePixelRatio())) || m_loadingState == OngoingLoadingState))
+	{
+		return m_thumbnail;
+	}
+
+	const QSize thumbnailSize(size.isValid() ? size : QSize(260, 170));
+	const qreal thumbnailAspectRatio(static_cast<qreal>(thumbnailSize.width()) / thumbnailSize.height());
+	const QSize contentsSize(m_webView->size());
+	const qreal contentsAspectRatio(static_cast<qreal>(contentsSize.width()) / contentsSize.height());
+	QPixmap pixmap(m_webView->grab(QRect(QPoint(0, 0), contentsSize)));
+
+	if (!qFuzzyCompare(thumbnailAspectRatio, contentsAspectRatio))
+	{
+		if (thumbnailAspectRatio > contentsAspectRatio)
+		{
+			pixmap = pixmap.copy(QRect(QPoint(0, 0), QSize(pixmap.width(), qFloor(pixmap.height() * thumbnailAspectRatio))));
+		}
+		else
+		{
+			const int offset((pixmap.width() - qFloor(pixmap.width() / thumbnailAspectRatio)) / 2);
+
+			pixmap = pixmap.copy(QRect(QPoint(offset, 0), QSize((pixmap.width() - (offset * 2)), pixmap.height())));
+		}
+	}
+
+	pixmap = pixmap.scaled((thumbnailSize * devicePixelRatio()), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	pixmap.setDevicePixelRatio(devicePixelRatio());
+
+	if (size.isNull())
+	{
+		m_thumbnail = pixmap;
+	}
+
+	return pixmap;
 }
 
 QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
