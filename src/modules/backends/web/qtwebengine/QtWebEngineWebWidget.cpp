@@ -1637,11 +1637,11 @@ QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
 	{
 		if (thumbnailAspectRatio > contentsAspectRatio)
 		{
-			pixmap = pixmap.copy(QRect(QPoint(0, 0), QSize(pixmap.width(), qFloor(pixmap.height() * thumbnailAspectRatio))));
+			pixmap = pixmap.copy(QRect(QPoint(0, 0), QSize(pixmap.width(), qFloor(pixmap.width() / thumbnailAspectRatio))));
 		}
 		else
 		{
-			const int offset((pixmap.width() - qFloor(pixmap.width() / thumbnailAspectRatio)) / 2);
+			const int offset((pixmap.width() - qFloor(pixmap.height() * thumbnailAspectRatio)) / 2);
 
 			pixmap = pixmap.copy(QRect(QPoint(offset, 0), QSize((pixmap.width() - (offset * 2)), pixmap.height())));
 		}
