@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ void StartPageModel::reloadModel()
 
 					m_reloads[url] = thumbnailRequestInformation;
 
-					AddonsManager::getWebBackend()->requestThumbnail(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()));
+					requestThumbnail(url, QSize(SettingsManager::getOption(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getOption(SettingsManager::StartPage_TileHeightOption).toInt()));
 				}
 
 				appendRow(item);
@@ -202,7 +202,7 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool needsTitleUpdate)
 			handleThumbnailCreated(url, thumbnail, information.getTitle());
 		}
 	}
-	else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
+	else if (requestThumbnail(url, size))
 	{
 		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = thumbnailRequestInformation;
 	}
@@ -212,10 +212,6 @@ void StartPageModel::handleOptionChanged(int identifier)
 {
 	switch (identifier)
 	{
-		case SettingsManager::Backends_WebOption:
-			connect(AddonsManager::getWebBackend(), &WebBackend::thumbnailAvailable, this, &StartPageModel::handleThumbnailCreated);
-
-			break;
 		case SettingsManager::StartPage_BookmarksFolderOption:
 		case SettingsManager::StartPage_ShowAddTileOption:
 			reloadModel();
@@ -376,6 +372,27 @@ QVariant StartPageModel::data(const QModelIndex &index, int role) const
 QStringList StartPageModel::mimeTypes() const
 {
 	return {QLatin1String("text/uri-list")};
+}
+
+bool StartPageModel::requestThumbnail(const QUrl &url, const QSize &size)
+{
+	WebPageThumbnailJob *job(AddonsManager::getWebBackend()->createPageThumbnailJob(url, size));
+
+	if (job)
+	{
+		connect(job, &WebPageThumbnailJob::jobFinished, [=](bool isSuccess)
+		{
+			Q_UNUSED(isSuccess)
+
+			handleThumbnailCreated(url, job->getThumbnail(), job->getTitle());
+		});
+
+		job->start();
+
+		return true;
+	}
+
+	return false;
 }
 
 bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)

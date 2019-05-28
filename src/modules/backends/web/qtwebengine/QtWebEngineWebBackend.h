@@ -57,7 +57,6 @@ public:
 #endif
 	QUrl getHomePage() const override;
 	WebBackend::BackendCapabilities getCapabilities() const override;
-	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 
 #if QTWEBENGINECORE_VERSION >= 0x050D00
 protected:

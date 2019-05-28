@@ -43,6 +43,7 @@ public:
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
 
 	WebWidget* createWidget(const QVariantMap &parameters, ContentsWidget *parent = nullptr) override;
+	WebPageThumbnailJob* createPageThumbnailJob(const QUrl &url, const QSize &size) override;
 	QString getName() const override;
 	QString getTitle() const override;
 	QString getDescription() const override;
@@ -53,7 +54,6 @@ public:
 	QUrl getHomePage() const override;
 	BackendCapabilities getCapabilities() const override;
 	static int getOptionIdentifier(OptionIdentifier identifier);
-	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 
 protected:
 	static QtWebKitWebBackend* getInstance();

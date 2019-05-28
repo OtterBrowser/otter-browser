@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,14 @@ QPixmap WebPageThumbnailJob::getThumbnail()
 
 WebBackend::WebBackend(QObject *parent) : QObject(parent), Addon()
 {
+}
+
+WebPageThumbnailJob* WebBackend::createPageThumbnailJob(const QUrl &url, const QSize &size)
+{
+	Q_UNUSED(url)
+	Q_UNUSED(size)
+
+	return nullptr;
 }
 
 QVector<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const

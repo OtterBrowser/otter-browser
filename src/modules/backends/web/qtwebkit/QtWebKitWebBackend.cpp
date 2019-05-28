@@ -176,6 +176,11 @@ WebWidget* QtWebKitWebBackend::createWidget(const QVariantMap &parameters, Conte
 	return widget;
 }
 
+WebPageThumbnailJob* QtWebKitWebBackend::createPageThumbnailJob(const QUrl &url, const QSize &size)
+{
+	return new QtWebKitWebPageThumbnailJob(url, size, this);
+}
+
 QtWebKitWebBackend* QtWebKitWebBackend::getInstance()
 {
 	return m_instance;
@@ -269,22 +274,6 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 	}
 
 	return -1;
-}
-
-bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
-{
-	QtWebKitWebPageThumbnailJob *job(new QtWebKitWebPageThumbnailJob(url, size, this));
-
-	connect(job, &QtWebKitWebPageThumbnailJob::jobFinished, [=](bool isSuccess)
-	{
-		Q_UNUSED(isSuccess)
-
-		emit thumbnailAvailable(url, job->getThumbnail(), job->getTitle());
-	});
-
-	job->start();
-
-	return true;
 }
 
 QtWebKitWebPageThumbnailJob::QtWebKitWebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent) : WebPageThumbnailJob(url, size, parent),

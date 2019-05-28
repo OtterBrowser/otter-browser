@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,8 @@ protected:
 		quint64 bookmarkIdentifier = 0;
 		bool needsTitleUpdate = false;
 	};
+
+	bool requestThumbnail(const QUrl &url, const QSize &size);
 
 protected slots:
 	void handleOptionChanged(int identifier);
