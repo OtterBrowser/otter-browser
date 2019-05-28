@@ -87,8 +87,8 @@ class QtWebKitWebPageThumbnailJob final : public WebPageThumbnailJob
 public:
 	explicit QtWebKitWebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
 
-	QString getTitle() override;
-	QPixmap getThumbnail() override;
+	QString getTitle() const override;
+	QPixmap getThumbnail() const override;
 	bool isRunning() const override;
 
 public slots:
