@@ -371,12 +371,12 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 	emit jobFinished(true);
 }
 
-QString QtWebKitWebPageThumbnailJob::getTitle()
+QString QtWebKitWebPageThumbnailJob::getTitle() const
 {
 	return m_title;
 }
 
-QPixmap QtWebKitWebPageThumbnailJob::getThumbnail()
+QPixmap QtWebKitWebPageThumbnailJob::getThumbnail() const
 {
 	return m_pixmap;
 }

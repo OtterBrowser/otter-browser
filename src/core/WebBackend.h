@@ -37,8 +37,8 @@ class WebPageThumbnailJob : public Job
 public:
 	explicit WebPageThumbnailJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
 
-	virtual QString getTitle();
-	virtual QPixmap getThumbnail();
+	virtual QString getTitle() const = 0;
+	virtual QPixmap getThumbnail() const = 0;
 };
 
 class WebBackend : public QObject, public Addon

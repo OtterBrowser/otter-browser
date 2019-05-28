@@ -28,16 +28,6 @@ WebPageThumbnailJob::WebPageThumbnailJob(const QUrl &url, const QSize &size, QOb
 	Q_UNUSED(size)
 }
 
-QString WebPageThumbnailJob::getTitle()
-{
-	return {};
-}
-
-QPixmap WebPageThumbnailJob::getThumbnail()
-{
-	return {};
-}
-
 WebBackend::WebBackend(QObject *parent) : QObject(parent), Addon()
 {
 }
