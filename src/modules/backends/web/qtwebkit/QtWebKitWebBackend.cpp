@@ -371,6 +371,16 @@ void QtWebKitWebPageThumbnailJob::handlePageLoadFinished(bool result)
 	emit jobFinished(true);
 }
 
+QString QtWebKitWebPageThumbnailJob::getTitle()
+{
+	return m_title;
+}
+
+QPixmap QtWebKitWebPageThumbnailJob::getThumbnail()
+{
+	return m_pixmap;
+}
+
 bool QtWebKitWebPageThumbnailJob::isRunning() const
 {
 	return (m_page != nullptr);
