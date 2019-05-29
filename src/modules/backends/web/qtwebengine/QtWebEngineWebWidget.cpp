@@ -1127,8 +1127,10 @@ void QtWebEngineWebWidget::notifyTitleChanged()
 	emit titleChanged(getTitle());
 }
 
-void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
+void QtWebEngineWebWidget::notifyUrlChanged()
 {
+	const QUrl &url(getUrl());
+
 	notifyNavigationActionsChanged();
 	updateOptions(url);
 
@@ -1605,7 +1607,7 @@ QUrl QtWebEngineWebWidget::getUrl() const
 {
 	const QUrl url(m_page->url());
 
-	return (Utils::isUrlEmpty(url) ? m_page->requestedUrl() : url);
+	return (Utils::isUrlEmpty(url) ? ((url.toString() == QLatin1String("about:blank#blocked")) ? QUrl(QLatin1String("about:start")) : m_page->requestedUrl()) : url);
 }
 
 QIcon QtWebEngineWebWidget::getIcon() const
