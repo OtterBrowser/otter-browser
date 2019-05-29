@@ -153,7 +153,7 @@ protected slots:
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
 	void handleFullScreenRequest(QWebEngineFullScreenRequest request);
 	void notifyTitleChanged();
-	void notifyUrlChanged(const QUrl &url);
+	void notifyUrlChanged();
 	void notifyIconChanged();
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature nativeFeature, bool cancel);
 	void notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status);
