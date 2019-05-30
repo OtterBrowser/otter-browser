@@ -1624,6 +1624,11 @@ QIcon QtWebEngineWebWidget::getIcon() const
 
 QPixmap QtWebEngineWebWidget::createThumbnail(const QSize &size)
 {
+	if (!m_webView)
+	{
+		return {};
+	}
+
 	if ((size.isNull() || size == m_thumbnail.size()) && ((!m_thumbnail.isNull() && qFuzzyCompare(m_thumbnail.devicePixelRatio(), devicePixelRatio())) || m_loadingState == OngoingLoadingState))
 	{
 		return m_thumbnail;
