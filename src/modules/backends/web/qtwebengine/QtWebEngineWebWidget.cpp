@@ -494,7 +494,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::SaveImageToDiskAction:
 			if (m_hitResult.imageUrl.isValid())
 			{
-				if (m_hitResult.imageUrl.url().contains(QLatin1String(";base64,")))
+				if (m_hitResult.imageUrl.scheme() == QLatin1String("data") && m_hitResult.imageUrl.url().contains(QLatin1String(";base64,")))
 				{
 					const QString imageUrl(m_hitResult.imageUrl.url());
 					const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));

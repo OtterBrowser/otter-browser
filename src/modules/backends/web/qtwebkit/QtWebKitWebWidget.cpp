@@ -429,7 +429,7 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 				device->deleteLater();
 			}
 		}
-		else if (!getCurrentHitTestResult().imageUrl.isEmpty() && getCurrentHitTestResult().imageUrl.url().contains(QLatin1String(";base64,")))
+		else if (!getCurrentHitTestResult().imageUrl.isEmpty() && getCurrentHitTestResult().imageUrl.scheme() == QLatin1String("data") && getCurrentHitTestResult().imageUrl.url().contains(QLatin1String(";base64,")))
 		{
 			const QString imageUrl(getCurrentHitTestResult().imageUrl.url());
 			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
