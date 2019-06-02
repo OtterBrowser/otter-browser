@@ -126,6 +126,9 @@
    </item>
    <item>
     <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>0</width>
@@ -164,9 +167,12 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>folderComboBox</tabstop>
+  <tabstop>newFolderButton</tabstop>
   <tabstop>titleLineEditWidget</tabstop>
   <tabstop>iconButton</tabstop>
   <tabstop>urlLineEditWidget</tabstop>
+  <tabstop>updateIntervalSpinBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
