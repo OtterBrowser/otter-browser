@@ -50,6 +50,9 @@
            <property name="text">
             <string>Import into folder:</string>
            </property>
+           <property name="buddy">
+            <cstring>folderComboBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -125,6 +128,9 @@
            <widget class="QLabel" name="subfolderNameLabel">
             <property name="text">
              <string>Subfolder name:</string>
+            </property>
+            <property name="buddy">
+             <cstring>subfolderNameLineEditWidget</cstring>
             </property>
            </widget>
           </item>
