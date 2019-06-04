@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -132,7 +132,7 @@ void AddressCompletionModel::updateModel()
 		const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
 		const QFileIconProvider iconProvider;
 		const QMimeDatabase mimeDatabase;
-		bool wasAdded(!m_showCompletionCategories);
+		bool headerWasAdded(!m_showCompletionCategories);
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
@@ -140,11 +140,11 @@ void AddressCompletionModel::updateModel()
 			{
 				const QString path(directory + entries.at(i).fileName());
 
-				if (!wasAdded)
+				if (!headerWasAdded)
 				{
 					completions.append(CompletionEntry({}, tr("Local files"), {}, {}, {}, CompletionEntry::HeaderType));
 
-					wasAdded = true;
+					headerWasAdded = true;
 				}
 
 				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(mimeDatabase.mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension).iconName(), iconProvider.icon(entries.at(i))), {}, CompletionEntry::LocalPathType));
@@ -185,7 +185,7 @@ void AddressCompletionModel::updateModel()
 	if (m_types.testFlag(SpecialPagesCompletionType))
 	{
 		const QStringList specialPages(AddonsManager::getSpecialPages());
-		bool wasAdded(!m_showCompletionCategories);
+		bool headerWasAdded(!m_showCompletionCategories);
 
 		for (int i = 0; i < specialPages.count(); ++i)
 		{
@@ -193,11 +193,11 @@ void AddressCompletionModel::updateModel()
 
 			if (information.url.toString().startsWith(m_filter))
 			{
-				if (!wasAdded)
+				if (!headerWasAdded)
 				{
 					completions.append(CompletionEntry({}, tr("Special pages"), {}, {}, {}, CompletionEntry::HeaderType));
 
-					wasAdded = true;
+					headerWasAdded = true;
 				}
 
 				completions.append(CompletionEntry(information.url, information.getTitle(), {}, information.icon, {}, CompletionEntry::SpecialPageType));
