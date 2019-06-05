@@ -27,8 +27,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QtMath>
 #include <QtCore/QStandardPaths>
-#include <QtXmlPatterns/QXmlSchema>
-#include <QtXmlPatterns/QXmlSchemaValidator>
 
 namespace Otter
 {
@@ -78,25 +76,14 @@ void Updater::handleTransferFinished()
 		{
 			if (QFileInfo(path).suffix() == QLatin1String("xml"))
 			{
-				QXmlSchema schema;
+				QFile file(SessionsManager::getWritableDataPath(QLatin1String("update.txt")));
 
-				if (!schema.load(QUrl::fromLocalFile(SessionsManager::getReadableDataPath(QLatin1String("schemas/update.xsd")))) || !QXmlSchemaValidator(schema).validate(QUrl::fromLocalFile(path)))
+				if (file.open(QIODevice::ReadWrite | QIODevice::Text))
 				{
-					Console::addMessage(QCoreApplication::translate("main", "Downloaded update script is not valid: %1").arg(path), Console::OtherCategory, Console::ErrorLevel);
+					QTextStream stream(&file);
+					stream << path;
 
-					m_transfersSuccessful = false;
-				}
-				else
-				{
-					QFile file(SessionsManager::getWritableDataPath(QLatin1String("update.txt")));
-
-					if (file.open(QIODevice::ReadWrite | QIODevice::Text))
-					{
-						QTextStream stream(&file);
-						stream << path;
-
-						file.close();
-					}
+					file.close();
 				}
 			}
 		}
