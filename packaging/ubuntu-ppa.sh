@@ -1,10 +1,10 @@
 #!/bin/bash
 
-version="0.9.11"
+version="1.0.01"
 context="-dev"
 channel="weekly"
 path=`pwd`
-distributions=(vivid wily xenial yakkety)
+distributions=(disco cosmic bionic)
 
 for i in "${!distributions[@]}"
 do
