@@ -1,6 +1,6 @@
 
 Upstream-Name: Otter Browser
-Source: https://github.com/Emdek/otter
+Source: https://github.com/OtterBrowser/otter-browser
 
 Files: *
 Copyright: 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
