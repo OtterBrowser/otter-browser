@@ -300,7 +300,7 @@ bool ItemModel::setData(const QModelIndex &index, const QVariant &value, int rol
 		{
 			m_isIgnoringCheckStateReset = false;
 
-			resetCheckState(QModelIndex());
+			resetCheckState({});
 
 			m_isIgnoringCheckStateReset = true;
 		}
