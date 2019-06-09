@@ -598,7 +598,7 @@ void FeedsModel::readdEntryUrl(Entry *entry)
 				{
 					if (!m_urls.contains(url))
 					{
-						m_urls[url] = QVector<Entry*>();
+						m_urls[url] = {};
 					}
 
 					m_urls[url].append(entry);
@@ -653,7 +653,7 @@ void FeedsModel::handleUrlChanged(Entry *entry, const QUrl &newUrl, const QUrl &
 	{
 		if (!m_urls.contains(newUrl))
 		{
-			m_urls[newUrl] = QVector<Entry*>();
+			m_urls[newUrl] = {};
 		}
 
 		m_urls[newUrl].append(entry);

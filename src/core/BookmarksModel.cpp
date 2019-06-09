@@ -891,7 +891,7 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 				{
 					if (!m_urls.contains(url))
 					{
-						m_urls[url] = QVector<Bookmark*>();
+						m_urls[url] = {};
 					}
 
 					m_urls[url].append(bookmark);
@@ -1015,7 +1015,7 @@ void BookmarksModel::handleUrlChanged(Bookmark *bookmark, const QUrl &newUrl, co
 	{
 		if (!m_urls.contains(newUrl))
 		{
-			m_urls[newUrl] = QVector<Bookmark*>();
+			m_urls[newUrl] = {};
 		}
 
 		m_urls[newUrl].append(bookmark);

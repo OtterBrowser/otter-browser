@@ -284,7 +284,7 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 	}
 	else
 	{
-		m_passwords[host] = QVector<PasswordsManager::PasswordInformation>();
+		m_passwords[host] = {};
 	}
 
 	m_passwords[host].append(password);
