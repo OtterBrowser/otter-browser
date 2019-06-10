@@ -272,7 +272,7 @@ void ContentBlockingInformationWidget::updateState()
 	}
 	else
 	{
-		m_icon = QIcon();
+		m_icon = {};
 	}
 
 	if (m_icon.isNull())
