@@ -876,13 +876,7 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 
 	switch (bookmark->getType())
 	{
-		case FolderBookmark:
-			for (int i = 0; i < bookmark->rowCount(); ++i)
-			{
-				readdBookmarkUrl(bookmark->getChild(i));
-			}
-
-			break;
+		case FeedBookmark:
 		case UrlBookmark:
 			{
 				const QUrl url(Utils::normalizeUrl(bookmark->data(UrlRole).toUrl()));
@@ -896,6 +890,13 @@ void BookmarksModel::readdBookmarkUrl(Bookmark *bookmark)
 
 					m_urls[url].append(bookmark);
 				}
+			}
+
+			break;
+		case FolderBookmark:
+			for (int i = 0; i < bookmark->rowCount(); ++i)
+			{
+				readdBookmarkUrl(bookmark->getChild(i));
 			}
 
 			break;
