@@ -620,12 +620,15 @@ void FeedsModel::readdEntryUrl(Entry *entry)
 
 void FeedsModel::emptyTrash()
 {
-	m_trashEntry->removeRows(0, m_trashEntry->rowCount());
-	m_trashEntry->setEnabled(false);
+	if (m_trashEntry->rowCount() > 0)
+	{
+		m_trashEntry->removeRows(0, m_trashEntry->rowCount());
+		m_trashEntry->setEnabled(false);
 
-	m_trash.clear();
+		m_trash.clear();
 
-	emit modelModified();
+		emit modelModified();
+	}
 }
 
 void FeedsModel::createIdentifier(FeedsModel::Entry *entry)

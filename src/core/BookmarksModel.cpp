@@ -927,12 +927,15 @@ void BookmarksModel::setupFeed(BookmarksModel::Bookmark *bookmark)
 
 void BookmarksModel::emptyTrash()
 {
-	m_trashItem->removeRows(0, m_trashItem->rowCount());
-	m_trashItem->setEnabled(false);
+	if (m_trashItem->rowCount() > 0)
+	{
+		m_trashItem->removeRows(0, m_trashItem->rowCount());
+		m_trashItem->setEnabled(false);
 
-	m_trash.clear();
+		m_trash.clear();
 
-	emit modelModified();
+		emit modelModified();
+	}
 }
 
 void BookmarksModel::handleFeedModified(Feed *feed)
