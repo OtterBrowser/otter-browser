@@ -395,7 +395,9 @@ QDateTime Feed::getLastSynchronizationTime() const
 
 QDateTime Feed::normalizeTime(const QDateTime &time)
 {
-	return ((time.isValid() && time < QDateTime::currentDateTimeUtc()) ? time : QDateTime::currentDateTimeUtc());
+	const QDateTime currentTime(QDateTime::currentDateTimeUtc());
+
+	return ((time.isValid() && time < currentTime) ? time : currentTime);
 }
 
 QMimeType Feed::getMimeType() const
