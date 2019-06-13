@@ -393,7 +393,7 @@ QDateTime Feed::getLastSynchronizationTime() const
 	return m_lastSynchronizationTime;
 }
 
-QDateTime Feed::normalizeTime(const QDateTime &time) const
+QDateTime Feed::normalizeTime(const QDateTime &time)
 {
 	return ((time.isValid() && time < QDateTime::currentDateTimeUtc()) ? time : QDateTime::currentDateTimeUtc());
 }
