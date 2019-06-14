@@ -232,9 +232,9 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 		return userAgent;
 	}
 
-	const UserAgentDefinition userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getOption(SettingsManager::Network_UserAgentOption).toString()));
+	const QString userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getOption(SettingsManager::Network_UserAgentOption).toString()).value);
 
-	return (userAgent.value.isEmpty() ? QString() : getUserAgent(userAgent.value));
+	return (userAgent.isEmpty() ? QString() : getUserAgent(userAgent));
 }
 
 QUrl QtWebKitWebBackend::getHomePage() const
