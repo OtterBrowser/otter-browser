@@ -125,6 +125,7 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 
 	SettingsManager::updateOptionDefinition(SettingsManager::Backends_WebOption, backends);
 
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Actions"), {}, QUrl(QLatin1String("about:actions")), ThemesManager::createIcon(QLatin1String("edit-cut"), false), SpecialPageInformation::UniversalType), QLatin1String("actions"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Addons"), {}, QUrl(QLatin1String("about:addons")), ThemesManager::createIcon(QLatin1String("preferences-plugin"), false), SpecialPageInformation::UniversalType), QLatin1String("addons"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Bookmarks"), {}, QUrl(QLatin1String("about:bookmarks")), ThemesManager::createIcon(QLatin1String("bookmarks"), false), SpecialPageInformation::UniversalType), QLatin1String("bookmarks"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cache"), {}, QUrl(QLatin1String("about:cache")), ThemesManager::createIcon(QLatin1String("cache"), false), SpecialPageInformation::UniversalType), QLatin1String("cache"));
