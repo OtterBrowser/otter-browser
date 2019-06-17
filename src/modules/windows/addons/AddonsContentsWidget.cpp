@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -80,35 +80,6 @@ void AddonsContentsWidget::changeEvent(QEvent *event)
 			}
 		}
 	}
-}
-
-QVector<Addon*> AddonsContentsWidget::getSelectedAddons() const
-{
-	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
-	QVector<Addon*> addons;
-	addons.reserve(indexes.count());
-
-	for (int i = 0; i < indexes.count(); ++i)
-	{
-		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
-		{
-			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
-
-			if (type == Addon::UserScriptType)
-			{
-				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
-
-				if (script)
-				{
-					addons.append(script);
-				}
-			}
-		}
-	}
-
-	addons.squeeze();
-
-	return addons;
 }
 
 void AddonsContentsWidget::populateAddons()
@@ -520,6 +491,35 @@ ActionsManager::ActionDefinition::State AddonsContentsWidget::getActionState(int
 	}
 
 	return ContentsWidget::getActionState(identifier, parameters);
+}
+
+QVector<Addon*> AddonsContentsWidget::getSelectedAddons() const
+{
+	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
+	QVector<Addon*> addons;
+	addons.reserve(indexes.count());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
+		{
+			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
+
+			if (type == Addon::UserScriptType)
+			{
+				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+
+				if (script)
+				{
+					addons.append(script);
+				}
+			}
+		}
+	}
+
+	addons.squeeze();
+
+	return addons;
 }
 
 WebWidget::LoadingState AddonsContentsWidget::getLoadingState() const
