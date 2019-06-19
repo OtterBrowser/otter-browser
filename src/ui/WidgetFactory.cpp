@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
 #include "../modules/widgets/statusMessage/StatusMessageWidget.h"
 #include "../modules/widgets/transfers/TransfersWidget.h"
 #include "../modules/widgets/zoom/ZoomWidget.h"
+#include "../modules/windows/actions/ActionsContentsWidget.h"
 #include "../modules/windows/addons/AddonsContentsWidget.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
@@ -203,6 +204,11 @@ QWidget* createToolBarItem(const ToolBarsManager::ToolBarDefinition::Entry &defi
 
 ContentsWidget* createContentsWidget(const QString &identifier, const QVariantMap &parameters, Window *window, QWidget *parent)
 {
+	if (identifier == QLatin1String("actions"))
+	{
+		return new ActionsContentsWidget(parameters, window, parent);
+	}
+
 	if (identifier == QLatin1String("addons"))
 	{
 		return new AddonsContentsWidget(parameters, window, parent);
