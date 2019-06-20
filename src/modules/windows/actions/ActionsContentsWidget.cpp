@@ -32,6 +32,30 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->actionsViewWidget->setViewMode(ItemViewWidget::TreeView);
 
+	QStandardItemModel *model(new QStandardItemModel(this));
+	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
+
+	for (int i = 0; i < definitions.count(); ++i)
+	{
+		if (!definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) && !definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
+		{
+			QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
+			item->setData(QColor(Qt::transparent), Qt::DecorationRole);
+			item->setData(definitions.at(i).identifier, Qt::UserRole);
+			item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+			if (!definitions.at(i).defaultState.icon.isNull())
+			{
+				item->setIcon(definitions.at(i).defaultState.icon);
+			}
+
+			model->appendRow(item);
+		}
+	}
+
+	m_ui->actionsViewWidget->setModel(model);
+
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
 }
 
