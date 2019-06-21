@@ -52,6 +52,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 private:
+	QStandardItemModel *m_model;
 	Ui::ActionsContentsWidget *m_ui;
 };
 

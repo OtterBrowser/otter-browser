@@ -26,13 +26,15 @@ namespace Otter
 {
 
 ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent) : ContentsWidget(parameters, window, parent),
+	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::ActionsContentsWidget)
 {
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->actionsViewWidget->setViewMode(ItemViewWidget::TreeView);
 
-	QStandardItemModel *model(new QStandardItemModel(this));
+	m_model->setHorizontalHeaderLabels({tr("Action")});
+
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
 	for (int i = 0; i < definitions.count(); ++i)
@@ -50,11 +52,11 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 				item->setIcon(definitions.at(i).defaultState.icon);
 			}
 
-			model->appendRow(item);
+			m_model->appendRow(item);
 		}
 	}
 
-	m_ui->actionsViewWidget->setModel(model);
+	m_ui->actionsViewWidget->setModel(m_model);
 
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
 }
@@ -71,6 +73,8 @@ void ActionsContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+
+		m_model->setHorizontalHeaderLabels({tr("Action")});
 	}
 }
 
