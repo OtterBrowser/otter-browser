@@ -41,18 +41,18 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 	{
 		if (!definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) && !definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
-			QStandardItem *item(new QStandardItem(definitions.at(i).getText(true)));
-			item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-			item->setData(definitions.at(i).identifier, Qt::UserRole);
-			item->setToolTip(QStringLiteral("%1 (%2)").arg(item->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
-			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+			QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true))});
+			items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+			items[0]->setData(definitions.at(i).identifier, Qt::UserRole);
+			items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
+			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 
 			if (!definitions.at(i).defaultState.icon.isNull())
 			{
-				item->setIcon(definitions.at(i).defaultState.icon);
+				items[0]->setIcon(definitions.at(i).defaultState.icon);
 			}
 
-			m_model->appendRow(item);
+			m_model->appendRow(items);
 		}
 	}
 
