@@ -725,6 +725,43 @@ int Transfer::getRemainingTime() const
 	return m_remainingTime;
 }
 
+bool Transfer::verifyHashes() const
+{
+	if (getState() != FinishedState)
+	{
+		return false;
+	}
+
+	QFile file(getTarget());
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return false;
+	}
+
+	QHash<QCryptographicHash::Algorithm, QByteArray>::const_iterator iterator;
+	bool isValid(true);
+
+	for (iterator = m_hashes.constBegin(); iterator != m_hashes.constEnd(); ++iterator)
+	{
+		QCryptographicHash hash(iterator.key());
+		hash.addData(&file);
+
+		if (hash.result() != iterator.value())
+		{
+			isValid = false;
+
+			break;
+		}
+
+		file.seek(0);
+	}
+
+	file.close();
+
+	return isValid;
+}
+
 bool Transfer::isArchived() const
 {
 	return m_isArchived;

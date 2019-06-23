@@ -77,6 +77,7 @@ public:
 	TransferOptions getOptions() const;
 	virtual TransferState getState() const;
 	virtual int getRemainingTime() const;
+	bool verifyHashes() const;
 	bool isArchived() const;
 
 public slots:
