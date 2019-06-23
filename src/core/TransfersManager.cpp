@@ -573,6 +573,18 @@ void Transfer::setOpenCommand(const QString &command)
 	}
 }
 
+void Transfer::setHash(const QByteArray &hash, QCryptographicHash::Algorithm algorithm)
+{
+	if (!hash.isEmpty())
+	{
+		m_hashes[algorithm] = hash;
+	}
+	else if (m_hashes.contains(algorithm))
+	{
+		m_hashes.remove(algorithm);
+	}
+}
+
 void Transfer::setUpdateInterval(int interval)
 {
 	m_updateInterval = interval;

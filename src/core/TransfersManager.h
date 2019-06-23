@@ -62,6 +62,7 @@ public:
 
 	~Transfer();
 
+	void setHash(const QByteArray &hash, QCryptographicHash::Algorithm algorithm);
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
 	virtual QString getSuggestedFileName();
@@ -112,6 +113,7 @@ private:
 	QDateTime m_timeStarted;
 	QDateTime m_timeFinished;
 	QMimeType m_mimeType;
+	QHash<QCryptographicHash::Algorithm, QByteArray> m_hashes;
 	QQueue<qint64> m_speeds;
 	qint64 m_speed;
 	qint64 m_bytesStart;
