@@ -39,21 +39,23 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		if (!definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) && !definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
+		if (definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::IsDeprecatedFlag) || definitions.at(i).flags.testFlag(ActionsManager::ActionDefinition::RequiresParameters))
 		{
-			QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true))});
-			items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-			items[0]->setData(definitions.at(i).identifier, Qt::UserRole);
-			items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
-			items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
-
-			if (!definitions.at(i).defaultState.icon.isNull())
-			{
-				items[0]->setIcon(definitions.at(i).defaultState.icon);
-			}
-
-			m_model->appendRow(items);
+			continue;
 		}
+
+		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true))});
+		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+		items[0]->setData(definitions.at(i).identifier, Qt::UserRole);
+		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
+		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+
+		if (!definitions.at(i).defaultState.icon.isNull())
+		{
+			items[0]->setIcon(definitions.at(i).defaultState.icon);
+		}
+
+		m_model->appendRow(items);
 	}
 
 	m_ui->actionsViewWidget->setModel(m_model);
