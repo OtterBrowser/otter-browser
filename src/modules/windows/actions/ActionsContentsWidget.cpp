@@ -33,7 +33,7 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->actionsViewWidget->setViewMode(ItemViewWidget::TreeView);
 
-	m_model->setHorizontalHeaderLabels({tr("Action")});
+	m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
@@ -44,11 +44,12 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 			continue;
 		}
 
-		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true))});
+		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(ActionsManager::getActionShortcut(definitions.at(i).identifier).toString(QKeySequence::NativeText))});
 		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		items[0]->setData(definitions.at(i).identifier, Qt::UserRole);
 		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 
 		if (!definitions.at(i).defaultState.icon.isNull())
 		{
@@ -76,7 +77,7 @@ void ActionsContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 
-		m_model->setHorizontalHeaderLabels({tr("Action")});
+		m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
 	}
 }
 
