@@ -375,6 +375,7 @@ public:
 	static QString createReport();
 	static QString getActionName(int identifier);
 	static QKeySequence getActionShortcut(int identifier, const QVariantMap &parameters = {});
+	static QVector<QKeySequence> getActionShortcuts(int identifier, const QVariantMap &parameters = {});
 	static QVector<ActionDefinition> getActionDefinitions();
 	static QVector<KeyboardProfile::Action> getShortcutDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
