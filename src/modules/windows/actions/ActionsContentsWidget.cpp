@@ -44,7 +44,16 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 			continue;
 		}
 
-		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(ActionsManager::getActionShortcut(definitions.at(i).identifier).toString(QKeySequence::NativeText))});
+		const QVector<QKeySequence> shortcuts(ActionsManager::getActionShortcuts(definitions.at(i).identifier));
+		QStringList nativeShortcuts;
+		nativeShortcuts.reserve(shortcuts.count());
+
+		for (int j = 0; j < shortcuts.count(); ++j)
+		{
+			nativeShortcuts.append(shortcuts.at(j).toString(QKeySequence::NativeText));
+		}
+
+		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(nativeShortcuts.join(QLatin1String(", ")))});
 		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		items[0]->setData(definitions.at(i).identifier, Qt::UserRole);
 		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
