@@ -32,7 +32,39 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->setupUi(this);
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->actionsViewWidget->setViewMode(ItemViewWidget::TreeView);
+	m_ui->actionsViewWidget->setModel(m_model);
 
+	populateActions();
+
+	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
+	connect(ActionsManager::getInstance(), &ActionsManager::shortcutsChanged, this, &ActionsContentsWidget::populateActions);
+}
+
+ActionsContentsWidget::~ActionsContentsWidget()
+{
+	delete m_ui;
+}
+
+void ActionsContentsWidget::changeEvent(QEvent *event)
+{
+	ContentsWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+
+		m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
+	}
+}
+
+void ActionsContentsWidget::print(QPrinter *printer)
+{
+	m_ui->actionsViewWidget->render(printer);
+}
+
+void ActionsContentsWidget::populateActions()
+{
+	m_model->clear();
 	m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
@@ -67,32 +99,6 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 
 		m_model->appendRow(items);
 	}
-
-	m_ui->actionsViewWidget->setModel(m_model);
-
-	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
-}
-
-ActionsContentsWidget::~ActionsContentsWidget()
-{
-	delete m_ui;
-}
-
-void ActionsContentsWidget::changeEvent(QEvent *event)
-{
-	ContentsWidget::changeEvent(event);
-
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
-
-		m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
-	}
-}
-
-void ActionsContentsWidget::print(QPrinter *printer)
-{
-	m_ui->actionsViewWidget->render(printer);
 }
 
 QString ActionsContentsWidget::getTitle() const

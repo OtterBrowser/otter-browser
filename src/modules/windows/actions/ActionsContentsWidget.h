@@ -51,6 +51,9 @@ public:
 protected:
 	void changeEvent(QEvent *event) override;
 
+protected slots:
+	void populateActions();
+
 private:
 	QStandardItemModel *m_model;
 	Ui::ActionsContentsWidget *m_ui;
