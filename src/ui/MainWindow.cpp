@@ -920,11 +920,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters, Ac
 						return;
 					}
 
-					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString());
+					mutableParameters[QLatin1String("url")] = FeedsManager::createFeedReaderUrl(entry->getFeed()->getUrl());
 				}
 				else if (parameters.contains(QLatin1String("url")))
 				{
-					mutableParameters[QLatin1String("url")] = QUrl(QLatin1String("view-feed:") + parameters[QLatin1String("url")].toUrl().toDisplayString());
+					mutableParameters[QLatin1String("url")] = FeedsManager::createFeedReaderUrl(parameters[QLatin1String("url")].toUrl());
 				}
 				else
 				{

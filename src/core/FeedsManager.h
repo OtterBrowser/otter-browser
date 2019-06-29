@@ -133,6 +133,7 @@ public:
 	static FeedsModel* getModel();
 	static Feed* createFeed(const QUrl &url, const QString &title = {}, const QIcon &icon = {}, int updateInterval = -1);
 	static Feed* getFeed(const QUrl &url);
+	static QUrl createFeedReaderUrl(const QUrl &url);
 	static QVector<Feed*> getFeeds();
 
 protected:

@@ -309,7 +309,7 @@ void Feed::update()
 
 							connect(NotificationsManager::createNotification(message, this), &Notification::clicked, [&]()
 							{
-								Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + getUrl().toDisplayString())}});
+								Application::getInstance()->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), FeedsManager::createFeedReaderUrl(getUrl())}});
 							});
 						}
 
@@ -777,6 +777,11 @@ Feed* FeedsManager::getFeed(const QUrl &url)
 	}
 
 	return nullptr;
+}
+
+QUrl FeedsManager::createFeedReaderUrl(const QUrl &url)
+{
+	return QUrl(QLatin1String("view-feed:") + url.toDisplayString());
 }
 
 QVector<Feed*> FeedsManager::getFeeds()

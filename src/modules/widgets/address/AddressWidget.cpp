@@ -24,6 +24,7 @@
 #include "../../../core/AddressCompletionModel.h"
 #include "../../../core/Application.h"
 #include "../../../core/BookmarksManager.h"
+#include "../../../core/FeedsManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/SearchEnginesManager.h"
@@ -619,7 +620,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 					if (feeds.count() == 1 && m_window)
 					{
-						m_window->setUrl(QUrl(QLatin1String("view-feed:") + feeds.first().url.toDisplayString()));
+						m_window->setUrl(FeedsManager::createFeedReaderUrl(feeds.first().url));
 					}
 					else if (feeds.count() > 1)
 					{
@@ -627,7 +628,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 						for (int i = 0; i < feeds.count(); ++i)
 						{
-							menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(QUrl(QLatin1String("view-feed:") + feeds.at(i).url.toDisplayString()));
+							menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(FeedsManager::createFeedReaderUrl(feeds.at(i).url));
 						}
 
 						connect(&menu, &QMenu::triggered, this, [&](QAction *action)

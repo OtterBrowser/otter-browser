@@ -227,7 +227,7 @@ void FeedsContentsWidget::openFeed()
 
 	if (mainWindow && entry && entry->getFeed())
 	{
-		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), QUrl(QLatin1String("view-feed:") + entry->getFeed()->getUrl().toDisplayString())}});
+		mainWindow->triggerAction(ActionsManager::OpenUrlAction, {{QLatin1String("url"), FeedsManager::createFeedReaderUrl(entry->getFeed()->getUrl())}});
 	}
 }
 
@@ -800,7 +800,7 @@ QLatin1String FeedsContentsWidget::getType() const
 
 QUrl FeedsContentsWidget::getUrl() const
 {
-	return (m_feed ? QUrl(QLatin1String("view-feed:") + m_feed->getUrl().toDisplayString()) : QUrl(QLatin1String("about:feeds")));
+	return (m_feed ? FeedsManager::createFeedReaderUrl(m_feed->getUrl()) : QUrl(QLatin1String("about:feeds")));
 }
 
 QIcon FeedsContentsWidget::getIcon() const
