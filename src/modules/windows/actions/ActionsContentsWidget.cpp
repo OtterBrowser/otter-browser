@@ -53,7 +53,7 @@ void ActionsContentsWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 
-		m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
+		m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts"), tr("Gestures")});
 	}
 }
 
@@ -65,7 +65,7 @@ void ActionsContentsWidget::print(QPrinter *printer)
 void ActionsContentsWidget::populateActions()
 {
 	m_model->clear();
-	m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts")});
+	m_model->setHorizontalHeaderLabels({tr("Action"), tr("Shortcuts"), tr("Gestures")});
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
@@ -85,12 +85,13 @@ void ActionsContentsWidget::populateActions()
 			nativeShortcuts.append(shortcuts.at(j).toString(QKeySequence::NativeText));
 		}
 
-		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(nativeShortcuts.join(QLatin1String(", ")))});
+		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(nativeShortcuts.join(QLatin1String(", "))), new QStandardItem()});
 		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		items[0]->setData(definitions.at(i).identifier, Qt::UserRole);
 		items[0]->setToolTip(QStringLiteral("%1 (%2)").arg(items[0]->text()).arg(ActionsManager::getActionName(definitions.at(i).identifier)));
 		items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
 		items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
+		items[2]->setFlags(items[2]->flags() | Qt::ItemNeverHasChildren);
 
 		if (!definitions.at(i).defaultState.icon.isNull())
 		{
