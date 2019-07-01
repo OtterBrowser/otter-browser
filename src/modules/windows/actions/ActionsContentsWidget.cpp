@@ -33,6 +33,7 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 	m_ui->filterLineEditWidget->setClearOnEscape(true);
 	m_ui->actionsViewWidget->setViewMode(ItemViewWidget::TreeView);
 	m_ui->actionsViewWidget->setModel(m_model);
+	m_ui->actionsViewWidget->setFilterRoles({Qt::DisplayRole, ActionRole, ParametersRole});
 
 	populateActions();
 
