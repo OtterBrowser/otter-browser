@@ -39,6 +39,13 @@ class ActionsContentsWidget final : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		ActionRole,
+		ParametersRole
+	};
+
 	explicit ActionsContentsWidget(const QVariantMap &parameters, Window *window, QWidget *parent);
 	~ActionsContentsWidget();
 
