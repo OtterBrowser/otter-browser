@@ -79,8 +79,8 @@ find_package(Hunspell 1.5.0 QUIET)
 
 set_package_properties(Qt5WebEngineCore PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
 set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKit PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
-set_package_properties(Qt5WebKitWidgets PROPERTIES URL "https://www.qt.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
+set_package_properties(Qt5WebKit PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
+set_package_properties(Qt5WebKitWidgets PROPERTIES URL "https://qtwebkit.github.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
 set_package_properties(Hunspell PROPERTIES URL "https://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
 set(otter_src
