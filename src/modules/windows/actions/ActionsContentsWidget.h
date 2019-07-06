@@ -60,6 +60,7 @@ protected:
 
 protected slots:
 	void populateActions();
+	void updateActions();
 
 private:
 	QStandardItemModel *m_model;

@@ -37,6 +37,7 @@ ActionsContentsWidget::ActionsContentsWidget(const QVariantMap &parameters, Wind
 
 	populateActions();
 
+	connect(m_ui->actionsViewWidget, &ItemViewWidget::needsActionsUpdate, this, &ActionsContentsWidget::updateActions);
 	connect(m_ui->filterLineEditWidget, &LineEditWidget::textChanged, m_ui->actionsViewWidget, &ItemViewWidget::setFilterString);
 	connect(ActionsManager::getInstance(), &ActionsManager::shortcutsChanged, this, &ActionsContentsWidget::populateActions);
 }
@@ -102,6 +103,26 @@ void ActionsContentsWidget::populateActions()
 		}
 
 		m_model->appendRow(items);
+	}
+}
+
+void ActionsContentsWidget::updateActions()
+{
+	const QModelIndex index(m_ui->actionsViewWidget->getCurrentIndex().sibling(m_ui->actionsViewWidget->getCurrentRow(), 0));
+
+	m_ui->actionLabelWidget->setText({});
+	m_ui->identifierLabelWidget->setText({});
+	m_ui->parametersLabelWidget->setText({});
+	m_ui->shortcutsLabelWidget->setText({});
+	m_ui->gesturesLabelWidget->setText({});
+
+	if (index.isValid())
+	{
+		m_ui->actionLabelWidget->setText(index.data(Qt::DisplayRole).toString());
+		m_ui->identifierLabelWidget->setText(index.data(ActionRole).toString());
+		m_ui->parametersLabelWidget->setText(index.data(ParametersRole).toString());
+		m_ui->shortcutsLabelWidget->setText(index.sibling(index.row(), 1).data(Qt::DisplayRole).toString());
+		m_ui->gesturesLabelWidget->setText(index.sibling(index.row(), 2).data(Qt::DisplayRole).toString());
 	}
 }
 
