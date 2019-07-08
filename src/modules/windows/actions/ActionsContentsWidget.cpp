@@ -78,17 +78,8 @@ void ActionsContentsWidget::populateActions()
 			continue;
 		}
 
-		const QVector<QKeySequence> shortcuts(ActionsManager::getActionShortcuts(definitions.at(i).identifier));
-		QStringList nativeShortcuts;
-		nativeShortcuts.reserve(shortcuts.count());
-
-		for (int j = 0; j < shortcuts.count(); ++j)
-		{
-			nativeShortcuts.append(shortcuts.at(j).toString(QKeySequence::NativeText));
-		}
-
 		const QString actionName(ActionsManager::getActionName(definitions.at(i).identifier));
-		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(nativeShortcuts.join(QLatin1String(", "))), new QStandardItem()});
+		QList<QStandardItem*> items({new QStandardItem(definitions.at(i).getText(true)), new QStandardItem(QKeySequence::listToString(ActionsManager::getActionShortcuts(definitions.at(i).identifier).toList(), QKeySequence::NativeText)), new QStandardItem()});
 		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		items[0]->setData(definitions.at(i).identifier, IdentifierRole);
 		items[0]->setData(actionName, ActionRole);
