@@ -104,7 +104,9 @@ void QtWebKitWebBackend::handleOptionChanged(int identifier)
 			break;
 	}
 
-	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
+	const QString optionName(SettingsManager::getOptionName(identifier));
+
+	if (optionName.startsWith(QLatin1String("Content/")))
 	{
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::ZoomTextOnly, SettingsManager::getOption(SettingsManager::Content_ZoomTextOnlyOption).toBool());
 		QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFontSize, SettingsManager::getOption(SettingsManager::Content_DefaultFontSizeOption).toInt());
@@ -117,7 +119,7 @@ void QtWebKitWebBackend::handleOptionChanged(int identifier)
 		QWebSettings::globalSettings()->setFontFamily(QWebSettings::CursiveFont, SettingsManager::getOption(SettingsManager::Content_CursiveFontOption).toString());
 		QWebSettings::globalSettings()->setFontFamily(QWebSettings::FantasyFont, SettingsManager::getOption(SettingsManager::Content_FantasyFontOption).toString());
 	}
-	else if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Permissions/")))
+	else if (optionName.startsWith(QLatin1String("Permissions/")))
 	{
 		const bool arePluginsEnabled(SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
 

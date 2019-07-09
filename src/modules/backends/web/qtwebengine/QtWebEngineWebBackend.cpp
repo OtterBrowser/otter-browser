@@ -169,7 +169,9 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 			break;
 	}
 
-	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
+	const QString optionName(SettingsManager::getOptionName(identifier));
+
+	if (optionName.startsWith(QLatin1String("Content/")))
 	{
 		QWebEngineSettings::globalSettings()->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getOption(SettingsManager::Content_DefaultFontSizeOption).toInt());
 		QWebEngineSettings::globalSettings()->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getOption(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
@@ -181,7 +183,7 @@ void QtWebEngineWebBackend::handleOptionChanged(int identifier)
 		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::CursiveFont, SettingsManager::getOption(SettingsManager::Content_CursiveFontOption).toString());
 		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::FantasyFont, SettingsManager::getOption(SettingsManager::Content_FantasyFontOption).toString());
 	}
-	else if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Permissions/")))
+	else if (optionName.startsWith(QLatin1String("Permissions/")))
 	{
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getOption(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getOption(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
