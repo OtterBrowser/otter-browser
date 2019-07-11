@@ -389,7 +389,9 @@ void QtWebKitWebWidget::startDelayedTransfer(Transfer *transfer)
 
 void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 {
-	if ((!getCurrentHitTestResult().imageUrl.isEmpty() && request.url() == getCurrentHitTestResult().imageUrl) || (!getCurrentHitTestResult().mediaUrl.isEmpty() && request.url() == getCurrentHitTestResult().mediaUrl))
+	const HitTestResult hitResult(getCurrentHitTestResult());
+
+	if ((!hitResult.imageUrl.isEmpty() && request.url() == hitResult.imageUrl) || (!hitResult.mediaUrl.isEmpty() && request.url() == hitResult.mediaUrl))
 	{
 		NetworkCache *cache(NetworkManagerFactory::getCache());
 
@@ -428,9 +430,9 @@ void QtWebKitWebWidget::handleDownloadRequested(const QNetworkRequest &request)
 				device->deleteLater();
 			}
 		}
-		else if (!getCurrentHitTestResult().imageUrl.isEmpty() && getCurrentHitTestResult().imageUrl.scheme() == QLatin1String("data") && getCurrentHitTestResult().imageUrl.url().contains(QLatin1String(";base64,")))
+		else if (!hitResult.imageUrl.isEmpty() && hitResult.imageUrl.scheme() == QLatin1String("data") && hitResult.imageUrl.url().contains(QLatin1String(";base64,")))
 		{
-			const QString imageUrl(getCurrentHitTestResult().imageUrl.url());
+			const QString imageUrl(hitResult.imageUrl.url());
 			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
 			const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
 
