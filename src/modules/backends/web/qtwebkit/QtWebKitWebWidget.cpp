@@ -2835,11 +2835,13 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			case QEvent::MouseButtonPress:
 			case QEvent::Wheel:
 				{
-					if (mouseEvent)
+					if (!mouseEvent || !isScrollBar(mouseEvent->pos()))
 					{
-						setClickPosition(mouseEvent->pos());
-						updateHitTestResult(mouseEvent->pos());
+						return true;
 					}
+
+					setClickPosition(mouseEvent->pos());
+					updateHitTestResult(mouseEvent->pos());
 
 					const HitTestResult hitResult(getCurrentHitTestResult());
 					QVector<GesturesManager::GesturesContext> contexts;
@@ -2856,7 +2858,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					contexts.append(GesturesManager::GenericContext);
 
-					if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
+					if (GesturesManager::startGesture(object, event, contexts))
 					{
 						return true;
 					}
