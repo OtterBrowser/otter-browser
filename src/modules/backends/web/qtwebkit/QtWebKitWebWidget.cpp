@@ -2841,14 +2841,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						updateHitTestResult(mouseEvent->pos());
 					}
 
+					const HitTestResult hitResult(getCurrentHitTestResult());
 					QVector<GesturesManager::GesturesContext> contexts;
 
-					if (getCurrentHitTestResult().flags.testFlag(HitTestResult::IsContentEditableTest))
+					if (hitResult.flags.testFlag(HitTestResult::IsContentEditableTest))
 					{
 						contexts.append(GesturesManager::ContentEditableContext);
 					}
 
-					if (getCurrentHitTestResult().linkUrl.isValid())
+					if (hitResult.linkUrl.isValid())
 					{
 						contexts.append(GesturesManager::LinkContext);
 					}
@@ -2862,8 +2863,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 					{
-						const HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
-
 						if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
 						{
 							setClickPosition(mouseEvent->pos());
