@@ -2835,13 +2835,16 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			case QEvent::MouseButtonPress:
 			case QEvent::Wheel:
 				{
-					if (!mouseEvent || !isScrollBar(mouseEvent->pos()))
+					if (mouseEvent)
 					{
-						return true;
-					}
+						if (isScrollBar(mouseEvent->pos()))
+						{
+							return QObject::eventFilter(object, event);
+						}
 
-					setClickPosition(mouseEvent->pos());
-					updateHitTestResult(mouseEvent->pos());
+						setClickPosition(mouseEvent->pos());
+						updateHitTestResult(mouseEvent->pos());
+					}
 
 					const HitTestResult hitResult(getCurrentHitTestResult());
 					QVector<GesturesManager::GesturesContext> contexts;
@@ -2863,17 +2866,17 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						return true;
 					}
 
-					if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
+					if (event->type() != QEvent::MouseButtonDblClick || mouseEvent->button() != Qt::LeftButton || !SettingsManager::getOption(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 					{
-						if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
-						{
-							setClickPosition(mouseEvent->pos());
+						return QObject::eventFilter(object, event);
+					}
 
-							QTimer::singleShot(250, this, [&]()
-							{
-								showContextMenu();
-							});
-						}
+					if (!hitResult.flags.testFlag(HitTestResult::IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+					{
+						QTimer::singleShot(250, this, [&]()
+						{
+							showContextMenu();
+						});
 					}
 				}
 
