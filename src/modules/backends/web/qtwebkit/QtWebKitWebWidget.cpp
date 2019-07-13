@@ -953,17 +953,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::OpenLinkAction:
 			{
+				const HitTestResult hitResult(getCurrentHitTestResult());
 				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
 
-				if (hints == SessionsManager::DefaultOpen && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
+				if (hints == SessionsManager::DefaultOpen && !hitResult.flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
 					m_page->triggerAction(QWebPage::OpenLink);
 
 					setClickPosition({});
 				}
-				else if (getCurrentHitTestResult().linkUrl.isValid())
+				else if (hitResult.linkUrl.isValid())
 				{
-					openUrl(getCurrentHitTestResult().linkUrl, hints);
+					openUrl(hitResult.linkUrl, hints);
 				}
 			}
 
