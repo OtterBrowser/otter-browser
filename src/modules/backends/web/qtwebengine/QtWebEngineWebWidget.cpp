@@ -301,8 +301,17 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			break;
 		case ActionsManager::OpenLinkAction:
+		case ActionsManager::OpenLinkInCurrentTabAction:
+		case ActionsManager::OpenLinkInNewTabAction:
+		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewWindowAction:
+		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateTabAction:
+		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			{
-				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+				const SessionsManager::OpenHints hints((identifier == ActionsManager::OpenLinkAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenLinkActionToOpenHints(identifier));
 
 				if (hints == SessionsManager::DefaultOpen && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
@@ -314,69 +323,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				{
 					openUrl(m_hitResult.linkUrl, hints);
 				}
-			}
-
-			break;
-		case ActionsManager::OpenLinkInCurrentTabAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, SessionsManager::CurrentTabOpen);
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewTabAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewTabBackgroundAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewWindowAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateTabAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateWindowAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-			if (m_hitResult.linkUrl.isValid())
-			{
-				openUrl(m_hitResult.linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
 			break;

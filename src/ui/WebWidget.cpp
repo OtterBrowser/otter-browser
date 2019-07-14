@@ -1563,6 +1563,35 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 	return KeepAskingPermission;
 }
 
+SessionsManager::OpenHints WebWidget::mapOpenLinkActionToOpenHints(int identifier)
+{
+	switch (identifier)
+	{
+		case ActionsManager::OpenLinkInCurrentTabAction:
+			return SessionsManager::CurrentTabOpen;
+		case ActionsManager::OpenLinkInNewTabAction:
+			return SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen);
+		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+			return (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen);
+		case ActionsManager::OpenLinkInNewWindowAction:
+			return SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen);
+		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+			return (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen);
+		case ActionsManager::OpenLinkInNewPrivateTabAction:
+			return (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen);
+		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+			return (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen);
+		case ActionsManager::OpenLinkInNewPrivateWindowAction:
+			return (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen);
+		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
+			return (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen);
+		default:
+			return SessionsManager::DefaultOpen;
+	}
+
+	return SessionsManager::DefaultOpen;
+}
+
 quint64 WebWidget::getWindowIdentifier() const
 {
 	return m_windowIdentifier;

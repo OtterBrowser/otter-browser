@@ -952,9 +952,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::OpenLinkAction:
+		case ActionsManager::OpenLinkInCurrentTabAction:
+		case ActionsManager::OpenLinkInNewTabAction:
+		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewWindowAction:
+		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateTabAction:
+		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			{
 				const HitTestResult hitResult(getCurrentHitTestResult());
-				const SessionsManager::OpenHints hints(SessionsManager::calculateOpenHints(parameters));
+				const SessionsManager::OpenHints hints((identifier == ActionsManager::OpenLinkAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenLinkActionToOpenHints(identifier));
 
 				if (hints == SessionsManager::DefaultOpen && !hitResult.flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
@@ -966,69 +975,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					openUrl(hitResult.linkUrl, hints);
 				}
-			}
-
-			break;
-		case ActionsManager::OpenLinkInCurrentTabAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, SessionsManager::CurrentTabOpen);
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewTabAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewTabBackgroundAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewWindowAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateTabAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewTabOpen | SessionsManager::PrivateOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateWindowAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::PrivateOpen));
-			}
-
-			break;
-		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().linkUrl, (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen));
 			}
 
 			break;
