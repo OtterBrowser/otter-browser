@@ -1586,7 +1586,7 @@ SessionsManager::OpenHints WebWidget::mapOpenLinkActionToOpenHints(int identifie
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			return (SessionsManager::NewWindowOpen | SessionsManager::BackgroundOpen | SessionsManager::PrivateOpen);
 		default:
-			return SessionsManager::DefaultOpen;
+			break;
 	}
 
 	return SessionsManager::DefaultOpen;
