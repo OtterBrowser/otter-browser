@@ -1010,30 +1010,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::OpenFrameAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().frameUrl, SessionsManager::calculateOpenHints(parameters));
-			}
-
-			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
-			{
-				setUrl(getCurrentHitTestResult().frameUrl, false);
-			}
-
-			break;
 		case ActionsManager::OpenFrameInNewTabAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().frameUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
-			}
-
-			break;
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				openUrl(getCurrentHitTestResult().frameUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+				const HitTestResult hitResult(getCurrentHitTestResult());
+
+				if (hitResult.frameUrl.isValid())
+				{
+					openUrl(hitResult.frameUrl, ((identifier == ActionsManager::OpenFrameAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenLinkActionToOpenHints(identifier)));
+				}
 			}
 
 			break;

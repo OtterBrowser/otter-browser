@@ -1568,10 +1568,13 @@ SessionsManager::OpenHints WebWidget::mapOpenLinkActionToOpenHints(int identifie
 	switch (identifier)
 	{
 		case ActionsManager::OpenLinkInCurrentTabAction:
+		case ActionsManager::OpenFrameInCurrentTabAction:
 			return SessionsManager::CurrentTabOpen;
 		case ActionsManager::OpenLinkInNewTabAction:
+		case ActionsManager::OpenFrameInNewTabAction:
 			return SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen);
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+		case ActionsManager::OpenFrameInNewTabBackgroundAction:
 			return (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen);
 		case ActionsManager::OpenLinkInNewWindowAction:
 			return SessionsManager::calculateOpenHints(SessionsManager::NewWindowOpen);
