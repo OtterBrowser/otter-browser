@@ -1563,7 +1563,7 @@ WebWidget::PermissionPolicy WebWidget::getPermission(FeaturePermission feature, 
 	return KeepAskingPermission;
 }
 
-SessionsManager::OpenHints WebWidget::mapOpenLinkActionToOpenHints(int identifier)
+SessionsManager::OpenHints WebWidget::mapOpenActionToOpenHints(int identifier)
 {
 	switch (identifier)
 	{

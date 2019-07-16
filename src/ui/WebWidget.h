@@ -286,7 +286,7 @@ protected:
 	static QString getFastForwardScript(bool isSelectingTheBestLink);
 	HitTestResult getCurrentHitTestResult() const;
 	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
-	static SessionsManager::OpenHints mapOpenLinkActionToOpenHints(int identifier);
+	static SessionsManager::OpenHints mapOpenActionToOpenHints(int identifier);
 	virtual int getAmountOfDeferredPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;

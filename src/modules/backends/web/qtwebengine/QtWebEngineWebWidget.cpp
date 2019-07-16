@@ -311,7 +311,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			{
-				const SessionsManager::OpenHints hints((identifier == ActionsManager::OpenLinkAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenLinkActionToOpenHints(identifier));
+				const SessionsManager::OpenHints hints((identifier == ActionsManager::OpenLinkAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier));
 
 				if (hints == SessionsManager::DefaultOpen && !getCurrentHitTestResult().flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
 				{
@@ -354,7 +354,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, ((identifier == ActionsManager::OpenFrameAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenLinkActionToOpenHints(identifier)));
+				openUrl(m_hitResult.frameUrl, ((identifier == ActionsManager::OpenFrameAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier)));
 			}
 
 			break;
