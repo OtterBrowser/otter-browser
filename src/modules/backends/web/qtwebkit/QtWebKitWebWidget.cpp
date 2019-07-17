@@ -1071,23 +1071,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::OpenImageAction:
-			if (getCurrentHitTestResult().imageUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().imageUrl, SessionsManager::calculateOpenHints(parameters));
-			}
-
-			break;
 		case ActionsManager::OpenImageInNewTabAction:
-			if (getCurrentHitTestResult().imageUrl.isValid())
-			{
-				openUrl(getCurrentHitTestResult().imageUrl, SessionsManager::calculateOpenHints(SessionsManager::NewTabOpen));
-			}
-
-			break;
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
-			if (getCurrentHitTestResult().imageUrl.isValid())
 			{
-				openUrl(getCurrentHitTestResult().imageUrl, (SessionsManager::NewTabOpen | SessionsManager::BackgroundOpen));
+				const HitTestResult hitResult(getCurrentHitTestResult());
+
+				if (hitResult.imageUrl.isValid())
+				{
+					openUrl(hitResult.imageUrl, ((identifier == ActionsManager::OpenImageAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier)));
+				}
 			}
 
 			break;
