@@ -1739,7 +1739,7 @@ int QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 		return 0;
 	}
 
-	QWebEnginePage::FindFlags nativeFlags(0);
+	QWebEnginePage::FindFlags nativeFlags;
 
 	if (flags.testFlag(BackwardFind))
 	{
