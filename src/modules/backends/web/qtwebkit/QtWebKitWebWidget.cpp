@@ -868,6 +868,8 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 
 void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &parameters, ActionsManager::TriggerType trigger)
 {
+	const HitTestResult hitResult(getCurrentHitTestResult());
+
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
@@ -962,7 +964,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			{
-				const HitTestResult hitResult(getCurrentHitTestResult());
 				const SessionsManager::OpenHints hints((identifier == ActionsManager::OpenLinkAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier));
 
 				if (hints == SessionsManager::DefaultOpen && !hitResult.flags.testFlag(HitTestResult::IsLinkFromSelectionTest))
@@ -979,25 +980,25 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (!getCurrentHitTestResult().linkUrl.isEmpty())
+			if (!hitResult.linkUrl.isEmpty())
 			{
-				Application::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(hitResult.linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
 		case ActionsManager::BookmarkLinkAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
+			if (hitResult.linkUrl.isValid())
 			{
-				const QString title(getCurrentHitTestResult().title);
+				const QString title(hitResult.title);
 
-				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), getCurrentHitTestResult().linkUrl}, {QLatin1String("title"), (title.isEmpty() ? m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element().toPlainText() : title)}}, parentWidget(), trigger);
+				Application::triggerAction(ActionsManager::BookmarkPageAction, {{QLatin1String("url"), hitResult.linkUrl}, {QLatin1String("title"), (title.isEmpty() ? m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element().toPlainText() : title)}}, parentWidget(), trigger);
 			}
 
 			break;
 		case ActionsManager::SaveLinkToDiskAction:
-			if (getCurrentHitTestResult().linkUrl.isValid())
+			if (hitResult.linkUrl.isValid())
 			{
-				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().linkUrl));
+				handleDownloadRequested(QNetworkRequest(hitResult.linkUrl));
 			}
 			else
 			{
@@ -1006,56 +1007,52 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::addTransfer(TransfersManager::startTransfer(getCurrentHitTestResult().linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(TransfersManager::startTransfer(hitResult.linkUrl.toString(), {}, (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			break;
 		case ActionsManager::OpenFrameAction:
 		case ActionsManager::OpenFrameInCurrentTabAction:
 		case ActionsManager::OpenFrameInNewTabAction:
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
+			if (hitResult.frameUrl.isValid())
 			{
-				const HitTestResult hitResult(getCurrentHitTestResult());
-
-				if (hitResult.frameUrl.isValid())
-				{
-					openUrl(hitResult.frameUrl, ((identifier == ActionsManager::OpenFrameAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier)));
-				}
+				openUrl(hitResult.frameUrl, ((identifier == ActionsManager::OpenFrameAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier)));
 			}
 
 			break;
 		case ActionsManager::CopyFrameLinkToClipboardAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
+			if (hitResult.frameUrl.isValid())
 			{
-				Application::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(hitResult.frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
 		case ActionsManager::ReloadFrameAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
+			if (hitResult.frameUrl.isValid())
 			{
-				const QUrl url(getCurrentHitTestResult().frameUrl);
-				QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
+				const QUrl url(hitResult.frameUrl);
+				QWebFrame *frame(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).frame());
 
-				if (hitResult.frame())
+				if (frame)
 				{
 					m_networkManager->addContentBlockingException(url, NetworkManager::SubFrameType);
 
-					hitResult.frame()->setUrl({});
-					hitResult.frame()->setUrl(url);
+					frame->setUrl({});
+					frame->setUrl(url);
 				}
 			}
 
 			break;
 		case ActionsManager::ViewFrameSourceAction:
-			if (getCurrentHitTestResult().frameUrl.isValid())
+			if (hitResult.frameUrl.isValid())
 			{
 				const QString defaultEncoding(m_page->settings()->defaultTextEncoding());
-				QNetworkRequest request(getCurrentHitTestResult().frameUrl);
+				QNetworkRequest request(hitResult.frameUrl);
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
 				QNetworkReply *reply(m_networkManager->get(request));
 				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
-				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getCurrentHitTestResult().frameUrl.toString()), false);
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + hitResult.frameUrl.toString()), false);
 
 				if (!defaultEncoding.isEmpty())
 				{
@@ -1073,26 +1070,22 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenImageAction:
 		case ActionsManager::OpenImageInNewTabAction:
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
+			if (hitResult.imageUrl.isValid())
 			{
-				const HitTestResult hitResult(getCurrentHitTestResult());
-
-				if (hitResult.imageUrl.isValid())
-				{
-					openUrl(hitResult.imageUrl, ((identifier == ActionsManager::OpenImageAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier)));
-				}
+				openUrl(hitResult.imageUrl, ((identifier == ActionsManager::OpenImageAction) ? SessionsManager::calculateOpenHints(parameters) : mapOpenActionToOpenHints(identifier)));
 			}
 
 			break;
 		case ActionsManager::SaveImageToDiskAction:
-			if (getCurrentHitTestResult().imageUrl.isValid())
+			if (hitResult.imageUrl.isValid())
 			{
-				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().imageUrl));
+				handleDownloadRequested(QNetworkRequest(hitResult.imageUrl));
 			}
 
 			break;
 		case ActionsManager::CopyImageToClipboardAction:
 			{
-				const QPixmap pixmap(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).pixmap());
+				const QPixmap pixmap(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).pixmap());
 
 				if (!pixmap.isNull())
 				{
@@ -1106,38 +1099,38 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::CopyImageUrlToClipboardAction:
-			if (!getCurrentHitTestResult().imageUrl.isEmpty())
+			if (!hitResult.imageUrl.isEmpty())
 			{
-				Application::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(hitResult.imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
 		case ActionsManager::ReloadImageAction:
-			if (!getCurrentHitTestResult().imageUrl.isEmpty())
+			if (!hitResult.imageUrl.isEmpty())
 			{
-				m_networkManager->addContentBlockingException(getCurrentHitTestResult().imageUrl, NetworkManager::ImageType);
+				m_networkManager->addContentBlockingException(hitResult.imageUrl, NetworkManager::ImageType);
 
 				m_page->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
-				if (getUrl().matches(getCurrentHitTestResult().imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
+				if (getUrl().matches(hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
 					triggerAction(ActionsManager::ReloadAndBypassCacheAction, {}, trigger);
 				}
 				else
 				{
-					const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
-					const QUrl url(getCurrentHitTestResult().imageUrl);
-					const QString src(hitResult.element().attribute(QLatin1String("src")));
+					QWebElement element(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element());
+					const QUrl url(hitResult.imageUrl);
+					const QString src(element.attribute(QLatin1String("src")));
 					NetworkCache *cache(NetworkManagerFactory::getCache());
 
-					hitResult.element().setAttribute(QLatin1String("src"), {});
+					element.setAttribute(QLatin1String("src"), {});
 
 					if (cache)
 					{
 						cache->remove(url);
 					}
 
-					hitResult.element().setAttribute(QLatin1String("src"), src);
+					element.setAttribute(QLatin1String("src"), src);
 
 					m_page->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = '%1'; }").arg(src));
 				}
@@ -1146,17 +1139,17 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::ImagePropertiesAction:
 			{
-				QVariantMap properties({{QLatin1String("alternativeText"), getCurrentHitTestResult().alternateText}, {QLatin1String("longDescription"), getCurrentHitTestResult().longDescription}});
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
+				QVariantMap properties({{QLatin1String("alternativeText"), hitResult.alternateText}, {QLatin1String("longDescription"), hitResult.longDescription}});
+				const QPixmap pixmap(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).pixmap());
 
-				if (!hitResult.pixmap().isNull())
+				if (!pixmap.isNull())
 				{
-					properties[QLatin1String("width")] = hitResult.pixmap().width();
-					properties[QLatin1String("height")] = hitResult.pixmap().height();
-					properties[QLatin1String("depth")] = hitResult.pixmap().depth();
+					properties[QLatin1String("width")] = pixmap.width();
+					properties[QLatin1String("height")] = pixmap.height();
+					properties[QLatin1String("depth")] = pixmap.depth();
 				}
 
-				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : nullptr), this));
+				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(hitResult.imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(hitResult.imageUrl) : nullptr), this));
 				imagePropertiesDialog->setButtonsVisible(false);
 
 				ContentsDialog *dialog(new ContentsDialog(ThemesManager::createIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), {}, {}, QDialogButtonBox::Close, imagePropertiesDialog, this));
@@ -1169,16 +1162,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::SaveMediaToDiskAction:
-			if (getCurrentHitTestResult().mediaUrl.isValid())
+			if (hitResult.mediaUrl.isValid())
 			{
-				handleDownloadRequested(QNetworkRequest(getCurrentHitTestResult().mediaUrl));
+				handleDownloadRequested(QNetworkRequest(hitResult.mediaUrl));
 			}
 
 			break;
 		case ActionsManager::CopyMediaUrlToClipboardAction:
-			if (!getCurrentHitTestResult().mediaUrl.isEmpty())
+			if (!hitResult.mediaUrl.isEmpty())
 			{
-				Application::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
+				Application::clipboard()->setText(hitResult.mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			break;
@@ -1199,7 +1192,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::MediaPlaybackRateAction:
-			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element().evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
+			m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element().evaluateJavaScript(QStringLiteral("this.playbackRate = %1").arg(parameters.value(QLatin1String("rate"), 1).toReal()));
 
 			break;
 		case ActionsManager::GoBackAction:
@@ -1424,7 +1417,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::CheckSpellingAction:
 			{
-				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition).element());
+				QWebElement element(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element());
 				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked"), !getActionState(identifier, parameters).isChecked).toBool() ? QLatin1String("true") : QLatin1String("false")));
 
 				if (parameters.contains(QLatin1String("dictionary")))
@@ -1442,8 +1435,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			break;
 		case ActionsManager::CreateSearchAction:
 			{
-				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().hitPosition));
-				QWebElement parentElement(hitResult.element().parent());
+				const QWebElement element(m_page->mainFrame()->hitTestContent(hitResult.hitPosition).element());
+				QWebElement parentElement(element.parent());
 
 				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 				{
@@ -1463,7 +1456,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 
 				QWebElement searchTermsElement;
-				const QString tagName(hitResult.element().tagName().toLower());
+				const QString tagName(element.tagName().toLower());
 				const QUrl url(parentElement.attribute(QLatin1String("action")));
 				const QIcon icon(m_page->mainFrame()->icon());
 				SearchEnginesManager::SearchEngineDefinition searchEngine;
@@ -1476,16 +1469,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (tagName != QLatin1String("select"))
 				{
-					const QString type(hitResult.element().attribute(QLatin1String("type")));
+					const QString type(element.attribute(QLatin1String("type")));
 
-					if (!inputElements.contains(hitResult.element()) && (type == QLatin1String("image") || type == QLatin1String("submit")))
+					if (!inputElements.contains(element) && (type == QLatin1String("image") || type == QLatin1String("submit")))
 					{
-						inputElements.append(hitResult.element());
+						inputElements.append(element);
 					}
 
 					if (tagName == QLatin1String("textarea") || type == QLatin1String("email") || type == QLatin1String("password") || type == QLatin1String("search") || type == QLatin1String("tel") || type == QLatin1String("text") || type == QLatin1String("url"))
 					{
-						searchTermsElement = hitResult.element();
+						searchTermsElement = element;
 					}
 				}
 
@@ -1503,12 +1496,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 						const QString type(inputElements.at(i).attribute(QLatin1String("type")));
 						const bool isSubmit(type == QLatin1String("image") || type == QLatin1String("submit"));
 
-						if ((isSubmit && inputElements.at(i) != hitResult.element()) || ((type == QLatin1String("checkbox") || type == QLatin1String("radio")) && !inputElements[i].evaluateJavaScript(QLatin1String("this.checked")).toBool()))
+						if ((isSubmit && inputElements.at(i) != element) || ((type == QLatin1String("checkbox") || type == QLatin1String("radio")) && !inputElements[i].evaluateJavaScript(QLatin1String("this.checked")).toBool()))
 						{
 							continue;
 						}
 
-						if (isSubmit && inputElements.at(i) == hitResult.element())
+						if (isSubmit && inputElements.at(i) == element)
 						{
 							if (inputElements.at(i).hasAttribute(QLatin1String("formaction")))
 							{
