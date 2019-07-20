@@ -1564,12 +1564,12 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 
 bool BookmarksModel::hasBookmark(const QUrl &url) const
 {
-	return (m_urls.contains(Utils::normalizeUrl(url)) || m_urls.contains(url));
+	return (m_urls.contains(url) || m_urls.contains(Utils::normalizeUrl(url)));
 }
 
 bool BookmarksModel::hasFeed(const QUrl &url) const
 {
-	return (m_feeds.contains(Utils::normalizeUrl(url)) || m_feeds.contains(url));
+	return (m_feeds.contains(url) || m_feeds.contains(Utils::normalizeUrl(url)));
 }
 
 bool BookmarksModel::hasKeyword(const QString &keyword) const

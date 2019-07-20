@@ -1000,7 +1000,7 @@ bool FeedsModel::setData(const QModelIndex &index, const QVariant &value, int ro
 
 bool FeedsModel::hasFeed(const QUrl &url) const
 {
-	return (m_urls.contains(Utils::normalizeUrl(url)) || m_urls.contains(url));
+	return (m_urls.contains(url) || m_urls.contains(Utils::normalizeUrl(url)));
 }
 
 }
