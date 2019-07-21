@@ -344,7 +344,7 @@ void Feed::update()
 				m_error = ParseError;
 				m_isUpdating = false;
 
-				Console::addMessage(tr("Failed to parse feed: invalid feed type"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
+				Console::addMessage(tr("Failed to parse feed: unknown feed format"), Console::NetworkCategory, Console::ErrorLevel, m_url.toDisplayString());
 
 				emit feedModified(this);
 			}
