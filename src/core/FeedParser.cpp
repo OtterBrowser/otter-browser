@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2018 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,11 @@ FeedParser::FeedParser() : QObject()
 
 FeedParser* FeedParser::createParser(Feed *feed, DataFetchJob *data)
 {
+	if (!feed || !data)
+	{
+		return nullptr;
+	}
+
 	const QMimeDatabase mimeDatabase;
 	const QMap<QString, ParserType> parsers({{QLatin1String("application/atom+xml"), AtomParser}, {QLatin1String("application/rss+xml"), RssParser}});
 	QMimeType mimeType(mimeDatabase.mimeTypeForData(data->getData()));
