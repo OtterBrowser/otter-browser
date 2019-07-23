@@ -78,7 +78,7 @@ protected:
 	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
-	FeedInformation m_data;
+	FeedInformation m_information;
 };
 
 class RssFeedParser final : public FeedParser
@@ -93,7 +93,7 @@ protected:
 	QDateTime readDateTime(QXmlStreamReader *reader);
 
 private:
-	FeedInformation m_data;
+	FeedInformation m_information;
 };
 
 }

@@ -97,7 +97,7 @@ QString FeedParser::createIdentifier(const Feed::Entry &entry)
 
 AtomFeedParser::AtomFeedParser() : FeedParser()
 {
-	m_data.mimeType = QMimeDatabase().mimeTypeForName(QLatin1String("application/atom+xml"));
+	m_information.mimeType = QMimeDatabase().mimeTypeForName(QLatin1String("application/atom+xml"));
 }
 
 void AtomFeedParser::parse(DataFetchJob *data)
@@ -105,7 +105,7 @@ void AtomFeedParser::parse(DataFetchJob *data)
 	QXmlStreamReader reader(data->getData());
 	bool isSuccess(true);
 
-	m_data.entries.reserve(10);
+	m_information.entries.reserve(10);
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("feed"))
 	{
@@ -181,7 +181,7 @@ void AtomFeedParser::parse(DataFetchJob *data)
 					entry.identifier = createIdentifier(entry);
 				}
 
-				m_data.entries.append(entry);
+				m_information.entries.append(entry);
 			}
 			else if (reader.isStartElement())
 			{
@@ -189,25 +189,25 @@ void AtomFeedParser::parse(DataFetchJob *data)
 				{
 					const QXmlStreamAttributes attributes(reader.attributes());
 
-					m_data.categories[attributes.value(QLatin1String("term")).toString()] = attributes.value(QLatin1String("label")).toString();
+					m_information.categories[attributes.value(QLatin1String("term")).toString()] = attributes.value(QLatin1String("label")).toString();
 
 					reader.skipCurrentElement();
 				}
 				else if (reader.name() == QLatin1String("icon"))
 				{
-					m_data.icon = QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements));
+					m_information.icon = QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements));
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_data.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
+					m_information.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 				}
 				else if (reader.name() == QLatin1String("summary"))
 				{
-					m_data.description = reader.readElementText(QXmlStreamReader::IncludeChildElements);
+					m_information.description = reader.readElementText(QXmlStreamReader::IncludeChildElements);
 				}
 				else if (reader.name() == QLatin1String("updated"))
 				{
-					m_data.lastUpdateTime = readDateTime(&reader);
+					m_information.lastUpdateTime = readDateTime(&reader);
 				}
 				else
 				{
@@ -228,9 +228,9 @@ void AtomFeedParser::parse(DataFetchJob *data)
 		}
 	}
 
-	m_data.entries.squeeze();
+	m_information.entries.squeeze();
 
-	if (m_data.entries.isEmpty())
+	if (m_information.entries.isEmpty())
 	{
 		Console::addMessage(tr("Failed to parse feed: no valid entries found"), Console::NetworkCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
 
@@ -242,7 +242,7 @@ void AtomFeedParser::parse(DataFetchJob *data)
 
 FeedParser::FeedInformation AtomFeedParser::getInformation() const
 {
-	return m_data;
+	return m_information;
 }
 
 QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
@@ -255,7 +255,7 @@ QDateTime AtomFeedParser::readDateTime(QXmlStreamReader *reader)
 
 RssFeedParser::RssFeedParser() : FeedParser()
 {
-	m_data.mimeType = QMimeDatabase().mimeTypeForName(QLatin1String("application/rss+xml"));
+	m_information.mimeType = QMimeDatabase().mimeTypeForName(QLatin1String("application/rss+xml"));
 }
 
 void RssFeedParser::parse(DataFetchJob *data)
@@ -263,7 +263,7 @@ void RssFeedParser::parse(DataFetchJob *data)
 	QXmlStreamReader reader(data->getData());
 	bool isSuccess(true);
 
-	m_data.entries.reserve(10);
+	m_information.entries.reserve(10);
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("rss"))
 	{
@@ -283,9 +283,9 @@ void RssFeedParser::parse(DataFetchJob *data)
 
 							entry.categories.append(category);
 
-							if (!m_data.categories.contains(category))
+							if (!m_information.categories.contains(category))
 							{
-								m_data.categories[category] = QString();
+								m_information.categories[category] = QString();
 							}
 						}
 						else if (reader.name() == QLatin1String("title"))
@@ -340,7 +340,7 @@ void RssFeedParser::parse(DataFetchJob *data)
 					entry.identifier = createIdentifier(entry);
 				}
 
-				m_data.entries.append(entry);
+				m_information.entries.append(entry);
 			}
 			else if (reader.isStartElement())
 			{
@@ -350,7 +350,7 @@ void RssFeedParser::parse(DataFetchJob *data)
 					{
 						if (reader.isStartElement() && reader.name() == QLatin1String("url"))
 						{
-							m_data.icon = QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements));
+							m_information.icon = QUrl(reader.readElementText(QXmlStreamReader::IncludeChildElements));
 						}
 						else if (reader.isEndElement() && reader.name() == QLatin1String("image"))
 						{
@@ -360,15 +360,15 @@ void RssFeedParser::parse(DataFetchJob *data)
 				}
 				else if (reader.name() == QLatin1String("title"))
 				{
-					m_data.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
+					m_information.title = reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified();
 				}
 				else if (reader.name() == QLatin1String("description"))
 				{
-					m_data.description = reader.readElementText(QXmlStreamReader::IncludeChildElements);
+					m_information.description = reader.readElementText(QXmlStreamReader::IncludeChildElements);
 				}
 				else if (reader.name() == QLatin1String("lastBuildDate"))
 				{
-					m_data.lastUpdateTime = readDateTime(&reader);
+					m_information.lastUpdateTime = readDateTime(&reader);
 				}
 				else if (reader.name() != QLatin1String("channel"))
 				{
@@ -389,9 +389,9 @@ void RssFeedParser::parse(DataFetchJob *data)
 		}
 	}
 
-	m_data.entries.squeeze();
+	m_information.entries.squeeze();
 
-	if (m_data.entries.isEmpty())
+	if (m_information.entries.isEmpty())
 	{
 		Console::addMessage(tr("Failed to parse feed: no valid entries found"), Console::NetworkCategory, Console::ErrorLevel, data->getUrl().toDisplayString());
 
@@ -403,7 +403,7 @@ void RssFeedParser::parse(DataFetchJob *data)
 
 FeedParser::FeedInformation RssFeedParser::getInformation() const
 {
-	return m_data;
+	return m_information;
 }
 
 QDateTime RssFeedParser::readDateTime(QXmlStreamReader *reader)
