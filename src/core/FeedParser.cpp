@@ -262,6 +262,8 @@ void RssFeedParser::parse(DataFetchJob *data)
 {
 	QXmlStreamReader reader(data->getData());
 	bool isSuccess(true);
+	QRegularExpression emailExpression(QLatin1String("^[a-zA-Z0-9\\._\\-]+@[a-zA-Z0-9\\._\\-]+\\.[a-zA-Z0-9]+$"));
+	emailExpression.optimize();
 
 	m_information.entries.reserve(10);
 
@@ -319,7 +321,7 @@ void RssFeedParser::parse(DataFetchJob *data)
 						{
 							const QString text(reader.readElementText(QXmlStreamReader::IncludeChildElements).simplified());
 
-							if (QRegularExpression(QLatin1String("^[a-zA-Z0-9\\._\\-]+@[a-zA-Z0-9\\._\\-]+\\.[a-zA-Z0-9]+$")).match(text).hasMatch())
+							if (emailExpression.match(text).hasMatch())
 							{
 								entry.email = text;
 							}
