@@ -81,7 +81,7 @@ QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyle
 
 	const QStringList keywords(PreferencesSearchPageWidget::getKeywords(index.model(), index.row()));
 	LineEditWidget *widget(new LineEditWidget(index.data(Qt::DisplayRole).toString(), parent));
-	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), widget));
+	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + QLatin1String("[a-z0-9]*")), widget));
 	widget->setFocus();
 
 	return widget;
