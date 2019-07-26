@@ -31,10 +31,10 @@ namespace Otter
 PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QWidget(parent),
 	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption).toStringList()),
 	m_thirdPartyCookiesRejectedHosts(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption).toStringList()),
-	m_clearHisorySettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList()),
+	m_clearHistorySettings(SettingsManager::getOption(SettingsManager::History_ClearOnCloseOption).toStringList()),
 	m_ui(new Ui::PreferencesPrivacyPageWidget)
 {
-	m_clearHisorySettings.removeAll({});
+	m_clearHistorySettings.removeAll({});
 
 	m_ui->setupUi(this);
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I do not want to be tracked"), QLatin1String("doNotAllow"));
@@ -71,8 +71,8 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	const int thirdPartyCookiesIndex(m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getOption(SettingsManager::Network_ThirdPartyCookiesPolicyOption).toString()));
 
 	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
-	m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
-	m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
+	m_ui->clearHistoryCheckBox->setChecked(!m_clearHistorySettings.isEmpty());
+	m_ui->clearHistoryButton->setEnabled(!m_clearHistorySettings.isEmpty());
 
 	m_ui->rememberPasswordsCheckBox->setChecked(SettingsManager::getOption(SettingsManager::Browser_RememberPasswordsOption).toBool());
 
@@ -82,9 +82,9 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, m_ui->clearHistoryButton, &QPushButton::setEnabled);
 	connect(m_ui->clearHistoryCheckBox, &QCheckBox::toggled, [&](bool isChecked)
 	{
-		if (isChecked && m_clearHisorySettings.isEmpty())
+		if (isChecked && m_clearHistorySettings.isEmpty())
 		{
-			m_clearHisorySettings = ClearHistoryDialog::getDefaultClearSettings();
+			m_clearHistorySettings = ClearHistoryDialog::getDefaultClearSettings();
 
 			emit settingsModified();
 		}
@@ -126,17 +126,17 @@ void PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions()
 
 void PreferencesPrivacyPageWidget::setupClearHistory()
 {
-	ClearHistoryDialog dialog(m_clearHisorySettings, true, this);
+	ClearHistoryDialog dialog(m_clearHistorySettings, true, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		m_clearHisorySettings = dialog.getClearSettings();
+		m_clearHistorySettings = dialog.getClearSettings();
 
 		emit settingsModified();
 	}
 
-	m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
-	m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
+	m_ui->clearHistoryCheckBox->setChecked(!m_clearHistorySettings.isEmpty());
+	m_ui->clearHistoryButton->setEnabled(!m_clearHistorySettings.isEmpty());
 }
 
 void PreferencesPrivacyPageWidget::save()
@@ -150,7 +150,7 @@ void PreferencesPrivacyPageWidget::save()
 	SettingsManager::setOption(SettingsManager::Network_ThirdPartyCookiesPolicyOption, m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString());
 	SettingsManager::setOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, m_thirdPartyCookiesAcceptedHosts);
 	SettingsManager::setOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, m_thirdPartyCookiesRejectedHosts);
-	SettingsManager::setOption(SettingsManager::History_ClearOnCloseOption, (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
+	SettingsManager::setOption(SettingsManager::History_ClearOnCloseOption, (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHistorySettings : QStringList()));
 	SettingsManager::setOption(SettingsManager::Browser_RememberPasswordsOption, m_ui->rememberPasswordsCheckBox->isChecked());
 }
 

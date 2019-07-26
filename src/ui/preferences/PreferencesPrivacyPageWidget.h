@@ -51,7 +51,7 @@ protected slots:
 private:
 	QStringList m_thirdPartyCookiesAcceptedHosts;
 	QStringList m_thirdPartyCookiesRejectedHosts;
-	QStringList m_clearHisorySettings;
+	QStringList m_clearHistorySettings;
 	Ui::PreferencesPrivacyPageWidget *m_ui;
 
 signals:
