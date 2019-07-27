@@ -404,6 +404,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		menu.addAction(tr("Copy Transfer Information"), this, &TransfersContentsWidget::copyTransferInformation);
 		menu.addSeparator();
 		menu.addAction(tr("Remove"), this, &TransfersContentsWidget::removeTransfer);
+		menu.addSeparator();
 	}
 
 	const QVector<Transfer*> transfers(TransfersManager::getTransfers());
