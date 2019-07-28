@@ -387,7 +387,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 	{
 		const bool canOpen(QFile::exists(transfer->getTarget()));
 
-		menu.addAction(QCoreApplication::translate("actions", "Open"), this, &TransfersContentsWidget::openTransfer)->setEnabled(canOpen);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), QCoreApplication::translate("actions", "Open"), this, &TransfersContentsWidget::openTransfer)->setEnabled(canOpen);
 
 		Menu *openWithMenu(new Menu(Menu::OpenInApplicationMenu, this));
 		openWithMenu->setEnabled(canOpen);
@@ -403,7 +403,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 		menu.addAction(tr("Copy Transfer Information"), this, &TransfersContentsWidget::copyTransferInformation);
 		menu.addSeparator();
-		menu.addAction(tr("Remove"), this, &TransfersContentsWidget::removeTransfer);
+		menu.addAction(ThemesManager::createIcon(QLatin1String("edit-delete")), tr("Remove"), this, &TransfersContentsWidget::removeTransfer);
 		menu.addSeparator();
 	}
 
