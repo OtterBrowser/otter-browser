@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &position)
 					menu.addSeparator();
 				}
 
-				menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open source page"), this, &NotesContentsWidget::openUrl)->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
+				menu.addAction(ThemesManager::createIcon(QLatin1String("document-open")), tr("Open Source Page"), this, &NotesContentsWidget::openUrl)->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
 
 				if (type != BookmarksModel::RootBookmark)
 				{
@@ -352,7 +352,7 @@ ActionsManager::ActionDefinition::State NotesContentsWidget::getActionState(int 
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
-			state.text = QCoreApplication::translate("actions", "Copy address of source page");
+			state.text = QCoreApplication::translate("actions", "Copy Address of Source Page");
 			state.isEnabled = (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && !m_ui->notesViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString().isEmpty());
 
 			return state;
