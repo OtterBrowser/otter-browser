@@ -557,8 +557,6 @@ ActionsManager::ActionDefinition::State TransfersContentsWidget::getActionState(
 
 				return state;
 			}
-
-			break;
 		default:
 			break;
 	}
