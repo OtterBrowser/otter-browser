@@ -131,7 +131,6 @@ friend class NotificationsManager;
 class NotificationsManager final : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(EventIdentifier)
 
 public:
 	enum EventIdentifier
@@ -141,6 +140,8 @@ public:
 		UpdateAvailableEvent,
 		WebPageNotificationEvent
 	};
+
+	Q_ENUM(EventIdentifier)
 
 	struct EventDefinition final
 	{

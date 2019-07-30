@@ -79,7 +79,6 @@ private:
 class ActionsManager final : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(ActionIdentifier)
 
 public:
 	enum ShortcutCheck
@@ -286,6 +285,8 @@ public:
 		ExitAction,
 		OtherAction
 	};
+
+	Q_ENUM(ActionIdentifier)
 
 	struct ActionDefinition final
 	{

@@ -31,7 +31,6 @@ namespace Otter
 class Menu : public QMenu
 {
 	Q_OBJECT
-	Q_ENUMS(MenuRole)
 
 public:
 	enum MenuRole
@@ -55,6 +54,8 @@ public:
 		ValidateMenu,
 		WindowsMenu
 	};
+
+	Q_ENUM(MenuRole)
 
 	explicit Menu(int role = UnknownMenu, QWidget *parent = nullptr);
 

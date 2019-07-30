@@ -36,7 +36,6 @@ class Style;
 class ColorScheme final : public QObject, public Addon
 {
 	Q_OBJECT
-	Q_ENUMS(ColorRole)
 
 public:
 	enum ColorRole
@@ -66,6 +65,8 @@ public:
 		LinkRole,
 		LinkVisitedRole
 	};
+
+	Q_ENUM(ColorRole)
 
 	struct ColorRoleInformation final
 	{

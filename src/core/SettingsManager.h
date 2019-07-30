@@ -32,8 +32,6 @@ namespace Otter
 class SettingsManager final : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(OptionIdentifier)
-	Q_ENUMS(OptionType)
 
 public:
 	enum OptionIdentifier
@@ -225,6 +223,8 @@ public:
 		Updates_ServerUrlOption
 	};
 
+	Q_ENUM(OptionIdentifier)
+
 	enum OptionType
 	{
 		UnknownType = 0,
@@ -239,6 +239,8 @@ public:
 		PasswordType,
 		StringType
 	};
+
+	Q_ENUM(OptionType)
 
 	struct OptionDefinition final
 	{

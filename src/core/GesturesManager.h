@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -97,7 +97,6 @@ private:
 class GesturesManager final : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(GesturesContext)
 
 public:
 	enum GesturesContext
@@ -112,6 +111,8 @@ public:
 		NoTabHandleContext,
 		OtherContext
 	};
+
+	Q_ENUM(GesturesContext)
 
 	static void createInstance();
 	static void loadProfiles();

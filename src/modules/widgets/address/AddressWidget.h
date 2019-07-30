@@ -75,7 +75,6 @@ private:
 class AddressWidget final : public LineEditWidget
 {
 	Q_OBJECT
-	Q_ENUMS(EntryIdentifier)
 
 public:
 	enum CompletionMode
@@ -99,6 +98,8 @@ public:
 		FillPasswordEntry,
 		HistoryDropdownEntry
 	};
+
+	Q_ENUM(EntryIdentifier)
 
 	struct EntryDefinition final
 	{

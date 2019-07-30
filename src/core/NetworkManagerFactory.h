@@ -177,7 +177,6 @@ private:
 class NetworkManagerFactory final : public QObject
 {
 	Q_OBJECT
-	Q_ENUMS(DoNotTrackPolicy)
 
 public:
 	enum DoNotTrackPolicy
@@ -186,6 +185,8 @@ public:
 		AllowToTrackPolicy,
 		DoNotAllowToTrackPolicy
 	};
+
+	Q_ENUM(DoNotTrackPolicy)
 
 	static void createInstance();
 	static void initialize();

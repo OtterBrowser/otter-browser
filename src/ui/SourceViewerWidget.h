@@ -31,8 +31,6 @@ namespace Otter
 class SyntaxHighlighter final : public QSyntaxHighlighter
 {
 	Q_OBJECT
-	Q_ENUMS(HighlightingSyntax)
-	Q_ENUMS(HighlightingState)
 
 public:
 	enum HighlightingSyntax
@@ -40,6 +38,8 @@ public:
 		NoSyntax = 0,
 		HtmlSyntax
 	};
+
+	Q_ENUM(HighlightingSyntax)
 
 	enum HighlightingState
 	{
@@ -52,6 +52,8 @@ public:
 		CharacterDataState,
 		CommentState
 	};
+
+	Q_ENUM(HighlightingState)
 
 	struct BlockData final : public QTextBlockUserData
 	{
