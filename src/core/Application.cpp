@@ -284,17 +284,16 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv), Act
 
 	if (socket.waitForConnected(500))
 	{
-		const QStringList decodedArguments(arguments);
 		QStringList encodedArguments;
-		encodedArguments.reserve(decodedArguments.count());
+		encodedArguments.reserve(arguments.count());
 
 #ifdef Q_OS_WIN
 		AllowSetForegroundWindow(ASFW_ANY);
 #endif
 
-		for (int i = 0; i < decodedArguments.count(); ++i)
+		for (int i = 0; i < arguments.count(); ++i)
 		{
-			encodedArguments.append(decodedArguments.at(i).toUtf8().toBase64());
+			encodedArguments.append(arguments.at(i).toUtf8().toBase64());
 		}
 
 		QTextStream stream(&socket);
