@@ -526,26 +526,32 @@ void NetworkManagerFactory::handleOptionChanged(int identifier, const QVariant &
 
 			break;
 		case SettingsManager::Security_CiphersOption:
-			if (value.toString() == QLatin1String("default"))
 			{
-				QSslConfiguration::defaultConfiguration().setCiphers(m_defaultCiphers);
-			}
-			else
-			{
-				const QStringList selectedCiphers(value.toStringList());
-				QList<QSslCipher> ciphers;
+				QSslConfiguration configuration(QSslConfiguration::defaultConfiguration());
 
-				for (int i = 0; i < selectedCiphers.count(); ++i)
+				if (value.toString() == QLatin1String("default"))
 				{
-					const QSslCipher cipher(selectedCiphers.at(i));
+					configuration.setCiphers(m_defaultCiphers);
+				}
+				else
+				{
+					const QStringList selectedCiphers(value.toStringList());
+					QList<QSslCipher> ciphers;
 
-					if (!cipher.isNull())
+					for (int i = 0; i < selectedCiphers.count(); ++i)
 					{
-						ciphers.append(cipher);
+						const QSslCipher cipher(selectedCiphers.at(i));
+
+						if (!cipher.isNull())
+						{
+							ciphers.append(cipher);
+						}
 					}
+
+					configuration.setCiphers(ciphers);
 				}
 
-				QSslConfiguration::defaultConfiguration().setCiphers(ciphers);
+				QSslConfiguration::setDefaultConfiguration(configuration);
 			}
 
 			break;
