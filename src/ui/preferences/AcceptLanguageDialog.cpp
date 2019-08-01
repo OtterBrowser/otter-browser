@@ -62,7 +62,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 			}
 			else
 			{
-				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name()});
+				entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name()});
 			}
 		}
 	}

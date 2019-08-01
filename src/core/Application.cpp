@@ -1489,7 +1489,7 @@ QString Application::createReport(ReportOptions options)
 
 QString Application::getFullVersion()
 {
-	return QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN).arg(OTTER_VERSION_CONTEXT);
+	return QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN, OTTER_VERSION_CONTEXT);
 }
 
 QString Application::getLocalePath()

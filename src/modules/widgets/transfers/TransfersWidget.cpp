@@ -321,7 +321,7 @@ bool TransferActionWidget::event(QEvent *event)
 	{
 		const bool isIndeterminate(m_transfer->getBytesTotal() <= 0);
 
-		QToolTip::showText(static_cast<QHelpEvent*>(event)->globalPos(), tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(m_transfer->getSource().toDisplayString().toHtmlEscaped()).arg(m_transfer->getTarget().toHtmlEscaped()).arg(isIndeterminate ? tr("Unknown") : Utils::formatUnit(m_transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(m_transfer->getBytesReceived(), false, 1, true), (isIndeterminate ? tr("Unknown") : QStringLiteral("%1%")).arg(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal()), 0, 'f', 1)));
+		QToolTip::showText(static_cast<QHelpEvent*>(event)->globalPos(), tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(m_transfer->getSource().toDisplayString().toHtmlEscaped(), m_transfer->getTarget().toHtmlEscaped(), (isIndeterminate ? tr("Unknown") : Utils::formatUnit(m_transfer->getBytesTotal(), false, 1, true)), Utils::formatUnit(m_transfer->getBytesReceived(), false, 1, true), (isIndeterminate ? tr("Unknown") : QStringLiteral("%1%")).arg(Utils::calculatePercent(m_transfer->getBytesReceived(), m_transfer->getBytesTotal()), 0, 'f', 1)));
 
 		return true;
 	}

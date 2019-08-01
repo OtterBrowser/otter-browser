@@ -48,7 +48,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 		}
 		else
 		{
-			entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName(), locale.name()), locale.name()});
+			entries.append({QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.name()), locale.name()});
 		}
 	}
 
