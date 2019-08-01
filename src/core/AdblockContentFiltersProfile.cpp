@@ -522,7 +522,7 @@ ContentFiltersManager::CheckResult AdblockContentFiltersProfile::checkRuleMatch(
 	{
 		QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
 
-		for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
+		for (iterator = m_resourceTypes.constBegin(); iterator != m_resourceTypes.constEnd(); ++iterator)
 		{
 			const bool supportsException(iterator.value() != WebSocketOption && iterator.value() != PopupOption);
 

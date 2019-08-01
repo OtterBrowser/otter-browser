@@ -232,7 +232,7 @@ bool KeyboardProfile::save()
 	QJsonArray contextsArray;
 	QHash<int, QVector<KeyboardProfile::Action> >::const_iterator contextsIterator;
 
-	for (contextsIterator = m_definitions.begin(); contextsIterator != m_definitions.end(); ++contextsIterator)
+	for (contextsIterator = m_definitions.constBegin(); contextsIterator != m_definitions.constEnd(); ++contextsIterator)
 	{
 		QJsonArray actionsArray;
 

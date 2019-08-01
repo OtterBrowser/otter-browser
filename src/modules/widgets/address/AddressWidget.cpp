@@ -410,7 +410,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	QHash<EntryIdentifier, EntryDefinition>::const_iterator iterator;
 
-	for (iterator = m_entries.begin(); iterator != m_entries.end(); ++iterator)
+	for (iterator = m_entries.constBegin(); iterator != m_entries.constEnd(); ++iterator)
 	{
 		if (!iterator.value().icon.isNull())
 		{
