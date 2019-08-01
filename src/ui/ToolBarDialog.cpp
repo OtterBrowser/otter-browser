@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -431,7 +431,7 @@ void ToolBarDialog::editEntry()
 		}
 		else if (identifier.startsWith(QLatin1String("bookmarks:")))
 		{
-			const BookmarksModel::Bookmark *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getBookmarkByPath(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+			const BookmarksModel::Bookmark *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getBookmarkByPath(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.midRef(10).toULongLong()));
 
 			if (bookmark)
 			{
@@ -775,7 +775,7 @@ QMap<int, QVariant> ToolBarDialog::createEntryData(const QString &identifier, co
 	}
 	else if (identifier.startsWith(QLatin1String("bookmarks:")))
 	{
-		const BookmarksModel::Bookmark *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getBookmarkByPath(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+		const BookmarksModel::Bookmark *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getBookmarkByPath(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.midRef(10).toULongLong()));
 
 		if (bookmark)
 		{

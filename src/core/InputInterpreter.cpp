@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ InputInterpreter::InterpreterResult InputInterpreter::interpret(const QString &t
 
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksModel::Bookmark *bookmark(text.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getBookmarkByPath(text.mid(11)) : BookmarksManager::getBookmark(text.mid(10).toULongLong()));
+		BookmarksModel::Bookmark *bookmark(text.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getBookmarkByPath(text.mid(11)) : BookmarksManager::getBookmark(text.midRef(10).toULongLong()));
 
 		if (bookmark)
 		{

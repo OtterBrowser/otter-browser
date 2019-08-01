@@ -74,7 +74,7 @@ int PacUtils::dnsDomainLevels(const QString &host) const
 {
 	if (host.startsWith(QLatin1String("www."), Qt::CaseInsensitive))
 	{
-		return host.mid(4).count(QLatin1Char('.'));
+		return host.midRef(4).count(QLatin1Char('.'));
 	}
 
 	return host.count(QLatin1Char('.'));

@@ -1123,7 +1123,7 @@ BookmarksModel::Bookmark* BookmarksModel::getBookmarkByPath(const QString &path)
 
 	if (path.startsWith(QLatin1Char('#')))
 	{
-		return getBookmark(path.mid(1).toULongLong());
+		return getBookmark(path.midRef(1).toULongLong());
 	}
 
 	Bookmark *bookmark(m_rootItem);
