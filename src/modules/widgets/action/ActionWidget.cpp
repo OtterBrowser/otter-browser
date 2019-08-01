@@ -278,8 +278,6 @@ bool NavigationActionWidget::event(QEvent *event)
 
 				return true;
 			}
-
-			return false;
 		case QEvent::MouseButtonDblClick:
 		case QEvent::MouseButtonPress:
 		case QEvent::Wheel:
