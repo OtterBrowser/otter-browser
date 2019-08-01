@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2018 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2019 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -366,12 +366,7 @@ bool CookieJar::isDomainTheSame(const QUrl &first, const QUrl &second)
 	QString secondDomain(QLatin1Char('.') + second.host().toLower());
 	secondDomain.remove((secondDomain.length() - secondTld.length()), secondTld.length());
 
-	if (firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1))
-	{
-		return true;
-	}
-
-	return false;
+	return firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1);
 }
 
 }
